@@ -4,7 +4,6 @@ using UnityEditor;
 
 namespace ET
 {
-    [TypeDrawer]
     public class DictionaryIntLongTypeDrawer: ITypeDrawer
     {
         public bool HandlesType(Type type)

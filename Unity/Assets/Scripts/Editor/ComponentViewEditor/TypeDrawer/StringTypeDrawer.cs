@@ -3,16 +3,13 @@ using UnityEditor;
 
 namespace ET
 {
-    [TypeDrawer]
+    [TypeDrawer(typeof(string))]
     public class StringTypeDrawer: ITypeDrawer
     {
-        public bool HandlesType(Type type)
-        {
-            return type == typeof (string);
-        }
-
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
         {
+            if (string.IsNullOrEmpty(memberName))
+                return EditorGUILayout.DelayedTextField((string) value);
             return EditorGUILayout.DelayedTextField(memberName, (string) value);
         }
     }

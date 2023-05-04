@@ -3,13 +3,9 @@ using UnityEditor;
 
 namespace ET
 {
-    [TypeDrawer]
+    [TypeDrawer(typeof(DateTime))]
     public class DateTimeTypeDrawer: ITypeDrawer
     {
-        public bool HandlesType(Type type)
-        {
-            return type == typeof (DateTime);
-        }
 
         // Note: This is a very basic implementation. The ToString() method conversion will cut off milliseconds.
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)

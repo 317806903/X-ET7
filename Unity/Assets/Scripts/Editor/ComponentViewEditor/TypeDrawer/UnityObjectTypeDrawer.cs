@@ -3,17 +3,13 @@ using UnityEditor;
 
 namespace ET
 {
-    [TypeDrawer]
+    [TypeDrawer(typeof(UnityEngine.Object), true)]
     public class UnityObjectTypeDrawer: ITypeDrawer
     {
-        public bool HandlesType(Type type)
-        {
-            return type == typeof (UnityEngine.Object) ||
-                    type.IsSubclassOf(typeof (UnityEngine.Object));
-        }
-
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
         {
+            if (string.IsNullOrEmpty(memberName))
+                return EditorGUILayout.ObjectField((UnityEngine.Object) value, memberType, true);
             return EditorGUILayout.ObjectField(memberName, (UnityEngine.Object) value, memberType, true);
         }
     }

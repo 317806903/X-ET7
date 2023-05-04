@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace ET
 {
-    [TypeDrawer(typeof(Vector4))]
-    public class Vector4TypeDrawer: ITypeDrawer
+    [TypeDrawer(typeof(Unity.Mathematics.float3))]
+    public class MathematicsFloat3TypeDrawer: ITypeDrawer
     {
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
         {
-            return EditorGUILayout.Vector4Field(memberName, (Vector4) value);
+            return EditorGUILayout.Vector3Field(memberName, (Unity.Mathematics.float3) value);
         }
     }
 }

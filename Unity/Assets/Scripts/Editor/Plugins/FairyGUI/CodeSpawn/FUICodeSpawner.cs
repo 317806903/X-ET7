@@ -53,11 +53,13 @@ namespace FUIEditor
         public const string HotfixViewCodeDir = "../Unity/Assets/Scripts/Codes/HotfixView/Client/Demo/FUI";
 
         // 不生成使用默认名称的成员
-        public static readonly bool IgnoreDefaultVariableName = false;
+        public static readonly bool IgnoreDefaultVariableName = true;
         
         public static readonly Dictionary<string, PackageInfo> PackageInfos = new Dictionary<string, PackageInfo>();
 
         public static readonly Dictionary<string, ComponentInfo> ComponentInfos = new Dictionary<string, ComponentInfo>();
+        
+        public static readonly Dictionary<string, ComponentInfo> MainPanelComponentInfos = new Dictionary<string, ComponentInfo>();
         
         public static readonly MultiDictionary<string, string, ComponentInfo> ExportedComponentInfos = new MultiDictionary<string, string, ComponentInfo>();
 
@@ -93,6 +95,7 @@ namespace FUIEditor
         {
             PackageInfos.Clear();
             ComponentInfos.Clear();
+            MainPanelComponentInfos.Clear();
             ExportedComponentInfos.Clear();
             ExtralExportURLs.Clear();
 
@@ -150,6 +153,15 @@ namespace FUIEditor
                 ComponentInfo componentInfo = ParseComponent(packageInfo, packageComponentInfo);
                 string key = "{0}/{1}".Fmt(componentInfo.PackageId, componentInfo.Id);
                 ComponentInfos.Add(key, componentInfo);
+
+                if (componentInfo.PanelType == PanelType.Main)
+                {
+                    if (MainPanelComponentInfos.ContainsKey(componentInfo.PackageId))
+                    {
+                        throw new Exception($"一个包里只能有一个主界面！{packageInfo.Name} 包里有 {MainPanelComponentInfos[componentInfo.PackageId].NameWithoutExtension} 和 {componentInfo.NameWithoutExtension}");
+                    }
+                    MainPanelComponentInfos.Add(componentInfo.PackageId, componentInfo);    
+                }
             }
 
             return packageInfo;
@@ -168,7 +180,7 @@ namespace FUIEditor
 
             XML xml = new XML(File.ReadAllText(packageComponentInfo.Path));
 
-            if (xml.attributes.TryGetValue("extention", out var typeName))
+            if (xml.attributes.TryGetValue("extention", out string typeName))
             {
                 ComponentType type = EnumHelper.FromString<ComponentType>(typeName);
                 if (type == ComponentType.None)
@@ -178,6 +190,13 @@ namespace FUIEditor
                 else
                 {
                     componentInfo.ComponentType = type;
+                }
+            }
+            else if (xml.attributes.TryGetValue("remark", out string remark))
+            {
+                if (Enum.TryParse(remark, out PanelType panelType))
+                {
+                    componentInfo.PanelType = panelType;
                 }
             }
 
@@ -227,7 +246,7 @@ namespace FUIEditor
         
         private static void SpawnCode()
         {
-            if (Directory.Exists(FUIAutoGenDir))
+            if (Directory.Exists(FUIAutoGenDir)) 
             {
                 Directory.Delete(FUIAutoGenDir, true);
             }
@@ -237,31 +256,54 @@ namespace FUIEditor
                 FUIComponentSpawner.SpawnComponent(componentInfo);
             }
             
+            List<PackageInfo> ExportedPackageInfos = new List<PackageInfo>();
             foreach (var kv in ExportedComponentInfos)
             {
                 FUIBinderSpawner.SpawnCodeForPanelBinder(PackageInfos[kv.Key], kv.Value);
+                
+                ExportedPackageInfos.Add(PackageInfos[kv.Key]);
             }
 
             FUIPanelIdSpawner.SpawnPanelId();
-            FUIBinderSpawner.SpawnFUIBinder();
+            FUIBinderSpawner.SpawnFUIBinder(ExportedPackageInfos);
 
-            foreach (PackageInfo packageInfo in PackageInfos.Values)
+            HashSet<string> subPanelIds = new HashSet<string>();
+
+            foreach (var kv in ComponentInfos)
             {
-                string panelName = "{0}Panel.xml".Fmt(packageInfo.Name);
-                if (packageInfo.PackageComponentInfos.TryGetValue(panelName, out var packageComponentInfo))
+                ComponentInfo componentInfo = kv.Value;
+                if (componentInfo.PanelType == PanelType.Main)
                 {
-                    string componentId = $"{packageInfo.Id}/{packageComponentInfo.Id}";
-                    if (ComponentInfos.TryGetValue(componentId, out var componentInfo))
-                    {
-                        FUIPanelSpawner.SpawnPanel(packageInfo.Name, componentInfo.NameSpace);
-                        FUIPanelSystemSpawner.SpawnPanelSystem(packageInfo.Name, componentInfo);
-                        FUIEventHandlerSpawner.SpawnEventHandler(packageInfo.Name);
-                    }
+                    PackageInfo packageInfo = PackageInfos[componentInfo.PackageId];
+                    
+                    SpawnSubPanelCode(componentInfo);
+
+                    FUIPanelSpawner.SpawnPanel(packageInfo.Name, componentInfo);
+                        
+                    FUIPanelSystemSpawner.SpawnPanelSystem(packageInfo.Name, $"{componentInfo.NameWithoutExtension}", componentInfo);
+                        
+                    FUIEventHandlerSpawner.SpawnEventHandler(packageInfo.Name);
                 }
             }
         }
 
+        private static void SpawnSubPanelCode(ComponentInfo componentInfo)
+        {
+            componentInfo.VariableInfos.ForEach(variableInfo =>
+            {
+                if (!variableInfo.IsExported || variableInfo.ComponentInfo == null)
+                {
+                    return;
+                }
+                
+                string subPackageName = PackageInfos[variableInfo.PackageId].Name;
 
+                FUIPanelSpawner.SpawnSubPanel(subPackageName, variableInfo.ComponentInfo);
+                FUIPanelSystemSpawner.SpawnPanelSystem(subPackageName, variableInfo.ComponentInfo.NameWithoutExtension, variableInfo.ComponentInfo, true, variableInfo);
+                
+                SpawnSubPanelCode(variableInfo.ComponentInfo);
+            });
+        }
     }
 }
 

@@ -39,34 +39,38 @@ namespace ET
         }
         
         /// <summary> 
-        /// 根据时间戳获取时间 
+        /// 根据时间戳获取时间 , 单位 毫秒
         /// </summary>  
         public DateTime ToDateTime(long timeStamp)
         {
             return dt.AddTicks(timeStamp * 10000);
         }
         
-        // 线程安全
+        // 线程安全, 单位 毫秒
         public long ClientNow()
         {
             return (DateTime.UtcNow.Ticks - this.dt1970.Ticks) / 10000;
         }
         
+        // 单位 毫秒
         public long ServerNow()
         {
             return ClientNow() + Instance.ServerMinusClientTime;
         }
         
+        // 单位 毫秒
         public long ClientFrameTime()
         {
             return this.FrameTime;
         }
         
+        // 单位 毫秒
         public long ServerFrameTime()
         {
             return this.FrameTime + Instance.ServerMinusClientTime;
         }
         
+        // 单位 毫秒
         public long Transition(DateTime d)
         {
             return (d.Ticks - dt.Ticks) / 10000;

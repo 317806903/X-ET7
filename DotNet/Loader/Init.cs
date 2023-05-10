@@ -45,6 +45,29 @@ namespace ET
 		public static void Update()
 		{
 			Game.Update();
+			ChkFixedUpdate();
+		}
+
+		static long lastChkTimer = 0;
+		static long logicTimer = 0;
+		private static void ChkFixedUpdate()
+		{
+			if (lastChkTimer > 0)
+			{
+				logicTimer += TimeHelper.ClientFrameTime() - lastChkTimer;
+			}
+			lastChkTimer = TimeHelper.ClientFrameTime();
+			while (logicTimer >= TimeHelper.FixedDetalTimeLong)
+			{
+				logicTimer -= TimeHelper.FixedDetalTimeLong;
+
+				FixedUpdate();
+			}
+		}
+
+		public static void FixedUpdate()
+		{
+			Game.FixedUpdate();
 		}
 
 		public static void LateUpdate()

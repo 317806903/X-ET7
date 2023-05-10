@@ -247,7 +247,10 @@ namespace ET.Client
                 self.HandleProgresses.Add(handle, progressCallback);
             }
 
-            await handle;
+            if (handle.IsValid)
+            {
+                await handle;
+            }
 
             return handle.SceneObject;
         }

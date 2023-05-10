@@ -7,6 +7,12 @@ namespace ET
         public const long OneDay = 86400000;
         public const long Hour = 3600000;
         public const long Minute = 60000;
+
+        public const int LogicFrame = 30;
+        [StaticField]
+        public static float FixedDetalTime = (1f / LogicFrame);
+        [StaticField]
+        public static long FixedDetalTimeLong = (long)(1000 * FixedDetalTime);
         
         /// <summary>
         /// 客户端时间

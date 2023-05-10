@@ -81,7 +81,7 @@ namespace ET.Ability
                 string actionId = buffObj.GetActionId(abilityBuffMonitorTriggerEvent);
                 if (string.IsNullOrWhiteSpace(actionId) == false)
                 {
-                    ActionHandlerHelper.CreateAction(actionId, buffObj.casterUnitId, 0);
+                    ActionHandlerHelper.CreateAction(buffObj.GetUnit(), actionId, null);
                 }
             }
         }

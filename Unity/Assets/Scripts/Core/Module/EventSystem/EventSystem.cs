@@ -66,7 +66,7 @@ namespace ET
         }
     }
     
-    public class EventSystem: Singleton<EventSystem>, ISingletonUpdate, ISingletonLateUpdate
+    public class EventSystem: Singleton<EventSystem>, ISingletonUpdate, ISingletonFixedUpdate, ISingletonLateUpdate
     {
         private class EventInfo
         {
@@ -548,6 +548,46 @@ namespace ET
                     try
                     {
                         iUpdateSystem.Run(component);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+            }
+        }
+
+        public void FixedUpdate()
+        {
+            Queue<long> queue = this.queues[InstanceQueueIndex.FixedUpdate];
+            int count = queue.Count;
+            while (count-- > 0)
+            {
+                long instanceId = queue.Dequeue();
+                Entity component = Root.Instance.Get(instanceId);
+                if (component == null)
+                {
+                    continue;
+                }
+
+                if (component.IsDisposed)
+                {
+                    continue;
+                }
+
+                List<object> iFixedUpdateSystems = this.typeSystems.GetSystems(component.GetType(), typeof(IFixedUpdateSystem));
+                if (iFixedUpdateSystems == null)
+                {
+                    continue;
+                }
+
+                queue.Enqueue(instanceId);
+
+                foreach (IFixedUpdateSystem iFixedUpdateSystem in iFixedUpdateSystems)
+                {
+                    try
+                    {
+                        iFixedUpdateSystem.Run(component);
                     }
                     catch (Exception e)
                     {

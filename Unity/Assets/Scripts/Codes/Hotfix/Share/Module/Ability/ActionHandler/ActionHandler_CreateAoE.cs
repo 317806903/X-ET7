@@ -1,11 +1,13 @@
-﻿namespace ET.Ability
+﻿using System.Collections.Generic;
+
+namespace ET.Ability
 {
-	[Event(SceneType.Current)]
-	public class ActionHandler_CreateAoE: AEvent<Scene, AbilityEventType.CreateAoE>
+	public class ActionHandler_CreateAoE: IActionHandler
 	{
-		protected override async ETTask Run(Scene scene, AbilityEventType.CreateAoE args)
+		public override void Run(Unit unit, string actionId, Dictionary<string, object> param)
 		{
-			await ETTask.CompletedTask;
 		}
 	}
 }
+
+

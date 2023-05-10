@@ -11,8 +11,6 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
-				UnitComponent.Instance = self;
-				
 				self.playerList = HashSetComponent<long>.Create();
 				self.monsterList = HashSetComponent<long>.Create();
 				self.npcList = HashSetComponent<long>.Create();
@@ -26,8 +24,6 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
-				UnitComponent.Instance = null;
-
 				self.playerList.Dispose();
 				self.monsterList.Dispose();
 				self.npcList.Dispose();
@@ -43,6 +39,18 @@ namespace ET
 			{
 				self.FixedUpdate();
 			}
+		}
+
+		public static void FixedUpdate(this Unit self, float fixedDeltaTime)
+		{
+			self.GetComponent<TimelineComponent>().FixedUpdate(fixedDeltaTime);
+			self.GetComponent<BuffComponent>().FixedUpdate(fixedDeltaTime);
+			self.GetComponent<SkillComponent>().FixedUpdate(fixedDeltaTime);
+			self.GetComponent<BulletObj>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<AoeObj>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<EffectComponent>().FixedUpdate(fixedDeltaTime);
+			self.GetComponent<Ability.MoveComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
 		}
 
 		public static void FixedUpdate(this UnitComponent self)

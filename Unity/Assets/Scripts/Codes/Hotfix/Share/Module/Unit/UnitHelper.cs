@@ -5,15 +5,25 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class UnitHelper
     {
-        public static Unit GetUnit(long unitId)
+        public static UnitComponent GetUnitComponent(Unit unit)
         {
-            Unit unit = UnitComponent.Instance.GetChild<Unit>(unitId);
+            return unit.DomainScene().GetComponent<UnitComponent>();
+        }
+        
+        public static UnitComponent GetUnitComponent(Scene scene)
+        {
+            return scene.GetComponent<UnitComponent>();
+        }
+        
+        public static Unit GetUnit(Scene scene, long unitId)
+        {
+            Unit unit = GetUnitComponent(scene).Get(unitId);
             return unit;
         }
         
-        public static bool ChkUnitAlive(long unitId)
+        public static bool ChkUnitAlive(Scene scene, long unitId)
         {
-            Unit unit = GetUnit(unitId);
+            Unit unit = GetUnit(scene, unitId);
             if (unit == null)
             {
                 return false;
@@ -21,9 +31,9 @@ namespace ET.Ability
             return true;
         }
         
-        public static bool ChkIsBullet(long unitId)
+        public static bool ChkIsBullet(Scene scene, long unitId)
         {
-            Unit unit = GetUnit(unitId);
+            Unit unit = GetUnit(scene, unitId);
             if (unit == null)
             {
                 return false;
@@ -36,9 +46,9 @@ namespace ET.Ability
             return false;
         }
         
-        public static bool ChkIsAoe(long unitId)
+        public static bool ChkIsAoe(Scene scene, long unitId)
         {
-            Unit unit = GetUnit(unitId);
+            Unit unit = GetUnit(scene, unitId);
             if (unit == null)
             {
                 return false;

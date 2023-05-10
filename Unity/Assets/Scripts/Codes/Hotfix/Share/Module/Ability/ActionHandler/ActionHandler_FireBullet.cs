@@ -1,11 +1,12 @@
-﻿namespace ET.Ability
+﻿using System.Collections.Generic;
+
+namespace ET.Ability
 {
-	[Event(SceneType.Current)]
-	public class ActionHandler_FireBullet: AEvent<Scene, AbilityEventType.FireBullet>
+	public class ActionHandler_FireBullet: IActionHandler
 	{
-		protected override async ETTask Run(Scene scene, AbilityEventType.FireBullet args)
+		public override void Run(Unit unit, string actionId, Dictionary<string, object> param)
 		{
-			await ETTask.CompletedTask;
 		}
 	}
 }
+

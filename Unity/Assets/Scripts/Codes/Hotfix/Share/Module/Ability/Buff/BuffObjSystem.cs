@@ -26,6 +26,26 @@ namespace ET.Ability
         {
         }
 
+        /// <summary>
+        /// 拥有者
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetUnit(this BuffObj self)
+        {
+            return UnitHelper.GetUnit(self.DomainScene(), self.carrierUnitId);
+        }
+
+        /// <summary>
+        /// 施法者
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterUnit(this BuffObj self)
+        {
+            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+        }
+
         public static string GetActionId(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
         {
             if (self.model.monitorTriggers.TryGetValue(abilityBuffMonitorTriggerEvent, out string actionId))
@@ -50,7 +70,7 @@ namespace ET.Ability
                     //float取模不精准，所以用x1000后的整数来
                     if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.tickTime * 1000) == 0)
                     {
-                        ActionHandlerHelper.CreateAction(actionId, self.casterUnitId, 0);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
                         self.ticked += 1;
                     }
                 }

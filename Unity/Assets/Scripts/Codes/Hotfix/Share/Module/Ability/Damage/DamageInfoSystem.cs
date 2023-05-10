@@ -40,18 +40,19 @@ namespace ET.Ability
         
         public static void DealWithDamage(this DamageInfo self)
         {
+            Scene scene = self.DomainScene();
             //如果目标已经挂了，就直接return了
-            if (UnitHelper.ChkUnitAlive(self.defenderUnitId) == false)
+            if (UnitHelper.ChkUnitAlive(scene, self.defenderUnitId) == false)
                 return;
 
-            Unit defenderUnit = UnitHelper.GetUnit(self.defenderUnitId);
-            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.DamageBeforeOnHit()
+            Unit defenderUnit = UnitHelper.GetUnit(scene, self.defenderUnitId);
+            EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnHit()
                 {
                     damageInfoId = self.Id,
                     attackerUnitId = self.attackerUnitId,
                     defenderUnitId = self.defenderUnitId,
                 });
-            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.DamageAfterOnHit()
+            EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnHit()
                 {
                     damageInfoId = self.Id,
                     attackerUnitId = self.attackerUnitId,
@@ -59,7 +60,7 @@ namespace ET.Ability
                 });
             if (defenderUnit.CanBeKilledByDamageInfo(self) == true)
             {
-                EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.DamageBeforeOnKill()
+                EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
                     {
                         damageInfoId = self.Id,
                         attackerUnitId = self.attackerUnitId,
@@ -85,7 +86,7 @@ namespace ET.Ability
 
             //if (false)
             {
-                EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.DamageAfterOnKill()
+                EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {
                     damageInfoId = self.Id,
                     attackerUnitId = self.attackerUnitId,

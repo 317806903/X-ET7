@@ -2,12 +2,9 @@
 
 namespace ET.Ability
 {
-	[ComponentOf(typeof(Scene))]
+	[ComponentOf(typeof(Unit))]
 	public class TimelineComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
-        [StaticField]
-        public static TimelineComponent Instance;
-
         public List<long> removeList;
     }
 }

@@ -36,12 +36,17 @@ namespace ET.Ability
             return "";
         }
 
+        public static Unit GetUnit(this BulletObj self)
+        {
+            return self.GetParent<Unit>();
+        }
+        
         public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
         {
             string actionId = self.GetActionId(abilityBulletMonitorTriggerEvent);
             if (string.IsNullOrWhiteSpace(actionId) == false)
             {
-                ActionHandlerHelper.CreateAction(actionId, self.casterUnitId, 0);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
             }
         }
 
@@ -52,7 +57,7 @@ namespace ET.Ability
             self.timeElapsed += timePassed;
             if (self.duration <= 0)
             {
-                self.GetParent<Unit>().Destroy();
+                self.GetUnit().Destroy();
             }
         }
     }

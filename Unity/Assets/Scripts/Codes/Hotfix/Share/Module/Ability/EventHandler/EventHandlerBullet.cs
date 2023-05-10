@@ -7,9 +7,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsBullet(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsBullet(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnCreate);
 				}
 				await ETTask.CompletedTask;
@@ -21,14 +21,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.attackerUnitId) && UnitHelper.ChkIsBullet(args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId) && UnitHelper.ChkIsBullet(scene, args.attackerUnitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.attackerUnitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnHit);
 				}
-				if (UnitHelper.ChkUnitAlive(args.defenderUnitId) && UnitHelper.ChkIsBullet(args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId) && UnitHelper.ChkIsBullet(scene, args.defenderUnitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.defenderUnitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnBeHurt);
 				}
 				await ETTask.CompletedTask;
@@ -40,9 +40,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsBullet(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsBullet(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnRemoved);
 				}
 				await ETTask.CompletedTask;

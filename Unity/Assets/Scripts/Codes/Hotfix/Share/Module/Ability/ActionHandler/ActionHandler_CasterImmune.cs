@@ -1,11 +1,14 @@
-﻿namespace ET.Ability
+﻿using System.Collections.Generic;
+
+namespace ET.Ability
 {
-	[Event(SceneType.Current)]
-	public class ActionHandler_CasterImmune: AEvent<Scene, AbilityEventType.CasterImmune>
+	public class ActionHandler_CasterImmune: IActionHandler
 	{
-		protected override async ETTask Run(Scene scene, AbilityEventType.CasterImmune args)
+		public override void Run(Unit unit, string actionId, Dictionary<string, object> param)
 		{
-			await ETTask.CompletedTask;
 		}
 	}
 }
+
+
+

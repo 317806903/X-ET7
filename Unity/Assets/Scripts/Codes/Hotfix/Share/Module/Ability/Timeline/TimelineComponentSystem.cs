@@ -12,7 +12,6 @@ namespace ET.Ability
         {
             protected override void Awake(TimelineComponent self)
             {
-                TimelineComponent.Instance = self;
             }
         }
 
@@ -21,18 +20,17 @@ namespace ET.Ability
         {
             protected override void Destroy(TimelineComponent self)
             {
-                TimelineComponent.Instance = null;
             }
         }
-        
-        [ObjectSystem]
-        public class TimelineComponentFixedUpdateSystem: FixedUpdateSystem<TimelineComponent>
-        {
-            protected override void FixedUpdate(TimelineComponent self)
-            {
-                self.FixedUpdate();
-            }
-        }
+        //
+        // [ObjectSystem]
+        // public class TimelineComponentFixedUpdateSystem: FixedUpdateSystem<TimelineComponent>
+        // {
+        //     protected override void FixedUpdate(TimelineComponent self)
+        //     {
+        //         self.FixedUpdate();
+        //     }
+        // }
 
         public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, int timelineId)
         {
@@ -42,14 +40,12 @@ namespace ET.Ability
             return timelineObj;
         }
 
-        public static void FixedUpdate(this TimelineComponent self)
+        public static void FixedUpdate(this TimelineComponent self, float fixedDeltaTime)
         {
             if (self.Children.Count <= 0)
             {
                 return;
             }
-
-            float fixedDeltaTime = TimeHelper.FixedDetalTime;
 
             if(self.removeList ==  null)
             {

@@ -1,12 +1,14 @@
-﻿namespace ET.Ability
+﻿using System.Collections.Generic;
+
+namespace ET.Ability
 {
-	[Event(SceneType.Current)]
-	public class ActionHandler_CreateEffect: AEvent<Scene, AbilityEventType.CreateEffect>
+	public class ActionHandler_CreateEffect: IActionHandler
 	{
-		protected override async ETTask Run(Scene scene, AbilityEventType.CreateEffect args)
+		public override void Run(Unit unit, string actionId, Dictionary<string, object> param)
 		{
-            EffectHelper.AddEffect(UnitHelper.GetUnit(args.unitId), args.cfgId);
-			await ETTask.CompletedTask;
+			//EffectHelper.AddEffect(UnitHelper.GetUnit(scene, args.unitId), args.cfgId);
 		}
 	}
 }
+
+

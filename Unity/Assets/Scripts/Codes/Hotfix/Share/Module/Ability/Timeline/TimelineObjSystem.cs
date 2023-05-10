@@ -38,6 +38,11 @@ namespace ET.Ability
             }
         }
 
+        public static Unit GetCasterUnit(this TimelineObj self)
+        {
+            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+        }
+        
         public static void FixedUpdate(this TimelineObj self, float fixedDeltaTime)
         {
             float wasTimeElapsed = self.timeElapsed;
@@ -73,9 +78,11 @@ namespace ET.Ability
                 {
                     //TODO zpb
                     //timelineNode.doEvent(self, timelineNode.eveParams);
-                    ActionHandlerHelper.CreateAction(timelineNode.actionId, self.casterUnitId, 0);
+                    ActionHandlerHelper.CreateAction(self.GetCasterUnit(), timelineNode.actionId, null);
                 }
             }
         }
+        
+        
     }
 }

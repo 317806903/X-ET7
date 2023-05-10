@@ -36,12 +36,17 @@ namespace ET.Ability
             return "";
         }
 
+        public static Unit GetUnit(this AoeObj self)
+        {
+            return self.GetParent<Unit>();
+        }
+
         public static void EventHandler(this AoeObj self, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
         {
             string actionId = self.GetActionId(abilityAoeMonitorTriggerEvent);
             if (string.IsNullOrWhiteSpace(actionId) == false)
             {
-                ActionHandlerHelper.CreateAction(actionId, self.casterUnitId, 0);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
             }
         }
 
@@ -64,7 +69,7 @@ namespace ET.Ability
                     //float取模不精准，所以用x1000后的整数来
                     if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.tickTime * 1000) == 0)
                     {
-                        ActionHandlerHelper.CreateAction(actionId, self.casterUnitId, 0);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
                         self.ticked += 1;
                     }
                 }

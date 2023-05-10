@@ -12,7 +12,6 @@ namespace ET.Ability
         {
             protected override void Awake(DamageComponent self)
             {
-                DamageComponent.Instance = self;
             }
         }
 
@@ -21,7 +20,6 @@ namespace ET.Ability
         {
             protected override void Destroy(DamageComponent self)
             {
-                DamageComponent.Instance = null;
             }
         }
         

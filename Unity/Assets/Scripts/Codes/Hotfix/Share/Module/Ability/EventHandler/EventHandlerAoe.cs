@@ -7,9 +7,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnCreate);
 				}
 				await ETTask.CompletedTask;
@@ -21,9 +21,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnRemoved);
 				}
 				await ETTask.CompletedTask;
@@ -35,9 +35,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnCharacterEnter args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnCharacterEnter);
 				}
 				await ETTask.CompletedTask;
@@ -49,9 +49,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnCharacterLeave args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnCharacterLeave);
 				}
 				await ETTask.CompletedTask;
@@ -63,9 +63,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnBulletEnter args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnBulletEnter);
 				}
 				await ETTask.CompletedTask;
@@ -77,9 +77,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnBulletLeave args)
 			{
-				if (UnitHelper.ChkUnitAlive(args.unitId) && UnitHelper.ChkIsAoe(args.unitId))
+				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsAoe(scene, args.unitId))
 				{
-					Unit unit = UnitHelper.GetUnit(args.unitId);
+					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
 					EventHandlerHelper.Run(unit, AbilityAoeMonitorTriggerEvent.AoeOnBulletLeave);
 				}
 				await ETTask.CompletedTask;

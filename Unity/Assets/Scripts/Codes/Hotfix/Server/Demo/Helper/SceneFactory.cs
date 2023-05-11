@@ -32,7 +32,7 @@ namespace ET.Server
                     scene.AddComponent<GateSessionKeyComponent>();
                     break;
                 case SceneType.Map:
-                    scene.AddComponent<UnitComponent>();
+                    ET.Ability.SceneHelper.InitWhenServer(scene);
                     scene.AddComponent<AOIManagerComponent>();
                     break;
                 case SceneType.Location:

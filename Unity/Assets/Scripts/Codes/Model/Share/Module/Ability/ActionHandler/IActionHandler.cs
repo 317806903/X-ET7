@@ -9,6 +9,6 @@ namespace ET.Ability
     [ActionHandler]
     public abstract class IActionHandler
     {
-        public abstract void Run(Unit unit, string actionId, Dictionary<string, object> param);
+        public abstract ETTask Run(Unit unit, string actionId, Dictionary<string, object> param);
     }
 }

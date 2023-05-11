@@ -62,7 +62,7 @@ namespace ET.Ability
                 return;
             }
 
-            self.dic[key].Run(unit, actionId, param);
+            self.dic[key].Run(unit, actionId, param).Coroutine();
         }
     }
 }

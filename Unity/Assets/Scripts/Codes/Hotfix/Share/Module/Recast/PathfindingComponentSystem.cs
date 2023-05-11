@@ -48,6 +48,8 @@ namespace ET
             self.EndPos[1] = target.y;
             self.EndPos[2] = target.z;
             //Log.Debug($"start find path: {self.GetParent<Unit>().Id}");
+
+            //float3 tmp1 = self.RecastFindNearestPoint(target);
             int n = Recast.RecastFind(self.NavMesh, PathfindingComponent.extents, self.StartPos, self.EndPos, self.Result);
             for (int i = 0; i < n; ++i)
             {

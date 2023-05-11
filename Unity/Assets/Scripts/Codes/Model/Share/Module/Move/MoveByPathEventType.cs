@@ -2,12 +2,12 @@
 {
     namespace EventType
     {
-        public struct MoveStart
+        public struct MoveByPathStart
         {
             public Unit Unit;
         }
 
-        public struct MoveStop
+        public struct MoveByPathStop
         {
             public Unit Unit;
         }

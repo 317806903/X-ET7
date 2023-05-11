@@ -20,7 +20,7 @@ namespace ET.Server
 				unit.AddComponent(entity);
 			}
 			
-			unit.AddComponent<MoveComponent>();
+			unit.AddComponent<MoveByPathComponent>();
 			unit.AddComponent<PathfindingComponent, string>(scene.Name);
 			unit.Position = new float3(-10, 0, -10);
 			

@@ -4,13 +4,13 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    [FriendOf(typeof(MoveComponent))]
-    public static class MoveComponentSystem
+    [FriendOf(typeof(MoveByPathComponent))]
+    public static class MoveByPathComponentSystem
     {
         [Invoke(TimerInvokeType.MoveTimer)]
-        public class MoveTimer: ATimer<MoveComponent>
+        public class MoveTimer: ATimer<MoveByPathComponent>
         {
-            protected override void Run(MoveComponent self)
+            protected override void Run(MoveByPathComponent self)
             {
                 try
                 {
@@ -24,18 +24,18 @@ namespace ET
         }
     
         [ObjectSystem]
-        public class DestroySystem: DestroySystem<MoveComponent>
+        public class DestroySystem: DestroySystem<MoveByPathComponent>
         {
-            protected override void Destroy(MoveComponent self)
+            protected override void Destroy(MoveByPathComponent self)
             {
                 self.MoveFinish(true);
             }
         }
 
         [ObjectSystem]
-        public class AwakeSystem: AwakeSystem<MoveComponent>
+        public class AwakeSystem: AwakeSystem<MoveByPathComponent>
         {
-            protected override void Awake(MoveComponent self)
+            protected override void Awake(MoveByPathComponent self)
             {
                 self.StartTime = 0;
                 self.StartPos = float3.zero;
@@ -49,12 +49,12 @@ namespace ET
             }
         }
         
-        public static bool IsArrived(this MoveComponent self)
+        public static bool IsArrived(this MoveByPathComponent self)
         {
             return self.Targets.Count == 0;
         }
 
-        public static bool ChangeSpeed(this MoveComponent self, float speed)
+        public static bool ChangeSpeed(this MoveByPathComponent self, float speed)
         {
             if (self.IsArrived())
             {
@@ -82,7 +82,7 @@ namespace ET
         }
 
         // 该方法不需要用cancelToken的方式取消，因为即使不传入cancelToken，多次调用该方法也要取消之前的移动协程,上层可以stop取消
-        public static async ETTask<bool> MoveToAsync(this MoveComponent self, List<float3> target, float speed, int turnTime = 100)
+        public static async ETTask<bool> MoveToAsync(this MoveByPathComponent self, List<float3> target, float speed, int turnTime = 100)
         {
             self.Stop(false);
 
@@ -96,7 +96,7 @@ namespace ET
             self.Speed = speed;
             self.tcs = ETTask<bool>.Create(true);
 
-            EventSystem.Instance.Publish(self.DomainScene(), new EventType.MoveStart() {Unit = self.GetParent<Unit>()});
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.MoveByPathStart() {Unit = self.GetParent<Unit>()});
             
             self.StartMove();
             
@@ -104,13 +104,13 @@ namespace ET
 
             if (moveRet)
             {
-                EventSystem.Instance.Publish(self.DomainScene(), new EventType.MoveStop() {Unit = self.GetParent<Unit>()});
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.MoveByPathStop() {Unit = self.GetParent<Unit>()});
             }
             return moveRet;
         }
 
         // ret: 停止的时候，移动协程的返回值
-        private static void MoveForward(this MoveComponent self, bool ret)
+        private static void MoveForward(this MoveByPathComponent self, bool ret)
         {
             Unit unit = self.GetParent<Unit>();
             
@@ -180,7 +180,7 @@ namespace ET
             }
         }
 
-        private static void StartMove(this MoveComponent self)
+        private static void StartMove(this MoveByPathComponent self)
         {
             self.BeginTime = TimeHelper.ClientNow();
             self.StartTime = self.BeginTime;
@@ -189,7 +189,7 @@ namespace ET
             self.MoveTimer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.MoveTimer, self);
         }
 
-        private static void SetNextTarget(this MoveComponent self)
+        private static void SetNextTarget(this MoveByPathComponent self)
         {
 
             Unit unit = self.GetParent<Unit>();
@@ -246,12 +246,12 @@ namespace ET
             }
         }
 
-        private static float3 GetFaceV(this MoveComponent self)
+        private static float3 GetFaceV(this MoveByPathComponent self)
         {
             return self.NextTarget - self.PreTarget;
         }
 
-        public static bool FlashTo(this MoveComponent self, float3 target)
+        public static bool FlashTo(this MoveByPathComponent self, float3 target)
         {
             Unit unit = self.GetParent<Unit>();
             unit.Position = target;
@@ -259,7 +259,7 @@ namespace ET
         }
 
         // ret: 停止的时候，移动协程的返回值
-        public static void Stop(this MoveComponent self, bool ret)
+        public static void Stop(this MoveByPathComponent self, bool ret)
         {
             if (self.Targets.Count > 0)
             {
@@ -269,7 +269,7 @@ namespace ET
             self.MoveFinish(ret);
         }
 
-        private static void MoveFinish(this MoveComponent self, bool ret)
+        private static void MoveFinish(this MoveByPathComponent self, bool ret)
         {
             if (self.StartTime == 0)
             {

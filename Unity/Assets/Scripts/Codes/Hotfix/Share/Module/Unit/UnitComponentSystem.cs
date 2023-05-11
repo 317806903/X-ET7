@@ -43,13 +43,13 @@ namespace ET
 
 		public static void FixedUpdate(this Unit self, float fixedDeltaTime)
 		{
-			self.GetComponent<TimelineComponent>().FixedUpdate(fixedDeltaTime);
-			self.GetComponent<BuffComponent>().FixedUpdate(fixedDeltaTime);
-			self.GetComponent<SkillComponent>().FixedUpdate(fixedDeltaTime);
+			self.GetComponent<TimelineComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<BuffComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<SkillComponent>()?.FixedUpdate(fixedDeltaTime);
 			self.GetComponent<BulletObj>()?.FixedUpdate(fixedDeltaTime);
 			self.GetComponent<AoeObj>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<EffectComponent>().FixedUpdate(fixedDeltaTime);
-			self.GetComponent<Ability.MoveComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<EffectComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<MoveComponent>()?.FixedUpdate(fixedDeltaTime);
 			self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
 		}
 

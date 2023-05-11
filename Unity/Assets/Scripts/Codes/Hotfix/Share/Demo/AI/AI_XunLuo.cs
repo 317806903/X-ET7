@@ -1,11 +1,13 @@
+using Unity.Mathematics;
+
 namespace ET.Client
 {
-    public class AI_Attack: AAIHandler
+    public class AI_XunLuo: AAIHandler
     {
         public override int Check(AIComponent aiComponent, AIConfig aiConfig)
         {
-            long sec = TimeHelper.ClientNow() / 1000 % 15;
-            if (sec >= 10)
+            long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
+            if (sec < 10)
             {
                 return 0;
             }
@@ -14,6 +16,11 @@ namespace ET.Client
 
         public override async ETTask Execute(AIComponent aiComponent, AIConfig aiConfig, ETCancellationToken cancellationToken)
         {
+            Unit unit = aiComponent.GetUnit();
+            if (unit == null)
+            {
+                return;
+            }
             Scene clientScene = aiComponent.DomainScene();
 
             Unit myUnit = UnitHelper.GetMyUnitFromClientScene(clientScene);
@@ -21,22 +28,19 @@ namespace ET.Client
             {
                 return;
             }
-
-            // 停在当前位置
-            clientScene.GetComponent<SessionComponent>().Session.Send(new C2M_Stop());
             
-            Log.Debug("开始攻击");
+            Log.Debug("开始巡逻");
 
-            for (int i = 0; i < 100000; ++i)
+            while (true)
             {
-                Log.Debug($"攻击: {i}次");
-
-                // 因为协程可能被中断，任何协程都要传入cancellationToken，判断如果是中断则要返回
-                await TimerComponent.Instance.WaitAsync(1000, cancellationToken);
+                XunLuoPathComponent xunLuoPathComponent = myUnit.GetComponent<XunLuoPathComponent>();
+                float3 nextTarget = xunLuoPathComponent.GetCurrent();
+                await myUnit.MoveToAsync(nextTarget, cancellationToken);
                 if (cancellationToken.IsCancel())
                 {
                     return;
                 }
+                xunLuoPathComponent.MoveNext();
             }
         }
     }

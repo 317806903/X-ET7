@@ -58,9 +58,9 @@ namespace ET.Ability
                 //unit.SendStop(3);
                 return;
             }
-            ET.MoveComponent moveComponent = unit.GetComponent<ET.MoveComponent>();
+            ET.MoveByPathComponent moveByPathComponent = unit.GetComponent<ET.MoveByPathComponent>();
             float speed = 2f;
-            moveComponent.MoveToAsync(list, speed).Coroutine();
+            moveByPathComponent.MoveToAsync(list, speed).Coroutine();
         }
 
         public static void FixedUpdate(this MoveComponent self, float fixedDeltaTime)

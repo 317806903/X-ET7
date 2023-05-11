@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ET.Client
@@ -20,6 +21,17 @@ namespace ET.Client
         {
             protected override void Update(OperaComponent self)
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
+                    {
+                        C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
+                        c2MPathfindingResult.Position = (float3)hit.point + new float3(0, 5f, 0);
+                        self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
+                    }
+                }
                 if (Input.GetMouseButtonDown(1))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -27,7 +39,7 @@ namespace ET.Client
                     if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
                     {
                         C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
-                        c2MPathfindingResult.Position = hit.point;
+                        c2MPathfindingResult.Position = (float3)hit.point - new float3(0, 5f, 0);
                         self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
                     }
                 }

@@ -20,7 +20,7 @@ namespace ET.Client
 				numericComponent.Set(kv.Key, kv.Value);
 			}
 	        
-	        unit.AddComponent<MoveComponent>();
+	        unit.AddComponent<MoveByPathComponent>();
 	        if (unitInfo.MoveInfo != null)
 	        {
 		        if (unitInfo.MoveInfo.Points.Count > 0)

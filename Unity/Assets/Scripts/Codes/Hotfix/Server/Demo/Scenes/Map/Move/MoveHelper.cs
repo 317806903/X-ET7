@@ -11,7 +11,7 @@ namespace ET.Server
             float speed = unit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Speed);
             if (speed < 0.01)
             {
-                unit.SendStop(2);
+                unit.SendStop(WaitTypeError.Cancel);
                 return;
             }
 
@@ -21,7 +21,7 @@ namespace ET.Server
 
             if (list.Count < 2)
             {
-                unit.SendStop(3);
+                unit.SendStop(WaitTypeError.Timeout);
                 return;
             }
                 
@@ -30,18 +30,18 @@ namespace ET.Server
             m2CPathfindingResult.Id = unit.Id;
             MessageHelper.Broadcast(unit, m2CPathfindingResult);
 
-            MoveComponent moveComponent = unit.GetComponent<MoveComponent>();
+            MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
             
-            bool ret = await moveComponent.MoveToAsync(list, speed);
+            bool ret = await moveByPathComponent.MoveToAsync(list, speed);
             if (ret) // 如果返回false，说明被其它移动取消了，这时候不需要通知客户端stop
             {
-                unit.SendStop(0);
+                unit.SendStop(WaitTypeError.Success);
             }
         }
 
         public static void Stop(this Unit unit, int error)
         {
-            unit.GetComponent<MoveComponent>().Stop(error == 0);
+            unit.GetComponent<MoveByPathComponent>().Stop(error == WaitTypeError.Success);
             unit.SendStop(error);
         }
 

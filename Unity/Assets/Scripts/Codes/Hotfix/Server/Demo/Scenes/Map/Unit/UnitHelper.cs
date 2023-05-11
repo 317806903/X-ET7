@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace ET.Server
 {
-    [FriendOf(typeof(MoveComponent))]
+    [FriendOf(typeof(MoveByPathComponent))]
     [FriendOf(typeof(NumericComponent))]
     public static class UnitHelper
     {
@@ -17,16 +17,16 @@ namespace ET.Server
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
 
-            MoveComponent moveComponent = unit.GetComponent<MoveComponent>();
-            if (moveComponent != null)
+            MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
+            if (moveByPathComponent != null)
             {
-                if (!moveComponent.IsArrived())
+                if (!moveByPathComponent.IsArrived())
                 {
                     unitInfo.MoveInfo = new MoveInfo() { Points = new List<float3>() };
                     unitInfo.MoveInfo.Points.Add(unit.Position);
-                    for (int i = moveComponent.N; i < moveComponent.Targets.Count; ++i)
+                    for (int i = moveByPathComponent.N; i < moveByPathComponent.Targets.Count; ++i)
                     {
-                        float3 pos = moveComponent.Targets[i];
+                        float3 pos = moveByPathComponent.Targets[i];
                         unitInfo.MoveInfo.Points.Add(pos);
                     }
                 }

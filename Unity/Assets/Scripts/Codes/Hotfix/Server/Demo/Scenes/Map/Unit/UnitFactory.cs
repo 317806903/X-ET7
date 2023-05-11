@@ -13,7 +13,7 @@ namespace ET.Server
                 case UnitType.Player:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -37,7 +37,7 @@ namespace ET.Server
                 case UnitType.Monster:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -61,7 +61,7 @@ namespace ET.Server
                 case UnitType.NPC:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -85,7 +85,7 @@ namespace ET.Server
                 case UnitType.SceneObj:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -109,7 +109,7 @@ namespace ET.Server
                 case UnitType.Bullet:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -133,7 +133,7 @@ namespace ET.Server
                 case UnitType.Aoe:
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
-                    unit.AddComponent<MoveComponent>();
+                    unit.AddComponent<MoveByPathComponent>();
                     unit.Position = new float3(-10, 0, -10);
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();

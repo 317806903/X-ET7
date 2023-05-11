@@ -44,6 +44,11 @@ namespace ET
             }
         }
         
+        public static Unit GetUnit(this AIComponent self)
+        {
+            return self.GetParent<Unit>();
+        }
+        
         public static void Check(this AIComponent self)
         {
             if (self.Parent == null)

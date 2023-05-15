@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -42,16 +43,16 @@ namespace ET.Ability
             }
         }
 
-        public static void LearnSkill(this SkillComponent self, int skillId, int skillLevel, SkillSlotType skillSlotType)
+        public static void LearnSkill(this SkillComponent self, string skillId, int skillLevel, SkillSlotType skillSlotType)
         {
             self.skillList.Add(skillSlotType, skillId);
             self.skillCDs.Add(skillId, 0);
-            SkillModel skillModel = new SkillModel(); //skillId
-            self.skillOrgCDs.Add(skillId, skillModel.skillCD);
+            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
+            self.skillOrgCDs.Add(skillId, skillCfg.Cd);
             self.skillLevels.Add(skillId, skillLevel);
         }
 
-        public static (bool ret, string msg) CastSkill(this SkillComponent self, int skillId)
+        public static (bool ret, string msg) CastSkill(this SkillComponent self, string skillId)
         {
             var result = self.ChkCanUseSkill(skillId);
             if (result.ret == false)
@@ -59,16 +60,15 @@ namespace ET.Ability
                 return result;
             }
 
-            SkillModel skillModel = new SkillModel(); //skillId
-            int timelineId = skillModel.timelineId;
-            TimelineHelper.CreateTimeline(self.GetParent<Unit>(), timelineId);
+            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
+            TimelineHelper.CreateTimeline(self.GetParent<Unit>(), skillCfg.TimelineId);
 
             self.CostSkill(skillId);
-            self.skillCDs[skillId] = skillModel.skillCD;
+            self.skillCDs[skillId] = skillCfg.Cd;
             return (true, "");
         }
 
-        public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, int skillId)
+        public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, string skillId)
         {
             if (self.GetSkillCD(skillId) > 0)
             {
@@ -86,17 +86,17 @@ namespace ET.Ability
             return (true, "");
         }
 
-        public static float GetSkillCD(this SkillComponent self, int skillId)
+        public static float GetSkillCD(this SkillComponent self, string skillId)
         {
             return 0;
         }
 
-        public static (bool ret, string msg) ChkSkillCost(this SkillComponent self, int skillId)
+        public static (bool ret, string msg) ChkSkillCost(this SkillComponent self, string skillId)
         {
             return (true, "");
         }
 
-        public static bool CostSkill(this SkillComponent self, int skillId)
+        public static bool CostSkill(this SkillComponent self, string skillId)
         {
             return true;
         }

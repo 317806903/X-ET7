@@ -1,0 +1,16 @@
+[
+  {
+    "id": "FireBullet_1",
+    "name": "射出子弹1",
+    "desc": "",
+    "res_id": "Bullet_1",
+    "moveType": "Bullet_1"
+  },
+  {
+    "id": "FireBullet_2",
+    "name": "射出子弹2",
+    "desc": "",
+    "res_id": "Bullet_2",
+    "moveType": "Bullet_2"
+  }
+]

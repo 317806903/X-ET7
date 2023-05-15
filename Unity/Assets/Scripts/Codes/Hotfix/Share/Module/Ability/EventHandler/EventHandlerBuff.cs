@@ -7,9 +7,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.SkillOnCast args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.SkillOnCast);
 				}
 				await ETTask.CompletedTask;
@@ -21,9 +21,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnAwake args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnAwake);
 				}
 				await ETTask.CompletedTask;
@@ -35,9 +35,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnStart args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnStart);
 				}
 				await ETTask.CompletedTask;
@@ -49,9 +49,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRefresh args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
 				}
 				await ETTask.CompletedTask;
@@ -63,9 +63,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRemoved args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRemoved);
 				}
 				await ETTask.CompletedTask;
@@ -77,9 +77,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnDestroy args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnDestroy);
 				}
 				await ETTask.CompletedTask;
@@ -91,14 +91,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageBeforeOnHit args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeHurt);
 				}
 				await ETTask.CompletedTask;
@@ -110,14 +110,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageAfterOnHit args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeHurt);
 				}
 				await ETTask.CompletedTask;
@@ -129,14 +129,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageBeforeOnKill args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeKilled);
 				}
 				await ETTask.CompletedTask;
@@ -148,14 +148,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageAfterOnKill args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled);
 				}
 				await ETTask.CompletedTask;
@@ -167,9 +167,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnCreate);
 				}
 				await ETTask.CompletedTask;
@@ -181,14 +181,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnBeHurt);
 				}
 				await ETTask.CompletedTask;
@@ -200,9 +200,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnRemoved);
 				}
 				await ETTask.CompletedTask;

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ResEffect_1",
+    "name": "",
+    "desc": "prefab1",
+    "res_name": "Assets/ResAB/EffectPrefab/prefab1.prefab"
+  },
+  {
+    "id": "ResEffect_2",
+    "name": "",
+    "desc": "prefab2",
+    "res_name": "Assets/ResAB/EffectPrefab/prefab2.prefab"
+  }
+]

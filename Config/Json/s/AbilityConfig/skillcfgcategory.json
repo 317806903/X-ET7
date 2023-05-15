@@ -1,0 +1,23 @@
+[
+  {
+    "id": "Skill_1",
+    "name": "技能1",
+    "cd": 10,
+    "skillSlotType": 1,
+    "timeline_id": "Timeline_1"
+  },
+  {
+    "id": "Skill_2",
+    "name": "技能2",
+    "cd": 8,
+    "skillSlotType": 2,
+    "timeline_id": "Timeline_2"
+  },
+  {
+    "id": "Skill_3",
+    "name": "技能3",
+    "cd": 20,
+    "skillSlotType": 3,
+    "timeline_id": "Timeline_3"
+  }
+]

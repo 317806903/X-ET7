@@ -11,7 +11,7 @@ namespace ET.Ability
             return timelineComponent;
         }
         
-        public static TimelineObj CreateTimeline(Unit unit, int timelineId)
+        public static TimelineObj CreateTimeline(Unit unit, string timelineId)
         {
             TimelineObj timelineObj = GetTimelineComponent(unit).CreateTimeline(unit, timelineId);
             return timelineObj;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -32,11 +33,10 @@ namespace ET.Ability
         //     }
         // }
 
-        public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, int timelineId)
+        public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, string timelineId)
         {
-            TimelineModel timelineModel = new TimelineModel();//timelineId
-            
-            TimelineObj timelineObj = self.AddChild<TimelineObj, TimelineModel, Unit>(timelineModel, castUnit);
+            TimelineCfg timelineCfg = TimelineCfgCategory.Instance.Get(timelineId);
+            TimelineObj timelineObj = self.AddChild<TimelineObj, TimelineCfg, Unit>(timelineCfg, castUnit);
             return timelineObj;
         }
 
@@ -61,7 +61,7 @@ namespace ET.Ability
                 timelineObj.FixedUpdate(fixedDeltaTime);
 
                 //判断timeline是否终结
-                if (timelineObj.model.duration <= timelineObj.timeElapsed)
+                if (timelineObj.model.Duration <= timelineObj.timeElapsed)
                 {
                     self.removeList.Add(timelineObjs.Key);
                 }

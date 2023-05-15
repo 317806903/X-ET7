@@ -7,9 +7,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsBullet(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsBullet(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnCreate);
 				}
 				await ETTask.CompletedTask;
@@ -21,14 +21,14 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.attackerUnitId) && UnitHelper.ChkIsBullet(scene, args.attackerUnitId))
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.attackerUnitId);
+					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnHit);
 				}
-				if (UnitHelper.ChkUnitAlive(scene, args.defenderUnitId) && UnitHelper.ChkIsBullet(scene, args.defenderUnitId))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.defenderUnitId);
+					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnBeHurt);
 				}
 				await ETTask.CompletedTask;
@@ -40,9 +40,9 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
-				if (UnitHelper.ChkUnitAlive(scene, args.unitId) && UnitHelper.ChkIsBullet(scene, args.unitId))
+				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsBullet(args.unit))
 				{
-					Unit unit = UnitHelper.GetUnit(scene, args.unitId);
+					Unit unit = args.unit;
 					EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnRemoved);
 				}
 				await ETTask.CompletedTask;

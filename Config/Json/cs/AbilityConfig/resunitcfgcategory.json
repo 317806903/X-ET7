@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ResUnit_1",
+    "name": "",
+    "desc": "prefab1",
+    "res_name": "Assets/ResAB/UnitPrefab/prefab1.prefab"
+  },
+  {
+    "id": "ResUnit_2",
+    "name": "",
+    "desc": "prefab2",
+    "res_name": "Assets/ResAB/UnitPrefab/prefab2.prefab"
+  }
+]

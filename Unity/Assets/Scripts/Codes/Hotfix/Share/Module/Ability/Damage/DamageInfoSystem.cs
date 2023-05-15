@@ -45,26 +45,27 @@ namespace ET.Ability
             if (UnitHelper.ChkUnitAlive(scene, self.defenderUnitId) == false)
                 return;
 
+            Unit attackerUnit = UnitHelper.GetUnit(scene, self.attackerUnitId);
             Unit defenderUnit = UnitHelper.GetUnit(scene, self.defenderUnitId);
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnHit()
                 {
+                    attackerUnit = attackerUnit,
+                    defenderUnit = defenderUnit,
                     damageInfoId = self.Id,
-                    attackerUnitId = self.attackerUnitId,
-                    defenderUnitId = self.defenderUnitId,
                 });
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnHit()
                 {
+                    attackerUnit = attackerUnit,
+                    defenderUnit = defenderUnit,
                     damageInfoId = self.Id,
-                    attackerUnitId = self.attackerUnitId,
-                    defenderUnitId = self.defenderUnitId,
                 });
             if (defenderUnit.CanBeKilledByDamageInfo(self) == true)
             {
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
                     {
+                        attackerUnit = attackerUnit,
+                        defenderUnit = defenderUnit,
                         damageInfoId = self.Id,
-                        attackerUnitId = self.attackerUnitId,
-                        defenderUnitId = self.defenderUnitId,
                     });
             }
 
@@ -88,9 +89,9 @@ namespace ET.Ability
             {
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {
+                    attackerUnit = attackerUnit,
+                    defenderUnit = defenderUnit,
                     damageInfoId = self.Id,
-                    attackerUnitId = self.attackerUnitId,
-                    defenderUnitId = self.defenderUnitId,
                 });
             }
             //

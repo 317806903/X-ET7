@@ -7,7 +7,7 @@
         /// </summary>
         public struct SkillOnCast
         {
-            public long unitId;
+            public Unit unit;
             public int skillId;
             public TimelineObj timeline;
         }
@@ -17,7 +17,7 @@
         /// </summary>
         public struct BuffOnAwake
         {
-            public long unitId;
+            public Unit unit;
             public BuffObj buff;
         }
         
@@ -26,7 +26,7 @@
         /// </summary>
         public struct BuffOnStart
         {
-            public long unitId;
+            public Unit unit;
             public BuffObj buff;
         }
         
@@ -35,7 +35,7 @@
         /// </summary>
         public struct BuffOnRefresh
         {
-            public long unitId;
+            public Unit unit;
             public BuffObj buff;
             public int modifyStack;
         }
@@ -45,7 +45,7 @@
         /// </summary>
         public struct BuffOnRemoved
         {
-            public long unitId;
+            public Unit unit;
             public BuffObj buff;
         }
 
@@ -54,7 +54,7 @@
         /// </summary>
         public struct BuffOnDestroy
         {
-            public long unitId;
+            public Unit unit;
             public BuffObj buff;
         }
 
@@ -63,9 +63,9 @@
         /// </summary>
         public struct DamageBeforeOnHit
         {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
             public long damageInfoId;
-            public long attackerUnitId;
-            public long defenderUnitId;
         }
         
         /// <summary>
@@ -73,9 +73,9 @@
         /// </summary>
         public struct DamageAfterOnHit
         {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
             public long damageInfoId;
-            public long attackerUnitId;
-            public long defenderUnitId;
         }
         
         /// <summary>
@@ -83,9 +83,9 @@
         /// </summary>
         public struct DamageBeforeOnKill
         {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
             public long damageInfoId;
-            public long attackerUnitId;
-            public long defenderUnitId;
         }
         
         /// <summary>
@@ -93,9 +93,9 @@
         /// </summary>
         public struct DamageAfterOnKill
         {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
             public long damageInfoId;
-            public long attackerUnitId;
-            public long defenderUnitId;
         }
         
         //=========================================================
@@ -105,7 +105,8 @@
         /// </summary>
         public struct UnitOnCreate
         {
-            public long unitId;
+            public Unit unit;
+            public Unit createUnit;
         }
         
         /// <summary>
@@ -113,8 +114,8 @@
         /// </summary>
         public struct UnitOnHit
         {
-            public long attackerUnitId;
-            public long defenderUnitId;
+            public Unit attackerUnit;
+            public Unit defenderUnit;
         }
         
         /// <summary>
@@ -122,7 +123,7 @@
         /// </summary>
         public struct UnitOnRemoved
         {
-            public long unitId;
+            public Unit unit;
         }
         
         /// <summary>
@@ -131,8 +132,8 @@
         /// </summary>
         public struct BulletTween
         {
-            public long bulletUnitId;
-            public long targetUnitId;
+            public Unit bulletUnit;
+            public Unit targetUnit;
             public float time;
         }
         
@@ -141,8 +142,8 @@
         /// </summary>
         public struct BulletTargettingFunction
         {
-            public long bulletUnitId;
-            public long[] targetUnitIds;
+            public Unit bulletUnit;
+            public Unit[] targetUnitIds;
         }
         
         //=========================================================
@@ -152,8 +153,8 @@
         /// </summary>
         public struct AoeOnCharacterEnter
         {
-            public long unitId;
-            public long[] targetUnitIds;
+            public Unit unit;
+            public Unit[] targetUnits;
         }
 
         /// <summary>
@@ -161,8 +162,8 @@
         /// </summary>
         public struct AoeOnCharacterLeave
         {
-            public long unitId;
-            public long[] targetUnitIds;
+            public Unit unit;
+            public Unit[] targetUnits;
         }
 
         /// <summary>
@@ -170,8 +171,8 @@
         /// </summary>
         public struct AoeOnBulletEnter
         {
-            public long unitId;
-            public long[] targetUnitIds;
+            public Unit unit;
+            public Unit[] targetUnits;
         }
 
         /// <summary>
@@ -179,8 +180,8 @@
         /// </summary>
         public struct AoeOnBulletLeave
         {
-            public long unitId;
-            public long[] targetUnitIds;
+            public Unit unit;
+            public Unit[] targetUnits;
         }
 
         /// <summary>
@@ -188,7 +189,7 @@
         /// </summary>
         public struct AoeTween
         {
-            public long unitId;
+            public Unit unit;
             public float time;
         }
 

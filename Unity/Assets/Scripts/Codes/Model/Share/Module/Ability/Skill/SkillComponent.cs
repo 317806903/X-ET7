@@ -5,9 +5,9 @@ namespace ET.Ability
 	[ComponentOf(typeof(Unit))]
 	public class SkillComponent: Entity, IAwake, IDestroy
 	{
-		public MultiMap<SkillSlotType, int> skillList;
-		public Dictionary<int, float> skillCDs;
-		public Dictionary<int, float> skillOrgCDs;
-		public Dictionary<int, int> skillLevels;
+		public MultiMap<SkillSlotType, string> skillList;
+		public Dictionary<string, float> skillCDs;
+		public Dictionary<string, float> skillOrgCDs;
+		public Dictionary<string, int> skillLevels;
 	}
 }

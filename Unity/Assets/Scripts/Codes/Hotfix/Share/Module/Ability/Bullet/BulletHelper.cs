@@ -1,17 +1,70 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
     [FriendOf(typeof(Unit))]
+    [FriendOf(typeof(BulletObj))]
     public static class BulletHelper
     {
-        public static void AddBullet(Unit unit, int bulletCfgId)
+        public static void CreateBullet(Unit unit, int bulletCfgId)
         {
+            UnitComponent unitComponent = UnitHelper.GetUnitComponent(unit);
+            Unit bulletUnit = unitComponent.AddChild<Unit>();
+            BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
+            bulletObj.Init(unit.Id, bulletCfgId);
+            unitComponent.Add(bulletUnit);
+            
+            EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
+            {
+                unit = unit,
+                createUnit = bulletUnit,
+            });
         }
         
         public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
         {
             unit.GetComponent<BulletObj>().EventHandler(abilityBulletMonitorTriggerEvent);
         }
+        
+        public static bool ChkBulletHit(Unit unitBullet, Unit unit)
+        {
+            BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
+            if (bulletObj.CanHit(unit) == false)
+            {
+                return false;
+            }
+            float bRadius = 0.1f;
+            float cRadius = 0.1f;
+            float3 dis = unitBullet.Position - unit.Position;
+            
+            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(bRadius + cRadius, 2))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
+        public static void DoBulletHit(Unit unitBullet, Unit unit)
+        {
+            BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
+            bulletObj.hp -= 1;
+            
+            EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.UnitOnHit()
+            {
+                attackerUnit = unitBullet,
+                defenderUnit = unit,
+            });
+
+            if (bulletObj.hp > 0){
+                bulletObj.hitRecords.Add(new BulletHitRecord()
+                {
+                    targetUnitId = unit.Id,
+                    timeToCanHit = bulletObj.model.SameTargetDelay,
+                });
+            }
+        }
+        
     }
 }

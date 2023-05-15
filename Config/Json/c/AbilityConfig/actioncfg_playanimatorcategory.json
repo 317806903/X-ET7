@@ -1,0 +1,14 @@
+[
+  {
+    "id": "PlayAnimator_1",
+    "name": "播放动作1",
+    "desc": "",
+    "animator_name": "Run"
+  },
+  {
+    "id": "PlayAnimator_2",
+    "name": "播放动作2",
+    "desc": "",
+    "animator_name": "Run"
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "Bullet_1",
+    "name": "子弹1",
+    "desc": "",
+    "res_id": "ResUnit_1",
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "monitorTriggers": [
+      {
+        "bulletTrig": 1,
+        "action_id": "PlayAudio_1"
+      },
+      {
+        "bulletTrig": 2,
+        "action_id": "PlayAudio_1"
+      },
+      {
+        "bulletTrig": 4,
+        "action_id": "PlayAudio_1"
+      }
+    ]
+  },
+  {
+    "id": "Bullet_2",
+    "name": "子弹2",
+    "desc": "",
+    "res_id": "ResUnit_2",
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "monitorTriggers": []
+  }
+]

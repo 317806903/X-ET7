@@ -1,0 +1,12 @@
+[
+  {
+    "id": "Unit_1",
+    "name": "对象1",
+    "res_id": "ResUnit_1"
+  },
+  {
+    "id": "Unit_2",
+    "name": "对象2",
+    "res_id": "ResUnit_2"
+  }
+]

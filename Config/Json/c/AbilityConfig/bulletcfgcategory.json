@@ -1,0 +1,14 @@
+[
+  {
+    "id": "Bullet_1",
+    "name": "子弹1",
+    "desc": "",
+    "res_id": "ResUnit_1"
+  },
+  {
+    "id": "Bullet_2",
+    "name": "子弹2",
+    "desc": "",
+    "res_id": "ResUnit_2"
+  }
+]

@@ -47,6 +47,10 @@ namespace ET.Client
                     {
                         configFilePath = $"../Config/Excel/{ct}/{Options.Instance.StartConfig}/{configType.Name.ToLower()}.bytes";    
                     }
+                    else if(configType.FullName.StartsWith("ET.AbilityConfig."))
+                    {
+                        configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configType.Name}.bytes";
+                    }
                     else
                     {
                         configFilePath = $"../Config/Excel/{ct}/GameConfig/{configType.Name}.bytes";

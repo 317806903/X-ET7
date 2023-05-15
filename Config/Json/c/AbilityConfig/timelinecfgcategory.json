@@ -1,0 +1,50 @@
+[
+  {
+    "id": "Timeline_1",
+    "name": "",
+    "desc": "",
+    "duration": 2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "action_id": "PlayAnimator_1"
+      },
+      {
+        "timeElapsed": 1,
+        "action_id": "FireBullet_1"
+      }
+    ]
+  },
+  {
+    "id": "Timeline_2",
+    "name": "",
+    "desc": "",
+    "duration": 2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "action_id": "Action_1"
+      },
+      {
+        "timeElapsed": 1,
+        "action_id": "Action_2"
+      }
+    ]
+  },
+  {
+    "id": "Timeline_3",
+    "name": "",
+    "desc": "",
+    "duration": 2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "action_id": "Action_1"
+      },
+      {
+        "timeElapsed": 1,
+        "action_id": "Action_2"
+      }
+    ]
+  }
+]

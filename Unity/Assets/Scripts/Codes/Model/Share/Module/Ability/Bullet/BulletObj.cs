@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -9,7 +10,7 @@ namespace ET.Ability
         ///<summary>
         ///这是一颗怎样的子弹
         ///</summary>
-        public BulletModel model;
+        public BulletCfg model;
 
         ///<summary>
         ///要发射子弹的这个人的gameObject，这里就认角色（拥有ChaState的）
@@ -75,7 +76,7 @@ namespace ET.Ability
         ///<summary>
         ///子弹命中纪录
         ///</summary>
-        public List<BulletHitRecord> hitRecords = new List<BulletHitRecord>();
+        public List<BulletHitRecord> hitRecords;
 
         ///<summary>
         ///子弹创建后多久是没有碰撞的，这样比如子母弹之类的，不会在创建后立即命中目标，但绝大多子弹还应该是0的
@@ -275,11 +276,5 @@ namespace ET.Ability
         ///多久之后还能再次命中，单位秒
         ///</summary>
         public float timeToCanHit;
-
-        public BulletHitRecord(long targetUnitId, float timeToCanHit)
-        {
-            this.targetUnitId = targetUnitId;
-            this.timeToCanHit = timeToCanHit;
-        }
     }
 }

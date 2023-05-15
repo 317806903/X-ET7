@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
     [FriendOf(typeof(Unit))]
+    [FriendOf(typeof(UnitComponent))]
     public static class UnitHelper
     {
         public static UnitComponent GetUnitComponent(Unit unit)
@@ -24,6 +27,12 @@ namespace ET.Ability
         public static bool ChkUnitAlive(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
+            
+            return ChkUnitAlive(unit);
+        }
+        
+        public static bool ChkUnitAlive(Unit unit)
+        {
             if (unit == null)
             {
                 return false;
@@ -31,9 +40,34 @@ namespace ET.Ability
             return true;
         }
         
+        public static bool ChkIsPlayer(Scene scene, long unitId)
+        {
+            Unit unit = GetUnit(scene, unitId);
+            return ChkIsPlayer(unit);
+        }
+        
+        public static bool ChkIsPlayer(Unit unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            if (unit.Type == UnitType.Player)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public static bool ChkIsBullet(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
+            return ChkIsBullet(unit);
+        }
+        
+        public static bool ChkIsBullet(Unit unit)
+        {
             if (unit == null)
             {
                 return false;
@@ -49,6 +83,11 @@ namespace ET.Ability
         public static bool ChkIsAoe(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
+            return ChkIsAoe(unit);
+        }
+        
+        public static bool ChkIsAoe(Unit unit)
+        {
             if (unit == null)
             {
                 return false;
@@ -58,6 +97,39 @@ namespace ET.Ability
             {
                 return true;
             }
+            return false;
+        }
+        
+        public static ListComponent<Unit> GetHostileForces(Unit curUnit)
+        {
+            ListComponent<Unit> hostileForces = ListComponent<Unit>.Create();
+            foreach (Unit unit in GetUnitComponent(curUnit).playerList)
+            {
+                if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
+                {
+                    hostileForces.Add(unit);
+                }
+            }
+            foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
+            {
+                if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
+                {
+                    hostileForces.Add(unit);
+                }
+            }
+            return hostileForces;
+        }
+
+        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius)
+        {
+            float bRadius = 0.1f;
+            float cRadius = 0.1f;
+            float3 dis = curUnit.Position - targetUnit.Position;
+            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(radius + bRadius + cRadius, 2))
+            {
+                return true;
+            }
+
             return false;
         }
     }

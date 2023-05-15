@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ResAudio_1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/bomb.wav"
+  },
+  {
+    "id": "ResAudio_2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/dead.wav"
+  }
+]

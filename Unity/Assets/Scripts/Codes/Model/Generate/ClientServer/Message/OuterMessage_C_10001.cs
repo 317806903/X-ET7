@@ -138,7 +138,7 @@ namespace ET
 		public long UnitId { get; set; }
 
 		[ProtoMember(2)]
-		public int ConfigId { get; set; }
+		public string ConfigId { get; set; }
 
 		[ProtoMember(3)]
 		public int Type { get; set; }

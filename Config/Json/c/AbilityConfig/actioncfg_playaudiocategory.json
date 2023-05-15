@@ -1,0 +1,14 @@
+[
+  {
+    "id": "PlayAudio_1",
+    "name": "播放音效1",
+    "desc": "",
+    "res_id": "ResAudio_1"
+  },
+  {
+    "id": "PlayAudio_2",
+    "name": "播放音效2",
+    "desc": "",
+    "res_id": "ResAudio_2"
+  }
+]

@@ -9,6 +9,6 @@ namespace ET.Ability
         ///<summary>
         /// 自身阵营
         ///</summary>
-        public TeamFlagType selfTeamFlagType;
+        public TeamFlagType teamFlagType;
     }
 }

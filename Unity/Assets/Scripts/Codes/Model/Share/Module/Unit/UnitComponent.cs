@@ -4,10 +4,10 @@
 	[ComponentOf(typeof(Scene))]
 	public class UnitComponent: Entity, IAwake, IDestroy, IFixedUpdate
 	{
-		public HashSetComponent<long> playerList;
-		public HashSetComponent<long> monsterList;
-		public HashSetComponent<long> npcList;
-		public HashSetComponent<long> sceneObjList;
-		public HashSetComponent<long> bulletList;
+		public HashSetComponent<Unit> playerList;
+		public HashSetComponent<Unit> monsterList;
+		public HashSetComponent<Unit> npcList;
+		public HashSetComponent<Unit> sceneObjList;
+		public HashSetComponent<Unit> bulletList;
 	}
 }

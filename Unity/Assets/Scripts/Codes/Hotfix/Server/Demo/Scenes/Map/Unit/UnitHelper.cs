@@ -5,6 +5,7 @@ namespace ET.Server
 {
     [FriendOf(typeof(MoveByPathComponent))]
     [FriendOf(typeof(NumericComponent))]
+    [FriendOf(typeof(Unit))]
     public static class UnitHelper
     {
         public static UnitInfo CreateUnitInfo(Unit unit)
@@ -12,7 +13,7 @@ namespace ET.Server
             UnitInfo unitInfo = new UnitInfo();
             NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
-            unitInfo.ConfigId = unit.ConfigId;
+            unitInfo.ConfigId = unit.unitCfgId;
             unitInfo.Type = (int)unit.Type;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -7,9 +8,9 @@ namespace ET.Ability
     public static class TimelineObjSystem
     {
         [ObjectSystem]
-        public class TimelineObjAwakeSystem: AwakeSystem<TimelineObj, TimelineModel, Unit>
+        public class TimelineObjAwakeSystem: AwakeSystem<TimelineObj, TimelineCfg, Unit>
         {
-            protected override void Awake(TimelineObj self, TimelineModel model, Unit caster)
+            protected override void Awake(TimelineObj self, TimelineCfg model, Unit caster)
             {
                 self.model = model;
                 self.casterUnitId = caster.Id;
@@ -48,11 +49,11 @@ namespace ET.Ability
             float wasTimeElapsed = self.timeElapsed;
             self.timeElapsed += fixedDeltaTime * self.timeScale;
 
-            //判断有没有返回点
-            if (
-                self.model.chargeGoBack.atDuration < self.timeElapsed &&
-                self.model.chargeGoBack.atDuration >= wasTimeElapsed
-            )
+            // //判断有没有返回点
+            // if (
+            //     self.model.chargeGoBack.atDuration < self.timeElapsed &&
+            //     self.model.chargeGoBack.atDuration >= wasTimeElapsed
+            // )
             {
                 //if (self.casterUnit != null)
                 {
@@ -66,19 +67,17 @@ namespace ET.Ability
                 }
             }
 
-            int count = self.model.nodes.Count;
+            int count = self.model.Nodes.Count;
             //执行时间点内的事情
             for (int i = 0; i < count; i++)
             {
-                TimelineNode timelineNode = self.model.nodes[i];
+                AbilityConfig.TimelineNode timelineNode = self.model.Nodes[i];
                 if (
-                    timelineNode.timeElapsed < self.timeElapsed &&
-                    timelineNode.timeElapsed >= wasTimeElapsed
+                    timelineNode.TimeElapsed < self.timeElapsed &&
+                    timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
-                    //TODO zpb
-                    //timelineNode.doEvent(self, timelineNode.eveParams);
-                    ActionHandlerHelper.CreateAction(self.GetCasterUnit(), timelineNode.actionId, null);
+                    ActionHandlerHelper.CreateAction(self.GetCasterUnit(), timelineNode.ActionId, null);
                 }
             }
         }

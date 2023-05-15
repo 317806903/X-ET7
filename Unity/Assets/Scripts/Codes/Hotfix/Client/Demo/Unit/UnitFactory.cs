@@ -2,14 +2,18 @@
 
 namespace ET.Client
 {
+	[FriendOf(typeof(Unit))]
     public static class UnitFactory
     {
         public static Unit Create(Scene currentScene, UnitInfo unitInfo)
         {
-	        UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
-	        Unit unit = unitComponent.AddChildWithId<Unit, int>(unitInfo.UnitId, unitInfo.ConfigId);
-	        unitComponent.Add(unit);
+	        // UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+	        // Unit unit = unitComponent.AddChildWithId<Unit, int>(unitInfo.UnitId, unitInfo.ConfigId);
+	        // unitComponent.Add(unit);
+
+	        Unit unit = ET.Ability.UnitHelper_Create.CreateWhenClient(currentScene, unitInfo.UnitId, (UnitType)unitInfo.Type);
 	        
+	        unit.Position = unitInfo.Position;
 	        unit.Position = unitInfo.Position;
 	        unit.Forward = unitInfo.Forward;
 	        

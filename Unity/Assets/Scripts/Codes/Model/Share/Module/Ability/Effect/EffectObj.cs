@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -10,7 +11,7 @@ namespace ET.Ability
         ///<summary>
         ///这是个什么Effect
         ///</summary>
-        public ResEffectModel model;
+        public ResEffectCfg model;
 
         ///<summary>
         ///挂载点,用于查找出这个transform后添加为子节点

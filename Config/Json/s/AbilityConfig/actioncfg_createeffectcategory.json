@@ -1,0 +1,12 @@
+[
+  {
+    "id": "CreateEffect_1",
+    "name": "创建特效1",
+    "res_id": "ResEffect_1"
+  },
+  {
+    "id": "CreateEffect_2",
+    "name": "创建特效2",
+    "res_id": "ResEffect_2"
+  }
+]

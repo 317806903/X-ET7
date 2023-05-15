@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using ET.AbilityConfig;
 using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
@@ -6,14 +7,14 @@ namespace ET
 {
     [ChildOf(typeof(UnitComponent))]
     [DebuggerDisplay("ViewName,nq")]
-    public class Unit: Entity, IAwake<int>
+    public class Unit: Entity, IAwake<string>, IAwake
     {
-        public int ConfigId { get; set; } //配置表id
+        public string unitCfgId { get; set; } //配置表id
 
         [BsonIgnore]
-        public UnitConfig Config => UnitConfigCategory.Instance.Get(this.ConfigId);
+        public UnitCfg Config => UnitCfgCategory.Instance.Get(this.unitCfgId);
 
-        public UnitType Type => (UnitType)UnitConfigCategory.Instance.Get(this.ConfigId).Type;
+        public UnitType Type;
 
         [BsonElement]
         private float3 position; //坐标

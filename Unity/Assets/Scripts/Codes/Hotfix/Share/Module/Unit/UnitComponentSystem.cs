@@ -4,6 +4,7 @@ using System;
 namespace ET
 {
     [FriendOf(typeof(UnitComponent))]
+    [FriendOf(typeof(Unit))]
     public static class UnitComponentSystem
 	{
 		[ObjectSystem]
@@ -11,11 +12,11 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
-				self.playerList = HashSetComponent<long>.Create();
-				self.monsterList = HashSetComponent<long>.Create();
-				self.npcList = HashSetComponent<long>.Create();
-				self.sceneObjList = HashSetComponent<long>.Create();
-				self.bulletList = HashSetComponent<long>.Create();
+				self.playerList = HashSetComponent<Unit>.Create();
+				self.monsterList = HashSetComponent<Unit>.Create();
+				self.npcList = HashSetComponent<Unit>.Create();
+				self.sceneObjList = HashSetComponent<Unit>.Create();
+				self.bulletList = HashSetComponent<Unit>.Create();
 			}
 		}
 	
@@ -56,6 +57,7 @@ namespace ET
 		public static void FixedUpdate(this UnitComponent self)
 		{
 			float fixedDeltaTime = TimeHelper.FixedDetalTime;
+			self.ChkHit(fixedDeltaTime);
 			foreach (var child in self.Children)
 			{
 				Unit unit = child.Value as Unit;
@@ -63,9 +65,36 @@ namespace ET
 			}
 		}
 		
-		public static HashSetComponent<long> GetRecordList(this UnitComponent self, UnitType unitType)
+		public static void ChkHit(this UnitComponent self, float fixedDeltaTime)
 		{
-			HashSetComponent<long> recordList;
+			foreach (Unit unitBullet in self.bulletList)
+			{
+				foreach (Unit unitPlayer in self.playerList)
+				{
+					if (TeamFlagHelper.ChkIsFriend(unitBullet, unitPlayer) == false)
+					{
+						if (BulletHelper.ChkBulletHit(unitBullet, unitPlayer))
+						{
+							BulletHelper.DoBulletHit(unitBullet, unitPlayer);
+						}
+					}
+				}
+				foreach (Unit unitMonster in self.monsterList)
+				{
+					if (TeamFlagHelper.ChkIsFriend(unitBullet, unitMonster) == false)
+					{
+						if (BulletHelper.ChkBulletHit(unitBullet, unitMonster))
+						{
+							BulletHelper.DoBulletHit(unitBullet, unitMonster);
+						}
+					}
+				}
+			}
+		}
+		
+		public static HashSetComponent<Unit> GetRecordList(this UnitComponent self, UnitType unitType)
+		{
+			HashSetComponent<Unit> recordList;
 			switch (unitType)
 			{
 				case UnitType.Player:
@@ -91,8 +120,8 @@ namespace ET
 
 		public static void Add(this UnitComponent self, Unit unit)
 		{
-			HashSetComponent<long> recordList = self.GetRecordList(unit.Type);
-			recordList.Add(unit.Id);
+			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
+			recordList.Add(unit);
 		}
 
 		public static Unit Get(this UnitComponent self, long id)
@@ -108,8 +137,8 @@ namespace ET
 			{
 				return;
 			}
-			HashSetComponent<long> recordList = self.GetRecordList(unit.Type);
-			recordList.Remove(unit.Id);
+			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
+			recordList.Remove(unit);
 			unit?.Dispose();
 		}
 	}

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
 {
     [ChildOf(typeof (TimelineComponent))]
     [FriendOf(typeof(Unit))]
-    public class TimelineObj: Entity, IAwake<TimelineModel, Unit>, IDestroy
+    public class TimelineObj: Entity, IAwake<TimelineCfg, Unit>, IDestroy
     {
         ///<summary>
         ///Timeline的基础信息
         ///</summary>
-        public TimelineModel model;
+        public TimelineCfg model;
 
         ///<summary>
         ///Timeline的焦点对象也就是创建timeline的负责人，比如技能产生的timeline，就是技能的施法者

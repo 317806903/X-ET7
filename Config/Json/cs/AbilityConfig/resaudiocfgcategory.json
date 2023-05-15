@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ResAudio_1",
+    "name": "",
+    "desc": "子弹发出声音1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/bomb.wav"
+  },
+  {
+    "id": "ResAudio_2",
+    "name": "",
+    "desc": "死亡",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/dead.wav"
+  }
+]

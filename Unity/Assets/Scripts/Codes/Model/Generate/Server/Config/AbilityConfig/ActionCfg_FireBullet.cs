@@ -19,6 +19,8 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         ResId = _buf.ReadString();
+        Speed = _buf.ReadFloat();
+        Duration = _buf.ReadFloat();
         MoveType = _buf.ReadString();
         PostInit();
     }
@@ -41,6 +43,14 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public BulletCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 飞行速度
+    /// </summary>
+    public float Speed { get; private set; }
+    /// <summary>
+    /// 持续时间(s)
+    /// </summary>
+    public float Duration { get; private set; }
     /// <summary>
     /// 飞行轨迹
     /// </summary>
@@ -65,6 +75,8 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "ResId:" + ResId + ","
+        + "Speed:" + Speed + ","
+        + "Duration:" + Duration + ","
         + "MoveType:" + MoveType + ","
         + "}";
     }

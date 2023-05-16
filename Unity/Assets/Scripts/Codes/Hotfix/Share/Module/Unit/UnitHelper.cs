@@ -100,7 +100,32 @@ namespace ET.Ability
             return false;
         }
         
-        public static ListComponent<Unit> GetHostileForces(Unit curUnit)
+        public static ListComponent<Unit> GetFriends(Unit curUnit, bool isOnlyPlayer)
+        {
+            ListComponent<Unit> friends = ListComponent<Unit>.Create();
+            foreach (Unit unit in GetUnitComponent(curUnit).playerList)
+            {
+                if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
+                {
+                    friends.Add(unit);
+                }
+            }
+
+            if (isOnlyPlayer == false)
+            {
+                foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
+                {
+                    if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
+                    {
+                        friends.Add(unit);
+                    }
+                }
+            }
+            
+            return friends;
+        }
+
+        public static ListComponent<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
         {
             ListComponent<Unit> hostileForces = ListComponent<Unit>.Create();
             foreach (Unit unit in GetUnitComponent(curUnit).playerList)
@@ -110,13 +135,18 @@ namespace ET.Ability
                     hostileForces.Add(unit);
                 }
             }
-            foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
+
+            if (isOnlyPlayer == false)
             {
-                if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
+                foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
                 {
-                    hostileForces.Add(unit);
+                    if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
+                    {
+                        hostileForces.Add(unit);
+                    }
                 }
             }
+            
             return hostileForces;
         }
 
@@ -131,6 +161,12 @@ namespace ET.Ability
             }
 
             return false;
+        }
+        
+        public static void AddWaitRemove(Unit unit)
+        {
+            UnitComponent unitComponent = GetUnitComponent(unit);
+            unitComponent.AddWaitRemove(unit);
         }
     }
 }

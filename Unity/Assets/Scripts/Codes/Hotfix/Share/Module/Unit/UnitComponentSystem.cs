@@ -12,6 +12,7 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
+				self.waitRemoveList = new();
 				self.playerList = HashSetComponent<Unit>.Create();
 				self.monsterList = HashSetComponent<Unit>.Create();
 				self.npcList = HashSetComponent<Unit>.Create();
@@ -25,6 +26,7 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
+				self.waitRemoveList.Clear();
 				self.playerList.Dispose();
 				self.monsterList.Dispose();
 				self.npcList.Dispose();
@@ -57,15 +59,26 @@ namespace ET
 		public static void FixedUpdate(this UnitComponent self)
 		{
 			float fixedDeltaTime = TimeHelper.FixedDetalTime;
-			self.ChkHit(fixedDeltaTime);
+			self.DoUnitHit(fixedDeltaTime);
 			foreach (var child in self.Children)
 			{
 				Unit unit = child.Value as Unit;
 				unit.FixedUpdate(fixedDeltaTime);
 			}
+			self.DoUnitRemove();
+		}
+
+		public static void DoUnitRemove(this UnitComponent self)
+		{
+			for (int i = 0; i < self.waitRemoveList.Count; i++)
+			{
+				self.Remove(self.waitRemoveList[i]);
+			}
+
+			self.waitRemoveList.Clear();
 		}
 		
-		public static void ChkHit(this UnitComponent self, float fixedDeltaTime)
+		public static void DoUnitHit(this UnitComponent self, float fixedDeltaTime)
 		{
 			foreach (Unit unitBullet in self.bulletList)
 			{
@@ -130,6 +143,11 @@ namespace ET
 			return unit;
 		}
 
+		public static void AddWaitRemove(this UnitComponent self, Unit unit)
+		{
+			self.waitRemoveList.Add(unit.Id);
+		}
+		
 		public static void Remove(this UnitComponent self, long id)
 		{
 			Unit unit = self.GetChild<Unit>(id);

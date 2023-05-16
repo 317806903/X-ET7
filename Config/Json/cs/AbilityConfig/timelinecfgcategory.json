@@ -7,11 +7,23 @@
     "nodes": [
       {
         "timeElapsed": 0,
-        "action_id": "PlayAnimator_1"
+        "action_id": "PlayAnimator_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        }
       },
       {
         "timeElapsed": 1,
-        "action_id": "FireBullet_1"
+        "action_id": "FireBullet_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnit",
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "isAngleFirst": false,
+          "radius": 100,
+          "angle": 360,
+          "selectNum": 1
+        }
       }
     ]
   },
@@ -23,11 +35,29 @@
     "nodes": [
       {
         "timeElapsed": 0,
-        "action_id": "Action_1"
+        "action_id": "PlayAnimator_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnit",
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "isAngleFirst": false,
+          "radius": 100,
+          "angle": 360,
+          "selectNum": 1
+        }
       },
       {
         "timeElapsed": 1,
-        "action_id": "Action_2"
+        "action_id": "FireBullet_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnit",
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "isAngleFirst": false,
+          "radius": 100,
+          "angle": 360,
+          "selectNum": 1
+        }
       }
     ]
   },
@@ -39,11 +69,29 @@
     "nodes": [
       {
         "timeElapsed": 0,
-        "action_id": "Action_1"
+        "action_id": "PlayAnimator_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnit",
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "isAngleFirst": false,
+          "radius": 100,
+          "angle": 360,
+          "selectNum": 1
+        }
       },
       {
         "timeElapsed": 1,
-        "action_id": "Action_2"
+        "action_id": "FireBullet_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnit",
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "isAngleFirst": false,
+          "radius": 100,
+          "angle": 360,
+          "selectNum": 1
+        }
       }
     ]
   }

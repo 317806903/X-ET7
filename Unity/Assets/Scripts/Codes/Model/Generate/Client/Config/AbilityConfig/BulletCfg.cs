@@ -20,6 +20,9 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         ResId = _buf.ReadString();
+        HitTimes = _buf.ReadInt();
+        SameTargetDelay = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonitorTriggers = new System.Collections.Generic.List<BulletActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BulletActionCall _e0;  _e0 = BulletActionCall.DeserializeBulletActionCall(_buf); MonitorTriggers.Add(_e0);}}
         PostInit();
     }
 
@@ -45,6 +48,15 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public ResUnitCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 子弹可以碰触的次数，每次碰到合理目标-1，到0的时候子弹就结束了
+    /// </summary>
+    public int HitTimes { get; private set; }
+    /// <summary>
+    /// 子弹碰触同一个目标的延迟，单位：秒，最小值是Time.fixedDeltaTime（每帧发生一次）
+    /// </summary>
+    public float SameTargetDelay { get; private set; }
+    public System.Collections.Generic.List<BulletActionCall> MonitorTriggers { get; private set; }
 
     public const int __ID__ = -1027634206;
     public override int GetTypeId() => __ID__;
@@ -52,11 +64,13 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.ResId_Ref = (_tables["ResUnitCfgCategory"] as ResUnitCfgCategory).GetOrDefault(ResId);
+        foreach(var _e in MonitorTriggers) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        foreach(var _e in MonitorTriggers) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
@@ -66,6 +80,9 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "ResId:" + ResId + ","
+        + "HitTimes:" + HitTimes + ","
+        + "SameTargetDelay:" + SameTargetDelay + ","
+        + "MonitorTriggers:" + Bright.Common.StringUtil.CollectionToString(MonitorTriggers) + ","
         + "}";
     }
     

@@ -138,7 +138,7 @@ namespace ET
 		public long UnitId { get; set; }
 
 		[ProtoMember(2)]
-		public int ConfigId { get; set; }
+		public string ConfigId { get; set; }
 
 		[ProtoMember(3)]
 		public int Type { get; set; }
@@ -503,6 +503,18 @@ namespace ET
 
 	}
 
+	[Message(OuterMessage.C2M_CreateMonster)]
+	[ProtoContract]
+	public partial class C2M_CreateMonster: ProtoObject, IActorLocationMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -541,5 +553,6 @@ namespace ET
 		 public const ushort M2C_TransferMap = 10035;
 		 public const ushort C2G_Benchmark = 10036;
 		 public const ushort G2C_Benchmark = 10037;
+		 public const ushort C2M_CreateMonster = 10038;
 	}
 }

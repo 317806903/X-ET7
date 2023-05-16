@@ -19,7 +19,7 @@ namespace ET.Ability
             return scene.GetComponent<UnitComponent>();
         }
         
-        public static Unit CreateWhenServer(Scene scene, long id, UnitType unitType)
+        public static Unit CreateWhenServer(Scene scene, long id, UnitType unitType, float3 position)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
             
@@ -29,7 +29,7 @@ namespace ET.Ability
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, string>(id, "Unit_1");
                     unit.AddComponent<MoveByPathComponent>();
-                    unit.Position = new float3(-10, 0, -10);
+                    unit.Position = position;
                     unit.Type = unitType;
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -45,14 +45,17 @@ namespace ET.Ability
                     unit.AddComponent<ET.Ability.EffectComponent>();
                     unit.AddComponent<ET.Ability.MoveComponent>();
                     unit.AddComponent<ET.Ability.RotateComponent>();
+                    
+                    unit.AddComponent<TeamFlagObj, TeamFlagType>(TeamFlagType.Team1);
+
                     return unit;
                     break;
                 }
                 case UnitType.Monster:
                 {
-                    Unit unit = unitComponent.AddChildWithId<Unit, string>(id, "Unit_1");
+                    Unit unit = unitComponent.AddChild<Unit, string>("Unit_2");
                     unit.AddComponent<MoveByPathComponent>();
-                    unit.Position = new float3(-10, 0, -10);
+                    unit.Position = position;
                     unit.Type = unitType;
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -68,6 +71,14 @@ namespace ET.Ability
                     unit.AddComponent<ET.Ability.EffectComponent>();
                     unit.AddComponent<ET.Ability.MoveComponent>();
                     unit.AddComponent<ET.Ability.RotateComponent>();
+                    
+                    unit.AddComponent<AIComponent, int>(11);
+
+                    unit.AddComponent<TeamFlagObj, TeamFlagType>(TeamFlagType.Monster);
+                    unit.AddComponent<PathfindingComponent, string>(scene.Name);
+
+                    SkillHelper.LearnSkill(unit, "Skill_1", 1, SkillSlotType.NormalAttack);
+
                     return unit;
                     break;
                 }
@@ -83,7 +94,7 @@ namespace ET.Ability
                 {
                     Unit unit = unitComponent.AddChildWithId<Unit, string>(id, "Unit_1");
                     unit.AddComponent<MoveByPathComponent>();
-                    unit.Position = new float3(-10, 0, -10);
+                    unit.Position = position;
                     unit.Type = unitType;
 			
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -121,5 +132,6 @@ namespace ET.Ability
             unitComponent.Add(unit);
             return unit;
         }
+
     }
 }

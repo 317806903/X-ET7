@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[Flags]
+	//[Flags]
 	public enum SceneType: ulong
 	{
 		None = 0,

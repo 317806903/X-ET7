@@ -27,9 +27,18 @@ namespace ET.Client
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
                     {
-                        C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
-                        c2MPathfindingResult.Position = (float3)hit.point + new float3(0, 5f, 0);
-                        self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            C2M_CreateMonster c2M_CreateMonster = new C2M_CreateMonster();
+                            c2M_CreateMonster.Position = (float3)hit.point;
+                            self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2M_CreateMonster);
+                        }
+                        else
+                        {
+                            C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
+                            c2MPathfindingResult.Position = (float3)hit.point + new float3(0, 5f, 0);
+                            self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
+                        }
                     }
                 }
                 if (Input.GetMouseButtonDown(1))

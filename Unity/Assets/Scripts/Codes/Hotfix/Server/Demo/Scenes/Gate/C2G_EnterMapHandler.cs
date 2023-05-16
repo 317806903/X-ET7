@@ -1,4 +1,6 @@
-﻿namespace ET.Server
+﻿using Unity.Mathematics;
+
+namespace ET.Server
 {
 	[MessageHandler(SceneType.Gate)]
 	public class C2G_EnterMapHandler : AMRpcHandler<C2G_EnterMap, G2C_EnterMap>
@@ -14,7 +16,8 @@
 			Scene scene = gateMapComponent.Scene;
 			
 			// 这里可以从DB中加载Unit
-			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player);
+			float3 position = new float3(-10, 0, -10);
+			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player, position);
 			
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "Map1");
 			response.MyId = player.Id;

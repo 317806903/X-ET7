@@ -2,8 +2,17 @@
   {
     "id": "Skill_1",
     "name": "技能1",
-    "cd": 10,
+    "cd": 4,
     "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnit",
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "isAngleFirst": false,
+      "radius": 100,
+      "angle": 360,
+      "selectNum": 1
+    },
     "timeline_id": "Timeline_1"
   },
   {
@@ -11,6 +20,9 @@
     "name": "技能2",
     "cd": 8,
     "skillSlotType": 2,
+    "skillSelectAction": {
+      "$type": "ActionCallSelectUnit"
+    },
     "timeline_id": "Timeline_2"
   },
   {
@@ -18,6 +30,9 @@
     "name": "技能3",
     "cd": 20,
     "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf"
+    },
     "timeline_id": "Timeline_3"
   }
 ]

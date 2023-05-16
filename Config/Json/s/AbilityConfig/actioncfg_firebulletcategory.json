@@ -3,12 +3,16 @@
     "id": "FireBullet_1",
     "name": "射出子弹1",
     "res_id": "Bullet_1",
+    "speed": 3,
+    "duration": 5,
     "moveType": "Bullet_1"
   },
   {
     "id": "FireBullet_2",
     "name": "射出子弹2",
     "res_id": "Bullet_2",
+    "speed": 3,
+    "duration": 5,
     "moveType": "Bullet_2"
   }
 ]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -34,11 +35,11 @@ namespace ET.Ability
 
         public static void FixedUpdate(this SkillComponent self, float fixedDeltaTime)
         {
-            foreach (var skill in self.skillCDs)
+            foreach (string skillId in self.skillCDs.Keys.ToArray())
             {
-                if (skill.Value > 0)
+                if (self.skillCDs[skillId] > 0)
                 {
-                    self.skillCDs[skill.Key] = math.min(0, skill.Value - fixedDeltaTime);
+                    self.skillCDs[skillId] = math.max(0, self.skillCDs[skillId] - fixedDeltaTime);
                 }
             }
         }
@@ -52,6 +53,11 @@ namespace ET.Ability
             self.skillLevels.Add(skillId, skillLevel);
         }
 
+        public static Unit GetUnit(this SkillComponent self)
+        {
+            return self.GetParent<Unit>();
+        }
+
         public static (bool ret, string msg) CastSkill(this SkillComponent self, string skillId)
         {
             var result = self.ChkCanUseSkill(skillId);
@@ -61,7 +67,10 @@ namespace ET.Ability
             }
 
             SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
-            TimelineHelper.CreateTimeline(self.GetParent<Unit>(), skillCfg.TimelineId);
+
+            SelectHandle selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
+
+            TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId, selectHandle);
 
             self.CostSkill(skillId);
             self.skillCDs[skillId] = skillCfg.Cd;
@@ -70,9 +79,10 @@ namespace ET.Ability
 
         public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, string skillId)
         {
-            if (self.GetSkillCD(skillId) > 0)
+            float cd = self.GetSkillCD(skillId);
+            if (cd > 0)
             {
-                string msg = "CD中";
+                string msg = $"CD中 {cd}";
                 return (false, msg);
             }
 
@@ -88,7 +98,7 @@ namespace ET.Ability
 
         public static float GetSkillCD(this SkillComponent self, string skillId)
         {
-            return 0;
+            return self.skillCDs[skillId];
         }
 
         public static (bool ret, string msg) ChkSkillCost(this SkillComponent self, string skillId)

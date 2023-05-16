@@ -14,7 +14,6 @@ namespace ET.Ability
             {
                 self.model = model;
                 self.casterUnitId = caster.Id;
-                self.values = new Dictionary<string, object>();
                 self.timeScale = 1.00f;
                 // TODO zpb
                 // if (casterUnit != null)
@@ -39,7 +38,12 @@ namespace ET.Ability
             }
         }
 
-        public static Unit GetCasterUnit(this TimelineObj self)
+        public static void Init(this TimelineObj self, SelectHandle selectHandle)
+        {
+            self.selectHandle = selectHandle;
+        }
+        
+        public static Unit GetUnit(this TimelineObj self)
         {
             return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
         }
@@ -77,7 +81,15 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
-                    ActionHandlerHelper.CreateAction(self.GetCasterUnit(), timelineNode.ActionId, null);
+                    if (timelineNode.ActionCallParam is ActionCallSelectLast)
+                    {
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, self.selectHandle);
+                    }
+                    else
+                    {
+                        SelectHandle selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), timelineNode.ActionCallParam);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, selectHandle);
+                    }
                 }
             }
         }

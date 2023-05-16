@@ -13,6 +13,11 @@ namespace ET.Ability
             protected override void Awake(TeamFlagComponent self)
             {
                 self.teamFriendDic = new();
+
+                foreach (TeamFlagType type in Enum.GetValues(typeof(TeamFlagType)))
+                {
+                    self.teamFriendDic[type] = (int)type;
+                }
             }
         }
 

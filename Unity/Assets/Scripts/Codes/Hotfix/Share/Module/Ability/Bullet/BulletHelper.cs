@@ -11,6 +11,8 @@ namespace ET.Ability
         {
             UnitComponent unitComponent = UnitHelper.GetUnitComponent(unit);
             Unit bulletUnit = unitComponent.AddChild<Unit>();
+            bulletUnit.Type = UnitType.Bullet;
+            bulletUnit.AddComponent<TeamFlagObj, TeamFlagType>(unit.GetComponent<TeamFlagObj>().GetTeamFlagType());
             BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
             bulletObj.Init(unit.Id, bulletCfgId);
             unitComponent.Add(bulletUnit);

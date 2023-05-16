@@ -5,9 +5,9 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class ActionHandlerHelper
     {
-        public static void CreateAction(Unit unit, string actionId, Dictionary<string, object> param)
+        public static void CreateAction(Unit unit, string actionId, SelectHandle selectHandle)
         {
-            unit.DomainScene().GetComponent<ActionHandlerComponent>().Run(unit, actionId, param);
+            unit.DomainScene().GetComponent<ActionHandlerComponent>().Run(unit, actionId, selectHandle);
         }
     }
 }

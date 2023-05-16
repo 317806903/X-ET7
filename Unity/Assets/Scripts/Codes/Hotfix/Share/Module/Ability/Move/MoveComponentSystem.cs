@@ -51,16 +51,16 @@ namespace ET.Ability
             Unit unit = self.GetParent<Unit>();
             float3 targetPos = unit.Position + self.moveDirectionInput * fixedDeltaTime;
             
-            List<float3> list = new List<float3>();
-            unit.GetComponent<PathfindingComponent>().Find(unit.Position, targetPos, list);
-            if (list.Count < 2)
-            {
-                //unit.SendStop(3);
-                return;
-            }
-            ET.MoveByPathComponent moveByPathComponent = unit.GetComponent<ET.MoveByPathComponent>();
-            float speed = 2f;
-            moveByPathComponent.MoveToAsync(list, speed).Coroutine();
+            // List<float3> list = new List<float3>();
+            // unit.GetComponent<PathfindingComponent>().Find(unit.Position, targetPos, list);
+            // if (list.Count < 2)
+            // {
+            //     //unit.SendStop(3);
+            //     return;
+            // }
+            // ET.MoveByPathComponent moveByPathComponent = unit.GetComponent<ET.MoveByPathComponent>();
+            // float speed = 2f;
+            // moveByPathComponent.MoveToAsync(list, speed).Coroutine();
         }
 
         public static void FixedUpdate(this MoveComponent self, float fixedDeltaTime)

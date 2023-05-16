@@ -18,6 +18,7 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
     {
         TimeElapsed = _buf.ReadFloat();
         ActionId = _buf.ReadString();
+        ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
         PostInit();
     }
 
@@ -34,17 +35,20 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
     /// 触发action
     /// </summary>
     public string ActionId { get; private set; }
+    public ActionCallParam ActionCallParam { get; private set; }
 
     public const int __ID__ = 1630749187;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        ActionCallParam?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        ActionCallParam?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -52,6 +56,7 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
         return "{ "
         + "TimeElapsed:" + TimeElapsed + ","
         + "ActionId:" + ActionId + ","
+        + "ActionCallParam:" + ActionCallParam + ","
         + "}";
     }
     

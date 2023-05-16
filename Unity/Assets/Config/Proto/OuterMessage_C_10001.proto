@@ -67,7 +67,7 @@ message MoveInfo
 message UnitInfo
 {
 	int64 UnitId = 1;
-	int32 ConfigId = 2;
+	string ConfigId = 2;
 	int32 Type = 3;
 	Unity.Mathematics.float3 Position = 4;
 	Unity.Mathematics.float3 Forward = 5;
@@ -246,4 +246,10 @@ message G2C_Benchmark // IResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+message C2M_CreateMonster // IActorLocationMessage
+{
+	int32 RpcId = 1;
+	Unity.Mathematics.float3 Position = 2;
 }

@@ -7,10 +7,11 @@ namespace ET.Ability
     public static class TeamFlagObjSystem
     {
         [ObjectSystem]
-        public class TeamFlagObjAwakeSystem: AwakeSystem<TeamFlagObj>
+        public class TeamFlagObjAwakeSystem: AwakeSystem<TeamFlagObj, TeamFlagType>
         {
-            protected override void Awake(TeamFlagObj self)
+            protected override void Awake(TeamFlagObj self, TeamFlagType teamFlagType)
             {
+                self.teamFlagType = teamFlagType;
             }
         }
 
@@ -22,10 +23,10 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this TeamFlagObj self, TeamFlagType teamFlagType)
-        {
-            self.teamFlagType = teamFlagType;
-        }
+        // public static void Init(this TeamFlagObj self, TeamFlagType teamFlagType)
+        // {
+        //     self.teamFlagType = teamFlagType;
+        // }
         
         public static TeamFlagType GetTeamFlagType(this TeamFlagObj self)
         {

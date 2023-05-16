@@ -1,8 +1,8 @@
 using Unity.Mathematics;
 
-namespace ET.Client
+namespace ET.Server
 {
-    public class AI_KaoJin: AAIHandler
+    public class AI_XunLuo: AAIHandler
     {
         public override int Check(AIComponent aiComponent, AIConfig aiConfig)
         {
@@ -21,33 +21,19 @@ namespace ET.Client
             {
                 return;
             }
-
-            ListComponent<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit);
-            Unit unitPlayer = null;
-            foreach (Unit hostileForce in hostileForces)
-            {
-                if (Ability.UnitHelper.ChkIsPlayer(hostileForce))
-                {
-                    unitPlayer = hostileForce;
-                    break;
-                }
-            }
-
-            if (unitPlayer == null)
-            {
-                return;
-            }
-
-            Log.Debug("开始靠近");
+            
+            Log.Debug("开始巡逻");
 
             while (true)
             {
-                float3 nextTarget = unitPlayer.Position;
-                await unit.MoveToAsync(nextTarget, cancellationToken);
+                XunLuoPathComponent xunLuoPathComponent = unit.GetComponent<XunLuoPathComponent>();
+                float3 nextTarget = xunLuoPathComponent.GetCurrent();
+                await unit.FindPathMoveToAsync(nextTarget, cancellationToken);
                 if (cancellationToken.IsCancel())
                 {
                     return;
                 }
+                xunLuoPathComponent.MoveNext();
             }
         }
     }

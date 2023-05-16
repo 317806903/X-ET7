@@ -45,9 +45,6 @@ public sealed partial class TimelineCfg: Bright.Config.BeanBase
     /// 总时长(单位秒)
     /// </summary>
     public float Duration { get; private set; }
-    /// <summary>
-    /// 节点列表,Timeline运行多久之后发生，单位：秒
-    /// </summary>
     public System.Collections.Generic.List<TimelineNode> Nodes { get; private set; }
 
     public const int __ID__ = 883877955;

@@ -33,10 +33,11 @@ namespace ET.Ability
         //     }
         // }
 
-        public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, string timelineId)
+        public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, string timelineId, SelectHandle selectHandle)
         {
             TimelineCfg timelineCfg = TimelineCfgCategory.Instance.Get(timelineId);
             TimelineObj timelineObj = self.AddChild<TimelineObj, TimelineCfg, Unit>(timelineCfg, castUnit);
+            timelineObj.Init(selectHandle);
             return timelineObj;
         }
 

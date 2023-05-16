@@ -57,7 +57,7 @@ namespace ET.Ability
             self.timeElapsed += timePassed;
             if (self.duration <= 0)
             {
-                self.GetParent<Unit>().Destroy();
+                self.GetUnit().Destroy();
                 return;
             }
             

@@ -28,7 +28,7 @@ namespace ET
             protected override void Awake(AIComponent self, int aiConfigId)
             {
                 self.AIConfigId = aiConfigId;
-                self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.AITimer, self);
+                self.Timer = TimerComponent.Instance.NewRepeatedTimer(100, TimerInvokeType.AITimer, self);
             }
         }
 
@@ -81,6 +81,7 @@ namespace ET
                     break;
                 }
 
+                Log.Debug($"==新 aiConfig.Id {aiConfig.Id} self.Current={self.Current}");
                 self.Cancel(); // 取消之前的行为
                 ETCancellationToken cancellationToken = new ETCancellationToken();
                 self.CancellationToken = cancellationToken;

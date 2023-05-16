@@ -21,6 +21,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         Cd = _buf.ReadFloat();
         SkillSlotType = (SkillSlotType)_buf.ReadInt();
+        SkillSelectAction = ActionCallParam.DeserializeActionCallParam(_buf);
         TimelineId = _buf.ReadString();
         PostInit();
     }
@@ -50,6 +51,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 技能类型
     /// </summary>
     public SkillSlotType SkillSlotType { get; private set; }
+    public ActionCallParam SkillSelectAction { get; private set; }
     /// <summary>
     /// timeline_id
     /// </summary>
@@ -61,12 +63,14 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        SkillSelectAction?.Resolve(_tables);
         this.TimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(TimelineId);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        SkillSelectAction?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -77,6 +81,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "Cd:" + Cd + ","
         + "SkillSlotType:" + SkillSlotType + ","
+        + "SkillSelectAction:" + SkillSelectAction + ","
         + "TimelineId:" + TimelineId + ","
         + "}";
     }

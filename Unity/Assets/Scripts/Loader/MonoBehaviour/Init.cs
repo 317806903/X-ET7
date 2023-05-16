@@ -66,6 +66,7 @@ namespace ET
 		private void Update()
 		{
 			Game.Update();
+			//Log.Debug($"Update {TimeHelper.ClientFrameTime()}");
 			this.ChkFixedUpdate();
 		}
 
@@ -73,21 +74,24 @@ namespace ET
 		protected long logicTimer = 0;
 		private void ChkFixedUpdate()
 		{
+			//Log.Debug($"....11 logicTimer={logicTimer}");
 			if (lastChkTimer > 0)
 			{
 				logicTimer += TimeHelper.ClientFrameTime() - lastChkTimer;
 			}
+			//Log.Debug($"....22 logicTimer={logicTimer}");
 			lastChkTimer = TimeHelper.ClientFrameTime();
 			while (logicTimer >= TimeHelper.FixedDetalTimeLong)
 			{
 				logicTimer -= TimeHelper.FixedDetalTimeLong;
 
-				this.FixedUpdate();
+				this.DoFixedUpdate();
 			}
 		}
 
-		private void FixedUpdate()
+		private void DoFixedUpdate()
 		{
+			//Log.Debug($"====FixedUpdate {TimeHelper.ClientFrameTime()}");
 			Game.FixedUpdate();
 		}
 

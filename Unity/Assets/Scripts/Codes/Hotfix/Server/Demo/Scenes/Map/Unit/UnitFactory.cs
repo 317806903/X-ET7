@@ -5,9 +5,9 @@ namespace ET.Server
 {
     public static class UnitFactory
     {
-        public static Unit Create(Scene scene, long id, UnitType unitType)
+        public static Unit Create(Scene scene, long id, UnitType unitType, float3 position)
         {
-            Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer(scene, id, unitType);
+            Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer(scene, id, unitType, position);
             
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             switch (unitType)

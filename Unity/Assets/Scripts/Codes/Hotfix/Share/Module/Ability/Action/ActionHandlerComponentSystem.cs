@@ -47,7 +47,7 @@ namespace ET.Ability
             }
         }
         
-        public static void Run(this ActionHandlerComponent self, Unit unit, string actionId, Dictionary<string, object> param)
+        public static void Run(this ActionHandlerComponent self, Unit unit, string actionId, SelectHandle selectHandle)
         {
             int index = actionId.IndexOf("_", 0);
             if (index == -1)
@@ -62,7 +62,7 @@ namespace ET.Ability
                 return;
             }
 
-            self.dic[key].Run(unit, actionId, param).Coroutine();
+            self.dic[key].Run(unit, actionId, selectHandle).Coroutine();
         }
     }
 }

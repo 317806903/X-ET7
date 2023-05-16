@@ -4,7 +4,7 @@ namespace ET.Ability
 {
 	public class Action_CreateAoE: IActionHandler
 	{
-		public override async ETTask Run(Unit unit, string actionId, Dictionary<string, object> param)
+		public override async ETTask Run(Unit unit, string actionId, SelectHandle selectHandle)
 		{
 		}
 	}

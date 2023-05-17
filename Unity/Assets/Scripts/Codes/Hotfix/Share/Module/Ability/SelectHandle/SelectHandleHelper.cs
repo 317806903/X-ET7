@@ -28,14 +28,33 @@ namespace ET.Ability
                 selectHandle.selectHandleType = SelectHandleType.SelectUnits;
                 selectHandle.unitIds = ListComponent<long>.Create();
                 selectHandle.unitIds.Add(unit.Id);
+                selectHandle.position = unit.Position;
+                selectHandle.direction = unit.Forward;
             }
             else if (actionCallParam is ActionCallAutoUnit)
             {
                 selectHandle.selectHandleType = SelectHandleType.SelectUnits;
                 selectHandle.unitIds = ListComponent<long>.Create();
                 GetSelectUnits(unit, actionCallParam as ActionCallAutoUnit, selectHandle);
+                if (selectHandle.unitIds.Count > 0)
+                {
+                    Unit selectUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[0]);
+                    selectHandle.position = selectUnit.Position;
+                    selectHandle.direction = selectUnit.Forward;
+                }
             }
 
+            return selectHandle;
+        }
+        
+        public static SelectHandle GetSelectHandle(Unit unit, Unit targetUnit)
+        {
+            SelectHandle selectHandle = new();
+            selectHandle.selectHandleType = SelectHandleType.SelectUnits;
+            selectHandle.unitIds = ListComponent<long>.Create();
+            selectHandle.unitIds.Add(targetUnit.Id);
+            selectHandle.position = targetUnit.Position;
+            selectHandle.direction = targetUnit.Forward;
             return selectHandle;
         }
         
@@ -64,21 +83,21 @@ namespace ET.Ability
             MultiMap<float, Unit> dic = new();
             for (int i = 0; i < list.Count; i++)
             {
-                Unit curUnit = list[i];
-                float disSq = math.distancesq(curUnit.Position, unit.Position);
+                Unit targetUnit = list[i];
+                float disSq = math.distancesq(targetUnit.Position, unit.Position);
                 if (disSq <= radiusSq)
                 {
-                    float3 dir = curUnit.Position - unit.Position;
+                    float3 dir = targetUnit.Position - unit.Position;
                     float angleTmp = math.degrees(math.acos(math.dot(unit.Forward, dir)));
                     if (angleTmp < angleHalf)
                     {
                         if (IsAngleFirst)
                         {
-                            dic.Add(angleTmp, curUnit);
+                            dic.Add(angleTmp, targetUnit);
                         }
                         else
                         {
-                            dic.Add(disSq, curUnit);
+                            dic.Add(disSq, targetUnit);
                         }
                     }
                 }
@@ -89,7 +108,7 @@ namespace ET.Ability
             {
                 for (int i = 0; i < sortList.Value.Count; i++)
                 {
-                    if (index <= selectNum)
+                    if (index <= selectNum || selectNum == -1)
                     {
                         selectHandle.unitIds.Add(sortList.Value[i].Id);
                         index++;

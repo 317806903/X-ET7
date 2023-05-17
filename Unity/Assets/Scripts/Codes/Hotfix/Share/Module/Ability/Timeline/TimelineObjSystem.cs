@@ -8,25 +8,10 @@ namespace ET.Ability
     public static class TimelineObjSystem
     {
         [ObjectSystem]
-        public class TimelineObjAwakeSystem: AwakeSystem<TimelineObj, TimelineCfg, Unit>
+        public class TimelineObjAwakeSystem: AwakeSystem<TimelineObj>
         {
-            protected override void Awake(TimelineObj self, TimelineCfg model, Unit caster)
+            protected override void Awake(TimelineObj self)
             {
-                self.model = model;
-                self.casterUnitId = caster.Id;
-                self.timeScale = 1.00f;
-                // TODO zpb
-                // if (casterUnit != null)
-                // {
-                //     ChaState cs = caster.GetComponent<ChaState>();
-                //     if (cs)
-                //     {
-                //         this.values.Add("faceDegree", cs.faceDegree);
-                //         this.values.Add("moveDegree", cs.moveDegree);
-                //     }
-                //
-                //     this._timeScale = cs.actionSpeed;
-                // }
             }
         }
 
@@ -38,8 +23,11 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this TimelineObj self, SelectHandle selectHandle)
+        public static void Init(this TimelineObj self, string timelineCfgId, long casterId, SelectHandle selectHandle)
         {
+            self.model = TimelineCfgCategory.Instance.Get(timelineCfgId);
+            self.casterUnitId = casterId;
+            self.timeScale = 1.00f;
             self.selectHandle = selectHandle;
         }
         

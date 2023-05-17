@@ -54,6 +54,7 @@ namespace ET
 			self.GetComponent<EffectComponent>()?.FixedUpdate(fixedDeltaTime);
 			self.GetComponent<MoveComponent>()?.FixedUpdate(fixedDeltaTime);
 			self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
+			self.GetComponent<MoveTweenObj>()?.FixedUpdate(fixedDeltaTime);
 		}
 
 		public static void FixedUpdate(this UnitComponent self)

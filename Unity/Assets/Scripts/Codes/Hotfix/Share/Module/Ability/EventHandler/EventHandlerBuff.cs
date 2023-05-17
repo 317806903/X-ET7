@@ -2,7 +2,7 @@
 {
 	public static class EventHandlerBuff
 	{
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_SkillOnCast: AEvent<Scene, AbilityTriggerEventType.SkillOnCast>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.SkillOnCast args)
@@ -16,7 +16,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_BuffOnAwake: AEvent<Scene, AbilityTriggerEventType.BuffOnAwake>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnAwake args)
@@ -30,7 +30,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_BuffOnStart: AEvent<Scene, AbilityTriggerEventType.BuffOnStart>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnStart args)
@@ -44,7 +44,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_BuffOnRefresh: AEvent<Scene, AbilityTriggerEventType.BuffOnRefresh>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRefresh args)
@@ -58,7 +58,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_BuffOnRemoved: AEvent<Scene, AbilityTriggerEventType.BuffOnRemoved>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRemoved args)
@@ -72,7 +72,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_BuffOnDestroy: AEvent<Scene, AbilityTriggerEventType.BuffOnDestroy>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnDestroy args)
@@ -86,7 +86,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_DamageBeforeOnHit: AEvent<Scene, AbilityTriggerEventType.DamageBeforeOnHit>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageBeforeOnHit args)
@@ -105,7 +105,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_DamageAfterOnHit: AEvent<Scene, AbilityTriggerEventType.DamageAfterOnHit>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageAfterOnHit args)
@@ -124,7 +124,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_DamageBeforeOnKill: AEvent<Scene, AbilityTriggerEventType.DamageBeforeOnKill>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageBeforeOnKill args)
@@ -143,7 +143,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_DamageAfterOnKill: AEvent<Scene, AbilityTriggerEventType.DamageAfterOnKill>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageAfterOnKill args)
@@ -162,7 +162,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnCreate: AEvent<Scene, AbilityTriggerEventType.UnitOnCreate>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
@@ -176,7 +176,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnHit: AEvent<Scene, AbilityTriggerEventType.UnitOnHit>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
@@ -195,7 +195,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnRemoved: AEvent<Scene, AbilityTriggerEventType.UnitOnRemoved>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)

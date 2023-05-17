@@ -4,20 +4,37 @@
     "name": "子弹1",
     "desc": "",
     "res_id": "ResUnit_1",
-    "hitTimes": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 2,
     "sameTargetDelay": 1,
     "monitorTriggers": [
       {
         "bulletTrig": 1,
-        "action_id": "PlayAudio_1"
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        }
       },
       {
         "bulletTrig": 2,
-        "action_id": "PlayAudio_1"
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnHitUnit"
+        }
+      },
+      {
+        "bulletTrig": 2,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        }
       },
       {
         "bulletTrig": 4,
-        "action_id": "PlayAudio_1"
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        }
       }
     ]
   },
@@ -26,6 +43,7 @@
     "name": "子弹2",
     "desc": "",
     "res_id": "ResUnit_2",
+    "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "monitorTriggers": []

@@ -32,6 +32,10 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
             case ActionCallSelectPosition.__ID__: return new ActionCallSelectPosition(_buf);
             case ActionCallAutoSelf.__ID__: return new ActionCallAutoSelf(_buf);
             case ActionCallAutoUnit.__ID__: return new ActionCallAutoUnit(_buf);
+            case ActionCallCasterUnit.__ID__: return new ActionCallCasterUnit(_buf);
+            case ActionCallCasterPlayerUnit.__ID__: return new ActionCallCasterPlayerUnit(_buf);
+            case ActionCallOnHitUnit.__ID__: return new ActionCallOnHitUnit(_buf);
+            case ActionCallBeHurtUnit.__ID__: return new ActionCallBeHurtUnit(_buf);
             default: throw new SerializationException();
         }
     }

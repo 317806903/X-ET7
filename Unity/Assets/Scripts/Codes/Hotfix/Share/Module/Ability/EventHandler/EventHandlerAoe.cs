@@ -2,7 +2,7 @@
 {
 	public static class EventHandlerAoe
 	{
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnCreate: AEvent<Scene, AbilityTriggerEventType.UnitOnCreate>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
@@ -16,7 +16,7 @@
 			}
 		}
 		
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnRemoved: AEvent<Scene, AbilityTriggerEventType.UnitOnRemoved>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
@@ -30,7 +30,7 @@
 			}
 		}
 
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_AoeOnCharacterEnter: AEvent<Scene, AbilityTriggerEventType.AoeOnCharacterEnter>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnCharacterEnter args)
@@ -44,7 +44,7 @@
 			}
 		}
 
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_AoeOnCharacterLeave: AEvent<Scene, AbilityTriggerEventType.AoeOnCharacterLeave>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnCharacterLeave args)
@@ -58,7 +58,7 @@
 			}
 		}
 
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_AoeOnBulletEnter: AEvent<Scene, AbilityTriggerEventType.AoeOnBulletEnter>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnBulletEnter args)
@@ -72,7 +72,7 @@
 			}
 		}
 
-		[Event(SceneType.Current)]
+		[Event(SceneType.Map)]
 		public class EventHandler_AoeOnBulletLeave: AEvent<Scene, AbilityTriggerEventType.AoeOnBulletLeave>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnBulletLeave args)

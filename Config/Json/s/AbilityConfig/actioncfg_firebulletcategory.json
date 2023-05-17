@@ -2,17 +2,46 @@
   {
     "id": "FireBullet_1",
     "name": "射出子弹1",
-    "res_id": "Bullet_1",
-    "speed": 3,
-    "duration": 5,
-    "moveType": "Bullet_1"
+    "bullet_id": "Bullet_1",
+    "duration": 50,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "moveType": {
+      "$type": "StraightMoveTweenType",
+      "speed": 3,
+      "acceleratedSpeed": 0
+    }
   },
   {
     "id": "FireBullet_2",
     "name": "射出子弹2",
-    "res_id": "Bullet_2",
-    "speed": 3,
-    "duration": 5,
-    "moveType": "Bullet_2"
+    "bullet_id": "Bullet_2",
+    "duration": 50,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "moveType": {
+      "$type": "TrackingMoveTweenType",
+      "speed": 3,
+      "acceleratedSpeed": 0,
+      "rotateAngle": 3
+    }
   }
 ]

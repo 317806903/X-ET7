@@ -33,12 +33,30 @@ namespace ET.Ability
         //     }
         // }
 
-        public static TimelineObj CreateTimeline(this TimelineComponent self, Unit castUnit, string timelineId, SelectHandle selectHandle)
+        public static Unit GetUnit(this TimelineComponent self)
         {
-            TimelineCfg timelineCfg = TimelineCfgCategory.Instance.Get(timelineId);
-            TimelineObj timelineObj = self.AddChild<TimelineObj, TimelineCfg, Unit>(timelineCfg, castUnit);
-            timelineObj.Init(selectHandle);
+            return self.GetParent<Unit>();
+        }
+
+        public static TimelineObj CreateTimeline(this TimelineComponent self, string timelineCfgId, long casterId, SelectHandle selectHandle)
+        {
+            TimelineObj timelineObj = self.AddChild<TimelineObj>();
+            timelineObj.Init(timelineCfgId, casterId, selectHandle);
             return timelineObj;
+        }
+        
+        public static TimelineObj ReplaceTimeline(this TimelineComponent self, long oldTimeLineId, string timelineCfgId)
+        {
+            TimelineObj timelineObj = self.GetChild<TimelineObj>(oldTimeLineId);
+            if (timelineObj == null)
+            {
+                return null;
+            }
+
+            long casterUnitId = timelineObj.casterUnitId;
+            SelectHandle selectHandle = timelineObj.selectHandle;
+            self.RemoveChild(oldTimeLineId);
+            return self.CreateTimeline(timelineCfgId, casterUnitId, selectHandle);
         }
 
         public static void FixedUpdate(this TimelineComponent self, float fixedDeltaTime)

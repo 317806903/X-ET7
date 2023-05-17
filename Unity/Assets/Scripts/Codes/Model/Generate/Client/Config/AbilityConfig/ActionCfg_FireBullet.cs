@@ -19,10 +19,12 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        ResId = _buf.ReadString();
-        Speed = _buf.ReadFloat();
+        BulletId = _buf.ReadString();
         Duration = _buf.ReadFloat();
-        MoveType = _buf.ReadString();
+        NodeName = _buf.ReadString();
+        OffSetPosition = _buf.ReadVector3();
+        RelateForward = _buf.ReadVector3();
+        MoveType = MoveTweenType.DeserializeMoveTweenType(_buf);
         PostInit();
     }
 
@@ -46,32 +48,39 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// <summary>
     /// 资源id
     /// </summary>
-    public string ResId { get; private set; }
-    public BulletCfg ResId_Ref { get; private set; }
-    /// <summary>
-    /// 飞行速度
-    /// </summary>
-    public float Speed { get; private set; }
+    public string BulletId { get; private set; }
+    public BulletCfg BulletId_Ref { get; private set; }
     /// <summary>
     /// 持续时间(s)
     /// </summary>
     public float Duration { get; private set; }
     /// <summary>
-    /// 飞行轨迹
+    /// 从这个挂载点对应位置生成
     /// </summary>
-    public string MoveType { get; private set; }
+    public string NodeName { get; private set; }
+    /// <summary>
+    /// 挂载点的相对偏移
+    /// </summary>
+    public System.Numerics.Vector3 OffSetPosition { get; private set; }
+    /// <summary>
+    /// 相对发送者的面向偏移
+    /// </summary>
+    public System.Numerics.Vector3 RelateForward { get; private set; }
+    public MoveTweenType MoveType { get; private set; }
 
     public const int __ID__ = -1637484119;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.ResId_Ref = (_tables["BulletCfgCategory"] as BulletCfgCategory).GetOrDefault(ResId);
+        this.BulletId_Ref = (_tables["BulletCfgCategory"] as BulletCfgCategory).GetOrDefault(BulletId);
+        MoveType?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        MoveType?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -80,9 +89,11 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "ResId:" + ResId + ","
-        + "Speed:" + Speed + ","
+        + "BulletId:" + BulletId + ","
         + "Duration:" + Duration + ","
+        + "NodeName:" + NodeName + ","
+        + "OffSetPosition:" + OffSetPosition + ","
+        + "RelateForward:" + RelateForward + ","
         + "MoveType:" + MoveType + ","
         + "}";
     }

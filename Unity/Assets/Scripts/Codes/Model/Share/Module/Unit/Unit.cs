@@ -12,7 +12,7 @@ namespace ET
         public string unitCfgId { get; set; } //配置表id
 
         [BsonIgnore]
-        public UnitCfg Config => UnitCfgCategory.Instance.Get(this.unitCfgId);
+        public UnitCfg Config;
 
         public UnitType Type;
 

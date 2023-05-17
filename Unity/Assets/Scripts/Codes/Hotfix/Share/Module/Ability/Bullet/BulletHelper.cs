@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Numerics;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -7,15 +9,19 @@ namespace ET.Ability
     [FriendOf(typeof(BulletObj))]
     public static class BulletHelper
     {
-        public static void CreateBullet(Unit unit, int bulletCfgId)
+        public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle)
         {
+            //UnitHelper_Create.CreateWhenServer()
             UnitComponent unitComponent = UnitHelper.GetUnitComponent(unit);
             Unit bulletUnit = unitComponent.AddChild<Unit>();
             bulletUnit.Type = UnitType.Bullet;
             bulletUnit.AddComponent<TeamFlagObj, TeamFlagType>(unit.GetComponent<TeamFlagObj>().GetTeamFlagType());
             BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
-            bulletObj.Init(unit.Id, bulletCfgId);
+            bulletObj.Init(unit.Id, actionCfgFireBullet.BulletId, actionCfgFireBullet.Duration);
+            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
             unitComponent.Add(bulletUnit);
+
+            UnitHelper.ResetNodePosition(unit, bulletUnit, actionCfgFireBullet.NodeName, actionCfgFireBullet.OffSetPosition, actionCfgFireBullet.RelateForward);
             
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
@@ -24,9 +30,9 @@ namespace ET.Ability
             });
         }
         
-        public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
+        public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
         {
-            unit.GetComponent<BulletObj>().EventHandler(abilityBulletMonitorTriggerEvent);
+            unit.GetComponent<BulletObj>()?.EventHandler(abilityBulletMonitorTriggerEvent, onHitUnit, beHurtUnit);
         }
         
         public static bool ChkBulletHit(Unit unitBullet, Unit unit)
@@ -51,7 +57,7 @@ namespace ET.Ability
         public static void DoBulletHit(Unit unitBullet, Unit unit)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
-            bulletObj.hp -= 1;
+            bulletObj.canHitTimes -= 1;
             
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.UnitOnHit()
             {
@@ -59,7 +65,7 @@ namespace ET.Ability
                 defenderUnit = unit,
             });
 
-            if (bulletObj.hp > 0){
+            if (bulletObj.canHitTimes > 0){
                 bulletObj.hitRecords.Add(new BulletHitRecord()
                 {
                     targetUnitId = unit.Id,

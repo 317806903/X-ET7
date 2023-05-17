@@ -20,6 +20,7 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         ResId = _buf.ReadString();
+        CanHitAfterCreated = _buf.ReadFloat();
         HitTimes = _buf.ReadInt();
         SameTargetDelay = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonitorTriggers = new System.Collections.Generic.List<BulletActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BulletActionCall _e0;  _e0 = BulletActionCall.DeserializeBulletActionCall(_buf); MonitorTriggers.Add(_e0);}}
@@ -48,6 +49,10 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public ResUnitCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 多久后才会计算攻击
+    /// </summary>
+    public float CanHitAfterCreated { get; private set; }
     /// <summary>
     /// 子弹可以碰触的次数，每次碰到合理目标-1，到0的时候子弹就结束了
     /// </summary>
@@ -80,6 +85,7 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "ResId:" + ResId + ","
+        + "CanHitAfterCreated:" + CanHitAfterCreated + ","
         + "HitTimes:" + HitTimes + ","
         + "SameTargetDelay:" + SameTargetDelay + ","
         + "MonitorTriggers:" + Bright.Common.StringUtil.CollectionToString(MonitorTriggers) + ","

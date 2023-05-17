@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -168,5 +169,12 @@ namespace ET.Ability
             UnitComponent unitComponent = GetUnitComponent(unit);
             unitComponent.AddWaitRemove(unit);
         }
+        
+        public static void ResetNodePosition(Unit unit, Unit targetUnit, string nodeName, Vector3 offSetPosition, Vector3 relateForward)
+        {
+            targetUnit.Position = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+            
+        }
+
     }
 }

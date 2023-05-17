@@ -8,7 +8,7 @@
         public struct SkillOnCast
         {
             public Unit unit;
-            public int skillId;
+            public string skillId;
             public TimelineObj timeline;
         }
 

@@ -6,7 +6,7 @@ namespace ET.Ability
 {
     [ChildOf(typeof (TimelineComponent))]
     [FriendOf(typeof(Unit))]
-    public class TimelineObj: Entity, IAwake<TimelineCfg, Unit>, IDestroy
+    public class TimelineObj: Entity, IAwake, IDestroy
     {
         ///<summary>
         ///Timeline的基础信息

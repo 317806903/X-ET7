@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -20,42 +21,122 @@ namespace ET.Ability
         {
             protected override void Destroy(BulletObj self)
             {
+                self.hitRecords.Dispose();
             }
         }
 
-        public static void Init(this BulletObj self, long casterUnitId, int bulletCfgId)
+        public static void Init(this BulletObj self, long casterUnitId, string bulletCfgId, float duration)
         {
             self.casterUnitId = casterUnitId;
+            self.model = BulletCfgCategory.Instance.Get(bulletCfgId);
+            self.duration = duration;
+            self.timeElapsed = 0;
+            self.canHitAfterCreated = self.model.CanHitAfterCreated;
+            self.canHitTimes = self.model.HitTimes;
+            self.hitRecords = ListComponent<BulletHitRecord>.Create();
         }
 
-        public static string GetActionId(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
+        public static List<BulletActionCall> GetActionIds(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
         {
+            ListComponent<BulletActionCall> actionList = ListComponent<BulletActionCall>.Create();
             for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
             {
                 if ((int)self.model.MonitorTriggers[i].BulletTrig == (int)abilityBulletMonitorTriggerEvent)
                 {
-                    return self.model.MonitorTriggers[i].ActionId;
+                    actionList.Add(self.model.MonitorTriggers[i]);
                 }
             }
-            // if (self.model.MonitorTriggers.TryGetValue(abilityBulletMonitorTriggerEvent, out string actionId))
-            // {
-            //     return actionId;
-            // }
-
-            return "";
+            return actionList;
         }
 
+        /// <summary>
+        /// 获取子弹发射者(上级)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterUnit(this BulletObj self)
+        {
+            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+        }
+        
+        /// <summary>
+        /// 获取子弹发射者(player或monster)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterPlayerUnit(this BulletObj self)
+        {
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+            while(true)
+            {
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
+                }
+                else if (UnitHelper.ChkIsAoe(unit))
+                {
+                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return unit;
+        }
+
+        /// <summary>
+        /// 获取子弹unit
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         public static Unit GetUnit(this BulletObj self)
         {
             return self.GetParent<Unit>();
         }
 
-        public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
+        public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
         {
-            string actionId = self.GetActionId(abilityBulletMonitorTriggerEvent);
-            if (string.IsNullOrWhiteSpace(actionId) == false)
+            List<BulletActionCall> actionIds = self.GetActionIds(abilityBulletMonitorTriggerEvent);
+            for (int i = 0; i < actionIds.Count; i++)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
+                BulletActionCall bulletActionCall = actionIds[i];
+                string actionId = bulletActionCall.ActionId;
+                SelectHandle selectHandle;
+                if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+                {
+                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoUnit);
+                }
+                else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
+                {
+                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoSelf);
+                }
+                else
+                {
+                    Unit targetUnit;
+                    if (bulletActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
+                    {
+                        targetUnit = self.GetCasterUnit();
+                    }
+                    else if (bulletActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
+                    {
+                        targetUnit = self.GetCasterPlayerUnit();
+                    }
+                    else if (bulletActionCall.ActionCallParam is ActionCallOnHitUnit actionCallOnHitUnit)
+                    {
+                        targetUnit = onHitUnit;
+                    }
+                    else if (bulletActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
+                    {
+                        targetUnit = beHurtUnit;
+                    }
+                    else
+                    {
+                        targetUnit = self.GetUnit();
+                    }
+                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), targetUnit);
+                }
+                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, selectHandle);
             }
         }
 
@@ -81,7 +162,7 @@ namespace ET.Ability
                 self.canHitAfterCreated -= timePassed;
             }
 
-            if (self.duration <= 0 || self.hp <= 0)
+            if (self.duration <= 0 || self.canHitTimes <= 0)
             {
                 self.GetUnit().Destroy();
             }
@@ -89,7 +170,7 @@ namespace ET.Ability
 
         public static bool CanHit(this BulletObj self, Unit unit)
         {
-            if (self.hp <= 0)
+            if (self.canHitTimes <= 0)
                 return false;
             if (self.canHitAfterCreated > 0)
                 return false;

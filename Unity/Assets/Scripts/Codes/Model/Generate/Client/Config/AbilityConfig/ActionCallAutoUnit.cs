@@ -54,7 +54,7 @@ public sealed partial class ActionCallAutoUnit:  ActionCallAuto
     /// </summary>
     public float Angle { get; private set; }
     /// <summary>
-    /// 选取的数量
+    /// 选取的数量(-1表示不限制)
     /// </summary>
     public int SelectNum { get; private set; }
 

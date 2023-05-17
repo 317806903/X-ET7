@@ -10,9 +10,9 @@ namespace ET.Ability
             BuffHelper.EventHandler(unit, abilityBuffMonitorTriggerEvent);
         }
         
-        public static void Run(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
+        public static void Run(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
         {
-            BulletHelper.EventHandler(unit, abilityBulletMonitorTriggerEvent);
+            BulletHelper.EventHandler(unit, abilityBulletMonitorTriggerEvent, onHitUnit, beHurtUnit);
         }
         
         public static void Run(Unit unit, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)

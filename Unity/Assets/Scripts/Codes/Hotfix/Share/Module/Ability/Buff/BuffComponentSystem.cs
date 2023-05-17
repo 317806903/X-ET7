@@ -85,6 +85,13 @@ namespace ET.Ability
                 }
             }
         }
+
+        public static void Remove(this BuffComponent self, BuffObj buffObj)
+        {
+            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnDestroy() { buff = buffObj });
+            self.RemoveMonitorTriggerList(buffObj);
+            buffObj.Dispose();
+        }
         
         public static void FixedUpdate(this BuffComponent self, float fixedDeltaTime)
         {
@@ -105,7 +112,6 @@ namespace ET.Ability
                 }
                 if (buffObj.ChkNeedRemove())
                 {
-                    EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnDestroy() { buff = buffObj });
                     self.removeList.Add(buffObj);
                 }
             }
@@ -113,8 +119,7 @@ namespace ET.Ability
             int count = self.removeList.Count;
             for (int i = 0; i < count; i++)
             {
-                self.RemoveMonitorTriggerList(self.removeList[i]);
-                self.removeList[i].Dispose();
+                self.Remove(self.removeList[i]);
             }
 
             self.removeList.Clear();

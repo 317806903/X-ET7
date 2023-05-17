@@ -36,6 +36,47 @@ namespace ET.Ability
             return "";
         }
 
+        /// <summary>
+        /// 获取aoe发射者(上级)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterUnit(this AoeObj self)
+        {
+            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+        }
+        
+        /// <summary>
+        /// 获取aoe发射者(player或monster)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterPlayerUnit(this AoeObj self)
+        {
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+            while(true)
+            {
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
+                }
+                else if (UnitHelper.ChkIsAoe(unit))
+                {
+                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return unit;
+        }
+
+        /// <summary>
+        /// 获取子弹unit
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         public static Unit GetUnit(this AoeObj self)
         {
             return self.GetParent<Unit>();

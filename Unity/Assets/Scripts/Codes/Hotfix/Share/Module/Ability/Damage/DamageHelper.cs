@@ -9,7 +9,7 @@ namespace ET.Ability
         DamageInfoTag[] tags)
         {
             Scene scene = unit.DomainScene();
-            return scene.GetComponent<DamageComponent>().Run(targetUnitId, damage, damageDegree, criticalRate, tags);
+            return scene.GetComponent<DamageComponent>().Add(targetUnitId, damage, damageDegree, criticalRate, tags);
         }
     }
 }

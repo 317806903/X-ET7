@@ -18,6 +18,7 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
     {
         BulletTrig = (BulletTriggerEvent)_buf.ReadInt();
         ActionId = _buf.ReadString();
+        ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
         PostInit();
     }
 
@@ -28,17 +29,20 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
 
     public BulletTriggerEvent BulletTrig { get; private set; }
     public string ActionId { get; private set; }
+    public ActionCallParam ActionCallParam { get; private set; }
 
     public const int __ID__ = -2019750794;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        ActionCallParam?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        ActionCallParam?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -46,6 +50,7 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
         return "{ "
         + "BulletTrig:" + BulletTrig + ","
         + "ActionId:" + ActionId + ","
+        + "ActionCallParam:" + ActionCallParam + ","
         + "}";
     }
     

@@ -11,7 +11,7 @@ namespace ET.Ability
         
         public static void EventHandler(Unit unit, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
         {
-            unit.GetComponent<AoeObj>().EventHandler(abilityAoeMonitorTriggerEvent);
+            unit.GetComponent<AoeObj>()?.EventHandler(abilityAoeMonitorTriggerEvent);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -7,7 +8,8 @@ namespace ET.Ability
 		public override async ETTask Run(Unit unit, string actionId, SelectHandle selectHandle)
 		{
 			await TimerComponent.Instance.WaitFrameAsync();
-			BulletHelper.CreateBullet(unit, 1);
+			ActionCfg_FireBullet actionCfgFireBullet = ActionCfg_FireBulletCategory.Instance.Get(actionId);
+			BulletHelper.CreateBullet(unit, actionCfgFireBullet, selectHandle);
 		}
 	}
 }

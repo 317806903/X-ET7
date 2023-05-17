@@ -70,7 +70,14 @@ namespace ET.Ability
 
             SelectHandle selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
 
-            TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId, selectHandle);
+            TimelineObj timelineObj= TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId, selectHandle);
+            
+            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.SkillOnCast()
+            {
+                unit = self.GetUnit(),
+                skillId = skillId,
+                timeline = timelineObj,
+            });
 
             self.CostSkill(skillId);
             self.skillCDs[skillId] = skillCfg.Cd;

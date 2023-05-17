@@ -85,7 +85,7 @@ namespace ET.Ability
                 // SceneVariants.PopUpNumberOnCharacter(self.defender, Mathf.Abs(dVal), isHeal);
             }
 
-            //if (false)
+            if (UnitHelper.ChkUnitAlive(defenderUnit) == false)
             {
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {

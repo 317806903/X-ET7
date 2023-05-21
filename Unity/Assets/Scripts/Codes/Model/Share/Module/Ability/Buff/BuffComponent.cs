@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -6,6 +7,6 @@ namespace ET.Ability
 	public class BuffComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
         public List<BuffObj> removeList;
-        public MultiMapSet<AbilityBuffMonitorTriggerEvent, BuffObj> monitorTriggerList;
+        public MultiMap<AbilityBuffMonitorTriggerEvent, BuffObj> monitorTriggerList;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -10,7 +11,7 @@ namespace ET.Ability
         ///<summary>
         ///这是个什么buff
         ///</summary>
-        public BuffModel model;
+        public BuffCfg model;
 
         ///<summary>
         ///剩余多久，单位：秒
@@ -47,26 +48,6 @@ namespace ET.Ability
         ///</summary>
         public int ticked = 0;
 
-        ///<summary>
-        ///buff的一些参数，这些参数是逻辑使用的，比如wow中牧师的盾还能吸收多少伤害，就可以记录在buffParam里面
-        ///</summary>
-        public Dictionary<string, object> buffParam = new Dictionary<string, object>();
-
-        // public BuffObj(
-        // BuffModel model, GameObject caster, GameObject carrier,  float duration, int stack, bool permanent = false,
-        // Dictionary<string, object> buffParam = null
-        // ){
-        //     this.model = model;
-        //     this.caster = caster;
-        //     this.carrier = carrier;
-        //     this.duration = duration;
-        //     this.stack = stack;
-        //     this.permanent = permanent;
-        //     if (buffParam != null) {
-        //         foreach(KeyValuePair<string, object> kv in buffParam){
-        //             this.buffParam.Add(kv.Key, kv.Value);
-        //         }
-        //     }
-        // }
+        public MultiMap<AbilityBuffMonitorTriggerEvent, BuffActionCall> monitorTriggerList;
     }
 }

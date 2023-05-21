@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -28,7 +30,7 @@ namespace ET.Ability
             }
         }
 
-        public static BuffObj AddBuff(this BuffComponent self, int buffCfgId)
+        public static BuffObj AddBuff(this BuffComponent self, string buffCfgId)
         {
             BuffObj buffObj = self.AddChild<BuffObj>();
             buffObj.Init(buffCfgId);
@@ -47,41 +49,38 @@ namespace ET.Ability
 
         public static void AddMonitorTriggerList(this BuffComponent self, BuffObj buffObj)
         {
-            foreach (AbilityBuffMonitorTriggerEvent type in Enum.GetValues(typeof(AbilityBuffMonitorTriggerEvent)))
+            foreach (var monitorTrigger in buffObj.monitorTriggerList)
             {
-                string actionId = buffObj.GetActionId(type);
-                if (string.IsNullOrWhiteSpace(actionId) == false)
-                {
-                    self.monitorTriggerList.Add(type, buffObj);
-                }
+                self.monitorTriggerList.Add(monitorTrigger.Key, buffObj);
             }
         }
         
         public static void RemoveMonitorTriggerList(this BuffComponent self, BuffObj buffObj)
         {
-            foreach (AbilityBuffMonitorTriggerEvent type in Enum.GetValues(typeof(AbilityBuffMonitorTriggerEvent)))
+            foreach (var monitorTrigger in buffObj.monitorTriggerList)
             {
-                string actionId = buffObj.GetActionId(type);
-                if (string.IsNullOrWhiteSpace(actionId) == false)
-                {
-                    self.monitorTriggerList.Remove(type, buffObj);
-                }
+                self.monitorTriggerList.Remove(monitorTrigger.Key, buffObj);
             }
         }
         
-        public static void EventHandler(this BuffComponent self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
+        public static void EventHandler(this BuffComponent self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
         {
             if (self.monitorTriggerList.ContainsKey(abilityBuffMonitorTriggerEvent) == false)
             {
                 return;
             }
-            HashSet<BuffObj> buffObjs = self.monitorTriggerList[abilityBuffMonitorTriggerEvent];
+            ListComponent<BuffObj> priorityBuffObjs = ListComponent<BuffObj>.Create();
+            List<BuffObj> buffObjs = self.monitorTriggerList[abilityBuffMonitorTriggerEvent];
+            buffObjs.Sort((a, b) => a.model.Priority.CompareTo(b.model.Priority));
             foreach (BuffObj buffObj in buffObjs)
             {
-                string actionId = buffObj.GetActionId(abilityBuffMonitorTriggerEvent);
-                if (string.IsNullOrWhiteSpace(actionId) == false)
+                List<BuffActionCall> buffActionCalls = buffObj.GetActionIds(abilityBuffMonitorTriggerEvent);
+                if (buffActionCalls.Count > 0)
                 {
-                    ActionHandlerHelper.CreateAction(buffObj.GetUnit(), actionId, null);
+                    for (int i = 0; i < buffActionCalls.Count; i++)
+                    {
+                        buffObj.EventHandler(buffActionCalls[i], onHitUnit, beHurtUnit);
+                    }
                 }
             }
         }

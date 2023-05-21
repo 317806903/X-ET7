@@ -10,7 +10,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.SkillOnCast);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.SkillOnCast, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -24,7 +24,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnAwake);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnAwake, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -38,7 +38,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnStart);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnStart, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -52,7 +52,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRefresh, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -66,7 +66,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRemoved);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRemoved, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -80,7 +80,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnDestroy);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnDestroy, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -94,12 +94,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeHurt);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -113,12 +113,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeHurt);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -132,12 +132,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeKilled);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeKilled, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -151,12 +151,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -170,7 +170,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnCreate);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnCreate, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -184,12 +184,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnBeHurt);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -203,7 +203,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnRemoved);
+					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnRemoved, null, null);
 				}
 				await ETTask.CompletedTask;
 			}

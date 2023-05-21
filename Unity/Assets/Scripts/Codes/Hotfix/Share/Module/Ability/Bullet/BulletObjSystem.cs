@@ -41,7 +41,7 @@ namespace ET.Ability
             ListComponent<BulletActionCall> actionList = ListComponent<BulletActionCall>.Create();
             for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
             {
-                if ((int)self.model.MonitorTriggers[i].BulletTrig == (int)abilityBulletMonitorTriggerEvent)
+                if (self.model.MonitorTriggers[i].BulletTrig.ToString() == abilityBulletMonitorTriggerEvent.ToString())
                 {
                     actionList.Add(self.model.MonitorTriggers[i]);
                 }

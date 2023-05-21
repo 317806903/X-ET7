@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System.Collections.Generic;
+
+namespace ET
 {
     public enum UnitType: byte
     {
@@ -8,5 +10,14 @@
         SceneObj = 4,
         Bullet = 5,
         Aoe = 6,
+    }
+
+    public struct CreateUnit
+    {
+        public List<Unit> units;
+    }
+    public struct SyncUnits
+    {
+        public List<Unit> units;
     }
 }

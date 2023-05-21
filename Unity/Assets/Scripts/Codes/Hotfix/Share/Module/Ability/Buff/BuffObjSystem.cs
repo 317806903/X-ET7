@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -22,8 +23,15 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this BuffObj self, int buffCfgId)
+        public static void Init(this BuffObj self, string buffCfgId)
         {
+            self.monitorTriggerList = new();
+            self.model = BuffCfgCategory.Instance.Get(buffCfgId);
+            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
+            {
+                AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent = (AbilityBuffMonitorTriggerEvent)Enum.Parse(typeof(AbilityBuffMonitorTriggerEvent), self.model.MonitorTriggers[i].BuffTrig.ToString());
+                self.monitorTriggerList.Add(abilityBuffMonitorTriggerEvent, self.model.MonitorTriggers[i]);
+            }
         }
 
         /// <summary>
@@ -46,14 +54,35 @@ namespace ET.Ability
             return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
         }
 
-        public static string GetActionId(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
+        /// <summary>
+        /// 获取buff发射者(player或monster)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetCasterPlayerUnit(this BuffObj self)
         {
-            if (self.model.monitorTriggers.TryGetValue(abilityBuffMonitorTriggerEvent, out string actionId))
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+            while(true)
             {
-                return actionId;
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
+                }
+                else if (UnitHelper.ChkIsAoe(unit))
+                {
+                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
+                }
+                else
+                {
+                    break;
+                }
             }
+            return unit;
+        }
 
-            return "";
+        public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
+        {
+            return self.monitorTriggerList[abilityBuffMonitorTriggerEvent];
         }
 
         public static void FixedUpdate(this BuffObj self, float fixedDeltaTime)
@@ -62,19 +91,62 @@ namespace ET.Ability
             if (self.permanent == false) self.duration -= timePassed;
             self.timeElapsed += timePassed;
 
-            if (self.model.tickTime > 0)
+            if (self.model.TickTime > 0)
             {
-                string actionId = self.GetActionId(AbilityBuffMonitorTriggerEvent.BuffOnTick);
-                if (string.IsNullOrWhiteSpace(actionId) == false)
+                //float取模不精准，所以用x1000后的整数来
+                if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.TickTime * 1000) == 0)
                 {
-                    //float取模不精准，所以用x1000后的整数来
-                    if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.tickTime * 1000) == 0)
+                    List<BuffActionCall> buffActionCalls = self.GetActionIds(AbilityBuffMonitorTriggerEvent.BuffOnTick);
+                    if (buffActionCalls.Count > 0)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
-                        self.ticked += 1;
+                        for (int i = 0; i < buffActionCalls.Count; i++)
+                        {
+                            self.EventHandler(buffActionCalls[i], null, null);
+                        }
                     }
+                    self.ticked += 1;
                 }
             }
+        }
+
+        public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onHitUnit, Unit beHurtUnit)
+        {
+            string actionId = buffActionCall.ActionId;
+            SelectHandle selectHandle;
+            if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+            {
+                selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoUnit);
+            }
+            else if (buffActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
+            {
+                selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoSelf);
+            }
+            else
+            {
+                Unit targetUnit;
+                if (buffActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
+                {
+                    targetUnit = self.GetCasterUnit();
+                }
+                else if (buffActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
+                {
+                    targetUnit = self.GetCasterPlayerUnit();
+                }
+                else if (buffActionCall.ActionCallParam is ActionCallOnHitUnit actionCallOnHitUnit)
+                {
+                    targetUnit = onHitUnit;
+                }
+                else if (buffActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
+                {
+                    targetUnit = beHurtUnit;
+                }
+                else
+                {
+                    targetUnit = self.GetUnit();
+                }
+                selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), targetUnit);
+            }
+            ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, selectHandle);
         }
 
         public static bool ChkNeedRemove(this BuffObj self)

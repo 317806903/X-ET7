@@ -4,7 +4,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof(Unit))]
-    public class TeamFlagObj: Entity, IAwake<TeamFlagType>, IDestroy, ITransfer
+    public class TeamFlagObj: Entity, IAwake<TeamFlagType>, IDestroy, ITransfer, ITransferClient
     {
         ///<summary>
         /// 自身阵营

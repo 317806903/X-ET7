@@ -1,0 +1,66 @@
+[
+  {
+    "id": "Buff_1",
+    "name": "",
+    "desc": "",
+    "tags": [],
+    "type": 0,
+    "priority": 1,
+    "maxStack": 9,
+    "tickTime": 2,
+    "monitorTriggers": [
+      {
+        "buffTrig": 1,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        }
+      }
+    ]
+  },
+  {
+    "id": "Buff_2",
+    "name": "",
+    "desc": "",
+    "tags": [],
+    "type": 0,
+    "priority": 1,
+    "maxStack": 11,
+    "tickTime": 3,
+    "monitorTriggers": [
+      {
+        "buffTrig": 8,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnHitUnit"
+        }
+      },
+      {
+        "buffTrig": 12,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallCasterPlayerUnit"
+        }
+      }
+    ]
+  },
+  {
+    "id": "Buff_3",
+    "name": "",
+    "desc": "",
+    "tags": [],
+    "type": 0,
+    "priority": 1,
+    "maxStack": 7,
+    "tickTime": 4,
+    "monitorTriggers": [
+      {
+        "buffTrig": 12,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        }
+      }
+    ]
+  }
+]

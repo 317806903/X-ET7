@@ -5,7 +5,7 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class BuffHelper
     {
-        public static void AddBuff(Unit unit, int buffCfgId)
+        public static void AddBuff(Unit unit, string buffCfgId)
         {
             BuffComponent buffComponent = unit.GetComponent<BuffComponent>();
             if (buffComponent == null)
@@ -15,9 +15,9 @@ namespace ET.Ability
             buffComponent.AddBuff(buffCfgId);
         }
         
-        public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
+        public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
         {
-            unit.GetComponent<BuffComponent>()?.EventHandler(abilityBuffMonitorTriggerEvent);
+            unit.GetComponent<BuffComponent>()?.EventHandler(abilityBuffMonitorTriggerEvent, onHitUnit, beHurtUnit);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ET.Server
         public static void NoticeUnitAdd(Unit unit, Unit sendUnit)
         {
             M2C_CreateUnits createUnits = new() { Units = new List<UnitInfo>() };
-            createUnits.Units.Add(UnitHelper.CreateUnitInfo(sendUnit));
+            createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(sendUnit));
             MessageHelper.SendToClient(unit, createUnits);
         }
         

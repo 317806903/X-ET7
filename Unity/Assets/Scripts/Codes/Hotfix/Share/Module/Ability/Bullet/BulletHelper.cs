@@ -7,6 +7,7 @@ namespace ET.Ability
 {
     [FriendOf(typeof(Unit))]
     [FriendOf(typeof(BulletObj))]
+    [FriendOf(typeof(NumericComponent))]
     public static class BulletHelper
     {
         public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle)
@@ -18,6 +19,13 @@ namespace ET.Ability
             bulletUnit.AddComponent<TeamFlagObj, TeamFlagType>(unit.GetComponent<TeamFlagObj>().GetTeamFlagType());
             BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
             bulletObj.Init(unit.Id, actionCfgFireBullet.BulletId, actionCfgFireBullet.Duration);
+
+            NumericComponent numericComponent = bulletUnit.AddComponent<NumericComponent>();
+            numericComponent.Set(NumericType.Speed, 6f); // 速度是6米每秒
+            numericComponent.Set(NumericType.AOI, 15000); // 视野15米
+            
+            bulletUnit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            
             MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
             unitComponent.Add(bulletUnit);
 
@@ -27,6 +35,10 @@ namespace ET.Ability
             {
                 unit = unit,
                 createUnit = bulletUnit,
+            });
+            
+            EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
+                units = new List<Unit>(){bulletUnit},
             });
         }
         

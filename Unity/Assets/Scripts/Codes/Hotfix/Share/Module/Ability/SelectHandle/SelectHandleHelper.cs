@@ -66,11 +66,11 @@ namespace ET.Ability
             ListComponent<Unit> list;
             if (isFriend)
             {
-                list = UnitHelper.GetHostileForces(unit, isOnlyPlayer);
+                list = UnitHelper.GetFriends(unit, isOnlyPlayer);
             }
             else
             {
-                list = UnitHelper.GetFriends(unit, isOnlyPlayer);
+                list = UnitHelper.GetHostileForces(unit, isOnlyPlayer);
             }
             
             int selectNum = actionCallAutoUnit.SelectNum;
@@ -87,8 +87,8 @@ namespace ET.Ability
                 float disSq = math.distancesq(targetUnit.Position, unit.Position);
                 if (disSq <= radiusSq)
                 {
-                    float3 dir = targetUnit.Position - unit.Position;
-                    float angleTmp = math.degrees(math.acos(math.dot(unit.Forward, dir)));
+                    float3 dir = math.normalize(targetUnit.Position - unit.Position);
+                    float angleTmp = math.degrees(math.acos(math.clamp(math.dot(unit.Forward, dir), -1, 1)));
                     if (angleTmp < angleHalf)
                     {
                         if (IsAngleFirst)

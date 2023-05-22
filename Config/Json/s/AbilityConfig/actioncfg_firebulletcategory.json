@@ -41,7 +41,7 @@
       "$type": "TrackingMoveTweenType",
       "speed": 2,
       "acceleratedSpeed": 0,
-      "rotateAngle": 3
+      "rotateAngle": 25
     }
   }
 ]

@@ -21,6 +21,7 @@ namespace ET.Client
             {
                 Transform transform = self.GameObject.transform;
                 transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, self.GetUnit().Rotation, Time.deltaTime);
             }
         }
 

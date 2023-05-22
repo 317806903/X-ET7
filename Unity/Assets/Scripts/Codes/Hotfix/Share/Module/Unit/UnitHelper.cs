@@ -175,7 +175,7 @@ namespace ET.Ability
         public static void ResetNodePosition(Unit unit, Unit targetUnit, string nodeName, Vector3 offSetPosition, Vector3 relateForward)
         {
             targetUnit.Position = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
-            
+            targetUnit.Forward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
         }
         
         public static void AddSyncUnit(Unit unit)

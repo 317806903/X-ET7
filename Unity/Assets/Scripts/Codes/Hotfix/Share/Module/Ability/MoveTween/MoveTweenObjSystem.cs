@@ -76,31 +76,45 @@ namespace ET.Ability
         {
             Unit targetUnit;
             SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
-            if (selectHandleType == SelectHandleType.SelectUnits)
-            {
-                long targetUnitId = self.selectHandle.unitIds[0];
-                targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-            }
-            else
+            if (selectHandleType != SelectHandleType.SelectUnits)
             {
                 return;
             }
+            
             Unit unit = self.GetUnit();
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             float rotateAngle = moveTweenType.RotateAngle;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
             
-            float3 dir = targetUnit.Position - unit.Position;
-            float angleTmp = math.degrees(math.acos(math.dot(unit.Forward, dir)));
-            if (angleTmp > rotateAngle)
+            float3 dir = float3.zero;
+            if (self.selectHandle.unitIds.Count == 0)
             {
-                angleTmp = rotateAngle;
+            }
+            else
+            {
+                long targetUnitId = self.selectHandle.unitIds[0];
+                targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                dir = targetUnit.Position - unit.Position;
             }
 
-            unit.Forward = math.lerp(unit.Forward, dir, rotateAngle * fixedDeltaTime / angleTmp);
-            self.forward = unit.Forward;
-            unit.Position += math.normalize(unit.Forward) * self.speed * fixedDeltaTime;
+            if (dir.Equals(float3.zero) == false)
+            {
+                dir = math.normalize(dir);
+                float angleTmp = math.degrees(math.acos(math.clamp(math.dot(unit.Forward, dir), -1, 1)));
+                if (angleTmp > 0)
+                {
+                    if (angleTmp > rotateAngle)
+                    {
+                        angleTmp = rotateAngle;
+                    }
+                    
+                    self.forward = math.lerp(unit.Forward, dir, rotateAngle * fixedDeltaTime / angleTmp);
+                    self.forward = math.normalize(self.forward);
+                    unit.Forward = self.forward;
+                }
+            }
+            unit.Position += unit.Forward * self.speed * fixedDeltaTime;
         }
         
         public static void DoMoveTween_Around(this MoveTweenObj self, AroundMoveTweenType moveTweenType, float fixedDeltaTime)

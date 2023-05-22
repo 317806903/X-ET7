@@ -4,7 +4,7 @@
     "name": "子弹1",
     "res_id": "ResUnit_1",
     "canHitAfterCreated": 0.1,
-    "hitTimes": 2,
+    "hitTimes": 1,
     "sameTargetDelay": 1,
     "monitorTriggers": [
       {

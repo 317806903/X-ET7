@@ -34,6 +34,7 @@ namespace ET.Server
                 {
                     configFilePath = $"../Config/Excel/s/GameConfig/{configType.Name}.bytes";
                 }
+                Log.Debug($"GetAllConfigBytes {configFilePath}");
                 output[configType] = new ByteBuf(File.ReadAllBytes(configFilePath));
             }
 

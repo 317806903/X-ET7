@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GlobalConfig
   m_EditorClassIdentifier: 
   CodeMode: 1
-  PlayMode: 0
-  ModelVersion: 35
-  HotFixVersion: 35
+  PlayMode: 1
+  ModelVersion: 37
+  HotFixVersion: 37

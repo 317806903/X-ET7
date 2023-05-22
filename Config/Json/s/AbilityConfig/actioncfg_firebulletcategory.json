@@ -17,7 +17,7 @@
     },
     "moveType": {
       "$type": "StraightMoveTweenType",
-      "speed": 3,
+      "speed": 2,
       "acceleratedSpeed": 0
     }
   },
@@ -39,7 +39,7 @@
     },
     "moveType": {
       "$type": "TrackingMoveTweenType",
-      "speed": 3,
+      "speed": 2,
       "acceleratedSpeed": 0,
       "rotateAngle": 3
     }

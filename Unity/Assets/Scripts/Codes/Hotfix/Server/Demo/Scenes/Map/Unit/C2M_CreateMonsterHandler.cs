@@ -9,10 +9,10 @@ namespace ET.Server
 		protected override async ETTask Run(Unit unit, C2M_CreateMonster message)
 		{
 			Unit monsterUnit = UnitFactory.Create(unit.DomainScene(), 0, UnitType.Monster, message.Position);
-			EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
-				units = new List<Unit>(){monsterUnit},
-			});
-			
+			// EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
+			// 	units = new List<Unit>(){monsterUnit},
+			// });
+			//
 			await ETTask.CompletedTask;
 		}
 	}

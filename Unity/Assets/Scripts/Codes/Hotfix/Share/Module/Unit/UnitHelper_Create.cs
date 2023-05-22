@@ -49,7 +49,6 @@ namespace ET.Ability
                     unit.AddComponent<TeamFlagObj, TeamFlagType>(TeamFlagType.Team1);
 
                     return unit;
-                    break;
                 }
                 case UnitType.Monster:
                 {
@@ -80,7 +79,6 @@ namespace ET.Ability
                     SkillHelper.LearnSkill(unit, "Skill_1", 1, SkillSlotType.NormalAttack);
 
                     return unit;
-                    break;
                 }
                 case UnitType.NPC:
                 {
@@ -111,7 +109,6 @@ namespace ET.Ability
                     unit.AddComponent<ET.Ability.MoveComponent>();
                     unit.AddComponent<ET.Ability.RotateComponent>();
                     return unit;
-                    break;
                 }
                 case UnitType.Aoe:
                 {

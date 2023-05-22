@@ -58,8 +58,8 @@ namespace ET
 			}
 			lastChkTimer = TimeHelper.ClientFrameTime();
 			while (logicTimer >= TimeHelper.FixedDetalTimeLong)
-			{
-				logicTimer -= TimeHelper.FixedDetalTimeLong;
+            {     
+                logicTimer -= TimeHelper.FixedDetalTimeLong;
 
 				FixedUpdate();
 			}

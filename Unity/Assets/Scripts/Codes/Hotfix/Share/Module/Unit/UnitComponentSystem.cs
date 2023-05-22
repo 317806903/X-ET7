@@ -1,5 +1,6 @@
 ﻿using ET.Ability;
 using System;
+using System.Collections.Generic;
 
 namespace ET
 {
@@ -12,6 +13,7 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
+				self.NeedSyncUnits = new();
 				self.waitRemoveList = new();
 				self.playerList = HashSetComponent<Unit>.Create();
 				self.monsterList = HashSetComponent<Unit>.Create();
@@ -26,6 +28,7 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
+				self.NeedSyncUnits.Dispose();
 				self.waitRemoveList.Clear();
 				self.playerList.Dispose();
 				self.monsterList.Dispose();
@@ -67,6 +70,7 @@ namespace ET
 				unit.FixedUpdate(fixedDeltaTime);
 			}
 			self.DoUnitRemove();
+			self.SyncUnit();
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -77,33 +81,6 @@ namespace ET
 			}
 
 			self.waitRemoveList.Clear();
-		}
-		
-		public static void DoUnitHit(this UnitComponent self, float fixedDeltaTime)
-		{
-			foreach (Unit unitBullet in self.bulletList)
-			{
-				foreach (Unit unitPlayer in self.playerList)
-				{
-					if (TeamFlagHelper.ChkIsFriend(unitBullet, unitPlayer) == false)
-					{
-						if (BulletHelper.ChkBulletHit(unitBullet, unitPlayer))
-						{
-							BulletHelper.DoBulletHit(unitBullet, unitPlayer);
-						}
-					}
-				}
-				foreach (Unit unitMonster in self.monsterList)
-				{
-					if (TeamFlagHelper.ChkIsFriend(unitBullet, unitMonster) == false)
-					{
-						if (BulletHelper.ChkBulletHit(unitBullet, unitMonster))
-						{
-							BulletHelper.DoBulletHit(unitBullet, unitMonster);
-						}
-					}
-				}
-			}
 		}
 		
 		public static HashSetComponent<Unit> GetRecordList(this UnitComponent self, UnitType unitType)
@@ -159,6 +136,28 @@ namespace ET
 			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
 			recordList.Remove(unit);
 			unit?.Dispose();
+		}
+		
+		public static void AddSyncUnit(this UnitComponent self, Unit unit)
+		{
+			self.NeedSyncUnits.Add(unit);
+		}
+		
+		public static void SyncUnit(this UnitComponent self)
+		{
+            if (self.NeedSyncUnits.Count == 0)
+                return;
+            
+			//同步单位状态（位置、方向、）
+            foreach (Unit unit in self.NeedSyncUnits)
+            {
+                if(unit.IsDisposed || unit.Type != UnitType.Bullet)
+	                continue;
+                EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
+	                units = new List<Unit>(){unit},
+                });
+            }
+            self.NeedSyncUnits.Clear();
 		}
 	}
 }

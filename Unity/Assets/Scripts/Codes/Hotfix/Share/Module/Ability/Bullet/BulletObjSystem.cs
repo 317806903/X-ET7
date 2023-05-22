@@ -144,6 +144,7 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             self.duration -= timePassed;
+            //Log.Error(" self.duration:" + self.duration + " " + self.GetUnit().Id);
             self.timeElapsed += timePassed;
             if (self.hitRecords != null)
             {

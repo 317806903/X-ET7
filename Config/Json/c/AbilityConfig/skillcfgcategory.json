@@ -3,7 +3,7 @@
     "id": "Skill_1",
     "name": "技能1",
     "desc": "",
-    "cd": 4,
+    "cd": 40,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnit",

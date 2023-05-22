@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.Client;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -16,9 +17,9 @@ namespace ET.Server
                 List<Unit> list = args.units;
                 foreach (Unit unit in list)
                 {
-                    M2C_CreateUnits createUnits = new () { Units = new List<UnitInfo>() };
-                    createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(unit));
-                    MessageHelper.Broadcast(unit, createUnits);
+                    M2C_SyncUnits syncUnits = new () { Units = new List<UnitInfo>() };
+                    syncUnits.Units.Add(ET.Ability.UnitHelper.SyncUnitSimpleInfo(unit));
+                    MessageHelper.Broadcast(unit, syncUnits);
                 }
                 
             }

@@ -23,23 +23,23 @@ namespace ET.Ability
             NumericComponent numericComponent = bulletUnit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 6f); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000); // 视野15米
-            
-            bulletUnit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
-            
-            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
-            unitComponent.Add(bulletUnit);
 
             UnitHelper.ResetNodePosition(unit, bulletUnit, actionCfgFireBullet.NodeName, actionCfgFireBullet.OffSetPosition, actionCfgFireBullet.RelateForward);
+
+            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
+            bulletUnit.AddComponent<AOIEntity, int, float3>(9 * 1000, bulletUnit.Position);
             
+            unitComponent.Add(bulletUnit);
+
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
                 unit = unit,
                 createUnit = bulletUnit,
             });
             
-            EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
-                units = new List<Unit>(){bulletUnit},
-            });
+            //EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
+            //    units = new List<Unit>(){bulletUnit},
+            //});
         }
         
         public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)

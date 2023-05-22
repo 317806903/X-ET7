@@ -11,7 +11,7 @@ echo ======================= Server ==========================
  -d %CONF_ROOT%\__root__.xml ^
  --input_data_dir %CONF_ROOT% ^
  --output_code_dir %OUTPUT_CODE_DIR%\Server\Config\StartConfig ^
- --output_data_dir %OUTPUT_DATA_DIR%\s\StartConfig ^
+ --output_data_dir %OUTPUT_DATA_DIR%\s\StartConfig\Localhost ^
  --output:exclude_tags c ^
  --gen_types code_cs_bin,data_bin ^
  -s server
@@ -26,7 +26,7 @@ echo ======================= Server Json ==========================
  -d %CONF_ROOT%\__root__.xml ^
  --input_data_dir %CONF_ROOT% ^
  --output_code_dir %OUTPUT_CODE_DIR%\Server\Config\StartConfig ^
- --output_data_dir %OUTPUT_JSON_DIR%\s\StartConfig ^
+ --output_data_dir %OUTPUT_JSON_DIR%\s\StartConfig\Localhost ^
  --output:exclude_tags c ^
  --gen_types data_json ^
  -s server

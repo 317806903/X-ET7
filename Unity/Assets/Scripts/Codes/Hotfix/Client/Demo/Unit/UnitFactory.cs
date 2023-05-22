@@ -16,13 +16,18 @@ namespace ET.Client
 	        unit.Position = unitInfo.Position;
 	        unit.Position = unitInfo.Position;
 	        unit.Forward = unitInfo.Forward;
-	        
-	        NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+	               
+	        foreach (byte[] bytes in unitInfo.Components)
+	        {
+		        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
+		        unit.AddComponent(entity);
+	        }
 
-			foreach (var kv in unitInfo.KV)
-			{
-				numericComponent.Set(kv.Key, kv.Value);
-			}
+	  //       NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+	  //       foreach (var kv in unitInfo.KV)
+			// {
+			// 	numericComponent.Set(kv.Key, kv.Value);
+			// }
 	        
 	        unit.AddComponent<MoveByPathComponent>();
 	        if (unitInfo.MoveInfo != null)
@@ -37,7 +42,7 @@ namespace ET.Client
 	        unit.AddComponent<ObjectWait>();
 
 	        //unit.AddComponent<XunLuoPathComponent>();
-	        
+	 
 	        EventSystem.Instance.Publish(unit.DomainScene(), new EventType.AfterUnitCreate() {Unit = unit});
             return unit;
         }

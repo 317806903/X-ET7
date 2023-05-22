@@ -18,14 +18,12 @@ namespace ET.Server
                     unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
                     
                     return unit;
-                    break;
                 }
                 case UnitType.Monster:
                 {
                     // 加入aoi
                     unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
                     return unit;
-                    break;
                 }
                 case UnitType.NPC:
                 {
@@ -40,7 +38,6 @@ namespace ET.Server
                     // 加入aoi
                     unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
                     return unit;
-                    break;
                 }
                 case UnitType.Aoe:
                 {

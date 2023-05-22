@@ -23,11 +23,6 @@ namespace ET.Ability
             }
         }
 
-        // public static void Init(this TeamFlagObj self, TeamFlagType teamFlagType)
-        // {
-        //     self.teamFlagType = teamFlagType;
-        // }
-        
         public static TeamFlagType GetTeamFlagType(this TeamFlagObj self)
         {
             return self.teamFlagType;

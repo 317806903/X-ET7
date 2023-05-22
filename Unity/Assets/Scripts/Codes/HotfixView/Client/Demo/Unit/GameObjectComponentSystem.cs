@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -11,6 +12,21 @@ namespace ET.Client
             {
                 UnityEngine.Object.Destroy(self.GameObject);
             }
+        }
+        
+        [ObjectSystem]
+        public class UpdateSystem: UpdateSystem<GameObjectComponent>
+        {
+            protected override void Update(GameObjectComponent self)
+            {
+                Transform transform = self.GameObject.transform;
+                transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, Time.deltaTime);
+            }
+        }
+
+        public static Unit GetUnit(this GameObjectComponent self)
+        {
+            return self.GetParent<Unit>();
         }
     }
 }

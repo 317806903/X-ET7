@@ -12,10 +12,6 @@ namespace ET
         Aoe = 6,
     }
 
-    public struct CreateUnit
-    {
-        public List<Unit> units;
-    }
     public struct SyncUnits
     {
         public List<Unit> units;

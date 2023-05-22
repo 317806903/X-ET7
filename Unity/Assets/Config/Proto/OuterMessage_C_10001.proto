@@ -81,6 +81,11 @@ message M2C_CreateUnits // IActorMessage
 	repeated UnitInfo Units = 1;
 }
 
+message M2C_SyncUnits // IActorMessage
+{
+	repeated UnitInfo Units = 1;
+}
+
 message M2C_CreateMyUnit // IActorMessage
 {
 	UnitInfo Unit = 1;

@@ -177,7 +177,11 @@ namespace ET.Ability
             targetUnit.Position = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             
         }
-
+        
+        public static void AddSyncUnit(Unit unit)
+        {
+            GetUnitComponent(unit).AddSyncUnit(unit);
+        }
         
         public static UnitInfo CreateUnitInfo(Unit unit)
         {
@@ -210,6 +214,25 @@ namespace ET.Ability
             {
                 unitInfo.KV.Add(key, value);
             }
+
+            unitInfo.Components = new List<byte[]>();
+            foreach (Entity entity in unit.Components.Values)
+            {
+                if (entity is ITransferClient)
+                {
+                    unitInfo.Components.Add(entity.ToBson());
+                }
+            }
+
+            return unitInfo;
+        }
+        
+        public static UnitInfo SyncUnitSimpleInfo(Unit unit)
+        {
+            UnitInfo unitInfo = new UnitInfo();
+            unitInfo.UnitId = unit.Id;
+            unitInfo.Position = unit.Position;
+            unitInfo.Forward = unit.Forward;
 
             return unitInfo;
         }

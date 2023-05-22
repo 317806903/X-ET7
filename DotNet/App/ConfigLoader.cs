@@ -24,7 +24,11 @@ namespace ET.Server
                 string configFilePath;
                 if (startConfigs.Contains(configType.Name))
                 {
-                    configFilePath = $"../Config/Excel/s/{Options.Instance.StartConfig}/{configType.Name.ToLower()}.bytes";    
+                    configFilePath = $"../Config/Excel/s/{Options.Instance.StartConfig}/{configType.Name.ToLower()}.bytes";
+                }
+                else if (configType.FullName.StartsWith("ET.AbilityConfig."))
+                {
+                    configFilePath = $"../Config/Excel/s/AbilityConfig/{configType.Name}.bytes";
                 }
                 else
                 {

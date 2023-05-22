@@ -62,6 +62,7 @@ namespace ET.Ability
                 return;
             }
 
+            Log.Debug($"ActionHandlerComponent {key}:{actionId}");
             self.dic[key].Run(unit, actionId, selectHandle).Coroutine();
         }
     }

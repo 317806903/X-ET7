@@ -46,7 +46,7 @@
       },
       {
         "timeElapsed": 1,
-        "action_id": "FireBullet_1",
+        "action_id": "FireBullet_2",
         "actionCallParam": {
           "$type": "ActionCallAutoUnit",
           "isFriend": false,
@@ -79,7 +79,7 @@
       },
       {
         "timeElapsed": 1,
-        "action_id": "FireBullet_1",
+        "action_id": "FireBullet_3",
         "actionCallParam": {
           "$type": "ActionCallAutoUnit",
           "isFriend": false,

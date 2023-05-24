@@ -62,6 +62,11 @@ namespace ET
 
 		public static void FixedUpdate(this UnitComponent self)
 		{
+			if (self.DomainScene().SceneType != SceneType.Map)
+			{
+				return;
+			}
+			
 			float fixedDeltaTime = TimeHelper.FixedDetalTime;
 			self.DoUnitHit(fixedDeltaTime);
 			foreach (var child in self.Children)

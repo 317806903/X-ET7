@@ -3,7 +3,46 @@
     "id": "Bullet_1",
     "name": "子弹1",
     "desc": "",
-    "res_id": "ResUnit_1",
+    "res_id": "ResUnit_Bullet1",
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "monitorTriggers": [
+      {
+        "bulletTrig": 1,
+        "action_id": "CreateEffect_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        }
+      },
+      {
+        "bulletTrig": 2,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnHitUnit"
+        }
+      },
+      {
+        "bulletTrig": 2,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        }
+      },
+      {
+        "bulletTrig": 4,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        }
+      }
+    ]
+  },
+  {
+    "id": "Bullet_2",
+    "name": "子弹2",
+    "desc": "",
+    "res_id": "ResUnit_Bullet2",
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
@@ -39,19 +78,26 @@
     ]
   },
   {
-    "id": "Bullet_2",
-    "name": "子弹2",
+    "id": "Bullet_3",
+    "name": "子弹1",
     "desc": "",
-    "res_id": "ResUnit_2",
+    "res_id": "ResUnit_Bullet3",
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "monitorTriggers": [
       {
         "bulletTrig": 1,
-        "action_id": "PlayAudio_1",
+        "action_id": "CreateEffect_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
+        }
+      },
+      {
+        "bulletTrig": 1,
+        "action_id": "CreateEffect_3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
         }
       },
       {

@@ -25,7 +25,7 @@ namespace ET.Ability
 
         public static void Init(this TimelineObj self, string timelineCfgId, long casterId, SelectHandle selectHandle)
         {
-            self.model = TimelineCfgCategory.Instance.Get(timelineCfgId);
+            self.CfgId = timelineCfgId;
             self.casterUnitId = casterId;
             self.timeScale = 1.00f;
             self.selectHandle = selectHandle;

@@ -54,19 +54,6 @@ MonoBehaviour:
         FilterRuleName: CollectBytes
         AssetTags: 
         UserData: 
-    - GroupName: Unit
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/Res/Unit
-        CollectorGUID: 20054f3f410561544a8b77946c75836d
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
     - GroupName: Scene
       GroupDesc: 
       AssetTags: 
@@ -129,7 +116,7 @@ MonoBehaviour:
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
     - GroupName: AbilityConfig
@@ -156,5 +143,18 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: TmpResPrefab
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Res/TmpRes/Prefabs
+        CollectorGUID: 3f5fb976ca04ca642bbef35580903084
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 

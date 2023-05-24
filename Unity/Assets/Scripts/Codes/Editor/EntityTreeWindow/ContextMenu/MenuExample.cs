@@ -7,7 +7,7 @@ namespace ET
         {
             var unit = entity as Unit;
 
-            Log.Debug(unit.Config.Name);
+            Log.Debug(unit.model.Name);
         }
     }
 }

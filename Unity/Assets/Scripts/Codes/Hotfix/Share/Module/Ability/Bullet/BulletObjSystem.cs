@@ -28,7 +28,7 @@ namespace ET.Ability
         public static void Init(this BulletObj self, long casterUnitId, string bulletCfgId, float duration)
         {
             self.casterUnitId = casterUnitId;
-            self.model = BulletCfgCategory.Instance.Get(bulletCfgId);
+            self.CfgId = bulletCfgId;
             self.duration = duration;
             self.timeElapsed = 0;
             self.canHitAfterCreated = self.model.CanHitAfterCreated;

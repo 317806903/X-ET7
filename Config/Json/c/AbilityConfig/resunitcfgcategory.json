@@ -1,14 +1,32 @@
 [
   {
-    "id": "ResUnit_1",
+    "id": "ResUnit_Player1",
     "name": "",
     "desc": "prefab1",
-    "res_name": "Assets/ResAB/UnitPrefab/prefab1.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Character/Character1.prefab"
   },
   {
-    "id": "ResUnit_2",
+    "id": "ResUnit_Monster1",
     "name": "",
     "desc": "prefab2",
-    "res_name": "Assets/ResAB/UnitPrefab/prefab2.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Monster1.prefab"
+  },
+  {
+    "id": "ResUnit_Bullet1",
+    "name": "",
+    "desc": "prefab3",
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet1.prefab"
+  },
+  {
+    "id": "ResUnit_Bullet2",
+    "name": "",
+    "desc": "prefab3",
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet2.prefab"
+  },
+  {
+    "id": "ResUnit_Bullet3",
+    "name": "",
+    "desc": "prefab3",
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet3.prefab"
   }
 ]

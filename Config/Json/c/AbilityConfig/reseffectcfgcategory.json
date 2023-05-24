@@ -10,5 +10,11 @@
     "name": "",
     "desc": "prefab2",
     "res_name": "Assets/ResAB/EffectPrefab/prefab2.prefab"
+  },
+  {
+    "id": "ResEffect_3",
+    "name": "",
+    "desc": "prefab3",
+    "res_name": "Assets/Res/TmpRes/Prefabs/Effect/Fire_A.prefab"
   }
 ]

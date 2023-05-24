@@ -9,10 +9,16 @@ namespace ET
     [DebuggerDisplay("ViewName,nq")]
     public class Unit: Entity, IAwake<string>, IAwake
     {
-        public string unitCfgId { get; set; } //配置表id
+        public string CfgId { get; set; } //配置表id
 
         [BsonIgnore]
-        public UnitCfg Config;
+        public UnitCfg model
+        {
+            get
+            {
+                return UnitCfgCategory.Instance.Get(this.CfgId);
+            }
+        }
 
         public UnitType Type;
 

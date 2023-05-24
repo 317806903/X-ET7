@@ -1,12 +1,12 @@
 [
   {
-    "id": "Unit_1",
+    "id": "Unit_Player1",
     "name": "对象1",
-    "res_id": "ResUnit_1"
+    "res_id": "ResUnit_Player1"
   },
   {
-    "id": "Unit_2",
+    "id": "Unit_Monster1",
     "name": "对象2",
-    "res_id": "ResUnit_2"
+    "res_id": "ResUnit_Monster1"
   }
 ]

@@ -2,11 +2,58 @@
   {
     "id": "CreateEffect_1",
     "name": "创建特效1",
-    "res_id": "ResEffect_1"
+    "res_id": "ResEffect_1",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": false,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
   },
   {
     "id": "CreateEffect_2",
     "name": "创建特效2",
-    "res_id": "ResEffect_2"
+    "res_id": "ResEffect_2",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": false,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "id": "CreateEffect_3",
+    "name": "创建特效3",
+    "res_id": "ResEffect_3",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": false,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
   }
 ]

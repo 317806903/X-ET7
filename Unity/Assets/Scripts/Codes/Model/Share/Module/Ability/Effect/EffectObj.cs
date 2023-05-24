@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -8,10 +9,22 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public class EffectObj: Entity, IAwake, IDestroy
     {
+        public bool isSceneEffect;
+        public long unitId;
+        
+        public string CfgId { get; set; }
+        
         ///<summary>
         ///这是个什么Effect
         ///</summary>
-        public ResEffectCfg model;
+        [BsonIgnore]
+        public ResEffectCfg model
+        {
+            get
+            {
+                return ResEffectCfgCategory.Instance.Get(this.CfgId);
+            }
+        }
 
         ///<summary>
         ///挂载点,用于查找出这个transform后添加为子节点

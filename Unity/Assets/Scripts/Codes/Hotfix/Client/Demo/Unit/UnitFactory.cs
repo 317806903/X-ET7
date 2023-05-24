@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using ET.Ability;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -16,13 +17,22 @@ namespace ET.Client
 	        unit.Position = unitInfo.Position;
 	        unit.Position = unitInfo.Position;
 	        unit.Forward = unitInfo.Forward;
-	               
+
 	        foreach (byte[] bytes in unitInfo.Components)
 	        {
 		        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
 		        unit.AddComponent(entity);
 	        }
 
+	        EffectComponent effectComponent = unit.AddComponent<EffectComponent>();
+	        if (unitInfo.EffectComponents != null)
+	        {
+		        foreach (byte[] bytes in unitInfo.EffectComponents)
+		        {
+			        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
+			        effectComponent.AddChild(entity);
+		        }
+	        }
 	  //       NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
 	  //       foreach (var kv in unitInfo.KV)
 			// {

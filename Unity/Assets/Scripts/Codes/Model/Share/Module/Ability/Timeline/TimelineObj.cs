@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -8,10 +9,19 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public class TimelineObj: Entity, IAwake, IDestroy
     {
+        public string CfgId { get; set; }
+        
         ///<summary>
         ///Timeline的基础信息
         ///</summary>
-        public TimelineCfg model;
+        [BsonIgnore]
+        public TimelineCfg model
+        {
+            get
+            {
+                return TimelineCfgCategory.Instance.Get(this.CfgId);
+            }
+        }
 
         ///<summary>
         ///Timeline的焦点对象也就是创建timeline的负责人，比如技能产生的timeline，就是技能的施法者

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
@@ -22,9 +24,26 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this EffectObj self, string buffCfgId)
+        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, float duration, string nodeName, float3 offSetPosition, 
+        float3 
+                relateForward)
         {
-            
+            self.isSceneEffect = unitId == 0? true : false;
+            self.unitId = unitId;
+            self.CfgId = effectCfgId;
+            self.duration = duration;
+            self.timeElapsed = 0;
+            self.permanent = self.duration == -1? true : false;
+            self.hangPointName = nodeName;
+            self.offSet = offSetPosition;
+            self.rotation = relateForward;
+            self.key = key;
+        }
+        
+        public static Unit GetUnit(this EffectObj self)
+        {
+            EffectComponent effectComponent = self.GetParent<EffectComponent>();
+            return effectComponent.GetParent<Unit>();
         }
 
         public static void FixedUpdate(this EffectObj self, float fixedDeltaTime)

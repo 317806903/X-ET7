@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -6,7 +7,9 @@ namespace ET.Ability
 	{
 		public override async ETTask Run(Unit unit, string actionId, SelectHandle selectHandle)
 		{
-			//EffectHelper.AddEffect(UnitHelper.GetUnit(scene, args.unitId), args.cfgId);
+			//await TimerComponent.Instance.WaitFrameAsync();
+			ActionCfg_CreateEffect actionCfgCreateEffect = ActionCfg_CreateEffectCategory.Instance.Get(actionId);
+			EffectHelper.AddEffect(unit, actionCfgCreateEffect, selectHandle);
 			await ETTask.CompletedTask;
 		}
 	}

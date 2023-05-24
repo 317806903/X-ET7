@@ -41,7 +41,30 @@
       "$type": "TrackingMoveTweenType",
       "speed": 2,
       "acceleratedSpeed": 0,
-      "rotateAngle": 25
+      "rotateAngle": 50
+    }
+  },
+  {
+    "id": "FireBullet_3",
+    "name": "射出子弹3",
+    "bullet_id": "Bullet_3",
+    "duration": 50,
+    "nodeName": "",
+    "offSetPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "relateForward": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "moveType": {
+      "$type": "TrackingMoveTweenType",
+      "speed": 2,
+      "acceleratedSpeed": 0,
+      "rotateAngle": 50
     }
   }
 ]

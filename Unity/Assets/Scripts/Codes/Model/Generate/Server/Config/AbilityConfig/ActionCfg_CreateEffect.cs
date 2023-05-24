@@ -19,6 +19,12 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         ResId = _buf.ReadString();
+        Key = _buf.ReadString();
+        Duration = _buf.ReadFloat();
+        IsSceneEffect = _buf.ReadBool();
+        NodeName = _buf.ReadString();
+        OffSetPosition = _buf.ReadVector3();
+        RelateForward = _buf.ReadVector3();
         PostInit();
     }
 
@@ -40,6 +46,30 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public ResEffectCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 唯一key(用来便于准确删除)
+    /// </summary>
+    public string Key { get; private set; }
+    /// <summary>
+    /// 持续时间(s)
+    /// </summary>
+    public float Duration { get; private set; }
+    /// <summary>
+    /// 是否场景特效
+    /// </summary>
+    public bool IsSceneEffect { get; private set; }
+    /// <summary>
+    /// 从这个挂载点对应位置生成
+    /// </summary>
+    public string NodeName { get; private set; }
+    /// <summary>
+    /// 挂载点的相对偏移
+    /// </summary>
+    public System.Numerics.Vector3 OffSetPosition { get; private set; }
+    /// <summary>
+    /// 相对发送者的面向偏移
+    /// </summary>
+    public System.Numerics.Vector3 RelateForward { get; private set; }
 
     public const int __ID__ = -1045636034;
     public override int GetTypeId() => __ID__;
@@ -60,6 +90,12 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "ResId:" + ResId + ","
+        + "Key:" + Key + ","
+        + "Duration:" + Duration + ","
+        + "IsSceneEffect:" + IsSceneEffect + ","
+        + "NodeName:" + NodeName + ","
+        + "OffSetPosition:" + OffSetPosition + ","
+        + "RelateForward:" + RelateForward + ","
         + "}";
     }
     

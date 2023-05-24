@@ -26,7 +26,7 @@ namespace ET.Ability
         public static void Init(this BuffObj self, string buffCfgId)
         {
             self.monitorTriggerList = new();
-            self.model = BuffCfgCategory.Instance.Get(buffCfgId);
+            self.CfgId = buffCfgId;
             for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
             {
                 AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent = (AbilityBuffMonitorTriggerEvent)Enum.Parse(typeof(AbilityBuffMonitorTriggerEvent), self.model.MonitorTriggers[i].BuffTrig.ToString());

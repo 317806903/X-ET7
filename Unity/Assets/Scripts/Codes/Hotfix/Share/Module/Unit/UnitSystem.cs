@@ -9,7 +9,7 @@ namespace ET
         {
             protected override void Awake(Unit self, string unitCfgId)
             {
-                self.unitCfgId = unitCfgId;
+                self.CfgId = unitCfgId;
             }
         }
         

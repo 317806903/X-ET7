@@ -158,6 +158,9 @@ namespace ET
 		[ProtoMember(8)]
 		public List<byte[]> Components { get; set; }
 
+		[ProtoMember(9)]
+		public List<byte[]> EffectComponents { get; set; }
+
 	}
 
 	[Message(OuterMessage.M2C_CreateUnits)]
@@ -175,6 +178,24 @@ namespace ET
 	{
 		[ProtoMember(1)]
 		public List<UnitInfo> Units { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SyncUnitEffects)]
+	[ProtoContract]
+	public partial class M2C_SyncUnitEffects: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public long UnitId { get; set; }
+
+		[ProtoMember(2)]
+		public int AddOrRemove { get; set; }
+
+		[ProtoMember(3)]
+		public long EffectObjId { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] EffectComponent { get; set; }
 
 	}
 
@@ -541,31 +562,32 @@ namespace ET
 		 public const ushort UnitInfo = 10011;
 		 public const ushort M2C_CreateUnits = 10012;
 		 public const ushort M2C_SyncUnits = 10013;
-		 public const ushort M2C_CreateMyUnit = 10014;
-		 public const ushort M2C_StartSceneChange = 10015;
-		 public const ushort M2C_RemoveUnits = 10016;
-		 public const ushort C2M_PathfindingResult = 10017;
-		 public const ushort C2M_Stop = 10018;
-		 public const ushort M2C_PathfindingResult = 10019;
-		 public const ushort M2C_Stop = 10020;
-		 public const ushort C2G_Ping = 10021;
-		 public const ushort G2C_Ping = 10022;
-		 public const ushort G2C_Test = 10023;
-		 public const ushort C2M_Reload = 10024;
-		 public const ushort M2C_Reload = 10025;
-		 public const ushort C2R_Login = 10026;
-		 public const ushort R2C_Login = 10027;
-		 public const ushort C2G_LoginGate = 10028;
-		 public const ushort G2C_LoginGate = 10029;
-		 public const ushort G2C_TestHotfixMessage = 10030;
-		 public const ushort C2M_TestRobotCase = 10031;
-		 public const ushort M2C_TestRobotCase = 10032;
-		 public const ushort C2M_TestRobotCase2 = 10033;
-		 public const ushort M2C_TestRobotCase2 = 10034;
-		 public const ushort C2M_TransferMap = 10035;
-		 public const ushort M2C_TransferMap = 10036;
-		 public const ushort C2G_Benchmark = 10037;
-		 public const ushort G2C_Benchmark = 10038;
-		 public const ushort C2M_CreateMonster = 10039;
+		 public const ushort M2C_SyncUnitEffects = 10014;
+		 public const ushort M2C_CreateMyUnit = 10015;
+		 public const ushort M2C_StartSceneChange = 10016;
+		 public const ushort M2C_RemoveUnits = 10017;
+		 public const ushort C2M_PathfindingResult = 10018;
+		 public const ushort C2M_Stop = 10019;
+		 public const ushort M2C_PathfindingResult = 10020;
+		 public const ushort M2C_Stop = 10021;
+		 public const ushort C2G_Ping = 10022;
+		 public const ushort G2C_Ping = 10023;
+		 public const ushort G2C_Test = 10024;
+		 public const ushort C2M_Reload = 10025;
+		 public const ushort M2C_Reload = 10026;
+		 public const ushort C2R_Login = 10027;
+		 public const ushort R2C_Login = 10028;
+		 public const ushort C2G_LoginGate = 10029;
+		 public const ushort G2C_LoginGate = 10030;
+		 public const ushort G2C_TestHotfixMessage = 10031;
+		 public const ushort C2M_TestRobotCase = 10032;
+		 public const ushort M2C_TestRobotCase = 10033;
+		 public const ushort C2M_TestRobotCase2 = 10034;
+		 public const ushort M2C_TestRobotCase2 = 10035;
+		 public const ushort C2M_TransferMap = 10036;
+		 public const ushort M2C_TransferMap = 10037;
+		 public const ushort C2G_Benchmark = 10038;
+		 public const ushort G2C_Benchmark = 10039;
+		 public const ushort C2M_CreateMonster = 10040;
 	}
 }

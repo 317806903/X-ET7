@@ -188,7 +188,7 @@ namespace ET.Ability
             UnitInfo unitInfo = new UnitInfo();
             NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
-            unitInfo.ConfigId = unit.unitCfgId;
+            unitInfo.ConfigId = unit.CfgId;
             unitInfo.Type = (int)unit.Type;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
@@ -221,6 +221,16 @@ namespace ET.Ability
                 if (entity is ITransferClient)
                 {
                     unitInfo.Components.Add(entity.ToBson());
+                }
+            }
+            
+            EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
+            if (effectComponent != null)
+            {
+                unitInfo.EffectComponents = new List<byte[]>();
+                foreach (Entity entity in effectComponent.Components.Values)
+                {
+                    unitInfo.EffectComponents.Add(entity.ToBson());
                 }
             }
 

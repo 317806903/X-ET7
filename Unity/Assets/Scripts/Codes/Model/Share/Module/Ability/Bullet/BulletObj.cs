@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -7,10 +8,19 @@ namespace ET.Ability
     [ComponentOf(typeof (Unit))]
     public class BulletObj: Entity, IAwake, IDestroy
     {
+        public string CfgId { get; set; }
+        
         ///<summary>
         ///这是一颗怎样的子弹
         ///</summary>
-        public BulletCfg model;
+        [BsonIgnore]
+        public BulletCfg model
+        {
+            get
+            {
+                return BulletCfgCategory.Instance.Get(this.CfgId);
+            }
+        }
 
         ///<summary>
         ///要发射子弹的这个人的gameObject，这里就认角色（拥有ChaState的）

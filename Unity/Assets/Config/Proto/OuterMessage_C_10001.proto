@@ -74,6 +74,7 @@ message UnitInfo
 	map<int32, int64> KV = 6;
 	MoveInfo MoveInfo = 7;
 	repeated bytes Components = 8;
+	repeated bytes EffectComponents = 9;
 }
 
 message M2C_CreateUnits // IActorMessage
@@ -84,6 +85,14 @@ message M2C_CreateUnits // IActorMessage
 message M2C_SyncUnits // IActorMessage
 {
 	repeated UnitInfo Units = 1;
+}
+
+message M2C_SyncUnitEffects // IActorMessage
+{
+	int64 UnitId = 1;
+	int32 AddOrRemove = 2;
+	int64 EffectObjId = 3;
+	bytes EffectComponent = 4;
 }
 
 message M2C_CreateMyUnit // IActorMessage

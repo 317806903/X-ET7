@@ -200,7 +200,10 @@ namespace FairyGUI
             this.gameObject.name = "Stage";
             this.gameObject.layer = LayerMask.NameToLayer(StageCamera.LayerName);
             this.gameObject.AddComponent<StageEngine>();
-            this.gameObject.AddComponent<UIContentScaler>();
+            UIContentScaler _UIContentScaler = this.gameObject.AddComponent<UIContentScaler>();
+            _UIContentScaler.scaleMode = UIContentScaler.ScaleMode.ScaleWithScreenSize;
+            _UIContentScaler.designResolutionX = 1080;
+            _UIContentScaler.designResolutionY = 1920;
             this.gameObject.SetActive(true);
             UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
 

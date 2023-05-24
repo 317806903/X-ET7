@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -8,10 +9,19 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public class BuffObj: Entity, IAwake, IDestroy
     {
+        public string CfgId { get; set; }
+
         ///<summary>
         ///这是个什么buff
         ///</summary>
-        public BuffCfg model;
+        [BsonIgnore]
+        public BuffCfg model
+        {
+            get
+            {
+                return BuffCfgCategory.Instance.Get(this.CfgId);
+            }
+        }
 
         ///<summary>
         ///剩余多久，单位：秒

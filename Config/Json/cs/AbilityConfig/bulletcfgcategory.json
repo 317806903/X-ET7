@@ -19,7 +19,7 @@
         "bulletTrig": 2,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnHitUnit"
+          "$type": "ActionCallOnAttackUnit"
         }
       },
       {
@@ -58,7 +58,7 @@
         "bulletTrig": 2,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnHitUnit"
+          "$type": "ActionCallOnAttackUnit"
         }
       },
       {
@@ -90,26 +90,19 @@
         "bulletTrig": 1,
         "action_id": "CreateEffect_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
-        }
-      },
-      {
-        "bulletTrig": 1,
-        "action_id": "CreateEffect_3",
-        "actionCallParam": {
           "$type": "ActionCallAutoSelf"
         }
       },
       {
         "bulletTrig": 2,
-        "action_id": "PlayAudio_1",
+        "action_id": "CreateEffect_1",
         "actionCallParam": {
-          "$type": "ActionCallOnHitUnit"
+          "$type": "ActionCallCasterPlayerUnit"
         }
       },
       {
         "bulletTrig": 2,
-        "action_id": "PlayAudio_1",
+        "action_id": "CreateEffect_1",
         "actionCallParam": {
           "$type": "ActionCallBeHurtUnit"
         }

@@ -269,6 +269,7 @@
     <type fullname="YooAsset.DownloaderOperation/OnDownloadProgress" preserve="all" />
     <type fullname="YooAsset.DownloaderOperation/OnStartDownloadFile" preserve="all" />
     <type fullname="YooAsset.EOperationStatus" preserve="all" />
+    <type fullname="YooAsset.EPlayMode" preserve="all" />
     <type fullname="YooAsset.OperationHandleBase" preserve="all" />
     <type fullname="YooAsset.RawFileOperationHandle" preserve="all" />
     <type fullname="YooAsset.ResourceDownloaderOperation" preserve="all" />

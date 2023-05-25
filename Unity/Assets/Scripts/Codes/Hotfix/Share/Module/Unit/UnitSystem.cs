@@ -13,14 +13,6 @@ namespace ET
             }
         }
         
-        [ObjectSystem]
-        public class UnitAwakeSystem2: AwakeSystem<Unit>
-        {
-            protected override void Awake(Unit self)
-            {
-            }
-        }
-
         public static void Destroy(this Unit self)
         {
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.UnitOnRemoved() { unit = self });

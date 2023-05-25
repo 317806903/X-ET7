@@ -109,7 +109,7 @@ namespace ET.Ability
             }
         }
 
-        public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onHitUnit, Unit beHurtUnit)
+        public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
             string actionId = buffActionCall.ActionId;
             SelectHandle selectHandle;
@@ -132,9 +132,9 @@ namespace ET.Ability
                 {
                     targetUnit = self.GetCasterPlayerUnit();
                 }
-                else if (buffActionCall.ActionCallParam is ActionCallOnHitUnit actionCallOnHitUnit)
+                else if (buffActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
                 {
-                    targetUnit = onHitUnit;
+                    targetUnit = onAttackUnit;
                 }
                 else if (buffActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
                 {

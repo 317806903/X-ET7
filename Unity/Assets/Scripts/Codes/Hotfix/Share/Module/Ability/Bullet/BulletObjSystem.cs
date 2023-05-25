@@ -95,7 +95,7 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
+        public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
             List<BulletActionCall> actionIds = self.GetActionIds(abilityBulletMonitorTriggerEvent);
             for (int i = 0; i < actionIds.Count; i++)
@@ -122,9 +122,9 @@ namespace ET.Ability
                     {
                         targetUnit = self.GetCasterPlayerUnit();
                     }
-                    else if (bulletActionCall.ActionCallParam is ActionCallOnHitUnit actionCallOnHitUnit)
+                    else if (bulletActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
                     {
-                        targetUnit = onHitUnit;
+                        targetUnit = onAttackUnit;
                     }
                     else if (bulletActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
                     {

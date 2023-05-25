@@ -45,7 +45,8 @@ namespace ET
 						HybridCLRHelper.Load();
 					}
 				}
-			
+				
+				Log.Debug($"---CodeLoader---Model_{GlobalConfig.Instance.ModelVersion}.dll");
 				this.model = Assembly.Load(assBytes, pdbBytes);
 				this.LoadHotfix();
 			}
@@ -60,6 +61,7 @@ namespace ET
 			byte[] assBytes = MonoResComponent.Instance.LoadRawFile($"Hotfix_{GlobalConfig.Instance.HotFixVersion}.dll");
 			byte[] pdbBytes = MonoResComponent.Instance.LoadRawFile($"Hotfix_{GlobalConfig.Instance.HotFixVersion}.pdb");
 
+			Log.Debug($"---CodeLoader---Hotfix_{GlobalConfig.Instance.ModelVersion}.dll");
 			Assembly hotfixAssembly = Assembly.Load(assBytes, pdbBytes);
 			
 			Dictionary<string, Type> types = AssemblyHelper.GetAssemblyTypes(typeof (Game).Assembly, typeof(Init).Assembly, this.model, hotfixAssembly);

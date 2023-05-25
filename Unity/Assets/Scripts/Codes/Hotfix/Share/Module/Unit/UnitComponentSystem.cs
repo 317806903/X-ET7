@@ -20,6 +20,8 @@ namespace ET
 				self.npcList = HashSetComponent<Unit>.Create();
 				self.sceneObjList = HashSetComponent<Unit>.Create();
 				self.bulletList = HashSetComponent<Unit>.Create();
+				self.aoeList = HashSetComponent<Unit>.Create();
+				self.sceneEffectList = HashSetComponent<Unit>.Create();
 			}
 		}
 	
@@ -35,6 +37,8 @@ namespace ET
 				self.npcList.Dispose();
 				self.sceneObjList.Dispose();
 				self.bulletList.Dispose();
+				self.aoeList.Dispose();
+				self.sceneEffectList.Dispose();
 			}
 		}
 
@@ -108,6 +112,12 @@ namespace ET
 				case UnitType.Bullet:
 					recordList = self.bulletList;
 					break;
+				case UnitType.Aoe:
+					recordList = self.aoeList;
+					break;
+				case UnitType.SceneEffect:
+					recordList = self.sceneEffectList;
+					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -156,7 +166,7 @@ namespace ET
 			//同步单位状态（位置、方向、）
             foreach (Unit unit in self.NeedSyncUnits)
             {
-                if(unit.IsDisposed || unit.Type != UnitType.Bullet)
+                if(unit.IsDisposed || (unit.Type == UnitType.Player || unit.Type == UnitType.Monster || unit.Type == UnitType.NPC))
 	                continue;
                 EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
 	                units = new List<Unit>(){unit},

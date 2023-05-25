@@ -7,7 +7,7 @@ namespace ET
 {
     [ChildOf(typeof(UnitComponent))]
     [DebuggerDisplay("ViewName,nq")]
-    public class Unit: Entity, IAwake<string>, IAwake
+    public class Unit: Entity, IAwake<string>
     {
         public string CfgId { get; set; } //配置表id
 

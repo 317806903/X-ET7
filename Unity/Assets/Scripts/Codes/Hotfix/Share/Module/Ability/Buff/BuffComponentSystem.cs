@@ -63,7 +63,7 @@ namespace ET.Ability
             }
         }
         
-        public static void EventHandler(this BuffComponent self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
+        public static void EventHandler(this BuffComponent self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
             if (self.monitorTriggerList.ContainsKey(abilityBuffMonitorTriggerEvent) == false)
             {
@@ -79,7 +79,7 @@ namespace ET.Ability
                 {
                     for (int i = 0; i < buffActionCalls.Count; i++)
                     {
-                        buffObj.EventHandler(buffActionCalls[i], onHitUnit, beHurtUnit);
+                        buffObj.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
                     }
                 }
             }

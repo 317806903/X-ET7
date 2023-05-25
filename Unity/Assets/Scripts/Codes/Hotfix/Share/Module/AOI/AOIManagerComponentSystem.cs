@@ -9,6 +9,13 @@ namespace ET
     {
         public static void Add(this AOIManagerComponent self, AOIEntity aoiEntity, float x, float y)
         {
+            //await TimerComponent.Instance.WaitFrameAsync();
+
+            if (aoiEntity.Parent == null)
+            {
+                return;
+            }
+            
             int cellX = (int)(x * 1000) / AOIManagerComponent.CellSize;
             int cellY = (int)(y * 1000) / AOIManagerComponent.CellSize;
 

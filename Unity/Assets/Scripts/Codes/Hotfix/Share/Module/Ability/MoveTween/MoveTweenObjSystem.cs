@@ -108,7 +108,7 @@ namespace ET.Ability
                     {
                         angleTmp = rotateAngle;
                     }
-                    
+
                     self.forward = math.lerp(unit.Forward, dir, rotateAngle * fixedDeltaTime / angleTmp);
                     self.forward = math.normalize(self.forward);
                     unit.Forward = self.forward;

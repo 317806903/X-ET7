@@ -12,24 +12,7 @@ namespace ET.Ability
     {
         public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle)
         {
-            //UnitHelper_Create.CreateWhenServer()
-            UnitComponent unitComponent = UnitHelper.GetUnitComponent(unit);
-            Unit bulletUnit = unitComponent.AddChild<Unit>();
-            bulletUnit.Type = UnitType.Bullet;
-            bulletUnit.AddComponent<TeamFlagObj, TeamFlagType>(unit.GetComponent<TeamFlagObj>().GetTeamFlagType());
-            BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
-            bulletObj.Init(unit.Id, actionCfgFireBullet.BulletId, actionCfgFireBullet.Duration);
-
-            NumericComponent numericComponent = bulletUnit.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 6f); // 速度是6米每秒
-            numericComponent.Set(NumericType.AOI, 15000); // 视野15米
-
-            UnitHelper.ResetNodePosition(unit, bulletUnit, actionCfgFireBullet.NodeName, actionCfgFireBullet.OffSetPosition, actionCfgFireBullet.RelateForward);
-
-            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
-            bulletUnit.AddComponent<AOIEntity, int, float3>(9 * 1000, bulletUnit.Position);
-            
-            unitComponent.Add(bulletUnit);
+            Unit bulletUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_Bullet(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle);
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
@@ -42,9 +25,9 @@ namespace ET.Ability
             //});
         }
         
-        public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
-            unit.GetComponent<BulletObj>()?.EventHandler(abilityBulletMonitorTriggerEvent, onHitUnit, beHurtUnit);
+            unit.GetComponent<BulletObj>()?.EventHandler(abilityBulletMonitorTriggerEvent, onAttackUnit, beHurtUnit);
         }
         
         public static bool ChkBulletHit(Unit unitBullet, Unit unit)

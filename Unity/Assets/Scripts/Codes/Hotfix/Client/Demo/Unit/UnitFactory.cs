@@ -12,9 +12,8 @@ namespace ET.Client
 	        // Unit unit = unitComponent.AddChildWithId<Unit, int>(unitInfo.UnitId, unitInfo.ConfigId);
 	        // unitComponent.Add(unit);
 
-	        Unit unit = ET.Ability.UnitHelper_Create.CreateWhenClient(currentScene, unitInfo.UnitId, (UnitType)unitInfo.Type);
+	        Unit unit = ET.Ability.UnitHelper_Create.CreateWhenClient(currentScene, unitInfo);
 	        
-	        unit.Position = unitInfo.Position;
 	        unit.Position = unitInfo.Position;
 	        unit.Forward = unitInfo.Forward;
 

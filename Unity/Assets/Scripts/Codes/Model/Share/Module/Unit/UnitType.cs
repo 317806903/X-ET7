@@ -11,6 +11,7 @@ namespace ET
         SceneObj = 4,
         Bullet = 5,
         Aoe = 6,
+        SceneEffect = 7,
     }
 
     public struct SyncUnits

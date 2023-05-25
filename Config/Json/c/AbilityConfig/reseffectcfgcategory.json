@@ -3,18 +3,18 @@
     "id": "ResEffect_1",
     "name": "",
     "desc": "prefab1",
-    "res_name": "Assets/ResAB/EffectPrefab/prefab1.prefab"
+    "res_name": "Assets/ResAB/EffectPrefab/Effect1.prefab"
   },
   {
     "id": "ResEffect_2",
     "name": "",
     "desc": "prefab2",
-    "res_name": "Assets/ResAB/EffectPrefab/prefab2.prefab"
+    "res_name": "Assets/ResAB/EffectPrefab/Effect2.prefab"
   },
   {
     "id": "ResEffect_3",
     "name": "",
     "desc": "prefab3",
-    "res_name": "Assets/Res/TmpRes/Prefabs/Effect/Fire_A.prefab"
+    "res_name": "Assets/ResAB/EffectPrefab/Effect3.prefab"
   }
 ]

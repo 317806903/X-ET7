@@ -15,9 +15,9 @@ namespace ET.Ability
             buffComponent.AddBuff(buffCfgId);
         }
         
-        public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onHitUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
-            unit.GetComponent<BuffComponent>()?.EventHandler(abilityBuffMonitorTriggerEvent, onHitUnit, beHurtUnit);
+            unit.GetComponent<BuffComponent>()?.EventHandler(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit);
         }
     }
 }

@@ -95,6 +95,15 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitPlayer = bulletObj.GetCasterPlayerUnit();
+						if (unitPlayer != null)
+						{
+							EventHandlerHelper.Run(unitPlayer, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
+						}
+					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
@@ -114,6 +123,15 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitPlayer = bulletObj.GetCasterPlayerUnit();
+						if (unitPlayer != null)
+						{
+							EventHandlerHelper.Run(unitPlayer, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
+						}
+					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
@@ -133,6 +151,15 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitPlayer = bulletObj.GetCasterPlayerUnit();
+						if (unitPlayer != null)
+						{
+							EventHandlerHelper.Run(unitPlayer, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
+						}
+					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
@@ -152,6 +179,15 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitPlayer = bulletObj.GetCasterPlayerUnit();
+						if (unitPlayer != null)
+						{
+							EventHandlerHelper.Run(unitPlayer, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
+						}
+					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
@@ -185,6 +221,15 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitPlayer = bulletObj.GetCasterPlayerUnit();
+						if (unitPlayer != null)
+						{
+							EventHandlerHelper.Run(unitPlayer, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
+						}
+					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{

@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Server
 {
@@ -8,7 +9,8 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Unit unit, C2M_CreateMonster message)
 		{
-			Unit monsterUnit = UnitFactory.Create(unit.DomainScene(), 0, UnitType.Monster, message.Position);
+			float3 forward = new float3(0, 0, 1);
+			Unit monsterUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_Monster(unit.DomainScene(), message.Position, forward);
 			// EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
 			// 	units = new List<Unit>(){monsterUnit},
 			// });

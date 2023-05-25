@@ -32,7 +32,7 @@
         "buffTrig": 8,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnHitUnit"
+          "$type": "ActionCallOnAttackUnit"
         }
       },
       {

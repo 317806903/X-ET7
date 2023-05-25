@@ -56,6 +56,10 @@ namespace ET.Client
 			self.Animator = animator;
 			foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
 			{
+				if (animationClip == null)
+				{
+					continue;
+				}
 				self.animationClips[animationClip.name] = animationClip;
 			}
 			foreach (AnimatorControllerParameter animatorControllerParameter in animator.parameters)

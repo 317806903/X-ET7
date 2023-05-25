@@ -6,7 +6,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class BulletObj: Entity, IAwake, IDestroy
+    public class BulletObj: Entity, IAwake, IDestroy, ITransferClient
     {
         public string CfgId { get; set; }
         
@@ -23,7 +23,7 @@ namespace ET.Ability
         }
 
         ///<summary>
-        ///要发射子弹的这个人的gameObject，这里就认角色（拥有ChaState的）
+        ///要发射子弹的这个人
         ///当然可以是null发射的，但是写效果逻辑的时候得小心caster是null的情况
         ///</summary>
         public long casterUnitId;

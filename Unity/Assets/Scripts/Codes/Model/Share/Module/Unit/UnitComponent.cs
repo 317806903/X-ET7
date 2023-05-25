@@ -13,5 +13,7 @@ namespace ET
 		public HashSetComponent<Unit> npcList;
 		public HashSetComponent<Unit> sceneObjList;
 		public HashSetComponent<Unit> bulletList;
+		public HashSetComponent<Unit> aoeList;
+		public HashSetComponent<Unit> sceneEffectList;
 	}
 }

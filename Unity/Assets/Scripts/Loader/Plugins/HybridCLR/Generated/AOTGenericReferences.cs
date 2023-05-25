@@ -111,15 +111,15 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary<ET.Ability.AbilityAoeMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary<ET.Client.PanelId,ET.Client.PanelInfo>
 	// System.Collections.Generic.Dictionary<object,object>
-	// System.Collections.Generic.Dictionary.Enumerator<object,object>
 	// System.Collections.Generic.Dictionary.Enumerator<long,object>
 	// System.Collections.Generic.Dictionary.Enumerator<int,long>
 	// System.Collections.Generic.Dictionary.Enumerator<int,object>
+	// System.Collections.Generic.Dictionary.Enumerator<object,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<int,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<int,object>
+	// System.Collections.Generic.HashSet<long>
 	// System.Collections.Generic.HashSet<ushort>
 	// System.Collections.Generic.HashSet<object>
-	// System.Collections.Generic.HashSet<long>
 	// System.Collections.Generic.HashSet.Enumerator<object>
 	// System.Collections.Generic.HashSet.Enumerator<long>
 	// System.Collections.Generic.KeyValuePair<int,long>
@@ -129,40 +129,40 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.KeyValuePair<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.KeyValuePair<int,object>
 	// System.Collections.Generic.List<ET.Client.PanelId>
+	// System.Collections.Generic.List<Unity.Mathematics.float3>
 	// System.Collections.Generic.List<long>
 	// System.Collections.Generic.List<object>
 	// System.Collections.Generic.List<ET.Ability.TeamFlagType>
-	// System.Collections.Generic.List<Unity.Mathematics.float3>
 	// System.Collections.Generic.List.Enumerator<object>
 	// System.Collections.Generic.List.Enumerator<long>
 	// System.Collections.Generic.List.Enumerator<Unity.Mathematics.float3>
 	// System.Collections.Generic.Queue<object>
 	// System.Collections.Generic.SortedDictionary<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
-	// System.Collections.Generic.SortedDictionary<object,object>
 	// System.Collections.Generic.SortedDictionary<int,object>
-	// System.Collections.Generic.SortedDictionary<float,object>
 	// System.Collections.Generic.SortedDictionary<long,object>
 	// System.Collections.Generic.SortedDictionary<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.SortedDictionary<object,object>
+	// System.Collections.Generic.SortedDictionary<float,object>
 	// System.Collections.Generic.SortedDictionary.Enumerator<float,object>
-	// System.Collections.Generic.SortedDictionary.Enumerator<long,object>
 	// System.Collections.Generic.SortedDictionary.Enumerator<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
+	// System.Collections.Generic.SortedDictionary.Enumerator<long,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<object,object>
-	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<object,object>
+	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<int,object>
 	// System.Collections.Generic.Stack<ET.Client.PanelId>
 	// System.Comparison<object>
 	// System.Func<object>
 	// System.Func<object,object>
 	// System.Func<object,object,object>
-	// System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>
 	// System.Runtime.CompilerServices.TaskAwaiter<object>
+	// System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>
 	// System.Threading.Tasks.Task<object>
 	// System.Threading.Tasks.Task<System.ValueTuple<uint,uint>>
 	// System.ValueTuple<uint,uint>
-	// System.ValueTuple<uint,object>
-	// System.ValueTuple<byte,object>
 	// System.ValueTuple<object,object>
+	// System.ValueTuple<byte,object>
+	// System.ValueTuple<uint,object>
 	// }}
 
 	public void RefMethods()
@@ -187,72 +187,73 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.Entity.RemoveComponent<object>()
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,object>(System.Runtime.CompilerServices.TaskAwaiter<object>&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,object>(ET.ETTaskCompleted&,object&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>,object>(System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<object,object>(object&,object&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>,object>(System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<uint,uint>>&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<byte>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<int>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,object>(System.Runtime.CompilerServices.TaskAwaiter<object>&,object&)
-		// System.Void ET.ETAsyncTaskMethodBuilder<System.ValueTuple<uint,object>>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<uint>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
+		// System.Void ET.ETAsyncTaskMethodBuilder<System.ValueTuple<uint,object>>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<UnityEngine.SceneManagement.Scene>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_CreateMyUnit>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
-		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_SceneChangeFinish>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_UnitStop>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
+		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_SceneChangeFinish>.AwaitUnsafeOnCompleted<object,object>(object&,object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<object>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<uint>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<System.ValueTuple<uint,object>>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<int>.Start<object>(object&)
+		// System.Void ET.ETAsyncTaskMethodBuilder<UnityEngine.SceneManagement.Scene>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_SceneChangeFinish>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<byte>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_UnitStop>.Start<object>(object&)
 		// System.Void ET.ETAsyncTaskMethodBuilder<ET.Client.Wait_CreateMyUnit>.Start<object>(object&)
-		// System.Void ET.ETAsyncTaskMethodBuilder<UnityEngine.SceneManagement.Scene>.Start<object>(object&)
-		// System.Void ET.EventSystem.Invoke<ET.SyncUnits>(ET.SyncUnits)
+		// System.Void ET.EventSystem.Invoke<ET.SyncUnitEffects>(ET.SyncUnitEffects)
 		// object ET.EventSystem.Invoke<ET.NavmeshComponent.RecastFileLoader,object>(ET.NavmeshComponent.RecastFileLoader)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.EnterMapFinish>(object,ET.EventType.EnterMapFinish)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.MoveByPathStop>(object,ET.EventType.MoveByPathStop)
+		// System.Void ET.EventSystem.Invoke<ET.SyncUnits>(ET.SyncUnits)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.OnPatchDownlodFailed>(object,ET.EventType.OnPatchDownlodFailed)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.MoveByPathStart>(object,ET.EventType.MoveByPathStart)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.EnterMapFinish>(object,ET.EventType.EnterMapFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.SwitchLanguage>(object,ET.EventType.SwitchLanguage)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.SceneChangeStart>(object,ET.EventType.SceneChangeStart)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.SceneChangeFinish>(object,ET.EventType.SceneChangeFinish)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.MoveByPathStart>(object,ET.EventType.MoveByPathStart)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.MoveByPathStop>(object,ET.EventType.MoveByPathStop)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.OnPatchDownloadProgress>(object,ET.EventType.OnPatchDownloadProgress)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.NetClientComponentOnRead>(object,ET.Client.NetClientComponentOnRead)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.UnitOnCreate>(object,ET.Ability.AbilityTriggerEventType.UnitOnCreate)
-		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.UnitOnRemoved>(object,ET.Ability.AbilityTriggerEventType.UnitOnRemoved)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.UnitEnterSightRange>(object,ET.EventType.UnitEnterSightRange)
-		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnAwake>(object,ET.Ability.AbilityTriggerEventType.BuffOnAwake)
-		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnStart>(object,ET.Ability.AbilityTriggerEventType.BuffOnStart)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnDestroy>(object,ET.Ability.AbilityTriggerEventType.BuffOnDestroy)
-		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnRemoved>(object,ET.Ability.AbilityTriggerEventType.BuffOnRemoved)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.AfterUnitCreate>(object,ET.EventType.AfterUnitCreate)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.UnitOnHit>(object,ET.Ability.AbilityTriggerEventType.UnitOnHit)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnHit>(object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnHit)
+		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnStart>(object,ET.Ability.AbilityTriggerEventType.BuffOnStart)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.DamageAfterOnHit>(object,ET.Ability.AbilityTriggerEventType.DamageAfterOnHit)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.UnitLeaveSightRange>(object,ET.EventType.UnitLeaveSightRange)
+		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnKill>(object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnKill)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.DamageAfterOnKill>(object,ET.Ability.AbilityTriggerEventType.DamageAfterOnKill)
+		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnRemoved>(object,ET.Ability.AbilityTriggerEventType.BuffOnRemoved)
 		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.SkillOnCast>(object,ET.Ability.AbilityTriggerEventType.SkillOnCast)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.ChangeRotation>(object,ET.EventType.ChangeRotation)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.AfterCreateCurrentScene>(object,ET.EventType.AfterCreateCurrentScene)
-		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnKill>(object,ET.Ability.AbilityTriggerEventType.DamageBeforeOnKill)
-		// System.Void ET.EventSystem.Publish<object,ET.EventType.NumbericChange>(object,ET.EventType.NumbericChange)
 		// System.Void ET.EventSystem.Publish<object,ET.EventType.ChangePosition>(object,ET.EventType.ChangePosition)
-		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent2>(object,ET.EventType.EntryEvent2)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.NumbericChange>(object,ET.EventType.NumbericChange)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.UnitLeaveSightRange>(object,ET.EventType.UnitLeaveSightRange)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.AfterCreateCurrentScene>(object,ET.EventType.AfterCreateCurrentScene)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.UnitEnterSightRange>(object,ET.EventType.UnitEnterSightRange)
+		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.UnitOnRemoved>(object,ET.Ability.AbilityTriggerEventType.UnitOnRemoved)
+		// System.Void ET.EventSystem.Publish<object,ET.Ability.AbilityTriggerEventType.BuffOnAwake>(object,ET.Ability.AbilityTriggerEventType.BuffOnAwake)
+		// System.Void ET.EventSystem.Publish<object,ET.EventType.AfterUnitCreate>(object,ET.EventType.AfterUnitCreate)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.AfterCreateClientScene>(object,ET.EventType.AfterCreateClientScene)
-		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent1>(object,ET.EventType.EntryEvent1)
-		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent3>(object,ET.EventType.EntryEvent3)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent2>(object,ET.EventType.EntryEvent2)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.LoginFinish>(object,ET.EventType.LoginFinish)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent3>(object,ET.EventType.EntryEvent3)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EventType.EntryEvent1>(object,ET.EventType.EntryEvent1)
 		// object ET.Game.AddSingleton<object>()
 		// object ET.JsonHelper.FromJson<object>(string)
 		// object ET.MongoHelper.Deserialize<object>(byte[])
 		// System.Void ET.ObjectHelper.Swap<object>(object&,object&)
 		// System.Void ET.RandomGenerator.BreakRank<object>(System.Collections.Generic.List<object>)
 		// string ET.StringHelper.ArrayToString<float>(float[])
-		// ET.Client.Wait_SceneChangeFinish System.Activator.CreateInstance<ET.Client.Wait_SceneChangeFinish>()
-		// ET.Client.Wait_CreateMyUnit System.Activator.CreateInstance<ET.Client.Wait_CreateMyUnit>()
 		// ET.Client.Wait_UnitStop System.Activator.CreateInstance<ET.Client.Wait_UnitStop>()
+		// ET.Client.Wait_CreateMyUnit System.Activator.CreateInstance<ET.Client.Wait_CreateMyUnit>()
+		// ET.Client.Wait_SceneChangeFinish System.Activator.CreateInstance<ET.Client.Wait_SceneChangeFinish>()
 		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
 		// ET.RpcInfo[] System.Linq.Enumerable.ToArray<ET.RpcInfo>(System.Collections.Generic.IEnumerable<ET.RpcInfo>)
 		// System.Threading.Tasks.Task<object> System.Threading.Tasks.TaskFactory.StartNew<object>(System.Func<object>,System.Threading.CancellationToken)

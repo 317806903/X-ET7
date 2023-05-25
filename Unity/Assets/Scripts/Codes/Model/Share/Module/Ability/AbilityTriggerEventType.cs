@@ -110,7 +110,7 @@
         }
         
         /// <summary>
-        /// 攻击触发的事件
+        /// 攻击触发的事件(这里只是判断碰撞到，并没有进入伤害流程)
         /// </summary>
         public struct UnitOnHit
         {

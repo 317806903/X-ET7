@@ -13,22 +13,22 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 攻击者
+/// 攻击者(可能是子弹,也可能是人)
 /// </summary>
-public sealed partial class ActionCallOnHitUnit:  ActionCallParam 
+public sealed partial class ActionCallOnAttackUnit:  ActionCallParam 
 {
-    public ActionCallOnHitUnit(ByteBuf _buf)  : base(_buf) 
+    public ActionCallOnAttackUnit(ByteBuf _buf)  : base(_buf) 
     {
         PostInit();
     }
 
-    public static ActionCallOnHitUnit DeserializeActionCallOnHitUnit(ByteBuf _buf)
+    public static ActionCallOnAttackUnit DeserializeActionCallOnAttackUnit(ByteBuf _buf)
     {
-        return new ActionCallOnHitUnit(_buf);
+        return new ActionCallOnAttackUnit(_buf);
     }
 
 
-    public const int __ID__ = -2041376412;
+    public const int __ID__ = -1783059681;
     public override int GetTypeId() => __ID__;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)

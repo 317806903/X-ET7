@@ -19,7 +19,7 @@ namespace ET.Server
             }
 
             AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
-            if (aoiEntity == null)
+            if (aoiEntity == null || aoiEntity.Cell == null)
             {
                 return;
             }

@@ -114,7 +114,7 @@ MonoBehaviour:
       - CollectPath: Assets/ResAB/UnitPrefab
         CollectorGUID: d1d22b1438bf2514bb6211002297ad2a
         CollectorType: 0
-        AddressRuleName: AddressByFileName
+        AddressRuleName: AddressByFilePath
         PackRuleName: PackDirectory
         FilterRuleName: CollectPrefab
         AssetTags: 
@@ -145,16 +145,16 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: TmpResPrefab
+    - GroupName: EffectPrefab
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Res/TmpRes/Prefabs
-        CollectorGUID: 3f5fb976ca04ca642bbef35580903084
+      - CollectPath: Assets/ResAB/EffectPrefab
+        CollectorGUID: 8e18b9b2706e59d45936d5b0fff51e52
         CollectorType: 0
         AddressRuleName: AddressByFilePath
         PackRuleName: PackDirectory
-        FilterRuleName: CollectPrefab
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 

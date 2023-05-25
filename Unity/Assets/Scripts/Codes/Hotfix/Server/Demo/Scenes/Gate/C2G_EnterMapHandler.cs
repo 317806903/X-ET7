@@ -17,8 +17,8 @@ namespace ET.Server
 			
 			// 这里可以从DB中加载Unit
 			float3 position = new float3(-10, 0, -10);
-			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player, position);
-			
+			float3 forward = new float3(0, 0, 1);
+			Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer_Player(scene, player.Id, position, forward);
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "Map1");
 			response.MyId = player.Id;
 

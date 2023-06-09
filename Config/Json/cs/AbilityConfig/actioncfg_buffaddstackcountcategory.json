@@ -1,0 +1,8 @@
+[
+  {
+    "id": "BuffAddStackCount_1",
+    "name": "",
+    "desc": "增加Buff层数",
+    "addStack": 1
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "DeathShow_Null",
+    "name": "",
+    "duration": 0,
+    "deathShowActionCall": []
+  },
+  {
+    "id": "DeathShow_1",
+    "name": "",
+    "duration": 1,
+    "deathShowActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "delayTime": 0.5,
+        "action_id": "CreateEffect_Death_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  }
+]

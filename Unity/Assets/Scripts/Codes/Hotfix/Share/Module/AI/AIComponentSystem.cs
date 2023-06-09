@@ -1,4 +1,5 @@
 using System;
+using ET.Ability;
 
 namespace ET
 {
@@ -53,6 +54,14 @@ namespace ET
         {
             if (self.Parent == null)
             {
+                self.Cancel();
+                TimerComponent.Instance.Remove(ref self.Timer);
+                return;
+            }
+
+            if (UnitHelper.ChkUnitAlive(self.GetUnit()) == false)
+            {
+                self.Cancel();
                 TimerComponent.Instance.Remove(ref self.Timer);
                 return;
             }
@@ -93,7 +102,7 @@ namespace ET
             
         }
 
-        private static void Cancel(this AIComponent self)
+        public static void Cancel(this AIComponent self)
         {
             self.CancellationToken?.Cancel();
             self.Current = 0;

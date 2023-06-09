@@ -17,9 +17,9 @@
 		}
 		
 		[Event(SceneType.Map)]
-		public class EventHandler_UnitOnHit: AEvent<Scene, AbilityTriggerEventType.UnitOnHit>
+		public class EventHandler_BulletOnHit: AEvent<Scene, AbilityTriggerEventType.BulletOnHit>
 		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BulletOnHit args)
 			{
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
@@ -34,6 +34,25 @@
 				await ETTask.CompletedTask;
 			}
 		}
+		
+		// [Event(SceneType.Map)]
+		// public class EventHandler_UnitOnHit: AEvent<Scene, AbilityTriggerEventType.UnitOnHit>
+		// {
+		// 	protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
+		// 	{
+		// 		if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
+		// 		{
+		// 			Unit unit = args.attackerUnit;
+		// 			EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
+		// 		}
+		// 		if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
+		// 		{
+		// 			Unit unit = args.defenderUnit;
+		// 			EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
+		// 		}
+		// 		await ETTask.CompletedTask;
+		// 	}
+		// }
 		
 		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnRemoved: AEvent<Scene, AbilityTriggerEventType.UnitOnRemoved>

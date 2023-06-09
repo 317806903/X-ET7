@@ -7,12 +7,22 @@ namespace ET.Ability
     {
         public static void LearnSkill(Unit castUnit, string skillId, int skillLevel, SkillSlotType skillSlotType)
         {
-            castUnit.GetComponent<SkillComponent>().LearnSkill(skillId, skillLevel, skillSlotType);
+            SkillComponent skillComponent = castUnit.GetComponent<SkillComponent>();
+            if (skillComponent == null)
+            {
+                skillComponent = castUnit.AddComponent<SkillComponent>();
+            }
+            skillComponent.LearnSkill(skillId, skillLevel, skillSlotType);
         }
         
         public static (bool ret, string msg) CastSkill(Unit castUnit, string skillId)
         {
-            return castUnit.GetComponent<SkillComponent>().CastSkill(skillId);
+            SkillComponent skillComponent = castUnit.GetComponent<SkillComponent>();
+            if (skillComponent == null)
+            {
+                skillComponent = castUnit.AddComponent<SkillComponent>();
+            }
+            return skillComponent.CastSkill(skillId);
         }
         
         public static (bool ret, string msg) ChkCanUseSkill(Unit castUnit, string skillId)

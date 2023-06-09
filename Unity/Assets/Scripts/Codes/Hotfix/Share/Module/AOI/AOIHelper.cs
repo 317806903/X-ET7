@@ -3,6 +3,7 @@
 namespace ET
 {
     [FriendOf(typeof(AOIEntity))]
+    [FriendOf(typeof(Unit))]
     public static class AOIHelper
     {
         public static long CreateCellId(int x, int y)

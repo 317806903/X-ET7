@@ -19,7 +19,7 @@ namespace ET.Client
             bool isReadEditor = false;
             if (Define.IsEditor)
             {
-                if (GlobalConfig.Instance.PlayMode == EPlayMode.EditorSimulateMode)
+                if (ResConfig.Instance.ResLoadMode == EPlayMode.EditorSimulateMode)
                 {
                     isReadEditor = true;
                 }

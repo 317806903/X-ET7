@@ -22,9 +22,7 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
         Key = _buf.ReadString();
         Duration = _buf.ReadFloat();
         IsSceneEffect = _buf.ReadBool();
-        NodeName = _buf.ReadString();
-        OffSetPosition = _buf.ReadVector3();
-        RelateForward = _buf.ReadVector3();
+        OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
         PostInit();
     }
 
@@ -58,18 +56,7 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
     /// 是否场景特效
     /// </summary>
     public bool IsSceneEffect { get; private set; }
-    /// <summary>
-    /// 从这个挂载点对应位置生成
-    /// </summary>
-    public string NodeName { get; private set; }
-    /// <summary>
-    /// 挂载点的相对偏移
-    /// </summary>
-    public System.Numerics.Vector3 OffSetPosition { get; private set; }
-    /// <summary>
-    /// 相对发送者的面向偏移
-    /// </summary>
-    public System.Numerics.Vector3 RelateForward { get; private set; }
+    public OffSetInfo OffSetInfo { get; private set; }
 
     public const int __ID__ = -1045636034;
     public override int GetTypeId() => __ID__;
@@ -77,11 +64,13 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.ResId_Ref = (_tables["ResEffectCfgCategory"] as ResEffectCfgCategory).GetOrDefault(ResId);
+        OffSetInfo?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        OffSetInfo?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -93,9 +82,7 @@ public sealed partial class ActionCfg_CreateEffect: Bright.Config.BeanBase
         + "Key:" + Key + ","
         + "Duration:" + Duration + ","
         + "IsSceneEffect:" + IsSceneEffect + ","
-        + "NodeName:" + NodeName + ","
-        + "OffSetPosition:" + OffSetPosition + ","
-        + "RelateForward:" + RelateForward + ","
+        + "OffSetInfo:" + OffSetInfo + ","
         + "}";
     }
     

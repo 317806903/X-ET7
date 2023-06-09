@@ -23,6 +23,15 @@ namespace ET.Ability
             }
         }
 
+        public bool isEnabled;
+        
+        public BuffAction buffAction;
+        
+        ///<summary>
+        ///总时长，单位：秒
+        ///</summary>
+        public float orgDuration;
+
         ///<summary>
         ///剩余多久，单位：秒
         ///</summary>
@@ -59,5 +68,8 @@ namespace ET.Ability
         public int ticked = 0;
 
         public MultiMap<AbilityBuffMonitorTriggerEvent, BuffActionCall> monitorTriggerList;
+        
+        [BsonIgnore]
+        public ActionContext actionContext;
     }
 }

@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// 创建特效
+/// </summary>
 [Config]
 public partial class ActionCfg_CreateEffectCategory: ConfigSingleton<ActionCfg_CreateEffectCategory>
 {

@@ -19,6 +19,11 @@ namespace ET
             public string ConfigName;
         }
 		
+        public struct GetRes
+        {
+            public string ResName;
+        }
+		
         private readonly Dictionary<string, IConfigSingleton> allConfig = new Dictionary<string, IConfigSingleton>(20);
 
 		public override void Dispose()

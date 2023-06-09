@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ET.AbilityConfig;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
@@ -11,14 +12,14 @@ namespace ET.Ability
             EffectComponent effectComponent;
             bool isSceneEffect = actionCfgCreateEffect.IsSceneEffect;
             
-            if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
-            {
-                isSceneEffect = false;
-            }
-            else if (selectHandle.selectHandleType == SelectHandleType.SelectPosition)
-            {
-                isSceneEffect = true;
-            }
+            // if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
+            // {
+            //     isSceneEffect = false;
+            // }
+            // else if (selectHandle.selectHandleType == SelectHandleType.SelectPosition)
+            // {
+            //     isSceneEffect = true;
+            // }
             
             if (isSceneEffect == false)
             {
@@ -31,11 +32,9 @@ namespace ET.Ability
                         effectComponent = unitEffect.AddComponent<EffectComponent>();
                     }
                     EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.ResId, actionCfgCreateEffect.Duration, 
-                    actionCfgCreateEffect.NodeName, actionCfgCreateEffect.OffSetPosition, 
-                        actionCfgCreateEffect.RelateForward);
+                    actionCfgCreateEffect.OffSetInfo);
                     EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
                         unit = unitEffect,
-                        isSceneEffect = false,
                         isAddEffect = true,
                         effectObj = effectObj,
                     });
@@ -44,19 +43,33 @@ namespace ET.Ability
             }
             else
             {
-                effectComponent = unit.DomainScene().GetComponent<EffectComponent>();
+                foreach (var unitId in selectHandle.unitIds)
+                {
+                    Unit unitEffect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+
+                    float3 position = unitEffect.Position;
+                    float3 forward = unitEffect.Forward;
+                    Unit unitSceneEffect = UnitHelper_Create.CreateWhenServer_SceneEffect(unit.DomainScene(), position, forward);
+                    effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
                 
-                EffectObj effectObj = effectComponent.AddEffect(0, actionCfgCreateEffect.Key, actionCfgCreateEffect.ResId, actionCfgCreateEffect.Duration, actionCfgCreateEffect.NodeName, actionCfgCreateEffect.OffSetPosition, 
-                    actionCfgCreateEffect.RelateForward);
-                EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
-                    unit = unit,
-                    isSceneEffect = true,
-                    isAddEffect = true,
-                    effectObj = effectObj,
-                });
+                    EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.ResId, actionCfgCreateEffect.Duration, actionCfgCreateEffect.OffSetInfo);
+                    EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
+                        unit = unitSceneEffect,
+                        isAddEffect = true,
+                        effectObj = effectObj,
+                    });
+
+                }
 
             }
 
         }
+        
+        public static void RemoveEffect(Unit unit, ActionCfg_RemoveEffect actionCfg_RemoveEffect)
+        {
+            EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
+            effectComponent.RemoveEffectByKey(actionCfg_RemoveEffect.Key);
+        }
+
     }
 }

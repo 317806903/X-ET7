@@ -53,5 +53,8 @@ namespace ET.Ability
         /// 存储指定的参数信息
         ///</summary>
         public SelectHandle selectHandle;
+
+        [BsonIgnore]
+        public ActionContext actionContext;
     }
 }

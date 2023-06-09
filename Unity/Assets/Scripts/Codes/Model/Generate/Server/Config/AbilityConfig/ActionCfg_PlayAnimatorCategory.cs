@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// 播放动作
+/// </summary>
 [Config]
 public partial class ActionCfg_PlayAnimatorCategory: ConfigSingleton<ActionCfg_PlayAnimatorCategory>
 {

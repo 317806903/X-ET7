@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -40,7 +41,21 @@ namespace ET.Ability
             {
                 return false;
             }
-            return true;
+
+            if (ChkIsBullet(unit))
+            {
+                return true;
+            }
+            else
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                if (curHp > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
         
         public static bool ChkIsPlayer(Scene scene, long unitId)
@@ -63,6 +78,26 @@ namespace ET.Ability
             return false;
         }
         
+        public static bool ChkIsMonster(Scene scene, long unitId)
+        {
+            Unit unit = GetUnit(scene, unitId);
+            return ChkIsBullet(unit);
+        }
+        
+        public static bool ChkIsMonster(Unit unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            if (unit.Type == UnitType.Monster)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static bool ChkIsBullet(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
@@ -103,6 +138,26 @@ namespace ET.Ability
             return false;
         }
         
+        public static bool ChkIsSceneEffect(Scene scene, long unitId)
+        {
+            Unit unit = GetUnit(scene, unitId);
+            return ChkIsBullet(unit);
+        }
+        
+        public static bool ChkIsSceneEffect(Unit unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            if (unit.Type == UnitType.SceneEffect)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static ListComponent<Unit> GetFriends(Unit curUnit, bool isOnlyPlayer)
         {
             ListComponent<Unit> friends = ListComponent<Unit>.Create();
@@ -110,7 +165,10 @@ namespace ET.Ability
             {
                 if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
                 {
-                    friends.Add(unit);
+                    if (UnitHelper.ChkUnitAlive(unit))
+                    {
+                        friends.Add(unit);
+                    }
                 }
             }
 
@@ -120,7 +178,10 @@ namespace ET.Ability
                 {
                     if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
                     {
-                        friends.Add(unit);
+                        if (UnitHelper.ChkUnitAlive(unit))
+                        {
+                            friends.Add(unit);
+                        }
                     }
                 }
             }
@@ -135,7 +196,10 @@ namespace ET.Ability
             {
                 if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
                 {
-                    hostileForces.Add(unit);
+                    if (UnitHelper.ChkUnitAlive(unit))
+                    {
+                        hostileForces.Add(unit);
+                    }
                 }
             }
 
@@ -145,7 +209,10 @@ namespace ET.Ability
                 {
                     if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
                     {
-                        hostileForces.Add(unit);
+                        if (UnitHelper.ChkUnitAlive(unit))
+                        {
+                            hostileForces.Add(unit);
+                        }
                     }
                 }
             }
@@ -172,15 +239,25 @@ namespace ET.Ability
             unitComponent.AddWaitRemove(unit);
         }
         
-        public static void ResetNodePosition(Unit unit, Unit targetUnit, string nodeName, Vector3 offSetPosition, Vector3 relateForward)
+        public static (float3, float3) GetNewNodePosition(Unit unit, OffSetInfo offSetInfo)
         {
-            targetUnit.Position = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
-            targetUnit.Forward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
+            string nodeName = offSetInfo.NodeName;
+            Vector3 offSetPosition = offSetInfo.OffSetPosition;
+            Vector3 relateForward = offSetInfo.RelateForward;
+            
+            float3 newPosition = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+            float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
+            return (newPosition, newForward);
         }
         
-        public static void AddSyncUnit(Unit unit)
+        public static void AddSyncPosUnit(Unit unit)
         {
-            GetUnitComponent(unit).AddSyncUnit(unit);
+            GetUnitComponent(unit).AddSyncPosUnit(unit);
+        }
+        
+        public static void AddSyncNumericUnit(Unit unit)
+        {
+            GetUnitComponent(unit).AddSyncNumericUnit(unit);
         }
         
         public static UnitInfo CreateUnitInfo(Unit unit)
@@ -237,14 +314,64 @@ namespace ET.Ability
             return unitInfo;
         }
         
-        public static UnitInfo SyncUnitSimpleInfo(Unit unit)
+        public static UnitPosInfo SyncPosUnitInfo(Unit unit)
         {
-            UnitInfo unitInfo = new UnitInfo();
+            UnitPosInfo unitInfo = new UnitPosInfo();
             unitInfo.UnitId = unit.Id;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
 
             return unitInfo;
         }
+        
+        public static UnitNumericInfo SyncNumericUnitInfo(Unit unit)
+        {
+            UnitNumericInfo unitInfo = new UnitNumericInfo();
+            unitInfo.UnitId = unit.Id;
+            unitInfo.KV = new Dictionary<int, long>();
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            foreach ((int key, long value) in numericComponent.NumericDic)
+            {
+                unitInfo.KV.Add(key, value);
+            }
+
+            return unitInfo;
+        }
+        
+        public static float GetTargetUnitAngle(Unit curUnit, Unit targetUnit)
+        {
+            float3 targetPos = targetUnit.Position;
+            return GetTargetPosAngle(curUnit, targetPos);
+        }
+        
+        public static float GetTargetPosAngle(Unit curUnit, float3 targetPos)
+        {
+            float3 targetDir = math.normalize(targetPos - curUnit.Position);
+            return GetTargetDirAngle(curUnit, targetDir);
+        }
+        
+        /// <summary>
+        /// 返回 夹角(弧度角)
+        /// </summary>
+        /// <param name="curUnit"></param>
+        /// <param name="targetDir"></param>
+        /// <returns></returns>
+        public static float GetTargetDirAngle(Unit curUnit, float3 targetDir)
+        {
+            float3 forward = math.normalize(curUnit.Forward);
+            //float angleTmp = math.degrees(math.acos(math.clamp(math.dot(forward, targetDir), -1, 1)));
+            float angleTmp = math.acos(math.clamp(math.dot(forward, targetDir), -1, 1));
+            float y = math.cross(forward, targetDir).y;
+            if (y > 0)
+            {
+                return angleTmp;
+            }
+            else
+            {
+                return -angleTmp;
+            }
+        }
+        
+        
     }
 }

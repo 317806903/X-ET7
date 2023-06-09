@@ -5,7 +5,7 @@ namespace ET.Ability
 {
     public static class SelectHandleHelper
     {
-        public static SelectHandle GetSelectHandle(Unit unit, ActionCallParam actionCallParam)
+        public static SelectHandle CreateSelectHandle(Unit unit, ActionCallParam actionCallParam)
         {
             SelectHandle selectHandle = new();
             if (actionCallParam is ActionCallSelectDirection)
@@ -35,19 +35,30 @@ namespace ET.Ability
             {
                 selectHandle.selectHandleType = SelectHandleType.SelectUnits;
                 selectHandle.unitIds = ListComponent<long>.Create();
-                GetSelectUnits(unit, actionCallParam as ActionCallAutoUnit, selectHandle);
+                if (actionCallParam is ActionCallAutoUnitArea actionCallAutoUnitArea)
+                {
+                    GetUnitsByArea(unit, actionCallAutoUnitArea, selectHandle);
+                }
+                else if (actionCallParam is ActionCallAutoUnitOne actionCallAutoUnitOne)
+                {
+                }
                 if (selectHandle.unitIds.Count > 0)
                 {
                     Unit selectUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[0]);
                     selectHandle.position = selectUnit.Position;
-                    selectHandle.direction = selectUnit.Forward;
+                    selectHandle.direction = selectUnit.Position - unit.Position;
+                }
+                else
+                {
+                    selectHandle.position = unit.Position;
+                    selectHandle.direction = unit.Forward;
                 }
             }
 
             return selectHandle;
         }
         
-        public static SelectHandle GetSelectHandle(Unit unit, Unit targetUnit)
+        public static SelectHandle CreateSelectHandle(Unit unit, Unit targetUnit)
         {
             SelectHandle selectHandle = new();
             selectHandle.selectHandleType = SelectHandleType.SelectUnits;
@@ -58,10 +69,10 @@ namespace ET.Ability
             return selectHandle;
         }
         
-        public static void GetSelectUnits(Unit unit, ActionCallAutoUnit actionCallAutoUnit, SelectHandle selectHandle)
+        public static void GetUnitsByArea(Unit unit, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle selectHandle)
         {
-            bool isFriend = actionCallAutoUnit.IsFriend;
-            bool isOnlyPlayer = actionCallAutoUnit.IsOnlyPlayer;
+            bool isFriend = actionCallAutoUnitArea.IsFriend;
+            bool isOnlyPlayer = actionCallAutoUnitArea.IsOnlyPlayer;
 
             ListComponent<Unit> list;
             if (isFriend)
@@ -73,22 +84,61 @@ namespace ET.Ability
                 list = UnitHelper.GetHostileForces(unit, isOnlyPlayer);
             }
             
-            int selectNum = actionCallAutoUnit.SelectNum;
-            float radius = actionCallAutoUnit.Radius;
+            int selectNum = actionCallAutoUnitArea.SelectNum;
+
+            MultiMap<float, Unit> dic = new();
+            if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
+            {
+                GetUnitsWhenUmbellate(unit, list, dic, actionCallAutoUnitWhenUmbellate);
+            }
+            else if (actionCallAutoUnitArea is ActionCallAutoUnitWhenRectangle actionCallAutoUnitWhenRectangle)
+            {
+                GetUnitsWhenRectangle(unit, list, dic, actionCallAutoUnitWhenRectangle);
+            }
+
+            int index = 0;
+            foreach (var sortList in dic)
+            {
+                for (int i = 0; i < sortList.Value.Count; i++)
+                {
+                    if (index <= selectNum - 1 || selectNum == -1)
+                    {
+                        Unit unitOne = sortList.Value[i];
+                        if (UnitHelper.ChkUnitAlive(unitOne))
+                        {
+                            selectHandle.unitIds.Add(unitOne.Id);
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        
+        public static void GetUnitsWhenUmbellate(Unit unit, ListComponent<Unit> list, MultiMap<float, Unit> dic, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit)
+        {
+            float radius = actionCallAutoUnit.UmbellateArea.Radius;
             float radiusSq = radius * radius;
-            float angle = actionCallAutoUnit.Angle;
+            float angle = actionCallAutoUnit.UmbellateArea.Angle;
             float angleHalf = angle * 0.5f;
             bool IsAngleFirst = actionCallAutoUnit.IsAngleFirst;
 
-            MultiMap<float, Unit> dic = new();
+            float3 curUnitPos;
+            float3 curUnitForward;
+            (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
+            curUnitForward = math.normalize(curUnitForward);
+
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                float disSq = math.distancesq(targetUnit.Position, unit.Position);
+                float disSq = math.distancesq(targetUnit.Position, curUnitPos);
                 if (disSq <= radiusSq)
                 {
-                    float3 dir = math.normalize(targetUnit.Position - unit.Position);
-                    float angleTmp = math.degrees(math.acos(math.clamp(math.dot(unit.Forward, dir), -1, 1)));
+                    float3 dir = math.normalize(targetUnit.Position - curUnitPos);
+                    float angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
                     if (angleTmp < angleHalf)
                     {
                         if (IsAngleFirst)
@@ -103,22 +153,40 @@ namespace ET.Ability
                 }
             }
 
-            int index = 0;
-            foreach (var sortList in dic)
+            return;
+        }
+        
+        public static void GetUnitsWhenRectangle(Unit unit, ListComponent<Unit> list, MultiMap<float, Unit> dic, ActionCallAutoUnitWhenRectangle actionCallAutoUnit)
+        {
+            float width = actionCallAutoUnit.RectangleArea.Width;
+            float length = actionCallAutoUnit.RectangleArea.Length;
+
+            float3 curUnitPos;
+            float3 curUnitForward;
+            (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
+            curUnitForward = math.normalize(curUnitForward);
+            
+            for (int i = 0; i < list.Count; i++)
             {
-                for (int i = 0; i < sortList.Value.Count; i++)
+                Unit targetUnit = list[i];
+                float3 dir = math.normalize(targetUnit.Position - curUnitPos);
+                float dot = math.dot(curUnitForward, dir);
+                if (dot >= 0)
                 {
-                    if (index <= selectNum || selectNum == -1)
+                    float acos = math.acos(math.clamp(dot, -1, 1));
+                    float dis = math.distance(targetUnit.Position, curUnitPos);
+                    float curHalfWidth = math.sin(acos) * dis;
+                    float curLength = math.cos(acos) * dis;
+                    //float angleTmp = math.degrees(acos);
+                    Log.Debug($" GetUnitsWhenRectangle dis={dis} curHalfWidth={curHalfWidth} curLength={curLength} angle={math.degrees(acos)}");
+                    if (curHalfWidth <= width * 0.5f && curLength <= length)
                     {
-                        selectHandle.unitIds.Add(sortList.Value[i].Id);
-                        index++;
-                    }
-                    else
-                    {
-                        return;
+                        dic.Add(dot, targetUnit);
                     }
                 }
             }
+
+            return;
         }
     }
 }

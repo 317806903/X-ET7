@@ -25,7 +25,11 @@ namespace ET.Client
 
 		private static void Awake(this CameraComponent self)
 		{
-			self.mainCamera = Camera.main;
+		}
+
+		public static void SetMainCamera(this CameraComponent self, Camera camera)
+		{
+			self.mainCamera = camera;
 		}
 
 		private static void LateUpdate(this CameraComponent self)

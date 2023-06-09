@@ -9,6 +9,9 @@
 
 namespace ET.AbilityConfig
 { 
+    /// <summary>
+    /// 技能类型
+    /// </summary>
     public enum SkillSlotType
     {
         /// <summary>

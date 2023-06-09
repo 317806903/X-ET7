@@ -20,13 +20,10 @@ namespace ET.Client
   
         private static async ETTask HotUpdateAsync(Scene clientScene)
         {
-            CommonBinder.BindAll();
-            HotUpdateBinder.BindAll();
-            
-            FUIComponent fuiComponent = clientScene.GetComponent<FUIComponent>();
+            UIComponent uiComponent = clientScene.GetComponent<UIComponent>();
 
             // 打开热更界面
-            await fuiComponent.ShowPanelAsync(PanelId.HotUpdatePanel);
+            await uiComponent.ShowWindowAsync(WindowID.WindowID_Update);
 
             // 更新版本号
             int errorCode = await ResComponent.Instance.UpdateVersionAsync();
@@ -59,7 +56,7 @@ namespace ET.Client
             }
             else
             {
-                await EnterGame(fuiComponent);
+                await EnterGame(clientScene);
             }
         }
         
@@ -109,19 +106,14 @@ namespace ET.Client
             else
             {
                 // 只是资源更新就直接进入游戏。
-                await EnterGame(clientScene.GetComponent<FUIComponent>());
+                await EnterGame(clientScene);
             }
         }
         
-        private static async ETTask EnterGame(FUIComponent fuiComponent)
+        private static async ETTask EnterGame(Scene scene)
         {
-            fuiComponent.Restart();
-            
-            // 打开登陆界面
-            LoginPanel_ContextData contextData = fuiComponent.AddChild<LoginPanel_ContextData>();
-            contextData.Data = "界面参数测试";
-            // 显示登录界面, 并传递参数contextData
-            await fuiComponent.ShowPanelAsync(PanelId.LoginPanel, contextData);
+            scene.GetComponent<UIComponent>().HideAllShownWindow();
+            await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Login);
         }
     }
 }

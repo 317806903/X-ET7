@@ -24,6 +24,20 @@ namespace ET.Ability
                 self.hitRecords.Dispose();
             }
         }
+        
+        [ObjectSystem]
+        public class BulletObjFixedUpdateSystem: FixedUpdateSystem<BulletObj>
+        {
+            protected override void FixedUpdate(BulletObj self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static void Init(this BulletObj self, long casterUnitId, string bulletCfgId, float duration)
         {
@@ -34,6 +48,13 @@ namespace ET.Ability
             self.canHitAfterCreated = self.model.CanHitAfterCreated;
             self.canHitTimes = self.model.HitTimes;
             self.hitRecords = ListComponent<BulletHitRecord>.Create();
+        }
+
+        public static void InitActionContext(this BulletObj self, ActionContext actionContext)
+        {
+            actionContext.isBreakSoftBati = false;
+            actionContext.isBreakStrongBati = false;
+            self.actionContext = actionContext;
         }
 
         public static List<BulletActionCall> GetActionIds(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
@@ -97,6 +118,10 @@ namespace ET.Ability
 
         public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
+            if (onAttackUnit != null)
+            {
+                self.actionContext.attackerUnitId = onAttackUnit.Id;
+            }
             List<BulletActionCall> actionIds = self.GetActionIds(abilityBulletMonitorTriggerEvent);
             for (int i = 0; i < actionIds.Count; i++)
             {
@@ -105,11 +130,11 @@ namespace ET.Ability
                 SelectHandle selectHandle;
                 if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
                 {
-                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoUnit);
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoUnit);
                 }
                 else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
                 {
-                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), actionCallAutoSelf);
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoSelf);
                 }
                 else
                 {
@@ -134,9 +159,24 @@ namespace ET.Ability
                     {
                         targetUnit = self.GetUnit();
                     }
-                    selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), targetUnit);
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), targetUnit);
                 }
-                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, selectHandle);
+
+                SelectHandle curSelectHandle = selectHandle;
+                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, self.actionContext);
+                if (isChgSelect1)
+                {
+                    curSelectHandle = newSelectHandle1;
+                }
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, self.actionContext);
+                if (isChgSelect2)
+                {
+                    curSelectHandle = newSelectHandle2;
+                }
+                if (bRet1 && bRet2)
+                {
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
+                }
             }
         }
 

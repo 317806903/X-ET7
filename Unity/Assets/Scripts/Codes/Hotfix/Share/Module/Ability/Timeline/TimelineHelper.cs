@@ -8,6 +8,10 @@ namespace ET.Ability
         public static TimelineComponent GetTimelineComponent(Unit unit)
         {
             TimelineComponent timelineComponent = unit.GetComponent<TimelineComponent>();
+            if (timelineComponent == null)
+            {
+                timelineComponent = unit.AddComponent<TimelineComponent>();
+            }
             return timelineComponent;
         }
         

@@ -47,7 +47,7 @@ namespace ET.Ability
             }
         }
         
-        public static void Run(this ActionHandlerComponent self, Unit unit, string actionId, SelectHandle selectHandle)
+        public static void Run(this ActionHandlerComponent self, Unit unit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
         {
             int index = actionId.IndexOf("_", 0);
             if (index == -1)
@@ -63,7 +63,7 @@ namespace ET.Ability
             }
 
             Log.Debug($"ActionHandlerComponent {key}:{actionId}");
-            self.dic[key].Run(unit, actionId, selectHandle).Coroutine();
+            self.dic[key].Run(unit, actionId, delayTime, selectHandle, actionContext).Coroutine();
         }
     }
 }

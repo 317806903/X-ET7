@@ -21,9 +21,28 @@ namespace ET.Ability
             {
             }
         }
+        
+        [ObjectSystem]
+        public class AoeObjFixedUpdateSystem: FixedUpdateSystem<AoeObj>
+        {
+            protected override void FixedUpdate(AoeObj self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static void Init(this AoeObj self)
         {
+        }
+
+        public static void InitActionContext(this AoeObj self, ActionContext actionContext)
+        {
+            self.actionContext = actionContext;
         }
 
         public static string GetActionId(this AoeObj self, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
@@ -87,7 +106,7 @@ namespace ET.Ability
             string actionId = self.GetActionId(abilityAoeMonitorTriggerEvent);
             if (string.IsNullOrWhiteSpace(actionId) == false)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0, null, self.actionContext);
             }
         }
 
@@ -110,7 +129,7 @@ namespace ET.Ability
                     //float取模不精准，所以用x1000后的整数来
                     if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.tickTime * 1000) == 0)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, null);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0,null, self.actionContext);
                         self.ticked += 1;
                     }
                 }

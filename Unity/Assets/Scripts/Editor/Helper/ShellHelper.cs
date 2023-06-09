@@ -32,9 +32,11 @@ namespace ET
 
                 process.StartInfo = start;
                 start.Arguments = arguments + " \"" + cmd + "\"";
-                start.CreateNoWindow = true;
+                //start.CreateNoWindow = true;
+                start.CreateNoWindow = false;
                 start.ErrorDialog = true;
-                start.UseShellExecute = false;
+                //start.UseShellExecute = false;
+                start.UseShellExecute = true;
                 start.WorkingDirectory = workDirectory;
 
                 if (start.UseShellExecute)
@@ -57,48 +59,52 @@ namespace ET
 
                 process.OutputDataReceived += (sender, args) =>
                 {
-                    if (args.Data != null)
+                    if (string.IsNullOrEmpty(args.Data) == false)
                     {
-                        if (args.Data != null)
+                        if (args.Data.Contains("fail") || args.Data.Contains("不存在"))
                         {
-                            if (args.Data.Contains("fail") || args.Data.Contains("不存在"))
-                            {
-                                UnityEngine.Debug.LogError(args.Data);
-                            }
-                            else
-                            {
-                                UnityEngine.Debug.Log(args.Data);
-                            }
+                            UnityEngine.Debug.LogError(args.Data);
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.Log(args.Data);
                         }
                     }
-                    else
-                    {
-                        endOutput = true;
-                    }
+                    endOutput = true;
                 };
 
                 process.ErrorDataReceived += (sender, args) =>
                 {
-                    if (args.Data != null)
+                    if (string.IsNullOrEmpty(args.Data) == false)
                     {
                         UnityEngine.Debug.LogError(args.Data);
                     }
-                    else
-                    {
-                        endError = true;
-                    }
+                    endError = true;
                 };
 
                 process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-
-                while (!endOutput || !endError)
+                
+                if (start.UseShellExecute)
                 {
                 }
+                else
+                {
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    while (!endOutput && !endError)
+                    {
+                    }
+                }
 
-                process.CancelOutputRead();
-                process.CancelErrorRead();
+                process.WaitForExit();
+                if (start.UseShellExecute)
+                {
+                }
+                else
+                {
+                    process.CancelOutputRead();
+                    process.CancelErrorRead();
+                }
             }
             catch (Exception e)
             {
@@ -107,6 +113,7 @@ namespace ET
             finally
             {
                 process.Close();
+                process.Dispose();
             }
         }
     }

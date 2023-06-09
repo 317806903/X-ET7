@@ -18,9 +18,13 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        Icon = _buf.ReadString();
         Desc = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Tags = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Tags.Add(_e0);}}
-        Type = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Tags = new System.Collections.Generic.List<BuffTagType>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffTagType _e0;  _e0 = (BuffTagType)_buf.ReadInt(); Tags.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ImmuneTags = new System.Collections.Generic.List<BuffTagType>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffTagType _e0;  _e0 = (BuffTagType)_buf.ReadInt(); ImmuneTags.Add(_e0);}}
+        if(_buf.ReadBool()){ TagGroup = (BuffTagGroupType)_buf.ReadInt(); } else { TagGroup = null; }
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ImmuneTagGroups = new System.Collections.Generic.List<BuffTagGroupType>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffTagGroupType _e0;  _e0 = (BuffTagGroupType)_buf.ReadInt(); ImmuneTagGroups.Add(_e0);}}
+        BuffType = (BuffType)_buf.ReadInt();
         Priority = _buf.ReadInt();
         MaxStack = _buf.ReadInt();
         TickTime = _buf.ReadFloat();
@@ -42,27 +46,44 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
     /// </summary>
     public string Name { get; private set; }
     /// <summary>
+    /// icon图标
+    /// </summary>
+    public string Icon { get; private set; }
+    public ResIconCfg Icon_Ref { get; private set; }
+    /// <summary>
     /// 描述
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
     /// tag标志
     /// </summary>
-    public System.Collections.Generic.List<string> Tags { get; private set; }
+    public System.Collections.Generic.List<BuffTagType> Tags { get; private set; }
     /// <summary>
-    /// buff类型
+    /// 免疫哪个类型的buff
     /// </summary>
-    public int Type { get; private set; }
+    public System.Collections.Generic.List<BuffTagType> ImmuneTags { get; private set; }
     /// <summary>
-    /// buff的优先级，优先级越低的buff越后面执行
+    /// tagGroup标志
+    /// </summary>
+    public BuffTagGroupType? TagGroup { get; private set; }
+    /// <summary>
+    /// 免疫TagGroup的buff
+    /// </summary>
+    public System.Collections.Generic.List<BuffTagGroupType> ImmuneTagGroups { get; private set; }
+    /// <summary>
+    /// 增益还是减益Buff
+    /// </summary>
+    public BuffType BuffType { get; private set; }
+    /// <summary>
+    /// buff优先级(越小越低)
     /// </summary>
     public int Priority { get; private set; }
     /// <summary>
-    /// buff堆叠的规则中需要的层数
+    /// buff最高层数
     /// </summary>
     public int MaxStack { get; private set; }
     /// <summary>
-    /// buff的工作周期，单位：秒
+    /// buff工作周期(秒)
     /// </summary>
     public float TickTime { get; private set; }
     public System.Collections.Generic.List<BuffActionCall> MonitorTriggers { get; private set; }
@@ -72,6 +93,7 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
         foreach(var _e in MonitorTriggers) { _e?.Resolve(_tables); }
         PostResolve();
     }
@@ -86,9 +108,13 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "Icon:" + Icon + ","
         + "Desc:" + Desc + ","
         + "Tags:" + Bright.Common.StringUtil.CollectionToString(Tags) + ","
-        + "Type:" + Type + ","
+        + "ImmuneTags:" + Bright.Common.StringUtil.CollectionToString(ImmuneTags) + ","
+        + "TagGroup:" + TagGroup + ","
+        + "ImmuneTagGroups:" + Bright.Common.StringUtil.CollectionToString(ImmuneTagGroups) + ","
+        + "BuffType:" + BuffType + ","
         + "Priority:" + Priority + ","
         + "MaxStack:" + MaxStack + ","
         + "TickTime:" + TickTime + ","

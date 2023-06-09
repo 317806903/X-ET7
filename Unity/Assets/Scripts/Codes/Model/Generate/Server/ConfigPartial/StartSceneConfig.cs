@@ -17,6 +17,7 @@ namespace ET
         public List<StartSceneConfig> Realms = new List<StartSceneConfig>();
         
         public List<StartSceneConfig> Routers = new List<StartSceneConfig>();
+        public StartSceneConfig RouterManager;
         
         public List<StartSceneConfig> Robots = new List<StartSceneConfig>();
 
@@ -60,6 +61,9 @@ namespace ET
                         break;
                     case SceneType.Router:
                         this.Routers.Add(startSceneConfig);
+                        break;
+                    case SceneType.RouterManager:
+                        this.RouterManager = startSceneConfig;
                         break;
                     case SceneType.BenchmarkServer:
                         this.BenchmarkServer = startSceneConfig;

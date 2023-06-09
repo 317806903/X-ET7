@@ -16,7 +16,11 @@ namespace ET.Client
                 RouterAddressComponent routerAddressComponent = clientScene.GetComponent<RouterAddressComponent>();
                 if (routerAddressComponent == null)
                 {
-                    routerAddressComponent = clientScene.AddComponent<RouterAddressComponent, string, int>(ConstValue.RouterHttpHost, ConstValue.RouterHttpPort);
+                    string RouterHttpHost = ConstValue.RouterHttpHost;
+                    int RouterHttpPort = ConstValue.RouterHttpPort;
+                    RouterHttpHost = StartMachineConfigCategory.Instance.DataList[0].OuterIP;
+                    RouterHttpPort = StartSceneConfigCategory.Instance.RouterManager.OuterPort;
+                    routerAddressComponent = clientScene.AddComponent<RouterAddressComponent, string, int>(RouterHttpHost, RouterHttpPort);
                     await routerAddressComponent.Init();
                     
                     clientScene.AddComponent<NetClientComponent, AddressFamily>(routerAddressComponent.RouterManagerIPAddress.AddressFamily);

@@ -2,18 +2,36 @@
   {
     "id": "Skill_1",
     "name": "技能1",
-    "cd": 40,
+    "cd": 4,
     "skillSlotType": 1,
     "skillSelectAction": {
-      "$type": "ActionCallAutoUnit",
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
       "isAngleFirst": false,
-      "radius": 100,
-      "angle": 360,
-      "selectNum": 1
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
     },
-    "timeline_id": "Timeline_3"
+    "timeline_id": "Timeline_3",
+    "learn_action_id": []
   },
   {
     "id": "Skill_2",
@@ -23,16 +41,268 @@
     "skillSelectAction": {
       "$type": "ActionCallSelectUnit"
     },
-    "timeline_id": "Timeline_2"
+    "timeline_id": "Timeline_2",
+    "learn_action_id": []
   },
   {
     "id": "Skill_3",
     "name": "技能3",
-    "cd": 20,
+    "cd": 4,
     "skillSlotType": 3,
     "skillSelectAction": {
       "$type": "ActionCallAutoSelf"
     },
-    "timeline_id": "Timeline_3"
+    "timeline_id": "Timeline_3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_Player1",
+    "name": "技能1",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "rectangleArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "width": 10,
+        "length": 6
+      }
+    },
+    "timeline_id": "Timeline_Player1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_Player2",
+    "name": "技能1",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_Player3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerPassive1",
+    "name": "技能1",
+    "cd": 3,
+    "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf"
+    },
+    "timeline_id": "",
+    "learn_action_id": [
+      "AddBuff_1"
+    ]
+  },
+  {
+    "id": "Skill_MachineGunTower1",
+    "name": "",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_MachineGunTower1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_RocketTower_1",
+    "name": "",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_RocketTower_1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_LaserTower_0",
+    "name": "",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_LaserTower_0",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_EnergyPylon_2",
+    "name": "",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_EnergyPylon_2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_HoverTankNormal1",
+    "name": "",
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_HoverTank1",
+    "learn_action_id": []
   }
 ]

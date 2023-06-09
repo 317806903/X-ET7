@@ -11,7 +11,7 @@ namespace ET.Client
             
             ConfigComponent.Instance.TranslateText(translateExcel);
             
-            scene.GetComponent<FUIComponent>().AllPanelTranslateText(arg.Language, translateFUI);
+            //scene.GetComponent<FUIComponent>().AllPanelTranslateText(arg.Language, translateFUI);
             
             await ETTask.CompletedTask;
         }

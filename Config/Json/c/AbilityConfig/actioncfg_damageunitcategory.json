@@ -1,0 +1,65 @@
+[
+  {
+    "id": "DamageUnit_1",
+    "name": "",
+    "desc": "固定血量",
+    "damageInfo": {
+      "damageType": 1,
+      "value": 12
+    }
+  },
+  {
+    "id": "DamageUnit_2",
+    "name": "",
+    "desc": "固定攻击者的总血量的百分比",
+    "damageInfo": {
+      "damageType": 2,
+      "value": 2
+    }
+  },
+  {
+    "id": "DamageUnit_3",
+    "name": "",
+    "desc": "固定受击者的总血量的百分比",
+    "damageInfo": {
+      "damageType": 3,
+      "value": 2
+    }
+  },
+  {
+    "id": "DamageUnit_4",
+    "name": "",
+    "desc": "固定攻击者的当前血量的百分比",
+    "damageInfo": {
+      "damageType": 4,
+      "value": 10
+    }
+  },
+  {
+    "id": "DamageUnit_5",
+    "name": "",
+    "desc": "固定受击者的当前血量的百分比",
+    "damageInfo": {
+      "damageType": 5,
+      "value": 10
+    }
+  },
+  {
+    "id": "DamageUnit_6",
+    "name": "",
+    "desc": "按照属性进行计算",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0
+    }
+  },
+  {
+    "id": "DamageUnit_7",
+    "name": "",
+    "desc": "按照来源配置(技能)的方式来计算",
+    "damageInfo": {
+      "damageType": 7,
+      "value": 0
+    }
+  }
+]

@@ -3,7 +3,7 @@
 namespace ET.Ability
 {
 	[ComponentOf(typeof(Unit))]
-	public class SkillComponent: Entity, IAwake, IDestroy
+	public class SkillComponent: Entity, IAwake, IDestroy, IFixedUpdate
 	{
 		public MultiMap<SkillSlotType, string> skillList;
 		public Dictionary<string, float> skillCDs;

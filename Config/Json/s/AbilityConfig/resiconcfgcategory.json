@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ResIcon_NULL",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_3.png"
+  },
+  {
+    "id": "ResIcon_1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
+  },
+  {
+    "id": "ResIcon_Player1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
+  },
+  {
+    "id": "ResIcon_Monster1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_2.png"
+  },
+  {
+    "id": "ResIcon_HeadQuarter1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_HeadQuarter1.png"
+  },
+  {
+    "id": "ResIcon_MachineGunTower_0",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_MachineGunTower_0.png"
+  },
+  {
+    "id": "ResIcon_EnergyPylon_2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_EnergyPylon_2.png"
+  },
+  {
+    "id": "ResIcon_LaserTower_0",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_LaserTower_0.png"
+  },
+  {
+    "id": "ResIcon_RocketTower_1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_RocketTower_1.png"
+  },
+  {
+    "id": "ResIcon_Hoverboss",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Hoverboss.png"
+  },
+  {
+    "id": "ResIcon_Hoverbuggy",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Hoverbuggy.png"
+  },
+  {
+    "id": "ResIcon_Hovercopter",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Hovercopter.png"
+  },
+  {
+    "id": "ResIcon_Hovertank",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Hovertank.png"
+  }
+]

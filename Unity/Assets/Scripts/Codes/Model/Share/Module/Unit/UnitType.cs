@@ -14,14 +14,19 @@ namespace ET
         SceneEffect = 7,
     }
 
-    public struct SyncUnits
+    public struct SyncPosUnits
     {
         public List<Unit> units;
     }
+    
+    public struct SyncNumericUnits
+    {
+        public List<Unit> units;
+    }
+    
     public struct SyncUnitEffects
     {
         public Unit unit;
-        public bool isSceneEffect;
         public bool isAddEffect;
         public long effectObjId;
         public ET.Ability.EffectObj effectObj;

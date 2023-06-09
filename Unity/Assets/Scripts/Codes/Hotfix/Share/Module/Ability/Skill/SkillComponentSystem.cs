@@ -32,6 +32,20 @@ namespace ET.Ability
                 self.skillLevels.Clear();
             }
         }
+        
+        [ObjectSystem]
+        public class SkillComponentFixedUpdateSystem: FixedUpdateSystem<SkillComponent>
+        {
+            protected override void FixedUpdate(SkillComponent self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static void FixedUpdate(this SkillComponent self, float fixedDeltaTime)
         {
@@ -46,11 +60,30 @@ namespace ET.Ability
 
         public static void LearnSkill(this SkillComponent self, string skillId, int skillLevel, SkillSlotType skillSlotType)
         {
+            if (self.skillLevels.ContainsKey(skillId))
+            {
+                return;
+            }
             self.skillList.Add(skillSlotType, skillId);
             self.skillCDs.Add(skillId, 0);
             SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
             self.skillOrgCDs.Add(skillId, skillCfg.Cd);
             self.skillLevels.Add(skillId, skillLevel);
+
+            if (skillCfg.LearnActionId.Count > 0)
+            {
+                SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
+                ActionContext actionContext = new ActionContext()
+                {
+                    unitId = self.GetUnit().Id,
+                    skillCfgId = skillId,
+                    skillLevel = self.skillLevels[skillId],
+                };
+                foreach (var actionId in skillCfg.LearnActionId)
+                {
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0, selectHandle, actionContext);
+                }
+            }
         }
 
         public static Unit GetUnit(this SkillComponent self)
@@ -68,14 +101,23 @@ namespace ET.Ability
 
             SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
 
-            SelectHandle selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
+            if (string.IsNullOrEmpty(skillCfg.TimelineId))
+            {
+                return (false, $"skillId[{skillId} TimelineId=null]");
+            }
+            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
 
             TimelineObj timelineObj= TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId, selectHandle);
-            
+            timelineObj.InitActionContext(new ActionContext()
+            {
+                unitId = self.GetUnit().Id,
+                skillCfgId = skillId,
+                skillLevel = self.skillLevels[skillId],
+            });
             EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.SkillOnCast()
             {
                 unit = self.GetUnit(),
-                skillId = skillId,
+                skillCfgId = skillId,
                 timeline = timelineObj,
             });
 

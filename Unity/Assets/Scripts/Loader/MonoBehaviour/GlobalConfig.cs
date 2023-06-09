@@ -16,8 +16,8 @@ namespace ET
         public static GlobalConfig Instance;
         
         public CodeMode CodeMode;
-        
-        public EPlayMode PlayMode;
+
+        public string StartConfig;
         
         public int ModelVersion = 1;
         

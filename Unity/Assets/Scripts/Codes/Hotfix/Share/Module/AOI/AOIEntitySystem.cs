@@ -4,6 +4,7 @@ using Unity.Mathematics;
 namespace ET
 {
     [FriendOf(typeof(AOIEntity))]
+    [FriendOf(typeof(Unit))]
     [FriendOf(typeof(Cell))]
     public static class AOIEntitySystem
     {

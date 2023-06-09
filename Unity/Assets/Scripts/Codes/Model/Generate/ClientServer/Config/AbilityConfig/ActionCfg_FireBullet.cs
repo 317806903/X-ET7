@@ -21,9 +21,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         BulletId = _buf.ReadString();
         Duration = _buf.ReadFloat();
-        NodeName = _buf.ReadString();
-        OffSetPosition = _buf.ReadVector3();
-        RelateForward = _buf.ReadVector3();
+        OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
         MoveType = MoveTweenType.DeserializeMoveTweenType(_buf);
         PostInit();
     }
@@ -46,7 +44,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 资源id
+    /// 子弹Id
     /// </summary>
     public string BulletId { get; private set; }
     public BulletCfg BulletId_Ref { get; private set; }
@@ -54,18 +52,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// 持续时间(s)
     /// </summary>
     public float Duration { get; private set; }
-    /// <summary>
-    /// 从这个挂载点对应位置生成
-    /// </summary>
-    public string NodeName { get; private set; }
-    /// <summary>
-    /// 挂载点的相对偏移
-    /// </summary>
-    public System.Numerics.Vector3 OffSetPosition { get; private set; }
-    /// <summary>
-    /// 相对发送者的面向偏移
-    /// </summary>
-    public System.Numerics.Vector3 RelateForward { get; private set; }
+    public OffSetInfo OffSetInfo { get; private set; }
     public MoveTweenType MoveType { get; private set; }
 
     public const int __ID__ = -1637484119;
@@ -74,12 +61,14 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.BulletId_Ref = (_tables["BulletCfgCategory"] as BulletCfgCategory).GetOrDefault(BulletId);
+        OffSetInfo?.Resolve(_tables);
         MoveType?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        OffSetInfo?.TranslateText(translator);
         MoveType?.TranslateText(translator);
     }
 
@@ -91,9 +80,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "BulletId:" + BulletId + ","
         + "Duration:" + Duration + ","
-        + "NodeName:" + NodeName + ","
-        + "OffSetPosition:" + OffSetPosition + ","
-        + "RelateForward:" + RelateForward + ","
+        + "OffSetInfo:" + OffSetInfo + ","
         + "MoveType:" + MoveType + ","
         + "}";
     }

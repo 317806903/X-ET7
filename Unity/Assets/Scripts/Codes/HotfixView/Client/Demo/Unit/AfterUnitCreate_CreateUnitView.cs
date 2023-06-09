@@ -1,5 +1,6 @@
 ﻿using ET.Ability;
 using ET.AbilityConfig;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,30 +13,52 @@ namespace ET.Client
         {
             Unit unit = args.Unit;
             string resName = "";
+            float resScale = 1f;
             if (Ability.UnitHelper.ChkIsPlayer(unit))
             {
                 resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                resScale = unit.model.ResScale;
             }
             else if (Ability.UnitHelper.ChkIsBullet(unit))
             {
                 resName = ResUnitCfgCategory.Instance.Get(unit.GetComponent<BulletObj>().model.ResId).ResName;
+                resScale = unit.GetComponent<BulletObj>().model.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsMonster(unit))
+            {
+                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                resScale = unit.model.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsSceneEffect(unit))
+            {
+                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                resScale = unit.model.ResScale;
             }
             else
             {
-                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                resName = "";
             }
             // Unit View层
-            GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
-	        Log.Debug(" AfterUnitCreate_CreateUnitView after LoadAssetAsync 1");
-            GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
-            Log.Debug($" AfterUnitCreate_CreateUnitView after LoadAssetAsync 2 0 {prefab} {go}");
-            go.transform.position = unit.Position;
-            unit.AddComponent<GameObjectComponent>().GameObject = go;
-            Log.Debug($" AfterUnitCreate_CreateUnitView after LoadAssetAsync 3 0 {prefab} {go}");
-            unit.AddComponent<AnimatorComponent>();
-            Log.Debug(" AfterUnitCreate_CreateUnitView after LoadAssetAsync 4");
+            if (string.IsNullOrEmpty(resName) == false)
+            {
+                GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
+                GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
+                go.transform.position = unit.Position;
+                go.transform.forward = unit.Forward;
+                go.transform.localScale = Vector3.one * resScale;
+                unit.AddComponent<GameObjectComponent>().GameObject = go;
+
+                if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsMonster(unit))
+                {
+                    GameObject HealthBarPrefab = await ResComponent.Instance.LoadAssetAsync<GameObject>("HealthBar");
+                    GameObject HealthBarGo = UnityEngine.Object.Instantiate(HealthBarPrefab, go.transform, true);
+                    HealthBarGo.transform.localPosition = new float3(0, 5, 0);
+                    HealthBarGo.transform.localScale = Vector3.one;
+                    unit.AddComponent<HealthBarComponent, GameObject>(HealthBarGo);
+                }
+                unit.AddComponent<AnimatorComponent>();
+            }
             unit.AddComponent<ET.Ability.Client.EffectShowComponent>();
-            Log.Debug(" AfterUnitCreate_CreateUnitView after LoadAssetAsync 5");
             await ETTask.CompletedTask;
         }
     }

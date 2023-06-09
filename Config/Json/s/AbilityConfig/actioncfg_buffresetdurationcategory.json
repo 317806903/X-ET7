@@ -1,0 +1,19 @@
+[
+  {
+    "id": "BuffResetDuration_1",
+    "name": "",
+    "buffDurationChgType": {
+      "$type": "BuffDurationChgCur",
+      "leftTimeScale": 2,
+      "stackCountScale": 0
+    }
+  },
+  {
+    "id": "BuffResetDuration_2",
+    "name": "",
+    "buffDurationChgType": {
+      "$type": "BuffDurationChgOrg",
+      "stackCountScale": 0
+    }
+  }
+]

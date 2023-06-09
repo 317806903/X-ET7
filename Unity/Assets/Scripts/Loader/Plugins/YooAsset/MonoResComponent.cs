@@ -22,6 +22,7 @@ namespace ET
             YooAssets.Initialize();
             YooAssets.SetOperationSystemMaxTimeSlice(30);
 
+            this.LoadResConfig();
             yield return InitPackage();
 
             yield return this.LoadGlobalConfig();
@@ -34,14 +35,15 @@ namespace ET
 
         private IEnumerator InitPackage()
         {
-            
+            EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
 #if UNITY_EDITOR
-            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
-            EPlayMode playMode = globalConfig.PlayMode;
 #else
-            EPlayMode playMode = EPlayMode.HostPlayMode;
+            if (resLoadMode == EPlayMode.EditorSimulateMode)
+            {
+                //resLoadMode = EPlayMode.HostPlayMode;
+                resLoadMode = EPlayMode.OfflinePlayMode;
+            }
 #endif
-            
             // 创建默认的资源包
             string packageName = "DefaultPackage";
             defaultPackage = YooAssets.TryGetPackage(packageName);
@@ -53,17 +55,17 @@ namespace ET
 
             // 编辑器下的模拟模式
             InitializationOperation initializationOperation = null;
-            if (playMode == EPlayMode.EditorSimulateMode)
+            if (resLoadMode == EPlayMode.EditorSimulateMode)
             {
                 var createParameters = new EditorSimulateModeParameters();
                 createParameters.SimulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(packageName);
                 initializationOperation = defaultPackage.InitializeAsync(createParameters);
             }
-            else if (playMode == EPlayMode.OfflinePlayMode){
+            else if (resLoadMode == EPlayMode.OfflinePlayMode){
                 var createParameters = new OfflinePlayModeParameters();
                 initializationOperation = defaultPackage.InitializeAsync(createParameters);
             }
-            else if (playMode == EPlayMode.HostPlayMode)
+            else if (resLoadMode == EPlayMode.HostPlayMode)
             {
                 var createParameters = new HostPlayModeParameters();
                 createParameters.DecryptionServices = new GameDecryptionServices(); 
@@ -88,6 +90,11 @@ namespace ET
             GlobalConfig.Instance = handler.AssetObject as GlobalConfig;
             handler.Release();
             defaultPackage.UnloadUnusedAssets();
+        }
+        
+        private void LoadResConfig()
+        {
+            ResConfig.Instance = Resources.Load<ResConfig>("ResConfig");
         }
         
         private async ETTask LoadGlobalConfigAsync()
@@ -135,8 +142,8 @@ namespace ET
         private string GetHostServerURL()
         {
             //string hostServerIP = "http://10.0.2.2"; //安卓模拟器地址
-            string hostServerIP = "http://127.0.0.1";
-            string gameVersion = "v1.0";
+            string hostServerIP = ResConfig.Instance.ResHostServerIP;
+            string gameVersion = ResConfig.Instance.ResGameVersion;
 
 #if UNITY_EDITOR
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)

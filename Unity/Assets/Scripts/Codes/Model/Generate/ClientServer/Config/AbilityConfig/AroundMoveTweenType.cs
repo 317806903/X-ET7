@@ -19,8 +19,9 @@ public sealed partial class AroundMoveTweenType:  MoveTweenType
 {
     public AroundMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {
-        Radius = _buf.ReadFloat();
         InitAngle = _buf.ReadFloat();
+        Radius = _buf.ReadFloat();
+        RadiusAddSpeed = _buf.ReadFloat();
         PostInit();
     }
 
@@ -30,13 +31,17 @@ public sealed partial class AroundMoveTweenType:  MoveTweenType
     }
 
     /// <summary>
+    /// 初始角度
+    /// </summary>
+    public float InitAngle { get; private set; }
+    /// <summary>
     /// 环绕半径
     /// </summary>
     public float Radius { get; private set; }
     /// <summary>
-    /// 初始角度
+    /// 环绕半径增加速度
     /// </summary>
-    public float InitAngle { get; private set; }
+    public float RadiusAddSpeed { get; private set; }
 
     public const int __ID__ = 1087275655;
     public override int GetTypeId() => __ID__;
@@ -57,8 +62,9 @@ public sealed partial class AroundMoveTweenType:  MoveTweenType
         return "{ "
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
-        + "Radius:" + Radius + ","
         + "InitAngle:" + InitAngle + ","
+        + "Radius:" + Radius + ","
+        + "RadiusAddSpeed:" + RadiusAddSpeed + ","
         + "}";
     }
     

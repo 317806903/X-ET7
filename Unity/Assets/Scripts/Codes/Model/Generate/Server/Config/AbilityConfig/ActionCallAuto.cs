@@ -24,7 +24,9 @@ public abstract partial class ActionCallAuto:  ActionCallParam
         switch (_buf.ReadInt())
         {
             case ActionCallAutoSelf.__ID__: return new ActionCallAutoSelf(_buf);
-            case ActionCallAutoUnit.__ID__: return new ActionCallAutoUnit(_buf);
+            case ActionCallAutoUnitWhenUmbellate.__ID__: return new ActionCallAutoUnitWhenUmbellate(_buf);
+            case ActionCallAutoUnitWhenRectangle.__ID__: return new ActionCallAutoUnitWhenRectangle(_buf);
+            case ActionCallAutoUnitOne.__ID__: return new ActionCallAutoUnitOne(_buf);
             default: throw new SerializationException();
         }
     }

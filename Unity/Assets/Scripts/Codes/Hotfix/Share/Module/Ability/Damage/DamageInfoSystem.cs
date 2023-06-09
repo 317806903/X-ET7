@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
@@ -22,22 +23,70 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this DamageInfo self, long targetUnitId, Damage damage, float damageDegree, float criticalRate, DamageInfoTag[] tags)
+        public static void Init(this DamageInfo self, long attackerUnitId, long targetUnitId, Damage damage, float damageDegree, float criticalRate, DamageSourceTag[] tags)
         {
-        }
-        
-        
-        public static bool isHeal(this DamageInfo self){
-            return false;
+            self.attackerUnitId = attackerUnitId;
+            self.defenderUnitId = targetUnitId;
+            self.damage = damage;
         }
         
         ///<summary>
-        ///从策划脚本获得最终的伤害值
+        ///这里再结合是否闪避，是否暴击进行处理
         ///</summary>
-        public static int DamageValue(this DamageInfo self, bool asHeal){
-            return 111;
+        public static int DamageValue(this DamageInfo self){
+            return self.damage.Overall();
         }
         
+        /// <summary>
+        /// 获取攻击者对应 的对象(player或monster)
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetAttackerPlayerUnit(this DamageInfo self)
+        {
+            Unit unit = GetAttackerUnit(self);
+            while(true)
+            {
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
+                }
+                else if (UnitHelper.ChkIsAoe(unit))
+                {
+                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return unit;
+        }
+
+        /// <summary>
+        /// 获取攻击者
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetAttackerUnit(this DamageInfo self)
+        {
+            Scene scene = self.DomainScene();
+            Unit unit = UnitHelper.GetUnit(scene, self.attackerUnitId);
+            return unit;
+        }
+
+        /// <summary>
+        /// 获取受击者
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static Unit GetDefenderUnit(this DamageInfo self)
+        {
+            Scene scene = self.DomainScene();
+            Unit unit = UnitHelper.GetUnit(scene, self.defenderUnitId);
+            return unit;
+        }
+
         public static void DealWithDamage(this DamageInfo self)
         {
             Scene scene = self.DomainScene();
@@ -45,33 +94,36 @@ namespace ET.Ability
             if (UnitHelper.ChkUnitAlive(scene, self.defenderUnitId) == false)
                 return;
 
-            Unit attackerUnit = UnitHelper.GetUnit(scene, self.attackerUnitId);
-            Unit defenderUnit = UnitHelper.GetUnit(scene, self.defenderUnitId);
+            Unit attackerUnit = self.GetAttackerUnit();
+            Unit defenderUnit = self.GetDefenderUnit();
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnHit()
                 {
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfoId = self.Id,
+                    damageInfo = self,
                 });
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnHit()
                 {
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfoId = self.Id,
+                    damageInfo = self,
                 });
-            if (defenderUnit.CanBeKilledByDamageInfo(self) == true)
+            if (self.CanBeKilledByDamageInfo(defenderUnit) == true)
             {
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
                     {
                         attackerUnit = attackerUnit,
                         defenderUnit = defenderUnit,
-                        damageInfoId = self.Id,
+                        damageInfo = self,
                     });
             }
 
-            //最后根据结果处理：如果是治疗或者角色非无敌，才会对血量进行调整。
-            bool isHeal = self.isHeal();
-            int dVal = self.DamageValue(isHeal);
+            int damageValue = self.DamageValue();
+            
+            NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
+            int curHp = numericComponent.GetAsInt(NumericType.Hp);
+            numericComponent.Set(NumericType.Hp, curHp - damageValue);
+            
             //if (isHeal == true)
             {
                 // if (self.requireDoHurt() == true && defenderChaState.CanBeKilledByDamageInfo(self) == false)
@@ -87,11 +139,13 @@ namespace ET.Ability
 
             if (UnitHelper.ChkUnitAlive(defenderUnit) == false)
             {
+                defenderUnit.DestroyWithDeathShow();
+                
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfoId = self.Id,
+                    damageInfo = self,
                 });
             }
             //
@@ -106,6 +160,18 @@ namespace ET.Ability
             //         toChaState.AddBuff(self.addBuffs[i]);
             //     }
             // }
+        }
+        
+        public static bool CanBeKilledByDamageInfo(this DamageInfo self, Unit targetUnit)
+        {
+            NumericComponent numericComponent = targetUnit.GetComponent<NumericComponent>();
+            int curHp = numericComponent.GetAsInt(NumericType.Hp);
+            int damageValue = self.damage.Overall();
+            if (damageValue >= curHp)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

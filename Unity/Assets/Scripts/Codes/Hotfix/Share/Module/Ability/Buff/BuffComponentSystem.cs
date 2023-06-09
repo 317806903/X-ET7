@@ -17,6 +17,12 @@ namespace ET.Ability
                 self.removeList = new();
                 
                 self.monitorTriggerList = new();
+                self.buffTagTypeList = new();
+                self.buffImmuneTagTypeList = new();
+                self.buffTagGroupTypeList = new();
+                self.buffImmuneTagGroupTypeList = new();
+                self.buffTypeList = new();
+                self.buffControlStateList = new();
             }
         }
 
@@ -27,26 +33,102 @@ namespace ET.Ability
             {
                 self.removeList.Clear();
                 self.monitorTriggerList.Clear();
+                self.buffTagTypeList.Clear();
+                self.buffImmuneTagTypeList.Clear();
+                self.buffTagGroupTypeList.Clear();
+                self.buffImmuneTagGroupTypeList.Clear();
+                self.buffTypeList.Clear();
+                self.buffControlStateList.Clear();
             }
         }
-
-        public static BuffObj AddBuff(this BuffComponent self, string buffCfgId)
+        
+        [ObjectSystem]
+        public class BuffComponentFixedUpdateSystem: FixedUpdateSystem<BuffComponent>
         {
-            BuffObj buffObj = self.AddChild<BuffObj>();
-            buffObj.Init(buffCfgId);
-            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnAwake()
+            protected override void FixedUpdate(BuffComponent self)
             {
-                buff = buffObj,
-            });
-            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnStart()
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
+        
+        public static BuffObj AddBuff(this BuffComponent self, Unit casterUnit, Unit unit, AddBuffInfo addBuffInfo, ActionContext actionContext)
+        {
+            (bool canAdd, string msg) = self.ChkCanAdd(addBuffInfo);
+            if (canAdd == false)
             {
-                buff = buffObj,
-            });
+                Log.Debug($" AddBuff canAdd==false msg={msg}");
+                return null;
+            }
 
-            self.AddMonitorTriggerList(buffObj);
+            bool IsEnabled = self.ChkIsEnabledByTagGroup(addBuffInfo);
+
+            (bool canStack, BuffObj buffObj) = self.ChkCanStack(casterUnit, unit, addBuffInfo);
+            if (canStack)
+            {
+                buffObj.AddStackCount(addBuffInfo.AddStack);
+                Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==true curStackCount={buffObj.stack}");
+            }
+            else
+            {
+                buffObj = self.AddChild<BuffObj>();
+                buffObj.isEnabled = IsEnabled;
+                buffObj.Init(casterUnit, unit, addBuffInfo);
+                buffObj.InitActionContext(actionContext);
+                self.DealWhenAddBuff(buffObj);
+                
+                Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
+                
+                buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnAwake);
+                buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnStart);
+            }
             return buffObj;
         }
 
+        public static (bool, BuffObj) ChkCanStack(this BuffComponent self, Unit casterUnit, Unit unit, AddBuffInfo addBuffInfo)
+        {
+            if (self.Children.Count <= 0)
+            {
+                return (false, null);
+            }
+            foreach (var buffObjs in self.Children)
+            {
+                BuffObj buffObj = buffObjs.Value as BuffObj;
+                if (buffObj.CfgId == addBuffInfo.BuffId && buffObj.casterUnitId == casterUnit.Id)
+                {
+                    return (true, buffObj);
+                }
+            }
+
+            return (false, null);
+        }
+        
+        public static void DealWhenAddBuff(this BuffComponent self, BuffObj buffObj)
+        {
+            self.AddMonitorTriggerList(buffObj);
+            self.AddBuffTagTypeList(buffObj);
+            self.AddBuffImmuneTagTypeList(buffObj);
+            self.AddBuffTypeList(buffObj);
+            self.AddBuffControlStateList(buffObj);
+
+            buffObj.AddBuffWhenModifyAttribute();
+        }
+        
+        public static void DealWhenRemoveBuff(this BuffComponent self, BuffObj buffObj)
+        {
+            self.RemoveMonitorTriggerList(buffObj);
+            self.RemoveBuffTagTypeList(buffObj);
+            self.RemoveBuffImmuneTagTypeList(buffObj);
+            self.RemoveBuffTypeList(buffObj);
+            self.RemoveBuffControlStateList(buffObj);
+            
+            buffObj.RemoveBuffWhenModifyAttribute();
+        }
+        
         public static void AddMonitorTriggerList(this BuffComponent self, BuffObj buffObj)
         {
             foreach (var monitorTrigger in buffObj.monitorTriggerList)
@@ -74,21 +156,16 @@ namespace ET.Ability
             buffObjs.Sort((a, b) => a.model.Priority.CompareTo(b.model.Priority));
             foreach (BuffObj buffObj in buffObjs)
             {
-                List<BuffActionCall> buffActionCalls = buffObj.GetActionIds(abilityBuffMonitorTriggerEvent);
-                if (buffActionCalls.Count > 0)
-                {
-                    for (int i = 0; i < buffActionCalls.Count; i++)
-                    {
-                        buffObj.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
-                    }
-                }
+                buffObj.TrigEvent(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit);
             }
         }
 
         public static void Remove(this BuffComponent self, BuffObj buffObj)
         {
-            EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnDestroy() { buff = buffObj });
-            self.RemoveMonitorTriggerList(buffObj);
+            buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnDestroy);
+            
+            self.DealWhenRemoveBuff(buffObj);
+            self.DoEnabledTagGroup(buffObj);
             buffObj.Dispose();
         }
         
@@ -107,7 +184,7 @@ namespace ET.Ability
 
                 if (buffObj.ChkNeedRemove())
                 {
-                    EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.BuffOnRemoved() { buff = buffObj });
+                    buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRemoved);
                 }
                 if (buffObj.ChkNeedRemove())
                 {
@@ -123,5 +200,6 @@ namespace ET.Ability
 
             self.removeList.Clear();
         }
+        
     }
 }

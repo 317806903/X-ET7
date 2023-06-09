@@ -172,12 +172,48 @@ namespace ET
 
 	}
 
-	[Message(OuterMessage.M2C_SyncUnits)]
+	[Message(OuterMessage.UnitPosInfo)]
 	[ProtoContract]
-	public partial class M2C_SyncUnits: ProtoObject, IActorMessage
+	public partial class UnitPosInfo: ProtoObject
 	{
 		[ProtoMember(1)]
-		public List<UnitInfo> Units { get; set; }
+		public long UnitId { get; set; }
+
+		[ProtoMember(4)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+		[ProtoMember(5)]
+		public Unity.Mathematics.float3 Forward { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SyncPosUnits)]
+	[ProtoContract]
+	public partial class M2C_SyncPosUnits: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public List<UnitPosInfo> Units { get; set; }
+
+	}
+
+	[Message(OuterMessage.UnitNumericInfo)]
+	[ProtoContract]
+	public partial class UnitNumericInfo: ProtoObject
+	{
+		[ProtoMember(1)]
+		public long UnitId { get; set; }
+
+		[MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
+		[ProtoMember(6)]
+		public Dictionary<int, long> KV { get; set; }
+	}
+
+	[Message(OuterMessage.M2C_SyncNumericUnits)]
+	[ProtoContract]
+	public partial class M2C_SyncNumericUnits: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public List<UnitNumericInfo> Units { get; set; }
 
 	}
 
@@ -536,15 +572,127 @@ namespace ET
 
 	}
 
-	[Message(OuterMessage.C2M_CreateMonster)]
+	[ResponseType(nameof(M2C_LearnSkill))]
+	[Message(OuterMessage.C2M_LearnSkill)]
 	[ProtoContract]
-	public partial class C2M_CreateMonster: ProtoObject, IActorLocationMessage
+	public partial class C2M_LearnSkill: ProtoObject, IActorLocationRequest
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
+		public long UnitId { get; set; }
+
+		[ProtoMember(3)]
+		public string SkillId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_LearnSkill)]
+	[ProtoContract]
+	public partial class M2C_LearnSkill: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_CastSkill))]
+	[Message(OuterMessage.C2M_CastSkill)]
+	[ProtoContract]
+	public partial class C2M_CastSkill: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long UnitId { get; set; }
+
+		[ProtoMember(3)]
+		public string SkillId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_CastSkill)]
+	[ProtoContract]
+	public partial class M2C_CastSkill: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_CallTower))]
+	[Message(OuterMessage.C2M_CallTower)]
+	[ProtoContract]
+	public partial class C2M_CallTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string TowerUnitCfgId { get; set; }
+
+		[ProtoMember(3)]
 		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_CallTower)]
+	[ProtoContract]
+	public partial class M2C_CallTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_CallTank))]
+	[Message(OuterMessage.C2M_CallTank)]
+	[ProtoContract]
+	public partial class C2M_CallTank: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string TankUnitCfgId { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_CallTank)]
+	[ProtoContract]
+	public partial class M2C_CallTank: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
 
 	}
 
@@ -561,33 +709,43 @@ namespace ET
 		 public const ushort MoveInfo = 10010;
 		 public const ushort UnitInfo = 10011;
 		 public const ushort M2C_CreateUnits = 10012;
-		 public const ushort M2C_SyncUnits = 10013;
-		 public const ushort M2C_SyncUnitEffects = 10014;
-		 public const ushort M2C_CreateMyUnit = 10015;
-		 public const ushort M2C_StartSceneChange = 10016;
-		 public const ushort M2C_RemoveUnits = 10017;
-		 public const ushort C2M_PathfindingResult = 10018;
-		 public const ushort C2M_Stop = 10019;
-		 public const ushort M2C_PathfindingResult = 10020;
-		 public const ushort M2C_Stop = 10021;
-		 public const ushort C2G_Ping = 10022;
-		 public const ushort G2C_Ping = 10023;
-		 public const ushort G2C_Test = 10024;
-		 public const ushort C2M_Reload = 10025;
-		 public const ushort M2C_Reload = 10026;
-		 public const ushort C2R_Login = 10027;
-		 public const ushort R2C_Login = 10028;
-		 public const ushort C2G_LoginGate = 10029;
-		 public const ushort G2C_LoginGate = 10030;
-		 public const ushort G2C_TestHotfixMessage = 10031;
-		 public const ushort C2M_TestRobotCase = 10032;
-		 public const ushort M2C_TestRobotCase = 10033;
-		 public const ushort C2M_TestRobotCase2 = 10034;
-		 public const ushort M2C_TestRobotCase2 = 10035;
-		 public const ushort C2M_TransferMap = 10036;
-		 public const ushort M2C_TransferMap = 10037;
-		 public const ushort C2G_Benchmark = 10038;
-		 public const ushort G2C_Benchmark = 10039;
-		 public const ushort C2M_CreateMonster = 10040;
+		 public const ushort UnitPosInfo = 10013;
+		 public const ushort M2C_SyncPosUnits = 10014;
+		 public const ushort UnitNumericInfo = 10015;
+		 public const ushort M2C_SyncNumericUnits = 10016;
+		 public const ushort M2C_SyncUnitEffects = 10017;
+		 public const ushort M2C_CreateMyUnit = 10018;
+		 public const ushort M2C_StartSceneChange = 10019;
+		 public const ushort M2C_RemoveUnits = 10020;
+		 public const ushort C2M_PathfindingResult = 10021;
+		 public const ushort C2M_Stop = 10022;
+		 public const ushort M2C_PathfindingResult = 10023;
+		 public const ushort M2C_Stop = 10024;
+		 public const ushort C2G_Ping = 10025;
+		 public const ushort G2C_Ping = 10026;
+		 public const ushort G2C_Test = 10027;
+		 public const ushort C2M_Reload = 10028;
+		 public const ushort M2C_Reload = 10029;
+		 public const ushort C2R_Login = 10030;
+		 public const ushort R2C_Login = 10031;
+		 public const ushort C2G_LoginGate = 10032;
+		 public const ushort G2C_LoginGate = 10033;
+		 public const ushort G2C_TestHotfixMessage = 10034;
+		 public const ushort C2M_TestRobotCase = 10035;
+		 public const ushort M2C_TestRobotCase = 10036;
+		 public const ushort C2M_TestRobotCase2 = 10037;
+		 public const ushort M2C_TestRobotCase2 = 10038;
+		 public const ushort C2M_TransferMap = 10039;
+		 public const ushort M2C_TransferMap = 10040;
+		 public const ushort C2G_Benchmark = 10041;
+		 public const ushort G2C_Benchmark = 10042;
+		 public const ushort C2M_LearnSkill = 10043;
+		 public const ushort M2C_LearnSkill = 10044;
+		 public const ushort C2M_CastSkill = 10045;
+		 public const ushort M2C_CastSkill = 10046;
+		 public const ushort C2M_CallTower = 10047;
+		 public const ushort M2C_CallTower = 10048;
+		 public const ushort C2M_CallTank = 10049;
+		 public const ushort M2C_CallTank = 10050;
 	}
 }

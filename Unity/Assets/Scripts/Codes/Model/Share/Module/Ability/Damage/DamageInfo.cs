@@ -28,7 +28,7 @@ namespace ET.Ability
         ///根据这些伤害类型，逻辑处理可能会有所不同，典型的比如"reflect"，来自反伤的，那本身一个buff的作用就是受到伤害的时候反弹伤害，如果双方都有这个buff
         ///并且这个buff没有判断damageInfo.tags里面有reflect，则可能造成“短路”，最终有一下有一方就秒了。
         ///</summary>
-        public DamageInfoTag[] tags;
+        public DamageSourceTag[] tags;
 
         ///<summary>
         ///伤害值，其实伤害值是多元的，通常游戏都会有多个属性伤害，所以会用一个struct，否则就会是一个int
@@ -55,62 +55,5 @@ namespace ET.Ability
         ///伤害的角度，作为伤害打向角色的入射角度，比如子弹，就是它当前的飞行角度
         ///</summary>
         public float degree;
-
-    }
-    
-    
-    ///<summary>
-    ///游戏中伤害值的struct，这游戏的伤害类型包括子弹伤害（治疗）、爆破伤害（治疗）、精神伤害（治疗）3种，这两种的概念更像是类似物理伤害、金木水火土属性伤害等等这种元素伤害的概念
-    ///但是游戏的逻辑可能会依赖于这个伤害做一些文章，比如“受到子弹伤害减少90%”之类的
-    ///</summary>
-    public struct Damage{
-        public int bullet;
-        public int explosion;
-        public int mental;
-
-        public Damage(int bullet, int explosion = 0, int mental = 0){
-            this.bullet = bullet;
-            this.explosion = explosion;
-            this.mental = mental;
-        }
-
-        ///<summary>
-        ///统计规则，在这个游戏里伤害和治疗不能共存在一个结果里，作为抵消用
-        ///<param name="asHeal">是否当做治疗来统计</name>
-        ///</summary>
-        public int Overall(bool asHeal = false){
-            return (asHeal == false) ? 
-                    (math.max(0, bullet) + math.max(0, explosion) + math.max(0, mental)):
-                    (math.min(0, bullet) + math.min(0, explosion) + math.min(0, mental));
-        }
-
-        public static Damage operator +(Damage a, Damage b){
-            return new Damage(
-                a.bullet + b.bullet,
-                a.explosion + b.explosion,
-                a.mental + b.mental
-            );
-        }
-        public static Damage operator *(Damage a, float b){
-            return new Damage(
-                (int)Math.Round(a.bullet * b),
-                (int)Math.Round(a.explosion * b),
-                (int)Math.Round(a.mental * b)
-            );
-        }
-    }
-
-    ///<summary>
-    ///伤害类型的Tag元素，因为DamageInfo的逻辑需要的严谨性远高于其他的元素，所以伤害类型应该是枚举数组的
-    ///这个伤害类型不应该是类似 火伤害、水伤害、毒伤害之类的，如果是这种元素伤害，那么应该是在damage做文章，即damange不是int而是一个struct或者array或者dictionary，然后DamageValue函数里面去改最终值算法
-    ///这里的伤害类型，指的还是比如直接伤害、反弹伤害、dot伤害等等，一些在逻辑处理流程会有不同待遇的东西，比如dot伤害可能不会触发一些效果等，当然这最终还是取决于策划设计的规则。
-    ///</summary>
-    public enum DamageInfoTag{
-        directDamage = 0,   //直接伤害
-        periodDamage = 1,   //间歇性伤害
-        reflectDamage = 2,  //反噬伤害
-        directHeal = 10,    //直接治疗
-        periodHeal = 11,    //间歇性治疗
-        monkeyDamage = 9999    //这个类型的伤害在目前这个demo中没有意义，只是告诉你可以随意扩展，仅仅比string严肃些。
     }
 }

@@ -11,7 +11,6 @@
     <type fullname="System.Action`1" preserve="all" />
     <type fullname="System.Action`2" preserve="all" />
     <type fullname="System.Action`3" preserve="all" />
-    <type fullname="System.Action`4" preserve="all" />
     <type fullname="System.Activator" preserve="all" />
     <type fullname="System.ArgumentNullException" preserve="all" />
     <type fullname="System.ArgumentOutOfRangeException" preserve="all" />
@@ -45,8 +44,6 @@
     <type fullname="System.Func`1" preserve="all" />
     <type fullname="System.Func`2" preserve="all" />
     <type fullname="System.Func`3" preserve="all" />
-    <type fullname="System.Func`4" preserve="all" />
-    <type fullname="System.Func`5" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Int64" preserve="all" />
@@ -54,6 +51,7 @@
     <type fullname="System.IO.TextReader" preserve="all" />
     <type fullname="System.Math" preserve="all" />
     <type fullname="System.NotImplementedException" preserve="all" />
+    <type fullname="System.Nullable`1" preserve="all" />
     <type fullname="System.Object" preserve="all" />
     <type fullname="System.Reflection.DefaultMemberAttribute" preserve="all" />
     <type fullname="System.Reflection.MemberInfo" preserve="all" />
@@ -93,7 +91,6 @@
     <type fullname="System.Collections.Generic.SortedDictionary`2/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection/Enumerator" preserve="all" />
-    <type fullname="System.Collections.Generic.Stack`1" preserve="all" />
     <type fullname="System.Net.EndPoint" preserve="all" />
     <type fullname="System.Net.IPAddress" preserve="all" />
     <type fullname="System.Net.IPEndPoint" preserve="all" />
@@ -132,11 +129,13 @@
     <type fullname="ET.ConfigComponent" preserve="all" />
     <type fullname="ET.ConfigComponent/GetAllConfigBytes" preserve="all" />
     <type fullname="ET.ConfigComponent/GetOneConfigBytes" preserve="all" />
+    <type fullname="ET.ConfigComponent/GetRes" preserve="all" />
     <type fullname="ET.ConfigSingleton`1" preserve="all" />
     <type fullname="ET.CoroutineLock" preserve="all" />
     <type fullname="ET.CoroutineLockComponent" preserve="all" />
     <type fullname="ET.DestroySystem`1" preserve="all" />
     <type fullname="ET.DisposeObject" preserve="all" />
+    <type fullname="ET.EnableMethodAttribute" preserve="all" />
     <type fullname="ET.Entity" preserve="all" />
     <type fullname="ET.EntitySceneFactory" preserve="all" />
     <type fullname="ET.ErrorCore" preserve="all" />
@@ -198,6 +197,7 @@
     <type fullname="ET.WinPeriod" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Loader">
+    <type fullname="ET.Client.GameObjectPoolHelper" preserve="all" />
     <type fullname="ET.CodeLoader" preserve="all" />
     <type fullname="ET.CodeMode" preserve="all" />
     <type fullname="ET.Define" preserve="all" />
@@ -205,7 +205,12 @@
     <type fullname="ET.Init" preserve="all" />
     <type fullname="ET.MonoResComponent" preserve="all" />
     <type fullname="ET.YooAssetHelper" preserve="all" />
+    <type fullname="RedDotMonoView" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
+    <type fullname="SelectImage" preserve="all" />
+    <type fullname="UnityEngine.UI.LoopHorizontalScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.LoopScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.LoopScrollRectBase" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Mathematics">
     <type fullname="Unity.Mathematics.float3" preserve="all" />
@@ -225,39 +230,6 @@
     <type fullname="ET.ETTaskCompleted" preserve="all" />
     <type fullname="ET.ETTaskHelper" preserve="all" />
     <type fullname="ET.Recast" preserve="all" />
-    <type fullname="FairyGUI.Controller" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader/LoadAudioClipAsyncHandler" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader/LoadTextureAsyncHandler" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader/LoadUIPackageAsyncHandler" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader/ReleaseAudioClipHandler" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.DelegateUIAssetLoader/ReleaseTextureHandler" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.IUIAssetLoader" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.IUIPackageHelper" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.LoadAudioClipCallback" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.LoadTextureCallback" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.LoadUIPackageCallback" preserve="all" />
-    <type fullname="FairyGUI.Dynamic.UIAssetManager" preserve="all" />
-    <type fullname="FairyGUI.EventCallback0" preserve="all" />
-    <type fullname="FairyGUI.EventCallback1" preserve="all" />
-    <type fullname="FairyGUI.EventContext" preserve="all" />
-    <type fullname="FairyGUI.EventListener" preserve="all" />
-    <type fullname="FairyGUI.GButton" preserve="all" />
-    <type fullname="FairyGUI.GComboBox" preserve="all" />
-    <type fullname="FairyGUI.GComponent" preserve="all" />
-    <type fullname="FairyGUI.GLabel" preserve="all" />
-    <type fullname="FairyGUI.GList" preserve="all" />
-    <type fullname="FairyGUI.GLoader" preserve="all" />
-    <type fullname="FairyGUI.GObject" preserve="all" />
-    <type fullname="FairyGUI.GProgressBar" preserve="all" />
-    <type fullname="FairyGUI.GRichTextField" preserve="all" />
-    <type fullname="FairyGUI.GRoot" preserve="all" />
-    <type fullname="FairyGUI.GTextField" preserve="all" />
-    <type fullname="FairyGUI.GTextInput" preserve="all" />
-    <type fullname="FairyGUI.UIObjectFactory" preserve="all" />
-    <type fullname="FairyGUI.UIPackage" preserve="all" />
-    <type fullname="FairyGUI.UIPackage/CreateObjectCallback" preserve="all" />
-    <type fullname="FairyGUI.Utils.XML" preserve="all" />
     <type fullname="ProtoBuf.ProtoContractAttribute" preserve="all" />
     <type fullname="ProtoBuf.ProtoIgnoreAttribute" preserve="all" />
     <type fullname="ProtoBuf.ProtoMemberAttribute" preserve="all" />
@@ -286,32 +258,63 @@
     <type fullname="UnityEngine.AnimatorControllerParameter" preserve="all" />
     <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
   </assembly>
-  <assembly fullname="UnityEngine.AudioModule">
-    <type fullname="UnityEngine.AudioClip" preserve="all" />
-  </assembly>
   <assembly fullname="UnityEngine.CoreModule">
     <type fullname="UnityEngine.Camera" preserve="all" />
     <type fullname="UnityEngine.Component" preserve="all" />
+    <type fullname="UnityEngine.Debug" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction`1" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent`1" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEventBase" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.KeyCode" preserve="all" />
     <type fullname="UnityEngine.LayerMask" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Quaternion" preserve="all" />
     <type fullname="UnityEngine.Ray" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
     <type fullname="UnityEngine.SceneManagement.LoadSceneMode" preserve="all" />
     <type fullname="UnityEngine.SceneManagement.Scene" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
     <type fullname="UnityEngine.SystemLanguage" preserve="all" />
     <type fullname="UnityEngine.TextAsset" preserve="all" />
-    <type fullname="UnityEngine.Texture" preserve="all" />
-    <type fullname="UnityEngine.Time" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.U2D.SpriteAtlas" preserve="all" />
+    <type fullname="UnityEngine.Vector2" preserve="all" />
     <type fullname="UnityEngine.Vector3" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.InputLegacyModule">
     <type fullname="UnityEngine.Input" preserve="all" />
+    <type fullname="UnityEngine.Touch" preserve="all" />
+    <type fullname="UnityEngine.TouchPhase" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.ParticleSystemModule">
+    <type fullname="UnityEngine.ParticleSystem" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.PhysicsModule">
     <type fullname="UnityEngine.Physics" preserve="all" />
     <type fullname="UnityEngine.RaycastHit" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.EventSystems.BaseEventData" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.EventTrigger" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.EventTrigger/Entry" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.EventTrigger/TriggerEvent" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.EventTriggerType" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.PointerEventData" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.RaycastResult" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.UIBehaviour" preserve="all" />
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
+    <type fullname="UnityEngine.UI.InputField" preserve="all" />
+    <type fullname="UnityEngine.UI.Selectable" preserve="all" />
+    <type fullname="UnityEngine.UI.Slider" preserve="all" />
+    <type fullname="UnityEngine.UI.Text" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.ToggleGroup" preserve="all" />
   </assembly>
 </linker>

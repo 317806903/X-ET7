@@ -7,16 +7,18 @@
     "key": "",
     "duration": 5,
     "isSceneEffect": false,
-    "nodeName": "",
-    "offSetPosition": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "relateForward": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     }
   },
   {
@@ -27,16 +29,18 @@
     "key": "",
     "duration": 5,
     "isSceneEffect": false,
-    "nodeName": "",
-    "offSetPosition": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "relateForward": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     }
   },
   {
@@ -47,16 +51,172 @@
     "key": "",
     "duration": 5,
     "isSceneEffect": false,
-    "nodeName": "",
-    "offSetPosition": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "relateForward": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_4",
+    "name": "创建特效4",
+    "desc": "",
+    "res_id": "ResEffect_1",
+    "key": "",
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_MachineGunLvl1Effect_1",
+    "name": "Tower火花+子弹特效",
+    "desc": "",
+    "res_id": "ResEffect_MachineGunLvl1Effect_1",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_EneryPylon_PFX1",
+    "name": "Tower火花+子弹特效",
+    "desc": "",
+    "res_id": "ResEffect_EneryPylon_PFX",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_LaserFireEffect1",
+    "name": "Tower火花+子弹特效",
+    "desc": "",
+    "res_id": "ResEffect_LaserFireEffect",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_HoverTankFireShow1",
+    "name": "HoverTank火花+子弹特效",
+    "desc": "",
+    "res_id": "ResEffect_EnemyShootEffect_1",
+    "key": "",
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0.125,
+        "y": 1.161,
+        "z": 0.914
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_BeHit1",
+    "name": "被击中",
+    "desc": "",
+    "res_id": "ResEffect_BeHitShow_1",
+    "key": "",
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_Death_1",
+    "name": "死亡",
+    "desc": "",
+    "res_id": "ResEffect_DeathShow_1",
+    "key": "",
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     }
   }
 ]

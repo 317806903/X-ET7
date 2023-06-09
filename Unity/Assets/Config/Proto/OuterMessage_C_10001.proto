@@ -82,9 +82,27 @@ message M2C_CreateUnits // IActorMessage
 	repeated UnitInfo Units = 1;
 }
 
-message M2C_SyncUnits // IActorMessage
+message UnitPosInfo
 {
-	repeated UnitInfo Units = 1;
+	int64 UnitId = 1;
+	Unity.Mathematics.float3 Position = 4;
+	Unity.Mathematics.float3 Forward = 5;
+}
+
+message M2C_SyncPosUnits // IActorMessage
+{
+	repeated UnitPosInfo Units = 1;
+}
+
+message UnitNumericInfo
+{
+	int64 UnitId = 1;
+	map<int32, int64> KV = 6;
+}
+
+message M2C_SyncNumericUnits // IActorMessage
+{
+	repeated UnitNumericInfo Units = 1;
 }
 
 message M2C_SyncUnitEffects // IActorMessage
@@ -263,8 +281,62 @@ message G2C_Benchmark // IResponse
 	string Message = 3;
 }
 
-message C2M_CreateMonster // IActorLocationMessage
+//ResponseType M2C_LearnSkill
+message C2M_LearnSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	Unity.Mathematics.float3 Position = 2;
+	int64 UnitId = 2;
+	string SkillId = 3;
+}
+
+message M2C_LearnSkill // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_CastSkill
+message C2M_CastSkill // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 UnitId = 2;
+	string SkillId = 3;
+}
+
+message M2C_CastSkill // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_CallTower
+message C2M_CallTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	string TowerUnitCfgId = 2;
+	Unity.Mathematics.float3 Position = 3;
+}
+
+message M2C_CallTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_CallTank
+message C2M_CallTank // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	string TankUnitCfgId = 2;
+	Unity.Mathematics.float3 Position = 3;
+}
+
+message M2C_CallTank // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
 }

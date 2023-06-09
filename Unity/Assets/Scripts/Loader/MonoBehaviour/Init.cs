@@ -18,12 +18,6 @@ namespace ET
 				
 			Game.AddSingleton<MainThreadSynchronizationContext>();
 
-			// 命令行参数
-			string[] args = "".Split(" ");
-			Parser.Default.ParseArguments<Options>(args)
-				.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
-				.WithParsed(Game.AddSingleton);
-			
 			Game.AddSingleton<TimeInfo>();
 			Game.AddSingleton<Logger>().ILog = new UnityLogger();
 			Game.AddSingleton<ObjectPool>();
@@ -35,6 +29,13 @@ namespace ET
 			ETTask.ExceptionHandler += Log.Error;
 
 			yield return MonoResComponent.Instance.InitAsync();
+			
+			// 命令行参数
+			string[] args = $"--StartConfig=StartConfig/{GlobalConfig.Instance.StartConfig}".Split(" ");
+			Parser.Default.ParseArguments<Options>(args)
+					.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
+					.WithParsed(Game.AddSingleton);
+
 			Game.AddSingleton<CodeLoader>().Start();
 		}
 

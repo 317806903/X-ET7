@@ -12,7 +12,9 @@ namespace ET
             foreach (string address in addresses)
             {
                 byte[] bytes = MonoResComponent.Instance.LoadRawFile(address);
+                Log.Debug($"ET.HybridCLRHelper.Load {address} before LoadMetadataForAOTAssembly");
                 RuntimeApi.LoadMetadataForAOTAssembly(bytes, HomologousImageMode.Consistent);
+                Log.Debug($"ET.HybridCLRHelper.Load {address} after LoadMetadataForAOTAssembly");
             }
         }
     }

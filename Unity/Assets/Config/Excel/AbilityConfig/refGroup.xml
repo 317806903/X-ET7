@@ -1,0 +1,15 @@
+<module name="refGroup">
+    <refgroup name="ActionCfg_ref_group" ref="ActionCfg_PlayAudioCategory,
+	ActionCfg_PlayAnimatorCategory,
+	ActionCfg_FireBulletCategory,
+	ActionCfg_CreateEffectCategory,
+	ActionCfg_RemoveEffectCategory,
+	ActionCfg_AttackAreaCategory,
+	ActionCfg_FaceToCategory,
+	ActionCfg_BuffAddStackCountCategory,
+	ActionCfg_BuffReduceStackCountCategory,
+	ActionCfg_BuffResetDurationCategory,
+	ActionCfg_FaceToCategory,
+	ActionCfg_AddBuffCategory,
+	ActionCfg_RemoveBuffCategory"/>
+</module>

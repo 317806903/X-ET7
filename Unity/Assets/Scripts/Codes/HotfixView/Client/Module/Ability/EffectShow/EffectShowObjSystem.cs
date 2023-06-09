@@ -32,6 +32,13 @@ namespace ET.Ability.Client
             string resName = effectObj.model.ResName;
             GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
             GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
+
+            ParticleSystem particleSystem = go.GetComponentInChildren<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Play();
+            }
+            
             self.go = go;
             Unit unit = effectObj.GetUnit();
             

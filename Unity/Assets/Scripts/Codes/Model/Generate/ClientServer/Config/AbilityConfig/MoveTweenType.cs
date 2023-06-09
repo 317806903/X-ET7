@@ -12,6 +12,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
 
+/// <summary>
+/// 运动轨迹(子弹,Aoe)
+/// </summary>
 public abstract partial class MoveTweenType: Bright.Config.BeanBase
 {
     public MoveTweenType(ByteBuf _buf) 
@@ -28,6 +31,7 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
             case StraightMoveTweenType.__ID__: return new StraightMoveTweenType(_buf);
             case TrackingMoveTweenType.__ID__: return new TrackingMoveTweenType(_buf);
             case AroundMoveTweenType.__ID__: return new AroundMoveTweenType(_buf);
+            case TargetMoveTweenType.__ID__: return new TargetMoveTweenType(_buf);
             case ParabolaMoveTweenType.__ID__: return new ParabolaMoveTweenType(_buf);
             default: throw new SerializationException();
         }

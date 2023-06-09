@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using FUIEditor;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
@@ -46,6 +45,7 @@ namespace ET
 		private BuildAssetBundleOptions buildAssetBundleOptions = BuildAssetBundleOptions.None;
 
 		private GlobalConfig globalConfig;
+		private ResConfig resConfig;
 
 		[MenuItem("ET/Build Tool")]
 		public static void ShowWindow()
@@ -56,7 +56,8 @@ namespace ET
         private void OnEnable()
 		{
 			globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
-					
+			resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
+
 #if UNITY_ANDROID
 			activePlatform = PlatformType.Android;
 #elif UNITY_IOS
@@ -78,6 +79,8 @@ namespace ET
 			this.platformType = (PlatformType)EditorGUILayout.EnumPopup(platformType);
 			this.clearFolder = EditorGUILayout.Toggle("clean folder? ", clearFolder);
 			this.isBuildExe = EditorGUILayout.Toggle("build exe?", this.isBuildExe);
+			this.isBuildExe = true;
+			
 			this.isContainAB = EditorGUILayout.Toggle("contain assetsbundle?", this.isContainAB);
 			this.codeOptimization = (CodeOptimization)EditorGUILayout.EnumPopup("CodeOptimization ", this.codeOptimization);
 			EditorGUILayout.LabelField("BuildAssetBundleOptions ");
@@ -131,11 +134,11 @@ namespace ET
 				AssetDatabase.SaveAssets();
 			}
 			
-			var playMode = (EPlayMode)EditorGUILayout.EnumPopup("PlayMode: ", this.globalConfig.PlayMode);
-			if (playMode != this.globalConfig.PlayMode)
+			var resLoadMode = (EPlayMode)EditorGUILayout.EnumPopup("PlayMode: ", this.resConfig.ResLoadMode);
+			if (resLoadMode != this.resConfig.ResLoadMode)
 			{
-				this.globalConfig.PlayMode = playMode;
-				EditorUtility.SetDirty(this.globalConfig);
+				this.resConfig.ResLoadMode = resLoadMode;
+				EditorUtility.SetDirty(this.resConfig);
 				AssetDatabase.SaveAssets();
 			}
 			
@@ -188,17 +191,37 @@ namespace ET
 			EditorGUILayout.BeginHorizontal();
 			{
 				this.configFolder = (ConfigFolder)EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
+				if (this.configFolder.ToString() != this.globalConfig.StartConfig)
+				{
+					this.globalConfig.StartConfig = this.configFolder.ToString();
+					EditorUtility.SetDirty(this.globalConfig);
+					AssetDatabase.SaveAssets();
+				}
 
 				if (GUILayout.Button("ExcelExporter"))
 				{
 					ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.configFolder);
 
-					const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
-					if (Directory.Exists(clientProtoDir))
+					string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/GameConfig";
+					if (Directory.Exists(unityClientConfigForAB))
 					{
-						Directory.Delete(clientProtoDir, true);
+						Directory.Delete(unityClientConfigForAB, true);
 					}
-					FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", clientProtoDir);
+					FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", unityClientConfigForAB);
+				
+					unityClientConfigForAB = "../Unity/Assets/Bundles/Config/AbilityConfig";
+					if (Directory.Exists(unityClientConfigForAB))
+					{
+						Directory.Delete(unityClientConfigForAB, true);
+					}
+					FileHelper.CopyDirectory("../Config/Excel/c/AbilityConfig", unityClientConfigForAB);
+				
+					unityClientConfigForAB = $"../Unity/Assets/Bundles/Config/StartConfig";
+					if (Directory.Exists(unityClientConfigForAB))
+					{
+						Directory.Delete(unityClientConfigForAB, true);
+					}
+					FileHelper.CopyDirectory($"../Config/Excel/c/StartConfig/{this.configFolder.ToString()}", unityClientConfigForAB + $"/{this.configFolder.ToString()}");
 				
 					AssetDatabase.Refresh();
 				}
@@ -206,33 +229,33 @@ namespace ET
 			EditorGUILayout.EndHorizontal();
 			
 			GUILayout.Label("");
-			GUILayout.Label("FairyGUI");
-			GUIContent guiContent = new GUIContent("FairyGUI语言文件XML路径：", "在 FairyGUI 里生成");
-			EditorGUI.BeginChangeCheck();
-			string xmlPath = EditorGUILayout.TextField(guiContent, fairyGUIXMLPath);
-			if (EditorGUI.EndChangeCheck())
-			{
-				fairyGUIXMLPath = xmlPath;
-			}
-
-			if (GUILayout.Button("导出 FairyGUI 多语言"))
-			{
-				if (FUICodeSpawner.Localize(fairyGUIXMLPath))
-				{
-					ShowNotification("FairyGUI 多语言导出成功！");
-				}
-				else
-				{
-					ShowNotification("FairyGUI 多语言导出失败！");
-				}
-			}
-			
-			GUILayout.Space(5);
-			if (GUILayout.Button("FUI代码生成"))
-			{
-				FUICodeSpawner.FUICodeSpawn();
-				ShowNotification("FUI代码生成成功！");
-			}
+			// GUILayout.Label("FairyGUI");
+			// GUIContent guiContent = new GUIContent("FairyGUI语言文件XML路径：", "在 FairyGUI 里生成");
+			// EditorGUI.BeginChangeCheck();
+			// string xmlPath = EditorGUILayout.TextField(guiContent, fairyGUIXMLPath);
+			// if (EditorGUI.EndChangeCheck())
+			// {
+			// 	fairyGUIXMLPath = xmlPath;
+			// }
+			//
+			// if (GUILayout.Button("导出 FairyGUI 多语言"))
+			// {
+			// 	if (FUICodeSpawner.Localize(fairyGUIXMLPath))
+			// 	{
+			// 		ShowNotification("FairyGUI 多语言导出成功！");
+			// 	}
+			// 	else
+			// 	{
+			// 		ShowNotification("FairyGUI 多语言导出失败！");
+			// 	}
+			// }
+			//
+			// GUILayout.Space(5);
+			// if (GUILayout.Button("FUI代码生成"))
+			// {
+			// 	FUICodeSpawner.FUICodeSpawn();
+			// 	ShowNotification("FUI代码生成成功！");
+			// }
 		}
 		
 		private static void AfterCompiling()

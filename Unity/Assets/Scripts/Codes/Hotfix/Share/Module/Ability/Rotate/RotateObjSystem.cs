@@ -23,8 +23,9 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this RotateObj self, int buffCfgId)
+        public static void Init(this RotateObj self, float incrementRotate)
         {
+            self.incrementRotate = incrementRotate;
         }
 
         public static float GetIncrementRotateInTime(this RotateObj self)

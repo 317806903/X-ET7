@@ -26,6 +26,20 @@ namespace ET.Ability
                 self.removeList.Clear();
             }
         }
+        
+        [ObjectSystem]
+        public class MoveComponentFixedUpdateSystem: FixedUpdateSystem<MoveComponent>
+        {
+            protected override void FixedUpdate(MoveComponent self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static MoveObj AddMove(this MoveComponent self, int moveCfgId)
         {

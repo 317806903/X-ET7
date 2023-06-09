@@ -2,11 +2,166 @@
   {
     "id": "Unit_Player1",
     "name": "对象1",
-    "res_id": "ResUnit_Player1"
+    "icon": "ResIcon_Player1",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Player1",
+    "deathShow": "DeathShow_1",
+    "skillList": []
   },
   {
     "id": "Unit_Monster1",
     "name": "对象2",
-    "res_id": "ResUnit_Monster1"
+    "icon": "ResIcon_Monster1",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Monster1",
+    "deathShow": "DeathShow_1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_SceneEffectNone",
+    "name": "场景特效空对象(不要删除这条记录)",
+    "icon": "ResIcon_NULL",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_SceneEffectNone",
+    "deathShow": "DeathShow_1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_HeadQuarter1",
+    "name": "大本营1",
+    "icon": "ResIcon_HeadQuarter1",
+    "moveSpeed": 10,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_HeadQuarter1",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_MachineGunTower1",
+      "Skill_RocketTower_1",
+      "Skill_LaserTower_0",
+      "Skill_EnergyPylon_2"
+    ]
+  },
+  {
+    "id": "Unit_MachineGunTower_0",
+    "name": "炮塔1",
+    "icon": "ResIcon_MachineGunTower_0",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_MachineGunTower_0",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_MachineGunTower1"
+    ]
+  },
+  {
+    "id": "Unit_EnergyPylon_2",
+    "name": "炮塔1",
+    "icon": "ResIcon_EnergyPylon_2",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_EnergyPylon_2",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_EnergyPylon_2"
+    ]
+  },
+  {
+    "id": "Unit_LaserTower_0",
+    "name": "炮塔1",
+    "icon": "ResIcon_LaserTower_0",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_LaserTower_0",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_LaserTower_0"
+    ]
+  },
+  {
+    "id": "Unit_RocketTower_1",
+    "name": "炮塔1",
+    "icon": "ResIcon_RocketTower_1",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_RocketTower_1",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_RocketTower_1"
+    ]
+  },
+  {
+    "id": "Unit_Hoverboss",
+    "name": "坦克1",
+    "icon": "ResIcon_Hoverboss",
+    "moveSpeed": 8,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Hoverboss",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_1"
+    ]
+  },
+  {
+    "id": "Unit_Hoverbuggy",
+    "name": "坦克2",
+    "icon": "ResIcon_Hoverbuggy",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Hoverbuggy",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_HoverTankNormal1"
+    ]
+  },
+  {
+    "id": "Unit_Hovercopter",
+    "name": "坦克3",
+    "icon": "ResIcon_Hovercopter",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Hovercopter",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_HoverTankNormal1"
+    ]
+  },
+  {
+    "id": "Unit_Hovertank",
+    "name": "坦克4",
+    "icon": "ResIcon_Hovertank",
+    "moveSpeed": 6,
+    "rotationSpeed": 200,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "res_id": "ResUnit_Hovertank",
+    "deathShow": "DeathShow_1",
+    "skillList": [
+      "Skill_HoverTankNormal1"
+    ]
   }
 ]

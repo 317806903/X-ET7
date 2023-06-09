@@ -24,10 +24,12 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, float duration, string nodeName, float3 offSetPosition, 
-        float3 
-                relateForward)
+        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, float duration, OffSetInfo offSetInfo)
         {
+            string nodeName = offSetInfo.NodeName;
+            float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
+            float3 relateForward = new float3(offSetInfo.RelateForward.X, offSetInfo.RelateForward.Y, offSetInfo.RelateForward.Z);
+            
             self.isSceneEffect = unitId == 0? true : false;
             self.unitId = unitId;
             self.CfgId = effectCfgId;

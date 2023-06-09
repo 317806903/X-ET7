@@ -11,7 +11,7 @@ namespace ET
             OuterMessage.G2C_Ping,
             OuterMessage.C2G_Benchmark,
             OuterMessage.G2C_Benchmark,
-            OuterMessage.M2C_SyncUnits,
+            OuterMessage.M2C_SyncPosUnits,
             ushort.MaxValue, // ActorResponse
         };
 

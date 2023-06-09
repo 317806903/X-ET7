@@ -21,37 +21,6 @@ namespace ET.Client
         {
             protected override void Update(OperaComponent self)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
-                    {
-                        if (Input.GetKey(KeyCode.LeftShift))
-                        {
-                            C2M_CreateMonster c2M_CreateMonster = new C2M_CreateMonster();
-                            c2M_CreateMonster.Position = (float3)hit.point;
-                            self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2M_CreateMonster);
-                        }
-                        else
-                        {
-                            C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
-                            c2MPathfindingResult.Position = (float3)hit.point + new float3(0, 5f, 0);
-                            self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
-                        }
-                    }
-                }
-                if (Input.GetMouseButtonDown(1))
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
-                    {
-                        C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
-                        c2MPathfindingResult.Position = (float3)hit.point - new float3(0, 5f, 0);
-                        self.ClientScene().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
-                    }
-                }
 
                 if (Input.GetKeyDown(KeyCode.R))
                 {
@@ -64,6 +33,27 @@ namespace ET.Client
                 {
                     C2M_TransferMap c2MTransferMap = new C2M_TransferMap();
                     self.ClientScene().GetComponent<SessionComponent>().Session.Call(c2MTransferMap).Coroutine();
+                }
+                
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    ET.Client.SkillHelper.LearnSkill(self.ClientScene(), "Skill_MachineGunTower1");
+                    ET.Client.SkillHelper.CastSkill(self.ClientScene(), "Skill_MachineGunTower1");
+                }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    ET.Client.SkillHelper.LearnSkill(self.ClientScene(), "Skill_RocketTower_1");
+                    ET.Client.SkillHelper.CastSkill(self.ClientScene(), "Skill_RocketTower_1");
+                }
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    ET.Client.SkillHelper.LearnSkill(self.ClientScene(), "Skill_LaserTower_0");
+                    ET.Client.SkillHelper.CastSkill(self.ClientScene(), "Skill_LaserTower_0");
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    ET.Client.SkillHelper.LearnSkill(self.ClientScene(), "Skill_EnergyPylon_2");
+                    ET.Client.SkillHelper.CastSkill(self.ClientScene(), "Skill_EnergyPylon_2");
                 }
             }
         }

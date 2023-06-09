@@ -8,6 +8,7 @@ namespace ET.Ability
 {
     [FriendOf(typeof(Unit))]
     [FriendOf(typeof(UnitComponent))]
+    [FriendOf(typeof(TeamFlagObj))]
     public static class UnitHelper_Create
     {
         public static UnitComponent GetUnitComponent(Unit unit)
@@ -42,8 +43,12 @@ namespace ET.Ability
             unit.Type = unitType;
 			
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 6f); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000); // 视野15米
+            if (unitType != UnitType.Bullet)
+            {
+                numericComponent.Set(NumericType.Speed, unit.model.MoveSpeed); // 速度是6米每秒
+                numericComponent.Set(NumericType.RotationSpeed, unit.model.RotationSpeed);
+            }
 
             unit.AddComponent<ET.Ability.TimelineComponent>();
             unit.AddComponent<ET.Ability.BuffComponent>();
@@ -62,7 +67,7 @@ namespace ET.Ability
         {
             unitComponent.Add(unit);
             // 加入aoi
-            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
         }
         
         public static Unit CreateWhenServer_CommonPlayer(Scene scene, long playerId, string unitCfgId, UnitType unitType, TeamFlagType teamFlagType, float3 
@@ -78,8 +83,11 @@ namespace ET.Ability
             unit.Type = unitType;
 			
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 6f); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000); // 视野15米
+            numericComponent.Set(NumericType.MaxHp, 10000);
+            numericComponent.Set(NumericType.Hp, 10000);
+            numericComponent.Set(NumericType.Speed, unit.model.MoveSpeed); // 速度是6米每秒
+            numericComponent.Set(NumericType.RotationSpeed, unit.model.RotationSpeed);
 
             unitComponent.Add(unit);
 
@@ -93,7 +101,7 @@ namespace ET.Ability
 
             unit.AddComponent<TeamFlagObj, TeamFlagType>(teamFlagType);
             // 加入aoi
-            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
             return unit;
         }
         
@@ -101,46 +109,83 @@ namespace ET.Ability
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
 
-            //Unit unit = CreateWhenServer_Common_Before(unitComponent, "Unit_Player1", UnitType.Player, TeamFlagType.Team1, position, forward);
-            //CreateWhenServer_Common_After(unitComponent, unit);
+            // Unit unit = CreateWhenServer_Common_Before(unitComponent, "Unit_MachineGunTower_0", UnitType.Player, TeamFlagType.Team1, position, forward);
+            // NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            // numericComponent.Set(NumericType.MaxHp, 10000);
+            // numericComponent.Set(NumericType.Hp, 10000);
+            //
+            // CreateWhenServer_Common_After(unitComponent, unit);
             
-            Unit unit = CreateWhenServer_CommonPlayer(scene, playerId, "Unit_Player1", UnitType.Player, TeamFlagType.Team1, position, forward);
+            Unit unit = CreateWhenServer_CommonPlayer(scene, playerId, "Unit_HeadQuarter1", UnitType.Player, TeamFlagType.Team1, position, forward);
+            
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            numericComponent.Set(NumericType.PhysicalAttack, 11f);
             
             return unit;
         }
 
-        public static Unit CreateWhenServer_Monster(Scene scene, float3 position, float3 forward)
+        public static Unit CreateWhenServer_Monster(Scene scene, string unitCfgId, TeamFlagType teamFlagType, float3 position, float3 forward)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
-            Unit unit = CreateWhenServer_Common_Before(unitComponent, "Unit_Monster1", UnitType.Monster, TeamFlagType.Monster, position, forward);
+            Unit unit = CreateWhenServer_Common_Before(unitComponent, unitCfgId, UnitType.Monster, teamFlagType, position, forward);
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            numericComponent.Set(NumericType.MaxHp, 100);
+            numericComponent.Set(NumericType.Hp, 100);
+            numericComponent.Set(NumericType.PhysicalAttack, 23f);
             unit.AddComponent<AIComponent, int>(11);
             unit.AddComponent<PathfindingComponent, string>(scene.Name);
             CreateWhenServer_Common_After(unitComponent, unit);
 
-            SkillHelper.LearnSkill(unit, "Skill_1", 1, SkillSlotType.NormalAttack);
+            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+            int count = unitCfg.SkillList.Count;
+            for (int i = 0; i < count; i++)
+            {
+                SkillHelper.LearnSkill(unit, unitCfg.SkillList[i], 1, SkillSlotType.NormalAttack);
+            }
 
             return unit;
         }
 
-        public static Unit CreateWhenServer_Bullet(Scene scene, Unit unitCaster, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle)
+        public static Unit CreateWhenServer_Bullet(Scene scene, Unit unitCaster, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ActionContext actionContext)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
-            TeamFlagType teamFlagType = unitCaster.GetComponent<TeamFlagObj>().teamFlagType;
+            TeamFlagType teamFlagType = unitCaster.GetComponent<TeamFlagObj>().GetTeamFlagType();
             
             float3 position = unitCaster.Position;
             float3 forward = unitCaster.Forward;
             Unit bulletUnit = CreateWhenServer_Common_Before(unitComponent, "Unit_Bullet1", UnitType.Bullet, teamFlagType, position, forward);
 
+            NumericComponent numericComponentCaster = unitCaster.GetComponent<NumericComponent>();
+            NumericComponent numericComponentBullet = bulletUnit.GetComponent<NumericComponent>();
+            foreach (var numeric in numericComponentCaster.NumericDic)
+            {
+                numericComponentBullet.Set(numeric.Key, numeric.Value);
+            }
+            numericComponentBullet.isFloatKey = numericComponentCaster.isFloatKey;
+            numericComponentBullet.Set(NumericType.RotationSpeed, 2000f);//子弹写死一个大的值
+
             BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
             bulletObj.Init(unitCaster.Id, actionCfgFireBullet.BulletId, actionCfgFireBullet.Duration);
+            bulletObj.InitActionContext(actionContext);
 
-            UnitHelper.ResetNodePosition(unitCaster, bulletUnit, actionCfgFireBullet.NodeName, actionCfgFireBullet.OffSetPosition, actionCfgFireBullet.RelateForward);
+            (float3 newPosition, float3 newForward) = UnitHelper.GetNewNodePosition(unitCaster, actionCfgFireBullet.OffSetInfo);
+            bulletUnit.Position = newPosition;
+            bulletUnit.Forward = newForward;
 
             MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
             
             CreateWhenServer_Common_After(unitComponent, bulletUnit);
 
             return bulletUnit;
+        }
+
+        public static Unit CreateWhenServer_SceneEffect(Scene scene, float3 position, float3 forward)
+        {
+            UnitComponent unitComponent = GetUnitComponent(scene);
+            Unit unit = CreateWhenServer_Common_Before(unitComponent, "Unit_SceneEffectNone", UnitType.SceneEffect, TeamFlagType.Team8, position, forward);
+            CreateWhenServer_Common_After(unitComponent, unit);
+
+            return unit;
         }
 
     }

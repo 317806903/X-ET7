@@ -19,7 +19,7 @@ namespace ET.Server
             Unit unit = aiComponent.GetUnit();
             if (unit == null)
             {
-                cancellationToken.Cancel();
+                aiComponent.Cancel();
                 return;
             }
 
@@ -34,9 +34,14 @@ namespace ET.Server
                 }
             }
 
+            if (unitPlayer == null && hostileForces.Count > 0)
+            {
+                unitPlayer = hostileForces[0];
+            }
+
             if (unitPlayer == null)
             {
-                cancellationToken.Cancel();
+                aiComponent.Cancel();
                 return;
             }
 

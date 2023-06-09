@@ -16,5 +16,41 @@
     "name": "",
     "desc": "prefab3",
     "res_name": "Assets/ResAB/EffectPrefab/Effect3.prefab"
+  },
+  {
+    "id": "ResEffect_MachineGunLvl1Effect_1",
+    "name": "",
+    "desc": "ResEffect_MachineGunLvl1Effect_1_",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/MachineGunLvl1Effect.prefab"
+  },
+  {
+    "id": "ResEffect_EneryPylon_PFX",
+    "name": "",
+    "desc": "ResEffect_EneryPylon_PFX_",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/EneryPylon_PFX.prefab"
+  },
+  {
+    "id": "ResEffect_LaserFireEffect",
+    "name": "",
+    "desc": "ResEffect_LaserFireEffect_",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/LaserFireEffect.prefab"
+  },
+  {
+    "id": "ResEffect_EnemyShootEffect_1",
+    "name": "",
+    "desc": "ResEffect_EnemyShootEffect_1_",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/EnemyShootEffect.prefab"
+  },
+  {
+    "id": "ResEffect_BeHitShow_1",
+    "name": "",
+    "desc": "ResEffect_BeHitShow_1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BulletHit.prefab"
+  },
+  {
+    "id": "ResEffect_DeathShow_1",
+    "name": "",
+    "desc": "ResEffect_DeathShow_1",
+    "res_name": "Assets/ResAB/EffectPrefab/DeathShow/BigDeathExplosionPfx.prefab"
   }
 ]

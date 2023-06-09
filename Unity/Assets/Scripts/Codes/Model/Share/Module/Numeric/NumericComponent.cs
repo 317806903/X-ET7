@@ -7,23 +7,48 @@ namespace ET
     [FriendOf(typeof (NumericComponent))]
     public static class NumericComponentSystem
     {
+        public static float Get(this NumericComponent self, int numericType)
+        {
+            if (self.isFloatKey.Contains(numericType))
+            {
+                return self.GetAsFloat(numericType);
+            }
+            return self.GetAsInt(numericType);
+        }
+
         public static float GetAsFloat(this NumericComponent self, int numericType)
         {
+            if (self.isFloatKey.Contains(numericType) == false)
+            {
+                Log.Error($"[{numericType}] is not floatKey, canot GetAsFloat ");
+            }
             return (float)self.GetByKey(numericType) / 10000;
         }
 
         public static int GetAsInt(this NumericComponent self, int numericType)
         {
+            if (self.isFloatKey.Contains(numericType))
+            {
+                Log.Error($"[{numericType}] is floatKey, canot GetAsInt ");
+            }
             return (int)self.GetByKey(numericType);
         }
 
         public static long GetAsLong(this NumericComponent self, int numericType)
         {
+            if (self.isFloatKey.Contains(numericType))
+            {
+                Log.Error($"[{numericType}] is floatKey, canot GetAsLong ");
+            }
             return self.GetByKey(numericType);
         }
 
         public static void Set(this NumericComponent self, int nt, float value)
         {
+            if (self.isFloatKey.Contains(nt) == false)
+            {
+                self.isFloatKey.Add(nt);
+            }
             self[nt] = (long)(value * 10000);
         }
 
@@ -105,6 +130,8 @@ namespace ET
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, long> NumericDic = new Dictionary<int, long>();
+
+        public HashSet<int> isFloatKey = new HashSet<int>();
 
         public long this[int numericType]
         {

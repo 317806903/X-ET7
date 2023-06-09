@@ -23,15 +23,20 @@ namespace ET.Ability
             {
             }
         }
-        //
-        // [ObjectSystem]
-        // public class TimelineComponentFixedUpdateSystem: FixedUpdateSystem<TimelineComponent>
-        // {
-        //     protected override void FixedUpdate(TimelineComponent self)
-        //     {
-        //         self.FixedUpdate();
-        //     }
-        // }
+        
+        [ObjectSystem]
+        public class TimelineComponentFixedUpdateSystem: FixedUpdateSystem<TimelineComponent>
+        {
+            protected override void FixedUpdate(TimelineComponent self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static Unit GetUnit(this TimelineComponent self)
         {
@@ -47,16 +52,19 @@ namespace ET.Ability
         
         public static TimelineObj ReplaceTimeline(this TimelineComponent self, long oldTimeLineId, string timelineCfgId)
         {
-            TimelineObj timelineObj = self.GetChild<TimelineObj>(oldTimeLineId);
-            if (timelineObj == null)
+            TimelineObj timelineObjOld = self.GetChild<TimelineObj>(oldTimeLineId);
+            if (timelineObjOld == null)
             {
                 return null;
             }
 
-            long casterUnitId = timelineObj.casterUnitId;
-            SelectHandle selectHandle = timelineObj.selectHandle;
+            long casterUnitId = timelineObjOld.casterUnitId;
+            SelectHandle selectHandle = timelineObjOld.selectHandle;
+            ActionContext actionContext = timelineObjOld.actionContext;
             self.RemoveChild(oldTimeLineId);
-            return self.CreateTimeline(timelineCfgId, casterUnitId, selectHandle);
+            TimelineObj timelineObj = self.CreateTimeline(timelineCfgId, casterUnitId, selectHandle);
+            timelineObj.InitActionContext(actionContext);
+            return timelineObj;
         }
 
         public static void FixedUpdate(this TimelineComponent self, float fixedDeltaTime)

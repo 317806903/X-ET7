@@ -1,4 +1,3 @@
-using FairyGUI;
 using UnityEngine;
 
 namespace ET.Client
@@ -11,25 +10,15 @@ namespace ET.Client
             GlobalComponent.Instance = self;
             
             self.Global = GameObject.Find("/Global").transform;
-            self.Unit = GameObject.Find("/Global/Unit").transform;
+            self.Unit = self.Global.Find("Unit").transform;
+            self.MainCamera = self.Global.Find("MainCamera").GetComponent<Camera>();
+            self.UICamera = self.Global.Find("UICamera").GetComponent<Camera>();
             
-            self.GRoot = GRoot.inst;
-
-            self.NormalGRoot = new GComponent();
-            self.NormalGRoot.gameObjectName = "NormalGRoot";
-            GRoot.inst.AddChild(self.NormalGRoot);
-            
-            self.PopUpGRoot = new GComponent();
-            self.PopUpGRoot.gameObjectName = "PopUpGRoot";
-            GRoot.inst.AddChild(self.PopUpGRoot);
-            
-            self.FixedGRoot = new GComponent();
-            self.FixedGRoot.gameObjectName = "FixedGRoot";
-            GRoot.inst.AddChild(self.FixedGRoot);
-            
-            self.OtherGRoot = new GComponent();
-            self.OtherGRoot.gameObjectName = "OtherGRoot";
-            GRoot.inst.AddChild(self.OtherGRoot);
+            self.NormalRoot = self.Global.Find("UIRoot/NormalRoot").transform;
+            self.PopUpRoot = self.Global.Find("UIRoot/PopUpRoot").transform;
+            self.FixedRoot = self.Global.Find("UIRoot/FixedRoot").transform;
+            self.OtherRoot = self.Global.Find("UIRoot/OtherRoot").transform;
+            self.PoolRoot =  self.Global.Find("PoolRoot").transform;
         }
     }
 }

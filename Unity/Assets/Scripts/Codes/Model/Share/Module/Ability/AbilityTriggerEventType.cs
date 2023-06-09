@@ -8,54 +8,8 @@
         public struct SkillOnCast
         {
             public Unit unit;
-            public string skillId;
+            public string skillCfgId;
             public TimelineObj timeline;
-        }
-
-        /// <summary>
-        /// buff在创建但还未生效时候触发的事件
-        /// </summary>
-        public struct BuffOnAwake
-        {
-            public Unit unit;
-            public BuffObj buff;
-        }
-        
-        /// <summary>
-        /// buff在创建且已生效时候触发的事件
-        /// </summary>
-        public struct BuffOnStart
-        {
-            public Unit unit;
-            public BuffObj buff;
-        }
-        
-        /// <summary>
-        /// buff在被添加、改变层数、改变持续时间 时候触发的事件
-        /// </summary>
-        public struct BuffOnRefresh
-        {
-            public Unit unit;
-            public BuffObj buff;
-            public int modifyStack;
-        }
-
-        /// <summary>
-        /// 在这个buffObj被移除之前要做的事情，如果运行之后buffObj又不足以被删除了就会被保留
-        /// </summary>
-        public struct BuffOnRemoved
-        {
-            public Unit unit;
-            public BuffObj buff;
-        }
-
-        /// <summary>
-        /// 在这个buffObj被移除之后要做的事情
-        /// </summary>
-        public struct BuffOnDestroy
-        {
-            public Unit unit;
-            public BuffObj buff;
         }
 
         /// <summary>
@@ -65,7 +19,7 @@
         {
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public long damageInfoId;
+            public DamageInfo damageInfo;
         }
         
         /// <summary>
@@ -75,7 +29,7 @@
         {
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public long damageInfoId;
+            public DamageInfo damageInfo;
         }
         
         /// <summary>
@@ -85,7 +39,7 @@
         {
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public long damageInfoId;
+            public DamageInfo damageInfo;
         }
         
         /// <summary>
@@ -95,7 +49,7 @@
         {
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public long damageInfoId;
+            public DamageInfo damageInfo;
         }
         
         //=========================================================
@@ -109,6 +63,15 @@
             public Unit createUnit;
         }
         
+        /// <summary>
+        /// 攻击触发的事件(这里只是判断碰撞到，并没有进入伤害流程)
+        /// </summary>
+        public struct BulletOnHit
+        {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
+        }
+
         /// <summary>
         /// 攻击触发的事件(这里只是判断碰撞到，并没有进入伤害流程)
         /// </summary>

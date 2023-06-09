@@ -1,0 +1,241 @@
+[
+  {
+    "id": "AttackArea_1",
+    "name": "",
+    "desc": "矩形区域攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "rectangleArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "width": 10,
+        "length": 6
+      }
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotChg",
+      "weightChg": 20,
+      "isKeepTotal": false
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "delayTime": 0,
+        "action_id": "CreateEffect_4",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_2",
+    "name": "",
+    "desc": "伞型区域攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "delayTime": 0,
+        "action_id": "CreateEffect_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_3",
+    "name": "",
+    "desc": "单体攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne"
+    },
+    "damageInfo": "",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_One1",
+    "name": "",
+    "desc": "单体攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne"
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "CreateEffect_BeHit1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_HoverTank1",
+    "name": "",
+    "desc": "单体攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne"
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "CreateEffect_BeHit1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Bullet1",
+    "name": "",
+    "desc": "单体攻击",
+    "isBreakSoftBati": true,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne"
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "CreateEffect_BeHit1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  }
+]

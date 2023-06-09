@@ -12,6 +12,9 @@ namespace ET.Client
             await ResComponent.Instance.LoadSceneAsync(currentScene.Name);
             
             currentScene.AddComponent<OperaComponent>();
+            CameraComponent cameraComponent = currentScene.AddComponent<CameraComponent>();
+            cameraComponent.SetMainCamera(GlobalComponent.Instance.MainCamera);
+            cameraComponent.Unit = UnitHelper.GetMyUnit(currentScene);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class AoeObj: Entity, IAwake, IDestroy
+    public class AoeObj: Entity, IAwake, IDestroy, IFixedUpdate
     {
         ///<summary>
         ///要释放的aoe
@@ -71,6 +72,10 @@ namespace ET.Ability
         ///现在aoe范围内的所有子弹的gameobject
         ///</summary>
         public List<long> bulletInRange = new List<long>();
+
+        [BsonIgnore]
+        public ActionContext actionContext;
+        
         //
         // ///<summary>
         // ///Tween函数的参数

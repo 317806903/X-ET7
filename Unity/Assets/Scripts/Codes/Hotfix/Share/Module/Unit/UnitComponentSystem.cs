@@ -13,7 +13,8 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
-				self.NeedSyncUnits = new();
+				self.NeedSyncNumericUnits = new();
+				self.NeedSyncPosUnits = new();
 				self.waitRemoveList = new();
 				self.playerList = HashSetComponent<Unit>.Create();
 				self.monsterList = HashSetComponent<Unit>.Create();
@@ -30,7 +31,8 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
-				self.NeedSyncUnits.Dispose();
+				self.NeedSyncNumericUnits.Dispose();
+				self.NeedSyncPosUnits.Dispose();
 				self.waitRemoveList.Clear();
 				self.playerList.Dispose();
 				self.monsterList.Dispose();
@@ -51,18 +53,18 @@ namespace ET
 			}
 		}
 
-		public static void FixedUpdate(this Unit self, float fixedDeltaTime)
-		{
-			self.GetComponent<TimelineComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<BuffComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<SkillComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<BulletObj>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<AoeObj>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<EffectComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<MoveComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
-			self.GetComponent<MoveTweenObj>()?.FixedUpdate(fixedDeltaTime);
-		}
+		// public static void FixedUpdate(this Unit self, float fixedDeltaTime)
+		// {
+		// 	self.GetComponent<TimelineComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<BuffComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<SkillComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<BulletObj>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<AoeObj>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<EffectComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<MoveComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
+		// 	self.GetComponent<MoveTweenObj>()?.FixedUpdate(fixedDeltaTime);
+		// }
 
 		public static void FixedUpdate(this UnitComponent self)
 		{
@@ -73,13 +75,22 @@ namespace ET
 			
 			float fixedDeltaTime = TimeHelper.FixedDetalTime;
 			self.DoUnitHit(fixedDeltaTime);
-			foreach (var child in self.Children)
-			{
-				Unit unit = child.Value as Unit;
-				unit.FixedUpdate(fixedDeltaTime);
-			}
+			// try
+			// {
+			// 	foreach (var child in self.Children)
+			// 	{
+			// 		Unit unit = child.Value as Unit;
+			// 		unit.FixedUpdate(fixedDeltaTime);
+			// 	}
+			// }
+			// catch (Exception e)
+			// {
+			// 	Console.WriteLine(e);
+			// 	throw;
+			// }
 			self.DoUnitRemove();
-			self.SyncUnit();
+			self.SyncPosUnit();
+			self.SyncNumericUnit();
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -153,26 +164,65 @@ namespace ET
 			unit?.Dispose();
 		}
 		
-		public static void AddSyncUnit(this UnitComponent self, Unit unit)
+		public static void AddSyncPosUnit(this UnitComponent self, Unit unit)
 		{
-			self.NeedSyncUnits.Add(unit);
+			if (self.NeedSyncPosUnits.Contains(unit))
+			{
+				return;
+			}
+			self.NeedSyncPosUnits.Add(unit);
 		}
 		
-		public static void SyncUnit(this UnitComponent self)
+		public static void AddSyncNumericUnit(this UnitComponent self, Unit unit)
 		{
-            if (self.NeedSyncUnits.Count == 0)
+			if (self.NeedSyncNumericUnits.Contains(unit))
+			{
+				return;
+			}
+			self.NeedSyncNumericUnits.Add(unit);
+		}
+		
+		public static void SyncPosUnit(this UnitComponent self)
+		{
+            if (self.NeedSyncPosUnits.Count == 0)
                 return;
             
 			//同步单位状态（位置、方向、）
-            foreach (Unit unit in self.NeedSyncUnits)
+            foreach (Unit unit in self.NeedSyncPosUnits)
             {
-                if(unit.IsDisposed || (unit.Type == UnitType.Player || unit.Type == UnitType.Monster || unit.Type == UnitType.NPC))
+                //if(unit.IsDisposed || (unit.Type == UnitType.Player || unit.Type == UnitType.Monster || unit.Type == UnitType.NPC))
+                if(unit.IsDisposed)
 	                continue;
-                EventSystem.Instance.Invoke<SyncUnits>(new SyncUnits(){
+                MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
+                if (moveByPathComponent != null)
+                {
+	                if (moveByPathComponent.IsArrived() == false)
+	                {
+		                continue;
+	                }
+                }
+                
+                EventSystem.Instance.Invoke<SyncPosUnits>(new SyncPosUnits(){
 	                units = new List<Unit>(){unit},
                 });
             }
-            self.NeedSyncUnits.Clear();
+            self.NeedSyncPosUnits.Clear();
+		}
+		
+		public static void SyncNumericUnit(this UnitComponent self)
+		{
+            if (self.NeedSyncNumericUnits.Count == 0)
+                return;
+            
+            foreach (Unit unit in self.NeedSyncNumericUnits)
+            {
+                if(unit.IsDisposed)
+	                continue;
+                EventSystem.Instance.Invoke<SyncNumericUnits>(new SyncNumericUnits(){
+	                units = new List<Unit>(){unit},
+                });
+            }
+            self.NeedSyncNumericUnits.Clear();
 		}
 	}
 }

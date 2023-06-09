@@ -119,24 +119,24 @@ namespace ET
                     break;
             }
 
-            string fold = string.Format(BuildFolder, type);
+            // string fold = string.Format(BuildFolder, type);
+            //
+            // if (clearFolder && Directory.Exists(fold))
+            // {
+            //     Directory.Delete(fold, true);
+            // }
+            // Directory.CreateDirectory(fold);
+            //
+            // UnityEngine.Debug.Log("start build assetbundle");
+            // BuildPipeline.BuildAssetBundles(fold, buildAssetBundleOptions, buildTarget);
+            //
+            // UnityEngine.Debug.Log("finish build assetbundle");
 
-            if (clearFolder && Directory.Exists(fold))
-            {
-                Directory.Delete(fold, true);
-            }
-            Directory.CreateDirectory(fold);
-
-            UnityEngine.Debug.Log("start build assetbundle");
-            BuildPipeline.BuildAssetBundles(fold, buildAssetBundleOptions, buildTarget);
-
-            UnityEngine.Debug.Log("finish build assetbundle");
-
-            if (isContainAB)
-            {
-                FileHelper.CleanDirectory("Assets/StreamingAssets/");
-                FileHelper.CopyDirectory(fold, "Assets/StreamingAssets/");
-            }
+            // if (isContainAB)
+            // {
+            //     FileHelper.CleanDirectory("Assets/StreamingAssets/");
+            //     FileHelper.CopyDirectory(fold, "Assets/StreamingAssets/");
+            // }
 
             if (isBuildExe)
             {
@@ -150,13 +150,13 @@ namespace ET
             }
             else
             {
-                if (isContainAB && type == PlatformType.Windows)
-                {
-                    string targetPath = Path.Combine(relativeDirPrefix, $"{programName}_Data/StreamingAssets/");
-                    FileHelper.CleanDirectory(targetPath);
-                    Debug.Log($"src dir: {fold}    target: {targetPath}");
-                    FileHelper.CopyDirectory(fold, targetPath);
-                }
+                // if (isContainAB && type == PlatformType.Windows)
+                // {
+                //     string targetPath = Path.Combine(relativeDirPrefix, $"{programName}_Data/StreamingAssets/");
+                //     FileHelper.CleanDirectory(targetPath);
+                //     Debug.Log($"src dir: {fold}    target: {targetPath}");
+                //     FileHelper.CopyDirectory(fold, targetPath);
+                // }
             }
         }
     }

@@ -10,7 +10,6 @@ namespace ET.Ability
             scene.AddComponent<DamageComponent>();
             scene.AddComponent<ActionHandlerComponent>();
             scene.AddComponent<TeamFlagComponent>();
-            scene.AddComponent<EffectComponent>();
         }
         
         public static void InitWhenClient(Scene scene)

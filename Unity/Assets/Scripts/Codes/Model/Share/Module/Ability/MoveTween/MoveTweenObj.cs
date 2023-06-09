@@ -5,7 +5,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class MoveTweenObj: Entity, IAwake, IDestroy
+    public class MoveTweenObj: Entity, IAwake, IDestroy, IFixedUpdate
     {
         ///<summary>
         ///</summary>

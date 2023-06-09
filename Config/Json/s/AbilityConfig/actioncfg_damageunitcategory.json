@@ -1,0 +1,58 @@
+[
+  {
+    "id": "DamageUnit_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": 12
+    }
+  },
+  {
+    "id": "DamageUnit_2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 2,
+      "value": 2
+    }
+  },
+  {
+    "id": "DamageUnit_3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 3,
+      "value": 2
+    }
+  },
+  {
+    "id": "DamageUnit_4",
+    "name": "",
+    "damageInfo": {
+      "damageType": 4,
+      "value": 10
+    }
+  },
+  {
+    "id": "DamageUnit_5",
+    "name": "",
+    "damageInfo": {
+      "damageType": 5,
+      "value": 10
+    }
+  },
+  {
+    "id": "DamageUnit_6",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0
+    }
+  },
+  {
+    "id": "DamageUnit_7",
+    "name": "",
+    "damageInfo": {
+      "damageType": 7,
+      "value": 0
+    }
+  }
+]

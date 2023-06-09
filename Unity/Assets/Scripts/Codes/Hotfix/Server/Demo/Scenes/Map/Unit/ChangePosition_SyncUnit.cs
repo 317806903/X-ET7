@@ -9,7 +9,7 @@ namespace ET.Server
         {
             Unit unit = args.Unit;
             
-            Ability.UnitHelper.AddSyncUnit(unit);
+            Ability.UnitHelper.AddSyncPosUnit(unit);
             await ETTask.CompletedTask;
         }
     }

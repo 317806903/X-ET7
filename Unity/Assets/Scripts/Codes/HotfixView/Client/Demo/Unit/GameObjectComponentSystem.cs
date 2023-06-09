@@ -23,7 +23,14 @@ namespace ET.Client
                 // transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, Time.deltaTime);
                 // transform.rotation = Quaternion.Slerp(transform.rotation, self.GetUnit().Rotation, Time.deltaTime);
                 transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, 1);
-                transform.rotation = Quaternion.Slerp(transform.rotation, self.GetUnit().Rotation, Time.deltaTime);
+
+                Quaternion targetRotation = self.GetUnit().Rotation;
+                float angle = Quaternion.Angle(transform.rotation, targetRotation);
+                NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
+                float rotationSpeed = numericComponent.GetAsFloat(NumericType.RotationSpeed);
+                float timeToComplete = angle / rotationSpeed;
+                float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, donePercentage);
             }
         }
 

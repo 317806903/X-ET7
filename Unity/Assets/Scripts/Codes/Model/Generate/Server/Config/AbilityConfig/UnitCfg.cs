@@ -18,7 +18,14 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        Icon = _buf.ReadString();
+        MoveSpeed = _buf.ReadFloat();
+        RotationSpeed = _buf.ReadFloat();
+        BodyRadius = _buf.ReadFloat();
+        ResScale = _buf.ReadFloat();
         ResId = _buf.ReadString();
+        DeathShow = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SkillList.Add(_e0);}}
         PostInit();
     }
 
@@ -36,17 +43,51 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// </summary>
     public string Name { get; private set; }
     /// <summary>
+    /// icon资源路径
+    /// </summary>
+    public string Icon { get; private set; }
+    public ResIconCfg Icon_Ref { get; private set; }
+    /// <summary>
+    /// 移动速度
+    /// </summary>
+    public float MoveSpeed { get; private set; }
+    /// <summary>
+    /// 转身速度
+    /// </summary>
+    public float RotationSpeed { get; private set; }
+    /// <summary>
+    /// 身体半径(判断伤害什么的)
+    /// </summary>
+    public float BodyRadius { get; private set; }
+    /// <summary>
+    /// 资源大小缩放
+    /// </summary>
+    public float ResScale { get; private set; }
+    /// <summary>
     /// 资源路径
     /// </summary>
     public string ResId { get; private set; }
     public ResUnitCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 死亡表现
+    /// </summary>
+    public string DeathShow { get; private set; }
+    public ActionCfg_DeathShow DeathShow_Ref { get; private set; }
+    /// <summary>
+    /// 拥有技能列表
+    /// </summary>
+    public System.Collections.Generic.List<string> SkillList { get; private set; }
+    public System.Collections.Generic.List<SkillCfg> SkillList_Ref { get; private set; }
 
     public const int __ID__ = 1378101280;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
         this.ResId_Ref = (_tables["ResUnitCfgCategory"] as ResUnitCfgCategory).GetOrDefault(ResId);
+        this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
+        { SkillCfgCategory __table = (SkillCfgCategory)_tables["SkillCfgCategory"]; this.SkillList_Ref = new System.Collections.Generic.List<SkillCfg>(); foreach(var __e in SkillList) { this.SkillList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -59,7 +100,14 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "Icon:" + Icon + ","
+        + "MoveSpeed:" + MoveSpeed + ","
+        + "RotationSpeed:" + RotationSpeed + ","
+        + "BodyRadius:" + BodyRadius + ","
+        + "ResScale:" + ResScale + ","
         + "ResId:" + ResId + ","
+        + "DeathShow:" + DeathShow + ","
+        + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
         + "}";
     }
     

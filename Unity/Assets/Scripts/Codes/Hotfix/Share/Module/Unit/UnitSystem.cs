@@ -13,6 +13,11 @@ namespace ET
             }
         }
         
+        public static void DestroyWithDeathShow(this Unit self)
+        {
+            ET.Ability.DeathShowHelper.DeathShow(self);
+        }
+
         public static void Destroy(this Unit self)
         {
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.UnitOnRemoved() { unit = self });
@@ -20,9 +25,5 @@ namespace ET
             UnitHelper.AddWaitRemove(self);
         }
 
-        public static bool CanBeKilledByDamageInfo(this Unit self, DamageInfo damageInfo)
-        {
-            return false;
-        }
     }
 }

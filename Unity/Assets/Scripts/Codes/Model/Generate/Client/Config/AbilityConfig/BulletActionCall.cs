@@ -17,8 +17,11 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
     public BulletActionCall(ByteBuf _buf) 
     {
         BulletTrig = (BulletTriggerEvent)_buf.ReadInt();
+        DelayTime = _buf.ReadFloat();
         ActionId = _buf.ReadString();
         ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition1.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition2.Add(_e0);}}
         PostInit();
     }
 
@@ -27,9 +30,30 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
         return new BulletActionCall(_buf);
     }
 
+    /// <summary>
+    /// 触发事件
+    /// </summary>
     public BulletTriggerEvent BulletTrig { get; private set; }
+    /// <summary>
+    /// 延迟多久后触发action
+    /// </summary>
+    public float DelayTime { get; private set; }
+    /// <summary>
+    /// 触发action
+    /// </summary>
     public string ActionId { get; private set; }
+    /// <summary>
+    /// 对象选择器
+    /// </summary>
     public ActionCallParam ActionCallParam { get; private set; }
+    /// <summary>
+    /// 条件1
+    /// </summary>
+    public System.Collections.Generic.List<SubCondition> ActionCondition1 { get; private set; }
+    /// <summary>
+    /// 条件2
+    /// </summary>
+    public System.Collections.Generic.List<SubCondition> ActionCondition2 { get; private set; }
 
     public const int __ID__ = -2019750794;
     public override int GetTypeId() => __ID__;
@@ -37,20 +61,27 @@ public sealed partial class BulletActionCall: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         ActionCallParam?.Resolve(_tables);
+        foreach(var _e in ActionCondition1) { _e?.Resolve(_tables); }
+        foreach(var _e in ActionCondition2) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
         ActionCallParam?.TranslateText(translator);
+        foreach(var _e in ActionCondition1) { _e?.TranslateText(translator); }
+        foreach(var _e in ActionCondition2) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
     {
         return "{ "
         + "BulletTrig:" + BulletTrig + ","
+        + "DelayTime:" + DelayTime + ","
         + "ActionId:" + ActionId + ","
         + "ActionCallParam:" + ActionCallParam + ","
+        + "ActionCondition1:" + Bright.Common.StringUtil.CollectionToString(ActionCondition1) + ","
+        + "ActionCondition2:" + Bright.Common.StringUtil.CollectionToString(ActionCondition2) + ","
         + "}";
     }
     

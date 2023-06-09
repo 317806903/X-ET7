@@ -1,4 +1,6 @@
 using ET.Ability;
+using ET.AbilityConfig;
+using SkillSlotType = ET.Ability.SkillSlotType;
 
 namespace ET.Server
 {
@@ -11,7 +13,7 @@ namespace ET.Server
             {
                 return 1;
             }
-            if (GetHostileForce(unit, 5f) == null)
+            if (GetHostileForce(unit, 10f) == null)
             {
                 return 1;
             }
@@ -39,14 +41,14 @@ namespace ET.Server
             Unit unit = aiComponent.GetUnit();
             if (unit == null)
             {
-                cancellationToken.Cancel();
+                aiComponent.Cancel();
                 return;
             }
 
-            Unit unitHostileForce = GetHostileForce(unit, 5f);
+            Unit unitHostileForce = GetHostileForce(unit, 10f);
             if (Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
             {
-                cancellationToken.Cancel();
+                aiComponent.Cancel();
                 return;
             }
 
@@ -57,27 +59,32 @@ namespace ET.Server
             
             while (true)
             {
-                string skillId = "Skill_1";
-                (bool ret, string msg) = SkillHelper.ChkCanUseSkill(unit, skillId);
-                //Log.Debug($"开始攻击 {skillId} {ret} {msg}");
-                if (ret == false)
+                UnitCfg unitCfg = unit.model;
+                int count = unitCfg.SkillList.Count;
+                for (int i = 0; i < count; i++)
                 {
+                    string skillId = unitCfg.SkillList[i];
+                    (bool ret, string msg) = SkillHelper.ChkCanUseSkill(unit, skillId);
+                    //Log.Debug($"开始攻击 {skillId} {ret} {msg}");
+                    if (ret == false)
+                    {
+                        await TimerComponent.Instance.WaitAsync(100, cancellationToken);
+                        if (cancellationToken.IsCancel())
+                        {
+                            return;
+                        }
+                        continue;
+                    }
+
+                    Log.Debug($"=============开始攻击 {skillId} ");
+                    SkillHelper.CastSkill(unit, skillId);
+
+                    // 因为协程可能被中断，任何协程都要传入cancellationToken，判断如果是中断则要返回
                     await TimerComponent.Instance.WaitAsync(100, cancellationToken);
                     if (cancellationToken.IsCancel())
                     {
                         return;
                     }
-                    continue;
-                }
-
-                Log.Debug($"=============开始攻击 {skillId} ");
-                SkillHelper.CastSkill(unit, skillId);
-
-                // 因为协程可能被中断，任何协程都要传入cancellationToken，判断如果是中断则要返回
-                await TimerComponent.Instance.WaitAsync(100, cancellationToken);
-                if (cancellationToken.IsCancel())
-                {
-                    return;
                 }
             }
 

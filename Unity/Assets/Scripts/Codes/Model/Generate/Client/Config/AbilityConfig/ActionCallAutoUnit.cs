@@ -15,51 +15,25 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 自动选择特定群体
 /// </summary>
-public sealed partial class ActionCallAutoUnit:  ActionCallAuto 
+public abstract partial class ActionCallAutoUnit:  ActionCallAuto 
 {
     public ActionCallAutoUnit(ByteBuf _buf)  : base(_buf) 
     {
-        IsFriend = _buf.ReadBool();
-        IsOnlyPlayer = _buf.ReadBool();
-        IsAngleFirst = _buf.ReadBool();
-        Radius = _buf.ReadFloat();
-        Angle = _buf.ReadFloat();
-        SelectNum = _buf.ReadInt();
         PostInit();
     }
 
     public static ActionCallAutoUnit DeserializeActionCallAutoUnit(ByteBuf _buf)
     {
-        return new ActionCallAutoUnit(_buf);
+        switch (_buf.ReadInt())
+        {
+            case ActionCallAutoUnitWhenUmbellate.__ID__: return new ActionCallAutoUnitWhenUmbellate(_buf);
+            case ActionCallAutoUnitWhenRectangle.__ID__: return new ActionCallAutoUnitWhenRectangle(_buf);
+            case ActionCallAutoUnitOne.__ID__: return new ActionCallAutoUnitOne(_buf);
+            default: throw new SerializationException();
+        }
     }
 
-    /// <summary>
-    /// 是否选取友军(否则选取敌军)
-    /// </summary>
-    public bool IsFriend { get; private set; }
-    /// <summary>
-    /// 是否只选取玩家
-    /// </summary>
-    public bool IsOnlyPlayer { get; private set; }
-    /// <summary>
-    /// 是否优先筛选角度(否则优先距离)
-    /// </summary>
-    public bool IsAngleFirst { get; private set; }
-    /// <summary>
-    /// 搜索半径
-    /// </summary>
-    public float Radius { get; private set; }
-    /// <summary>
-    /// 张开的角度(单位度)(圆形则为360)
-    /// </summary>
-    public float Angle { get; private set; }
-    /// <summary>
-    /// 选取的数量(-1表示不限制)
-    /// </summary>
-    public int SelectNum { get; private set; }
 
-    public const int __ID__ = -85571129;
-    public override int GetTypeId() => __ID__;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
@@ -75,12 +49,6 @@ public sealed partial class ActionCallAutoUnit:  ActionCallAuto
     public override string ToString()
     {
         return "{ "
-        + "IsFriend:" + IsFriend + ","
-        + "IsOnlyPlayer:" + IsOnlyPlayer + ","
-        + "IsAngleFirst:" + IsAngleFirst + ","
-        + "Radius:" + Radius + ","
-        + "Angle:" + Angle + ","
-        + "SelectNum:" + SelectNum + ","
         + "}";
     }
     

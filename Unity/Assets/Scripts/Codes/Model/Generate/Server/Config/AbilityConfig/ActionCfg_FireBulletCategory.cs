@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// 发送子弹
+/// </summary>
 [Config]
 public partial class ActionCfg_FireBulletCategory: ConfigSingleton<ActionCfg_FireBulletCategory>
 {

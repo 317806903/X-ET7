@@ -9,6 +9,9 @@
 
 namespace ET.AbilityConfig
 { 
+    /// <summary>
+    /// Buff触发事件
+    /// </summary>
     public enum BuffTriggerEvent
     {
         /// <summary>

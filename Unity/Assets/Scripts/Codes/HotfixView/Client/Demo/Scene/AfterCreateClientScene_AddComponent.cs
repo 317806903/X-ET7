@@ -5,9 +5,13 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.AfterCreateClientScene args)
         {
-            scene.AddComponent<FUIEventComponent>();
-            scene.AddComponent<FUIAssetComponent>();
-            scene.AddComponent<FUIComponent>();
+            scene.AddComponent<UIEventComponent>();
+            scene.AddComponent<UIPathComponent>();
+            scene.AddComponent<UIComponent>();
+            
+            // scene.AddComponent<FUIEventComponent>();
+            // scene.AddComponent<FUIAssetComponent>();
+            // scene.AddComponent<FUIComponent>();
             scene.AddComponent<LocalizeComponent>();
             await ETTask.CompletedTask;
         }

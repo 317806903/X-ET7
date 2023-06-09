@@ -108,6 +108,15 @@ namespace ET
         }
 
         [BsonIgnore]
+        public bool IsComponentTest
+        {
+            get
+            {
+                return IsComponent;
+            }
+        }
+        
+        [BsonIgnore]
         protected bool IsComponent
         {
             get => (this.status & EntityStatus.IsComponent) == EntityStatus.IsComponent;

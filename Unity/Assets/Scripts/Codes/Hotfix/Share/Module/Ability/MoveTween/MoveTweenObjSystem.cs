@@ -24,6 +24,20 @@ namespace ET.Ability
             {
             }
         }
+        
+        [ObjectSystem]
+        public class MoveTweenObjFixedUpdateSystem: FixedUpdateSystem<MoveTweenObj>
+        {
+            protected override void FixedUpdate(MoveTweenObj self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
         public static void Init(this MoveTweenObj self, long unitId, MoveTweenType moveTweenType, SelectHandle selectHandle)
         {
@@ -59,6 +73,17 @@ namespace ET.Ability
             else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
             {
                 self.DoMoveTween_Around(aroundMoveTweenType, fixedDeltaTime);
+            }
+            else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
+            {
+                if (self.selectHandle.selectHandleType == SelectHandleType.SelectDirection)
+                {
+                    self.DoMoveTween_Straight(self.moveTweenType as StraightMoveTweenType, fixedDeltaTime);
+                }
+                else
+                {
+                    self.DoMoveTween_Target(targetMoveTweenType, fixedDeltaTime);
+                }
             }
             //Log.Debug($" DoMoveTween {self.GetUnit().Position} {self.GetUnit().Forward}");
         }
@@ -123,31 +148,94 @@ namespace ET.Ability
             SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
             if (selectHandleType == SelectHandleType.SelectUnits)
             {
+                if (self.selectHandle.unitIds.Count == 0)
+                {
+                    self.GetUnit().DestroyWithDeathShow();
+                    return;
+                }
                 long targetUnitId = self.selectHandle.unitIds[0];
                 Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                if (targetUnit == null)
+                {
+                    self.GetUnit().DestroyWithDeathShow();
+                    return;
+                }
                 targetPosition = targetUnit.Position;
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
             {
                 targetPosition = self.selectHandle.position;
             }
+            else
+            {
+                return;
+            }
             Unit unit = self.GetUnit();
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
-            float radius = moveTweenType.Radius;
+            float orgRadius = moveTweenType.Radius;
+            float initAngle = moveTweenType.InitAngle;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
-            //
-            //
-            // float3 dir = targetUnit.Position - self.GetUnit().Position;
-            // float angleTmp = math.degrees(math.acos(math.dot(self.GetUnit().Forward, dir)));
-            // if (angleTmp > rotateAngle)
-            // {
-            //     angleTmp = rotateAngle;
-            // }
-            //
-            // unit.Forward = math.lerp(unit.Forward, dir, rotateAngle * fixedDeltaTime / angleTmp);
-            // self.forward = unit.Forward;
-            // unit.Position += math.normalize(unit.Forward) * self.speed * fixedDeltaTime;
+
+            float radiusAddSpeed = moveTweenType.RadiusAddSpeed;
+            float radius = orgRadius + self.timeElapsed * radiusAddSpeed;
+            
+            float curAngle = initAngle + self.speed / orgRadius * self.timeElapsed;
+            float3 curPosDir = math.mul(quaternion.RotateY(curAngle), math.forward());
+            self.forward = math.mul(quaternion.RotateY(math.PI*0.5f), curPosDir);
+            self.forward = math.normalize(self.forward);
+            unit.Forward = self.forward;
+            unit.Position = targetPosition + curPosDir * radius;
+        }
+        
+        public static void DoMoveTween_Target(this MoveTweenObj self, TargetMoveTweenType moveTweenType, float fixedDeltaTime)
+        {
+            float3 targetPosition;
+            SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
+            if (selectHandleType == SelectHandleType.SelectUnits)
+            {
+                if (self.selectHandle.unitIds.Count > 0)
+                {
+                    long targetUnitId = self.selectHandle.unitIds[0];
+                    Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                    targetPosition = targetUnit.Position;
+                }
+                else
+                {
+                    Unit unitTmp = self.GetUnit();
+                    targetPosition = unitTmp.Position + self.forward * 100;
+                }
+            }
+            else if (selectHandleType == SelectHandleType.SelectPosition)
+            {
+                targetPosition = self.selectHandle.position;
+            }
+            else
+            {
+                return;
+            }
+            Unit unit = self.GetUnit();
+            float speed = moveTweenType.Speed;
+            float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
+            self.speed = speed + self.timeElapsed * acceleratedSpeed;
+            
+            float3 dir = targetPosition - unit.Position;
+            float dirLength = math.length(dir);
+            if (dirLength == 0)
+            {
+            }
+            else if (dirLength <= self.speed * fixedDeltaTime)
+            {
+                unit.Position = targetPosition;
+                self.forward = math.normalize(dir);
+                unit.Forward = self.forward;
+            }
+            else
+            {
+                self.forward = math.normalize(dir);
+                unit.Forward = self.forward;
+                unit.Position += self.forward * self.speed * fixedDeltaTime;
+            }
         }
     }
 }

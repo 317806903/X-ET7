@@ -17,76 +17,6 @@
 		}
 		
 		[Event(SceneType.Map)]
-		public class EventHandler_BuffOnAwake: AEvent<Scene, AbilityTriggerEventType.BuffOnAwake>
-		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnAwake args)
-			{
-				if (UnitHelper.ChkUnitAlive(args.unit))
-				{
-					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnAwake, null, null);
-				}
-				await ETTask.CompletedTask;
-			}
-		}
-		
-		[Event(SceneType.Map)]
-		public class EventHandler_BuffOnStart: AEvent<Scene, AbilityTriggerEventType.BuffOnStart>
-		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnStart args)
-			{
-				if (UnitHelper.ChkUnitAlive(args.unit))
-				{
-					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnStart, null, null);
-				}
-				await ETTask.CompletedTask;
-			}
-		}
-		
-		[Event(SceneType.Map)]
-		public class EventHandler_BuffOnRefresh: AEvent<Scene, AbilityTriggerEventType.BuffOnRefresh>
-		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRefresh args)
-			{
-				if (UnitHelper.ChkUnitAlive(args.unit))
-				{
-					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRefresh, null, null);
-				}
-				await ETTask.CompletedTask;
-			}
-		}
-		
-		[Event(SceneType.Map)]
-		public class EventHandler_BuffOnRemoved: AEvent<Scene, AbilityTriggerEventType.BuffOnRemoved>
-		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnRemoved args)
-			{
-				if (UnitHelper.ChkUnitAlive(args.unit))
-				{
-					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnRemoved, null, null);
-				}
-				await ETTask.CompletedTask;
-			}
-		}
-		
-		[Event(SceneType.Map)]
-		public class EventHandler_BuffOnDestroy: AEvent<Scene, AbilityTriggerEventType.BuffOnDestroy>
-		{
-			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BuffOnDestroy args)
-			{
-				if (UnitHelper.ChkUnitAlive(args.unit))
-				{
-					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.BuffOnDestroy, null, null);
-				}
-				await ETTask.CompletedTask;
-			}
-		}
-		
-		[Event(SceneType.Map)]
 		public class EventHandler_DamageBeforeOnHit: AEvent<Scene, AbilityTriggerEventType.DamageBeforeOnHit>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.DamageBeforeOnHit args)
@@ -95,6 +25,7 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
+					
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
@@ -123,6 +54,7 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
+					
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
@@ -151,6 +83,7 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
+					
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
@@ -179,6 +112,7 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
+					
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
@@ -221,6 +155,7 @@
 				{
 					Unit unit = args.attackerUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
+					
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();

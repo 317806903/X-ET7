@@ -9,6 +9,9 @@
 
 namespace ET.AbilityConfig
 { 
+    /// <summary>
+    /// 子弹触发事件
+    /// </summary>
     public enum BulletTriggerEvent
     {
         /// <summary>

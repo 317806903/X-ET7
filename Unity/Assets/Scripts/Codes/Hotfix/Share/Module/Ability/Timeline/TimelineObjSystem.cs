@@ -31,6 +31,13 @@ namespace ET.Ability
             self.selectHandle = selectHandle;
         }
         
+        public static void InitActionContext(this TimelineObj self, ActionContext actionContext)
+        {
+            actionContext.timelineCfgId = self.CfgId;
+            actionContext.timelineId = self.Id;
+            self.actionContext = actionContext;
+        }
+        
         public static Unit GetUnit(this TimelineObj self)
         {
             return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
@@ -69,14 +76,29 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
+                    SelectHandle curSelectHandle;
                     if (timelineNode.ActionCallParam is ActionCallSelectLast)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, self.selectHandle);
+                        curSelectHandle = self.selectHandle;
                     }
                     else
                     {
-                        SelectHandle selectHandle = SelectHandleHelper.GetSelectHandle(self.GetUnit(), timelineNode.ActionCallParam);
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, selectHandle);
+                        curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), timelineNode.ActionCallParam);
+                    }
+                    (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, self.actionContext);
+                    if (isChgSelect1)
+                    {
+                        curSelectHandle = newSelectHandle1;
+                    }
+                    (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition2, self.actionContext);
+                    if (isChgSelect2)
+                    {
+                        curSelectHandle = newSelectHandle2;
+                    }
+
+                    if (bRet1 && bRet2)
+                    {
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self.actionContext);
                     }
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -28,19 +29,30 @@ namespace ET.Ability
                 self.recordEffectList.Clear();
             }
         }
+        
+        [ObjectSystem]
+        public class EffectComponentFixedUpdateSystem: FixedUpdateSystem<EffectComponent>
+        {
+            protected override void FixedUpdate(EffectComponent self)
+            {
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
-        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, string effectCfgId, float duration, string nodeName, Vector3 
-        offSetPosition, Vector3 
-        relateForward)
+        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, string effectCfgId, float duration, OffSetInfo offSetInfo)
         {
             EffectObj effectObj = self.AddChild<EffectObj>();
-            float3 offSetPosition1 = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
-            float3 relateForward1 = new float3(relateForward.X, relateForward.Y, relateForward.Z);
-            effectObj.Init(unitId, key, effectCfgId, duration, nodeName, offSetPosition1, relateForward1);
+            effectObj.Init(unitId, key, effectCfgId, duration, offSetInfo);
             if (string.IsNullOrEmpty(key) == false)
             {
                 self.recordEffectList[key] = effectObj;
             }
+
             return effectObj;
         }
 
@@ -56,11 +68,9 @@ namespace ET.Ability
 
         public static void NoticeClientRemoveEffect(this EffectComponent self, EffectObj effectObj)
         {
-            EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
-                unit = effectObj.GetUnit(),
-                isSceneEffect = false,
-                isAddEffect = false,
-                effectObjId = effectObj.Id,
+            EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects()
+            {
+                unit = effectObj.GetUnit(), isAddEffect = false, effectObjId = effectObj.Id,
             });
         }
 
@@ -68,6 +78,12 @@ namespace ET.Ability
         {
             if (self.Children.Count <= 0)
             {
+                Unit unit = self.GetParent<Unit>();
+                if (UnitHelper.ChkIsSceneEffect(unit))
+                {
+                    unit.Destroy();
+                }
+
                 return;
             }
 
@@ -91,6 +107,7 @@ namespace ET.Ability
                 {
                     self.recordEffectList.Remove(key);
                 }
+
                 self.NoticeClientRemoveEffect(self.removeList[i]);
                 self.removeList[i].Dispose();
             }

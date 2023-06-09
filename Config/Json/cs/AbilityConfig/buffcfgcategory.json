@@ -2,64 +2,117 @@
   {
     "id": "Buff_1",
     "name": "",
+    "icon": "ResIcon_1",
     "desc": "",
-    "tags": [],
-    "type": 0,
+    "tags": [
+      1
+    ],
+    "immuneTags": [
+      3
+    ],
+    "tagGroup": 1,
+    "immuneTagGroups": [
+      3
+    ],
+    "buffType": 1,
     "priority": 1,
-    "maxStack": 9,
-    "tickTime": 2,
+    "maxStack": 19,
+    "tickTime": 4,
     "monitorTriggers": [
       {
-        "buffTrig": 1,
-        "action_id": "PlayAudio_1",
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffReduceStackCount_1",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
-        }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_1",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "RemoveBuff_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   },
   {
     "id": "Buff_2",
     "name": "",
+    "icon": "",
     "desc": "",
-    "tags": [],
-    "type": 0,
+    "tags": [
+      3
+    ],
+    "immuneTags": [],
+    "tagGroup": 3,
+    "immuneTagGroups": [],
+    "buffType": 2,
     "priority": 1,
     "maxStack": 11,
     "tickTime": 3,
     "monitorTriggers": [
       {
         "buffTrig": 8,
+        "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
           "$type": "ActionCallOnAttackUnit"
-        }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       },
       {
         "buffTrig": 12,
+        "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
           "$type": "ActionCallCasterPlayerUnit"
-        }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   },
   {
     "id": "Buff_3",
     "name": "",
+    "icon": "",
     "desc": "",
-    "tags": [],
-    "type": 0,
+    "tags": [
+      2
+    ],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "buffType": 2,
     "priority": 1,
     "maxStack": 7,
     "tickTime": 4,
     "monitorTriggers": [
       {
         "buffTrig": 12,
+        "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
           "$type": "ActionCallBeHurtUnit"
-        }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   }

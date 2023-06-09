@@ -23,5 +23,60 @@
     "id": "ResUnit_Bullet3",
     "name": "",
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet3.prefab"
+  },
+  {
+    "id": "ResUnit_SceneEffectNone",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/SceneEffect/SceneEffectNone.prefab"
+  },
+  {
+    "id": "ResUnit_HeadQuarter1",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Character/HeadQuarter.prefab"
+  },
+  {
+    "id": "ResUnit_MachineGunTower_0",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/MachineGunTower_0.prefab"
+  },
+  {
+    "id": "ResUnit_EnergyPylon_2",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/EnergyPylon_2.prefab"
+  },
+  {
+    "id": "ResUnit_LaserTower_0",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/LaserTower_0.prefab"
+  },
+  {
+    "id": "ResUnit_RocketTower_1",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/RocketTower_1.prefab"
+  },
+  {
+    "id": "ResUnit_BulletRocketProjectile_1",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/RocketProjectile_1.prefab"
+  },
+  {
+    "id": "ResUnit_Hoverboss",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hoverboss.prefab"
+  },
+  {
+    "id": "ResUnit_Hoverbuggy",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hoverbuggy.prefab"
+  },
+  {
+    "id": "ResUnit_Hovercopter",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hovercopter.prefab"
+  },
+  {
+    "id": "ResUnit_Hovertank",
+    "name": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hovertank.prefab"
   }
 ]

@@ -6,7 +6,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class BulletObj: Entity, IAwake, IDestroy, ITransferClient
+    public class BulletObj: Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
     {
         public string CfgId { get; set; }
         
@@ -60,6 +60,9 @@ namespace ET.Ability
         ///还能命中几次
         ///</summary>
         public int canHitTimes = 1;
+        
+        [BsonIgnore]
+        public ActionContext actionContext;
     }
 
     ///<summary>

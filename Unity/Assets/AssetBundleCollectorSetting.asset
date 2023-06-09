@@ -33,25 +33,17 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: UI
+    - GroupName: UIPrefab
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/FUI
-        CollectorGUID: 90d4b1892ed984abd872a4e996d78bfb
+      - CollectPath: Assets/ResAB/UIPrefab
+        CollectorGUID: 91ae2d48ecf44c84dbdea3366f136a28
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
-        FilterRuleName: CollectAtlas
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/Bundles/FUI
-        CollectorGUID: 90d4b1892ed984abd872a4e996d78bfb
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
-        FilterRuleName: CollectBytes
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
     - GroupName: Scene
@@ -156,5 +148,18 @@ MonoBehaviour:
         AddressRuleName: AddressByFilePath
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: UI
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UI
+        CollectorGUID: 9d0e5ac46c43a074c924d6e23d5acd24
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectSprite
         AssetTags: 
         UserData: 

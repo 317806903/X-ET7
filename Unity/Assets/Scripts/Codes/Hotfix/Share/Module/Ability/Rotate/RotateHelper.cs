@@ -6,14 +6,69 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class RotateHelper
     {
-        public static void AddRotate(Unit unit, int rotateCfgId)
+        public static void AddRotate(Unit unit, SelectHandle selectHandle, bool forceSet)
         {
-            unit.GetComponent<RotateComponent>().AddRotate(rotateCfgId);
+            float incrementRotate = 0;
+            if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
+            {
+                // int count = selectHandle.unitIds.Count;
+                // foreach (var unitId in selectHandle.unitIds)
+                // {
+                //     Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                //     incrementRotate += ET.Ability.UnitHelper.GetTargetUnitAngle(unit, unitSelect);
+                // }
+                // incrementRotate /= count;
+                foreach (var unitId in selectHandle.unitIds)
+                {
+                    Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                    incrementRotate = ET.Ability.UnitHelper.GetTargetUnitAngle(unit, unitSelect);
+                    break;
+                }
+            }
+            else if (selectHandle.selectHandleType == SelectHandleType.SelectPosition)
+            {
+                incrementRotate = ET.Ability.UnitHelper.GetTargetPosAngle(unit, selectHandle.position);
+            }
+            else if (selectHandle.selectHandleType == SelectHandleType.SelectDirection)
+            {
+                incrementRotate = ET.Ability.UnitHelper.GetTargetDirAngle(unit, selectHandle.direction);
+            }
+
+            if (forceSet)
+            {
+                ForceSetRotate(unit, incrementRotate);
+            }
+            else
+            {
+                AddRotate(unit, incrementRotate);
+            }
         }
         
-        public static void SetRotateInput(Unit unit, float rotateDirectionInput)
+        public static RotateComponent GetRotateComponent(Unit unit)
         {
-            unit.GetComponent<RotateComponent>().SetRotateInput(rotateDirectionInput);
+            RotateComponent rotateComponent = unit.GetComponent<RotateComponent>();
+            if (rotateComponent == null)
+            {
+                rotateComponent = unit.AddComponent<RotateComponent>();
+            }
+
+            return rotateComponent;
+        }
+        
+        public static void AddRotate(Unit unit, float incrementRotate)
+        {
+            Log.Debug($"AddRotate {incrementRotate}");
+            GetRotateComponent(unit).AddRotate(incrementRotate);
+        }
+        
+        public static void ForceSetRotate(Unit unit, float rotateAngle)
+        {
+            GetRotateComponent(unit).ForceSetRotate(rotateAngle);
+        }
+        
+        public static void ForceSetRotate(Unit unit, float3 rotateDirection)
+        {
+            GetRotateComponent(unit).ForceSetRotate(rotateDirection);
         }
     }
 }

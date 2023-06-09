@@ -32,10 +32,11 @@ namespace ET.Ability
             }
         }
 
-        public static DamageInfo Add(this DamageComponent self, long targetUnitId, Damage damage, float damageDegree, float criticalRate, DamageInfoTag[] tags)
+        public static DamageInfo Add(this DamageComponent self, Unit attackerUnit, Unit targetUnit, Damage damage, float damageDegree, float 
+        criticalRate, DamageSourceTag[] tags)
         {
             DamageInfo damageInfo = self.AddChild<DamageInfo>();
-            damageInfo.Init(targetUnitId, damage, damageDegree, criticalRate, tags);
+            damageInfo.Init(attackerUnit.Id, targetUnit.Id, damage, damageDegree, criticalRate, tags);
             return damageInfo;
         }
         

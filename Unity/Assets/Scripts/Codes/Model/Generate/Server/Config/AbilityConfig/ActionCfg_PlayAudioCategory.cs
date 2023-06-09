@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// 播放音效
+/// </summary>
 [Config]
 public partial class ActionCfg_PlayAudioCategory: ConfigSingleton<ActionCfg_PlayAudioCategory>
 {

@@ -7,23 +7,86 @@
     "nodes": [
       {
         "timeElapsed": 0,
+        "delayTime": 0,
         "action_id": "PlayAnimator_1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
-        }
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "BuffStackCountCondition",
+                "conditionCompare": 2,
+                "stackCount": 4
+              },
+              {
+                "$type": "BuffTagTypeCondition",
+                "conditionCompare": 2,
+                "buffTagType": 1
+              }
+            ]
+          },
+          {
+            "conditions": [
+              {
+                "$type": "AttributeCondition",
+                "conditionCompare": 1,
+                "numericType": 10032,
+                "value": 4
+              },
+              {
+                "$type": "ProbabilityCondition",
+                "conditionCompare": 2,
+                "value": 50
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       },
       {
         "timeElapsed": 1,
+        "delayTime": 0,
         "action_id": "FireBullet_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnit",
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
           "isAngleFirst": false,
-          "radius": 100,
-          "angle": 360,
-          "selectNum": 1
-        }
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   },
@@ -35,29 +98,69 @@
     "nodes": [
       {
         "timeElapsed": 0,
+        "delayTime": 0,
         "action_id": "PlayAnimator_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnit",
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
           "isAngleFirst": false,
-          "radius": 100,
-          "angle": 360,
-          "selectNum": 1
-        }
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       },
       {
         "timeElapsed": 1,
+        "delayTime": 0,
         "action_id": "FireBullet_2",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnit",
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
           "isAngleFirst": false,
-          "radius": 100,
-          "angle": 360,
-          "selectNum": 1
-        }
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   },
@@ -69,29 +172,391 @@
     "nodes": [
       {
         "timeElapsed": 0,
+        "delayTime": 0,
         "action_id": "PlayAnimator_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnit",
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
           "isAngleFirst": false,
-          "radius": 100,
-          "angle": 360,
-          "selectNum": 1
-        }
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       },
       {
         "timeElapsed": 1,
-        "action_id": "FireBullet_3",
+        "delayTime": 0,
+        "action_id": "FireBullet_5",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnit",
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Player1",
+    "name": "",
+    "desc": "",
+    "duration": 3,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
           "isAngleFirst": false,
-          "radius": 100,
-          "angle": 360,
-          "selectNum": 1
-        }
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 1,
+        "delayTime": 0,
+        "action_id": "AttackArea_One1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenRectangle",
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "rectangleArea": {
+            "ignoringHeight": false,
+            "keepHorizontal": true,
+            "width": 10,
+            "length": 6
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Player2",
+    "name": "",
+    "desc": "",
+    "duration": 3,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "delayTime": 0,
+        "action_id": "AttackArea_One1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Player3",
+    "name": "",
+    "desc": "",
+    "duration": 3,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "delayTime": 0,
+        "action_id": "AddBuff_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_RocketTower_1",
+    "name": "",
+    "desc": "",
+    "duration": 4,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0.2,
+        "action_id": "FireBullet_RocketProjectile_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_MachineGunTower1",
+    "name": "",
+    "desc": "",
+    "duration": 4,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_MachineGunLvl1Effect_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0.2,
+        "action_id": "AttackArea_One1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_LaserTower_0",
+    "name": "",
+    "desc": "",
+    "duration": 4,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_LaserFireEffect1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0.2,
+        "action_id": "AttackArea_One1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_EnergyPylon_2",
+    "name": "",
+    "desc": "",
+    "duration": 4,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_EneryPylon_PFX1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0.2,
+        "action_id": "AttackArea_One1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_HoverTank1",
+    "name": "",
+    "desc": "",
+    "duration": 4,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_HoverTankFireShow1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0.2,
+        "action_id": "AttackArea_HoverTank1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
       }
     ]
   }

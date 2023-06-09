@@ -1,0 +1,36 @@
+[
+  {
+    "id": "AddBuff_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 30,
+        "addStack": 20,
+        "buffAction": {
+          "$type": "BuffActionModifyAttribute",
+          "numericType": 10052,
+          "baseValue": 11,
+          "stackValue": 13
+        },
+        "buffId": "Buff_1"
+      },
+      {
+        "duration": 30,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionNone"
+        },
+        "buffId": "Buff_3"
+      },
+      {
+        "duration": 30,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionModifyControlState",
+          "controlState": 1
+        },
+        "buffId": "Buff_2"
+      }
+    ]
+  }
+]

@@ -90,6 +90,20 @@ namespace ET
             }
         }
 
+        public static void ReNotice(this AOIManagerComponent self, AOIEntity aoiEntity)
+        {
+            if (aoiEntity.Parent == null)
+            {
+                return;
+            }
+
+            foreach (var aoiEntitys in aoiEntity.GetSeeUnits())
+            {
+                AOIEntity aoiEntityTmp = aoiEntitys.Value;
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.UnitEnterSightRange() { A = aoiEntity, B = aoiEntityTmp });
+            }
+        }
+
         private static Cell GetCell(this AOIManagerComponent self, long cellId)
         {
             Cell cell = self.GetChild<Cell>(cellId);

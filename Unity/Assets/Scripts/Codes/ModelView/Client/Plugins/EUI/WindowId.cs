@@ -9,5 +9,7 @@ namespace ET.Client
         WindowID_RedDot,   //红点测试界面
 		WindowID_Update,
 		WindowID_Battle,
+		WindowID_Hall,
+		WindowID_Room,
 	}
 }

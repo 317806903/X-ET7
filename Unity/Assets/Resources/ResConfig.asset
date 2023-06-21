@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4908b9894262c7e4499b445cff347a4b, type: 3}
   m_Name: ResConfig
   m_EditorClassIdentifier: 
-  ResLoadMode: 2
+  ResLoadMode: 0
   ResHostServerIP: http://192.168.10.95
   ResGameVersion: v1.0

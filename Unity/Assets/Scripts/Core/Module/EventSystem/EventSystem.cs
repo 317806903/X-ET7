@@ -195,7 +195,24 @@ namespace ET
                     }
                     catch (Exception e)
                     {
-                        throw new Exception($"action type duplicate: {iInvoke.Type.Name} {invokeAttribute.Type}", e);
+                        string codeMode = EventSystem.Instance.Invoke<ConfigComponent.GetCodeMode, string>(new ConfigComponent.GetCodeMode());
+                        if (codeMode == "ClientServer")
+                        {
+                            if (obj.GetType().FullName.StartsWith("ET.Server"))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                if (dict[invokeAttribute.Type].GetType().FullName.StartsWith("ET.Server")
+                                && obj.GetType().FullName.StartsWith("ET.Client"))
+                                {
+                                    dict[invokeAttribute.Type] = obj;
+                                    continue;
+                                }
+                            }
+                        }
+                        throw new Exception($"action type duplicate: {iInvoke.Type.FullName} {invokeAttribute.Type}", e);
                     }
                     
                 }

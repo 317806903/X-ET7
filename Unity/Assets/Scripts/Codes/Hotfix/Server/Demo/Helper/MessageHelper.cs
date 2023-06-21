@@ -28,19 +28,43 @@ namespace ET.Server
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             foreach (AOIEntity u in dict.Values)
             {
-                oneTypeLocationType.Send(u.Unit.Id, message);
+                long unitId = u.Unit.Id;
+                if (oneTypeLocationType.GetChild<Entity>(unitId) == null)
+                {
+                    continue;
+                }
+                oneTypeLocationType.Send(unitId, message);
             }
         }
         
-        public static void SendToClient(Unit unit, IActorMessage message)
+        public static void SendToClient(Unit unit, IActorMessage message, bool chkPlayerExist = true)
         {
-            ActorLocationSenderComponent.Instance.Get(LocationType.Player).Send(unit.Id, message);
+            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+            if (chkPlayerExist && oneTypeLocationType.GetChild<Entity>(unit.Id) == null)
+            {
+                return;
+            }
+            oneTypeLocationType.Send(unit.Id, message);
         }
         
-        
-        public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message)
+        public static void SendToClient(long actionId, IActorMessage message, bool chkPlayerExist = true)
         {
-            ActorLocationSenderComponent.Instance.Get(locationType).Send(id, message);
+            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+            if (chkPlayerExist && oneTypeLocationType.GetChild<Entity>(actionId) == null)
+            {
+                return;
+            }
+            oneTypeLocationType.Send(actionId, message);
+        }
+        
+        public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message, bool needChkExist = true)
+        {
+            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(locationType);
+            if (needChkExist && oneTypeLocationType.GetChild<Entity>(id) == null)
+            {
+                return;
+            }
+            oneTypeLocationType.Send(id, message);
         }
         
         /// <summary>

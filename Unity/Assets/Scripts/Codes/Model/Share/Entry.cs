@@ -43,4 +43,11 @@
             await EventSystem.Instance.PublishAsync(Root.Instance.Scene, new EventType.EntryEvent3());
         }
     }
+    
+    public enum PlayerStatus
+    {
+        Hall,
+        Room,
+        Battle,
+    }
 }

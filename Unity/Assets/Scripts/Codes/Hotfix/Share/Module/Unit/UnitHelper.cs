@@ -41,6 +41,10 @@ namespace ET.Ability
             {
                 return false;
             }
+            if (unit.IsDisposed)
+            {
+                return false;
+            }
 
             if (ChkIsBullet(unit))
             {

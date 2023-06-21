@@ -41,15 +41,53 @@ namespace ET.Client
      		}
      	}
 
+		public UnityEngine.UI.Button E_QuitBattleButton
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_QuitBattleButton == null )
+     			{
+		    		this.m_E_QuitBattleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject,"GameObject/E_QuitBattle");
+     			}
+     			return this.m_E_QuitBattleButton;
+     		}
+     	}
+
+		public UnityEngine.UI.Image E_QuitBattleImage
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_QuitBattleImage == null )
+     			{
+		    		this.m_E_QuitBattleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"GameObject/E_QuitBattle");
+     			}
+     			return this.m_E_QuitBattleImage;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 			this.m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
+			this.m_E_QuitBattleButton = null;
+			this.m_E_QuitBattleImage = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
+		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
+		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
 		public Transform uiTransform = null;
 	}
 }

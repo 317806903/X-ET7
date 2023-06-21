@@ -27,7 +27,7 @@ namespace ET.Server
                     Root.Instance.Scene.AddComponent<NetInnerComponent, IPEndPoint>(processConfig.InnerIPPort);
 
                     var processScenes = StartSceneConfigCategory.Instance.GetByProcess(Options.Instance.Process);
-                    foreach (StartSceneConfig startConfig in processScenes)
+                    foreach (StartSceneConfig startConfig in processScenes.Values)
                     {
                         await SceneFactory.CreateServerScene(ServerSceneManagerComponent.Instance, startConfig.Id, startConfig.InstanceId, startConfig.Zone, startConfig.Name,
                             startConfig.Type, startConfig);

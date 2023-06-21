@@ -236,7 +236,8 @@ namespace ET.Client
 
         public static async ETTask<UnityEngine.SceneManagement.Scene> LoadSceneAsync(this ResComponent self, string location, Action<float> progressCallback = null, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool activateOnLoad = true, int priority = 100)
         {
-            if (!self.SceneOperationHandles.TryGetValue(location, out SceneOperationHandle handle))
+            bool bRet = self.SceneOperationHandles.TryGetValue(location, out SceneOperationHandle handle);
+            if (bRet == false || handle.IsValid == false)
             {
                 handle = YooAssets.LoadSceneAsync(location, loadSceneMode, activateOnLoad, priority);
                 self.SceneOperationHandles[location] = handle;

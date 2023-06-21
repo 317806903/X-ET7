@@ -41,8 +41,10 @@ namespace ET.Client
             // Unit View层
             if (string.IsNullOrEmpty(resName) == false)
             {
-                GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
-                GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
+                // GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
+                // GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
+                GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
+                go.transform.SetParent(GlobalComponent.Instance.Unit);
                 go.transform.position = unit.Position;
                 go.transform.forward = unit.Forward;
                 go.transform.localScale = Vector3.one * resScale;
@@ -50,8 +52,10 @@ namespace ET.Client
 
                 if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsMonster(unit))
                 {
-                    GameObject HealthBarPrefab = await ResComponent.Instance.LoadAssetAsync<GameObject>("HealthBar");
-                    GameObject HealthBarGo = UnityEngine.Object.Instantiate(HealthBarPrefab, go.transform, true);
+                    //GameObject HealthBarPrefab = await ResComponent.Instance.LoadAssetAsync<GameObject>("HealthBar");
+                    //GameObject HealthBarGo = UnityEngine.Object.Instantiate(HealthBarPrefab, go.transform, true);
+                    GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool("HealthBar",true,10);
+                    HealthBarGo.transform.SetParent(go.transform);
                     HealthBarGo.transform.localPosition = new float3(0, 5, 0);
                     HealthBarGo.transform.localScale = Vector3.one;
                     unit.AddComponent<HealthBarComponent, GameObject>(HealthBarGo);

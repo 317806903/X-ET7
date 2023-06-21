@@ -23,7 +23,8 @@ namespace ET.Client
         {
             protected override void Destroy(HealthBarComponent self)
             {
-                UnityEngine.Object.Destroy(self.go);
+                //UnityEngine.Object.Destroy(self.go);
+                GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
             }
         }
         
@@ -33,7 +34,12 @@ namespace ET.Client
             protected override void Update(HealthBarComponent self)
             {
                 Transform transform = self.go.transform;
-                Vector3 direction = CameraHelper.GetMainCamera(self.DomainScene()).transform.forward;
+                Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
+                if (mainCamera == null)
+                {
+                    return;
+                }
+                Vector3 direction = mainCamera.transform.forward;
                 transform.forward = -direction;
             }
         }

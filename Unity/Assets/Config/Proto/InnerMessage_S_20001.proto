@@ -176,3 +176,231 @@ message M2M_UnitTransferResponse // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType R2G_GetRoomIdByPlayer
+message G2R_GetRoomIdByPlayer // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message R2G_GetRoomIdByPlayer // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomId = 4;
+	string RoomStatus = 5;
+}
+
+//ResponseType R2G_GetRoomList
+message G2R_GetRoomList // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message R2G_GetRoomList // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated bytes RoomInfos = 4;
+}
+
+//ResponseType R2G_GetRoomInfo
+message G2R_GetRoomInfo // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+}
+
+message R2G_GetRoomInfo // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes RoomInfo = 4;
+	repeated bytes RoomMemberInfos = 5;
+}
+
+message R2G_RoomInfoChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+}
+
+//ResponseType R2G_CreateRoom
+message G2R_CreateRoom // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message R2G_CreateRoom // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomId = 4;
+}
+
+//ResponseType R2G_JoinRoom
+message G2R_JoinRoom // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+}
+
+message R2G_JoinRoom // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_QuitRoom
+message G2R_QuitRoom // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+}
+
+message R2G_QuitRoom // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_ChgRoomStatus
+message G2R_ChgRoomStatus // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 3;
+	int32 RoomStatus = 4;
+}
+
+message R2G_ChgRoomStatus // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_ChgRoomMemberStatus
+message G2R_ChgRoomMemberStatus // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+	int32 IsReady = 4;
+}
+
+message R2G_ChgRoomMemberStatus // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsReady = 4;
+}
+
+//ResponseType R2G_ChgRoomMemberSeat
+message G2R_ChgRoomMemberSeat // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+	int32 NewSeat = 4;
+}
+
+message R2G_ChgRoomMemberSeat // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2R_CreateDynamicMap
+message R2M_CreateDynamicMap // IActorRequest
+{
+	int32 RpcId = 1;
+	bytes RoomInfo = 2;
+	repeated bytes RoomMemberInfos = 3;
+}
+
+message M2R_CreateDynamicMap // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 DynamicMapId = 4;
+}
+
+//ResponseType M2R_DestroyDynamicMap
+message R2M_DestroyDynamicMap // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 DynamicMapId = 2;
+}
+
+message M2R_DestroyDynamicMap // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2R_StartBattle
+message R2G_StartBattle // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 DynamicMapId = 2;
+}
+
+message G2R_StartBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2M_QuitBattle
+message M2G_QuitBattle // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2M_QuitBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2M_MemberQuitBattle
+message M2G_MemberQuitBattle // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2M_MemberQuitBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_ReturnBackBattle
+message G2R_ReturnBackBattle // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message R2G_ReturnBackBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

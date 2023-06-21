@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Compilation;
+using UnityEngine;
 using YooAsset;
 
 namespace ET
@@ -16,6 +17,7 @@ namespace ET
         public static GlobalConfig Instance;
         
         public CodeMode CodeMode;
+        public CodeOptimization codeOptimization = CodeOptimization.Debug;
 
         public string StartConfig;
         

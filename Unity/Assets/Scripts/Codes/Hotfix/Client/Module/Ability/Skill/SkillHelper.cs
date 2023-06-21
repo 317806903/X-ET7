@@ -14,7 +14,6 @@ namespace ET.Client
                 _C2MLearnSkill.SkillId = skillId;
                 M2C_LearnSkill _M2C_LearnSkill = await clientScene.GetComponent<SessionComponent>().Session.Call(_C2MLearnSkill) as M2C_LearnSkill;
 
-                //EventSystem.Instance.Publish(clientScene, new EventType.SkillFinish());
             }
             catch (Exception e)
             {
@@ -30,12 +29,7 @@ namespace ET.Client
                 _C2M_CastSkill.UnitId = clientScene.GetComponent<PlayerComponent>().MyId;
                 _C2M_CastSkill.SkillId = skillId;
                 M2C_CastSkill _M2C_CastSkill = await clientScene.GetComponent<SessionComponent>().Session.Call(_C2M_CastSkill) as M2C_CastSkill;
-                // clientScene.GetComponent<PlayerComponent>().MyId = g2CSkill.MyId;
-                //
-                // // 等待场景切换完成
-                // await clientScene.GetComponent<ObjectWait>().Wait<Wait_SceneChangeFinish>();
-                //
-                //EventSystem.Instance.Publish(clientScene, new EventType.SkillFinish());
+
             }
             catch (Exception e)
             {

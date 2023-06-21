@@ -17,7 +17,7 @@ namespace ET.Server
                 List<Unit> list = args.units;
                 foreach (Unit unit in list)
                 {
-                    M2C_SyncPosUnits syncPosUnits = new () { Units = new List<UnitPosInfo>() };
+                    M2C_SyncPosUnits syncPosUnits = new () { Units = ListComponent<UnitPosInfo>.Create()};
                     syncPosUnits.Units.Add(ET.Ability.UnitHelper.SyncPosUnitInfo(unit));
                     MessageHelper.Broadcast(unit, syncPosUnits);
                 }
@@ -33,7 +33,7 @@ namespace ET.Server
                 List<Unit> list = args.units;
                 foreach (Unit unit in list)
                 {
-                    M2C_SyncNumericUnits syncNumericUnits = new () { Units = new List<UnitNumericInfo>() };
+                    M2C_SyncNumericUnits syncNumericUnits = new () { Units = ListComponent<UnitNumericInfo>.Create() };
                     syncNumericUnits.Units.Add(ET.Ability.UnitHelper.SyncNumericUnitInfo(unit));
                     MessageHelper.Broadcast(unit, syncNumericUnits);
                 }

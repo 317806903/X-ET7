@@ -11,6 +11,14 @@ namespace ET.Ability
         
         public static bool ChkIsFriend(Unit curUnit, Unit targetUnit)
         {
+            if (UnitHelper.ChkUnitAlive(curUnit) == false)
+            {
+                return false;
+            }
+            if (UnitHelper.ChkUnitAlive(targetUnit) == false)
+            {
+                return false;
+            }
             TeamFlagType curTeamFlagType = curUnit.GetComponent<TeamFlagObj>().GetTeamFlagType();
             TeamFlagType targetTeamFlagType = targetUnit.GetComponent<TeamFlagObj>().GetTeamFlagType();
             return curUnit.DomainScene().GetComponent<TeamFlagComponent>().ChkIsFriend(curTeamFlagType, targetTeamFlagType);

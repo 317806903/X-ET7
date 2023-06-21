@@ -19,8 +19,10 @@ namespace ET.Server
 			float3 position = new float3(-10, 0, -10);
 			float3 forward = new float3(0, 0, 1);
 			Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer_Player(scene, player.Id, position, forward);
-			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "Map1");
-			response.MyId = player.Id;
+			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), request.MapName);
+
+			G2C_EnterBattleNotice _G2C_EnterBattleNotice = new() { };
+			player.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_EnterBattleNotice);
 
 			// 等到一帧的最后面再传送，先让G2C_EnterMap返回，否则传送消息可能比G2C_EnterMap还早
 			TransferHelper.TransferAtFrameFinish(unit, startSceneConfig.InstanceId, startSceneConfig.Name).Coroutine();

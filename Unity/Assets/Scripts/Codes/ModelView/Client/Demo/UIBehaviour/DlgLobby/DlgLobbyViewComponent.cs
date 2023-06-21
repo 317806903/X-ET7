@@ -58,17 +58,74 @@ namespace ET.Client
      		}
      	}
 
+		public UnityEngine.UI.InputField E_InputFieldInputField
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_InputFieldInputField == null )
+     			{
+		    		this.m_E_InputFieldInputField = UIFindHelper.FindDeepChild<UnityEngine.UI.InputField>(this.uiTransform.gameObject,"EGBackGround/E_InputField");
+     			}
+     			return this.m_E_InputFieldInputField;
+     		}
+     	}
+
+		public UnityEngine.UI.Image E_InputFieldImage
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_InputFieldImage == null )
+     			{
+		    		this.m_E_InputFieldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"EGBackGround/E_InputField");
+     			}
+     			return this.m_E_InputFieldImage;
+     		}
+     	}
+
+		public UnityEngine.UI.Text E_TextText
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_TextText == null )
+     			{
+		    		this.m_E_TextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"EGBackGround/E_InputField/E_Text");
+     			}
+     			return this.m_E_TextText;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
 			this.m_E_EnterMapButton = null;
 			this.m_E_EnterMapImage = null;
+			this.m_E_InputFieldInputField = null;
+			this.m_E_InputFieldImage = null;
+			this.m_E_TextText = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.RectTransform m_EGBackGroundRectTransform = null;
 		private UnityEngine.UI.Button m_E_EnterMapButton = null;
 		private UnityEngine.UI.Image m_E_EnterMapImage = null;
+		private UnityEngine.UI.InputField m_E_InputFieldInputField = null;
+		private UnityEngine.UI.Image m_E_InputFieldImage = null;
+		private UnityEngine.UI.Text m_E_TextText = null;
 		public Transform uiTransform = null;
 	}
 }

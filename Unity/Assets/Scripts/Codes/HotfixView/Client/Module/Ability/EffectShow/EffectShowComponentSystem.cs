@@ -14,8 +14,8 @@ namespace ET.Ability.Client
         {
             protected override void Awake(EffectShowComponent self)
             {
-                self.recordEffectList = new();
-                self.recordExistEffectList = new();
+                self.curExistEffectList = new();
+                self.waitRemoveEffectList = new();
             }
         }
 
@@ -24,8 +24,8 @@ namespace ET.Ability.Client
         {
             protected override void Destroy(EffectShowComponent self)
             {
-                self.recordEffectList.Clear();
-                self.recordExistEffectList.Clear();
+                self.curExistEffectList.Clear();
+                self.waitRemoveEffectList.Clear();
             }
         }
 
@@ -42,17 +42,17 @@ namespace ET.Ability.Client
         public static EffectShowObj AddEffectShow(this EffectShowComponent self, EffectObj effectObj)
         {
             EffectShowObj effectShowObj = self.AddChild<EffectShowObj>();
-            effectShowObj.Init(effectObj);
-            self.recordEffectList[effectObj.Id] = effectShowObj;
+            effectShowObj.Init(effectObj).Coroutine();
+            self.curExistEffectList[effectObj.Id] = effectShowObj;
             return effectShowObj;
         }
 
         public static void RemoveEffectShow(this EffectShowComponent self, long effectObjId)
         {
-            if (self.recordEffectList.ContainsKey(effectObjId))
+            if (self.curExistEffectList.ContainsKey(effectObjId))
             {
-                self.recordEffectList[effectObjId].Dispose();
-                self.recordEffectList.Remove(effectObjId);
+                self.curExistEffectList[effectObjId].Dispose();
+                self.curExistEffectList.Remove(effectObjId);
             }
         }
 
@@ -63,18 +63,18 @@ namespace ET.Ability.Client
             {
                 return;
             }
-            self.recordExistEffectList.Clear();
-            foreach (var effectShowObjs in self.recordEffectList)
+            self.waitRemoveEffectList.Clear();
+            foreach (var effectShowObjs in self.curExistEffectList)
             {
-                self.recordExistEffectList.Add(effectShowObjs.Key);
+                self.waitRemoveEffectList.Add(effectShowObjs.Key);
             }
             
             foreach (var effectObjs in effectComponent.Children)
             {
                 EffectObj effectObj = effectObjs.Value as EffectObj;
-                if (self.recordEffectList.ContainsKey(effectObj.Id))
+                if (self.curExistEffectList.ContainsKey(effectObj.Id))
                 {
-                    self.recordExistEffectList.Remove(effectObj.Id);
+                    self.waitRemoveEffectList.Remove(effectObj.Id);
                     continue;
                 }
                 else
@@ -83,16 +83,16 @@ namespace ET.Ability.Client
                 }
             }
             
-            if (self.recordExistEffectList.Count <= 0)
+            if (self.waitRemoveEffectList.Count <= 0)
             {
                 return;
             }
 
-            foreach (var effectObjId in self.recordExistEffectList)
+            foreach (var effectObjId in self.waitRemoveEffectList)
             {
                 self.RemoveEffectShow(effectObjId);
             }
-            self.recordExistEffectList.Clear();
+            self.waitRemoveEffectList.Clear();
         }
     }
 }

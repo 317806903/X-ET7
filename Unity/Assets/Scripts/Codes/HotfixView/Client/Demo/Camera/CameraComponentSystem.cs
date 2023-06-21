@@ -40,6 +40,10 @@ namespace ET.Client
 
 		private static void UpdatePosition(this CameraComponent self)
 		{
+			if (self.Unit == null)
+			{
+				return;
+			}
 			Vector3 cameraPos = self.mainCamera.transform.position;
 			self.mainCamera.transform.position = new Vector3(self.Unit.Position.x, cameraPos.y, self.Unit.Position.z - 1);
 		}

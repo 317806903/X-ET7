@@ -10,33 +10,53 @@ namespace ET.Server
 		{
 			UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 			Unit unit = MongoHelper.Deserialize<Unit>(request.Unit);
-			
-			unitComponent.AddChild(unit);
-			unitComponent.Add(unit);
-
-			foreach (byte[] bytes in request.Entitys)
+			bool bExistUnit = false;
+			if (unitComponent.Get(unit.Id) != null)
 			{
-				Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-				unit.AddComponent(entity);
+				bExistUnit = true;
+			}
+
+			if (bExistUnit)
+			{
+				unit.Dispose();
+				unit = unitComponent.Get(unit.Id);
+			}
+			else
+			{
+				unitComponent.AddChild(unit);
+				unitComponent.Add(unit);
+
+				foreach (byte[] bytes in request.Entitys)
+				{
+					Entity entity = MongoHelper.Deserialize<Entity>(bytes);
+					unit.AddComponent(entity);
+				}
+			
+				unit.AddComponent<MoveByPathComponent>();
+				unit.AddComponent<PathfindingComponent, string>(scene.Name);
+				unit.Position = new float3(-10, 0, -10);
+			
+				unit.AddComponent<MailBoxComponent>();
 			}
 			
-			unit.AddComponent<MoveByPathComponent>();
-			unit.AddComponent<PathfindingComponent, string>(scene.Name);
-			unit.Position = new float3(-10, 0, -10);
-			
-			unit.AddComponent<MailBoxComponent>();
-
 			// 通知客户端开始切场景
 			M2C_StartSceneChange m2CStartSceneChange = new M2C_StartSceneChange() {SceneInstanceId = scene.InstanceId, SceneName = scene.Name};
-			MessageHelper.SendToClient(unit, m2CStartSceneChange);
+			MessageHelper.SendToClient(unit, m2CStartSceneChange, false);
 			
 			// 通知客户端创建My Unit
 			M2C_CreateMyUnit m2CCreateUnits = new M2C_CreateMyUnit();
 			m2CCreateUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(unit);
 			MessageHelper.SendToClient(unit, m2CCreateUnits);
-			
-			// 加入aoi
-			unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
+
+			if (bExistUnit)
+			{
+				unit.GetComponent<AOIEntity>().ReNotice();
+			}
+			else
+			{
+				// 加入aoi
+				unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
+			}
 			
 			// 解锁location，可以接收发给Unit的消息
 			await LocationProxyComponent.Instance.UnLock(LocationType.Unit, unit.Id, request.OldInstanceId, unit.InstanceId);

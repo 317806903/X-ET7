@@ -378,6 +378,474 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(R2G_GetRoomIdByPlayer))]
+	[Message(InnerMessage.G2R_GetRoomIdByPlayer)]
+	[ProtoContract]
+	public partial class G2R_GetRoomIdByPlayer: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_GetRoomIdByPlayer)]
+	[ProtoContract]
+	public partial class R2G_GetRoomIdByPlayer: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public long RoomId { get; set; }
+
+		[ProtoMember(5)]
+		public string RoomStatus { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_GetRoomList))]
+	[Message(InnerMessage.G2R_GetRoomList)]
+	[ProtoContract]
+	public partial class G2R_GetRoomList: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_GetRoomList)]
+	[ProtoContract]
+	public partial class R2G_GetRoomList: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public List<byte[]> RoomInfos { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_GetRoomInfo))]
+	[Message(InnerMessage.G2R_GetRoomInfo)]
+	[ProtoContract]
+	public partial class G2R_GetRoomInfo: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long RoomId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_GetRoomInfo)]
+	[ProtoContract]
+	public partial class R2G_GetRoomInfo: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] RoomInfo { get; set; }
+
+		[ProtoMember(5)]
+		public List<byte[]> RoomMemberInfos { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_RoomInfoChgNotice)]
+	[ProtoContract]
+	public partial class R2G_RoomInfoChgNotice: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_CreateRoom))]
+	[Message(InnerMessage.G2R_CreateRoom)]
+	[ProtoContract]
+	public partial class G2R_CreateRoom: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_CreateRoom)]
+	[ProtoContract]
+	public partial class R2G_CreateRoom: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public long RoomId { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_JoinRoom))]
+	[Message(InnerMessage.G2R_JoinRoom)]
+	[ProtoContract]
+	public partial class G2R_JoinRoom: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_JoinRoom)]
+	[ProtoContract]
+	public partial class R2G_JoinRoom: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_QuitRoom))]
+	[Message(InnerMessage.G2R_QuitRoom)]
+	[ProtoContract]
+	public partial class G2R_QuitRoom: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_QuitRoom)]
+	[ProtoContract]
+	public partial class R2G_QuitRoom: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_ChgRoomStatus))]
+	[Message(InnerMessage.G2R_ChgRoomStatus)]
+	[ProtoContract]
+	public partial class G2R_ChgRoomStatus: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+		[ProtoMember(4)]
+		public int RoomStatus { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ChgRoomStatus)]
+	[ProtoContract]
+	public partial class R2G_ChgRoomStatus: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_ChgRoomMemberStatus))]
+	[Message(InnerMessage.G2R_ChgRoomMemberStatus)]
+	[ProtoContract]
+	public partial class G2R_ChgRoomMemberStatus: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+		[ProtoMember(4)]
+		public int IsReady { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ChgRoomMemberStatus)]
+	[ProtoContract]
+	public partial class R2G_ChgRoomMemberStatus: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public int IsReady { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_ChgRoomMemberSeat))]
+	[Message(InnerMessage.G2R_ChgRoomMemberSeat)]
+	[ProtoContract]
+	public partial class G2R_ChgRoomMemberSeat: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+		[ProtoMember(4)]
+		public int NewSeat { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ChgRoomMemberSeat)]
+	[ProtoContract]
+	public partial class R2G_ChgRoomMemberSeat: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2R_CreateDynamicMap))]
+	[Message(InnerMessage.R2M_CreateDynamicMap)]
+	[ProtoContract]
+	public partial class R2M_CreateDynamicMap: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] RoomInfo { get; set; }
+
+		[ProtoMember(3)]
+		public List<byte[]> RoomMemberInfos { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2R_CreateDynamicMap)]
+	[ProtoContract]
+	public partial class M2R_CreateDynamicMap: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public long DynamicMapId { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2R_DestroyDynamicMap))]
+	[Message(InnerMessage.R2M_DestroyDynamicMap)]
+	[ProtoContract]
+	public partial class R2M_DestroyDynamicMap: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long DynamicMapId { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2R_DestroyDynamicMap)]
+	[ProtoContract]
+	public partial class M2R_DestroyDynamicMap: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2R_StartBattle))]
+	[Message(InnerMessage.R2G_StartBattle)]
+	[ProtoContract]
+	public partial class R2G_StartBattle: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long DynamicMapId { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2R_StartBattle)]
+	[ProtoContract]
+	public partial class G2R_StartBattle: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2M_QuitBattle))]
+	[Message(InnerMessage.M2G_QuitBattle)]
+	[ProtoContract]
+	public partial class M2G_QuitBattle: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2M_QuitBattle)]
+	[ProtoContract]
+	public partial class G2M_QuitBattle: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2M_MemberQuitBattle))]
+	[Message(InnerMessage.M2G_MemberQuitBattle)]
+	[ProtoContract]
+	public partial class M2G_MemberQuitBattle: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2M_MemberQuitBattle)]
+	[ProtoContract]
+	public partial class G2M_MemberQuitBattle: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2G_ReturnBackBattle))]
+	[Message(InnerMessage.G2R_ReturnBackBattle)]
+	[ProtoContract]
+	public partial class G2R_ReturnBackBattle: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ReturnBackBattle)]
+	[ProtoContract]
+	public partial class R2G_ReturnBackBattle: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -403,5 +871,36 @@ namespace ET
 		 public const ushort ObjectQueryResponse = 20022;
 		 public const ushort M2M_UnitTransferRequest = 20023;
 		 public const ushort M2M_UnitTransferResponse = 20024;
+		 public const ushort G2R_GetRoomIdByPlayer = 20025;
+		 public const ushort R2G_GetRoomIdByPlayer = 20026;
+		 public const ushort G2R_GetRoomList = 20027;
+		 public const ushort R2G_GetRoomList = 20028;
+		 public const ushort G2R_GetRoomInfo = 20029;
+		 public const ushort R2G_GetRoomInfo = 20030;
+		 public const ushort R2G_RoomInfoChgNotice = 20031;
+		 public const ushort G2R_CreateRoom = 20032;
+		 public const ushort R2G_CreateRoom = 20033;
+		 public const ushort G2R_JoinRoom = 20034;
+		 public const ushort R2G_JoinRoom = 20035;
+		 public const ushort G2R_QuitRoom = 20036;
+		 public const ushort R2G_QuitRoom = 20037;
+		 public const ushort G2R_ChgRoomStatus = 20038;
+		 public const ushort R2G_ChgRoomStatus = 20039;
+		 public const ushort G2R_ChgRoomMemberStatus = 20040;
+		 public const ushort R2G_ChgRoomMemberStatus = 20041;
+		 public const ushort G2R_ChgRoomMemberSeat = 20042;
+		 public const ushort R2G_ChgRoomMemberSeat = 20043;
+		 public const ushort R2M_CreateDynamicMap = 20044;
+		 public const ushort M2R_CreateDynamicMap = 20045;
+		 public const ushort R2M_DestroyDynamicMap = 20046;
+		 public const ushort M2R_DestroyDynamicMap = 20047;
+		 public const ushort R2G_StartBattle = 20048;
+		 public const ushort G2R_StartBattle = 20049;
+		 public const ushort M2G_QuitBattle = 20050;
+		 public const ushort G2M_QuitBattle = 20051;
+		 public const ushort M2G_MemberQuitBattle = 20052;
+		 public const ushort G2M_MemberQuitBattle = 20053;
+		 public const ushort G2R_ReturnBackBattle = 20054;
+		 public const ushort R2G_ReturnBackBattle = 20055;
 	}
 }

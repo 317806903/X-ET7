@@ -90,7 +90,7 @@ namespace ET
                     break;
                 }
 
-                Log.Debug($"==新 aiConfig.Id {aiConfig.Id} self.Current={self.Current}");
+                //Log.Debug($"==新 aiConfig.Id {aiConfig.Id} self.Current={self.Current}");
                 self.Cancel(); // 取消之前的行为
                 ETCancellationToken cancellationToken = new ETCancellationToken();
                 self.CancellationToken = cancellationToken;

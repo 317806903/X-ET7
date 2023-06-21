@@ -203,7 +203,7 @@
     "desc": "",
     "res_id": "ResEffect_DeathShow_1",
     "key": "",
-    "duration": 3,
+    "duration": 10,
     "isSceneEffect": true,
     "offSetInfo": {
       "nodeName": "",

@@ -177,5 +177,10 @@ namespace ET
         {
             return self.BeSeePlayers.ContainsKey(unitId);
         }
+        
+        public static void ReNotice(this AOIEntity self)
+        {
+            self.DomainScene().GetComponent<AOIManagerComponent>()?.ReNotice(self);
+        }
     }
 }

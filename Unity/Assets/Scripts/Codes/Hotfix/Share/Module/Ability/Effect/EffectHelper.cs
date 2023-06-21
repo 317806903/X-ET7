@@ -46,6 +46,10 @@ namespace ET.Ability
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitEffect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                    if (unitEffect == null)
+                    {
+                        continue;
+                    }
 
                     float3 position = unitEffect.Position;
                     float3 forward = unitEffect.Forward;

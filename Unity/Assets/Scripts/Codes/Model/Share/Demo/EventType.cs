@@ -2,11 +2,15 @@
 {
     namespace EventType
     {
-        public struct SceneChangeStart
+        public struct HallSceneEnterStart
         {
         }
         
-        public struct SceneChangeFinish
+        public struct BattleSceneEnterStart
+        {
+        }
+        
+        public struct BattleSceneEnterFinish
         {
         }
         
@@ -26,7 +30,15 @@
         {
         }
 
+        public struct LoginOutFinish
+        {
+        }
+
         public struct EnterMapFinish
+        {
+        }
+
+        public struct RoomInfoChg
         {
         }
 

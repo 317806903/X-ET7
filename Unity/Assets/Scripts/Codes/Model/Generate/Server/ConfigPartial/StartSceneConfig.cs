@@ -6,28 +6,42 @@ namespace ET
 {
     public partial class StartSceneConfigCategory
     {
-        public MultiMap<int, StartSceneConfig> Gates = new MultiMap<int, StartSceneConfig>();
+        public MultiMap<int, StartSceneConfig> Gates = new ();
         
-        public MultiMap<int, StartSceneConfig> ProcessScenes = new MultiMap<int, StartSceneConfig>();
+        public MultiDictionary<int, int, StartSceneConfig> ProcessScenes = new ();
         
-        public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new Dictionary<long, Dictionary<string, StartSceneConfig>>();
+        public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new ();
 
         public StartSceneConfig LocationConfig;
 
-        public List<StartSceneConfig> Realms = new List<StartSceneConfig>();
+        public List<StartSceneConfig> Realms = new ();
         
-        public List<StartSceneConfig> Routers = new List<StartSceneConfig>();
+        public List<StartSceneConfig> Routers = new ();
         public StartSceneConfig RouterManager;
         
-        public List<StartSceneConfig> Robots = new List<StartSceneConfig>();
+        public List<StartSceneConfig> Robots = new ();
 
         public StartSceneConfig BenchmarkServer;
+        public StartSceneConfig RoomManager;
+        public MultiMap<int, StartSceneConfig> DynamicMaps = new ();
         
-        public List<StartSceneConfig> GetByProcess(int process)
+        public Dictionary<int, StartSceneConfig> GetByProcess(int process)
         {
             return this.ProcessScenes[process];
         }
         
+        public StartSceneConfig GetRoomManager(int zone)
+        {
+            return this.RoomManager;
+        }
+
+        public StartSceneConfig GetDynamicMap(int zone)
+        {
+            var dynamicMapList = this.DynamicMaps[zone];
+            int n = RandomGenerator.RandomNumber(0, dynamicMapList.Count);
+            return dynamicMapList[n];
+        }
+
         public StartSceneConfig GetBySceneName(int zone, string name)
         {
             return this.ClientScenesByName[zone][name];
@@ -37,13 +51,20 @@ namespace ET
         {
             foreach (StartSceneConfig startSceneConfig in this.GetAll().Values)
             {
-                this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig);
+                this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig.Id, startSceneConfig);
                 
                 if (!this.ClientScenesByName.ContainsKey(startSceneConfig.Zone))
                 {
                     this.ClientScenesByName.Add(startSceneConfig.Zone, new Dictionary<string, StartSceneConfig>());
                 }
-                this.ClientScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
+                if(startSceneConfig.Type == SceneType.Map && startSceneConfig.Name == "Dynamic")
+                {
+                    this.DynamicMaps.Add(startSceneConfig.Zone, startSceneConfig);
+                }
+                else
+                {
+                    this.ClientScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
+                }
                 
                 switch (startSceneConfig.Type)
                 {
@@ -67,6 +88,13 @@ namespace ET
                         break;
                     case SceneType.BenchmarkServer:
                         this.BenchmarkServer = startSceneConfig;
+                        break;
+                    case SceneType.Room:
+                        this.RoomManager = startSceneConfig;
+                        break;
+                    case SceneType.Match:
+                        break;
+                    case SceneType.Map:
                         break;
                 }
             }

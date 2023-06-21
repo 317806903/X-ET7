@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# ET0013: 静态类之间禁止环形依赖
+dotnet_diagnostic.ET0013.severity = error

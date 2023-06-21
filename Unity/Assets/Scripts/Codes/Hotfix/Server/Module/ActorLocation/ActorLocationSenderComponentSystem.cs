@@ -71,7 +71,7 @@ namespace ET.Server
         {
             if (id == 0)
             {
-                throw new Exception($"actor id is 0");
+                throw new Exception($"GetOrCreate actor id is 0");
             }
 
             if (self.Children.TryGetValue(id, out Entity actorLocationSender))
@@ -83,7 +83,7 @@ namespace ET.Server
             return (ActorLocationSender) actorLocationSender;
         }
 
-        private static void Remove(this ActorLocationSenderOneType self, long id)
+        public static void Remove(this ActorLocationSenderOneType self, long id)
         {
             if (!self.Children.TryGetValue(id, out Entity actorMessageSender))
             {
@@ -92,7 +92,16 @@ namespace ET.Server
 
             actorMessageSender.Dispose();
         }
-        
+
+        public static void ResetTime(this ActorLocationSenderOneType self, long id)
+        {
+            ActorLocationSender actorLocationSender = self.GetChild<ActorLocationSender>(id);
+            if (actorLocationSender != null)
+            {
+                actorLocationSender.LastSendOrRecvTime = TimeHelper.ServerNow();
+            }
+        }
+
         // 发给不会改变位置的actorlocation用这个，这种actor消息不会阻塞发送队列，性能更高
         // 发送过去找不到actor不会重试,用此方法，你得保证actor提前注册好了location
         public static void Send(this ActorLocationSenderOneType self, long entityId, IActorMessage message)

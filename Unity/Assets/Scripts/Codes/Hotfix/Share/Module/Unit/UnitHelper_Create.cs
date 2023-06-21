@@ -108,18 +108,30 @@ namespace ET.Ability
         public static Unit CreateWhenServer_Player(Scene scene, long playerId, float3 position, float3 forward)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
-
-            // Unit unit = CreateWhenServer_Common_Before(unitComponent, "Unit_MachineGunTower_0", UnitType.Player, TeamFlagType.Team1, position, forward);
-            // NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            // numericComponent.Set(NumericType.MaxHp, 10000);
-            // numericComponent.Set(NumericType.Hp, 10000);
-            //
-            // CreateWhenServer_Common_After(unitComponent, unit);
+            Unit unit;
+            if (false)
+            {
+                //{
+                //    unit = CreateWhenServer_Common_Before(unitComponent, "Unit_MachineGunTower_0", UnitType.Player, TeamFlagType.Team1, position, forward);
+                //    NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                //    numericComponent.Set(NumericType.MaxHp, 10000);
+                //    numericComponent.Set(NumericType.Hp, 10000);
+                    
+                //    numericComponent.Set(NumericType.PhysicalAttack, 11f);
+                    
+                //    CreateWhenServer_Common_After(unitComponent, unit);
+                //}
+            }
+            else
+            {
+                {
+                    unit = CreateWhenServer_CommonPlayer(scene, playerId, "Unit_HeadQuarter1", UnitType.Player, TeamFlagType.Team1, position, forward);
             
-            Unit unit = CreateWhenServer_CommonPlayer(scene, playerId, "Unit_HeadQuarter1", UnitType.Player, TeamFlagType.Team1, position, forward);
+                    NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                    numericComponent.Set(NumericType.PhysicalAttack, 11f);
+                }
+            }
             
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            numericComponent.Set(NumericType.PhysicalAttack, 11f);
             
             return unit;
         }

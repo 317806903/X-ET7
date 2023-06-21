@@ -5,7 +5,13 @@ namespace ET.Ability.Client
     [ComponentOf]
 	public class EffectShowComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
-        public Dictionary<long, EffectShowObj> recordEffectList;
-        public HashSet<long> recordExistEffectList;
+        /// <summary>
+        /// 当前存在的列表
+        /// </summary>
+        public Dictionary<long, EffectShowObj> curExistEffectList;
+        /// <summary>
+        /// 准备移除的列表
+        /// </summary>
+        public HashSet<long> waitRemoveEffectList;
     }
 }

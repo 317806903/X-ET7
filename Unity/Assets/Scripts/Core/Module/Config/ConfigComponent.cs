@@ -10,6 +10,10 @@ namespace ET
     /// </summary>
     public class ConfigComponent: Singleton<ConfigComponent>
     {
+	    public struct GetCodeMode
+	    {
+	    }
+
         public struct GetAllConfigBytes
         {
         }

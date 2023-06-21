@@ -7,8 +7,20 @@ namespace ET.Client
     public static class GameObjectPoolHelper
     {
         private static Dictionary<string, GameObjectPool> poolDict = new Dictionary<string, GameObjectPool>();
-        
-        public static void InitPool( string poolName, int size, PoolInflationType type = PoolInflationType.DOUBLE)
+        private static GameObject _poolRoot;
+        private static GameObject poolRoot
+        {
+            get
+            {
+                if (_poolRoot == null)
+                {
+                    _poolRoot = GameObject.Find("Global/PoolRoot");
+                }
+                return _poolRoot;
+            }
+        }
+
+        public static void InitPool(string poolName, int size, PoolInflationType type = PoolInflationType.DOUBLE)
         {
             if (poolDict.ContainsKey(poolName))
             {
@@ -25,8 +37,7 @@ namespace ET.Client
                         return;
                     }
 
-                    
-                    poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
+                    poolDict[poolName] = new GameObjectPool(poolName, pb, poolRoot, size, type);
                 }
                 catch (Exception e)
                 {
@@ -34,8 +45,8 @@ namespace ET.Client
                 }
             }
         }
-        
-        public static async ETTask InitPoolFormGamObjectAsync(  GameObject pb, int size, PoolInflationType type = PoolInflationType.DOUBLE)
+
+        public static async ETTask InitPoolFormGamObjectAsync(GameObject pb, int size, PoolInflationType type = PoolInflationType.DOUBLE)
         {
             string poolName = pb.name;
             if (poolDict.ContainsKey(poolName))
@@ -51,7 +62,8 @@ namespace ET.Client
                         Debug.LogError("[ResourceManager] Invalide prefab name for pooling :" + poolName);
                         return;
                     }
-                    poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
+
+                    poolDict[poolName] = new GameObjectPool(poolName, pb, poolRoot, size, type);
                 }
                 catch (Exception e)
                 {
@@ -61,15 +73,14 @@ namespace ET.Client
 
             await ETTask.CompletedTask;
         }
-        
-        
+
         /// <summary>
         /// Returns an available object from the pool 
         /// OR null in case the pool does not have any object available & can grow size is false.
         /// </summary>
         /// <OtherParam name="poolName"></OtherParam>
         /// <returns></returns>
-        public static GameObject GetObjectFromPool( string poolName,    bool autoActive = true, int autoCreate = 0)
+        public static GameObject GetObjectFromPool(string poolName, bool autoActive = true, int autoCreate = 0)
         {
             GameObject result = null;
 
@@ -99,12 +110,11 @@ namespace ET.Client
             return result;
         }
 
-        
         /// <summary>
         /// Return obj to the pool
         /// </summary>
         /// <OtherParam name="go"></OtherParam>
-        public static void ReturnObjectToPool( GameObject go)
+        public static void ReturnObjectToPool(GameObject go)
         {
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
@@ -133,7 +143,7 @@ namespace ET.Client
         /// Return obj to the pool
         /// </summary>
         /// <OtherParam name="t"></OtherParam>
-        public static void ReturnTransformToPool( Transform t)
+        public static void ReturnTransformToPool(Transform t)
         {
             if (t == null)
             {
@@ -142,20 +152,18 @@ namespace ET.Client
 #endif
                 return;
             }
+
             ReturnObjectToPool(t.gameObject);
         }
 
-        public static GameObject GetGameObjectByResType( string poolName)
+        public static GameObject GetGameObjectByResType(string poolName)
         {
             // GameObject pb = null;
             // Dictionary<string, UnityEngine.Object>  assetDict = AssetsBundleHelper.LoadBundle(poolName + ".unity3d");
             // pb = assetDict[poolName] as GameObject;
             //
             //
-            GameObject go = EventSystem.Instance.Invoke<ConfigComponent.GetRes, GameObject>(new ConfigComponent.GetRes()
-            {
-                ResName = poolName
-            });
+            GameObject go = EventSystem.Instance.Invoke<ConfigComponent.GetRes, GameObject>(new ConfigComponent.GetRes() { ResName = poolName });
             return go;
         }
     }

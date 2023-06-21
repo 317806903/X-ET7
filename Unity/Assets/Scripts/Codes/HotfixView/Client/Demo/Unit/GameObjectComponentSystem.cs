@@ -10,7 +10,8 @@ namespace ET.Client
         {
             protected override void Destroy(GameObjectComponent self)
             {
-                UnityEngine.Object.Destroy(self.GameObject);
+                //UnityEngine.Object.Destroy(self.GameObject);
+                GameObjectPoolHelper.ReturnTransformToPool(self.GameObject.transform);
             }
         }
         

@@ -842,7 +842,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY;SINGLE_THREAD;ENABLE_CODES
+    Android: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
     Server: UNITY
     Standalone: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
     WebGL: UNITY;ENABLE_CODES

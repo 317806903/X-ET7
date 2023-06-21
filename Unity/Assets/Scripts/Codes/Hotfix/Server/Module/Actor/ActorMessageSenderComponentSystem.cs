@@ -98,7 +98,7 @@ namespace ET.Server
         {
             if (actorId == 0)
             {
-                throw new Exception($"actor id is 0: {message}");
+                throw new Exception($"Send actor id is 0: {message}");
             }
             
             ProcessActorId processActorId = new(actorId);
@@ -135,7 +135,7 @@ namespace ET.Server
             
             if (actorId == 0)
             {
-                throw new Exception($"actor id is 0: {request}");
+                throw new Exception($"Call actor id is 0: {request}");
             }
 
             return await self.Call(actorId, request.RpcId, request, needException);
@@ -151,7 +151,7 @@ namespace ET.Server
         {
             if (actorId == 0)
             {
-                throw new Exception($"actor id is 0: {iActorRequest}");
+                throw new Exception($"Call actor id is 0: {iActorRequest}");
             }
 
             var tcs = ETTask<IActorResponse>.Create(true);

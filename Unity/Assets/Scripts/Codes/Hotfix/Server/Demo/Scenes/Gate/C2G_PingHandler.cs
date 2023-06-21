@@ -9,7 +9,16 @@ namespace ET.Server
 		protected override async ETTask Run(Session session, C2G_Ping request, G2C_Ping response)
 		{
 			response.Time = TimeHelper.ServerNow();
-			await ETTask.CompletedTask;
+            SessionPlayerComponent sessionPlayerComponent = session.GetComponent<SessionPlayerComponent>();
+			if (sessionPlayerComponent != null)
+            {
+                Player player = sessionPlayerComponent.Player;
+				if (player != null)
+                {
+                    ActorLocationSenderComponent.Instance?.Get(LocationType.Player).ResetTime(player.Id);
+                }
+            }
+            await ETTask.CompletedTask;
 		}
 	}
 }

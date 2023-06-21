@@ -76,7 +76,14 @@ namespace ET.Server
 
         public static async ETTask RemoveLocation(this Entity self, int type)
         {
-            await LocationProxyComponent.Instance.Remove(type, self.Id);
+            await LocationProxyComponent.Instance.RemoveLocation(self.Id, type);
+        }
+        
+        public static async ETTask RemoveLocation(this LocationProxyComponent self, long id, int type)
+        {
+            await LocationProxyComponent.Instance.Remove(type, id);
+            await TimerComponent.Instance.WaitFrameAsync();
+            ActorLocationSenderComponent.Instance?.Get(type).Remove(id);
         }
     }
 }

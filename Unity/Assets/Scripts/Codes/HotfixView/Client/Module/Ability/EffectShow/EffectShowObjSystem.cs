@@ -23,16 +23,19 @@ namespace ET.Ability.Client
         {
             protected override void Destroy(EffectShowObj self)
             {
-                UnityEngine.Object.Destroy(self.go);
+                //UnityEngine.Object.Destroy(self.go);
+                GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
             }
         }
 
         public static async ETTask Init(this EffectShowObj self, EffectObj effectObj)
         {
             string resName = effectObj.model.ResName;
-            GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
-            GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
-
+            // GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
+            // GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
+            // await GameObjectPoolHelper.InitPoolFormGamObjectAsync(prefab, 1);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
+            
             ParticleSystem particleSystem = go.GetComponentInChildren<ParticleSystem>();
             if (particleSystem != null)
             {

@@ -48,6 +48,11 @@ namespace ET.Server
                 case SceneType.BenchmarkClient:
                     scene.AddComponent<BenchmarkClientComponent>();
                     break;
+                case SceneType.Room:
+                    scene.AddComponent<RoomManagerComponent>();
+                    break;
+                case SceneType.Match:
+                    break;
             }
 
             return scene;

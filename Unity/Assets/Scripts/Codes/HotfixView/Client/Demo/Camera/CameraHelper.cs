@@ -17,6 +17,11 @@ namespace ET.Client
 				currentScene = scene;
 			}
 
+			if (currentScene.GetComponent<CameraComponent>() == null)
+			{
+				return null;
+			}
+
 			return currentScene.GetComponent<CameraComponent>().MainCamera;
 		}
 	}

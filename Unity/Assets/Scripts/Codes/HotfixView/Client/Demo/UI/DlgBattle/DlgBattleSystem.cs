@@ -30,9 +30,12 @@ namespace ET.Client
 
 		public static void RegisterUIEvent(this DlgBattle self)
 		{
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Tower";
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.poolSize = 5;
 			self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) => self.AddTowerItemRefreshListener(transform, i));
 			self.View.ELoopScrollList_TankLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) => self.AddTankItemRefreshListener
 			(transform, i));
+            self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
 		}
 
 		public static void ShowWindow(this DlgBattle self, Entity contextData = null)
@@ -54,6 +57,12 @@ namespace ET.Client
         public static void HideWindow(this DlgBattle self)
         {
             TimerComponent.Instance?.Remove(ref self.Timer);
+        }
+
+        public static async ETTask QuitBattle(this DlgBattle self)
+        {
+            await RoomHelper.MemberQuitBattleAsync(self.ClientScene());
+            await SceneHelper.EnterHall(self.ClientScene());
         }
 
         public static string GetUnitCfgId(this DlgBattle self, bool isTower, int index)
@@ -169,7 +178,7 @@ namespace ET.Client
 
         public static void ChkPlayerMove(this DlgBattle self)
         {
-#if UNITY_EDITOR
+#if true||UNITY_EDITOR
             if (Input.GetMouseButtonDown(1))
 #else
             if (Input.GetMouseButtonDown(0))
@@ -192,7 +201,9 @@ namespace ET.Client
         /// <returns></returns>
         public static bool CheckUserInput(this DlgBattle self)
         {
-    #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+    #if true||UNITY_EDITOR
+            return Input.GetMouseButton(0);
+    #elif UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS
             if (Input.touches.Length > 0) {
                 if (!self.isTouchInput) {
                     self.isTouchInput = true;
@@ -215,17 +226,18 @@ namespace ET.Client
         {
             if (UnityEngine.EventSystems.EventSystem.current)
             {
-    #if UNITY_EDITOR
+    #if true||UNITY_EDITOR
                 return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-    #elif UNITY_ANDROID || UNITY_IPHONE
+    #elif UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS
                 if (Input.touchCount > 0)
                 {
                     return self.IsPointerOverUIObject();
                 }
 
                 return false;
-    #endif
+    #else
                 return false;
+    #endif
             }
 
             return false;
@@ -246,12 +258,15 @@ namespace ET.Client
         {
             Vector3 point;
             Vector3 screenPosition;
-    #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+#if true||UNITY_EDITOR
+            screenPosition = Input.mousePosition;
+#elif UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS
             Touch touch = Input.GetTouch (self.touchID);
             screenPosition = new Vector3 (touch.position.x, touch.position.y, 0);
-    #else
+#else
             screenPosition = Input.mousePosition;
-    #endif
+#endif
+
             Ray ray = ET.Client.CameraHelper.GetMainCamera(self.DomainScene()).ScreenPointToRay(screenPosition);
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo, 1000, self._groundLayerMask))

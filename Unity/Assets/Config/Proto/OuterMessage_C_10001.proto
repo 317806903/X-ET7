@@ -46,6 +46,7 @@ message Actor_TransferResponse // IActorLocationResponse
 message C2G_EnterMap // IRequest
 {
 	int32 RpcId = 1;
+	string MapName = 2;
 }
 
 message G2C_EnterMap // IResponse
@@ -53,8 +54,22 @@ message G2C_EnterMap // IResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	// 自己unitId
-	int64 MyId = 4;
+}
+
+message G2C_EnterBattleNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+message G2C_PlayerStatusChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string PlayerStatus = 4;
+	int64 RoomId = 5;
 }
 
 message MoveInfo
@@ -221,6 +236,39 @@ message G2C_LoginGate // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 PlayerId = 4;
+	string PlayerStatus = 5;
+	int64 RoomId = 6;
+}
+
+//ResponseType G2C_LoginOut
+message C2G_LoginOut // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_LoginOut // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ReLogin
+message C2G_ReLogin // IRequest
+{
+	int32 RpcId = 1;
+	int64 Key = 2;  // 帐号
+	int64 GateId = 3;
+}
+
+message G2C_ReLogin // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 PlayerId = 4;
+	string PlayerStatus = 5;
+	int64 RoomId = 6;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -335,6 +383,137 @@ message C2M_CallTank // IActorLocationRequest
 }
 
 message M2C_CallTank // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_GetRoomList
+message C2G_GetRoomList // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_GetRoomList // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated bytes RoomInfos = 4;
+}
+
+//ResponseType G2C_GetRoomInfo
+message C2G_GetRoomInfo // IRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+}
+
+message G2C_GetRoomInfo // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes RoomInfo = 4;
+	repeated bytes RoomMemberInfos = 5;
+}
+
+message R2C_RoomInfoChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+}
+
+//ResponseType G2C_CreateRoom
+message C2G_CreateRoom // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_CreateRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomId = 4;
+}
+
+//ResponseType G2C_JoinRoom
+message C2G_JoinRoom // IRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+}
+
+message G2C_JoinRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_QuitRoom
+message C2G_QuitRoom // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_QuitRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ChgRoomMemberStatus
+message C2G_ChgRoomMemberStatus // IRequest
+{
+	int32 RpcId = 1;
+	int32 IsReady = 2;
+}
+
+message G2C_ChgRoomMemberStatus // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsReady = 4;
+}
+
+//ResponseType G2C_ChgRoomMemberSeat
+message C2G_ChgRoomMemberSeat // IRequest
+{
+	int32 RpcId = 1;
+	int32 NewSeat = 2;
+}
+
+message G2C_ChgRoomMemberSeat // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ReturnBackBattle
+message C2G_ReturnBackBattle // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_ReturnBackBattle // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_MemberQuitBattle
+message C2M_MemberQuitBattle // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_MemberQuitBattle // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

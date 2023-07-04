@@ -21,6 +21,10 @@ namespace ET.Ability
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                    if (unitSelect == null)
+                    {
+                        continue;
+                    }
                     incrementRotate = ET.Ability.UnitHelper.GetTargetUnitAngle(unit, unitSelect);
                     break;
                 }

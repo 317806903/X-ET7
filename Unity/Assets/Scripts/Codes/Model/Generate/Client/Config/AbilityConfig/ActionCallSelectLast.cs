@@ -13,9 +13,9 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 上级的选择
+/// 保持的选择
 /// </summary>
-public sealed partial class ActionCallSelectLast:  ActionCallSelect 
+public sealed partial class ActionCallSelectLast:  ActionCallParam 
 {
     public ActionCallSelectLast(ByteBuf _buf)  : base(_buf) 
     {

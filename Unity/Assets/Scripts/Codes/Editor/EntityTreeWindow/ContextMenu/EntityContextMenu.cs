@@ -41,7 +41,7 @@ namespace ET
                 return;
             }
 
-            string name = entity.GetType().Name;
+            string name = entity.GetType().FullName;
 
             ACTIONS.TryGetValue(name, out var actions);
 

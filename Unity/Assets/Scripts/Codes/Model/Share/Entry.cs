@@ -44,6 +44,14 @@
         }
     }
     
+    public enum PlayerGameMode
+    {
+        None,
+        SingleMap,
+        Room,
+        ARRoom,
+    }
+    
     public enum PlayerStatus
     {
         Hall,

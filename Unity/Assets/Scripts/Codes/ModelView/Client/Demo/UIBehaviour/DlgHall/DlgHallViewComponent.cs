@@ -109,6 +109,40 @@ namespace ET.Client
      		}
      	}
 
+		public UnityEngine.UI.Button E_RefreshRoomListButton
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_RefreshRoomListButton == null )
+     			{
+		    		this.m_E_RefreshRoomListButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject,"EGBackGround/E_RefreshRoomList");
+     			}
+     			return this.m_E_RefreshRoomListButton;
+     		}
+     	}
+
+		public UnityEngine.UI.Image E_RefreshRoomListImage
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_RefreshRoomListImage == null )
+     			{
+		    		this.m_E_RefreshRoomListImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"EGBackGround/E_RefreshRoomList");
+     			}
+     			return this.m_E_RefreshRoomListImage;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -117,6 +151,8 @@ namespace ET.Client
 			this.m_ELoopScrollList_RoomLoopHorizontalScrollRect = null;
 			this.m_E_ReturnLoginButton = null;
 			this.m_E_ReturnLoginImage = null;
+			this.m_E_RefreshRoomListButton = null;
+			this.m_E_RefreshRoomListImage = null;
 			this.uiTransform = null;
 		}
 
@@ -126,6 +162,8 @@ namespace ET.Client
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RoomLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
 		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
+		private UnityEngine.UI.Button m_E_RefreshRoomListButton = null;
+		private UnityEngine.UI.Image m_E_RefreshRoomListImage = null;
 		public Transform uiTransform = null;
 	}
 }

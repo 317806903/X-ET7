@@ -9,5 +9,18 @@ namespace ET.Ability
 		public Dictionary<string, float> skillCDs;
 		public Dictionary<string, float> skillOrgCDs;
 		public Dictionary<string, int> skillLevels;
+
+		public EntityRef<TimelineObj> _TimeLineObj;
+		public TimelineObj curTimelineObj
+		{
+			get
+			{
+				return this._TimeLineObj;
+			}
+			set
+			{
+				this._TimeLineObj = value;
+			}
+		}
 	}
 }

@@ -38,13 +38,9 @@ namespace ET.Ability
                         isChgSelect = true;
                         if (newSelectHandle == null)
                         {
-                            newSelectHandle = new ()
-                            {
-                                selectHandleType = selectHandle.selectHandleType,
-                                position = selectHandle.position,
-                                direction = selectHandle.direction,
-                                unitIds = new ListComponent<long>(),
-                            };
+                            newSelectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
+                            newSelectHandle.position = selectHandle.position;
+                            newSelectHandle.direction = selectHandle.direction;
                         }
                         newSelectHandle.unitIds.Add(i);
                     }

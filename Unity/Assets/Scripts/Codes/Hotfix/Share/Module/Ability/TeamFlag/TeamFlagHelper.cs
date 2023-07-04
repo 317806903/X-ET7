@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ET.Ability
@@ -22,6 +23,13 @@ namespace ET.Ability
             TeamFlagType curTeamFlagType = curUnit.GetComponent<TeamFlagObj>().GetTeamFlagType();
             TeamFlagType targetTeamFlagType = targetUnit.GetComponent<TeamFlagObj>().GetTeamFlagType();
             return curUnit.DomainScene().GetComponent<TeamFlagComponent>().ChkIsFriend(curTeamFlagType, targetTeamFlagType);
+        }
+        
+        public static TeamFlagType GetTeamFlagTypeBySeatIndex(int roomSeatIndex)
+        {
+            string key = $"TeamPlayer{roomSeatIndex + 1}";
+            TeamFlagType teamFlagType = (TeamFlagType)Enum.Parse(typeof(TeamFlagType), key);
+            return teamFlagType;
         }
         
     }

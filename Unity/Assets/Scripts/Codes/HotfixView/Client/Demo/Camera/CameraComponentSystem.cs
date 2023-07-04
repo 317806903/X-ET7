@@ -19,7 +19,7 @@ namespace ET.Client
 		{
 			protected override void LateUpdate(CameraComponent self)
 			{
-				self.LateUpdate();
+				//self.LateUpdate();
 			}
 		}
 
@@ -29,7 +29,38 @@ namespace ET.Client
 
 		public static void SetMainCamera(this CameraComponent self, Camera camera)
 		{
-			self.mainCamera = camera;
+			self.MainCamera = camera;
+		}
+
+		public static async ETTask SetFollowPlayer(this CameraComponent self)
+		{
+			while (true)
+			{
+				Unit myUnit = UnitHelper.GetMyUnit(self.DomainScene());
+				if (ET.Ability.UnitHelper.ChkUnitAlive(myUnit))
+				{
+					self.Unit = myUnit;
+					break;
+				}
+				else
+				{
+					await TimerComponent.Instance.WaitAsync(200);
+				}
+			}
+			while (true)
+			{
+				GameObjectComponent gameObjectComponent = self.Unit.GetComponent<GameObjectComponent>();
+				if (gameObjectComponent != null && gameObjectComponent.GameObject != null)
+				{
+					WorldCameraController worldCameraController = self.MainCamera.gameObject.GetComponent<WorldCameraController>();
+					worldCameraController.ForceSetPosition(self.Unit.GetComponent<GameObjectComponent>().GameObject.transform, 1f, 30, new Vector3(30f, 116, 0));
+					return;
+				}
+				else
+				{
+					await TimerComponent.Instance.WaitAsync(200);
+				}
+			}
 		}
 
 		private static void LateUpdate(this CameraComponent self)
@@ -44,8 +75,9 @@ namespace ET.Client
 			{
 				return;
 			}
-			Vector3 cameraPos = self.mainCamera.transform.position;
-			self.mainCamera.transform.position = new Vector3(self.Unit.Position.x, cameraPos.y, self.Unit.Position.z - 1);
+			Vector3 cameraPos = self.MainCamera.transform.position;
+			Vector3 targetPosition = new Vector3(self.Unit.Position.x, cameraPos.y, self.Unit.Position.z - 1);
+			self.MainCamera.transform.position = Vector3.Lerp(cameraPos, targetPosition, 0.8f);
 		}
 	}
 }

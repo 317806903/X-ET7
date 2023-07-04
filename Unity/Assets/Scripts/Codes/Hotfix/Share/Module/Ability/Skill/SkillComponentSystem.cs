@@ -42,6 +42,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -107,7 +108,7 @@ namespace ET.Ability
             }
             SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
 
-            TimelineObj timelineObj= TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId, selectHandle);
+            TimelineObj timelineObj = TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
             timelineObj.InitActionContext(new ActionContext()
             {
                 unitId = self.GetUnit().Id,
@@ -123,11 +124,20 @@ namespace ET.Ability
 
             self.CostSkill(skillId);
             self.skillCDs[skillId] = skillCfg.Cd;
+
+            self.curTimelineObj = timelineObj;
+            
             return (true, "");
         }
 
         public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, string skillId)
         {
+            if (self.curTimelineObj != null)
+            {
+                string msg = $"上个技能释放中";
+                return (false, msg);
+            }
+            
             float cd = self.GetSkillCD(skillId);
             if (cd > 0)
             {

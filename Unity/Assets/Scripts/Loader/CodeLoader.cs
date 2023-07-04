@@ -18,7 +18,7 @@ namespace ET
 			{
 				if (GlobalConfig.Instance.CodeMode != CodeMode.ClientServer)
 				{
-					throw new Exception("ENABLE_CODES mode must use ClientServer code mode!");
+					//throw new Exception("ENABLE_CODES mode must use ClientServer code mode!");
 				}
 				
 				Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();

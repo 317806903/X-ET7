@@ -5,24 +5,28 @@ namespace ET.Client
 	public class CameraComponent : Entity, IAwake, ILateUpdate
 	{
 		// 战斗摄像机
-		public Camera mainCamera;
+		private Camera mainCamera;
 
-		private long unitInstanceId;
+		private EntityRef<Unit> unit;
 
 		public Unit Unit
 		{
 			get
 			{
-				return Root.Instance.Get(this.unitInstanceId) as Unit;
+				return unit;
 			}
 			set
 			{
-				this.unitInstanceId = value.InstanceId;
+				this.unit = value;
 			}
 		}
 
 		public Camera MainCamera
 		{
+			set
+			{
+				this.mainCamera = value;
+			}
 			get
 			{
 				return this.mainCamera;

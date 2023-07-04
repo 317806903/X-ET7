@@ -49,11 +49,6 @@ namespace ET.Ability
         ///</summary>
         public float timeElapsed = 0;
 
-        ///<summary>
-        /// 存储指定的参数信息
-        ///</summary>
-        public SelectHandle selectHandle;
-
         [BsonIgnore]
         public ActionContext actionContext;
     }

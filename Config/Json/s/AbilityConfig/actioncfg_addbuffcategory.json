@@ -13,23 +13,34 @@
           "stackValue": 13
         },
         "buffId": "Buff_1"
-      },
+      }
+    ]
+  },
+  {
+    "id": "AddBuff_Line1",
+    "name": "",
+    "buffList": [
       {
-        "duration": 30,
+        "duration": 1,
         "addStack": 1,
         "buffAction": {
           "$type": "BuffActionNone"
         },
-        "buffId": "Buff_3"
-      },
+        "buffId": "Buff_Line1"
+      }
+    ]
+  },
+  {
+    "id": "AddBuff_Circle1",
+    "name": "",
+    "buffList": [
       {
-        "duration": 30,
+        "duration": 1,
         "addStack": 1,
         "buffAction": {
-          "$type": "BuffActionModifyControlState",
-          "controlState": 1
+          "$type": "BuffActionNone"
         },
-        "buffId": "Buff_2"
+        "buffId": "Buff_Circle1"
       }
     ]
   }

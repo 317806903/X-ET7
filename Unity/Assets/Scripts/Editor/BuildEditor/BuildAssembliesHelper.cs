@@ -216,7 +216,18 @@ namespace ET
 
             BuildTargetGroup buildTargetGroup = BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget);
 
-            assemblyBuilder.compilerOptions.CodeOptimization = codeOptimization;
+            switch (codeOptimization)
+            {
+                case CodeOptimization.None:
+                    assemblyBuilder.compilerOptions.CodeOptimization = UnityEditor.Compilation.CodeOptimization.None;
+                    break;
+                case CodeOptimization.Debug:
+                    assemblyBuilder.compilerOptions.CodeOptimization = UnityEditor.Compilation.CodeOptimization.Debug;
+                    break;
+                case CodeOptimization.Release:
+                    assemblyBuilder.compilerOptions.CodeOptimization = UnityEditor.Compilation.CodeOptimization.Release;
+                    break;
+            }
             assemblyBuilder.compilerOptions.ApiCompatibilityLevel = PlayerSettings.GetApiCompatibilityLevel(buildTargetGroup);
             // assemblyBuilder.compilerOptions.ApiCompatibilityLevel = ApiCompatibilityLevel.NET_4_6;
 

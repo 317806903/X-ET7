@@ -28,7 +28,13 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(DamageComponent self)
             {
-                self.FixedUpdate();
+                if (self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
             }
         }
 
@@ -40,7 +46,7 @@ namespace ET.Ability
             return damageInfo;
         }
         
-        public static void FixedUpdate(this DamageComponent self)
+        public static void FixedUpdate(this DamageComponent self, float fixedDeltaTime)
         {
             if (self.Children.Count <= 0)
             {

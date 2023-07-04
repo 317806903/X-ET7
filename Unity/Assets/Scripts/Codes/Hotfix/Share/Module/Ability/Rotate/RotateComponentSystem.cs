@@ -35,6 +35,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }

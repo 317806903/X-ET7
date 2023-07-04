@@ -11,7 +11,10 @@
 				return;
 			}
 			UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
-			
+			if (unitComponent == null)
+			{
+				return;
+			}
 			foreach (UnitPosInfo unitInfo in message.Units)
 			{
 				Unit unit = unitComponent.Get(unitInfo.UnitId);

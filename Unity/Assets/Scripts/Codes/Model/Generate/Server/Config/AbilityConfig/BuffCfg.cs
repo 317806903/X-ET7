@@ -26,7 +26,7 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
         BuffType = (BuffType)_buf.ReadInt();
         Priority = _buf.ReadInt();
         MaxStack = _buf.ReadInt();
-        TickTime = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TickTime = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); TickTime.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonitorTriggers = new System.Collections.Generic.List<BuffActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffActionCall _e0;  _e0 = BuffActionCall.DeserializeBuffActionCall(_buf); MonitorTriggers.Add(_e0);}}
         PostInit();
     }
@@ -80,7 +80,7 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
     /// <summary>
     /// buff工作周期(秒)
     /// </summary>
-    public float TickTime { get; private set; }
+    public System.Collections.Generic.List<float> TickTime { get; private set; }
     public System.Collections.Generic.List<BuffActionCall> MonitorTriggers { get; private set; }
 
     public const int __ID__ = 1892616945;
@@ -111,7 +111,7 @@ public sealed partial class BuffCfg: Bright.Config.BeanBase
         + "BuffType:" + BuffType + ","
         + "Priority:" + Priority + ","
         + "MaxStack:" + MaxStack + ","
-        + "TickTime:" + TickTime + ","
+        + "TickTime:" + Bright.Common.StringUtil.CollectionToString(TickTime) + ","
         + "MonitorTriggers:" + Bright.Common.StringUtil.CollectionToString(MonitorTriggers) + ","
         + "}";
     }

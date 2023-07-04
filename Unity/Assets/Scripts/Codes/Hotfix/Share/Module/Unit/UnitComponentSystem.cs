@@ -16,8 +16,9 @@ namespace ET
 				self.NeedSyncNumericUnits = new();
 				self.NeedSyncPosUnits = new();
 				self.waitRemoveList = new();
+				self.observerList = HashSetComponent<Unit>.Create();
 				self.playerList = HashSetComponent<Unit>.Create();
-				self.monsterList = HashSetComponent<Unit>.Create();
+				self.actorList = HashSetComponent<Unit>.Create();
 				self.npcList = HashSetComponent<Unit>.Create();
 				self.sceneObjList = HashSetComponent<Unit>.Create();
 				self.bulletList = HashSetComponent<Unit>.Create();
@@ -34,8 +35,9 @@ namespace ET
 				self.NeedSyncNumericUnits.Dispose();
 				self.NeedSyncPosUnits.Dispose();
 				self.waitRemoveList.Clear();
+				self.observerList.Dispose();
 				self.playerList.Dispose();
-				self.monsterList.Dispose();
+				self.actorList.Dispose();
 				self.npcList.Dispose();
 				self.sceneObjList.Dispose();
 				self.bulletList.Dispose();
@@ -49,45 +51,20 @@ namespace ET
 		{
 			protected override void FixedUpdate(UnitComponent self)
 			{
-				self.FixedUpdate();
+				if (self.DomainScene().SceneType != SceneType.Map)
+				{
+					return;
+				}
+
+				float fixedDeltaTime = TimeHelper.FixedDetalTime;
+				self.FixedUpdate(fixedDeltaTime);
 			}
 		}
 
-		// public static void FixedUpdate(this Unit self, float fixedDeltaTime)
-		// {
-		// 	self.GetComponent<TimelineComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<BuffComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<SkillComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<BulletObj>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<AoeObj>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<EffectComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<MoveComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<RotateComponent>()?.FixedUpdate(fixedDeltaTime);
-		// 	self.GetComponent<MoveTweenObj>()?.FixedUpdate(fixedDeltaTime);
-		// }
-
-		public static void FixedUpdate(this UnitComponent self)
+		public static void FixedUpdate(this UnitComponent self, float fixedDeltaTime)
 		{
-			if (self.DomainScene().SceneType != SceneType.Map)
-			{
-				return;
-			}
-			
-			float fixedDeltaTime = TimeHelper.FixedDetalTime;
 			self.DoUnitHit(fixedDeltaTime);
-			// try
-			// {
-			// 	foreach (var child in self.Children)
-			// 	{
-			// 		Unit unit = child.Value as Unit;
-			// 		unit.FixedUpdate(fixedDeltaTime);
-			// 	}
-			// }
-			// catch (Exception e)
-			// {
-			// 	Console.WriteLine(e);
-			// 	throw;
-			// }
+			
 			self.DoUnitRemove();
 			self.SyncPosUnit();
 			self.SyncNumericUnit();
@@ -108,11 +85,14 @@ namespace ET
 			HashSetComponent<Unit> recordList;
 			switch (unitType)
 			{
-				case UnitType.Player:
+				case UnitType.ObserverUnit:
+					recordList = self.observerList;
+					break;
+				case UnitType.PlayerUnit:
 					recordList = self.playerList;
 					break;
-				case UnitType.Monster:
-					recordList = self.monsterList;
+				case UnitType.ActorUnit:
+					recordList = self.actorList;
 					break;
 				case UnitType.NPC:
 					recordList = self.npcList;
@@ -202,9 +182,12 @@ namespace ET
 	                }
                 }
                 
-                EventSystem.Instance.Invoke<SyncPosUnits>(new SyncPosUnits(){
-	                units = new List<Unit>(){unit},
-                });
+                EventType.SyncPosUnits _SyncPosUnits = new ()
+                {
+	                units = ListComponent<Unit>.Create(),
+                };
+                _SyncPosUnits.units.Add(unit);
+                EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
             }
             self.NeedSyncPosUnits.Clear();
 		}
@@ -218,9 +201,13 @@ namespace ET
             {
                 if(unit.IsDisposed)
 	                continue;
-                EventSystem.Instance.Invoke<SyncNumericUnits>(new SyncNumericUnits(){
-	                units = new List<Unit>(){unit},
-                });
+                
+                EventType.SyncNumericUnits _SyncNumericUnits = new ()
+                {
+	                units = ListComponent<Unit>.Create(),
+                };
+                _SyncNumericUnits.units.Add(unit);
+                EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
             }
             self.NeedSyncNumericUnits.Clear();
 		}

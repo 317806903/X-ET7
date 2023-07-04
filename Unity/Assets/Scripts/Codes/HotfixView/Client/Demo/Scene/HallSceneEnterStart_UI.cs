@@ -10,16 +10,22 @@ namespace ET.Client
         {
             Scene clientScene = scene;
 
-            clientScene.GetComponent<UIComponent>().HideAllShownWindow();
-			
+            await ResComponent.Instance.LoadSceneAsync("Hall");
             
-            int i = 2;
-            if (i == 1)
+            clientScene.GetComponent<UIComponent>().HideAllShownWindow();
+            //zpb clientScene.GetComponent<UIComponent>().CloseAllWindow();
+			
+            PlayerComponent playerComponent = clientScene.GetComponent<PlayerComponent>();
+            if (playerComponent.PlayerGameMode == PlayerGameMode.None)
+            {
+                await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_GameMode);
+            }
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.SingleMap)
             {
                 //进入全局场景，所有人都进同个Map
                 await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Lobby);
             }
-            else if (i == 2)
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.Room)
             {
                 //进入动态场景，按房间都进同个Map
                 PlayerStatus playerStatus = clientScene.GetComponent<PlayerComponent>().PlayerStatus;
@@ -36,7 +42,7 @@ namespace ET.Client
                     RoomHelper.ReturnBackBattle(clientScene);
                 }
             }
-            else if (i == 3)
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.ARRoom)
             {
                 //进入AR动态场景，按房间都进同个Map
             }

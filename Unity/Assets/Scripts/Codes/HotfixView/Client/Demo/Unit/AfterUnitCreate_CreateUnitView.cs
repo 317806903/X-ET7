@@ -14,35 +14,20 @@ namespace ET.Client
             Unit unit = args.Unit;
             string resName = "";
             float resScale = 1f;
-            if (Ability.UnitHelper.ChkIsPlayer(unit))
-            {
-                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
-                resScale = unit.model.ResScale;
-            }
-            else if (Ability.UnitHelper.ChkIsBullet(unit))
+            if (Ability.UnitHelper.ChkIsBullet(unit))
             {
                 resName = ResUnitCfgCategory.Instance.Get(unit.GetComponent<BulletObj>().model.ResId).ResName;
                 resScale = unit.GetComponent<BulletObj>().model.ResScale;
             }
-            else if (Ability.UnitHelper.ChkIsMonster(unit))
-            {
-                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
-                resScale = unit.model.ResScale;
-            }
-            else if (Ability.UnitHelper.ChkIsSceneEffect(unit))
-            {
-                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
-                resScale = unit.model.ResScale;
-            }
             else
             {
-                resName = "";
+                resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                resScale = unit.model.ResScale;
             }
+            
             // Unit View层
             if (string.IsNullOrEmpty(resName) == false)
             {
-                // GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
-                // GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
                 GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
                 go.transform.SetParent(GlobalComponent.Instance.Unit);
                 go.transform.position = unit.Position;

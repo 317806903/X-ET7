@@ -51,6 +51,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -71,7 +72,7 @@ namespace ET.Ability
             if (canStack)
             {
                 buffObj.AddStackCount(addBuffInfo.AddStack);
-                Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==true curStackCount={buffObj.stack}");
+                //Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==true curStackCount={buffObj.stack}");
             }
             else
             {
@@ -81,7 +82,7 @@ namespace ET.Ability
                 buffObj.InitActionContext(actionContext);
                 self.DealWhenAddBuff(buffObj);
                 
-                Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
+                //Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
                 
                 buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnAwake);
                 buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnStart);

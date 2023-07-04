@@ -9,18 +9,24 @@ namespace ET.Server
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
-			long playerId = player.Id;
-			long roomId = playerStatusComponent.RoomId;
-
-			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(player.DomainZone());
-
-			R2G_QuitRoom _R2G_QuitRoom = (R2G_QuitRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig
-			.InstanceId, new G2R_QuitRoom()
+			if (playerStatusComponent.PlayerGameMode == PlayerGameMode.Room
+			|| playerStatusComponent.PlayerGameMode == PlayerGameMode.ARRoom)
 			{
-				PlayerId = playerId,
-				RoomId = roomId,
-			});
+				long playerId = player.Id;
+				long roomId = playerStatusComponent.RoomId;
 
+				StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(player.DomainZone());
+
+				R2G_QuitRoom _R2G_QuitRoom = (R2G_QuitRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig
+						.InstanceId, new G2R_QuitRoom()
+				{
+					PlayerId = playerId,
+					RoomId = roomId,
+				});
+
+				playerStatusComponent.RoomId = 0;
+			}
+			
 			await playerStatusComponent.NoticeClient();
 			
 			await ETTask.CompletedTask;

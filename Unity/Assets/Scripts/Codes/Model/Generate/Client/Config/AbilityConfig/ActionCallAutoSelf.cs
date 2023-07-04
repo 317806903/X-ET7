@@ -45,6 +45,7 @@ public sealed partial class ActionCallAutoSelf:  ActionCallAuto
     public override string ToString()
     {
         return "{ "
+        + "IsSave:" + IsSave + ","
         + "}";
     }
     

@@ -15,5 +15,7 @@
         public const int AITimer = 202;
         public const int SessionAcceptTimeout = 203;
         public const int BattleFrameTimer = 204;
+        public const int BattleTowerFrameTimer = 205;
+        public const int ChkMonsterWaveCallAllClear = 206;
     }
 }

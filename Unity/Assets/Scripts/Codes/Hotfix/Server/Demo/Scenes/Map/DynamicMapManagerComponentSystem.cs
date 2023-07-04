@@ -68,19 +68,34 @@ namespace ET.Server
             //Scene dynamicMapNew = await SceneFactory.CreateServerScene(ServerSceneManagerComponent.Instance, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone, sceneMapName, dynamicMapBaseConfig.Type);
             Scene dynamicMapNew = await SceneFactory.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone, 
                 roomComponent.sceneName, dynamicMapBaseConfig.Type);
+
+            dynamicMapNew.AddComponent(roomComponent);
+            for (int i = 0; i < roomMemberList.Count; i++)
+            {
+                roomComponent.AddChild(roomMemberList[i]);
+            }
+
+            dynamicMapNew.AddComponent<GamePlayComponent>();
             
-            self.dynamicMapList.Add(dynamicMapNew.InstanceId);
+            self.dynamicMapList.Add(dynamicMapNew.InstanceId, dynamicMapNew.Id);
             self.dynamicUsedIndex.Add(dynamicMapBaseId);
             
             return dynamicMapNew;
         }
         
-        public static async ETTask DestroyDynamicMap(this DynamicMapManagerComponent self, Scene dynamicMap)
+        public static async ETTask DestroyDynamicMap(this DynamicMapManagerComponent self, long dynamicMapInstanceId)
         {
-            self.dynamicMapList.Remove(dynamicMap.InstanceId);
-            self.dynamicUsedIndex.Remove((int)dynamicMap.Id);
+            if (self.dynamicMapList.ContainsKey(dynamicMapInstanceId) == false)
+            {
+                return;
+            }
 
-            dynamicMap.Dispose();
+            long dynamicMapId = self.dynamicMapList[dynamicMapInstanceId];
+            self.dynamicMapList.Remove(dynamicMapInstanceId);
+            self.dynamicUsedIndex.Remove((int)dynamicMapId);
+
+            self.RemoveChild(dynamicMapId);
+
             await ETTask.CompletedTask;
         }
 

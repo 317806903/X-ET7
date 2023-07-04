@@ -25,7 +25,9 @@
         /// <summary>
         /// 监听 buff在每个工作周期会执行的函数，如果这个函数为空，或者tickTime<=0，都不会发生周期性工作
         /// </summary>
-        BuffOnTick,
+        BuffOnTick1,
+        BuffOnTick2,
+        BuffOnTick3,
         
         /// <summary>
         /// 监听 在这个buffObj被移除之前要做的事情，如果运行之后buffObj又不足以被删除了就会被保留

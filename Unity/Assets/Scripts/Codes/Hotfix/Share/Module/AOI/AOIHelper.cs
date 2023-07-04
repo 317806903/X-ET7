@@ -6,6 +6,15 @@ namespace ET
     [FriendOf(typeof(Unit))]
     public static class AOIHelper
     {
+        public static bool ChkNeedNoticePlayer(Unit unit)
+        {
+            if (unit.Type == UnitType.PlayerUnit || unit.Type == UnitType.ObserverUnit)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static long CreateCellId(int x, int y)
         {
             return (long) ((ulong) x << 32) | (uint) y;
@@ -17,7 +26,7 @@ namespace ET
             leaveCell.Clear();
             int r = (aoiEntity.ViewDistance - 1) / AOIManagerComponent.CellSize + 1;
             int leaveR = r;
-            if (aoiEntity.Unit.Type == UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(aoiEntity.Unit))
             {
                 leaveR += 1;
             }
@@ -38,5 +47,6 @@ namespace ET
                 }
             }
         }
+        
     }
 }

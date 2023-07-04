@@ -33,63 +33,71 @@ namespace ET.AbilityConfig
         /// <summary>
         /// 监听 buff在每个工作周期会执行的函数
         /// </summary>
-        BuffOnTick = 5,
+        BuffOnTick1 = 5,
+        /// <summary>
+        /// 监听 buff在每个工作周期会执行的函数
+        /// </summary>
+        BuffOnTick2 = 6,
+        /// <summary>
+        /// 监听 buff在每个工作周期会执行的函数
+        /// </summary>
+        BuffOnTick3 = 7,
         /// <summary>
         /// 监听 在这个buffObj被移除之前要做的事情，如果运行之后buffObj又不足以被删除了就会被保留
         /// </summary>
-        BuffOnRemoved = 6,
+        BuffOnRemoved = 8,
         /// <summary>
         /// 监听 在这个buffObj被移除之后要做的事情
         /// </summary>
-        BuffOnDestroy = 7,
+        BuffOnDestroy = 9,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageBeforeOnHit = 8,
+        DamageBeforeOnHit = 10,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageBeforeOnBeHurt = 9,
+        DamageBeforeOnBeHurt = 11,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageAfterOnHit = 10,
+        DamageAfterOnHit = 12,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageAfterOnBeHurt = 11,
+        DamageAfterOnBeHurt = 13,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，如果击杀目标，则会触发的啥事情
         /// </summary>
-        DamageBeforeOnKill = 12,
+        DamageBeforeOnKill = 14,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
-        DamageBeforeOnBeKilled = 13,
+        DamageBeforeOnBeKilled = 15,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发
         /// </summary>
-        DamageAfterOnKill = 14,
+        DamageAfterOnKill = 16,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发
         /// </summary>
-        DamageAfterOnBeKilled = 15,
+        DamageAfterOnBeKilled = 17,
         /// <summary>
         /// 监听 unit被创建的事件
         /// </summary>
-        UnitOnCreate = 16,
+        UnitOnCreate = 18,
         /// <summary>
         /// 监听 unit产生攻击的事件
         /// </summary>
-        UnitOnHit = 17,
+        UnitOnHit = 19,
         /// <summary>
         /// 监听 unit被攻击的事件
         /// </summary>
-        UnitOnBeHurt = 18,
+        UnitOnBeHurt = 20,
         /// <summary>
         /// 监听 unit销毁的事件
         /// </summary>
-        UnitOnRemoved = 19,
+        UnitOnRemoved = 21,
     }
 
 } 

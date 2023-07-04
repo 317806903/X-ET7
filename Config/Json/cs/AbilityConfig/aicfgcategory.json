@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1_1",
+    "AIConfigId": "1",
+    "Order": 1,
+    "Name": "AI_Attack",
+    "Desc": "攻击",
+    "NodeParams": []
+  },
+  {
+    "Id": "1_2",
+    "AIConfigId": "1",
+    "Order": 2,
+    "Name": "AI_XunLuo",
+    "Desc": "巡逻",
+    "NodeParams": []
+  },
+  {
+    "Id": "Monster1_1",
+    "AIConfigId": "Monster1",
+    "Order": 1,
+    "Name": "AI_Attack",
+    "Desc": "攻击",
+    "NodeParams": []
+  },
+  {
+    "Id": "Monster1_2",
+    "AIConfigId": "Monster1",
+    "Order": 2,
+    "Name": "AI_KaoJin",
+    "Desc": "靠近",
+    "NodeParams": []
+  },
+  {
+    "Id": "Tower1_1",
+    "AIConfigId": "Tower1",
+    "Order": 1,
+    "Name": "AI_Attack",
+    "Desc": "攻击",
+    "NodeParams": []
+  },
+  {
+    "Id": "MonsterTower1_1",
+    "AIConfigId": "MonsterTower1",
+    "Order": 1,
+    "Name": "AI_AttackWhenBlock",
+    "Desc": "被堵路时攻击",
+    "NodeParams": []
+  },
+  {
+    "Id": "MonsterTower1_2",
+    "AIConfigId": "MonsterTower1",
+    "Order": 2,
+    "Name": "AI_Escape",
+    "Desc": "往大本营前进",
+    "NodeParams": []
+  },
+  {
+    "Id": "MonsterTower1_3",
+    "AIConfigId": "MonsterTower1",
+    "Order": 3,
+    "Name": "AI_Attack",
+    "Desc": "攻击",
+    "NodeParams": []
+  },
+  {
+    "Id": "MonsterTower1_4",
+    "AIConfigId": "MonsterTower1",
+    "Order": 4,
+    "Name": "AI_KaoJin",
+    "Desc": "靠近",
+    "NodeParams": []
+  },
+  {
+    "Id": "2_1",
+    "AIConfigId": "2",
+    "Order": 1,
+    "Name": "AI_XunLuo",
+    "Desc": "巡逻",
+    "NodeParams": []
+  }
+]

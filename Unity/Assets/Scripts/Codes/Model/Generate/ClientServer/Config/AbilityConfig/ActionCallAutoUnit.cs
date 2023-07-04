@@ -49,6 +49,7 @@ public abstract partial class ActionCallAutoUnit:  ActionCallAuto
     public override string ToString()
     {
         return "{ "
+        + "IsSave:" + IsSave + ","
         + "}";
     }
     

@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace ET
 {
-    public enum RoomStatus
+    public enum RoomStatus: byte
     {
         Idle,
         EnterBattle,
         InTheBattle,
     }
-    public enum RoomTeamMode
+    public enum RoomTeamMode: byte
     {
         //单人一队
         Single,
@@ -19,7 +19,7 @@ namespace ET
         OneTeam,
     }
     
-    public enum RoomTeamId
+    public enum RoomTeamId: byte
     {
         Red,
         Green,
@@ -29,6 +29,7 @@ namespace ET
     [ChildOf(typeof(RoomManagerComponent))]
     public class RoomComponent : Entity, IAwake, IDestroy
     {
+        public bool isARRoom;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;
         public string sceneName;

@@ -10,9 +10,19 @@ namespace ET.Server
 		{
 			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
 			long playerId = request.PlayerId;
+			bool isARRoom = request.IsARRoom == 1? true : false;
 			RoomTeamMode roomTeamMode = RoomTeamMode.Single;
-			string sceneName = "Map1";
-			RoomComponent roomComponent = roomManagerComponent.CreateRoom(playerId, roomTeamMode, sceneName);
+			string sceneName = "";
+			if (isARRoom)
+			{
+				sceneName = "ARMap";
+			}
+			else
+			{
+				sceneName = "Map1";
+			}
+			RoomComponent roomComponent = roomManagerComponent.CreateRoom(isARRoom, playerId, roomTeamMode, sceneName);
+			
 			response.RoomId = roomComponent.Id;
 
 			await ETTask.CompletedTask;

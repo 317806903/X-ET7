@@ -22,13 +22,30 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgRoom self, Entity contextData = null)
         {
-            long roomId = self.ClientScene().GetComponent<PlayerComponent>().RoomId;
             self.GetRoomInfo().Coroutine();
         }
 
         public static async ETTask RefreshUI(this DlgRoom self)
         {
+			if(self.roomComponent == null)
+			{
+				return;
+			}
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.RefreshCells();
+            
+            long myPlayerId = self.ClientScene().GetComponent<PlayerComponent>().MyId;
+            
+            if (myPlayerId == self.roomComponent.ownerRoomMemberId)
+            {
+                self.View.ELable_RoomMemberStatusText.text = "开始游戏";
+            }
+            else
+            {
+                RoomMember roomMember = self.roomComponent.GetRoomMember(myPlayerId);
+                bool isReady = roomMember.isReady;
+
+                self.View.ELable_RoomMemberStatusText.text = isReady? "取消准备" : "准备";
+            }
         }
 
         public static async ETTask GetRoomInfo(this DlgRoom self)
@@ -37,7 +54,7 @@ namespace ET.Client
             long roomId = clientScene.GetComponent<PlayerComponent>().RoomId;
             await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
 
-            RoomComponent roomComponent = clientScene.GetComponent<RoomManagerComponent>().Get(roomId);
+            RoomComponent roomComponent = clientScene.GetComponent<RoomManagerComponent>().GetRoom(roomId);
 
             self.roomComponent = roomComponent;
 
@@ -67,6 +84,7 @@ namespace ET.Client
             }
             else
             {
+                long myPlayerId = self.ClientScene().GetComponent<PlayerComponent>().MyId;
                 RoomMember roomMember = self.roomComponent.GetRoomMember(roomMemberId);
                 if (self.roomComponent.ownerRoomMemberId == roomMemberId)
                 {
@@ -76,16 +94,35 @@ namespace ET.Client
                 {
                     itemRoom.ELabel_ContentText.text = $"RoomId:{index}:{roomMemberId} isReady={roomMember.isReady}";
                 }
-                itemRoom.ELabel_OperatorText.text = $"查看信息";
-                itemRoom.EButton_OperatorButton.AddListener(() => { });
 
-                if (self.ClientScene().GetComponent<PlayerComponent>().MyId == roomMemberId)
+                if (myPlayerId == self.roomComponent.ownerRoomMemberId)
+                {
+                    itemRoom.ELabel_OperatorText.text = $"踢出房间";
+                    itemRoom.EButton_OperatorButton.AddListener(() =>
+                    {
+                        self.KickOutRoom(roomMemberId);
+                    });
+                }
+                else
+                {
+                    itemRoom.ELabel_OperatorText.text = $"查看信息";
+                    itemRoom.EButton_OperatorButton.AddListener(() =>
+                    {
+                    });
+                }
+
+                if (myPlayerId == roomMemberId)
                 {
                     itemRoom.EButton_OperatorButton.SetVisible(false);
-                    itemRoom.ELabel_ContentText.text = $"自己:{roomMemberId} isReady={roomMember.isReady}";
+                    itemRoom.ELabel_ContentText.text = $"[自己]{itemRoom.ELabel_ContentText.text}";
                 }
             }
 
+        }
+
+        public static async ETTask KickOutRoom(this DlgRoom self, long beKickedPlayerId)
+        {
+            await RoomHelper.BeKickedOutRoomAsync(self.ClientScene(), beKickedPlayerId);
         }
 
         public static async ETTask QuitRoom(this DlgRoom self)
@@ -97,25 +134,19 @@ namespace ET.Client
 
         public static async ETTask ChgRoomMemberStatus(this DlgRoom self)
         {
-            if (self.ClientScene().GetComponent<PlayerComponent>().MyId == self.roomComponent.ownerRoomMemberId)
+            long myPlayerId = self.ClientScene().GetComponent<PlayerComponent>().MyId;
+            if (myPlayerId == self.roomComponent.ownerRoomMemberId)
             {
                 if (self.roomComponent.ChkIsAllReady() == false)
                 {
                     return;
                 }
             }
-            bool isReady = self.ClientScene().GetComponent<PlayerComponent>().IsRoomReady;
+            RoomMember roomMember = self.roomComponent.GetRoomMember(myPlayerId);
+            bool isReady = roomMember.isReady;
+            
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
-            
-            if (self.ClientScene().GetComponent<PlayerComponent>().MyId == self.roomComponent.ownerRoomMemberId)
-            {
-                self.View.ELable_RoomMemberStatusText.text = "开始游戏";
-            }
-            else
-            {
-                self.View.ELable_RoomMemberStatusText.text = isReady? "取消准备" : "准备";
-            }
         }
         
         public static async ETTask ChgRoomSeat(this DlgRoom self, int newSeat)

@@ -5,7 +5,7 @@ namespace ET
 {
     public static class ToolsEditor
     {
-        public static void ExcelExporter(CodeMode codeMode, ConfigFolder configFolder)
+        public static void ExcelExporter(CodeMode codeMode, string configFolder)
         {
             string genCode = string.Empty;
 

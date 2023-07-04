@@ -15,15 +15,15 @@ namespace ET.Server
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
-			R2G_GetRoomInfo _R2G_GetRoomList = (R2G_GetRoomInfo) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_GetRoomInfo()
+			R2G_GetRoomInfo _R2G_GetRoomInfo = (R2G_GetRoomInfo) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_GetRoomInfo()
 			{
 				RoomId = roomId,
 			});
 			
-			response.Error = _R2G_GetRoomList.Error;
-			response.Message = _R2G_GetRoomList.Message;
-			response.RoomInfo = _R2G_GetRoomList.RoomInfo;
-			response.RoomMemberInfos = _R2G_GetRoomList.RoomMemberInfos;
+			response.Error = _R2G_GetRoomInfo.Error;
+			response.Message = _R2G_GetRoomInfo.Message;
+			response.RoomInfo = _R2G_GetRoomInfo.RoomInfo;
+			response.RoomMemberInfos = _R2G_GetRoomInfo.RoomMemberInfos;
 
 			await ETTask.CompletedTask;
 		}

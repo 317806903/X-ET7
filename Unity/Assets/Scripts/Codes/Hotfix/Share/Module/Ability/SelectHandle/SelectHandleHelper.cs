@@ -7,7 +7,7 @@ namespace ET.Ability
     {
         public static SelectHandle CreateSelectHandle(Unit unit, ActionCallParam actionCallParam)
         {
-            SelectHandle selectHandle = new();
+            SelectHandle selectHandle = SelectHandle.Create();
             if (actionCallParam is ActionCallSelectDirection)
             {
                 selectHandle.selectHandleType = SelectHandleType.SelectDirection;
@@ -55,17 +55,70 @@ namespace ET.Ability
                 }
             }
 
+            if (actionCallParam is ActionCallAuto actionCallAuto)
+            {
+                if (actionCallAuto.IsSave)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle);
+                }
+            }
+            else if (actionCallParam is ActionCallSelect actionCallSelect)
+            {
+                if (actionCallSelect.IsSave)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle);
+                }
+            }
+
             return selectHandle;
         }
         
-        public static SelectHandle CreateSelectHandle(Unit unit, Unit targetUnit)
+        public static SelectHandle CreateUnitSelectHandle(Unit unit, Unit targetUnit, ActionCallParam actionCallParam)
         {
-            SelectHandle selectHandle = new();
+            SelectHandle selectHandle = SelectHandle.Create();
             selectHandle.selectHandleType = SelectHandleType.SelectUnits;
             selectHandle.unitIds = ListComponent<long>.Create();
             selectHandle.unitIds.Add(targetUnit.Id);
             selectHandle.position = targetUnit.Position;
             selectHandle.direction = targetUnit.Forward;
+
+            
+            if (actionCallParam is ActionCallAuto actionCallAuto)
+            {
+                if (actionCallAuto.IsSave)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle);
+                }
+            }
+            else if (actionCallParam is ActionCallSelect actionCallSelect)
+            {
+                if (actionCallSelect.IsSave)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle);
+                }
+            }
+            
+            return selectHandle;
+        }
+        
+        public static SelectHandle CreateUnitSelfSelectHandle(Unit unit)
+        {
+            SelectHandle selectHandle = SelectHandle.Create();
+            selectHandle.selectHandleType = SelectHandleType.SelectUnits;
+            selectHandle.unitIds = ListComponent<long>.Create();
+            selectHandle.unitIds.Add(unit.Id);
+            selectHandle.position = unit.Position;
+            selectHandle.direction = unit.Forward;
+            
+            return selectHandle;
+        }
+        
+        public static SelectHandle CreateUnitNoneSelectHandle()
+        {
+            SelectHandle selectHandle = SelectHandle.Create();
+            selectHandle.selectHandleType = SelectHandleType.SelectUnits;
+            selectHandle.unitIds = ListComponent<long>.Create();
+            
             return selectHandle;
         }
         

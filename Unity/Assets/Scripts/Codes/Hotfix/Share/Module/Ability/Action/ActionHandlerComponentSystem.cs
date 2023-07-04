@@ -62,7 +62,7 @@ namespace ET.Ability
                 return;
             }
 
-            Log.Debug($"ActionHandlerComponent {key}:{actionId}");
+            //Log.Debug($"ActionHandlerComponent {key}:{actionId}");
             self.dic[key].Run(unit, actionId, delayTime, selectHandle, actionContext).Coroutine();
         }
     }

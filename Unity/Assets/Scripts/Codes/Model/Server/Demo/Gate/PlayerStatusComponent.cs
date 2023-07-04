@@ -3,6 +3,7 @@
 	[ComponentOf(typeof(Player))]
 	public class PlayerStatusComponent : Entity, IAwake
 	{
+		public PlayerGameMode PlayerGameMode { get; set; }
 		public PlayerStatus PlayerStatus { get; set; }
 		public long RoomId { get; set; }
 	}

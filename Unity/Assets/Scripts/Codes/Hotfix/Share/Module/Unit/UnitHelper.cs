@@ -24,7 +24,16 @@ namespace ET.Ability
         
         public static Unit GetUnit(Scene scene, long unitId)
         {
-            Unit unit = GetUnitComponent(scene).Get(unitId);
+            if (scene == null)
+            {
+                return null;
+            }
+            UnitComponent unitComponent = GetUnitComponent(scene);
+            if (unitComponent == null)
+            {
+                return null;
+            }
+            Unit unit = unitComponent.Get(unitId);
             return unit;
         }
         
@@ -62,6 +71,26 @@ namespace ET.Ability
             }
         }
         
+        public static bool ChkIsObserver(Scene scene, long unitId)
+        {
+            Unit unit = GetUnit(scene, unitId);
+            return ChkIsObserver(unit);
+        }
+        
+        public static bool ChkIsObserver(Unit unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            if (unit.Type == UnitType.ObserverUnit)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public static bool ChkIsPlayer(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
@@ -75,7 +104,7 @@ namespace ET.Ability
                 return false;
             }
 
-            if (unit.Type == UnitType.Player)
+            if (unit.Type == UnitType.PlayerUnit)
             {
                 return true;
             }
@@ -95,7 +124,7 @@ namespace ET.Ability
                 return false;
             }
 
-            if (unit.Type == UnitType.Monster)
+            if (unit.Type == UnitType.ActorUnit)
             {
                 return true;
             }
@@ -178,7 +207,7 @@ namespace ET.Ability
 
             if (isOnlyPlayer == false)
             {
-                foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
+                foreach (Unit unit in GetUnitComponent(curUnit).actorList)
                 {
                     if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
                     {
@@ -209,7 +238,7 @@ namespace ET.Ability
 
             if (isOnlyPlayer == false)
             {
-                foreach (Unit unit in GetUnitComponent(curUnit).monsterList)
+                foreach (Unit unit in GetUnitComponent(curUnit).actorList)
                 {
                     if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
                     {
@@ -279,7 +308,7 @@ namespace ET.Ability
             {
                 if (!moveByPathComponent.IsArrived())
                 {
-                    unitInfo.MoveInfo = new MoveInfo() { Points = new List<float3>() };
+                    unitInfo.MoveInfo = new MoveInfo() { Points = ListComponent<float3>.Create() };
                     unitInfo.MoveInfo.Points.Add(unit.Position);
                     for (int i = moveByPathComponent.N; i < moveByPathComponent.Targets.Count; ++i)
                     {
@@ -296,7 +325,7 @@ namespace ET.Ability
                 unitInfo.KV.Add(key, value);
             }
 
-            unitInfo.Components = new List<byte[]>();
+            unitInfo.Components = ListComponent<byte[]>.Create();
             foreach (Entity entity in unit.Components.Values)
             {
                 if (entity is ITransferClient)
@@ -308,7 +337,7 @@ namespace ET.Ability
             EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
             if (effectComponent != null)
             {
-                unitInfo.EffectComponents = new List<byte[]>();
+                unitInfo.EffectComponents = ListComponent<byte[]>.Create();
                 foreach (Entity entity in effectComponent.Components.Values)
                 {
                     unitInfo.EffectComponents.Add(entity.ToBson());
@@ -376,6 +405,21 @@ namespace ET.Ability
             }
         }
         
+        public static void SaveSelectHandle(Unit curUnit, SelectHandle selectHandle)
+        {
+            SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
+            if (selectHandleObj == null)
+            {
+                selectHandleObj = curUnit.AddComponent<SelectHandleObj>();
+            }
+            selectHandleObj.SaveSelectHandle(selectHandle);
+        }
+        
+        public static SelectHandle GetSaveSelectHandle(Unit curUnit)
+        {
+            SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
+            return selectHandleObj?.GetSaveSelectHandle();
+        }
         
     }
 }

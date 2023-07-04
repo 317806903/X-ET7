@@ -57,7 +57,7 @@ namespace ET
                     if (this.Entity is Scene scene)
                         winName = $"Scene({scene.Name})";
                     else
-                        winName = this.Entity.GetType().Name;
+                        winName = this.Entity.GetType().FullName;
                     return winName;
                 }
             }
@@ -117,11 +117,11 @@ namespace ET
                     });
                     menu.AddItem(new GUIContent("关注节点[Name]"), false, () =>
                     {
-                        Setting.QuickFlags.Add(this.Entity.GetType().Name);
+                        Setting.QuickFlags.Add(this.Entity.GetType().FullName);
                     });
                     menu.AddItem(new GUIContent("关注节点[Name+ID]"), false, () =>
                     {
-                        Setting.QuickFlags.Add($"{this.Entity.GetType().Name}_{this.Entity.Id}");
+                        Setting.QuickFlags.Add($"{this.Entity.GetType().FullName}_{this.Entity.Id}");
                     });
                     menu.ShowAsContext();
                 }

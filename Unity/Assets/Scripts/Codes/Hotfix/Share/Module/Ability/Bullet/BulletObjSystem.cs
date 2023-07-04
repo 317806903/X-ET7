@@ -34,6 +34,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -128,7 +129,11 @@ namespace ET.Ability
                 BulletActionCall bulletActionCall = actionIds[i];
                 string actionId = bulletActionCall.ActionId;
                 SelectHandle selectHandle;
-                if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+                if (bulletActionCall.ActionCallParam is ActionCallSelectLast)
+                {
+                    selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
+                }
+                else if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
                 {
                     selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoUnit);
                 }
@@ -159,7 +164,7 @@ namespace ET.Ability
                     {
                         targetUnit = self.GetUnit();
                     }
-                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), targetUnit);
+                    selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
                 }
 
                 SelectHandle curSelectHandle = selectHandle;

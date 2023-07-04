@@ -109,6 +109,40 @@ namespace ET.Client
      		}
      	}
 
+		public UnityEngine.UI.Button E_ReturnLoginButton
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_ReturnLoginButton == null )
+     			{
+		    		this.m_E_ReturnLoginButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject,"EGBackGround/E_ReturnLogin");
+     			}
+     			return this.m_E_ReturnLoginButton;
+     		}
+     	}
+
+		public UnityEngine.UI.Image E_ReturnLoginImage
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_ReturnLoginImage == null )
+     			{
+		    		this.m_E_ReturnLoginImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"EGBackGround/E_ReturnLogin");
+     			}
+     			return this.m_E_ReturnLoginImage;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -117,6 +151,8 @@ namespace ET.Client
 			this.m_E_InputFieldInputField = null;
 			this.m_E_InputFieldImage = null;
 			this.m_E_TextText = null;
+			this.m_E_ReturnLoginButton = null;
+			this.m_E_ReturnLoginImage = null;
 			this.uiTransform = null;
 		}
 
@@ -126,6 +162,8 @@ namespace ET.Client
 		private UnityEngine.UI.InputField m_E_InputFieldInputField = null;
 		private UnityEngine.UI.Image m_E_InputFieldImage = null;
 		private UnityEngine.UI.Text m_E_TextText = null;
+		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
+		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
 		public Transform uiTransform = null;
 	}
 }

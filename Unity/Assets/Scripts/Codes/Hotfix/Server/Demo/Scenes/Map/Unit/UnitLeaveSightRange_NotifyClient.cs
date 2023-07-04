@@ -9,7 +9,7 @@
             await ETTask.CompletedTask;
             AOIEntity a = args.A;
             AOIEntity b = args.B;
-            if (a.Unit.Type != UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(a.Unit) == false)
             {
                 return;
             }

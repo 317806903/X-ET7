@@ -23,12 +23,11 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this TimelineObj self, string timelineCfgId, long casterId, SelectHandle selectHandle)
+        public static void Init(this TimelineObj self, string timelineCfgId, long casterId)
         {
             self.CfgId = timelineCfgId;
             self.casterUnitId = casterId;
             self.timeScale = 1.00f;
-            self.selectHandle = selectHandle;
         }
         
         public static void InitActionContext(this TimelineObj self, ActionContext actionContext)
@@ -79,7 +78,7 @@ namespace ET.Ability
                     SelectHandle curSelectHandle;
                     if (timelineNode.ActionCallParam is ActionCallSelectLast)
                     {
-                        curSelectHandle = self.selectHandle;
+                        curSelectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
                     }
                     else
                     {

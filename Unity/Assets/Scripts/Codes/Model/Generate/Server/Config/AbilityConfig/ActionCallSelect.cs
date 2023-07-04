@@ -16,6 +16,7 @@ public abstract partial class ActionCallSelect:  ActionCallParam
 {
     public ActionCallSelect(ByteBuf _buf)  : base(_buf) 
     {
+        IsSave = _buf.ReadBool();
         PostInit();
     }
 
@@ -23,7 +24,6 @@ public abstract partial class ActionCallSelect:  ActionCallParam
     {
         switch (_buf.ReadInt())
         {
-            case ActionCallSelectLast.__ID__: return new ActionCallSelectLast(_buf);
             case ActionCallSelectUnit.__ID__: return new ActionCallSelectUnit(_buf);
             case ActionCallSelectDirection.__ID__: return new ActionCallSelectDirection(_buf);
             case ActionCallSelectPosition.__ID__: return new ActionCallSelectPosition(_buf);
@@ -31,6 +31,10 @@ public abstract partial class ActionCallSelect:  ActionCallParam
         }
     }
 
+    /// <summary>
+    /// 是否存储选择结果
+    /// </summary>
+    public bool IsSave { get; private set; }
 
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
@@ -47,6 +51,7 @@ public abstract partial class ActionCallSelect:  ActionCallParam
     public override string ToString()
     {
         return "{ "
+        + "IsSave:" + IsSave + ","
         + "}";
     }
     

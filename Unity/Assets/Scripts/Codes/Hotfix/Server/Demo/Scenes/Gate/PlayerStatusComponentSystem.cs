@@ -9,6 +9,7 @@ namespace ET.Server
         {
             G2C_PlayerStatusChgNotice _G2C_PlayerStatusChgNotice = new()
             {
+                PlayerGameMode = self.PlayerGameMode.ToString(),
                 PlayerStatus = self.PlayerStatus.ToString(),
                 RoomId = self.RoomId,
             };

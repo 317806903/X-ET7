@@ -16,7 +16,7 @@ namespace ET
         [InitializeOnLoadMethod]
         public static void ReGenerateProjectFiles()
         {
-            if (Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().Name== "RiderScriptEditor")
+            if (Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().FullName == "RiderScriptEditor")
             {
                 FieldInfo generator = Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().GetField("m_ProjectGeneration", BindingFlags.Static | BindingFlags.NonPublic);
                 var syncMethod = generator.FieldType.GetMethod("Sync");
@@ -142,7 +142,7 @@ namespace ET
             {
                 AssetDatabase.Refresh();
                 string[] levels = {
-                    "Assets/Scenes/Init.unity",
+                    "Assets/ResAB/Scene/Init.unity",
                 };
                 UnityEngine.Debug.Log("start build exe");
                 BuildPipeline.BuildPlayer(levels, $"{relativeDirPrefix}/{exeName}", buildTarget, buildOptions);

@@ -1,5 +1,6 @@
 using System;
 using ET.Ability;
+using ET.AbilityConfig;
 
 namespace ET
 {
@@ -24,11 +25,11 @@ namespace ET
         }
     
         [ObjectSystem]
-        public class AIComponentAwakeSystem: AwakeSystem<AIComponent, int>
+        public class AIComponentAwakeSystem: AwakeSystem<AIComponent, string>
         {
-            protected override void Awake(AIComponent self, int aiConfigId)
+            protected override void Awake(AIComponent self, string aiConfigId)
             {
-                self.AIConfigId = aiConfigId;
+                self.AICfgId = aiConfigId;
                 self.Timer = TimerComponent.Instance.NewRepeatedTimer(100, TimerInvokeType.AITimer, self);
             }
         }
@@ -41,7 +42,7 @@ namespace ET
                 TimerComponent.Instance?.Remove(ref self.Timer);
                 self.CancellationToken?.Cancel();
                 self.CancellationToken = null;
-                self.Current = 0;
+                self.Current = "";
             }
         }
         
@@ -66,9 +67,9 @@ namespace ET
                 return;
             }
 
-            var oneAI = AIConfigCategory.Instance.AIConfigs[self.AIConfigId];
+            var oneAI = AICfgCategory.Instance.GetAI(self.AICfgId);
 
-            foreach (AIConfig aiConfig in oneAI.Values)
+            foreach (AICfg aiConfig in oneAI.Values)
             {
 
                 AIDispatcherComponent.Instance.AIHandlers.TryGetValue(aiConfig.Name, out AAIHandler aaiHandler);
@@ -105,7 +106,7 @@ namespace ET
         public static void Cancel(this AIComponent self)
         {
             self.CancellationToken?.Cancel();
-            self.Current = 0;
+            self.Current = "";
             self.CancellationToken = null;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
@@ -17,14 +18,6 @@ namespace ET
         Linux
     }
 
-    public enum ConfigFolder
-    {
-        Localhost,
-        Release,
-        RouterTest,
-        Benchmark
-    }
-
     public enum BuildType
     {
         Development,
@@ -35,7 +28,6 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
-        private ConfigFolder configFolder;
         private bool clearFolder;
         private bool isBuildExe;
         private bool isContainAB;
@@ -45,6 +37,10 @@ namespace ET
 
         private GlobalConfig globalConfig;
         private ResConfig resConfig;
+        
+        private int selectStartConfigIndex = 1;
+        private string[] startConfigs;
+        private string startConfig;
 
         [MenuItem("ET/Build Tool")]
         public static void ShowWindow()
@@ -56,6 +52,17 @@ namespace ET
         {
             globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
             resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
+            DirectoryInfo directoryInfo = new DirectoryInfo("Assets/Config/Excel/StartConfig");
+            this.startConfigs = directoryInfo.GetDirectories().Select(x => x.Name).ToArray();
+
+            for (int i = 0; i < this.startConfigs.Length; i++)
+            {
+                if (this.startConfigs[i] == this.globalConfig.StartConfig)
+                {
+                    this.selectStartConfigIndex = i;
+                    break;
+                }
+            }
 
 #if UNITY_ANDROID
             activePlatform = PlatformType.Android;
@@ -210,17 +217,18 @@ namespace ET
             GUILayout.Space(5);
             EditorGUILayout.BeginHorizontal();
             {
-                this.configFolder = (ConfigFolder) EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
-                if (this.configFolder.ToString() != this.globalConfig.StartConfig)
+                selectStartConfigIndex = EditorGUILayout.Popup("服务器模式:", selectStartConfigIndex, this.startConfigs);
+                //this.configFolder = (ConfigFolder) EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
+                if (this.startConfigs[selectStartConfigIndex] != this.globalConfig.StartConfig)
                 {
-                    this.globalConfig.StartConfig = this.configFolder.ToString();
+                    this.globalConfig.StartConfig = this.startConfigs[selectStartConfigIndex];
                     EditorUtility.SetDirty(this.globalConfig);
                     AssetDatabase.SaveAssets();
                 }
 
                 if (GUILayout.Button("ExcelExporter"))
                 {
-                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.configFolder);
+                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.startConfigs[selectStartConfigIndex]);
 
                     string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/GameConfig";
                     if (Directory.Exists(unityClientConfigForAB))
@@ -244,8 +252,8 @@ namespace ET
                         Directory.Delete(unityClientConfigForAB, true);
                     }
 
-                    FileHelper.CopyDirectory($"../Config/Excel/c/StartConfig/{this.configFolder.ToString()}",
-                        unityClientConfigForAB + $"/{this.configFolder.ToString()}");
+                    FileHelper.CopyDirectory($"../Config/Excel/c/StartConfig/{this.startConfigs[selectStartConfigIndex]}",
+                        unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}");
 
                     AssetDatabase.Refresh();
                 }

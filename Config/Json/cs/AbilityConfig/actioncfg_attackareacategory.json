@@ -7,6 +7,7 @@
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
       "$type": "ActionCallAutoUnitWhenRectangle",
+      "isSave": false,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -67,6 +68,7 @@
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -125,7 +127,8 @@
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne"
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
     },
     "damageInfo": "",
     "damageAllot": {
@@ -155,7 +158,8 @@
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne"
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
     },
     "damageInfo": "DamageUnit_6",
     "damageAllot": {
@@ -185,7 +189,8 @@
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne"
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
@@ -215,7 +220,8 @@
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne"
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
     },
     "damageInfo": "DamageUnit_6",
     "damageAllot": {
@@ -237,5 +243,158 @@
         "actionCondition2": []
       }
     ]
+  },
+  {
+    "id": "AttackArea_PlayerSolo1",
+    "name": "单体",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe1",
+    "name": "群体",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_EnemySolo1",
+    "name": "敌人单体",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Line1",
+    "name": "直线火焰",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 100,
+        "length": 10
+      }
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Circle1",
+    "name": "圆形毒雾",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "damageInfo": "DamageUnit_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
   }
 ]

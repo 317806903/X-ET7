@@ -14,7 +14,7 @@
             }
 
             Unit ua = a.GetParent<Unit>();
-            if (ua.Type != UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(ua) == false)
             {
                 return;
             }

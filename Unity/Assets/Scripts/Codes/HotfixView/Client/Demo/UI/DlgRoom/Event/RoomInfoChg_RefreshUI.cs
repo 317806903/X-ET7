@@ -11,10 +11,10 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.RoomInfoChg args)
         {
-            DlgRoom _DlgRoom = scene.GetComponent<UIComponent>().GetDlgLogic<DlgRoom>();
+            DlgRoom _DlgRoom = scene.GetComponent<UIComponent>().GetDlgLogic<DlgRoom>(true);
             if (_DlgRoom != null)
             {
-                _DlgRoom.RefreshUI();
+                _DlgRoom.RefreshUI().Coroutine();
             }
             await ETTask.CompletedTask;
         }

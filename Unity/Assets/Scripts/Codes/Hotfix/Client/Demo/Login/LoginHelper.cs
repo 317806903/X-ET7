@@ -11,7 +11,7 @@ namespace ET.Client
             try
             {
                 // 创建一个ETModel层的Session
-                //clientScene.RemoveComponent<RouterAddressComponent>();
+                clientScene.RemoveComponent<RouterAddressComponent>();
                 // 获取路由跟realmDispatcher地址
                 RouterAddressComponent routerAddressComponent = clientScene.GetComponent<RouterAddressComponent>();
                 if (routerAddressComponent == null)
@@ -47,6 +47,7 @@ namespace ET.Client
 
                 clientScene.GetComponent<PlayerComponent>().MyId = g2CLoginGate.PlayerId;
                 
+                clientScene.GetComponent<PlayerComponent>().PlayerGameMode = (PlayerGameMode)Enum.Parse(typeof(PlayerGameMode), g2CLoginGate.PlayerGameMode);
                 clientScene.GetComponent<PlayerComponent>().PlayerStatus = (PlayerStatus)Enum.Parse(typeof(PlayerStatus), g2CLoginGate.PlayerStatus);
                 clientScene.GetComponent<PlayerComponent>().RoomId = g2CLoginGate.RoomId;
                 

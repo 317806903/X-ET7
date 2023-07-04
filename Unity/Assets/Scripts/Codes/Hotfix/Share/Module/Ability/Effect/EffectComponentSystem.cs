@@ -39,6 +39,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -46,6 +47,10 @@ namespace ET.Ability
 
         public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, string effectCfgId, float duration, OffSetInfo offSetInfo)
         {
+            if (string.IsNullOrEmpty(key) == false && self.recordEffectList.ContainsKey(key))
+            {
+                return null;
+            }
             EffectObj effectObj = self.AddChild<EffectObj>();
             effectObj.Init(unitId, key, effectCfgId, duration, offSetInfo);
             if (string.IsNullOrEmpty(key) == false)
@@ -68,10 +73,13 @@ namespace ET.Ability
 
         public static void NoticeClientRemoveEffect(this EffectComponent self, EffectObj effectObj)
         {
-            EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects()
+            EventType.SyncUnitEffects _SyncUnitEffects = new()
             {
-                unit = effectObj.GetUnit(), isAddEffect = false, effectObjId = effectObj.Id,
-            });
+                unit = effectObj.GetUnit(),
+                isAddEffect = false,
+                effectObjId = effectObj.Id,
+            };
+            EventSystem.Instance.Publish(self.DomainScene(), _SyncUnitEffects);
         }
 
         public static void FixedUpdate(this EffectComponent self, float fixedDeltaTime)

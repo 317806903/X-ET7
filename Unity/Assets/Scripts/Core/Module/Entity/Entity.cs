@@ -103,7 +103,7 @@ namespace ET
         {
             get
             {
-                return this.GetType().Name;
+                return this.GetType().FullName;
             }
         }
 
@@ -182,18 +182,18 @@ namespace ET
             {
                 if (value == null)
                 {
-                    throw new Exception($"cant set parent null: {this.GetType().Name}");
+                    throw new Exception($"cant set parent null: {this.GetType().FullName}");
                 }
 
                 if (value == this)
                 {
-                    throw new Exception($"cant set parent self: {this.GetType().Name}");
+                    throw new Exception($"cant set parent self: {this.GetType().FullName}");
                 }
 
                 // 严格限制parent必须要有domain,也就是说parent必须在数据树上面
                 if (value.Domain == null)
                 {
-                    throw new Exception($"cant set parent because parent domain is null: {this.GetType().Name} {value.GetType().Name}");
+                    throw new Exception($"cant set parent because parent domain is null: {this.GetType().FullName} {value.GetType().FullName}");
                 }
 
                 if (this.parent != null) // 之前有parent
@@ -201,7 +201,7 @@ namespace ET
                     // parent相同，不设置
                     if (this.parent == value)
                     {
-                        Log.Error($"重复设置了Parent: {this.GetType().Name} parent: {this.parent.GetType().Name}");
+                        Log.Error($"重复设置了Parent: {this.GetType().FullName} parent: {this.parent.GetType().FullName}");
                         return;
                     }
 
@@ -238,18 +238,18 @@ namespace ET
             {
                 if (value == null)
                 {
-                    throw new Exception($"cant set parent null: {this.GetType().Name}");
+                    throw new Exception($"cant set parent null: {this.GetType().FullName}");
                 }
 
                 if (value == this)
                 {
-                    throw new Exception($"cant set parent self: {this.GetType().Name}");
+                    throw new Exception($"cant set parent self: {this.GetType().FullName}");
                 }
 
                 // 严格限制parent必须要有domain,也就是说parent必须在数据树上面
                 if (value.Domain == null)
                 {
-                    throw new Exception($"cant set parent because parent domain is null: {this.GetType().Name} {value.GetType().Name}");
+                    throw new Exception($"cant set parent because parent domain is null: {this.GetType().FullName} {value.GetType().FullName}");
                 }
 
                 if (this.parent != null) // 之前有parent
@@ -257,7 +257,7 @@ namespace ET
                     // parent相同，不设置
                     if (this.parent == value)
                     {
-                        Log.Error($"重复设置了Parent: {this.GetType().Name} parent: {this.parent.GetType().Name}");
+                        Log.Error($"重复设置了Parent: {this.GetType().FullName} parent: {this.parent.GetType().FullName}");
                         return;
                     }
 
@@ -296,7 +296,7 @@ namespace ET
             {
                 if (value == null)
                 {
-                    throw new Exception($"domain cant set null: {this.GetType().Name}");
+                    throw new Exception($"domain cant set null: {this.GetType().FullName}");
                 }
 
                 if (this.domain == value)
@@ -322,7 +322,7 @@ namespace ET
                         foreach (Entity component in this.componentsDB)
                         {
                             component.IsComponent = true;
-                            this.Components.Add(component.GetType().Name, component);
+                            this.Components.Add(component.GetType().FullName, component);
                             component.parent = this;
                         }
                     }
@@ -508,7 +508,7 @@ namespace ET
 
         private void AddToComponents(Entity component)
         {
-            this.Components.Add(component.GetType().Name, component);
+            this.Components.Add(component.GetType().FullName, component);
         }
 
         private void RemoveFromComponents(Entity component)
@@ -518,7 +518,7 @@ namespace ET
                 return;
             }
 
-            this.components.Remove(component.GetType().Name);
+            this.components.Remove(component.GetType().FullName);
 
             if (this.components.Count == 0)
             {
@@ -629,7 +629,7 @@ namespace ET
             }
 
             Entity component;
-            if (!this.components.TryGetValue(typeof (K).Name, out component))
+            if (!this.components.TryGetValue(typeof (K).FullName, out component))
             {
                 return default;
             }
@@ -651,7 +651,7 @@ namespace ET
             }
 
             Entity component;
-            if (!this.components.TryGetValue(type.Name, out component))
+            if (!this.components.TryGetValue(type.FullName, out component))
             {
                 return null;
             }
@@ -687,7 +687,7 @@ namespace ET
         public Entity AddComponent(Entity component)
         {
             Type type = component.GetType();
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -704,7 +704,7 @@ namespace ET
 
         public Entity AddComponent(Type type, bool isFromPool = false)
         {
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -725,7 +725,7 @@ namespace ET
         public K AddComponentWithId<K>(long id, bool isFromPool = false) where K : Entity, IAwake, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -746,7 +746,7 @@ namespace ET
         public K AddComponentWithId<K, P1>(long id, P1 p1, bool isFromPool = false) where K : Entity, IAwake<P1>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -767,7 +767,7 @@ namespace ET
         public K AddComponentWithId<K, P1, P2>(long id, P1 p1, P2 p2, bool isFromPool = false) where K : Entity, IAwake<P1, P2>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -788,7 +788,7 @@ namespace ET
         public K AddComponentWithId<K, P1, P2, P3>(long id, P1 p1, P2 p2, P3 p3, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(type.Name))
+            if (this.components != null && this.components.ContainsKey(type.FullName))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }

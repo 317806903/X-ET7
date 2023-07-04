@@ -11,29 +11,42 @@ namespace ET.Client
             
             await ResComponent.Instance.LoadSceneAsync(currentScene.Name);
 
-            if (currentScene.GetComponent<OperaComponent>() == null)
+            if (ET.Define.IsEditor)
             {
-                currentScene.AddComponent<OperaComponent>();
+                if (currentScene.GetComponent<ChkHotFixComponent>() == null)
+                {
+                    currentScene.AddComponent<ChkHotFixComponent>();
+                }
             }
+            
+            PlayerComponent playerComponent = scene.GetComponent<PlayerComponent>();
+            if (playerComponent.PlayerGameMode == PlayerGameMode.None)
+            {
+                Log.Error("BattleSceneEnterStart_AddComponent playerComponent.PlayerGameMode == PlayerGameMode.None");
+            }
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.SingleMap)
+            {
+                await SetMainCamera(currentScene);
+            }
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.Room)
+            {
+                await SetMainCamera(currentScene);
+            }
+            else if (playerComponent.PlayerGameMode == PlayerGameMode.ARRoom)
+            {
+                
+            }
+        }
+
+        public async ETTask SetMainCamera(Scene currentScene)
+        {
             if (currentScene.GetComponent<CameraComponent>() == null)
             {
                 currentScene.AddComponent<CameraComponent>();
             }
             CameraComponent cameraComponent = currentScene.GetComponent<CameraComponent>();
             cameraComponent.SetMainCamera(GlobalComponent.Instance.MainCamera);
-            while (true)
-            {
-                Unit myUnit = UnitHelper.GetMyUnit(currentScene);
-                if (ET.Ability.UnitHelper.ChkUnitAlive(myUnit))
-                {
-                    cameraComponent.Unit = myUnit;
-                    return;
-                }
-                else
-                {
-                    await TimerComponent.Instance.WaitAsync(200);
-                }
-            }
+            await cameraComponent.SetFollowPlayer();
         }
     }
 }

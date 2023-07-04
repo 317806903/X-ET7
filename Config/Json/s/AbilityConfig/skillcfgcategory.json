@@ -6,6 +6,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -39,7 +40,8 @@
     "cd": 8,
     "skillSlotType": 2,
     "skillSelectAction": {
-      "$type": "ActionCallSelectUnit"
+      "$type": "ActionCallSelectUnit",
+      "isSave": true
     },
     "timeline_id": "Timeline_2",
     "learn_action_id": []
@@ -50,7 +52,8 @@
     "cd": 4,
     "skillSlotType": 3,
     "skillSelectAction": {
-      "$type": "ActionCallAutoSelf"
+      "$type": "ActionCallAutoSelf",
+      "isSave": true
     },
     "timeline_id": "Timeline_3",
     "learn_action_id": []
@@ -62,6 +65,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenRectangle",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -95,6 +99,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -128,7 +133,8 @@
     "cd": 3,
     "skillSlotType": 3,
     "skillSelectAction": {
-      "$type": "ActionCallAutoSelf"
+      "$type": "ActionCallAutoSelf",
+      "isSave": true
     },
     "timeline_id": "",
     "learn_action_id": [
@@ -142,6 +148,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -176,6 +183,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -210,6 +218,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -244,6 +253,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -278,6 +288,7 @@
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
       "selectNum": 1,
       "isFriend": false,
       "isOnlyPlayer": false,
@@ -303,6 +314,181 @@
       }
     },
     "timeline_id": "Timeline_HoverTank1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerSolo1",
+    "name": "射击",
+    "cd": 0.1,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_PlayerSolo1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerAoe1",
+    "name": "炮击",
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_PlayerAoe1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerLine1",
+    "name": "火柱",
+    "cd": 0,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_PlayerLine1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerCircle1",
+    "name": "毒雾",
+    "cd": 0,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_PlayerCircle1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_EnemySolo1",
+    "name": "射击",
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    },
+    "timeline_id": "Timeline_EnemySolo1",
     "learn_action_id": []
   }
 ]

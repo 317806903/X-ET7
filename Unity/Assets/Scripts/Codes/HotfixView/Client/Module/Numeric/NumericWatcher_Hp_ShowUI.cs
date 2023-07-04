@@ -10,7 +10,7 @@ namespace ET
 	{
 		public void Run(Unit unit, EventType.NumbericChange args)
 		{
-			Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
+			//Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
 			unit.GetComponent<HealthBarComponent>().UpdateHealth();
 		}
 	}

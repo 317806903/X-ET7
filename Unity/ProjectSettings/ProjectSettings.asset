@@ -166,7 +166,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 22
+  AndroidMinSdkVersion: 29
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -842,7 +842,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
+    Android: UNITY;SINGLE_THREAD;ENABLE_VIEW
     Server: UNITY
     Standalone: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
     WebGL: UNITY;ENABLE_CODES
@@ -857,7 +857,7 @@ PlayerSettings:
     iPhone: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
-    Android: 1
+    Android: 4
     EmbeddedLinux: 1
     GameCoreScarlett: 1
     GameCoreXboxOne: 1

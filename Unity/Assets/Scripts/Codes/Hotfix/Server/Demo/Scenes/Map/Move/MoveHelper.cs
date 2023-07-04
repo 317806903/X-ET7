@@ -16,8 +16,7 @@ namespace ET.Server
                 return;
             }
 
-            List<float3> list = new List<float3>();
-            
+            List<float3> list = ListComponent<float3>.Create();
             unit.GetComponent<PathfindingComponent>().Find(unit.Position, target, list);
 
             if (list.Count < 2)

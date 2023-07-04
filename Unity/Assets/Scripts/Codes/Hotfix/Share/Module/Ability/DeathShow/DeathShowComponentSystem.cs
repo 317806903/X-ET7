@@ -33,6 +33,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -44,11 +45,8 @@ namespace ET.Ability
             self.timeElapsed = 0;
             
             string actionId = actionCfg_DeathShow.Id;
-            SelectHandle selectHandleSelf = new SelectHandle()
-            {
-                selectHandleType = SelectHandleType.SelectUnits,
-                unitIds = new ListComponent<long>() { self.GetUnit().Id },
-            };
+
+            SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
             ET.Ability.ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0, selectHandleSelf, new ActionContext());
         }
 

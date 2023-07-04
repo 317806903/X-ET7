@@ -26,7 +26,7 @@ namespace ET
 						}
 					}
 				}
-				foreach (Unit unitMonster in self.monsterList)
+				foreach (Unit unitMonster in self.actorList)
 				{
 					if (TeamFlagHelper.ChkIsFriend(unitBullet, unitMonster) == false)
 					{

@@ -57,6 +57,7 @@ public sealed partial class ActionCallAutoUnitWhenUmbellate:  ActionCallAutoUnit
     public override string ToString()
     {
         return "{ "
+        + "IsSave:" + IsSave + ","
         + "SelectNum:" + SelectNum + ","
         + "IsFriend:" + IsFriend + ","
         + "IsOnlyPlayer:" + IsOnlyPlayer + ","

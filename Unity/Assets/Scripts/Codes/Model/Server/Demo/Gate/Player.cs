@@ -5,6 +5,7 @@
     {
         public string Account { get; set; }
 		
+        public int Level { get; set; }
         public long UnitId { get; set; }
     }
 }

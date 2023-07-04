@@ -34,8 +34,8 @@ namespace ET.Ability.Client
         {
             protected override void FixedUpdate(EffectShowComponent self)
             {
-                float fixedDeltaTime = TimeHelper.FixedDetalTime;
-                self.FixedUpdate(fixedDeltaTime);
+				float fixedDeltaTime = TimeHelper.FixedDetalTime;
+				self.FixedUpdate(fixedDeltaTime);
             }
         }
 

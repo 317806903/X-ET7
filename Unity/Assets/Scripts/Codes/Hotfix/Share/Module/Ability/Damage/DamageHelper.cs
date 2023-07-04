@@ -32,10 +32,7 @@ namespace ET.Ability
 
             }
 
-            SelectHandle selectHandleSelf = new SelectHandle()
-            {
-                selectHandleType = SelectHandleType.SelectUnits, unitIds = new ListComponent<long>() { unit.Id },
-            };
+            SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
             {
                 SelectHandle curSelectHandle = selectHandleSelf;
@@ -118,6 +115,10 @@ namespace ET.Ability
             for (int i = 0; i < count; i++)
             {
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
+                if (UnitHelper.ChkUnitAlive(targetUnit) == false)
+                {
+                    continue;
+                }
                 Damage damage = GetDamage(unit, targetUnit, actionCfg_DamageUnit);
                 if (damageAllot is DamageAllotChg damageAllotChg)
                 {
@@ -167,7 +168,7 @@ namespace ET.Ability
                     value = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PropertyBlood:
-                    value = attackerUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.PhysicalAttack);
+                    value = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.PhysicalAttack);
                     break;
                 case DamageType.LastSelectBlood:
                     break;

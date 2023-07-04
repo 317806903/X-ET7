@@ -49,17 +49,17 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// </summary>
     public float Cd { get; private set; }
     /// <summary>
-    /// 技能类型
+    /// 技能类型<br/>NormalAttack普通攻击,InitiativeSkill主动技能,PassiveSkill被动技能
     /// </summary>
     public SkillSlotType SkillSlotType { get; private set; }
     public ActionCallParam SkillSelectAction { get; private set; }
     /// <summary>
-    /// timeline_id
+    /// timeline_id（对应TimelineCfg表id）
     /// </summary>
     public string TimelineId { get; private set; }
     public TimelineCfg TimelineId_Ref { get; private set; }
     /// <summary>
-    /// 学习技能时触发的Action事件id
+    /// 学习技能时Action事件id（对应ActionConfig文件夹下表格）<br/>AddBuff新增Buff<br/>AttackArea范围攻击<br/>BuffAddStackCount增加Buff层数<br/>BuffReduceStackCount减少Buff层数<br/>BuffResetDuration改变Buff时长<br/>CreateEffect创建特效<br/>DamageUnit造成伤害<br/>DeathShow死亡表现<br/>FaceTo面向<br/>FireBullet射出子弹<br/>PlayAnimator播放动作<br/>PlayAudio播放音效<br/>RemoveBuff移除Buff<br/>RemoveEffect删除特效
     /// </summary>
     public System.Collections.Generic.List<string> LearnActionId { get; private set; }
 

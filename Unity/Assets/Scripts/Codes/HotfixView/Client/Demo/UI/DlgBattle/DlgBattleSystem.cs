@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
     [Invoke(TimerInvokeType.BattleFrameTimer)]
-    public class AITimer: ATimer<DlgBattle>
+    public class DlgBattleTimer: ATimer<DlgBattle>
     {
         protected override void Run(DlgBattle self)
         {
@@ -65,48 +65,53 @@ namespace ET.Client
             await SceneHelper.EnterHall(self.ClientScene());
         }
 
-        public static string GetUnitCfgId(this DlgBattle self, bool isTower, int index)
+        public static (string cfgId, UnitCfg unitCfg) GetCfgId(this DlgBattle self, bool isTower, int index)
         {
+            string cfgId;
             string unitCfgId;
             if (isTower)
             {
-                unitCfgId = self.towerList[index];
+                cfgId = self.towerList[index];
+                TowerCfg towerCfg = TowerCfgCategory.Instance.Get(cfgId);
+                unitCfgId = towerCfg.UnitId;
             }
             else
             {
-                unitCfgId = self.tankList[index];
+                cfgId = self.tankList[index];
+                MonsterCfg monsterCfg = MonsterCfgCategory.Instance.Get(cfgId);
+                unitCfgId = monsterCfg.UnitId;
             }
-
-            return unitCfgId;
-        }
-        
-        public static UnitCfg GetUnitCfg(this DlgBattle self, bool isTower, int index)
-        {
-            string unitCfgId = self.GetUnitCfgId(isTower, index);
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
-            return unitCfg;
+
+            return (cfgId, unitCfg);
         }
-        
-        public static string GetUnitPrefabName(this DlgBattle self, bool isTower, int index)
+
+        public static string GetUnitPrefabName(this DlgBattle self, UnitCfg unitCfg)
         {
-            UnitCfg unitCfg = self.GetUnitCfg(isTower, index);
             ResUnitCfg resUnitCfg = ResUnitCfgCategory.Instance.Get(unitCfg.ResId);
             return resUnitCfg.ResName;
         }
         
-        public static string GetUnitIcon(this DlgBattle self, bool isTower, int index)
+        public static string GetUnitIcon(this DlgBattle self, UnitCfg unitCfg)
         {
-            UnitCfg unitCfg = self.GetUnitCfg(isTower, index);
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(unitCfg.Icon);
             return resIconCfg.ResName;
         }
         
 		public static void OnSelectItem(this DlgBattle self, bool isTower, int index)
         {
-            self.isTower = isTower;
-            self.selectUnitCfgId = self.GetUnitCfgId(isTower, index);
+            if (isTower)
+            {
+                self.selectCfgType = UISelectCfgType.Tower;
+            }
+            else
+            {
+                self.selectCfgType = UISelectCfgType.Tanker;
+            }
+            UnitCfg unitCfg;
+            (self.selectCfgId, unitCfg) = self.GetCfgId(isTower, index);
             
-            string pathName = self.GetUnitPrefabName(isTower, index);
+            string pathName = self.GetUnitPrefabName(unitCfg);
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
             
             self.currentPlaceObj = GameObject.Instantiate(go);
@@ -115,7 +120,9 @@ namespace ET.Client
 		public static void AddTowerItemRefreshListener(this DlgBattle self, Transform transform, int index)
 		{
 			Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
-            string icon = self.GetUnitIcon(true, index);
+            UnitCfg unitCfg;
+            (self.selectCfgId, unitCfg) = self.GetCfgId(true, index);
+            string icon = self.GetUnitIcon(unitCfg);
             Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
 			itemTower.ELabel_ContentText.text = $"Tower:{index}";
             itemTower.EButton_SelectImage.sprite = sprite;
@@ -126,7 +133,9 @@ namespace ET.Client
 		public static void AddTankItemRefreshListener(this DlgBattle self, Transform transform, int index)
 		{
 			Scroll_Item_Tower itemTank = self.ScrollItemTanks[index].BindTrans(transform);
-            string icon = self.GetUnitIcon(false, index);
+            UnitCfg unitCfg;
+            (self.selectCfgId, unitCfg) = self.GetCfgId(false, index);
+            string icon = self.GetUnitIcon(unitCfg);
             Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
             itemTank.ELabel_ContentText.text = $"Tank:{index}";
             itemTank.EButton_SelectImage.sprite = sprite;
@@ -157,13 +166,13 @@ namespace ET.Client
                 if (self.isClickUGUI == false)
                 {
                     var position = self.currentPlaceObj.transform.position;
-                    if (self.isTower)
+                    if (self.selectCfgType == UISelectCfgType.Tower)
                     {
-                        ET.Client.UnitHelper.SendCallTower(self.ClientScene(), self.selectUnitCfgId, position);
+                        ET.Client.GamePlayHelper.SendCallTower(self.ClientScene(), self.selectCfgId, position);
                     }
-                    else
+                    else if (self.selectCfgType == UISelectCfgType.Tanker)
                     {
-                        ET.Client.UnitHelper.SendCallTank(self.ClientScene(), self.selectUnitCfgId, position);
+                        ET.Client.GamePlayHelper.SendCallTank(self.ClientScene(), self.selectCfgId, position);
                     }
                 }
                 GameObject.Destroy(self.currentPlaceObj);

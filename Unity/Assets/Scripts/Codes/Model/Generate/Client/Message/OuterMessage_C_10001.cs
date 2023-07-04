@@ -121,12 +121,6 @@ namespace ET
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
-		[ProtoMember(2)]
-		public int Error { get; set; }
-
-		[ProtoMember(3)]
-		public string Message { get; set; }
-
 	}
 
 	[Message(OuterMessage.G2C_PlayerStatusChgNotice)]
@@ -137,15 +131,12 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public int Error { get; set; }
+		public string PlayerGameMode { get; set; }
 
 		[ProtoMember(3)]
-		public string Message { get; set; }
-
-		[ProtoMember(4)]
 		public string PlayerStatus { get; set; }
 
-		[ProtoMember(5)]
+		[ProtoMember(4)]
 		public long RoomId { get; set; }
 
 	}
@@ -492,9 +483,12 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(5)]
-		public string PlayerStatus { get; set; }
+		public string PlayerGameMode { get; set; }
 
 		[ProtoMember(6)]
+		public string PlayerStatus { get; set; }
+
+		[ProtoMember(7)]
 		public long RoomId { get; set; }
 
 	}
@@ -557,9 +551,12 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(5)]
-		public string PlayerStatus { get; set; }
+		public string PlayerGameMode { get; set; }
 
 		[ProtoMember(6)]
+		public string PlayerStatus { get; set; }
+
+		[ProtoMember(7)]
 		public long RoomId { get; set; }
 
 	}
@@ -810,6 +807,9 @@ namespace ET
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(2)]
+		public int IsARRoom { get; set; }
+
 	}
 
 	[Message(OuterMessage.G2C_GetRoomList)]
@@ -881,6 +881,9 @@ namespace ET
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(2)]
+		public int IsARRoom { get; set; }
+
 	}
 
 	[Message(OuterMessage.G2C_CreateRoom)]
@@ -951,6 +954,43 @@ namespace ET
 
 		[ProtoMember(3)]
 		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2C_KickMemberOutRoom))]
+	[Message(OuterMessage.C2G_KickMemberOutRoom)]
+	[ProtoContract]
+	public partial class C2G_KickMemberOutRoom: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long BeKickPlayerId { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_KickMemberOutRoom)]
+	[ProtoContract]
+	public partial class G2C_KickMemberOutRoom: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_BeKickMemberOutRoom)]
+	[ProtoContract]
+	public partial class G2C_BeKickMemberOutRoom: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
 
 	}
 
@@ -1063,6 +1103,192 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(M2C_MemberReturnRoomFromBattle))]
+	[Message(OuterMessage.C2M_MemberReturnRoomFromBattle)]
+	[ProtoContract]
+	public partial class C2M_MemberReturnRoomFromBattle: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_MemberReturnRoomFromBattle)]
+	[ProtoContract]
+	public partial class M2C_MemberReturnRoomFromBattle: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_GamePlayChgNotice)]
+	[ProtoContract]
+	public partial class M2C_GamePlayChgNotice: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] GamePlayInfo { get; set; }
+
+		[ProtoMember(3)]
+		public List<byte[]> Components { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_PutHome))]
+	[Message(OuterMessage.C2M_PutHome)]
+	[ProtoContract]
+	public partial class C2M_PutHome: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string UnitCfgId { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_PutHome)]
+	[ProtoContract]
+	public partial class M2C_PutHome: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_PutMonsterCall))]
+	[Message(OuterMessage.C2M_PutMonsterCall)]
+	[ProtoContract]
+	public partial class C2M_PutMonsterCall: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string UnitCfgId { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_PutMonsterCall)]
+	[ProtoContract]
+	public partial class M2C_PutMonsterCall: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_BuyPlayerTower))]
+	[Message(OuterMessage.C2M_BuyPlayerTower)]
+	[ProtoContract]
+	public partial class C2M_BuyPlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Index { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_BuyPlayerTower)]
+	[ProtoContract]
+	public partial class M2C_BuyPlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_RefreshBuyPlayerTower))]
+	[Message(OuterMessage.C2M_RefreshBuyPlayerTower)]
+	[ProtoContract]
+	public partial class C2M_RefreshBuyPlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_RefreshBuyPlayerTower)]
+	[ProtoContract]
+	public partial class M2C_RefreshBuyPlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_CallOwnTower))]
+	[Message(OuterMessage.C2M_CallOwnTower)]
+	[ProtoContract]
+	public partial class C2M_CallOwnTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string TowerUnitCfgId { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_CallOwnTower)]
+	[ProtoContract]
+	public partial class M2C_CallOwnTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -1131,13 +1357,29 @@ namespace ET
 		 public const ushort G2C_JoinRoom = 10065;
 		 public const ushort C2G_QuitRoom = 10066;
 		 public const ushort G2C_QuitRoom = 10067;
-		 public const ushort C2G_ChgRoomMemberStatus = 10068;
-		 public const ushort G2C_ChgRoomMemberStatus = 10069;
-		 public const ushort C2G_ChgRoomMemberSeat = 10070;
-		 public const ushort G2C_ChgRoomMemberSeat = 10071;
-		 public const ushort C2G_ReturnBackBattle = 10072;
-		 public const ushort G2C_ReturnBackBattle = 10073;
-		 public const ushort C2M_MemberQuitBattle = 10074;
-		 public const ushort M2C_MemberQuitBattle = 10075;
+		 public const ushort C2G_KickMemberOutRoom = 10068;
+		 public const ushort G2C_KickMemberOutRoom = 10069;
+		 public const ushort G2C_BeKickMemberOutRoom = 10070;
+		 public const ushort C2G_ChgRoomMemberStatus = 10071;
+		 public const ushort G2C_ChgRoomMemberStatus = 10072;
+		 public const ushort C2G_ChgRoomMemberSeat = 10073;
+		 public const ushort G2C_ChgRoomMemberSeat = 10074;
+		 public const ushort C2G_ReturnBackBattle = 10075;
+		 public const ushort G2C_ReturnBackBattle = 10076;
+		 public const ushort C2M_MemberQuitBattle = 10077;
+		 public const ushort M2C_MemberQuitBattle = 10078;
+		 public const ushort C2M_MemberReturnRoomFromBattle = 10079;
+		 public const ushort M2C_MemberReturnRoomFromBattle = 10080;
+		 public const ushort M2C_GamePlayChgNotice = 10081;
+		 public const ushort C2M_PutHome = 10082;
+		 public const ushort M2C_PutHome = 10083;
+		 public const ushort C2M_PutMonsterCall = 10084;
+		 public const ushort M2C_PutMonsterCall = 10085;
+		 public const ushort C2M_BuyPlayerTower = 10086;
+		 public const ushort M2C_BuyPlayerTower = 10087;
+		 public const ushort C2M_RefreshBuyPlayerTower = 10088;
+		 public const ushort M2C_RefreshBuyPlayerTower = 10089;
+		 public const ushort C2M_CallOwnTower = 10090;
+		 public const ushort M2C_CallOwnTower = 10091;
 	}
 }

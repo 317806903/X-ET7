@@ -33,12 +33,16 @@ namespace ET.Ability
                     }
                     EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.ResId, actionCfgCreateEffect.Duration, 
                     actionCfgCreateEffect.OffSetInfo);
-                    EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
-                        unit = unitEffect,
-                        isAddEffect = true,
-                        effectObj = effectObj,
-                    });
-
+                    if (effectObj != null)
+                    {
+                        EventType.SyncUnitEffects _SyncUnitEffects = new ()
+                        {
+                            unit = unitEffect,
+                            isAddEffect = true,
+                            effectObj = effectObj,
+                        };
+                        EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                    }
                 }
             }
             else
@@ -57,12 +61,16 @@ namespace ET.Ability
                     effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
                 
                     EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.ResId, actionCfgCreateEffect.Duration, actionCfgCreateEffect.OffSetInfo);
-                    EventSystem.Instance.Invoke<SyncUnitEffects>(new SyncUnitEffects(){
-                        unit = unitSceneEffect,
-                        isAddEffect = true,
-                        effectObj = effectObj,
-                    });
-
+                    if (effectObj != null)
+                    {
+                        EventType.SyncUnitEffects _SyncUnitEffects = new ()
+                        {
+                            unit = unitSceneEffect,
+                            isAddEffect = true,
+                            effectObj = effectObj,
+                        };
+                        EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                    }
                 }
 
             }

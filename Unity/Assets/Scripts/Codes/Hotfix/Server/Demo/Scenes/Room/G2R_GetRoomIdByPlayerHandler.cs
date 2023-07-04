@@ -12,13 +12,16 @@ namespace ET.Server
 			RoomComponent roomComponent = roomManagerComponent.GetRoomByPlayerId(request.PlayerId);
 			long roomId = 0;
 			RoomStatus roomStatus = RoomStatus.Idle;
+			int isARRoom = 0;
 			if (roomComponent != null)
 			{
 				roomId = roomComponent.Id;
 				roomStatus = roomComponent.roomStatus;
+				isARRoom = roomComponent.isARRoom? 1 : 0;
 			}
 			response.RoomId = roomId;
 			response.RoomStatus = roomStatus.ToString();
+			response.IsARRoom = isARRoom;
 			await ETTask.CompletedTask;
 		}
 	}

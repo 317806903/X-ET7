@@ -10,16 +10,29 @@ namespace ET.Server
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
+			int isARRoom = request.IsARRoom;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
-			R2G_CreateRoom _R2G_CreateRoom = (R2G_CreateRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_CreateRoom() {PlayerId = playerId});
+			R2G_CreateRoom _R2G_CreateRoom = (R2G_CreateRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_CreateRoom()
+			{
+				PlayerId = playerId,
+				IsARRoom = isARRoom,
+			});
 			
 			response.Error = _R2G_CreateRoom.Error;
 			response.Message = _R2G_CreateRoom.Message;
 			response.RoomId = _R2G_CreateRoom.RoomId;
 			
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
+			if (isARRoom == 1)
+			{
+				playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
+			}
+			else
+			{
+				playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
+			}
 			playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 			playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
 

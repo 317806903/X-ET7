@@ -13,21 +13,15 @@ namespace ET.Server
 			long roomId = request.RoomId;
 			bool isReady = request.IsReady == 1?true:false;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			if (roomComponent.ChkIsOwner(playerId))
+			{
+				isReady = true;
+			}
 			roomComponent.ChgRoomMemberStatus(playerId, isReady);
 			response.IsReady = isReady?1:0;
 
-			R2C_RoomInfoChgNotice _R2C_RoomInfoChgNotice = new();
-			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
-			for (int i = 0; i < roomMemberList.Count; i++)
-			{
-				RoomMember roomMember = roomMemberList[i];
-				// if (playerId == roomMember.Id)
-				// {
-				// 	continue;
-				// }
-				MessageHelper.SendToClient(roomMember.Id, _R2C_RoomInfoChgNotice, false);
-			}
-
+			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, false).Coroutine();
+			
 			if (isReady && roomComponent.ChkIsOwner(playerId) && roomComponent.ChkIsAllReady())
 			{
 				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.EnterBattle);
@@ -40,6 +34,17 @@ namespace ET.Server
 				{
 					roomMemberInfos.Add(roomMember.ToBson());
 				}
+
+				if (roomComponent.sceneMapId > 0)
+				{
+					R2M_DestroyDynamicMap _R2M_DestroyDynamicMap = new ()
+					{
+						DynamicMapId = roomComponent.sceneMapId,
+					};
+					M2R_DestroyDynamicMap _M2R_DestroyDynamicMap = (M2R_DestroyDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig
+							.InstanceId, _R2M_DestroyDynamicMap);
+				}
+				
 				R2M_CreateDynamicMap _R2M_CreateDynamicMap = new ()
 				{
 					RoomInfo = roomInfo,
@@ -49,19 +54,23 @@ namespace ET.Server
 						.InstanceId, _R2M_CreateDynamicMap);
 				long dynamicMapId = _M2R_CreateDynamicMap.DynamicMapId;
 
-				R2G_StartBattle _R2G_StartBattle = new ()
-				{
-					DynamicMapId = dynamicMapId,
-				};
 				roomComponent.sceneMapId = dynamicMapId;
 				List<RoomMember> roomMemberList2 = roomComponent.GetRoomMemberList();
 				foreach (RoomMember roomMember in roomMemberList2)
 				{
+					R2G_StartBattle _R2G_StartBattle = new ()
+					{
+						DynamicMapId = dynamicMapId,
+						RoomSeatIndex = roomMember.seatIndex,
+					};
 					ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 					await oneTypeLocationType.Call(roomMember.Id, _R2G_StartBattle);
 				}
 				
 				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.InTheBattle);
+			}
+			else
+			{
 			}
 			
 			await ETTask.CompletedTask;

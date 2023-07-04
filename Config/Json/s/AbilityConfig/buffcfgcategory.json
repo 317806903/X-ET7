@@ -16,7 +16,9 @@
     "buffType": 1,
     "priority": 1,
     "maxStack": 19,
-    "tickTime": 4,
+    "tickTime": [
+      4
+    ],
     "monitorTriggers": [
       {
         "buffTrig": 5,
@@ -63,10 +65,12 @@
     "buffType": 2,
     "priority": 1,
     "maxStack": 11,
-    "tickTime": 3,
+    "tickTime": [
+      3
+    ],
     "monitorTriggers": [
       {
-        "buffTrig": 8,
+        "buffTrig": 10,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -76,7 +80,7 @@
         "actionCondition2": []
       },
       {
-        "buffTrig": 12,
+        "buffTrig": 14,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -99,14 +103,160 @@
     "buffType": 2,
     "priority": 1,
     "maxStack": 7,
-    "tickTime": 4,
+    "tickTime": [
+      4
+    ],
     "monitorTriggers": [
       {
-        "buffTrig": 12,
+        "buffTrig": 14,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
           "$type": "ActionCallBeHurtUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Line1",
+    "name": "火焰",
+    "icon": "",
+    "tags": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "tickTime": [
+      0.2,
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": false,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "CreateEffect_PlayerLine1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 6,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Circle1",
+    "name": "毒雾",
+    "icon": "",
+    "tags": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "tickTime": [
+      0.2,
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": false,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          }
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "CreateEffect_PlayerCircle1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 6,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
         },
         "actionCondition1": [],
         "actionCondition2": []

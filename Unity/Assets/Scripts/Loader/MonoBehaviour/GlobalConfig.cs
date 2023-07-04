@@ -1,6 +1,4 @@
-﻿using UnityEditor.Compilation;
-using UnityEngine;
-using YooAsset;
+﻿using UnityEngine;
 
 namespace ET
 {
@@ -9,6 +7,13 @@ namespace ET
         Client = 1,
         Server = 2,
         ClientServer = 3,
+    }
+    
+    public enum CodeOptimization
+    {
+        None = 1,
+        Debug = 2,
+        Release = 3,
     }
     
     [CreateAssetMenu(menuName = "ET/CreateGlobalConfig", fileName = "GlobalConfig", order = 0)]

@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using ET.Ability;
+using Unity.Mathematics;
 
 namespace ET.Server
 {
@@ -16,7 +17,9 @@ namespace ET.Server
 			// 这里可以从DB中加载Unit
 			float3 position = new float3(-10, 0, -10);
 			float3 forward = new float3(0, 0, 1);
-			Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer_Player(scene, player.Id, position, forward);
+			int roomSeatIndex = request.RoomSeatIndex;
+			TeamFlagType teamFlagType = ET.Ability.TeamFlagHelper.GetTeamFlagTypeBySeatIndex(roomSeatIndex);
+			Unit unit = ET.Ability.UnitHelper_Create.CreateWhenServer_ObserverUnit(scene, player.Id, teamFlagType, position, forward);
 			
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;

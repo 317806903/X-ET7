@@ -26,7 +26,7 @@ namespace ET
                     return _displayName;
                 }
 
-                string name = this.entity.GetType().Name;
+                string name = this.entity.GetType().FullName;
 
                 string debugger_name = ReadDebuggerDisplay(entity);
 

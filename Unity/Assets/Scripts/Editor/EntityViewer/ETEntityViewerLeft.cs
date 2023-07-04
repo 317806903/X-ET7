@@ -117,7 +117,7 @@ namespace ET
         
         private static void SearchByName(Node node)
         {
-            if (node.Entity.GetType().Name.ToLower().Contains(_searchStr.ToLower()))
+            if (node.Entity.GetType().FullName.ToLower().Contains(_searchStr.ToLower()))
             {
                 _searchRes.Add(node);
             }

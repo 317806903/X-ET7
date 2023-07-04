@@ -10,17 +10,17 @@ namespace ET
 
         public int ViewDistance;
 
-        private long cellInstanceId;
+        private EntityRef<Cell> cell;
 
         public Cell Cell
         {
             get
             {
-                return Root.Instance.Get(this.cellInstanceId) as Cell;
+                return cell;
             }
             set
             {
-                this.cellInstanceId = value.InstanceId;
+                this.cell = value;
             }
         }
 

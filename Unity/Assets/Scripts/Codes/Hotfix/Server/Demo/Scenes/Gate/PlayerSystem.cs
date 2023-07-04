@@ -9,6 +9,7 @@
             protected override void Awake(Player self, string a)
             {
                 self.Account = a;
+                self.Level = 1;
             }
         }
     }

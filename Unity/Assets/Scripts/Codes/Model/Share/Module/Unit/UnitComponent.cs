@@ -9,8 +9,9 @@ namespace ET
 		public HashSetComponent<Unit> NeedSyncNumericUnits;
 		public HashSetComponent<Unit> NeedSyncPosUnits;
 		public List<long> waitRemoveList;
+		public HashSetComponent<Unit> observerList;
 		public HashSetComponent<Unit> playerList;
-		public HashSetComponent<Unit> monsterList;
+		public HashSetComponent<Unit> actorList;
 		public HashSetComponent<Unit> npcList;
 		public HashSetComponent<Unit> sceneObjList;
 		public HashSetComponent<Unit> bulletList;

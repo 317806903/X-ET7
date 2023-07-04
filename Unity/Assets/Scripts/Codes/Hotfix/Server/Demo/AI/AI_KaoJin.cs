@@ -1,20 +1,22 @@
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Server
 {
     public class AI_KaoJin: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AIConfig aiConfig)
+        public override int Check(AIComponent aiComponent, AICfg aiConfig)
         {
             long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
             if (sec < 10)
             {
                 return 0;
             }
+            
             return 1;
         }
 
-        public override async ETTask Execute(AIComponent aiComponent, AIConfig aiConfig, ETCancellationToken cancellationToken)
+        public override async ETTask Execute(AIComponent aiComponent, AICfg aiConfig, ETCancellationToken cancellationToken)
         {
             Unit unit = aiComponent.GetUnit();
             if (unit == null)
@@ -39,24 +41,30 @@ namespace ET.Server
                 unitPlayer = hostileForces[0];
             }
 
-            if (unitPlayer == null)
+            if (ET.Ability.UnitHelper.ChkUnitAlive(unitPlayer) == false)
             {
                 aiComponent.Cancel();
                 return;
             }
 
-            Log.Debug("开始靠近");
+            Log.Debug("开始靠近 11");
 
             while (true)
             {
+                if (ET.Ability.UnitHelper.ChkUnitAlive(unitPlayer) == false)
+                {
+                    aiComponent.Cancel();
+                    return;
+                }
+
                 float3 nextTarget = unitPlayer.Position;
-                Log.Debug($"开始靠近 {nextTarget}");
+                Log.Debug($"开始靠近 22 {nextTarget}");
                 await unit.FindPathMoveToAsync(nextTarget, null);
                 if (cancellationToken.IsCancel())
                 {
                     return;
                 }
-                await TimerComponent.Instance.WaitAsync(1000, cancellationToken);
+                await TimerComponent.Instance.WaitAsync(500, cancellationToken);
                 if (cancellationToken.IsCancel())
                 {
                     return;

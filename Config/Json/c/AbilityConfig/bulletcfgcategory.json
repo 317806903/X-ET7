@@ -46,7 +46,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -100,7 +101,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -124,17 +126,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_3",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "bulletTrig": 2,
-        "delayTime": 0,
-        "action_id": "CreateEffect_1",
-        "actionCallParam": {
-          "$type": "ActionCallCasterPlayerUnit"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -164,7 +157,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -188,17 +182,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_3",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "bulletTrig": 2,
-        "delayTime": 0,
-        "action_id": "CreateEffect_1",
-        "actionCallParam": {
-          "$type": "ActionCallCasterPlayerUnit"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -228,7 +213,173 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_PlayerSolo1",
+    "name": "机枪子弹",
+    "desc": "",
+    "res_id": "ResUnit_Bullet1",
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 1,
+        "delayTime": 0,
+        "action_id": "CreateEffect_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnAttackUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 4,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_PlayerAoe1",
+    "name": "炮弹",
+    "desc": "",
+    "res_id": "ResUnit_Bullet1",
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 1,
+        "delayTime": 0,
+        "action_id": "CreateEffect_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnAttackUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 4,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_EnemySolo1",
+    "name": "敌人子弹",
+    "desc": "",
+    "res_id": "ResUnit_Bullet1",
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 1,
+        "delayTime": 0,
+        "action_id": "CreateEffect_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnAttackUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_EnemySolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 4,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []

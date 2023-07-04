@@ -15,9 +15,9 @@ namespace ET.Ability
             return timelineComponent;
         }
         
-        public static TimelineObj CreateTimeline(Unit unit, string timelineCfgId, SelectHandle selectHandle)
+        public static TimelineObj CreateTimeline(Unit unit, string timelineCfgId)
         {
-            TimelineObj timelineObj = GetTimelineComponent(unit).CreateTimeline(timelineCfgId, unit.Id, selectHandle);
+            TimelineObj timelineObj = GetTimelineComponent(unit).CreateTimeline(timelineCfgId, unit.Id);
             return timelineObj;
         }
     }

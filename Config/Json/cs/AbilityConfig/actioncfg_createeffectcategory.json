@@ -4,7 +4,7 @@
     "name": "创建特效1",
     "desc": "",
     "res_id": "ResEffect_1",
-    "key": "",
+    "key": "CreateEffect_1",
     "duration": 5,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -26,7 +26,7 @@
     "name": "创建特效2",
     "desc": "",
     "res_id": "ResEffect_2",
-    "key": "",
+    "key": "CreateEffect_2",
     "duration": 5,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -48,7 +48,7 @@
     "name": "创建特效3",
     "desc": "",
     "res_id": "ResEffect_3",
-    "key": "",
+    "key": "CreateEffect_3",
     "duration": 5,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -203,8 +203,118 @@
     "desc": "",
     "res_id": "ResEffect_DeathShow_1",
     "key": "",
-    "duration": 10,
+    "duration": 3,
     "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_PlayerSolo1_Fire",
+    "name": "机枪开火",
+    "desc": "我方单体攻击",
+    "res_id": "ResEffect_1",
+    "key": "PlayerSolo1_Fire",
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_PlayerAoe1_Fire",
+    "name": "炮击开火",
+    "desc": "我方aoe攻击",
+    "res_id": "ResEffect_1",
+    "key": "PlayerAoe1_Fire",
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_EnemySolo1_Fire",
+    "name": "射击开火",
+    "desc": "敌人单体攻击",
+    "res_id": "ResEffect_1",
+    "key": "EnemySolo1_Fire",
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_PlayerLine1",
+    "name": "直线火焰",
+    "desc": "直线火焰",
+    "res_id": "ResEffect_1",
+    "key": "PlayerLine1",
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CreateEffect_PlayerCircle1",
+    "name": "圆形毒雾",
+    "desc": "圆形毒雾",
+    "res_id": "ResEffect_1",
+    "key": "PlayerCircle1",
+    "duration": 1,
+    "isSceneEffect": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {

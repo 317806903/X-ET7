@@ -14,17 +14,8 @@ namespace ET.Server
 			roomManagerComponent.QuitRoom(playerId, roomId);
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 			
-			R2C_RoomInfoChgNotice _R2C_RoomInfoChgNotice = new();
-			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
-			for (int i = 0; i < roomMemberList.Count; i++)
-			{
-				RoomMember roomMember = roomMemberList[i];
-				// if (playerId == roomMember.Id)
-				// {
-				// 	continue;
-				// }
-				MessageHelper.SendToClient(roomMember.Id, _R2C_RoomInfoChgNotice, false);
-			}
+			
+			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 
 			await ETTask.CompletedTask;
 		}

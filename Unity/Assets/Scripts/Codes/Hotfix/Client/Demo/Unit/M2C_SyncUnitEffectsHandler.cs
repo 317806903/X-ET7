@@ -9,7 +9,10 @@ namespace ET.Client
 		protected override async ETTask Run(Session session, M2C_SyncUnitEffects message)
 		{
 			Scene currentScene = session.DomainScene().CurrentScene();
-			UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+			if (currentScene == null)
+			{
+				return;
+			}
 
 			long unitId = message.UnitId;
 			int addOrRemove = message.AddOrRemove;
@@ -21,6 +24,11 @@ namespace ET.Client
 			}
 			else
 			{
+				UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+				if (unitComponent == null)
+				{
+					return;
+				}
 				Unit unit = unitComponent.Get(unitId);
 				if (unit == null)
 				{

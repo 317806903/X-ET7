@@ -196,7 +196,7 @@ namespace ET
                     catch (Exception e)
                     {
                         string codeMode = EventSystem.Instance.Invoke<ConfigComponent.GetCodeMode, string>(new ConfigComponent.GetCodeMode());
-                        if (codeMode == "ClientServer")
+                        if (codeMode == "ClientServer" || codeMode == "Client")
                         {
                             if (obj.GetType().FullName.StartsWith("ET.Server"))
                             {
@@ -206,6 +206,22 @@ namespace ET
                             {
                                 if (dict[invokeAttribute.Type].GetType().FullName.StartsWith("ET.Server")
                                 && obj.GetType().FullName.StartsWith("ET.Client"))
+                                {
+                                    dict[invokeAttribute.Type] = obj;
+                                    continue;
+                                }
+                            }
+                        }
+                        else if (codeMode == "Server")
+                        {
+                            if (obj.GetType().FullName.StartsWith("ET.Client"))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                if (dict[invokeAttribute.Type].GetType().FullName.StartsWith("ET.Client")
+                                    && obj.GetType().FullName.StartsWith("ET.Server"))
                                 {
                                     dict[invokeAttribute.Type] = obj;
                                     continue;
@@ -673,7 +689,7 @@ namespace ET
                     
                 if (!(eventInfo.IEvent is AEvent<S, T> aEvent))
                 {
-                    Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");
+                    Log.Error($"event error: {eventInfo.IEvent.GetType().FullName}");
                     continue;
                 }
 
@@ -709,7 +725,7 @@ namespace ET
                 
                 if (!(eventInfo.IEvent is AEvent<S, T> aEvent))
                 {
-                    Log.Error($"event error: {eventInfo.IEvent.GetType().Name}");
+                    Log.Error($"event error: {eventInfo.IEvent.GetType().FullName}");
                     continue;
                 }
                 

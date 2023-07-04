@@ -15,23 +15,23 @@ namespace ET.Client
 
 		public List<string> towerList = new List<string>()
 		{
-			"Unit_MachineGunTower_0",
-			"Unit_EnergyPylon_2",
-			"Unit_LaserTower_0",
-			"Unit_RocketTower_1",
+			"Tow1_1",
+			"Tow2_1",
+			"Tow3_1",
+			"Tow4_1",
 		};
 
 		public List<string> tankList = new List<string>()
 		{
-			"Unit_Hoverboss",
-			"Unit_Hoverbuggy",
-			"Unit_Hovercopter",
-			"Unit_Hovertank",
+			"Monster1_1",
+			"Monster2_1",
+			"Monster3_1",
+			"Monster4_1",
 		};
 
 		public long Timer;
-		public string selectUnitCfgId;
-		public bool isTower;
+		public string selectCfgId;
+		public UISelectCfgType selectCfgType;
 		
 		//物体z轴距摄像机的长度
 		public float _zDistance = 50f;

@@ -60,12 +60,12 @@ namespace ET.Ability
             self.stack = math.clamp(self.stack + addStack, 0, self.model.MaxStack);
             self.ChgBuffStackCountWhenModifyAttribute(oldStackCount, self.stack);
             
-            Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
+            //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
             if (needPublic && addStack > 0)
             {
                 self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
             }
-            Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
+            //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
 
         public static void ChgDuration(this BuffObj self, float duration)
@@ -150,14 +150,29 @@ namespace ET.Ability
             if (self.permanent == false) self.duration -= timePassed;
             self.timeElapsed += timePassed;
 
-            if (self.model.TickTime > 0)
+            int tickCount = math.min(self.model.TickTime.Count, 3);
+            for (int i = 0; i < tickCount; i++)
             {
-                //float取模不精准，所以用x1000后的整数来
-                if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.TickTime * 1000) == 0)
+                if (self.model.TickTime[i] > 0)
                 {
-                    self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick);
+                    //float取模不精准，所以用x1000后的整数来
+                    if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.TickTime[i] * 1000) == 0)
+                    {
+                        if (i == 0)
+                        {
+                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick1);
+                        }
+                        else if (i == 1)
+                        {
+                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick2);
+                        }
+                        else if (i == 2)
+                        {
+                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick3);
+                        }
 
-                    self.ticked += 1;
+                        self.ticked += 1;
+                    }
                 }
             }
         }
@@ -187,7 +202,11 @@ namespace ET.Ability
             }
             string actionId = buffActionCall.ActionId;
             SelectHandle selectHandle;
-            if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+            if (buffActionCall.ActionCallParam is ActionCallSelectLast)
+            {
+                selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
+            }
+            else if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
             {
                 selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoUnit);
             }
@@ -218,7 +237,7 @@ namespace ET.Ability
                 {
                     targetUnit = self.GetUnit();
                 }
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), targetUnit);
+                selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, buffActionCall.ActionCallParam);
             }
 
             SelectHandle curSelectHandle = selectHandle;

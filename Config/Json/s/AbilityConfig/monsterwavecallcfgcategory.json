@@ -1,0 +1,97 @@
+[
+  {
+    "waveRule": "Wave1",
+    "waveIndex": 1,
+    "name": "",
+    "duration": 60,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "totalNum": 20,
+        "onceIntervalTime": 2,
+        "onceCallNum": 2,
+        "monsterCfgId": "Monster1_1",
+        "level": 1,
+        "rewardGold": 10
+      },
+      {
+        "timeElapsed": 2,
+        "totalNum": 10,
+        "onceIntervalTime": 2,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster3_1",
+        "level": 1,
+        "rewardGold": 10
+      }
+    ]
+  },
+  {
+    "waveRule": "Wave1",
+    "waveIndex": 2,
+    "name": "",
+    "duration": 60,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "totalNum": 20,
+        "onceIntervalTime": 2,
+        "onceCallNum": 2,
+        "monsterCfgId": "Monster1_1",
+        "level": 1,
+        "rewardGold": 10
+      },
+      {
+        "timeElapsed": 2,
+        "totalNum": 10,
+        "onceIntervalTime": 2,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster3_1",
+        "level": 1,
+        "rewardGold": 10
+      }
+    ]
+  },
+  {
+    "waveRule": "Wave1",
+    "waveIndex": 3,
+    "name": "",
+    "duration": 60,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "totalNum": 20,
+        "onceIntervalTime": 2,
+        "onceCallNum": 2,
+        "monsterCfgId": "Monster1_1",
+        "level": 1,
+        "rewardGold": 10
+      },
+      {
+        "timeElapsed": 2,
+        "totalNum": 10,
+        "onceIntervalTime": 2,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster3_1",
+        "level": 1,
+        "rewardGold": 10
+      }
+    ]
+  },
+  {
+    "waveRule": "WaveTest",
+    "waveIndex": 1,
+    "name": "",
+    "duration": 60,
+    "nodes": [
+      {
+        "timeElapsed": 1,
+        "totalNum": 1,
+        "onceIntervalTime": 2,
+        "onceCallNum": 2,
+        "monsterCfgId": "Monster1_1",
+        "level": 1,
+        "rewardGold": 10
+      }
+    ]
+  }
+]

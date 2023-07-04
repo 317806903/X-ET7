@@ -13,7 +13,8 @@ namespace ET
             {
                 byte[] bytes = MonoResComponent.Instance.LoadRawFile(address);
                 Log.Debug($"ET.HybridCLRHelper.Load {address} before LoadMetadataForAOTAssembly");
-                RuntimeApi.LoadMetadataForAOTAssembly(bytes, HomologousImageMode.Consistent);
+                //RuntimeApi.LoadMetadataForAOTAssembly(bytes, HomologousImageMode.Consistent);
+                RuntimeApi.LoadMetadataForAOTAssembly(bytes, HomologousImageMode.SuperSet);
                 Log.Debug($"ET.HybridCLRHelper.Load {address} after LoadMetadataForAOTAssembly");
             }
         }

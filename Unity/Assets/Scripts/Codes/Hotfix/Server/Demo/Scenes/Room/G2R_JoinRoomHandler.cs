@@ -13,18 +13,10 @@ namespace ET.Server
 			long roomId = request.RoomId;
 			roomManagerComponent.JoinRoom(playerId, roomId);
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			response.IsARRoom = roomComponent.isARRoom?1:0;
 
-			R2C_RoomInfoChgNotice _R2C_RoomInfoChgNotice = new();
-			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
-			for (int i = 0; i < roomMemberList.Count; i++)
-			{
-				RoomMember roomMember = roomMemberList[i];
-				// if (playerId == roomMember.Id)
-				// {
-				// 	continue;
-				// }
-				MessageHelper.SendToClient(roomMember.Id, _R2C_RoomInfoChgNotice, false);
-			}
+			
+			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 
 			await ETTask.CompletedTask;
 		}

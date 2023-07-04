@@ -14,10 +14,11 @@ namespace ET.Server
 			if (roomComponent != null)
 			{
 				long dynamicMapId = roomComponent.sceneMapId;
-				
+				RoomMember roomMember = roomComponent.GetRoomMember(playerId);
 				R2G_StartBattle _R2G_StartBattle = new ()
 				{
 					DynamicMapId = dynamicMapId,
+					RoomSeatIndex = roomMember.seatIndex,
 				};
 				
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);

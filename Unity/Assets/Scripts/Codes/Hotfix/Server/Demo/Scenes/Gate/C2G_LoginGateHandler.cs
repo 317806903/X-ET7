@@ -51,8 +51,6 @@ namespace ET.Server
 			if (playerStatusComponent == null)
 			{
 				playerStatusComponent = player.AddComponent<PlayerStatusComponent>();
-				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
-				playerStatusComponent.RoomId = 0;
 			}
 			
 
@@ -65,11 +63,20 @@ namespace ET.Server
 
 			if (_R2G_GetRoomIdByPlayer.RoomId == 0)
 			{
+				playerStatusComponent.PlayerGameMode = PlayerGameMode.None;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 				playerStatusComponent.RoomId = 0;
 			}
 			else
 			{
+				if (_R2G_GetRoomIdByPlayer.IsARRoom == 1)
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
+				}
+				else
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
+				}
 				RoomStatus roomStatus = (RoomStatus) Enum.Parse(typeof (RoomStatus), _R2G_GetRoomIdByPlayer.RoomStatus);
 				if (roomStatus == RoomStatus.Idle)
 				{
@@ -89,6 +96,7 @@ namespace ET.Server
 			session.AddComponent<SessionPlayerComponent>().Player = player;
 
 			response.PlayerId = playerId;
+			response.PlayerGameMode = playerStatusComponent.PlayerGameMode.ToString();
 			response.PlayerStatus = playerStatusComponent.PlayerStatus.ToString();
 			response.RoomId = playerStatusComponent.RoomId;
 			await ETTask.CompletedTask;

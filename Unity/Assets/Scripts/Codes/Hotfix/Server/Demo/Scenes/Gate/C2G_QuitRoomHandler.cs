@@ -24,6 +24,7 @@ namespace ET.Server
 			response.Error = _R2G_QuitRoom.Error;
 			response.Message = _R2G_QuitRoom.Message;
 			
+			playerStatusComponent.PlayerGameMode = PlayerGameMode.None;
 			playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 			playerStatusComponent.RoomId = 0;
 

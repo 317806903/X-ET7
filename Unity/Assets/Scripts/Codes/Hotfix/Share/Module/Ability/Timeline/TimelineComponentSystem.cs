@@ -33,6 +33,7 @@ namespace ET.Ability
                 {
                     return;
                 }
+
                 float fixedDeltaTime = TimeHelper.FixedDetalTime;
                 self.FixedUpdate(fixedDeltaTime);
             }
@@ -43,10 +44,10 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static TimelineObj CreateTimeline(this TimelineComponent self, string timelineCfgId, long casterId, SelectHandle selectHandle)
+        public static TimelineObj CreateTimeline(this TimelineComponent self, string timelineCfgId, long casterId)
         {
             TimelineObj timelineObj = self.AddChild<TimelineObj>();
-            timelineObj.Init(timelineCfgId, casterId, selectHandle);
+            timelineObj.Init(timelineCfgId, casterId);
             return timelineObj;
         }
         
@@ -59,10 +60,9 @@ namespace ET.Ability
             }
 
             long casterUnitId = timelineObjOld.casterUnitId;
-            SelectHandle selectHandle = timelineObjOld.selectHandle;
             ActionContext actionContext = timelineObjOld.actionContext;
             self.RemoveChild(oldTimeLineId);
-            TimelineObj timelineObj = self.CreateTimeline(timelineCfgId, casterUnitId, selectHandle);
+            TimelineObj timelineObj = self.CreateTimeline(timelineCfgId, casterUnitId);
             timelineObj.InitActionContext(actionContext);
             return timelineObj;
         }

@@ -20,11 +20,12 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         Icon = _buf.ReadString();
+        ResId = _buf.ReadString();
         MoveSpeed = _buf.ReadFloat();
         RotationSpeed = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
-        ResId = _buf.ReadString();
+        PropertyType = _buf.ReadString();
         DeathShow = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SkillList.Add(_e0);}}
         PostInit();
@@ -53,6 +54,11 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public string Icon { get; private set; }
     public ResIconCfg Icon_Ref { get; private set; }
     /// <summary>
+    /// 资源路径
+    /// </summary>
+    public string ResId { get; private set; }
+    public ResUnitCfg ResId_Ref { get; private set; }
+    /// <summary>
     /// 移动速度
     /// </summary>
     public float MoveSpeed { get; private set; }
@@ -69,10 +75,9 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// </summary>
     public float ResScale { get; private set; }
     /// <summary>
-    /// 资源路径
+    /// 属性类型
     /// </summary>
-    public string ResId { get; private set; }
-    public ResUnitCfg ResId_Ref { get; private set; }
+    public string PropertyType { get; private set; }
     /// <summary>
     /// 死亡表现
     /// </summary>
@@ -107,11 +112,12 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "Icon:" + Icon + ","
+        + "ResId:" + ResId + ","
         + "MoveSpeed:" + MoveSpeed + ","
         + "RotationSpeed:" + RotationSpeed + ","
         + "BodyRadius:" + BodyRadius + ","
         + "ResScale:" + ResScale + ","
-        + "ResId:" + ResId + ","
+        + "PropertyType:" + PropertyType + ","
         + "DeathShow:" + DeathShow + ","
         + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
         + "}";

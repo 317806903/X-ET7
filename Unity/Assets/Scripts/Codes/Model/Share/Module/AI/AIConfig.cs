@@ -4,27 +4,27 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ProtoBuf;
 
-namespace ET
+namespace ET.AbilityConfig
 {
-	public partial class AIConfigCategory
+	public partial class AICfgCategory
 	{
 		[ProtoIgnore]
 		[BsonIgnore]
-		public Dictionary<int, SortedDictionary<int, AIConfig>> AIConfigs = new Dictionary<int, SortedDictionary<int, AIConfig>>();
+		public Dictionary<string, SortedDictionary<string, AICfg>> AIConfigs = new();
 
-		public SortedDictionary<int, AIConfig> GetAI(int aiConfigId)
+		public SortedDictionary<string, AICfg> GetAI(string aiCfgId)
 		{
-			return this.AIConfigs[aiConfigId];
+			return this.AIConfigs[aiCfgId];
 		}
 
 		partial void PostResolve()
 		{
 			foreach (var kv in this.GetAll())
 			{
-				SortedDictionary<int, AIConfig> aiNodeConfig;
+				SortedDictionary<string, AICfg> aiNodeConfig;
 				if (!this.AIConfigs.TryGetValue(kv.Value.AIConfigId, out aiNodeConfig))
 				{
-					aiNodeConfig = new SortedDictionary<int, AIConfig>();
+					aiNodeConfig = new SortedDictionary<string, AICfg>();
 					this.AIConfigs.Add(kv.Value.AIConfigId, aiNodeConfig);
 				}
 				

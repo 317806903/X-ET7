@@ -7,6 +7,16 @@ namespace ET.Server
     {
         protected override async ETTask Run(Scene scene, ET.EventType.EntryEvent2 args)
         {
+#if UNITY_EDITOR
+            if (Define.EnableCodes)
+            {
+                if (GlobalConfig.Instance.CodeMode == CodeMode.Client)
+                {
+                    return;
+                }
+            }
+#endif
+
             // 发送普通actor消息
             Root.Instance.Scene.AddComponent<ActorMessageSenderComponent>();
             // 发送location actor消息

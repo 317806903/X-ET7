@@ -105,36 +105,24 @@ namespace ET
                 return;
             }
 
-            if (self.Unit.Type == UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(self.Unit))
             {
-                if (enter.Unit.Type == UnitType.Player)
+                if (AOIHelper.ChkNeedNoticePlayer(enter.Unit))
                 {
-                    self.SeeUnits.Add(enter.Id, enter);
-                    enter.BeSeeUnits.Add(self.Id, self);
                     self.SeePlayers.Add(enter.Id, enter);
-                    enter.BeSeePlayers.Add(self.Id, self);
-                    
                 }
-                else
-                {
-                    self.SeeUnits.Add(enter.Id, enter);
-                    enter.BeSeeUnits.Add(self.Id, self);
-                    enter.BeSeePlayers.Add(self.Id, self);
-                }
+                self.SeeUnits.Add(enter.Id, enter);
+                enter.BeSeeUnits.Add(self.Id, self);
+                enter.BeSeePlayers.Add(self.Id, self);
             }
             else
             {
-                if (enter.Unit.Type == UnitType.Player)
+                if (AOIHelper.ChkNeedNoticePlayer(enter.Unit))
                 {
-                    self.SeeUnits.Add(enter.Id, enter);
-                    enter.BeSeeUnits.Add(self.Id, self);
                     self.SeePlayers.Add(enter.Id, enter);
                 }
-                else
-                {
-                    self.SeeUnits.Add(enter.Id, enter);
-                    enter.BeSeeUnits.Add(self.Id, self);
-                }
+                self.SeeUnits.Add(enter.Id, enter);
+                enter.BeSeeUnits.Add(self.Id, self);
             }
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.UnitEnterSightRange() { A = self, B = enter });
         }
@@ -153,13 +141,13 @@ namespace ET
             }
 
             self.SeeUnits.Remove(leave.Id);
-            if (leave.Unit.Type == UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(leave.Unit))
             {
                 self.SeePlayers.Remove(leave.Id);
             }
 
             leave.BeSeeUnits.Remove(self.Id);
-            if (self.Unit.Type == UnitType.Player)
+            if (AOIHelper.ChkNeedNoticePlayer(self.Unit))
             {
                 leave.BeSeePlayers.Remove(self.Id);
             }

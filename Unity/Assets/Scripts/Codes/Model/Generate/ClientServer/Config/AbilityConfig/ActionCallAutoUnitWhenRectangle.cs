@@ -52,6 +52,7 @@ public sealed partial class ActionCallAutoUnitWhenRectangle:  ActionCallAutoUnit
     public override string ToString()
     {
         return "{ "
+        + "IsSave:" + IsSave + ","
         + "SelectNum:" + SelectNum + ","
         + "IsFriend:" + IsFriend + ","
         + "IsOnlyPlayer:" + IsOnlyPlayer + ","

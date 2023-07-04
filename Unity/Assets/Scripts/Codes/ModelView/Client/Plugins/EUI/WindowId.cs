@@ -11,5 +11,9 @@ namespace ET.Client
 		WindowID_Battle,
 		WindowID_Hall,
 		WindowID_Room,
+		WindowID_GameMode,
+		WindowID_ARRoom,
+		WindowID_BattleTower,
+		WindowID_BattleTowerEnd,
 	}
 }

@@ -60,6 +60,7 @@
         "action_id": "FireBullet_1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -100,6 +101,7 @@
         "action_id": "PlayAnimator_1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -133,6 +135,7 @@
         "action_id": "FireBullet_2",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -173,6 +176,7 @@
         "action_id": "PlayAnimator_1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -206,6 +210,7 @@
         "action_id": "FaceTo_1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -238,7 +243,8 @@
         "delayTime": 0,
         "action_id": "FireBullet_5",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -256,6 +262,7 @@
         "action_id": "FaceTo_1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -289,6 +296,7 @@
         "action_id": "AttackArea_One1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenRectangle",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -328,6 +336,7 @@
         "action_id": "AttackArea_One1",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": false,
           "selectNum": 1,
           "isFriend": false,
           "isOnlyPlayer": false,
@@ -367,7 +376,8 @@
         "delayTime": 0,
         "action_id": "AddBuff_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -421,7 +431,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_MachineGunLvl1Effect_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -458,7 +469,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_LaserFireEffect1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -495,7 +507,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_EneryPylon_PFX1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -532,7 +545,8 @@
         "delayTime": 0,
         "action_id": "CreateEffect_HoverTankFireShow1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -541,6 +555,156 @@
         "timeElapsed": 0,
         "delayTime": 0.2,
         "action_id": "AttackArea_HoverTank1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerSolo1",
+    "name": "射击",
+    "duration": 0,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_PlayerSolo1_Fire",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerAoe1",
+    "name": "炮击",
+    "duration": 0,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_PlayerAoe1_Fire",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_PlayerAoe1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerLine1",
+    "name": "火柱",
+    "duration": 0,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "AddBuff_Line1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerCircle1",
+    "name": "毒雾",
+    "duration": 0,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "AddBuff_Circle1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_EnemySolo1",
+    "name": "射击",
+    "duration": 0,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "CreateEffect_EnemySolo1_Fire",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_EnemySolo1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },

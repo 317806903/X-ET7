@@ -12,6 +12,13 @@ namespace ET
             OuterMessage.C2G_Benchmark,
             OuterMessage.G2C_Benchmark,
             OuterMessage.M2C_SyncPosUnits,
+            OuterMessage.M2C_SyncUnitEffects,
+            OuterMessage.M2C_Stop,
+            OuterMessage.M2C_CreateUnits,
+            OuterMessage.M2C_RemoveUnits,
+            OuterMessage.M2C_SyncNumericUnits,
+            OuterMessage.M2C_PathfindingResult,
+            
             ushort.MaxValue, // ActorResponse
         };
 

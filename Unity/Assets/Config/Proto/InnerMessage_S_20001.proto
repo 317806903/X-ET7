@@ -191,12 +191,14 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 	string Message = 3;
 	int64 RoomId = 4;
 	string RoomStatus = 5;
+	int32 IsARRoom = 6;
 }
 
 //ResponseType R2G_GetRoomList
 message G2R_GetRoomList // IActorRequest
 {
 	int32 RpcId = 1;
+	int32 IsARRoom = 2;
 }
 
 message R2G_GetRoomList // IActorResponse
@@ -233,6 +235,7 @@ message G2R_CreateRoom // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
+	int32 IsARRoom = 3;
 }
 
 message R2G_CreateRoom // IActorResponse
@@ -256,6 +259,7 @@ message R2G_JoinRoom // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+	int32 IsARRoom = 4;
 }
 
 //ResponseType R2G_QuitRoom
@@ -267,6 +271,22 @@ message G2R_QuitRoom // IActorRequest
 }
 
 message R2G_QuitRoom // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_KickMemberOutRoom
+message G2R_KickMemberOutRoom // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 BeKickPlayerId = 3;
+	int64 RoomId = 4;
+}
+
+message R2G_KickMemberOutRoom // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -356,9 +376,23 @@ message R2G_StartBattle // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 DynamicMapId = 2;
+	int32 RoomSeatIndex = 3;
 }
 
 message G2R_StartBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2R_BeKickedMember
+message R2G_BeKickedMember // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2R_BeKickedMember // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -385,6 +419,19 @@ message M2G_MemberQuitBattle // IActorRequest
 }
 
 message G2M_MemberQuitBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2M_MemberReturnRoomFromBattle
+message M2G_MemberReturnRoomFromBattle // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2M_MemberReturnRoomFromBattle // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

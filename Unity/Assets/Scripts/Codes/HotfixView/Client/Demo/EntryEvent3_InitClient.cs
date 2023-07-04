@@ -8,6 +8,15 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, ET.EventType.EntryEvent3 args)
         {
+#if UNITY_EDITOR
+            if (Define.EnableCodes)
+            {
+                if (GlobalConfig.Instance.CodeMode == CodeMode.Server)
+                {
+                    return;
+                }
+            }
+#endif
             Root.Instance.Scene.AddComponent<GlobalComponent>();
             
             Root.Instance.Scene.AddComponent<FsmDispatcherComponent>();

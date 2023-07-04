@@ -16,6 +16,7 @@ namespace ET.Client
 			self.View.ELoopScrollList_RoomLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) => self.AddTowerItemRefreshListener
 			(transform, i));
 			self.View.E_CreateRoomButton.AddListenerAsync(self.CreateRoom);
+			self.View.E_RefreshRoomListButton.AddListenerAsync(self.RefreshRoomList);
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
 		}
 
@@ -59,9 +60,14 @@ namespace ET.Client
 
 		public static async ETTask CreateRoom(this DlgHall self)
 		{
-			await RoomHelper.CreateRoomAsync(self.ClientScene());
+			await RoomHelper.CreateRoomAsync(self.ClientScene(), false);
 			self.ClientScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Hall);
 			await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+		}
+
+		public static async ETTask RefreshRoomList(this DlgHall self)
+		{
+			await self.GetRoomList();
 		}
 
 		public static async ETTask ReturnLogin(this DlgHall self)

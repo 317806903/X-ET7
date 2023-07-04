@@ -63,40 +63,5 @@ namespace ET.Client
             return roomMember;
         }
 
-        public static bool ChkIsOwner(this RoomComponent self, long playerId)
-        {
-            return self.ownerRoomMemberId == playerId;
-        }
-
-        public static List<RoomMember> GetRoomMemberList(this RoomComponent self)
-        {
-            ListComponent<RoomMember> list = ListComponent<RoomMember>.Create();
-            foreach (var child in self.Children)
-            {
-                list.Add(child.Value as RoomMember);
-            }
-            return list;
-        }
-
-        public static bool ChkIsAllReady(this RoomComponent self)
-        {
-            foreach (RoomMember roomMember in self.GetRoomMemberList())
-            {
-                if (self.ownerRoomMemberId != roomMember.Id)
-                {
-                    if (roomMember.isReady == false)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public static RoomMember GetRoomMember(this RoomComponent self, long playerId)
-        {
-            return self.GetChild<RoomMember>(playerId);
-        }
-
     }
 }

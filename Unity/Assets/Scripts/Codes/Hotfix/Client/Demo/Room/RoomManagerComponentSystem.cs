@@ -42,15 +42,10 @@ namespace ET.Client
                 self.AddChild(roomComponent);
             }
         }
-        
-        public static RoomComponent Get(this RoomManagerComponent self, long roomId)
-        {
-            return self.GetChild<RoomComponent>(roomId);
-        }
-        
+
         public static void Init(this RoomManagerComponent self, long roomId, byte[] roomInfo, List<byte[]> roomMemberList)
         {
-            RoomComponent roomComponent = self.Get(roomId);
+            RoomComponent roomComponent = self.GetRoom(roomId);
             if (roomComponent == null)
             {
                 roomComponent = self.AddChildWithId<RoomComponent>(roomId);
@@ -58,14 +53,5 @@ namespace ET.Client
             roomComponent.Init(roomInfo, roomMemberList);
         }
         
-        public static List<RoomComponent> GetRoomList(this RoomManagerComponent self)
-        {
-            ListComponent<RoomComponent> list =ListComponent<RoomComponent>.Create();
-            foreach (var child in self.Children)
-            {
-                list.Add(child.Value as RoomComponent);
-            }
-            return list;
-        }
     }
 }

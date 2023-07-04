@@ -147,5 +147,77 @@
       "speed": 20,
       "acceleratedSpeed": 0
     }
+  },
+  {
+    "id": "FireBullet_PlayerSolo1",
+    "name": "机枪子弹",
+    "bullet_id": "Bullet_PlayerSolo1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "StraightMoveTweenType",
+      "speed": 50,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_PlayerAoe1",
+    "name": "炮弹",
+    "bullet_id": "Bullet_PlayerAoe1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "StraightMoveTweenType",
+      "speed": 50,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_EnemySolo1",
+    "name": "敌人子弹",
+    "bullet_id": "Bullet_EnemySolo1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "StraightMoveTweenType",
+      "speed": 50,
+      "acceleratedSpeed": 0
+    }
   }
 ]

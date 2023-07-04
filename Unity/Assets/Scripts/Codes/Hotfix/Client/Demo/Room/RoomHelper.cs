@@ -35,16 +35,16 @@ namespace ET.Client
             }	
         }
 
-        public static async ETTask CreateRoomAsync(Scene clientScene)
+        public static async ETTask CreateRoomAsync(Scene clientScene, bool isARRoom)
         {
             try
             {
-                G2C_CreateRoom _G2C_CreateRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_CreateRoom()) as G2C_CreateRoom;
+                G2C_CreateRoom _G2C_CreateRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_CreateRoom()
+                {
+                    IsARRoom = isARRoom?1:0,
+                }) as G2C_CreateRoom;
                 long roomId = _G2C_CreateRoom.RoomId;
                 clientScene.GetComponent<RoomManagerComponent>().AddChildWithId<RoomComponent>(roomId);
-                clientScene.GetComponent<PlayerComponent>().PlayerStatus = PlayerStatus.Room;
-                clientScene.GetComponent<PlayerComponent>().RoomId = roomId;
-                clientScene.GetComponent<PlayerComponent>().IsRoomReady = false;
             }
             catch (Exception e)
             {
@@ -60,9 +60,6 @@ namespace ET.Client
                 {
                     RoomId = roomId,
                 }) as G2C_JoinRoom;
-                clientScene.GetComponent<PlayerComponent>().PlayerStatus = PlayerStatus.Room;
-                clientScene.GetComponent<PlayerComponent>().RoomId = roomId;
-                clientScene.GetComponent<PlayerComponent>().IsRoomReady = false;
             }
             catch (Exception e)
             {
@@ -75,9 +72,6 @@ namespace ET.Client
             try
             {
                 G2C_QuitRoom _G2C_QuitRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_QuitRoom()) as G2C_QuitRoom;
-                clientScene.GetComponent<PlayerComponent>().PlayerStatus = PlayerStatus.Hall;
-                clientScene.GetComponent<PlayerComponent>().RoomId = 0;
-                clientScene.GetComponent<PlayerComponent>().IsRoomReady = false;
             }
             catch (Exception e)
             {
@@ -93,7 +87,6 @@ namespace ET.Client
                 {
                     IsReady = isReady?1:0,
                 }) as G2C_ChgRoomMemberStatus;
-                clientScene.GetComponent<PlayerComponent>().IsRoomReady = _G2C_ChgRoomMemberStatus.IsReady == 1?true :false;
             }
             catch (Exception e)
             {
@@ -123,6 +116,35 @@ namespace ET.Client
             {
                 M2C_MemberQuitBattle _M2C_MemberQuitBattle = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2M_MemberQuitBattle()) as 
                 M2C_MemberQuitBattle;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }	
+        }
+
+        public static async ETTask BeKickedOutRoomAsync(Scene clientScene, long beKickedPlayerId)
+        {
+            try
+            {
+                G2C_KickMemberOutRoom _G2C_KickMemberOutRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_KickMemberOutRoom()
+                        {
+                            BeKickPlayerId = beKickedPlayerId,
+                        }) as 
+                        G2C_KickMemberOutRoom;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }	
+        }
+
+        public static async ETTask MemberReturnRoomFromBattleAsync(Scene clientScene)
+        {
+            try
+            {
+                M2C_MemberReturnRoomFromBattle _M2C_MemberReturnRoomFromBattle = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2M_MemberReturnRoomFromBattle()) as 
+                        M2C_MemberReturnRoomFromBattle;
             }
             catch (Exception e)
             {

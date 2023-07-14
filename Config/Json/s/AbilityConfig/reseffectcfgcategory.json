@@ -43,5 +43,45 @@
     "id": "ResEffect_DeathShow_1",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/DeathShow/BigDeathExplosionPfx.prefab"
+  },
+  {
+    "id": "ResEffect_BulletSolo1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/BulletSolo1.prefab"
+  },
+  {
+    "id": "ResEffect_FlashSolo1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FlashSolo1.prefab"
+  },
+  {
+    "id": "ResEffect_HitSolo1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HitSolo1.prefab"
+  },
+  {
+    "id": "ResEffect_BulletAoe1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/BulletAoe1.prefab"
+  },
+  {
+    "id": "ResEffect_FlashAoe1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FlashAoe1.prefab"
+  },
+  {
+    "id": "ResEffect_HitAoe1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HitAoe1.prefab"
+  },
+  {
+    "id": "ResEffect_Fire1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Fire1.prefab"
+  },
+  {
+    "id": "ResEffect_Drag1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Drag1.prefab"
   }
 ]

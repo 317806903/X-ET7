@@ -7,15 +7,30 @@ namespace ET.Ability
     [FriendOf(typeof (Unit))]
     public static class DamageHelper
     {
-        public static void DoAttackArea(Unit unit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
+        public static void DoAttackArea(Unit unit, Unit resetPosByUnit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
         {
-            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(unit, actionCfg_AttackArea.ActionCallAutoUnitArea);
+            SelectHandle selectHandle;
+            if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
+            {
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea);
+            }
+            else if(selectHandleOld.selectHandleType == SelectHandleType.SelectPosition)
+            {
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea);
+            }
+            else
+            {
+                Log.Error($"ET.Ability.DamageHelper.DoAttackArea selectHandleOld.selectHandleType err");
+                return;
+            }
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
+                Log.Error($"DoAttackArea selectHandle.selectHandleType != SelectHandleType.SelectUnits");
                 return;
             }
             if (actionCfg_AttackArea.ActionCallAutoUnitArea is ActionCallAutoUnitOne actionCallAutoUnitOne)
             {
+                selectHandle.unitIds.Clear();
                 selectHandle.unitIds.AddRange(selectHandleOld.unitIds);
             }
             actionContext.attackerUnitId = unit.Id;
@@ -48,7 +63,8 @@ namespace ET.Ability
                 }
                 if (bRet1 && bRet2)
                 {
-                    ActionHandlerHelper.CreateAction(unit, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
+                    ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, 
+                    actionContext);
                 }
             }
             
@@ -67,7 +83,12 @@ namespace ET.Ability
                 }
                 if (bRet1 && bRet2)
                 {
-                    ActionHandlerHelper.CreateAction(unit, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
+                    Unit resetPosByUnitNew = null;
+                    if (curSelectHandle.unitIds.Count > 0)
+                    {
+                        resetPosByUnitNew = UnitHelper.GetUnit(unit.DomainScene(), curSelectHandle.unitIds[0]);
+                    }
+                    ActionHandlerHelper.CreateAction(unit, resetPosByUnitNew, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
                 }
                 
             }
@@ -82,6 +103,7 @@ namespace ET.Ability
         {
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
+                Log.Error($"ET.Ability.DamageHelper.DoDamage selectHandle.selectHandleType[{selectHandle.selectHandleType}] != SelectHandleType.SelectUnits");
                 return;
             }
 

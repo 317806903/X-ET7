@@ -41,9 +41,9 @@ namespace ET.Server
         {
             protected override void Destroy(RouterComponent self)
             {
-                self.OuterSocket.Dispose();
-                self.InnerSocket.Dispose();
-                self.OuterNodes.Clear();
+                self.OuterSocket?.Dispose();
+                self.InnerSocket?.Dispose();
+                self.OuterNodes?.Clear();
                 self.IPEndPoint = null;
             }
         }

@@ -480,15 +480,6 @@ namespace ET
 
 	}
 
-	[Message(InnerMessage.R2G_RoomInfoChgNotice)]
-	[ProtoContract]
-	public partial class R2G_RoomInfoChgNotice: ProtoObject, IActorMessage
-	{
-		[ProtoMember(1)]
-		public int RpcId { get; set; }
-
-	}
-
 	[ResponseType(nameof(R2G_CreateRoom))]
 	[Message(InnerMessage.G2R_CreateRoom)]
 	[ProtoContract]
@@ -501,6 +492,9 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(3)]
+		public string BattleCfgId { get; set; }
+
+		[ProtoMember(4)]
 		public int IsARRoom { get; set; }
 
 	}
@@ -724,6 +718,40 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(R2G_ChgRoomBattleLevelCfg))]
+	[Message(InnerMessage.G2R_ChgRoomBattleLevelCfg)]
+	[ProtoContract]
+	public partial class G2R_ChgRoomBattleLevelCfg: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+		[ProtoMember(4)]
+		public string NewBattleCfgId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ChgRoomBattleLevelCfg)]
+	[ProtoContract]
+	public partial class R2G_ChgRoomBattleLevelCfg: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	[ResponseType(nameof(M2R_CreateDynamicMap))]
 	[Message(InnerMessage.R2M_CreateDynamicMap)]
 	[ProtoContract]
@@ -786,6 +814,40 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(M2M_EnterMapResponse))]
+	[Message(InnerMessage.M2M_EnterMapRequest)]
+	[ProtoContract]
+	public partial class M2M_EnterMapRequest: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public int PlayerLevel { get; set; }
+
+		[ProtoMember(4)]
+		public string GamePlayBattleLevelCfgId { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2M_EnterMapResponse)]
+	[ProtoContract]
+	public partial class M2M_EnterMapResponse: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	[ResponseType(nameof(G2R_StartBattle))]
 	[Message(InnerMessage.R2G_StartBattle)]
 	[ProtoContract]
@@ -795,10 +857,10 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public long DynamicMapId { get; set; }
+		public string GamePlayBattleLevelCfgId { get; set; }
 
 		[ProtoMember(3)]
-		public int RoomSeatIndex { get; set; }
+		public long DynamicMapId { get; set; }
 
 	}
 
@@ -945,6 +1007,121 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(M2R_ChkIsBattleEnd))]
+	[Message(InnerMessage.R2M_ChkIsBattleEnd)]
+	[ProtoContract]
+	public partial class R2M_ChkIsBattleEnd: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2R_ChkIsBattleEnd)]
+	[ProtoContract]
+	public partial class M2R_ChkIsBattleEnd: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public int IsBattleEnd { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2R_MemberQuitBattle))]
+	[Message(InnerMessage.R2M_MemberQuitBattle)]
+	[ProtoContract]
+	public partial class R2M_MemberQuitBattle: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2R_MemberQuitBattle)]
+	[ProtoContract]
+	public partial class M2R_MemberQuitBattle: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2M_MemberQuitRoom))]
+	[Message(InnerMessage.M2R_MemberQuitRoom)]
+	[ProtoContract]
+	public partial class M2R_MemberQuitRoom: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public long RoomId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2M_MemberQuitRoom)]
+	[ProtoContract]
+	public partial class R2M_MemberQuitRoom: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(R2M_NoticeRoomBattleEnd))]
+	[Message(InnerMessage.M2R_NoticeRoomBattleEnd)]
+	[ProtoContract]
+	public partial class M2R_NoticeRoomBattleEnd: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long RoomId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2M_NoticeRoomBattleEnd)]
+	[ProtoContract]
+	public partial class R2M_NoticeRoomBattleEnd: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -976,36 +1153,47 @@ namespace ET
 		 public const ushort R2G_GetRoomList = 20028;
 		 public const ushort G2R_GetRoomInfo = 20029;
 		 public const ushort R2G_GetRoomInfo = 20030;
-		 public const ushort R2G_RoomInfoChgNotice = 20031;
-		 public const ushort G2R_CreateRoom = 20032;
-		 public const ushort R2G_CreateRoom = 20033;
-		 public const ushort G2R_JoinRoom = 20034;
-		 public const ushort R2G_JoinRoom = 20035;
-		 public const ushort G2R_QuitRoom = 20036;
-		 public const ushort R2G_QuitRoom = 20037;
-		 public const ushort G2R_KickMemberOutRoom = 20038;
-		 public const ushort R2G_KickMemberOutRoom = 20039;
-		 public const ushort G2R_ChgRoomStatus = 20040;
-		 public const ushort R2G_ChgRoomStatus = 20041;
-		 public const ushort G2R_ChgRoomMemberStatus = 20042;
-		 public const ushort R2G_ChgRoomMemberStatus = 20043;
-		 public const ushort G2R_ChgRoomMemberSeat = 20044;
-		 public const ushort R2G_ChgRoomMemberSeat = 20045;
-		 public const ushort R2M_CreateDynamicMap = 20046;
-		 public const ushort M2R_CreateDynamicMap = 20047;
-		 public const ushort R2M_DestroyDynamicMap = 20048;
-		 public const ushort M2R_DestroyDynamicMap = 20049;
-		 public const ushort R2G_StartBattle = 20050;
-		 public const ushort G2R_StartBattle = 20051;
-		 public const ushort R2G_BeKickedMember = 20052;
-		 public const ushort G2R_BeKickedMember = 20053;
-		 public const ushort M2G_QuitBattle = 20054;
-		 public const ushort G2M_QuitBattle = 20055;
-		 public const ushort M2G_MemberQuitBattle = 20056;
-		 public const ushort G2M_MemberQuitBattle = 20057;
-		 public const ushort M2G_MemberReturnRoomFromBattle = 20058;
-		 public const ushort G2M_MemberReturnRoomFromBattle = 20059;
-		 public const ushort G2R_ReturnBackBattle = 20060;
-		 public const ushort R2G_ReturnBackBattle = 20061;
+		 public const ushort G2R_CreateRoom = 20031;
+		 public const ushort R2G_CreateRoom = 20032;
+		 public const ushort G2R_JoinRoom = 20033;
+		 public const ushort R2G_JoinRoom = 20034;
+		 public const ushort G2R_QuitRoom = 20035;
+		 public const ushort R2G_QuitRoom = 20036;
+		 public const ushort G2R_KickMemberOutRoom = 20037;
+		 public const ushort R2G_KickMemberOutRoom = 20038;
+		 public const ushort G2R_ChgRoomStatus = 20039;
+		 public const ushort R2G_ChgRoomStatus = 20040;
+		 public const ushort G2R_ChgRoomMemberStatus = 20041;
+		 public const ushort R2G_ChgRoomMemberStatus = 20042;
+		 public const ushort G2R_ChgRoomMemberSeat = 20043;
+		 public const ushort R2G_ChgRoomMemberSeat = 20044;
+		 public const ushort G2R_ChgRoomBattleLevelCfg = 20045;
+		 public const ushort R2G_ChgRoomBattleLevelCfg = 20046;
+		 public const ushort R2M_CreateDynamicMap = 20047;
+		 public const ushort M2R_CreateDynamicMap = 20048;
+		 public const ushort R2M_DestroyDynamicMap = 20049;
+		 public const ushort M2R_DestroyDynamicMap = 20050;
+		 public const ushort M2M_EnterMapRequest = 20051;
+		 public const ushort M2M_EnterMapResponse = 20052;
+		 public const ushort R2G_StartBattle = 20053;
+		 public const ushort G2R_StartBattle = 20054;
+		 public const ushort R2G_BeKickedMember = 20055;
+		 public const ushort G2R_BeKickedMember = 20056;
+		 public const ushort M2G_QuitBattle = 20057;
+		 public const ushort G2M_QuitBattle = 20058;
+		 public const ushort M2G_MemberQuitBattle = 20059;
+		 public const ushort G2M_MemberQuitBattle = 20060;
+		 public const ushort M2G_MemberReturnRoomFromBattle = 20061;
+		 public const ushort G2M_MemberReturnRoomFromBattle = 20062;
+		 public const ushort G2R_ReturnBackBattle = 20063;
+		 public const ushort R2G_ReturnBackBattle = 20064;
+		 public const ushort R2M_ChkIsBattleEnd = 20065;
+		 public const ushort M2R_ChkIsBattleEnd = 20066;
+		 public const ushort R2M_MemberQuitBattle = 20067;
+		 public const ushort M2R_MemberQuitBattle = 20068;
+		 public const ushort M2R_MemberQuitRoom = 20069;
+		 public const ushort R2M_MemberQuitRoom = 20070;
+		 public const ushort M2R_NoticeRoomBattleEnd = 20071;
+		 public const ushort R2M_NoticeRoomBattleEnd = 20072;
 	}
 }

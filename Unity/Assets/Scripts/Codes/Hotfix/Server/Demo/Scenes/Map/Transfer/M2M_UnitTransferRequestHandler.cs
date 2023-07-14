@@ -33,7 +33,8 @@ namespace ET.Server
 				}
 			
 				unit.AddComponent<MoveByPathComponent>();
-				unit.AddComponent<PathfindingComponent, string>(scene.Name);
+				string pathfindingMapName = scene.Name;
+				unit.AddComponent<PathfindingComponent, string>(pathfindingMapName);
 				unit.Position = new float3(-10, 0, -10);
 			
 				unit.AddComponent<MailBoxComponent>();
@@ -55,9 +56,17 @@ namespace ET.Server
 			else
 			{
 				// 加入aoi
-				unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
+				//unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
 			}
 			
+			GamePlayComponent gamePlayComponent = scene.GetComponent<GamePlayComponent>();
+			if (gamePlayComponent == null)
+			{
+				gamePlayComponent = scene.AddComponent<GamePlayComponent>();
+				gamePlayComponent.InitWhenGlobal(scene.InstanceId, "GamePlayBattleLevel_Global1");
+			}
+			gamePlayComponent.AddPlayerWhenGlobal(unit.Id, 1);
+
 			// 解锁location，可以接收发给Unit的消息
 			await LocationProxyComponent.Instance.UnLock(LocationType.Unit, unit.Id, request.OldInstanceId, unit.InstanceId);
 		}

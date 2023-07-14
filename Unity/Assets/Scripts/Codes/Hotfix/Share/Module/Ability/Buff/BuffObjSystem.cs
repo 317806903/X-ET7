@@ -30,7 +30,7 @@ namespace ET.Ability
             self.CfgId = addBuffInfo.BuffId;
             for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
             {
-                AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent = (AbilityBuffMonitorTriggerEvent)Enum.Parse(typeof(AbilityBuffMonitorTriggerEvent), self.model.MonitorTriggers[i].BuffTrig.ToString());
+                AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent = EnumHelper.FromString<AbilityBuffMonitorTriggerEvent>(self.model.MonitorTriggers[i].BuffTrig.ToString());
                 self.monitorTriggerList.Add(abilityBuffMonitorTriggerEvent, self.model.MonitorTriggers[i]);
             }
 
@@ -71,7 +71,7 @@ namespace ET.Ability
         public static void ChgDuration(this BuffObj self, float duration)
         {
             self.duration = duration;
-            Log.Debug($"---ChgDuration {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
+            //Log.Debug($"---ChgDuration {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
 
         public static void SetEnabled(this BuffObj self, bool isEnabled)
@@ -201,6 +201,7 @@ namespace ET.Ability
                 self.actionContext.attackerUnitId = onAttackUnit.Id;
             }
             string actionId = buffActionCall.ActionId;
+            Unit resetPosByUnit = null;
             SelectHandle selectHandle;
             if (buffActionCall.ActionCallParam is ActionCallSelectLast)
             {
@@ -208,11 +209,11 @@ namespace ET.Ability
             }
             else if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoUnit);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit);
             }
             else if (buffActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoSelf);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf);
             }
             else
             {
@@ -237,6 +238,8 @@ namespace ET.Ability
                 {
                     targetUnit = self.GetUnit();
                 }
+
+                resetPosByUnit = targetUnit;
                 selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, buffActionCall.ActionCallParam);
             }
 
@@ -253,7 +256,7 @@ namespace ET.Ability
             }
             if (bRet1 && bRet2)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, buffActionCall.DelayTime, curSelectHandle, self.actionContext);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, self.actionContext);
             }
         }
 

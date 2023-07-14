@@ -1,0 +1,130 @@
+[
+  {
+    "id": "Monster1_1",
+    "type": "1",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Common1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster1_2",
+    "type": "1",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Common1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster1_3",
+    "type": "1",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Common1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster1_4",
+    "type": "1",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Common1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster2_1",
+    "type": "2",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Quick1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster2_2",
+    "type": "2",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Quick1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster2_3",
+    "type": "2",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Quick1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster2_4",
+    "type": "2",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Quick1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster3_1",
+    "type": "3",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Tank1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster3_2",
+    "type": "3",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Tank1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster3_3",
+    "type": "3",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Tank1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster3_4",
+    "type": "3",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Tank1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster4_1",
+    "type": "4",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Attack1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster4_2",
+    "type": "4",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Attack1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster4_3",
+    "type": "4",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Attack1",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster4_4",
+    "type": "4",
+    "name": "",
+    "desc": "",
+    "unitId": "Unit_Attack1",
+    "aiCfgId": "TowerDefense_Monster1"
+  }
+]

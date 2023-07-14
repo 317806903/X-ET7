@@ -5,11 +5,26 @@ namespace ET.Server
 {
     public static class TransferHelper
     {
-        public static async ETTask TransferAtFrameFinish(Unit unit, long sceneInstanceId, string sceneName)
+        public static async ETTask TransferAtFrameFinish(bool isDestroyScene, Scene scene, Unit unit, long sceneInstanceId, string sceneName)
         {
             await Game.WaitFrameFinish();
 
             await TransferHelper.Transfer(unit, sceneInstanceId, sceneName);
+
+            if (isDestroyScene)
+            {
+                scene.Dispose();
+            }
+        }
+        
+        public static async ETTask EnterMap(long sceneInstanceId, long playerId, int playerLevel, string gamePlayBattleLevelCfgId)
+        {
+            await Game.WaitFrameFinish();
+
+			M2M_EnterMapRequest _M2M_EnterMapRequest = new() { PlayerId = playerId, PlayerLevel = playerLevel, GamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId, };
+			
+            await ActorMessageSenderComponent.Instance.Call(sceneInstanceId, _M2M_EnterMapRequest);
+
         }
         
 

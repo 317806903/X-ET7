@@ -11,8 +11,15 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
-			roomManagerComponent.JoinRoom(playerId, roomId);
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			if (roomComponent == null)
+			{
+				string msg = $"roomComponent == null roomId=[{roomId}]";
+				response.Error = ET.ErrorCode.ERR_LogicError;
+				response.Message = msg;
+				return;
+			}
+			roomManagerComponent.JoinRoom(playerId, roomId);
 			response.IsARRoom = roomComponent.isARRoom?1:0;
 
 			

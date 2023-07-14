@@ -8,7 +8,6 @@ namespace ET.Server
 		protected override async ETTask Run(Player player, M2G_MemberQuitBattle request, G2M_MemberQuitBattle response)
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 			if (playerStatusComponent.PlayerGameMode == PlayerGameMode.Room
 			|| playerStatusComponent.PlayerGameMode == PlayerGameMode.ARRoom)
 			{
@@ -24,10 +23,20 @@ namespace ET.Server
 					RoomId = roomId,
 				});
 
-				playerStatusComponent.RoomId = 0;
+				response.Error = _R2G_QuitRoom.Error;
+				response.Message = _R2G_QuitRoom.Message;
+				if (response.Error == ET.ErrorCode.ERR_Success)
+				{
+					playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
+					playerStatusComponent.RoomId = 0;
+					await playerStatusComponent.NoticeClient();
+				}
 			}
-			
-			await playerStatusComponent.NoticeClient();
+			else
+			{
+				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
+				await playerStatusComponent.NoticeClient();
+			}
 			
 			await ETTask.CompletedTask;
 		}

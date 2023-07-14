@@ -13,6 +13,11 @@ namespace ET.Server
 			long playerId = player.Id;
 			long roomId = playerStatusComponent.RoomId;
 			PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
+			if (playerStatus != PlayerStatus.Battle)
+			{
+				Log.Error($"C2G_ReturnBackBattleHandler playerStatusComponent.PlayerStatus[{playerStatus}] != PlayerStatus.Battle");
+				return;
+			}
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -20,6 +25,8 @@ namespace ET.Server
 			{
 				PlayerId = playerId,
 			});
+			response.Error = _R2G_ReturnBackBattle.Error;
+			response.Message = _R2G_ReturnBackBattle.Message;
 
 			await ETTask.CompletedTask;
 		}

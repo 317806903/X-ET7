@@ -10,6 +10,7 @@ namespace ET.Server
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
+			string battleCfgId = request.BattleCfgId;
 			int isARRoom = request.IsARRoom;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
@@ -17,6 +18,7 @@ namespace ET.Server
 			R2G_CreateRoom _R2G_CreateRoom = (R2G_CreateRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_CreateRoom()
 			{
 				PlayerId = playerId,
+				BattleCfgId = battleCfgId,
 				IsARRoom = isARRoom,
 			});
 			
@@ -24,20 +26,22 @@ namespace ET.Server
 			response.Message = _R2G_CreateRoom.Message;
 			response.RoomId = _R2G_CreateRoom.RoomId;
 			
-			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			if (isARRoom == 1)
+			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
-			}
-			else
-			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
-			}
-			playerStatusComponent.PlayerStatus = PlayerStatus.Room;
-			playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
+				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
+				if (isARRoom == 1)
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
+				}
+				else
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
+				}
+				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
+				playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
 
-			await playerStatusComponent.NoticeClient();
-
+				await playerStatusComponent.NoticeClient();
+			}
 			await ETTask.CompletedTask;
 		}
 	}

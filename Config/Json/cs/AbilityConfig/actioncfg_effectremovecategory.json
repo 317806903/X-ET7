@@ -1,0 +1,14 @@
+[
+  {
+    "id": "EffectRemove_Fire1",
+    "name": "删除火焰",
+    "desc": "",
+    "key": "ResEffect_Fire1"
+  },
+  {
+    "id": "EffectRemove_Drag1",
+    "name": "删除毒雾",
+    "desc": "",
+    "key": "ResEffect_Drag1"
+  }
+]

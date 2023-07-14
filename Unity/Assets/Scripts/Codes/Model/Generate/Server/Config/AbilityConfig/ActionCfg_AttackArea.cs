@@ -20,7 +20,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
         Name = _buf.ReadString();
         IsBreakSoftBati = _buf.ReadBool();
         IsBreakStrongBati = _buf.ReadBool();
-        ActionCallAutoUnitArea = ActionCallAutoUnit.DeserializeActionCallAutoUnit(_buf);
+        ActionCallAutoUnitArea = ActionCallParam.DeserializeActionCallParam(_buf);
         DamageInfo = _buf.ReadString();
         DamageAllot = DamageAllot.DeserializeDamageAllot(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelfAttackActionCall = new System.Collections.Generic.List<AttackActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { AttackActionCall _e0;  _e0 = AttackActionCall.DeserializeAttackActionCall(_buf); SelfAttackActionCall.Add(_e0);}}
@@ -49,7 +49,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
     /// 是否破强霸体
     /// </summary>
     public bool IsBreakStrongBati { get; private set; }
-    public ActionCallAutoUnit ActionCallAutoUnitArea { get; private set; }
+    public ActionCallParam ActionCallAutoUnitArea { get; private set; }
     /// <summary>
     /// 伤害类型
     /// </summary>

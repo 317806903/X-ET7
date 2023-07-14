@@ -7,6 +7,6 @@ namespace ET.Ability
 	public class EffectComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
         public List<EffectObj> removeList;
-        public Dictionary<string, EffectObj> recordEffectList;
+        public MultiMap<string, long> recordEffectList;
     }
 }

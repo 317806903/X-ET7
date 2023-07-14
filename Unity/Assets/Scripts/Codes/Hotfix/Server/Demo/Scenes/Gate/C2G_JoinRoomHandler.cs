@@ -23,20 +23,23 @@ namespace ET.Server
 			response.Error = _R2G_JoinRoom.Error;
 			response.Message = _R2G_JoinRoom.Message;
 
-			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			if (_R2G_JoinRoom.IsARRoom == 1)
+			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
-			}
-			else
-			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
-			}
-			playerStatusComponent.PlayerStatus = PlayerStatus.Room;
-			playerStatusComponent.RoomId = roomId;
+				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
+				if (_R2G_JoinRoom.IsARRoom == 1)
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
+				}
+				else
+				{
+					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
+				}
+				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
+				playerStatusComponent.RoomId = roomId;
 
-			await playerStatusComponent.NoticeClient();
-
+				await playerStatusComponent.NoticeClient();
+			}
+			
 			await ETTask.CompletedTask;
 		}
 	}

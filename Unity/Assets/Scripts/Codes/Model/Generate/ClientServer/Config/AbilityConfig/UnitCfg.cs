@@ -23,6 +23,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         ResId = _buf.ReadString();
         MoveSpeed = _buf.ReadFloat();
         RotationSpeed = _buf.ReadFloat();
+        BodyHeight = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
         PropertyType = _buf.ReadString();
@@ -66,6 +67,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// 转身速度
     /// </summary>
     public float RotationSpeed { get; private set; }
+    /// <summary>
+    /// 身体高度(判断位置，判断伤害什么的)
+    /// </summary>
+    public float BodyHeight { get; private set; }
     /// <summary>
     /// 身体半径(判断伤害什么的)
     /// </summary>
@@ -115,6 +120,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "ResId:" + ResId + ","
         + "MoveSpeed:" + MoveSpeed + ","
         + "RotationSpeed:" + RotationSpeed + ","
+        + "BodyHeight:" + BodyHeight + ","
         + "BodyRadius:" + BodyRadius + ","
         + "ResScale:" + ResScale + ","
         + "PropertyType:" + PropertyType + ","

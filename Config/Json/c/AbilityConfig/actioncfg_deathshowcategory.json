@@ -10,7 +10,7 @@
     "id": "DeathShow_1",
     "name": "",
     "desc": "死亡表现",
-    "duration": 1,
+    "duration": 0.1,
     "deathShowActionCall": [
       {
         "delayTime": 0,
@@ -19,8 +19,8 @@
         "actionCondition2": []
       },
       {
-        "delayTime": 0.5,
-        "action_id": "CreateEffect_Death_1",
+        "delayTime": 0,
+        "action_id": "EffectCreate_Death_1",
         "actionCondition1": [],
         "actionCondition2": []
       }

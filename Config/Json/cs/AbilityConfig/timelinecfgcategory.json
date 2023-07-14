@@ -84,7 +84,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -126,7 +127,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -160,7 +162,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -202,7 +205,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -236,7 +240,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -289,7 +294,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -322,7 +328,8 @@
             "keepHorizontal": true,
             "width": 10,
             "length": 6
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -364,7 +371,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -380,7 +388,7 @@
       {
         "timeElapsed": 1,
         "delayTime": 0,
-        "action_id": "AddBuff_1",
+        "action_id": "BuffAdd_1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -437,7 +445,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_MachineGunLvl1Effect_1",
+        "action_id": "EffectCreate_MachineGunLvl1Effect_1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -476,7 +484,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_LaserFireEffect1",
+        "action_id": "EffectCreate_LaserFireEffect1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -515,7 +523,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_EneryPylon_PFX1",
+        "action_id": "EffectCreate_EneryPylon_PFX1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -554,7 +562,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_HoverTankFireShow1",
+        "action_id": "EffectCreate_HoverTankFireShow1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -593,7 +601,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_PlayerSolo1_Fire",
+        "action_id": "EffectCreate_PlayerSolo1_Fire",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -604,9 +612,21 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FireBullet_PlayerSolo1",
+        "action_id": "EffectCreate_PlayerSolo1_Flash",
         "actionCallParam": {
-          "$type": "ActionCallSelectLast"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitOne",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -632,7 +652,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_PlayerAoe1_Fire",
+        "action_id": "EffectCreate_PlayerAoe1_Fire",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -643,9 +663,21 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FireBullet_PlayerAoe1",
+        "action_id": "EffectCreate_PlayerAoe1_Flash",
         "actionCallParam": {
-          "$type": "ActionCallSelectLast"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe1First",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitOne",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -661,7 +693,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "AddBuff_Line1",
+        "action_id": "BuffAdd_Line1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -680,7 +712,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "AddBuff_Circle1",
+        "action_id": "BuffAdd_Circle1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -709,7 +741,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "CreateEffect_EnemySolo1_Fire",
+        "action_id": "EffectCreate_EnemySolo1_Fire",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false

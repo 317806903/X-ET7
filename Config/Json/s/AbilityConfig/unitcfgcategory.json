@@ -6,6 +6,7 @@
     "res_id": "ResUnit_Player1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Player1",
@@ -19,6 +20,7 @@
     "res_id": "ResUnit_Monster1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
@@ -32,6 +34,7 @@
     "res_id": "ResUnit_SceneEffectNone",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
@@ -45,6 +48,7 @@
     "res_id": "ResUnit_HeadQuarter1",
     "moveSpeed": 10,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Player1",
@@ -59,10 +63,11 @@
   {
     "id": "Unit_MonsterCall",
     "name": "刷怪点",
-    "icon": "ResIcon_Monster1",
-    "res_id": "ResUnit_Monster1",
+    "icon": "ResIcon_MonsterCall",
+    "res_id": "ResUnit_MonsterCall",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
@@ -76,6 +81,7 @@
     "res_id": "ResUnit_Player1",
     "moveSpeed": 10,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Player1",
@@ -88,27 +94,30 @@
     ]
   },
   {
-    "id": "Unit_MachineGunTower_0",
+    "id": "Unit_Solo1",
     "name": "炮塔1",
     "icon": "ResIcon_MachineGunTower_0",
-    "res_id": "ResUnit_MachineGunTower_0",
+    "res_id": "ResUnit_Solo1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
     "deathShow": "DeathShow_1",
     "skillList": [
-      "Skill_PlayerSolo1"
+      "Skill_PlayerSolo1",
+      "Skill_PlayerAttackGotGold1"
     ]
   },
   {
-    "id": "Unit_EnergyPylon_2",
+    "id": "Unit_Aoe1",
     "name": "炮塔1",
     "icon": "ResIcon_EnergyPylon_2",
-    "res_id": "ResUnit_EnergyPylon_2",
+    "res_id": "ResUnit_Aoe1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower2",
@@ -118,12 +127,13 @@
     ]
   },
   {
-    "id": "Unit_LaserTower_0",
+    "id": "Unit_Line1",
     "name": "炮塔1",
     "icon": "ResIcon_LaserTower_0",
-    "res_id": "ResUnit_LaserTower_0",
+    "res_id": "ResUnit_Line1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower3",
@@ -133,12 +143,13 @@
     ]
   },
   {
-    "id": "Unit_RocketTower_1",
+    "id": "Unit_Circle1",
     "name": "炮塔1",
     "icon": "ResIcon_RocketTower_1",
-    "res_id": "ResUnit_RocketTower_1",
+    "res_id": "ResUnit_Circle1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower4",
@@ -148,57 +159,55 @@
     ]
   },
   {
-    "id": "Unit_Hoverboss",
+    "id": "Unit_Common1",
     "name": "坦克1",
     "icon": "ResIcon_Hoverboss",
-    "res_id": "ResUnit_Hoverboss",
+    "res_id": "ResUnit_Common1",
     "moveSpeed": 8,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Monster1",
     "deathShow": "DeathShow_1",
-    "skillList": [
-      "Skill_EnemySolo1"
-    ]
+    "skillList": []
   },
   {
-    "id": "Unit_Hoverbuggy",
+    "id": "Unit_Quick1",
     "name": "坦克2",
     "icon": "ResIcon_Hoverbuggy",
-    "res_id": "ResUnit_Hoverbuggy",
+    "res_id": "ResUnit_Quick1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Monster2",
     "deathShow": "DeathShow_1",
-    "skillList": [
-      "Skill_EnemySolo1"
-    ]
+    "skillList": []
   },
   {
-    "id": "Unit_Hovercopter",
+    "id": "Unit_Tank1",
     "name": "坦克3",
     "icon": "ResIcon_Hovercopter",
-    "res_id": "ResUnit_Hovercopter",
+    "res_id": "ResUnit_Tank1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Monster3",
     "deathShow": "DeathShow_1",
-    "skillList": [
-      "Skill_EnemySolo1"
-    ]
+    "skillList": []
   },
   {
-    "id": "Unit_Hovertank",
+    "id": "Unit_Attack1",
     "name": "坦克4",
     "icon": "ResIcon_Hovertank",
-    "res_id": "ResUnit_Hovertank",
+    "res_id": "ResUnit_Attack1",
     "moveSpeed": 6,
     "rotationSpeed": 200,
+    "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Monster4",

@@ -123,7 +123,7 @@
 						}
 					}
 				}
-				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
+				//if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled, args.attackerUnit, args.defenderUnit);

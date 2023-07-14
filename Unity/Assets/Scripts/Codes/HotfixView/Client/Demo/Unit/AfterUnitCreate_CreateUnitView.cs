@@ -35,7 +35,7 @@ namespace ET.Client
                 go.transform.localScale = Vector3.one * resScale;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
 
-                if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsMonster(unit))
+                if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsActor(unit))
                 {
                     //GameObject HealthBarPrefab = await ResComponent.Instance.LoadAssetAsync<GameObject>("HealthBar");
                     //GameObject HealthBarGo = UnityEngine.Object.Instantiate(HealthBarPrefab, go.transform, true);

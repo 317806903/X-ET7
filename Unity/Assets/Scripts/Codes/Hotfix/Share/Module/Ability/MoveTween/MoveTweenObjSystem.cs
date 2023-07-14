@@ -65,39 +65,71 @@ namespace ET.Ability
         {
             if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
+                ProfilerSample.BeginSample("StraightMoveTweenType");
                 self.DoMoveTween_Straight(straightMoveTweenType, fixedDeltaTime);
+                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
             {
+                ProfilerSample.BeginSample("TrackingMoveTweenType");
                 self.DoMoveTween_Tracking(trackingMoveTweenType, fixedDeltaTime);
+                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
             {
+                ProfilerSample.BeginSample("AroundMoveTweenType");
                 self.DoMoveTween_Around(aroundMoveTweenType, fixedDeltaTime);
+                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
             {
                 if (self.selectHandle.selectHandleType == SelectHandleType.SelectDirection)
                 {
+                    ProfilerSample.BeginSample("TargetMoveTweenType SelectDirection");
                     self.DoMoveTween_Straight(self.moveTweenType as StraightMoveTweenType, fixedDeltaTime);
+                    ProfilerSample.EndSample();
                 }
                 else
                 {
+                    ProfilerSample.BeginSample("TargetMoveTweenType");
                     self.DoMoveTween_Target(targetMoveTweenType, fixedDeltaTime);
+                    ProfilerSample.EndSample();
                 }
             }
             //Log.Debug($" DoMoveTween {self.GetUnit().Position} {self.GetUnit().Forward}");
         }
         
+        /// <summary>
+        /// 直线轨迹
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="moveTweenType"></param>
+        /// <param name="fixedDeltaTime"></param>
         public static void DoMoveTween_Straight(this MoveTweenObj self, StraightMoveTweenType moveTweenType, float fixedDeltaTime)
         {
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
+            
+            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Forward");
             self.GetUnit().Forward = self.forward;
-            self.GetUnit().Position += math.normalize(self.forward) * self.speed * fixedDeltaTime;
+            ProfilerSample.EndSample();
+            
+            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Position 11");
+            float3 pos = self.GetUnit().Position;
+            pos += math.normalize(self.forward) * self.speed * fixedDeltaTime;
+            ProfilerSample.EndSample();
+            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Position 22");
+            self.GetUnit().Position = pos;
+            ProfilerSample.EndSample();
         }
         
+        /// <summary>
+        /// 追踪某个对象
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="moveTweenType"></param>
+        /// <param name="fixedDeltaTime"></param>
         public static void DoMoveTween_Tracking(this MoveTweenObj self, TrackingMoveTweenType moveTweenType, float fixedDeltaTime)
         {
             Unit targetUnit;
@@ -143,6 +175,12 @@ namespace ET.Ability
             unit.Position += unit.Forward * self.speed * fixedDeltaTime;
         }
         
+        /// <summary>
+        /// 环绕某个对象
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="moveTweenType"></param>
+        /// <param name="fixedDeltaTime"></param>
         public static void DoMoveTween_Around(this MoveTweenObj self, AroundMoveTweenType moveTweenType, float fixedDeltaTime)
         {
             float3 targetPosition;
@@ -189,6 +227,12 @@ namespace ET.Ability
             unit.Position = targetPosition + curPosDir * radius;
         }
         
+        /// <summary>
+        /// 特定目标轨迹
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="moveTweenType"></param>
+        /// <param name="fixedDeltaTime"></param>
         public static void DoMoveTween_Target(this MoveTweenObj self, TargetMoveTweenType moveTweenType, float fixedDeltaTime)
         {
             float3 targetPosition;

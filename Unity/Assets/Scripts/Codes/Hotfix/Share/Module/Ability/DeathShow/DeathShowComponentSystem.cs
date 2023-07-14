@@ -47,7 +47,7 @@ namespace ET.Ability
             string actionId = actionCfg_DeathShow.Id;
 
             SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
-            ET.Ability.ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0, selectHandleSelf, new ActionContext());
+            ET.Ability.ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, new ActionContext());
         }
 
         /// <summary>

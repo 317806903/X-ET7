@@ -95,7 +95,7 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public string MapName { get; set; }
+		public string GamePlayBattleLevelCfgId { get; set; }
 
 	}
 
@@ -882,6 +882,9 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
+		public string BattleCfgId { get; set; }
+
+		[ProtoMember(3)]
 		public int IsARRoom { get; set; }
 
 	}
@@ -992,6 +995,9 @@ namespace ET
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(2)]
+		public int IsKickWhenBattle { get; set; }
+
 	}
 
 	[ResponseType(nameof(G2C_ChgRoomMemberStatus))]
@@ -1041,6 +1047,34 @@ namespace ET
 	[Message(OuterMessage.G2C_ChgRoomMemberSeat)]
 	[ProtoContract]
 	public partial class G2C_ChgRoomMemberSeat: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2C_ChgRoomBattleLevelCfg))]
+	[Message(OuterMessage.C2G_ChgRoomBattleLevelCfg)]
+	[ProtoContract]
+	public partial class C2G_ChgRoomBattleLevelCfg: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string NewBattleCfgId { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_ChgRoomBattleLevelCfg)]
+	[ProtoContract]
+	public partial class G2C_ChgRoomBattleLevelCfg: ProtoObject, IResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -1141,6 +1175,36 @@ namespace ET
 		[ProtoMember(3)]
 		public List<byte[]> Components { get; set; }
 
+	}
+
+	[Message(OuterMessage.M2C_GamePlayCoinChgNotice)]
+	[ProtoContract]
+	public partial class M2C_GamePlayCoinChgNotice: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] GamePlayPlayerListComponent { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_GamePlayModeChgNotice)]
+	[ProtoContract]
+	public partial class M2C_GamePlayModeChgNotice: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] GamePlayModeInfo { get; set; }
+
+		[ProtoMember(3)]
+		public List<byte[]> Components { get; set; }
+
+		[MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
+		[ProtoMember(4)]
+		public Dictionary<int, int> CoinKV { get; set; }
 	}
 
 	[ResponseType(nameof(M2C_PutHome))]
@@ -1364,22 +1428,26 @@ namespace ET
 		 public const ushort G2C_ChgRoomMemberStatus = 10072;
 		 public const ushort C2G_ChgRoomMemberSeat = 10073;
 		 public const ushort G2C_ChgRoomMemberSeat = 10074;
-		 public const ushort C2G_ReturnBackBattle = 10075;
-		 public const ushort G2C_ReturnBackBattle = 10076;
-		 public const ushort C2M_MemberQuitBattle = 10077;
-		 public const ushort M2C_MemberQuitBattle = 10078;
-		 public const ushort C2M_MemberReturnRoomFromBattle = 10079;
-		 public const ushort M2C_MemberReturnRoomFromBattle = 10080;
-		 public const ushort M2C_GamePlayChgNotice = 10081;
-		 public const ushort C2M_PutHome = 10082;
-		 public const ushort M2C_PutHome = 10083;
-		 public const ushort C2M_PutMonsterCall = 10084;
-		 public const ushort M2C_PutMonsterCall = 10085;
-		 public const ushort C2M_BuyPlayerTower = 10086;
-		 public const ushort M2C_BuyPlayerTower = 10087;
-		 public const ushort C2M_RefreshBuyPlayerTower = 10088;
-		 public const ushort M2C_RefreshBuyPlayerTower = 10089;
-		 public const ushort C2M_CallOwnTower = 10090;
-		 public const ushort M2C_CallOwnTower = 10091;
+		 public const ushort C2G_ChgRoomBattleLevelCfg = 10075;
+		 public const ushort G2C_ChgRoomBattleLevelCfg = 10076;
+		 public const ushort C2G_ReturnBackBattle = 10077;
+		 public const ushort G2C_ReturnBackBattle = 10078;
+		 public const ushort C2M_MemberQuitBattle = 10079;
+		 public const ushort M2C_MemberQuitBattle = 10080;
+		 public const ushort C2M_MemberReturnRoomFromBattle = 10081;
+		 public const ushort M2C_MemberReturnRoomFromBattle = 10082;
+		 public const ushort M2C_GamePlayChgNotice = 10083;
+		 public const ushort M2C_GamePlayCoinChgNotice = 10084;
+		 public const ushort M2C_GamePlayModeChgNotice = 10085;
+		 public const ushort C2M_PutHome = 10086;
+		 public const ushort M2C_PutHome = 10087;
+		 public const ushort C2M_PutMonsterCall = 10088;
+		 public const ushort M2C_PutMonsterCall = 10089;
+		 public const ushort C2M_BuyPlayerTower = 10090;
+		 public const ushort M2C_BuyPlayerTower = 10091;
+		 public const ushort C2M_RefreshBuyPlayerTower = 10092;
+		 public const ushort M2C_RefreshBuyPlayerTower = 10093;
+		 public const ushort C2M_CallOwnTower = 10094;
+		 public const ushort M2C_CallOwnTower = 10095;
 	}
 }

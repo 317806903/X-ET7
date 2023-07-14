@@ -11,8 +11,8 @@ namespace ET.Client
 		{
 			Scene clientScene = session.DomainScene();
 
-			clientScene.GetComponent<PlayerComponent>().PlayerGameMode = (PlayerGameMode)Enum.Parse(typeof(PlayerGameMode), message.PlayerGameMode);
-			clientScene.GetComponent<PlayerComponent>().PlayerStatus = (PlayerStatus)Enum.Parse(typeof(PlayerStatus), message.PlayerStatus);
+			clientScene.GetComponent<PlayerComponent>().PlayerGameMode = EnumHelper.FromString<PlayerGameMode>(message.PlayerGameMode);
+			clientScene.GetComponent<PlayerComponent>().PlayerStatus = EnumHelper.FromString<PlayerStatus>(message.PlayerStatus);
 			clientScene.GetComponent<PlayerComponent>().RoomId = message.RoomId;
 
 			await ETTask.CompletedTask;

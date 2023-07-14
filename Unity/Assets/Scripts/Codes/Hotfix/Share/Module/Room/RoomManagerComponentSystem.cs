@@ -18,10 +18,10 @@ namespace ET
             }
         }
 
-        public static RoomComponent CreateRoom(this RoomManagerComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string sceneName)
+        public static RoomComponent CreateRoom(this RoomManagerComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
         {
             RoomComponent roomComponent = self.AddChild<RoomComponent>();
-            roomComponent.Init(isARRoom, playerId, roomTeamMode, sceneName);
+            roomComponent.Init(isARRoom, playerId, roomTeamMode, battleCfgId);
 
             self.IdleRoomList.Add(roomComponent.Id);
             self.player2Room.Add(playerId, roomComponent.Id);
@@ -44,15 +44,21 @@ namespace ET
             self.player2Room.Add(playerId, roomComponent.Id);
         }
         
-        public static void QuitRoom(this RoomManagerComponent self, long playerId, long roomId)
+        public static bool QuitRoom(this RoomManagerComponent self, long playerId, long roomId)
         {
             RoomComponent roomComponent = self.GetRoom(roomId);
             bool isEmptyMember = roomComponent.RemoveRoomMember(playerId);
-            self.player2Room.Remove(playerId);
+            if (self.player2Room.ContainsKey(playerId) && self.player2Room[playerId] == roomId)
+            {
+                self.player2Room.Remove(playerId);
+            }
+            
             if (isEmptyMember)
             {
-                //self.DestroyRoom(roomId);
+                self.DestroyRoom(roomId);
             }
+
+            return isEmptyMember;
         }
         
         public static void ChgRoomStatus(this RoomManagerComponent self, long roomId, RoomStatus roomStatus)
@@ -70,7 +76,7 @@ namespace ET
                     self.EnterBattleRoomList.Remove(roomId);
                     self.InTheBattleRoomList.Remove(roomId);
                     break;
-                case RoomStatus.EnterBattle:
+                case RoomStatus.EnteringBattle:
                     self.IdleRoomList.Remove(roomId);
                     self.EnterBattleRoomList.Add(roomId);
                     self.InTheBattleRoomList.Remove(roomId);

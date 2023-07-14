@@ -1,0 +1,25 @@
+[
+  {
+    "id": "BuffRemove_1",
+    "name": "",
+    "buffRemoveType": {
+      "$type": "BuffRemoveCur"
+    }
+  },
+  {
+    "id": "BuffRemove_2",
+    "name": "",
+    "buffRemoveType": {
+      "$type": "BuffRemoveByTag",
+      "buffTagType": 2
+    }
+  },
+  {
+    "id": "BuffRemove_3",
+    "name": "",
+    "buffRemoveType": {
+      "$type": "BuffRemoveByType",
+      "buffType": 2
+    }
+  }
+]

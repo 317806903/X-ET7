@@ -9,7 +9,6 @@ namespace ET.Ability
             scene.AddComponent<UnitComponent>();
             scene.AddComponent<DamageComponent>();
             scene.AddComponent<ActionHandlerComponent>();
-            scene.AddComponent<TeamFlagComponent>();
         }
         
         public static void InitWhenClient(Scene scene)

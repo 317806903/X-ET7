@@ -16,6 +16,8 @@
         public const int SessionAcceptTimeout = 203;
         public const int BattleFrameTimer = 204;
         public const int BattleTowerFrameTimer = 205;
-        public const int ChkMonsterWaveCallAllClear = 206;
+        public const int GamePlayChkTimer = 206;
+        public const int GamePlayChkMonsterWaveCallAllClear = 207;
+        public const int GamePlayChkHomeAlive = 208;
     }
 }

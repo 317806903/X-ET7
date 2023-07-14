@@ -583,7 +583,7 @@ namespace ETEditor
             MeshFilter[] meshFilters = FindObjectsOfType<MeshFilter>();
             foreach (MeshFilter mf in meshFilters)
             {
-                if (mf.gameObject.tag == NAVMESH_TAG)
+                //if (mf.gameObject.tag == NAVMESH_TAG)
                 {
                     meshes.Add(mf);
                 }

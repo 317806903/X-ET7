@@ -45,12 +45,14 @@ namespace ET.Client
 
         public static void Init(this RoomManagerComponent self, long roomId, byte[] roomInfo, List<byte[]> roomMemberList)
         {
-            RoomComponent roomComponent = self.GetRoom(roomId);
-            if (roomComponent == null)
+            self.RemoveChild(roomId);
+            RoomComponent roomComponent = MongoHelper.Deserialize<Entity>(roomInfo) as RoomComponent;
+            self.AddChild(roomComponent);
+            for (int i = 0; i < roomMemberList.Count; i++)
             {
-                roomComponent = self.AddChildWithId<RoomComponent>(roomId);
+                Entity roomMember = MongoHelper.Deserialize<Entity>(roomMemberList[i]);
+                roomComponent.AddChild(roomMember);
             }
-            roomComponent.Init(roomInfo, roomMemberList);
         }
         
     }

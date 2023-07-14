@@ -16,7 +16,7 @@ namespace ET.Client
 				currentScene = session.DomainScene().CurrentScene();
 			}
 			currentScene.RemoveComponent<GamePlayComponent>();
-			
+
 			GamePlayComponent gamePlayComponent = MongoHelper.Deserialize<Entity>(message.GamePlayInfo) as GamePlayComponent;
 			currentScene.AddComponent(gamePlayComponent);
 			if (message.Components != null)
@@ -27,8 +27,6 @@ namespace ET.Client
 					gamePlayComponent.AddComponent(entity);
 				}
 			}
-			
-			EventSystem.Instance.Publish(clientScene, new EventType.GamePlayChg());
 
 			await ETTask.CompletedTask;
 		}

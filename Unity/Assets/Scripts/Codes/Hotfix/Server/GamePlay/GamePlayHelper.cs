@@ -1,11 +1,16 @@
 ﻿namespace ET.Server
 {
-    [FriendOf(typeof(GamePlayComponent))]
+    [FriendOf(typeof(GamePlayTowerDefenseComponent))]
     public static class GamePlayHelper
 	{
-		public static GamePlayComponent GetGamePlayer(Scene scene)
+		public static GamePlayComponent GetGamePlay(Scene scene)
 		{
-			return scene.GetComponent<GamePlayComponent>();
+			return ET.GamePlayHelper.GetGamePlay(scene);
+		}
+		
+		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(Scene scene)
+		{
+			return ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
 		}
 	}
 }

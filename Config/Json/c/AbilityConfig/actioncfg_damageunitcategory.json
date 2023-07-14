@@ -1,11 +1,20 @@
 [
   {
+    "id": "DamageUnit_0",
+    "name": "",
+    "desc": "选择目标用",
+    "damageInfo": {
+      "damageType": 1,
+      "value": 0
+    }
+  },
+  {
     "id": "DamageUnit_1",
     "name": "",
     "desc": "固定血量",
     "damageInfo": {
       "damageType": 1,
-      "value": 12
+      "value": 2
     }
   },
   {

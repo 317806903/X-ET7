@@ -7,6 +7,11 @@
 		{
 			Scene currentScene = session.DomainScene().CurrentScene();
 			UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+			if (unitComponent == null)
+			{
+				//int i = 6;
+				//return;
+			}
 			
 			foreach (UnitInfo unitInfo in message.Units)
 			{

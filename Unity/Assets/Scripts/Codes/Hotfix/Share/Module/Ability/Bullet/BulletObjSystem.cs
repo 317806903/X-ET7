@@ -129,17 +129,18 @@ namespace ET.Ability
                 BulletActionCall bulletActionCall = actionIds[i];
                 string actionId = bulletActionCall.ActionId;
                 SelectHandle selectHandle;
+                Unit resetPosByUnit = null;
                 if (bulletActionCall.ActionCallParam is ActionCallSelectLast)
                 {
                     selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
                 }
                 else if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
                 {
-                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoUnit);
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit);
                 }
                 else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
                 {
-                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), actionCallAutoSelf);
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf);
                 }
                 else
                 {
@@ -164,6 +165,7 @@ namespace ET.Ability
                     {
                         targetUnit = self.GetUnit();
                     }
+                    resetPosByUnit = targetUnit;
                     selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
                 }
 
@@ -180,7 +182,7 @@ namespace ET.Ability
                 }
                 if (bRet1 && bRet2)
                 {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
                 }
             }
         }

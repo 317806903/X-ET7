@@ -93,6 +93,9 @@ namespace ET.Client
             {
                 GameObjectPool pool = poolDict[poolName];
                 result = pool.NextAvailableObject(autoActive);
+                
+                TrigFromPool(result);
+
                 //scenario when no available object is found in pool
 #if UNITY_EDITOR
                 if (result == null)
@@ -110,12 +113,58 @@ namespace ET.Client
             return result;
         }
 
+        public static void TrigFromPool(GameObject go)
+        {
+            if (go == null)
+            {
+                return;
+            }
+            ParticleSystem[] particleSystems = go.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                if (particleSystem != null)
+                {
+                    particleSystem.Play();
+                }
+            }
+
+            TrailRenderer[] trailRenderers = go.GetComponentsInChildren<TrailRenderer>();
+            foreach (TrailRenderer trailRenderer in trailRenderers)
+            {
+                if (trailRenderer != null)
+                {
+                    trailRenderer.Clear();
+                }
+            }
+        }
+        
+        public static void TrigToPool(GameObject go)
+        {
+            if (go == null)
+            {
+                return;
+            }
+            ParticleSystem particleSystem = go.GetComponentInChildren<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Stop();
+            }
+
+            TrailRenderer trailRenderer = go.GetComponentInChildren<TrailRenderer>();
+            if (trailRenderer != null)
+            {
+                trailRenderer.Clear();
+            }
+        }
+        
         /// <summary>
         /// Return obj to the pool
         /// </summary>
         /// <OtherParam name="go"></OtherParam>
         public static void ReturnObjectToPool(GameObject go)
         {
+            TrigToPool(go);
+            
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
             {

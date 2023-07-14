@@ -139,14 +139,14 @@ namespace ET.Ability
 
             if (UnitHelper.ChkUnitAlive(defenderUnit) == false)
             {
-                defenderUnit.DestroyWithDeathShow();
-                
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
                     damageInfo = self,
                 });
+                defenderUnit.DestroyWithDeathShow();
+
             }
             //
             // //伤害流程走完，添加buff

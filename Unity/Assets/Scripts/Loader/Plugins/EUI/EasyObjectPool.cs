@@ -83,32 +83,48 @@ namespace ET.Client
         public GameObject NextAvailableObject(bool autoActive)
         {
             PoolObject po = null;
-            if (availableObjStack.Count > 1)
+            int reTryCount = 10;
+            while (true)
             {
-                po = availableObjStack.Pop();
-            }
-            else
-            {
-                int increaseSize = 0;
-                //increment size var, this is for info purpose only
-                if (inflationType == PoolInflationType.INCREMENT)
+                if (availableObjStack.Count > 1)
                 {
-                    increaseSize = 1;
-                }
-                else if (inflationType == PoolInflationType.DOUBLE)
-                {
-                    increaseSize = availableObjStack.Count + Mathf.Max(objectsInUse, 0);
-                }
-#if UNITY_EDITOR
-                Debug.Log(string.Format("Growing pool {0}: {1} populated", poolName, increaseSize));
-#endif
-                if (increaseSize > 0)
-                {
-                    populatePool(increaseSize);
                     po = availableObjStack.Pop();
                 }
+                else
+                {
+                    int increaseSize = 0;
+                    //increment size var, this is for info purpose only
+                    if (inflationType == PoolInflationType.INCREMENT)
+                    {
+                        increaseSize = 1;
+                    }
+                    else if (inflationType == PoolInflationType.DOUBLE)
+                    {
+                        increaseSize = availableObjStack.Count + Mathf.Max(objectsInUse, 0);
+                    }
+#if UNITY_EDITOR
+                    Debug.Log(string.Format("Growing pool {0}: {1} populated", poolName, increaseSize));
+#endif
+                    if (increaseSize > 0)
+                    {
+                        populatePool(increaseSize);
+                        po = availableObjStack.Pop();
+                    }
+                }
+                if (po != null)
+                {
+                    break;
+                }
+                else
+                {
+                    reTryCount--;
+                    if (reTryCount <= 0)
+                    {
+                        break;
+                    }
+                }
             }
-
+            
             GameObject result = null;
             if (po != null)
             {

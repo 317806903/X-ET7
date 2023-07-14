@@ -31,7 +31,8 @@ namespace ET
                 this[t] = kSet;
             }
 
-            kSet.Add(m, n);
+            //kSet.Add(m, n);
+            kSet[m] = n;
         }
 
         public bool Remove(T t, M m)

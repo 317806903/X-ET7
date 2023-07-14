@@ -16,13 +16,6 @@ namespace ET.Server
 				long roomId = playerStatusComponent.RoomId;
 
 				StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(player.DomainZone());
-				//
-				// R2G_QuitRoom _R2G_QuitRoom = (R2G_QuitRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig
-				// 		.InstanceId, new G2R_QuitRoom()
-				// {
-				// 	PlayerId = playerId,
-				// 	RoomId = roomId,
-				// });
 			}
 			
 			await playerStatusComponent.NoticeClient();

@@ -45,17 +45,21 @@ namespace ET.Ability
             }
         }
 
-        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, string effectCfgId, float duration, OffSetInfo offSetInfo)
+        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, float duration, OffSetInfo offSetInfo)
         {
-            if (string.IsNullOrEmpty(key) == false && self.recordEffectList.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) == false)
             {
-                return null;
+                if (self.recordEffectList.ContainsKey(key) && self.recordEffectList[key].Count >= maxKeyNum)
+                {
+                    return null;
+                }
             }
+
             EffectObj effectObj = self.AddChild<EffectObj>();
             effectObj.Init(unitId, key, effectCfgId, duration, offSetInfo);
             if (string.IsNullOrEmpty(key) == false)
             {
-                self.recordEffectList[key] = effectObj;
+                self.recordEffectList.Add(key, effectObj.Id);
             }
 
             return effectObj;
@@ -65,8 +69,13 @@ namespace ET.Ability
         {
             if (self.recordEffectList.ContainsKey(key))
             {
-                self.NoticeClientRemoveEffect(self.recordEffectList[key]);
-                self.recordEffectList[key].Dispose();
+                self.recordEffectList.TryGetValue(key, out List<long> effectList);
+                foreach (long effectObjId in effectList)
+                {
+                    EffectObj effectObj = self.GetChild<EffectObj>(effectObjId);
+                    self.NoticeClientRemoveEffect(effectObj);
+                    effectObj.Dispose();
+                }
                 self.recordEffectList.Remove(key);
             }
         }
@@ -110,14 +119,15 @@ namespace ET.Ability
             int count = self.removeList.Count;
             for (int i = 0; i < count; i++)
             {
-                string key = self.removeList[i].key;
+                EffectObj effectObj = self.removeList[i];
+                string key = effectObj.key;
                 if (self.recordEffectList.ContainsKey(key))
                 {
-                    self.recordEffectList.Remove(key);
+                    self.recordEffectList.Remove(key, effectObj.Id);
                 }
 
-                self.NoticeClientRemoveEffect(self.removeList[i]);
-                self.removeList[i].Dispose();
+                self.NoticeClientRemoveEffect(effectObj);
+                effectObj.Dispose();
             }
 
             self.removeList.Clear();

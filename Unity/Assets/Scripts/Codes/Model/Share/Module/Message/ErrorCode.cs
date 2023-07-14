@@ -13,6 +13,7 @@ namespace ET
         // 这里配置逻辑层的错误码
         // 110000 - 200000是抛异常的错误
         // 200001以上不抛异常
+        public const int ERR_LogicError = 200001;            // 业务逻辑错误
         
         // 300000 - 310000 客户端框架异常
         public const int ERR_ResourceInitError = 300000;            // 资源初始化失败

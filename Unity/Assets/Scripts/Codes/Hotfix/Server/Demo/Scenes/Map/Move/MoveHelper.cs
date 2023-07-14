@@ -12,7 +12,7 @@ namespace ET.Server
             if (speed < 0.01)
             {
                 cancellationToken?.Cancel();
-                unit.SendStop(WaitTypeError.Cancel);
+                unit.NoticeStopToClient(WaitTypeError.Cancel);
                 return;
             }
 
@@ -22,7 +22,7 @@ namespace ET.Server
             if (list.Count < 2)
             {
                 cancellationToken?.Cancel();
-                unit.SendStop(WaitTypeError.Timeout);
+                unit.NoticeStopToClient(WaitTypeError.Timeout);
                 return;
             }
                 
@@ -38,18 +38,12 @@ namespace ET.Server
             if (ret) // 如果返回false，说明被其它移动取消了，这时候不需要通知客户端stop
             {
                 //cancellationToken?.Cancel();
-                unit.SendStop(WaitTypeError.Success);
+                unit.NoticeStopToClient(WaitTypeError.Success);
             }
         }
 
-        public static void Stop(this Unit unit, int error)
-        {
-            unit.GetComponent<MoveByPathComponent>().Stop(error == WaitTypeError.Success);
-            unit.SendStop(error);
-        }
-
         // error: 0表示协程走完正常停止
-        public static void SendStop(this Unit unit, int error)
+        public static void NoticeStopToClient(this Unit unit, int error)
         {
             MessageHelper.Broadcast(unit, new M2C_Stop()
             {

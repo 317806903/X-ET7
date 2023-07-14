@@ -12,7 +12,7 @@
 			}
 			foreach (long unitId in message.Units)
 			{
-				unitComponent.Remove(unitId);
+				unitComponent.RemoveChild(unitId);
 			}
 
 			await ETTask.CompletedTask;

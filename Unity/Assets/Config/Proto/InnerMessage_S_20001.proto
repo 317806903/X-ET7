@@ -225,17 +225,13 @@ message R2G_GetRoomInfo // IActorResponse
 	repeated bytes RoomMemberInfos = 5;
 }
 
-message R2G_RoomInfoChgNotice // IActorMessage
-{
-	int32 RpcId = 1;
-}
-
 //ResponseType R2G_CreateRoom
 message G2R_CreateRoom // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
-	int32 IsARRoom = 3;
+	string BattleCfgId = 3;
+	int32 IsARRoom = 4;
 }
 
 message R2G_CreateRoom // IActorResponse
@@ -341,6 +337,22 @@ message R2G_ChgRoomMemberSeat // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType R2G_ChgRoomBattleLevelCfg
+message G2R_ChgRoomBattleLevelCfg // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+	string NewBattleCfgId = 4;
+}
+
+message R2G_ChgRoomBattleLevelCfg // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2R_CreateDynamicMap
 message R2M_CreateDynamicMap // IActorRequest
 {
@@ -371,12 +383,28 @@ message M2R_DestroyDynamicMap // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType M2M_EnterMapResponse
+message M2M_EnterMapRequest // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 PlayerLevel = 3;
+	string GamePlayBattleLevelCfgId = 4;
+}
+
+message M2M_EnterMapResponse // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType G2R_StartBattle
 message R2G_StartBattle // IActorRequest
 {
 	int32 RpcId = 1;
-	int64 DynamicMapId = 2;
-	int32 RoomSeatIndex = 3;
+	string GamePlayBattleLevelCfgId = 2;
+	int64 DynamicMapId = 3;
 }
 
 message G2R_StartBattle // IActorResponse
@@ -446,6 +474,63 @@ message G2R_ReturnBackBattle // IActorRequest
 }
 
 message R2G_ReturnBackBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2R_ChkIsBattleEnd
+message R2M_ChkIsBattleEnd // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2R_ChkIsBattleEnd // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsBattleEnd = 4;
+}
+
+//ResponseType M2R_MemberQuitBattle
+message R2M_MemberQuitBattle // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message M2R_MemberQuitBattle // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2M_MemberQuitRoom
+message M2R_MemberQuitRoom // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+}
+
+message R2M_MemberQuitRoom // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2M_NoticeRoomBattleEnd
+message M2R_NoticeRoomBattleEnd // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+}
+
+message R2M_NoticeRoomBattleEnd // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

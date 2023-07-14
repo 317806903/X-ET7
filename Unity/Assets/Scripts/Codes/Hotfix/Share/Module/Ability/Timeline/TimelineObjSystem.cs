@@ -75,15 +75,8 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
-                    SelectHandle curSelectHandle;
-                    if (timelineNode.ActionCallParam is ActionCallSelectLast)
-                    {
-                        curSelectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
-                    }
-                    else
-                    {
-                        curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), timelineNode.ActionCallParam);
-                    }
+                    SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam);
+
                     (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, self.actionContext);
                     if (isChgSelect1)
                     {
@@ -97,7 +90,8 @@ namespace ET.Ability
 
                     if (bRet1 && bRet2)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self.actionContext);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self
+                        .actionContext);
                     }
                 }
             }

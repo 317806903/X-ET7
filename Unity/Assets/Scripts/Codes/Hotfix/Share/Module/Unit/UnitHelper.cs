@@ -111,13 +111,13 @@ namespace ET.Ability
             return false;
         }
         
-        public static bool ChkIsMonster(Scene scene, long unitId)
+        public static bool ChkIsActor(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsBullet(unit);
         }
         
-        public static bool ChkIsMonster(Unit unit)
+        public static bool ChkIsActor(Unit unit)
         {
             if (unit == null)
             {
@@ -196,7 +196,7 @@ namespace ET.Ability
             ListComponent<Unit> friends = ListComponent<Unit>.Create();
             foreach (Unit unit in GetUnitComponent(curUnit).playerList)
             {
-                if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
+                if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
                 {
                     if (UnitHelper.ChkUnitAlive(unit))
                     {
@@ -209,7 +209,7 @@ namespace ET.Ability
             {
                 foreach (Unit unit in GetUnitComponent(curUnit).actorList)
                 {
-                    if (TeamFlagHelper.ChkIsFriend(curUnit, unit))
+                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
                     {
                         if (UnitHelper.ChkUnitAlive(unit))
                         {
@@ -222,27 +222,45 @@ namespace ET.Ability
             return friends;
         }
 
+        /// <summary>
+        /// 获取敌对势力的对象列表
+        /// </summary>
+        /// <param name="curUnit"></param>
+        /// <param name="isOnlyPlayer"></param>
+        /// <returns></returns>
         public static ListComponent<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
         {
             ListComponent<Unit> hostileForces = ListComponent<Unit>.Create();
-            foreach (Unit unit in GetUnitComponent(curUnit).playerList)
+            
+            Dictionary<long, AOIEntity> seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
+            foreach (var seeUnit in seeUnits)
             {
-                if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
+                Unit unit = seeUnit.Value.Unit;
+                bool isContinue = false;
+                if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsActor(unit))
+                {
+                    isContinue = true;
+                }
+                else
+                {
+                    isContinue = false;
+                }
+                if (isContinue == false)
+                {
+                    continue;
+                }
+                ProfilerSample.BeginSample("seeUnits ET.GamePlayHelper.ChkIsFriend");
+                bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
+                ProfilerSample.EndSample();
+                if (isFriend == false)
                 {
                     if (UnitHelper.ChkUnitAlive(unit))
                     {
-                        hostileForces.Add(unit);
-                    }
-                }
-            }
-
-            if (isOnlyPlayer == false)
-            {
-                foreach (Unit unit in GetUnitComponent(curUnit).actorList)
-                {
-                    if (TeamFlagHelper.ChkIsFriend(curUnit, unit) == false)
-                    {
-                        if (UnitHelper.ChkUnitAlive(unit))
+                        if (UnitHelper.ChkIsPlayer(unit))
+                        {
+                            hostileForces.Add(unit);
+                        }
+                        else if (UnitHelper.ChkIsActor(unit) && isOnlyPlayer == false)
                         {
                             hostileForces.Add(unit);
                         }
@@ -255,6 +273,20 @@ namespace ET.Ability
 
         public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius)
         {
+            float bRadius = 0.1f;
+            float cRadius = 0.1f;
+            float3 dis = curUnit.Position - targetUnit.Position;
+            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(radius + bRadius + cRadius, 2))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
+        public static bool ChkIsNear(Unit curUnit, Unit targetUnit)
+        {
+            float radius = 0.3f;
             float bRadius = 0.1f;
             float cRadius = 0.1f;
             float3 dis = curUnit.Position - targetUnit.Position;
@@ -281,6 +313,16 @@ namespace ET.Ability
             float3 newPosition = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
             return (newPosition, newForward);
+        }
+        
+        public static float3 GetNewNodePosition(float3 resetPos, OffSetInfo offSetInfo)
+        {
+            string nodeName = offSetInfo.NodeName;
+            Vector3 offSetPosition = offSetInfo.OffSetPosition;
+            Vector3 relateForward = offSetInfo.RelateForward;
+            
+            float3 newPosition = resetPos + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+            return newPosition;
         }
         
         public static void AddSyncPosUnit(Unit unit)

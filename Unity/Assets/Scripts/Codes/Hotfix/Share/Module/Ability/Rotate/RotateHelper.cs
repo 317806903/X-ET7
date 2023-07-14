@@ -38,6 +38,10 @@ namespace ET.Ability
                 incrementRotate = ET.Ability.UnitHelper.GetTargetDirAngle(unit, selectHandle.direction);
             }
 
+            if (math.abs(incrementRotate) <= 0.05f)
+            {
+                return;
+            }
             if (forceSet)
             {
                 ForceSetRotate(unit, incrementRotate);

@@ -580,7 +580,9 @@ namespace ET
                 {
                     try
                     {
+                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iUpdateSystem.Run(component);
+                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {
@@ -620,7 +622,9 @@ namespace ET
                 {
                     try
                     {
+                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iFixedUpdateSystem.Run(component);
+                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {
@@ -660,7 +664,9 @@ namespace ET
                 {
                     try
                     {
+                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iLateUpdateSystem.Run(component);
+                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {

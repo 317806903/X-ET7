@@ -5,7 +5,7 @@ namespace ET.Ability
 {
 	public class Action_DeathShow: IActionHandler
 	{
-		public override async ETTask Run(Unit unit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
+		public override async ETTask Run(Unit unit, Unit resetPosByUnit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
 		{
 			if (delayTime > 0)
 			{
@@ -27,7 +27,8 @@ namespace ET.Ability
 				}
 				if (bRet1 && bRet2)
 				{
-					ActionHandlerHelper.CreateAction(unit, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
+					ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, 
+					actionContext);
 				}
 			}
 			await ETTask.CompletedTask;

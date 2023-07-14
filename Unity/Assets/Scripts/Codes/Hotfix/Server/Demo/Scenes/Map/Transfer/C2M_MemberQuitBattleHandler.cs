@@ -9,20 +9,14 @@ namespace ET.Server
 		{
 			long playerId = unit.Id;
 
-			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlayer(unit.DomainScene());
-			if (gamePlayComponent != null)
-			{
-				RoomComponent roomComponent = gamePlayComponent.GetRoomComponent();
-				roomComponent.RemoveRoomMember(playerId);
-			}
-			
 			M2G_MemberQuitBattle _M2G_MemberQuitBattle = new();
 			ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 			await oneTypeLocationType.Call(playerId, _M2G_MemberQuitBattle);
 			
 			unit.RemoveLocation(LocationType.Unit).Coroutine();
-			unit.Dispose();
-			
+			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());
+			gamePlayComponent.PlayerQuitBattle(playerId, true);
+
 			await ETTask.CompletedTask;
 		}
 	}

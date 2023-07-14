@@ -25,6 +25,11 @@
     "res_name": "Assets/ResAB/UI/Icon/Icon_HeadQuarter1.png"
   },
   {
+    "id": "ResIcon_MonsterCall",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_HeadQuarter1.png"
+  },
+  {
     "id": "ResIcon_MachineGunTower_0",
     "name": "",
     "res_name": "Assets/ResAB/UI/Icon/Icon_MachineGunTower_0.png"

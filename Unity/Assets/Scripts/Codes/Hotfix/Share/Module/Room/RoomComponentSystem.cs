@@ -18,13 +18,13 @@ namespace ET
             }
         }
         
-        public static void Init(this RoomComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string sceneName)
+        public static void Init(this RoomComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
         {
             self.isARRoom = isARRoom;
             self.roomStatus = RoomStatus.Idle;
             self.ownerRoomMemberId = playerId;
             self.roomTeamMode = roomTeamMode;
-            self.sceneName = sceneName;
+            self.gamePlayBattleLevelCfgId = battleCfgId;
             self.AddRoomMember(playerId, true, RoomTeamId.Red, 0);
         }
         
@@ -37,12 +37,7 @@ namespace ET
         {
             self.roomTeamMode = roomTeamMode;
         }
-        
-        public static void ChgSceneName(this RoomComponent self, string sceneName)
-        {
-            self.sceneName = sceneName;
-        }
-        
+
         public static bool ChkIsOwner(this RoomComponent self, long playerId)
         {
             return self.ownerRoomMemberId == playerId;
@@ -116,6 +111,11 @@ namespace ET
         
         public static bool RemoveRoomMember(this RoomComponent self, long playerId)
         {
+            RoomMember curRoomMember = self.GetChild<RoomMember>(playerId);
+            if (curRoomMember == null)
+            {
+                return false;
+            }
             bool isEmptyMember = false;
             bool isOwner = playerId == self.ownerRoomMemberId;
             if (isOwner)
@@ -142,7 +142,6 @@ namespace ET
                 }
             }
 
-            RoomMember curRoomMember = self.GetChild<RoomMember>(playerId);
             self.roomMemberSeat[curRoomMember.seatIndex] = -1;
             
             curRoomMember.Dispose();
@@ -169,7 +168,10 @@ namespace ET
             self.roomMemberSeat[seatIndex] = playerId;
         }
 
-        //获取房间对应的动态map
-        //销毁房间的时候销毁动态map
+        public static void ChgRoomBattleLevelCfg(this RoomComponent self, string newBattleCfgId)
+        {
+            self.gamePlayBattleLevelCfgId = newBattleCfgId;
+        }
+
     }
 }

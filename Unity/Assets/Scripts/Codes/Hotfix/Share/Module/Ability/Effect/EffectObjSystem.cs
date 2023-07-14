@@ -33,9 +33,9 @@ namespace ET.Ability
             self.isSceneEffect = unitId == 0? true : false;
             self.unitId = unitId;
             self.CfgId = effectCfgId;
-            self.duration = duration;
             self.timeElapsed = 0;
-            self.permanent = self.duration == -1? true : false;
+            self.permanent = duration == -1? true : false;
+            self.duration = duration == -1? 1 : duration;
             self.hangPointName = nodeName;
             self.offSet = offSetPosition;
             self.rotation = relateForward;

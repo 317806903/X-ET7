@@ -1,0 +1,75 @@
+[
+  {
+    "id": "BuffAdd_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 30,
+        "addStack": 20,
+        "buffAction": {
+          "$type": "BuffActionModifyAttribute",
+          "numericType": 10052,
+          "baseValue": 11,
+          "stackValue": 13
+        },
+        "buffId": "Buff_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Line1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionNone"
+        },
+        "buffId": "Buff_Line1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Circle1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionNone"
+        },
+        "buffId": "Buff_Circle1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AttackGetGold1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionNone"
+        },
+        "buffId": "Buff_AttackGetGold1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AutoGetGold1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffAction": {
+          "$type": "BuffActionNone"
+        },
+        "buffId": "Buff_AutoGetGold1"
+      }
+    ]
+  }
+]

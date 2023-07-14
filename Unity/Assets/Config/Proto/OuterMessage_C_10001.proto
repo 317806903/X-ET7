@@ -46,7 +46,7 @@ message Actor_TransferResponse // IActorLocationResponse
 message C2G_EnterMap // IRequest
 {
 	int32 RpcId = 1;
-	string MapName = 2;
+	string GamePlayBattleLevelCfgId = 2;
 }
 
 message G2C_EnterMap // IResponse
@@ -428,7 +428,8 @@ message R2C_RoomInfoChgNotice // IActorMessage
 message C2G_CreateRoom // IRequest
 {
 	int32 RpcId = 1;
-	int32 IsARRoom = 2;
+	string BattleCfgId = 2;
+	int32 IsARRoom = 3;
 }
 
 message G2C_CreateRoom // IResponse
@@ -483,6 +484,7 @@ message G2C_KickMemberOutRoom // IResponse
 message G2C_BeKickMemberOutRoom // IActorMessage
 {
 	int32 RpcId = 1;
+	int32 IsKickWhenBattle = 2;
 }
 
 //ResponseType G2C_ChgRoomMemberStatus
@@ -508,6 +510,20 @@ message C2G_ChgRoomMemberSeat // IRequest
 }
 
 message G2C_ChgRoomMemberSeat // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ChgRoomBattleLevelCfg
+message C2G_ChgRoomBattleLevelCfg // IRequest
+{
+	int32 RpcId = 1;
+	string NewBattleCfgId = 2;
+}
+
+message G2C_ChgRoomBattleLevelCfg // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -558,6 +574,20 @@ message M2C_GamePlayChgNotice // IActorMessage
 	int32 RpcId = 1;
 	bytes GamePlayInfo = 2;
 	repeated bytes Components = 3;
+}
+
+message M2C_GamePlayCoinChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	bytes GamePlayPlayerListComponent = 2;
+}
+
+message M2C_GamePlayModeChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	bytes GamePlayModeInfo = 2;
+	repeated bytes Components = 3;
+	map<int32, int32> CoinKV = 4;
 }
 
 //ResponseType M2C_PutHome

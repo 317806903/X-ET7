@@ -34,13 +34,14 @@ namespace ET.Client
                     await TimerComponent.Instance.WaitFrameAsync();
                     currentScene = scene.CurrentScene();
                 }
-                GamePlayComponent gamePlayComponent = currentScene.GetComponent<GamePlayComponent>();
-                while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
+                
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(currentScene);
+                while (gamePlayTowerDefenseComponent == null || gamePlayTowerDefenseComponent.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
-                    gamePlayComponent = currentScene.GetComponent<GamePlayComponent>();
+                    gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                 }
-            
+
                 await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_BattleTower);
 
             }

@@ -24,13 +24,15 @@ namespace ET.Server
 			
 			if (isReady && roomComponent.ChkIsOwner(playerId) && roomComponent.ChkIsAllReady())
 			{
-				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.EnterBattle);
+				List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+				
+				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.EnteringBattle);
 				
 				StartSceneConfig dynamicMapConfig = StartSceneConfigCategory.Instance.GetDynamicMap(scene.DomainZone());
 					
 				byte[] roomInfo = roomComponent.ToBson();
 				ListComponent<byte[]> roomMemberInfos = ListComponent<byte[]>.Create();
-				foreach (var roomMember in roomComponent.GetRoomMemberList())
+				foreach (var roomMember in roomMemberList)
 				{
 					roomMemberInfos.Add(roomMember.ToBson());
 				}
@@ -55,19 +57,23 @@ namespace ET.Server
 				long dynamicMapId = _M2R_CreateDynamicMap.DynamicMapId;
 
 				roomComponent.sceneMapId = dynamicMapId;
-				List<RoomMember> roomMemberList2 = roomComponent.GetRoomMemberList();
-				foreach (RoomMember roomMember in roomMemberList2)
+				
+				foreach (RoomMember roomMember in roomMemberList)
 				{
 					R2G_StartBattle _R2G_StartBattle = new ()
 					{
 						DynamicMapId = dynamicMapId,
-						RoomSeatIndex = roomMember.seatIndex,
+						GamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId,
 					};
 					ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 					await oneTypeLocationType.Call(roomMember.Id, _R2G_StartBattle);
 				}
 				
 				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.InTheBattle);
+				foreach (RoomMember roomMember in roomMemberList)
+				{
+					roomComponent.ChgRoomMemberStatus(roomMember.Id, false);
+				}
 			}
 			else
 			{

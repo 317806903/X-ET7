@@ -1,0 +1,420 @@
+[
+  {
+    "id": "EffectCreate_1",
+    "name": "创建特效1",
+    "res_id": "ResEffect_1",
+    "key": "CreateEffect_1",
+    "maxKeyNum": 1,
+    "duration": 5,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_2",
+    "name": "创建特效2",
+    "res_id": "ResEffect_2",
+    "key": "CreateEffect_2",
+    "maxKeyNum": 1,
+    "duration": 5,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_3",
+    "name": "创建特效3",
+    "res_id": "ResEffect_3",
+    "key": "CreateEffect_3",
+    "maxKeyNum": 1,
+    "duration": 5,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_4",
+    "name": "创建特效4",
+    "res_id": "ResEffect_1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_MachineGunLvl1Effect_1",
+    "name": "Tower火花+子弹特效",
+    "res_id": "ResEffect_MachineGunLvl1Effect_1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_EneryPylon_PFX1",
+    "name": "Tower火花+子弹特效",
+    "res_id": "ResEffect_EneryPylon_PFX",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_LaserFireEffect1",
+    "name": "Tower火花+子弹特效",
+    "res_id": "ResEffect_LaserFireEffect",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.9469,
+        "z": 1.1227
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HoverTankFireShow1",
+    "name": "HoverTank火花+子弹特效",
+    "res_id": "ResEffect_EnemyShootEffect_1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 5,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0.125,
+        "y": 1.161,
+        "z": 0.914
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BeHit1",
+    "name": "被击中",
+    "res_id": "ResEffect_BeHitShow_1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Death_1",
+    "name": "死亡",
+    "res_id": "ResEffect_DeathShow_1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerSolo1_Fire",
+    "name": "机枪开火弹道",
+    "res_id": "ResEffect_BulletSolo1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.17,
+        "z": 1.4
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerSolo1_Flash",
+    "name": "机枪开火火光",
+    "res_id": "ResEffect_FlashSolo1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.17,
+        "z": 1.4
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerSolo1_Hit",
+    "name": "机枪开火命中",
+    "res_id": "ResEffect_HitSolo1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerAoe1_Fire",
+    "name": "炮击开火弹道",
+    "res_id": "ResEffect_BulletAoe1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.25,
+        "z": 1.12
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerAoe1_Flash",
+    "name": "炮击开火火光",
+    "res_id": "ResEffect_FlashAoe1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.25,
+        "z": 1.12
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerAoe1_Hit",
+    "name": "炮击开火命中",
+    "res_id": "ResEffect_HitAoe1",
+    "key": "",
+    "maxKeyNum": 0,
+    "duration": 1,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_EnemySolo1_Fire",
+    "name": "射击开火",
+    "res_id": "ResEffect_1",
+    "key": "EnemySolo1_Fire",
+    "maxKeyNum": 1,
+    "duration": 1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerLine1",
+    "name": "直线火焰",
+    "res_id": "ResEffect_Fire1",
+    "key": "ResEffect_Fire1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.8,
+        "z": 1.1
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerCircle1",
+    "name": "圆形毒雾",
+    "res_id": "ResEffect_Drag1",
+    "key": "ResEffect_Drag1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  }
+]

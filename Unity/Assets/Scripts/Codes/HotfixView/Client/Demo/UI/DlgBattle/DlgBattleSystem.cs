@@ -72,13 +72,13 @@ namespace ET.Client
             if (isTower)
             {
                 cfgId = self.towerList[index];
-                TowerCfg towerCfg = TowerCfgCategory.Instance.Get(cfgId);
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(cfgId);
                 unitCfgId = towerCfg.UnitId;
             }
             else
             {
                 cfgId = self.tankList[index];
-                MonsterCfg monsterCfg = MonsterCfgCategory.Instance.Get(cfgId);
+                TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(cfgId);
                 unitCfgId = monsterCfg.UnitId;
             }
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
@@ -168,26 +168,24 @@ namespace ET.Client
                     var position = self.currentPlaceObj.transform.position;
                     if (self.selectCfgType == UISelectCfgType.Tower)
                     {
-                        ET.Client.GamePlayHelper.SendCallTower(self.ClientScene(), self.selectCfgId, position);
+                        ET.Client.GamePlayTowerDefenseHelper.SendCallTower(self.ClientScene(), self.selectCfgId, position);
                     }
                     else if (self.selectCfgType == UISelectCfgType.Tanker)
                     {
-                        ET.Client.GamePlayHelper.SendCallTank(self.ClientScene(), self.selectCfgId, position);
+                        ET.Client.GamePlayTowerDefenseHelper.SendCallTank(self.ClientScene(), self.selectCfgId, position);
                     }
                 }
-                GameObject.Destroy(self.currentPlaceObj);
                 self.CheckIfPlaceSuccess();
             }
             else if(self.currentPlaceObj != null)
             {
-                GameObject.Destroy(self.currentPlaceObj);
                 self.CheckIfPlaceSuccess();
             }
         }
 
         public static void ChkPlayerMove(this DlgBattle self)
         {
-#if true||UNITY_EDITOR
+#if UNITY_EDITOR
             if (Input.GetMouseButtonDown(1))
 #else
             if (Input.GetMouseButtonDown(0))
@@ -298,7 +296,11 @@ namespace ET.Client
         public static void CheckIfPlaceSuccess(this DlgBattle self)
         {
             self.isDragging = false;
-            self.currentPlaceObj = null;
+            if (self.currentPlaceObj != null)
+            {
+                GameObject.Destroy(self.currentPlaceObj);
+                self.currentPlaceObj = null;
+            }
         }
     }
 }

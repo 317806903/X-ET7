@@ -22,9 +22,9 @@ namespace ET.Client
 
 		public static void ShowGameResult(this DlgBattleTowerEnd self)
 		{
-            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlayer(self.DomainScene());
-            GamePlayStatus gamePlayStatus = gamePlayComponent.GamePlayStatus;
-            if (gamePlayStatus == GamePlayStatus.GameSuccess)
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+            GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.GamePlayTowerDefenseStatus;
+            if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameSuccess)
             {
 	            self.View.ELabel_GameEndText.text = "战斗胜利";
             }

@@ -7,7 +7,7 @@
     "actionCallAutoUnitArea": {
       "$type": "ActionCallAutoUnitWhenRectangle",
       "isSave": false,
-      "selectNum": 1,
+      "selectNum": -1,
       "isFriend": false,
       "isOnlyPlayer": false,
       "offSetInfo": {
@@ -28,7 +28,8 @@
         "keepHorizontal": true,
         "width": 10,
         "length": 6
-      }
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
@@ -45,7 +46,7 @@
       },
       {
         "delayTime": 0,
-        "action_id": "CreateEffect_4",
+        "action_id": "EffectCreate_4",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -67,7 +68,7 @@
     "actionCallAutoUnitArea": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
       "isSave": false,
-      "selectNum": 1,
+      "selectNum": -1,
       "isFriend": false,
       "isOnlyPlayer": false,
       "offSetInfo": {
@@ -89,7 +90,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
@@ -104,7 +106,7 @@
       },
       {
         "delayTime": 0,
-        "action_id": "CreateEffect_1",
+        "action_id": "EffectCreate_1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -172,7 +174,7 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "CreateEffect_BeHit1",
+        "action_id": "EffectCreate_BeHit1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -202,7 +204,7 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "CreateEffect_BeHit1",
+        "action_id": "EffectCreate_BeHit1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -232,7 +234,7 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "CreateEffect_BeHit1",
+        "action_id": "EffectCreate_BeHit1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -244,15 +246,99 @@
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
     "SelfAttackActionCall": [],
-    "TargetAttackActionCall": []
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerSolo1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_PlayerAoe1First",
+    "name": "群体的目标",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_0",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerAoe1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
   },
   {
     "id": "AttackArea_PlayerAoe1",
@@ -282,9 +368,10 @@
       "umbellateArea": {
         "ignoringHeight": false,
         "keepHorizontal": true,
-        "radius": 100,
+        "radius": 5,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
@@ -338,7 +425,8 @@
         "keepHorizontal": true,
         "width": 100,
         "length": 10
-      }
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {
@@ -355,7 +443,7 @@
     "actionCallAutoUnitArea": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
       "isSave": false,
-      "selectNum": 1,
+      "selectNum": -1,
       "isFriend": false,
       "isOnlyPlayer": false,
       "offSetInfo": {
@@ -377,7 +465,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "damageInfo": "DamageUnit_1",
     "damageAllot": {

@@ -13,7 +13,7 @@ namespace ET.Server
 			(bool ret, string msg) = SkillHelper.CastSkill(unit, skillId);
 			if (ret == false)
 			{
-				//response.Error = 1;
+				//response.Error = ET.ErrorCode.ERR_LogicError;
 				response.Message = msg;
 			}
 			await ETTask.CompletedTask;

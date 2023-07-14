@@ -10,7 +10,6 @@ namespace ET.Client
             get => this.GetComponent<DlgRoomViewComponent>();
         }
 
-        public RoomComponent roomComponent;
         public Dictionary<int, Scroll_Item_RoomMember> ScrollItemRoomMembers;
     }
 }

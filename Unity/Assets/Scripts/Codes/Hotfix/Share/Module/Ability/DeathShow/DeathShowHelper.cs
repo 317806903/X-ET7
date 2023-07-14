@@ -12,6 +12,7 @@ namespace ET.Ability
         public static void DeathShow(Unit unit)
         {
             unit.RemoveComponent<AIComponent>();
+            unit.Stop(WaitTypeError.Cancel);
             float deathShowDuration = 0;
             ActionCfg_DeathShow actionCfg_DeathShow;
             if (UnitHelper.ChkIsBullet(unit))

@@ -43,7 +43,7 @@
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "RemoveBuff_3",
+        "action_id": "BuffRemove_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
         },
@@ -130,10 +130,31 @@
     "priority": 1,
     "maxStack": 1,
     "tickTime": [
-      0.2,
-      1
+      0.2
     ],
     "monitorTriggers": [
+      {
+        "buffTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerLine1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
       {
         "buffTrig": 5,
         "delayTime": 0,
@@ -163,7 +184,8 @@
             "keepHorizontal": true,
             "radius": 100,
             "angle": 360
-          }
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -171,20 +193,20 @@
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "CreateEffect_PlayerLine1",
+        "action_id": "AttackArea_Line1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
+          "$type": "ActionCallSelectLast"
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "buffTrig": 6,
+        "buffTrig": 9,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
+        "action_id": "EffectRemove_Fire1",
         "actionCallParam": {
-          "$type": "ActionCallSelectLast"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -202,61 +224,70 @@
     "priority": 1,
     "maxStack": 1,
     "tickTime": [
-      0.2,
-      1
+      0.2
     ],
     "monitorTriggers": [
       {
-        "buffTrig": 5,
+        "buffTrig": 2,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": false,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          }
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "buffTrig": 5,
-        "delayTime": 0,
-        "action_id": "CreateEffect_PlayerCircle1",
+        "action_id": "EffectCreate_PlayerCircle1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Buff_AttackGetGold1",
+    "name": "攻击偷钱",
+    "icon": "",
+    "tags": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
       {
-        "buffTrig": 6,
+        "buffTrig": 19,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
+        "action_id": "CoinAdd_Attack_1",
         "actionCallParam": {
-          "$type": "ActionCallSelectLast"
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AutoGetGold1",
+    "name": "自动加钱",
+    "icon": "",
+    "tags": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "tickTime": [
+      2
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "CoinAdd_Auto_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []

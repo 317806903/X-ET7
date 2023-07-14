@@ -2,14 +2,15 @@
     <refgroup name="ActionCfg_ref_group" ref="ActionCfg_PlayAudioCategory,
 	ActionCfg_PlayAnimatorCategory,
 	ActionCfg_FireBulletCategory,
-	ActionCfg_CreateEffectCategory,
-	ActionCfg_RemoveEffectCategory,
+	ActionCfg_EffectCreateCategory,
+	ActionCfg_EffectRemoveCategory,
 	ActionCfg_AttackAreaCategory,
 	ActionCfg_FaceToCategory,
 	ActionCfg_BuffAddStackCountCategory,
 	ActionCfg_BuffReduceStackCountCategory,
 	ActionCfg_BuffResetDurationCategory,
+	ActionCfg_CoinAddCategory,
 	ActionCfg_FaceToCategory,
-	ActionCfg_AddBuffCategory,
-	ActionCfg_RemoveBuffCategory"/>
+	ActionCfg_BuffAddCategory,
+	ActionCfg_BuffRemoveCategory"/>
 </module>

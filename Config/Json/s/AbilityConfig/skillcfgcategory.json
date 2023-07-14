@@ -29,7 +29,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_3",
     "learn_action_id": []
@@ -87,7 +88,8 @@
         "keepHorizontal": true,
         "width": 10,
         "length": 6
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_Player1",
     "learn_action_id": []
@@ -122,7 +124,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_Player3",
     "learn_action_id": []
@@ -138,7 +141,7 @@
     },
     "timeline_id": "",
     "learn_action_id": [
-      "AddBuff_1"
+      "BuffAdd_1"
     ]
   },
   {
@@ -171,7 +174,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_MachineGunTower1",
     "learn_action_id": []
@@ -206,7 +210,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_RocketTower_1",
     "learn_action_id": []
@@ -241,7 +246,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_LaserTower_0",
     "learn_action_id": []
@@ -276,7 +282,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_EnergyPylon_2",
     "learn_action_id": []
@@ -311,7 +318,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_HoverTank1",
     "learn_action_id": []
@@ -346,7 +354,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_PlayerSolo1",
     "learn_action_id": []
@@ -381,7 +390,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_PlayerAoe1",
     "learn_action_id": []
@@ -389,12 +399,12 @@
   {
     "id": "Skill_PlayerLine1",
     "name": "火柱",
-    "cd": 0,
+    "cd": 0.2,
     "skillSlotType": 1,
     "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "$type": "ActionCallAutoUnitWhenRectangle",
       "isSave": true,
-      "selectNum": 1,
+      "selectNum": -1,
       "isFriend": false,
       "isOnlyPlayer": false,
       "offSetInfo": {
@@ -410,13 +420,13 @@
           "z": 0
         }
       },
-      "isAngleFirst": false,
-      "umbellateArea": {
+      "rectangleArea": {
         "ignoringHeight": true,
         "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      }
+        "width": 100,
+        "length": 10
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_PlayerLine1",
     "learn_action_id": []
@@ -424,7 +434,7 @@
   {
     "id": "Skill_PlayerCircle1",
     "name": "毒雾",
-    "cd": 0,
+    "cd": 0.2,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -451,7 +461,8 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_PlayerCircle1",
     "learn_action_id": []
@@ -486,9 +497,38 @@
         "keepHorizontal": true,
         "radius": 100,
         "angle": 360
-      }
+      },
+      "isChgToSelectPos": false
     },
     "timeline_id": "Timeline_EnemySolo1",
     "learn_action_id": []
+  },
+  {
+    "id": "Skill_PlayerAttackGotGold1",
+    "name": "攻击偷钱",
+    "cd": 8,
+    "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf",
+      "isSave": false
+    },
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_AttackGetGold1"
+    ]
+  },
+  {
+    "id": "Skill_PlayerAutoGetGold1",
+    "name": "自动加钱",
+    "cd": 8,
+    "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf",
+      "isSave": false
+    },
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_AutoGetGold1"
+    ]
   }
 ]

@@ -63,11 +63,21 @@ namespace ET
 
 		public static void FixedUpdate(this UnitComponent self, float fixedDeltaTime)
 		{
+			ProfilerSample.BeginSample($"DoUnitHit");
 			self.DoUnitHit(fixedDeltaTime);
+			ProfilerSample.EndSample();
 			
+			ProfilerSample.BeginSample($"DoUnitRemove");
 			self.DoUnitRemove();
+			ProfilerSample.EndSample();
+			
+			ProfilerSample.BeginSample($"SyncPosUnit");
 			self.SyncPosUnit();
+			ProfilerSample.EndSample();
+			
+			ProfilerSample.BeginSample($"SyncNumericUnit");
 			self.SyncNumericUnit();
+			ProfilerSample.EndSample();
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -139,6 +149,9 @@ namespace ET
 			{
 				return;
 			}
+			
+			GamePlayHelper.RemoveUnitInfo(unit);
+			
 			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
 			recordList.Remove(unit);
 			unit?.Dispose();
@@ -147,6 +160,11 @@ namespace ET
 		public static void AddSyncPosUnit(this UnitComponent self, Unit unit)
 		{
 			if (self.NeedSyncPosUnits.Contains(unit))
+			{
+				return;
+			}
+
+			if (unit.GetComponent<AOIEntity>() == null)
 			{
 				return;
 			}
@@ -159,6 +177,10 @@ namespace ET
 			{
 				return;
 			}
+			if (unit.GetComponent<AOIEntity>() == null)
+			{
+				return;
+			}
 			self.NeedSyncNumericUnits.Add(unit);
 		}
 		
@@ -167,6 +189,10 @@ namespace ET
             if (self.NeedSyncPosUnits.Count == 0)
                 return;
             
+            EventType.SyncPosUnits _SyncPosUnits = new ()
+            {
+	            units = ListComponent<Unit>.Create(),
+            };
 			//同步单位状态（位置、方向、）
             foreach (Unit unit in self.NeedSyncPosUnits)
             {
@@ -182,12 +208,12 @@ namespace ET
 	                }
                 }
                 
-                EventType.SyncPosUnits _SyncPosUnits = new ()
-                {
-	                units = ListComponent<Unit>.Create(),
-                };
                 _SyncPosUnits.units.Add(unit);
-                EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
+            }
+
+            if (_SyncPosUnits.units.Count > 0)
+            {
+	            EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
             }
             self.NeedSyncPosUnits.Clear();
 		}
@@ -197,17 +223,20 @@ namespace ET
             if (self.NeedSyncNumericUnits.Count == 0)
                 return;
             
+            EventType.SyncNumericUnits _SyncNumericUnits = new ()
+            {
+	            units = ListComponent<Unit>.Create(),
+            };
             foreach (Unit unit in self.NeedSyncNumericUnits)
             {
                 if(unit.IsDisposed)
 	                continue;
                 
-                EventType.SyncNumericUnits _SyncNumericUnits = new ()
-                {
-	                units = ListComponent<Unit>.Create(),
-                };
                 _SyncNumericUnits.units.Add(unit);
-                EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
+            }
+            if (_SyncNumericUnits.units.Count > 0)
+            {
+	            EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
             }
             self.NeedSyncNumericUnits.Clear();
 		}

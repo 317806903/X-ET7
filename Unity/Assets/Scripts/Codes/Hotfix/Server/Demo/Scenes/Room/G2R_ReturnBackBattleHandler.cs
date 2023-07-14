@@ -13,16 +13,31 @@ namespace ET.Server
 			RoomComponent roomComponent = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponent != null)
 			{
+				if (roomComponent.roomStatus != RoomStatus.InTheBattle)
+				{
+					string msg = $"roomComponent.roomStatus[{roomComponent.roomStatus}] != RoomStatus.InTheBattle [playerId={playerId}][roomId={roomComponent.Id}]";
+					Log.Error(msg);
+					response.Error = ET.ErrorCode.ERR_LogicError;
+					response.Message = msg;
+					return;
+				}
 				long dynamicMapId = roomComponent.sceneMapId;
 				RoomMember roomMember = roomComponent.GetRoomMember(playerId);
 				R2G_StartBattle _R2G_StartBattle = new ()
 				{
 					DynamicMapId = dynamicMapId,
-					RoomSeatIndex = roomMember.seatIndex,
+					GamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId,
 				};
 				
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 				await oneTypeLocationType.Call(playerId, _R2G_StartBattle);
+			}
+			else
+			{
+				string msg = $"not find room when roomManagerComponent.GetRoomByPlayerId[{playerId}]";
+				Log.Error(msg);
+				response.Error = ET.ErrorCode.ERR_LogicError;
+				response.Message = msg;
 			}
 
 			await ETTask.CompletedTask;

@@ -73,7 +73,7 @@ namespace ET.Ability
 
             if (skillCfg.LearnActionId.Count > 0)
             {
-                SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
+                SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
                 ActionContext actionContext = new ActionContext()
                 {
                     unitId = self.GetUnit().Id,
@@ -82,7 +82,7 @@ namespace ET.Ability
                 };
                 foreach (var actionId in skillCfg.LearnActionId)
                 {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), actionId, 0, selectHandle, actionContext);
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, actionContext);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace ET.Ability
             {
                 return (false, $"skillId[{skillId} TimelineId=null]");
             }
-            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), skillCfg.SkillSelectAction);
+            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction);
 
             TimelineObj timelineObj = TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
             timelineObj.InitActionContext(new ActionContext()

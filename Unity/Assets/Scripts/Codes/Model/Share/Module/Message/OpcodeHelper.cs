@@ -18,6 +18,7 @@ namespace ET
             OuterMessage.M2C_RemoveUnits,
             OuterMessage.M2C_SyncNumericUnits,
             OuterMessage.M2C_PathfindingResult,
+            OuterMessage.M2C_GamePlayCoinChgNotice,
             
             ushort.MaxValue, // ActorResponse
         };

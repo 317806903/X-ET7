@@ -23,8 +23,11 @@ namespace ET.Ability.Client
         {
             protected override void Destroy(EffectShowObj self)
             {
-                //UnityEngine.Object.Destroy(self.go);
-                GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
+                if (self.go != null)
+                {
+                    //UnityEngine.Object.Destroy(self.go);
+                    GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
+                }
             }
         }
 
@@ -35,13 +38,10 @@ namespace ET.Ability.Client
             // GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
             // await GameObjectPoolHelper.InitPoolFormGamObjectAsync(prefab, 1);
             GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
-            
-            ParticleSystem particleSystem = go.GetComponentInChildren<ParticleSystem>();
-            if (particleSystem != null)
+            if (go == null)
             {
-                particleSystem.Play();
+                Log.Error($"EffectShowObjSystem.Init go == null when resName={resName}");
             }
-            
             self.go = go;
             Unit unit = effectObj.GetUnit();
             
@@ -54,12 +54,15 @@ namespace ET.Ability.Client
             else
             {
                 GameObject gameObject = unit.GetComponent<GameObjectComponent>().GameObject;
-                // 通过 effectObj.hangPointName 找到节点
-                Transform tran = gameObject.transform;
-                go.transform.SetParent(tran);
-                go.transform.localScale = Vector3.one;
-                go.transform.localPosition = effectObj.offSet;
-                go.transform.localEulerAngles = effectObj.rotation;
+                if (gameObject != null)
+                {
+                    // 通过 effectObj.hangPointName 找到节点
+                    Transform tran = gameObject.transform;
+                    go.transform.SetParent(tran);
+                    go.transform.localScale = Vector3.one;
+                    go.transform.localPosition = effectObj.offSet;
+                    go.transform.localEulerAngles = effectObj.rotation;
+                }
             }
         }
 

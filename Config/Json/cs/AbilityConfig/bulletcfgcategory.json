@@ -14,7 +14,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
         },
@@ -124,7 +124,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -135,7 +135,7 @@
       {
         "bulletTrig": 2,
         "delayTime": 0,
-        "action_id": "CreateEffect_4",
+        "action_id": "EffectCreate_4",
         "actionCallParam": {
           "$type": "ActionCallBeHurtUnit"
         },
@@ -180,7 +180,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
@@ -191,7 +191,7 @@
       {
         "bulletTrig": 2,
         "delayTime": 0,
-        "action_id": "CreateEffect_4",
+        "action_id": "EffectCreate_4",
         "actionCallParam": {
           "$type": "ActionCallBeHurtUnit"
         },
@@ -236,7 +236,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
         },
@@ -291,7 +291,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
         },
@@ -346,7 +346,7 @@
       {
         "bulletTrig": 1,
         "delayTime": 0,
-        "action_id": "CreateEffect_3",
+        "action_id": "EffectCreate_3",
         "actionCallParam": {
           "$type": "ActionCallCasterUnit"
         },

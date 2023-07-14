@@ -51,6 +51,11 @@ namespace ET.Server
 
             while (true)
             {
+                if (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
+                {
+                    aiComponent.Cancel();
+                    return;
+                }
                 if (ET.Ability.UnitHelper.ChkUnitAlive(unitPlayer) == false)
                 {
                     aiComponent.Cancel();

@@ -15,8 +15,45 @@ namespace ET.Server
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 			if (roomComponent.ownerRoomMemberId != playerId)
 			{
-				Log.Error($"roomComponent.ownerRoomMemberId[{roomComponent.ownerRoomMemberId}] != playerId[{playerId}]");
-				response.Error = 1;
+				string msg = $"roomComponent.ownerRoomMemberId[{roomComponent.ownerRoomMemberId}] != playerId[{playerId}] roomId[{roomComponent.Id}]";
+				Log.Error(msg);
+				response.Error = ET.ErrorCode.ERR_LogicError;
+				response.Message = msg;
+				return;
+			}
+
+			if (roomComponent.sceneMapId > 0)
+			{
+				if (roomComponent.roomStatus == RoomStatus.InTheBattle)
+				{
+					R2M_ChkIsBattleEnd _R2M_ChkIsBattleEnd = new ();
+					M2R_ChkIsBattleEnd _M2R_ChkIsBattleEnd = (M2R_ChkIsBattleEnd) await ActorMessageSenderComponent.Instance.Call(roomComponent.sceneMapId, _R2M_ChkIsBattleEnd);
+					bool isBattleEnd = _M2R_ChkIsBattleEnd.IsBattleEnd == 1? true : false;
+					if (isBattleEnd == false)
+					{
+						string msg = $"isBattleEnd == false playerId[{playerId}] roomId[{roomComponent.Id}]";
+						Log.Error(msg);
+						response.Error = ET.ErrorCode.ERR_LogicError;
+						response.Message = msg;
+						return;
+					}
+					else
+					{
+						R2M_MemberQuitBattle _R2M_MemberQuitBattle = new ()
+						{
+							PlayerId = beKickPlayerId,
+						};
+						ActorMessageSenderComponent.Instance.Send(roomComponent.sceneMapId, _R2M_MemberQuitBattle);
+					}
+				}
+				else
+				{
+					R2M_MemberQuitBattle _R2M_MemberQuitBattle = new ()
+					{
+						PlayerId = beKickPlayerId,
+					};
+					ActorMessageSenderComponent.Instance.Send(roomComponent.sceneMapId, _R2M_MemberQuitBattle);
+				}
 			}
 			roomManagerComponent.QuitRoom(beKickPlayerId, roomId);
 

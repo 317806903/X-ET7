@@ -24,7 +24,9 @@ namespace ET.Server
                 return;
             }
 
+            ProfilerSample.BeginSample($"ChangePosition_NotifyAOI");
             unit.DomainScene().GetComponent<AOIManagerComponent>().Move(aoiEntity, newCellX, newCellY);
+            ProfilerSample.EndSample();
             await ETTask.CompletedTask;
         }
     }

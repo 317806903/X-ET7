@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 自身
+/// 仅ActionCfg_AttackArea中使用,表示使用调用时传入的对象进行处理
 /// </summary>
 public sealed partial class ActionCallAutoUnitOne:  ActionCallAutoUnit 
 {

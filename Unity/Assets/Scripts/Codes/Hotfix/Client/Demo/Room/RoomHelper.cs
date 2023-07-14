@@ -9,8 +9,14 @@ namespace ET.Client
             try
             {
                 G2C_GetRoomList _G2C_GetRoomList = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_GetRoomList()) as G2C_GetRoomList;
-                
-                clientScene.GetComponent<RoomManagerComponent>().Init(_G2C_GetRoomList.RoomInfos);
+                if (_G2C_GetRoomList.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.GetRoomListAsync Error==1 msg={_G2C_GetRoomList.Message}");
+                }
+                else
+                {
+                    clientScene.GetComponent<RoomManagerComponent>().Init(_G2C_GetRoomList.RoomInfos);
+                }
             }
             catch (Exception e)
             {
@@ -27,7 +33,14 @@ namespace ET.Client
                             RoomId = roomId,
                         }) as 
                 G2C_GetRoomInfo;
-                clientScene.GetComponent<RoomManagerComponent>().Init(roomId, _G2C_GetRoomInfo.RoomInfo, _G2C_GetRoomInfo.RoomMemberInfos);
+                if (_G2C_GetRoomInfo.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.GetRoomInfoAsync Error==1 msg={_G2C_GetRoomInfo.Message}");
+                }
+                else
+                {
+                    clientScene.GetComponent<RoomManagerComponent>().Init(roomId, _G2C_GetRoomInfo.RoomInfo, _G2C_GetRoomInfo.RoomMemberInfos);
+                }
             }
             catch (Exception e)
             {
@@ -35,24 +48,31 @@ namespace ET.Client
             }	
         }
 
-        public static async ETTask CreateRoomAsync(Scene clientScene, bool isARRoom)
+        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, bool isARRoom)
         {
             try
             {
                 G2C_CreateRoom _G2C_CreateRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_CreateRoom()
                 {
+                    BattleCfgId = battleCfgId,
                     IsARRoom = isARRoom?1:0,
                 }) as G2C_CreateRoom;
-                long roomId = _G2C_CreateRoom.RoomId;
-                clientScene.GetComponent<RoomManagerComponent>().AddChildWithId<RoomComponent>(roomId);
+                if (_G2C_CreateRoom.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.CreateRoomAsync Error==1 msg={_G2C_CreateRoom.Message}");
+                    return false;
+                }
+
+                return true;
             }
             catch (Exception e)
             {
                 Log.Error(e);
+                return false;
             }	
         }
         
-        public static async ETTask JoinRoomAsync(Scene clientScene, long roomId)
+        public static async ETTask<bool> JoinRoomAsync(Scene clientScene, long roomId)
         {
             try
             {
@@ -60,11 +80,19 @@ namespace ET.Client
                 {
                     RoomId = roomId,
                 }) as G2C_JoinRoom;
+                if (_G2C_JoinRoom.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.JoinRoomAsync Error==1 msg={_G2C_JoinRoom.Message}");
+                    return false;
+                }
+
+                return true;
             }
             catch (Exception e)
             {
                 Log.Error(e);
-            }	
+                return false;
+            }
         }
         
         public static async ETTask QuitRoomAsync(Scene clientScene)
@@ -72,6 +100,10 @@ namespace ET.Client
             try
             {
                 G2C_QuitRoom _G2C_QuitRoom = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_QuitRoom()) as G2C_QuitRoom;
+                if (_G2C_QuitRoom.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.QuitRoomAsync Error==1 msg={_G2C_QuitRoom.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -87,6 +119,10 @@ namespace ET.Client
                 {
                     IsReady = isReady?1:0,
                 }) as G2C_ChgRoomMemberStatus;
+                if (_G2C_ChgRoomMemberStatus.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.ChgRoomMemberStatusAsync Error==1 msg={_G2C_ChgRoomMemberStatus.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -94,7 +130,7 @@ namespace ET.Client
             }	
         }
         
-        public static async ETTask ChgRoomSeatAsync(Scene clientScene, int newSeat)
+        public static async ETTask ChgRoomMemberSeatAsync(Scene clientScene, int newSeat)
         {
             try
             {
@@ -103,6 +139,30 @@ namespace ET.Client
                 {
                     NewSeat = newSeat,
                 }) as G2C_ChgRoomMemberSeat;
+                if (_G2C_ChgRoomMemberSeat.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.ChgRoomSeatAsync Error==1 msg={_G2C_ChgRoomMemberSeat.Message}");
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }	
+        }
+        
+        public static async ETTask ChgRoomBattleLevelCfgAsync(Scene clientScene, string newBattleCfgId)
+        {
+            try
+            {
+                G2C_ChgRoomBattleLevelCfg _G2C_ChgRoomBattleLevelCfg = await clientScene.GetComponent<SessionComponent>().Session.Call(new 
+                        C2G_ChgRoomBattleLevelCfg()
+                {
+                    NewBattleCfgId = newBattleCfgId,
+                }) as G2C_ChgRoomBattleLevelCfg;
+                if (_G2C_ChgRoomBattleLevelCfg.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.ChgRoomBattleLevelCfgAsync Error==1 msg={_G2C_ChgRoomBattleLevelCfg.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -116,6 +176,10 @@ namespace ET.Client
             {
                 M2C_MemberQuitBattle _M2C_MemberQuitBattle = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2M_MemberQuitBattle()) as 
                 M2C_MemberQuitBattle;
+                if (_M2C_MemberQuitBattle.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.MemberQuitBattleAsync Error==1 msg={_M2C_MemberQuitBattle.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -132,6 +196,10 @@ namespace ET.Client
                             BeKickPlayerId = beKickedPlayerId,
                         }) as 
                         G2C_KickMemberOutRoom;
+                if (_G2C_KickMemberOutRoom.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.BeKickedOutRoomAsync Error==1 msg={_G2C_KickMemberOutRoom.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -145,6 +213,10 @@ namespace ET.Client
             {
                 M2C_MemberReturnRoomFromBattle _M2C_MemberReturnRoomFromBattle = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2M_MemberReturnRoomFromBattle()) as 
                         M2C_MemberReturnRoomFromBattle;
+                if (_M2C_MemberReturnRoomFromBattle.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.MemberReturnRoomFromBattleAsync Error==1 msg={_M2C_MemberReturnRoomFromBattle.Message}");
+                }
             }
             catch (Exception e)
             {
@@ -157,6 +229,10 @@ namespace ET.Client
             try
             {
                 G2C_ReturnBackBattle _G2C_ReturnBackBattle = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_ReturnBackBattle()) as G2C_ReturnBackBattle;
+                if (_G2C_ReturnBackBattle.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.ReturnBackBattle Error==1 msg={_G2C_ReturnBackBattle.Message}");
+                }
             }
             catch (Exception e)
             {

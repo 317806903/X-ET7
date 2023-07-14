@@ -32,40 +32,40 @@
     "NodeParams": []
   },
   {
-    "Id": "Tower1_1",
-    "AIConfigId": "Tower1",
+    "Id": "TowerDefense_Tower1_1",
+    "AIConfigId": "TowerDefense_Tower1",
     "Order": 1,
     "Name": "AI_Attack",
     "Desc": "攻击",
     "NodeParams": []
   },
   {
-    "Id": "MonsterTower1_1",
-    "AIConfigId": "MonsterTower1",
+    "Id": "TowerDefense_Monster1_1",
+    "AIConfigId": "TowerDefense_Monster1",
     "Order": 1,
-    "Name": "AI_AttackWhenBlock",
+    "Name": "AI_TowerDefense_AttackWhenBlock",
     "Desc": "被堵路时攻击",
     "NodeParams": []
   },
   {
-    "Id": "MonsterTower1_2",
-    "AIConfigId": "MonsterTower1",
+    "Id": "TowerDefense_Monster1_2",
+    "AIConfigId": "TowerDefense_Monster1",
     "Order": 2,
-    "Name": "AI_Escape",
+    "Name": "AI_TowerDefense_Escape",
     "Desc": "往大本营前进",
     "NodeParams": []
   },
   {
-    "Id": "MonsterTower1_3",
-    "AIConfigId": "MonsterTower1",
+    "Id": "TowerDefense_Monster1_3",
+    "AIConfigId": "TowerDefense_Monster1",
     "Order": 3,
     "Name": "AI_Attack",
     "Desc": "攻击",
     "NodeParams": []
   },
   {
-    "Id": "MonsterTower1_4",
-    "AIConfigId": "MonsterTower1",
+    "Id": "TowerDefense_Monster1_4",
+    "AIConfigId": "TowerDefense_Monster1",
     "Order": 4,
     "Name": "AI_KaoJin",
     "Desc": "靠近",

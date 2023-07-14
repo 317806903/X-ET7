@@ -11,7 +11,14 @@ namespace ET.Client
 		{
 			Scene clientScene = session.DomainScene();
 
-            EventSystem.Instance.Publish(clientScene, new EventType.BeKickedRoom());
+			await ET.Client.SceneHelper.EnterHall(clientScene);
+			// if (message.IsKickWhenBattle == 1)
+			// {
+			// }
+			// else
+			// {
+			// 	EventSystem.Instance.Publish(clientScene, new EventType.BeKickedRoom());
+			// }
 
 			await ETTask.CompletedTask;
 		}

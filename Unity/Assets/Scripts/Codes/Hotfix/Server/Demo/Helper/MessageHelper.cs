@@ -21,6 +21,23 @@ namespace ET.Server
             MessageHelper.SendToClient(unit, removeUnits);
         }
         
+        public static MultiMap<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
+        {
+            MultiMap<long, Unit> playerSeeUnits = new();
+            for (int i = 0; i < units.Count; i++)
+            {
+                Unit unit = units[i];
+                Dictionary<long, AOIEntity> dict = unit.GetBeSeePlayers();
+                foreach (AOIEntity u in dict.Values)
+                {
+                    long playerId = u.Unit.Id;
+                    playerSeeUnits.Add(playerId, unit);
+                }
+            }
+
+            return playerSeeUnits;
+        }
+        
         public static void Broadcast(Unit unit, IActorMessage message)
         {
             Dictionary<long, AOIEntity> dict = unit.GetBeSeePlayers();

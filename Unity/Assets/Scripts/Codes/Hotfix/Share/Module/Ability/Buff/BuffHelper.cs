@@ -16,7 +16,7 @@ namespace ET.Ability
             return buffComponent;
         }
         
-        public static void AddBuff(Unit casterUnit, ActionCfg_AddBuff actionCfgAddBuff, SelectHandle selectHandle, ActionContext actionContext)
+        public static void AddBuff(Unit casterUnit, ActionCfg_BuffAdd actionCfgAddBuff, SelectHandle selectHandle, ActionContext actionContext)
         {
             if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
             {
@@ -41,7 +41,7 @@ namespace ET.Ability
             GetBuffComponent(unit).AddBuff(casterUnit, unit, addBuffInfo, actionContext);
         }
         
-        public static void RemoveBuff(Unit casterUnit, ActionCfg_RemoveBuff actionCfgRemoveBuff, SelectHandle selectHandle, ActionContext actionContext)
+        public static void RemoveBuff(Unit casterUnit, ActionCfg_BuffRemove actionCfgRemoveBuff, SelectHandle selectHandle, ActionContext actionContext)
         {
             BuffRemoveType buffRemoveType = actionCfgRemoveBuff.BuffRemoveType;
             if (buffRemoveType is BuffRemoveCur buffRemoveCur)

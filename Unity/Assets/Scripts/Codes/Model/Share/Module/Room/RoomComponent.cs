@@ -6,7 +6,7 @@ namespace ET
     public enum RoomStatus: byte
     {
         Idle,
-        EnterBattle,
+        EnteringBattle,
         InTheBattle,
     }
     public enum RoomTeamMode: byte
@@ -32,9 +32,9 @@ namespace ET
         public bool isARRoom;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;
-        public string sceneName;
         public long ownerRoomMemberId;
         public long sceneMapId;
+        public string gamePlayBattleLevelCfgId;
         public List<long> roomMemberSeat;
     }
 }

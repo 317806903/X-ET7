@@ -9,6 +9,6 @@ namespace ET.Ability
     [ActionHandler]
     public abstract class IActionHandler
     {
-        public abstract ETTask Run(Unit unit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext);
+        public abstract ETTask Run(Unit unit, Unit resetPosByUnit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext);
     }
 }

@@ -77,7 +77,7 @@ namespace ET.Server
 				{
 					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
 				}
-				RoomStatus roomStatus = (RoomStatus) Enum.Parse(typeof (RoomStatus), _R2G_GetRoomIdByPlayer.RoomStatus);
+				RoomStatus roomStatus = EnumHelper.FromString<RoomStatus>(_R2G_GetRoomIdByPlayer.RoomStatus);
 				if (roomStatus == RoomStatus.Idle)
 				{
 					playerStatusComponent.PlayerStatus = PlayerStatus.Room;

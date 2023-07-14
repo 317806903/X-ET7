@@ -11,12 +11,35 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
-			roomManagerComponent.QuitRoom(playerId, roomId);
+			if (roomId == 0)
+			{
+				return;
+			}
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			if (roomComponent == null)
+			{
+				return;
+			}
+			long dynamicMapId = roomComponent.sceneMapId;
+			bool isEmptyMember = roomManagerComponent.QuitRoom(playerId, roomId);
+			if (isEmptyMember)
+			{
+				// if (dynamicMapId > 0)
+				// {
+				// 	R2M_DestroyDynamicMap _R2M_DestroyDynamicMap = new ()
+				// 	{
+				// 		DynamicMapId = dynamicMapId,
+				// 	};
+				// 	StartSceneConfig dynamicMapConfig = StartSceneConfigCategory.Instance.GetDynamicMap(scene.DomainZone());
+				// 	M2R_DestroyDynamicMap _M2R_DestroyDynamicMap = (M2R_DestroyDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig
+				// 			.InstanceId, _R2M_DestroyDynamicMap);
+				// }
+			}
+			else
+			{
+				ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
+			}
 			
-			
-			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
-
 			await ETTask.CompletedTask;
 		}
 	}

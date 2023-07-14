@@ -15,7 +15,7 @@ namespace ET.Client
             Root.Instance.Scene.AddComponent<ResComponent>();
             Dictionary<Type, ByteBuf> output = new Dictionary<Type, ByteBuf>();
             HashSet<Type> configTypes = EventSystem.Instance.GetTypes(typeof(ConfigAttribute));
-            //GlobalConfig.Instance.PlayMode
+
             bool isReadEditor = false;
             if (Define.IsEditor)
             {
@@ -33,6 +33,13 @@ namespace ET.Client
                 isReadEditor = false;
             }
 
+            List<string> startConfigs = new List<string>()
+            {
+                "StartMachineConfigCategory", 
+                "StartProcessConfigCategory", 
+                "StartSceneConfigCategory", 
+                "StartZoneConfigCategory",
+            };
             if (isReadEditor)
             {
                 string ct = "cs";
@@ -51,13 +58,6 @@ namespace ET.Client
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                List<string> startConfigs = new List<string>()
-                {
-                    "StartMachineConfigCategory", 
-                    "StartProcessConfigCategory", 
-                    "StartSceneConfigCategory", 
-                    "StartZoneConfigCategory",
-                };
                 foreach (Type configType in configTypes)
                 {
                     string configFilePath;
@@ -81,8 +81,17 @@ namespace ET.Client
             {
                 foreach (Type configType in configTypes)
                 {
-                    Log.Debug($"GetAllConfigBytes {configType.Name}");
-                    TextAsset v = ResComponent.Instance.LoadAsset<TextAsset>(configType.Name.ToLower()) as TextAsset;
+                    string configFilePath;
+                    if (startConfigs.Contains(configType.Name))
+                    {
+                        configFilePath = $"{Options.Instance.StartConfig}_{configType.Name.ToLower()}";    
+                    }
+                    else
+                    {
+                        configFilePath = configType.Name.ToLower();
+                    }
+                    Log.Debug($"GetAllConfigBytes {configType.Name}=>{configFilePath}");
+                    TextAsset v = ResComponent.Instance.LoadAsset<TextAsset>(configFilePath) as TextAsset;
                     output[configType] = new ByteBuf(v.bytes);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -65,20 +66,22 @@ namespace ET.Server
             InstanceIdStruct instanceIdStruct = new InstanceIdStruct(dynamicMapBaseConfig.Process, (uint) dynamicMapBaseId);
             long dynamicMapBaseInstanceId = instanceIdStruct.ToLong();
             
-            //Scene dynamicMapNew = await SceneFactory.CreateServerScene(ServerSceneManagerComponent.Instance, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone, sceneMapName, dynamicMapBaseConfig.Type);
+            string gamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId;
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);
             Scene dynamicMapNew = await SceneFactory.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone, 
-                roomComponent.sceneName, dynamicMapBaseConfig.Type);
+                gamePlayBattleLevelCfg.SceneMap, dynamicMapBaseConfig.Type);
 
-            dynamicMapNew.AddComponent(roomComponent);
-            for (int i = 0; i < roomMemberList.Count; i++)
-            {
-                roomComponent.AddChild(roomMemberList[i]);
-            }
-
-            dynamicMapNew.AddComponent<GamePlayComponent>();
+            GamePlayComponent gamePlayComponent = dynamicMapNew.AddComponent<GamePlayComponent>();
+            gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList);
             
             self.dynamicMapList.Add(dynamicMapNew.InstanceId, dynamicMapNew.Id);
             self.dynamicUsedIndex.Add(dynamicMapBaseId);
+            
+            roomComponent.Dispose();
+            for (int i = 0; i < roomMemberList.Count; i++)
+            {
+                roomMemberList[i].Dispose();
+            }
             
             return dynamicMapNew;
         }
@@ -114,8 +117,5 @@ namespace ET.Server
             //
             // session.Dispose();
         }
-        
-        //轮询一段时间后，判断player是否断线一段时间，是的话踢出 Map，踢出房间，
-        //      当没有玩家的时候，退出 DynamicMap，并关闭房间
     }
 }

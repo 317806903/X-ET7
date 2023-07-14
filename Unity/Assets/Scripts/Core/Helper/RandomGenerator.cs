@@ -92,5 +92,43 @@ namespace ET
             int a = RandomNumber(0, 1000000);
             return a / 1000000f;
         }
+
+        public static int GetRandomIndexLinear(List<int> list)
+        {
+            int totalWeight = 0;
+            foreach (var one in list)
+            {
+                totalWeight += one;
+            }
+            var value = RandomNumber(0, totalWeight);
+            for (int i = 0; i < list.Count; i++)
+            {
+                value -= list[i];
+                if (value <= 0)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
+        public static T GetRandomIndexLinear<T>(Dictionary<T, int> list)
+        {
+            int totalWeight = 0;
+            foreach (var one in list)
+            {
+                totalWeight += one.Value;
+            }
+            int value = RandomNumber(0, totalWeight);
+            foreach (var one in list)
+            {
+                value -= one.Value;
+                if (value <= 0)
+                {
+                    return one.Key;
+                }
+            }
+            return default;
+        }
     }
 }

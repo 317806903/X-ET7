@@ -52,6 +52,10 @@ namespace ET
         {
         }
 
+        public struct GamePlayCoinChg
+        {
+        }
+
         public struct AfterUnitCreate
         {
             public Unit Unit;
@@ -78,6 +82,31 @@ namespace ET
         public struct NoticeGamePlayToClient
         {
             public long playerId;
+            public GamePlayComponent gamePlayComponent;
         }
+        
+        public struct NoticeGamePlayPlayerListToClient
+        {
+            public long playerId;
+            public GamePlayPlayerListComponent gamePlayPlayerListComponent;
+        }
+        
+        public struct NoticeGamePlayModeToClient
+        {
+            public long playerId;
+            public GamePlayModeComponent gamePlayModeComponent;
+        }
+        
+        public struct NoticeGameEndToRoom
+        {
+            public long roomId;
+        }
+        
+        public struct StopMove
+        {
+            public Unit unit;
+            public int error;
+        }
+
     }
 }

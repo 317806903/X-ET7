@@ -42,28 +42,34 @@
     "res_name": "Assets/ResAB/UnitPrefab/Character/HeadQuarter.prefab"
   },
   {
-    "id": "ResUnit_MachineGunTower_0",
+    "id": "ResUnit_MonsterCall",
     "name": "",
-    "desc": "ResUnit_Tower1",
-    "res_name": "Assets/ResAB/UnitPrefab/Tower/MachineGunTower_0.prefab"
+    "desc": "",
+    "res_name": "Assets/ResAB/UnitPrefab/Character/MonsterCall.prefab"
   },
   {
-    "id": "ResUnit_EnergyPylon_2",
+    "id": "ResUnit_Solo1",
     "name": "",
     "desc": "ResUnit_Tower1",
-    "res_name": "Assets/ResAB/UnitPrefab/Tower/EnergyPylon_2.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/Solo1.prefab"
   },
   {
-    "id": "ResUnit_LaserTower_0",
+    "id": "ResUnit_Aoe1",
     "name": "",
     "desc": "ResUnit_Tower1",
-    "res_name": "Assets/ResAB/UnitPrefab/Tower/LaserTower_0.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/Aoe1.prefab"
   },
   {
-    "id": "ResUnit_RocketTower_1",
+    "id": "ResUnit_Line1",
     "name": "",
     "desc": "ResUnit_Tower1",
-    "res_name": "Assets/ResAB/UnitPrefab/Tower/RocketTower_1.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/Line1.prefab"
+  },
+  {
+    "id": "ResUnit_Circle1",
+    "name": "",
+    "desc": "ResUnit_Tower1",
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/Circle1.prefab"
   },
   {
     "id": "ResUnit_BulletRocketProjectile_1",
@@ -72,27 +78,27 @@
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/RocketProjectile_1.prefab"
   },
   {
-    "id": "ResUnit_Hoverboss",
+    "id": "ResUnit_Common1",
     "name": "",
     "desc": "ResUnit_Hoverboss",
-    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hoverboss.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Common1.prefab"
   },
   {
-    "id": "ResUnit_Hoverbuggy",
+    "id": "ResUnit_Quick1",
     "name": "",
     "desc": "ResUnit_Hoverbuggy",
-    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hoverbuggy.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Quick1.prefab"
   },
   {
-    "id": "ResUnit_Hovercopter",
+    "id": "ResUnit_Tank1",
     "name": "",
     "desc": "ResUnit_Hovercopter",
-    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hovercopter.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Tank1.prefab"
   },
   {
-    "id": "ResUnit_Hovertank",
+    "id": "ResUnit_Attack1",
     "name": "",
     "desc": "ResUnit_Hovertank",
-    "res_name": "Assets/ResAB/UnitPrefab/Monster/Hovertank.prefab"
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Attack1.prefab"
   }
 ]

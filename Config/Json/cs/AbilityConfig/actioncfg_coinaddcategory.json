@@ -1,0 +1,24 @@
+[
+  {
+    "id": "CoinAdd_Attack_1",
+    "name": "",
+    "desc": "",
+    "coinAdd": [
+      [
+        1,
+        2
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_Auto_1",
+    "name": "",
+    "desc": "",
+    "coinAdd": [
+      [
+        1,
+        1
+      ]
+    ]
+  }
+]

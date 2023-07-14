@@ -12,7 +12,7 @@ namespace ET.Ability
     {
         public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ActionContext actionContext)
         {
-            Unit bulletUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_Bullet(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
+            Unit bulletUnit = ET.GamePlayHelper.CreateBulletByUnit(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
@@ -92,11 +92,13 @@ namespace ET.Ability
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
             bulletObj.canHitTimes -= 1;
             
+            ProfilerSample.BeginSample("DoBulletHit");
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHit()
             {
                 attackerUnit = unitBullet,
                 defenderUnit = unit,
             });
+            ProfilerSample.EndSample();
 
             if (bulletObj.canHitTimes > 0){
                 bulletObj.hitRecords.Add(new BulletHitRecord()

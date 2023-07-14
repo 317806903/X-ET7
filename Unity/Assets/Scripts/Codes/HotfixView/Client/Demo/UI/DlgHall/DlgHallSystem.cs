@@ -60,9 +60,14 @@ namespace ET.Client
 
 		public static async ETTask CreateRoom(this DlgHall self)
 		{
-			await RoomHelper.CreateRoomAsync(self.ClientScene(), false);
-			self.ClientScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Hall);
-			await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+			string battleCfgId = "GamePlayBattleLevel_Room11";
+			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, false);
+			if (result)
+			{
+				self.ClientScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Hall);
+				await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+			}
+			
 		}
 
 		public static async ETTask RefreshRoomList(this DlgHall self)
@@ -79,9 +84,12 @@ namespace ET.Client
 		
 		public static async ETTask JoinRoom(this DlgHall self, long roomId)
 		{
-			await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
-			self.ClientScene().GetComponent<UIComponent>().HideAllShownWindow();
-			await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+			bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
+			if (result)
+			{
+				self.ClientScene().GetComponent<UIComponent>().HideAllShownWindow();
+				await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+			}
 		}
 
 	}

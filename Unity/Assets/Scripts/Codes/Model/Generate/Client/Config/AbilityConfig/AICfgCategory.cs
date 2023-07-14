@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// AI配置表
+/// </summary>
 [Config]
 public partial class AICfgCategory: ConfigSingleton<AICfgCategory>
 {

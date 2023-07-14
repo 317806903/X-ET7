@@ -1,0 +1,38 @@
+[
+  {
+    "id": "GamePlayTowerDefense1",
+    "name": "",
+    "isNeedPutHomeAndMonsterCall": false,
+    "playerInitGold": 1000,
+    "resTime": 10,
+    "refreshBuyTowerCost": 9,
+    "buyTowerPoolCount": 3,
+    "homeLife": 200,
+    "buyTowerRefreshRuleCfgId": "BuyTowerRefreshRule_1",
+    "monsterWaveCallRuleCfgId": "MonsterWaveCallRule_1"
+  },
+  {
+    "id": "GamePlayTowerDefense2",
+    "name": "",
+    "isNeedPutHomeAndMonsterCall": false,
+    "playerInitGold": 1000,
+    "resTime": 10,
+    "refreshBuyTowerCost": 9,
+    "buyTowerPoolCount": 3,
+    "homeLife": 200,
+    "buyTowerRefreshRuleCfgId": "BuyTowerRefreshRule_1",
+    "monsterWaveCallRuleCfgId": "MonsterWaveCallRule_1"
+  },
+  {
+    "id": "GamePlayTowerDefense3",
+    "name": "",
+    "isNeedPutHomeAndMonsterCall": false,
+    "playerInitGold": 1000,
+    "resTime": 10,
+    "refreshBuyTowerCost": 9,
+    "buyTowerPoolCount": 3,
+    "homeLife": 200,
+    "buyTowerRefreshRuleCfgId": "BuyTowerRefreshRule_1",
+    "monsterWaveCallRuleCfgId": "MonsterWaveCallRule_1"
+  }
+]

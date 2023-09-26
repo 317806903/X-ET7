@@ -11,16 +11,20 @@ namespace ET.Server
             Scene scene = EntitySceneFactory.CreateScene(id, instanceId, zone, sceneType, name, parent);
 
             scene.AddComponent<MailBoxComponent, MailboxType>(MailboxType.UnOrderMessageDispatcher);
+            //scene.AddComponent<NavmeshManagerComponent>();
 
             switch (scene.SceneType)
             {
                 case SceneType.Router:
                     // 云服务器中，一般来说router要单独部署，不过大家经常放在一起，那么下面要修改
-                    // startSceneConfig.OuterIPPort改成startSceneConfig.InnerIPOutPort
+                    // startSceneConfig.OuterIPPort 改成 startSceneConfig.InnerIPOutPort
                     // 然后云服务器防火墙把端口映射过来
-                    scene.AddComponent<RouterComponent, IPEndPoint, string>(startSceneConfig.OuterIPPort,
+                    scene.AddComponent<RouterComponent, IPEndPoint, string>(startSceneConfig.InnerIPOutPort,
                         startSceneConfig.StartProcessConfig.InnerIP
                     );
+					//scene.AddComponent<RouterComponent, IPEndPoint, string>(startSceneConfig.OuterIPPort,
+                    //    startSceneConfig.StartProcessConfig.InnerIP
+                    //);
                     break;
                 case SceneType.RouterManager: // 正式发布请用CDN代替RouterManager
                     // 云服务器在防火墙那里做端口映射

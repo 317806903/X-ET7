@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_ChgRoomMemberSeat request, R2G_ChgRoomMemberSeat response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
 			int newSeat = request.NewSeat;

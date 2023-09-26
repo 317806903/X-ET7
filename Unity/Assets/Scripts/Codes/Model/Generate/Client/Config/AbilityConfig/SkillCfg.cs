@@ -19,6 +19,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        Dis = _buf.ReadFloat();
         Cd = _buf.ReadFloat();
         SkillSlotType = (SkillSlotType)_buf.ReadInt();
         SkillSelectAction = ActionCallParam.DeserializeActionCallParam(_buf);
@@ -44,6 +45,10 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 描述
     /// </summary>
     public string Desc { get; private set; }
+    /// <summary>
+    /// 技能施法距离
+    /// </summary>
+    public float Dis { get; private set; }
     /// <summary>
     /// 技能cd
     /// </summary>
@@ -84,6 +89,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "Dis:" + Dis + ","
         + "Cd:" + Cd + ","
         + "SkillSlotType:" + SkillSlotType + ","
         + "SkillSelectAction:" + SkillSelectAction + ","

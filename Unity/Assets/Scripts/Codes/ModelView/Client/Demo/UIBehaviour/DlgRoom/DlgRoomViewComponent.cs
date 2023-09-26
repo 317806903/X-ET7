@@ -5,7 +5,7 @@ namespace ET.Client
 {
 	[ComponentOf(typeof(DlgRoom))]
 	[EnableMethod]
-	public  class DlgRoomViewComponent : Entity,IAwake,IDestroy 
+	public class DlgRoomViewComponent : Entity, IAwake, IDestroy
 	{
 		public UnityEngine.RectTransform EGBackGroundRectTransform
      	{

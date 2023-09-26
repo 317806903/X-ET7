@@ -71,8 +71,15 @@ namespace ETEditor
         private static string outputServerFolder = "../Config/RecastNavData/ExportedObj/";
 
         #region 菜单主函数
+
         [MenuItem("ET/NavMesh/ExportSceneObj")]
         public static void ExportScene()
+        {
+            // 导出Recast可用的*.Obj文件
+            WriteRecastObjFile();
+        }
+
+        public static void ExportScene11()
         {
             var triangulation = UnityEngine.AI.NavMesh.CalculateTriangulation();
             if (triangulation.indices.Length < 3)
@@ -676,7 +683,7 @@ namespace ETEditor
 
                 // int[] triangles = m.GetTriangles(material);
                 // for (int i=0;i<triangles.Length;i+=3) {
-                // 	sb.Append(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}\n", 
+                // 	sb.Append(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}\n",
                 // 		triangles[i]+1, triangles[i+1]+1, triangles[i+2]+1));
                 // }
                 int[] triangles = m.GetTriangles(material);

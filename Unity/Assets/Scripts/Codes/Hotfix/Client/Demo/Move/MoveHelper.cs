@@ -10,13 +10,13 @@ namespace ET.Client
         public static async ETTask<int> MoveToAsync(this Unit unit, float3 targetPos, ETCancellationToken cancellationToken = null)
         {
             C2M_PathfindingResult msg = new C2M_PathfindingResult() { Position = targetPos };
-            unit.ClientScene().GetComponent<SessionComponent>().Session.Send(msg);
+            ET.Client.SessionHelper.GetSession(unit.ClientScene()).Send(msg);
 
             ObjectWait objectWait = unit.GetComponent<ObjectWait>();
-            
+
             // 要取消上一次的移动协程
             objectWait.Notify(new Wait_UnitStop() { Error = WaitTypeError.Cancel });
-            
+
             // 一直等到unit发送stop
             Wait_UnitStop waitUnitStop = await objectWait.Wait<Wait_UnitStop>(cancellationToken);
             if (cancellationToken.IsCancel())
@@ -25,10 +25,10 @@ namespace ET.Client
             }
             return waitUnitStop.Error;
         }
-        
+
         public static async ETTask MoveToAsync(this Unit unit, List<float3> path)
         {
-            float speed = unit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Speed);
+            float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
             MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
             await moveByPathComponent.MoveToAsync(path, speed);
         }

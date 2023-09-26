@@ -3,19 +3,24 @@
     "id": "Bullet_1",
     "name": "子弹1",
     "res_id": "ResUnit_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
         "delayTime": 0,
         "action_id": "EffectCreate_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -25,7 +30,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -35,13 +41,14 @@
         "delayTime": 0,
         "action_id": "AttackArea_Bullet1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -57,19 +64,24 @@
     "id": "Bullet_2",
     "name": "子弹2",
     "res_id": "ResUnit_Bullet2",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -79,7 +91,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -89,13 +102,14 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -111,12 +125,16 @@
     "id": "Bullet_3",
     "name": "子弹1",
     "res_id": "ResUnit_Bullet3",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
@@ -134,7 +152,8 @@
         "delayTime": 0,
         "action_id": "EffectCreate_4",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -144,13 +163,14 @@
         "delayTime": 0,
         "action_id": "AttackArea_Bullet1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -166,12 +186,16 @@
     "id": "Bullet_RocketProjectile_1",
     "name": "子弹1",
     "res_id": "ResUnit_BulletRocketProjectile_1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
@@ -189,7 +213,8 @@
         "delayTime": 0,
         "action_id": "EffectCreate_4",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -199,13 +224,14 @@
         "delayTime": 0,
         "action_id": "AttackArea_Bullet1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -221,19 +247,24 @@
     "id": "Bullet_PlayerSolo1",
     "name": "机枪子弹",
     "res_id": "ResUnit_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
         "delayTime": 0,
         "action_id": "EffectCreate_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -243,7 +274,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -253,13 +285,14 @@
         "delayTime": 0,
         "action_id": "AttackArea_PlayerSolo1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -275,19 +308,24 @@
     "id": "Bullet_PlayerAoe1",
     "name": "炮弹",
     "res_id": "ResUnit_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
         "delayTime": 0,
         "action_id": "EffectCreate_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -297,7 +335,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -307,13 +346,14 @@
         "delayTime": 0,
         "action_id": "AttackArea_PlayerAoe1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 5,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
@@ -329,29 +369,24 @@
     "id": "Bullet_EnemySolo1",
     "name": "敌人子弹",
     "res_id": "ResUnit_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
     "bodyRadius": 0.1,
     "resScale": 1,
     "canHitAfterCreated": 0.1,
     "hitTimes": 1,
     "sameTargetDelay": 1,
     "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
     "monitorTriggers": [
       {
         "bulletTrig": 1,
         "delayTime": 0,
         "action_id": "EffectCreate_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "bulletTrig": 2,
-        "delayTime": 0,
-        "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -361,18 +396,476 @@
         "delayTime": 0,
         "action_id": "AttackArea_EnemySolo1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Arrow_Bullet_1",
+    "name": "弩箭炮弹1",
+    "res_id": "ResUnit_Tower_ArrowSolo_Bullet_1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "bulletTrig": 4,
+        "bulletTrig": 2,
         "delayTime": 0,
-        "action_id": "PlayAudio_1",
+        "action_id": "EffectCreate_Arrow_Hit_1",
         "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Arrow_Bullet_2",
+    "name": "弩箭炮弹2",
+    "res_id": "ResUnit_Tower_ArrowSolo_Bullet_2",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Arrow_Hit_2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Arrow_Bullet_3",
+    "name": "弩箭炮弹3",
+    "res_id": "ResUnit_Tower_ArrowSolo_Bullet_3",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Arrow_Hit_3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Cannon_Bullet_1",
+    "name": "加农炮弹1",
+    "res_id": "ResUnit_Tower_Canon_Bullet_1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Hit_1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Cannon_Bullet_2",
+    "name": "加农炮弹2",
+    "res_id": "ResUnit_Tower_Canon_Bullet_2",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Hit_2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_Tower_Cannon_Bullet_3",
+    "name": "加农炮弹3",
+    "res_id": "ResUnit_Tower_Canon_Bullet_3",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerAoe3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Hit_3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerDragon_Bullet1",
+    "name": "龙击炮1子弹",
+    "res_id": "ResUnit_TowerDragon_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerDragon_Hit1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerDragon_Bullet2",
+    "name": "龙击炮2子弹",
+    "res_id": "ResUnit_TowerDragon_Bullet2",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerDragon_Hit2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerDragon_Bullet3",
+    "name": "龙击炮3子弹",
+    "res_id": "ResUnit_TowerDragon_Bullet3",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerDragon_Hit3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerIce_Bullet1",
+    "name": "冰魔炮弹1",
+    "res_id": "ResUnit_TowerIce_Bullet1",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_SlowAoe1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerIce_Hit1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerIce_Bullet2",
+    "name": "冰魔炮弹2",
+    "res_id": "ResUnit_TowerIce_Bullet2",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_SlowAoe2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerIce_Hit2",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Bullet_TowerIce_Bullet3",
+    "name": "冰魔炮弹3",
+    "res_id": "ResUnit_TowerIce_Bullet3",
+    "rotationSpeed": 2000,
+    "isNeedChkMesh": true,
+    "bodyHeight": 0.1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "canHitAfterCreated": 0.1,
+    "hitTimes": 1,
+    "sameTargetDelay": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "monitorTriggers": [
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "AttackArea_SlowAoe3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "bulletTrig": 2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerIce_Hit3",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []

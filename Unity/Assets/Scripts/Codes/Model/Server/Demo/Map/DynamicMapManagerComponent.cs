@@ -7,7 +7,7 @@ namespace ET.Server
 	public class DynamicMapManagerComponent : Entity, IAwake, IDestroy
 	{
 		public Dictionary<long, long> dynamicMapList;
-		public HashSet<int> dynamicUsedIndex;
+		public HashSet<int> dynamicUsedIndexList;
 		public long RepeatedTimer;
 	}
 }

@@ -24,7 +24,6 @@ echo ======================= ClientServer Json ==========================
 %GEN_CLIENT% --template_search_path CustomTemplate -j cfg --^
  -d %CONF_ROOT%\__root__.xml ^
  --input_data_dir %CONF_ROOT% ^
- --output_code_dir %OUTPUT_CODE_DIR%\ClientServer\Config\AbilityConfig ^
  --output_data_dir %OUTPUT_JSON_DIR%\cs\AbilityConfig ^
  --gen_types data_json ^
  -s all
@@ -35,5 +34,4 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo "============success============"
-pause
-
+timeout /t 3

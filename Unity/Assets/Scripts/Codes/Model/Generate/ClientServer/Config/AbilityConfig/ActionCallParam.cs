@@ -34,6 +34,8 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
             case ActionCallAutoUnitWhenUmbellate.__ID__: return new ActionCallAutoUnitWhenUmbellate(_buf);
             case ActionCallAutoUnitWhenRectangle.__ID__: return new ActionCallAutoUnitWhenRectangle(_buf);
             case ActionCallAutoUnitOne.__ID__: return new ActionCallAutoUnitOne(_buf);
+            case ActionCallOnAoeChgUnit.__ID__: return new ActionCallOnAoeChgUnit(_buf);
+            case ActionCallOnAoeInUnit.__ID__: return new ActionCallOnAoeInUnit(_buf);
             case ActionCallCasterUnit.__ID__: return new ActionCallCasterUnit(_buf);
             case ActionCallCasterPlayerUnit.__ID__: return new ActionCallCasterPlayerUnit(_buf);
             case ActionCallOnAttackUnit.__ID__: return new ActionCallOnAttackUnit(_buf);

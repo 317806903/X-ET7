@@ -4,7 +4,7 @@ namespace ET.Client
 {
     public static class UnitHelper
     {
-        public static Unit GetMyUnit(Scene scene)
+        public static UnitComponent GetUnitComponent(Scene scene)
         {
             Scene currentScene = null;
             Scene clientScene = null;
@@ -19,8 +19,23 @@ namespace ET.Client
                 clientScene = currentScene.Parent.GetParent<Scene>();
             }
 
-            PlayerComponent playerComponent = clientScene.GetComponent<PlayerComponent>();
-            return currentScene.GetComponent<UnitComponent>().Get(playerComponent.MyId);
+            UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+            return unitComponent;
+        }
+
+        public static Unit GetMyObserverUnit(Scene scene)
+        {
+            UnitComponent unitComponent = GetUnitComponent(scene);
+            long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
+            Unit observerUnit = unitComponent.Get(myPlayerId);
+            return observerUnit;
+        }
+
+        public static Unit GetMyPlayerUnit(Scene scene)
+        {
+            Unit observerUnit = GetMyObserverUnit(scene);
+            Unit myPlayerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+            return myPlayerUnit;
         }
 
     }

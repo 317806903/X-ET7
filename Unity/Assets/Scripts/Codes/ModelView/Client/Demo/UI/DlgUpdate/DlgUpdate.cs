@@ -1,10 +1,10 @@
 ﻿namespace ET.Client
 {
-	 [ComponentOf(typeof(UIBaseWindow))]
-	public  class DlgUpdate :Entity,IAwake,IUILogic
+	[ComponentOf(typeof(UIBaseWindow))]
+	public class DlgUpdate : Entity, IAwake, IUILogic
 	{
 
-		public DlgUpdateViewComponent View { get => this.GetComponent<DlgUpdateViewComponent>();} 
+		public DlgUpdateViewComponent View { get => this.GetComponent<DlgUpdateViewComponent>(); }
 
 		 
 

@@ -29,7 +29,7 @@ namespace ET.Ability
                 self.recordEffectList.Clear();
             }
         }
-        
+
         [ObjectSystem]
         public class EffectComponentFixedUpdateSystem: FixedUpdateSystem<EffectComponent>
         {
@@ -45,18 +45,28 @@ namespace ET.Ability
             }
         }
 
-        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, float duration, OffSetInfo offSetInfo)
+        public static Unit GetUnit(this EffectComponent self)
+        {
+            return self.GetParent<Unit>();
+        }
+
+        public static bool ChkCanAddEffect(this EffectComponent self, Unit unitEffect, string key, int maxKeyNum)
         {
             if (string.IsNullOrEmpty(key) == false)
             {
                 if (self.recordEffectList.ContainsKey(key) && self.recordEffectList[key].Count >= maxKeyNum)
                 {
-                    return null;
+                    return false;
                 }
             }
+            return true;
+        }
 
+        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo)
+        {
             EffectObj effectObj = self.AddChild<EffectObj>();
-            effectObj.Init(unitId, key, effectCfgId, duration, offSetInfo);
+            effectObj.Init(unitId, key, effectCfgId, playAudioActionId, duration, offSetInfo);
+
             if (string.IsNullOrEmpty(key) == false)
             {
                 self.recordEffectList.Add(key, effectObj.Id);
@@ -73,8 +83,9 @@ namespace ET.Ability
                 foreach (long effectObjId in effectList)
                 {
                     EffectObj effectObj = self.GetChild<EffectObj>(effectObjId);
-                    self.NoticeClientRemoveEffect(effectObj);
-                    effectObj.Dispose();
+                    // self.NoticeClientRemoveEffect(effectObj);
+                    // effectObj.Dispose();
+                    effectObj.WillDestroy();
                 }
                 self.recordEffectList.Remove(key);
             }
@@ -98,7 +109,7 @@ namespace ET.Ability
                 Unit unit = self.GetParent<Unit>();
                 if (UnitHelper.ChkIsSceneEffect(unit))
                 {
-                    unit.Destroy();
+                    unit.DestroyWithDeathShow();
                 }
 
                 return;

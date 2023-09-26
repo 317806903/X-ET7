@@ -8,5 +8,10 @@
     "id": "EffectRemove_Drag1",
     "name": "删除毒雾",
     "key": "ResEffect_Drag1"
+  },
+  {
+    "id": "EffectRemove_TowerTime_Hit1",
+    "name": "删除减cd",
+    "key": "TowerTime_Hit1"
   }
 ]

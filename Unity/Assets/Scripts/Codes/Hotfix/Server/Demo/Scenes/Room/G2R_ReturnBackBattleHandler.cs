@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_ReturnBackBattle request, R2G_ReturnBackBattle response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			RoomComponent roomComponent = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponent != null)
@@ -21,14 +21,14 @@ namespace ET.Server
 					response.Message = msg;
 					return;
 				}
-				long dynamicMapId = roomComponent.sceneMapId;
+				long dynamicMapInstanceId = roomComponent.dynamicMapInstanceId;
 				RoomMember roomMember = roomComponent.GetRoomMember(playerId);
 				R2G_StartBattle _R2G_StartBattle = new ()
 				{
-					DynamicMapId = dynamicMapId,
+					DynamicMapInstanceId = dynamicMapInstanceId,
 					GamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId,
 				};
-				
+
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 				await oneTypeLocationType.Call(playerId, _R2G_StartBattle);
 			}

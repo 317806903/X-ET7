@@ -337,6 +337,23 @@ message R2G_ChgRoomMemberSeat // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType R2G_SetARRoomInfo
+message G2R_SetARRoomInfo // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+	string ARSceneId = 4;
+	string ARMeshDownLoadUrl = 5;
+}
+
+message R2G_SetARRoomInfo // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType R2G_ChgRoomBattleLevelCfg
 message G2R_ChgRoomBattleLevelCfg // IActorRequest
 {
@@ -359,6 +376,7 @@ message R2M_CreateDynamicMap // IActorRequest
 	int32 RpcId = 1;
 	bytes RoomInfo = 2;
 	repeated bytes RoomMemberInfos = 3;
+	string ARMeshDownLoadUrl = 4;
 }
 
 message M2R_CreateDynamicMap // IActorResponse
@@ -366,14 +384,14 @@ message M2R_CreateDynamicMap // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int64 DynamicMapId = 4;
+	int64 DynamicMapInstanceId = 4;
 }
 
 //ResponseType M2R_DestroyDynamicMap
 message R2M_DestroyDynamicMap // IActorRequest
 {
 	int32 RpcId = 1;
-	int64 DynamicMapId = 2;
+	int64 DynamicMapInstanceId = 2;
 }
 
 message M2R_DestroyDynamicMap // IActorResponse
@@ -404,7 +422,7 @@ message R2G_StartBattle // IActorRequest
 {
 	int32 RpcId = 1;
 	string GamePlayBattleLevelCfgId = 2;
-	int64 DynamicMapId = 3;
+	int64 DynamicMapInstanceId = 3;
 }
 
 message G2R_StartBattle // IActorResponse

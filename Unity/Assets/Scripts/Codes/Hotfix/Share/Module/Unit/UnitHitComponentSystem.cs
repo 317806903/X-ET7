@@ -1,6 +1,7 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -12,10 +13,15 @@ namespace ET
 		{
 			foreach (Unit unitBullet in self.bulletList)
 			{
-				Dictionary<long, AOIEntity> seeUnits = unitBullet.GetComponent<AOIEntity>().GetSeeUnits();
+				if (UnitHelper.ChkUnitAlive(unitBullet) == false)
+				{
+					continue;
+				}
+				var seeUnits = unitBullet.GetComponent<AOIEntity>().GetSeeUnits();
 				foreach (var seeUnit in seeUnits)
 				{
-					Unit unit = seeUnit.Value.Unit;
+					AOIEntity aoiEntityTmp = seeUnit.Value;
+					Unit unit = aoiEntityTmp.Unit;
 					bool isChkHit = false;
 					if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsActor(unit))
 					{
@@ -35,49 +41,20 @@ namespace ET
 					if (isFriend == false)
 					{
 						ProfilerSample.BeginSample("seeUnits BulletHelper.ChkBulletHit");
-						bool isHit = BulletHelper.ChkBulletHit(unitBullet, unit);
+						(bool bHitUnit, bool bHitMesh, float3 hitPos) = BulletHelper.ChkBulletHit(unitBullet, unit);
 						ProfilerSample.EndSample();
-						if (isHit)
+						if (bHitUnit)
 						{
-							BulletHelper.DoBulletHit(unitBullet, unit);
+							BulletHelper.DoBulletHitUnit(unitBullet, unit);
+						}
+						if (bHitMesh)
+						{
+							BulletHelper.DoBulletHitMesh(unitBullet, hitPos);
 						}
 					}
 				}
-				
-				// foreach (Unit unitPlayer in self.playerList)
-				// {
-				// 	ProfilerSample.BeginSample("playerList ET.GamePlayHelper.ChkIsFriend");
-				// 	bool isFriend = ET.GamePlayHelper.ChkIsFriend(unitBullet, unitPlayer);
-				// 	ProfilerSample.EndSample();
-				// 	if (isFriend == false)
-				// 	{
-				// 		ProfilerSample.BeginSample("playerList BulletHelper.ChkBulletHit");
-				// 		bool isHit = BulletHelper.ChkBulletHit(unitBullet, unitPlayer);
-				// 		ProfilerSample.EndSample();
-				// 		if (isHit)
-				// 		{
-				// 			BulletHelper.DoBulletHit(unitBullet, unitPlayer);
-				// 		}
-				// 	}
-				// }
-				// foreach (Unit unitMonster in self.actorList)
-				// {
-				// 	ProfilerSample.BeginSample("actorList ET.GamePlayHelper.ChkIsFriend");
-				// 	bool isFriend = ET.GamePlayHelper.ChkIsFriend(unitBullet, unitMonster);
-				// 	ProfilerSample.EndSample();
-				// 	if (isFriend == false)
-				// 	{
-				// 		ProfilerSample.BeginSample("actorList BulletHelper.ChkBulletHit");
-				// 		bool isHit = BulletHelper.ChkBulletHit(unitBullet, unitMonster);
-				// 		ProfilerSample.EndSample();
-				// 		if (isHit)
-				// 		{
-				// 			BulletHelper.DoBulletHit(unitBullet, unitMonster);
-				// 		}
-				// 	}
-				// }
 			}
 		}
-		
+
 	}
 }

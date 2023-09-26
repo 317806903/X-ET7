@@ -1,0 +1,26 @@
+[
+  {
+    "id": "TimelineJumpTime_0_05",
+    "name": "",
+    "desc": "",
+    "newTimeElapsed": 0.05
+  },
+  {
+    "id": "TimelineJumpTime_1",
+    "name": "",
+    "desc": "",
+    "newTimeElapsed": 3
+  },
+  {
+    "id": "TimelineJumpTime_2",
+    "name": "",
+    "desc": "",
+    "newTimeElapsed": 4
+  },
+  {
+    "id": "TimelineJumpTime_End",
+    "name": "",
+    "desc": "",
+    "newTimeElapsed": -1
+  }
+]

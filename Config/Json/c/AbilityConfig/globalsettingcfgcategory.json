@@ -1,0 +1,11 @@
+[
+  {
+    "testGlobalSetting1": 11,
+    "testGlobalSetting2": 22,
+    "testGlobalSetting3": "hello world",
+    "testGlobalSetting4": [
+      "hh1;hh2",
+      "hh3,hh4"
+    ]
+  }
+]

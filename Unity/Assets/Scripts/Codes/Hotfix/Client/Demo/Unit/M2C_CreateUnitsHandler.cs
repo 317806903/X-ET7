@@ -12,14 +12,16 @@
 				//int i = 6;
 				//return;
 			}
-			
+
 			foreach (UnitInfo unitInfo in message.Units)
 			{
-				if (unitComponent.Get(unitInfo.UnitId) != null)
+				Unit unit = unitComponent.Get(unitInfo.UnitId);
+				if (unit != null)
 				{
+					UnitFactory.ReplaceComponent(unit, unitInfo);
 					continue;
 				}
-				Unit unit = UnitFactory.Create(currentScene, unitInfo);
+				unit = UnitFactory.Create(unitComponent, unitInfo);
 			}
 			await ETTask.CompletedTask;
 		}

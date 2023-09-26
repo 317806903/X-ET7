@@ -1,4 +1,5 @@
 ﻿using ET;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -135,47 +136,47 @@ namespace UnityEditor.UI
             return LoopScrollRectMenuOptions.CreateNewUI();
         }
         #endregion
-        
-        [MenuItem("GameObject/EUI/Loop Horizontal Scroll Rect", false, -1)]
+
+        [MenuItem("GameObject/EUI/Loop Horizontal Scroll Rect", false, -500)]
         static public void AddLoopHorizontalScrollRect(MenuCommand menuCommand)
         {
             GameObject go = LoopScrollRectDefaultControls.CreateLoopHorizontalScrollRect(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
-          
+
             go.name = "ELoopScrollList_";
         }
 
-        [MenuItem("GameObject/EUI/Loop Vertical Scroll Rect", false, -1)]
+        [MenuItem("GameObject/EUI/Loop Vertical Scroll Rect", false, -501)]
         static public void AddLoopVerticalScrollRect(MenuCommand menuCommand)
         {
             GameObject go = LoopScrollRectDefaultControls.CreateLoopVerticalScrollRect(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
-         
+
             go.name = "ELoopScrollList_";
         }
-        
-        
-        [MenuItem("GameObject/EUI/Loop Horizontal Grid Scroll Rect", false, -1)]
+
+
+        [MenuItem("GameObject/EUI/Loop Horizontal Grid Scroll Rect", false, -502)]
         static public void AddLoopHorizontalGridScrollRect(MenuCommand menuCommand)
         {
             GameObject go = LoopScrollRectDefaultControls.CreateLoopHorizontalScrollRect(GetStandardResources(),true);
             PlaceUIElementRoot(go, menuCommand);
-          
+
             go.name = "ELoopScrollList_";
         }
 
-        [MenuItem("GameObject/EUI/Loop Vertical Grid Scroll Rect", false, -1)]
+        [MenuItem("GameObject/EUI/Loop Vertical Grid Scroll Rect", false, -503)]
         static public void AddLoopVerticalGridScrollRect(MenuCommand menuCommand)
         {
             GameObject go = LoopScrollRectDefaultControls.CreateLoopVerticalScrollRect(GetStandardResources(),true);
             PlaceUIElementRoot(go, menuCommand);
-         
+
             go.name = "ELoopScrollList_";
         }
-        
-        
-        
-        [MenuItem("GameObject/EUI/EUISprite", false, -1)]
+
+
+
+        [MenuItem("GameObject/EUI/EUISprite", false, -504)]
         static public void AddZUISprite(MenuCommand menuCommand)
         {
             GameObject go = new GameObject();
@@ -185,12 +186,12 @@ namespace UnityEditor.UI
             go.AddComponent<RectTransform>();
             go.AddComponent<CanvasRenderer>();
             go.AddComponent<Image>();
-         
+
             go.name = "ESprite_";
         }
-        
-        
-        [MenuItem("GameObject/EUI/EUIButton", false, -1)]
+
+
+        [MenuItem("GameObject/EUI/EUIButton", false, -505)]
         static public void AddZUIButton(MenuCommand menuCommand)
         {
             GameObject go = new GameObject();
@@ -201,12 +202,12 @@ namespace UnityEditor.UI
             go.AddComponent<CanvasRenderer>();
             go.AddComponent<Image>();
             go.AddComponent<Button>();
-           
+
             go.name = "EButton_";
         }
-        
-        
-        [MenuItem("GameObject/EUI/EUIButtonAndLabel", false, -1)]
+
+
+        [MenuItem("GameObject/EUI/EUIButtonAndLabel", false, -506)]
         static public void AddZUIButtonAndLabel(MenuCommand menuCommand)
         {
             GameObject go = new GameObject();
@@ -217,21 +218,21 @@ namespace UnityEditor.UI
             go.AddComponent<CanvasRenderer>();
             go.AddComponent<Image>();
             go.AddComponent<Button>();
-         
+
             go.name = "EButton_";
             GameObject go2 = new GameObject();
             go2.transform.SetParent(go.transform,false);
             go2.transform.SetAsLastSibling();
             go2.AddComponent<RectTransform>();
             go2.AddComponent<CanvasRenderer>();
-            Text text = go2.AddComponent<Text>();
+            TextMeshProUGUI text = go2.AddComponent<TextMeshProUGUI>();
             text.color = Color.black;
             text.text = "1111";
-           
+
             go2.name = "ELabel_";
         }
-        
-        [MenuItem("GameObject/EUI/EUILabel", false, -1)]
+
+        [MenuItem("GameObject/EUI/EUILabel", false, -507)]
         static public void AddZUILabel(MenuCommand menuCommand)
         {
             GameObject go = new GameObject();
@@ -240,12 +241,12 @@ namespace UnityEditor.UI
             go.transform.SetAsLastSibling();
             go.AddComponent<RectTransform>();
             go.AddComponent<CanvasRenderer>();
-            Text text = go.AddComponent<Text>();
+            TextMeshProUGUI text = go.AddComponent<TextMeshProUGUI>();
             text.color = Color.black;
             text.text = "1111";
-          
+
             go.name = "ELabel_";
         }
-        
+
     }
 }

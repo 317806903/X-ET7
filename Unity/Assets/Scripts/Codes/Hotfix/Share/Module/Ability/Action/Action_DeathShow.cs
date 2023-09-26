@@ -27,8 +27,7 @@ namespace ET.Ability
 				}
 				if (bRet1 && bRet2)
 				{
-					ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, 
-					actionContext);
+					ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
 				}
 			}
 			await ETTask.CompletedTask;

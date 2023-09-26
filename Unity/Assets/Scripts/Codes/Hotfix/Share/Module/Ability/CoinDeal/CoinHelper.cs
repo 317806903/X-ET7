@@ -9,27 +9,26 @@ namespace ET.Ability
     {
         public static void DealCoinAdd(Unit unit, ActionCfg_CoinAdd actionCfgCoinAdd, SelectHandle selectHandle, ActionContext actionContext)
         {
-            if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext);
+            if (list == null)
             {
-                Log.Error($"ET.Ability.DamageHelper.DoDamage selectHandle.selectHandleType[{selectHandle.selectHandleType}] != SelectHandleType.SelectUnits");
                 return;
             }
 
-            for (int i = 0; i < selectHandle.unitIds.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
-                if (UnitHelper.ChkUnitAlive(targetUnit) == false)
-                {
-                    continue;
-                }
-                DoCoinAdd(targetUnit, actionCfgCoinAdd);
+                DoCoinAdd(list[i], actionCfgCoinAdd);
             }
         }
-        
+
         public static void DoCoinAdd(Unit unit, ActionCfg_CoinAdd actionCfgCoinAdd)
         {
             long playerId = GamePlayHelper.GetPlayerIdByUnitId(unit);
             if (playerId == -1)
+            {
+                return;
+            }
+            if (GamePlayHelper.ChkCanDoCoinAdd(unit.DomainScene()) == false)
             {
                 return;
             }
@@ -40,6 +39,6 @@ namespace ET.Ability
                 GamePlayHelper.ChgPlayerCoin(unit.DomainScene(), playerId, coinType, chgValue);
             }
         }
-        
+
     }
 }

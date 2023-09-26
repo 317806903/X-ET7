@@ -19,6 +19,7 @@ public sealed partial class ResUnitCfg: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        MoveShowNatureSpeed = _buf.ReadFloat();
         ResName = _buf.ReadString();
         PostInit();
     }
@@ -40,6 +41,10 @@ public sealed partial class ResUnitCfg: Bright.Config.BeanBase
     /// 描述
     /// </summary>
     public string Desc { get; private set; }
+    /// <summary>
+    /// 多少速度时Move动作最自然
+    /// </summary>
+    public float MoveShowNatureSpeed { get; private set; }
     /// <summary>
     /// 资源路径
     /// </summary>
@@ -63,6 +68,7 @@ public sealed partial class ResUnitCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "MoveShowNatureSpeed:" + MoveShowNatureSpeed + ","
         + "ResName:" + ResName + ","
         + "}";
     }

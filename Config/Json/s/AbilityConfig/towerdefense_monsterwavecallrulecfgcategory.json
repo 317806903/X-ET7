@@ -3,25 +3,17 @@
     "waveRule": "MonsterWaveCallRule_1",
     "waveIndex": 1,
     "name": "",
-    "duration": 60,
+    "waveRewardGold": 0,
+    "duration": 15,
     "nodes": [
       {
-        "timeElapsed": 1,
-        "totalNum": 20,
-        "onceIntervalTime": 2,
-        "onceCallNum": 2,
-        "monsterCfgId": "Monster1_1",
-        "level": 1,
-        "rewardGold": 10
-      },
-      {
-        "timeElapsed": 2,
-        "totalNum": 10,
-        "onceIntervalTime": 2,
+        "timeElapsed": 0,
+        "totalNum": 15,
+        "onceIntervalTime": 1,
         "onceCallNum": 1,
-        "monsterCfgId": "Monster3_1",
+        "monsterCfgId": "Monster7_1",
         "level": 1,
-        "rewardGold": 10
+        "rewardGold": 20
       }
     ]
   },
@@ -29,25 +21,17 @@
     "waveRule": "MonsterWaveCallRule_1",
     "waveIndex": 2,
     "name": "",
-    "duration": 60,
+    "waveRewardGold": 0,
+    "duration": 16,
     "nodes": [
       {
-        "timeElapsed": 1,
-        "totalNum": 20,
-        "onceIntervalTime": 2,
-        "onceCallNum": 2,
+        "timeElapsed": 0,
+        "totalNum": 48,
+        "onceIntervalTime": 0.3,
+        "onceCallNum": 1,
         "monsterCfgId": "Monster1_1",
         "level": 1,
-        "rewardGold": 10
-      },
-      {
-        "timeElapsed": 2,
-        "totalNum": 10,
-        "onceIntervalTime": 2,
-        "onceCallNum": 1,
-        "monsterCfgId": "Monster3_1",
-        "level": 1,
-        "rewardGold": 10
+        "rewardGold": 8
       }
     ]
   },
@@ -55,25 +39,116 @@
     "waveRule": "MonsterWaveCallRule_1",
     "waveIndex": 3,
     "name": "",
-    "duration": 60,
+    "waveRewardGold": 0,
+    "duration": 24,
     "nodes": [
       {
-        "timeElapsed": 1,
-        "totalNum": 20,
-        "onceIntervalTime": 2,
-        "onceCallNum": 2,
+        "timeElapsed": 0,
+        "totalNum": 60,
+        "onceIntervalTime": 0.3,
+        "onceCallNum": 1,
         "monsterCfgId": "Monster1_1",
+        "level": 1,
+        "rewardGold": 8
+      },
+      {
+        "timeElapsed": 0,
+        "totalNum": 6,
+        "onceIntervalTime": 4,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster8_1",
+        "level": 1,
+        "rewardGold": 20
+      }
+    ]
+  },
+  {
+    "waveRule": "MonsterWaveCallRule_1",
+    "waveIndex": 4,
+    "name": "",
+    "waveRewardGold": 0,
+    "duration": 16,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "totalNum": 16,
+        "onceIntervalTime": 1,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster8_1",
+        "level": 1,
+        "rewardGold": 20
+      },
+      {
+        "timeElapsed": 0,
+        "totalNum": 16,
+        "onceIntervalTime": 1,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster4_1",
+        "level": 1,
+        "rewardGold": 20
+      }
+    ]
+  },
+  {
+    "waveRule": "MonsterWaveCallRule_1",
+    "waveIndex": 5,
+    "name": "",
+    "waveRewardGold": 0,
+    "duration": 24,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "totalNum": 12,
+        "onceIntervalTime": 1,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster5_1",
+        "level": 1,
+        "rewardGold": 20
+      },
+      {
+        "timeElapsed": 12,
+        "totalNum": 36,
+        "onceIntervalTime": 0.3,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster2_1",
+        "level": 1,
+        "rewardGold": 10
+      }
+    ]
+  },
+  {
+    "waveRule": "MonsterWaveCallRule_1",
+    "waveIndex": 6,
+    "name": "",
+    "waveRewardGold": 0,
+    "duration": 32,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "totalNum": 15,
+        "onceIntervalTime": 0.3,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster2_1",
         "level": 1,
         "rewardGold": 10
       },
       {
-        "timeElapsed": 2,
-        "totalNum": 10,
-        "onceIntervalTime": 2,
+        "timeElapsed": 0,
+        "totalNum": 20,
+        "onceIntervalTime": 1,
         "onceCallNum": 1,
-        "monsterCfgId": "Monster3_1",
+        "monsterCfgId": "Monster8_1",
         "level": 1,
-        "rewardGold": 10
+        "rewardGold": 20
+      },
+      {
+        "timeElapsed": 5,
+        "totalNum": 1,
+        "onceIntervalTime": 1,
+        "onceCallNum": 1,
+        "monsterCfgId": "Monster9_1",
+        "level": 1,
+        "rewardGold": 100
       }
     ]
   },
@@ -81,6 +156,7 @@
     "waveRule": "MonsterWaveCallRule_Test",
     "waveIndex": 1,
     "name": "",
+    "waveRewardGold": 0,
     "duration": 60,
     "nodes": [
       {
@@ -90,7 +166,7 @@
         "onceCallNum": 2,
         "monsterCfgId": "Monster1_1",
         "level": 1,
-        "rewardGold": 10
+        "rewardGold": 8
       }
     ]
   }

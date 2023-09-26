@@ -17,12 +17,12 @@ namespace ET.AbilityConfig
 [Config]
 public partial class AICfgCategory: ConfigSingleton<AICfgCategory>
 {
-    private readonly Dictionary<string, AICfg> _dataMap;
     private readonly List<AICfg> _dataList;
-    
+
+    private Dictionary<(string, int), AICfg> _dataMapUnion;
+
     public AICfgCategory(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<string, AICfg>();
         _dataList = new List<AICfg>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -30,26 +30,18 @@ public partial class AICfgCategory: ConfigSingleton<AICfgCategory>
             AICfg _v;
             _v = AICfg.DeserializeAICfg(_buf);
             _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+        }
+        _dataMapUnion = new Dictionary<(string, int), AICfg>();
+        foreach(var _v in _dataList)
+        {
+            _dataMapUnion.Add((_v.AIConfigId, _v.Order), _v);
         }
         PostInit();
     }
-    
-    public bool Contain(string id)
-    {
-        return _dataMap.ContainsKey(id);
-    }
 
-    public Dictionary<string, AICfg> GetAll()
-    {
-        return _dataMap;
-    }
-    
     public List<AICfg> DataList => _dataList;
 
-    public AICfg GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public AICfg Get(string key) => _dataMap[key];
-    public AICfg this[string key] => _dataMap[key];
+    public AICfg Get(string AIConfigId, int Order) => _dataMapUnion.TryGetValue((AIConfigId, Order), out AICfg __v) ? __v : null;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
@@ -70,10 +62,9 @@ public partial class AICfgCategory: ConfigSingleton<AICfgCategory>
     
     public override void TrimExcess()
     {
-        _dataMap.TrimExcess();
         _dataList.TrimExcess();
     }
-    
+        
     
     public override string ConfigName()
     {

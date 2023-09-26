@@ -21,15 +21,19 @@
 	    public const int RotationSpeedFinalAdd = RotationSpeed * 10 + 4;
 	    public const int RotationSpeedFinalPct = RotationSpeed * 10 + 5;
 
-	    public const int Hp = 1002;
-	    public const int HpBase = Hp * 10 + 1;
+	    public const int SkillCD = 1002;
+	    public const int SkillCDBase = SkillCD * 10 + 1;
+	    public const int SkillCDAdd = SkillCD * 10 + 2;
+	    public const int SkillCDPct = SkillCD * 10 + 3;
+	    public const int SkillCDFinalAdd = SkillCD * 10 + 4;
+	    public const int SkillCDFinalPct = SkillCD * 10 + 5;
 
-	    public const int MaxHp = 1003;
-	    public const int MaxHpBase = MaxHp * 10 + 1;
-	    public const int MaxHpAdd = MaxHp * 10 + 2;
-	    public const int MaxHpPct = MaxHp * 10 + 3;
-	    public const int MaxHpFinalAdd = MaxHp * 10 + 4;
-	    public const int MaxHpFinalPct = MaxHp * 10 + 5;
+	    public const int SkillDis = 1003;
+	    public const int SkillDisBase = SkillDis * 10 + 1;
+	    public const int SkillDisAdd = SkillDis * 10 + 2;
+	    public const int SkillDisPct = SkillDis * 10 + 3;
+	    public const int SkillDisFinalAdd = SkillDis * 10 + 4;
+	    public const int SkillDisFinalPct = SkillDis * 10 + 5;
 
 	    public const int AOI = 1004;
 	    public const int AOIBase = AOI * 10 + 1;
@@ -38,7 +42,17 @@
 	    public const int AOIFinalAdd = AOI * 10 + 4;
 	    public const int AOIFinalPct = AOI * 10 + 5;
 	    
-	    public const int PhysicalAttack = 1005;
+	    public const int Hp = 1005;
+	    public const int HpBase = Hp * 10 + 1;
+
+	    public const int MaxHp = 1006;
+	    public const int MaxHpBase = MaxHp * 10 + 1;
+	    public const int MaxHpAdd = MaxHp * 10 + 2;
+	    public const int MaxHpPct = MaxHp * 10 + 3;
+	    public const int MaxHpFinalAdd = MaxHp * 10 + 4;
+	    public const int MaxHpFinalPct = MaxHp * 10 + 5;
+
+	    public const int PhysicalAttack = 1007;
 	    public const int PhysicalAttackBase = PhysicalAttack * 10 + 1;
 	    public const int PhysicalAttackAdd = PhysicalAttack * 10 + 2;
 	    public const int PhysicalAttackPct = PhysicalAttack * 10 + 3;
@@ -49,5 +63,6 @@
 	    // FireDamage = 1, //元素-火伤害
 	    // IceDamage = 2, //元素-冰伤害
 	    // ThunderDamage = 3, //元素-雷伤害
+	    
     }
 }

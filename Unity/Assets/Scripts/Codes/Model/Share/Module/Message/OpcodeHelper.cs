@@ -12,14 +12,16 @@ namespace ET
             OuterMessage.C2G_Benchmark,
             OuterMessage.G2C_Benchmark,
             OuterMessage.M2C_SyncPosUnits,
+            OuterMessage.M2C_SyncNumericUnits,
             OuterMessage.M2C_SyncUnitEffects,
+            OuterMessage.M2C_SyncPlayAudio,
+            OuterMessage.M2C_SyncPlayAnimator,
             OuterMessage.M2C_Stop,
             OuterMessage.M2C_CreateUnits,
             OuterMessage.M2C_RemoveUnits,
-            OuterMessage.M2C_SyncNumericUnits,
             OuterMessage.M2C_PathfindingResult,
             OuterMessage.M2C_GamePlayCoinChgNotice,
-            
+
             ushort.MaxValue, // ActorResponse
         };
 
@@ -50,10 +52,10 @@ namespace ET
             {
                 return;
             }
-            
+
             Logger.Instance.Debug("zone: {0} {1}", zone, message);
         }
-        
+
         public static void LogMsg(long actorId, object message)
         {
             ushort opcode = NetServices.Instance.GetOpcode(message.GetType());
@@ -61,7 +63,7 @@ namespace ET
             {
                 return;
             }
-            
+
             Logger.Instance.Debug("actorId: {0} {1}", actorId, message);
         }
     }

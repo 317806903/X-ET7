@@ -20,7 +20,7 @@ namespace ET
 				{
 					//throw new Exception("ENABLE_CODES mode must use ClientServer code mode!");
 				}
-				
+
 				Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 				Dictionary<string, Type> types = AssemblyHelper.GetAssemblyTypes(assemblies);
 				EventSystem.Instance.Add(types);
@@ -36,7 +36,11 @@ namespace ET
 			else
 			{
 				byte[] assBytes = MonoResComponent.Instance.LoadRawFile($"Model_{GlobalConfig.Instance.ModelVersion}.dll");
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
 				byte[] pdbBytes = MonoResComponent.Instance.LoadRawFile($"Model_{GlobalConfig.Instance.ModelVersion}.pdb");
+#else
+				byte[] pdbBytes = null;
+#endif
 
 				if (!Define.IsEditor)
 				{
@@ -45,12 +49,12 @@ namespace ET
 						HybridCLRHelper.Load();
 					}
 				}
-				
+
 				Log.Debug($"---CodeLoader---Model_{GlobalConfig.Instance.ModelVersion}.dll");
 				this.model = Assembly.Load(assBytes, pdbBytes);
 				this.LoadHotfix();
 			}
-			
+
 			IStaticMethod start = new StaticMethod(this.model, "ET.Entry", "Start");
 			start.Run();
 		}
@@ -59,17 +63,21 @@ namespace ET
 		public void LoadHotfix()
 		{
 			byte[] assBytes = MonoResComponent.Instance.LoadRawFile($"Hotfix_{GlobalConfig.Instance.HotFixVersion}.dll");
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
 			byte[] pdbBytes = MonoResComponent.Instance.LoadRawFile($"Hotfix_{GlobalConfig.Instance.HotFixVersion}.pdb");
+#else
+			byte[] pdbBytes = null;
+#endif
 
-			Log.Debug($"---CodeLoader---Hotfix_{GlobalConfig.Instance.ModelVersion}.dll");
+			Log.Debug($"---CodeLoader---Hotfix_{GlobalConfig.Instance.HotFixVersion}.dll");
 			Assembly hotfixAssembly = Assembly.Load(assBytes, pdbBytes);
-			
+
 			Dictionary<string, Type> types = AssemblyHelper.GetAssemblyTypes(typeof (Game).Assembly, typeof(Init).Assembly, this.model, hotfixAssembly);
-			
+
 			EventSystem.Instance.Add(types);
 		}
 	}
-	
+
 	[Invoke]
 	public class GetCodeMode: AInvokeHandler<ConfigComponent.GetCodeMode, string>
 	{

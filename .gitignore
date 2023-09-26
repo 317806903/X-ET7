@@ -78,7 +78,7 @@ Server/.DS_Store
 /Unity/Unity.Ignore.csproj
 Publish/
 YooAsset.Editor.csproj
-/Unity/Assets/Bundles/Code/*
+
 /Unity/Assets/Bundles/AssetBundleOutput.meta
 /Unity/Assets/Bundles/AssetBundleOutput
 /Unity/Assets/Bundles/AssetBundleSourceData
@@ -97,3 +97,11 @@ YooAsset.Editor.csproj
 /Unity/Assembly-CSharp-firstpass.csproj
 FGUIProject/settings/i18n.json
 Unity/Assembly-CSharp-Editor-firstpass.csproj
+
+/Unity/DOTwee.Pro.Editor.csproj
+/Unity/DOTween.Runtime.csproj
+/Unity/DOTwee.Pro.Runtime.csproj
+/Unity/DM.DOTween.csproj
+/Unity/ShootTextPro.csproj
+/Unity/MirrorVerse.UI.Renderers.csproj
+/Unity/*.csproj

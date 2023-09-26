@@ -15,5 +15,14 @@ namespace ET.Client
 		WindowID_ARRoom,
 		WindowID_BattleTower,
 		WindowID_BattleTowerEnd,
+		WindowID_ARHall,
+		WindowID_BattleTowerBegin,
+		WindowID_BattleTowerHUD,
+		WindowID_CommonTip,
+		WindowID_Loading,
+		WindowID_CommonConfirm,
+		WindowID_BattleTowerHUDShow,
+		WindowID_BattleTowerAR,
+		WindowID_BattleCfgChoose,
 	}
 }

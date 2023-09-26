@@ -11,7 +11,16 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
-			
+
+			actionContext.motionUnitId = unit.Id;
+			if (resetPosByUnit != null)
+			{
+				actionContext.motionPosition = resetPosByUnit.Position;
+			}
+			else
+			{
+				actionContext.motionPosition = unit.Position;
+			}
 			ActionCfg_BuffAdd actionCfgAddBuff = ActionCfg_BuffAddCategory.Instance.Get(actionId);
 			BuffHelper.AddBuff(unit, actionCfgAddBuff, selectHandle, actionContext);
 			await ETTask.CompletedTask;

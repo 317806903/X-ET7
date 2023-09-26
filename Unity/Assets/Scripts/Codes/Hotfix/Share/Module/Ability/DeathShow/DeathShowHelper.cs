@@ -11,24 +11,19 @@ namespace ET.Ability
     {
         public static void DeathShow(Unit unit)
         {
+            if (unit.GetComponent<DeathShowComponent>() != null)
+            {
+                return;
+            }
             unit.RemoveComponent<AIComponent>();
             unit.Stop(WaitTypeError.Cancel);
             float deathShowDuration = 0;
-            ActionCfg_DeathShow actionCfg_DeathShow;
-            if (UnitHelper.ChkIsBullet(unit))
-            {
-                actionCfg_DeathShow = unit.GetComponent<BulletObj>().model.DeathShow_Ref;
-            }
-            else
-            {
-                actionCfg_DeathShow = unit.model.DeathShow_Ref;
-            }
-
+            ActionCfg_DeathShow actionCfg_DeathShow = UnitHelper.GetDeathShow(unit);
             deathShowDuration = actionCfg_DeathShow.Duration;
 
             if (deathShowDuration == 0)
             {
-                unit.Destroy();
+                unit._Destroy();
             }
             else
             {

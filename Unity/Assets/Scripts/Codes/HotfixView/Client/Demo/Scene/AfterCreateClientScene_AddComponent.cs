@@ -7,12 +7,14 @@ namespace ET.Client
         {
             scene.AddComponent<UIEventComponent>();
             scene.AddComponent<UIPathComponent>();
+            scene.AddComponent<RedDotComponent>();
+            scene.AddComponent<UITextLocalizeComponent>();
             scene.AddComponent<UIComponent>();
-            
+            scene.AddComponent<ET.Ability.Client.UIAudioManagerComponent>();
+
             // scene.AddComponent<FUIEventComponent>();
             // scene.AddComponent<FUIAssetComponent>();
             // scene.AddComponent<FUIComponent>();
-            scene.AddComponent<LocalizeComponent>();
             await ETTask.CompletedTask;
         }
     }

@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 环绕运动
+/// 环绕轨迹
 /// </summary>
 public sealed partial class AroundMoveTweenType:  MoveTweenType 
 {

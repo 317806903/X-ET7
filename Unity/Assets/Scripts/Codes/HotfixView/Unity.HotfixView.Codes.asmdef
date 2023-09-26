@@ -9,9 +9,13 @@
         "Unity.ModelView.Codes",
         "Unity.Mathematics",
         "Unity.Loader",
-        "MirrorVerse.UI.MirrorSceneDefaultUI",
+        "Unity.RenderPipelines.Universal.Runtime",
         "MirrorVerse",
-        "Unity.RenderPipelines.Universal.Runtime"
+        "MirrorVerse.UI.MirrorSceneDefaultUI",
+        "MirrorVerse.UI.Renderers",
+        "Unity.TextMeshPro",
+        "DM.DOTween",
+        "ShootTextPro"
     ],
     "includePlatforms": [
         "Editor"

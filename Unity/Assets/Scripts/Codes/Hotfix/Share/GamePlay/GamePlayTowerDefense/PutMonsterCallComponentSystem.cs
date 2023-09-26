@@ -17,7 +17,7 @@ namespace ET
 				self.MonsterCallUnitId = new();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class PutMonsterCallComponentDestroySystem : DestroySystem<PutMonsterCallComponent>
 		{
@@ -35,6 +35,15 @@ namespace ET
 			self.MonsterCallUnitId[playerId] = monsterCallUnit.Id;
 
 			self.ChkNextStep();
+		}
+
+		public static string GetMonsterCallCount(this PutMonsterCallComponent self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+
+			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
+			string count = $"({self.MonsterCallUnitId.Count}/{playerList.Count})";
+			return count;
 		}
 
 		public static void ChkNextStep(this PutMonsterCallComponent self)

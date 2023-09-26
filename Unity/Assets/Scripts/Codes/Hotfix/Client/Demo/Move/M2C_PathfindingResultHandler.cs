@@ -9,7 +9,7 @@ namespace ET.Client
 		{
 			Unit unit = session.DomainScene().CurrentScene().GetComponent<UnitComponent>().Get(message.Id);
 
-			float speed = unit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Speed);
+			float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
 
 			await unit.GetComponent<MoveByPathComponent>().MoveToAsync(message.Points, speed);
 		}

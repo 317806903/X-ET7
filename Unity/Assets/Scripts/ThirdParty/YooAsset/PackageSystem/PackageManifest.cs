@@ -71,6 +71,11 @@ namespace YooAsset
 		private bool _locationToLower = false;
 
 
+		public void ResetInitAssetPathMapping()
+		{
+			_isInitAssetPathMapping = false;
+		}
+
 		/// <summary>
 		/// 初始化资源路径映射
 		/// </summary>

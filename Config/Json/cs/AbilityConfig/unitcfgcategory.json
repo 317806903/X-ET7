@@ -1,62 +1,107 @@
 [
   {
     "id": "Unit_Player1",
-    "name": "对象1",
-    "desc": "prefab1",
+    "name": {
+      "key": "Text_Key_Name_Unit_Player1",
+      "text": "对象1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Player1",
+      "text": "prefab1"
+    },
     "icon": "ResIcon_Player1",
     "res_id": "ResUnit_Player1",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
     "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Player1",
     "deathShow": "DeathShow_1",
-    "skillList": []
-  },
-  {
-    "id": "Unit_Monster1",
-    "name": "对象2",
-    "desc": "prefab2",
-    "icon": "ResIcon_Monster1",
-    "res_id": "ResUnit_Monster1",
-    "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
-    "bodyRadius": 0.5,
-    "resScale": 1,
-    "propertyType": "Tower1",
-    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
     "id": "Unit_SceneEffectNone",
-    "name": "场景特效空对象(不要删除这条记录)",
-    "desc": "场景特效空对象(不要删除这条记录)",
+    "name": {
+      "key": "Text_Key_Name_Unit_SceneEffectNone",
+      "text": "场景特效空对象(不要删除这条记录)"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_SceneEffectNone",
+      "text": "场景特效空对象(不要删除这条记录)"
+    },
     "icon": "ResIcon_NULL",
     "res_id": "ResUnit_SceneEffectNone",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
     "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
-    "deathShow": "DeathShow_1",
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
-    "id": "Unit_HeadQuarter",
-    "name": "大本营",
-    "desc": "",
-    "icon": "ResIcon_HeadQuarter1",
-    "res_id": "ResUnit_HeadQuarter1",
+    "id": "Unit_PlayerPK",
+    "name": {
+      "key": "Text_Key_Name_Unit_PlayerPK",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_PlayerPK",
+      "text": ""
+    },
+    "icon": "ResIcon_Player1",
+    "res_id": "ResUnit_Player1",
     "moveSpeed": 10,
-    "rotationSpeed": 200,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
     "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Player1",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_MachineGunTower1",
+      "Skill_RocketTower_1",
+      "Skill_LaserTower_0",
+      "Skill_EnergyPylon_2"
+    ]
+  },
+  {
+    "id": "Unit_HeadQuarter",
+    "name": {
+      "key": "Text_Key_Name_Unit_HeadQuarter",
+      "text": "大本营"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_HeadQuarter",
+      "text": ""
+    },
+    "icon": "ResIcon_HeadQuarter1",
+    "res_id": "ResUnit_HeadQuarter1",
+    "moveSpeed": 10,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 3.8,
+    "bodyHeight": 3.8,
+    "bodyRadius": 2,
+    "resScale": 1,
+    "propertyType": "Player1",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
       "Skill_MachineGunTower1",
       "Skill_RocketTower_1",
@@ -66,32 +111,52 @@
   },
   {
     "id": "Unit_MonsterCall",
-    "name": "刷怪点",
-    "desc": "",
+    "name": {
+      "key": "Text_Key_Name_Unit_MonsterCall",
+      "text": "刷怪点"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_MonsterCall",
+      "text": ""
+    },
     "icon": "ResIcon_MonsterCall",
     "res_id": "ResUnit_MonsterCall",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
     "bodyHeight": 1,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
     "id": "Unit_Observer",
-    "name": "OB",
-    "desc": "",
-    "icon": "ResIcon_HeadQuarter1",
-    "res_id": "ResUnit_Player1",
+    "name": {
+      "key": "Text_Key_Name_Unit_Observer",
+      "text": "OB"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Observer",
+      "text": ""
+    },
+    "icon": "ResIcon_Player1",
+    "res_id": "ResUnit_Observer",
     "moveSpeed": 10,
-    "rotationSpeed": 200,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
     "bodyHeight": 1,
-    "bodyRadius": 0.5,
+    "bodyRadius": 0.01,
     "resScale": 1,
     "propertyType": "Player1",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
       "Skill_MachineGunTower1",
       "Skill_RocketTower_1",
@@ -101,133 +166,875 @@
   },
   {
     "id": "Unit_Solo1",
-    "name": "炮塔1",
-    "desc": "射击",
+    "name": {
+      "key": "Text_Key_Name_Unit_Solo1",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Solo1",
+      "text": "射击"
+    },
     "icon": "ResIcon_MachineGunTower_0",
-    "res_id": "ResUnit_Solo1",
+    "res_id": "ResUnit_Tower_ArrowSolo_1",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower1",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
-      "Skill_PlayerSolo1",
-      "Skill_PlayerAttackGotGold1"
+      "Skill_PlayerSolo1"
+    ]
+  },
+  {
+    "id": "Unit_Solo2",
+    "name": {
+      "key": "Text_Key_Name_Unit_Solo2",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Solo2",
+      "text": "射击"
+    },
+    "icon": "ResIcon_MachineGunTower_0",
+    "res_id": "ResUnit_Tower_ArrowSolo_2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower1",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerSolo2"
+    ]
+  },
+  {
+    "id": "Unit_Solo3",
+    "name": {
+      "key": "Text_Key_Name_Unit_Solo3",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Solo3",
+      "text": "射击"
+    },
+    "icon": "ResIcon_MachineGunTower_0",
+    "res_id": "ResUnit_Tower_ArrowSolo_3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower1",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerSolo3"
     ]
   },
   {
     "id": "Unit_Aoe1",
-    "name": "炮塔1",
-    "desc": "炮击",
+    "name": {
+      "key": "Text_Key_Name_Unit_Aoe1",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Aoe1",
+      "text": "炮击"
+    },
     "icon": "ResIcon_EnergyPylon_2",
-    "res_id": "ResUnit_Aoe1",
+    "res_id": "ResUnit_Tower_Canon_1",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower2",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
       "Skill_PlayerAoe1"
     ]
   },
   {
-    "id": "Unit_Line1",
-    "name": "炮塔1",
-    "desc": "火柱",
-    "icon": "ResIcon_LaserTower_0",
-    "res_id": "ResUnit_Line1",
+    "id": "Unit_Aoe2",
+    "name": {
+      "key": "Text_Key_Name_Unit_Aoe2",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Aoe2",
+      "text": "炮击"
+    },
+    "icon": "ResIcon_EnergyPylon_2",
+    "res_id": "ResUnit_Tower_Canon_2",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower2",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerAoe2"
+    ]
+  },
+  {
+    "id": "Unit_Aoe3",
+    "name": {
+      "key": "Text_Key_Name_Unit_Aoe3",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Aoe3",
+      "text": "炮击"
+    },
+    "icon": "ResIcon_EnergyPylon_2",
+    "res_id": "ResUnit_Tower_Canon_3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower2",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerAoe3"
+    ]
+  },
+  {
+    "id": "Unit_Line1",
+    "name": {
+      "key": "Text_Key_Name_Unit_Line1",
+      "text": "火图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Line1",
+      "text": "火柱"
+    },
+    "icon": "ResIcon_LaserTower_0",
+    "res_id": "ResUnit_Tower_FireLine_1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower3",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
       "Skill_PlayerLine1"
     ]
   },
   {
-    "id": "Unit_Circle1",
-    "name": "炮塔1",
-    "desc": "毒雾",
-    "icon": "ResIcon_RocketTower_1",
-    "res_id": "ResUnit_Circle1",
+    "id": "Unit_Line2",
+    "name": {
+      "key": "Text_Key_Name_Unit_Line2",
+      "text": "火图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Line2",
+      "text": "火柱"
+    },
+    "icon": "ResIcon_LaserTower_0",
+    "res_id": "ResUnit_Tower_FireLine_2",
     "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower3",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerLine2"
+    ]
+  },
+  {
+    "id": "Unit_Line3",
+    "name": {
+      "key": "Text_Key_Name_Unit_Line3",
+      "text": "火图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Line3",
+      "text": "火柱"
+    },
+    "icon": "ResIcon_LaserTower_0",
+    "res_id": "ResUnit_Tower_FireLine_3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower3",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerLine3"
+    ]
+  },
+  {
+    "id": "Unit_Circle1",
+    "name": {
+      "key": "Text_Key_Name_Unit_Circle1",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Circle1",
+      "text": "毒雾"
+    },
+    "icon": "ResIcon_RocketTower_1",
+    "res_id": "ResUnit_Tower_DragCircle_1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Tower4",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
       "Skill_PlayerCircle1"
     ]
   },
   {
-    "id": "Unit_Common1",
-    "name": "坦克1",
-    "desc": "",
-    "icon": "ResIcon_Hoverboss",
-    "res_id": "ResUnit_Common1",
-    "moveSpeed": 8,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "id": "Unit_Circle2",
+    "name": {
+      "key": "Text_Key_Name_Unit_Circle2",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Circle2",
+      "text": "毒雾"
+    },
+    "icon": "ResIcon_RocketTower_1",
+    "res_id": "ResUnit_Tower_DragCircle_2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
     "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower4",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerCircle1"
+    ]
+  },
+  {
+    "id": "Unit_Circle3",
+    "name": {
+      "key": "Text_Key_Name_Unit_Circle3",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Circle3",
+      "text": "毒雾"
+    },
+    "icon": "ResIcon_RocketTower_1",
+    "res_id": "ResUnit_Tower_DragCircle_3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower4",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_PlayerCircle1"
+    ]
+  },
+  {
+    "id": "Unit_Monster1",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster1",
+      "text": "蝙蝠1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster1",
+      "text": "蝙蝠1"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster1",
+    "moveSpeed": 3,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 0.2,
+    "bodyHeight": 0.2,
+    "bodyRadius": 0.2,
     "resScale": 1,
     "propertyType": "Monster1",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
-    "id": "Unit_Quick1",
-    "name": "坦克2",
-    "desc": "",
-    "icon": "ResIcon_Hoverbuggy",
-    "res_id": "ResUnit_Quick1",
-    "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
-    "bodyRadius": 0.5,
+    "id": "Unit_Monster2",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster2",
+      "text": "蝙蝠2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster2",
+      "text": "蝙蝠2"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster2",
+    "moveSpeed": 3,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 0.7,
+    "bodyHeight": 0.7,
+    "bodyRadius": 0.2,
     "resScale": 1,
     "propertyType": "Monster2",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
-    "id": "Unit_Tank1",
-    "name": "坦克3",
-    "desc": "",
-    "icon": "ResIcon_Hovercopter",
-    "res_id": "ResUnit_Tank1",
-    "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
-    "bodyRadius": 0.5,
+    "id": "Unit_Monster3",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster3",
+      "text": "蝙蝠3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster3",
+      "text": "蝙蝠3"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster3",
+    "moveSpeed": 3,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 3,
+    "bodyHeight": 3,
+    "bodyRadius": 0.2,
     "resScale": 1,
     "propertyType": "Monster3",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": []
   },
   {
-    "id": "Unit_Attack1",
-    "name": "坦克4",
-    "desc": "射击",
+    "id": "Unit_Monster4",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster4",
+      "text": "蜘蛛1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster4",
+      "text": "蜘蛛1"
+    },
     "icon": "ResIcon_Hovertank",
-    "res_id": "ResUnit_Attack1",
-    "moveSpeed": 6,
-    "rotationSpeed": 200,
-    "bodyHeight": 1,
+    "res_id": "ResUnit_Monster4",
+    "moveSpeed": 9,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 0.4,
+    "bodyHeight": 0.4,
     "bodyRadius": 0.5,
     "resScale": 1,
     "propertyType": "Monster4",
     "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_Monster5",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster5",
+      "text": "蜘蛛2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster5",
+      "text": "蜘蛛2"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster5",
+    "moveSpeed": 9,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1,
+    "bodyHeight": 1,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Monster5",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_Monster6",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster6",
+      "text": "蜘蛛3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster6",
+      "text": "蜘蛛3"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster6",
+    "moveSpeed": 9,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2.2,
+    "bodyHeight": 2.2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Monster6",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_Monster7",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster7",
+      "text": "暗影蛋1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster7",
+      "text": "暗影蛋1"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster7",
+    "moveSpeed": 3,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 0.9,
+    "bodyHeight": 0.9,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Monster7",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_Monster8",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster8",
+      "text": "暗影蛋2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster8",
+      "text": "暗影蛋2"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster8",
+    "moveSpeed": 3,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 1.2,
+    "bodyHeight": 1.2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Monster8",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_Monster9",
+    "name": {
+      "key": "Text_Key_Name_Unit_Monster9",
+      "text": "暗影蛋3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_Monster9",
+      "text": "暗影蛋3"
+    },
+    "icon": "ResIcon_Hovertank",
+    "res_id": "ResUnit_Monster9",
+    "moveSpeed": 1.5,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 3.3,
+    "bodyHeight": 3.3,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Monster9",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": []
+  },
+  {
+    "id": "Unit_TowerDragon1",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerDragon1",
+      "text": "龙击炮1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerDragon1",
+      "text": "龙击炮1"
+    },
+    "icon": "ResIcon_TowerDragon1",
+    "res_id": "ResUnit_TowerDragon1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower5",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
     "skillList": [
-      "Skill_EnemySolo1"
+      "Skill_TowerDragon1"
+    ]
+  },
+  {
+    "id": "Unit_TowerDragon2",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerDragon2",
+      "text": "龙击炮2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerDragon2",
+      "text": "龙击炮2"
+    },
+    "icon": "ResIcon_TowerDragon1",
+    "res_id": "ResUnit_TowerDragon2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower5",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerDragon2"
+    ]
+  },
+  {
+    "id": "Unit_TowerDragon3",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerDragon3",
+      "text": "龙击炮3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerDragon3",
+      "text": "龙击炮3"
+    },
+    "icon": "ResIcon_TowerDragon1",
+    "res_id": "ResUnit_TowerDragon3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower5",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerDragon3"
+    ]
+  },
+  {
+    "id": "Unit_TowerElec1",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerElec1",
+      "text": "雷电塔1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerElec1",
+      "text": "雷电塔1"
+    },
+    "icon": "ResIcon_TowerElec1",
+    "res_id": "ResUnit_TowerElec1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower6",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerElec1"
+    ]
+  },
+  {
+    "id": "Unit_TowerElec2",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerElec2",
+      "text": "雷电塔2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerElec2",
+      "text": "雷电塔2"
+    },
+    "icon": "ResIcon_TowerElec1",
+    "res_id": "ResUnit_TowerElec2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower6",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerElec2"
+    ]
+  },
+  {
+    "id": "Unit_TowerElec3",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerElec3",
+      "text": "雷电塔3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerElec3",
+      "text": "雷电塔3"
+    },
+    "icon": "ResIcon_TowerElec1",
+    "res_id": "ResUnit_TowerElec3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower6",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerElec3"
+    ]
+  },
+  {
+    "id": "Unit_TowerIce1",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerIce1",
+      "text": "冰魔塔1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerIce1",
+      "text": "冰魔塔1"
+    },
+    "icon": "ResIcon_TowerIce1",
+    "res_id": "ResUnit_TowerIce1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower7",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerIce1"
+    ]
+  },
+  {
+    "id": "Unit_TowerIce2",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerIce2",
+      "text": "冰魔塔2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerIce2",
+      "text": "冰魔塔2"
+    },
+    "icon": "ResIcon_TowerIce1",
+    "res_id": "ResUnit_TowerIce2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower7",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerIce2"
+    ]
+  },
+  {
+    "id": "Unit_TowerIce3",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerIce3",
+      "text": "冰魔塔3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerIce3",
+      "text": "冰魔塔3"
+    },
+    "icon": "ResIcon_TowerIce1",
+    "res_id": "ResUnit_TowerIce3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": true,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower7",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerIce3"
+    ]
+  },
+  {
+    "id": "Unit_TowerTime1",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerTime1",
+      "text": "加速塔1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerTime1",
+      "text": "加速塔1"
+    },
+    "icon": "ResIcon_TowerTime1",
+    "res_id": "ResUnit_TowerTime1",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower8",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerTime1"
+    ]
+  },
+  {
+    "id": "Unit_TowerTime2",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerTime2",
+      "text": "加速塔2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerTime2",
+      "text": "加速塔2"
+    },
+    "icon": "ResIcon_TowerTime1",
+    "res_id": "ResUnit_TowerTime2",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower8",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerTime2"
+    ]
+  },
+  {
+    "id": "Unit_TowerTime3",
+    "name": {
+      "key": "Text_Key_Name_Unit_TowerTime3",
+      "text": "加速塔3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Unit_TowerTime3",
+      "text": "加速塔3"
+    },
+    "icon": "ResIcon_TowerTime1",
+    "res_id": "ResUnit_TowerTime3",
+    "moveSpeed": 6,
+    "rotationSpeed": 400,
+    "isNeedChkMesh": false,
+    "attackPointHeight": 2,
+    "bodyHeight": 2,
+    "bodyRadius": 0.5,
+    "resScale": 1,
+    "propertyType": "Tower8",
+    "deathShow": "DeathShow_1",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "skillList": [
+      "Skill_TowerTime3"
     ]
   }
 ]

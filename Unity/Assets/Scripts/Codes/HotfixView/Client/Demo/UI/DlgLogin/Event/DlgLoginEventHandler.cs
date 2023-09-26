@@ -2,27 +2,27 @@
 {
 	[FriendOf(typeof(UIBaseWindow))]
 	[AUIEvent(WindowID.WindowID_Login)]
-	public  class DlgLoginEventHandler : IAUIEventHandler
+	public class DlgLoginEventHandler : IAUIEventHandler
 	{
 
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.windowType = UIWindowType.Normal; 
+			uiBaseWindow.windowType = UIWindowType.Normal; 
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.AddComponent<DlgLogin>().AddComponent<DlgLoginViewComponent>();
+			uiBaseWindow.AddComponent<DlgLogin>().AddComponent<DlgLoginViewComponent>();
 		}
 
 		public void OnRegisterUIEvent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.GetComponent<DlgLogin>().RegisterUIEvent(); 
+			uiBaseWindow.GetComponent<DlgLogin>().RegisterUIEvent(); 
 		}
 
-		public void OnShowWindow(UIBaseWindow uiBaseWindow, Entity contextData = null)
+		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-		  uiBaseWindow.GetComponent<DlgLogin>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgLogin>().ShowWindow(contextData); 
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -10,6 +11,9 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
+
+			ET.Ability.AudioPlayHelper.DoAudioPlay(unit, actionId, selectHandle, actionContext);
+			
 			await ETTask.CompletedTask;
 		}
 	}

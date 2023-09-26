@@ -24,7 +24,24 @@ namespace ET
             AddSingleton(singleton);
             return singleton;
         }
-        
+
+        public static T GetExistSingleton<T>() where T: Singleton<T>, new()
+        {
+            Type singletonType = typeof(T);
+            return (T)singletonTypes[singletonType];
+        }
+
+        public static bool ChkIsExistSingleton<T>() where T: Singleton<T>, new()
+        {
+            Type singletonType = typeof(T);
+            if (singletonTypes.ContainsKey(singletonType))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static void AddSingleton(ISingleton singleton)
         {
             Type singletonType = singleton.GetType();
@@ -35,19 +52,19 @@ namespace ET
 
             singletonTypes.Add(singletonType, singleton);
             singletons.Push(singleton);
-            
+
             singleton.Register();
 
             if (singleton is ISingletonAwake awake)
             {
                 awake.Awake();
             }
-            
+
             if (singleton is ISingletonUpdate)
             {
                 updates.Enqueue(singleton);
             }
-            
+
             if (singleton is ISingletonFixedUpdate)
             {
                 fixedUpdates.Enqueue(singleton);
@@ -82,7 +99,7 @@ namespace ET
                 {
                     continue;
                 }
-                
+
                 updates.Enqueue(singleton);
                 try
                 {
@@ -96,14 +113,14 @@ namespace ET
                 }
             }
         }
-        
+
         public static void LateUpdate()
         {
             int count = lateUpdates.Count;
             while (count-- > 0)
             {
                 ISingleton singleton = lateUpdates.Dequeue();
-                
+
                 if (singleton.IsDisposed())
                 {
                     continue;
@@ -113,7 +130,7 @@ namespace ET
                 {
                     continue;
                 }
-                
+
                 lateUpdates.Enqueue(singleton);
                 try
                 {
@@ -134,7 +151,7 @@ namespace ET
             while (count-- > 0)
             {
                 ISingleton singleton = fixedUpdates.Dequeue();
-                
+
                 if (singleton.IsDisposed())
                 {
                     continue;

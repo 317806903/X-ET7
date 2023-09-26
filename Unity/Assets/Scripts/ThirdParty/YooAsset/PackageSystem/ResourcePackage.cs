@@ -796,6 +796,12 @@ namespace YooAsset
 		{
 			return _playModeServices.ActiveManifest.ConvertLocationToAssetInfo(location, assetType);
 		}
+
+		public void ReLoadMap()
+		{
+			//_bundleServices.ReLoadMap();
+			_isInitialize = false;
+		}
 		#endregion
 
 		#region 调试方法

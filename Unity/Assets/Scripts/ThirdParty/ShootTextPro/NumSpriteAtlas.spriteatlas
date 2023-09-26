@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NumSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 0e9df348b2bb2dc4e8904c22af260498, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 043c07108eaebc748b392b2c3078d47b: 21300000
+    - 0e471a102ae45bf41b764044f5831c9d: 21300000
+    - 535f6f80d1904bc40acf824acf2c97eb: 21300000
+    - d9eb72f0d7939c64a8446e08a70e7fb4: 21300000
+    - 97d047112a9391f49bf111f92663bb61: 21300000
+    - fb6d11d14b63314409873dd063a19244: 21300000
+    - a89610821d7d97042b254fd49b705322: 21300000
+    - 7474f51357d578a4cb1670596c5b627a: 21300000
+    - 76346033a9d86e4469dd9dd214fc3679: 21300000
+    - 6402c134e465a174c9e9280888e62b5a: 21300000
+    - 284834647b3c29b4da9169f57da1659e: 21300000
+    - 034c41c47e842f242a1cee1c7441139c: 21300000
+    - 4cf304262d8b681488211eb0a09dc341: 21300000
+    - b5911c9660953c34a83f82324bd49da3: 21300000
+    - 0f94f0f6a50c9544483ee9ee5f8b2d2b: 21300000
+    - 9d852368021d45a4ba3867ed6b67e37d: 21300000
+    - e93d27b899c50094183e407ed7ccebdd: 21300000
+    - f8dfa9797b7abab43b0cde5045c3850b: 21300000
+    - a6a7f93af397d4b469b7fdae631b4c0c: 21300000
+    - 2924ab7a0c2153841b484e5d8aafefb9: 21300000
+    - 2164da8ae26990c44a14588ce4b1bbde: 21300000
+    - 6d0326fadb590944c8506fb2f6fad82d: 21300000
+    - 65c8e05b0b32391459a46b3a4456ca18: 21300000
+    - 64ea40ebb869ba04fadfc221785fa5c0: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 043c07108eaebc748b392b2c3078d47b, type: 3}
+  - {fileID: 21300000, guid: 0e471a102ae45bf41b764044f5831c9d, type: 3}
+  - {fileID: 21300000, guid: 535f6f80d1904bc40acf824acf2c97eb, type: 3}
+  - {fileID: 21300000, guid: d9eb72f0d7939c64a8446e08a70e7fb4, type: 3}
+  - {fileID: 21300000, guid: 97d047112a9391f49bf111f92663bb61, type: 3}
+  - {fileID: 21300000, guid: fb6d11d14b63314409873dd063a19244, type: 3}
+  - {fileID: 21300000, guid: a89610821d7d97042b254fd49b705322, type: 3}
+  - {fileID: 21300000, guid: 7474f51357d578a4cb1670596c5b627a, type: 3}
+  - {fileID: 21300000, guid: 76346033a9d86e4469dd9dd214fc3679, type: 3}
+  - {fileID: 21300000, guid: 6402c134e465a174c9e9280888e62b5a, type: 3}
+  - {fileID: 21300000, guid: 284834647b3c29b4da9169f57da1659e, type: 3}
+  - {fileID: 21300000, guid: 034c41c47e842f242a1cee1c7441139c, type: 3}
+  - {fileID: 21300000, guid: 4cf304262d8b681488211eb0a09dc341, type: 3}
+  - {fileID: 21300000, guid: b5911c9660953c34a83f82324bd49da3, type: 3}
+  - {fileID: 21300000, guid: 0f94f0f6a50c9544483ee9ee5f8b2d2b, type: 3}
+  - {fileID: 21300000, guid: 9d852368021d45a4ba3867ed6b67e37d, type: 3}
+  - {fileID: 21300000, guid: e93d27b899c50094183e407ed7ccebdd, type: 3}
+  - {fileID: 21300000, guid: f8dfa9797b7abab43b0cde5045c3850b, type: 3}
+  - {fileID: 21300000, guid: a6a7f93af397d4b469b7fdae631b4c0c, type: 3}
+  - {fileID: 21300000, guid: 2924ab7a0c2153841b484e5d8aafefb9, type: 3}
+  - {fileID: 21300000, guid: 2164da8ae26990c44a14588ce4b1bbde, type: 3}
+  - {fileID: 21300000, guid: 6d0326fadb590944c8506fb2f6fad82d, type: 3}
+  - {fileID: 21300000, guid: 65c8e05b0b32391459a46b3a4456ca18, type: 3}
+  - {fileID: 21300000, guid: 64ea40ebb869ba04fadfc221785fa5c0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 2
+  - 9
+  - 6
+  - 9
+  - 1
+  - 1
+  - 2
+  - 3
+  - 7
+  - 4
+  - 8
+  - 7
+  - 5
+  - 0
+  - '-'
+  - 0
+  - 3
+  - 6
+  - '-'
+  - 8
+  - +
+  - +
+  - 5
+  - 4
+  m_RenderDataMap: {}
+  m_Tag: NumSpriteAtlas
+  m_IsVariant: 0

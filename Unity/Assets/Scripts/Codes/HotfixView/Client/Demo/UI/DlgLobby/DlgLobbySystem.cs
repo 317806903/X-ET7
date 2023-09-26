@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
 	[FriendOf(typeof(DlgLobby))]
-	public static  class DlgLobbySystem
+	public static class DlgLobbySystem
 	{
 
 		public static void RegisterUIEvent(this DlgLobby self)
@@ -23,7 +23,7 @@ namespace ET.Client
 				});
 		}
 
-		public static void ShowWindow(this DlgLobby self, Entity contextData = null)
+		public static void ShowWindow(this DlgLobby self, ShowWindowData contextData = null)
 		{
 		}
 
@@ -43,9 +43,11 @@ namespace ET.Client
 			}
 
 		}
-		
+
 		public static async ETTask EnterMap(this DlgLobby self)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
 			string gamePlayBattleLevelCfgId = self.View.E_InputFieldInputField.text;
 			if (GamePlayBattleLevelCfgCategory.Instance.Contain(gamePlayBattleLevelCfgId) == false)
 			{
@@ -59,15 +61,15 @@ namespace ET.Client
 				Log.Error($"gamePlayBattleLevelCfg.IsGlobalMode == false when gamePlayBattleLevelCfgId[{gamePlayBattleLevelCfgId}]");
 				return;
 			}
-			
+
 			await EnterMapHelper.EnterMapAsync(self.ClientScene(), gamePlayBattleLevelCfgId);
 		}
-		
+
 		public static async ETTask ReturnLogin(this DlgLobby self)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+
 			await LoginHelper.LoginOut(self.ClientScene());
-			self.ClientScene().GetComponent<UIComponent>().HideAllShownWindow();
-			await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Login);
 		}
 
 	}

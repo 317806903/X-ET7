@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 抛物线运动
+/// 抛物线轨迹
 /// </summary>
 public sealed partial class ParabolaMoveTweenType:  MoveTweenType 
 {

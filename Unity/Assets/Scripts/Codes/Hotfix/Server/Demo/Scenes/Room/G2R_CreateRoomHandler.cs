@@ -8,10 +8,17 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_CreateRoom request, R2G_CreateRoom response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			string battleCfgId = request.BattleCfgId;
 			bool isARRoom = request.IsARRoom == 1? true : false;
+				
+			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
+			if (roomComponentOld != null)
+			{
+				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
+			}
+			
 			RoomTeamMode roomTeamMode = RoomTeamMode.Single;
 			RoomComponent roomComponent = roomManagerComponent.CreateRoom(isARRoom, playerId, roomTeamMode, battleCfgId);
 			

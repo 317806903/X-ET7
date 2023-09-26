@@ -12,227 +12,8 @@
     "teamMode": {
       "$type": "AllPlayersOneGroup"
     },
-    "sceneMap": "Map1",
-    "playerBirthPosList": [
-      [
-        {
-          "x": 32.47901,
-          "y": 0.09153199,
-          "z": 25.64863
-        }
-      ],
-      [
-        {
-          "x": 5.3036385,
-          "y": 0.09153199,
-          "z": 25.377892
-        }
-      ],
-      [
-        {
-          "x": -11.32815,
-          "y": 0.09153199,
-          "z": 19.428177
-        }
-      ],
-      [
-        {
-          "x": -21.791573,
-          "y": 0.09153199,
-          "z": 7.824051
-        }
-      ],
-      [
-        {
-          "x": -23.75347,
-          "y": 0.09153199,
-          "z": -10.634224
-        }
-      ],
-      [
-        {
-          "x": 6.5113716,
-          "y": 0.09153199,
-          "z": -33.988983
-        }
-      ],
-      [
-        {
-          "x": -4.8139887,
-          "y": 0.09153199,
-          "z": -24.230585
-        }
-      ],
-      [
-        {
-          "x": -11.316156,
-          "y": 0.09153199,
-          "z": -15.966864
-        }
-      ],
-      [
-        {
-          "x": -22.839828,
-          "y": 0.09153199,
-          "z": -8.597555
-        }
-      ]
-    ],
-    "monsterCallPosList": [
-      [
-        {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        {
-          "x": 2,
-          "y": 2,
-          "z": 2
-        }
-      ],
-      [
-        {
-          "x": 10,
-          "y": 10,
-          "z": 10
-        },
-        {
-          "x": 11,
-          "y": 11,
-          "z": 11
-        }
-      ],
-      [
-        {
-          "x": 20,
-          "y": 20,
-          "z": 20
-        }
-      ]
-    ]
-  },
-  {
-    "id": "GamePlayBattleLevel_Room12",
-    "name": "",
-    "desc": "",
-    "isGlobalMode": false,
-    "maxPlayerCount": 10,
-    "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
-    },
-    "teamMode": {
-      "$type": "AllPlayersOneGroup"
-    },
-    "sceneMap": "Map2",
-    "playerBirthPosList": [
-      [
-        {
-          "x": 32.47901,
-          "y": 0.09153199,
-          "z": 25.64863
-        },
-        {
-          "x": 5.3036385,
-          "y": 0.09153199,
-          "z": 25.377892
-        },
-        {
-          "x": -11.32815,
-          "y": 0.09153199,
-          "z": 19.428177
-        },
-        {
-          "x": -21.791573,
-          "y": 0.09153199,
-          "z": 7.824051
-        },
-        {
-          "x": -23.75347,
-          "y": 0.09153199,
-          "z": -10.634224
-        },
-        {
-          "x": 6.5113716,
-          "y": 0.09153199,
-          "z": -33.988983
-        },
-        {
-          "x": -4.8139887,
-          "y": 0.09153199,
-          "z": -24.230585
-        },
-        {
-          "x": -11.316156,
-          "y": 0.09153199,
-          "z": -15.966864
-        },
-        {
-          "x": -22.839828,
-          "y": 0.09153199,
-          "z": -8.597555
-        }
-      ]
-    ],
-    "monsterCallPosList": [
-      [
-        {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        {
-          "x": 2,
-          "y": 2,
-          "z": 2
-        }
-      ],
-      [
-        {
-          "x": 10,
-          "y": 10,
-          "z": 10
-        },
-        {
-          "x": 11,
-          "y": 11,
-          "z": 11
-        }
-      ],
-      [
-        {
-          "x": 20,
-          "y": 20,
-          "z": 20
-        }
-      ]
-    ]
-  },
-  {
-    "id": "GamePlayBattleLevel_Room13",
-    "name": "",
-    "desc": "",
-    "isGlobalMode": false,
-    "maxPlayerCount": 10,
-    "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
-    },
-    "teamMode": {
-      "$type": "AllPlayersOneGroup"
-    },
     "sceneMap": "Map3",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -314,6 +95,222 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Room12",
+    "name": "",
+    "desc": "",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefense1",
+      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map2",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        },
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        },
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        },
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        },
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        },
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        },
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        },
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        },
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Room13",
+    "name": "",
+    "desc": "",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefense1",
+      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -330,6 +327,7 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map1",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -432,6 +430,11 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -450,6 +453,7 @@
       "isAllowDiffTeamMember": true
     },
     "sceneMap": "Map1",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -552,6 +556,135 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Room80",
+    "name": "",
+    "desc": "",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayPK1",
+      "gamePlayModeCfgId": "GamePlayPK1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Map1",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -568,6 +701,7 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map1",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -670,6 +804,11 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -686,6 +825,7 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map2",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -772,6 +912,11 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -788,6 +933,7 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map3",
+    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -869,6 +1015,50 @@
           "z": 20
         }
       ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Global4",
+    "name": "",
+    "desc": "",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPK1",
+      "gamePlayModeCfgId": "GamePlayPK1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "zpbTest",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
     ]
   },
   {
@@ -885,7 +1075,196 @@
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "ARMap",
-    "playerBirthPosList": [],
-    "monsterCallPosList": []
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoompk",
+    "name": "",
+    "desc": "",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayPK1",
+      "gamePlayModeCfgId": "GamePlayPK1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "ARMap",
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
   }
 ]

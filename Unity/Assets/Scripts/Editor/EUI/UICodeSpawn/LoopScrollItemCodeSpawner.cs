@@ -18,7 +18,7 @@ public partial class UICodeSpawner
         SpawnCodeForScrollLoopItemViewSystem(gameObject);
         AssetDatabase.Refresh();
     }
-    
+
     static void SpawnCodeForScrollLoopItemViewSystem(GameObject gameObject)
     {
         if (null == gameObject)
@@ -42,26 +42,26 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("using UnityEngine.UI;");
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
-        
-        
+
+
         strBuilder.AppendLine("\t[ObjectSystem]");
         strBuilder.AppendFormat("\tpublic class Scroll_{0}DestroySystem : DestroySystem<Scroll_{1}> \r\n", strDlgName, strDlgName);
         strBuilder.AppendLine("\t{");
         strBuilder.AppendFormat("\t\tprotected override void Destroy( Scroll_{0} self )",strDlgName);
         strBuilder.AppendLine("\n\t\t{");
-        
+
         strBuilder.AppendFormat("\t\t\tself.DestroyWidget();\r\n");
 
         strBuilder.AppendLine("\t\t}");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
-        
+
         sw.Write(strBuilder);
         sw.Flush();
         sw.Close();
     }
-    
-    
+
+
     static void SpawnCodeForScrollLoopItemBehaviour(GameObject gameObject)
     {
         if (null == gameObject)
@@ -86,11 +86,11 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[EnableMethod]");
-        strBuilder.AppendFormat("\tpublic  class Scroll_{0} : Entity,IAwake,IDestroy,IUIScrollItem \r\n", strDlgName)
+        strBuilder.AppendFormat("\tpublic class Scroll_{0} : Entity, IAwake, IDestroy, IUIScrollItem\r\n", strDlgName)
             .AppendLine("\t{");
-        
+
         strBuilder.AppendLine("\t\tpublic long DataId {get;set;}");
-        
+
         strBuilder.AppendLine("\t\tprivate bool isCacheNode = false;");
         strBuilder.AppendLine("\t\tpublic void SetCacheMode(bool isCache)");
         strBuilder.AppendLine("\t\t{");
@@ -101,16 +101,16 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("\t\t\tthis.uiTransform = trans;");
         strBuilder.AppendLine("\t\t\treturn this;");
         strBuilder.AppendLine("\t\t}\n");
-        
+
         CreateWidgetBindCode(ref strBuilder, gameObject.transform);
         CreateDestroyWidgetCode(ref strBuilder,true);
         CreateDeclareCode(ref strBuilder);
-        
+
         strBuilder.AppendLine("\t\tpublic Transform uiTransform = null;");
-        
+
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
-        
+
         sw.Write(strBuilder);
         sw.Flush();
         sw.Close();

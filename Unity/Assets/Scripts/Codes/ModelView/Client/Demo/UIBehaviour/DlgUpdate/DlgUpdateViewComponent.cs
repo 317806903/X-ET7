@@ -5,7 +5,7 @@ namespace ET.Client
 {
 	[ComponentOf(typeof(DlgUpdate))]
 	[EnableMethod]
-	public  class DlgUpdateViewComponent : Entity,IAwake,IDestroy 
+	public class DlgUpdateViewComponent : Entity, IAwake, IDestroy
 	{
 		public UnityEngine.UI.Slider E_SliderSlider
      	{

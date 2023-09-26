@@ -13,6 +13,7 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
+				self.waitRecycleSelectHandles = new();
 				self.NeedSyncNumericUnits = new();
 				self.NeedSyncPosUnits = new();
 				self.waitRemoveList = new();
@@ -26,12 +27,13 @@ namespace ET
 				self.sceneEffectList = HashSetComponent<Unit>.Create();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class UnitComponentDestroySystem : DestroySystem<UnitComponent>
 		{
 			protected override void Destroy(UnitComponent self)
 			{
+				self.waitRecycleSelectHandles.Dispose();
 				self.NeedSyncNumericUnits.Dispose();
 				self.NeedSyncPosUnits.Dispose();
 				self.waitRemoveList.Clear();
@@ -66,18 +68,33 @@ namespace ET
 			ProfilerSample.BeginSample($"DoUnitHit");
 			self.DoUnitHit(fixedDeltaTime);
 			ProfilerSample.EndSample();
-			
+
 			ProfilerSample.BeginSample($"DoUnitRemove");
 			self.DoUnitRemove();
 			ProfilerSample.EndSample();
-			
-			ProfilerSample.BeginSample($"SyncPosUnit");
-			self.SyncPosUnit();
-			ProfilerSample.EndSample();
-			
-			ProfilerSample.BeginSample($"SyncNumericUnit");
-			self.SyncNumericUnit();
-			ProfilerSample.EndSample();
+
+			if (self.curFrameSyncPos++ > self.waitFrameSyncPos)
+			{
+				self.curFrameSyncPos = 0;
+
+				ProfilerSample.BeginSample($"SyncPosUnit");
+				self.SyncPosUnit();
+				ProfilerSample.EndSample();
+			}
+			if (self.curFrameSyncNumeric++ > self.waitFrameSyncNumeric)
+			{
+				self.curFrameSyncNumeric = 0;
+
+				ProfilerSample.BeginSample($"SyncNumericUnit");
+				self.SyncNumericUnit();
+				ProfilerSample.EndSample();
+			}
+			if (self.curFrameRecycleSelectHandle++ > self.waitFrameRecycleSelectHandle)
+			{
+				self.curFrameRecycleSelectHandle = 0;
+
+				self.RecycleSelectHandles();
+			}
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -89,7 +106,7 @@ namespace ET
 
 			self.waitRemoveList.Clear();
 		}
-		
+
 		public static HashSetComponent<Unit> GetRecordList(this UnitComponent self, UnitType unitType)
 		{
 			HashSetComponent<Unit> recordList;
@@ -141,7 +158,7 @@ namespace ET
 		{
 			self.waitRemoveList.Add(unit.Id);
 		}
-		
+
 		public static void Remove(this UnitComponent self, long id)
 		{
 			Unit unit = self.GetChild<Unit>(id);
@@ -149,14 +166,14 @@ namespace ET
 			{
 				return;
 			}
-			
+
 			GamePlayHelper.RemoveUnitInfo(unit);
-			
+
 			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
 			recordList.Remove(unit);
 			unit?.Dispose();
 		}
-		
+
 		public static void AddSyncPosUnit(this UnitComponent self, Unit unit)
 		{
 			if (self.NeedSyncPosUnits.Contains(unit))
@@ -170,7 +187,7 @@ namespace ET
 			}
 			self.NeedSyncPosUnits.Add(unit);
 		}
-		
+
 		public static void AddSyncNumericUnit(this UnitComponent self, Unit unit)
 		{
 			if (self.NeedSyncNumericUnits.Contains(unit))
@@ -183,12 +200,21 @@ namespace ET
 			}
 			self.NeedSyncNumericUnits.Add(unit);
 		}
-		
+
+		public static void AddRecycleSelectHandles(this UnitComponent self, SelectHandle selectHandle)
+		{
+			if (self.waitRecycleSelectHandles.Contains(selectHandle))
+			{
+				return;
+			}
+			self.waitRecycleSelectHandles.Add(selectHandle);
+		}
+
 		public static void SyncPosUnit(this UnitComponent self)
 		{
             if (self.NeedSyncPosUnits.Count == 0)
                 return;
-            
+
             EventType.SyncPosUnits _SyncPosUnits = new ()
             {
 	            units = ListComponent<Unit>.Create(),
@@ -207,7 +233,7 @@ namespace ET
 		                continue;
 	                }
                 }
-                
+
                 _SyncPosUnits.units.Add(unit);
             }
 
@@ -217,12 +243,12 @@ namespace ET
             }
             self.NeedSyncPosUnits.Clear();
 		}
-		
+
 		public static void SyncNumericUnit(this UnitComponent self)
 		{
             if (self.NeedSyncNumericUnits.Count == 0)
                 return;
-            
+
             EventType.SyncNumericUnits _SyncNumericUnits = new ()
             {
 	            units = ListComponent<Unit>.Create(),
@@ -231,7 +257,7 @@ namespace ET
             {
                 if(unit.IsDisposed)
 	                continue;
-                
+
                 _SyncNumericUnits.units.Add(unit);
             }
             if (_SyncNumericUnits.units.Count > 0)
@@ -239,6 +265,18 @@ namespace ET
 	            EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
             }
             self.NeedSyncNumericUnits.Clear();
+		}
+
+		public static void RecycleSelectHandles(this UnitComponent self)
+		{
+            if (self.waitRecycleSelectHandles.Count == 0)
+                return;
+
+            foreach (SelectHandle selectHandle in self.waitRecycleSelectHandles)
+            {
+                selectHandle.Dispose();
+            }
+            self.waitRecycleSelectHandles.Clear();
 		}
 	}
 }

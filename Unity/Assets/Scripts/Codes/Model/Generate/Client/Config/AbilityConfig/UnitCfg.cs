@@ -17,17 +17,21 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public UnitCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Name = _buf.ReadString();
-        Desc = _buf.ReadString();
+        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
+        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         Icon = _buf.ReadString();
         ResId = _buf.ReadString();
         MoveSpeed = _buf.ReadFloat();
         RotationSpeed = _buf.ReadFloat();
+        IsNeedChkMesh = _buf.ReadBool();
+        AttackPointHeight = _buf.ReadFloat();
         BodyHeight = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
         PropertyType = _buf.ReadString();
         DeathShow = _buf.ReadString();
+        IdleTimelineId = _buf.ReadString();
+        MoveTimelineId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SkillList.Add(_e0);}}
         PostInit();
     }
@@ -41,14 +45,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// 这是id
     /// </summary>
     public string Id { get; private set; }
-    /// <summary>
-    /// 名字
-    /// </summary>
     public string Name { get; private set; }
-    /// <summary>
-    /// 描述
-    /// </summary>
+    public string Name_l10n_key { get; }
     public string Desc { get; private set; }
+    public string Desc_l10n_key { get; }
     /// <summary>
     /// icon资源路径
     /// </summary>
@@ -67,6 +67,14 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// 转身速度
     /// </summary>
     public float RotationSpeed { get; private set; }
+    /// <summary>
+    /// 是否需要检测Mesh(判断攻击目标时)
+    /// </summary>
+    public bool IsNeedChkMesh { get; private set; }
+    /// <summary>
+    /// 攻击点高度(判断连通时会不会被阻挡)
+    /// </summary>
+    public float AttackPointHeight { get; private set; }
     /// <summary>
     /// 身体高度(判断位置，判断伤害什么的)
     /// </summary>
@@ -89,6 +97,16 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public string DeathShow { get; private set; }
     public ActionCfg_DeathShow DeathShow_Ref { get; private set; }
     /// <summary>
+    /// Idle行为
+    /// </summary>
+    public string IdleTimelineId { get; private set; }
+    public TimelineCfg IdleTimelineId_Ref { get; private set; }
+    /// <summary>
+    /// Move行为
+    /// </summary>
+    public string MoveTimelineId { get; private set; }
+    public TimelineCfg MoveTimelineId_Ref { get; private set; }
+    /// <summary>
     /// 拥有技能列表
     /// </summary>
     public System.Collections.Generic.List<string> SkillList { get; private set; }
@@ -102,12 +120,16 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
         this.ResId_Ref = (_tables["ResUnitCfgCategory"] as ResUnitCfgCategory).GetOrDefault(ResId);
         this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
+        this.IdleTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(IdleTimelineId);
+        this.MoveTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(MoveTimelineId);
         { SkillCfgCategory __table = (SkillCfgCategory)_tables["SkillCfgCategory"]; this.SkillList_Ref = new System.Collections.Generic.List<SkillCfg>(); foreach(var __e in SkillList) { this.SkillList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        Name = translator(Name_l10n_key, Name);
+        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -120,11 +142,15 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "ResId:" + ResId + ","
         + "MoveSpeed:" + MoveSpeed + ","
         + "RotationSpeed:" + RotationSpeed + ","
+        + "IsNeedChkMesh:" + IsNeedChkMesh + ","
+        + "AttackPointHeight:" + AttackPointHeight + ","
         + "BodyHeight:" + BodyHeight + ","
         + "BodyRadius:" + BodyRadius + ","
         + "ResScale:" + ResScale + ","
         + "PropertyType:" + PropertyType + ","
         + "DeathShow:" + DeathShow + ","
+        + "IdleTimelineId:" + IdleTimelineId + ","
+        + "MoveTimelineId:" + MoveTimelineId + ","
         + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
         + "}";
     }

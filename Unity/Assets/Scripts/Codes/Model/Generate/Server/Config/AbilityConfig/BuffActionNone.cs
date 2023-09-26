@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 不做事情
+/// 不做额外事情
 /// </summary>
 public sealed partial class BuffActionNone:  BuffAction 
 {

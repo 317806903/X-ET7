@@ -19,7 +19,7 @@ public sealed partial class ActionCfg_PlayAnimator: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        AnimatorName = _buf.ReadString();
+        AnimatorName = (AnimatorMotionName)_buf.ReadInt();
         PostInit();
     }
 
@@ -43,7 +43,7 @@ public sealed partial class ActionCfg_PlayAnimator: Bright.Config.BeanBase
     /// <summary>
     /// 动作名称
     /// </summary>
-    public string AnimatorName { get; private set; }
+    public AnimatorMotionName AnimatorName { get; private set; }
 
     public const int __ID__ = 631630028;
     public override int GetTypeId() => __ID__;

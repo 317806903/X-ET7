@@ -1,0 +1,9 @@
+---------这是 prefab中存在, 但是excel中没有配置的项
+DlgGameMode/EGBackGround/E_SingleMapMode/E_SingleMapText	全局地图模式
+DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText	房间模式
+DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText	AR房间模式
+
+
+---------这是 excel配置,但是不存在prefab中的项
+DlgGameMode/EGBackGround/E_ReturnLogin/Text	重新登录
+DlgGameMode/EGBackGround/E_ReturnLogin/Text2	重新登录

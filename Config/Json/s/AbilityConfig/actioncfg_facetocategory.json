@@ -1,6 +1,62 @@
 [
   {
-    "id": "FaceTo_1",
-    "name": ""
+    "id": "FaceTo_Forward_ForceSetFaceImmediately",
+    "name": "",
+    "faceToType": 1
+  },
+  {
+    "id": "FaceTo_Forward_ForceSetFace",
+    "name": "",
+    "faceToType": 2
+  },
+  {
+    "id": "FaceTo_Forward_AddRotate",
+    "name": "",
+    "faceToType": 3
+  },
+  {
+    "id": "FaceTo_Back_ForceSetFaceImmediately",
+    "name": "",
+    "faceToType": 4
+  },
+  {
+    "id": "FaceTo_Back_ForceSetFace",
+    "name": "",
+    "faceToType": 5
+  },
+  {
+    "id": "FaceTo_Back_AddRotate",
+    "name": "",
+    "faceToType": 6
+  },
+  {
+    "id": "FaceTo_Around_ForceSetFaceImmediately",
+    "name": "",
+    "faceToType": 7
+  },
+  {
+    "id": "FaceTo_Around_ForceSetFace",
+    "name": "",
+    "faceToType": 8
+  },
+  {
+    "id": "FaceTo_Around_AddRotate",
+    "name": "",
+    "faceToType": 9
+  },
+  {
+    "id": "FaceTo_Random_ForceSetFaceImmediately",
+    "name": "",
+    "faceToType": 10
+  },
+  {
+    "id": "FaceTo_Random_ForceSetFace",
+    "name": "",
+    "faceToType": 11
+  },
+  {
+    "id": "FaceTo_Random_AddRotate",
+    "name": "",
+    "faceToType": 12
   }
 ]

@@ -8,6 +8,7 @@ namespace ET
     {
         public static void Load()
         {
+            //HybridCLRSettings.Instance.patchAOTAssemblies
             string[] addresses = MonoResComponent.Instance.GetAddressesByTag("aotdlls");
             foreach (string address in addresses)
             {

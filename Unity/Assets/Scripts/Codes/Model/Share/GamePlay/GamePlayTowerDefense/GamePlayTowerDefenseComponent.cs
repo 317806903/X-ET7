@@ -2,13 +2,13 @@
 using System.Linq;
 using ET.AbilityConfig;
 using MongoDB.Bson.Serialization.Attributes;
+using Unity.Mathematics;
 
 namespace ET
 {
 	public enum GamePlayTowerDefenseStatus
 	{
-		ScanMap,
-		DownloadMap,
+		ShowStartEffect,
 		PutHome,
 		PutMonsterPoint,
 		RestTime,
@@ -16,10 +16,12 @@ namespace ET
 		GameSuccess,
 		GameFailed,
 	}
-	
+
 	[ComponentOf(typeof(GamePlayComponent))]
 	public class GamePlayTowerDefenseComponent : GamePlayModeComponent
 	{
+		[BsonIgnore]
+		public long lastSendTime;
 		[BsonIgnore]
 		public GamePlayTowerDefenseCfg model
 		{
@@ -28,8 +30,13 @@ namespace ET
 				return GamePlayTowerDefenseCfgCategory.Instance.Get(this.gamePlayModeCfgId);
 			}
 		}
-		
-		public GamePlayTowerDefenseStatus GamePlayTowerDefenseStatus { get; set; }
+
+		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus { get; set; }
 		public long ownerPlayerId { get; set; }
+
+		[BsonIgnore]
+		public long lastMouseDownTime;
+		[BsonIgnore]
+		public float3 lastMousePosition;
 	}
 }

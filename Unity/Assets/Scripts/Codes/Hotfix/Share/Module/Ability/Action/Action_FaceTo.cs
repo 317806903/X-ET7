@@ -11,7 +11,9 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
-			RotateHelper.AddRotate(unit, selectHandle, true);
+
+			ActionCfg_FaceTo actionCfg_FaceTo = ActionCfg_FaceToCategory.Instance.Get(actionId);
+			RotateHelper.DealRotate(unit, actionCfg_FaceTo, selectHandle);
 			await ETTask.CompletedTask;
 		}
 	}

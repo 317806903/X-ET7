@@ -2,57 +2,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using ET.AbilityConfig;
+using MongoDB.Bson;
 using Unity.Mathematics;
 
 namespace ET.Ability
 {
-    [FriendOf(typeof(Unit))]
-    [FriendOf(typeof(UnitComponent))]
-    [FriendOf(typeof(MoveByPathComponent))]
-    [FriendOf(typeof(NumericComponent))]
+    [FriendOf(typeof (Unit))]
+    [FriendOf(typeof (UnitComponent))]
+    //[FriendOf(typeof(MoveByPathComponent))]
+    [FriendOf(typeof (NumericComponent))]
     public static class UnitHelper
     {
         public static UnitComponent GetUnitComponent(Unit unit)
         {
             return unit.DomainScene().GetComponent<UnitComponent>();
         }
-        
+
         public static UnitComponent GetUnitComponent(Scene scene)
         {
             return scene.GetComponent<UnitComponent>();
         }
-        
+
         public static Unit GetUnit(Scene scene, long unitId)
         {
             if (scene == null)
             {
                 return null;
             }
+
             UnitComponent unitComponent = GetUnitComponent(scene);
             if (unitComponent == null)
             {
                 return null;
             }
+
             Unit unit = unitComponent.Get(unitId);
             return unit;
         }
-        
-        public static bool ChkUnitAlive(Scene scene, long unitId)
+
+        public static bool ChkUnitAlive(Scene scene, long unitId, bool isContainDeathShow = false)
         {
             Unit unit = GetUnit(scene, unitId);
-            
-            return ChkUnitAlive(unit);
+
+            return ChkUnitAlive(unit, isContainDeathShow);
         }
-        
-        public static bool ChkUnitAlive(Unit unit)
+
+        public static bool ChkUnitAlive(Unit unit, bool isContainDeathShow = false)
         {
             if (unit == null)
             {
                 return false;
             }
+
             if (unit.IsDisposed)
             {
                 return false;
+            }
+
+            if (isContainDeathShow)
+            {
+                return true;
             }
 
             if (ChkIsBullet(unit))
@@ -67,16 +76,17 @@ namespace ET.Ability
                 {
                     return true;
                 }
+
                 return false;
             }
         }
-        
+
         public static bool ChkIsObserver(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsObserver(unit);
         }
-        
+
         public static bool ChkIsObserver(Unit unit)
         {
             if (unit == null)
@@ -88,15 +98,16 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
-        
+
         public static bool ChkIsPlayer(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsPlayer(unit);
         }
-        
+
         public static bool ChkIsPlayer(Unit unit)
         {
             if (unit == null)
@@ -108,15 +119,16 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
-        
+
         public static bool ChkIsActor(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsBullet(unit);
         }
-        
+
         public static bool ChkIsActor(Unit unit)
         {
             if (unit == null)
@@ -128,6 +140,7 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
 
@@ -136,7 +149,7 @@ namespace ET.Ability
             Unit unit = GetUnit(scene, unitId);
             return ChkIsBullet(unit);
         }
-        
+
         public static bool ChkIsBullet(Unit unit)
         {
             if (unit == null)
@@ -148,15 +161,16 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
-        
+
         public static bool ChkIsAoe(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsAoe(unit);
         }
-        
+
         public static bool ChkIsAoe(Unit unit)
         {
             if (unit == null)
@@ -168,15 +182,16 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
-        
+
         public static bool ChkIsSceneEffect(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
             return ChkIsBullet(unit);
         }
-        
+
         public static bool ChkIsSceneEffect(Unit unit)
         {
             if (unit == null)
@@ -188,6 +203,7 @@ namespace ET.Ability
             {
                 return true;
             }
+
             return false;
         }
 
@@ -218,7 +234,7 @@ namespace ET.Ability
                     }
                 }
             }
-            
+
             return friends;
         }
 
@@ -231,11 +247,12 @@ namespace ET.Ability
         public static ListComponent<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
         {
             ListComponent<Unit> hostileForces = ListComponent<Unit>.Create();
-            
-            Dictionary<long, AOIEntity> seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
+
+            var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
             foreach (var seeUnit in seeUnits)
             {
-                Unit unit = seeUnit.Value.Unit;
+                AOIEntity aoiEntityTmp = seeUnit.Value;
+                Unit unit = aoiEntityTmp.Unit;
                 bool isContinue = false;
                 if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsActor(unit))
                 {
@@ -245,120 +262,252 @@ namespace ET.Ability
                 {
                     isContinue = false;
                 }
+
                 if (isContinue == false)
                 {
                     continue;
                 }
+
                 ProfilerSample.BeginSample("seeUnits ET.GamePlayHelper.ChkIsFriend");
                 bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
                 ProfilerSample.EndSample();
-                if (isFriend == false)
+                if (isFriend)
                 {
-                    if (UnitHelper.ChkUnitAlive(unit))
+                    continue;
+                }
+
+                bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
+                if (isBeFind == false)
+                {
+                    continue;
+                }
+
+                if (UnitHelper.ChkUnitAlive(unit))
+                {
+                    if (UnitHelper.ChkIsPlayer(unit))
                     {
-                        if (UnitHelper.ChkIsPlayer(unit))
-                        {
-                            hostileForces.Add(unit);
-                        }
-                        else if (UnitHelper.ChkIsActor(unit) && isOnlyPlayer == false)
-                        {
-                            hostileForces.Add(unit);
-                        }
+                        hostileForces.Add(unit);
+                    }
+                    else if (UnitHelper.ChkIsActor(unit) && isOnlyPlayer == false)
+                    {
+                        hostileForces.Add(unit);
                     }
                 }
             }
-            
+
             return hostileForces;
         }
 
-        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius)
+        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius, bool ignoreY = false)
         {
-            float bRadius = 0.1f;
-            float cRadius = 0.1f;
-            float3 dis = curUnit.Position - targetUnit.Position;
-            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(radius + bRadius + cRadius, 2))
+            if (ChkIsNear(curUnit, targetUnit, radius, ignoreY))
             {
                 return true;
             }
 
             return false;
         }
-        
-        public static bool ChkIsNear(Unit curUnit, Unit targetUnit)
+
+        public static (bool, float3) ChkHitMesh(Unit curUnit, float3 curUnitPos, float curUnitHeight, Unit targetUnit)
         {
-            float radius = 0.3f;
-            float bRadius = 0.1f;
-            float cRadius = 0.1f;
-            float3 dis = curUnit.Position - targetUnit.Position;
-            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(radius + bRadius + cRadius, 2))
+            if (IsNeedChkMesh(curUnit) == false)
+            {
+                return (false, float3.zero);
+            }
+            float targetUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(targetUnit);
+            float3 startPos = curUnitPos + new float3(0, curUnitHeight * 0.5f, 0);
+            float3 endPos = targetUnit.Position + new float3(0, targetUnitHeight * 0.5f, 0);
+            (bool bHitMesh, float3 hitPos) = RecastHelper.ChkHitMesh(targetUnit.DomainScene(), startPos, endPos);
+            if (bHitMesh)
+            {
+                return (true, hitPos);
+            }
+
+            return (false, float3.zero);
+        }
+
+        public static (bool, float3) ChkHitMesh(Unit curUnit, Unit targetUnit)
+        {
+            if (IsNeedChkMesh(curUnit) == false)
+            {
+                return (false, float3.zero);
+            }
+            float curUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(curUnit);
+            float targetUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(targetUnit);
+            float3 startPos = curUnit.Position + new float3(0, curUnitHeight * 0.5f, 0);
+            float3 endPos = targetUnit.Position + new float3(0, targetUnitHeight * 0.5f, 0);
+            (bool bHitMesh, float3 hitPos) = RecastHelper.ChkHitMesh(curUnit.DomainScene(), startPos, endPos);
+            if (bHitMesh)
+            {
+                return (true, hitPos);
+            }
+
+            return (false, float3.zero);
+        }
+
+        public static bool IsNeedChkMesh(Unit curUnit)
+        {
+            if (UnitHelper.ChkIsBullet(curUnit))
+            {
+                BulletObj bulletObj = curUnit.GetComponent<BulletObj>();
+                Unit casterPlayerUnit = bulletObj.GetCasterActorUnit();
+                if (casterPlayerUnit != null && casterPlayerUnit.model.IsNeedChkMesh == false)
+                {
+                    return false;
+                }
+                return bulletObj.model.IsNeedChkMesh;
+            }
+            return curUnit.model.IsNeedChkMesh;
+        }
+
+        public static bool ChkCanMove(Unit unit)
+        {
+            if (UnitHelper.ChkIsBullet(unit))
             {
                 return true;
             }
 
+            string moveTimelineId = "";
+            float moveSpeed = 0;
+            if (UnitHelper.ChkIsAoe(unit))
+            {
+                moveTimelineId = unit.GetComponent<AoeObj>().model.MoveTimelineId;
+                moveSpeed = unit.GetComponent<AoeObj>().model.MoveSpeed;
+            }
+            else
+            {
+                moveTimelineId = unit.model.MoveTimelineId;
+                moveSpeed = unit.model.MoveSpeed;
+            }
+
+            if (string.IsNullOrEmpty(moveTimelineId))
+            {
+                return false;
+            }
+
+            if (moveSpeed <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsNear(Unit curUnit, Unit targetUnit, float radius, bool ignoreY)
+        {
+            float targetUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(targetUnit);
+            return ChkIsNear(curUnit, targetUnit.Position, targetUnitRadius, radius, ignoreY);
+        }
+
+        public static bool ChkIsNear(Unit curUnit, float3 targetPos, float targetUnitRadius, float radius, bool ignoreY)
+        {
+            float curUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(curUnit);
+            float curUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(curUnit);
+            float3 dis = curUnit.Position - targetPos;
+            float targetDisSq = math.pow(radius + curUnitRadius + targetUnitRadius, 2);
+            if (ignoreY)
+            {
+                if (math.pow(dis.y, 2) > math.max(targetDisSq, math.pow(curUnitHeight*0.8f, 2)))
+                {
+                    return false;
+                }
+                if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= targetDisSq)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (math.lengthsq(dis) <= targetDisSq)
+                {
+                    return true;
+                }
+            }
             return false;
         }
-        
+
         public static void AddWaitRemove(Unit unit)
         {
             UnitComponent unitComponent = GetUnitComponent(unit);
             unitComponent.AddWaitRemove(unit);
         }
-        
+
+        private static float2 PointRotate(float2 center, float2 p1, float angle)
+        {
+            float angleHude = angle * math.PI / 180;
+            /*角度变成弧度*/
+            float x1 = (p1.x - center.x) * math.cos(angleHude) + (p1.y - center.y) * math.sin(angleHude) + center.x;
+            float y1 = -(p1.x - center.x) * math.sin(angleHude) + (p1.y - center.y) * math.cos(angleHude) + center.y;
+            return new float2(x1, y1);
+        }
+
         public static (float3, float3) GetNewNodePosition(Unit unit, OffSetInfo offSetInfo)
         {
             string nodeName = offSetInfo.NodeName;
             Vector3 offSetPosition = offSetInfo.OffSetPosition;
             Vector3 relateForward = offSetInfo.RelateForward;
-            
-            float3 newPosition = unit.Position + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+
+            float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+            offSetPos *= Ability.UnitHelper.GetResScale(unit);
+            var t1 = math.rotate(unit.Rotation, offSetPos);
+            float3 newPosition = unit.Position + t1;
             float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
             return (newPosition, newForward);
         }
-        
-        public static float3 GetNewNodePosition(float3 resetPos, OffSetInfo offSetInfo)
+
+        public static float3 GetNewNodePosition(Unit unit, float3 resetPos, OffSetInfo offSetInfo)
         {
             string nodeName = offSetInfo.NodeName;
             Vector3 offSetPosition = offSetInfo.OffSetPosition;
             Vector3 relateForward = offSetInfo.RelateForward;
-            
-            float3 newPosition = resetPos + new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+
+            float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
+            offSetPos *= Ability.UnitHelper.GetResScale(unit);
+            var t1 = math.rotate(unit.Rotation, offSetPos);
+            float3 newPosition = resetPos + t1;
             return newPosition;
         }
-        
+
         public static void AddSyncPosUnit(Unit unit)
         {
             GetUnitComponent(unit).AddSyncPosUnit(unit);
         }
-        
+
         public static void AddSyncNumericUnit(Unit unit)
         {
             GetUnitComponent(unit).AddSyncNumericUnit(unit);
         }
-        
+
+        public static void AddRecycleSelectHandles(Scene scene, SelectHandle selectHandle)
+        {
+            GetUnitComponent(scene).AddRecycleSelectHandles(selectHandle);
+        }
+
         public static UnitInfo CreateUnitInfo(Unit unit)
         {
             UnitInfo unitInfo = new UnitInfo();
             NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
             unitInfo.ConfigId = unit.CfgId;
+            unitInfo.Level = unit.level;
             unitInfo.Type = (int)unit.Type;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
 
-            MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
-            if (moveByPathComponent != null)
-            {
-                if (!moveByPathComponent.IsArrived())
-                {
-                    unitInfo.MoveInfo = new MoveInfo() { Points = ListComponent<float3>.Create() };
-                    unitInfo.MoveInfo.Points.Add(unit.Position);
-                    for (int i = moveByPathComponent.N; i < moveByPathComponent.Targets.Count; ++i)
-                    {
-                        float3 pos = moveByPathComponent.Targets[i];
-                        unitInfo.MoveInfo.Points.Add(pos);
-                    }
-                }
-            }
+            // MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
+            // if (moveByPathComponent != null)
+            // {
+            //     if (!moveByPathComponent.IsArrived())
+            //     {
+            //         unitInfo.MoveInfo = new MoveInfo() { Points = ListComponent<float3>.Create() };
+            //         unitInfo.MoveInfo.Points.Add(unit.Position);
+            //         for (int i = moveByPathComponent.N; i < moveByPathComponent.Targets.Count; ++i)
+            //         {
+            //             float3 pos = moveByPathComponent.Targets[i];
+            //             unitInfo.MoveInfo.Points.Add(pos);
+            //         }
+            //     }
+            // }
 
             unitInfo.KV = new Dictionary<int, long>();
 
@@ -375,7 +524,7 @@ namespace ET.Ability
                     unitInfo.Components.Add(entity.ToBson());
                 }
             }
-            
+
             EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
             if (effectComponent != null)
             {
@@ -388,7 +537,7 @@ namespace ET.Ability
 
             return unitInfo;
         }
-        
+
         public static UnitPosInfo SyncPosUnitInfo(Unit unit)
         {
             UnitPosInfo unitInfo = new UnitPosInfo();
@@ -398,7 +547,7 @@ namespace ET.Ability
 
             return unitInfo;
         }
-        
+
         public static UnitNumericInfo SyncNumericUnitInfo(Unit unit)
         {
             UnitNumericInfo unitInfo = new UnitNumericInfo();
@@ -412,28 +561,29 @@ namespace ET.Ability
 
             return unitInfo;
         }
-        
-        public static float GetTargetUnitAngle(Unit curUnit, Unit targetUnit)
+
+        public static float GetTargetUnitRadian(Unit curUnit, Unit targetUnit)
         {
             float3 targetPos = targetUnit.Position;
-            return GetTargetPosAngle(curUnit, targetPos);
+            return GetTargetPosRadian(curUnit, targetPos);
         }
-        
-        public static float GetTargetPosAngle(Unit curUnit, float3 targetPos)
+
+        public static float GetTargetPosRadian(Unit curUnit, float3 targetPos)
         {
             float3 targetDir = math.normalize(targetPos - curUnit.Position);
-            return GetTargetDirAngle(curUnit, targetDir);
+            return GetTargetDirRadian(curUnit, targetDir);
         }
-        
+
         /// <summary>
         /// 返回 夹角(弧度角)
         /// </summary>
         /// <param name="curUnit"></param>
         /// <param name="targetDir"></param>
         /// <returns></returns>
-        public static float GetTargetDirAngle(Unit curUnit, float3 targetDir)
+        public static float GetTargetDirRadian(Unit curUnit, float3 targetDir)
         {
             float3 forward = math.normalize(curUnit.Forward);
+            targetDir = math.normalize(targetDir);
             //float angleTmp = math.degrees(math.acos(math.clamp(math.dot(forward, targetDir), -1, 1)));
             float angleTmp = math.acos(math.clamp(math.dot(forward, targetDir), -1, 1));
             float y = math.cross(forward, targetDir).y;
@@ -446,7 +596,7 @@ namespace ET.Ability
                 return -angleTmp;
             }
         }
-        
+
         public static void SaveSelectHandle(Unit curUnit, SelectHandle selectHandle)
         {
             SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
@@ -454,14 +604,406 @@ namespace ET.Ability
             {
                 selectHandleObj = curUnit.AddComponent<SelectHandleObj>();
             }
+
             selectHandleObj.SaveSelectHandle(selectHandle);
         }
-        
+
         public static SelectHandle GetSaveSelectHandle(Unit curUnit)
         {
             SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
             return selectHandleObj?.GetSaveSelectHandle();
         }
-        
+
+        public static void ResetPos(Unit unit, float3 resetPos)
+        {
+            ET.Ability.MoveOrIdleHelper.StopMove(unit);
+            PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
+            pathfindingComponent?.ResetPos(resetPos);
+        }
+
+        public static float GetResScale(Unit unit)
+        {
+            float resScale = 1;
+            if (Ability.UnitHelper.ChkIsBullet(unit))
+            {
+                BulletCfg bulletCfg = unit.GetComponent<BulletObj>().model;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsAoe(unit))
+            {
+                AoeCfg aoeCfg = unit.GetComponent<AoeObj>().model;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                resScale = unit.model.ResScale;
+            }
+
+            return resScale;
+        }
+
+        public static float GetBodyRadius(Unit unit)
+        {
+            float bodyRadius = 0.1f;
+            float resScale = 1;
+            if (Ability.UnitHelper.ChkIsBullet(unit))
+            {
+                BulletCfg bulletCfg = unit.GetComponent<BulletObj>().model;
+                bodyRadius = bulletCfg.BodyRadius;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsAoe(unit))
+            {
+                AoeCfg aoeCfg = unit.GetComponent<AoeObj>().model;
+                bodyRadius = aoeCfg.BodyRadius;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                bodyRadius = unit.model.BodyRadius;
+                resScale = unit.model.ResScale;
+            }
+
+            return bodyRadius * resScale;
+        }
+
+        public static float GetBodyRadius(string unitCfgId, bool isBullet, bool isAoe)
+        {
+            float bodyRadius = 0.1f;
+            float resScale = 1;
+            if (isBullet)
+            {
+                BulletCfg bulletCfg = BulletCfgCategory.Instance.Get(unitCfgId);
+                bodyRadius = bulletCfg.BodyRadius;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (isAoe)
+            {
+                AoeCfg aoeCfg = AoeCfgCategory.Instance.Get(unitCfgId);
+                bodyRadius = aoeCfg.BodyRadius;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+                bodyRadius = unitCfg.BodyRadius;
+                resScale = unitCfg.ResScale;
+            }
+
+            return bodyRadius * resScale;
+        }
+
+        public static float GetBodyHeight(Unit unit)
+        {
+            float bodyHeight = 0.1f;
+            float resScale = 1;
+            if (Ability.UnitHelper.ChkIsBullet(unit))
+            {
+                BulletCfg bulletCfg = unit.GetComponent<BulletObj>().model;
+                bodyHeight = bulletCfg.BodyHeight;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsAoe(unit))
+            {
+                AoeCfg aoeCfg = unit.GetComponent<AoeObj>().model;
+                bodyHeight = aoeCfg.BodyHeight;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                bodyHeight = unit.model.BodyHeight;
+                resScale = unit.model.ResScale;
+            }
+
+            return bodyHeight * resScale;
+        }
+
+        public static float GetBodyHeight(string unitCfgId, bool isBullet, bool isAoe)
+        {
+            float bodyHeight = 0.1f;
+            float resScale = 1;
+            if (isBullet)
+            {
+                BulletCfg bulletCfg = BulletCfgCategory.Instance.Get(unitCfgId);
+                bodyHeight = bulletCfg.BodyHeight;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (isAoe)
+            {
+                AoeCfg aoeCfg = AoeCfgCategory.Instance.Get(unitCfgId);
+                bodyHeight = aoeCfg.BodyHeight;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+                bodyHeight = unitCfg.BodyHeight;
+                resScale = unitCfg.ResScale;
+            }
+
+            return bodyHeight * resScale;
+        }
+
+        public static float GetAttackPointHeight(Unit unit)
+        {
+            float attackPointHeight = 0.1f;
+            float resScale = 1;
+            if (Ability.UnitHelper.ChkIsBullet(unit))
+            {
+                BulletCfg bulletCfg = unit.GetComponent<BulletObj>().model;
+                attackPointHeight = bulletCfg.BodyHeight;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsAoe(unit))
+            {
+                AoeCfg aoeCfg = unit.GetComponent<AoeObj>().model;
+                attackPointHeight = aoeCfg.BodyHeight;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                attackPointHeight = unit.model.AttackPointHeight;
+                resScale = unit.model.ResScale;
+            }
+
+            return attackPointHeight * resScale;
+        }
+
+        public static float GetAttackPointHeight(string unitCfgId, bool isBullet, bool isAoe)
+        {
+            float attackPointHeight = 0.1f;
+            float resScale = 1;
+            if (isBullet)
+            {
+                BulletCfg bulletCfg = BulletCfgCategory.Instance.Get(unitCfgId);
+                attackPointHeight = bulletCfg.BodyHeight;
+                resScale = bulletCfg.ResScale;
+            }
+            else if (isAoe)
+            {
+                AoeCfg aoeCfg = AoeCfgCategory.Instance.Get(unitCfgId);
+                attackPointHeight = aoeCfg.BodyHeight;
+                resScale = aoeCfg.ResScale;
+            }
+            else
+            {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+                attackPointHeight = unitCfg.AttackPointHeight;
+                resScale = unitCfg.ResScale;
+            }
+
+            return attackPointHeight * resScale;
+        }
+
+        public static float GetMoveSpeed(Unit unit)
+        {
+            if (unit == null)
+            {
+                return 0;
+            }
+
+            if (unit.IsDisposed)
+            {
+                return 0;
+            }
+
+            if (ChkIsBullet(unit) || ChkIsAoe(unit))
+            {
+                if (unit.GetComponent<MoveTweenObj>() != null)
+                {
+                    return unit.GetComponent<MoveTweenObj>().speed;
+                }
+
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                float speed = numericComponent.GetAsFloat(NumericType.Speed);
+                return speed;
+            }
+            else if (ChkIsSceneEffect(unit))
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                float speed = numericComponent.GetAsFloat(NumericType.Speed);
+                return speed;
+            }
+            else
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                if (curHp <= 0)
+                {
+                    return 0;
+                }
+
+                float speed = numericComponent.GetAsFloat(NumericType.Speed);
+                return speed;
+            }
+        }
+
+        public static float GetRotationSpeed(Unit unit)
+        {
+            if (unit == null)
+            {
+                return 0;
+            }
+
+            if (unit.IsDisposed)
+            {
+                return 0;
+            }
+
+            if (ChkIsBullet(unit))
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                float rotationSpeed = numericComponent.GetAsFloat(NumericType.RotationSpeed);
+                return rotationSpeed;
+            }
+            else if (ChkIsSceneEffect(unit))
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                float speed = numericComponent.GetAsFloat(NumericType.RotationSpeed);
+                return speed;
+            }
+            else
+            {
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                if (curHp <= 0)
+                {
+                    return 0;
+                }
+
+                float rotationSpeed = numericComponent.GetAsFloat(NumericType.RotationSpeed);
+                return rotationSpeed;
+            }
+        }
+
+        public static string GetIdleTimeLineId(Unit unit)
+        {
+            string idleTimelineId = "";
+            if (UnitHelper.ChkIsBullet(unit))
+            {
+                idleTimelineId = unit.GetComponent<BulletObj>().model.IdleTimelineId;
+            }
+            else if (UnitHelper.ChkIsAoe(unit))
+            {
+                idleTimelineId = unit.GetComponent<AoeObj>().model.IdleTimelineId;
+            }
+            else
+            {
+                idleTimelineId = unit.model.IdleTimelineId;
+            }
+
+            return idleTimelineId;
+        }
+
+        public static string GetMoveTimeLineId(Unit unit)
+        {
+            string moveTimelineId = "";
+            if (UnitHelper.ChkIsBullet(unit))
+            {
+                moveTimelineId = "";
+            }
+            else if (UnitHelper.ChkIsAoe(unit))
+            {
+                moveTimelineId = unit.GetComponent<AoeObj>().model.MoveTimelineId;
+            }
+            else
+            {
+                moveTimelineId = unit.model.MoveTimelineId;
+            }
+
+            return moveTimelineId;
+        }
+
+        public static Unit GetCasterUnit(Unit unit)
+        {
+            Unit casterPlayerUnit = null;
+            if (UnitHelper.ChkIsBullet(unit))
+            {
+                casterPlayerUnit = unit.GetComponent<BulletObj>().GetCasterActorUnit();
+            }
+            else if (UnitHelper.ChkIsAoe(unit))
+            {
+                casterPlayerUnit = unit.GetComponent<AoeObj>().GetCasterActorUnit();
+            }
+            else
+            {
+                casterPlayerUnit = null;
+            }
+
+            return casterPlayerUnit;
+        }
+
+        public static Unit GetCasterActorUnit(Scene scene, long casterUnitId)
+        {
+            Unit unit = UnitHelper.GetUnit(scene, casterUnitId);
+            while (true)
+            {
+                Unit casterUnit = UnitHelper.GetCasterUnit(unit);
+                if (casterUnit == null)
+                {
+                    break;
+                }
+
+                unit = casterUnit;
+            }
+
+            return unit;
+        }
+
+        public static Unit GetCasterActorUnit(Unit unit)
+        {
+            while (true)
+            {
+                Unit casterUnit = UnitHelper.GetCasterUnit(unit);
+                if (casterUnit == null)
+                {
+                    break;
+                }
+
+                unit = casterUnit;
+            }
+
+            return unit;
+        }
+
+        public static ActionCfg_DeathShow GetDeathShow(Unit unit)
+        {
+            ActionCfg_DeathShow actionCfg_DeathShow;
+            if (UnitHelper.ChkIsBullet(unit))
+            {
+                actionCfg_DeathShow = unit.GetComponent<BulletObj>().model.DeathShow_Ref;
+            }
+            else if (UnitHelper.ChkIsAoe(unit))
+            {
+                actionCfg_DeathShow = unit.GetComponent<AoeObj>().model.DeathShow_Ref;
+            }
+            else
+            {
+                actionCfg_DeathShow = unit.model.DeathShow_Ref;
+            }
+
+            return actionCfg_DeathShow;
+        }
+
+        public static float GetMaxSkillDis(Unit unit, ET.Ability.SkillSlotType skillSlotType)
+        {
+            return SkillHelper.GetMaxSkillDis(unit, skillSlotType);
+        }
+
+        public static float GetMaxSkillDis(UnitCfg unitCfg, ET.Ability.SkillSlotType skillSlotType)
+        {
+            float dis = 0;
+            int count = unitCfg.SkillList.Count;
+            for (int i = 0; i < count; i++)
+            {
+                string skillCfgId = unitCfg.SkillList[i];
+                SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
+                if (dis < skillCfg.Dis)
+                {
+                    dis = skillCfg.Dis;
+                }
+            }
+            return dis;
+        }
     }
 }

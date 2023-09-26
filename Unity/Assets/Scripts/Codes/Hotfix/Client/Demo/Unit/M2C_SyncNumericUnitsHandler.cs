@@ -30,7 +30,7 @@
 				}
 				foreach (var kv in unitInfo.KV)
 				{
-					numericComponent.Set(kv.Key, kv.Value);
+					numericComponent.SetAsLong(kv.Key, kv.Value);
 				}
 			}
 			await ETTask.CompletedTask;

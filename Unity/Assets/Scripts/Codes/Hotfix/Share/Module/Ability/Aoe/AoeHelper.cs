@@ -1,17 +1,27 @@
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
     [FriendOf(typeof(Unit))]
     public static class AoeHelper
     {
-        public static void AddAoe(Unit unit, int aoeCfgId)
+        public static void CreateAoe(Unit unit, ActionCfg_CallAoe actionCfg_CallAoe, SelectHandle selectHandle, ActionContext actionContext)
         {
+            Unit aoeUnit = ET.GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), unit, actionCfg_CallAoe, selectHandle, actionContext);
+
+            EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
+            {
+                unit = unit,
+                createUnit = aoeUnit,
+            });
+
         }
-        
+
+
         public static void EventHandler(Unit unit, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
         {
-            unit.GetComponent<AoeObj>()?.EventHandler(abilityAoeMonitorTriggerEvent);
+            unit.GetComponent<AoeObj>()?.TrigEvent(abilityAoeMonitorTriggerEvent);
         }
     }
 }

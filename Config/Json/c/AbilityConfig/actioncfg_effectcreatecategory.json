@@ -3,7 +3,8 @@
     "id": "EffectCreate_1",
     "name": "创建特效1",
     "desc": "",
-    "res_id": "ResEffect_1",
+    "resEffectId": "ResEffect_1",
+    "playAudioActionId": "",
     "key": "CreateEffect_1",
     "maxKeyNum": 1,
     "duration": 5,
@@ -26,7 +27,8 @@
     "id": "EffectCreate_2",
     "name": "创建特效2",
     "desc": "",
-    "res_id": "ResEffect_2",
+    "resEffectId": "ResEffect_2",
+    "playAudioActionId": "",
     "key": "CreateEffect_2",
     "maxKeyNum": 1,
     "duration": 5,
@@ -49,7 +51,8 @@
     "id": "EffectCreate_3",
     "name": "创建特效3",
     "desc": "",
-    "res_id": "ResEffect_3",
+    "resEffectId": "ResEffect_3",
+    "playAudioActionId": "PlayAudio_1",
     "key": "CreateEffect_3",
     "maxKeyNum": 1,
     "duration": 5,
@@ -72,9 +75,10 @@
     "id": "EffectCreate_4",
     "name": "创建特效4",
     "desc": "",
-    "res_id": "ResEffect_1",
+    "resEffectId": "ResEffect_1",
+    "playAudioActionId": "",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -95,9 +99,10 @@
     "id": "EffectCreate_MachineGunLvl1Effect_1",
     "name": "Tower火花+子弹特效",
     "desc": "",
-    "res_id": "ResEffect_MachineGunLvl1Effect_1",
+    "resEffectId": "ResEffect_MachineGunLvl1Effect_1",
+    "playAudioActionId": "PlayAudio_1",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -118,9 +123,10 @@
     "id": "EffectCreate_EneryPylon_PFX1",
     "name": "Tower火花+子弹特效",
     "desc": "",
-    "res_id": "ResEffect_EneryPylon_PFX",
+    "resEffectId": "ResEffect_EneryPylon_PFX",
+    "playAudioActionId": "PlayAudio_1",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -141,9 +147,10 @@
     "id": "EffectCreate_LaserFireEffect1",
     "name": "Tower火花+子弹特效",
     "desc": "",
-    "res_id": "ResEffect_LaserFireEffect",
+    "resEffectId": "ResEffect_LaserFireEffect",
+    "playAudioActionId": "PlayAudio_1",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -164,9 +171,10 @@
     "id": "EffectCreate_HoverTankFireShow1",
     "name": "HoverTank火花+子弹特效",
     "desc": "",
-    "res_id": "ResEffect_EnemyShootEffect_1",
+    "resEffectId": "ResEffect_EnemyShootEffect_1",
+    "playAudioActionId": "PlayAudio_1",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -187,9 +195,10 @@
     "id": "EffectCreate_BeHit1",
     "name": "被击中",
     "desc": "",
-    "res_id": "ResEffect_BeHitShow_1",
+    "resEffectId": "ResEffect_BeHitShow_1",
+    "playAudioActionId": "PlayAudio_1",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -210,9 +219,10 @@
     "id": "EffectCreate_Death_1",
     "name": "死亡",
     "desc": "",
-    "res_id": "ResEffect_DeathShow_1",
+    "resEffectId": "ResEffect_DeathShow_1",
+    "playAudioActionId": "PlayAudio_dead",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -233,9 +243,10 @@
     "id": "EffectCreate_PlayerSolo1_Fire",
     "name": "机枪开火弹道",
     "desc": "我方单体攻击",
-    "res_id": "ResEffect_BulletSolo1",
+    "resEffectId": "ResEffect_BulletSolo1",
+    "playAudioActionId": "",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -256,9 +267,10 @@
     "id": "EffectCreate_PlayerSolo1_Flash",
     "name": "机枪开火火光",
     "desc": "我方单体攻击",
-    "res_id": "ResEffect_FlashSolo1",
+    "resEffectId": "ResEffect_FlashSolo1",
+    "playAudioActionId": "PlayAudio_solo",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -279,9 +291,10 @@
     "id": "EffectCreate_PlayerSolo1_Hit",
     "name": "机枪开火命中",
     "desc": "我方单体攻击",
-    "res_id": "ResEffect_HitSolo1",
+    "resEffectId": "ResEffect_HitSolo1",
+    "playAudioActionId": "",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -302,9 +315,10 @@
     "id": "EffectCreate_PlayerAoe1_Fire",
     "name": "炮击开火弹道",
     "desc": "我方aoe攻击",
-    "res_id": "ResEffect_BulletAoe1",
+    "resEffectId": "ResEffect_BulletAoe1",
+    "playAudioActionId": "",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -325,9 +339,10 @@
     "id": "EffectCreate_PlayerAoe1_Flash",
     "name": "炮击开火火光",
     "desc": "我方aoe攻击",
-    "res_id": "ResEffect_FlashAoe1",
+    "resEffectId": "ResEffect_FlashAoe1",
+    "playAudioActionId": "PlayAudio_aoe",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -348,9 +363,10 @@
     "id": "EffectCreate_PlayerAoe1_Hit",
     "name": "炮击开火命中",
     "desc": "我方aoe攻击",
-    "res_id": "ResEffect_HitAoe1",
+    "resEffectId": "ResEffect_HitAoe1",
+    "playAudioActionId": "",
     "key": "",
-    "maxKeyNum": 0,
+    "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": true,
     "offSetInfo": {
@@ -371,9 +387,10 @@
     "id": "EffectCreate_EnemySolo1_Fire",
     "name": "射击开火",
     "desc": "敌人单体攻击",
-    "res_id": "ResEffect_1",
+    "resEffectId": "ResEffect_FlashSolo1",
+    "playAudioActionId": "PlayAudio_1",
     "key": "EnemySolo1_Fire",
-    "maxKeyNum": 1,
+    "maxKeyNum": 10,
     "duration": 1,
     "isSceneEffect": false,
     "offSetInfo": {
@@ -394,7 +411,8 @@
     "id": "EffectCreate_PlayerLine1",
     "name": "直线火焰",
     "desc": "直线火焰",
-    "res_id": "ResEffect_Fire1",
+    "resEffectId": "ResEffect_Fire1",
+    "playAudioActionId": "PlayAudio_line",
     "key": "ResEffect_Fire1",
     "maxKeyNum": 1,
     "duration": -1,
@@ -403,8 +421,56 @@
       "nodeName": "",
       "offSetPosition": {
         "x": 0,
-        "y": 0.8,
-        "z": 1.1
+        "y": 1.02,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerLine2",
+    "name": "直线火焰",
+    "desc": "直线火焰",
+    "resEffectId": "ResEffect_Fire1",
+    "playAudioActionId": "PlayAudio_line",
+    "key": "ResEffect_Fire1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.32,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerLine3",
+    "name": "直线火焰",
+    "desc": "直线火焰",
+    "resEffectId": "ResEffect_Fire1",
+    "playAudioActionId": "PlayAudio_line",
+    "key": "ResEffect_Fire1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.375,
+        "z": 0
       },
       "relateForward": {
         "x": 0,
@@ -417,8 +483,705 @@
     "id": "EffectCreate_PlayerCircle1",
     "name": "圆形毒雾",
     "desc": "圆形毒雾",
-    "res_id": "ResEffect_Drag1",
+    "resEffectId": "ResEffect_Drag1",
+    "playAudioActionId": "PlayAudio_circle",
     "key": "ResEffect_Drag1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerCircle2",
+    "name": "圆形毒雾",
+    "desc": "圆形毒雾",
+    "resEffectId": "ResEffect_Drag1",
+    "playAudioActionId": "PlayAudio_circle",
+    "key": "ResEffect_Drag1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_PlayerCircle3",
+    "name": "圆形毒雾",
+    "desc": "圆形毒雾",
+    "resEffectId": "ResEffect_Drag1",
+    "playAudioActionId": "PlayAudio_circle",
+    "key": "ResEffect_Drag1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Fire_1",
+    "name": "弩箭开火1",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Fire_1",
+    "playAudioActionId": "PlayAudio_solo",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.74,
+        "z": 0.88
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Fire_2",
+    "name": "弩箭开火2",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Fire_2",
+    "playAudioActionId": "PlayAudio_solo",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.1,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Fire_3",
+    "name": "弩箭开火3",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Fire_3",
+    "playAudioActionId": "PlayAudio_solo",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.5,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Hit_1",
+    "name": "弩箭命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Hit_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Hit_2",
+    "name": "弩箭命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Hit_2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Arrow_Hit_3",
+    "name": "弩箭命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_Arrow_Hit_3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Fire_1",
+    "name": "加农炮开火1",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Fire_1",
+    "playAudioActionId": "PlayAudio_aoe",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.77,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Fire_2",
+    "name": "加农炮开火2",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Fire_2",
+    "playAudioActionId": "PlayAudio_aoe",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.9,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Fire_3",
+    "name": "加农炮开火3",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Fire_3",
+    "playAudioActionId": "PlayAudio_aoe",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.46,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Hit_1",
+    "name": "加农炮命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Hit_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Hit_2",
+    "name": "加农炮命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Hit_2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Cannon_Hit_3",
+    "name": "加农炮命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_Cannon_Hit_3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerDragon_Hit1",
+    "name": "龙击炮命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerDragon_Hit1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerDragon_Hit2",
+    "name": "龙击炮命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerDragon_Hit2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerDragon_Hit3",
+    "name": "龙击炮命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerDragon_Hit3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Hit1",
+    "name": "雷电塔命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Hit1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Hit2",
+    "name": "雷电塔命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Hit2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Hit3",
+    "name": "雷电塔命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Hit3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Skill1",
+    "name": "雷电塔施法1",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Skill1",
+    "playAudioActionId": "",
+    "key": "TowerElec_Skill1",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.7025,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Skill2",
+    "name": "雷电塔施法2",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Skill2",
+    "playAudioActionId": "",
+    "key": "TowerElec_Skill2",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": -0.01,
+        "y": 2.361,
+        "z": 0.031
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerElec_Skill3",
+    "name": "雷电塔施法3",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerElec_Skill3",
+    "playAudioActionId": "",
+    "key": "TowerElec_Skill3",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.013,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerIce_Hit1",
+    "name": "冰魔塔命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerIce_Hit1",
+    "playAudioActionId": "",
+    "key": "TowerIce_Hit1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerIce_Hit2",
+    "name": "冰魔塔命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerIce_Hit2",
+    "playAudioActionId": "",
+    "key": "TowerIce_Hit2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerIce_Hit3",
+    "name": "冰魔塔命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerIce_Hit3",
+    "playAudioActionId": "",
+    "key": "TowerIce_Hit3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerTime_Hit1",
+    "name": "加速塔命中1",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerTime_Hit1",
+    "playAudioActionId": "",
+    "key": "TowerTime_Hit1",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerTime_Hit2",
+    "name": "加速塔命中2",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerTime_Hit2",
+    "playAudioActionId": "",
+    "key": "TowerTime_Hit2",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_TowerTime_Hit3",
+    "name": "加速塔命中3",
+    "desc": "",
+    "resEffectId": "ResEffect_TowerTime_Hit3",
+    "playAudioActionId": "",
+    "key": "TowerTime_Hit3",
     "maxKeyNum": 1,
     "duration": -1,
     "isSceneEffect": false,

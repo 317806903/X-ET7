@@ -1,6 +1,5 @@
 [
   {
-    "Id": "1_1",
     "AIConfigId": "1",
     "Order": 1,
     "Name": "AI_Attack",
@@ -8,7 +7,6 @@
     "NodeParams": []
   },
   {
-    "Id": "1_2",
     "AIConfigId": "1",
     "Order": 2,
     "Name": "AI_XunLuo",
@@ -16,7 +14,6 @@
     "NodeParams": []
   },
   {
-    "Id": "Monster1_1",
     "AIConfigId": "Monster1",
     "Order": 1,
     "Name": "AI_Attack",
@@ -24,7 +21,6 @@
     "NodeParams": []
   },
   {
-    "Id": "Monster1_2",
     "AIConfigId": "Monster1",
     "Order": 2,
     "Name": "AI_KaoJin",
@@ -32,7 +28,6 @@
     "NodeParams": []
   },
   {
-    "Id": "TowerDefense_Tower1_1",
     "AIConfigId": "TowerDefense_Tower1",
     "Order": 1,
     "Name": "AI_Attack",
@@ -40,7 +35,6 @@
     "NodeParams": []
   },
   {
-    "Id": "TowerDefense_Monster1_1",
     "AIConfigId": "TowerDefense_Monster1",
     "Order": 1,
     "Name": "AI_TowerDefense_AttackWhenBlock",
@@ -48,7 +42,6 @@
     "NodeParams": []
   },
   {
-    "Id": "TowerDefense_Monster1_2",
     "AIConfigId": "TowerDefense_Monster1",
     "Order": 2,
     "Name": "AI_TowerDefense_Escape",
@@ -56,7 +49,6 @@
     "NodeParams": []
   },
   {
-    "Id": "TowerDefense_Monster1_3",
     "AIConfigId": "TowerDefense_Monster1",
     "Order": 3,
     "Name": "AI_Attack",
@@ -64,7 +56,6 @@
     "NodeParams": []
   },
   {
-    "Id": "TowerDefense_Monster1_4",
     "AIConfigId": "TowerDefense_Monster1",
     "Order": 4,
     "Name": "AI_KaoJin",
@@ -72,7 +63,6 @@
     "NodeParams": []
   },
   {
-    "Id": "2_1",
     "AIConfigId": "2",
     "Order": 1,
     "Name": "AI_XunLuo",

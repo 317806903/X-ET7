@@ -17,22 +17,23 @@ namespace ET
                 }
             }
         }
-        
+
         public static void Init(this RoomComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
         {
             self.isARRoom = isARRoom;
+            self.arSceneId = "";
             self.roomStatus = RoomStatus.Idle;
             self.ownerRoomMemberId = playerId;
             self.roomTeamMode = roomTeamMode;
             self.gamePlayBattleLevelCfgId = battleCfgId;
             self.AddRoomMember(playerId, true, RoomTeamId.Red, 0);
         }
-        
+
         public static void ChgRoomStatus(this RoomComponent self, RoomStatus roomStatus)
         {
             self.roomStatus = roomStatus;
         }
-        
+
         public static void ChgRoomTeamMode(this RoomComponent self, RoomTeamMode roomTeamMode)
         {
             self.roomTeamMode = roomTeamMode;
@@ -97,7 +98,7 @@ namespace ET
                     }
                 }
             }
-            
+
             RoomMember roomMember = self.AddChildWithId<RoomMember>(playerId);
             roomMember.isOwner = isOwner;
             roomMember.isReady = false;
@@ -108,7 +109,7 @@ namespace ET
 
             return roomMember;
         }
-        
+
         public static bool RemoveRoomMember(this RoomComponent self, long playerId)
         {
             RoomMember curRoomMember = self.GetChild<RoomMember>(playerId);
@@ -143,7 +144,7 @@ namespace ET
             }
 
             self.roomMemberSeat[curRoomMember.seatIndex] = -1;
-            
+
             curRoomMember.Dispose();
 
             if (isEmptyMember)
@@ -153,7 +154,7 @@ namespace ET
 
             return isEmptyMember;
         }
-        
+
         public static void ChgRoomMemberStatus(this RoomComponent self, long playerId, bool isReady)
         {
             RoomMember ownerRoomMember = self.GetRoomMember(playerId);

@@ -31,7 +31,7 @@ namespace ET.Client
                     break;
                 }
             }
-            
+
             if (roomList == null)
             {
                 return;
@@ -45,15 +45,19 @@ namespace ET.Client
 
         public static void Init(this RoomManagerComponent self, long roomId, byte[] roomInfo, List<byte[]> roomMemberList)
         {
+            Log.Debug($"self[{self}], roomId[{roomId}], roomInfo[{roomInfo.Length}], roomMemberList[{roomMemberList.Count}]");
             self.RemoveChild(roomId);
-            RoomComponent roomComponent = MongoHelper.Deserialize<Entity>(roomInfo) as RoomComponent;
+            Log.Debug($"roomComponent is MongoHelper.Deserialize ing");
+            RoomComponent roomComponent = MongoHelper.Deserialize<RoomComponent>(roomInfo);
+            Log.Debug($"roomComponent[{roomComponent}]");
             self.AddChild(roomComponent);
             for (int i = 0; i < roomMemberList.Count; i++)
             {
-                Entity roomMember = MongoHelper.Deserialize<Entity>(roomMemberList[i]);
+                RoomMember roomMember = MongoHelper.Deserialize<RoomMember>(roomMemberList[i]);
                 roomComponent.AddChild(roomMember);
             }
+            Log.Debug($"ET.Client.RoomManagerComponentSystem.Init End");
         }
-        
+
     }
 }

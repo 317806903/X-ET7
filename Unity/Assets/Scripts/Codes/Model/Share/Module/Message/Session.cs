@@ -17,7 +17,7 @@ namespace ET
             this.Tcs = ETTask<IResponse>.Create(true);
         }
     }
-    
+
     [FriendOf(typeof(Session))]
     public static class SessionSystem
     {
@@ -32,29 +32,29 @@ namespace ET
                 self.LastSendTime = timeNow;
 
                 self.requestCallbacks.Clear();
-            
+
                 Log.Info($"session create: zone: {self.DomainZone()} id: {self.Id} {timeNow} ");
             }
         }
-        
+
         [ObjectSystem]
         public class SessionDestroySystem: DestroySystem<Session>
         {
             protected override void Destroy(Session self)
             {
                 NetServices.Instance.RemoveChannel(self.ServiceId, self.Id, self.Error);
-            
+
                 foreach (RpcInfo responseCallback in self.requestCallbacks.Values.ToArray())
                 {
                     responseCallback.Tcs.SetException(new RpcException(self.Error, $"session dispose: {self.Id} {self.RemoteAddress}"));
                 }
 
                 Log.Info($"session dispose: {self.RemoteAddress} id: {self.Id} ErrorCode: {self.Error}, please see ErrorCode.cs! {TimeHelper.ClientNow()}");
-            
+
                 self.requestCallbacks.Clear();
             }
         }
-        
+
         public static void OnResponse(this Session self, IResponse response)
         {
             if (!self.requestCallbacks.TryGetValue(response.RpcId, out var action))
@@ -70,16 +70,20 @@ namespace ET
             }
             action.Tcs.SetResult(response);
         }
-        
+
         public static async ETTask<IResponse> Call(this Session self, IRequest request, ETCancellationToken cancellationToken)
         {
+            if (self.ChkSessionDestroy())
+            {
+                return null;
+            }
             int rpcId = ++Session.RpcId;
             RpcInfo rpcInfo = new RpcInfo(request);
             self.requestCallbacks[rpcId] = rpcInfo;
             request.RpcId = rpcId;
 
             self.Send(request);
-            
+
             void CancelAction()
             {
                 if (!self.requestCallbacks.TryGetValue(rpcId, out RpcInfo action))
@@ -107,8 +111,23 @@ namespace ET
             return ret;
         }
 
+        public static bool ChkSessionDestroy(this Session self)
+        {
+            if (self == null || self.IsDisposed)
+            {
+                //EventSystem.Instance.Publish();
+                return true;
+            }
+
+            return false;
+        }
+
         public static async ETTask<IResponse> Call(this Session self, IRequest request)
         {
+            if (self.ChkSessionDestroy())
+            {
+                return null;
+            }
             int rpcId = ++Session.RpcId;
             RpcInfo rpcInfo = new RpcInfo(request);
             self.requestCallbacks[rpcId] = rpcInfo;
@@ -121,9 +140,13 @@ namespace ET
         {
             self.Send(0, message);
         }
-        
+
         public static void Send(this Session self, long actorId, IMessage message)
         {
+            if (self.ChkSessionDestroy())
+            {
+                return;
+            }
             self.LastSendTime = TimeHelper.ClientNow();
             OpcodeHelper.LogMsg(self.DomainZone(), message);
             NetServices.Instance.SendMessage(self.ServiceId, self.Id, actorId, message);
@@ -134,7 +157,7 @@ namespace ET
     public sealed class Session: Entity, IAwake<int>, IDestroy
     {
         public int ServiceId { get; set; }
-        
+
         public static int RpcId
         {
             get;
@@ -142,7 +165,7 @@ namespace ET
         }
 
         public readonly Dictionary<int, RpcInfo> requestCallbacks = new Dictionary<int, RpcInfo>();
-        
+
         public long LastRecvTime
         {
             get;

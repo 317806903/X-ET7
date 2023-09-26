@@ -1,0 +1,18 @@
+[
+  {
+    "id": "SetRecordInt_test1_Add_1",
+    "name": "",
+    "desc": "",
+    "recordKey": 1,
+    "valueOperation": 1,
+    "recordValue": 1
+  },
+  {
+    "id": "SetRecordInt_test2_Set_1",
+    "name": "",
+    "desc": "",
+    "recordKey": 2,
+    "valueOperation": 3,
+    "recordValue": 8
+  }
+]

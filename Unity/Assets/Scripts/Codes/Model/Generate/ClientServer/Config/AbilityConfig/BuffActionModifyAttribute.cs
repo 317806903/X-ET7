@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 修改属性
+/// 修改属性(float chgValue = buffActionModifyAttribute.BaseValue + buffActionModifyAttribute.StackValue * stackCount)
 /// </summary>
 public sealed partial class BuffActionModifyAttribute:  BuffAction 
 {
@@ -22,6 +22,7 @@ public sealed partial class BuffActionModifyAttribute:  BuffAction
         NumericType = (NumericType)_buf.ReadInt();
         BaseValue = _buf.ReadFloat();
         StackValue = _buf.ReadFloat();
+        MaxChgValue = _buf.ReadFloat();
         PostInit();
     }
 
@@ -42,6 +43,10 @@ public sealed partial class BuffActionModifyAttribute:  BuffAction
     /// 按照层数附加
     /// </summary>
     public float StackValue { get; private set; }
+    /// <summary>
+    /// 最大允许修改值(-1表示不限制)
+    /// </summary>
+    public float MaxChgValue { get; private set; }
 
     public const int __ID__ = 1933880121;
     public override int GetTypeId() => __ID__;
@@ -63,6 +68,7 @@ public sealed partial class BuffActionModifyAttribute:  BuffAction
         + "NumericType:" + NumericType + ","
         + "BaseValue:" + BaseValue + ","
         + "StackValue:" + StackValue + ","
+        + "MaxChgValue:" + MaxChgValue + ","
         + "}";
     }
     

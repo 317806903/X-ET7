@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Mathematics;
 
 namespace ET
@@ -14,7 +15,8 @@ namespace ET
             protected override void Awake(AOIEntity self, int distance, float3 pos)
             {
                 self.ViewDistance = distance;
-                self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, pos.x, pos.z);
+                //self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, pos.x, pos.z);
+                self.WaitNextFrame(pos.x, pos.z).Coroutine();
             }
         }
 
@@ -29,23 +31,50 @@ namespace ET
                 self.SeePlayers.Clear();
                 self.BeSeePlayers.Clear();
                 self.BeSeeUnits.Clear();
-                self.SubEnterCells.Clear();
-                self.SubLeaveCells.Clear();
+                self.SubscribeEnterCells.Clear();
+                self.SubscribeLeaveCells.Clear();
             }
         }
-        
+
+        public static async ETTask WaitNextFrame(this AOIEntity self, float posX, float posZ)
+        {
+            await TimerComponent.Instance.WaitFrameAsync();
+            if (self == null)
+            {
+                Log.Error(" self == null");
+                return;
+            }
+            if (self.IsDisposed)
+            {
+                Log.Debug(" self.IsDisposed");
+                return;
+            }
+            if (self.DomainScene() == null)
+            {
+                Log.Error(" self.DomainScene() == null");
+                return;
+            }
+            if (self.DomainScene().GetComponent<AOIManagerComponent>() == null)
+            {
+                Log.Error(" self.DomainScene().GetComponent<AOIManagerComponent>() == null");
+                return;
+            }
+            self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, posX, posZ);
+            await Task.CompletedTask;
+        }
+
         // 获取在自己视野中的对象
-        public static Dictionary<long, AOIEntity> GetSeeUnits(this AOIEntity self)
+        public static Dictionary<long, EntityRef<AOIEntity>> GetSeeUnits(this AOIEntity self)
         {
             return self.SeeUnits;
         }
 
-        public static Dictionary<long, AOIEntity> GetBeSeePlayers(this AOIEntity self)
+        public static Dictionary<long, EntityRef<AOIEntity>> GetBeSeePlayers(this AOIEntity self)
         {
             return self.BeSeePlayers;
         }
 
-        public static Dictionary<long, AOIEntity> GetSeePlayers(this AOIEntity self)
+        public static Dictionary<long, EntityRef<AOIEntity>> GetSeePlayers(this AOIEntity self)
         {
             return self.SeePlayers;
         }
@@ -53,8 +82,8 @@ namespace ET
         // cell中的unit进入self的视野
         public static void SubEnter(this AOIEntity self, Cell cell)
         {
-            cell.SubsEnterEntities.Add(self.Id, self);
-            foreach (KeyValuePair<long, AOIEntity> kv in cell.AOIUnits)
+            cell.SubscribeEnterEntities.Add(self.Id, self);
+            foreach (var kv in cell.AOIUnits)
             {
                 if (kv.Key == self.Id)
                 {
@@ -67,18 +96,18 @@ namespace ET
 
         public static void UnSubEnter(this AOIEntity self, Cell cell)
         {
-            cell.SubsEnterEntities.Remove(self.Id);
+            cell.SubscribeEnterEntities.Remove(self.Id);
         }
 
         public static void SubLeave(this AOIEntity self, Cell cell)
         {
-            cell.SubsLeaveEntities.Add(self.Id, self);
+            cell.SubscribeLeaveEntities.Add(self.Id, self);
         }
 
         // cell中的unit离开self的视野
         public static void UnSubLeave(this AOIEntity self, Cell cell)
         {
-            foreach (KeyValuePair<long, AOIEntity> kv in cell.AOIUnits)
+            foreach (var kv in cell.AOIUnits)
             {
                 if (kv.Key == self.Id)
                 {
@@ -88,7 +117,7 @@ namespace ET
                 self.LeaveSight(kv.Value);
             }
 
-            cell.SubsLeaveEntities.Remove(self.Id);
+            cell.SubscribeLeaveEntities.Remove(self.Id);
         }
 
         // enter进入self视野
@@ -99,7 +128,7 @@ namespace ET
             {
                 return;
             }
-            
+
             if (!AOISeeCheckHelper.IsCanSee(self, enter))
             {
                 return;
@@ -130,6 +159,10 @@ namespace ET
         // leave离开self视野
         public static void LeaveSight(this AOIEntity self, AOIEntity leave)
         {
+            if (self == null || leave == null)
+            {
+                return;
+            }
             if (self.Id == leave.Id)
             {
                 return;
@@ -165,7 +198,7 @@ namespace ET
         {
             return self.BeSeePlayers.ContainsKey(unitId);
         }
-        
+
         public static void ReNotice(this AOIEntity self)
         {
             self.DomainScene().GetComponent<AOIManagerComponent>()?.ReNotice(self);

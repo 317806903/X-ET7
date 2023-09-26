@@ -9,9 +9,9 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, M2M_EnterMapRequest request, M2M_EnterMapResponse response)
 		{
-			long playerId = request.PlayerId;	
+			long playerId = request.PlayerId;
 			// 通知客户端开始切场景
-			M2C_StartSceneChange m2CStartSceneChange = new M2C_StartSceneChange() {SceneInstanceId = scene.InstanceId, SceneName = scene.Name};
+			M2C_StartSceneChange m2CStartSceneChange = new () {SceneInstanceId = scene.InstanceId, SceneName = scene.Name};
 			MessageHelper.SendToClient(playerId, m2CStartSceneChange, false);
 
 			string gamePlayBattleLevelCfgId = request.GamePlayBattleLevelCfgId;
@@ -23,7 +23,7 @@ namespace ET.Server
 				if (gamePlayComponent == null)
 				{
 					gamePlayComponent = scene.AddComponent<GamePlayComponent>();
-					gamePlayComponent.InitWhenGlobal(scene.InstanceId, gamePlayBattleLevelCfgId);
+					await gamePlayComponent.InitWhenGlobal(scene.InstanceId, gamePlayBattleLevelCfgId);
 				}
 				gamePlayComponent.AddPlayerWhenGlobal(playerId, 1);
 			}
@@ -36,54 +36,61 @@ namespace ET.Server
 			}
 
 			UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
-			
+
 			bool bExistUnit = false;
 			if (unitComponent.Get(playerId) != null)
 			{
 				bExistUnit = true;
 			}
 
-			Unit unit = null;
+			Unit observerUnit = null;
+			Unit playerUnit = null;
 			if (bExistUnit)
 			{
-				unit = unitComponent.Get(playerId);
+				observerUnit = unitComponent.Get(playerId);
 				gamePlayComponent.ReNoticeToClient(playerId);
 			}
 			else
 			{
 				int playerLevel = request.PlayerLevel;
 				GamePlayMode gamePlayMode = gamePlayComponent.gamePlayMode;
-				
+
+				observerUnit = ET.GamePlayHelper.CreateObserverUnit(gamePlayMode, scene, playerId);
+				unitComponent.Add(observerUnit);
+				observerUnit.AddComponent<MailBoxComponent>();
+
 				float3 position = gamePlayComponent.GetPlayerBirthPos(playerId);
 				float3 forward = new float3(0, 0, 1);
-				unit = ET.GamePlayHelper.CreatePlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
-				
-				unitComponent.Add(unit);
-
-				string pathfindingMapName = scene.Name;
-				unit.AddComponent<PathfindingComponent, string>(pathfindingMapName);
-
-				unit.AddComponent<MailBoxComponent>();
+				playerUnit = ET.GamePlayHelper.CreatePlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
+				if (playerUnit != null)
+				{
+					unitComponent.Add(playerUnit);
+				}
 			}
-			
+
 			// 解锁location，可以接收发给Unit的消息
-			await LocationProxyComponent.Instance.Add(LocationType.Unit, unit.Id, unit.InstanceId);
-		
+			await LocationProxyComponent.Instance.Add(LocationType.Unit, observerUnit.Id, observerUnit.InstanceId);
+
 			// 通知客户端创建My Unit
 			M2C_CreateMyUnit m2CCreateUnits = new ();
-			m2CCreateUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(unit);
-			MessageHelper.SendToClient(unit, m2CCreateUnits);
+			m2CCreateUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(observerUnit);
+			MessageHelper.SendToClient(observerUnit, m2CCreateUnits);
+
+			// if (playerUnit != null)
+			// {
+			// 	M2C_CreateMyUnit m2CCreatePlayerUnits = new ();
+			// 	m2CCreatePlayerUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(playerUnit);
+			// 	MessageHelper.SendToClient(observerUnit, m2CCreatePlayerUnits);
+			// }
 
 			if (bExistUnit)
 			{
-				unit.GetComponent<AOIEntity>().ReNotice();
+				observerUnit.GetComponent<AOIEntity>().ReNotice();
 			}
 			else
 			{
-				// 加入aoi
-				//unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
 			}
-			
+
 		}
 	}
 }

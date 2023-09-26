@@ -5,8 +5,88 @@
     "res_name": "Assets/ResAB/Audio/AudioBattle/bomb.wav"
   },
   {
-    "id": "ResAudio_2",
+    "id": "ResAudio_dead",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioBattle/dead.wav"
+    "res_name": "Assets/ResAB/Audio/AudioBattle/dead.mp3"
+  },
+  {
+    "id": "ResAudio_solo",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/solo.mp3"
+  },
+  {
+    "id": "ResAudio_aoe",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/aoe.wav"
+  },
+  {
+    "id": "ResAudio_line",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/line.wav"
+  },
+  {
+    "id": "ResAudio_circle",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/circle.wav"
+  },
+  {
+    "id": "ResAudio_UI_ready_go",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/ready_go.mp3"
+  },
+  {
+    "id": "ResAudio_UI_victory",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/victory.wav"
+  },
+  {
+    "id": "ResAudio_UI_failed",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/failed.mp3"
+  },
+  {
+    "id": "ResAudio_UI_Click",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/click.mp3"
+  },
+  {
+    "id": "ResAudio_UI_Back",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/back.ogg"
+  },
+  {
+    "id": "ResAudio_UI_Confirm",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/confirm.mp3"
+  },
+  {
+    "id": "ResAudio_TowerPush",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/set.mp3"
+  },
+  {
+    "id": "ResAudio_Music_login",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/login.mp3"
+  },
+  {
+    "id": "ResAudio_Music_main",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/main.mp3"
+  },
+  {
+    "id": "ResAudio_Music_game1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/game1.mp3"
+  },
+  {
+    "id": "ResAudio_Music_game2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/game2.mp3"
+  },
+  {
+    "id": "ResAudio_Music_game3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/game3.mp3"
   }
 ]

@@ -219,5 +219,293 @@
       "speed": 50,
       "acceleratedSpeed": 0
     }
+  },
+  {
+    "id": "FireBullet_Tower_Arrow_Bullet_1",
+    "name": "射出弩箭1",
+    "bullet_id": "Bullet_Tower_Arrow_Bullet_1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.74,
+        "z": 0.88
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_Tower_Arrow_Bullet_2",
+    "name": "射出弩箭2",
+    "bullet_id": "Bullet_Tower_Arrow_Bullet_2",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.1,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_Tower_Arrow_Bullet_3",
+    "name": "射出弩箭3",
+    "bullet_id": "Bullet_Tower_Arrow_Bullet_3",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.5,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_Tower_Cannon_Bullet_1",
+    "name": "射出加农炮1",
+    "bullet_id": "Bullet_Tower_Cannon_Bullet_1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.77,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_Tower_Cannon_Bullet_2",
+    "name": "射出加农炮2",
+    "bullet_id": "Bullet_Tower_Cannon_Bullet_2",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.9,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_Tower_Cannon_Bullet_3",
+    "name": "射出加农炮3",
+    "bullet_id": "Bullet_Tower_Cannon_Bullet_3",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.46,
+        "z": 0.9
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerDragon_Bullet1",
+    "name": "射出龙击炮1",
+    "bullet_id": "Bullet_TowerDragon_Bullet1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.244,
+        "z": 0.572
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerDragon_Bullet2",
+    "name": "射出龙击炮2",
+    "bullet_id": "Bullet_TowerDragon_Bullet2",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.845,
+        "z": 0.322
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerDragon_Bullet3",
+    "name": "射出龙击炮3",
+    "bullet_id": "Bullet_TowerDragon_Bullet3",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.272,
+        "z": 0.39
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerIce_Bullet1",
+    "name": "射出冰魔塔1",
+    "bullet_id": "Bullet_TowerIce_Bullet1",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.625,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerIce_Bullet2",
+    "name": "射出冰魔塔2",
+    "bullet_id": "Bullet_TowerIce_Bullet2",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.193,
+        "z": 0.1419
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
+  },
+  {
+    "id": "FireBullet_TowerIce_Bullet3",
+    "name": "射出冰魔塔3",
+    "bullet_id": "Bullet_TowerIce_Bullet3",
+    "duration": 10,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.451,
+        "z": 0.15
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "TargetMoveTweenType",
+      "speed": 20,
+      "acceleratedSpeed": 0
+    }
   }
 ]

@@ -1,0 +1,314 @@
+[
+  {
+    "key": "Text_Key_Desc_Unit_Aoe1",
+    "text_en": "(en)炮击"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Aoe2",
+    "text_en": "(en)炮击"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Aoe3",
+    "text_en": "(en)炮击"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Circle1",
+    "text_en": "(en)毒雾"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Circle2",
+    "text_en": "(en)毒雾"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Circle3",
+    "text_en": "(en)毒雾"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_HeadQuarter",
+    "text_en": "(en)"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Line1",
+    "text_en": "(en)火柱"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Line2",
+    "text_en": "(en)火柱"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Line3",
+    "text_en": "(en)火柱"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster1",
+    "text_en": "(en)蝙蝠1"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster2",
+    "text_en": "(en)蝙蝠2"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster3",
+    "text_en": "(en)蝙蝠3"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster4",
+    "text_en": "(en)蜘蛛1"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster5",
+    "text_en": "(en)蜘蛛2"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster6",
+    "text_en": "(en)蜘蛛3"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster7",
+    "text_en": "(en)暗影蛋1"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster8",
+    "text_en": "(en)暗影蛋2"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Monster9",
+    "text_en": "(en)暗影蛋3"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_MonsterCall",
+    "text_en": "(en)"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Observer",
+    "text_en": "(en)"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Player1",
+    "text_en": "(en)prefab1"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_PlayerPK",
+    "text_en": "(en)"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_SceneEffectNone",
+    "text_en": "(en)场景特效空对象(不要删除这条记录)"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Solo1",
+    "text_en": "(en)射击"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Solo2",
+    "text_en": "(en)射击"
+  },
+  {
+    "key": "Text_Key_Desc_Unit_Solo3",
+    "text_en": "(en)射击"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Aoe1",
+    "text_en": "(en)加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Aoe2",
+    "text_en": "(en)加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Aoe3",
+    "text_en": "(en)加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Circle1",
+    "text_en": "(en)毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Circle2",
+    "text_en": "(en)毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Circle3",
+    "text_en": "(en)毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Unit_HeadQuarter",
+    "text_en": "(en)大本营"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Line1",
+    "text_en": "(en)火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Line2",
+    "text_en": "(en)火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Line3",
+    "text_en": "(en)火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster1",
+    "text_en": "(en)蝙蝠1"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster2",
+    "text_en": "(en)蝙蝠2"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster3",
+    "text_en": "(en)蝙蝠3"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster4",
+    "text_en": "(en)蜘蛛1"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster5",
+    "text_en": "(en)蜘蛛2"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster6",
+    "text_en": "(en)蜘蛛3"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster7",
+    "text_en": "(en)暗影蛋1"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster8",
+    "text_en": "(en)暗影蛋2"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Monster9",
+    "text_en": "(en)暗影蛋3"
+  },
+  {
+    "key": "Text_Key_Name_Unit_MonsterCall",
+    "text_en": "(en)刷怪点"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Observer",
+    "text_en": "(en)OB"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Player1",
+    "text_en": "(en)对象1"
+  },
+  {
+    "key": "Text_Key_Name_Unit_PlayerPK",
+    "text_en": "(en)"
+  },
+  {
+    "key": "Text_Key_Name_Unit_SceneEffectNone",
+    "text_en": "(en)场景特效空对象(不要删除这条记录)"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Solo1",
+    "text_en": "(en)弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Solo2",
+    "text_en": "(en)弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Unit_Solo3",
+    "text_en": "(en)弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow1_1",
+    "text_en": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow1_2",
+    "text_en": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow1_3",
+    "text_en": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow2_1",
+    "text_en": "加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow2_2",
+    "text_en": "加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow2_3",
+    "text_en": "加农炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow3_1",
+    "text_en": "火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow3_2",
+    "text_en": "火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow3_3",
+    "text_en": "火图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow4_1",
+    "text_en": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow4_2",
+    "text_en": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow4_3",
+    "text_en": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow5_1",
+    "text_en": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow5_2",
+    "text_en": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow5_3",
+    "text_en": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Name_Tow6_1",
+    "text_en": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow6_2",
+    "text_en": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow6_3",
+    "text_en": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow7_1",
+    "text_en": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow7_2",
+    "text_en": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow7_3",
+    "text_en": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow8_1",
+    "text_en": "加速塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow8_2",
+    "text_en": "加速塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow8_3",
+    "text_en": "加速塔"
+  }
+]

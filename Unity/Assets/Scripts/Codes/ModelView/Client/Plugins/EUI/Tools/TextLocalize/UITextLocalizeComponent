@@ -1,0 +1,12 @@
+﻿using System.Collections.Generic;
+
+namespace ET.Client
+{
+    [ComponentOf(typeof(Scene))]
+    public class UITextLocalizeComponent : Entity,IAwake,IDestroy
+    {
+        public static UITextLocalizeComponent Instance { get; set; }
+
+        public HashSetComponent<UITextLocalizeMonoView> _UITextLocalizeMonoViewList;
+    }
+}

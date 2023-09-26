@@ -23,10 +23,13 @@ namespace ET.Ability
             }
         }
 
+        /// <summary>
+        /// 当同组tagGroup有优先级更高的，则会处理
+        /// </summary>
         public bool isEnabled;
-        
-        public BuffAction buffAction;
-        
+
+        public List<BuffAction> buffActions;
+
         ///<summary>
         ///总时长，单位：秒
         ///</summary>
@@ -51,12 +54,7 @@ namespace ET.Ability
         ///buff的施法者是谁，当然可以是空的
         ///</summary>
         public long casterUnitId;
-        
-        ///<summary>
-        ///buff的携带者，实际上是作为参数传递给脚本用，具体是谁，可定是所在控件的this.gameObject了
-        ///</summary>
-        public long carrierUnitId;
-        
+
         ///<summary>
         ///buff已经存在了多少时间了，单位：秒
         ///</summary>
@@ -68,8 +66,10 @@ namespace ET.Ability
         public int ticked = 0;
 
         public MultiMap<AbilityBuffMonitorTriggerEvent, BuffActionCall> monitorTriggerList;
-        
+
         [BsonIgnore]
         public ActionContext actionContext;
+
+        public List<EntityRef<EffectObj>> selfEffectList;
     }
 }

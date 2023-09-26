@@ -14,20 +14,24 @@ namespace ET
 		{
 			protected override void Awake(GamePlayPlayerListComponent self)
 			{
+				self.playerList = new();
 				self.playerId2UnitIds = new();
+				self.playerId2PlayerUnitId = new();
 				self.unitId2PlayerId = new();
 				self.playerId2IsQuit = new();
 				self.playerId2BirthPos = new();
 				self.playerId2CoinList = new();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class GamePlayPlayerListComponentDestroySystem : DestroySystem<GamePlayPlayerListComponent>
 		{
 			protected override void Destroy(GamePlayPlayerListComponent self)
 			{
+				self.playerList?.Clear();
 				self.playerId2UnitIds?.Clear();
+				self.playerId2PlayerUnitId?.Clear();
 				self.unitId2PlayerId?.Clear();
 				self.playerId2IsQuit?.Clear();
 				self.playerId2BirthPos?.Clear();
@@ -49,7 +53,7 @@ namespace ET
 		public static void InitWhenGlobal(this GamePlayPlayerListComponent self)
 		{
 		}
-		
+
 		public static void AddPlayerWhenGlobal(this GamePlayPlayerListComponent self, long playerId, int playerTeamId)
 		{
 			self.playerId2IsQuit[playerId] = false;
@@ -64,46 +68,74 @@ namespace ET
 			}
 			self.playerId2IsQuit[playerId] = true;
 
-			Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerId);
-			self._InitPlayerBirthPos(playerId, playerUnit.Position, true);
+			Unit observerUnit = UnitHelper.GetUnit(self.DomainScene(), playerId);
+			Unit playerUnit = GamePlayHelper.GetPlayerUnit(observerUnit);
+			if (playerUnit != null)
+			{
+				self._InitPlayerBirthPos(playerId, playerUnit.Position, true);
+			}
 
 			if (isNeedRemoveAllPlayerUnits)
 			{
 				foreach (var unitId in self.playerId2UnitIds[playerId])
 				{
 					Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
-					unit?.Dispose();
+					if (unit != null)
+					{
+						unit.DestroyNotDeathShow();
+					}
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// 当unit创建时， 存储unitId 和 playerId 的关系
 		/// </summary>
 		/// <param name="self"></param>
 		/// <param name="playerId"></param>
 		/// <param name="unitId"></param>
-		public static void AddUnitInfo(this GamePlayPlayerListComponent self, long playerId, long unitId)
+		public static void AddUnitInfo(this GamePlayPlayerListComponent self, long playerId, long unitId, bool isPlayerUnit)
 		{
 			if (self.unitId2PlayerId.ContainsKey(unitId) == false)
 			{
 				self.playerId2UnitIds.Add(playerId, unitId);
 				self.unitId2PlayerId.Add(unitId, playerId);
+
+				if (isPlayerUnit)
+				{
+					self.playerId2PlayerUnitId.Add(playerId, unitId);
+					self.NoticeCoinToClient(playerId, GetCoinType.Normal);
+				}
 			}
 		}
-		
+
 		/// <summary>
 		/// 当unit销毁时， 去掉已存储的unitId 和 playerId 的关系
 		/// </summary>
 		/// <param name="self"></param>
 		/// <param name="unitId"></param>
-		public static void RemoveUnitInfo(this GamePlayPlayerListComponent self, long unitId)
+		public static void RemoveUnitInfo(this GamePlayPlayerListComponent self, long unitId, bool isPlayerUnit)
 		{
-			if (self.unitId2PlayerId.ContainsKey(unitId))
+			if (self.unitId2PlayerId.TryGetValue(unitId, out long playerId))
 			{
-				long playerId = self.unitId2PlayerId[unitId];
 				self.playerId2UnitIds.Remove(playerId, unitId);
+				self.unitId2PlayerId.Remove(unitId);
+
+				if (isPlayerUnit)
+				{
+					self.playerId2PlayerUnitId.Remove(playerId);
+				}
 			}
+		}
+
+		public static long GetPlayerUnitId(this GamePlayPlayerListComponent self, long playerId)
+		{
+			if (self.playerId2PlayerUnitId.TryGetValue(playerId, out long id))
+			{
+				return id;
+			}
+
+			return -1;
 		}
 
 		/// <summary>
@@ -129,22 +161,28 @@ namespace ET
 		/// <returns></returns>
 		public static List<long> GetPlayerList(this GamePlayPlayerListComponent self)
 		{
-			ListComponent<long> playerList = ListComponent<long>.Create();
+			self.playerList.Clear();
 			foreach (var playerId2IsQuit in self.playerId2IsQuit)
 			{
 				long playerId = playerId2IsQuit.Key;
 				bool isQuit = playerId2IsQuit.Value;
 				if (isQuit == false)
 				{
-					playerList.Add(playerId);
+					self.playerList.Add(playerId);
 				}
 			}
-			return playerList;
+			return self.playerList;
+		}
+
+		public static GamePlayComponent GetGamePlay(this GamePlayPlayerListComponent self)
+		{
+			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			return gamePlayComponent;
 		}
 
 		public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayPlayerListComponent self)
 		{
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			return gamePlayComponent.GetGamePlayBattleConfig();
 		}
 
@@ -206,13 +244,13 @@ namespace ET
 			}
 		}
 
-		public static void _InitPlayerBirthPos(this GamePlayPlayerListComponent self, long playerId, System.Numerics.Vector3 pos, bool forceSet = 
+		public static void _InitPlayerBirthPos(this GamePlayPlayerListComponent self, long playerId, System.Numerics.Vector3 pos, bool forceSet =
 		false)
 		{
 			self._InitPlayerBirthPos(playerId, new float3(pos.X, pos.Y, pos.Z), forceSet);
 		}
-		
-		public static void _InitPlayerBirthPos(this GamePlayPlayerListComponent self, long playerId, float3 pos, bool forceSet = 
+
+		public static void _InitPlayerBirthPos(this GamePlayPlayerListComponent self, long playerId, float3 pos, bool forceSet =
 		false)
 		{
 			if (forceSet == false && self.playerId2BirthPos.ContainsKey(playerId))
@@ -221,7 +259,7 @@ namespace ET
 			}
 			self.playerId2BirthPos[playerId] = pos;
 		}
-		
+
 		public static float3 GetPlayerBirthPos(this GamePlayPlayerListComponent self, long playerId)
 		{
 			return self.playerId2BirthPos[playerId];
@@ -248,37 +286,70 @@ namespace ET
 			}
 		}
 
-		public static void SetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int setValue)
+		public static void ResetPlayerBirthPos(this GamePlayPlayerListComponent self, float3 pos)
+		{
+			foreach (long playerId in self.GetPlayerList())
+			{
+				self._InitPlayerBirthPos(playerId, pos, true);
+
+				if (self.playerId2PlayerUnitId.TryGetValue(playerId, out long playerUnitId))
+				{
+					Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerUnitId);
+					if (playerUnit != null)
+					{
+						playerUnit.Position = pos;
+
+						ET.Ability.UnitHelper.ResetPos(playerUnit, pos);
+					}
+				}
+			}
+		}
+
+		public static void SetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int setValue, GetCoinType getCoinType)
 		{
 			setValue = math.max(0, setValue);
 			self.playerId2CoinList.Add(playerId, coinType.ToString(), setValue);
-			
-			self.NoticeCoinToClient(playerId);
+
+			self.NoticeCoinToClient(playerId, getCoinType);
 		}
-		
-		public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int chgValue)
+
+		public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int chgValue, GetCoinType getCoinType)
 		{
 			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out int curValue);
 			curValue = math.max(0, curValue + chgValue);
 			self.playerId2CoinList.Add(playerId, coinType.ToString(), curValue);
 
-			self.NoticeCoinToClient(playerId);
+			self.NoticeCoinToClient(playerId, getCoinType);
 		}
-		
+
 		public static int GetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType)
 		{
 			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out int curValue);
 			return curValue;
 		}
-		
-		public static void NoticeCoinToClient(this GamePlayPlayerListComponent self, long playerId)
+
+		public static void NoticeCoinToClient(this GamePlayPlayerListComponent self, long playerId, GetCoinType getCoinType)
 		{
-			EventType.NoticeGamePlayPlayerListToClient _NoticeGamePlayPlayerListToClient = new ()
+			if (getCoinType == GetCoinType.Normal)
 			{
-				playerId = playerId,
-				gamePlayPlayerListComponent = self,
-			};
-			EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayPlayerListToClient);
+				EventType.WaitNoticeGamePlayPlayerListToClient _WaitNoticeGamePlayPlayerListToClient = new ()
+				{
+					playerId = playerId,
+					getCoinType = getCoinType,
+					gamePlayPlayerListComponent = self,
+				};
+				EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayPlayerListToClient);
+			}
+			else
+			{
+				EventType.NoticeGamePlayPlayerListToClient _NoticeGamePlayPlayerListToClient = new ()
+				{
+					playerIds = new HashSet<long>(){playerId},
+					getCoinType = getCoinType,
+					gamePlayPlayerListComponent = self,
+				};
+				EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayPlayerListToClient);
+			}
 		}
 	}
 }

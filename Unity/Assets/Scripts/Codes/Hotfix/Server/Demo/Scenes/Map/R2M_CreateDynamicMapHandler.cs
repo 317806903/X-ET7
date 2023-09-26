@@ -24,9 +24,10 @@ namespace ET.Server
 		            roomMemberList.Add(roomMember as RoomMember);
 	            }
             }
-            
-			Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList);
-			response.DynamicMapId = dynamicMap.InstanceId;
+
+            string _ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
+			Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList, _ARMeshDownLoadUrl);
+			response.DynamicMapInstanceId = dynamicMap.InstanceId;
 
 			await ETTask.CompletedTask;
 		}

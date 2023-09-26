@@ -12,11 +12,11 @@ namespace ET.Ability
             SelectHandle selectHandle;
             if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea, ref actionContext);
             }
             else if(selectHandleOld.selectHandleType == SelectHandleType.SelectPosition)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea, ref actionContext);
             }
             else
             {
@@ -35,6 +35,8 @@ namespace ET.Ability
             }
             actionContext.attackerUnitId = unit.Id;
             int count = selectHandle.unitIds.Count;
+            actionContext.selectUnitNum = count;
+            
             for (int i = 0; i < count; i++)
             {
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);

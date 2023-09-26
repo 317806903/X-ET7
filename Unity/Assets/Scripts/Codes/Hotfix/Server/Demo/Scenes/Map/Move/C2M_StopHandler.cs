@@ -3,9 +3,11 @@
 	[ActorMessageHandler(SceneType.Map)]
 	public class C2M_StopHandler : AMActorLocationHandler<Unit, C2M_Stop>
 	{
-		protected override async ETTask Run(Unit unit, C2M_Stop message)
+		protected override async ETTask Run(Unit observerUnit, C2M_Stop message)
 		{
-			unit.Stop(WaitTypeError.Destroy);
+			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+
+			playerUnit.Stop(WaitTypeError.Destroy);
 			await ETTask.CompletedTask;
 		}
 	}

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Compilation;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using YooAsset;
 
@@ -28,19 +29,15 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
-        private bool clearFolder;
-        private bool isBuildExe;
-        private bool isContainAB;
-        private string fairyGUIXMLPath;
-        private BuildOptions buildOptions;
-        private BuildAssetBundleOptions buildAssetBundleOptions = BuildAssetBundleOptions.None;
 
         private GlobalConfig globalConfig;
         private ResConfig resConfig;
-        
+
+        private int localHostStartConfigIndex = 1;
         private int selectStartConfigIndex = 1;
         private string[] startConfigs;
         private string startConfig;
+        private string selectStartConfigServerIP;
 
         [MenuItem("ET/Build Tool")]
         public static void ShowWindow()
@@ -48,7 +45,7 @@ namespace ET
             GetWindow<BuildEditor>(DockDefine.Types);
         }
 
-        private void OnEnable()
+        public void Refresh()
         {
             globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
             resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
@@ -60,9 +57,18 @@ namespace ET
                 if (this.startConfigs[i] == this.globalConfig.StartConfig)
                 {
                     this.selectStartConfigIndex = i;
-                    break;
+                }
+                if (this.startConfigs[i] == "Localhost")
+                {
+                    this.localHostStartConfigIndex = i;
                 }
             }
+            this.selectStartConfigServerIP = GetServerIP(this.globalConfig.CodeMode, this.globalConfig.StartConfig);
+        }
+
+        private void OnEnable()
+        {
+            this.Refresh();
 
 #if UNITY_ANDROID
             activePlatform = PlatformType.Android;
@@ -83,11 +89,42 @@ namespace ET
         private void OnGUI()
         {
             this.platformType = (PlatformType) EditorGUILayout.EnumPopup(platformType);
-            this.clearFolder = EditorGUILayout.Toggle("clean folder? ", clearFolder);
-            this.isBuildExe = EditorGUILayout.Toggle("build exe?", this.isBuildExe);
-            this.isBuildExe = true;
 
-            this.isContainAB = EditorGUILayout.Toggle("contain assetsbundle?", this.isContainAB);
+            GUILayout.Label("====================================");
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField("Code Compile：", GUILayout.Width(200f));
+                if (GUILayout.Button("Reset Local Editor"))
+                {
+                    if (this.globalConfig.CodeMode != CodeMode.ClientServer)
+                    {
+                        this.globalConfig.CodeMode = CodeMode.ClientServer;
+                        EditorUtility.SetDirty(this.globalConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.globalConfig.StartConfig != "Localhost")
+                    {
+                        this.globalConfig.StartConfig = "Localhost";
+                        EditorUtility.SetDirty(this.globalConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
+                    {
+                        this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+
+                    EditorSceneManager.OpenScene("Assets/ResAB/Scene/Init.unity");
+                    BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", true);
+
+                    this.Refresh();
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Label("====================================");
+            GUILayout.Space(5);
+
             var codeOptimization = (CodeOptimization) EditorGUILayout.EnumPopup("CodeOptimization ", this.globalConfig.codeOptimization);
             if (codeOptimization != this.globalConfig.codeOptimization)
             {
@@ -96,54 +133,8 @@ namespace ET
                 AssetDatabase.SaveAssets();
             }
 
-            EditorGUILayout.LabelField("BuildAssetBundleOptions ");
-            this.buildAssetBundleOptions = (BuildAssetBundleOptions) EditorGUILayout.EnumFlagsField(this.buildAssetBundleOptions);
-
-            switch (codeOptimization)
-            {
-                case CodeOptimization.None:
-                case CodeOptimization.Debug:
-                    this.buildOptions = BuildOptions.Development | BuildOptions.ConnectWithProfiler;
-                    break;
-                case CodeOptimization.Release:
-                    this.buildOptions = BuildOptions.None;
-                    break;
-            }
-
-            GUILayout.Space(5);
-
-            if (GUILayout.Button("BuildPackage"))
-            {
-                EditorApplication.isPlaying = false;
-                if (this.platformType == PlatformType.None)
-                {
-                    ShowNotification(new GUIContent("please select platform!"));
-                    return;
-                }
-
-                if (platformType != activePlatform)
-                {
-                    switch (EditorUtility.DisplayDialogComplex("Warning!",
-                        $"current platform is {activePlatform}, if change to {platformType}, may be take a long time", "change", "cancel",
-                        "no change"))
-                    {
-                        case 0:
-                            activePlatform = platformType;
-                            break;
-                        case 1:
-                            return;
-                        case 2:
-                            platformType = activePlatform;
-                            break;
-                    }
-                }
-
-                BuildHelper.Build(this.platformType, this.buildAssetBundleOptions, this.buildOptions, this.isBuildExe, this.isContainAB,
-                    this.clearFolder);
-            }
-
             GUILayout.Label("");
-            
+
             var resLoadMode = (EPlayMode) EditorGUILayout.EnumPopup("ResLoadMode: ", this.resConfig.ResLoadMode);
             if (resLoadMode != this.resConfig.ResLoadMode)
             {
@@ -151,9 +142,22 @@ namespace ET
                 EditorUtility.SetDirty(this.resConfig);
                 AssetDatabase.SaveAssets();
             }
+            if (resLoadMode == EPlayMode.HostPlayMode)
+            {
+                EditorGUI.BeginChangeCheck();
+                string resHostIp = EditorGUILayout.TextField("资源热更新地址:", this.resConfig.ResHostServerIP);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    if (resHostIp != this.resConfig.ResHostServerIP)
+                    {
+                        this.resConfig.ResHostServerIP = resHostIp;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+            }
             GUILayout.Space(5);
-            
-            GUILayout.Label("Code Compile：");
+
 
             EditorGUILayout.BeginHorizontal();
             {
@@ -175,6 +179,12 @@ namespace ET
                         EditorUtility.SetDirty(this.globalConfig);
                         AssetDatabase.SaveAssets();
                     }
+                    if (EPlayMode.EditorSimulateMode != this.resConfig.ResLoadMode)
+                    {
+                        this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
                 }
 #endif
             }
@@ -193,19 +203,19 @@ namespace ET
             if (GUILayout.Button("BuildModelAndHotfix"))
             {
                 EditorApplication.isPlaying = false;
-                BuildModelAndHotfix();
+                BuildModelAndHotfix().Coroutine();
             }
 
             if (GUILayout.Button("BuildModel"))
             {
                 EditorApplication.isPlaying = false;
-                BuildModel();
+                BuildModel().Coroutine();
             }
 
             if (GUILayout.Button("BuildHotfix"))
             {
                 EditorApplication.isPlaying = false;
-                BuildHotfix();
+                BuildHotfix().Coroutine();
             }
 
             GUILayout.Space(5);
@@ -217,28 +227,24 @@ namespace ET
             GUILayout.Space(5);
             EditorGUILayout.BeginHorizontal();
             {
-                selectStartConfigIndex = EditorGUILayout.Popup("服务器模式:", selectStartConfigIndex, this.startConfigs);
-                //this.configFolder = (ConfigFolder) EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
+                selectStartConfigIndex = EditorGUILayout.Popup("服务器模式:", selectStartConfigIndex, this.startConfigs, GUILayout.MinWidth(150));
                 if (this.startConfigs[selectStartConfigIndex] != this.globalConfig.StartConfig)
                 {
                     this.globalConfig.StartConfig = this.startConfigs[selectStartConfigIndex];
                     EditorUtility.SetDirty(this.globalConfig);
                     AssetDatabase.SaveAssets();
+                    this.selectStartConfigServerIP = GetServerIP(codeMode, this.globalConfig.StartConfig);
+                }
+                if (string.IsNullOrEmpty(this.selectStartConfigServerIP))
+                {
+                    this.selectStartConfigServerIP = GetServerIP(codeMode, this.globalConfig.StartConfig);
                 }
 
                 if (GUILayout.Button("ExcelExporter"))
                 {
-                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.startConfigs[selectStartConfigIndex]);
+                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.startConfigs[selectStartConfigIndex], ToolsEditor.ConfigType.All);
 
-                    string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/GameConfig";
-                    if (Directory.Exists(unityClientConfigForAB))
-                    {
-                        Directory.Delete(unityClientConfigForAB, true);
-                    }
-
-                    FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", unityClientConfigForAB);
-
-                    unityClientConfigForAB = "../Unity/Assets/Bundles/Config/AbilityConfig";
+                    string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/AbilityConfig";
                     if (Directory.Exists(unityClientConfigForAB))
                     {
                         Directory.Delete(unityClientConfigForAB, true);
@@ -247,19 +253,20 @@ namespace ET
                     FileHelper.CopyDirectory("../Config/Excel/c/AbilityConfig", unityClientConfigForAB);
 
                     unityClientConfigForAB = $"../Unity/Assets/Bundles/Config/StartConfig";
-                    if (Directory.Exists(unityClientConfigForAB))
+                    if (Directory.Exists(unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}"))
                     {
-                        Directory.Delete(unityClientConfigForAB, true);
+                        Directory.Delete(unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}", true);
                     }
 
-                    FileHelper.CopyDirectory($"../Config/Excel/c/StartConfig/{this.startConfigs[selectStartConfigIndex]}",
-                        unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}");
+                    FileHelper.CopyDirectory($"../Config/Excel/c/StartConfig/{this.startConfigs[selectStartConfigIndex]}", unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}");
 
                     AssetDatabase.Refresh();
                 }
             }
             EditorGUILayout.EndHorizontal();
-            
+            EditorGUILayout.LabelField("对应服务器地址:", this.selectStartConfigServerIP, GUILayout.MinHeight(120));
+
+
             GUILayout.Space(5);
             GUILayout.Label("");
             // GUILayout.Label("FairyGUI");
@@ -291,15 +298,43 @@ namespace ET
             // }
         }
 
+        private static string GetServerIP(CodeMode codeMode, string StartConfigPath)
+        {
+            string ct = "cs";
+            switch (codeMode)
+            {
+                case CodeMode.Client:
+                    ct = "c";
+                    break;
+                case CodeMode.Server:
+                    ct = "s";
+                    break;
+                case CodeMode.ClientServer:
+                    ct = "cs";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            string configFile = "StartMachineConfigCategory";
+            string configFilePath = $"../Config/Json/{ct}/StartConfig/{StartConfigPath}/{configFile.ToLower()}.json";
+            if (File.Exists(configFilePath) == false)
+            {
+                string err = $"--------configFilePath[{configFilePath}] not exists";
+                Log.Error(err);
+                return err;
+            }
+            return File.ReadAllText(configFilePath);
+        }
+
         private static void AfterCompiling()
         {
-            Directory.CreateDirectory(BuildAssembliesHelper.CodeDir);
-
-            // 设置ab包
-            AssetImporter assetImporter = AssetImporter.GetAtPath("Assets/Bundles/Code");
-            assetImporter.assetBundleName = "Code.unity3d";
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            // Directory.CreateDirectory(BuildAssembliesHelper.CodeDir);
+            //
+            // // 设置ab包
+            // AssetImporter assetImporter = AssetImporter.GetAtPath("Assets/Bundles/Code");
+            // assetImporter.assetBundleName = "Code.unity3d";
+            // AssetDatabase.SaveAssets();
+            // AssetDatabase.Refresh();
 
             Debug.Log("build success!");
         }
@@ -310,48 +345,41 @@ namespace ET
             game?.ShowNotification(new GUIContent($"{tips}"));
         }
 
-        public static void BuildModel()
+        public static async ETTask BuildModel()
         {
             if (Define.EnableCodes)
             {
                 throw new Exception("now in ENABLE_CODES mode, do not need Build!");
             }
 
-            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
-            var codeOptimization = globalConfig.codeOptimization;
-            BuildAssembliesHelper.BuildModel(codeOptimization, globalConfig);
+            await ET.BuildHelper.BuildModel();
 
             AfterCompiling();
 
             ShowNotification("Build Model Success!");
         }
 
-        public static void BuildHotfix()
+        public static async ETTask BuildHotfix()
         {
             if (Define.EnableCodes)
             {
                 throw new Exception("now in ENABLE_CODES mode, do not need Build!");
             }
 
-            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
-            var codeOptimization = globalConfig.codeOptimization;
-            BuildAssembliesHelper.BuildHotfix(codeOptimization, globalConfig);
+            await ET.BuildHelper.BuildHotfix();
 
             AfterCompiling();
             ShowNotification("Build Hotfix Success!");
         }
 
-        public static void BuildModelAndHotfix()
+        public static async ETTask BuildModelAndHotfix()
         {
             if (Define.EnableCodes)
             {
                 throw new Exception("now in ENABLE_CODES mode, do not need Build!");
             }
 
-            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
-            var codeOptimization = globalConfig.codeOptimization;
-            BuildAssembliesHelper.BuildModel(codeOptimization, globalConfig);
-            BuildAssembliesHelper.BuildHotfix(codeOptimization, globalConfig);
+            await ET.BuildHelper.BuildModelAndHotfix();
 
             AfterCompiling();
 

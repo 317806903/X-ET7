@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_JoinRoom request, R2G_JoinRoom response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
@@ -18,6 +18,12 @@ namespace ET.Server
 				response.Error = ET.ErrorCode.ERR_LogicError;
 				response.Message = msg;
 				return;
+			}
+			
+			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
+			if (roomComponentOld != null)
+			{
+				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
 			}
 			roomManagerComponent.JoinRoom(playerId, roomId);
 			response.IsARRoom = roomComponent.isARRoom?1:0;

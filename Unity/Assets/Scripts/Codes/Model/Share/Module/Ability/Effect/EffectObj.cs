@@ -14,6 +14,8 @@ namespace ET.Ability
         
         public string CfgId { get; set; }
         
+        public string PlayAudioActionId { get; set; }
+        
         ///<summary>
         ///这是个什么Effect
         ///</summary>

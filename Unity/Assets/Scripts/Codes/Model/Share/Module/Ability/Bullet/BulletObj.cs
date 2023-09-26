@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ET.AbilityConfig;
 using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
@@ -9,7 +10,7 @@ namespace ET.Ability
     public class BulletObj: Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
     {
         public string CfgId { get; set; }
-        
+
         ///<summary>
         ///这是一颗怎样的子弹
         ///</summary>
@@ -27,12 +28,6 @@ namespace ET.Ability
         ///当然可以是null发射的，但是写效果逻辑的时候得小心caster是null的情况
         ///</summary>
         public long casterUnitId;
-
-        // ///<summary>
-        // ///子弹发射时候，caster的属性，如果caster不存在，就会是一个ChaProperty.zero
-        // ///在一些设计中，比如wow的技能中，技能效果是跟发出时候的角色状态有关的，之后即使获得或者取消了buff，更换了装备，数值一样不会受到影响，所以得记录这个释放当时的值
-        // ///</summary>
-        // public ChaProperty propWhileCast = ChaProperty.zero;
 
         ///<summary>
         ///子弹的生命周期，单位：秒
@@ -60,7 +55,7 @@ namespace ET.Ability
         ///还能命中几次
         ///</summary>
         public int canHitTimes = 1;
-        
+
         [BsonIgnore]
         public ActionContext actionContext;
     }
@@ -68,7 +63,7 @@ namespace ET.Ability
     ///<summary>
     ///子弹命中纪录
     ///</summary>
-    public class BulletHitRecord
+    public class BulletHitRecord: DisposablClass
     {
         ///<summary>
         ///角色的GameObject
@@ -79,5 +74,25 @@ namespace ET.Ability
         ///多久之后还能再次命中，单位秒
         ///</summary>
         public float timeToCanHit;
+
+        public static BulletHitRecord Create()
+        {
+            return ObjectPool.Instance.Fetch(typeof (SelectHandle)) as BulletHitRecord;
+        }
+
+        private bool _disposed; //表示是否已经被回收
+        protected override void Dispose(bool disposing)
+        {
+            if(_disposed) return; //如果已经被回收，就中断执行
+            if(disposing) //如果需要回收一些托管资源
+            {
+            }
+            ObjectPool.Instance.Recycle(this);
+
+            _disposed = true;
+
+            base.Dispose(disposing);//再调用父类的垃圾回收逻辑
+        }
+
     }
 }

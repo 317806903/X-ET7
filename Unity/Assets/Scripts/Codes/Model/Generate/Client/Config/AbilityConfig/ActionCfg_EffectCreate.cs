@@ -19,7 +19,8 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        ResId = _buf.ReadString();
+        ResEffectId = _buf.ReadString();
+        PlayAudioActionId = _buf.ReadString();
         Key = _buf.ReadString();
         MaxKeyNum = _buf.ReadInt();
         Duration = _buf.ReadFloat();
@@ -46,16 +47,21 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 资源id
+    /// 特效资源id
     /// </summary>
-    public string ResId { get; private set; }
-    public ResEffectCfg ResId_Ref { get; private set; }
+    public string ResEffectId { get; private set; }
+    public ResEffectCfg ResEffectId_Ref { get; private set; }
+    /// <summary>
+    /// 音效资源id
+    /// </summary>
+    public string PlayAudioActionId { get; private set; }
+    public ActionCfg_PlayAudio PlayAudioActionId_Ref { get; private set; }
     /// <summary>
     /// 唯一key(用来便于准确删除)
     /// </summary>
     public string Key { get; private set; }
     /// <summary>
-    /// 指定key后限制最大数量
+    /// 指定key后限制最大数量(-1表示不限制)
     /// </summary>
     public int MaxKeyNum { get; private set; }
     /// <summary>
@@ -73,7 +79,8 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.ResId_Ref = (_tables["ResEffectCfgCategory"] as ResEffectCfgCategory).GetOrDefault(ResId);
+        this.ResEffectId_Ref = (_tables["ResEffectCfgCategory"] as ResEffectCfgCategory).GetOrDefault(ResEffectId);
+        this.PlayAudioActionId_Ref = (_tables["ActionCfg_PlayAudioCategory"] as ActionCfg_PlayAudioCategory).GetOrDefault(PlayAudioActionId);
         OffSetInfo?.Resolve(_tables);
         PostResolve();
     }
@@ -89,7 +96,8 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "ResId:" + ResId + ","
+        + "ResEffectId:" + ResEffectId + ","
+        + "PlayAudioActionId:" + PlayAudioActionId + ","
         + "Key:" + Key + ","
         + "MaxKeyNum:" + MaxKeyNum + ","
         + "Duration:" + Duration + ","

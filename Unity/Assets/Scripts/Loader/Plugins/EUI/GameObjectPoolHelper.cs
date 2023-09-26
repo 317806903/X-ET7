@@ -75,7 +75,7 @@ namespace ET.Client
         }
 
         /// <summary>
-        /// Returns an available object from the pool 
+        /// Returns an available object from the pool
         /// OR null in case the pool does not have any object available & can grow size is false.
         /// </summary>
         /// <OtherParam name="poolName"></OtherParam>
@@ -93,7 +93,7 @@ namespace ET.Client
             {
                 GameObjectPool pool = poolDict[poolName];
                 result = pool.NextAvailableObject(autoActive);
-                
+
                 TrigFromPool(result);
 
                 //scenario when no available object is found in pool
@@ -134,29 +134,38 @@ namespace ET.Client
                 if (trailRenderer != null)
                 {
                     trailRenderer.Clear();
+                    trailRenderer.enabled = true;
                 }
             }
         }
-        
+
         public static void TrigToPool(GameObject go)
         {
             if (go == null)
             {
                 return;
             }
-            ParticleSystem particleSystem = go.GetComponentInChildren<ParticleSystem>();
-            if (particleSystem != null)
+
+            ParticleSystem[] particleSystems = go.GetComponentsInChildren<ParticleSystem>(true);
+            foreach (ParticleSystem particleSystem in particleSystems)
             {
-                particleSystem.Stop();
+                if (particleSystem != null)
+                {
+                    particleSystem.Stop();
+                }
             }
 
-            TrailRenderer trailRenderer = go.GetComponentInChildren<TrailRenderer>();
-            if (trailRenderer != null)
+            TrailRenderer[] trailRenderers = go.GetComponentsInChildren<TrailRenderer>(true);
+            foreach (TrailRenderer trailRenderer in trailRenderers)
             {
-                trailRenderer.Clear();
+                if (trailRenderer != null)
+                {
+                    trailRenderer.Clear();
+                    trailRenderer.enabled = false;
+                }
             }
         }
-        
+
         /// <summary>
         /// Return obj to the pool
         /// </summary>
@@ -164,7 +173,7 @@ namespace ET.Client
         public static void ReturnObjectToPool(GameObject go)
         {
             TrigToPool(go);
-            
+
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
             {

@@ -16,7 +16,6 @@ public sealed partial class AICfg: Bright.Config.BeanBase
 {
     public AICfg(ByteBuf _buf) 
     {
-        Id = _buf.ReadString();
         AIConfigId = _buf.ReadString();
         Order = _buf.ReadInt();
         Name = _buf.ReadString();
@@ -30,10 +29,6 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         return new AICfg(_buf);
     }
 
-    /// <summary>
-    /// Id
-    /// </summary>
-    public string Id { get; private set; }
     /// <summary>
     /// 所属ai
     /// </summary>
@@ -70,7 +65,6 @@ public sealed partial class AICfg: Bright.Config.BeanBase
     public override string ToString()
     {
         return "{ "
-        + "Id:" + Id + ","
         + "AIConfigId:" + AIConfigId + ","
         + "Order:" + Order + ","
         + "Name:" + Name + ","

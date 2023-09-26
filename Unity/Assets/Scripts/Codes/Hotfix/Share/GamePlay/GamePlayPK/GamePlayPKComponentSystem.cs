@@ -18,7 +18,7 @@ namespace ET
 			{
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class GamePlayPKComponentDestroySystem : DestroySystem<GamePlayPKComponent>
 		{
@@ -46,9 +46,15 @@ namespace ET
 		{
 		}
 
-		public static List<long> GetPlayerList(this GamePlayPKComponent self)
+		public static GamePlayComponent GetGamePlay(this GamePlayPKComponent self)
 		{
 			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			return gamePlayComponent;
+		}
+
+		public static List<long> GetPlayerList(this GamePlayPKComponent self)
+		{
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			return gamePlayComponent.GetPlayerList();
 		}
 
@@ -63,12 +69,12 @@ namespace ET
 
 		public static void NoticeToClient(this GamePlayPKComponent self, long playerId)
 		{
-			EventType.NoticeGamePlayModeToClient _NoticeGamePlayModeChgToClient = new ()
+			EventType.WaitNoticeGamePlayModeToClient _WaitNoticeGamePlayModeChgToClient = new ()
 			{
 				playerId = playerId,
-				gamePlayModeComponent = self,
+				gamePlayComponent = self.GetGamePlay(),
 			};
-			EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayModeChgToClient);
+			EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
 		}
 
 		public static void Init(this GamePlayPKComponent self, long ownerPlayerId, string gamePlayModeCfgId)
@@ -82,13 +88,13 @@ namespace ET
 		public static void DealFriendTeamFlagType(this GamePlayPKComponent self)
 		{
 			ListComponent<TeamFlagType> teamFlagTypes = ListComponent<TeamFlagType>.Create();
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.DealFriendTeamFlag(teamFlagTypes, true, true);
 		}
 
 		public static void Start(this GamePlayPKComponent self)
 		{
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.Start();
 
 			self.DealFriendTeamFlagType();
@@ -99,9 +105,9 @@ namespace ET
 		{
 			//self.GamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameSuccess;
 
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.GameEnd();
-			
+
 			self.NoticeToClientAll();
 		}
 

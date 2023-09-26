@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
@@ -18,22 +19,23 @@ namespace ET
         //统一一队
         OneTeam,
     }
-    
+
     public enum RoomTeamId: byte
     {
         Red,
         Green,
         Blue,
     }
-    
+
     [ChildOf(typeof(RoomManagerComponent))]
     public class RoomComponent : Entity, IAwake, IDestroy
     {
         public bool isARRoom;
+        public string arSceneId;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;
         public long ownerRoomMemberId;
-        public long sceneMapId;
+        public long dynamicMapInstanceId;
         public string gamePlayBattleLevelCfgId;
         public List<long> roomMemberSeat;
     }

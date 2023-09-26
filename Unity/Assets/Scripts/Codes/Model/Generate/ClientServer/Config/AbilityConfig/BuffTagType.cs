@@ -14,54 +14,66 @@ namespace ET.AbilityConfig
     /// </summary>
     public enum BuffTagType
     {
-        BuffTagType1 = 1,
-        BuffTagType2 = 2,
-        BuffTagType3 = 3,
-        BuffTagType4 = 4,
         /// <summary>
         /// 弱霸体
         /// </summary>
-        SoftBati = 5,
+        SoftBati = 1,
         /// <summary>
         /// 强霸体
         /// </summary>
-        StrongBati = 6,
+        StrongBati = 2,
         /// <summary>
         /// 虚弱(和霸体共存期间相当于无霸体)
         /// </summary>
-        Weak = 7,
+        Weak = 3,
         /// <summary>
         /// 完全霸体（霸体表示 不受击退，击飞，禁锢等控制）
         /// </summary>
-        FullBati = 8,
+        FullBati = 4,
         /// <summary>
-        /// 无敌
+        /// 无敌(受攻击但不受伤害,不受控制)
         /// </summary>
-        Invincible = 9,
+        Invincible = 5,
         /// <summary>
         /// 破弱霸体
         /// </summary>
-        BreakSoftBati = 10,
+        BreakSoftBati = 6,
         /// <summary>
         /// 破强霸体
         /// </summary>
-        BreakStrongBati = 11,
+        BreakStrongBati = 7,
         /// <summary>
-        /// 移动输入(逻辑的移动？)
+        /// 禁止主动移动操作
         /// </summary>
-        NoMoveInput = 12,
+        NoMoveInput = 8,
         /// <summary>
-        /// 技能输入
+        /// 禁止主动技能操作
         /// </summary>
-        NoSkillCastInput = 13,
+        NoSkillCastInput = 9,
         /// <summary>
-        /// 修改面向输入(逻辑的修改面向？)
+        /// 禁止主动修改面向操作
         /// </summary>
-        NoFaceChgInput = 14,
+        NoFaceChgInput = 10,
         /// <summary>
-        /// 不可被其他人看见
+        /// 隐身：不可被其他人看见(不被主动搜索到)
         /// </summary>
-        Invisible = 15,
+        Invisible = 11,
+        /// <summary>
+        /// 被显形
+        /// </summary>
+        BeBreakInvisible = 12,
+        /// <summary>
+        /// 动作停止(被冰冻)
+        /// </summary>
+        StopAnimator = 13,
+        /// <summary>
+        /// 不可被移动
+        /// </summary>
+        NoMotion = 14,
+        BuffTagType1 = 15,
+        BuffTagType2 = 16,
+        BuffTagType3 = 17,
+        BuffTagType4 = 18,
     }
 
 } 

@@ -9,8 +9,9 @@ namespace ET.Ability
             scene.AddComponent<UnitComponent>();
             scene.AddComponent<DamageComponent>();
             scene.AddComponent<ActionHandlerComponent>();
+            scene.AddComponent<SceneEffectComponent>();
         }
-        
+
         public static void InitWhenClient(Scene scene)
         {
             scene.AddComponent<UnitComponent>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using HybridCLR.Editor;
 using UnityEngine;
 using UnityEditor;
@@ -14,7 +15,7 @@ namespace ET
     {
         public const string CodeDir = "Assets/Bundles/Code/";
 
-        public static void BuildModel(CodeOptimization codeOptimization, GlobalConfig globalConfig)
+        public static async ETTask BuildModel(CodeOptimization codeOptimization, GlobalConfig globalConfig)
         {
             if (Directory.Exists(Define.BuildOutputDir))
             {
@@ -31,9 +32,9 @@ namespace ET
                 foreach (string modelFile in logicFiles)
                 {
                     File.Delete(modelFile);
-                } 
+                }
             }
-            
+
             List<string> codes;
             switch (globalConfig.CodeMode)
             {
@@ -84,15 +85,19 @@ namespace ET
 
             HybridCLRSettings.Save();
             AssetDatabase.SaveAssets();
-            
-            BuildAssembliesHelper.BuildMuteAssembly(assemblyName, codes, Array.Empty<string>(), codeOptimization, globalConfig.CodeMode);
+
+            await BuildAssembliesHelper.BuildMuteAssembly(assemblyName, codes, Array.Empty<string>(), codeOptimization, globalConfig.CodeMode);
 
             File.Copy(Path.Combine(Define.BuildOutputDir, $"{assemblyName}.dll"), Path.Combine(CodeDir, $"{assemblyName}.dll.bytes"), true);
             File.Copy(Path.Combine(Define.BuildOutputDir, $"{assemblyName}.pdb"), Path.Combine(CodeDir, $"{assemblyName}.pdb.bytes"), true);
             Debug.Log("copy Model.dll to Bundles/Code success!");
+
+            AssetDatabase.ImportAsset(Path.Combine(CodeDir, $"{assemblyName}.dll.bytes"));
+            AssetDatabase.ImportAsset(Path.Combine(CodeDir, $"{assemblyName}.pdb.bytes"));
+            AssetDatabase.Refresh();
         }
 
-        public static void BuildHotfix(CodeOptimization codeOptimization, GlobalConfig globalConfig)
+        public static async ETTask BuildHotfix(CodeOptimization codeOptimization, GlobalConfig globalConfig)
         {
             if (Directory.Exists(Define.BuildOutputDir))
             {
@@ -111,7 +116,7 @@ namespace ET
                     File.Delete(modelFile);
                 }
             }
-           
+
 
             List<string> codes;
             switch (globalConfig.CodeMode)
@@ -145,7 +150,7 @@ namespace ET
 
             string assemblyName = $"Hotfix_{++globalConfig.HotFixVersion}";
             EditorUtility.SetDirty(globalConfig);
-            
+
             // 修改 HybridCLR 设置里的热更程序集名
             for (int index = 0; index < SettingsUtil.HybridCLRSettings.hotUpdateAssemblies.Length; index++)
             {
@@ -158,15 +163,19 @@ namespace ET
             HybridCLRSettings.Save();
             AssetDatabase.SaveAssets();
 
-            BuildAssembliesHelper.BuildMuteAssembly(assemblyName, codes, new[] { Path.Combine(CodeDir, $"Model_{globalConfig.ModelVersion}.dll.bytes") }, codeOptimization,
+            await BuildAssembliesHelper.BuildMuteAssembly(assemblyName, codes, new[] { Path.Combine(CodeDir, $"Model_{globalConfig.ModelVersion}.dll.bytes") }, codeOptimization,
                 globalConfig.CodeMode);
 
             File.Copy(Path.Combine(Define.BuildOutputDir, $"{assemblyName}.dll"), Path.Combine(CodeDir, $"{assemblyName}.dll.bytes"), true);
             File.Copy(Path.Combine(Define.BuildOutputDir, $"{assemblyName}.pdb"), Path.Combine(CodeDir, $"{assemblyName}.pdb.bytes"), true);
             Debug.Log("copy Hotfix.dll to Bundles/Code success!");
+
+            AssetDatabase.ImportAsset(Path.Combine(CodeDir, $"{assemblyName}.dll.bytes"));
+            AssetDatabase.ImportAsset(Path.Combine(CodeDir, $"{assemblyName}.pdb.bytes"));
+            AssetDatabase.Refresh();
         }
 
-        private static void BuildMuteAssembly(
+        private static async Task BuildMuteAssembly(
             string assemblyName, List<string> CodeDirectorys,
             string[] additionalReferences, CodeOptimization codeOptimization, CodeMode codeMode = CodeMode.Client)
         {
@@ -199,13 +208,13 @@ namespace ET
             {
                 assemblyBuilder.excludeReferences = new string[]
                 {
-                    "DnsClient.dll", 
-                    "MongoDB.Driver.Core.dll", 
-                    "MongoDB.Driver.dll", 
+                    "DnsClient.dll",
+                    "MongoDB.Driver.Core.dll",
+                    "MongoDB.Driver.dll",
                     "MongoDB.Driver.Legacy.dll",
-                    "MongoDB.Libmongocrypt.dll", 
-                    "SharpCompress.dll", 
-                    "System.Buffers.dll", 
+                    "MongoDB.Libmongocrypt.dll",
+                    "SharpCompress.dll",
+                    "System.Buffers.dll",
                     "System.Runtime.CompilerServices.Unsafe.dll",
                     "System.Text.Encoding.CodePages.dll"
                 };
@@ -278,11 +287,19 @@ namespace ET
                 return;
             }
 
-            while (EditorApplication.isCompiling)
-            {
-                // 主线程sleep并不影响编译线程
-                Thread.Sleep(1);
-            }
+            // //while (EditorApplication.isCompiling)
+            // {
+            //     // 主线程sleep并不影响编译线程
+            //     //Thread.Sleep(1);
+            //     //await TimerComponent.Instance.WaitFrameAsync();
+            //     await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1f));
+            // }
+            // while (File.Exists(dllPath) == false)
+            // {
+            //     await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1f));
+            // }
+            while(assemblyBuilder.status != AssemblyBuilderStatus.Finished)
+                System.Threading.Thread.Sleep(10);
         }
     }
 }

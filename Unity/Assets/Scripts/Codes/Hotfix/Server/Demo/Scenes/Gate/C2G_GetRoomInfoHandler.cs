@@ -8,10 +8,11 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Session session, C2G_GetRoomInfo request, G2C_GetRoomInfo response)
 		{
-			Player player = session.GetComponent<SessionPlayerComponent>().Player;
-			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			long playerId = player.Id;
-			long roomId = playerStatusComponent.RoomId;
+			// Player player = session.GetComponent<SessionPlayerComponent>().Player;
+			// PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
+			// long playerId = player.Id;
+			// long roomId = playerStatusComponent.RoomId;
+			long roomId = request.RoomId;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -19,7 +20,7 @@ namespace ET.Server
 			{
 				RoomId = roomId,
 			});
-			
+
 			response.Error = _R2G_GetRoomInfo.Error;
 			response.Message = _R2G_GetRoomInfo.Message;
 			response.RoomInfo = _R2G_GetRoomInfo.RoomInfo;

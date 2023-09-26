@@ -19,6 +19,7 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         WaveRule = _buf.ReadString();
         WaveIndex = _buf.ReadInt();
         Name = _buf.ReadString();
+        WaveRewardGold = _buf.ReadInt();
         Duration = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Nodes = new System.Collections.Generic.List<MonsterWaveCallNode>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { MonsterWaveCallNode _e0;  _e0 = MonsterWaveCallNode.DeserializeMonsterWaveCallNode(_buf); Nodes.Add(_e0);}}
         PostInit();
@@ -41,6 +42,10 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 波次结束奖励金币
+    /// </summary>
+    public int WaveRewardGold { get; private set; }
     /// <summary>
     /// 总时长(单位秒)
     /// </summary>
@@ -67,6 +72,7 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         + "WaveRule:" + WaveRule + ","
         + "WaveIndex:" + WaveIndex + ","
         + "Name:" + Name + ","
+        + "WaveRewardGold:" + WaveRewardGold + ","
         + "Duration:" + Duration + ","
         + "Nodes:" + Bright.Common.StringUtil.CollectionToString(Nodes) + ","
         + "}";

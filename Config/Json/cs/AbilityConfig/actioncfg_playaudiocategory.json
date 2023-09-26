@@ -3,12 +3,48 @@
     "id": "PlayAudio_1",
     "name": "播放音效1",
     "desc": "",
-    "res_id": "ResAudio_1"
+    "res_id": "ResAudio_1",
+    "duration": 2,
+    "isLoop": false
   },
   {
-    "id": "PlayAudio_2",
+    "id": "PlayAudio_dead",
     "name": "播放音效2",
     "desc": "",
-    "res_id": "ResAudio_2"
+    "res_id": "ResAudio_dead",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_solo",
+    "name": "播放音效1",
+    "desc": "",
+    "res_id": "ResAudio_solo",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_aoe",
+    "name": "播放音效2",
+    "desc": "",
+    "res_id": "ResAudio_aoe",
+    "duration": 3,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_line",
+    "name": "播放音效3",
+    "desc": "",
+    "res_id": "ResAudio_line",
+    "duration": -1,
+    "isLoop": true
+  },
+  {
+    "id": "PlayAudio_circle",
+    "name": "播放音效4",
+    "desc": "",
+    "res_id": "ResAudio_circle",
+    "duration": -1,
+    "isLoop": true
   }
 ]

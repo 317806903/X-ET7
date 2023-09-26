@@ -2,86 +2,379 @@
   {
     "id": "ResUnit_Player1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Character/Character1.prefab"
-  },
-  {
-    "id": "ResUnit_Monster1",
-    "name": "",
-    "res_name": "Assets/ResAB/UnitPrefab/Monster/Monster1.prefab"
   },
   {
     "id": "ResUnit_Bullet1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet1.prefab"
   },
   {
     "id": "ResUnit_Bullet2",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet2.prefab"
   },
   {
     "id": "ResUnit_Bullet3",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/Bullet3.prefab"
+  },
+  {
+    "id": "ResUnit_Observer",
+    "name": "",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Character/Observer.prefab"
   },
   {
     "id": "ResUnit_SceneEffectNone",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/SceneEffect/SceneEffectNone.prefab"
+  },
+  {
+    "id": "ResUnit_Aoe1",
+    "name": "",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Character/Character1.prefab"
   },
   {
     "id": "ResUnit_HeadQuarter1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Character/HeadQuarter.prefab"
   },
   {
     "id": "ResUnit_MonsterCall",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Character/MonsterCall.prefab"
   },
   {
-    "id": "ResUnit_Solo1",
+    "id": "ResUnit_TowerSolo1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Tower/Solo1.prefab"
   },
   {
-    "id": "ResUnit_Aoe1",
+    "id": "ResUnit_TowerAoe1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Tower/Aoe1.prefab"
   },
   {
-    "id": "ResUnit_Line1",
+    "id": "ResUnit_TowerLine1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Tower/Line1.prefab"
   },
   {
-    "id": "ResUnit_Circle1",
+    "id": "ResUnit_TowerCircle1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Tower/Circle1.prefab"
   },
   {
     "id": "ResUnit_BulletRocketProjectile_1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Bullet/RocketProjectile_1.prefab"
   },
   {
     "id": "ResUnit_Common1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Monster/Common1.prefab"
   },
   {
     "id": "ResUnit_Quick1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Monster/Quick1.prefab"
   },
   {
     "id": "ResUnit_Tank1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Monster/Tank1.prefab"
   },
   {
     "id": "ResUnit_Attack1",
     "name": "",
+    "moveShowNatureSpeed": 6,
     "res_name": "Assets/ResAB/UnitPrefab/Monster/Attack1.prefab"
+  },
+  {
+    "id": "ResUnit_Monster1",
+    "name": "蝙蝠1",
+    "moveShowNatureSpeed": 3,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Bat.prefab"
+  },
+  {
+    "id": "ResUnit_Monster2",
+    "name": "蝙蝠2",
+    "moveShowNatureSpeed": 3,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Vampire Bat.prefab"
+  },
+  {
+    "id": "ResUnit_Monster3",
+    "name": "蝙蝠3",
+    "moveShowNatureSpeed": 3,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Bat Lord.prefab"
+  },
+  {
+    "id": "ResUnit_Monster4",
+    "name": "蜘蛛1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Spider.prefab"
+  },
+  {
+    "id": "ResUnit_Monster5",
+    "name": "蜘蛛2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Spider Toxin.prefab"
+  },
+  {
+    "id": "ResUnit_Monster6",
+    "name": "蜘蛛3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Spider King.prefab"
+  },
+  {
+    "id": "ResUnit_Monster7",
+    "name": "蛋1",
+    "moveShowNatureSpeed": 1.5,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Egglet.prefab"
+  },
+  {
+    "id": "ResUnit_Monster8",
+    "name": "蛋2",
+    "moveShowNatureSpeed": 1.5,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Shade.prefab"
+  },
+  {
+    "id": "ResUnit_Monster9",
+    "name": "蛋3",
+    "moveShowNatureSpeed": 1.5,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Shadow.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_FireLine_1",
+    "name": "火图腾1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/FE_moth_1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_FireLine_2",
+    "name": "火图腾2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/FE_moth_2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_FireLine_3",
+    "name": "火图腾3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/FE_moth_3.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_DragCircle_1",
+    "name": "毒雾塔1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_poison_1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_DragCircle_2",
+    "name": "毒雾塔2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_poison_2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_DragCircle_3",
+    "name": "毒雾塔3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_poison_3.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_1",
+    "name": "弩箭塔1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_crossbow_1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_2",
+    "name": "弩箭塔2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_crossbow_2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_3",
+    "name": "弩箭塔3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_crossbow_3.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_Bullet_1",
+    "name": "弩箭塔子弹1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/FE_toothfish_bullet_1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_Bullet_2",
+    "name": "弩箭塔子弹2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/FE_toothfish_bullet_2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_ArrowSolo_Bullet_3",
+    "name": "弩箭塔子弹3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/FE_toothfish_bullet_3.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_1",
+    "name": "加农炮1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_cannon_1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_2",
+    "name": "加农炮2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_cannon_2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_3",
+    "name": "加农炮3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/HM_cannon_3.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_Bullet_1",
+    "name": "加农炮子弹1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/HM_cannon_bullet1.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_Bullet_2",
+    "name": "加农炮子弹2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/HM_cannon_bullet2.prefab"
+  },
+  {
+    "id": "ResUnit_Tower_Canon_Bullet_3",
+    "name": "加农炮子弹3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/HM_cannon_bullet3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon1",
+    "name": "龙击炮1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerDragon1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon2",
+    "name": "龙击炮2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerDragon2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon3",
+    "name": "龙击炮3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerDragon3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerElec1",
+    "name": "雷电塔1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerElec1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerElec2",
+    "name": "雷电塔2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerElec2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerElec3",
+    "name": "雷电塔3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerElec3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce1",
+    "name": "冰魔塔1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerIce1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce2",
+    "name": "冰魔塔2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerIce2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce3",
+    "name": "冰魔塔3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerIce3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerTime1",
+    "name": "加速塔1",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerTime1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerTime2",
+    "name": "加速塔2",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerTime2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerTime3",
+    "name": "加速塔3",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Tower/TowerTime3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon_Bullet1",
+    "name": "龙击炮1子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerDragon_Bullet1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon_Bullet2",
+    "name": "龙击炮2子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerDragon_Bullet2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerDragon_Bullet3",
+    "name": "龙击炮3子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerDragon_Bullet3.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce_Bullet1",
+    "name": "冰魔塔1子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerIce_Bullet1.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce_Bullet2",
+    "name": "冰魔塔2子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerIce_Bullet2.prefab"
+  },
+  {
+    "id": "ResUnit_TowerIce_Bullet3",
+    "name": "冰魔塔3子弹",
+    "moveShowNatureSpeed": 6,
+    "res_name": "Assets/ResAB/UnitPrefab/Bullet/TowerIce_Bullet3.prefab"
   }
 ]

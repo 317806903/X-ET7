@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 直线运动
+/// 直线轨迹
 /// </summary>
 public sealed partial class StraightMoveTweenType:  MoveTweenType 
 {

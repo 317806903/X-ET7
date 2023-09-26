@@ -13,21 +13,26 @@ namespace ET.Server
             createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(sendUnit));
             MessageHelper.SendToClient(unit, createUnits);
         }
-        
+
         public static void NoticeUnitRemove(Unit unit, Unit sendUnit)
         {
             M2C_RemoveUnits removeUnits = new() {Units = ListComponent<long>.Create()};
             removeUnits.Units.Add(sendUnit.Id);
             MessageHelper.SendToClient(unit, removeUnits);
         }
-        
+
+        private static MultiMap<long, Unit> playerSeeUnits = new();
         public static MultiMap<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
         {
-            MultiMap<long, Unit> playerSeeUnits = new();
+            playerSeeUnits.Clear();
             for (int i = 0; i < units.Count; i++)
             {
                 Unit unit = units[i];
-                Dictionary<long, AOIEntity> dict = unit.GetBeSeePlayers();
+                var dict = unit.GetBeSeePlayers();
+                if (dict == null)
+                {
+                    continue;
+                }
                 foreach (AOIEntity u in dict.Values)
                 {
                     long playerId = u.Unit.Id;
@@ -37,10 +42,14 @@ namespace ET.Server
 
             return playerSeeUnits;
         }
-        
+
         public static void Broadcast(Unit unit, IActorMessage message)
         {
-            Dictionary<long, AOIEntity> dict = unit.GetBeSeePlayers();
+            var dict = unit.GetBeSeePlayers();
+            if (dict == null)
+            {
+                return;
+            }
             // 网络底层做了优化，同一个消息不会多次序列化
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             foreach (AOIEntity u in dict.Values)
@@ -53,7 +62,7 @@ namespace ET.Server
                 oneTypeLocationType.Send(unitId, message);
             }
         }
-        
+
         public static void SendToClient(Unit unit, IActorMessage message, bool chkPlayerExist = true)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
@@ -63,7 +72,7 @@ namespace ET.Server
             }
             oneTypeLocationType.Send(unit.Id, message);
         }
-        
+
         public static void SendToClient(long actionId, IActorMessage message, bool chkPlayerExist = true)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
@@ -73,7 +82,7 @@ namespace ET.Server
             }
             oneTypeLocationType.Send(actionId, message);
         }
-        
+
         public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message, bool needChkExist = true)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(locationType);
@@ -83,7 +92,7 @@ namespace ET.Server
             }
             oneTypeLocationType.Send(id, message);
         }
-        
+
         /// <summary>
         /// 发送协议给Actor
         /// </summary>

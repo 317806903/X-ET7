@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_QuitRoom request, R2G_QuitRoom response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
 			if (roomId == 0)
@@ -20,15 +20,15 @@ namespace ET.Server
 			{
 				return;
 			}
-			long dynamicMapId = roomComponent.sceneMapId;
+			long dynamicMapInstanceId = roomComponent.dynamicMapInstanceId;
 			bool isEmptyMember = roomManagerComponent.QuitRoom(playerId, roomId);
 			if (isEmptyMember)
 			{
-				// if (dynamicMapId > 0)
+				// if (dynamicMapInstanceId > 0)
 				// {
 				// 	R2M_DestroyDynamicMap _R2M_DestroyDynamicMap = new ()
 				// 	{
-				// 		DynamicMapId = dynamicMapId,
+				// 		DynamicMapInstanceId = dynamicMapInstanceId,
 				// 	};
 				// 	StartSceneConfig dynamicMapConfig = StartSceneConfigCategory.Instance.GetDynamicMap(scene.DomainZone());
 				// 	M2R_DestroyDynamicMap _M2R_DestroyDynamicMap = (M2R_DestroyDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig
@@ -39,7 +39,7 @@ namespace ET.Server
 			{
 				ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 			}
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

@@ -18,11 +18,13 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = _buf.ReadString();
-        Name = _buf.ReadString();
-        Desc = _buf.ReadString();
+        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
+        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         UnitId = _buf.ReadString();
         Level = _buf.ReadInt();
         BuyTowerCostGold = _buf.ReadInt();
+        ReclaimTowerCostGold = _buf.ReadInt();
+        ScaleTowerCostGold = _buf.ReadInt();
         NextTowerId = _buf.ReadString();
         NewTowerCostCount = _buf.ReadInt();
         AiCfgId = _buf.ReadString();
@@ -42,14 +44,10 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// 类型
     /// </summary>
     public string Type { get; private set; }
-    /// <summary>
-    /// 名字
-    /// </summary>
     public string Name { get; private set; }
-    /// <summary>
-    /// 描述
-    /// </summary>
+    public string Name_l10n_key { get; }
     public string Desc { get; private set; }
+    public string Desc_l10n_key { get; }
     /// <summary>
     /// unitId
     /// </summary>
@@ -63,6 +61,14 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// 购买消耗金币
     /// </summary>
     public int BuyTowerCostGold { get; private set; }
+    /// <summary>
+    /// 回收塔消耗金币
+    /// </summary>
+    public int ReclaimTowerCostGold { get; private set; }
+    /// <summary>
+    /// 出售塔获得金币
+    /// </summary>
+    public int ScaleTowerCostGold { get; private set; }
     /// <summary>
     /// 下一级id
     /// </summary>
@@ -89,6 +95,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        Name = translator(Name_l10n_key, Name);
+        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -101,6 +109,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         + "UnitId:" + UnitId + ","
         + "Level:" + Level + ","
         + "BuyTowerCostGold:" + BuyTowerCostGold + ","
+        + "ReclaimTowerCostGold:" + ReclaimTowerCostGold + ","
+        + "ScaleTowerCostGold:" + ScaleTowerCostGold + ","
         + "NextTowerId:" + NextTowerId + ","
         + "NewTowerCostCount:" + NewTowerCostCount + ","
         + "AiCfgId:" + AiCfgId + ","

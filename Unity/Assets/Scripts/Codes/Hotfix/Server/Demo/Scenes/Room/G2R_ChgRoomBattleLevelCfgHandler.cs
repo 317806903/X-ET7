@@ -8,11 +8,20 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_ChgRoomBattleLevelCfg request, R2G_ChgRoomBattleLevelCfg response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
 			string newBattleCfgId = request.NewBattleCfgId;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			if (roomComponent.gamePlayBattleLevelCfgId == newBattleCfgId)
+			{
+				string msg = $"roomComponent.gamePlayBattleLevelCfgId == newBattleCfgId[{newBattleCfgId}]";
+				Log.Error(msg);
+				response.Error = ET.ErrorCode.ERR_LogicError;
+				response.Message = msg;
+				return;
+			}
+
 			if (roomComponent.ownerRoomMemberId != playerId)
 			{
 				string msg = $"roomComponent.ownerRoomMemberId[{roomComponent.ownerRoomMemberId}] != playerId[{playerId}] roomId[{roomComponent.Id}]";
@@ -23,6 +32,13 @@ namespace ET.Server
 			}
 
 			roomComponent.ChgRoomBattleLevelCfg(newBattleCfgId);
+
+			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+			for (int i = 0; i < roomMemberList.Count; i++)
+			{
+				RoomMember roomMember = roomMemberList[i];
+				roomMember.isReady = false;
+			}
 
 			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, false).Coroutine();
 

@@ -1,7 +1,74 @@
 [
   {
-    "id": "FaceTo_1",
+    "id": "FaceTo_Forward_ForceSetFaceImmediately",
     "name": "",
-    "desc": "面向"
+    "desc": "面向_直接强制转向且无过程",
+    "faceToType": 1
+  },
+  {
+    "id": "FaceTo_Forward_ForceSetFace",
+    "name": "",
+    "desc": "面向_直接强制转向有过程(unit自身的旋转速度)",
+    "faceToType": 2
+  },
+  {
+    "id": "FaceTo_Forward_AddRotate",
+    "name": "",
+    "desc": "面向_设置角度偏移(会叠加,有过程)",
+    "faceToType": 3
+  },
+  {
+    "id": "FaceTo_Back_ForceSetFaceImmediately",
+    "name": "",
+    "desc": "背向_直接强制转向且无过程",
+    "faceToType": 4
+  },
+  {
+    "id": "FaceTo_Back_ForceSetFace",
+    "name": "",
+    "desc": "背向_直接强制转向有过程(unit自身的旋转速度)",
+    "faceToType": 5
+  },
+  {
+    "id": "FaceTo_Back_AddRotate",
+    "name": "",
+    "desc": "背向_设置角度偏移(会叠加,有过程)",
+    "faceToType": 6
+  },
+  {
+    "id": "FaceTo_Around_ForceSetFaceImmediately",
+    "name": "",
+    "desc": "环绕切向_直接强制转向且无过程",
+    "faceToType": 7
+  },
+  {
+    "id": "FaceTo_Around_ForceSetFace",
+    "name": "",
+    "desc": "环绕切向_直接强制转向有过程(unit自身的旋转速度)",
+    "faceToType": 8
+  },
+  {
+    "id": "FaceTo_Around_AddRotate",
+    "name": "",
+    "desc": "环绕切向_设置角度偏移(会叠加,有过程)",
+    "faceToType": 9
+  },
+  {
+    "id": "FaceTo_Random_ForceSetFaceImmediately",
+    "name": "",
+    "desc": "随机_直接强制转向且无过程",
+    "faceToType": 10
+  },
+  {
+    "id": "FaceTo_Random_ForceSetFace",
+    "name": "",
+    "desc": "随机_直接强制转向有过程(unit自身的旋转速度)",
+    "faceToType": 11
+  },
+  {
+    "id": "FaceTo_Random_AddRotate",
+    "name": "",
+    "desc": "随机_设置角度偏移(会叠加,有过程)",
+    "faceToType": 12
   }
 ]

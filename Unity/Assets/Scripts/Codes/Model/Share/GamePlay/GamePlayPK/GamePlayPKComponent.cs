@@ -2,12 +2,15 @@
 using System.Linq;
 using ET.AbilityConfig;
 using MongoDB.Bson.Serialization.Attributes;
+using Unity.Mathematics;
 
 namespace ET
 {
 	[ComponentOf(typeof(GamePlayComponent))]
 	public class GamePlayPKComponent : GamePlayModeComponent
 	{
+		[BsonIgnore]
+		public long lastSendTime;
 		[BsonIgnore]
 		public GamePlayPKCfg model
 		{
@@ -18,5 +21,11 @@ namespace ET
 		}
 
 		public long ownerPlayerId { get; set; }
+
+
+		[BsonIgnore]
+		public long lastMouseDownTime;
+		[BsonIgnore]
+		public float3 lastMousePosition;
 	}
 }

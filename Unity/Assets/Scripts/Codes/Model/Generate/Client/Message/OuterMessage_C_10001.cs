@@ -167,24 +167,27 @@ namespace ET
 		public string ConfigId { get; set; }
 
 		[ProtoMember(3)]
-		public int Type { get; set; }
+		public int Level { get; set; }
 
 		[ProtoMember(4)]
-		public Unity.Mathematics.float3 Position { get; set; }
+		public int Type { get; set; }
 
 		[ProtoMember(5)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+		[ProtoMember(6)]
 		public Unity.Mathematics.float3 Forward { get; set; }
 
 		[MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
-		[ProtoMember(6)]
-		public Dictionary<int, long> KV { get; set; }
 		[ProtoMember(7)]
+		public Dictionary<int, long> KV { get; set; }
+		[ProtoMember(8)]
 		public MoveInfo MoveInfo { get; set; }
 
-		[ProtoMember(8)]
+		[ProtoMember(9)]
 		public List<byte[]> Components { get; set; }
 
-		[ProtoMember(9)]
+		[ProtoMember(10)]
 		public List<byte[]> EffectComponents { get; set; }
 
 	}
@@ -195,6 +198,15 @@ namespace ET
 	{
 		[ProtoMember(1)]
 		public List<UnitInfo> Units { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SyncDataList)]
+	[ProtoContract]
+	public partial class M2C_SyncDataList: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public List<byte[]> SyncDataList { get; set; }
 
 	}
 
@@ -258,6 +270,30 @@ namespace ET
 
 		[ProtoMember(4)]
 		public byte[] EffectComponent { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SyncPlayAudio)]
+	[ProtoContract]
+	public partial class M2C_SyncPlayAudio: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public long UnitId { get; set; }
+
+		[ProtoMember(2)]
+		public string PlayAudioActionId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SyncPlayAnimator)]
+	[ProtoContract]
+	public partial class M2C_SyncPlayAnimator: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public long UnitId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] PlayAnimatorComponent { get; set; }
 
 	}
 
@@ -684,9 +720,6 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public long UnitId { get; set; }
-
-		[ProtoMember(3)]
 		public string SkillId { get; set; }
 
 	}
@@ -715,9 +748,6 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public long UnitId { get; set; }
-
-		[ProtoMember(3)]
 		public string SkillId { get; set; }
 
 	}
@@ -768,25 +798,28 @@ namespace ET
 
 	}
 
-	[ResponseType(nameof(M2C_CallTank))]
-	[Message(OuterMessage.C2M_CallTank)]
+	[ResponseType(nameof(M2C_CallMonster))]
+	[Message(OuterMessage.C2M_CallMonster)]
 	[ProtoContract]
-	public partial class C2M_CallTank: ProtoObject, IActorLocationRequest
+	public partial class C2M_CallMonster: ProtoObject, IActorLocationRequest
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public string TankUnitCfgId { get; set; }
+		public string MonsterUnitCfgId { get; set; }
 
 		[ProtoMember(3)]
 		public Unity.Mathematics.float3 Position { get; set; }
 
+		[ProtoMember(4)]
+		public int Count { get; set; }
+
 	}
 
-	[Message(OuterMessage.M2C_CallTank)]
+	[Message(OuterMessage.M2C_CallMonster)]
 	[ProtoContract]
-	public partial class M2C_CallTank: ProtoObject, IActorLocationResponse
+	public partial class M2C_CallMonster: ProtoObject, IActorLocationResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -1059,6 +1092,37 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2C_SetARRoomInfo))]
+	[Message(OuterMessage.C2G_SetARRoomInfo)]
+	[ProtoContract]
+	public partial class C2G_SetARRoomInfo: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string ARSceneId { get; set; }
+
+		[ProtoMember(3)]
+		public string ARMeshDownLoadUrl { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_SetARRoomInfo)]
+	[ProtoContract]
+	public partial class G2C_SetARRoomInfo: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	[ResponseType(nameof(G2C_ChgRoomBattleLevelCfg))]
 	[Message(OuterMessage.C2G_ChgRoomBattleLevelCfg)]
 	[ProtoContract]
@@ -1185,6 +1249,9 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
+		public int GetCoinType { get; set; }
+
+		[ProtoMember(3)]
 		public byte[] GamePlayPlayerListComponent { get; set; }
 
 	}
@@ -1353,6 +1420,192 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(M2C_UpgradePlayerTower))]
+	[Message(OuterMessage.C2M_UpgradePlayerTower)]
+	[ProtoContract]
+	public partial class C2M_UpgradePlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long TowerUnitId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_UpgradePlayerTower)]
+	[ProtoContract]
+	public partial class M2C_UpgradePlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_ScalePlayerTower))]
+	[Message(OuterMessage.C2M_ScalePlayerTower)]
+	[ProtoContract]
+	public partial class C2M_ScalePlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long TowerUnitId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_ScalePlayerTower)]
+	[ProtoContract]
+	public partial class M2C_ScalePlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_ReclaimPlayerTower))]
+	[Message(OuterMessage.C2M_ReclaimPlayerTower)]
+	[ProtoContract]
+	public partial class C2M_ReclaimPlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long TowerUnitId { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_ReclaimPlayerTower)]
+	[ProtoContract]
+	public partial class M2C_ReclaimPlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_GetMonsterCall2HeadQuarterPath))]
+	[Message(OuterMessage.C2M_GetMonsterCall2HeadQuarterPath)]
+	[ProtoContract]
+	public partial class C2M_GetMonsterCall2HeadQuarterPath: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_GetMonsterCall2HeadQuarterPath)]
+	[ProtoContract]
+	public partial class M2C_GetMonsterCall2HeadQuarterPath: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+		[ProtoMember(5)]
+		public List<Unity.Mathematics.float3> Points { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_ChkRay))]
+	[Message(OuterMessage.C2M_ChkRay)]
+	[ProtoContract]
+	public partial class C2M_ChkRay: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public Unity.Mathematics.float3 StartPosition { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 EndPosition { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_ChkRay)]
+	[ProtoContract]
+	public partial class M2C_ChkRay: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public int HitRet { get; set; }
+
+		[ProtoMember(5)]
+		public Unity.Mathematics.float3 HitPosition { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_SendARCameraPos))]
+	[Message(OuterMessage.C2M_SendARCameraPos)]
+	[ProtoContract]
+	public partial class C2M_SendARCameraPos: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public Unity.Mathematics.float3 ARCameraPosition { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 ARCameraHitPosition { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_SendARCameraPos)]
+	[ProtoContract]
+	public partial class M2C_SendARCameraPos: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -1368,86 +1621,103 @@ namespace ET
 		 public const ushort MoveInfo = 10012;
 		 public const ushort UnitInfo = 10013;
 		 public const ushort M2C_CreateUnits = 10014;
-		 public const ushort UnitPosInfo = 10015;
-		 public const ushort M2C_SyncPosUnits = 10016;
-		 public const ushort UnitNumericInfo = 10017;
-		 public const ushort M2C_SyncNumericUnits = 10018;
-		 public const ushort M2C_SyncUnitEffects = 10019;
-		 public const ushort M2C_CreateMyUnit = 10020;
-		 public const ushort M2C_StartSceneChange = 10021;
-		 public const ushort M2C_RemoveUnits = 10022;
-		 public const ushort C2M_PathfindingResult = 10023;
-		 public const ushort C2M_Stop = 10024;
-		 public const ushort M2C_PathfindingResult = 10025;
-		 public const ushort M2C_Stop = 10026;
-		 public const ushort C2G_Ping = 10027;
-		 public const ushort G2C_Ping = 10028;
-		 public const ushort G2C_Test = 10029;
-		 public const ushort C2M_Reload = 10030;
-		 public const ushort M2C_Reload = 10031;
-		 public const ushort C2R_Login = 10032;
-		 public const ushort R2C_Login = 10033;
-		 public const ushort C2G_LoginGate = 10034;
-		 public const ushort G2C_LoginGate = 10035;
-		 public const ushort C2G_LoginOut = 10036;
-		 public const ushort G2C_LoginOut = 10037;
-		 public const ushort C2G_ReLogin = 10038;
-		 public const ushort G2C_ReLogin = 10039;
-		 public const ushort G2C_TestHotfixMessage = 10040;
-		 public const ushort C2M_TestRobotCase = 10041;
-		 public const ushort M2C_TestRobotCase = 10042;
-		 public const ushort C2M_TestRobotCase2 = 10043;
-		 public const ushort M2C_TestRobotCase2 = 10044;
-		 public const ushort C2M_TransferMap = 10045;
-		 public const ushort M2C_TransferMap = 10046;
-		 public const ushort C2G_Benchmark = 10047;
-		 public const ushort G2C_Benchmark = 10048;
-		 public const ushort C2M_LearnSkill = 10049;
-		 public const ushort M2C_LearnSkill = 10050;
-		 public const ushort C2M_CastSkill = 10051;
-		 public const ushort M2C_CastSkill = 10052;
-		 public const ushort C2M_CallTower = 10053;
-		 public const ushort M2C_CallTower = 10054;
-		 public const ushort C2M_CallTank = 10055;
-		 public const ushort M2C_CallTank = 10056;
-		 public const ushort C2G_GetRoomList = 10057;
-		 public const ushort G2C_GetRoomList = 10058;
-		 public const ushort C2G_GetRoomInfo = 10059;
-		 public const ushort G2C_GetRoomInfo = 10060;
-		 public const ushort R2C_RoomInfoChgNotice = 10061;
-		 public const ushort C2G_CreateRoom = 10062;
-		 public const ushort G2C_CreateRoom = 10063;
-		 public const ushort C2G_JoinRoom = 10064;
-		 public const ushort G2C_JoinRoom = 10065;
-		 public const ushort C2G_QuitRoom = 10066;
-		 public const ushort G2C_QuitRoom = 10067;
-		 public const ushort C2G_KickMemberOutRoom = 10068;
-		 public const ushort G2C_KickMemberOutRoom = 10069;
-		 public const ushort G2C_BeKickMemberOutRoom = 10070;
-		 public const ushort C2G_ChgRoomMemberStatus = 10071;
-		 public const ushort G2C_ChgRoomMemberStatus = 10072;
-		 public const ushort C2G_ChgRoomMemberSeat = 10073;
-		 public const ushort G2C_ChgRoomMemberSeat = 10074;
-		 public const ushort C2G_ChgRoomBattleLevelCfg = 10075;
-		 public const ushort G2C_ChgRoomBattleLevelCfg = 10076;
-		 public const ushort C2G_ReturnBackBattle = 10077;
-		 public const ushort G2C_ReturnBackBattle = 10078;
-		 public const ushort C2M_MemberQuitBattle = 10079;
-		 public const ushort M2C_MemberQuitBattle = 10080;
-		 public const ushort C2M_MemberReturnRoomFromBattle = 10081;
-		 public const ushort M2C_MemberReturnRoomFromBattle = 10082;
-		 public const ushort M2C_GamePlayChgNotice = 10083;
-		 public const ushort M2C_GamePlayCoinChgNotice = 10084;
-		 public const ushort M2C_GamePlayModeChgNotice = 10085;
-		 public const ushort C2M_PutHome = 10086;
-		 public const ushort M2C_PutHome = 10087;
-		 public const ushort C2M_PutMonsterCall = 10088;
-		 public const ushort M2C_PutMonsterCall = 10089;
-		 public const ushort C2M_BuyPlayerTower = 10090;
-		 public const ushort M2C_BuyPlayerTower = 10091;
-		 public const ushort C2M_RefreshBuyPlayerTower = 10092;
-		 public const ushort M2C_RefreshBuyPlayerTower = 10093;
-		 public const ushort C2M_CallOwnTower = 10094;
-		 public const ushort M2C_CallOwnTower = 10095;
+		 public const ushort M2C_SyncDataList = 10015;
+		 public const ushort UnitPosInfo = 10016;
+		 public const ushort M2C_SyncPosUnits = 10017;
+		 public const ushort UnitNumericInfo = 10018;
+		 public const ushort M2C_SyncNumericUnits = 10019;
+		 public const ushort M2C_SyncUnitEffects = 10020;
+		 public const ushort M2C_SyncPlayAudio = 10021;
+		 public const ushort M2C_SyncPlayAnimator = 10022;
+		 public const ushort M2C_CreateMyUnit = 10023;
+		 public const ushort M2C_StartSceneChange = 10024;
+		 public const ushort M2C_RemoveUnits = 10025;
+		 public const ushort C2M_PathfindingResult = 10026;
+		 public const ushort C2M_Stop = 10027;
+		 public const ushort M2C_PathfindingResult = 10028;
+		 public const ushort M2C_Stop = 10029;
+		 public const ushort C2G_Ping = 10030;
+		 public const ushort G2C_Ping = 10031;
+		 public const ushort G2C_Test = 10032;
+		 public const ushort C2M_Reload = 10033;
+		 public const ushort M2C_Reload = 10034;
+		 public const ushort C2R_Login = 10035;
+		 public const ushort R2C_Login = 10036;
+		 public const ushort C2G_LoginGate = 10037;
+		 public const ushort G2C_LoginGate = 10038;
+		 public const ushort C2G_LoginOut = 10039;
+		 public const ushort G2C_LoginOut = 10040;
+		 public const ushort C2G_ReLogin = 10041;
+		 public const ushort G2C_ReLogin = 10042;
+		 public const ushort G2C_TestHotfixMessage = 10043;
+		 public const ushort C2M_TestRobotCase = 10044;
+		 public const ushort M2C_TestRobotCase = 10045;
+		 public const ushort C2M_TestRobotCase2 = 10046;
+		 public const ushort M2C_TestRobotCase2 = 10047;
+		 public const ushort C2M_TransferMap = 10048;
+		 public const ushort M2C_TransferMap = 10049;
+		 public const ushort C2G_Benchmark = 10050;
+		 public const ushort G2C_Benchmark = 10051;
+		 public const ushort C2M_LearnSkill = 10052;
+		 public const ushort M2C_LearnSkill = 10053;
+		 public const ushort C2M_CastSkill = 10054;
+		 public const ushort M2C_CastSkill = 10055;
+		 public const ushort C2M_CallTower = 10056;
+		 public const ushort M2C_CallTower = 10057;
+		 public const ushort C2M_CallMonster = 10058;
+		 public const ushort M2C_CallMonster = 10059;
+		 public const ushort C2G_GetRoomList = 10060;
+		 public const ushort G2C_GetRoomList = 10061;
+		 public const ushort C2G_GetRoomInfo = 10062;
+		 public const ushort G2C_GetRoomInfo = 10063;
+		 public const ushort R2C_RoomInfoChgNotice = 10064;
+		 public const ushort C2G_CreateRoom = 10065;
+		 public const ushort G2C_CreateRoom = 10066;
+		 public const ushort C2G_JoinRoom = 10067;
+		 public const ushort G2C_JoinRoom = 10068;
+		 public const ushort C2G_QuitRoom = 10069;
+		 public const ushort G2C_QuitRoom = 10070;
+		 public const ushort C2G_KickMemberOutRoom = 10071;
+		 public const ushort G2C_KickMemberOutRoom = 10072;
+		 public const ushort G2C_BeKickMemberOutRoom = 10073;
+		 public const ushort C2G_ChgRoomMemberStatus = 10074;
+		 public const ushort G2C_ChgRoomMemberStatus = 10075;
+		 public const ushort C2G_ChgRoomMemberSeat = 10076;
+		 public const ushort G2C_ChgRoomMemberSeat = 10077;
+		 public const ushort C2G_SetARRoomInfo = 10078;
+		 public const ushort G2C_SetARRoomInfo = 10079;
+		 public const ushort C2G_ChgRoomBattleLevelCfg = 10080;
+		 public const ushort G2C_ChgRoomBattleLevelCfg = 10081;
+		 public const ushort C2G_ReturnBackBattle = 10082;
+		 public const ushort G2C_ReturnBackBattle = 10083;
+		 public const ushort C2M_MemberQuitBattle = 10084;
+		 public const ushort M2C_MemberQuitBattle = 10085;
+		 public const ushort C2M_MemberReturnRoomFromBattle = 10086;
+		 public const ushort M2C_MemberReturnRoomFromBattle = 10087;
+		 public const ushort M2C_GamePlayChgNotice = 10088;
+		 public const ushort M2C_GamePlayCoinChgNotice = 10089;
+		 public const ushort M2C_GamePlayModeChgNotice = 10090;
+		 public const ushort C2M_PutHome = 10091;
+		 public const ushort M2C_PutHome = 10092;
+		 public const ushort C2M_PutMonsterCall = 10093;
+		 public const ushort M2C_PutMonsterCall = 10094;
+		 public const ushort C2M_BuyPlayerTower = 10095;
+		 public const ushort M2C_BuyPlayerTower = 10096;
+		 public const ushort C2M_RefreshBuyPlayerTower = 10097;
+		 public const ushort M2C_RefreshBuyPlayerTower = 10098;
+		 public const ushort C2M_CallOwnTower = 10099;
+		 public const ushort M2C_CallOwnTower = 10100;
+		 public const ushort C2M_UpgradePlayerTower = 10101;
+		 public const ushort M2C_UpgradePlayerTower = 10102;
+		 public const ushort C2M_ScalePlayerTower = 10103;
+		 public const ushort M2C_ScalePlayerTower = 10104;
+		 public const ushort C2M_ReclaimPlayerTower = 10105;
+		 public const ushort M2C_ReclaimPlayerTower = 10106;
+		 public const ushort C2M_GetMonsterCall2HeadQuarterPath = 10107;
+		 public const ushort M2C_GetMonsterCall2HeadQuarterPath = 10108;
+		 public const ushort C2M_ChkRay = 10109;
+		 public const ushort M2C_ChkRay = 10110;
+		 public const ushort C2M_SendARCameraPos = 10111;
+		 public const ushort M2C_SendARCameraPos = 10112;
 	}
 }

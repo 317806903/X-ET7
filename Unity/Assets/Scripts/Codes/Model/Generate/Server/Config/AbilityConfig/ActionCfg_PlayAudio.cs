@@ -19,6 +19,8 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         ResId = _buf.ReadString();
+        Duration = _buf.ReadFloat();
+        IsLoop = _buf.ReadBool();
         PostInit();
     }
 
@@ -40,6 +42,14 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public ResAudioCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 持续时间(s),-1表示永久
+    /// </summary>
+    public float Duration { get; private set; }
+    /// <summary>
+    /// 是否循环播放
+    /// </summary>
+    public bool IsLoop { get; private set; }
 
     public const int __ID__ = 1680093201;
     public override int GetTypeId() => __ID__;
@@ -60,6 +70,8 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "ResId:" + ResId + ","
+        + "Duration:" + Duration + ","
+        + "IsLoop:" + IsLoop + ","
         + "}";
     }
     

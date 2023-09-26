@@ -18,6 +18,7 @@ namespace ET.AbilityConfig
         BuffTagGroupType2 = 2,
         BuffTagGroupType3 = 3,
         BuffTagGroupType4 = 4,
+        BuffTagGroupCDDown = 5,
     }
 
 } 

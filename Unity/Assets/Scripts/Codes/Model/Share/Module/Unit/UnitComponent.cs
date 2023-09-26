@@ -1,11 +1,23 @@
 ﻿using System.Collections.Generic;
+using ET.Ability;
 
 namespace ET
 {
-	
+
 	[ComponentOf(typeof(Scene))]
 	public class UnitComponent: Entity, IAwake, IDestroy, IFixedUpdate
 	{
+		public int waitFrameSyncPos = 1;
+		public int curFrameSyncPos = 0;
+
+		public int waitFrameSyncNumeric = 4;
+		public int curFrameSyncNumeric = 0;
+
+		public int waitFrameRecycleSelectHandle = 4;
+		public int curFrameRecycleSelectHandle = 0;
+
+		public HashSetComponent<SelectHandle> waitRecycleSelectHandles;
+
 		public HashSetComponent<Unit> NeedSyncNumericUnits;
 		public HashSetComponent<Unit> NeedSyncPosUnits;
 		public List<long> waitRemoveList;

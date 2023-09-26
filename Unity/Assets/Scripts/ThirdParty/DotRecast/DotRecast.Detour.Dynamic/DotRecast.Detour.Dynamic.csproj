@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DotRecast.Detour\DotRecast.Detour.csproj" />
+        <ProjectReference Include="..\DotRecast.Recast\DotRecast.Recast.csproj" />
+    </ItemGroup>
+
+</Project>

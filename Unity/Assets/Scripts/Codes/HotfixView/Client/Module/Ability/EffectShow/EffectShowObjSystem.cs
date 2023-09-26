@@ -27,6 +27,12 @@ namespace ET.Ability.Client
                 {
                     //UnityEngine.Object.Destroy(self.go);
                     GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
+                    self.go = null;
+                }
+
+                if (self.RefAudioPlayObj != null)
+                {
+                    self.RefAudioPlayObj.Dispose();
                 }
             }
         }
@@ -34,9 +40,6 @@ namespace ET.Ability.Client
         public static async ETTask Init(this EffectShowObj self, EffectObj effectObj)
         {
             string resName = effectObj.model.ResName;
-            // GameObject prefab = await ResComponent.Instance.LoadAssetAsync<GameObject>(resName);
-            // GameObject go = UnityEngine.Object.Instantiate(prefab, GlobalComponent.Instance.Unit, true);
-            // await GameObjectPoolHelper.InitPoolFormGamObjectAsync(prefab, 1);
             GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
             if (go == null)
             {
@@ -44,7 +47,7 @@ namespace ET.Ability.Client
             }
             self.go = go;
             Unit unit = effectObj.GetUnit();
-            
+
             if (unit == null)
             {
                 go.transform.localScale = Vector3.one;
@@ -53,17 +56,19 @@ namespace ET.Ability.Client
             }
             else
             {
-                GameObject gameObject = unit.GetComponent<GameObjectComponent>().GameObject;
-                if (gameObject != null)
+                GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
+                if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
                 {
                     // 通过 effectObj.hangPointName 找到节点
-                    Transform tran = gameObject.transform;
+                    Transform tran = gameObjectComponent.GetGo().transform;
                     go.transform.SetParent(tran);
                     go.transform.localScale = Vector3.one;
                     go.transform.localPosition = effectObj.offSet;
                     go.transform.localEulerAngles = effectObj.rotation;
                 }
             }
+            ET.Client.GameObjectPoolHelper.TrigFromPool(go);
+
         }
 
     }

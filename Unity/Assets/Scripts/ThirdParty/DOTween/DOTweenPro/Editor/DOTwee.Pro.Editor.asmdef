@@ -1,0 +1,20 @@
+{
+    "name": "DOTwee.Pro.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ac0cbb8561928a44d8fb178323df33de",
+        "GUID:13e331cbe34c2454a88f437bd4a4903b",
+        "GUID:410782b1c74f9b14386ef9e797a36aee"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

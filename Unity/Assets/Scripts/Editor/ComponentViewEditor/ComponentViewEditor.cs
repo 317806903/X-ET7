@@ -151,7 +151,14 @@ namespace ET
             }
             if (typeDrawers.TryGetValue(key, out var drawer))
             {
-                drawer.Drawer.DrawAndGetNewValue(type, label, obj, null);
+				try
+				{
+					drawer.Drawer.DrawAndGetNewValue(type, label, obj, null);
+				}
+				catch(Exception e)
+				{
+					 Debug.LogError(e);
+				}
             }
             else
             {
@@ -165,7 +172,14 @@ namespace ET
                             (inheritDrawer.IsInterface && t != null))
                         {
                             inheritFind = true;
-                            inheritDrawer.Drawer.DrawAndGetNewValue(type, label, obj, null);
+							try
+							{
+								inheritDrawer.Drawer.DrawAndGetNewValue(type, label, obj, null);
+							}
+							catch(Exception e)
+							{
+								 Debug.LogError(e);
+							}
                             break;
                         }
                     }

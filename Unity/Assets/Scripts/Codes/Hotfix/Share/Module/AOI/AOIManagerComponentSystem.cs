@@ -15,7 +15,7 @@ namespace ET
             {
                 return;
             }
-            
+
             int cellX = (int)(x * 1000) / AOIManagerComponent.CellSize;
             int cellY = (int)(y * 1000) / AOIManagerComponent.CellSize;
 
@@ -24,17 +24,17 @@ namespace ET
                 aoiEntity.ViewDistance = 1;
             }
 
-            AOIHelper.CalcEnterAndLeaveCell(aoiEntity, cellX, cellY, aoiEntity.SubEnterCells, aoiEntity.SubLeaveCells);
+            AOIHelper.CalcEnterAndLeaveCell(aoiEntity, cellX, cellY, aoiEntity.SubscribeEnterCells, aoiEntity.SubscribeLeaveCells);
 
             // 遍历EnterCell
-            foreach (long cellId in aoiEntity.SubEnterCells)
+            foreach (long cellId in aoiEntity.SubscribeEnterCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.SubEnter(cell);
             }
 
             // 遍历LeaveCell
-            foreach (long cellId in aoiEntity.SubLeaveCells)
+            foreach (long cellId in aoiEntity.SubscribeLeaveCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.SubLeave(cell);
@@ -45,9 +45,10 @@ namespace ET
             aoiEntity.Cell = selfCell;
             selfCell.Add(aoiEntity);
             // 通知订阅该Cell Enter的Unit
-            foreach (KeyValuePair<long, AOIEntity> kv in selfCell.SubsEnterEntities)
+            foreach (var kv in selfCell.SubscribeEnterEntities)
             {
-                kv.Value.EnterSight(aoiEntity);
+                AOIEntity aoiEntityTmp = kv.Value;
+                aoiEntityTmp.EnterSight(aoiEntity);
             }
         }
 
@@ -60,19 +61,20 @@ namespace ET
 
             // 通知订阅该Cell Leave的Unit
             aoiEntity.Cell.Remove(aoiEntity);
-            foreach (KeyValuePair<long, AOIEntity> kv in aoiEntity.Cell.SubsLeaveEntities)
+            foreach (var kv in aoiEntity.Cell.SubscribeLeaveEntities)
             {
-                kv.Value.LeaveSight(aoiEntity);
+                AOIEntity aoiEntityTmp = kv.Value;
+                aoiEntityTmp.LeaveSight(aoiEntity);
             }
 
             // 通知自己订阅的Enter Cell，清理自己
-            foreach (long cellId in aoiEntity.SubEnterCells)
+            foreach (long cellId in aoiEntity.SubscribeEnterCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.UnSubEnter(cell);
             }
 
-            foreach (long cellId in aoiEntity.SubLeaveCells)
+            foreach (long cellId in aoiEntity.SubscribeLeaveCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.UnSubLeave(cell);
@@ -121,26 +123,28 @@ namespace ET
             preCell.Remove(aoiEntity);
             newCell.Add(aoiEntity);
             // 通知订阅该newCell Enter的Unit
-            foreach (KeyValuePair<long, AOIEntity> kv in newCell.SubsEnterEntities)
+            foreach (var kv in newCell.SubscribeEnterEntities)
             {
-                if (kv.Value.SubEnterCells.Contains(preCell.Id))
+                AOIEntity aoiEntityTmp = kv.Value;
+                if (aoiEntityTmp.SubscribeEnterCells.Contains(preCell.Id))
                 {
                     continue;
                 }
 
-                kv.Value.EnterSight(aoiEntity);
+                aoiEntityTmp.EnterSight(aoiEntity);
             }
 
             // 通知订阅preCell leave的Unit
-            foreach (KeyValuePair<long, AOIEntity> kv in preCell.SubsLeaveEntities)
+            foreach (var kv in preCell.SubscribeLeaveEntities)
             {
+                AOIEntity aoiEntityTmp = kv.Value;
                 // 如果新的cell仍然在对方订阅的subleave中
-                if (kv.Value.SubLeaveCells.Contains(newCell.Id))
+                if (aoiEntityTmp.SubscribeLeaveCells.Contains(newCell.Id))
                 {
                     continue;
                 }
 
-                kv.Value.LeaveSight(aoiEntity);
+                aoiEntityTmp.LeaveSight(aoiEntity);
             }
         }
 
@@ -161,7 +165,7 @@ namespace ET
             // 算出自己leave新Cell
             foreach (long cellId in aoiEntity.leaveHashSet)
             {
-                if (aoiEntity.SubLeaveCells.Contains(cellId))
+                if (aoiEntity.SubscribeLeaveCells.Contains(cellId))
                 {
                     continue;
                 }
@@ -171,20 +175,20 @@ namespace ET
             }
 
             // 算出需要通知离开的Cell
-            aoiEntity.SubLeaveCells.ExceptWith(aoiEntity.leaveHashSet);
-            foreach (long cellId in aoiEntity.SubLeaveCells)
+            aoiEntity.SubscribeLeaveCells.ExceptWith(aoiEntity.leaveHashSet);
+            foreach (long cellId in aoiEntity.SubscribeLeaveCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.UnSubLeave(cell);
             }
 
             // 这里交换两个HashSet,提高性能
-            ObjectHelper.Swap(ref aoiEntity.SubLeaveCells, ref aoiEntity.leaveHashSet);
+            ObjectHelper.Swap(ref aoiEntity.SubscribeLeaveCells, ref aoiEntity.leaveHashSet);
 
             // 算出自己看到的新Cell
             foreach (long cellId in aoiEntity.enterHashSet)
             {
-                if (aoiEntity.SubEnterCells.Contains(cellId))
+                if (aoiEntity.SubscribeEnterCells.Contains(cellId))
                 {
                     continue;
                 }
@@ -194,15 +198,15 @@ namespace ET
             }
 
             // 离开的Enter
-            aoiEntity.SubEnterCells.ExceptWith(aoiEntity.enterHashSet);
-            foreach (long cellId in aoiEntity.SubEnterCells)
+            aoiEntity.SubscribeEnterCells.ExceptWith(aoiEntity.enterHashSet);
+            foreach (long cellId in aoiEntity.SubscribeEnterCells)
             {
                 Cell cell = self.GetCell(cellId);
                 aoiEntity.UnSubEnter(cell);
             }
 
             // 这里交换两个HashSet,提高性能
-            ObjectHelper.Swap(ref aoiEntity.SubEnterCells, ref aoiEntity.enterHashSet);
+            ObjectHelper.Swap(ref aoiEntity.SubscribeEnterCells, ref aoiEntity.enterHashSet);
         }
     }
 }

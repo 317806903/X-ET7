@@ -5,11 +5,13 @@ namespace ET.Server
 	[ActorMessageHandler(SceneType.Map)]
 	public class C2M_TransferMapHandler : AMActorLocationRpcHandler<Unit, C2M_TransferMap, M2C_TransferMap>
 	{
-		protected override async ETTask Run(Unit unit, C2M_TransferMap request, M2C_TransferMap response)
+		protected override async ETTask Run(Unit observerUnit, C2M_TransferMap request, M2C_TransferMap response)
 		{
 			await ETTask.CompletedTask;
 
-			string currentMap = unit.DomainScene().Name;
+			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+
+			string currentMap = observerUnit.DomainScene().Name;
 			string toMap = null;
 			if (currentMap == "Map1")
 			{
@@ -20,9 +22,9 @@ namespace ET.Server
 				toMap = "Map1";
 			}
 
-			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.DomainScene().Zone, toMap);
-			
-			TransferHelper.TransferAtFrameFinish(false, unit.DomainScene(), unit, startSceneConfig.InstanceId, toMap).Coroutine();
+			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(observerUnit.DomainScene().Zone, toMap);
+
+			TransferHelper.TransferAtFrameFinish(false, observerUnit.DomainScene(), observerUnit, startSceneConfig.InstanceId, toMap).Coroutine();
 		}
 	}
 }

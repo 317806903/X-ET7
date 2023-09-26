@@ -1,5 +1,40 @@
 [
   {
+    "id": "ResEffect_HealthBar_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/HealthBar.prefab"
+  },
+  {
+    "id": "ResEffect_MainTowerBar",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/MainTowerBar.prefab"
+  },
+  {
+    "id": "ResEffect_ShootTextPrefab",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ShootTextPrefab.prefab"
+  },
+  {
+    "id": "ResEffect_AudioSource",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/AudioSource.prefab"
+  },
+  {
+    "id": "ResEffect_TowerShow",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/TowerShow.prefab"
+  },
+  {
+    "id": "ResEffect_TowerStarBar_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/TowerStarBar.prefab"
+  },
+  {
+    "id": "ResEffect_PathLineRenderer_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/PathLineRenderer.prefab"
+  },
+  {
     "id": "ResEffect_1",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/Effect1.prefab"
@@ -83,5 +118,140 @@
     "id": "ResEffect_Drag1",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/Drag1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_2.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_3.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_2.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_3.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_1.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_2.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_3.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_1.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_2.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit2",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit3.prefab"
   }
 ]

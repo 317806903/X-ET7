@@ -11,10 +11,21 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.GamePlayChg args)
         {
-            DlgBattleTower _DlgBattleTower = scene.GetComponent<UIComponent>().GetDlgLogic<DlgBattleTower>(true);
-            if (_DlgBattleTower != null)
+            if (ET.Client.GamePlayHelper.GetGamePlay(scene).IsAR())
             {
-                _DlgBattleTower.RefreshUI().Coroutine();
+                DlgBattleTowerAR _DlgBattleTowerAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTowerAR>(true);
+                if (_DlgBattleTowerAR != null)
+                {
+                    _DlgBattleTowerAR.RefreshUI().Coroutine();
+                }
+            }
+            else
+            {
+                DlgBattleTower _DlgBattleTower = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTower>(true);
+                if (_DlgBattleTower != null)
+                {
+                    _DlgBattleTower.RefreshUI().Coroutine();
+                }
             }
             await ETTask.CompletedTask;
         }

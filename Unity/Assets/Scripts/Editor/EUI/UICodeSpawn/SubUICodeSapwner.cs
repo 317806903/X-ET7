@@ -9,7 +9,7 @@ public partial class UICodeSpawner
 {
     static public void SpawnSubUICode(GameObject gameObject)
     {
-      
+
         Path2WidgetCachedDict?.Clear();
         Path2WidgetCachedDict = new Dictionary<string, List<Component>>();
         FindAllWidgets(gameObject.transform, "");
@@ -17,7 +17,7 @@ public partial class UICodeSpawner
         SpawnCodeForSubUIBehaviour(gameObject);
         AssetDatabase.Refresh();
     }
-    
+
     static void SpawnCodeForSubUI(GameObject objPanel)
     {
         if (null == objPanel)
@@ -34,7 +34,7 @@ public partial class UICodeSpawner
             System.IO.Directory.CreateDirectory(strFilePath);
         }
         strFilePath     = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIBehaviour/CommonUI/" + strDlgName + "ViewSystem.cs";
-	    
+
         StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
 
         StringBuilder strBuilder = new StringBuilder();
@@ -52,8 +52,8 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("\t\t}");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("\n");
-        
-       
+
+
         strBuilder.AppendLine("\t[ObjectSystem]");
         strBuilder.AppendFormat("\tpublic class {0}DestroySystem : DestroySystem<{1}> \r\n", strDlgName, strDlgName);
         strBuilder.AppendLine("\t{");
@@ -61,16 +61,16 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("\n\t\t{");
 
         strBuilder.AppendFormat("\t\t\tself.DestroyWidget();\r\n");
-        
+
         strBuilder.AppendLine("\t\t}");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
-        
+
         sw.Write(strBuilder);
         sw.Flush();
         sw.Close();
     }
-    
+
     static void SpawnCodeForSubUIBehaviour(GameObject objPanel)
     {
         if (null == objPanel)
@@ -86,7 +86,7 @@ public partial class UICodeSpawner
             System.IO.Directory.CreateDirectory(strFilePath);
         }
         strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/CommonUI/" + strDlgName + ".cs";
-	    
+
         StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
 
         StringBuilder strBuilder = new StringBuilder();
@@ -96,17 +96,17 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[EnableMethod]");
-        strBuilder.AppendFormat("\tpublic  class {0} : Entity,ET.IAwake<UnityEngine.Transform>,IDestroy \r\n", strDlgName)
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, ET.IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgName)
             .AppendLine("\t{");
-        
-       
+
+
         CreateWidgetBindCode(ref strBuilder, objPanel.transform);
         CreateDestroyWidgetCode(ref strBuilder);
         CreateDeclareCode(ref strBuilder);
         strBuilder.AppendLine("\t\tpublic Transform uiTransform = null;");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
-        
+
         sw.Write(strBuilder);
         sw.Flush();
         sw.Close();

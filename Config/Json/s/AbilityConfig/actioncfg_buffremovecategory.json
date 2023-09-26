@@ -11,7 +11,7 @@
     "name": "",
     "buffRemoveType": {
       "$type": "BuffRemoveByTag",
-      "buffTagType": 2
+      "buffTagType": 16
     }
   },
   {

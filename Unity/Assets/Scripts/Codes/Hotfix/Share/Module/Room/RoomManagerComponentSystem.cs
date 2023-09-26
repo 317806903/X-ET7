@@ -15,6 +15,7 @@ namespace ET
                 self.EnterBattleRoomList = new();
                 self.InTheBattleRoomList = new();
                 self.player2Room = new();
+                self._ARMeshDownLoadUrlDic = new();
             }
         }
 
@@ -28,7 +29,7 @@ namespace ET
 
             return roomComponent;
         }
-        
+
         public static void JoinRoom(this RoomManagerComponent self, long playerId, long roomId)
         {
             RoomComponent roomComponent = self.GetRoom(roomId);
@@ -43,7 +44,7 @@ namespace ET
             }
             self.player2Room.Add(playerId, roomComponent.Id);
         }
-        
+
         public static bool QuitRoom(this RoomManagerComponent self, long playerId, long roomId)
         {
             RoomComponent roomComponent = self.GetRoom(roomId);
@@ -52,7 +53,7 @@ namespace ET
             {
                 self.player2Room.Remove(playerId);
             }
-            
+
             if (isEmptyMember)
             {
                 self.DestroyRoom(roomId);
@@ -60,7 +61,7 @@ namespace ET
 
             return isEmptyMember;
         }
-        
+
         public static void ChgRoomStatus(this RoomManagerComponent self, long roomId, RoomStatus roomStatus)
         {
             RoomComponent roomComponent = self.GetRoom(roomId);
@@ -89,6 +90,28 @@ namespace ET
             }
         }
 
+        public static void SetARSceneId(this RoomManagerComponent self, long roomId, string ARSceneId)
+        {
+            RoomComponent roomComponent = self.GetRoom(roomId);
+            roomComponent.arSceneId = ARSceneId;
+        }
+
+        public static void SetARMeshDownLoadUrl(this RoomManagerComponent self, long roomId, string _ARMeshDownLoadUrl)
+        {
+            //     @"http://prod-cn-bj-alicloud-arsession-arsession-deepmirror-s3.oss-cn-beijing.aliyuncs.com/64d0dfbf5252b55795bc8507.space_mesh?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5tPk1NHZtLxk3N1nm8nT%2F20230807%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230807T121319Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=040086f469d411292adf293aa8372ddff823450c77304d7c5e701a8e58f440e9";
+            self._ARMeshDownLoadUrlDic[roomId] = _ARMeshDownLoadUrl;
+        }
+
+        public static string GetARMeshDownLoadUrl(this RoomManagerComponent self, long roomId)
+        {
+            if (self._ARMeshDownLoadUrlDic.ContainsKey(roomId))
+            {
+                return self._ARMeshDownLoadUrlDic[roomId];
+            }
+
+            return "";
+        }
+
         public static RoomComponent GetRoom(this RoomManagerComponent self, long roomId)
         {
             return self.GetChild<RoomComponent>(roomId);
@@ -106,8 +129,9 @@ namespace ET
                 self.player2Room.Remove(roomMember.Id);
             }
             roomComponent.Dispose();
+            self._ARMeshDownLoadUrlDic.Remove(roomId);
         }
-        
+
         //获取当前房间列表
         public static List<long> GetIdleRoomList(this RoomManagerComponent self, bool isARRoom)
         {
@@ -125,14 +149,14 @@ namespace ET
 
         public static List<RoomComponent> GetRoomList(this RoomManagerComponent self)
         {
-            ListComponent<RoomComponent> list =ListComponent<RoomComponent>.Create();
+            ListComponent<RoomComponent> list = ListComponent<RoomComponent>.Create();
             foreach (var child in self.Children)
             {
                 list.Add(child.Value as RoomComponent);
             }
             return list;
         }
-        
+
         public static RoomComponent GetRoomByPlayerId(this RoomManagerComponent self, long playerId)
         {
             if (self.player2Room.ContainsKey(playerId))

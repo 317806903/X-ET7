@@ -1,14 +1,26 @@
 [
   {
+    "id": "PlayAnimator_None",
+    "name": "Idle和Move动作指定为None,客户端会根据是否到位转换",
+    "desc": "",
+    "animator_name": 1
+  },
+  {
     "id": "PlayAnimator_1",
     "name": "播放动作1",
     "desc": "",
-    "animator_name": "Run"
+    "animator_name": 2
   },
   {
     "id": "PlayAnimator_2",
     "name": "播放动作2",
     "desc": "",
-    "animator_name": "Run"
+    "animator_name": 2
+  },
+  {
+    "id": "PlayAnimator_Die",
+    "name": "播放死亡",
+    "desc": "",
+    "animator_name": 7
   }
 ]

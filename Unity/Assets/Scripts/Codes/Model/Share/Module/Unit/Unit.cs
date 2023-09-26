@@ -20,6 +20,7 @@ namespace ET
             }
         }
 
+        public int level;
         public UnitType Type;
 
         [BsonElement]

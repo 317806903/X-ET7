@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GlobalConfig
   m_EditorClassIdentifier: 
   CodeMode: 3
-  codeOptimization: 1
+  codeOptimization: 3
   StartConfig: Localhost
-  ModelVersion: 173
-  HotFixVersion: 162
+  ModelVersion: 299
+  HotFixVersion: 338

@@ -6,7 +6,9 @@
         "Unity.Core",
         "Unity.Model.Codes",
         "Unity.Mathematics",
-        "Unity.Loader"
+        "Unity.Loader",
+        "Unity.TextMeshPro",
+        "ShootTextPro"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,0 +1,16 @@
+{
+    "name": "DOTwee.Pro.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:410782b1c74f9b14386ef9e797a36aee"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

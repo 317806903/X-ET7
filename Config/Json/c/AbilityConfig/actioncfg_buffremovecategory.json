@@ -13,7 +13,7 @@
     "desc": "移除tag为指定的所有Buff",
     "buffRemoveType": {
       "$type": "BuffRemoveByTag",
-      "buffTagType": 2
+      "buffTagType": 16
     }
   },
   {

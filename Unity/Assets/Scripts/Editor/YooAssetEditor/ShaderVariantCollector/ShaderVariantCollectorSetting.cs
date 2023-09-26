@@ -8,7 +8,7 @@ namespace YooAsset.Editor
 		/// <summary>
 		/// 文件存储路径
 		/// </summary>
-		public string SavePath = "Assets/MyShaderVariants.shadervariants";
+		public string SavePath = "Assets/ResAB/ShaderVariants/MyShaderVariants.shadervariants";
 
 		/// <summary>
 		/// 收集的包裹名称

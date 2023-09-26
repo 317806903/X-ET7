@@ -1,0 +1,65 @@
+[
+  {
+    "id": "Aoe_1",
+    "name": "",
+    "res_id": "ResUnit_Aoe1",
+    "moveSpeed": 6,
+    "rotationSpeed": 800,
+    "isNeedChkMesh": false,
+    "bodyHeight": 1,
+    "bodyRadius": 0.1,
+    "resScale": 1,
+    "deathShow": "DeathShow_Null",
+    "idle_timeline_id": "Timeline_Idle1",
+    "move_timeline_id": "Timeline_Move1",
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "aoeTrig": 1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_3",
+        "actionCallParam": {
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "aoeTrig": 2,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "aoeTrig": 3,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "aoeTrig": 4,
+        "delayTime": 0,
+        "action_id": "PlayAudio_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  }
+]

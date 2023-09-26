@@ -2,27 +2,27 @@
 {
 	[FriendOf(typeof(UIBaseWindow))]
 	[AUIEvent(WindowID.WindowID_Update)]
-	public  class DlgUpdateEventHandler : IAUIEventHandler
+	public class DlgUpdateEventHandler : IAUIEventHandler
 	{
 
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.windowType = UIWindowType.Normal; 
+			uiBaseWindow.windowType = UIWindowType.Normal; 
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.AddComponent<DlgUpdate>().AddComponent<DlgUpdateViewComponent>();
+			uiBaseWindow.AddComponent<DlgUpdate>().AddComponent<DlgUpdateViewComponent>();
 		}
 
 		public void OnRegisterUIEvent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.GetComponent<DlgUpdate>().RegisterUIEvent(); 
+			uiBaseWindow.GetComponent<DlgUpdate>().RegisterUIEvent(); 
 		}
 
-		public void OnShowWindow(UIBaseWindow uiBaseWindow, Entity contextData = null)
+		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-		  uiBaseWindow.GetComponent<DlgUpdate>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgUpdate>().ShowWindow(contextData); 
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

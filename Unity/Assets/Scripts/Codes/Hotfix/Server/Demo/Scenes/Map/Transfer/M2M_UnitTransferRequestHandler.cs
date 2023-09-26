@@ -31,19 +31,17 @@ namespace ET.Server
 					Entity entity = MongoHelper.Deserialize<Entity>(bytes);
 					unit.AddComponent(entity);
 				}
-			
-				unit.AddComponent<MoveByPathComponent>();
-				string pathfindingMapName = scene.Name;
-				unit.AddComponent<PathfindingComponent, string>(pathfindingMapName);
+
+				//unit.AddComponent<MoveByPathComponent>();
 				unit.Position = new float3(-10, 0, -10);
-			
+
 				unit.AddComponent<MailBoxComponent>();
 			}
-			
+
 			// 通知客户端开始切场景
 			M2C_StartSceneChange m2CStartSceneChange = new M2C_StartSceneChange() {SceneInstanceId = scene.InstanceId, SceneName = scene.Name};
 			MessageHelper.SendToClient(unit, m2CStartSceneChange, false);
-			
+
 			// 通知客户端创建My Unit
 			M2C_CreateMyUnit m2CCreateUnits = new M2C_CreateMyUnit();
 			m2CCreateUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(unit);
@@ -55,17 +53,16 @@ namespace ET.Server
 			}
 			else
 			{
-				// 加入aoi
-				//unit.AddComponent<AOIEntity, int, float3>(30 * 1000, unit.Position);
 			}
-			
+
 			GamePlayComponent gamePlayComponent = scene.GetComponent<GamePlayComponent>();
 			if (gamePlayComponent == null)
 			{
 				gamePlayComponent = scene.AddComponent<GamePlayComponent>();
-				gamePlayComponent.InitWhenGlobal(scene.InstanceId, "GamePlayBattleLevel_Global1");
+				await gamePlayComponent.InitWhenGlobal(scene.InstanceId, "GamePlayBattleLevel_Global1");
 			}
 			gamePlayComponent.AddPlayerWhenGlobal(unit.Id, 1);
+			ET.GamePlayHelper.AddUnitPathfinding(unit);
 
 			// 解锁location，可以接收发给Unit的消息
 			await LocationProxyComponent.Instance.UnLock(LocationType.Unit, unit.Id, request.OldInstanceId, unit.InstanceId);

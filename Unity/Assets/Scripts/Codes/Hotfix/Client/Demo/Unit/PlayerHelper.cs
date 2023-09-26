@@ -4,7 +4,7 @@ namespace ET.Client
 {
     public static class PlayerHelper
     {
-        public static long GetMyPlayerId(Scene scene)
+        public static PlayerComponent GetMyPlayerComponent(Scene scene)
         {
             Scene currentScene = null;
             Scene clientScene = null;
@@ -20,6 +20,12 @@ namespace ET.Client
             }
 
             PlayerComponent playerComponent = clientScene.GetComponent<PlayerComponent>();
+            return playerComponent;
+        }
+
+        public static long GetMyPlayerId(Scene scene)
+        {
+            PlayerComponent playerComponent = GetMyPlayerComponent(scene);
             return playerComponent.MyId;
         }
 

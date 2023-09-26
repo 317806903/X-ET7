@@ -32,8 +32,16 @@ namespace ET
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, int> playerRefreshTowerCost;
-		
+
+		/// <summary>
+		/// 玩家对应塔列表
+		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, string> unitId2TowerCfgId;
+		public MultiMap<long, long> playerId2unitTowerId;
+
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<string, string> towerCfgId2PreTowerCfgId;
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<string, string> towerCfgId2NextTowerCfgId;
 	}
 }

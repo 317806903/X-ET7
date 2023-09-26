@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using Unity.Mathematics;
 
@@ -78,6 +80,69 @@ namespace ET
             }
         }
 
+        class DictionaryRepresentationConvention : ConventionBase, IMemberMapConvention
+        {
+            private readonly DictionaryRepresentation _dictionaryRepresentation;
+            public DictionaryRepresentationConvention(DictionaryRepresentation dictionaryRepresentation)
+            {
+                _dictionaryRepresentation = dictionaryRepresentation;
+            }
+            public void Apply(BsonMemberMap memberMap)
+            {
+                memberMap.SetSerializer(ConfigureSerializer(memberMap.GetSerializer()));
+            }
+            private IBsonSerializer ConfigureSerializer(IBsonSerializer serializer)
+            {
+                var dictionaryRepresentationConfigurable = serializer as IDictionaryRepresentationConfigurable;
+                if (dictionaryRepresentationConfigurable != null)
+                {
+                    serializer = dictionaryRepresentationConfigurable.WithDictionaryRepresentation(_dictionaryRepresentation);
+                }
+
+                var childSerializerConfigurable = serializer as IChildSerializerConfigurable;
+                return childSerializerConfigurable == null
+                    ? serializer
+                    : childSerializerConfigurable.WithChildSerializer(ConfigureSerializer(childSerializerConfigurable.ChildSerializer));
+            }
+        }
+
+        public class DictionaryRepresentationConvention2 : ConventionBase, IMemberMapConvention
+        {
+            private readonly DictionaryRepresentation _dictionaryRepresentation;
+
+            public DictionaryRepresentationConvention2(DictionaryRepresentation dictionaryRepresentation = DictionaryRepresentation.ArrayOfDocuments)
+            {
+                // see http://mongodb.github.io/mongo-csharp-driver/2.2/reference/bson/mapping/#dictionary-serialization-options
+
+                _dictionaryRepresentation = dictionaryRepresentation;
+            }
+
+            public void Apply(BsonMemberMap memberMap)
+            {
+                memberMap.SetSerializer(ConfigureSerializer(memberMap.GetSerializer(),Array.Empty<IBsonSerializer>()));
+            }
+
+            private IBsonSerializer ConfigureSerializer(IBsonSerializer serializer, IBsonSerializer[] stack)
+            {
+                if (serializer is IDictionaryRepresentationConfigurable dictionaryRepresentationConfigurable)
+                {
+                    serializer = dictionaryRepresentationConfigurable.WithDictionaryRepresentation(_dictionaryRepresentation);
+                }
+
+                if (serializer is IChildSerializerConfigurable childSerializerConfigurable)
+                {
+                    if (!stack.Contains(childSerializerConfigurable.ChildSerializer))
+                    {
+                        var newStack = stack.Union(new[] { serializer }).ToArray();
+                        var childConfigured = ConfigureSerializer(childSerializerConfigurable.ChildSerializer, newStack);
+                        return childSerializerConfigurable.WithChildSerializer(childConfigured);
+                    }
+                }
+
+                return serializer;
+            }
+        }
+
         [StaticField]
         private static readonly JsonWriterSettings defaultSettings = new() { OutputMode = JsonOutputMode.RelaxedExtendedJson };
 
@@ -88,11 +153,43 @@ namespace ET
             ConventionPack conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
 
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
+            //ConventionRegistry.Register("DictionaryRepresentationConvention", new ConventionPack {new DictionaryRepresentationConvention(DictionaryRepresentation.ArrayOfArrays)}, _ => true);
 
             RegisterStruct<float2>();
             RegisterStruct<float3>();
             RegisterStruct<float4>();
             RegisterStruct<quaternion>();
+
+        }
+
+        public static void Init()
+        {
+            Type typeBson = typeof(MongoDB.Bson.Serialization.BsonSerializer);
+
+            var _idGenerators = typeBson.GetField("__idGenerators", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var dic1 = ((Dictionary<Type, IIdGenerator>)_idGenerators.GetValue(null));
+            dic1.Clear();
+
+            var _discriminatorConventions = typeBson.GetField("__discriminatorConventions", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var dic2 = ((Dictionary<Type, IDiscriminatorConvention>)_discriminatorConventions.GetValue(null));
+            dic2.Clear();
+
+            var _discriminators = typeBson.GetField("__discriminators", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var dic3 = ((Dictionary<BsonValue, HashSet<Type>>)_discriminators.GetValue(null));
+            dic3.Clear();
+
+            var _discriminatedTypes = typeBson.GetField("__discriminatedTypes", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var dic4 = ((HashSet<Type>)_discriminatedTypes.GetValue(null));
+            dic4.Clear();
+
+            var _typesWithRegisteredKnownTypes = typeBson.GetField("__typesWithRegisteredKnownTypes", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var dic5 = ((System.Collections.Concurrent.ConcurrentDictionary<Type, object>)_typesWithRegisteredKnownTypes.GetValue(null));
+            dic5.Clear();
+            //
+            // var staticMethod = typeBson.GetMethod("CreateSerializerRegistry", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            // staticMethod.Invoke(typeBson, null);
+            var staticMethod2 = typeBson.GetMethod("RegisterIdGenerators", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            staticMethod2.Invoke(typeBson, null);
 
             Dictionary<string, Type> types = EventSystem.Instance.GetTypes();
             foreach (Type type in types.Values)
@@ -109,10 +206,6 @@ namespace ET
 
                 BsonClassMap.LookupClassMap(type);
             }
-        }
-
-        public static void Init()
-        {
         }
 
         public static void RegisterStruct<T>() where T : struct

@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, M2R_MemberQuitRoom request, R2M_MemberQuitRoom response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
 			RoomComponent roomComponent1 = roomManagerComponent.GetRoom(roomId);
@@ -19,10 +19,15 @@ namespace ET.Server
 			RoomComponent roomComponent2 = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponent2 == null || roomComponent1 == roomComponent2)
 			{
+				try
 				{
 					R2G_BeKickedMember _R2G_BeKickedMember = new ();
 					ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 					await oneTypeLocationType.Call(playerId, _R2G_BeKickedMember);
+				}
+				catch (Exception e)
+				{
+					Log.Error($"M2R_MemberQuitRoom {e}");
 				}
 			}
 			roomManagerComponent.QuitRoom(playerId, roomId);

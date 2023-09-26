@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 追踪运动
+/// 追踪轨迹
 /// </summary>
 public sealed partial class TrackingMoveTweenType:  MoveTweenType 
 {

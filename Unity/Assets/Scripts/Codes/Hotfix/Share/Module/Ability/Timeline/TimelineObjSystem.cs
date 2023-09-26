@@ -28,42 +28,25 @@ namespace ET.Ability
             self.CfgId = timelineCfgId;
             self.casterUnitId = casterId;
             self.timeScale = 1.00f;
+            self.duration = self.model.Duration;
         }
-        
+
         public static void InitActionContext(this TimelineObj self, ActionContext actionContext)
         {
             actionContext.timelineCfgId = self.CfgId;
             actionContext.timelineId = self.Id;
             self.actionContext = actionContext;
         }
-        
+
         public static Unit GetUnit(this TimelineObj self)
         {
             return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
         }
-        
+
         public static void FixedUpdate(this TimelineObj self, float fixedDeltaTime)
         {
             float wasTimeElapsed = self.timeElapsed;
             self.timeElapsed += fixedDeltaTime * self.timeScale;
-
-            // //判断有没有返回点
-            // if (
-            //     self.model.chargeGoBack.atDuration < self.timeElapsed &&
-            //     self.model.chargeGoBack.atDuration >= wasTimeElapsed
-            // )
-            {
-                //if (self.casterUnit != null)
-                {
-                    // TODO zpb
-                    // ChaState cs = self.caster.GetComponent<ChaState>();
-                    // if (cs.charging == true)
-                    // {
-                    //     self.timeElapsed = self.model.chargeGoBack.gotoDuration;
-                    //     continue;
-                    // }
-                }
-            }
 
             int count = self.model.Nodes.Count;
             //执行时间点内的事情
@@ -75,7 +58,7 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
-                    SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam);
+                    SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam, ref self.actionContext);
 
                     (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, self.actionContext);
                     if (isChgSelect1)
@@ -90,13 +73,22 @@ namespace ET.Ability
 
                     if (bRet1 && bRet2)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self
-                        .actionContext);
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self.actionContext);
+                        if (timelineNode.ActionId.Contains("TimelineJumpTime"))
+                        {
+                            self.timelineJumpNum++;
+                            if (self.timelineJumpNum > 10)
+                            {
+                                self.timeElapsed = wasTimeElapsed + 0.0001f;
+                                self.timelineJumpNum = 0;
+                            }
+                            return;
+                        }
                     }
                 }
             }
         }
-        
-        
+
+
     }
 }

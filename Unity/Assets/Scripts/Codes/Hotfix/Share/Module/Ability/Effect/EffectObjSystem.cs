@@ -24,7 +24,7 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, float duration, OffSetInfo offSetInfo)
+        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo)
         {
             string nodeName = offSetInfo.NodeName;
             float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
@@ -33,6 +33,7 @@ namespace ET.Ability
             self.isSceneEffect = unitId == 0? true : false;
             self.unitId = unitId;
             self.CfgId = effectCfgId;
+            self.PlayAudioActionId = playAudioActionId;
             self.timeElapsed = 0;
             self.permanent = duration == -1? true : false;
             self.duration = duration == -1? 1 : duration;
@@ -55,6 +56,11 @@ namespace ET.Ability
             self.timeElapsed += timePassed;
         }
 
+        public static void WillDestroy(this EffectObj self)
+        {
+            self.duration = 0;
+        }
+        
         public static bool ChkNeedRemove(this EffectObj self)
         {
             //只要duration <= 0，不管是否是permanent都移除掉

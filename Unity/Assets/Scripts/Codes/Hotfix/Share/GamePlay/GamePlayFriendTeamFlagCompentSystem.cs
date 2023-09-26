@@ -17,9 +17,10 @@ namespace ET
 				self.teamFriendDic = new();
 				self.playerId2TeamFlag = new();
 				self.unitId2TeamFlag = new();
+				self.playerId2Color = new();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class GamePlayFriendTeamFlagCompentDestroySystem : DestroySystem<GamePlayFriendTeamFlagCompent>
 		{
@@ -28,6 +29,7 @@ namespace ET
 				self.teamFriendDic?.Clear();
 				self.playerId2TeamFlag?.Clear();
 				self.unitId2TeamFlag?.Clear();
+				self.playerId2Color?.Clear();
 			}
 		}
 
@@ -53,6 +55,13 @@ namespace ET
 			string key = $"TeamPlayer{roomTeamId + 1}";
 			TeamFlagType teamFlagType = EnumHelper.FromString<TeamFlagType>(key);
 			self.playerId2TeamFlag[playerId] = teamFlagType;
+			self.unitId2TeamFlag[playerId] = teamFlagType;
+		}
+
+		public static void _InitPlayerColor(this GamePlayFriendTeamFlagCompent self, long playerId, int index)
+		{
+			float3 color = self.playerColorList[index];
+			self.playerId2Color[playerId] = color;
 		}
 
 		/// <summary>
@@ -105,9 +114,15 @@ namespace ET
 			return self.unitId2TeamFlag[unit.Id];
 		}
 
-		public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayFriendTeamFlagCompent self)
+		public static GamePlayComponent GetGamePlay(this GamePlayFriendTeamFlagCompent self)
 		{
 			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			return gamePlayComponent;
+		}
+
+		public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayFriendTeamFlagCompent self)
+		{
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			return gamePlayComponent.GetGamePlayBattleConfig();
 		}
 
@@ -120,6 +135,7 @@ namespace ET
 				{
 					RoomMember roomMember = roomMemberList[i];
 					self._InitPlayerTeamFlag(roomMember.Id, 0);
+					self._InitPlayerColor(roomMember.Id, i);
 				}
 			}
 			else if (gamePlayBattleLevelCfg.TeamMode is PlayerAlone playerAlone)
@@ -128,6 +144,7 @@ namespace ET
 				{
 					RoomMember roomMember = roomMemberList[i];
 					self._InitPlayerTeamFlag(roomMember.Id, 0);
+					self._InitPlayerColor(roomMember.Id, i);
 				}
 			}
 			else if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam playerTeam)
@@ -136,6 +153,7 @@ namespace ET
 				{
 					RoomMember roomMember = roomMemberList[i];
 					self._InitPlayerTeamFlag(roomMember.Id, (int)roomMember.roomTeamId);
+					self._InitPlayerColor(roomMember.Id, i);
 				}
 			}
 		}
@@ -155,14 +173,15 @@ namespace ET
 			{
 				self._InitPlayerTeamFlag(playerId, playerTeamId);
 			}
+			self._InitPlayerColor(playerId, 0);
 		}
 
 		public static long GetPlayerIdByUnitId(this GamePlayFriendTeamFlagCompent self, long unitId)
 		{
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			return gamePlayComponent.GetPlayerIdByUnitId(unitId);
 		}
-		
+
 		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, Unit curUnit, Unit targetUnit)
 		{
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
@@ -194,7 +213,12 @@ namespace ET
 
 			return false;
 		}
-		
+
+		public static float3 GetPlayerColor(this GamePlayFriendTeamFlagCompent self, long playerId)
+		{
+			return self.playerId2Color[playerId];
+		}
+
 		public static void DealFriendTeamFlag(this GamePlayFriendTeamFlagCompent self, List<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
 		{
 			int newFriendTypes = 0;
@@ -241,7 +265,7 @@ namespace ET
 			bool isFriend = (self.teamFriendDic[curTeamFlagType] & (int)targetTeamFlagType) > 0;
 			return isFriend;
 		}
-		
+
 		public static void StopAllAI(this GamePlayFriendTeamFlagCompent self)
 		{
 			foreach (long unitId in self.unitId2TeamFlag.Keys)

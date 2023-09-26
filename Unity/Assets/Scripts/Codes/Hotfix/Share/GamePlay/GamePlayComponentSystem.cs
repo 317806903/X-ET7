@@ -1,284 +1,445 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET
 {
-    [FriendOf(typeof(GamePlayComponent))]
+    [FriendOf(typeof (GamePlayComponent))]
     public static class GamePlayComponentSystem
-	{
-		[ObjectSystem]
-		public class GamePlayComponentAwakeSystem : AwakeSystem<GamePlayComponent>
-		{
-			protected override void Awake(GamePlayComponent self)
-			{
-			}
-		}
-	
-		[ObjectSystem]
-		public class GamePlayComponentDestroySystem : DestroySystem<GamePlayComponent>
-		{
-			protected override void Destroy(GamePlayComponent self)
-			{
-			}
-		}
+    {
+        [ObjectSystem]
+        public class GamePlayComponentAwakeSystem: AwakeSystem<GamePlayComponent>
+        {
+            protected override void Awake(GamePlayComponent self)
+            {
+                self.AddComponent<NavmeshManagerComponent>();
+            }
+        }
 
-		public static void InitWhenRoom(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId, RoomComponent roomComponent, 
-		List<RoomMember> roomMemberList)
-		{
-			self.dynamicMapInstanceId = dynamicMapInstanceId;
-			self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
-			self.roomId = roomComponent.Id;
-			self.ownerPlayerId = roomComponent.ownerRoomMemberId;
+        [ObjectSystem]
+        public class GamePlayComponentDestroySystem: DestroySystem<GamePlayComponent>
+        {
+            protected override void Destroy(GamePlayComponent self)
+            {
+            }
+        }
 
+        public static async ETTask InitWhenRoom(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId,
+        RoomComponent roomComponent,
+        List<RoomMember> roomMemberList, string _ARMeshDownLoadUrl)
+        {
+            self.dynamicMapInstanceId = dynamicMapInstanceId;
+            self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
+            self.roomId = roomComponent.Id;
+            self.ownerPlayerId = roomComponent.ownerRoomMemberId;
+            self.isAR = roomComponent.isARRoom;
+            self._ARMeshDownLoadUrl = _ARMeshDownLoadUrl;
 
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
-			gamePlayPlayerListComponent.InitWhenRoom(roomComponent, roomMemberList);
-            
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.InitWhenRoom(roomComponent, roomMemberList);
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
+            gamePlayPlayerListComponent.InitWhenRoom(roomComponent, roomMemberList);
 
-			self.CreateGamePlayMode();
-			
-			self.gamePlayStatus = GamePlayStatus.WaitForStart;
-			
-			self.NoticeToClientAll();
-		}
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.InitWhenRoom(roomComponent, roomMemberList);
 
-		public static void InitWhenGlobal(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId)
-		{
-			self.dynamicMapInstanceId = dynamicMapInstanceId;
-			self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
-			self.roomId = 0;
-			self.ownerPlayerId = -1;
+            await self.DownloadMapRecast();
 
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
-			gamePlayPlayerListComponent.InitWhenGlobal();
-            
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.InitWhenGlobal();
+            self.CreateGamePlayMode();
 
-			self.CreateGamePlayMode();
-			
-			self.gamePlayStatus = GamePlayStatus.WaitForStart;
+            self.gamePlayStatus = GamePlayStatus.WaitForStart;
 
-			//self.NoticeToClientAll();
-		}
-		
-		public static void AddPlayerWhenGlobal(this GamePlayComponent self, long playerId, int playerTeamId)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			gamePlayPlayerListComponent.AddPlayerWhenGlobal(playerId, playerTeamId);
-            
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.AddPlayerWhenGlobal(playerId, playerTeamId);
+            self.NoticeToClientAll();
+            await ETTask.CompletedTask;
+        }
 
-			
-			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
-			if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefense1 gamePlayTowerDefense1)
-			{
-				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
-				gamePlayTowerDefenseComponent.NoticeToClient(playerId);
-			}
-			else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPK1 gamePlayPK1)
-			{
-				GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-				gamePlayPKComponent.NoticeToClient(playerId);
-			}
-			self.NoticeToClient(playerId);
-		}
+        public static async ETTask InitWhenGlobal(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId)
+        {
+            self.dynamicMapInstanceId = dynamicMapInstanceId;
+            self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
+            self.roomId = 0;
+            self.ownerPlayerId = -1;
+            self.isAR = false;
 
-		public static void Start(this GamePlayComponent self)
-		{
-			self.gamePlayStatus = GamePlayStatus.Gaming;
-			self.NoticeToClientAll();
-		}
+            self.gamePlayStatus = GamePlayStatus.WaitForStart;
 
-		public static void GameEnd(this GamePlayComponent self)
-		{
-			self.gamePlayStatus = GamePlayStatus.GameEnd;
-			self.StopAllAI();
-			
-			self.NoticeToClientAll();
-			self.NoticeGameEndToRoom();
-		}
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
+            gamePlayPlayerListComponent.InitWhenGlobal();
 
-		public static void StopAllAI(this GamePlayComponent self)
-		{
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.StopAllAI();
-		}
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.InitWhenGlobal();
 
-		public static void CreateGamePlayMode(this GamePlayComponent self)
-		{
-			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
-			if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefense1 gamePlayTowerDefense1)
-			{
-				self.gamePlayMode = GamePlayMode.TowerDefense;
-				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-				gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefense1.GamePlayModeCfgId);
-			}
-			else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPK1 gamePlayPK1)
-			{
-				self.gamePlayMode = GamePlayMode.PK;
-				GamePlayPKComponent gamePlayPKComponent = self.AddComponent<GamePlayPKComponent>();
-				gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPK1.GamePlayModeCfgId);
-			}
-		}
+            await self.DownloadMapRecast();
 
-		public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayComponent self)
-		{
-			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
-			return gamePlayBattleLevelCfg;
-		}
-		
-		public static List<long> GetPlayerList(this GamePlayComponent self)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			return gamePlayPlayerListComponent.GetPlayerList();
-		}
-		
-		/// <summary>
-		/// 通过这个判断 unitId 是否归属 player, 返回-1则不是玩家的
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="unitId"></param>
-		/// <returns></returns>
-		public static long GetPlayerIdByUnitId(this GamePlayComponent self, long unitId)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			return gamePlayPlayerListComponent.GetPlayerIdByUnitId(unitId);
-		}
-		
-		public static void PlayerQuitBattle(this GamePlayComponent self, long playerId, bool isNeedRemoveAllPlayerUnits)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			gamePlayPlayerListComponent?.PlayerQuitBattle(playerId, isNeedRemoveAllPlayerUnits);
-		}
+            self.CreateGamePlayMode();
 
-		public static void DealFriendTeamFlag(this GamePlayComponent self, ListComponent<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
-		{
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.DealFriendTeamFlag(teamFlagTypes, isWithPlayers, reset);
-		}
-		
-		public static void NoticeToClientAll(this GamePlayComponent self)
-		{
-			List<long> playerList = self.GetPlayerList();
-			for (int i = 0; i < playerList.Count; i++)
-			{
-				self.NoticeToClient(playerList[i]);
-			}
-		}
+            //self.NoticeToClientAll();
+            await ETTask.CompletedTask;
+        }
 
-		public static void ReNoticeToClient(this GamePlayComponent self, long playerId)
-		{
-			self.NoticeToClient(playerId);
+        public static Task<byte[]> DownloadFileAsync(this GamePlayComponent self, string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                Log.Info("Empty URL, return an empty task.");
+                return Task.FromResult<byte[]>(null);
+            }
 
-			if (self.gamePlayMode == GamePlayMode.TowerDefense)
-			{
-				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
-				gamePlayTowerDefenseComponent.NoticeToClient(playerId); 
-			}
-			else if (self.gamePlayMode == GamePlayMode.PK)
-			{
-				GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-				gamePlayPKComponent.NoticeToClient(playerId); 
-			}
-		}
+            HttpClient httpClient = new();
+            return httpClient.GetByteArrayAsync(url);
+        }
 
-		public static void NoticeToClient(this GamePlayComponent self, long playerId)
-		{
-			EventType.NoticeGamePlayToClient _NoticeGamePlayChgToClient = new ()
-			{
-				playerId = playerId,
-				gamePlayComponent = self,
-			};
-			EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayChgToClient);
-		}
+        public static async ETTask DownloadMapRecast(this GamePlayComponent self)
+        {
+            string pathfindingMapName = self.GetPathfindingMapName();
 
-		public static void NoticeGameEndToRoom(this GamePlayComponent self)
-		{
-			EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new ()
-			{
-				roomId = self.roomId,
-			};
-			EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
-		}
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
 
-		/// <summary>
-		/// 指定玩家的阵营,例如塔
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="playerId"></param>
-		/// <param name="unit"></param>
-		public static void AddPlayerUnitTeamFlag(this GamePlayComponent self, long playerId, Unit unit)
-		{
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.AddPlayerUnitTeamFlag(playerId, unit);
-		}
+            if (self.isTestARMesh)
+            {
+                self._ARMeshDownLoadUrl = self.isTestARMeshUrl;
+            }
+            else if (self.ChkIsAR() == false)
+            {
+                var tmp = Task.Run(() =>
+                {
+                    navmeshManagerComponent.InitByFile(pathfindingMapName);
+                });
+                return;
+            }
 
-		/// <summary>
-		/// 直接指定阵营信息,例如 大本营，怪物
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="unit"></param>
-		/// <param name="teamFlag"></param>
-		public static void AddUnitTeamFlag(this GamePlayComponent self, Unit unit, TeamFlagType teamFlag)
-		{
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.AddUnitTeamFlag(unit, teamFlag);
-		}
+            if (string.IsNullOrEmpty(self._ARMeshDownLoadUrl))
+            {
+                return;
+            }
 
-		/// <summary>
-		/// 有召唤者的设置阵营信息，例如子弹
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="unitParent"></param>
-		/// <param name="unit"></param>
-		public static void AddUnitTeamFlagByParent(this GamePlayComponent self, Unit unitParent, Unit unit)
-		{
-			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-			gamePlayFriendTeamFlagCompent.AddUnitTeamFlagByParent(unitParent, unit);
-		}
-		
-		public static string GetPathfindingMapName(this GamePlayComponent self)
-		{
-			return self.GetGamePlayBattleConfig().SceneMap;
-		}
-		
-		public static float3 GetPlayerBirthPos(this GamePlayComponent self, long playerId)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			return gamePlayPlayerListComponent.GetPlayerBirthPos(playerId);
-		}
-		
-		public static bool ChkIsGameEnd(this GamePlayComponent self)
-		{
-			return self.gamePlayStatus == GamePlayStatus.GameEnd;
-		}
+            // Mesh URL
+            string mapUrl = self._ARMeshDownLoadUrl;
 
-		public static void DealUnitBeKill(this GamePlayComponent self, Unit attackerUnit, Unit beKillUnit)
-		{
-			if (self.gamePlayMode == GamePlayMode.TowerDefense)
-			{
-				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
-				gamePlayTowerDefenseComponent.DealUnitBeKill(attackerUnit, beKillUnit); 
-			}
-			else if (self.gamePlayMode == GamePlayMode.PK)
-			{
-				GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-				gamePlayPKComponent.DealUnitBeKill(attackerUnit, beKillUnit); 
-			}
-		}
+            // Draco bytes
+            byte[] bytes = await self.DownloadFileAsync(mapUrl);
 
-		public static int GetPlayerCoin(this GamePlayComponent self, long playerId, CoinType coinType)
-		{
-			GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-			return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);
-		}
+            Log.Info($"====================Draco bytes length {bytes.Length}");
 
-	}
+            // Decode draco obj to data
+            MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
+
+            Log.Info($"====================MeshData {meshData.vertices.Length}, {meshData.normals.Length}, {meshData.triangles.Length}");
+
+            var tmp2 = Task.Run(() =>
+            {
+                navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
+            });
+
+            await ETTask.CompletedTask;
+        }
+
+        public static void AddPlayerWhenGlobal(this GamePlayComponent self, long playerId, int playerTeamId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            gamePlayPlayerListComponent.AddPlayerWhenGlobal(playerId, playerTeamId);
+
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.AddPlayerWhenGlobal(playerId, playerTeamId);
+
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.NoticeToClient(playerId);
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                gamePlayPKComponent.NoticeToClient(playerId);
+            }
+
+            self.NoticeToClient(playerId);
+        }
+
+        public static void Start(this GamePlayComponent self)
+        {
+            self.gamePlayStatus = GamePlayStatus.Gaming;
+            self.NoticeToClientAll();
+        }
+
+        public static void GameEnd(this GamePlayComponent self)
+        {
+            self.gamePlayStatus = GamePlayStatus.GameEnd;
+            self.StopAllAI();
+
+            self.NoticeToClientAll();
+            self.NoticeGameEndToRoom();
+        }
+
+        public static void StopAllAI(this GamePlayComponent self)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.StopAllAI();
+        }
+
+        public static void CreateGamePlayMode(this GamePlayComponent self)
+        {
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
+            if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefense1 gamePlayTowerDefense1)
+            {
+                self.gamePlayMode = GamePlayMode.TowerDefense;
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefense1.GamePlayModeCfgId);
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPK1 gamePlayPK1)
+            {
+                self.gamePlayMode = GamePlayMode.PK;
+                GamePlayPKComponent gamePlayPKComponent = self.AddComponent<GamePlayPKComponent>();
+                gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPK1.GamePlayModeCfgId);
+            }
+        }
+
+        public static GamePlayModeComponent GetGamePlayMode(this GamePlayComponent self)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                return gamePlayTowerDefenseComponent;
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                return gamePlayPKComponent;
+            }
+
+            return null;
+        }
+
+        public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayComponent self)
+        {
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            return gamePlayBattleLevelCfg;
+        }
+
+        public static List<long> GetPlayerList(this GamePlayComponent self)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            if (gamePlayPlayerListComponent == null)
+            {
+                return null;
+            }
+            return gamePlayPlayerListComponent.GetPlayerList();
+        }
+
+        /// <summary>
+        /// 通过这个判断 unitId 是否归属 player, 返回-1则不是玩家的
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="unitId"></param>
+        /// <returns></returns>
+        public static long GetPlayerIdByUnitId(this GamePlayComponent self, long unitId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            return gamePlayPlayerListComponent.GetPlayerIdByUnitId(unitId);
+        }
+
+        public static Unit GetPlayerUnit(this GamePlayComponent self, long playerId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+
+            long playerUnitId = gamePlayPlayerListComponent.GetPlayerUnitId(playerId);
+            if (playerUnitId == -1)
+            {
+                return null;
+            }
+            Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerUnitId);
+            return playerUnit;
+        }
+
+        public static void PlayerQuitBattle(this GamePlayComponent self, long playerId, bool isNeedRemoveAllPlayerUnits)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            gamePlayPlayerListComponent?.PlayerQuitBattle(playerId, isNeedRemoveAllPlayerUnits);
+        }
+
+        public static void DealFriendTeamFlag(this GamePlayComponent self, ListComponent<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.DealFriendTeamFlag(teamFlagTypes, isWithPlayers, reset);
+        }
+
+        public static float3 GetPlayerColor(this GamePlayComponent self, long playerId)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            return gamePlayFriendTeamFlagCompent.GetPlayerColor(playerId);
+        }
+
+        public static void NoticeToClientAll(this GamePlayComponent self)
+        {
+            List<long> playerList = self.GetPlayerList();
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                self.NoticeToClient(playerList[i]);
+            }
+        }
+
+        public static void ReNoticeToClient(this GamePlayComponent self, long playerId)
+        {
+            self.NoticeToClient(playerId);
+
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.NoticeToClient(playerId);
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                gamePlayPKComponent.NoticeToClient(playerId);
+            }
+        }
+
+        public static void NoticeToClient(this GamePlayComponent self, long playerId)
+        {
+            EventType.WaitNoticeGamePlayToClient _WaitNoticeGamePlayChgToClient = new() { playerId = playerId, gamePlayComponent = self, };
+            EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayChgToClient);
+        }
+
+        public static void NoticeGameEndToRoom(this GamePlayComponent self)
+        {
+            EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new() { roomId = self.roomId, };
+            EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
+        }
+
+        /// <summary>
+        /// 指定玩家的阵营,例如塔
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="playerId"></param>
+        /// <param name="unit"></param>
+        public static void AddPlayerUnitTeamFlag(this GamePlayComponent self, long playerId, Unit unit)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.AddPlayerUnitTeamFlag(playerId, unit);
+        }
+
+        /// <summary>
+        /// 直接指定阵营信息,例如 大本营，怪物
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="unit"></param>
+        /// <param name="teamFlag"></param>
+        public static void AddUnitTeamFlag(this GamePlayComponent self, Unit unit, TeamFlagType teamFlag)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.AddUnitTeamFlag(unit, teamFlag);
+        }
+
+        /// <summary>
+        /// 有召唤者的设置阵营信息，例如子弹
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="unitParent"></param>
+        /// <param name="unit"></param>
+        public static void AddUnitTeamFlagByParent(this GamePlayComponent self, Unit unitParent, Unit unit)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.AddUnitTeamFlagByParent(unitParent, unit);
+        }
+
+        public static string GetPathfindingMapName(this GamePlayComponent self)
+        {
+            if (self.ChkIsAR())
+            {
+                return $"ARMap{self.roomId}";
+            }
+
+            string sceneMap = self.GetGamePlayBattleConfig().SceneMap;
+            return sceneMap;
+        }
+
+        /// <summary>
+        /// 创建寻路agent
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="unit"></param>
+        public static void AddUnitPathfinding(this GamePlayComponent self, Unit unit)
+        {
+            PathfindingComponent pathfindingComponent = unit.AddComponent<PathfindingComponent>();
+            pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>()).Coroutine();
+        }
+
+        public static bool ChkIsAR(this GamePlayComponent self)
+        {
+            string sceneMap = self.GetGamePlayBattleConfig().SceneMap;
+            if (sceneMap == "ARMap")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static float GetARScale(this GamePlayComponent self)
+        {
+            if (self.isTestARMesh)
+            {
+                return 30f;
+            }
+
+            if (self.ChkIsAR())
+            {
+                float mapScale = self.GetGamePlayBattleConfig().MapScale;
+                return mapScale;
+            }
+
+            return 1;
+        }
+
+        public static float3 GetPlayerBirthPos(this GamePlayComponent self, long playerId)
+        {
+            if (self.IsAR())
+            {
+                return float3.zero;
+            }
+            else
+            {
+                GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+                return gamePlayPlayerListComponent.GetPlayerBirthPos(playerId);
+            }
+        }
+
+        public static bool IsAR(this GamePlayComponent self)
+        {
+            return self.isAR;
+        }
+
+        public static bool ChkIsGameEnd(this GamePlayComponent self)
+        {
+            return self.gamePlayStatus == GamePlayStatus.GameEnd;
+        }
+
+        public static void DealUnitBeKill(this GamePlayComponent self, Unit attackerUnit, Unit beKillUnit)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.DealUnitBeKill(attackerUnit, beKillUnit);
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                gamePlayPKComponent.DealUnitBeKill(attackerUnit, beKillUnit);
+            }
+        }
+
+        public static int GetPlayerCoin(this GamePlayComponent self, long playerId, CoinType coinType)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);
+        }
+
+        public static void ResetPlayerBirthPos(this GamePlayComponent self, float3 pos)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            gamePlayPlayerListComponent.ResetPlayerBirthPos(pos);
+        }
+    }
 }

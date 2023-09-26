@@ -1,0 +1,33 @@
+[
+  {
+    "id": "CallAoe_1",
+    "name": "召唤Aoe1",
+    "desc": "",
+    "aoe_id": "Aoe_1",
+    "beCallActorActionId": [],
+    "duration": 50,
+    "aoeTargetCondition": {
+      "radius": 5,
+      "actionCondition1": [],
+      "actionCondition2": []
+    },
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "moveType": {
+      "$type": "StraightMoveTweenType",
+      "speed": 3,
+      "acceleratedSpeed": 0
+    }
+  }
+]

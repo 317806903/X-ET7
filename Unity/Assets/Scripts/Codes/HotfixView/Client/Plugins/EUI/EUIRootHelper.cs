@@ -8,9 +8,9 @@ namespace ET.Client
     {
         public static void Init()
         {
-          
+
         }
-        
+
         public static Transform GetTargetRoot(UIWindowType type)
         {
             if (type == UIWindowType.Normal)
@@ -25,9 +25,17 @@ namespace ET.Client
             {
                 return GlobalComponent.Instance.PopUpRoot;
             }
-            else if (type == UIWindowType.Other)
+            else if (type == UIWindowType.NoticeRoot)
             {
-                return GlobalComponent.Instance.OtherRoot;
+                return GlobalComponent.Instance.NoticeRoot;
+            }
+            else if (type == UIWindowType.LoadingRoot)
+            {
+                return GlobalComponent.Instance.LoadingRoot;
+            }
+            else if (type == UIWindowType.HighestNoticeRoot)
+            {
+                return GlobalComponent.Instance.HighestNoticeRoot;
             }
 
             Log.Error("uiroot type is error: " + type.ToString());

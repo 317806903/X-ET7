@@ -5,6 +5,12 @@ namespace ET.Server
 {
     public static class RoomHelper
     {
+	    public static RoomManagerComponent GetRoomManager(Scene scene)
+	    {
+		    RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+		    return roomManagerComponent;
+	    }
+
         public static async ETTask SendRoomInfoChgNotice(this RoomComponent self, bool waitOneFrame)
         {
 	        if (waitOneFrame)

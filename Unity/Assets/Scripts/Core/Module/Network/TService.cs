@@ -14,20 +14,20 @@ namespace ET
 		StartRecv,
 		Connect,
 	}
-	
+
 	public struct TArgs
 	{
 		public TcpOp Op;
 		public long ChannelId;
 		public SocketAsyncEventArgs SocketAsyncEventArgs;
 	}
-	
+
 	public sealed class TService : AService
 	{
 		private readonly Dictionary<long, TChannel> idChannels = new Dictionary<long, TChannel>();
 
 		private readonly SocketAsyncEventArgs innArgs = new SocketAsyncEventArgs();
-		
+
 		private Socket acceptor;
 
 		public ConcurrentQueue<TArgs> Queue = new ConcurrentQueue<TArgs>();
@@ -40,7 +40,7 @@ namespace ET
 		public TService(IPEndPoint ipEndPoint, ServiceType serviceType)
 		{
 			this.ServiceType = serviceType;
-			
+
 			this.acceptor = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 			// 容易出问题，先注释掉，按需开启
 			//this.acceptor.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
@@ -53,9 +53,9 @@ namespace ET
 			{
 				throw new Exception($"bind error: {ipEndPoint}", e);
 			}
-			
+
 			this.acceptor.Listen(1000);
-			
+
 			this.AcceptAsync();
 		}
 
@@ -81,6 +81,7 @@ namespace ET
 			if (socketError != SocketError.Success)
 			{
 				Log.Error($"accept error {socketError}");
+				this.AcceptAsync();
 				return;
 			}
 
@@ -90,18 +91,18 @@ namespace ET
 				TChannel channel = new TChannel(id, acceptSocket, this);
 				this.idChannels.Add(channel.Id, channel);
 				long channelId = channel.Id;
-				
+
 				NetServices.Instance.OnAccept(this.Id, channelId, channel.RemoteAddress);
 			}
 			catch (Exception exception)
 			{
 				Log.Error(exception);
-			}		
-			
+			}
+
 			// 开始新的accept
 			this.AcceptAsync();
 		}
-		
+
 		private void AcceptAsync()
 		{
 			this.innArgs.AcceptSocket = null;
@@ -127,22 +128,22 @@ namespace ET
 			}
 			this.Create(address, id);
 		}
-		
+
 		private TChannel Get(long id)
 		{
 			TChannel channel = null;
 			this.idChannels.TryGetValue(id, out channel);
 			return channel;
 		}
-		
+
 		public override void Dispose()
 		{
 			base.Dispose();
-			
+
 			this.acceptor?.Close();
 			this.acceptor = null;
 			this.innArgs.Dispose();
-			
+
 			foreach (long id in this.idChannels.Keys.ToArray())
 			{
 				TChannel channel = this.idChannels[id];
@@ -156,7 +157,7 @@ namespace ET
 			if (this.idChannels.TryGetValue(id, out TChannel channel))
 			{
 				channel.Error = error;
-				channel.Dispose();	
+				channel.Dispose();
 			}
 			this.idChannels.Remove(id);
 		}
@@ -179,7 +180,7 @@ namespace ET
 				Log.Error(e);
 			}
 		}
-		
+
 		public override void Update()
 		{
 			while (true)
@@ -188,7 +189,7 @@ namespace ET
 				{
 					break;
 				}
-				
+
 				SocketAsyncEventArgs e = result.SocketAsyncEventArgs;
 
 				if (e == null)
@@ -277,7 +278,7 @@ namespace ET
 				}
 			}
 		}
-		
+
 		public override bool IsDispose()
 		{
 			return this.acceptor == null;

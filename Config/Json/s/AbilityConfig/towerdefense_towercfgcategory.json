@@ -2,43 +2,47 @@
   {
     "id": "Tow1_1",
     "type": "1",
-    "name": "",
+    "name": {
+      "key": "Text_Key_Name_Tow1_1",
+      "text": "弩箭塔Lv1"
+    },
     "unitId": "Unit_Solo1",
     "level": 1,
-    "BuyTowerCostGold": 50,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 100,
     "nextTowerId": "Tow1_2",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow1_2",
     "type": "1",
-    "name": "",
-    "unitId": "Unit_Solo1",
+    "name": {
+      "key": "Text_Key_Name_Tow1_2",
+      "text": "弩箭塔Lv2"
+    },
+    "unitId": "Unit_Solo2",
     "level": 2,
-    "BuyTowerCostGold": 60,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 100,
     "nextTowerId": "Tow1_3",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow1_3",
     "type": "1",
-    "name": "",
-    "unitId": "Unit_Solo1",
+    "name": {
+      "key": "Text_Key_Name_Tow1_3",
+      "text": "弩箭塔Lv3"
+    },
+    "unitId": "Unit_Solo3",
     "level": 3,
-    "BuyTowerCostGold": 70,
-    "nextTowerId": "Tow1_4",
-    "newTowerCostCount": 6,
-    "aiCfgId": "TowerDefense_Tower1"
-  },
-  {
-    "id": "Tow1_4",
-    "type": "1",
-    "name": "",
-    "unitId": "Unit_Solo1",
-    "level": 4,
-    "BuyTowerCostGold": 80,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 100,
     "nextTowerId": "",
     "newTowerCostCount": 0,
     "aiCfgId": "TowerDefense_Tower1"
@@ -46,43 +50,47 @@
   {
     "id": "Tow2_1",
     "type": "2",
-    "name": "",
+    "name": {
+      "key": "Text_Key_Name_Tow2_1",
+      "text": "加农炮Lv1"
+    },
     "unitId": "Unit_Aoe1",
     "level": 1,
-    "BuyTowerCostGold": 50,
+    "BuyTowerCostGold": 160,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 80,
     "nextTowerId": "Tow2_2",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow2_2",
     "type": "2",
-    "name": "",
-    "unitId": "Unit_Aoe1",
+    "name": {
+      "key": "Text_Key_Name_Tow2_2",
+      "text": "加农炮Lv2"
+    },
+    "unitId": "Unit_Aoe2",
     "level": 2,
-    "BuyTowerCostGold": 60,
+    "BuyTowerCostGold": 160,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 80,
     "nextTowerId": "Tow2_3",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow2_3",
     "type": "2",
-    "name": "",
-    "unitId": "Unit_Aoe1",
+    "name": {
+      "key": "Text_Key_Name_Tow2_3",
+      "text": "加农炮Lv3"
+    },
+    "unitId": "Unit_Aoe3",
     "level": 3,
-    "BuyTowerCostGold": 70,
-    "nextTowerId": "Tow2_4",
-    "newTowerCostCount": 6,
-    "aiCfgId": "TowerDefense_Tower1"
-  },
-  {
-    "id": "Tow2_4",
-    "type": "2",
-    "name": "",
-    "unitId": "Unit_Aoe1",
-    "level": 4,
-    "BuyTowerCostGold": 80,
+    "BuyTowerCostGold": 160,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 80,
     "nextTowerId": "",
     "newTowerCostCount": 0,
     "aiCfgId": "TowerDefense_Tower1"
@@ -90,43 +98,47 @@
   {
     "id": "Tow3_1",
     "type": "3",
-    "name": "",
+    "name": {
+      "key": "Text_Key_Name_Tow3_1",
+      "text": "火图腾Lv1"
+    },
     "unitId": "Unit_Line1",
     "level": 1,
-    "BuyTowerCostGold": 50,
+    "BuyTowerCostGold": 80,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 40,
     "nextTowerId": "Tow3_2",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow3_2",
     "type": "3",
-    "name": "",
-    "unitId": "Unit_Line1",
+    "name": {
+      "key": "Text_Key_Name_Tow3_2",
+      "text": "火图腾Lv2"
+    },
+    "unitId": "Unit_Line2",
     "level": 2,
-    "BuyTowerCostGold": 60,
+    "BuyTowerCostGold": 80,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 40,
     "nextTowerId": "Tow3_3",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow3_3",
     "type": "3",
-    "name": "",
-    "unitId": "Unit_Line1",
+    "name": {
+      "key": "Text_Key_Name_Tow3_3",
+      "text": "火图腾Lv3"
+    },
+    "unitId": "Unit_Line3",
     "level": 3,
-    "BuyTowerCostGold": 70,
-    "nextTowerId": "Tow3_4",
-    "newTowerCostCount": 6,
-    "aiCfgId": "TowerDefense_Tower1"
-  },
-  {
-    "id": "Tow3_4",
-    "type": "3",
-    "name": "",
-    "unitId": "Unit_Line1",
-    "level": 4,
     "BuyTowerCostGold": 80,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 40,
     "nextTowerId": "",
     "newTowerCostCount": 0,
     "aiCfgId": "TowerDefense_Tower1"
@@ -134,43 +146,239 @@
   {
     "id": "Tow4_1",
     "type": "4",
-    "name": "",
+    "name": {
+      "key": "Text_Key_Name_Tow4_1",
+      "text": "毒雾塔Lv1"
+    },
     "unitId": "Unit_Circle1",
     "level": 1,
-    "BuyTowerCostGold": 50,
+    "BuyTowerCostGold": 120,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 60,
     "nextTowerId": "Tow4_2",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow4_2",
     "type": "4",
-    "name": "",
-    "unitId": "Unit_Circle1",
+    "name": {
+      "key": "Text_Key_Name_Tow4_2",
+      "text": "毒雾塔Lv2"
+    },
+    "unitId": "Unit_Circle2",
     "level": 2,
-    "BuyTowerCostGold": 60,
+    "BuyTowerCostGold": 120,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 60,
     "nextTowerId": "Tow4_3",
-    "newTowerCostCount": 6,
+    "newTowerCostCount": 3,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
     "id": "Tow4_3",
     "type": "4",
-    "name": "",
-    "unitId": "Unit_Circle1",
+    "name": {
+      "key": "Text_Key_Name_Tow4_3",
+      "text": "毒雾塔Lv3"
+    },
+    "unitId": "Unit_Circle3",
     "level": 3,
-    "BuyTowerCostGold": 70,
-    "nextTowerId": "Tow4_4",
-    "newTowerCostCount": 6,
+    "BuyTowerCostGold": 120,
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 60,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
     "aiCfgId": "TowerDefense_Tower1"
   },
   {
-    "id": "Tow4_4",
-    "type": "4",
-    "name": "",
-    "unitId": "Unit_Circle1",
-    "level": 4,
-    "BuyTowerCostGold": 80,
+    "id": "Tow5_1",
+    "type": "5",
+    "name": {
+      "key": "Text_Key_Name_Tow5_1",
+      "text": "龙击炮LV1"
+    },
+    "unitId": "Unit_TowerDragon1",
+    "level": 1,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 1,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow5_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow5_2",
+    "type": "5",
+    "name": {
+      "key": "Text_Key_Name_Tow5_2",
+      "text": "龙击炮LV2"
+    },
+    "unitId": "Unit_TowerDragon2",
+    "level": 2,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 2,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow5_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow5_3",
+    "type": "5",
+    "name": {
+      "key": "Text_Key_Name_Tow5_3",
+      "text": "龙击炮LV3"
+    },
+    "unitId": "Unit_TowerDragon3",
+    "level": 3,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 3,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow6_1",
+    "type": "6",
+    "name": {
+      "key": "Text_Key_Name_Tow6_1",
+      "text": "雷电塔LV1"
+    },
+    "unitId": "Unit_TowerElec1",
+    "level": 1,
+    "BuyTowerCostGold": 250,
+    "ReclaimTowerCostGold": 4,
+    "ScaleTowerCostGold": 125,
+    "nextTowerId": "Tow6_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow6_2",
+    "type": "6",
+    "name": {
+      "key": "Text_Key_Name_Tow6_2",
+      "text": "雷电塔LV2"
+    },
+    "unitId": "Unit_TowerElec2",
+    "level": 2,
+    "BuyTowerCostGold": 250,
+    "ReclaimTowerCostGold": 5,
+    "ScaleTowerCostGold": 125,
+    "nextTowerId": "Tow6_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow6_3",
+    "type": "6",
+    "name": {
+      "key": "Text_Key_Name_Tow6_3",
+      "text": "雷电塔LV3"
+    },
+    "unitId": "Unit_TowerElec3",
+    "level": 3,
+    "BuyTowerCostGold": 250,
+    "ReclaimTowerCostGold": 6,
+    "ScaleTowerCostGold": 125,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow7_1",
+    "type": "7",
+    "name": {
+      "key": "Text_Key_Name_Tow7_1",
+      "text": "冰魔塔LV1"
+    },
+    "unitId": "Unit_TowerIce1",
+    "level": 1,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 7,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow7_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow7_2",
+    "type": "7",
+    "name": {
+      "key": "Text_Key_Name_Tow7_2",
+      "text": "冰魔塔LV2"
+    },
+    "unitId": "Unit_TowerIce2",
+    "level": 2,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 8,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow7_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow7_3",
+    "type": "7",
+    "name": {
+      "key": "Text_Key_Name_Tow7_3",
+      "text": "冰魔塔LV3"
+    },
+    "unitId": "Unit_TowerIce3",
+    "level": 3,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 9,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow8_1",
+    "type": "8",
+    "name": {
+      "key": "Text_Key_Name_Tow8_1",
+      "text": "加速塔LV1"
+    },
+    "unitId": "Unit_TowerTime1",
+    "level": 1,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 10,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow8_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow8_2",
+    "type": "8",
+    "name": {
+      "key": "Text_Key_Name_Tow8_2",
+      "text": "加速塔LV2"
+    },
+    "unitId": "Unit_TowerTime2",
+    "level": 2,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 11,
+    "ScaleTowerCostGold": 100,
+    "nextTowerId": "Tow8_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1"
+  },
+  {
+    "id": "Tow8_3",
+    "type": "8",
+    "name": {
+      "key": "Text_Key_Name_Tow8_3",
+      "text": "加速塔LV3"
+    },
+    "unitId": "Unit_TowerTime3",
+    "level": 3,
+    "BuyTowerCostGold": 200,
+    "ReclaimTowerCostGold": 12,
+    "ScaleTowerCostGold": 100,
     "nextTowerId": "",
     "newTowerCostCount": 0,
     "aiCfgId": "TowerDefense_Tower1"

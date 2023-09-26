@@ -21,7 +21,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     {
         Duration = _buf.ReadFloat();
         AddStack = _buf.ReadInt();
-        BuffAction = BuffAction.DeserializeBuffAction(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BuffActions = new System.Collections.Generic.List<BuffAction>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffAction _e0;  _e0 = BuffAction.DeserializeBuffAction(_buf); BuffActions.Add(_e0);}}
         BuffId = _buf.ReadString();
         PostInit();
     }
@@ -42,7 +42,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     /// <summary>
     /// buff基本逻辑
     /// </summary>
-    public BuffAction BuffAction { get; private set; }
+    public System.Collections.Generic.List<BuffAction> BuffActions { get; private set; }
     /// <summary>
     /// buffId
     /// </summary>
@@ -53,13 +53,13 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        BuffAction?.Resolve(_tables);
+        foreach(var _e in BuffActions) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        BuffAction?.TranslateText(translator);
+        foreach(var _e in BuffActions) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
@@ -67,7 +67,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
         return "{ "
         + "Duration:" + Duration + ","
         + "AddStack:" + AddStack + ","
-        + "BuffAction:" + BuffAction + ","
+        + "BuffActions:" + Bright.Common.StringUtil.CollectionToString(BuffActions) + ","
         + "BuffId:" + BuffId + ","
         + "}";
     }

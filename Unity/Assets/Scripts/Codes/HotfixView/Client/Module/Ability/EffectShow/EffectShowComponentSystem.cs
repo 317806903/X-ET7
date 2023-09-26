@@ -10,7 +10,7 @@ namespace ET.Ability.Client
     public static class EffectShowComponentSystem
     {
         [ObjectSystem]
-        public class EffectComponentAwakeSystem: AwakeSystem<EffectShowComponent>
+        public class EffectShowComponentAwakeSystem: AwakeSystem<EffectShowComponent>
         {
             protected override void Awake(EffectShowComponent self)
             {
@@ -39,11 +39,27 @@ namespace ET.Ability.Client
             }
         }
 
+        public static Unit GetUnit(this EffectShowComponent self)
+        {
+            Unit unit = self.GetParent<Unit>();
+            return unit;
+        }
+
         public static EffectShowObj AddEffectShow(this EffectShowComponent self, EffectObj effectObj)
         {
             EffectShowObj effectShowObj = self.AddChild<EffectShowObj>();
             effectShowObj.Init(effectObj).Coroutine();
             self.curExistEffectList[effectObj.Id] = effectShowObj;
+
+            if (string.IsNullOrEmpty(effectObj.PlayAudioActionId) == false)
+            {
+                AudioPlayObj audioPlayObj = AudioPlayHelper.PlayAudio(self.GetUnit(), effectObj.PlayAudioActionId);
+                if (audioPlayObj != null)
+                {
+                    effectShowObj.RefAudioPlayObj = audioPlayObj;
+                }
+            }
+
             return effectShowObj;
         }
 
@@ -58,7 +74,7 @@ namespace ET.Ability.Client
 
         public static void FixedUpdate(this EffectShowComponent self, float fixedDeltaTime)
         {
-            EffectComponent effectComponent = self.Parent.GetComponent<EffectComponent>();
+            EffectComponent effectComponent = self.GetUnit().GetComponent<EffectComponent>();
             if (effectComponent == null)
             {
                 return;
@@ -68,7 +84,7 @@ namespace ET.Ability.Client
             {
                 self.waitRemoveEffectList.Add(effectShowObjs.Key);
             }
-            
+
             foreach (var effectObjs in effectComponent.Children)
             {
                 EffectObj effectObj = effectObjs.Value as EffectObj;
@@ -82,17 +98,16 @@ namespace ET.Ability.Client
                     self.AddEffectShow(effectObj);
                 }
             }
-            
-            if (self.waitRemoveEffectList.Count <= 0)
+
+            if (self.waitRemoveEffectList.Count > 0)
             {
-                return;
+                foreach (var effectObjId in self.waitRemoveEffectList)
+                {
+                    self.RemoveEffectShow(effectObjId);
+                }
+                self.waitRemoveEffectList.Clear();
             }
 
-            foreach (var effectObjId in self.waitRemoveEffectList)
-            {
-                self.RemoveEffectShow(effectObjId);
-            }
-            self.waitRemoveEffectList.Clear();
         }
     }
 }

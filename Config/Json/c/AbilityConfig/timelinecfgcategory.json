@@ -23,7 +23,7 @@
               {
                 "$type": "BuffTagTypeCondition",
                 "conditionCompare": 2,
-                "buffTagType": 1
+                "buffTagType": 15
               }
             ]
           },
@@ -32,7 +32,7 @@
               {
                 "$type": "AttributeCondition",
                 "conditionCompare": 1,
-                "numericType": 10032,
+                "numericType": 10062,
                 "value": 4
               },
               {
@@ -48,7 +48,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -214,7 +214,7 @@
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
           "isSave": false,
@@ -263,12 +263,12 @@
     "id": "Timeline_Player1",
     "name": "",
     "desc": "",
-    "duration": 3,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
           "isSave": false,
@@ -340,7 +340,7 @@
     "id": "Timeline_Player2",
     "name": "",
     "desc": "",
-    "duration": 3,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 1,
@@ -383,7 +383,7 @@
     "id": "Timeline_Player3",
     "name": "",
     "desc": "",
-    "duration": 3,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 1,
@@ -402,12 +402,12 @@
     "id": "Timeline_RocketTower_1",
     "name": "",
     "desc": "",
-    "duration": 4,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -415,8 +415,28 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
-        "delayTime": 0.2,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
         "action_id": "FireBullet_RocketProjectile_1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
@@ -430,12 +450,12 @@
     "id": "Timeline_MachineGunTower1",
     "name": "",
     "desc": "",
-    "duration": 4,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -443,7 +463,27 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_MachineGunLvl1Effect_1",
         "actionCallParam": {
@@ -454,8 +494,8 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
-        "delayTime": 0.2,
+        "timeElapsed": 0.2,
+        "delayTime": 0,
         "action_id": "AttackArea_One1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
@@ -469,12 +509,12 @@
     "id": "Timeline_LaserTower_0",
     "name": "",
     "desc": "",
-    "duration": 4,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -482,7 +522,27 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_LaserFireEffect1",
         "actionCallParam": {
@@ -493,8 +553,8 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
-        "delayTime": 0.2,
+        "timeElapsed": 0.2,
+        "delayTime": 0,
         "action_id": "AttackArea_One1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
@@ -508,12 +568,12 @@
     "id": "Timeline_EnergyPylon_2",
     "name": "",
     "desc": "",
-    "duration": 4,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -521,7 +581,27 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_EneryPylon_PFX1",
         "actionCallParam": {
@@ -532,8 +612,8 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
-        "delayTime": 0.2,
+        "timeElapsed": 0.2,
+        "delayTime": 0,
         "action_id": "AttackArea_One1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
@@ -547,12 +627,12 @@
     "id": "Timeline_HoverTank1",
     "name": "",
     "desc": "",
-    "duration": 4,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -560,7 +640,27 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_HoverTankFireShow1",
         "actionCallParam": {
@@ -571,8 +671,8 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
-        "delayTime": 0.2,
+        "timeElapsed": 0.2,
+        "delayTime": 0,
         "action_id": "AttackArea_HoverTank1",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
@@ -586,12 +686,12 @@
     "id": "Timeline_PlayerSolo1",
     "name": "射击",
     "desc": "单体射击",
-    "duration": 0,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -599,33 +699,159 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
         "delayTime": 0,
-        "action_id": "EffectCreate_PlayerSolo1_Fire",
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Arrow_Bullet_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Arrow_Fire_1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerSolo2",
+    "name": "射击",
+    "desc": "单体射击",
+    "duration": 1,
+    "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "EffectCreate_PlayerSolo1_Flash",
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Arrow_Bullet_2",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Arrow_Fire_2",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerSolo3",
+    "name": "射击",
+    "desc": "单体射击",
+    "duration": 1,
+    "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnitOne",
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Arrow_Bullet_3",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Arrow_Fire_3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
@@ -637,12 +863,12 @@
     "id": "Timeline_PlayerAoe1",
     "name": "炮击",
     "desc": "AOE射击",
-    "duration": 0,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -650,33 +876,159 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
         "delayTime": 0,
-        "action_id": "EffectCreate_PlayerAoe1_Fire",
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Cannon_Bullet_1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Fire_1",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerAoe2",
+    "name": "炮击",
+    "desc": "AOE射击",
+    "duration": 1,
+    "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "EffectCreate_PlayerAoe1_Flash",
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Cannon_Bullet_2",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Fire_2",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerAoe3",
+    "name": "炮击",
+    "desc": "AOE射击",
+    "duration": 1,
+    "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerAoe1First",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
-          "$type": "ActionCallAutoUnitOne",
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_Tower_Cannon_Bullet_3",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Cannon_Fire_3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
           "isSave": false
         },
         "actionCondition1": [],
@@ -686,9 +1038,9 @@
   },
   {
     "id": "Timeline_PlayerLine1",
-    "name": "火柱",
+    "name": "火柱1",
     "desc": "直线范围攻击",
-    "duration": 0,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
@@ -704,10 +1056,48 @@
     ]
   },
   {
+    "id": "Timeline_PlayerLine2",
+    "name": "火柱2",
+    "desc": "直线范围攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Line2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerLine3",
+    "name": "火柱3",
+    "desc": "直线范围攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Line3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "Timeline_PlayerCircle1",
     "name": "毒雾",
     "desc": "圆形范围攻击",
-    "duration": 0,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
@@ -726,12 +1116,12 @@
     "id": "Timeline_EnemySolo1",
     "name": "射击",
     "desc": "单体射击",
-    "duration": 0,
+    "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },
@@ -739,7 +1129,27 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_EnemySolo1_Fire",
         "actionCallParam": {
@@ -750,9 +1160,485 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_EnemySolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Idle1",
+    "name": "待机",
+    "desc": "待机",
+    "duration": 5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_None",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Move1",
+    "name": "移动",
+    "desc": "移动",
+    "duration": 5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_None",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDragon1",
+    "name": "龙击炮1",
+    "desc": "单体射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDragon_Bullet1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDragon2",
+    "name": "龙击炮2",
+    "desc": "单体射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDragon_Bullet2",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDragon3",
+    "name": "龙击炮1",
+    "desc": "单体射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDragon_Bullet3",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElec1",
+    "name": "雷电塔1",
+    "desc": "单体攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Skill1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Hit1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AttackUp",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElec2",
+    "name": "雷电塔2",
+    "desc": "单体攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Skill2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Hit2",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AttackUp",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElec3",
+    "name": "雷电塔3",
+    "desc": "单体攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_PlayerSolo1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Skill3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_TowerElec_Hit3",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AttackUp",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIce1",
+    "name": "冰魔塔1",
+    "desc": "AOE射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIce_Bullet1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIce2",
+    "name": "冰魔塔2",
+    "desc": "AOE射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIce_Bullet2",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIce3",
+    "name": "冰魔塔3",
+    "desc": "AOE射击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.2,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIce_Bullet3",
         "actionCallParam": {
           "$type": "ActionCallSelectLast"
         },

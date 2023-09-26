@@ -19,12 +19,16 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         ResId = _buf.ReadString();
+        RotationSpeed = _buf.ReadFloat();
+        IsNeedChkMesh = _buf.ReadBool();
+        BodyHeight = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
         CanHitAfterCreated = _buf.ReadFloat();
         HitTimes = _buf.ReadInt();
         SameTargetDelay = _buf.ReadFloat();
         DeathShow = _buf.ReadString();
+        IdleTimelineId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonitorTriggers = new System.Collections.Generic.List<BulletActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BulletActionCall _e0;  _e0 = BulletActionCall.DeserializeBulletActionCall(_buf); MonitorTriggers.Add(_e0);}}
         PostInit();
     }
@@ -47,6 +51,18 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     /// </summary>
     public string ResId { get; private set; }
     public ResUnitCfg ResId_Ref { get; private set; }
+    /// <summary>
+    /// 转身速度
+    /// </summary>
+    public float RotationSpeed { get; private set; }
+    /// <summary>
+    /// 是否需要检测Mesh(移动时)
+    /// </summary>
+    public bool IsNeedChkMesh { get; private set; }
+    /// <summary>
+    /// 身体高度(判断位置，判断伤害什么的)
+    /// </summary>
+    public float BodyHeight { get; private set; }
     /// <summary>
     /// 身体半径(判断伤害什么的)
     /// </summary>
@@ -72,6 +88,11 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     /// </summary>
     public string DeathShow { get; private set; }
     public ActionCfg_DeathShow DeathShow_Ref { get; private set; }
+    /// <summary>
+    /// Idle行为
+    /// </summary>
+    public string IdleTimelineId { get; private set; }
+    public TimelineCfg IdleTimelineId_Ref { get; private set; }
     public System.Collections.Generic.List<BulletActionCall> MonitorTriggers { get; private set; }
 
     public const int __ID__ = -1027634206;
@@ -81,6 +102,7 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     {
         this.ResId_Ref = (_tables["ResUnitCfgCategory"] as ResUnitCfgCategory).GetOrDefault(ResId);
         this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
+        this.IdleTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(IdleTimelineId);
         foreach(var _e in MonitorTriggers) { _e?.Resolve(_tables); }
         PostResolve();
     }
@@ -96,12 +118,16 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "ResId:" + ResId + ","
+        + "RotationSpeed:" + RotationSpeed + ","
+        + "IsNeedChkMesh:" + IsNeedChkMesh + ","
+        + "BodyHeight:" + BodyHeight + ","
         + "BodyRadius:" + BodyRadius + ","
         + "ResScale:" + ResScale + ","
         + "CanHitAfterCreated:" + CanHitAfterCreated + ","
         + "HitTimes:" + HitTimes + ","
         + "SameTargetDelay:" + SameTargetDelay + ","
         + "DeathShow:" + DeathShow + ","
+        + "IdleTimelineId:" + IdleTimelineId + ","
         + "MonitorTriggers:" + Bright.Common.StringUtil.CollectionToString(MonitorTriggers) + ","
         + "}";
     }

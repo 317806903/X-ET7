@@ -18,6 +18,7 @@ public sealed partial class ActionCfg_FaceTo: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        FaceToType = (FaceToType)_buf.ReadInt();
         PostInit();
     }
 
@@ -34,6 +35,10 @@ public sealed partial class ActionCfg_FaceTo: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 面向的修改方式
+    /// </summary>
+    public FaceToType FaceToType { get; private set; }
 
     public const int __ID__ = 1860862217;
     public override int GetTypeId() => __ID__;
@@ -52,6 +57,7 @@ public sealed partial class ActionCfg_FaceTo: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "FaceToType:" + FaceToType + ","
         + "}";
     }
     

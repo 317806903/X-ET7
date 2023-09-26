@@ -1,5 +1,4 @@
-﻿using ET;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RedDotMonoView: MonoBehaviour
@@ -8,10 +7,10 @@ public class RedDotMonoView: MonoBehaviour
     public bool isRedDotActive = false;
     private GameObject redDotGameObject = null;
     private Text redDotCountLabel = null;
-    
+
     public Vector3 RedDotScale    = Vector3.one;
     public Vector2 PositionOffset = Vector2.zero;
-    
+
     private void Awake()
     {
         this.isRedDotActive = false;
@@ -27,7 +26,7 @@ public class RedDotMonoView: MonoBehaviour
         this.redDotCountLabel = redDotGameObject.GetComponentInChildren<Text>();
         redDotGameObject.SetActive(true);
     }
-    
+
     public void RefreshRedDotCount(int count)
     {
         if ( null == this.redDotGameObject )
@@ -44,7 +43,7 @@ public class RedDotMonoView: MonoBehaviour
         {
             this.redDotCountLabel.text = "";
         }
-        
+
         this.isRedDotActive = false;
         this.redDotCountLabel = null;
         this.redDotGameObject?.SetActive(false);

@@ -21,6 +21,7 @@ namespace ET.Ability
         {
             protected override void Destroy(BuffObj self)
             {
+                self.monitorTriggerList?.Clear();
             }
         }
 
@@ -35,33 +36,64 @@ namespace ET.Ability
             }
 
             self.permanent = addBuffInfo.Duration == -1? true : false;
-            self.duration = addBuffInfo.Duration == -1? 1 : addBuffInfo.Duration;
+            self.duration = addBuffInfo.Duration == -1? 100 : addBuffInfo.Duration;
             self.orgDuration = self.duration;
             self.stack = 0;
-            self.AddStackCount(addBuffInfo.AddStack, false);
+            self.buffActions = addBuffInfo.BuffActions;
+
             self.casterUnitId = casterUnit.Id;
-            self.carrierUnitId = unit.Id;
+            Unit casterPlayerUnit = self.GetCasterActorUnit();
+            self.casterUnitId = casterPlayerUnit.Id;
+
             self.timeElapsed = 0;
             self.ticked = 0;
-            self.buffAction = addBuffInfo.BuffAction;
+            self.AddStackCount(addBuffInfo.AddStack, false);
         }
-        
+
         public static void InitActionContext(this BuffObj self, ActionContext actionContext)
         {
-            actionContext.buffUnitId = self.carrierUnitId;
+            actionContext.buffUnitId = self.GetUnit().Id;
             actionContext.buffCfgId = self.CfgId;
             actionContext.buffId = self.Id;
             self.actionContext = actionContext;
         }
 
-        public static void AddStackCount(this BuffObj self, int addStack, bool needPublic = true)
+        public static void AddStackCount(this BuffObj self, ActionCfg_BuffStackCountChg actionCfgBuffStackCountChg, bool needPublic = true)
         {
             int oldStackCount = self.stack;
-            self.stack = math.clamp(self.stack + addStack, 0, self.model.MaxStack);
-            self.ChgBuffStackCountWhenModifyAttribute(oldStackCount, self.stack);
-            
+            if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Add)
+            {
+                self.stack = math.clamp(self.stack + actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+            }
+            else if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Reduce)
+            {
+                self.stack = math.clamp(self.stack - actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+            }
+            else if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Set)
+            {
+                self.stack = math.clamp(actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+            }
+            self.DealSpecWhenChgBuffStackCount(oldStackCount, self.stack);
+
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
-            if (needPublic && addStack > 0)
+            if (needPublic && actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Add)
+            {
+                self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
+            }
+            //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
+        }
+
+        public static void AddStackCount(this BuffObj self, int addStackCount, bool needPublic = true)
+        {
+            int oldStackCount = self.stack;
+            self.stack = math.clamp(self.stack + addStackCount, 0, self.model.MaxStack);
+            if (needPublic)
+            {
+                self.DealSpecWhenChgBuffStackCount(oldStackCount, self.stack);
+            }
+
+            //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
+            if (needPublic && addStackCount > 0)
             {
                 self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
             }
@@ -81,15 +113,17 @@ namespace ET.Ability
             {
                 return;
             }
-            if (oldIsEnabled && isEnabled == false)
+            if (isEnabled == false)
             {
-                self.RemoveBuffWhenModifyAttribute();
                 self.isEnabled = false;
+                self.DealSelfEffectWhenSetEnable(false);
+                self.DealSpecWhenSetEnable(false);
             }
             else
             {
                 self.isEnabled = true;
-                self.AddBuffWhenModifyAttribute();
+                self.DealSelfEffectWhenSetEnable(true);
+                self.DealSpecWhenSetEnable(true);
             }
         }
 
@@ -100,7 +134,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static Unit GetUnit(this BuffObj self)
         {
-            return UnitHelper.GetUnit(self.DomainScene(), self.carrierUnitId);
+            return self.GetParent<BuffComponent>().GetParent<Unit>();
         }
 
         /// <summary>
@@ -118,25 +152,9 @@ namespace ET.Ability
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static Unit GetCasterPlayerUnit(this BuffObj self)
+        public static Unit GetCasterActorUnit(this BuffObj self)
         {
-            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-            while(true)
-            {
-                if (UnitHelper.ChkIsBullet(unit))
-                {
-                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
-                }
-                else if (UnitHelper.ChkIsAoe(unit))
-                {
-                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return unit;
+            return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
         }
 
         public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
@@ -148,6 +166,7 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             if (self.permanent == false) self.duration -= timePassed;
+            float lastTimeElapsed = self.timeElapsed;
             self.timeElapsed += timePassed;
 
             int tickCount = math.min(self.model.TickTime.Count, 3);
@@ -155,9 +174,11 @@ namespace ET.Ability
             {
                 if (self.model.TickTime[i] > 0)
                 {
-                    //float取模不精准，所以用x1000后的整数来
-                    if (Math.Round(self.timeElapsed * 1000) % Math.Round(self.model.TickTime[i] * 1000) == 0)
+                    int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
+                    int newCount = (int)(self.timeElapsed / self.model.TickTime[i]);
+                    while (newCount > lastCount)
                     {
+                        lastCount++;
                         if (i == 0)
                         {
                             self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick1);
@@ -177,8 +198,7 @@ namespace ET.Ability
             }
         }
 
-        public static void TrigEvent(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit = null, Unit 
-        beHurtUnit = null)
+        public static void TrigEvent(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit = null, Unit beHurtUnit = null)
         {
             if (self.isEnabled == false)
             {
@@ -193,7 +213,7 @@ namespace ET.Ability
                 }
             }
         }
-        
+
         public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
             if (onAttackUnit != null)
@@ -209,11 +229,11 @@ namespace ET.Ability
             }
             else if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit, ref self.actionContext);
             }
             else if (buffActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf, ref self.actionContext);
             }
             else
             {
@@ -224,7 +244,7 @@ namespace ET.Ability
                 }
                 else if (buffActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
                 {
-                    targetUnit = self.GetCasterPlayerUnit();
+                    targetUnit = self.GetCasterActorUnit();
                 }
                 else if (buffActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
                 {

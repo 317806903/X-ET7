@@ -19,15 +19,17 @@ namespace ET.Client
                 {
                     string RouterHttpHost = ConstValue.RouterHttpHost;
                     int RouterHttpPort = ConstValue.RouterHttpPort;
-                    RouterHttpHost = StartMachineConfigCategory.Instance.DataList[0].OuterIP;
-                    RouterHttpPort = StartSceneConfigCategory.Instance.RouterManager.OuterPort;
+
+                    (RouterHttpHost, RouterHttpPort) = EventSystem.Instance.Invoke<ConfigComponent.GetRouterHttpHostAndPort, (string, int)>(new ConfigComponent.GetRouterHttpHostAndPort());
+
+                    Log.Debug($"===ET.Client.LoginHelper.Login RouterHttpHost[{RouterHttpHost}] RouterHttpPort[{RouterHttpPort}]");
                     routerAddressComponent = clientScene.AddComponent<RouterAddressComponent, string, int>(RouterHttpHost, RouterHttpPort);
                     await routerAddressComponent.Init();
-                    
+
                     clientScene.AddComponent<NetClientComponent, AddressFamily>(routerAddressComponent.RouterManagerIPAddress.AddressFamily);
                 }
                 IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
-                
+
                 R2C_Login r2CLogin;
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
@@ -36,22 +38,22 @@ namespace ET.Client
 
                 // 创建一个gate Session,并且保存到SessionComponent中
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(r2CLogin.Address));
-                SessionComponent sessionComponent = clientScene.GetComponent<SessionComponent>();
+                SessionComponent sessionComponent = ET.Client.SessionHelper.GetSessionCompent(clientScene);
                 if (sessionComponent == null)
                 {
                     sessionComponent = clientScene.AddComponent<SessionComponent>();
                 }
                 sessionComponent.Session = gateSession;
-				
+
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
                     new C2G_LoginGate() { Key = r2CLogin.Key, GateId = r2CLogin.GateId});
 
                 clientScene.GetComponent<PlayerComponent>().MyId = g2CLoginGate.PlayerId;
-                
+
                 clientScene.GetComponent<PlayerComponent>().PlayerGameMode = EnumHelper.FromString<PlayerGameMode>(g2CLoginGate.PlayerGameMode);
                 clientScene.GetComponent<PlayerComponent>().PlayerStatus = EnumHelper.FromString<PlayerStatus>(g2CLoginGate.PlayerStatus);
                 clientScene.GetComponent<PlayerComponent>().RoomId = g2CLoginGate.RoomId;
-                
+
                 Log.Debug("登陆gate成功!");
 
                 await EventSystem.Instance.PublishAsync(clientScene, new EventType.LoginFinish());
@@ -61,20 +63,27 @@ namespace ET.Client
                 Log.Error(e);
             }
         }
-        
+
         public static async ETTask LoginOut(Scene clientScene)
         {
             try
             {
-                Session gateSession = clientScene.GetComponent<SessionComponent>().Session;
-				
-                G2C_LoginOut _G2C_LoginOut = (G2C_LoginOut)await gateSession.Call(
-                    new C2G_LoginOut());
+                try
+                {
+                    Session gateSession = ET.Client.SessionHelper.GetSession(clientScene);
+                    G2C_LoginOut _G2C_LoginOut = (G2C_LoginOut)await gateSession.Call(
+                        new C2G_LoginOut());
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
 
                 clientScene.RemoveComponent<RouterAddressComponent>();
                 clientScene.RemoveComponent<NetClientComponent>();
                 clientScene.RemoveComponent<SessionComponent>();
-                
+
+                await SceneHelper.EnterLogin(clientScene, false);
                 await EventSystem.Instance.PublishAsync(clientScene, new EventType.LoginOutFinish());
             }
             catch (Exception e)
@@ -82,7 +91,7 @@ namespace ET.Client
                 Log.Error(e);
             }
         }
-        
+
         public static async ETTask ReLogin(Scene clientScene, string account, string password)
         {
             try
@@ -95,15 +104,16 @@ namespace ET.Client
                 {
                     string RouterHttpHost = ConstValue.RouterHttpHost;
                     int RouterHttpPort = ConstValue.RouterHttpPort;
-                    RouterHttpHost = StartMachineConfigCategory.Instance.DataList[0].OuterIP;
-                    RouterHttpPort = StartSceneConfigCategory.Instance.RouterManager.OuterPort;
+
+                    (RouterHttpHost, RouterHttpPort) = EventSystem.Instance.Invoke<ConfigComponent.GetRouterHttpHostAndPort, (string, int)>(new ConfigComponent.GetRouterHttpHostAndPort());
+
                     routerAddressComponent = clientScene.AddComponent<RouterAddressComponent, string, int>(RouterHttpHost, RouterHttpPort);
                     await routerAddressComponent.Init();
-                    
+
                     clientScene.AddComponent<NetClientComponent, AddressFamily>(routerAddressComponent.RouterManagerIPAddress.AddressFamily);
                 }
                 IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
-                
+
                 R2C_Login r2CLogin;
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
@@ -113,7 +123,7 @@ namespace ET.Client
                 // 创建一个gate Session,并且保存到SessionComponent中
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(r2CLogin.Address));
                 clientScene.AddComponent<SessionComponent>().Session = gateSession;
-				
+
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
                     new C2G_LoginGate() { Key = r2CLogin.Key, GateId = r2CLogin.GateId});
 

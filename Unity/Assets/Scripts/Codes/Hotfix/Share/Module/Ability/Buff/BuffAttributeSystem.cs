@@ -8,67 +8,54 @@ namespace ET.Ability
     [FriendOf(typeof (BuffObj))]
     public static class BuffAttributeSystem
     {
-        public static (ET.AbilityConfig.NumericType, float) GetAttributeChg(this BuffObj self, int stackCount)
+        public static (ET.AbilityConfig.NumericType, float) _GetAttributeChg(this BuffObj self, BuffActionModifyAttribute buffActionModifyAttribute, int stackCount)
         {
-            BuffActionModifyAttribute buffActionModifyAttribute = self.buffAction as BuffActionModifyAttribute;
             float chgValue = buffActionModifyAttribute.BaseValue + buffActionModifyAttribute.StackValue * stackCount;
+            float maxChgValue = buffActionModifyAttribute.MaxChgValue;
+            if (chgValue > 0)
+            {
+                maxChgValue = Math.Abs(maxChgValue);
+                chgValue = Math.Min(chgValue, maxChgValue);
+            }
+            else
+            {
+                maxChgValue = -Math.Abs(maxChgValue);
+                chgValue = Math.Max(chgValue, maxChgValue);
+            }
             return (buffActionModifyAttribute.NumericType, chgValue);
         }
 
-        public static void AddBuffWhenModifyAttribute(this BuffObj self)
+        public static void AddBuffWhenModifyAttribute(this BuffObj self, BuffActionModifyAttribute buffActionModifyAttribute)
         {
-            if (self.isEnabled == false)
-            {
-                return;
-            }
-            if (self.buffAction is BuffActionModifyAttribute == false)
-            {
-                return;
-            }
-            
-            (AbilityConfig.NumericType numericType, float value) = self.GetAttributeChg(self.stack);
+            (AbilityConfig.NumericType numericType, float value) = self._GetAttributeChg(buffActionModifyAttribute, self.stack);
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             float newValue = numericComponent.GetAsFloat((int)numericType) + value;
-            numericComponent.Set((int)numericType, newValue);
+            numericComponent.SetAsFloat((int)numericType, newValue);
         }
-        
-        public static void ChgBuffStackCountWhenModifyAttribute(this BuffObj self, int oldStackCount, int newStackCount)
-        {
-            if (self.isEnabled == false)
-            {
-                return;
-            }
-            if (self.buffAction is BuffActionModifyAttribute == false)
-            {
-                return;
-            }
 
+        public static void ChgBuffStackCountWhenModifyAttribute(this BuffObj self, BuffActionModifyAttribute buffActionModifyAttribute, int oldStackCount, int newStackCount)
+        {
+            if (oldStackCount == 0)
+            {
+                return;
+            }
             if (oldStackCount == newStackCount)
             {
                 return;
             }
-            (AbilityConfig.NumericType numericType, float oldValue) = self.GetAttributeChg(oldStackCount);
-            (AbilityConfig.NumericType numericType2, float newValue) = self.GetAttributeChg(newStackCount);
+            (AbilityConfig.NumericType numericType, float oldValue) = self._GetAttributeChg(buffActionModifyAttribute, oldStackCount);
+            (AbilityConfig.NumericType numericType2, float newValue) = self._GetAttributeChg(buffActionModifyAttribute, newStackCount);
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             float value = numericComponent.GetAsFloat((int)numericType) - oldValue + newValue;
-            numericComponent.Set((int)numericType, value);
+            numericComponent.SetAsFloat((int)numericType, value);
         }
-        
-        public static void RemoveBuffWhenModifyAttribute(this BuffObj self)
-        {
-            if (self.isEnabled == false)
-            {
-                return;
-            }
-            if (self.buffAction is BuffActionModifyAttribute == false)
-            {
-                return;
-            }
 
-            (AbilityConfig.NumericType numericType, float value) = self.GetAttributeChg(self.stack);
+        public static void RemoveBuffWhenModifyAttribute(this BuffObj self, BuffActionModifyAttribute buffActionModifyAttribute)
+        {
+            (AbilityConfig.NumericType numericType, float value) = self._GetAttributeChg(buffActionModifyAttribute, self.stack);
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             float newValue = numericComponent.GetAsFloat((int)numericType) - value;
-            numericComponent.Set((int)numericType, newValue);
+            numericComponent.SetAsFloat((int)numericType, newValue);
         }
 
     }

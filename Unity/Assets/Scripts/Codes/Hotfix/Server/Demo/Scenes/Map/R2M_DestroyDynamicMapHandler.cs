@@ -14,7 +14,7 @@ namespace ET.Server
 				return;
 			}
 
-			await dynamicMapManagerComponent.DestroyDynamicMap(request.DynamicMapId);
+			await dynamicMapManagerComponent.DestroyDynamicMap(request.DynamicMapInstanceId);
 
 			await ETTask.CompletedTask;
 		}

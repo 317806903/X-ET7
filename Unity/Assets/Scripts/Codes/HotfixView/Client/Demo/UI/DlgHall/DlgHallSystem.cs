@@ -6,8 +6,24 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
+	[Invoke(TimerInvokeType.HallTimer)]
+	public class DlgHallTimer: ATimer<DlgHall>
+	{
+		protected override void Run(DlgHall self)
+		{
+			try
+			{
+				self.GetRoomList().Coroutine();
+			}
+			catch (Exception e)
+			{
+				Log.Error($"move timer error: {self.Id}\n{e}");
+			}
+		}
+	}
+
 	[FriendOf(typeof(DlgHall))]
-	public static  class DlgHallSystem
+	public static class DlgHallSystem
 	{
 		public static void RegisterUIEvent(this DlgHall self)
 		{
@@ -20,18 +36,26 @@ namespace ET.Client
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
 		}
 
-		public static void ShowWindow(this DlgHall self, Entity contextData = null)
+		public static void ShowWindow(this DlgHall self, ShowWindowData contextData = null)
 		{
 			self.GetRoomList().Coroutine();
+
+			self.Timer = TimerComponent.Instance.NewRepeatedTimer(5000, TimerInvokeType.HallTimer, self);
+
+		}
+
+		public static void HideWindow(this DlgHall self)
+		{
+			TimerComponent.Instance?.Remove(ref self.Timer);
 		}
 
 		public static async ETTask GetRoomList(this DlgHall self)
 		{
 			Scene clientScene = self.ClientScene();
 			await RoomHelper.GetRoomListAsync(clientScene);
-			
-			self.roomList = clientScene.GetComponent<RoomManagerComponent>().GetRoomList();
-			
+			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(clientScene);
+			self.roomList = roomManagerComponent.GetRoomList();
+
 			int count = self.roomList.Count;
 			self.AddUIScrollItems(ref self.ScrollItemRooms, count);
 			self.View.ELoopScrollList_RoomLoopHorizontalScrollRect.SetVisible(true, count);
@@ -40,7 +64,7 @@ namespace ET.Client
 		public static void AddTowerItemRefreshListener(this DlgHall self, Transform transform, int index)
 		{
 			Scroll_Item_Room itemRoom = self.ScrollItemRooms[index].BindTrans(transform);
-			
+
 			RoomComponent roomComponent = self.roomList[index];
 			long roomId = roomComponent.Id;
 			RoomStatus roomStatus = roomComponent.roomStatus;
@@ -49,7 +73,7 @@ namespace ET.Client
 			{
 				itemRoom.EButton_JoinButton.AddListener(() =>
 				{
-					self.JoinRoom(roomId);
+					self.JoinRoom(roomId).Coroutine();
 				});
 			}
 			else
@@ -60,35 +84,41 @@ namespace ET.Client
 
 		public static async ETTask CreateRoom(this DlgHall self)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
 			string battleCfgId = "GamePlayBattleLevel_Room11";
 			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, false);
 			if (result)
 			{
-				self.ClientScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Hall);
-				await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgHall>();
+				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRoom>();
 			}
-			
+
 		}
 
 		public static async ETTask RefreshRoomList(this DlgHall self)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+
 			await self.GetRoomList();
 		}
 
 		public static async ETTask ReturnLogin(this DlgHall self)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+
 			await LoginHelper.LoginOut(self.ClientScene());
-			self.ClientScene().GetComponent<UIComponent>().HideAllShownWindow();
-			await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Login);
 		}
-		
+
 		public static async ETTask JoinRoom(this DlgHall self, long roomId)
 		{
+			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
 			bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
 			if (result)
 			{
-				self.ClientScene().GetComponent<UIComponent>().HideAllShownWindow();
-				await self.ClientScene().GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+				UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
+				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRoom>();
 			}
 		}
 

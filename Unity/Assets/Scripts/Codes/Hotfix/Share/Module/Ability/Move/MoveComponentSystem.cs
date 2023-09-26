@@ -5,7 +5,6 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [FriendOf(typeof (MoveComponent))]
-    [FriendOf(typeof (MoveObj))]
     public static class MoveComponentSystem
     {
         [ObjectSystem]
@@ -13,8 +12,6 @@ namespace ET.Ability
         {
             protected override void Awake(MoveComponent self)
             {
-                self.moveDirectionInput = float3.zero;
-                self.removeList = new();
             }
         }
 
@@ -23,10 +20,9 @@ namespace ET.Ability
         {
             protected override void Destroy(MoveComponent self)
             {
-                self.removeList.Clear();
             }
         }
-        
+
         [ObjectSystem]
         public class MoveComponentFixedUpdateSystem: FixedUpdateSystem<MoveComponent>
         {
@@ -42,70 +38,117 @@ namespace ET.Ability
             }
         }
 
-        public static MoveObj AddMove(this MoveComponent self, int moveCfgId)
+        public static Unit GetUnit(this MoveComponent self)
         {
-            MoveObj moveObj = self.AddChild<MoveObj>();
-            moveObj.Init(moveCfgId);
-            
-            return moveObj;
-        }
-
-        public static void SetMoveInput(this MoveComponent self, float3 moveDirectionInput)
-        {
-            self.moveDirectionInput = moveDirectionInput;
-        }
-
-        public static void RunMove(this MoveComponent self, float fixedDeltaTime)
-        {
-            foreach (var moveObjs in self.Children)
-            {
-                MoveObj moveObj = moveObjs.Value as MoveObj;
-                self.moveDirectionInput += moveObj.GetVeloInTime();
-            }
-
-            Unit unit = self.GetParent<Unit>();
-            float3 targetPos = unit.Position + self.moveDirectionInput * fixedDeltaTime;
-            
-            // List<float3> list = new List<float3>();
-            // unit.GetComponent<PathfindingComponent>().Find(unit.Position, targetPos, list);
-            // if (list.Count < 2)
-            // {
-            //     //unit.SendStop(3);
-            //     return;
-            // }
-            // ET.MoveByPathComponent moveByPathComponent = unit.GetComponent<ET.MoveByPathComponent>();
-            // float speed = 2f;
-            // moveByPathComponent.MoveToAsync(list, speed).Coroutine();
+            return self.GetParent<Unit>();
         }
 
         public static void FixedUpdate(this MoveComponent self, float fixedDeltaTime)
         {
-            self.RunMove(fixedDeltaTime);
-
-            if (self.Children.Count <= 0)
+            Unit unit = self.GetUnit();
+            if (UnitHelper.ChkCanMove(unit) == false)
+            {
+                return;
+            }
+            PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
+            if (pathfindingComponent == null)
+            {
+                return;
+            }
+            if (pathfindingComponent.navMeshAgent == null)
             {
                 return;
             }
 
-            self.removeList.Clear();
-            foreach (var moveObjs in self.Children)
-            {
-                MoveObj moveObj = moveObjs.Value as MoveObj;
-                moveObj.FixedUpdate(fixedDeltaTime);
+            float3 speedVector = BuffHelper.GetMotionSpeedVector(unit);
 
-                if (moveObj.ChkNeedRemove())
+
+            if (speedVector.Equals(float3.zero))
+            {
+                if (pathfindingComponent != null)
                 {
-                    self.removeList.Add(moveObj);
+                    pathfindingComponent.StopMoveVelocity();
+                }
+                MoveOrIdleComponent moveOrIdleComponent = unit.GetComponent<MoveOrIdleComponent>();
+                if (moveOrIdleComponent != null)
+                {
+                    float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
+                    if (moveOrIdleComponent.moveInputType == MoveInputType.Stop)
+                    {
+                    }
+                    else if (moveOrIdleComponent.moveInputType == MoveInputType.Direction)
+                    {
+                        pathfindingComponent.SetMoveVelocity(moveOrIdleComponent.directionInput * speed);
+                    }
+                    else if (moveOrIdleComponent.moveInputType == MoveInputType.TargetPosition)
+                    {
+                        float3 targetPos = moveOrIdleComponent.targetPositionInput;
+                        float3 unitPos = unit.Position;
+                        if (math.abs(targetPos.x - unitPos.x) < 0.1f && math.abs(targetPos.z - unitPos.z) < 0.1f)
+                        {
+                            ET.Ability.UnitHelper.ResetPos(unit, targetPos);
+                            return;
+                        }
+                        unit.FindPathMoveToAsync(targetPos, null).Coroutine();
+                    }
+                }
+                return;
+            }
+            else
+            {
+                MoveOrIdleComponent moveOrIdleComponent = unit.GetComponent<MoveOrIdleComponent>();
+                if (moveOrIdleComponent != null)
+                {
+                    float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
+                    if (moveOrIdleComponent.moveInputType == MoveInputType.Stop)
+                    {
+                    }
+                    else if (moveOrIdleComponent.moveInputType == MoveInputType.Direction)
+                    {
+                        speedVector += moveOrIdleComponent.directionInput * speed;
+                    }
+                    else if (moveOrIdleComponent.moveInputType == MoveInputType.TargetPosition)
+                    {
+                        float3 targetPos = moveOrIdleComponent.targetPositionInput;
+                        float3 unitPos = unit.Position;
+                        if (math.abs(targetPos.x - unitPos.x) < 0.1f && math.abs(targetPos.z - unitPos.z) < 0.1f)
+                        {
+                            ET.Ability.UnitHelper.ResetPos(unit, targetPos);
+                            return;
+                        }
+                        speedVector += math.normalize(moveOrIdleComponent.targetPositionInput - unit.Position) * speed;
+
+                        ET.Ability.MoveOrIdleHelper.StopMove(unit);
+                    }
                 }
             }
 
-            int count = self.removeList.Count;
-            for (int i = 0; i < count; i++)
+            if (speedVector.Equals(float3.zero))
             {
-                self.removeList[i].Dispose();
+                if (pathfindingComponent != null)
+                {
+                    pathfindingComponent.StopMoveVelocity();
+                }
+                return;
             }
 
-            self.removeList.Clear();
+            var isnan = math.isnan(speedVector);
+            if (isnan.Equals(true))
+            {
+                return;
+            }
+
+            speedVector.y = 0;
+
+            if (pathfindingComponent != null)
+            {
+                pathfindingComponent.SetMoveVelocity(speedVector);
+            }
+            else
+            {
+                float3 targetPos = unit.Position + speedVector * fixedDeltaTime;
+                unit.Position = targetPos;
+            }
         }
     }
 }

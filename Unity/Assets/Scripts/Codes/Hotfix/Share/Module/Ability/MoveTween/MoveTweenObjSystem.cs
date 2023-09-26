@@ -24,7 +24,7 @@ namespace ET.Ability
             {
             }
         }
-        
+
         [ObjectSystem]
         public class MoveTweenObjFixedUpdateSystem: FixedUpdateSystem<MoveTweenObj>
         {
@@ -58,6 +58,7 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             self.timeElapsed += timePassed;
+            self.lastPosition = self.GetUnit().Position;
             self.DoMoveTween(fixedDeltaTime);
         }
 
@@ -98,7 +99,7 @@ namespace ET.Ability
             }
             //Log.Debug($" DoMoveTween {self.GetUnit().Position} {self.GetUnit().Forward}");
         }
-        
+
         /// <summary>
         /// 直线轨迹
         /// </summary>
@@ -110,11 +111,11 @@ namespace ET.Ability
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
-            
+
             ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Forward");
             self.GetUnit().Forward = self.forward;
             ProfilerSample.EndSample();
-            
+
             ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Position 11");
             float3 pos = self.GetUnit().Position;
             pos += math.normalize(self.forward) * self.speed * fixedDeltaTime;
@@ -123,7 +124,7 @@ namespace ET.Ability
             self.GetUnit().Position = pos;
             ProfilerSample.EndSample();
         }
-        
+
         /// <summary>
         /// 追踪某个对象
         /// </summary>
@@ -138,13 +139,13 @@ namespace ET.Ability
             {
                 return;
             }
-            
+
             Unit unit = self.GetUnit();
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             float rotateAngle = moveTweenType.RotateAngle;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
-            
+
             float3 dir = float3.zero;
             if (self.selectHandle.unitIds.Count == 0)
             {
@@ -153,7 +154,10 @@ namespace ET.Ability
             {
                 long targetUnitId = self.selectHandle.unitIds[0];
                 targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-                dir = targetUnit.Position - unit.Position;
+                if (UnitHelper.ChkUnitAlive(targetUnit))
+                {
+                    dir = targetUnit.Position - unit.Position;
+                }
             }
 
             if (dir.Equals(float3.zero) == false)
@@ -174,7 +178,7 @@ namespace ET.Ability
             }
             unit.Position += unit.Forward * self.speed * fixedDeltaTime;
         }
-        
+
         /// <summary>
         /// 环绕某个对象
         /// </summary>
@@ -199,7 +203,7 @@ namespace ET.Ability
                     self.GetUnit().DestroyWithDeathShow();
                     return;
                 }
-                targetPosition = targetUnit.Position;
+                targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
             {
@@ -218,7 +222,7 @@ namespace ET.Ability
 
             float radiusAddSpeed = moveTweenType.RadiusAddSpeed;
             float radius = orgRadius + self.timeElapsed * radiusAddSpeed;
-            
+
             float curAngle = initAngle + self.speed / orgRadius * self.timeElapsed;
             float3 curPosDir = math.mul(quaternion.RotateY(curAngle), math.forward());
             self.forward = math.mul(quaternion.RotateY(math.PI*0.5f), curPosDir);
@@ -226,7 +230,7 @@ namespace ET.Ability
             unit.Forward = self.forward;
             unit.Position = targetPosition + curPosDir * radius;
         }
-        
+
         /// <summary>
         /// 特定目标轨迹
         /// </summary>
@@ -243,12 +247,17 @@ namespace ET.Ability
                 {
                     long targetUnitId = self.selectHandle.unitIds[0];
                     Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-                    targetPosition = targetUnit.Position;
+                    if (UnitHelper.ChkUnitAlive(targetUnit) == false)
+                    {
+                        self.GetUnit().DestroyWithDeathShow();
+                        return;
+                    }
+                    targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                 }
                 else
                 {
                     Unit unitTmp = self.GetUnit();
-                    targetPosition = unitTmp.Position + self.forward * 100;
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
                 }
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
@@ -263,17 +272,17 @@ namespace ET.Ability
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
-            
+
             float3 dir = targetPosition - unit.Position;
-            float dirLength = math.length(dir);
-            if (dirLength == 0)
+            float dirLengthSq = math.lengthsq(dir);
+            if (dirLengthSq == 0)
             {
             }
-            else if (dirLength <= self.speed * fixedDeltaTime)
+            else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
             {
-                unit.Position = targetPosition;
                 self.forward = math.normalize(dir);
                 unit.Forward = self.forward;
+                unit.Position = targetPosition;
             }
             else
             {

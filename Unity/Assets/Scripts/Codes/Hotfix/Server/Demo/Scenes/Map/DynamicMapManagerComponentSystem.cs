@@ -30,12 +30,12 @@ namespace ET.Server
             protected override void Awake(DynamicMapManagerComponent self)
             {
                 self.dynamicMapList = new();
-                self.dynamicUsedIndex = new();
-                
+                self.dynamicUsedIndexList = new();
+
                 self.RepeatedTimer = TimerComponent.Instance.NewRepeatedTimer(DynamicMapManagerComponentSystem.CheckInteral, TimerInvokeType.DynamicMapChecker, self);
             }
         }
-        
+
         public class DynamicMapManagerComponentDestroySystem: DestroySystem<DynamicMapManagerComponent>
         {
             protected override void Destroy(DynamicMapManagerComponent self)
@@ -48,7 +48,7 @@ namespace ET.Server
         {
             for (int i = 10000; i < 20000; i++)
             {
-                if (self.dynamicUsedIndex.Contains(i) == false)
+                if (self.dynamicUsedIndexList.Contains(i) == false)
                 {
                     return i;
                 }
@@ -56,36 +56,36 @@ namespace ET.Server
             return -1;
         }
 
-        public static async ETTask<Scene> CreateDynamicMap(this DynamicMapManagerComponent self, RoomComponent roomComponent, List<RoomMember> roomMemberList)
+        public static async ETTask<Scene> CreateDynamicMap(this DynamicMapManagerComponent self, RoomComponent roomComponent, List<RoomMember> roomMemberList, string _ARMeshDownLoadUrl)
         {
             Scene dynamicMapBase = self.GetParent<Scene>();
             var processScenes = StartSceneConfigCategory.Instance.GetByProcess(Options.Instance.Process);
             StartSceneConfig dynamicMapBaseConfig = processScenes[(int)dynamicMapBase.Id];
             int dynamicMapBaseId = self.GetDynamicMapIndex();
-            
+
             InstanceIdStruct instanceIdStruct = new InstanceIdStruct(dynamicMapBaseConfig.Process, (uint) dynamicMapBaseId);
             long dynamicMapBaseInstanceId = instanceIdStruct.ToLong();
-            
+
             string gamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId;
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);
-            Scene dynamicMapNew = await SceneFactory.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone, 
+            Scene dynamicMapNew = await SceneFactory.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone,
                 gamePlayBattleLevelCfg.SceneMap, dynamicMapBaseConfig.Type);
 
             GamePlayComponent gamePlayComponent = dynamicMapNew.AddComponent<GamePlayComponent>();
-            gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList);
-            
+            await gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList, _ARMeshDownLoadUrl);
+
             self.dynamicMapList.Add(dynamicMapNew.InstanceId, dynamicMapNew.Id);
-            self.dynamicUsedIndex.Add(dynamicMapBaseId);
-            
+            self.dynamicUsedIndexList.Add(dynamicMapBaseId);
+
             roomComponent.Dispose();
             for (int i = 0; i < roomMemberList.Count; i++)
             {
                 roomMemberList[i].Dispose();
             }
-            
+
             return dynamicMapNew;
         }
-        
+
         public static async ETTask DestroyDynamicMap(this DynamicMapManagerComponent self, long dynamicMapInstanceId)
         {
             if (self.dynamicMapList.ContainsKey(dynamicMapInstanceId) == false)
@@ -93,11 +93,11 @@ namespace ET.Server
                 return;
             }
 
-            long dynamicMapId = self.dynamicMapList[dynamicMapInstanceId];
+            long dynamicMapBaseId = self.dynamicMapList[dynamicMapInstanceId];
             self.dynamicMapList.Remove(dynamicMapInstanceId);
-            self.dynamicUsedIndex.Remove((int)dynamicMapId);
+            self.dynamicUsedIndexList.Remove((int)dynamicMapBaseId);
 
-            self.RemoveChild(dynamicMapId);
+            self.RemoveChild(dynamicMapBaseId);
 
             await ETTask.CompletedTask;
         }

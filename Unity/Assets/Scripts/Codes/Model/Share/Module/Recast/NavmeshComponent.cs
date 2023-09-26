@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using DotRecast.Detour;
+using DotRecast.Detour.Crowd;
+using DotRecast.Recast.Toolset;
+using DotRecast.Recast.Toolset.Builder;
+using Unity.Mathematics;
 
 namespace ET
 {
-    [ComponentOf(typeof(Scene))]
-    public class NavmeshComponent: Entity, IAwake
+    [ComponentOf(typeof(NavmeshManagerComponent))]
+    public class NavmeshComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
-        [StaticField]
-        public static NavmeshComponent Instance;
-        
-        public struct RecastFileLoader
-        {
-            public string Name { get; set; }
-        }
-        
-        public Dictionary<string, long> Navmeshs = new Dictionary<string, long>();
+        public DtCrowd crowd;
+        public List<float3> arrivePath = new();
     }
 }

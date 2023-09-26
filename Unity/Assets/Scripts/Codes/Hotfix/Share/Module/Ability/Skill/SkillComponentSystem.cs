@@ -14,10 +14,9 @@ namespace ET.Ability
         {
             protected override void Awake(SkillComponent self)
             {
-                self.skillList = new();
-                self.skillCDs = new();
-                self.skillOrgCDs = new();
-                self.skillLevels = new();
+                self.skillSlotType2SkillObjs = new();
+                self.skillCfgId2SkillObjs = new();
+                self.sortPrioritySkillObjs = new();
             }
         }
 
@@ -26,13 +25,12 @@ namespace ET.Ability
         {
             protected override void Destroy(SkillComponent self)
             {
-                self.skillList.Clear();
-                self.skillCDs.Clear();
-                self.skillOrgCDs.Clear();
-                self.skillLevels.Clear();
+                self.skillSlotType2SkillObjs.Clear();
+                self.skillCfgId2SkillObjs.Clear();
+                self.sortPrioritySkillObjs.Clear();
             }
         }
-        
+
         [ObjectSystem]
         public class SkillComponentFixedUpdateSystem: FixedUpdateSystem<SkillComponent>
         {
@@ -50,41 +48,36 @@ namespace ET.Ability
 
         public static void FixedUpdate(this SkillComponent self, float fixedDeltaTime)
         {
-            foreach (string skillId in self.skillCDs.Keys.ToArray())
-            {
-                if (self.skillCDs[skillId] > 0)
-                {
-                    self.skillCDs[skillId] = math.max(0, self.skillCDs[skillId] - fixedDeltaTime);
-                }
-            }
         }
 
-        public static void LearnSkill(this SkillComponent self, string skillId, int skillLevel, SkillSlotType skillSlotType)
+        public static (bool ret, string msg) LearnSkill(this SkillComponent self, string skillCfgId, int skillLevel, SkillSlotType skillSlotType)
         {
-            if (self.skillLevels.ContainsKey(skillId))
+            if (self.GetSkillObj(skillCfgId) != null)
             {
-                return;
+                return (false, "已经学过");
             }
-            self.skillList.Add(skillSlotType, skillId);
-            self.skillCDs.Add(skillId, 0);
-            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
-            self.skillOrgCDs.Add(skillId, skillCfg.Cd);
-            self.skillLevels.Add(skillId, skillLevel);
 
-            if (skillCfg.LearnActionId.Count > 0)
+            if (SkillCfgCategory.Instance.Contain(skillCfgId) == false)
             {
-                SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
-                ActionContext actionContext = new ActionContext()
-                {
-                    unitId = self.GetUnit().Id,
-                    skillCfgId = skillId,
-                    skillLevel = self.skillLevels[skillId],
-                };
-                foreach (var actionId in skillCfg.LearnActionId)
-                {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, actionContext);
-                }
+                string msg = $"SkillCfgCategory.Instance.Contain({skillCfgId}) == false";
+                return (false, msg);
             }
+
+            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
+            if (string.IsNullOrEmpty(skillCfg.TimelineId))
+            {
+                skillSlotType = SkillSlotType.PassiveSkill;
+            }
+
+            SkillObj skillObj = self.AddChild<SkillObj>();
+
+            self.skillSlotType2SkillObjs.Add(skillSlotType, skillObj.Id);
+            self.skillCfgId2SkillObjs.Add(skillCfgId, skillObj.Id);
+            self.ReSortPrioritySkillObjs();
+
+            skillObj.Init(skillCfgId, skillLevel, skillSlotType);
+
+            return (true, "");
         }
 
         public static Unit GetUnit(this SkillComponent self)
@@ -92,82 +85,169 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static (bool ret, string msg) CastSkill(this SkillComponent self, string skillId)
+        public static SkillObj GetSkillObj(this SkillComponent self, string skillCfgId)
         {
-            var result = self.ChkCanUseSkill(skillId);
+            if (self.skillCfgId2SkillObjs.TryGetValue(skillCfgId, out long skillId))
+            {
+                return self.GetChild<SkillObj>(skillId);
+            }
+            return null;
+        }
+
+        public static async ETTask<(bool ret, string msg)> CastSkill(this SkillComponent self, string skillCfgId)
+        {
+            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
+            if (string.IsNullOrEmpty(skillCfg.TimelineId))
+            {
+                return (false, $"skillId[{skillCfgId} TimelineId=null]");
+            }
+
+            var result = self.ChkCanUseSkill(skillCfgId);
             if (result.ret == false)
             {
                 return result;
             }
 
-            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillId);
-
-            if (string.IsNullOrEmpty(skillCfg.TimelineId))
+            SkillObj skillObj = self.GetSkillObj(skillCfgId);
+            if (skillObj == null)
             {
-                return (false, $"skillId[{skillId} TimelineId=null]");
+                string msg = $"还没学习这个技能[{skillCfgId}]";
+                return (false, msg);
             }
-            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction);
 
-            TimelineObj timelineObj = TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
-            timelineObj.InitActionContext(new ActionContext()
-            {
-                unitId = self.GetUnit().Id,
-                skillCfgId = skillId,
-                skillLevel = self.skillLevels[skillId],
-            });
+            ET.Ability.MoveOrIdleHelper.StopMove(self.GetUnit());
+
+            TimelineObj timelineObj = await skillObj.CastSkill();
+
+            self.CurSkillTimelineObj = timelineObj;
+
             EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.SkillOnCast()
             {
                 unit = self.GetUnit(),
-                skillCfgId = skillId,
-                timeline = timelineObj,
             });
 
-            self.CostSkill(skillId);
-            self.skillCDs[skillId] = skillCfg.Cd;
-
-            self.curTimelineObj = timelineObj;
-            
             return (true, "");
         }
 
-        public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, string skillId)
+        public static async ETTask ReplaceSkillTimeline(this SkillComponent self, string newTimelineCfgId)
         {
-            if (self.curTimelineObj != null)
+            if (self.CurSkillTimelineObj == null)
+            {
+                return;
+            }
+
+            TimelineObj timelineObj = await ET.Ability.TimelineHelper.ReplaceTimeline(self.GetUnit(), self.CurSkillTimelineObj.Id, newTimelineCfgId);
+            self.CurSkillTimelineObj = timelineObj;
+        }
+
+        public static (bool ret, string msg) ChkCanUseSkill(this SkillComponent self, string skillCfgId)
+        {
+            if (self.CurSkillTimelineObj != null)
             {
                 string msg = $"上个技能释放中";
                 return (false, msg);
             }
-            
-            float cd = self.GetSkillCD(skillId);
-            if (cd > 0)
+
+            SkillObj skillObj = self.GetSkillObj(skillCfgId);
+            if (skillObj == null)
             {
-                string msg = $"CD中 {cd}";
+                string msg = $"还没学习这个技能[{skillCfgId}]";
                 return (false, msg);
             }
 
-            var result = self.ChkSkillCost(skillId);
+            var result = skillObj.ChkCanUseSkill();
             if (result.ret == false)
             {
-                string msg = result.msg;
-                return (false, msg);
+                return result;
             }
 
             return (true, "");
         }
 
-        public static float GetSkillCD(this SkillComponent self, string skillId)
+        public static void ReSortPrioritySkillObjs(this SkillComponent self)
         {
-            return self.skillCDs[skillId];
+            self.sortPrioritySkillObjs.Clear();
+            if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.InitiativeSkill, out List<long> skillObjs))
+            {
+                self.sortPrioritySkillObjs.AddRange(skillObjs);
+            }
+            if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.NormalAttack, out skillObjs))
+            {
+                self.sortPrioritySkillObjs.AddRange(skillObjs);
+            }
         }
 
-        public static (bool ret, string msg) ChkSkillCost(this SkillComponent self, string skillId)
+        public static List<long> GetSkillListBySkillSlotType(this SkillComponent self, SkillSlotType skillSlotType)
         {
-            return (true, "");
+            if (self.skillSlotType2SkillObjs.TryGetValue(skillSlotType, out List<long> skillObjs))
+            {
+                return skillObjs;
+            }
+            return null;
         }
 
-        public static bool CostSkill(this SkillComponent self, string skillId)
+        public static (float, SkillObj) GetSkillAttackDis(this SkillComponent self)
         {
-            return true;
+            float dis = 0;
+            for (int i = 0; i < self.sortPrioritySkillObjs.Count; i++)
+            {
+                long skillId = self.sortPrioritySkillObjs[i];
+                SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                if (dis < skillObj.GetSkillDis())
+                {
+                    dis = skillObj.GetSkillDis();
+                }
+                var result = skillObj.ChkCanUseSkill();
+                if (result.ret)
+                {
+                    return (skillObj.GetSkillDis(), skillObj);
+                }
+            }
+
+            return (dis, null);
         }
+
+        public static float GetMaxSkillDis(this SkillComponent self, ET.Ability.SkillSlotType skillSlotType)
+        {
+            List<long> list = self.GetSkillListBySkillSlotType(skillSlotType);
+            float dis = 0;
+            if (list != null)
+            {
+                foreach (long skillId in list)
+                {
+                    SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    if (dis < skillObj.GetSkillDis())
+                    {
+                        dis = skillObj.GetSkillDis();
+                    }
+                }
+            }
+
+            return dis;
+        }
+
+        public static List<SkillObj> GetSkillList(this SkillComponent self, string skillCfgId, ET.Ability.SkillSlotType skillSlotType)
+        {
+            ListComponent<SkillObj> skillList = ListComponent<SkillObj>.Create();
+            if (string.IsNullOrEmpty(skillCfgId) == false)
+            {
+                SkillObj skillObj = self.GetSkillObj(skillCfgId);
+                skillList.Add(skillObj);
+            }
+            else
+            {
+                List<long> list = self.GetSkillListBySkillSlotType(skillSlotType);
+                if (list != null)
+                {
+                    foreach (long skillId in list)
+                    {
+                        SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                        skillList.Add(skillObj);
+                    }
+                }
+            }
+            return skillList;
+        }
+
     }
 }

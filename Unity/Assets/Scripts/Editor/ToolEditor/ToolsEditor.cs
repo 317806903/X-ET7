@@ -5,79 +5,76 @@ namespace ET
 {
     public static class ToolsEditor
     {
-        public static void ExcelExporter(CodeMode codeMode, string configFolder)
+        public enum ConfigType
+        {
+            AbilityConfig = 1<<1,
+            StartConfig = 1<<2,
+            All = AbilityConfig | StartConfig,
+        }
+
+        public static void ExcelExporter(CodeMode codeMode, string configFolder, ConfigType configType)
         {
             string genCode = string.Empty;
 
 #if UNITY_EDITOR_OSX || UNITY_EDITOR_LINUX
-            switch (codeMode)
+            // if ((configType & ConfigType.StartConfig) > 0)
+            // {
+            //     genCode = $"sh gen_code_client__StartConfig.sh {configFolder}";
+            //     ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+            //
+            //     genCode = $"sh gen_code_server__StartConfig.sh {configFolder}";
+            //     ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+            //
+            //     genCode = $"sh gen_code_client_server__StartConfig.sh {configFolder}";
+            //     ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+            // }
+
+            if ((configType & ConfigType.AbilityConfig) > 0)
             {
-                case CodeMode.Client:
-                    genCode = $"sh gen_code_client.sh {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                case CodeMode.Server:
-                    genCode = $"sh gen_code_server.sh {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                case CodeMode.ClientServer:
-                    genCode = $"sh gen_code_client.sh {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    
-                    genCode = $"sh gen_code_server.sh {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    
-                    genCode = $"sh gen_code_client_server.sh {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof (codeMode), codeMode, null);
+                genCode = $"sh gen_code_client__AbilityConfig.sh";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+
+                genCode = $"sh gen_code_server__AbilityConfig.sh";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+
+                genCode = $"sh gen_code_client_server__AbilityConfig.sh";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
             }
 #else
-            switch (codeMode)
+            if ((configType & ConfigType.StartConfig) > 0)
             {
-                case CodeMode.Client:
-                    genCode = $"gen_code_client__StartConfig.bat {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client__GameConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client__AbilityConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                case CodeMode.Server:
-                    genCode = $"gen_code_server__StartConfig.bat {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_server__GameConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_server__AbilityConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                case CodeMode.ClientServer:
-                    genCode = $"gen_code_client__StartConfig.bat {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client__GameConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client__AbilityConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+                genCode = $"gen_code_client__StartConfig.bat {configFolder}";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
 
-                    genCode = $"gen_code_server__StartConfig.bat {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_server__GameConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_server__AbilityConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+                genCode = $"gen_code_server__StartConfig.bat {configFolder}";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
 
-                    genCode = $"gen_code_client_server__StartConfig.bat {configFolder}";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client_server__GameConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    genCode = $"gen_code_client_server__AbilityConfig.bat";
-                    ShellHelper.Run($"{genCode}", "../Tools/Luban/");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof (codeMode), codeMode, null);
+                genCode = $"gen_code_client_server__StartConfig.bat {configFolder}";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+            }
+
+            if ((configType & ConfigType.AbilityConfig) > 0)
+            {
+                genCode = $"gen_code_client__AbilityConfig.bat";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+
+                genCode = $"gen_code_server__AbilityConfig.bat";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
+
+                genCode = $"gen_code_client_server__AbilityConfig.bat";
+                ShellHelper.Run($"{genCode}", "../Tools/Luban/");
             }
 #endif
+        }
+
+        public static void ExcelExporterUI()
+        {
+#if UNITY_EDITOR_OSX || UNITY_EDITOR_LINUX
+            const string tools = "./Tool";
+#else
+            const string tools = ".\\Tool.exe";
+#endif
+            ShellHelper.Run($"{tools} --AppType=ExcelExporterUI --Console=1", "../Bin/");
         }
 
         public static void Proto2CS()

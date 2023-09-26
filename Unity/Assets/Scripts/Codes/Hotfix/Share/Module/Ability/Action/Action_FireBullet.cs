@@ -11,7 +11,7 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
-			await TimerComponent.Instance.WaitFrameAsync();
+
 			ActionCfg_FireBullet actionCfgFireBullet = ActionCfg_FireBulletCategory.Instance.Get(actionId);
 			BulletHelper.CreateBullet(unit, actionCfgFireBullet, selectHandle, actionContext);
 			await ETTask.CompletedTask;

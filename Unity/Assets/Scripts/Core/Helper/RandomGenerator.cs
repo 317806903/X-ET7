@@ -20,7 +20,7 @@ namespace ET
         {
             int r1 = RandInt32();
             int r2 = RandInt32();
-            
+
             return ((ulong)r1 << 32) & (ulong)r2;
         }
 
@@ -111,7 +111,7 @@ namespace ET
             }
             return -1;
         }
-        
+
         public static T GetRandomIndexLinear<T>(Dictionary<T, int> list)
         {
             int totalWeight = 0;
@@ -119,12 +119,14 @@ namespace ET
             {
                 totalWeight += one.Value;
             }
-            int value = RandomNumber(0, totalWeight);
+            int valueInit = RandomNumber(1, totalWeight + 1);
+            int value = valueInit;
             foreach (var one in list)
             {
                 value -= one.Value;
                 if (value <= 0)
                 {
+                    //Log.Debug($"---GetRandomIndexLinear totalWeight[{totalWeight}] valueInit[{valueInit}] choose[{one.Key}]");
                     return one.Key;
                 }
             }

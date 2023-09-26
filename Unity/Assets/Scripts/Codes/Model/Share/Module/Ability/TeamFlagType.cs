@@ -15,7 +15,7 @@
         TeamGlobal4 = 1 << 4,
         TeamGlobal5 = 1 << 5,
         /// <summary>
-        /// 一个player一个势力，如果是友军则通过ET.Ability.TeamFlagComponentSystem.AddFriendTeamFlag进行设置
+        /// 一个player一个势力
         /// </summary>
         TeamPlayer1 = 1 << 6,
         TeamPlayer2 = 1 << 7,

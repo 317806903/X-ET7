@@ -26,7 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1142212835072583155}
   m_Father: {fileID: 0}
@@ -103,7 +103,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6558428, guid: 9367964038275c543b1f8070bf0be267, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9367964038275c543b1f8070bf0be267, type: 3}
 --- !u!4 &1142212835072583155 stripped
 Transform:

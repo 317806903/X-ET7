@@ -13,9 +13,9 @@ namespace ET.Server
             Dictionary<Type, ByteBuf> output = new Dictionary<Type, ByteBuf>();
             List<string> startConfigs = new List<string>()
             {
-                "StartMachineConfigCategory", 
-                "StartProcessConfigCategory", 
-                "StartSceneConfigCategory", 
+                "StartMachineConfigCategory",
+                "StartProcessConfigCategory",
+                "StartSceneConfigCategory",
                 "StartZoneConfigCategory",
             };
             HashSet<Type> configTypes = EventSystem.Instance.GetTypes(typeof (ConfigAttribute));
@@ -47,14 +47,14 @@ namespace ET.Server
                     Log.Error($"==GetAllConfigBytes {configFilePath} isExists == false");
                     continue;
                 }
-                
+
                 output[configType] = new ByteBuf(File.ReadAllBytes(configFilePath));
             }
 
             return output;
         }
     }
-    
+
     [Invoke]
     public class GetOneConfigBytes: AInvokeHandler<ConfigComponent.GetOneConfigBytes, ByteBuf>
     {
@@ -62,6 +62,15 @@ namespace ET.Server
         {
             ByteBuf configBytes = new ByteBuf(File.ReadAllBytes($"../Config/{args.ConfigName}.bytes"));
             return configBytes;
+        }
+    }
+
+    [Invoke]
+    public class GetCodeMode: AInvokeHandler<ConfigComponent.GetCodeMode, string>
+    {
+        public override string Handle(ConfigComponent.GetCodeMode args)
+        {
+            return "Server";
         }
     }
 }

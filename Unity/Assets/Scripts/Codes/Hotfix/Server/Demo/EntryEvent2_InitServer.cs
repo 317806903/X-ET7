@@ -7,15 +7,16 @@ namespace ET.Server
     {
         protected override async ETTask Run(Scene scene, ET.EventType.EntryEvent2 args)
         {
-#if UNITY_EDITOR
-            if (Define.EnableCodes)
+            string codeMode = EventSystem.Instance.Invoke<ConfigComponent.GetCodeMode, string>(new ConfigComponent.GetCodeMode());
+            if (codeMode == "Client")
             {
-                if (GlobalConfig.Instance.CodeMode == CodeMode.Client)
-                {
-                    return;
-                }
+                return;
             }
-#endif
+
+            if (Game.ChkIsExistSingleton<ConfigComponent>() == false)
+            {
+                await Game.AddSingleton<ConfigComponent>().LoadAsync();
+            }
 
             // 发送普通actor消息
             Root.Instance.Scene.AddComponent<ActorMessageSenderComponent>();
@@ -27,7 +28,7 @@ namespace ET.Server
             Root.Instance.Scene.AddComponent<ServerSceneManagerComponent>();
             Root.Instance.Scene.AddComponent<RobotCaseComponent>();
 
-            Root.Instance.Scene.AddComponent<NavmeshComponent>();
+            Root.Instance.Scene.AddComponent<NavmeshManagerComponent>();
 
             StartProcessConfig processConfig = StartProcessConfigCategory.Instance.Get(Options.Instance.Process);
             switch (Options.Instance.AppType)

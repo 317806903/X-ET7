@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, M2R_NoticeRoomBattleEnd request, R2M_NoticeRoomBattleEnd response)
 		{
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long roomId = request.RoomId;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 			if (roomComponent == null)

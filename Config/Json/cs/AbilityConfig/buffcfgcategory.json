@@ -5,18 +5,23 @@
     "icon": "ResIcon_1",
     "desc": "",
     "tags": [
-      1
-    ],
-    "immuneTags": [
-      3
+      15
     ],
     "tagGroup": 1,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [
+      17
+    ],
     "immuneTagGroups": [
       3
     ],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
     "buffType": 1,
     "priority": 1,
     "maxStack": 19,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       4
     ],
@@ -24,9 +29,10 @@
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "BuffReduceStackCount_1",
+        "action_id": "BuffStackCountChg_Reduce1",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -36,7 +42,8 @@
         "delayTime": 0,
         "action_id": "BuffResetDuration_1",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -46,7 +53,8 @@
         "delayTime": 0,
         "action_id": "BuffRemove_3",
         "actionCallParam": {
-          "$type": "ActionCallCasterUnit"
+          "$type": "ActionCallCasterUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -59,14 +67,19 @@
     "icon": "",
     "desc": "",
     "tags": [
-      3
+      17
     ],
-    "immuneTags": [],
     "tagGroup": 3,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
     "buffType": 2,
     "priority": 1,
     "maxStack": 11,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       3
     ],
@@ -76,7 +89,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit"
+          "$type": "ActionCallOnAttackUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -86,7 +100,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallCasterPlayerUnit"
+          "$type": "ActionCallCasterPlayerUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -99,13 +114,18 @@
     "icon": "",
     "desc": "",
     "tags": [
-      2
+      16
     ],
+    "removeTags": [],
+    "removeTagGroups": [],
     "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
     "buffType": 2,
     "priority": 1,
     "maxStack": 7,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       4
     ],
@@ -115,7 +135,8 @@
         "delayTime": 0,
         "action_id": "PlayAudio_1",
         "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit"
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": true
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -128,26 +149,22 @@
     "icon": "",
     "desc": "直线火焰",
     "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
     "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerLine1"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
     "buffType": 1,
     "priority": 1,
     "maxStack": 1,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       0.2
     ],
     "monitorTriggers": [
-      {
-        "buffTrig": 2,
-        "delayTime": 0,
-        "action_id": "EffectCreate_PlayerLine1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
       {
         "buffTrig": 4,
         "delayTime": 0,
@@ -162,7 +179,7 @@
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "FaceTo_1",
+        "action_id": "FaceTo_Forward_ForceSetFace",
         "actionCallParam": {
           "$type": "ActionCallAutoUnitWhenUmbellate",
           "isSave": true,
@@ -203,14 +220,163 @@
         },
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "Buff_Line2",
+    "name": "火焰",
+    "icon": "",
+    "desc": "直线火焰",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerLine2"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.2
+    ],
+    "monitorTriggers": [
       {
-        "buffTrig": 9,
+        "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "EffectRemove_Fire1",
+        "action_id": "BuffResetDuration_2",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": false,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          },
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Line1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Line3",
+    "name": "火焰",
+    "icon": "",
+    "desc": "直线火焰",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerLine3"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.2
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": 1,
+          "isFriend": false,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": false,
+            "keepHorizontal": true,
+            "radius": 100,
+            "angle": 360
+          },
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Line1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -223,22 +389,39 @@
     "icon": "",
     "desc": "圆形毒雾",
     "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
     "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerCircle1"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
     "buffType": 1,
     "priority": 1,
     "maxStack": 1,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       0.2
     ],
     "monitorTriggers": [
       {
-        "buffTrig": 2,
+        "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "EffectCreate_PlayerCircle1",
+        "action_id": "BuffResetDuration_2",
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Circle1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
         },
         "actionCondition1": [],
         "actionCondition2": []
@@ -251,17 +434,22 @@
     "icon": "",
     "desc": "攻击偷钱",
     "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
     "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
     "buffType": 1,
     "priority": 1,
     "maxStack": 1,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       0
     ],
     "monitorTriggers": [
       {
-        "buffTrig": 19,
+        "buffTrig": 22,
         "delayTime": 0,
         "action_id": "CoinAdd_Attack_1",
         "actionCallParam": {
@@ -279,11 +467,16 @@
     "icon": "",
     "desc": "自动加钱",
     "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
     "immuneTags": [],
     "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
     "buffType": 1,
     "priority": 1,
     "maxStack": 1,
+    "isIgnoreCasterActor": false,
     "tickTime": [
       2
     ],
@@ -295,6 +488,416 @@
         "actionCallParam": {
           "$type": "ActionCallAutoSelf",
           "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_HitBack1",
+    "name": "攻击产生击退",
+    "icon": "",
+    "desc": "攻击产生击退",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 22,
+        "delayTime": 0,
+        "action_id": "BuffAdd_BeHitBack1",
+        "actionCallParam": {
+          "$type": "ActionCallBeHurtUnit",
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_BeHitBack1",
+    "name": "被击退",
+    "icon": "",
+    "desc": "被击退",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Slow",
+    "name": "减速",
+    "icon": "",
+    "desc": "减速",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_CDDown1",
+    "name": "减cd1",
+    "icon": "",
+    "desc": "减cd",
+    "tags": [],
+    "tagGroup": 5,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_TowerTime_Hit1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_CDDown2",
+    "name": "减cd2",
+    "icon": "",
+    "desc": "减cd",
+    "tags": [],
+    "tagGroup": 5,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_TowerTime_Hit2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_CDDown3",
+    "name": "减cd3",
+    "icon": "",
+    "desc": "减cd",
+    "tags": [],
+    "tagGroup": 5,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_TowerTime_Hit3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AttackUp",
+    "name": "加攻击",
+    "icon": "",
+    "desc": "加攻击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 10,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 18,
+        "delayTime": 0,
+        "action_id": "BuffRemove_1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddCDDown1",
+    "name": "强化1",
+    "icon": "",
+    "desc": "为队友释放减cd",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_CDDown1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": -1,
+          "isFriend": true,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 5,
+            "angle": 360
+          },
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddCDDown2",
+    "name": "强化2",
+    "icon": "",
+    "desc": "为队友释放减cd",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_CDDown2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": -1,
+          "isFriend": true,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 5,
+            "angle": 360
+          },
+          "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddCDDown3",
+    "name": "强化3",
+    "icon": "",
+    "desc": "为队友释放减cd",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_CDDown3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoUnitWhenUmbellate",
+          "isSave": true,
+          "selectNum": -1,
+          "isFriend": true,
+          "isOnlyPlayer": false,
+          "offSetInfo": {
+            "nodeName": "",
+            "offSetPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "relateForward": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "isAngleFirst": false,
+          "umbellateArea": {
+            "ignoringHeight": true,
+            "keepHorizontal": true,
+            "radius": 5,
+            "angle": 360
+          },
+          "isChgToSelectPos": false
         },
         "actionCondition1": [],
         "actionCondition2": []

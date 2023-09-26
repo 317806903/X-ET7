@@ -33,8 +33,15 @@ namespace YooAsset
 				return _activeManifest;
 			}
 		}
-		public void FlushManifestVersionFile() 
+
+		public void FlushManifestVersionFile()
 		{
+		}
+
+		public void ReLoadMap()
+		{
+			_activeManifest.ResetInitAssetPathMapping();
+			_activeManifest.InitAssetPathMapping(_locationToLower);
 		}
 
 		UpdatePackageVersionOperation IPlayModeServices.UpdatePackageVersionAsync(bool appendTimeTicks, int timeout)
@@ -55,7 +62,7 @@ namespace YooAsset
 			OperationSystem.StartOperation(operation);
 			return operation;
 		}
-		
+
 		ResourceDownloaderOperation IPlayModeServices.CreateResourceDownloaderByAll(int downloadingMaxNumber, int failedTryAgain, int timeout)
 		{
 			return ResourceDownloaderOperation.CreateEmptyDownloader(downloadingMaxNumber, failedTryAgain, timeout);

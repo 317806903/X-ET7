@@ -9,7 +9,7 @@ namespace ET.Server
 		protected override async ETTask Run(Scene scene, G2R_GetRoomList request, R2G_GetRoomList response)
 		{
 			bool isARRoom = request.IsARRoom == 1? true : false;
-			RoomManagerComponent roomManagerComponent = scene.GetComponent<RoomManagerComponent>();
+			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			response.RoomInfos = ListComponent<byte[]>.Create();
 			foreach (long roomId in roomManagerComponent.GetIdleRoomList(isARRoom))
 			{

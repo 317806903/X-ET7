@@ -14,7 +14,7 @@ namespace ET
 			{
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class RestTimeComponentDestroySystem : DestroySystem<RestTimeComponent>
 		{
@@ -50,12 +50,12 @@ namespace ET
 			{
 				self.duration -= fixedDeltaTime;
 			}
-			
+
 			self.timeElapsed += fixedDeltaTime;
 
 			if (self.duration <= 0)
 			{
-				self.GetParent<GamePlayTowerDefenseComponent>().TransToBattle();
+				self.GetParent<GamePlayTowerDefenseComponent>().TransToBattle().Coroutine();
 				return;
 			}
 		}

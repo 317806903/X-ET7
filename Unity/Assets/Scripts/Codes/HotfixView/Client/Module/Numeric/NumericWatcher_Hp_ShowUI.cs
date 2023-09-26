@@ -1,6 +1,5 @@
-﻿using ET.Client;
-
-namespace ET
+﻿
+namespace ET.Client
 {
 	/// <summary>
 	/// 客户端监视hp数值变化，改变血条值
@@ -11,7 +10,8 @@ namespace ET
 		public void Run(Unit unit, EventType.NumbericChange args)
 		{
 			//Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
-			unit.GetComponent<HealthBarComponent>().UpdateHealth();
+			unit.GetComponent<HealthBarComponent>()?.UpdateHealth();
+			ShootTextComponent.Instance.Show(unit, (int)((args.Old - args.New)/10000));
 		}
 	}
 }

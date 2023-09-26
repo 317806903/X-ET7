@@ -7,7 +7,7 @@ namespace ET.Client
     {
         [StaticField]
         public static GlobalComponent Instance;
-        
+
         public Transform Global;
         public Transform Unit { get; set; }
         public Camera MainCamera { get; set; }
@@ -16,7 +16,12 @@ namespace ET.Client
         public Transform NormalRoot{ get; set; }
         public Transform PopUpRoot{ get; set; }
         public Transform FixedRoot{ get; set; }
+        public Transform NoticeRoot{ get; set; }
+        public Transform LoadingRoot{ get; set; }
+        public Transform HighestNoticeRoot{ get; set; }
+
+        public Transform ClientManagerRoot{ get; set; }
         public Transform PoolRoot{ get; set; }
-        public Transform OtherRoot{ get; set; }
+        public Transform DebugRoot{ get; set; }
     }
 }

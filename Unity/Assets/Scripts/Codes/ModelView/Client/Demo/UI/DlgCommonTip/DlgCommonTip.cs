@@ -1,0 +1,16 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace ET.Client
+{
+	[ComponentOf(typeof(UIBaseWindow))]
+	public class DlgCommonTip : Entity, IAwake, IUILogic
+	{
+
+		public DlgCommonTipViewComponent View { get => this.GetComponent<DlgCommonTipViewComponent>();}
+
+		public Transform transTipNode;
+		public Stack<string> tips = new();
+		public bool isDoing;
+	}
+}

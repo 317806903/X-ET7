@@ -31,6 +31,12 @@ namespace YooAsset
 			return operation;
 		}
 
+		public void ReLoadMap()
+		{
+			_activeManifest.ResetInitAssetPathMapping();
+			_activeManifest.InitAssetPathMapping(_locationToLower);
+		}
+
 		// 下载相关
 		private List<BundleInfo> ConvertToDownloadList(List<PackageBundle> downloadList)
 		{
@@ -42,6 +48,7 @@ namespace YooAsset
 			}
 			return result;
 		}
+
 		private BundleInfo ConvertToDownloadInfo(PackageBundle packageBundle)
 		{
 			string remoteMainURL = GetRemoteMainURL(packageBundle.FileName);

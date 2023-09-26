@@ -253,34 +253,58 @@
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
     "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
     },
-    "damageInfo": "DamageUnit_1",
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerSolo1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_PlayerSolo2",
+    "name": "单体",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerSolo1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_PlayerSolo3",
+    "name": "单体",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitOne",
+      "isSave": false
+    },
+    "damageInfo": "DamageUnit_6",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -382,7 +406,89 @@
       },
       "isChgToSelectPos": false
     },
-    "damageInfo": "DamageUnit_1",
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe2",
+    "name": "群体",
+    "desc": "溅射周围单位",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe3",
+    "name": "群体",
+    "desc": "溅射周围单位",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_6",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -399,7 +505,7 @@
       "$type": "ActionCallAutoUnitOne",
       "isSave": false
     },
-    "damageInfo": "DamageUnit_1",
+    "damageInfo": "DamageUnit_6",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -434,12 +540,12 @@
       "rectangleArea": {
         "ignoringHeight": true,
         "keepHorizontal": true,
-        "width": 100,
-        "length": 10
+        "width": 10,
+        "length": 100
       },
       "isChgToSelectPos": false
     },
-    "damageInfo": "DamageUnit_1",
+    "damageInfo": "DamageUnit_6",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -475,16 +581,177 @@
       "umbellateArea": {
         "ignoringHeight": false,
         "keepHorizontal": true,
-        "radius": 100,
+        "radius": 15,
         "angle": 360
       },
       "isChgToSelectPos": false
     },
-    "damageInfo": "DamageUnit_1",
+    "damageInfo": "DamageUnit_6",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
     "SelfAttackActionCall": [],
     "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Dot",
+    "name": "中毒",
+    "desc": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoSelf",
+      "isSave": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_SlowAoe1",
+    "name": "群体减速",
+    "desc": "溅射周围单位",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_SlowAoe2",
+    "name": "群体减速",
+    "desc": "溅射周围单位",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_SlowAoe3",
+    "name": "群体减速",
+    "desc": "溅射周围单位",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_6",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
   }
 ]

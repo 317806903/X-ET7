@@ -13,22 +13,22 @@ namespace ET
             {
                 self.AOIUnits.Clear();
 
-                self.SubsEnterEntities.Clear();
+                self.SubscribeEnterEntities.Clear();
 
-                self.SubsLeaveEntities.Clear();
+                self.SubscribeLeaveEntities.Clear();
             }
         }
-        
+
         public static void Add(this Cell self, AOIEntity aoiEntity)
         {
             self.AOIUnits.Add(aoiEntity.Id, aoiEntity);
         }
-        
+
         public static void Remove(this Cell self, AOIEntity aoiEntity)
         {
             self.AOIUnits.Remove(aoiEntity.Id);
         }
-        
+
         public static string CellIdToString(this long cellId)
         {
             int y = (int) (cellId & 0xffffffff);

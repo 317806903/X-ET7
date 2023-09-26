@@ -1,0 +1,131 @@
+[
+  {
+    "id": "CallActor_1",
+    "name": "召唤Actor1",
+    "desc": "",
+    "unit_id": "Unit_Solo1",
+    "beCallActorAttrType": {
+      "$type": "UseSelfAttrTypeAndCallerLevel",
+      "offsetLevel": 0
+    },
+    "beCallActorActionId": [],
+    "unit_aiCfg": "",
+    "duration": 50,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CallActor_2",
+    "name": "召唤Actor2",
+    "desc": "",
+    "unit_id": "Unit_Aoe1",
+    "beCallActorAttrType": {
+      "$type": "UseSelfAttrTypeAndFixedLevel",
+      "fixedLevel": 0
+    },
+    "beCallActorActionId": [],
+    "unit_aiCfg": "",
+    "duration": 50,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CallActor_3",
+    "name": "召唤Actor3",
+    "desc": "",
+    "unit_id": "Unit_Line1",
+    "beCallActorAttrType": {
+      "$type": "UseCallerAttrTypeAndCallerLevel",
+      "offsetLevel": 0
+    },
+    "beCallActorActionId": [],
+    "unit_aiCfg": "",
+    "duration": 50,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CallActor_4",
+    "name": "召唤Actor4",
+    "desc": "",
+    "unit_id": "Unit_Circle1",
+    "beCallActorAttrType": {
+      "$type": "UseCallerAttrTypeAndFixedLevel",
+      "fixedLevel": 0
+    },
+    "beCallActorActionId": [],
+    "unit_aiCfg": "",
+    "duration": 50,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "CallActor_5",
+    "name": "召唤Actor5",
+    "desc": "",
+    "unit_id": "Unit_Solo1",
+    "beCallActorAttrType": {
+      "$type": "UseCallerCurAttr"
+    },
+    "beCallActorActionId": [],
+    "unit_aiCfg": "",
+    "duration": 50,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  }
+]

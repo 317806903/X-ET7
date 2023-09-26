@@ -1,1 +1,1 @@
-PlayAnimator_1播放动作1RunPlayAnimator_2播放动作2Run
+PlayAnimator_NoneCIdle和Move动作指定为None,客户端会根据是否到位转换PlayAnimator_1播放动作1PlayAnimator_2播放动作2PlayAnimator_Die播放死亡

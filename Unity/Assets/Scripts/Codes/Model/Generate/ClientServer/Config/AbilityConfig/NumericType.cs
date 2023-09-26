@@ -10,34 +10,58 @@
 namespace ET.AbilityConfig
 { 
     /// <summary>
-    /// 属性(枚举值要和程序代码对应上)
+    /// 属性(!!枚举值必须和程序代码ET.NumericType对应上)
     /// </summary>
     public enum NumericType
     {
         /// <summary>
         /// 速度
         /// </summary>
-        SpeedBase = 10011,
-        SpeedAdd = 10012,
-        SpeedPct = 10013,
-        SpeedFinalAdd = 10014,
-        SpeedFinalPct = 10015,
+        SpeedBase = 10001,
+        SpeedAdd = 10002,
+        SpeedPct = 10003,
+        SpeedFinalAdd = 10004,
+        SpeedFinalPct = 10005,
+        /// <summary>
+        /// 技能CD
+        /// </summary>
+        RotationSpeedBase = 10011,
+        RotationSpeedAdd = 10012,
+        RotationSpeedPct = 10013,
+        RotationSpeedFinalAdd = 10014,
+        RotationSpeedFinalPct = 10015,
+        /// <summary>
+        /// 技能CD
+        /// </summary>
+        SkillCDBase = 10021,
+        SkillCDAdd = 10022,
+        SkillCDPct = 10023,
+        SkillCDFinalAdd = 10024,
+        SkillCDFinalPct = 10025,
+        /// <summary>
+        /// 技能释放距离
+        /// </summary>
+        SkillDisBase = 10031,
+        SkillDisAdd = 10032,
+        SkillDisPct = 10033,
+        SkillDisFinalAdd = 10034,
+        SkillDisFinalPct = 10035,
         /// <summary>
         /// 总血量
         /// </summary>
-        MaxHpBase = 10031,
-        MaxHpAdd = 10032,
-        MaxHpPct = 10033,
-        MaxHpFinalAdd = 10034,
-        MaxHpFinalPct = 10035,
+        MaxHpBase = 10061,
+        MaxHpAdd = 10062,
+        MaxHpPct = 10063,
+        MaxHpFinalAdd = 10064,
+        MaxHpFinalPct = 10065,
         /// <summary>
         /// 物理攻击
         /// </summary>
-        PhysicalAttackBase = 10051,
-        PhysicalAttackAdd = 10052,
-        PhysicalAttackPct = 10053,
-        PhysicalAttackFinalAdd = 10054,
-        PhysicalAttackFinalPct = 10055,
+        PhysicalAttackBase = 10071,
+        PhysicalAttackAdd = 10072,
+        PhysicalAttackPct = 10073,
+        PhysicalAttackFinalAdd = 10074,
+        PhysicalAttackFinalPct = 10075,
     }
 
 } 

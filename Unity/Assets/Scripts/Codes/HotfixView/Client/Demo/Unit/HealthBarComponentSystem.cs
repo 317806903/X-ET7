@@ -1,4 +1,5 @@
 ﻿using System;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,17 +8,45 @@ namespace ET.Client
     public static class HealthBarComponentSystem
     {
         [ObjectSystem]
-        public class AwakeSystem: AwakeSystem<HealthBarComponent, GameObject>
+        public class AwakeSystem: AwakeSystem<HealthBarComponent>
         {
-            protected override void Awake(HealthBarComponent self, GameObject go)
+            protected override void Awake(HealthBarComponent self)
             {
-                self.go = go;
-                self.healthBar = go.transform.Find("Bar/GreenAnchor");
-                self.backgroundBar = go.transform.Find("Bar/RedAnchor");
+                string resName = "";
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+                if (gamePlayTowerDefenseComponent != null)
+                {
+                    PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+                    if (putHomeComponent != null && putHomeComponent.unitId == self.GetUnit().Id)
+                    {
+                        resName = "ResEffect_MainTowerBar";
+                    }
+                    else if (self.GetComponent<TowerComponent>() != null)
+                    {
+                        resName = "ResEffect_MainTowerBar";
+                    }
+                }
+
+                if(string.IsNullOrEmpty(resName))
+                {
+                    resName = "ResEffect_HealthBar_1";
+                }
+
+                GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
+                GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
+                HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
+                float height = self.GetUnit().model.BodyHeight + 1f;
+                HealthBarGo.transform.localPosition = new float3(0, height, 0);
+                HealthBarGo.transform.localScale = Vector3.one;
+
+                self.go = HealthBarGo;
+                self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
+                self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
                 self.UpdateHealth();
             }
         }
-        
+
         [ObjectSystem]
         public class DestroySystem: DestroySystem<HealthBarComponent>
         {
@@ -27,20 +56,13 @@ namespace ET.Client
                 GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
             }
         }
-        
+
         [ObjectSystem]
         public class UpdateSystem: UpdateSystem<HealthBarComponent>
         {
             protected override void Update(HealthBarComponent self)
             {
-                Transform transform = self.go.transform;
-                Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
-                if (mainCamera == null)
-                {
-                    return;
-                }
-                Vector3 direction = mainCamera.transform.forward;
-                transform.forward = -direction;
+                self.Update();
             }
         }
 
@@ -48,7 +70,7 @@ namespace ET.Client
         {
             return self.GetParent<Unit>();
         }
-        
+
         public static void UpdateHealth(this HealthBarComponent self)
         {
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
@@ -68,6 +90,7 @@ namespace ET.Client
                 scale.x = 1 - normalizedHealth;
                 self.backgroundBar.transform.localScale = scale;
             }
+            //Log.Debug($"normalizedHealth={normalizedHealth}");
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {
@@ -77,6 +100,22 @@ namespace ET.Client
             {
                 self.go.SetActive(false);
             }
+        }
+
+        public static void Update(this HealthBarComponent self)
+        {
+            if (self.go == null)
+            {
+                return;
+            }
+            Transform transform = self.go.transform;
+            Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
+            if (mainCamera == null)
+            {
+                return;
+            }
+            Vector3 direction = mainCamera.transform.forward;
+            transform.forward = -direction;
         }
 
     }

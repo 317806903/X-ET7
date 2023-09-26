@@ -172,7 +172,7 @@ public class WorldCameraController : MonoBehaviour
                     bool t1 = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
                     if (t1)
                     {
-                        Debug.LogError("zpb ==========true=============== ");
+                        //Debug.LogError("zpb ==========true=============== ");
                     }
                     //this.bClickUGUI = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
                     this.bClickUGUI = IsPointerOverUIObject();

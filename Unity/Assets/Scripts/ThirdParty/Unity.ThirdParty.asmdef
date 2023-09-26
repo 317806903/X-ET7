@@ -1,7 +1,9 @@
 {
     "name": "Unity.ThirdParty",
     "rootNamespace": "ET",
-    "references": [],
+    "references": [
+        "Unity.Mathematics"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,

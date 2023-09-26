@@ -18,7 +18,7 @@ namespace ET.Server
 			G2C_EnterBattleNotice _G2C_EnterBattleNotice = new() { };
 			player.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_EnterBattleNotice);
 
-			TransferHelper.EnterMap(request.DynamicMapId, player.Id, player.Level, request.GamePlayBattleLevelCfgId).Coroutine();
+			TransferHelper.EnterMap(request.DynamicMapInstanceId, player.Id, player.Level, request.GamePlayBattleLevelCfgId).Coroutine();
 
 
             await ETTask.CompletedTask;

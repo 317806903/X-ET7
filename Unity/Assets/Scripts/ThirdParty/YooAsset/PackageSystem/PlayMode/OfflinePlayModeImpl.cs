@@ -20,6 +20,12 @@ namespace YooAsset
 			return operation;
 		}
 
+		public void ReLoadMap()
+		{
+			_activeManifest.ResetInitAssetPathMapping();
+			_activeManifest.InitAssetPathMapping(_locationToLower);
+		}
+
 		#region IPlayModeServices接口
 		public PackageManifest ActiveManifest
 		{

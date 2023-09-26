@@ -25,7 +25,7 @@ namespace ET
         }
 
         public long Id;
-        
+
         public TimerClass TimerClass;
 
         public object Object;
@@ -35,7 +35,7 @@ namespace ET
         public long Time;
 
         public int Type;
-        
+
         public void Recycle()
         {
             this.Id = 0;
@@ -127,7 +127,7 @@ namespace ET
                 {
                     continue;
                 }
-                
+
                 this.Run(timerAction);
             }
         }
@@ -150,7 +150,7 @@ namespace ET
                     break;
                 }
                 case TimerClass.RepeatedTimer:
-                {                    
+                {
                     long timeNow = GetNow();
                     timerAction.StartTime = timeNow;
                     this.AddTimer(timerAction);
@@ -269,12 +269,12 @@ namespace ET
         public long NewOnceTimer(long tillTime, int type, object args)
         {
             long timeNow = GetNow();
-            if (tillTime < timeNow)
+            if (tillTime < 100)
             {
                 Log.Error($"new once time too small: {tillTime}");
             }
 
-            TimerAction timer = TimerAction.Create(this.GetId(), TimerClass.OnceTimer, timeNow, tillTime - timeNow, type, args);
+            TimerAction timer = TimerAction.Create(this.GetId(), TimerClass.OnceTimer, timeNow, tillTime, type, args);
             this.AddTimer(timer);
             return timer.Id;
         }
@@ -299,7 +299,7 @@ namespace ET
                 throw new Exception($"repeated timer < 100, timerType: time: {time}");
             }
 #endif
-            
+
             long timeNow = GetNow();
             TimerAction timer = TimerAction.Create(this.GetId(), TimerClass.RepeatedTimer, timeNow, time, type, args);
 

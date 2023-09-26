@@ -32,12 +32,12 @@ namespace ET
 			{
 				self.sortWaveIndex = new();
 				self.waveMonsterCallList = new();
-				
+
 				self.unitId2MonsterCfgId = new();
 				self.unitId2RewardGold = new();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class MonsterWaveCallComponentDestroySystem : DestroySystem<MonsterWaveCallComponent>
 		{
@@ -56,7 +56,7 @@ namespace ET
 
 			self.totalCount = 0;
 			List<TowerDefense_MonsterWaveCallRuleCfg> list = TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.DataList;
-			
+
 			for (int i = 0; i < list.Count; i++)
 			{
 				if (list[i].WaveRule == self.monsterWaveRule)
@@ -66,14 +66,22 @@ namespace ET
 				}
 			}
 			self.sortWaveIndex.Sort();
-			
+
 			self.curIndex = -1;
-			
+
 		}
 
 		public static float3 GetCallMonsterPosition(this MonsterWaveCallComponent self, long playerId)
 		{
 			return self.GetParent<GamePlayTowerDefenseComponent>().GetCallMonsterPosition(playerId);
+		}
+
+		public static int GetWaveRewardGold(this MonsterWaveCallComponent self)
+		{
+			int waveIndex = self.sortWaveIndex[self.curIndex];
+			TowerDefense_MonsterWaveCallRuleCfg monsterWaveCallCfg = TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.Get(self.monsterWaveRule, waveIndex);
+
+			return monsterWaveCallCfg.WaveRewardGold;
 		}
 
 		public static void DoNextMonsterWaveCall(this MonsterWaveCallComponent self)
@@ -99,7 +107,7 @@ namespace ET
 				MonsterWaveCallOnceComponent monsterWaveCallOnceComponent = self.AddChild<MonsterWaveCallOnceComponent>();
 				int waveIndex = self.sortWaveIndex[self.curIndex];
 				monsterWaveCallOnceComponent.Init(playerId, self.monsterWaveRule, waveIndex);
-			
+
 				self.duration = monsterWaveCallOnceComponent.duration;
 				if (self.waveMonsterCallList.ContainsKey(playerId) == false)
 				{
@@ -114,11 +122,11 @@ namespace ET
 			float3 pos = self.GetCallMonsterPosition(playerId);
 			float3 randomPos = pos + new float3(RandomGenerator.RandFloat01(), 0, RandomGenerator.RandFloat01());
 			float3 randomForward = new float3(RandomGenerator.RandFloat01(), 0, RandomGenerator.RandFloat01());
-			
+
 			Unit monsterUnit = ET.GamePlayTowerDefenseHelper.CreateMonster(self.DomainScene(), monsterCfgId, level, randomPos, randomForward);
 
 			self.RecordUnit2Monster(monsterUnit.Id, monsterCfgId, rewardGold);
-			
+
 			return monsterUnit;
 		}
 
@@ -127,7 +135,7 @@ namespace ET
 			self.unitId2MonsterCfgId.Add(unitId, monsterCfgId);
 			self.unitId2RewardGold.Add(unitId, rewardGold);
 		}
-		
+
 		public static string GetMonsterCfgIdByUnitId(this MonsterWaveCallComponent self, long unitId)
 		{
 			if (self.unitId2MonsterCfgId.ContainsKey(unitId) == false)
@@ -136,7 +144,7 @@ namespace ET
 			}
 			return self.unitId2MonsterCfgId[unitId];
 		}
-		
+
 		public static int GetMonsterRewardGoldByUnitId(this MonsterWaveCallComponent self, long unitId)
 		{
 			if (self.unitId2RewardGold.ContainsKey(unitId) == false)
@@ -145,7 +153,7 @@ namespace ET
 			}
 			return self.unitId2RewardGold[unitId];
 		}
-		
+
 		public static void ChkMonsterCallAllClear(this MonsterWaveCallComponent self)
 		{
 			bool allPlayerWaveMonsterClear = true;
@@ -184,14 +192,14 @@ namespace ET
 					}
 				}
 				self.waveMonsterCallList.Clear();
-				
+
 				if (self.curIndex == self.totalCount - 1)
 				{
-					self.GetParent<GamePlayTowerDefenseComponent>().TransToGameSuccess();
+					self.GetParent<GamePlayTowerDefenseComponent>().TransToGameSuccess().Coroutine();
 				}
 				else
 				{
-					self.GetParent<GamePlayTowerDefenseComponent>().TransToRestTime();
+					self.GetParent<GamePlayTowerDefenseComponent>().TransToRestTime().Coroutine();
 				}
 				TimerComponent.Instance.Remove(ref self.Timer);
 			}

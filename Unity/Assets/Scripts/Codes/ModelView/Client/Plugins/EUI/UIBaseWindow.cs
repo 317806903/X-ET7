@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ChildOf(typeof(UIComponent))]
-    public class UIBaseWindow : Entity,IAwake, IDestroy
+    public class UIBaseWindow : Entity, IAwake, IDestroy
     {
         public bool IsPreLoad
         {
@@ -12,7 +12,7 @@ namespace ET.Client
                 return this.UIPrefabGameObject != null ;
             }
         }
-        
+
         public Transform uiTransform
         {
             get
@@ -24,7 +24,7 @@ namespace ET.Client
                 return null;
             }
         }
-        
+
         public WindowID WindowID
         {
             get
@@ -37,14 +37,14 @@ namespace ET.Client
             }
             set { m_windowID = value; }
         }
-        
+
         public bool IsInStackQueue
         {
             get;
             set;
         }
-                
-        
+
+
         public WindowID m_windowID           = WindowID.WindowID_Invaild;
         public GameObject UIPrefabGameObject = null;
         public UIWindowType windowType = UIWindowType.Normal;

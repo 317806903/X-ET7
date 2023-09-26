@@ -9,9 +9,9 @@ namespace ET
 	[ComponentOf(typeof(GamePlayTowerDefenseComponent))]
 	public class PutMonsterCallComponent : Entity, IAwake, IDestroy, ITransferClient
 	{
-		[BsonIgnore]
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, float3> MonsterCallPos;
-		
+
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, long> MonsterCallUnitId;
 	}

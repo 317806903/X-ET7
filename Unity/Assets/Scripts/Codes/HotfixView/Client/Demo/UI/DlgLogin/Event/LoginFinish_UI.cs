@@ -5,7 +5,7 @@
     {
         protected override async ETTask Run(Scene scene, EventType.LoginFinish args)
         {
-            await SceneHelper.EnterHall(scene);
+            await SceneHelper.EnterHall(scene, true);
         }
     }
 }

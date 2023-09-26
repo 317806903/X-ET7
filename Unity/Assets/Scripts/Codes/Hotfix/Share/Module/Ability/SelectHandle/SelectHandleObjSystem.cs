@@ -19,16 +19,38 @@ namespace ET.Ability
         {
             protected override void Destroy(SelectHandleObj self)
             {
-                self.selectHandle?.Dispose();
-                self.selectHandle = null;
+                if (self.selectHandle != null)
+                {
+                    self.selectHandle.SetHolding(false);
+                    ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), self.selectHandle);
+                    self.selectHandle = null;
+                }
             }
+        }
+
+        public static Unit GetUnit(this SelectHandleObj self)
+        {
+            Unit unit = self.GetParent<Unit>();
+            return unit;
         }
 
         public static void SaveSelectHandle(this SelectHandleObj self, SelectHandle selectHandle)
         {
+            if (self.selectHandle != null)
+            {
+                EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.UnitChgSaveSelectObj()
+                {
+                    unit = self.GetUnit(),
+                    selectHandle = selectHandle,
+                });
+
+                self.selectHandle.SetHolding(false);
+                ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), self.selectHandle);
+            }
             self.selectHandle = selectHandle;
+            self.selectHandle.SetHolding(true);
         }
-        
+
         public static SelectHandle GetSaveSelectHandle(this SelectHandleObj self)
         {
             return self.selectHandle;

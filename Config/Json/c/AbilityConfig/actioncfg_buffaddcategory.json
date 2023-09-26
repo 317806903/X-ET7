@@ -7,12 +7,29 @@
       {
         "duration": 30,
         "addStack": 20,
-        "buffAction": {
-          "$type": "BuffActionModifyAttribute",
-          "numericType": 10052,
-          "baseValue": 11,
-          "stackValue": 13
-        },
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10072,
+            "baseValue": 11,
+            "stackValue": 13,
+            "maxChgValue": 100
+          },
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10073,
+            "baseValue": 11,
+            "stackValue": 13,
+            "maxChgValue": 100
+          },
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10072,
+            "baseValue": 11,
+            "stackValue": 13,
+            "maxChgValue": 100
+          }
+        ],
         "buffId": "Buff_1"
       }
     ]
@@ -25,10 +42,46 @@
       {
         "duration": 1,
         "addStack": 1,
-        "buffAction": {
-          "$type": "BuffActionNone"
-        },
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
         "buffId": "Buff_Line1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Line2",
+    "name": "",
+    "desc": "新增buff：持续直线攻击",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Line2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Line3",
+    "name": "",
+    "desc": "新增buff：持续直线攻击",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Line3"
       }
     ]
   },
@@ -40,9 +93,11 @@
       {
         "duration": 1,
         "addStack": 1,
-        "buffAction": {
-          "$type": "BuffActionNone"
-        },
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
         "buffId": "Buff_Circle1"
       }
     ]
@@ -55,9 +110,11 @@
       {
         "duration": -1,
         "addStack": 1,
-        "buffAction": {
-          "$type": "BuffActionNone"
-        },
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
         "buffId": "Buff_AttackGetGold1"
       }
     ]
@@ -70,10 +127,207 @@
       {
         "duration": -1,
         "addStack": 1,
-        "buffAction": {
-          "$type": "BuffActionNone"
-        },
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
         "buffId": "Buff_AutoGetGold1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_HitBack1",
+    "name": "",
+    "desc": "攻击产生击退",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [],
+        "buffId": "Buff_HitBack1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_BeHitBack1",
+    "name": "",
+    "desc": "被击退",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyMotionHorizontal_Forward",
+            "speed": 2,
+            "acceleratedSpeed": 0,
+            "motionTargetType": 1
+          }
+        ],
+        "buffId": "Buff_BeHitBack1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Slow",
+    "name": "",
+    "desc": "减速",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Slow"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_CDDown1",
+    "name": "",
+    "desc": "减cd1",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -10,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -10
+          }
+        ],
+        "buffId": "Buff_CDDown1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_CDDown2",
+    "name": "",
+    "desc": "减cd2",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -20,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -20
+          }
+        ],
+        "buffId": "Buff_CDDown2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_CDDown3",
+    "name": "",
+    "desc": "减cd3",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -50,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_CDDown3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AttackUp",
+    "name": "",
+    "desc": "加攻击",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": 0,
+            "stackValue": 10,
+            "maxChgValue": 100
+          }
+        ],
+        "buffId": "Buff_AttackUp"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddCDDown1",
+    "name": "",
+    "desc": "为队友减cd1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddCDDown1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddCDDown2",
+    "name": "",
+    "desc": "为队友减cd2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddCDDown2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddCDDown3",
+    "name": "",
+    "desc": "为队友减cd3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddCDDown3"
       }
     ]
   }

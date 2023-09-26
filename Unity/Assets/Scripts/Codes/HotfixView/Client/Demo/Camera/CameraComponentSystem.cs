@@ -36,10 +36,10 @@ namespace ET.Client
 		{
 			while (true)
 			{
-				Unit myUnit = UnitHelper.GetMyUnit(self.DomainScene());
-				if (ET.Ability.UnitHelper.ChkUnitAlive(myUnit))
+				Unit observerUnit = UnitHelper.GetMyObserverUnit(self.DomainScene());
+				if (ET.Ability.UnitHelper.ChkUnitAlive(observerUnit))
 				{
-					self.Unit = myUnit;
+					self.Unit = observerUnit;
 					break;
 				}
 				else
@@ -50,10 +50,10 @@ namespace ET.Client
 			while (true)
 			{
 				GameObjectComponent gameObjectComponent = self.Unit.GetComponent<GameObjectComponent>();
-				if (gameObjectComponent != null && gameObjectComponent.GameObject != null)
+				if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
 				{
 					WorldCameraController worldCameraController = self.MainCamera.gameObject.GetComponent<WorldCameraController>();
-					worldCameraController.ForceSetPosition(self.Unit.GetComponent<GameObjectComponent>().GameObject.transform, 1f, 30, new Vector3(30f, 116, 0));
+					worldCameraController.ForceSetPosition(gameObjectComponent.GetGo().transform, 1f, 30, new Vector3(30f, 116, 0));
 					return;
 				}
 				else

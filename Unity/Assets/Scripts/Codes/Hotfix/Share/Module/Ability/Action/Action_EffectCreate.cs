@@ -12,7 +12,7 @@ namespace ET.Ability
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
 			ActionCfg_EffectCreate actionCfgCreateEffect = ActionCfg_EffectCreateCategory.Instance.Get(actionId);
-			EffectHelper.AddEffect(unit, actionCfgCreateEffect, selectHandle);
+			EffectHelper.AddEffect(unit, actionCfgCreateEffect, selectHandle, actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

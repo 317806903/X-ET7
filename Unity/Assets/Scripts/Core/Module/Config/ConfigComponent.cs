@@ -17,18 +17,28 @@ namespace ET
         public struct GetAllConfigBytes
         {
         }
-        
+
         public struct GetOneConfigBytes
         {
             public string ConfigName;
         }
-		
+
         public struct GetRes
         {
             public string ResName;
         }
-		
+
+        public struct GetRouterHttpHostAndPort
+        {
+        }
+
+        public struct GetRouterHttpHostAndPortWhenEditor
+        {
+        }
+
         private readonly Dictionary<string, IConfigSingleton> allConfig = new Dictionary<string, IConfigSingleton>(20);
+
+        private bool isFinishLoad;
 
 		public override void Dispose()
 		{
@@ -38,6 +48,11 @@ namespace ET
 			}
 		}
 
+		public bool ChkFinishLoad()
+		{
+			return this.isFinishLoad;
+		}
+
 		public object LoadOneConfig(Type configType)
 		{
 			this.allConfig.TryGetValue(configType.Name, out IConfigSingleton oneConfig);
@@ -45,19 +60,24 @@ namespace ET
 			{
 				oneConfig.Destroy();
 			}
-			
-			ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes() {ConfigName = configType.FullName});
+
+			ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes() {ConfigName = configType.Name});
 
 			object category = Activator.CreateInstance(configType, oneConfigBytes);
 			IConfigSingleton singleton = category as IConfigSingleton;
 			singleton.Register();
-			
+
 			this.allConfig[configType.Name] = singleton;
 			return category;
 		}
-		
+
 		public void Load()
 		{
+			this.isFinishLoad = false;
+			foreach (var configSingleton in this.allConfig)
+			{
+				configSingleton.Value.Destroy();
+			}
 			this.allConfig.Clear();
 			Dictionary<Type, ByteBuf> configBytes = EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, ByteBuf>>(new GetAllConfigBytes());
 
@@ -66,21 +86,27 @@ namespace ET
 				ByteBuf oneConfigBytes = configBytes[type];
 				this.LoadOneInThread(type, oneConfigBytes);
 			}
-			
+
 			foreach (IConfigSingleton category in this.allConfig.Values)
 			{
 				category.Register();
 				category.Resolve(allConfig);
 			}
+			this.isFinishLoad = true;
 		}
-		
+
 		public async ETTask LoadAsync()
 		{
+			this.isFinishLoad = false;
+			foreach (var configSingleton in this.allConfig)
+			{
+				configSingleton.Value.Destroy();
+			}
 			this.allConfig.Clear();
 			Dictionary<Type, ByteBuf> configBytes = EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, ByteBuf>>(new GetAllConfigBytes());
 
 			using ListComponent<Task> listTasks = ListComponent<Task>.Create();
-			
+
 			foreach (Type type in configBytes.Keys)
 			{
 				ByteBuf oneConfigBytes = configBytes[type];
@@ -94,22 +120,23 @@ namespace ET
 			{
 				category.Register();
 			}
-			
+
 			foreach (IConfigSingleton category in this.allConfig.Values)
 			{
 				category.Resolve(allConfig);
 			}
+			this.isFinishLoad = true;
 		}
-		
+
 		private void LoadOneInThread(Type configType, ByteBuf oneConfigBytes)
 		{
 			object category = Activator.CreateInstance(configType, oneConfigBytes);
 			lock (this)
 			{
-				this.allConfig[configType.Name] = category as IConfigSingleton;	
+				this.allConfig[configType.Name] = category as IConfigSingleton;
 			}
 		}
-		
+
 		public void TranslateText(Func<string, string, string> translator)
 		{
 			foreach (IConfigSingleton category in this.allConfig.Values)

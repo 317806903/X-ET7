@@ -10,5 +10,18 @@ namespace ET.Ability.Client
     public class EffectShowObj: Entity, IAwake, IDestroy
     {
         public GameObject go;
+        
+        private EntityRef<AudioPlayObj> audioPlayObj;
+        public AudioPlayObj RefAudioPlayObj
+        {
+            get
+            {
+                return audioPlayObj;
+            }
+            set
+            {
+                this.audioPlayObj = value;
+            }
+        }
     }
 }

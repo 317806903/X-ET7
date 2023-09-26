@@ -22,6 +22,10 @@ namespace ET.AbilityConfig
         /// 减益效果
         /// </summary>
         Debuff = 2,
+        /// <summary>
+        /// 其他
+        /// </summary>
+        Other = 3,
     }
 
 } 

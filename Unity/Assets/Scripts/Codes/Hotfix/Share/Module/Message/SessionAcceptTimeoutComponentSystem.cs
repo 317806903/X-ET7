@@ -17,13 +17,13 @@ namespace ET
             }
         }
     }
-    
+
     [ObjectSystem]
     public class SessionAcceptTimeoutComponentAwakeSystem: AwakeSystem<SessionAcceptTimeoutComponent>
     {
         protected override void Awake(SessionAcceptTimeoutComponent self)
         {
-            self.Timer = TimerComponent.Instance.NewOnceTimer(TimeHelper.ServerNow() + 5000, TimerInvokeType.SessionAcceptTimeout, self);
+            self.Timer = TimerComponent.Instance.NewOnceTimer(5000, TimerInvokeType.SessionAcceptTimeout, self);
         }
     }
 

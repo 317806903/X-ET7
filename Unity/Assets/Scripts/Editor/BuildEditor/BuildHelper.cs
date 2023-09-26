@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace ET
@@ -11,26 +12,27 @@ namespace ET
         private const string relativeDirPrefix = "../Release";
 
         public static string BuildFolder = "../Release/{0}/StreamingAssets/";
-        
-        
+
+
         [InitializeOnLoadMethod]
         public static void ReGenerateProjectFiles()
         {
-            if (Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().FullName == "RiderScriptEditor")
+            if (Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().Name == "RiderScriptEditor")
             {
                 FieldInfo generator = Unity.CodeEditor.CodeEditor.CurrentEditor.GetType().GetField("m_ProjectGeneration", BindingFlags.Static | BindingFlags.NonPublic);
                 var syncMethod = generator.FieldType.GetMethod("Sync");
                 syncMethod.Invoke(generator.GetValue(Unity.CodeEditor.CodeEditor.CurrentEditor), null);
+                Debug.Log("ReGenerateProjectFiles rider finished.");
             }
             else
             {
                 Unity.CodeEditor.CodeEditor.CurrentEditor.SyncAll();
+                Debug.Log("ReGenerateProjectFiles vs finished.");
             }
-            
-            Debug.Log("ReGenerateProjectFiles finished.");
+
         }
 
-              
+
 #if ENABLE_CODES
         [MenuItem("ET/ChangeDefine/Remove ENABLE_CODES")]
         public static void RemoveEnableCodes()
@@ -58,106 +60,219 @@ namespace ET
             EnableDefineSymbols("ENABLE_VIEW", true);
         }
 #endif
-        public static void EnableDefineSymbols(string symbols, bool enable)
+        public static void EnableDefineSymbols(string symbolsIn, bool enable)
         {
-            Log.Debug($"EnableDefineSymbols {symbols} {enable}");
+            Log.Debug($"EnableDefineSymbols {symbolsIn} {enable}");
+            var symbolsList = symbolsIn.Split(';').ToList();
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
             var ss = defines.Split(';').ToList();
-            if (enable)
+            bool isChg = false;
+            for (int i = 0; i < symbolsList.Count; i++)
             {
-                if (ss.Contains(symbols))
+                string symbols = symbolsList[i];
+
+                if (enable)
                 {
-                    return;
+                    if (ss.Contains(symbols))
+                    {
+                        continue;
+                    }
+                    ss.Add(symbols);
+                    isChg = true;
                 }
-                ss.Add(symbols);
+                else
+                {
+                    if (!ss.Contains(symbols))
+                    {
+                        continue;
+                    }
+                    ss.Remove(symbols);
+                    isChg = true;
+                }
+                BuildHelper.ShowNotification($"EnableDefineSymbols {symbols} {enable}");
             }
-            else
+
+            if (isChg)
             {
-                if (!ss.Contains(symbols))
-                {
-                    return;
-                }
-                ss.Remove(symbols);
+                defines = string.Join(";", ss);
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines);
+                //AssetDatabase.SaveAssets();
+                UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
+                AssetDatabase.Refresh();
             }
-            BuildHelper.ShowNotification($"EnableDefineSymbols {symbols} {enable}");
-            defines = string.Join(";", ss);
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
-        
+
         public static void ShowNotification(string tips)
         {
             EditorWindow game = EditorWindow.GetWindow(typeof(EditorWindow).Assembly.GetType("UnityEditor.GameView"));
             game?.ShowNotification(new GUIContent($"{tips}"));
         }
 
-        public static void Build(PlatformType type, BuildAssetBundleOptions buildAssetBundleOptions, BuildOptions buildOptions, bool isBuildExe, bool isContainAB, bool clearFolder)
+        public static void Build(BuildTarget buildTarget, BuildOptions buildOptions, string packName)
         {
-            BuildTarget buildTarget = BuildTarget.StandaloneWindows;
-            string programName = "ET";
-            string exeName = programName;
-            switch (type)
+            string programName;
+            if (string.IsNullOrEmpty(packName))
             {
-                case PlatformType.Windows:
-                    buildTarget = BuildTarget.StandaloneWindows64;
-                    exeName += ".exe";
-                    break;
-                case PlatformType.Android:
-                    buildTarget = BuildTarget.Android;
-                    exeName += ".apk";
-                    break;
-                case PlatformType.IOS:
-                    buildTarget = BuildTarget.iOS;
-                    break;
-                case PlatformType.MacOS:
-                    buildTarget = BuildTarget.StandaloneOSX;
-                    break;
-                
-                case PlatformType.Linux:
-                    buildTarget = BuildTarget.StandaloneLinux64;
-                    break;
-            }
-
-            // string fold = string.Format(BuildFolder, type);
-            //
-            // if (clearFolder && Directory.Exists(fold))
-            // {
-            //     Directory.Delete(fold, true);
-            // }
-            // Directory.CreateDirectory(fold);
-            //
-            // UnityEngine.Debug.Log("start build assetbundle");
-            // BuildPipeline.BuildAssetBundles(fold, buildAssetBundleOptions, buildTarget);
-            //
-            // UnityEngine.Debug.Log("finish build assetbundle");
-
-            // if (isContainAB)
-            // {
-            //     FileHelper.CleanDirectory("Assets/StreamingAssets/");
-            //     FileHelper.CopyDirectory(fold, "Assets/StreamingAssets/");
-            // }
-
-            if (isBuildExe)
-            {
-                AssetDatabase.Refresh();
-                string[] levels = {
-                    "Assets/ResAB/Scene/Init.unity",
-                };
-                UnityEngine.Debug.Log("start build exe");
-                BuildPipeline.BuildPlayer(levels, $"{relativeDirPrefix}/{exeName}", buildTarget, buildOptions);
-                UnityEngine.Debug.Log("finish build exe");
+                programName = "ARGame";
             }
             else
             {
-                // if (isContainAB && type == PlatformType.Windows)
-                // {
-                //     string targetPath = Path.Combine(relativeDirPrefix, $"{programName}_Data/StreamingAssets/");
-                //     FileHelper.CleanDirectory(targetPath);
-                //     Debug.Log($"src dir: {fold}    target: {targetPath}");
-                //     FileHelper.CopyDirectory(fold, targetPath);
-                // }
+                programName = packName;
             }
+
+            switch (buildTarget)
+            {
+                case BuildTarget.StandaloneWindows:
+                    programName += ".exe";
+                    break;
+                case BuildTarget.StandaloneWindows64:
+                    programName += ".exe";
+                    break;
+                case BuildTarget.Android:
+                    programName += ".apk";
+                    break;
+                case BuildTarget.iOS:
+                    break;
+                case BuildTarget.StandaloneOSX:
+                    break;
+                case BuildTarget.StandaloneLinux64:
+                    break;
+            }
+
+            AssetDatabase.Refresh();
+            string[] levels = {
+                "Assets/ResAB/Scene/Init.unity",
+            };
+            Debug.Log("start buildpack");
+            BuildReport buildReport = BuildPipeline.BuildPlayer(levels, $"{relativeDirPrefix}/{programName}", buildTarget, buildOptions);
+            BuildSummary summary = buildReport.summary;
+            if (summary.result == BuildResult.Succeeded)
+            {
+                Debug.Log("----Build succeeded: " + summary.totalSize + " bytes");
+
+                FileInfo fileInfo = new ($"{relativeDirPrefix}/{programName}");
+                EditorUtility.RevealInFinder(fileInfo.FullName);
+            }
+            else if (summary.result == BuildResult.Failed)
+            {
+                Debug.LogError("----Build failed");
+            }
+        }
+
+
+        public static async ETTask BuildModel()
+        {
+            if (Define.EnableCodes)
+            {
+                Log.Error("now in ENABLE_CODES mode, do not need Build!");
+                return;
+            }
+
+            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
+            var codeOptimization = globalConfig.codeOptimization;
+            await BuildAssembliesHelper.BuildModel(codeOptimization, globalConfig);
+        }
+
+        public static async ETTask BuildHotfix()
+        {
+            if (Define.EnableCodes)
+            {
+                Log.Error("now in ENABLE_CODES mode, do not need Build!");
+                return;
+            }
+
+            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
+            var codeOptimization = globalConfig.codeOptimization;
+            await BuildAssembliesHelper.BuildHotfix(codeOptimization, globalConfig);
+        }
+
+        public static async ETTask BuildModelAndHotfix()
+        {
+            if (Define.EnableCodes)
+            {
+                string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+                Log.Error($"now in ENABLE_CODES mode, do not need Build! [{defines}]");
+                return;
+            }
+
+            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
+            var codeOptimization = globalConfig.codeOptimization;
+            await BuildAssembliesHelper.BuildModel(codeOptimization, globalConfig);
+            await BuildAssembliesHelper.BuildHotfix(codeOptimization, globalConfig);
+        }
+
+        // 从构建命令里获取参数示例
+        public static BuildTarget GetBuildTargetFromCommandLine(string buildComman)
+        {
+            string buildTargetParam = "";
+            foreach (string arg in System.Environment.GetCommandLineArgs())
+            {
+                if (arg.StartsWith(buildComman))
+                    buildTargetParam = arg.Split("="[0])[1].Trim();
+                break;
+            }
+
+            BuildTarget buildTarget = BuildTarget.NoTarget;
+            if (string.IsNullOrEmpty(buildTargetParam))
+            {
+                buildTarget = BuildTarget.NoTarget;
+            }
+            else if (buildTargetParam == "Android" || buildTargetParam == "android")
+            {
+                buildTarget = BuildTarget.Android;
+            }
+            else if (buildTargetParam == "IOS" || buildTargetParam == "iOS")
+            {
+                buildTarget = BuildTarget.iOS;
+            }
+            else if (buildTargetParam == "WebGL" || buildTargetParam == "webGL")
+            {
+                buildTarget = BuildTarget.WebGL;
+            }
+            else if (buildTargetParam == "StandaloneLinux64" || buildTargetParam == "standaloneLinux64" || buildTargetParam == "StandaloneLinux" || buildTargetParam == "standaloneLinux")
+            {
+                buildTarget = BuildTarget.StandaloneLinux64;
+            }
+            else if (buildTargetParam == "PC" || buildTargetParam == "StandaloneWindows64" || buildTargetParam == "standaloneWindows64" || buildTargetParam == "StandaloneWindows" || buildTargetParam == "standaloneWindows")
+            {
+                buildTarget = BuildTarget.StandaloneWindows64;
+            }
+            return buildTarget;
+        }
+
+        // 从构建命令里获取参数示例
+        public static PackName GetBuildPackNameFromCommandLine(string buildComman)
+        {
+            string buildPackNameParam = "";
+            foreach (string arg in System.Environment.GetCommandLineArgs())
+            {
+                if (arg.StartsWith(buildComman))
+                    buildPackNameParam = arg.Split("="[0])[1].Trim();
+                break;
+            }
+
+            PackName packName = PackName.InNet148;
+            if (string.IsNullOrEmpty(buildPackNameParam))
+            {
+                packName = PackName.InNet148;
+            }
+            else if (buildPackNameParam == "Local")
+            {
+                packName = PackName.Local;
+            }
+            else if (buildPackNameParam == "InNet148")
+            {
+                packName = PackName.InNet148;
+            }
+            else if (buildPackNameParam == "OutNet_CN")
+            {
+                packName = PackName.OutNet_CN;
+            }
+            else if (buildPackNameParam == "OutNet_EN")
+            {
+                packName = PackName.OutNet_EN;
+            }
+            return packName;
         }
     }
 }

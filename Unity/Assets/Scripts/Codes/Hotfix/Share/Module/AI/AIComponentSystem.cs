@@ -23,14 +23,14 @@ namespace ET
                 }
             }
         }
-    
+
         [ObjectSystem]
         public class AIComponentAwakeSystem: AwakeSystem<AIComponent, string>
         {
             protected override void Awake(AIComponent self, string aiConfigId)
             {
                 self.AICfgId = aiConfigId;
-                self.Timer = TimerComponent.Instance.NewRepeatedTimer(100, TimerInvokeType.AITimer, self);
+                self.Timer = TimerComponent.Instance.NewRepeatedTimer(500, TimerInvokeType.AITimer, self);
             }
         }
 
@@ -45,12 +45,17 @@ namespace ET
                 self.Current = "";
             }
         }
-        
+
         public static Unit GetUnit(this AIComponent self)
         {
             return self.GetParent<Unit>();
         }
-        
+
+        public static string GetAICfgId(this AIComponent self)
+        {
+            return self.AICfgId;
+        }
+
         public static void Check(this AIComponent self)
         {
             if (self.Parent == null)
@@ -86,7 +91,7 @@ namespace ET
                     continue;
                 }
 
-                if (self.Current == aiConfig.Id)
+                if (self.Current == aiConfig.Order.ToString())
                 {
                     break;
                 }
@@ -95,12 +100,12 @@ namespace ET
                 self.Cancel(); // 取消之前的行为
                 ETCancellationToken cancellationToken = new ETCancellationToken();
                 self.CancellationToken = cancellationToken;
-                self.Current = aiConfig.Id;
+                self.Current = aiConfig.Order.ToString();
 
                 aaiHandler.Execute(self, aiConfig, cancellationToken).Coroutine();
                 return;
             }
-            
+
         }
 
         public static void Cancel(this AIComponent self)
@@ -110,4 +115,4 @@ namespace ET
             self.CancellationToken = null;
         }
     }
-} 
+}

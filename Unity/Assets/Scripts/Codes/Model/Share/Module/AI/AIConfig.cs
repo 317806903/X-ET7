@@ -10,25 +10,25 @@ namespace ET.AbilityConfig
 	{
 		[ProtoIgnore]
 		[BsonIgnore]
-		public Dictionary<string, SortedDictionary<string, AICfg>> AIConfigs = new();
+		public Dictionary<string, SortedDictionary<int, AICfg>> AIConfigs = new();
 
-		public SortedDictionary<string, AICfg> GetAI(string aiCfgId)
+		public SortedDictionary<int, AICfg> GetAI(string aiCfgId)
 		{
 			return this.AIConfigs[aiCfgId];
 		}
 
 		partial void PostResolve()
 		{
-			foreach (var kv in this.GetAll())
+			foreach (var aICfg in this.DataList)
 			{
-				SortedDictionary<string, AICfg> aiNodeConfig;
-				if (!this.AIConfigs.TryGetValue(kv.Value.AIConfigId, out aiNodeConfig))
+				SortedDictionary<int, AICfg> aiNodeConfig;
+				if (!this.AIConfigs.TryGetValue(aICfg.AIConfigId, out aiNodeConfig))
 				{
-					aiNodeConfig = new SortedDictionary<string, AICfg>();
-					this.AIConfigs.Add(kv.Value.AIConfigId, aiNodeConfig);
+					aiNodeConfig = new SortedDictionary<int, AICfg>();
+					this.AIConfigs.Add(aICfg.AIConfigId, aiNodeConfig);
 				}
 				
-				aiNodeConfig.Add(kv.Key, kv.Value);
+				aiNodeConfig.Add(aICfg.Order, aICfg);
 			}
 		}
 	}

@@ -10,5 +10,6 @@ namespace ET
 		public HashSet<long> EnterBattleRoomList;
 		public HashSet<long> InTheBattleRoomList;
 		public Dictionary<long, long> player2Room;
+		public Dictionary<long, string> _ARMeshDownLoadUrlDic;
 	}
 }

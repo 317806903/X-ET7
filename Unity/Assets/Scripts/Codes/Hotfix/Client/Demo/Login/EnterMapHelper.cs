@@ -8,7 +8,7 @@ namespace ET.Client
         {
             try
             {
-                G2C_EnterMap g2CEnterMap = await clientScene.GetComponent<SessionComponent>().Session.Call(new C2G_EnterMap()
+                G2C_EnterMap g2CEnterMap = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_EnterMap()
                 {
                     GamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId,
                 }) as G2C_EnterMap;

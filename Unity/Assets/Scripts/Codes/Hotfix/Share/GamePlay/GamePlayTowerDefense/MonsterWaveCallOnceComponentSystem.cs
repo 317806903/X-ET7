@@ -98,6 +98,10 @@ namespace ET
 			int leftNum = monsterWaveCallNode.TotalNum;
 			while (leftNum > 0)
 			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
 				for (int i = 0; i < monsterWaveCallNode.OnceCallNum; i++)
 				{
 					Unit monsterUnit = monsterWaveCallComponent.CallMonsterOnce(self.playerId, monsterWaveCallNode.MonsterCfgId, monsterWaveCallNode.Level, monsterWaveCallNode.RewardGold);

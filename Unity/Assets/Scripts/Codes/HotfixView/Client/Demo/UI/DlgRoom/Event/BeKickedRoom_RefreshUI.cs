@@ -11,10 +11,10 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.BeKickedRoom args)
         {
-            scene.GetComponent<UIComponent>().HideAllShownWindow();
-            
-            await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Hall);
-            
+            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>();
+
             await ETTask.CompletedTask;
         }
     }

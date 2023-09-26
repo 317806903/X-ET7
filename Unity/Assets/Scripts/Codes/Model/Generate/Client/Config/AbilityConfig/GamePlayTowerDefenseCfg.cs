@@ -21,7 +21,9 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         IsNeedPutHomeAndMonsterCall = _buf.ReadBool();
         PlayerInitGold = _buf.ReadInt();
+        InterestOnDeposit = _buf.ReadInt();
         ResTime = _buf.ReadFloat();
+        LimitTowerCount = _buf.ReadInt();
         RefreshBuyTowerCost = _buf.ReadInt();
         BuyTowerPoolCount = _buf.ReadInt();
         HomeLife = _buf.ReadInt();
@@ -56,9 +58,17 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// </summary>
     public int PlayerInitGold { get; private set; }
     /// <summary>
+    /// 波次结束结算存款利息(%)
+    /// </summary>
+    public int InterestOnDeposit { get; private set; }
+    /// <summary>
     /// 中间休息时间
     /// </summary>
     public float ResTime { get; private set; }
+    /// <summary>
+    /// 每人最多允许建造塔数
+    /// </summary>
+    public int LimitTowerCount { get; private set; }
     /// <summary>
     /// 玩家刷新可购买塔的费用
     /// </summary>
@@ -102,7 +112,9 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "IsNeedPutHomeAndMonsterCall:" + IsNeedPutHomeAndMonsterCall + ","
         + "PlayerInitGold:" + PlayerInitGold + ","
+        + "InterestOnDeposit:" + InterestOnDeposit + ","
         + "ResTime:" + ResTime + ","
+        + "LimitTowerCount:" + LimitTowerCount + ","
         + "RefreshBuyTowerCost:" + RefreshBuyTowerCost + ","
         + "BuyTowerPoolCount:" + BuyTowerPoolCount + ","
         + "HomeLife:" + HomeLife + ","

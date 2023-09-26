@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="uiBaseWindow"></param>
         /// <param name="contextData"></param>
-        void OnShowWindow(UIBaseWindow uiBaseWindow, Entity contextData = null);
+        void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null);
         
         /// <summary>
         /// 隐藏UI窗口的业务逻辑

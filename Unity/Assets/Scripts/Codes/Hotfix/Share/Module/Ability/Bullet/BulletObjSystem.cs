@@ -21,10 +21,18 @@ namespace ET.Ability
         {
             protected override void Destroy(BulletObj self)
             {
-                self.hitRecords.Dispose();
+                if (self.hitRecords != null)
+                {
+                    foreach (BulletHitRecord bulletHitRecord in self.hitRecords)
+                    {
+                        bulletHitRecord.Dispose();
+                    }
+                    self.hitRecords.Dispose();
+                    self.hitRecords = null;
+                }
             }
         }
-        
+
         [ObjectSystem]
         public class BulletObjFixedUpdateSystem: FixedUpdateSystem<BulletObj>
         {
@@ -80,31 +88,15 @@ namespace ET.Ability
         {
             return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
         }
-        
+
         /// <summary>
         /// 获取子弹发射者(player或monster)
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static Unit GetCasterPlayerUnit(this BulletObj self)
+        public static Unit GetCasterActorUnit(this BulletObj self)
         {
-            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-            while(true)
-            {
-                if (UnitHelper.ChkIsBullet(unit))
-                {
-                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
-                }
-                else if (UnitHelper.ChkIsAoe(unit))
-                {
-                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return unit;
+            return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
         }
 
         /// <summary>
@@ -117,73 +109,81 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void EventHandler(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void TrigEvent(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit = null, Unit
+            beHurtUnit = null)
+        {
+            List<BulletActionCall> bulletActionCalls = self.GetActionIds(abilityBulletMonitorTriggerEvent);
+            if (bulletActionCalls.Count > 0)
+            {
+                for (int i = 0; i < bulletActionCalls.Count; i++)
+                {
+                    self.EventHandler(bulletActionCalls[i], onAttackUnit, beHurtUnit);
+                }
+            }
+        }
+
+        public static void EventHandler(this BulletObj self, BulletActionCall bulletActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
             if (onAttackUnit != null)
             {
                 self.actionContext.attackerUnitId = onAttackUnit.Id;
             }
-            List<BulletActionCall> actionIds = self.GetActionIds(abilityBulletMonitorTriggerEvent);
-            for (int i = 0; i < actionIds.Count; i++)
+            string actionId = bulletActionCall.ActionId;
+            SelectHandle selectHandle;
+            Unit resetPosByUnit = null;
+            if (bulletActionCall.ActionCallParam is ActionCallSelectLast)
             {
-                BulletActionCall bulletActionCall = actionIds[i];
-                string actionId = bulletActionCall.ActionId;
-                SelectHandle selectHandle;
-                Unit resetPosByUnit = null;
-                if (bulletActionCall.ActionCallParam is ActionCallSelectLast)
+                selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
+            }
+            else if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+            {
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit, ref self.actionContext);
+            }
+            else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
+            {
+                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf, ref self.actionContext);
+            }
+            else
+            {
+                Unit targetUnit;
+                if (bulletActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
                 {
-                    selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
+                    targetUnit = self.GetCasterUnit();
                 }
-                else if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
+                else if (bulletActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
                 {
-                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit);
+                    targetUnit = self.GetCasterActorUnit();
                 }
-                else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
+                else if (bulletActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
                 {
-                    selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf);
+                    targetUnit = onAttackUnit;
+                }
+                else if (bulletActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
+                {
+                    targetUnit = beHurtUnit;
                 }
                 else
                 {
-                    Unit targetUnit;
-                    if (bulletActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
-                    {
-                        targetUnit = self.GetCasterUnit();
-                    }
-                    else if (bulletActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
-                    {
-                        targetUnit = self.GetCasterPlayerUnit();
-                    }
-                    else if (bulletActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
-                    {
-                        targetUnit = onAttackUnit;
-                    }
-                    else if (bulletActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
-                    {
-                        targetUnit = beHurtUnit;
-                    }
-                    else
-                    {
-                        targetUnit = self.GetUnit();
-                    }
-                    resetPosByUnit = targetUnit;
-                    selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
+                    targetUnit = self.GetUnit();
                 }
+                resetPosByUnit = targetUnit;
+                selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
+            }
 
-                SelectHandle curSelectHandle = selectHandle;
-                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, self.actionContext);
-                if (isChgSelect1)
-                {
-                    curSelectHandle = newSelectHandle1;
-                }
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, self.actionContext);
-                if (isChgSelect2)
-                {
-                    curSelectHandle = newSelectHandle2;
-                }
-                if (bRet1 && bRet2)
-                {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
-                }
+            SelectHandle curSelectHandle = selectHandle;
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, self.actionContext);
+            if (isChgSelect1)
+            {
+                curSelectHandle = newSelectHandle1;
+            }
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, self.actionContext);
+            if (isChgSelect2)
+            {
+                curSelectHandle = newSelectHandle2;
+            }
+            if (bRet1 && bRet2)
+            {
+                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
             }
         }
 
@@ -212,11 +212,11 @@ namespace ET.Ability
 
             if (self.duration <= 0 || self.canHitTimes <= 0)
             {
-                self.GetUnit().Destroy();
+                self.GetUnit().DestroyWithDeathShow();
             }
         }
 
-        public static bool CanHit(this BulletObj self, Unit unit)
+        public static bool CanHitUnit(this BulletObj self, Unit unit)
         {
             if (self.canHitTimes <= 0)
                 return false;
@@ -227,6 +227,30 @@ namespace ET.Ability
                 for (int i = 0; i < self.hitRecords.Count; i++)
                 {
                     if (self.hitRecords[i].targetUnitId == unit.Id)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool CanHitMesh(this BulletObj self)
+        {
+            if (UnitHelper.IsNeedChkMesh(self.GetUnit()) == false)
+            {
+                return false;
+            }
+            if (self.canHitTimes <= 0)
+                return false;
+            if (self.canHitAfterCreated > 0)
+                return false;
+            if (self.hitRecords != null)
+            {
+                for (int i = 0; i < self.hitRecords.Count; i++)
+                {
+                    if (self.hitRecords[i].targetUnitId == -1)
                     {
                         return false;
                     }

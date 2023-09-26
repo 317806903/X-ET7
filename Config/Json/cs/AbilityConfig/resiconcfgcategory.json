@@ -82,5 +82,29 @@
     "name": "",
     "desc": "",
     "res_name": "Assets/ResAB/UI/Icon/Icon_Hovertank.png"
+  },
+  {
+    "id": "ResIcon_TowerDragon1",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragon_1.png"
+  },
+  {
+    "id": "ResIcon_TowerElec1",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElec_1.png"
+  },
+  {
+    "id": "ResIcon_TowerIce1",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIce_1.png"
+  },
+  {
+    "id": "ResIcon_TowerTime1",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime_1.png"
   }
 ]

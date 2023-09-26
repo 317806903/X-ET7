@@ -14,8 +14,9 @@ namespace ET.Client
         private static async ETTask CheckAsync(RouterCheckComponent self)
         {
             Session session = self.GetParent<Session>();
+            Scene scene = self.DomainScene();
             long instanceId = self.InstanceId;
-            
+
             while (true)
             {
                 if (self.InstanceId != instanceId)
@@ -24,7 +25,7 @@ namespace ET.Client
                 }
 
                 await TimerComponent.Instance.WaitAsync(1000);
-                
+
                 if (self.InstanceId != instanceId)
                 {
                     return;
@@ -36,13 +37,14 @@ namespace ET.Client
                 {
                     continue;
                 }
-                
+
                 try
                 {
+
                     long sessionId = session.Id;
 
                     (uint localConn, uint remoteConn) = await NetServices.Instance.GetChannelConn(session.ServiceId, sessionId);
-                    
+
                     IPEndPoint realAddress = self.GetParent<Session>().RemoteAddress;
                     Log.Info($"get recvLocalConn start: {self.ClientScene().Id} {realAddress} {localConn} {remoteConn}");
 
@@ -52,16 +54,18 @@ namespace ET.Client
                         Log.Error($"get recvLocalConn fail: {self.ClientScene().Id} {routerAddress} {realAddress} {localConn} {remoteConn}");
                         continue;
                     }
-                    
+
                     Log.Info($"get recvLocalConn ok: {self.ClientScene().Id} {routerAddress} {realAddress} {recvLocalConn} {localConn} {remoteConn}");
-                    
+
                     session.LastRecvTime = TimeHelper.ClientNow();
-                    
+
                     NetServices.Instance.ChangeAddress(session.ServiceId, sessionId, routerAddress);
                 }
                 catch (Exception e)
                 {
                     Log.Error(e);
+
+                    EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
                 }
             }
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 namespace ET.Client
@@ -10,43 +11,148 @@ namespace ET.Client
         {
             Scene clientScene = scene;
 
-            await ResComponent.Instance.LoadSceneAsync("Hall");
-            
-            clientScene.GetComponent<UIComponent>().HideAllShownWindow();
-            //zpb clientScene.GetComponent<UIComponent>().CloseAllWindow();
-			
-            PlayerComponent playerComponent = clientScene.GetComponent<PlayerComponent>();
-            if (playerComponent.PlayerGameMode == PlayerGameMode.None)
+            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+            //zpb UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
+
+            ET.Ability.Client.UIAudioManagerHelper.PlayMusicMain(scene);
+
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLoading>();
+            DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);
+            await ResComponent.Instance.LoadSceneAsync("Hall", _DlgLoading.UpdateProcess);
+
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(scene);
+            PlayerGameMode playerGameMode = playerComponent.PlayerGameMode;
+            PlayerStatus playerStatus = playerComponent.PlayerStatus;
+
+            bool isFromLogin = args.isFromLogin;
+            Log.Debug($"------ HallSceneEnterStart_UI playerGameMode[{playerGameMode.ToString()}] playerStatus[{playerStatus.ToString()}]");
+
+            if (playerGameMode == PlayerGameMode.None)
             {
-                await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_GameMode);
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
             }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.SingleMap)
+            else if (playerGameMode == PlayerGameMode.SingleMap)
             {
                 //进入全局场景，所有人都进同个Map
-                await scene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Lobby);
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLobby>();
             }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.Room)
+            else if (playerGameMode == PlayerGameMode.Room)
             {
                 //进入动态场景，按房间都进同个Map
-                PlayerStatus playerStatus = clientScene.GetComponent<PlayerComponent>().PlayerStatus;
-                if (playerStatus == PlayerStatus.Room)
+                if (playerStatus == PlayerStatus.Hall)
                 {
-                    await clientScene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Room);
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>();
                 }
-                else if (playerStatus == PlayerStatus.Hall)
+                else if (playerStatus == PlayerStatus.Room)
                 {
-                    await clientScene.GetComponent<UIComponent>().ShowWindowAsync(WindowID.WindowID_Hall);
+                    //在房间的时候杀掉进程后重进 会进到这里
+                    if (isFromLogin)
+                    {
+                        string msg = "检测到还在房间中,是否返回房间?";
+                        ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                        {
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>().Coroutine();
+                        }, () =>
+                        {
+                            RoomHelper.QuitRoomAsync(scene).Coroutine();
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>().Coroutine();
+                        });
+                    }
+                    else
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
+                    }
                 }
                 else if (playerStatus == PlayerStatus.Battle)
                 {
-                    RoomHelper.ReturnBackBattle(clientScene);
+                    //在战斗的时候杀掉进程后重进 会进到这里
+                    if (isFromLogin)
+                    {
+                        string msg = "检测到还在战斗中,是否返回战斗?";
+                        ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                        {
+                            RoomHelper.ReturnBackBattle(clientScene).Coroutine();
+                        }, () =>
+                        {
+                            RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>().Coroutine();
+                        });
+                    }
+                    else
+                    {
+                        await RoomHelper.ReturnBackBattle(clientScene);
+                    }
                 }
             }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.ARRoom)
+            else if (playerGameMode == PlayerGameMode.ARRoom)
             {
-                //进入AR动态场景，按房间都进同个Map
+                if (playerStatus == PlayerStatus.Hall)
+                {
+                    //AR战斗自行退出 会进到这里
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>();
+                }
+                else if (playerStatus == PlayerStatus.Room)
+                {
+                    bool _ARSceneStatusCompleted = ET.Client.ARSessionHelper.ChkARSceneStatusCompleted(scene);
+                    Log.Debug($"_ARSceneStatusCompleted[{_ARSceneStatusCompleted}]");
+                    if (_ARSceneStatusCompleted)
+                    {
+                        //AR战斗后返回 会进到这里
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
+                    }
+                    else
+                    {
+                        DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                        {
+                            playerStatus = PlayerStatus.Room,
+                            arRoomId = playerComponent.RoomId,
+                        };
+                        //在AR房间的时候杀掉进程后重进 会进到这里
+                        if (isFromLogin)
+                        {
+                            string msg = "检测到还在房间中,是否返回房间?";
+                            ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                            {
+                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                            }, () =>
+                            {
+                                RoomHelper.QuitRoomAsync(scene).Coroutine();
+                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>().Coroutine();
+                            });
+                        }
+                        else
+                        {
+                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                        }
+                    }
+                }
+                else if (playerStatus == PlayerStatus.Battle)
+                {
+                    DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                    {
+                        playerStatus = PlayerStatus.Battle,
+                        arRoomId = playerComponent.RoomId,
+                    };
+                    //在AR战斗的时候杀掉进程后重进 会进到这里
+                    if (isFromLogin)
+                    {
+                        string msg = "检测到还在战斗中,是否返回战斗?";
+                        ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                        {
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                        }, () =>
+                        {
+                            RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>().Coroutine();
+                        });
+                    }
+                    else
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                    }
+                }
             }
-            
+
         }
     }
 }

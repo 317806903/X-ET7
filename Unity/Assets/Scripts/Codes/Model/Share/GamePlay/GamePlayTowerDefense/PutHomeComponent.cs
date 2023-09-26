@@ -11,6 +11,8 @@ namespace ET
 		[BsonIgnore]
 		public long Timer;
 		public float3 HomePos { get; set; }
+		public long unitId;
+
 		private EntityRef<Unit> homeUnit;
 		[BsonIgnore]
 		public Unit HomeUnit

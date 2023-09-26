@@ -1,5 +1,47 @@
 [
   {
+    "id": "ResEffect_HealthBar_1",
+    "name": "",
+    "desc": "血量显示",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/HealthBar.prefab"
+  },
+  {
+    "id": "ResEffect_MainTowerBar",
+    "name": "",
+    "desc": "血量显示",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/MainTowerBar.prefab"
+  },
+  {
+    "id": "ResEffect_ShootTextPrefab",
+    "name": "",
+    "desc": "飘血",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ShootTextPrefab.prefab"
+  },
+  {
+    "id": "ResEffect_AudioSource",
+    "name": "",
+    "desc": "音效挂件",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/AudioSource.prefab"
+  },
+  {
+    "id": "ResEffect_TowerShow",
+    "name": "",
+    "desc": "塔的显示圈",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/TowerShow.prefab"
+  },
+  {
+    "id": "ResEffect_TowerStarBar_1",
+    "name": "",
+    "desc": "塔的星星",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/TowerStarBar.prefab"
+  },
+  {
+    "id": "ResEffect_PathLineRenderer_1",
+    "name": "",
+    "desc": "路径指示",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/PathLineRenderer.prefab"
+  },
+  {
     "id": "ResEffect_1",
     "name": "",
     "desc": "prefab1",
@@ -100,5 +142,167 @@
     "name": "",
     "desc": "毒气",
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/Drag1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_1",
+    "name": "",
+    "desc": "弩箭开火1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_2",
+    "name": "",
+    "desc": "弩箭开火2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_2.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Fire_3",
+    "name": "",
+    "desc": "弩箭开火3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_crossbow_fire_3.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_1",
+    "name": "",
+    "desc": "弩箭命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_1.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_2",
+    "name": "",
+    "desc": "弩箭命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_2.prefab"
+  },
+  {
+    "id": "ResEffect_Arrow_Hit_3",
+    "name": "",
+    "desc": "弩箭命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_crossbow_impact_3.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_1",
+    "name": "",
+    "desc": "加农炮开火1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_1.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_2",
+    "name": "",
+    "desc": "加农炮开火2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_2.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Fire_3",
+    "name": "",
+    "desc": "加农炮开火3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/HM_cannon_fire_3.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_1",
+    "name": "",
+    "desc": "加农炮命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_1.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_2",
+    "name": "",
+    "desc": "加农炮命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_2.prefab"
+  },
+  {
+    "id": "ResEffect_Cannon_Hit_3",
+    "name": "",
+    "desc": "加农炮命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HM_cannon_impact_3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit1",
+    "name": "",
+    "desc": "龙击炮命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit2",
+    "name": "",
+    "desc": "龙击炮命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerDragon_Hit3",
+    "name": "",
+    "desc": "龙击炮命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerDragon_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit1",
+    "name": "",
+    "desc": "雷电塔命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit2",
+    "name": "",
+    "desc": "雷电塔命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Hit3",
+    "name": "",
+    "desc": "雷电塔命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill1",
+    "name": "",
+    "desc": "雷电塔施法1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill2",
+    "name": "",
+    "desc": "雷电塔施法2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerElec_Skill3",
+    "name": "",
+    "desc": "雷电塔施法3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerElec_Skill3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit1",
+    "name": "",
+    "desc": "冰魔塔命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit2",
+    "name": "",
+    "desc": "冰魔塔命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerIce_Hit3",
+    "name": "",
+    "desc": "冰魔塔命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerIce_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit1",
+    "name": "",
+    "desc": "加速塔命中1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit1.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit2",
+    "name": "",
+    "desc": "加速塔命中2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit2.prefab"
+  },
+  {
+    "id": "ResEffect_TowerTime_Hit3",
+    "name": "",
+    "desc": "加速塔命中3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit3.prefab"
   }
 ]

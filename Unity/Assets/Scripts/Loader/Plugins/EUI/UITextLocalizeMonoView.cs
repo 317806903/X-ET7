@@ -1,0 +1,241 @@
+﻿using System;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+
+public enum LocalizeType
+{
+    Static,
+    Dynamic,
+}
+
+public class UITextLocalizeMonoView: MonoBehaviour
+{
+    private Text mText;
+    private TMPro.TextMeshProUGUI mTextMesh;
+    public string textKey;
+    private string textDefaultValue;
+    public LocalizeType localizeType = LocalizeType.Static;
+    [SerializeField]
+    private object[] args;
+    public Func<string, string, string> GetTextKeyValue;
+    public Func<string, Func<string, string, string>> GetTextKeyValueActionBack;
+    private void Awake()
+    {
+        this.mText = this.GetComponent<Text>();
+        this.mTextMesh = this.GetComponent<TMPro.TextMeshProUGUI>();
+
+        if (this.mText != null)
+        {
+            this.textDefaultValue = this.mText.text;
+        }
+        if (this.mTextMesh != null)
+        {
+            this.textDefaultValue = this.mTextMesh.text;
+        }
+
+        this.args = null;
+        this.GetTextKeyValue = null;
+    }
+
+    private void Start()
+    {
+        this.OnChangeLanguage();
+    }
+
+    public (string, string) GetInfo()
+    {
+        this.mText = this.GetComponent<Text>();
+        this.mTextMesh = this.GetComponent<TMPro.TextMeshProUGUI>();
+
+        if (this.mText != null)
+        {
+            this.textDefaultValue = this.mText.text;
+        }
+        if (this.mTextMesh != null)
+        {
+            this.textDefaultValue = this.mTextMesh.text;
+        }
+        return (this.textKey, this.textDefaultValue);
+    }
+
+#if UNITY_EDITOR
+    [ContextMenu("DoChangeLanguage_ResetKey")]
+    public void DoChangeLanguage_ResetKey()
+    {
+        Debug.Log("DoChangeLanguage_ResetKey");
+        string textKey = this.GetNodePath();
+        if (this.textKey != null && this.textKey.Equals(textKey))
+        {
+            Debug.LogError("key 一致");
+            return;
+        }
+
+        this.textKey = textKey;
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    [ContextMenu("DoChangeLanguage_ReShowValue")]
+    private void DoChangeLanguage_ReShowValue()
+    {
+        Debug.Log("DoChangeLanguage_ReShowValue");
+        OnChangeLanguage();
+    }
+
+    [ContextMenu("DoChangeLanguage_CN")]
+    private void DoChangeLanguage_CN()
+    {
+        this.DoChangeLanguage_Force("CN");
+    }
+
+    [ContextMenu("DoChangeLanguage_TW")]
+    private void DoChangeLanguage_TW()
+    {
+        this.DoChangeLanguage_Force("TW");
+    }
+
+    [ContextMenu("DoChangeLanguage_EN")]
+    private void DoChangeLanguage_EN()
+    {
+        this.DoChangeLanguage_Force("EN");
+    }
+
+#endif
+
+    private void OnDestroy()
+    {
+        this.args = null;
+        this.GetTextKeyValue = null;
+        this.GetTextKeyValueActionBack = null;
+    }
+
+    public void SetGetTextKeyValueActionBack(Func<string, Func<string, string, string>> getTextKeyValueActionBack)
+    {
+        this.GetTextKeyValueActionBack = getTextKeyValueActionBack;
+    }
+
+    public void SetTextLocalizeAction(Func<string, string, string> getTextKeyValue)
+    {
+        this.GetTextKeyValue = getTextKeyValue;
+    }
+
+    public void DoRefreshTextValue()
+    {
+        this.OnChangeLanguage();
+    }
+
+    private void OnChangeLanguage()
+    {
+        if (this.localizeType == LocalizeType.Static)
+        {
+            this.StaticSet();
+        }
+        else if(this.args != null)
+        {
+            this.DynamicSet(this.args);
+        }
+    }
+
+    private void StaticSet()
+    {
+        this._StaticSet(this.GetTextKeyValue);
+    }
+
+    private void _StaticSet(Func<string, string, string> InGetTextKeyValue)
+    {
+        if (InGetTextKeyValue == null)
+        {
+            return;
+        }
+        if (string.IsNullOrEmpty(this.textKey))
+        {
+            return;
+        }
+        string textValue = InGetTextKeyValue(this.textKey, this.textDefaultValue);
+        if (this.mText != null)
+        {
+            this.mText.text = textValue;
+        }
+        if (this.mTextMesh != null)
+        {
+            this.mTextMesh.text = textValue;
+        }
+    }
+
+    /// <summary>
+    /// 动态设置文本内容
+    /// </summary>
+    public void DynamicSet(params object[] _args)
+    {
+        this.args = _args;
+
+        this._DynamicSet(this.GetTextKeyValue, _args);
+    }
+
+    /// <summary>
+    /// 动态设置文本内容
+    /// </summary>
+    private void _DynamicSet(Func<string, string, string> InGetTextKeyValue, params object[] _args)
+    {
+        if (InGetTextKeyValue == null)
+        {
+            return;
+        }
+        if (string.IsNullOrEmpty(this.textKey))
+        {
+            return;
+        }
+        string textValue = InGetTextKeyValue(this.textKey, this.textDefaultValue);
+        textValue = string.Format(textValue, _args);
+        if (this.mText != null)
+        {
+            this.mText.text = textValue;
+        }
+        if (this.mTextMesh != null)
+        {
+            this.mTextMesh.text = textValue;
+        }
+    }
+
+
+    private void DoChangeLanguage_Force(string language)
+    {
+        if (this.GetTextKeyValueActionBack == null)
+        {
+            Debug.LogError("this.GetTextKeyValueActionBack == null");
+            return;
+        }
+        var getTextKeyValueTmp = this.GetTextKeyValueActionBack(language);
+        if (this.localizeType == LocalizeType.Static)
+        {
+            this._StaticSet(getTextKeyValueTmp);
+        }
+        else if(this.args != null)
+        {
+            this._DynamicSet(getTextKeyValueTmp, this.args);
+        }
+    }
+
+    public string GetNodePath()
+    {
+        string result = "";
+        Transform selectChild = this.transform;
+        if (selectChild != null)
+        {
+            result = selectChild.name;
+            while (selectChild.parent != null)
+            {
+                selectChild = selectChild.parent;
+                result = string.Format("{0}/{1}", selectChild.name, result);
+                if (selectChild.gameObject.GetComponent<Canvas>() != null)
+                {
+                    break;
+                }
+            }
+        }
+
+        result = result.Trim();
+
+        return result;
+    }
+}

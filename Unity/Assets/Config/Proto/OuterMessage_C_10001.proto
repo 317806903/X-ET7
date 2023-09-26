@@ -80,18 +80,24 @@ message UnitInfo
 {
 	int64 UnitId = 1;
 	string ConfigId = 2;
-	int32 Type = 3;
-	Unity.Mathematics.float3 Position = 4;
-	Unity.Mathematics.float3 Forward = 5;
-	map<int32, int64> KV = 6;
-	MoveInfo MoveInfo = 7;
-	repeated bytes Components = 8;
-	repeated bytes EffectComponents = 9;
+	int32 Level = 3;
+	int32 Type = 4;
+	Unity.Mathematics.float3 Position = 5;
+	Unity.Mathematics.float3 Forward = 6;
+	map<int32, int64> KV = 7;
+	MoveInfo MoveInfo = 8;
+	repeated bytes Components = 9;
+	repeated bytes EffectComponents = 10;
 }
 
 message M2C_CreateUnits // IActorMessage
 {
 	repeated UnitInfo Units = 1;
+}
+
+message M2C_SyncDataList // IActorMessage
+{
+	repeated bytes SyncDataList = 1;
 }
 
 message UnitPosInfo
@@ -123,6 +129,18 @@ message M2C_SyncUnitEffects // IActorMessage
 	int32 AddOrRemove = 2;
 	int64 EffectObjId = 3;
 	bytes EffectComponent = 4;
+}
+
+message M2C_SyncPlayAudio // IActorMessage
+{
+	int64 UnitId = 1;
+	string PlayAudioActionId = 2;
+}
+
+message M2C_SyncPlayAnimator // IActorMessage
+{
+	int64 UnitId = 1;
+	bytes PlayAnimatorComponent = 2;
 }
 
 message M2C_CreateMyUnit // IActorMessage
@@ -332,8 +350,7 @@ message G2C_Benchmark // IResponse
 message C2M_LearnSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	int64 UnitId = 2;
-	string SkillId = 3;
+	string SkillId = 2;
 }
 
 message M2C_LearnSkill // IActorLocationResponse
@@ -347,8 +364,7 @@ message M2C_LearnSkill // IActorLocationResponse
 message C2M_CastSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	int64 UnitId = 2;
-	string SkillId = 3;
+	string SkillId = 2;
 }
 
 message M2C_CastSkill // IActorLocationResponse
@@ -373,15 +389,16 @@ message M2C_CallTower // IActorLocationResponse
 	string Message = 3;
 }
 
-//ResponseType M2C_CallTank
-message C2M_CallTank // IActorLocationRequest
+//ResponseType M2C_CallMonster
+message C2M_CallMonster // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	string TankUnitCfgId = 2;
+	string MonsterUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	int32 Count = 4;
 }
 
-message M2C_CallTank // IActorLocationResponse
+message M2C_CallMonster // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -516,6 +533,21 @@ message G2C_ChgRoomMemberSeat // IResponse
 	string Message = 3;
 }
 
+//ResponseType G2C_SetARRoomInfo
+message C2G_SetARRoomInfo // IRequest
+{
+	int32 RpcId = 1;
+	string ARSceneId = 2;
+	string ARMeshDownLoadUrl = 3;
+}
+
+message G2C_SetARRoomInfo // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType G2C_ChgRoomBattleLevelCfg
 message C2G_ChgRoomBattleLevelCfg // IRequest
 {
@@ -579,7 +611,8 @@ message M2C_GamePlayChgNotice // IActorMessage
 message M2C_GamePlayCoinChgNotice // IActorMessage
 {
 	int32 RpcId = 1;
-	bytes GamePlayPlayerListComponent = 2;
+	int32 GetCoinType = 2;
+	bytes GamePlayPlayerListComponent = 3;
 }
 
 message M2C_GamePlayModeChgNotice // IActorMessage
@@ -661,3 +694,94 @@ message M2C_CallOwnTower // IActorLocationResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType M2C_UpgradePlayerTower
+message C2M_UpgradePlayerTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+}
+
+message M2C_UpgradePlayerTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_ScalePlayerTower
+message C2M_ScalePlayerTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+}
+
+message M2C_ScalePlayerTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_ReclaimPlayerTower
+message C2M_ReclaimPlayerTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+}
+
+message M2C_ReclaimPlayerTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_GetMonsterCall2HeadQuarterPath
+message C2M_GetMonsterCall2HeadQuarterPath // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	Unity.Mathematics.float3 Position = 2;
+}
+
+message M2C_GetMonsterCall2HeadQuarterPath // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	Unity.Mathematics.float3 Position = 4;
+	repeated Unity.Mathematics.float3 Points = 5;
+}
+
+//ResponseType M2C_ChkRay
+message C2M_ChkRay // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	Unity.Mathematics.float3 StartPosition = 2;
+	Unity.Mathematics.float3 EndPosition = 3;
+}
+
+message M2C_ChkRay // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 HitRet = 4;
+	Unity.Mathematics.float3 HitPosition = 5;
+}
+
+//ResponseType M2C_SendARCameraPos
+message C2M_SendARCameraPos // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	Unity.Mathematics.float3 ARCameraPosition = 2;
+	Unity.Mathematics.float3 ARCameraHitPosition = 3;
+}
+
+message M2C_SendARCameraPos // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+

@@ -5,7 +5,7 @@ namespace ET.Client
 {
 	[ComponentOf(typeof(DlgLogin))]
 	[EnableMethod]
-	public  class DlgLoginViewComponent : Entity,IAwake,IDestroy 
+	public class DlgLoginViewComponent : Entity, IAwake, IDestroy
 	{
 		public UnityEngine.UI.Button E_LoginButton
      	{

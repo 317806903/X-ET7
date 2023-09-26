@@ -5,39 +5,57 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class SkillHelper
     {
-        public static void LearnSkill(Unit castUnit, string skillId, int skillLevel, SkillSlotType skillSlotType)
+        public static SkillComponent GetSkillComponent(Unit unit)
         {
-            SkillComponent skillComponent = castUnit.GetComponent<SkillComponent>();
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
             if (skillComponent == null)
             {
-                skillComponent = castUnit.AddComponent<SkillComponent>();
+                skillComponent = unit.AddComponent<SkillComponent>();
             }
-            skillComponent.LearnSkill(skillId, skillLevel, skillSlotType);
-        }
-        
-        public static (bool ret, string msg) CastSkill(Unit castUnit, string skillId)
-        {
-            SkillComponent skillComponent = castUnit.GetComponent<SkillComponent>();
-            if (skillComponent == null)
-            {
-                skillComponent = castUnit.AddComponent<SkillComponent>();
-            }
-            return skillComponent.CastSkill(skillId);
-        }
-        
-        public static (bool ret, string msg) ChkCanUseSkill(Unit castUnit, string skillId)
-        {
-            return castUnit.GetComponent<SkillComponent>().ChkCanUseSkill(skillId);
+            return skillComponent;
         }
 
-        public static float GetSkillCD(Unit castUnit, string skillId)
+        public static (bool ret, string msg) LearnSkill(Unit unit, string skillCfgId, int skillLevel, SkillSlotType skillSlotType)
         {
-            return castUnit.GetComponent<SkillComponent>().GetSkillCD(skillId);
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.LearnSkill(skillCfgId, skillLevel, skillSlotType);
         }
 
-        public static (bool ret, string msg) ChkSkillCost(Unit castUnit, string skillId)
+        public static async ETTask<(bool ret, string msg)> CastSkill(Unit unit, string skillCfgId)
         {
-            return castUnit.GetComponent<SkillComponent>().ChkSkillCost(skillId);
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return await skillComponent.CastSkill(skillCfgId);
         }
+
+        public static async ETTask ReplaceSkillTimeline(Unit unit, string newTimelineCfgId)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            await skillComponent.ReplaceSkillTimeline(newTimelineCfgId);
+        }
+
+        public static (bool ret, string msg) ChkCanUseSkill(Unit unit, string skillCfgId)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.ChkCanUseSkill(skillCfgId);
+        }
+
+        public static (float, SkillObj) GetSkillAttackDis(Unit unit)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.GetSkillAttackDis();
+        }
+
+        public static List<SkillObj> GetSkillList(Unit unit, string skillCfgId, ET.Ability.SkillSlotType skillSlotType)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.GetSkillList(skillCfgId, skillSlotType);
+        }
+
+        public static float GetMaxSkillDis(Unit unit, ET.Ability.SkillSlotType skillSlotType)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.GetMaxSkillDis(skillSlotType);
+        }
+
     }
 }

@@ -28,14 +28,31 @@ public abstract partial class Condition: Bright.Config.BeanBase
         switch (_buf.ReadInt())
         {
             case BuffStackCountCondition.__ID__: return new BuffStackCountCondition(_buf);
+            case BuffStackCountRecordCondition.__ID__: return new BuffStackCountRecordCondition(_buf);
             case BuffPassTimeCondition.__ID__: return new BuffPassTimeCondition(_buf);
+            case BuffPassTimeRecordCondition.__ID__: return new BuffPassTimeRecordCondition(_buf);
             case BuffLeftTimeCondition.__ID__: return new BuffLeftTimeCondition(_buf);
+            case BuffLeftTimeRecordCondition.__ID__: return new BuffLeftTimeRecordCondition(_buf);
+            case BuffIdCondition.__ID__: return new BuffIdCondition(_buf);
             case BuffTagTypeCondition.__ID__: return new BuffTagTypeCondition(_buf);
             case BuffTypeCondition.__ID__: return new BuffTypeCondition(_buf);
             case AttributeCondition.__ID__: return new AttributeCondition(_buf);
+            case AttributeRecordCondition.__ID__: return new AttributeRecordCondition(_buf);
             case CurHpCondition.__ID__: return new CurHpCondition(_buf);
-            case OnHitChkCanBeControl.__ID__: return new OnHitChkCanBeControl(_buf);
+            case CurHpRecordCondition.__ID__: return new CurHpRecordCondition(_buf);
+            case RecordIntCondition.__ID__: return new RecordIntCondition(_buf);
+            case RecordStringCondition.__ID__: return new RecordStringCondition(_buf);
+            case RecordIntRecordCondition.__ID__: return new RecordIntRecordCondition(_buf);
+            case RecordStringRecordCondition.__ID__: return new RecordStringRecordCondition(_buf);
+            case OnHitChkCanBeControlCondition.__ID__: return new OnHitChkCanBeControlCondition(_buf);
+            case ChkSelectUnitNumCondition.__ID__: return new ChkSelectUnitNumCondition(_buf);
+            case ChkSelectUnitNumRecordCondition.__ID__: return new ChkSelectUnitNumRecordCondition(_buf);
+            case SkillIdCondition.__ID__: return new SkillIdCondition(_buf);
+            case SkillSlotTypeCondition.__ID__: return new SkillSlotTypeCondition(_buf);
+            case AngleCondition.__ID__: return new AngleCondition(_buf);
+            case AngleRecordCondition.__ID__: return new AngleRecordCondition(_buf);
             case ProbabilityCondition.__ID__: return new ProbabilityCondition(_buf);
+            case ProbabilityRecordCondition.__ID__: return new ProbabilityRecordCondition(_buf);
             default: throw new SerializationException();
         }
     }

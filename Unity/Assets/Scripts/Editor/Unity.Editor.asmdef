@@ -10,7 +10,8 @@
         "Unity.Loader",
         "HybridCLR.Runtime",
         "HybridCLR.Editor",
-        "Unity.Mathematics"
+        "Unity.Mathematics",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

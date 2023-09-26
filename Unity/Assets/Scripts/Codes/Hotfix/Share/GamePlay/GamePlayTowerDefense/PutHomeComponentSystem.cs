@@ -32,7 +32,7 @@ namespace ET
 			{
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class PutHomeComponentDestroySystem : DestroySystem<PutHomeComponent>
 		{
@@ -46,7 +46,7 @@ namespace ET
 		{
 			self.HomePos = homePos;
 			self.CreateHome(unitCfgId);
-			
+
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(500, TimerInvokeType.GamePlayChkHomeAlive, self);
 		}
 
@@ -56,13 +56,14 @@ namespace ET
 			int hp = gamePlayTowerDefenseComponent.model.HomeLife;
 
 			self.HomeUnit = GamePlayTowerDefenseHelper.CreateHome(self.DomainScene(), unitCfgId, self.HomePos, hp);
+			self.unitId = self.HomeUnit.Id;
 		}
-		
+
 		public static Unit GetHomeUnit(this PutHomeComponent self)
 		{
 			return self.HomeUnit;
 		}
-		
+
 		public static float3 GetPosition(this PutHomeComponent self)
 		{
 			if (self.HomeUnit != null)
@@ -71,7 +72,7 @@ namespace ET
 			}
 			return self.HomePos;
 		}
-		
+
 		public static bool ChkHomeAlive(this PutHomeComponent self)
 		{
 			if (ET.Ability.UnitHelper.ChkUnitAlive(self.HomeUnit))
@@ -79,7 +80,7 @@ namespace ET
 				return true;
 			}
 
-			self.GetParent<GamePlayTowerDefenseComponent>().TransToGameFailed();
+			self.GetParent<GamePlayTowerDefenseComponent>().TransToGameFailed().Coroutine();
 			TimerComponent.Instance.Remove(ref self.Timer);
 			return false;
 		}

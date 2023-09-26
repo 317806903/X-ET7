@@ -8,7 +8,7 @@
   {
     "id": "DeathShow_1",
     "name": "",
-    "duration": 0.1,
+    "duration": 1,
     "deathShowActionCall": [
       {
         "delayTime": 0,
@@ -19,6 +19,12 @@
       {
         "delayTime": 0,
         "action_id": "EffectCreate_Death_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "delayTime": 0,
+        "action_id": "PlayAnimator_Die",
         "actionCondition1": [],
         "actionCondition2": []
       }

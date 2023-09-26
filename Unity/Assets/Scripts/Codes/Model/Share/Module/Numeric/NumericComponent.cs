@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -13,6 +14,7 @@ namespace ET
             {
                 return self.GetAsFloat(numericType);
             }
+
             return self.GetAsInt(numericType);
         }
 
@@ -20,44 +22,48 @@ namespace ET
         {
             if (self.isFloatKey.Contains(numericType) == false)
             {
-                Log.Error($"[{numericType}] is not floatKey, canot GetAsFloat ");
+                //Log.Error($"[{numericType}] is not floatKey, canot GetAsFloat ");
             }
-            return (float)self.GetByKey(numericType) / 10000;
+
+            return (float) (self.GetByKey(numericType) / 10000f);
         }
 
         public static int GetAsInt(this NumericComponent self, int numericType)
         {
             if (self.isFloatKey.Contains(numericType))
             {
-                Log.Error($"[{numericType}] is floatKey, canot GetAsInt ");
+                //Log.Error($"[{numericType}] is floatKey, canot GetAsInt ");
             }
-            return (int)self.GetByKey(numericType);
+
+            return (int) (self.GetByKey(numericType) / 10000f);
         }
 
         public static long GetAsLong(this NumericComponent self, int numericType)
         {
             if (self.isFloatKey.Contains(numericType))
             {
-                Log.Error($"[{numericType}] is floatKey, canot GetAsLong ");
+                //Log.Error($"[{numericType}] is floatKey, canot GetAsLong ");
             }
+
             return self.GetByKey(numericType);
         }
 
-        public static void Set(this NumericComponent self, int nt, float value)
+        public static void SetAsFloat(this NumericComponent self, int nt, float value)
         {
             if (self.isFloatKey.Contains(nt) == false)
             {
                 self.isFloatKey.Add(nt);
             }
-            self[nt] = (long)(value * 10000);
+
+            self[nt] = (long) (value * 10000);
         }
 
-        public static void Set(this NumericComponent self, int nt, int value)
+        public static void SetAsInt(this NumericComponent self, int nt, int value)
         {
-            self[nt] = value;
+            self[nt] = (long) (value * 10000);
         }
 
-        public static void Set(this NumericComponent self, int nt, long value)
+        public static void SetAsLong(this NumericComponent self, int nt, long value)
         {
             self[nt] = value;
         }
@@ -85,8 +91,12 @@ namespace ET
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(self.DomainScene(),
-                    new EventType.NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
+                Unit unit = self.GetParent<Unit>();
+                if (unit != null)
+                {
+                    EventSystem.Instance.Publish(self.DomainScene(),
+                        new EventType.NumbericChange() { Unit = unit, New = value, Old = oldValue, NumericType = numericType });
+                }
             }
         }
 
@@ -99,7 +109,7 @@ namespace ET
 
         public static void Update(this NumericComponent self, int numericType, bool isPublicEvent)
         {
-            int final = (int)numericType / 10;
+            int final = (int) numericType / 10;
             int bas = final * 10 + 1;
             int add = final * 10 + 2;
             int pct = final * 10 + 3;
@@ -108,12 +118,12 @@ namespace ET
 
             // 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
-            long result = (long)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f + self.GetByKey(finalAdd)) *
-                (100 + self.GetAsFloat(finalPct)) / 100f);
+            long result = (long) ((((self.GetAsFloat(bas) + self.GetAsFloat(add)) * math.max(0, 100 + self.GetAsFloat(pct)) / 100f + self.GetAsFloat(finalAdd)) *
+                math.max(0, 100 + self.GetAsFloat(finalPct)) / 100f)*10000);
             self.Insert(final, result, isPublicEvent);
         }
     }
-    
+
     namespace EventType
     {
         public struct NumbericChange
@@ -129,9 +139,9 @@ namespace ET
     public class NumericComponent: Entity, IAwake, ITransfer, ITransferClient
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, long> NumericDic = new Dictionary<int, long>();
+        public Dictionary<int, long> NumericDic = new ();
 
-        public HashSet<int> isFloatKey = new HashSet<int>();
+        public HashSet<int> isFloatKey = new ();
 
         public long this[int numericType]
         {

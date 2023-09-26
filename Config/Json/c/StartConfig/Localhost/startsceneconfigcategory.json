@@ -52,11 +52,27 @@
     "Process": 1,
     "Zone": 1,
     "SceneType": "Map",
-    "Name": "Dynamic",
+    "Name": "Map3",
     "OuterPort": 0
   },
   {
     "Id": 8,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "zpbTest",
+    "OuterPort": 0
+  },
+  {
+    "Id": 9,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "Dynamic",
+    "OuterPort": 0
+  },
+  {
+    "Id": 10,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Room",
@@ -64,7 +80,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 9,
+    "Id": 11,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Match",

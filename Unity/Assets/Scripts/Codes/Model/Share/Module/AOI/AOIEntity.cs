@@ -25,27 +25,27 @@ namespace ET
         }
 
         // 观察进入视野的Cell
-        public HashSet<long> SubEnterCells = new HashSet<long>();
+        public HashSet<long> SubscribeEnterCells = new ();
 
         // 观察离开视野的Cell
-        public HashSet<long> SubLeaveCells = new HashSet<long>();
-        
+        public HashSet<long> SubscribeLeaveCells = new ();
+
         // 观察进入视野的Cell
-        public HashSet<long> enterHashSet = new HashSet<long>();
+        public HashSet<long> enterHashSet = new ();
 
         // 观察离开视野的Cell
-        public HashSet<long> leaveHashSet = new HashSet<long>();
+        public HashSet<long> leaveHashSet = new ();
 
         // 我看的见的Unit
-        public Dictionary<long, AOIEntity> SeeUnits = new Dictionary<long, AOIEntity>();
-        
+        public Dictionary<long, EntityRef<AOIEntity>> SeeUnits = new ();
+
         // 看见我的Unit
-        public Dictionary<long, AOIEntity> BeSeeUnits = new Dictionary<long, AOIEntity>();
-        
+        public Dictionary<long, EntityRef<AOIEntity>> BeSeeUnits = new ();
+
         // 我看的见的Player
-        public Dictionary<long, AOIEntity> SeePlayers = new Dictionary<long, AOIEntity>();
+        public Dictionary<long, EntityRef<AOIEntity>> SeePlayers = new ();
 
         // 看见我的Player单独放一个Dict，用于广播
-        public Dictionary<long, AOIEntity> BeSeePlayers = new Dictionary<long, AOIEntity>();
+        public Dictionary<long, EntityRef<AOIEntity>> BeSeePlayers = new ();
     }
 }

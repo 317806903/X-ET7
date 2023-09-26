@@ -46,8 +46,8 @@ namespace ET.Ability
                 self.dic.Add(type.Name.Replace("Action_", ""), iActionHandler);
             }
         }
-        
-        public static void Run(this ActionHandlerComponent self, Unit unit, Unit resetPosByUnit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
+
+        public static async ETTask Run(this ActionHandlerComponent self, Unit unit, Unit resetPosByUnit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
         {
             int index = actionId.IndexOf("_", 0);
             if (index == -1)
@@ -61,9 +61,14 @@ namespace ET.Ability
                 Log.Error($"not found IActionHandler: {actionId}");
                 return;
             }
+#if UNITY_EDITOR
+            //Log.Debug($"---ActionHandlerComponent {key}:{actionId}");
+#endif
+            selectHandle.SetHolding(true);
+            await self.dic[key].Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext);
+            selectHandle.SetHolding(false);
 
-            //Log.Debug($"ActionHandlerComponent {key}:{actionId}");
-            self.dic[key].Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext).Coroutine();
+            ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), selectHandle);
         }
     }
 }

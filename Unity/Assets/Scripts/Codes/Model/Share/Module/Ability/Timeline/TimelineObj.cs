@@ -10,7 +10,7 @@ namespace ET.Ability
     public class TimelineObj: Entity, IAwake, IDestroy
     {
         public string CfgId { get; set; }
-        
+
         ///<summary>
         ///Timeline的基础信息
         ///</summary>
@@ -48,6 +48,10 @@ namespace ET.Ability
         ///Timeline已经运行了多少秒了
         ///</summary>
         public float timeElapsed = 0;
+
+        public float duration = 0;
+
+        public int timelineJumpNum = 0;
 
         [BsonIgnore]
         public ActionContext actionContext;

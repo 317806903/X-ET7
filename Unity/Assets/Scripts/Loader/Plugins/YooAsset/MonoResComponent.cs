@@ -15,25 +15,25 @@ namespace ET
         public static MonoResComponent Instance { get; private set; } = new MonoResComponent();
 
         private ResourcePackage defaultPackage;
-        
-        public IEnumerator InitAsync()
+
+        public async ETTask InitAsync()
         {
             // 初始化资源系统
             YooAssets.Initialize();
             YooAssets.SetOperationSystemMaxTimeSlice(30);
 
             this.LoadResConfig();
-            yield return InitPackage();
+            await InitPackage();
 
-            yield return this.LoadGlobalConfig();
+            await this.LoadGlobalConfig();
         }
 
         public async ETTask RestartAsync()
         {
             await this.LoadGlobalConfigAsync();
-        } 
+        }
 
-        private IEnumerator InitPackage()
+        private async ETTask InitPackage()
         {
             EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
 #if UNITY_EDITOR
@@ -53,6 +53,7 @@ namespace ET
                 YooAssets.SetDefaultPackage(defaultPackage);
             }
 
+            Log.Debug($"---- ResUpdate resLoadMode[{resLoadMode.ToString()}]");
             // 编辑器下的模拟模式
             InitializationOperation initializationOperation = null;
             if (resLoadMode == EPlayMode.EditorSimulateMode)
@@ -68,35 +69,42 @@ namespace ET
             else if (resLoadMode == EPlayMode.HostPlayMode)
             {
                 var createParameters = new HostPlayModeParameters();
-                createParameters.DecryptionServices = new GameDecryptionServices(); 
+                createParameters.DecryptionServices = new GameDecryptionServices();
                 createParameters.QueryServices = new GameQueryServices();
                 createParameters.DefaultHostServer = GetHostServerURL();
                 createParameters.FallbackHostServer = GetHostServerURL();
                 initializationOperation = defaultPackage.InitializeAsync(createParameters);
+
+                Log.Debug($"---- ResUpdateUrl GetHostServerURL[{createParameters.DefaultHostServer}]");
+            }
+            while (initializationOperation.IsDone == false)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
             }
 
-            yield return initializationOperation;
-            
             if (defaultPackage.InitializeStatus != EOperationStatus.Succeed)
             {
                 Debug.LogError($"{initializationOperation.Error}");
             }
         }
 
-        private IEnumerator LoadGlobalConfig()
+        private async ETTask LoadGlobalConfig()
         {
             AssetOperationHandle handler = YooAssets.LoadAssetAsync<GlobalConfig>("GlobalConfig");
-            yield return handler;
+            while (handler.IsDone == false)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+            }
             GlobalConfig.Instance = handler.AssetObject as GlobalConfig;
             handler.Release();
             defaultPackage.UnloadUnusedAssets();
         }
-        
+
         private void LoadResConfig()
         {
             ResConfig.Instance = Resources.Load<ResConfig>("ResConfig");
         }
-        
+
         private async ETTask LoadGlobalConfigAsync()
         {
             AssetOperationHandle handler = YooAssets.LoadAssetAsync<GlobalConfig>("GlobalConfig");
@@ -105,20 +113,34 @@ namespace ET
             handler.Release();
             defaultPackage.UnloadUnusedAssets();
         }
-        
+
+        public async ETTask Destroy()
+        {
+            YooAssets.Destroy();
+        }
+
+        public async ETTask ReLoadMap()
+        {
+            //ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
+            //package.ForceUnloadAllAssets();
+            defaultPackage.ReLoadMap();
+            await InitPackage();
+            await this.LoadGlobalConfigAsync();
+        }
+
         public byte[] LoadRawFile(string location)
         {
             RawFileOperationHandle handle = YooAssets.LoadRawFileSync(location);
             return handle.GetRawFileData();
         }
-        
+
         public async ETTask<byte[]> LoadRawFileAsync(string location)
         {
             RawFileOperationHandle handle = YooAssets.LoadRawFileAsync(location);
             await handle;
             return handle.GetRawFileData();
         }
-        
+
         public AssetOperationHandle LoadAssetAsync<T>(string location)where T: UnityEngine.Object
         {
             return YooAssets.LoadAssetAsync<T>(location);
@@ -135,7 +157,7 @@ namespace ET
 
             return addresses;
         }
-        
+
         /// <summary>
         /// 获取资源服务器地址
         /// </summary>
@@ -149,23 +171,23 @@ namespace ET
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
                 return $"{hostServerIP}/CDN/Android/{gameVersion}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
-                return $"{hostServerIP}/CDN/IPhone/{gameVersion}";
+                return $"{hostServerIP}/CDN/IOS/{gameVersion}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
                 return $"{hostServerIP}/CDN/WebGL/{gameVersion}";
             else
                 return $"{hostServerIP}/CDN/PC/{gameVersion}";
 #else
-		if (Application.platform == RuntimePlatform.Android)
-			return $"{hostServerIP}/CDN/Android/{gameVersion}";
-		else if (Application.platform == RuntimePlatform.IPhonePlayer)
-			return $"{hostServerIP}/CDN/IPhone/{gameVersion}";
-		else if (Application.platform == RuntimePlatform.WebGLPlayer)
-			return $"{hostServerIP}/CDN/WebGL/{gameVersion}";
-		else
-			return $"{hostServerIP}/CDN/PC/{gameVersion}";
+		    if (Application.platform == RuntimePlatform.Android)
+			    return $"{hostServerIP}/CDN/Android/{gameVersion}";
+		    else if (Application.platform == RuntimePlatform.IPhonePlayer)
+			    return $"{hostServerIP}/CDN/IOS/{gameVersion}";
+		    else if (Application.platform == RuntimePlatform.WebGLPlayer)
+			    return $"{hostServerIP}/CDN/WebGL/{gameVersion}";
+		    else
+			    return $"{hostServerIP}/CDN/PC/{gameVersion}";
 #endif
         }
-        
+
         /// <summary>
         /// 内置文件查询服务类
         /// </summary>
@@ -178,7 +200,7 @@ namespace ET
                 return StreamingAssetsHelper.FileExists($"{buildinFolderName}/{fileName}");
             }
         }
-        
+
         /// <summary>
         /// 资源文件解密服务类
         /// </summary>

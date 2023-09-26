@@ -13,23 +13,37 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 修改运动
+/// 修改运动(击退，吸引，击飞等)
 /// </summary>
-public sealed partial class BuffActionModifyMotion:  BuffAction 
+public abstract partial class BuffActionModifyMotion:  BuffAction 
 {
     public BuffActionModifyMotion(ByteBuf _buf)  : base(_buf) 
     {
+        Speed = _buf.ReadFloat();
+        AcceleratedSpeed = _buf.ReadFloat();
         PostInit();
     }
 
     public static BuffActionModifyMotion DeserializeBuffActionModifyMotion(ByteBuf _buf)
     {
-        return new BuffActionModifyMotion(_buf);
+        switch (_buf.ReadInt())
+        {
+            case BuffActionModifyMotionVertical.__ID__: return new BuffActionModifyMotionVertical(_buf);
+            case BuffActionModifyMotionHorizontal_Forward.__ID__: return new BuffActionModifyMotionHorizontal_Forward(_buf);
+            case BuffActionModifyMotionHorizontal_Back.__ID__: return new BuffActionModifyMotionHorizontal_Back(_buf);
+            default: throw new SerializationException();
+        }
     }
 
+    /// <summary>
+    /// 速度
+    /// </summary>
+    public float Speed { get; private set; }
+    /// <summary>
+    /// 加速度
+    /// </summary>
+    public float AcceleratedSpeed { get; private set; }
 
-    public const int __ID__ = 1319488569;
-    public override int GetTypeId() => __ID__;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
@@ -45,6 +59,8 @@ public sealed partial class BuffActionModifyMotion:  BuffAction
     public override string ToString()
     {
         return "{ "
+        + "Speed:" + Speed + ","
+        + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "}";
     }
     

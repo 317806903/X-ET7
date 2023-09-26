@@ -29,14 +29,14 @@ namespace ET.Ability
             self.defenderUnitId = targetUnitId;
             self.damage = damage;
         }
-        
+
         ///<summary>
         ///这里再结合是否闪避，是否暴击进行处理
         ///</summary>
         public static int DamageValue(this DamageInfo self){
             return self.damage.Overall();
         }
-        
+
         /// <summary>
         /// 获取攻击者对应 的对象(player或monster)
         /// </summary>
@@ -45,22 +45,7 @@ namespace ET.Ability
         public static Unit GetAttackerPlayerUnit(this DamageInfo self)
         {
             Unit unit = GetAttackerUnit(self);
-            while(true)
-            {
-                if (UnitHelper.ChkIsBullet(unit))
-                {
-                    unit = unit.GetComponent<BulletObj>().GetCasterPlayerUnit();
-                }
-                else if (UnitHelper.ChkIsAoe(unit))
-                {
-                    unit = unit.GetComponent<AoeObj>().GetCasterPlayerUnit();
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return unit;
+            return UnitHelper.GetCasterActorUnit(unit);
         }
 
         /// <summary>
@@ -119,11 +104,11 @@ namespace ET.Ability
             }
 
             int damageValue = self.DamageValue();
-            
+
             NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
             int curHp = numericComponent.GetAsInt(NumericType.Hp);
-            numericComponent.Set(NumericType.Hp, curHp - damageValue);
-            
+            numericComponent.SetAsInt(NumericType.HpBase, curHp - damageValue);
+
             //if (isHeal == true)
             {
                 // if (self.requireDoHurt() == true && defenderChaState.CanBeKilledByDamageInfo(self) == false)
@@ -161,7 +146,7 @@ namespace ET.Ability
             //     }
             // }
         }
-        
+
         public static bool CanBeKilledByDamageInfo(this DamageInfo self, Unit targetUnit)
         {
             NumericComponent numericComponent = targetUnit.GetComponent<NumericComponent>();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -10,6 +11,9 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
+			
+			ActionCfg_PlayAnimator actionCfg_PlayAnimator = ActionCfg_PlayAnimatorCategory.Instance.Get(actionId);
+			ET.Ability.AnimatorHelper.PlayAnimator(unit, actionCfg_PlayAnimator, selectHandle, actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

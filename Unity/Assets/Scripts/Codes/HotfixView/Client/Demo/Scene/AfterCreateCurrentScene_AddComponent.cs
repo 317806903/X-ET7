@@ -5,8 +5,10 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.AfterCreateCurrentScene args)
         {
-            scene.AddComponent<UIComponent>();
+            //scene.AddComponent<UIComponent>();
             //scene.AddComponent<FUIComponent>();
+            scene.AddComponent<PathLineRendererComponent>();
+            scene.AddComponent<ShootTextComponent>();
             await ETTask.CompletedTask;
         }
     }

@@ -41,5 +41,4 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo "============success============"
-pause
-
+timeout /t 3

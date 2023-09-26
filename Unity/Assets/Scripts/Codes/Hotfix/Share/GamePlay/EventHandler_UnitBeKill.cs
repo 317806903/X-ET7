@@ -19,11 +19,17 @@ namespace ET
 				{
 					return;
 				}
-				if (UnitHelper.ChkUnitAlive(attackerUnit) && UnitHelper.ChkIsBullet(attackerUnit))
-				{
-					BulletObj bulletObj = attackerUnit.GetComponent<BulletObj>();
-					attackerUnit = bulletObj.GetCasterPlayerUnit();
-				}
+				// if (UnitHelper.ChkUnitAlive(attackerUnit) && UnitHelper.ChkIsBullet(attackerUnit))
+				// {
+				// 	BulletObj bulletObj = attackerUnit.GetComponent<BulletObj>();
+				// 	attackerUnit = bulletObj.GetCasterActorUnit();
+				// }
+				// else if (UnitHelper.ChkUnitAlive(attackerUnit) && UnitHelper.ChkIsAoe(attackerUnit))
+				// {
+				// 	AoeObj aoeObj = attackerUnit.GetComponent<AoeObj>();
+				// 	attackerUnit = aoeObj.GetCasterActorUnit();
+				// }
+				attackerUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
 				GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 				gamePlayComponent.DealUnitBeKill(attackerUnit, beKillUnit);
 				await ETTask.CompletedTask;

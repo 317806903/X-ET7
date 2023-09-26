@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185f6993d5150494d98da50e26cb1c25, type: 3}
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
-  ShowPackageView: 0
+  ShowPackageView: 1
   EnableAddressable: 1
   UniqueBundleName: 0
   ShowEditorAlias: 0
@@ -20,46 +20,7 @@ MonoBehaviour:
   - PackageName: DefaultPackage
     PackageDesc: 
     Groups:
-    - GroupName: GameConfig
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/Bundles/Config/GameConfig
-        CollectorGUID: bd62e73513d5641b48081bfd70f67106
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: UIPrefab
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/ResAB/UIPrefab
-        CollectorGUID: 91ae2d48ecf44c84dbdea3366f136a28
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
-    - GroupName: Scene
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/ResAB/Scene
-        CollectorGUID: 4ff078f95a35c7643a6567b81caf27e3
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
-        FilterRuleName: CollectScene
-        AssetTags: 
-        UserData: 
-    - GroupName: AotCode
+    - GroupName: Code_AotCode
       GroupDesc: 
       AssetTags: aotdlls
       ActiveRuleName: EnableGroup
@@ -72,7 +33,7 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Code
+    - GroupName: Code_Dll
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -85,7 +46,7 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: GlobalConfig
+    - GroupName: Config_GlobalConfig
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -98,20 +59,7 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: UnitPrefab
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/ResAB/UnitPrefab
-        CollectorGUID: d1d22b1438bf2514bb6211002297ad2a
-        CollectorType: 0
-        AddressRuleName: AddressByFilePath
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
-    - GroupName: AbilityConfig
+    - GroupName: Config_AbilityConfig
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -124,7 +72,7 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: StartConfig
+    - GroupName: Config_StartConfig
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -137,7 +85,59 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: EffectPrefab
+    - GroupName: Config_GameConfig
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Config/GameConfig
+        CollectorGUID: bd62e73513d5641b48081bfd70f67106
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Res_UIPrefab
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UIPrefab
+        CollectorGUID: 91ae2d48ecf44c84dbdea3366f136a28
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Res_Scene
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/Scene
+        CollectorGUID: 4ff078f95a35c7643a6567b81caf27e3
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectScene
+        AssetTags: 
+        UserData: 
+    - GroupName: Res_UnitPrefab
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UnitPrefab
+        CollectorGUID: d1d22b1438bf2514bb6211002297ad2a
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Res_EffectPrefab
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -146,11 +146,11 @@ MonoBehaviour:
         CollectorGUID: 8e18b9b2706e59d45936d5b0fff51e52
         CollectorType: 0
         AddressRuleName: AddressByFilePath
-        PackRuleName: PackDirectory
+        PackRuleName: PackSeparately
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: UI
+    - GroupName: Res_UI
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -159,7 +159,7 @@ MonoBehaviour:
         CollectorGUID: 9d0e5ac46c43a074c924d6e23d5acd24
         CollectorType: 0
         AddressRuleName: AddressByFilePath
-        PackRuleName: PackDirectory
+        PackRuleName: PackTopDirectory
         FilterRuleName: CollectSprite
         AssetTags: 
         UserData: 
@@ -174,5 +174,55 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Res_Audio
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/Audio/AudioBattle
+        CollectorGUID: 6783ba19264777549b79f64b5fd98290
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/ResAB/Audio/AudioUI
+        CollectorGUID: 940c8912c973c594eb10f1282bfd1a1e
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/ResAB/Audio/Music
+        CollectorGUID: a4c69b9ee6490214aaecfe944efc9d16
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Shader
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/Shader
+        CollectorGUID: e27022a7bc52a7a4aab9cbf07b95b8c5
+        CollectorType: 0
+        AddressRuleName: AddressByFolderAndFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/ResAB/ShaderVariants
+        CollectorGUID: 5ce1a871bb3ee5e45898e02ce20dc969
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectShaderVariants
         AssetTags: 
         UserData: 

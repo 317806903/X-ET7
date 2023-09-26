@@ -2,27 +2,27 @@
 {
 	[FriendOf(typeof(UIBaseWindow))]
 	[AUIEvent(WindowID.WindowID_BattleTower)]
-	public  class DlgBattleTowerEventHandler : IAUIEventHandler
+	public class DlgBattleTowerEventHandler : IAUIEventHandler
 	{
 
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.windowType = UIWindowType.Normal; 
+			uiBaseWindow.windowType = UIWindowType.Normal; 
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.AddComponent<DlgBattleTower>().AddComponent<DlgBattleTowerViewComponent>();
+			uiBaseWindow.AddComponent<DlgBattleTower>().AddComponent<DlgBattleTowerViewComponent>();
 		}
 
 		public void OnRegisterUIEvent(UIBaseWindow uiBaseWindow)
 		{
-		  uiBaseWindow.GetComponent<DlgBattleTower>().RegisterUIEvent(); 
+			uiBaseWindow.GetComponent<DlgBattleTower>().RegisterUIEvent(); 
 		}
 
-		public void OnShowWindow(UIBaseWindow uiBaseWindow, Entity contextData = null)
+		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-		  uiBaseWindow.GetComponent<DlgBattleTower>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgBattleTower>().ShowWindow(contextData); 
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

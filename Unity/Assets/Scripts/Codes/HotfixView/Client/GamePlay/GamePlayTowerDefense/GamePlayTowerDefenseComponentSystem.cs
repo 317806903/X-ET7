@@ -143,8 +143,7 @@ namespace ET.Client
 			GameObject hitGo = hit.collider.gameObject;
 
 			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-			bool isHitMyTower = false;
-			if (playerOwnerTowersComponent.playerId2unitTowerId.TryGetValue(myPlayerId, out List<long> unitIds))
+			foreach (List<long> unitIds in playerOwnerTowersComponent.playerId2unitTowerId.Values)
 			{
 				foreach (long unitId in unitIds)
 				{
@@ -160,7 +159,6 @@ namespace ET.Client
 						if (towerShowComponent.transCollider.gameObject == hitGo)
 						{
 							self.OnHitTower(towerShowComponent, hit);
-							isHitMyTower = true;
 						}
 						else
 						{
@@ -168,11 +166,6 @@ namespace ET.Client
 						}
 					}
 				}
-			}
-
-			if (isHitMyTower == false)
-			{
-				UIManagerHelper.ShowTip(self.DomainScene(), "这不是你的塔");
 			}
 			Log.Debug($" hit.collider.name[{hit.collider.name}]");
 		}
@@ -251,12 +244,20 @@ namespace ET.Client
 		public static async ETTask<bool> DoDrawMyMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self, float3 pos)
 		{
 			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-			return await self.DoDrawMonsterCall2HeadQuarterByPos(myPlayerId, pos);
+			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+			return await self.DoDrawMonsterCall2HeadQuarterByPos(homeTeamFlagType, myPlayerId, pos);
 		}
 
-		public static async ETTask<bool> DoDrawMonsterCall2HeadQuarterByPos(this GamePlayTowerDefenseComponent self, long playerId, float3 pos)
+		public static async ETTask DoHideMyMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self)
 		{
-			(float3 homePos, List<float3> points) = await ET.Client.GamePlayTowerDefenseHelper.SendGetMonsterCall2HeadQuarterPath(self.ClientScene(), pos);
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+			await PathLineRendererComponent.Instance.ShowPath(homeTeamFlagType, myPlayerId, false, null);
+		}
+
+		public static async ETTask<bool> DoDrawMonsterCall2HeadQuarterByPos(this GamePlayTowerDefenseComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId, float3 pos)
+		{
+			(float3 homePos, List<float3> points) = await ET.Client.GamePlayTowerDefenseHelper.SendGetMonsterCall2HeadQuarterPath(self.ClientScene(), homeTeamFlagType, pos);
 
 			bool canArrive = false;
 			if (points != null && points.Count > 0)
@@ -270,24 +271,37 @@ namespace ET.Client
 				}
 			}
 
-			await PathLineRendererComponent.Instance.ShowPath(playerId, canArrive, points);
+			await PathLineRendererComponent.Instance.ShowPath(homeTeamFlagType, monsterCallUnitId, canArrive, points);
 			return canArrive;
 		}
 
 		public static void DoDrawAllMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self)
 		{
+			// GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+			// if (gamePlayComponent.gamePlayStatus != GamePlayStatus.Gaming)
+			// {
+			// 	return;
+			// }
 			PutMonsterCallComponent putMonsterCallComponent = self.GetComponent<PutMonsterCallComponent>();
-			if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallPos != null)
+			if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallUnitId != null)
 			{
-				foreach (var monsterCallPos in putMonsterCallComponent.MonsterCallPos)
+				foreach (var monsterCallUnitIds in putMonsterCallComponent.MonsterCallUnitId)
 				{
-					long playerId = monsterCallPos.Key;
-					float3 pos = monsterCallPos.Value;
-					if (ET.Client.PathLineRendererComponent.Instance.ChkIsShowPath(playerId, pos))
+					long playerId = monsterCallUnitIds.Key;
+					long monsterCallUnitId = monsterCallUnitIds.Value;
+					Unit monsterCallUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), monsterCallUnitId);
+					if (monsterCallUnit == null)
 					{
 						continue;
 					}
-					self.DoDrawMonsterCall2HeadQuarterByPos(playerId, pos).Coroutine();
+					float3 pos = monsterCallUnit.Position;
+					TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(playerId);
+					if (ET.Client.PathLineRendererComponent.Instance.ChkIsShowPath(homeTeamFlagType, monsterCallUnitId, pos))
+					{
+						continue;
+					}
+					ET.Client.PathLineRendererComponent.Instance.ChgCurPlayerShowPath(homeTeamFlagType, playerId, monsterCallUnitId);
+					self.DoDrawMonsterCall2HeadQuarterByPos(homeTeamFlagType, monsterCallUnitId, pos).Coroutine();
 				}
 			}
 		}
@@ -295,9 +309,10 @@ namespace ET.Client
 
 		public static void ChkMouseRightClick(this GamePlayTowerDefenseComponent self)
 		{
-#if !UNITY_EDITOR
-			return;
-#endif
+			if (Application.isEditor == false)
+			{
+				return;
+			}
 
 			if (Input.GetMouseButtonUp(1))
 			{
@@ -377,7 +392,7 @@ namespace ET.Client
 			{
 				return;
 			}
-			self.lastSendTime = TimeHelper.ClientNow() + 1000;
+			self.lastSendTime = TimeHelper.ClientNow() + 2000;
 
 			Camera camera = CameraHelper.GetMainCamera(self.DomainScene());
 			float3 cameraPos = camera.transform.position;

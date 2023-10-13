@@ -1,4 +1,5 @@
 using ET.Ability;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -12,14 +13,18 @@ namespace ET.Server
 
 			long playerId = observerUnit.Id;
 
-			string towerUnitCfgId = request.TowerUnitCfgId;
+			string towerCfgId = request.TowerUnitCfgId;
 			float3 position = request.Position;
 
-			position = ET.RecastHelper.GetNearNavmeshPos(observerUnit, position);
+			position = ET.RecastHelper.GetHitNavmeshPos(observerUnit.DomainScene(), position);
 
+			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+
+			bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+			bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
-			(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(playerId, towerUnitCfgId);
+			(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(playerId, towerCfgId);
 			if (bRet == false)
 			{
 				response.Error = ErrorCode.ERR_LogicError;
@@ -27,7 +32,20 @@ namespace ET.Server
 			}
 			else
 			{
-				bool success = gamePlayTowerDefenseComponent.CallPlayerTower(playerId, towerUnitCfgId, position);
+				if (isCallMonster)
+				{
+					(TeamFlagType teamFlagType, Unit homeUnit) = gamePlayTowerDefenseComponent.GetNearHostileHomeByPlayerId(playerId, position);
+
+					bool canArrive = ET.RecastHelper.ChkArrive(observerUnit, position, homeUnit.Position);
+					if (canArrive == false)
+					{
+						response.Error = ErrorCode.ERR_LogicError;
+						response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+						return;
+					}
+				}
+
+				bool success = gamePlayTowerDefenseComponent.CallPlayerTower(playerId, towerCfgId, position);
 				if (success == false)
 				{
 					response.Error = ErrorCode.ERR_LogicError;

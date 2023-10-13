@@ -36,14 +36,20 @@ set curDir=Library
 if exist %ProjectOrgName%\%curDir% (
 	md %ProjectCloneName%\%curDir%
 	for /f %%s in ('dir /b "%ProjectOrgName%\%curDir%"') do (
-		set isMatch=false
+		set isMatchToLink=false
 		::for %%i in ("PackageCache", "ScriptAssemblies", "Artifacts", "ShaderCache") do (
-		for %%i in ("PackageCache", "ScriptAssemblies", "Artifacts", "ShaderCache") do (
+		for %%i in ("PackageCache", "Artifacts", "ShaderCache") do (
 			if %%i=="%%s" (
-				set isMatch=true
+				set isMatchToLink=true
 			)
 		)
-		if !isMatch!==true (
+		set isMatchToEmpty=false
+		for %%i in ("ScriptAssemblies", "Bee") do (
+			if %%i=="%%s" (
+				set isMatchToEmpty=true
+			)
+		)
+		if !isMatchToLink!==true (
 			for %%a in (%ProjectOrgName%\%curDir%\%%s) do (
 				set "b=%%~aa"
 				set F=!b:~0,1!
@@ -55,14 +61,18 @@ if exist %ProjectOrgName%\%curDir% (
 				)
 			)
 		) else (
-			for %%a in (%ProjectOrgName%\%curDir%\%%s) do (
-				set "b=%%~aa"
-				set F=!b:~0,1!
-				
-				if !F!==d (
-					xcopy %ProjectOrgName%\%curDir%\%%s %ProjectCloneName%\%curDir%\%%s /s/e/i/y
-				) else (
-					copy %ProjectOrgName%\%curDir%\%%s %ProjectCloneName%\%curDir%\%%s /y
+			if !isMatchToEmpty!==true (
+				echo "--%curDir%\%%s is isMatchToEmpty"
+			) else (
+				for %%a in (%ProjectOrgName%\%curDir%\%%s) do (
+					set "b=%%~aa"
+					set F=!b:~0,1!
+					
+					if !F!==d (
+						xcopy %ProjectOrgName%\%curDir%\%%s %ProjectCloneName%\%curDir%\%%s /s/e/i/y
+					) else (
+						copy %ProjectOrgName%\%curDir%\%%s %ProjectCloneName%\%curDir%\%%s /y
+					)
 				)
 			)
 		)

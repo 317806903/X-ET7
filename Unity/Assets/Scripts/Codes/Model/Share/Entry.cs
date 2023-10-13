@@ -63,6 +63,14 @@
         ARRoom,
     }
 
+    public enum ARRoomType
+    {
+        Normal,
+        PVE,
+        PVP,
+        EndlessChallenge,
+    }
+
     /// <summary>
     /// 玩法当前所在步骤
     /// </summary>

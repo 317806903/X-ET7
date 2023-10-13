@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,7 @@ namespace ET.Client
 			else
 			{
 				DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = contextData as DlgARHall_ShowWindowData;
+				self._ARRoomTypeIn = _DlgARHall_ShowWindowData._ARRoomType;
 				if (_DlgARHall_ShowWindowData.playerStatus == PlayerStatus.Hall)
 				{
 					self.roomId = 0;
@@ -96,8 +98,16 @@ namespace ET.Client
 			Log.Debug($"ET.Client.DlgARHallSystem.OnClose ");
 			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-			UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameMode>();
+			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgARHall>();
+			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+			if (playerComponent.IsDebugMode)
+			{
+				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameMode>();
+			}
+			else
+			{
+				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+			}
 		}
 
 		public static async ETTask OnCreateRoomCallBack(this DlgARHall self)
@@ -152,7 +162,7 @@ namespace ET.Client
 				self.HideMenu().Coroutine();
 				self.roomId = 0;
 
-				string txt = "房间不存在";
+				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
 				UIManagerHelper.ShowConfirm(self.DomainScene(), txt, () =>
 				{
 					self.ReStart().Coroutine();
@@ -167,6 +177,7 @@ namespace ET.Client
 			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+			Log.Debug($"-OnFinishedCallBack self.playerStatusIn[{self.playerStatusIn.ToString()}] playerComponent.PlayerStatus[{playerComponent.PlayerStatus.ToString()}]");
 			if (self.playerStatusIn != PlayerStatus.Hall)
 			{
 				if (playerComponent.PlayerStatus == PlayerStatus.Battle)
@@ -182,7 +193,7 @@ namespace ET.Client
 					if (roomExist == false)
 					{
 						self.HideMenu().Coroutine();
-						string txt = "房间不存在";
+						string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
 						UIManagerHelper.ShowConfirm(self.DomainScene(), txt, () =>
 						{
 							self.ReStart().Coroutine();
@@ -239,15 +250,33 @@ namespace ET.Client
 		{
 			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
-			string battleCfgId = "GamePlayBattleLevel_ARRoom";
-			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, true);
+			string battleCfgId = "";
+			bool isARRoomTypeNormal = false;
+			if (self._ARRoomTypeIn == ARRoomType.Normal)
+			{
+				battleCfgId = "GamePlayBattleLevel_ARRoom";
+				isARRoomTypeNormal = true;
+			}
+			else if (self._ARRoomTypeIn == ARRoomType.PVE)
+			{
+				battleCfgId = GlobalSettingCfgCategory.Instance.ARPVECfgId;
+			}
+			else if (self._ARRoomTypeIn == ARRoomType.PVP)
+			{
+				battleCfgId = GlobalSettingCfgCategory.Instance.ARPVPCfgId;
+			}
+			else if (self._ARRoomTypeIn == ARRoomType.EndlessChallenge)
+			{
+				battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+			}
+			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, true, isARRoomTypeNormal);
 			if (result)
 			{
 			}
 			else
 			{
 				self.HideMenu().Coroutine();
-				string txt = "房间创建失败";
+				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_CreateRoomError");
 				UIManagerHelper.ShowConfirm(self.DomainScene(), txt, () =>
 				{
 					self.ReStart().Coroutine();
@@ -278,7 +307,7 @@ namespace ET.Client
 			else
 			{
 				self.HideMenu().Coroutine();
-				string txt = "房间不存在";
+				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
 				UIManagerHelper.ShowConfirm(self.DomainScene(), txt, () =>
 				{
 					self.ReStart().Coroutine();

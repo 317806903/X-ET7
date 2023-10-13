@@ -9,7 +9,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.NoticeUIReconnect args)
         {
-            string tipMsg = "网络已断开";
+            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkDisconnect");
             UIManagerHelper.ShowConfirm(scene, tipMsg, () =>
             {
                 //SceneHelper.EnterLogin(scene).Coroutine();

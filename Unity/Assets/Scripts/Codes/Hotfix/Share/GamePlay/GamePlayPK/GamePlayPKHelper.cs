@@ -16,28 +16,46 @@ namespace ET
 			Unit monsterUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, monsterCfg.UnitId, level, pos, forward, monsterCfg.AiCfgId);
 
 			GamePlayHelper.AddUnitPathfinding(monsterUnit);
-			GamePlayHelper.AddUnitTeamFlag(monsterUnit, TeamFlagType.Monster);
+			GamePlayHelper.AddUnitTeamFlag(monsterUnit, TeamFlagType.Monster1);
 
 			return monsterUnit;
 		}
 
-		public static Unit CreateTower(Scene scene, long playerId, string towerId, float3 pos)
+		public static List<Unit> CreateTower(Scene scene, long playerId, string towerId, float3 pos)
 		{
 			float3 forward = new float3(0, 0, 1);
 
+			List<Unit> unitList = new();
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerId);
-			Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, towerCfg.UnitId, towerCfg.Level, pos, forward, towerCfg.AiCfgId);
+			bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+			int count = towerCfg.UnitId.Count;
+			for (int i = 0; i < count; i++)
+			{
+				string unitCfgId = towerCfg.UnitId[i];
+				int unitLevel = towerCfg.Level[i];
+				float3 releativePos = float3.zero;
+				if (towerCfg.RelativePosition.Count > i)
+				{
+					releativePos = new float3(towerCfg.RelativePosition[i].X, towerCfg.RelativePosition[i].Y, towerCfg.RelativePosition[i].Z);
+				}
+				Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-			TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
-			towerComponent.towerCfgId = towerId;
-			towerComponent.playerId = playerId;
 
-			GamePlayHelper.AddUnitPathfinding(towerUnit);
-			GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
+				if (isTower)
+				{
+					TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
+					towerComponent.towerCfgId = towerId;
+					towerComponent.playerId = playerId;
+				}
 
-			GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+				GamePlayHelper.AddUnitPathfinding(towerUnit);
+				GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
 
-			return towerUnit;
+				GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+
+				unitList.Add(towerUnit);
+			}
+			return unitList;
 		}
 
 	}

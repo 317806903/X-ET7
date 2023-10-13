@@ -1,5 +1,6 @@
 ﻿using System;
 using ET.AbilityConfig;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -16,17 +17,16 @@ namespace ET.Client
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
                 if (gamePlayTowerDefenseComponent != null)
                 {
-                    PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-                    if (putHomeComponent != null && putHomeComponent.unitId == self.GetUnit().Id)
-                    {
-                        resName = "ResEffect_MainTowerBar";
-                    }
-                    else if (self.GetComponent<TowerComponent>() != null)
-                    {
-                        resName = "ResEffect_MainTowerBar";
-                    }
                 }
 
+                if (self.GetUnit().GetComponent<HomeComponent>() != null)
+                {
+                    resName = "ResEffect_MainTowerBar";
+                }
+                else if (self.GetUnit().GetComponent<TowerComponent>() != null)
+                {
+                    resName = "ResEffect_MainTowerBar";
+                }
                 if(string.IsNullOrEmpty(resName))
                 {
                     resName = "ResEffect_HealthBar_1";
@@ -43,6 +43,8 @@ namespace ET.Client
                 self.go = HealthBarGo;
                 self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
                 self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
+                self.HpValueShowTrans = self.go.transform.Find("GameObject/HpValueShow");
+
                 self.UpdateHealth();
             }
         }
@@ -91,6 +93,12 @@ namespace ET.Client
                 self.backgroundBar.transform.localScale = scale;
             }
             //Log.Debug($"normalizedHealth={normalizedHealth}");
+
+            if (self.HpValueShowTrans != null)
+            {
+                TextMeshPro textMeshPro = self.HpValueShowTrans.GetComponent<TextMeshPro>();
+                textMeshPro.text = $"{curHp}/{maxHp}";
+            }
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {

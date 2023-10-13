@@ -23,7 +23,7 @@ namespace ET.Server
                 }
             }
         }
-    
+
         [ObjectSystem]
         public class AwakeSystem: AwakeSystem<ActorLocationSenderOneType, int>
         {
@@ -67,7 +67,7 @@ namespace ET.Server
             }
         }
 
-        private static ActorLocationSender GetOrCreate(this ActorLocationSenderOneType self, long id)
+        public static ActorLocationSender GetOrCreate(this ActorLocationSenderOneType self, long id)
         {
             if (id == 0)
             {
@@ -108,7 +108,7 @@ namespace ET.Server
         {
             self.SendInner(entityId, message).Coroutine();
         }
-        
+
         private static async ETTask SendInner(this ActorLocationSenderOneType self, long entityId, IActorMessage message)
         {
             ActorLocationSender actorLocationSender = self.GetOrCreate(entityId);
@@ -119,9 +119,9 @@ namespace ET.Server
                 ActorMessageSenderComponent.Instance.Send(actorLocationSender.ActorId, message);
                 return;
             }
-            
+
             long instanceId = actorLocationSender.InstanceId;
-            
+
             int coroutineLockType = (self.LocationType << 16) | CoroutineLockType.ActorLocationSender;
             using (await CoroutineLockComponent.Instance.Wait(coroutineLockType, entityId))
             {
@@ -129,7 +129,7 @@ namespace ET.Server
                 {
                     throw new RpcException(ErrorCore.ERR_ActorTimeout, $"{message}");
                 }
-                
+
                 if (actorLocationSender.ActorId == 0)
                 {
                     actorLocationSender.ActorId = await LocationProxyComponent.Instance.Get(self.LocationType, actorLocationSender.Id);
@@ -138,7 +138,7 @@ namespace ET.Server
                         throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{message}");
                     }
                 }
-                
+
                 actorLocationSender.LastSendOrRecvTime = TimeHelper.ServerNow();
                 ActorMessageSenderComponent.Instance.Send(actorLocationSender.ActorId, message);
             }
@@ -155,9 +155,9 @@ namespace ET.Server
                 actorLocationSender.LastSendOrRecvTime = TimeHelper.ServerNow();
                 return await ActorMessageSenderComponent.Instance.Call(actorLocationSender.ActorId, request);
             }
-            
+
             long instanceId = actorLocationSender.InstanceId;
-            
+
             int coroutineLockType = (self.LocationType << 16) | CoroutineLockType.ActorLocationSender;
             using (await CoroutineLockComponent.Instance.Wait(coroutineLockType, entityId))
             {
@@ -192,7 +192,7 @@ namespace ET.Server
             // 先序列化好
             int rpcId = ActorMessageSenderComponent.Instance.GetRpcId();
             iActorRequest.RpcId = rpcId;
-            
+
             long actorLocationSenderInstanceId = actorLocationSender.InstanceId;
             int coroutineLockType = (self.LocationType << 16) | CoroutineLockType.ActorLocationSender;
             using (await CoroutineLockComponent.Instance.Wait(coroutineLockType, entityId))
@@ -207,7 +207,7 @@ namespace ET.Server
                 {
                     return ActorHelper.CreateResponse(iActorRequest, actorLocationSender.Error);
                 }
-                
+
                 try
                 {
                     return await self.CallInner(actorLocationSender, rpcId, iActorRequest);
@@ -230,7 +230,7 @@ namespace ET.Server
             int failTimes = 0;
             long instanceId = actorLocationSender.InstanceId;
             actorLocationSender.LastSendOrRecvTime = TimeHelper.ServerNow();
-            
+
             while (true)
             {
                 if (actorLocationSender.ActorId == 0)
@@ -317,7 +317,7 @@ namespace ET.Server
                 ActorLocationSenderComponent.Instance = null;
             }
         }
-        
+
         public static ActorLocationSenderOneType Get(this ActorLocationSenderComponent self, int locationType)
         {
             return self.ActorLocationSenderComponents[locationType];

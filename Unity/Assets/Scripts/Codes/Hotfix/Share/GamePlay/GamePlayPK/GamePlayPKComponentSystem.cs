@@ -46,36 +46,36 @@ namespace ET
 		{
 		}
 
-		public static GamePlayComponent GetGamePlay(this GamePlayPKComponent self)
-		{
-			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
-			return gamePlayComponent;
-		}
-
-		public static List<long> GetPlayerList(this GamePlayPKComponent self)
-		{
-			GamePlayComponent gamePlayComponent = self.GetGamePlay();
-			return gamePlayComponent.GetPlayerList();
-		}
-
-		public static void NoticeToClientAll(this GamePlayPKComponent self)
-		{
-			List<long> playerList = self.GetPlayerList();
-			for (int i = 0; i < playerList.Count; i++)
-			{
-				self.NoticeToClient(playerList[i]);
-			}
-		}
-
-		public static void NoticeToClient(this GamePlayPKComponent self, long playerId)
-		{
-			EventType.WaitNoticeGamePlayModeToClient _WaitNoticeGamePlayModeChgToClient = new ()
-			{
-				playerId = playerId,
-				gamePlayComponent = self.GetGamePlay(),
-			};
-			EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
-		}
+		// public static GamePlayComponent GetGamePlay(this GamePlayPKComponent self)
+		// {
+		// 	GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
+		// 	return gamePlayComponent;
+		// }
+		//
+		// public static List<long> GetPlayerList(this GamePlayPKComponent self)
+		// {
+		// 	GamePlayComponent gamePlayComponent = self.GetGamePlay();
+		// 	return gamePlayComponent.GetPlayerList();
+		// }
+		//
+		// public static void NoticeToClientAll(this GamePlayPKComponent self)
+		// {
+		// 	List<long> playerList = self.GetPlayerList();
+		// 	for (int i = 0; i < playerList.Count; i++)
+		// 	{
+		// 		self.NoticeToClient(playerList[i]);
+		// 	}
+		// }
+		//
+		// public static void NoticeToClient(this GamePlayPKComponent self, long playerId)
+		// {
+		// 	EventType.WaitNoticeGamePlayModeToClient _WaitNoticeGamePlayModeChgToClient = new ()
+		// 	{
+		// 		playerId = playerId,
+		// 		gamePlayComponent = self.GetGamePlay(),
+		// 	};
+		// 	EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
+		// }
 
 		public static void Init(this GamePlayPKComponent self, long ownerPlayerId, string gamePlayModeCfgId)
 		{
@@ -85,11 +85,15 @@ namespace ET
 			self.Start();
 		}
 
+		/// <summary>
+		/// 处理阵营关系
+		/// </summary>
+		/// <param name="self"></param>
 		public static void DealFriendTeamFlagType(this GamePlayPKComponent self)
 		{
 			ListComponent<TeamFlagType> teamFlagTypes = ListComponent<TeamFlagType>.Create();
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
-			gamePlayComponent.DealFriendTeamFlag(teamFlagTypes, true, true);
+			gamePlayComponent.DealFriendTeamFlag(null, false, true);
 		}
 
 		public static void Start(this GamePlayPKComponent self)

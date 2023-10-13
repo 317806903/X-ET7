@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
 	[ObjectSystem]
-	public class DlgBattleTowerEndViewComponentAwakeSystem : AwakeSystem<DlgBattleTowerEndViewComponent> 
+	public class DlgBattleTowerEndViewComponentAwakeSystem : AwakeSystem<DlgBattleTowerEndViewComponent>
 	{
 		protected override void Awake(DlgBattleTowerEndViewComponent self)
 		{
@@ -12,9 +12,8 @@ namespace ET.Client
 		}
 	}
 
-
 	[ObjectSystem]
-	public class DlgBattleTowerEndViewComponentDestroySystem : DestroySystem<DlgBattleTowerEndViewComponent> 
+	public class DlgBattleTowerEndViewComponentDestroySystem : DestroySystem<DlgBattleTowerEndViewComponent>
 	{
 		protected override void Destroy(DlgBattleTowerEndViewComponent self)
 		{

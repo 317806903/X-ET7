@@ -63,7 +63,7 @@ namespace ET.Client
 
         public static void Init(this TowerStarBarComponent self, TowerComponent towerComponent)
         {
-            self.ShowStar(towerComponent.model.Level);
+            self.ShowStar(towerComponent.model.Level[0]);
         }
 
         public static void ShowStar(this TowerStarBarComponent self, int starCount)

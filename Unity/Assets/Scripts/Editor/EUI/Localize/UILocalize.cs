@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ET;
 using UnityEngine;
 
 public class UILocalize
@@ -83,6 +84,23 @@ public class UILocalize
                         foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in uiTextLocalizeMonoViews)
                         {
                             var(textKey, textDefaultValue) = uiTextLocalizeMonoView.GetInfo();
+                            if (string.IsNullOrEmpty(textKey))
+                            {
+                                Debug.LogError($"存在textKey为空  [{files[i].Name}][{uiTextLocalizeMonoView.gameObject.name}]");
+                                continue;
+                            }
+                            if (dicPrefab.TryGetValue(textKey, out string textDefaultValueExist))
+                            {
+                                if (textDefaultValue == textDefaultValueExist)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    Debug.LogError($"存在多个textKey[{textKey}],但是默认值不同  [{textDefaultValueExist}][{textDefaultValue}]  [{files[i].Name}][{uiTextLocalizeMonoView.gameObject.name}]");
+                                    continue;
+                                }
+                            }
                             dicPrefab.Add(textKey, textDefaultValue);
                         }
                     }

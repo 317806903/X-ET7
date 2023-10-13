@@ -15,6 +15,6 @@ MonoBehaviour:
   ResLoadMode: 0
   ResHostServerIP: http://192.168.10.148
   ResGameVersion: v1.0
-  RouterHttpHost: 127.0.0.1
+  RouterHttpHost: 8.134.156.170
   RouterHttpPort: 30300
   isShowDebugRoot: 0

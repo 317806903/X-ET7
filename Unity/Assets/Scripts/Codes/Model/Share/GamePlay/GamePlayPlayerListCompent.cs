@@ -10,7 +10,16 @@ namespace ET
 {
 	public enum GetCoinType
 	{
+		/// <summary>
+		/// 普通获得
+		/// </summary>
 		Normal,
+
+		/// <summary>
+		/// 波次结束平分阵营金币池
+		/// </summary>
+		DivideEquallyTeamCoin,
+
 		/// <summary>
 		/// 波次结束结算存款利息
 		/// </summary>
@@ -59,5 +68,12 @@ namespace ET
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiDictionary<long, string, int> playerId2CoinList;
+
+		/// <summary>
+		/// team对应的货币列表
+		/// </summary>
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public MultiDictionary<TeamFlagType, string, int> team2CoinList;
+
 	}
 }

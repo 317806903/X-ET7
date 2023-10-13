@@ -259,7 +259,14 @@ namespace ET
             gamePlayPlayerListComponent?.PlayerQuitBattle(playerId, isNeedRemoveAllPlayerUnits);
         }
 
-        public static void DealFriendTeamFlag(this GamePlayComponent self, ListComponent<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
+        /// <summary>
+        /// 处理阵营关系
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="teamFlagTypes"></param>
+        /// <param name="isWithPlayers"></param>
+        /// <param name="reset"></param>
+        public static void DealFriendTeamFlag(this GamePlayComponent self, List<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
             gamePlayFriendTeamFlagCompent.DealFriendTeamFlag(teamFlagTypes, isWithPlayers, reset);
@@ -342,6 +349,30 @@ namespace ET
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
             gamePlayFriendTeamFlagCompent.AddUnitTeamFlagByParent(unitParent, unit);
+        }
+
+        public static Dictionary<long, TeamFlagType> GetAllPlayerTeamFlag(this GamePlayComponent self)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            return gamePlayFriendTeamFlagCompent.GetAllPlayerTeamFlag();
+        }
+
+        public static TeamFlagType GetTeamFlagByUnit(this GamePlayComponent self, Unit unit)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            return gamePlayFriendTeamFlagCompent.GetTeamFlagByUnit(unit);
+        }
+
+        public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayComponent self, long playerId)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            return gamePlayFriendTeamFlagCompent.GetTeamFlagByPlayerId(playerId);
+        }
+
+        public static bool ChkIsFriend(this GamePlayComponent self, TeamFlagType curTeamFlagType, TeamFlagType targetTeamFlagType)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            return gamePlayFriendTeamFlagCompent._ChkIsFriend(curTeamFlagType, targetTeamFlagType);
         }
 
         public static string GetPathfindingMapName(this GamePlayComponent self)
@@ -436,10 +467,10 @@ namespace ET
             return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);
         }
 
-        public static void ResetPlayerBirthPos(this GamePlayComponent self, float3 pos)
+        public static void ResetPlayerBirthPos(this GamePlayComponent self, TeamFlagType playerTeamFlagType, float3 pos)
         {
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-            gamePlayPlayerListComponent.ResetPlayerBirthPos(pos);
+            gamePlayPlayerListComponent.ResetPlayerBirthPos(playerTeamFlagType, pos);
         }
     }
 }

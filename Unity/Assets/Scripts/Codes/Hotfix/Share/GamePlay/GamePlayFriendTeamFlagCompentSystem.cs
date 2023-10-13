@@ -35,7 +35,7 @@ namespace ET
 
 		public static void InitWhenRoom(this GamePlayFriendTeamFlagCompent self, RoomComponent roomComponent, List<RoomMember> roomMemberList)
 		{
-			self.InitPlayerTeamFlag(roomComponent, roomMemberList);
+			self.InitPlayerTeamFlagWhenRoom(roomComponent, roomMemberList);
 		}
 
 		public static void InitWhenGlobal(this GamePlayFriendTeamFlagCompent self)
@@ -44,12 +44,15 @@ namespace ET
 
 		public static void AddPlayerWhenGlobal(this GamePlayFriendTeamFlagCompent self, long playerId, int playerTeamId)
 		{
-			self.InitPlayerTeamFlagOne(playerId, playerTeamId);
-
-			TeamFlagType teamFlagType = self.playerId2TeamFlag[playerId];
-			self.unitId2TeamFlag[playerId] = teamFlagType;
+			self.InitPlayerTeamFlagOneWhenGlobal(playerId, playerTeamId);
 		}
 
+		/// <summary>
+		/// 设置player的阵营标志
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="playerId"></param>
+		/// <param name="roomTeamId"></param>
 		public static void _InitPlayerTeamFlag(this GamePlayFriendTeamFlagCompent self, long playerId, int roomTeamId)
 		{
 			string key = $"TeamPlayer{roomTeamId + 1}";
@@ -58,6 +61,12 @@ namespace ET
 			self.unitId2TeamFlag[playerId] = teamFlagType;
 		}
 
+		/// <summary>
+		/// 玩家对应颜色
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="playerId"></param>
+		/// <param name="index"></param>
 		public static void _InitPlayerColor(this GamePlayFriendTeamFlagCompent self, long playerId, int index)
 		{
 			float3 color = self.playerColorList[index];
@@ -114,6 +123,16 @@ namespace ET
 			return self.unitId2TeamFlag[unit.Id];
 		}
 
+		public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayFriendTeamFlagCompent self, long playerId)
+		{
+			return self.playerId2TeamFlag[playerId];
+		}
+
+		public static Dictionary<long, TeamFlagType> GetAllPlayerTeamFlag(this GamePlayFriendTeamFlagCompent self)
+		{
+			return self.playerId2TeamFlag;
+		}
+
 		public static GamePlayComponent GetGamePlay(this GamePlayFriendTeamFlagCompent self)
 		{
 			GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
@@ -126,7 +145,7 @@ namespace ET
 			return gamePlayComponent.GetGamePlayBattleConfig();
 		}
 
-		public static void InitPlayerTeamFlag(this GamePlayFriendTeamFlagCompent self, RoomComponent roomComponent, List<RoomMember> roomMemberList)
+		public static void InitPlayerTeamFlagWhenRoom(this GamePlayFriendTeamFlagCompent self, RoomComponent roomComponent, List<RoomMember> roomMemberList)
 		{
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
 			if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
@@ -158,7 +177,7 @@ namespace ET
 			}
 		}
 
-		public static void InitPlayerTeamFlagOne(this GamePlayFriendTeamFlagCompent self, long playerId, int playerTeamId)
+		public static void InitPlayerTeamFlagOneWhenGlobal(this GamePlayFriendTeamFlagCompent self, long playerId, int playerTeamId)
 		{
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
 			if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
@@ -173,15 +192,30 @@ namespace ET
 			{
 				self._InitPlayerTeamFlag(playerId, playerTeamId);
 			}
-			self._InitPlayerColor(playerId, 0);
+
+			int colorIndex = RandomGenerator.RandomNumber(0, self.playerColorList.Count);
+			self._InitPlayerColor(playerId, colorIndex);
 		}
 
+		/// <summary>
+		/// 判断unitId是否归宿某个player
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="unitId"></param>
+		/// <returns></returns>
 		public static long GetPlayerIdByUnitId(this GamePlayFriendTeamFlagCompent self, long unitId)
 		{
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			return gamePlayComponent.GetPlayerIdByUnitId(unitId);
 		}
 
+		/// <summary>
+		/// 判断阵营
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="curUnit"></param>
+		/// <param name="targetUnit"></param>
+		/// <returns></returns>
 		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, Unit curUnit, Unit targetUnit)
 		{
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
@@ -219,8 +253,20 @@ namespace ET
 			return self.playerId2Color[playerId];
 		}
 
+		/// <summary>
+		/// 处理阵营关系
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="teamFlagTypes"></param>
+		/// <param name="isWithPlayers"></param>
+		/// <param name="reset"></param>
 		public static void DealFriendTeamFlag(this GamePlayFriendTeamFlagCompent self, List<TeamFlagType> teamFlagTypes, bool isWithPlayers, bool reset)
 		{
+			if (teamFlagTypes == null)
+			{
+				teamFlagTypes = new();
+			}
+
 			int newFriendTypes = 0;
 			for (int i = 0; i < teamFlagTypes.Count; i++)
 			{

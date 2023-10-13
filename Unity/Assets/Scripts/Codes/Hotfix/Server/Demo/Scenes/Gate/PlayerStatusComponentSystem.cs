@@ -11,6 +11,7 @@ namespace ET.Server
             {
                 PlayerGameMode = self.PlayerGameMode.ToString(),
                 PlayerStatus = self.PlayerStatus.ToString(),
+                ARRoomType = self.ARRoomType.ToString(),
                 RoomId = self.RoomId,
             };
             Player player = self.GetParent<Player>();

@@ -59,6 +59,8 @@ namespace ET.Server
 				unitComponent.Add(observerUnit);
 				observerUnit.AddComponent<MailBoxComponent>();
 
+				await TimerComponent.Instance.WaitFrameAsync();
+
 				float3 position = gamePlayComponent.GetPlayerBirthPos(playerId);
 				float3 forward = new float3(0, 0, 1);
 				playerUnit = ET.GamePlayHelper.CreatePlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);

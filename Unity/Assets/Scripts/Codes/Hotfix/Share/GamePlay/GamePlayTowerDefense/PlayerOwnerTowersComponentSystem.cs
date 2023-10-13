@@ -78,7 +78,7 @@ namespace ET
 			bool success = self._ChkCostWhenRefresh(playerId);
 			if (success == false)
 			{
-				msg = "金币不足";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
 				return (false, msg);
 			}
 			return (true, msg);
@@ -197,7 +197,7 @@ namespace ET
 			if (self.playerTowerBuyPools[playerId].Count <= index)
 			{
 				Log.Debug($" BuyPlayerTower self.playerTowerPools[playerId].Count <= index 没有这个序列的塔");
-				msg = "没有这个序列的塔";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_NotHaveThisTower");
 				return (false, msg);
 			}
 
@@ -214,7 +214,7 @@ namespace ET
 			bool success = self._ChkCostWhenBuyTower(playerId, towerCfgId);
 			if (success == false)
 			{
-				msg = "金币不足";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
 				return (false, msg);
 			}
 
@@ -280,7 +280,7 @@ namespace ET
 			return true;
 		}
 
-		public static Unit CreateTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId, float3 position)
+		public static List<Unit> CreateTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId, float3 position)
 		{
 			return GamePlayTowerDefenseHelper.CreateTower(self.DomainScene(), playerId, towerCfgId, position);
 		}
@@ -296,19 +296,25 @@ namespace ET
 			if (count <= 0)
 			{
 				Log.Debug($" CallPlayerTower self.playerOwnerTowerId count <= 0");
-				msg = "没有这个塔";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_NotHaveThisTower");
 				return (false, msg);
 			}
 
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-			int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
-			List<long> towerUnitIdList = self.playerId2unitTowerId[playerId];
-			if (towerUnitIdList.Count >= limitTowerCount)
+			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+
+			bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+			bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+			if (isTower)
 			{
-				msg = $"最多只能建造{limitTowerCount}个塔";
-				return (false, msg);
+				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+				int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
+				List<long> towerUnitIdList = self.playerId2unitTowerId[playerId];
+				if (towerUnitIdList.Count >= limitTowerCount)
+				{
+					msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxPutTowerCount", limitTowerCount);
+					return (false, msg);
+				}
 			}
-
 			return (true, msg);;
 		}
 
@@ -342,9 +348,11 @@ namespace ET
 
 			self.playerOwnerTowerId[playerId][towerCfgId] = count - 1;
 
-			Unit towerUnit = self.CreateTower(playerId, towerCfgId, position);
-
-			self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
+			List<Unit> towerUnitList = self.CreateTower(playerId, towerCfgId, position);
+			foreach (var towerUnit in towerUnitList)
+			{
+				self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
+			}
 
 			self.NoticeToClient(playerId);
 			return true;
@@ -369,7 +377,7 @@ namespace ET
 			if (self.playerId2unitTowerId.Contains(playerId, towerUnitId) == false)
 			{
 				Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] not exist in self.playerId2unitTowerId 不存在这个塔");
-				msg = "不存在这个塔";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_NotHaveThisTower");
 				return (false, msg, null);
 			}
 
@@ -430,9 +438,11 @@ namespace ET
 			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
 			curTownUnit.DestroyNotDeathShow();
 
-			Unit towerUnit = self.CreateTower(playerId, nextTowerId, position);
-
-			self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
+			List<Unit> towerUnitList = self.CreateTower(playerId, nextTowerId, position);
+			foreach (var towerUnit in towerUnitList)
+			{
+				self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
+			}
 
 			self.NoticeToClient(playerId);
 			return true;
@@ -466,7 +476,7 @@ namespace ET
 			if (self.playerId2unitTowerId.Contains(playerId, towerUnitId) == false)
 			{
 				Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] not exist in self.playerId2unitTowerId");
-				msg = "没有这个塔";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_NotHaveThisTower");
 				return (false, msg);
 			}
 
@@ -479,7 +489,7 @@ namespace ET
 			if (curGold < reclaimTowerCostGold)
 			{
 				Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] curGold[{curGold}] < reclaimTowerCostGold[{reclaimTowerCostGold}]");
-				msg = "金币不足";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
 				return (false, msg);
 			}
 
@@ -552,26 +562,45 @@ namespace ET
 			}
 		}
 
-		public static bool ChkIsNearTower(this PlayerOwnerTowersComponent self, float3 targetPos, float targetUnitRadius)
+		public static List<long> GetPutTowers(this PlayerOwnerTowersComponent self, long playerId)
+		{
+			return self.playerId2unitTowerId[playerId];
+		}
+
+		public static bool ChkIsNearTower(this PlayerOwnerTowersComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-			Unit homeUnit = putHomeComponent.HomeUnit;
-			if (homeUnit == null)
+			var homeUnitList = putHomeComponent.GetHomeUnitList();
+			float nearDis = 0.3f;
+			foreach (var homeUnits in homeUnitList)
 			{
-				homeUnit = UnitHelper.GetUnit(self.DomainScene(), putHomeComponent.unitId);
-			}
-			if (homeUnit != null)
-			{
-				bool isNear1 = UnitHelper.ChkIsNear(homeUnit, targetPos, targetUnitRadius, 0.5f, false);
-				if (isNear1)
+				if (playerId != -1)
 				{
-					return true;
+					TeamFlagType homeTeamFlagType = gamePlayTowerDefenseComponent.GetHomeTeamFlagTypeByPlayer(playerId);
+					if (homeTeamFlagType != homeUnits.Key)
+					{
+						continue;
+					}
+				}
+				long homeUnitId = homeUnits.Value;
+				Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
+				if (homeUnit != null)
+				{
+					bool isNear1 = UnitHelper.ChkIsNear(homeUnit, targetPos, targetUnitRadius, nearDis, false);
+					if (isNear1)
+					{
+						return true;
+					}
 				}
 			}
 
 			foreach (var list in self.playerId2unitTowerId)
 			{
+				if (playerId != -1 && playerId != list.Key)
+				{
+					continue;
+				}
 				foreach (long unitId in list.Value)
 				{
 					Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
@@ -579,7 +608,7 @@ namespace ET
 					{
 						continue;
 					}
-					bool isNear = UnitHelper.ChkIsNear(unit, targetPos, targetUnitRadius, 0.5f, false);
+					bool isNear = UnitHelper.ChkIsNear(unit, targetPos, targetUnitRadius, nearDis, false);
 					if (isNear)
 					{
 						return true;

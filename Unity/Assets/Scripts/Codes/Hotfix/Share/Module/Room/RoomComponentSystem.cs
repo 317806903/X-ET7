@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET
 {
@@ -26,7 +27,7 @@ namespace ET
             self.ownerRoomMemberId = playerId;
             self.roomTeamMode = roomTeamMode;
             self.gamePlayBattleLevelCfgId = battleCfgId;
-            self.AddRoomMember(playerId, true, RoomTeamId.Red, 0);
+            self.AddRoomMember(playerId, true, RoomTeamId.Green, 0);
         }
 
         public static void ChgRoomStatus(this RoomComponent self, RoomStatus roomStatus)
@@ -61,7 +62,7 @@ namespace ET
 
         public static List<RoomMember> GetRoomMemberList(this RoomComponent self)
         {
-            ListComponent<RoomMember> list = ListComponent<RoomMember>.Create();
+            List<RoomMember> list = new();
             foreach (var child in self.Children)
             {
                 list.Add(child.Value as RoomMember);
@@ -169,9 +170,97 @@ namespace ET
             self.roomMemberSeat[seatIndex] = playerId;
         }
 
+        public static void ChgRoomMemberTeam(this RoomComponent self, long playerId, RoomTeamId roomTeamId)
+        {
+            RoomMember ownerRoomMember = self.GetRoomMember(playerId);
+            ownerRoomMember.roomTeamId = roomTeamId;
+            ownerRoomMember.isReady = false;
+        }
+
         public static void ChgRoomBattleLevelCfg(this RoomComponent self, string newBattleCfgId)
         {
             self.gamePlayBattleLevelCfgId = newBattleCfgId;
+        }
+
+        public static (bool, string) ChkOwnerStartGame(this RoomComponent self)
+        {
+            if (self.ChkIsAllReady() == false)
+            {
+                string msg = "请等待全部人员准备好";
+                return (false, msg);
+            }
+
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            PlayerTeam playerTeam = gamePlayBattleLevelCfg.TeamMode as PlayerTeam;
+            if (playerTeam != null)
+            {
+                int countRoomTeamId_Green = 0;
+                int countRoomTeamId_Red = 0;
+                int countRoomTeamId_Blue = 0;
+
+                List<RoomMember> memberList = self.GetRoomMemberList();
+                foreach (var roomMember in memberList)
+                {
+                    if (roomMember.roomTeamId == RoomTeamId.Green)
+                    {
+                        countRoomTeamId_Green++;
+                    }
+                    else if (roomMember.roomTeamId == RoomTeamId.Red)
+                    {
+                        countRoomTeamId_Red++;
+                    }
+                    else if (roomMember.roomTeamId == RoomTeamId.Blue)
+                    {
+                        countRoomTeamId_Blue++;
+                    }
+                }
+                if (playerTeam.MaxTeamCount == 2)
+                {
+                    if (countRoomTeamId_Green == 0 || countRoomTeamId_Red == 0)
+                    {
+                        string msg = "必须每个阵营都有人";
+                        return (false, msg);
+                    }
+                    if (playerTeam.IsAllowDiffTeamMember == false)
+                    {
+                        if (countRoomTeamId_Green != countRoomTeamId_Red)
+                        {
+                            string msg = "阵营人数不一致,请调整";
+                            return (false, msg);
+                        }
+                    }
+                }
+                else if (playerTeam.MaxTeamCount == 3)
+                {
+                    if (countRoomTeamId_Green == 0 || countRoomTeamId_Red == 0 || countRoomTeamId_Blue == 0)
+                    {
+                        string msg = "必须每个阵营都有人";
+                        return (false, msg);
+                    }
+                    if (playerTeam.IsAllowDiffTeamMember == false)
+                    {
+                        if (countRoomTeamId_Green != countRoomTeamId_Red
+                            || countRoomTeamId_Green != countRoomTeamId_Blue
+                            || countRoomTeamId_Red != countRoomTeamId_Blue)
+                        {
+                            string msg = "阵营人数不一致,请调整";
+                            return (false, msg);
+                        }
+                    }
+                }
+                else if (playerTeam.MaxTeamCount < 2)
+                {
+                    string msg = "暂不支持小于2个阵营";
+                    return (false, msg);
+                }
+                else if (playerTeam.MaxTeamCount > 3)
+                {
+                    string msg = "暂不支持超过3个阵营";
+                    return (false, msg);
+                }
+            }
+
+            return (true, "");
         }
 
     }

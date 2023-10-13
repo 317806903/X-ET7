@@ -6,7 +6,7 @@
 
 		public DlgLobbyViewComponent View { get => this.GetComponent<DlgLobbyViewComponent>(); }
 
-		 
+		public string gamePlayBattleLevelCfgId;
 
 	}
 }

@@ -6,7 +6,8 @@
         "Unity.Core",
         "HybridCLR.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -32,8 +32,12 @@ namespace ET.Server
 				{
 					putMonsterCallComponent = gamePlayTowerDefenseComponent.AddComponent<PutMonsterCallComponent>();
 				}
-				putMonsterCallComponent.Init(playerId, unitCfgId, pos);
 
+				PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+				Unit homeUnit = putHomeComponent.GetHomeUnit(observerUnit);
+				float3 forward = homeUnit.Position - pos;
+				forward.y = 0;
+				putMonsterCallComponent.Init(playerId, unitCfgId, pos, forward);
 			}
 
 			await ETTask.CompletedTask;
@@ -42,29 +46,8 @@ namespace ET.Server
 		public bool ChkPosition(GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent, Unit unit, float3 putMonsterCallPos)
 		{
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-			float3 homePos = putHomeComponent.GetPosition();
-			float3 startPos = putMonsterCallPos;
-
-			List<float3> points = ET.RecastHelper.GetArrivePath(unit, startPos, homePos);
-			if (points == null)
-			{
-				return false;
-			}
-			if (points.Count == 0)
-			{
-				return false;
-			}
-			float3 lastPoint = points[points.Count - 1];
-			if (math.abs(homePos.x - lastPoint.x) < 0.3f
-			    && math.abs(homePos.y - lastPoint.y) < 0.3f
-			    && math.abs(homePos.z - lastPoint.z) < 0.3f)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			Unit homeUnit = putHomeComponent.GetHomeUnit(unit);
+			return putHomeComponent.ChkHomeUnitPosition(homeUnit, putMonsterCallPos);
 		}
 	}
 }

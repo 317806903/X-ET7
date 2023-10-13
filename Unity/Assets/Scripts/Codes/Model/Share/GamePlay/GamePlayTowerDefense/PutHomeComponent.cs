@@ -1,30 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ET.Ability;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Unity.Mathematics;
 
 namespace ET
 {
 	[ComponentOf(typeof(GamePlayTowerDefenseComponent))]
-	public class PutHomeComponent : Entity, IAwake, IDestroy, ITransferClient
+	public class PutHomeComponent : Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
 	{
-		[BsonIgnore]
-		public long Timer;
-		public float3 HomePos { get; set; }
-		public long unitId;
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<TeamFlagType, long> HomeUnitIdList;
 
-		private EntityRef<Unit> homeUnit;
-		[BsonIgnore]
-		public Unit HomeUnit
-		{
-			get
-			{
-				return this.homeUnit;
-			}
-			set
-			{
-				this.homeUnit = value;
-			}
-		}
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<TeamFlagType, long> TeamFlagType2PlayerIdCanPutHome;
+
 	}
 }

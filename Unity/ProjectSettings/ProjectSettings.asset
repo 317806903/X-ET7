@@ -234,14 +234,14 @@ PlayerSettings:
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 1
   iosCopyPluginsCodeInsteadOfSymlink: 0
-  appleDeveloperTeamID: 
+  appleDeveloperTeamID: 9882G66R3A
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   VisionOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0
   tvOSManualSigningProvisioningProfileType: 0
   VisionOSManualSigningProvisioningProfileType: 0
-  appleEnableAutomaticSigning: 0
+  appleEnableAutomaticSigning: 1
   iOSRequireARKit: 0
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
@@ -861,7 +861,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
+    Android: UNITY;SINGLE_THREAD
     Server: UNITY;ENABLE_VIEW;ENABLE_CODES
     Standalone: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
     WebGL: UNITY;ENABLE_VIEW;ENABLE_CODES
@@ -1000,4 +1000,4 @@ PlayerSettings:
   hmiLoadingImage: {fileID: 0}
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
-  insecureHttpOption: 2
+  insecureHttpOption: 1

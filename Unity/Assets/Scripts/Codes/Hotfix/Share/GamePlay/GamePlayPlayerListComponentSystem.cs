@@ -21,6 +21,7 @@ namespace ET
 				self.playerId2IsQuit = new();
 				self.playerId2BirthPos = new();
 				self.playerId2CoinList = new();
+				self.team2CoinList = new();
 			}
 		}
 
@@ -36,6 +37,7 @@ namespace ET
 				self.playerId2IsQuit?.Clear();
 				self.playerId2BirthPos?.Clear();
 				self.playerId2CoinList?.Clear();
+				self.team2CoinList?.Clear();
 			}
 		}
 
@@ -286,10 +288,15 @@ namespace ET
 			}
 		}
 
-		public static void ResetPlayerBirthPos(this GamePlayPlayerListComponent self, float3 pos)
+		public static void ResetPlayerBirthPos(this GamePlayPlayerListComponent self, TeamFlagType playerTeamFlagType, float3 pos)
 		{
 			foreach (long playerId in self.GetPlayerList())
 			{
+				if (playerTeamFlagType != self.GetGamePlay().GetTeamFlagByPlayerId(playerId))
+				{
+					continue;
+				}
+
 				self._InitPlayerBirthPos(playerId, pos, true);
 
 				if (self.playerId2PlayerUnitId.TryGetValue(playerId, out long playerUnitId))
@@ -326,6 +333,50 @@ namespace ET
 		{
 			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out int curValue);
 			return curValue;
+		}
+
+		public static void ChgTeamCoin(this GamePlayPlayerListComponent self, TeamFlagType teamFlagType, CoinType coinType, int chgValue, GetCoinType getCoinType)
+		{
+			self.team2CoinList.TryGetValue(teamFlagType, coinType.ToString(), out int curValue);
+			curValue = math.max(0, curValue + chgValue);
+			self.team2CoinList.Add(teamFlagType, coinType.ToString(), curValue);
+		}
+
+		public static (bool, MultiDictionary<long, string, int>) GetTeamCoin2Players(this GamePlayPlayerListComponent self)
+		{
+			if (self.team2CoinList.Count == 0)
+			{
+				return (false, null);
+			}
+
+			MultiDictionary<long, string, int> playerId2Coins = new();
+			GamePlayComponent gamePlayComponent = self.GetGamePlay();
+			foreach (var teamList in self.team2CoinList)
+			{
+				int playerNum = 0;
+				foreach (long playerId in self.GetPlayerList())
+				{
+					TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
+					if (teamFlagType == teamList.Key)
+					{
+						playerNum++;
+					}
+				}
+
+				foreach (var coin in teamList.Value)
+				{
+					foreach (long playerId in self.GetPlayerList())
+					{
+						TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
+						if (teamFlagType == teamList.Key)
+						{
+							playerId2Coins.Add(playerId, coin.Key, (int)(1f*coin.Value / playerNum));
+						}
+					}
+				}
+			}
+
+			return (true, playerId2Coins);
 		}
 
 		public static void NoticeCoinToClient(this GamePlayPlayerListComponent self, long playerId, GetCoinType getCoinType)

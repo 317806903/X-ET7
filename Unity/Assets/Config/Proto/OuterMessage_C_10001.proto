@@ -66,7 +66,8 @@ message G2C_PlayerStatusChgNotice // IActorMessage
 	int32 RpcId = 1;
 	string PlayerGameMode = 2;
 	string PlayerStatus = 3;
-	int64 RoomId = 4;
+	string ARRoomType = 4;
+	int64 RoomId = 5;
 }
 
 message MoveInfo
@@ -253,7 +254,8 @@ message G2C_LoginGate // IResponse
 	int64 PlayerId = 4;
 	string PlayerGameMode = 5;
 	string PlayerStatus = 6;
-	int64 RoomId = 7;
+	string ARRoomType = 7;
+	int64 RoomId = 8;
 }
 
 //ResponseType G2C_LoginOut
@@ -285,7 +287,8 @@ message G2C_ReLogin // IResponse
 	int64 PlayerId = 4;
 	string PlayerGameMode = 5;
 	string PlayerStatus = 6;
-	int64 RoomId = 7;
+	string ARRoomType = 7;
+	int64 RoomId = 8;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -405,6 +408,32 @@ message M2C_CallMonster // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_ClearMyTower
+message C2M_ClearMyTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ClearMyTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_ClearAllMonster
+message C2M_ClearAllMonster // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ClearAllMonster // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType G2C_GetRoomList
 message C2G_GetRoomList // IRequest
 {
@@ -447,6 +476,7 @@ message C2G_CreateRoom // IRequest
 	int32 RpcId = 1;
 	string BattleCfgId = 2;
 	int32 IsARRoom = 3;
+	int32 IsARRoomTypeNormal = 4;
 }
 
 message G2C_CreateRoom // IResponse
@@ -527,6 +557,20 @@ message C2G_ChgRoomMemberSeat // IRequest
 }
 
 message G2C_ChgRoomMemberSeat // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ChgRoomMemberTeam
+message C2G_ChgRoomMemberTeam // IRequest
+{
+	int32 RpcId = 1;
+	int32 NewTeam = 2;
+}
+
+message G2C_ChgRoomMemberTeam // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -737,11 +781,25 @@ message M2C_ReclaimPlayerTower // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_ReadyWhenRestTime
+message C2M_ReadyWhenRestTime // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ReadyWhenRestTime // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2C_GetMonsterCall2HeadQuarterPath
 message C2M_GetMonsterCall2HeadQuarterPath // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	Unity.Mathematics.float3 Position = 2;
+	int32 HomeTeamFlagType = 2;
+	Unity.Mathematics.float3 Position = 3;
 }
 
 message M2C_GetMonsterCall2HeadQuarterPath // IActorLocationResponse

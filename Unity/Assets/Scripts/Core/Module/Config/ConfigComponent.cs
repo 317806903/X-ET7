@@ -21,6 +21,7 @@ namespace ET
         public struct GetOneConfigBytes
         {
             public string ConfigName;
+            public string ConfigFullName;
         }
 
         public struct GetRes
@@ -61,7 +62,11 @@ namespace ET
 				oneConfig.Destroy();
 			}
 
-			ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes() {ConfigName = configType.Name});
+			ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes()
+			{
+				ConfigName = configType.Name,
+				ConfigFullName = configType.FullName,
+			});
 
 			object category = Activator.CreateInstance(configType, oneConfigBytes);
 			IConfigSingleton singleton = category as IConfigSingleton;

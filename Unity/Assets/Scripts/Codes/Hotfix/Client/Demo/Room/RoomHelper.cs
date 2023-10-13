@@ -80,7 +80,7 @@ namespace ET.Client
         /// <param name="battleCfgId"></param>
         /// <param name="isARRoom"></param>
         /// <returns></returns>
-        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, bool isARRoom)
+        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, bool isARRoom, bool isARRoomTypeNormal)
         {
             try
             {
@@ -88,6 +88,7 @@ namespace ET.Client
                 {
                     BattleCfgId = battleCfgId,
                     IsARRoom = isARRoom?1:0,
+                    IsARRoomTypeNormal = isARRoomTypeNormal?1:0,
                 }) as G2C_CreateRoom;
                 if (_G2C_CreateRoom.Error != ET.ErrorCode.ERR_Success)
                 {
@@ -194,6 +195,26 @@ namespace ET.Client
                 if (_G2C_ChgRoomMemberSeat.Error != ET.ErrorCode.ERR_Success)
                 {
                     Log.Error($"ET.Client.RoomHelper.ChgRoomSeatAsync Error==1 msg={_G2C_ChgRoomMemberSeat.Message}");
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
+        public static async ETTask ChgRoomMemberTeamAsync(Scene clientScene, RoomTeamId newTeam)
+        {
+            try
+            {
+                G2C_ChgRoomMemberTeam _G2C_ChgRoomMemberTeam = await ET.Client.SessionHelper.GetSession(clientScene).Call(new
+                C2G_ChgRoomMemberTeam()
+                {
+                    NewTeam = (int)newTeam,
+                }) as G2C_ChgRoomMemberTeam;
+                if (_G2C_ChgRoomMemberTeam.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"ET.Client.RoomHelper.ChgRoomTeamAsync Error==1 msg={_G2C_ChgRoomMemberTeam.Message}");
                 }
             }
             catch (Exception e)

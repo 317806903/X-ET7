@@ -1,5 +1,5 @@
 ﻿using System;
-
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -12,6 +12,7 @@ namespace ET.Server
 			long playerId = player.Id;
 			string battleCfgId = request.BattleCfgId;
 			int isARRoom = request.IsARRoom;
+			bool isARRoomTypeNormal = request.IsARRoomTypeNormal == 1?true:false;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -21,11 +22,11 @@ namespace ET.Server
 				BattleCfgId = battleCfgId,
 				IsARRoom = isARRoom,
 			});
-			
+
 			response.Error = _R2G_CreateRoom.Error;
 			response.Message = _R2G_CreateRoom.Message;
 			response.RoomId = _R2G_CreateRoom.RoomId;
-			
+
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
 				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
@@ -39,6 +40,27 @@ namespace ET.Server
 				}
 				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 				playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
+
+				if (isARRoomTypeNormal)
+				{
+					playerStatusComponent.ARRoomType = ARRoomType.Normal;
+				}
+				else if (battleCfgId == GlobalSettingCfgCategory.Instance.ARPVECfgId)
+				{
+					playerStatusComponent.ARRoomType = ARRoomType.PVE;
+				}
+				else if (battleCfgId == GlobalSettingCfgCategory.Instance.ARPVPCfgId)
+				{
+					playerStatusComponent.ARRoomType = ARRoomType.PVP;
+				}
+				else if (battleCfgId == GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId)
+				{
+					playerStatusComponent.ARRoomType = ARRoomType.EndlessChallenge;
+				}
+				else
+				{
+					playerStatusComponent.ARRoomType = ARRoomType.Normal;
+				}
 
 				await playerStatusComponent.NoticeClient();
 			}

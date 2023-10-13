@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 using UnityEngine;
@@ -39,11 +40,12 @@ namespace ET.Client
             }
         }
 
-        public static bool ChkIsShowPath(this PathLineRendererComponent self, long playerId, float3 pos)
+        public static bool ChkIsShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId, float3 pos)
         {
-            if (self.lineRenderers.ContainsKey(playerId))
+            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
+            if (self.lineRenderers.ContainsKey(key))
             {
-                LineRenderer lineRenderer = self.lineRenderers[playerId];
+                LineRenderer lineRenderer = self.lineRenderers[key];
                 float3 startPos = lineRenderer.GetPosition(0);
                 if (math.abs(startPos.x - pos.x) < 0.1f && math.abs(startPos.z - pos.z) < 0.1f)
                 {
@@ -54,14 +56,28 @@ namespace ET.Client
             return false;
         }
 
-        public static async ETTask ShowPath(this PathLineRendererComponent self, long playerId, bool canArrive, List<float3> points)
+        public static void ChgCurPlayerShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long playerId, long monsterCallUnitId)
+        {
+            string keyOld = $"{homeTeamFlagType}_{playerId}";
+            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
+            if (self.lineRenderers.ContainsKey(keyOld))
+            {
+                self.lineRenderers[key] = self.lineRenderers[keyOld];
+                self.lineRendererTrans[key] = self.lineRendererTrans[keyOld];
+                self.lineRenderers.Remove(keyOld);
+                self.lineRendererTrans.Remove(keyOld);
+            }
+        }
+
+        public static async ETTask ShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId, bool canArrive, List<float3> points)
         {
             Transform lineRendererTran;
             LineRenderer lineRenderer;
-            if (self.lineRenderers.ContainsKey(playerId))
+            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
+            if (self.lineRenderers.ContainsKey(key))
             {
-                lineRendererTran = self.lineRendererTrans[playerId];
-                lineRenderer = self.lineRenderers[playerId];
+                lineRendererTran = self.lineRendererTrans[key];
+                lineRenderer = self.lineRenderers[key];
             }
             else
             {
@@ -84,8 +100,8 @@ namespace ET.Client
                 lineRendererTran = lineRendererNew.transform;
 
                 lineRenderer = lineRendererNew.gameObject.GetComponentInChildren<LineRenderer>();
-                self.lineRendererTrans.Add(playerId, lineRendererNew.transform);
-                self.lineRenderers.Add(playerId, lineRenderer);
+                self.lineRendererTrans.Add(key, lineRendererNew.transform);
+                self.lineRenderers.Add(key, lineRenderer);
             }
 
             if (points != null && points.Count > 0)

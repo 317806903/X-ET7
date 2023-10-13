@@ -15,6 +15,14 @@ namespace ET.Server
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 			if (roomComponent.ChkIsOwner(playerId))
 			{
+				(bool bRet, string msg) = roomComponent.ChkOwnerStartGame();
+				if (bRet == false)
+				{
+					Log.Error(msg);
+					response.Error = ET.ErrorCode.ERR_LogicError;
+					response.Message = msg;
+					return;
+				}
 				isReady = true;
 			}
 			roomComponent.ChgRoomMemberStatus(playerId, isReady);
@@ -22,7 +30,7 @@ namespace ET.Server
 
 			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, false).Coroutine();
 
-			if (isReady && roomComponent.ChkIsOwner(playerId) && roomComponent.ChkIsAllReady())
+			if (isReady && roomComponent.ChkIsOwner(playerId))
 			{
 				List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
 

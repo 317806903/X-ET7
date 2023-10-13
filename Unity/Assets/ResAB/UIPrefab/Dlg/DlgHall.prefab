@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4379032646043054275}
   - component: {fileID: 431490809594852342}
   - component: {fileID: 8825619471016033154}
+  - component: {fileID: 2684564283171657479}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -231,6 +232,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5237\u65B0\u623F\u95F4\u5217\u8868"
+--- !u!114 &2684564283171657479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613279477379270333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgHall/EGBackGround/E_RefreshRoomList/Text
+  localizeType: 0
 --- !u!1 &1994267609944684781
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,8 +456,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 298.2495, y: 122.65436}
-  m_SizeDelta: {x: 403.0318, y: 129.2987}
+  m_AnchoredPosition: {x: 143.38971, y: 129}
+  m_SizeDelta: {x: 226.9667, y: 163.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6775029770512702063
 CanvasRenderer:
@@ -738,6 +753,7 @@ GameObject:
   - component: {fileID: 8746134623629231619}
   - component: {fileID: 6439153530059990871}
   - component: {fileID: 29426952150966264}
+  - component: {fileID: 5414914594618215115}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -806,6 +822,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u8FD4\u56DE"
+--- !u!114 &5414914594618215115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853399500327262633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgHall/EGBackGround/E_ReturnLogin/Text
+  localizeType: 0
 --- !u!1 &7660831138560550972
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +847,7 @@ GameObject:
   - component: {fileID: 6091122611058534771}
   - component: {fileID: 8407038897176866100}
   - component: {fileID: 3719726565047848299}
+  - component: {fileID: 7454855038667865559}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -885,6 +916,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u521B\u5EFA\u623F\u95F4"
+--- !u!114 &7454855038667865559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660831138560550972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgHall/EGBackGround/E_CreateRoom/Text
+  localizeType: 0
 --- !u!1 &8874840408665117146
 GameObject:
   m_ObjectHideFlags: 0

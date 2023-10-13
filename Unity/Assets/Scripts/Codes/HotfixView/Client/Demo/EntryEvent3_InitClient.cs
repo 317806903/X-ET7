@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using ET.AbilityConfig;
 using UnityEngine;
@@ -29,6 +30,28 @@ namespace ET.Client
             LocalizeComponent.Instance.SwitchLanguage(LanguageType.EN, true);
 
             // 热更流程
+            await ChkHotUpdateAsync(clientScene);
+        }
+
+        public static async ETTask ChkHotUpdateAsync(Scene clientScene)
+        {
+            int retryTimes = 10;
+            while (IsNetworkReachability() == false)
+            {
+                await TimerComponent.Instance.WaitAsync(100);
+                retryTimes--;
+                if (retryTimes == 0)
+                {
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkConnect");
+                    UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return;
+                }
+            }
+
+            // 热更流程
             bool bRet = await HotUpdateAsync(clientScene);
             if (bRet)
             {
@@ -44,6 +67,22 @@ namespace ET.Client
             }
         }
 
+        public static bool IsNetworkReachability()
+        {
+            switch (Application.internetReachability)
+            {
+                case NetworkReachability.ReachableViaLocalAreaNetwork:
+                    //Logger.Log("当前使用的是：WiFi，请放心更新！");
+                    return true;
+                case NetworkReachability.ReachableViaCarrierDataNetwork:
+                    //Logger.Log("当前使用的是移动网络，是否继续更新？");
+                    return true;
+                default:
+                    //Logger.Log("当前没有联网，请您先联网后再进行操作！");
+                    return false;
+            }
+        }
+
         private static async ETTask<bool> HotUpdateAsync(Scene clientScene)
         {
             UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
@@ -56,8 +95,12 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
-                string msg = $"资源更新发生错误:{errorCode}";
-                UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                {
+                    ChkHotUpdateAsync(clientScene).Coroutine();
+                });
                 return false;
             }
 
@@ -66,8 +109,12 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("ResourceComponent.UpdateManifest 出错！{0}".Fmt(errorCode));
-                string msg = $"资源更新发生错误:{errorCode}";
-                UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                {
+                    ChkHotUpdateAsync(clientScene).Coroutine();
+                });
                 return false;
             }
 
@@ -76,8 +123,12 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("ResourceComponent.FsmCreateDownloader 出错！{0}".Fmt(errorCode));
-                string msg = $"资源更新发生错误:{errorCode}";
-                UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                {
+                    ChkHotUpdateAsync(clientScene).Coroutine();
+                });
                 return false;
             }
 
@@ -132,7 +183,7 @@ namespace ET.Client
 
             if (modelChanged || hotfixChanged)
             {
-                string msg = $"更新完成";
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
                 UIManagerHelper.ShowConfirm(clientScene, msg, () =>
                 {
                     ReloadAll(clientScene).Coroutine();

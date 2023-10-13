@@ -45,7 +45,7 @@ namespace ET
 					.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
 					.WithParsed(Game.AddSingleton);
 
-			Game.AddSingleton<CodeLoader>().Start();
+			Game.AddSingleton<ET.CodeLoader>().Start();
 
 #if UNITY_EDITOR
 
@@ -90,7 +90,7 @@ namespace ET
 
 			await MonoResComponent.Instance.InitAsync();
 
-			Game.AddSingleton<CodeLoader>().Start();
+			Game.AddSingleton<ET.CodeLoader>().Start();
 		}
 
 		private void Update()

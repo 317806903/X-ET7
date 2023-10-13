@@ -95,6 +95,7 @@
     <type fullname="ET.ConfigAttribute" preserve="all" />
     <type fullname="ET.ConfigComponent" preserve="all" />
     <type fullname="ET.ConfigComponent/GetAllConfigBytes" preserve="all" />
+    <type fullname="ET.ConfigComponent/GetCodeMode" preserve="all" />
     <type fullname="ET.ConfigComponent/GetOneConfigBytes" preserve="all" />
     <type fullname="ET.ConfigComponent/GetRes" preserve="all" />
     <type fullname="ET.ConfigComponent/GetRouterHttpHostAndPort" preserve="all" />
@@ -203,6 +204,9 @@
     <type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalCameraData" preserve="all" />
   </assembly>
   <assembly fullname="Unity.TextMeshPro">
+    <type fullname="TMPro.TMP_Dropdown" preserve="all" />
+    <type fullname="TMPro.TMP_Dropdown/DropdownEvent" preserve="all" />
+    <type fullname="TMPro.TMP_Dropdown/OptionData" preserve="all" />
     <type fullname="TMPro.TMP_InputField" preserve="all" />
     <type fullname="TMPro.TMP_Text" preserve="all" />
     <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
@@ -309,6 +313,7 @@
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.NetworkReachability" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.PlayerPrefs" preserve="all" />
     <type fullname="UnityEngine.PrimitiveType" preserve="all" />
@@ -357,9 +362,9 @@
     <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
     <type fullname="UnityEngine.UI.Image" preserve="all" />
     <type fullname="UnityEngine.UI.InputField" preserve="all" />
-    <type fullname="UnityEngine.UI.InputField/EndEditEvent" preserve="all" />
     <type fullname="UnityEngine.UI.Selectable" preserve="all" />
     <type fullname="UnityEngine.UI.Slider" preserve="all" />
+    <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="all" />
     <type fullname="UnityEngine.UI.Text" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="all" />
@@ -397,11 +402,8 @@
     <type fullname="System.Convert" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerBrowsableAttribute" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerBrowsableState" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerStepThroughAttribute" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
     <type fullname="System.Func`1" preserve="all" />
@@ -421,7 +423,8 @@
     <type fullname="System.Reflection.DefaultMemberAttribute" preserve="all" />
     <type fullname="System.Reflection.FieldInfo" preserve="all" />
     <type fullname="System.Reflection.MemberInfo" preserve="all" />
-    <type fullname="System.Reflection.PropertyInfo" preserve="all" />
+    <type fullname="System.Reflection.MethodBase" preserve="all" />
+    <type fullname="System.Reflection.MethodInfo" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.AsyncStateMachineAttribute" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.AsyncTaskMethodBuilder" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.CompilationRelaxationsAttribute" preserve="all" />

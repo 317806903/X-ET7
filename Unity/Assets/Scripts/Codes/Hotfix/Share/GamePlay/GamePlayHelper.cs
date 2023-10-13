@@ -143,7 +143,7 @@ namespace ET
 		{
 			Unit unit = UnitHelper_Create.CreateWhenServer_SceneEffect(scene, position, forward);
 
-			GamePlayHelper.AddUnitTeamFlag(unit, TeamFlagType.TeamGlobal1);
+			GamePlayHelper.AddUnitTeamFlag(unit, TeamFlagType.SceneEffect);
 
 			return unit;
 		}
@@ -152,7 +152,7 @@ namespace ET
 		{
 			Unit unit = UnitHelper_Create.CreateWhenServer_NPC(scene, unitCfgId, position, forward);
 
-			GamePlayHelper.AddUnitTeamFlag(unit, TeamFlagType.TeamGlobal1);
+			GamePlayHelper.AddUnitTeamFlag(unit, TeamFlagType.NPC);
 
 			return unit;
 		}
@@ -318,6 +318,13 @@ namespace ET
 			return false;
 		}
 
+		/// <summary>
+		/// 修改player的代币
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <param name="playerId"></param>
+		/// <param name="coinType"></param>
+		/// <param name="chgValue"></param>
 		public static void ChgPlayerCoin(Scene scene, long playerId, CoinType coinType, int chgValue)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
@@ -330,6 +337,21 @@ namespace ET
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 			return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);
+		}
+
+		/// <summary>
+		/// 修改team的代币
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <param name="playerId"></param>
+		/// <param name="coinType"></param>
+		/// <param name="chgValue"></param>
+		public static void ChgTeamCoin(Scene scene, long playerId, CoinType coinType, int chgValue)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
+			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
+			gamePlayPlayerListComponent.ChgTeamCoin(teamFlagType, coinType, chgValue, GetCoinType.Normal);
 		}
 
 	}

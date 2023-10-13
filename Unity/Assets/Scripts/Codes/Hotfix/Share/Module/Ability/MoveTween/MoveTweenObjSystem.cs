@@ -154,7 +154,7 @@ namespace ET.Ability
             {
                 long targetUnitId = self.selectHandle.unitIds[0];
                 targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-                if (UnitHelper.ChkUnitAlive(targetUnit))
+                if (UnitHelper.ChkUnitAlive(targetUnit, true))
                 {
                     dir = targetUnit.Position - unit.Position;
                 }
@@ -247,12 +247,21 @@ namespace ET.Ability
                 {
                     long targetUnitId = self.selectHandle.unitIds[0];
                     Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-                    if (UnitHelper.ChkUnitAlive(targetUnit) == false)
+                    if (UnitHelper.ChkUnitAlive(targetUnit, true))
                     {
-                        self.GetUnit().DestroyWithDeathShow();
-                        return;
+                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        self.lastTargetPosition = targetPosition;
                     }
-                    targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                    else
+                    {
+                        Unit bulletUnit = self.GetUnit();
+                        if (bulletUnit.Position.Equals(self.lastTargetPosition))
+                        {
+                            self.GetUnit().DestroyWithDeathShow();
+                            return;
+                        }
+                        targetPosition = self.lastTargetPosition;
+                    }
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 dotnet publish -r win-x64 --no-self-contained --no-dependencies -c Release
+
 $path = ".\Publish\win-x64"
 Remove-Item $path\Bin\ -Recurse -ErrorAction Ignore
 Copy-Item .\Bin\win-x64\publish -Destination $path\Bin -Recurse -Force
@@ -8,16 +9,6 @@ Remove-Item $path\Config\Json -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\cs -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\c -Recurse -ErrorAction Ignore
 
-$path = ".\Publish\win-x64-Quick"
-Remove-Item $path\Bin\ -Recurse -ErrorAction Ignore
-Copy-Item .\Bin\win-x64\publish -Destination $path\Bin -Recurse -Force
-Remove-Item $path\Bin\ -Recurse -ErrorAction Ignore
-
-Remove-Item $path\Config -Recurse -ErrorAction Ignore
-Copy-Item .\Config -Destination $path\Config  -Recurse -Force
-Remove-Item $path\Config\Json -Recurse -ErrorAction Ignore
-Remove-Item $path\Config\Excel\cs -Recurse -ErrorAction Ignore
-Remove-Item $path\Config\Excel\c -Recurse -ErrorAction Ignore
 
 #---------------------------------
 $path = ".\Publish\win-x64-Quick"
@@ -37,10 +28,7 @@ Copy-Item .\Bin\win-x64\publish\Core.dll -Destination $path\Bin\Core.dll -Recurs
 Copy-Item .\Bin\win-x64\publish\ThirdParty.dll -Destination $path\Bin\ThirdParty.dll -Recurse -Force
 
 Remove-Item $path\Config -Recurse -ErrorAction Ignore
-Copy-Item .\Config -Destination $path\Config  -Recurse -Force
-Remove-Item $path\Config\Json -Recurse -ErrorAction Ignore
-Remove-Item $path\Config\Excel\cs -Recurse -ErrorAction Ignore
-Remove-Item $path\Config\Excel\c -Recurse -ErrorAction Ignore
+Copy-Item .\Config\Excel\s -Destination $path\Config\Excel\s  -Recurse -Force
 
 echo "`n`n=========================Build Server win-x64 Success========================="
 timeout /t 3

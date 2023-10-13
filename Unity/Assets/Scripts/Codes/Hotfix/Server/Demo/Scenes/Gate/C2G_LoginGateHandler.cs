@@ -16,7 +16,7 @@ namespace ET.Server
 				response.Message = "Gate key验证失败!";
 				return;
 			}
-			
+
 			session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
 			PlayerComponent playerComponent = scene.GetComponent<PlayerComponent>();
@@ -31,7 +31,7 @@ namespace ET.Server
 			}
 			else
 			{
-				playerId = Convert.ToInt32(account);
+				playerId = Convert.ToInt64(account);
 				await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);
 				player = playerComponent.GetChild<Player>(playerId);
 				if (player != null)
@@ -51,8 +51,9 @@ namespace ET.Server
 			if (playerStatusComponent == null)
 			{
 				playerStatusComponent = player.AddComponent<PlayerStatusComponent>();
+				playerStatusComponent.ARRoomType = ARRoomType.Normal;
 			}
-			
+
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -88,16 +89,19 @@ namespace ET.Server
 				}
 				playerStatusComponent.RoomId = _R2G_GetRoomIdByPlayer.RoomId;
 			}
-			
+
             player.AddComponent<PlayerSessionComponent>().Session = session;
 			player.AddComponent<MailBoxComponent, MailboxType>(MailboxType.GateSession);
 			await player.AddLocation(LocationType.Player);
-			
+			ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+			oneTypeLocationType.GetOrCreate(playerId);
+
 			session.AddComponent<SessionPlayerComponent>().Player = player;
 
 			response.PlayerId = playerId;
 			response.PlayerGameMode = playerStatusComponent.PlayerGameMode.ToString();
 			response.PlayerStatus = playerStatusComponent.PlayerStatus.ToString();
+			response.ARRoomType = playerStatusComponent.ARRoomType.ToString();
 			response.RoomId = playerStatusComponent.RoomId;
 			await ETTask.CompletedTask;
 		}

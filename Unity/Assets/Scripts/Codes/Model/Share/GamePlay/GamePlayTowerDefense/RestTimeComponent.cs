@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Unity.Mathematics;
 
 namespace ET
@@ -9,5 +11,8 @@ namespace ET
 	{
 		public float duration;
 		public float timeElapsed = 0;
+
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<long, bool> isPlayerReadyForBattle;
 	}
 }

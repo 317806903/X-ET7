@@ -615,6 +615,7 @@ public partial class UICodeSpawner
         WidgetInterfaceList.Add("ToggleGroup");
         WidgetInterfaceList.Add("Toggle");
         WidgetInterfaceList.Add("Dropdown");
+        WidgetInterfaceList.Add("TMPro.TMP_Dropdown");
         WidgetInterfaceList.Add("Slider");
         WidgetInterfaceList.Add("ScrollRect");
         WidgetInterfaceList.Add("Image");

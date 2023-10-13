@@ -5,12 +5,10 @@
 	{
 		protected override async ETTask Run(Session session, M2C_CreateUnits message)
 		{
-			Scene currentScene = session.DomainScene().CurrentScene();
-			UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
+			UnitComponent unitComponent = ET.Client.UnitHelper.GetUnitComponent(session.DomainScene());
 			if (unitComponent == null)
 			{
-				//int i = 6;
-				//return;
+				return;
 			}
 
 			foreach (UnitInfo unitInfo in message.Units)

@@ -22,6 +22,7 @@ namespace ET.Ability
         public float3 forward;
 
         public float3 lastPosition;
+        public float3 lastTargetPosition;
 
         ///<summary>
         ///已经存在了多久了，单位：秒

@@ -15,6 +15,13 @@ namespace ET
             return pathfindingComponent.GetNearNavmeshPos(pos);
         }
 
+        public static float3 GetHitNavmeshPos(Scene scene, float3 pos)
+        {
+            (bool bRet, float3 hitPoint) = OnRaycast(scene, pos + new float3(0, 1, 0), pos + new float3(0, -1, 0));
+
+            return hitPoint;
+        }
+
         public static List<float3> GetArrivePath(Unit unit, float3 startPos, float3 endPos)
         {
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
@@ -23,6 +30,30 @@ namespace ET
                 return null;
             }
             return pathfindingComponent.GetArrivePath(startPos, endPos);
+        }
+
+        public static bool ChkArrive(Unit unit, float3 startPos, float3 endPos)
+        {
+            List<float3> points = ET.RecastHelper.GetArrivePath(unit, startPos, endPos);
+            if (points == null)
+            {
+                return false;
+            }
+            if (points.Count == 0)
+            {
+                return false;
+            }
+            float3 lastPoint = points[points.Count - 1];
+            if (math.abs(endPos.x - lastPoint.x) < 0.3f
+                && math.abs(endPos.y - lastPoint.y) < 0.3f
+                && math.abs(endPos.z - lastPoint.z) < 0.3f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static (bool, float3) OnRaycast(Scene scene, float3 rayStartIn, float3 rayEndIn)

@@ -1,9 +1,26 @@
 ---------这是 prefab中存在, 但是excel中没有配置的项
-DlgGameMode/EGBackGround/E_SingleMapMode/E_SingleMapText	全局地图模式
-DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText	房间模式
-DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText	AR房间模式
+DlgARRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam	切换阵营
+DlgARRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text	选择关卡
+DlgBattleCfgChoose/EGBackGround/E_Sure/ELable_Sure	确定
+DlgBattleCfgChoose/EGBackGround/E_Back/Text	返回
+DlgBattleCfgChoose/EGBackGround/E_Menu/E_GameMode/Text	玩法:
+DlgBattleCfgChoose/EGBackGround/E_Menu/E_TeamMode/Text	组队方式:
+DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime/ELabel_ReadyWhenRestTime	我已准备好
+DlgHall/EGBackGround/E_CreateRoom/Text	创建房间
+DlgHall/EGBackGround/E_ReturnLogin/Text	返回
+DlgHall/EGBackGround/E_RefreshRoomList/Text	刷新房间列表
+DlgLobby/EGBackGround/EButton_ChooseBattleCfg/Text	选择关卡
+DlgLogin/Sprite_BackGround/E_Login_google/Text	谷歌账号登录
+DlgRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam	切换阵营
+DlgRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text	选择关卡
 
 
 ---------这是 excel配置,但是不存在prefab中的项
-DlgGameMode/EGBackGround/E_ReturnLogin/Text	重新登录
-DlgGameMode/EGBackGround/E_ReturnLogin/Text2	重新登录
+DlgARRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus	准备
+DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome	放置大本营
+DlgBattleTowerHUD/E_OperatorMenu/Image/E_TowerName	火焰塔
+DlgRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus	准备
+Canvas (Environment)/Item_Room/ELabel_Content	滑动列表项
+Canvas (Environment)/Item_RoomMember/ELabel_Content_Name	名称
+Canvas (Environment)/Item_RoomMember/EButton_Operator/ELabel_Operator	操作
+Canvas (Environment)/Item_Tower/ELabel_Name	idsuhciud哈哈哈12

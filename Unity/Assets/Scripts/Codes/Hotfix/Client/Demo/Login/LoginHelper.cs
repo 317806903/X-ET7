@@ -48,11 +48,12 @@ namespace ET.Client
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
                     new C2G_LoginGate() { Key = r2CLogin.Key, GateId = r2CLogin.GateId});
 
-                clientScene.GetComponent<PlayerComponent>().MyId = g2CLoginGate.PlayerId;
+                PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
+                playerComponent.MyId = g2CLoginGate.PlayerId;
 
-                clientScene.GetComponent<PlayerComponent>().PlayerGameMode = EnumHelper.FromString<PlayerGameMode>(g2CLoginGate.PlayerGameMode);
-                clientScene.GetComponent<PlayerComponent>().PlayerStatus = EnumHelper.FromString<PlayerStatus>(g2CLoginGate.PlayerStatus);
-                clientScene.GetComponent<PlayerComponent>().RoomId = g2CLoginGate.RoomId;
+                playerComponent.PlayerGameMode = EnumHelper.FromString<PlayerGameMode>(g2CLoginGate.PlayerGameMode);
+                playerComponent.PlayerStatus = EnumHelper.FromString<PlayerStatus>(g2CLoginGate.PlayerStatus);
+                playerComponent.RoomId = g2CLoginGate.RoomId;
 
                 Log.Debug("登陆gate成功!");
 
@@ -127,7 +128,8 @@ namespace ET.Client
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
                     new C2G_LoginGate() { Key = r2CLogin.Key, GateId = r2CLogin.GateId});
 
-                clientScene.GetComponent<PlayerComponent>().MyId = g2CLoginGate.PlayerId;
+                PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
+                playerComponent.MyId = g2CLoginGate.PlayerId;
                 Log.Debug("登陆gate成功!");
 
                 await EventSystem.Instance.PublishAsync(clientScene, new EventType.LoginFinish());

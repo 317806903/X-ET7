@@ -13,7 +13,9 @@ namespace ET.Client
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
 		public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemTowerBuy;
 
-		public Dictionary<string, int> myOwnTowList = new();
+		public bool needResetMyOwnTowList;
+		public List<string> myOwnTowerList = new();
+		public Dictionary<string, int> myOwnTowerDic = new();
 
 		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus;
 		public long curTipTime;

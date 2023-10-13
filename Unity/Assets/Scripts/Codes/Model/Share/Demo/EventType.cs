@@ -56,6 +56,11 @@ namespace ET
         {
         }
 
+        public struct BattleCfgIdChoose
+        {
+            public string gamePlayBattleLevelCfgId;
+        }
+
         public struct BeKickedRoom
         {
         }

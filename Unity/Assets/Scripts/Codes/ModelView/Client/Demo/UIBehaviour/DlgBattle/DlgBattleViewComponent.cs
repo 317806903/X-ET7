@@ -24,23 +24,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image ELoopScrollList_TankImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELoopScrollList_TankImage == null )
-				{
-					this.m_ELoopScrollList_TankImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/MonsterRoot/ELoopScrollList_Tank");
-				}
-				return this.m_ELoopScrollList_TankImage;
-			}
-		}
-
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_TankLoopHorizontalScrollRect
 		{
 			get
@@ -381,10 +364,145 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EGClearRootRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGClearRootRectTransform == null )
+				{
+					this.m_EGClearRootRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "GameObject/EGClearRoot");
+				}
+				return this.m_EGClearRootRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image EGClearRootImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGClearRootImage == null )
+				{
+					this.m_EGClearRootImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/EGClearRoot");
+				}
+				return this.m_EGClearRootImage;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ClearMyTowerButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ClearMyTowerButton == null )
+				{
+					this.m_EButton_ClearMyTowerButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "GameObject/EGClearRoot/EButton_ClearMyTower");
+				}
+				return this.m_EButton_ClearMyTowerButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ClearMyTowerImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ClearMyTowerImage == null )
+				{
+					this.m_EButton_ClearMyTowerImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/EGClearRoot/EButton_ClearMyTower");
+				}
+				return this.m_EButton_ClearMyTowerImage;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ClearAllMonsterButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ClearAllMonsterButton == null )
+				{
+					this.m_EButton_ClearAllMonsterButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "GameObject/EGClearRoot/EButton_ClearAllMonster");
+				}
+				return this.m_EButton_ClearAllMonsterButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ClearAllMonsterImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ClearAllMonsterImage == null )
+				{
+					this.m_EButton_ClearAllMonsterImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/EGClearRoot/EButton_ClearAllMonster");
+				}
+				return this.m_EButton_ClearAllMonsterImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_TipNodeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TipNodeImage == null )
+				{
+					this.m_E_TipNodeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/TipNode/E_TipNode");
+				}
+				return this.m_E_TipNodeImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_TipTextTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TipTextTextMeshProUGUI == null )
+				{
+					this.m_E_TipTextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "GameObject/TipNode/E_TipNode/E_TipText");
+				}
+				return this.m_E_TipTextTextMeshProUGUI;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
-			this.m_ELoopScrollList_TankImage = null;
 			this.m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
 			this.m_E_TankOnceCountTextMeshProUGUI = null;
 			this.m_E_InputFieldTMP_InputField = null;
@@ -405,11 +523,18 @@ namespace ET.Client
 			this.m_EButton_Skill4Button = null;
 			this.m_EButton_Skill4Image = null;
 			this.m_ELabel_Skill4Text = null;
+			this.m_EGClearRootRectTransform = null;
+			this.m_EGClearRootImage = null;
+			this.m_EButton_ClearMyTowerButton = null;
+			this.m_EButton_ClearMyTowerImage = null;
+			this.m_EButton_ClearAllMonsterButton = null;
+			this.m_EButton_ClearAllMonsterImage = null;
+			this.m_E_TipNodeImage = null;
+			this.m_E_TipTextTextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
-		private UnityEngine.UI.Image m_ELoopScrollList_TankImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
 		private TMPro.TextMeshProUGUI m_E_TankOnceCountTextMeshProUGUI = null;
 		private TMPro.TMP_InputField m_E_InputFieldTMP_InputField = null;
@@ -430,6 +555,14 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_Skill4Button = null;
 		private UnityEngine.UI.Image m_EButton_Skill4Image = null;
 		private UnityEngine.UI.Text m_ELabel_Skill4Text = null;
+		private UnityEngine.RectTransform m_EGClearRootRectTransform = null;
+		private UnityEngine.UI.Image m_EGClearRootImage = null;
+		private UnityEngine.UI.Button m_EButton_ClearMyTowerButton = null;
+		private UnityEngine.UI.Image m_EButton_ClearMyTowerImage = null;
+		private UnityEngine.UI.Button m_EButton_ClearAllMonsterButton = null;
+		private UnityEngine.UI.Image m_EButton_ClearAllMonsterImage = null;
+		private UnityEngine.UI.Image m_E_TipNodeImage = null;
+		private TMPro.TextMeshProUGUI m_E_TipTextTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

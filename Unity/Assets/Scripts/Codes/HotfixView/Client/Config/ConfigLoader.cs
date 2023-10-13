@@ -107,6 +107,7 @@ namespace ET.Client
         {
             ByteBuf configBytes;
             string configName = args.ConfigName;
+            string configFullName = args.ConfigFullName;
             bool isReadEditor = false;
             if (Define.IsEditor)
             {
@@ -155,7 +156,7 @@ namespace ET.Client
                 {
                     configFilePath = $"../Config/Excel/{ct}/{Options.Instance.StartConfig}/{configName.ToLower()}.bytes";
                 }
-                else if(configName.StartsWith("ET.AbilityConfig."))
+                else if(configFullName.StartsWith("ET.AbilityConfig."))
                 {
                     configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configName}.bytes";
                 }
@@ -184,6 +185,15 @@ namespace ET.Client
             }
 
             return configBytes;
+        }
+    }
+
+    [Invoke]
+    public class GetCodeMode: AInvokeHandler<ConfigComponent.GetCodeMode, string>
+    {
+        public override string Handle(ConfigComponent.GetCodeMode args)
+        {
+            return GlobalConfig.Instance.CodeMode.ToString();
         }
     }
 }

@@ -18,7 +18,6 @@
         public const int BattleTowerFrameTimer = 205;
         public const int BattleTowerARFrameTimer = 206;
         public const int GamePlayChkMonsterWaveCallAllClear = 207;
-        public const int GamePlayChkHomeAlive = 208;
         public const int HallTimer = 209;
         public const int LoadingTimer = 210;
     }

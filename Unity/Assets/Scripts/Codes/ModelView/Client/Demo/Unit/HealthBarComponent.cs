@@ -8,5 +8,6 @@ namespace ET.Client
         public GameObject go { get; set; }
         public Transform healthBar { get; set; }
         public Transform backgroundBar { get; set; }
+        public Transform HpValueShowTrans { get; set; }
     }
 }

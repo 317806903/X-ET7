@@ -9,13 +9,13 @@ namespace ET
             {
                 case ConsoleMode.ReloadDll:
                     contex.Parent.RemoveComponent<ModeContex>();
-                    
-                    CodeLoader.Instance.LoadHotfix();
-                    
+
+                    ET.CodeLoader.Instance.LoadHotfix();
+
                     EventSystem.Instance.Load();
                     break;
             }
-            
+
             await ETTask.CompletedTask;
         }
     }

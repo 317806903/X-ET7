@@ -6,13 +6,13 @@ namespace ET
     public interface IConfigCategory
     {
         void Resolve(Dictionary<string, IConfigSingleton> _tables);
-        
+
         void TranslateText(System.Func<string, string, string> translator);
     }
 
     public interface IConfigSingleton: IConfigCategory, ISingleton
     {
-        
+
     }
     public abstract class ConfigSingleton<T>: IConfigSingleton where T: ConfigSingleton<T>
     {
@@ -45,10 +45,10 @@ namespace ET
                 return;
             }
             this.isDisposed = true;
-            
+
             T t = instance;
             instance = null;
-            t.Dispose();
+            t?.Dispose();
         }
 
         bool ISingleton.IsDisposed()
@@ -59,11 +59,11 @@ namespace ET
         public virtual void Dispose()
         {
         }
-        
+
         public virtual void TrimExcess()
         {
         }
-    
+
         public virtual string ConfigName()
         {
             return string.Empty;

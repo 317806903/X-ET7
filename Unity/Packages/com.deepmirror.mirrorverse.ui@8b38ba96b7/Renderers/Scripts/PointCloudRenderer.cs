@@ -18,8 +18,8 @@ namespace MirrorVerse.UI.Renderers
 
         private float _shaderTimestampSec;
         private float _lastRenderPointTimestamp;
-        private Queue<MeshProperties> _queuedPoints;
-        private List<MeshProperties> _allPoints;
+        private Queue<MeshProperties> _queuedPoints = new();
+        private List<MeshProperties> _allPoints = new();
         private ComputeBuffer _meshPropertiesBuffer;
         private ComputeBuffer _argsBuffer;
         private int _currentBatch;
@@ -53,8 +53,8 @@ namespace MirrorVerse.UI.Renderers
             CreateDisk();
 
             // Start with no points
-            _allPoints = new List<MeshProperties>();
-            _queuedPoints = new Queue<MeshProperties>();
+            _allPoints.Clear();
+            _queuedPoints.Clear();
             _displayBounds = new Bounds(Vector3.zero, Vector3.one * options.drawBounds);
 
             options.pointCloudMaterial.SetFloat("_fadeInDuration", options.fadeInDuration);
@@ -80,7 +80,7 @@ namespace MirrorVerse.UI.Renderers
                 // Disk will fade to given opacity or transparent, and infate to a given scale.
                 options.pointCloudMaterial.SetFloat("_opacity", options.opacity);
                 options.pointCloudMaterial.SetFloat("_inflationScale", options.inflationScale);
-
+                
                 AilgnCameraRotation();
 
                 Graphics.DrawMeshInstancedIndirect(_mesh, 0, options.pointCloudMaterial, _displayBounds, _argsBuffer);
@@ -128,7 +128,7 @@ namespace MirrorVerse.UI.Renderers
                 newColor = options.primaryColor;
             }
             else
-            {
+            { 
                 // Otherwise pick a color from the palette.
                 int index = _colorsMap.Keys.Count % options.paletteColors.Length;
                 newColor = options.paletteColors[index];
@@ -159,26 +159,17 @@ namespace MirrorVerse.UI.Renderers
             if (_meshPropertiesBuffer != null)
             {
                 _meshPropertiesBuffer.Release();
-                _meshPropertiesBuffer = null;
             }
+            _meshPropertiesBuffer = null;
 
             if (_argsBuffer != null)
             {
                 _argsBuffer.Release();
-                _argsBuffer = null;
             }
+            _argsBuffer = null;
 
-            if (_allPoints != null)
-            {
-                _allPoints.Clear();
-                _allPoints = null;
-            }
-
-            if (_queuedPoints != null)
-            {
-                _queuedPoints.Clear();
-                _queuedPoints = null;
-            }
+            _allPoints.Clear();
+            _queuedPoints.Clear();
 
             if (_cameraBackgroundMask != null)
             {
@@ -243,7 +234,7 @@ namespace MirrorVerse.UI.Renderers
             // Clean old points those already faded out.
             _allPoints.RemoveAll((point) =>
             {
-                // Remove faded out points (has exit time longer than a given duration).
+                // Remove faded out points (has exit time longer than a given duration). 
                 return point.exitTime > 0 && _shaderTimestampSec - point.exitTime > options.fadeOutDuration;
             });
 
@@ -382,7 +373,7 @@ namespace MirrorVerse.UI.Renderers
         {
             return options.pointSize;
         }
-
+        
         private void CreateDisk()
         {
             Vector3[] vertices = GetCircumferencePoints(options.diskSides, GetPointSize(), Vector3.zero).ToArray();

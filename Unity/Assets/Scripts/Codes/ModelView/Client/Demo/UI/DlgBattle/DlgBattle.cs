@@ -15,6 +15,7 @@ namespace ET.Client
 
 		public List<string> towerList = new List<string>()
 		{
+			"TowCallMonster_1",
 			"Tow5_1",
 			"Tow5_2",
 			"Tow5_3",
@@ -41,7 +42,7 @@ namespace ET.Client
 			"Tow4_3",
 		};
 
-		public List<string> tankList = new List<string>()
+		public List<string> monsterList = new List<string>()
 		{
 			"Monster1_1",
 			"Monster2_1",

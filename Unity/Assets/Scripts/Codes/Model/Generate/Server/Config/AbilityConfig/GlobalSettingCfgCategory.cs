@@ -35,6 +35,18 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
      public int TestGlobalSetting2 => _data.TestGlobalSetting2;
      public string TestGlobalSetting3 => _data.TestGlobalSetting3;
      public System.Collections.Generic.List<string> TestGlobalSetting4 => _data.TestGlobalSetting4;
+    /// <summary>
+    /// AR模式PVE的cfgId
+    /// </summary>
+     public string ARPVECfgId => _data.ARPVECfgId;
+    /// <summary>
+    /// AR模式PVP的cfgId
+    /// </summary>
+     public string ARPVPCfgId => _data.ARPVPCfgId;
+    /// <summary>
+    /// AR模式PVE无尽模式的cfgId
+    /// </summary>
+     public string AREndlessChallengeCfgId => _data.AREndlessChallengeCfgId;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

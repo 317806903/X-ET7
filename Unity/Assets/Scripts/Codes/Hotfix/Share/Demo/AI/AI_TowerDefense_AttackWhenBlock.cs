@@ -49,7 +49,7 @@ namespace ET
             {
                 return null;
             }
-            Unit unitHeadQuarter = gamePlayTowerDefenseComponent.GetHomeUnit();
+            Unit unitHeadQuarter = gamePlayTowerDefenseComponent.GetHomeUnit(unit);
             return unitHeadQuarter;
         }
 

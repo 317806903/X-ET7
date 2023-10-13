@@ -5,6 +5,7 @@
 	{
 		public PlayerGameMode PlayerGameMode { get; set; }
 		public PlayerStatus PlayerStatus { get; set; }
+		public ARRoomType ARRoomType { get; set; }
 		public long RoomId { get; set; }
 	}
 }

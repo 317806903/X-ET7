@@ -401,7 +401,7 @@ namespace ET
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.isShowDebugRoot = true;
                 productName = $"ARGame_Local";
-                packageName = $"com.dm.ARGame_Local";
+                packageName = $"com.dm.ARGameLocal";
             }
             else if(packName == PackName.InNet148)
             {
@@ -412,7 +412,7 @@ namespace ET
                 ResConfig.Instance.RouterHttpPort = 30300;
                 ResConfig.Instance.isShowDebugRoot = true;
                 productName = $"ARGame_InNet148";
-                packageName = $"com.dm.ARGame_InNet148";
+                packageName = $"com.dm.ARGameInNet148";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.OutNet_CN)
@@ -424,7 +424,7 @@ namespace ET
                 ResConfig.Instance.RouterHttpPort = 30300;
                 ResConfig.Instance.isShowDebugRoot = false;
                 productName = $"ARGame_OutNet_CN";
-                packageName = $"com.dm.ARGame_CN";
+                packageName = $"com.dm.ARGameCN";
             }
             else if(packName == PackName.InNetZpb)
             {
@@ -435,7 +435,7 @@ namespace ET
                 ResConfig.Instance.RouterHttpPort = 30300;
                 ResConfig.Instance.isShowDebugRoot = false;
                 productName = $"ARGame_InNetZpb";
-                packageName = $"com.dm.ARGame_InNetZpb";
+                packageName = $"com.dm.ARGameInNetZpb";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.OutNet_EN)
@@ -447,7 +447,7 @@ namespace ET
                 ResConfig.Instance.RouterHttpPort = 30300;
                 ResConfig.Instance.isShowDebugRoot = false;
                 productName = $"ARGame_OutNet_EN";
-                packageName = $"com.dm.ARGame_EN";
+                packageName = $"com.dm.ARGameEN";
             }
 
             // // 设置签名

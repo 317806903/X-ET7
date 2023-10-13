@@ -235,6 +235,30 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image EImage_TeamImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EImage_TeamImage == null )
+					{
+						this.m_EImage_TeamImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+					}
+					return this.m_EImage_TeamImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+				}
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EButton_IconButton = null;
@@ -246,6 +270,7 @@ namespace ET.Client
 			this.m_EButton_OperatorButton = null;
 			this.m_EButton_OperatorImage = null;
 			this.m_ELabel_OperatorText = null;
+			this.m_EImage_TeamImage = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
@@ -259,6 +284,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_OperatorButton = null;
 		private UnityEngine.UI.Image m_EButton_OperatorImage = null;
 		private UnityEngine.UI.Text m_ELabel_OperatorText = null;
+		private UnityEngine.UI.Image m_EImage_TeamImage = null;
 		public Transform uiTransform = null;
 	}
 }

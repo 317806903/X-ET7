@@ -12,6 +12,7 @@ namespace ET
 		{
 			protected override void Awake(RestTimeComponent self)
 			{
+				self.isPlayerReadyForBattle = new();
 			}
 		}
 
@@ -20,6 +21,7 @@ namespace ET
 		{
 			protected override void Destroy(RestTimeComponent self)
 			{
+				self.isPlayerReadyForBattle.Clear();
 			}
 		}
 
@@ -42,6 +44,31 @@ namespace ET
 		{
 			self.duration = duration;
 			self.timeElapsed = 0;
+
+			self.isPlayerReadyForBattle.Clear();
+			List<long> playerList = self.GetGamePlayTowerDefense().GetPlayerList();
+			foreach (long playerId in playerList)
+			{
+				self.isPlayerReadyForBattle[playerId] = false;
+			}
+		}
+
+		public static GamePlayComponent GetGamePlay(this RestTimeComponent self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			GamePlayComponent gamePlayComponent = gamePlayTowerDefenseComponent.GetParent<GamePlayComponent>();
+			return gamePlayComponent;
+		}
+
+		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this RestTimeComponent self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			return gamePlayTowerDefenseComponent;
+		}
+
+		public static void SetReadyWhenRestTime(this RestTimeComponent self, long playerId)
+		{
+			self.isPlayerReadyForBattle[playerId] = true;
 		}
 
 		public static void FixedUpdate(this RestTimeComponent self, float fixedDeltaTime)
@@ -53,9 +80,26 @@ namespace ET
 
 			self.timeElapsed += fixedDeltaTime;
 
+			bool needTransToBattle = false;
 			if (self.duration <= 0)
 			{
-				self.GetParent<GamePlayTowerDefenseComponent>().TransToBattle().Coroutine();
+				needTransToBattle = true;
+			}
+			else
+			{
+				needTransToBattle = true;
+				foreach (var isPlayerReady in self.isPlayerReadyForBattle)
+				{
+					if (isPlayerReady.Value == false)
+					{
+						needTransToBattle = false;
+						break;
+					}
+				}
+			}
+			if (needTransToBattle)
+			{
+				self.GetGamePlayTowerDefense().TransToBattle().Coroutine();
 				return;
 			}
 		}

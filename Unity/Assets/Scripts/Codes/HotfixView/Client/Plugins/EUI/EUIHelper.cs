@@ -267,6 +267,15 @@ namespace ET.Client
             }
         }
 
+        public static void AddListener(this TMPro.TMP_Dropdown dropdown, UnityAction<int> valueChgEventHandler)
+        {
+            dropdown.onValueChanged.RemoveAllListeners();
+            if (valueChgEventHandler != null)
+            {
+                dropdown.onValueChanged.AddListener(valueChgEventHandler);
+            }
+        }
+
         public static void AddListener(this Button button, UnityAction clickEventHandler)
         {
             button.onClick.RemoveAllListeners();

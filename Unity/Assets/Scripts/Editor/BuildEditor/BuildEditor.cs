@@ -94,7 +94,7 @@ namespace ET
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField("Code Compile：", GUILayout.Width(200f));
-                if (GUILayout.Button("Reset Local Editor"))
+                if (GUILayout.Button("ResetLocalEditor"))
                 {
                     if (this.globalConfig.CodeMode != CodeMode.ClientServer)
                     {
@@ -117,6 +117,10 @@ namespace ET
 
                     EditorSceneManager.OpenScene("Assets/ResAB/Scene/Init.unity");
                     BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", true);
+
+                    var tmp = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("ProjectSettings/ProjectSettings.asset");
+                    EditorUtility.SetDirty(tmp);
+                    AssetDatabase.SaveAssets();
 
                     this.Refresh();
                 }
@@ -320,7 +324,7 @@ namespace ET
             if (File.Exists(configFilePath) == false)
             {
                 string err = $"--------configFilePath[{configFilePath}] not exists";
-                Log.Error(err);
+                Debug.LogError(err);
                 return err;
             }
             return File.ReadAllText(configFilePath);
@@ -349,7 +353,8 @@ namespace ET
         {
             if (Define.EnableCodes)
             {
-                throw new Exception("now in ENABLE_CODES mode, do not need Build!");
+                Debug.LogError("now in ENABLE_CODES mode, do not need Build!");
+                return;
             }
 
             await ET.BuildHelper.BuildModel();
@@ -363,7 +368,8 @@ namespace ET
         {
             if (Define.EnableCodes)
             {
-                throw new Exception("now in ENABLE_CODES mode, do not need Build!");
+                Debug.LogError("now in ENABLE_CODES mode, do not need Build!");
+                return;
             }
 
             await ET.BuildHelper.BuildHotfix();
@@ -376,7 +382,8 @@ namespace ET
         {
             if (Define.EnableCodes)
             {
-                throw new Exception("now in ENABLE_CODES mode, do not need Build!");
+                Debug.LogError("now in ENABLE_CODES mode, do not need Build!");
+                return;
             }
 
             await ET.BuildHelper.BuildModelAndHotfix();

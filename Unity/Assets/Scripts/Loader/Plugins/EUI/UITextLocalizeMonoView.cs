@@ -28,14 +28,16 @@ public class UITextLocalizeMonoView: MonoBehaviour
         if (this.mText != null)
         {
             this.textDefaultValue = this.mText.text;
+            this.mText.text = "";
         }
         if (this.mTextMesh != null)
         {
             this.textDefaultValue = this.mTextMesh.text;
+            this.mTextMesh.text = "";
         }
 
-        this.args = null;
-        this.GetTextKeyValue = null;
+        //this.args = null;
+        //this.GetTextKeyValue = null;
     }
 
     private void Start()

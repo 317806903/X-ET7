@@ -17,7 +17,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     public TowerDefense_MonsterCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Type = _buf.ReadString();
+        Type = (MonsterType)_buf.ReadInt();
         Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
         Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         UnitId = _buf.ReadString();
@@ -37,7 +37,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// <summary>
     /// 类型
     /// </summary>
-    public string Type { get; private set; }
+    public MonsterType Type { get; private set; }
     public string Name { get; private set; }
     public string Name_l10n_key { get; }
     public string Desc { get; private set; }

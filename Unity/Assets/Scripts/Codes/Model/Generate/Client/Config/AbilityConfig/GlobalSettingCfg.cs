@@ -20,6 +20,9 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         TestGlobalSetting2 = _buf.ReadInt();
         TestGlobalSetting3 = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TestGlobalSetting4 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TestGlobalSetting4.Add(_e0);}}
+        ARPVECfgId = _buf.ReadString();
+        ARPVPCfgId = _buf.ReadString();
+        AREndlessChallengeCfgId = _buf.ReadString();
         PostInit();
     }
 
@@ -38,6 +41,18 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public int TestGlobalSetting2 { get; private set; }
     public string TestGlobalSetting3 { get; private set; }
     public System.Collections.Generic.List<string> TestGlobalSetting4 { get; private set; }
+    /// <summary>
+    /// AR模式PVE的cfgId
+    /// </summary>
+    public string ARPVECfgId { get; private set; }
+    /// <summary>
+    /// AR模式PVP的cfgId
+    /// </summary>
+    public string ARPVPCfgId { get; private set; }
+    /// <summary>
+    /// AR模式PVE无尽模式的cfgId
+    /// </summary>
+    public string AREndlessChallengeCfgId { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -58,6 +73,9 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "TestGlobalSetting2:" + TestGlobalSetting2 + ","
         + "TestGlobalSetting3:" + TestGlobalSetting3 + ","
         + "TestGlobalSetting4:" + Bright.Common.StringUtil.CollectionToString(TestGlobalSetting4) + ","
+        + "ARPVECfgId:" + ARPVECfgId + ","
+        + "ARPVPCfgId:" + ARPVPCfgId + ","
+        + "AREndlessChallengeCfgId:" + AREndlessChallengeCfgId + ","
         + "}";
     }
     

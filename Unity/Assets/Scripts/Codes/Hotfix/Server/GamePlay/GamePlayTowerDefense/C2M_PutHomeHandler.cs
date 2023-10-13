@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.Ability;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -19,18 +20,24 @@ namespace ET.Server
 
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
-			gamePlayTowerDefenseComponent.RemoveComponent<PutHomeComponent>();
-			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.AddComponent<PutHomeComponent>();
-			//if (gamePlayComponent.isAR)
+			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+			bool canPut = putHomeComponent.ChkPosition(pos);
+			if (canPut == false)
 			{
-				gamePlayComponent.ResetPlayerBirthPos(pos);
+				response.Error = ErrorCode.ERR_LogicError;
+				response.Message = "当前放置位置 没法连通大本营,请重新选位置";
 			}
-			putHomeComponent.Init(unitCfgId, pos);
-			gamePlayTowerDefenseComponent.DealFriendTeamFlagType();
-			await gamePlayTowerDefenseComponent.TransToPutMonsterPoint();
+			else
+			{
+				//if (gamePlayComponent.isAR)
+				{
+					TeamFlagType playerTeamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
+					gamePlayComponent.ResetPlayerBirthPos(playerTeamFlagType, pos);
+				}
+				putHomeComponent.InitHomeByPlayer(playerId, unitCfgId, pos);
+			}
 
 			await ETTask.CompletedTask;
 		}
-
 	}
 }

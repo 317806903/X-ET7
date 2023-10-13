@@ -28,11 +28,34 @@ namespace ET
 			}
 		}
 
-		public static void Init(this PutMonsterCallComponent self, long playerId, string unitCfgId, float3 monsterCallPos)
+		public static void Init(this PutMonsterCallComponent self, long playerId, string unitCfgId, float3 monsterCallPos, float3 forward)
 		{
+
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+			TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetMonsterTeamFlagTypeByPlayer(playerId);
+
 			self.MonsterCallPos[playerId] = monsterCallPos;
-			Unit monsterCallUnit = self.CreateMonsterCall(unitCfgId, monsterCallPos);
+			Unit monsterCallUnit = self.CreateMonsterCall(teamFlagType, unitCfgId, monsterCallPos, forward);
 			self.MonsterCallUnitId[playerId] = monsterCallUnit.Id;
+
+			self.ChkNextStep();
+		}
+
+		public static void InitWhenPVP(this PutMonsterCallComponent self, float3 midPos)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+
+			TeamFlagType teamFlagType = TeamFlagType.Monster1;
+			string unitCfgId = "Unit_MonsterCall";
+			float3 monsterCallPos = midPos;
+			float3 forward = new float3(0, 0, 1);
+			Unit monsterCallUnit = self.CreateMonsterCall(teamFlagType, unitCfgId, monsterCallPos, forward);
+			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
+			foreach (long playerId in playerList)
+			{
+				self.MonsterCallPos[playerId] = monsterCallPos;
+				self.MonsterCallUnitId[playerId] = monsterCallUnit.Id;
+			}
 
 			self.ChkNextStep();
 		}
@@ -62,9 +85,15 @@ namespace ET
 			gamePlayTowerDefenseComponent.Start();
 		}
 
-		public static Unit CreateMonsterCall(this PutMonsterCallComponent self, string unitCfgId, float3 monsterCallPos)
+		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this PutMonsterCallComponent self)
 		{
-			return GamePlayTowerDefenseHelper.CreateMonsterCall(self.DomainScene(), unitCfgId, monsterCallPos);
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			return gamePlayTowerDefenseComponent;
+		}
+
+		public static Unit CreateMonsterCall(this PutMonsterCallComponent self, TeamFlagType teamFlagType, string unitCfgId, float3 monsterCallPos, float3 forward)
+		{
+			return GamePlayTowerDefenseHelper.CreateMonsterCall(self.DomainScene(), unitCfgId, monsterCallPos, forward, teamFlagType);
 		}
 
 		public static float3 GetPosition(this PutMonsterCallComponent self, long playerId)

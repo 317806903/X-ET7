@@ -13,8 +13,7 @@ namespace ET
 		PutMonsterPoint,
 		RestTime,
 		InTheBattle,
-		GameSuccess,
-		GameFailed,
+		GameEnd,
 	}
 
 	[ComponentOf(typeof(GamePlayComponent))]

@@ -41,7 +41,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_RoomLevelChooseButton
+		public UnityEngine.UI.Button E_SureButton
 		{
 			get
 			{
@@ -50,15 +50,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_RoomLevelChooseButton == null )
+				if( this.m_E_SureButton == null )
 				{
-					this.m_E_RoomLevelChooseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_RoomLevelChoose");
+					this.m_E_SureButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_Sure");
 				}
-				return this.m_E_RoomLevelChooseButton;
+				return this.m_E_SureButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_RoomLevelChooseImage
+		public UnityEngine.UI.Image E_SureImage
 		{
 			get
 			{
@@ -67,15 +67,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_RoomLevelChooseImage == null )
+				if( this.m_E_SureImage == null )
 				{
-					this.m_E_RoomLevelChooseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_RoomLevelChoose");
+					this.m_E_SureImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_Sure");
 				}
-				return this.m_E_RoomLevelChooseImage;
+				return this.m_E_SureImage;
 			}
 		}
 
-		public UnityEngine.UI.Text ELable_RoomLevelChooseText
+		public UnityEngine.UI.Text ELable_SureText
 		{
 			get
 			{
@@ -84,11 +84,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELable_RoomLevelChooseText == null )
+				if( this.m_ELable_SureText == null )
 				{
-					this.m_ELable_RoomLevelChooseText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_RoomLevelChoose/ELable_RoomLevelChoose");
+					this.m_ELable_SureText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_Sure/ELable_Sure");
 				}
-				return this.m_ELable_RoomLevelChooseText;
+				return this.m_ELable_SureText;
 			}
 		}
 
@@ -137,9 +137,26 @@ namespace ET.Client
 				}
 				if( this.m_ELoopScrollList_ItemLoopHorizontalScrollRect == null )
 				{
-					this.m_ELoopScrollList_ItemLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "EGBackGround/RoomLevelChooseList/ELoopScrollList_Item");
+					this.m_ELoopScrollList_ItemLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "EGBackGround/E_BattleChooseList/ELoopScrollList_Item");
 				}
 				return this.m_ELoopScrollList_ItemLoopHorizontalScrollRect;
+			}
+		}
+
+		public TMPro.TMP_Dropdown E_DropdownGameModeTMP_Dropdown
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_DropdownGameModeTMP_Dropdown == null )
+				{
+					this.m_E_DropdownGameModeTMP_Dropdown = UIFindHelper.FindDeepChild<TMPro.TMP_Dropdown>(this.uiTransform.gameObject, "EGBackGround/E_Menu/E_GameMode/E_DropdownGameMode");
+				}
+				return this.m_E_DropdownGameModeTMP_Dropdown;
 			}
 		}
 
@@ -157,6 +174,23 @@ namespace ET.Client
 					this.m_E_DropdownGameModeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_Menu/E_GameMode/E_DropdownGameMode");
 				}
 				return this.m_E_DropdownGameModeImage;
+			}
+		}
+
+		public TMPro.TMP_Dropdown E_DropdownTeamModeTMP_Dropdown
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_DropdownTeamModeTMP_Dropdown == null )
+				{
+					this.m_E_DropdownTeamModeTMP_Dropdown = UIFindHelper.FindDeepChild<TMPro.TMP_Dropdown>(this.uiTransform.gameObject, "EGBackGround/E_Menu/E_TeamMode/E_DropdownTeamMode");
+				}
+				return this.m_E_DropdownTeamModeTMP_Dropdown;
 			}
 		}
 
@@ -181,26 +215,30 @@ namespace ET.Client
 		{
 			this.m_EGBackGroundRectTransform = null;
 			this.m_EGBackGroundImage = null;
-			this.m_E_RoomLevelChooseButton = null;
-			this.m_E_RoomLevelChooseImage = null;
-			this.m_ELable_RoomLevelChooseText = null;
+			this.m_E_SureButton = null;
+			this.m_E_SureImage = null;
+			this.m_ELable_SureText = null;
 			this.m_E_BackButton = null;
 			this.m_E_BackImage = null;
 			this.m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
+			this.m_E_DropdownGameModeTMP_Dropdown = null;
 			this.m_E_DropdownGameModeImage = null;
+			this.m_E_DropdownTeamModeTMP_Dropdown = null;
 			this.m_E_DropdownTeamModeImage = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.RectTransform m_EGBackGroundRectTransform = null;
 		private UnityEngine.UI.Image m_EGBackGroundImage = null;
-		private UnityEngine.UI.Button m_E_RoomLevelChooseButton = null;
-		private UnityEngine.UI.Image m_E_RoomLevelChooseImage = null;
-		private UnityEngine.UI.Text m_ELable_RoomLevelChooseText = null;
+		private UnityEngine.UI.Button m_E_SureButton = null;
+		private UnityEngine.UI.Image m_E_SureImage = null;
+		private UnityEngine.UI.Text m_ELable_SureText = null;
 		private UnityEngine.UI.Button m_E_BackButton = null;
 		private UnityEngine.UI.Image m_E_BackImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
+		private TMPro.TMP_Dropdown m_E_DropdownGameModeTMP_Dropdown = null;
 		private UnityEngine.UI.Image m_E_DropdownGameModeImage = null;
+		private TMPro.TMP_Dropdown m_E_DropdownTeamModeTMP_Dropdown = null;
 		private UnityEngine.UI.Image m_E_DropdownTeamModeImage = null;
 		public Transform uiTransform = null;
 	}

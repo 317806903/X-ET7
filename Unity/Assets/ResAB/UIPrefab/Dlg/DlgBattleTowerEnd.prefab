@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 2517986543158485764}
   - component: {fileID: 2670726080231138304}
   - component: {fileID: 7433490860126563247}
+  - component: {fileID: 5950738302534699133}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -200,6 +201,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9996\u9875"
+--- !u!114 &5950738302534699133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388943785123844808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text
+  localizeType: 0
 --- !u!1 &517840168276600170
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +347,7 @@ GameObject:
   - component: {fileID: 774834193162734079}
   - component: {fileID: 4648902239632175771}
   - component: {fileID: 3502537096325886067}
+  - component: {fileID: 5305159528474535391}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -400,6 +416,96 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u56DE\u5230\u623F\u95F4"
+--- !u!114 &5305159528474535391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636245754066871889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text
+  localizeType: 0
+--- !u!1 &669248354599864547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 965309931863134996}
+  - component: {fileID: 502329029041395259}
+  - component: {fileID: 1072116381056490896}
+  m_Layer: 5
+  m_Name: E_Effect_EndlessChallenge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &965309931863134996
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669248354599864547}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2274150808632254748}
+  m_Father: {fileID: 5685155911798390545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &502329029041395259
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669248354599864547}
+  m_CullTransparentMesh: 1
+--- !u!114 &1072116381056490896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669248354599864547}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1205800056654486561
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +518,7 @@ GameObject:
   - component: {fileID: 4851244282595971270}
   - component: {fileID: 6015190130162346471}
   m_Layer: 5
-  m_Name: E_Effect
+  m_Name: E_Effect_PVP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,6 +615,7 @@ RectTransform:
   m_Children:
   - {fileID: 7391384699254026497}
   - {fileID: 1919778718963797534}
+  - {fileID: 965309931863134996}
   - {fileID: 1202007268634391348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -654,6 +761,7 @@ GameObject:
   - component: {fileID: 6148279262274527433}
   - component: {fileID: 193865902845164151}
   - component: {fileID: 4368763636457293908}
+  - component: {fileID: 5244193969060483758}
   m_Layer: 0
   m_Name: ELabel_GameEnd
   m_TagString: Untagged
@@ -722,6 +830,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u6218\u6597\u7ED3\u675F:"
+--- !u!114 &5244193969060483758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4028835213684581631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgBattleTowerEnd/E_Root/EButton_GameEnd/ELabel_GameEnd
+  localizeType: 0
 --- !u!1 &8460884292762710836
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1202007268634391348}
   m_Layer: 5
-  m_Name: E_Effect_Model
+  m_Name: E_Effect_PVE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,6 +928,7 @@ GameObject:
   - component: {fileID: 8085967931054672787}
   - component: {fileID: 269348254064432470}
   - component: {fileID: 1520007683530792332}
+  - component: {fileID: 3462540037758359417}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -874,6 +997,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9000\u51FA\u6218\u6597"
+--- !u!114 &3462540037758359417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759850300361946563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text
+  localizeType: 0
 --- !u!1 &8765509357299792469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1261,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1202007268634391348}
     m_Modifications:
+    - target: {fileID: 760148671632293079, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1175018704405582573, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_name
+      objectReference: {fileID: 0}
     - target: {fileID: 2130241632310351126, guid: 99ff55cc6a9a70b4da1470accb57334b,
         type: 3}
       propertyPath: m_Name
@@ -1134,10 +1281,52 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2337122428815583585, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards
+        (1)/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527145178096343301, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (1)/Item_TowerBuy/1EButton_name
+      objectReference: {fileID: 0}
     - target: {fileID: 2796732728936357292, guid: 99ff55cc6a9a70b4da1470accb57334b,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168029033645855328, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (2)/Item_TowerBuy/1EButton_name
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545757763101375578, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (2)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039897809745623753, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final
+        (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165881741760689983, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (1)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497716644751237774, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards
+        (1)/Card/Effect_Card1/Text (TMP)
       objectReference: {fileID: 0}
     - target: {fileID: 4504664946973269060, guid: 99ff55cc6a9a70b4da1470accb57334b,
         type: 3}
@@ -1158,6 +1347,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -277
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030345463996216105, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423771341792527105, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/txt
       objectReference: {fileID: 0}
     - target: {fileID: 6053853270698689070, guid: 99ff55cc6a9a70b4da1470accb57334b,
         type: 3}
@@ -1284,6 +1483,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -277
       objectReference: {fileID: 0}
+    - target: {fileID: 6614478944514685126, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Text
+        (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949829760063387723, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (2)/Text (TMP)
+      objectReference: {fileID: 0}
     - target: {fileID: 6960894633836054145, guid: 99ff55cc6a9a70b4da1470accb57334b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1329,6 +1540,47 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -277
       objectReference: {fileID: 0}
+    - target: {fileID: 7536740858898936622, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (1)/Text (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7612487952807411444, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006525798100862860, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/title/Text
+        (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011015104969303711, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards
+        (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497942517282736293, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards
+        (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_name
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544411387558049985, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (1)/Item_TowerBuy/1ELabel_Content
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112743963254649764, guid: 99ff55cc6a9a70b4da1470accb57334b,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1
+        (2)/Item_TowerBuy/1ELabel_Content
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1340,6 +1592,156 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3057030987899850887}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3655767196781909145
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 965309931863134996}
+    m_Modifications:
+    - target: {fileID: 1916128174442910595, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682484604128754422, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: m_Name
+      value: Effect_GameEnd_ChallengeEnds
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787903914134753591, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final
+        (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518642221680501817, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518642221680501817, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: localizeType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7994797713161785884, guid: 8084443a77bed2f419acad5b31fb31d7,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8084443a77bed2f419acad5b31fb31d7, type: 3}
+--- !u!224 &2274150808632254748 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3257383435656197509, guid: 8084443a77bed2f419acad5b31fb31d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3655767196781909145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8589588880050612729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,6 +1750,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1919778718963797534}
     m_Modifications:
+    - target: {fileID: 1106585678326358747, guid: 7193673a0fd430342add3218a42065b1,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_lose/txt
+      objectReference: {fileID: 0}
     - target: {fileID: 2130241632310351126, guid: 7193673a0fd430342add3218a42065b1,
         type: 3}
       propertyPath: m_Name
@@ -1357,6 +1764,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595737649621151011, guid: 7193673a0fd430342add3218a42065b1,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final
       objectReference: {fileID: 0}
     - target: {fileID: 6053853270698689070, guid: 7193673a0fd430342add3218a42065b1,
         type: 3}
@@ -1462,6 +1874,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189986966235605524, guid: 7193673a0fd430342add3218a42065b1,
+        type: 3}
+      propertyPath: textKey
+      value: DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final
+        (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -76,6 +76,48 @@ namespace ET.Client
 
 			self.ScaleARCameraGo = self.ARSessoinGo.transform.Find("MirrorSceneAll/ArScaleCamera").gameObject;
 			self.ScaleARCamera = self.ScaleARCameraGo.transform.GetComponent<Camera>();
+
+			self.RegisterCallBack();
+		}
+
+		public static void RegisterCallBack(this ARSessionComponent self)
+		{
+			DefaultUI.Instance.onMenuFinish += ()=>
+			{
+				GameObject go = null;
+				StatusOr<GameObject> sceneMesh = MirrorScene.Get().GetSceneMeshWrapperObject();
+				if (sceneMesh.HasValue && sceneMesh.Value != null)
+				{
+					go = sceneMesh.Value;
+				}
+
+				self.OnMenuFinished(go);
+			};
+			DefaultUI.Instance.onMenuCancel += ()=>
+			{
+				self.OnMenuCancel();
+			};
+			DefaultUI.Instance.onMenuCreateScene += ()=>
+			{
+				self.OnMenuCreateSceneCallBack();
+			};
+			DefaultUI.Instance.onMenuQuitScene += ()=>
+			{
+				self.OnMenuQuitSceneCallBack();
+			};
+			DefaultUI.Instance.onMenuJoinByExistScene += ()=>
+			{
+				self.OnMenuJoinByExistSceneCallBack();
+			};
+			DefaultUI.Instance.onMenuJoinByQRCode += (sQRCodeInfo)=>
+			{
+				self.OnMenuJoinByQRCodeCallBack(sQRCodeInfo);
+			};
+			DefaultUI.Instance.onGetQRCodeInfo += ()=>
+			{
+				return self.OnGetQRCodeInfo();
+			};
+
 		}
 
 		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId)
@@ -85,42 +127,6 @@ namespace ET.Client
 			if (MirrorScene.IsAvailable())
 			{
 				self.ResetMainCamera(true);
-
-				DefaultUI.Instance.onMenuFinish += ()=>
-				{
-					GameObject go = null;
-					StatusOr<GameObject> sceneMesh = MirrorScene.Get().GetSceneMeshWrapperObject();
-					if (sceneMesh.HasValue && sceneMesh.Value != null)
-					{
-						go = sceneMesh.Value;
-					}
-
-					self.OnMenuFinished(go);
-				};
-				DefaultUI.Instance.onMenuCancel += ()=>
-				{
-					self.OnMenuCancel();
-				};
-				DefaultUI.Instance.onMenuCreateScene += ()=>
-				{
-					self.OnMenuCreateSceneCallBack();
-				};
-				DefaultUI.Instance.onMenuQuitScene += ()=>
-				{
-					self.OnMenuQuitSceneCallBack();
-				};
-				DefaultUI.Instance.onMenuJoinByExistScene += ()=>
-				{
-					self.OnMenuJoinByExistSceneCallBack();
-				};
-				DefaultUI.Instance.onMenuJoinByQRCode += (sQRCodeInfo)=>
-				{
-					self.OnMenuJoinByQRCodeCallBack(sQRCodeInfo);
-				};
-				DefaultUI.Instance.onGetQRCodeInfo += ()=>
-				{
-					return self.OnGetQRCodeInfo();
-				};
 
 				//self.SetMeshShow();
 
@@ -192,14 +198,9 @@ namespace ET.Client
 			var coreValue = coreField.GetValue(iMirrorScene);
 			Log.Debug($"coreValue {coreValue}");
 
-			var arSessionField = coreValue.GetType().GetField("_arSession", InstanceBindFlags);
-			Log.Debug($"arSessionField {arSessionField}");
-			var arSessionValue = arSessionField.GetValue(coreValue);
-			Log.Debug($"arSessionValue {arSessionValue}");
-
-			var meshUrlProperTy = arSessionValue.GetType().GetProperty("MeshUrl", InstanceBindFlags);
-			Log.Debug($"meshUrlProperTy {meshUrlProperTy}");
-			var meshUrlValue = meshUrlProperTy.GetValue(arSessionValue);
+			var getSceneMeshUrlMethod = coreValue.GetType().GetMethod("GetSceneMeshUrl", InstanceBindFlags);
+			Log.Debug($"getSceneMeshUrlMethod {getSceneMeshUrlMethod}");
+			var meshUrlValue = getSceneMeshUrlMethod.Invoke(coreValue, null);
 
 			Log.Debug($"meshUrlValue {meshUrlValue}");
 			return meshUrlValue.ToString();

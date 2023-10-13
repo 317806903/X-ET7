@@ -91,7 +91,11 @@ namespace ET
                 EditorSceneManager.OpenScene("Assets/ResAB/Scene/Init.unity");
                 BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", true);
 
-                BuildEditor buildEditor = UnityEditor.EditorWindow.GetWindow<BuildEditor>(DockDefine.Types);
+                var tmp = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("ProjectSettings/ProjectSettings.asset");
+                EditorUtility.SetDirty(tmp);
+                AssetDatabase.SaveAssets();
+
+                BuildEditor buildEditor = UnityEditor.EditorWindow.GetWindow<BuildEditor>();
                 if (buildEditor != null)
                 {
                     buildEditor.Refresh();
@@ -147,7 +151,7 @@ namespace ET
             //ResComponent
 
             // 热重载代码
-            CodeLoader.Instance.LoadHotfix();
+            ET.CodeLoader.Instance.LoadHotfix();
             EventSystem.Instance.Load();
             Log.Debug("hot reload success!");
         }

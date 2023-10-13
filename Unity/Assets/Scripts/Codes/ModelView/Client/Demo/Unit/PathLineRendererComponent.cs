@@ -11,8 +11,8 @@ namespace ET.Client
 
         public Transform lineRendererRoot;
         public Transform lineRendererItem;
-        public Dictionary<long, Transform> lineRendererTrans;
-        public Dictionary<long, LineRenderer> lineRenderers;
+        public Dictionary<string, Transform> lineRendererTrans;
+        public Dictionary<string, LineRenderer> lineRenderers;
 
         public RaycastHit[] results = new RaycastHit[5];
     }

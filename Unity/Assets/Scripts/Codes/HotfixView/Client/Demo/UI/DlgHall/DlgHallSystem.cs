@@ -87,7 +87,7 @@ namespace ET.Client
 			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			string battleCfgId = "GamePlayBattleLevel_Room11";
-			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, false);
+			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, false, true);
 			if (result)
 			{
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgHall>();

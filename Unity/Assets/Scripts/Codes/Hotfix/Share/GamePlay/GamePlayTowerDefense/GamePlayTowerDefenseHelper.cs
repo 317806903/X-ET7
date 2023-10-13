@@ -10,60 +10,171 @@ namespace ET
     [FriendOf(typeof (Unit))]
     public static class GamePlayTowerDefenseHelper
     {
-        public static Unit CreateHome(Scene scene, string unitCfgId, float3 pos, int hp)
+        public static Unit CreateHome(Scene scene, string unitCfgId, float3 pos, int hp, TeamFlagType teamFlagType)
         {
             float3 forward = new float3(0, 0, 1);
 
             Unit headQuarterUnit = UnitHelper_Create.CreateWhenServer_HomeUnit(scene, unitCfgId, pos, forward, "");
+
+            HomeComponent homeComponent = headQuarterUnit.AddComponent<HomeComponent>();
 
             NumericComponent numericComponent = headQuarterUnit.GetComponent<NumericComponent>();
             numericComponent.SetAsInt(NumericType.MaxHpBase, hp);
             numericComponent.SetAsInt(NumericType.HpBase, hp);
 
             //GamePlayHelper.AddUnitPathfinding(headQuarterUnit);
-            GamePlayHelper.AddUnitTeamFlag(headQuarterUnit, TeamFlagType.TeamGlobal1);
+            GamePlayHelper.AddUnitTeamFlag(headQuarterUnit, teamFlagType);
 
             return headQuarterUnit;
         }
 
-        public static Unit CreateMonsterCall(Scene scene, string unitCfgId, float3 pos)
+        public static Unit CreateMonsterCall(Scene scene, string unitCfgId, float3 pos, float3 forward, TeamFlagType teamFlagType)
         {
-            float3 forward = new float3(0, 0, 1);
             Unit monsterCallUnit = UnitHelper_Create.CreateWhenServer_NPC(scene, unitCfgId, pos, forward);
 
-            GamePlayHelper.AddUnitTeamFlag(monsterCallUnit, TeamFlagType.Monster);
+            GamePlayHelper.AddUnitTeamFlag(monsterCallUnit, teamFlagType);
 
             return monsterCallUnit;
         }
 
-        public static Unit CreateMonster(Scene scene, string monsterCfgId, int level, float3 pos, float3 forward)
+        public static Unit CreateMonster(Scene scene, long playerId, string monsterCfgId, int level, float3 pos, float3 forward, TeamFlagType teamFlagType)
         {
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             Unit monsterUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, monsterCfg.UnitId, level, pos, forward, monsterCfg.AiCfgId);
 
             GamePlayHelper.AddUnitPathfinding(monsterUnit);
-            GamePlayHelper.AddUnitTeamFlag(monsterUnit, TeamFlagType.Monster);
+            GamePlayHelper.AddUnitTeamFlag(monsterUnit, teamFlagType);
 
             return monsterUnit;
         }
 
-        public static Unit CreateTower(Scene scene, long playerId, string towerId, float3 pos)
+        public static List<Unit> CreateTower(Scene scene, long playerId, string towerId, float3 pos)
         {
             float3 forward = new float3(0, 0, 1);
 
+            List<Unit> unitList = new();
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerId);
+            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+            int count = towerCfg.UnitId.Count;
+            for (int i = 0; i < count; i++)
+            {
+                string unitCfgId = towerCfg.UnitId[i];
+                int unitLevel = towerCfg.Level[i];
+                float3 releativePos = float3.zero;
+                if (towerCfg.RelativePosition.Count > i)
+                {
+                    releativePos = new float3(towerCfg.RelativePosition[i].X, towerCfg.RelativePosition[i].Y, towerCfg.RelativePosition[i].Z);
+                }
+                Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-            Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, towerCfg.UnitId, towerCfg.Level, pos, forward, towerCfg.AiCfgId);
+                if (isTower)
+                {
+                    TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
+                    towerComponent.towerCfgId = towerId;
+                    towerComponent.playerId = playerId;
+                }
 
-            TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
-            towerComponent.towerCfgId = towerId;
-            towerComponent.playerId = playerId;
+                GamePlayHelper.AddUnitPathfinding(towerUnit);
+                if (isCallMonster)
+                {
+                    GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
+                    TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetPlayerCallMonsterTeamFlagTypeByPlayer(playerId, pos);
+                    GamePlayHelper.AddUnitTeamFlag(towerUnit, teamFlagType);
 
-            GamePlayHelper.AddUnitPathfinding(towerUnit);
-            GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
-            GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+                    MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+                    int rewardGold = 0;
+                    if (towerCfg.RewardGold.Count > i)
+                    {
+                        rewardGold = towerCfg.RewardGold[i];
+                        monsterWaveCallComponent.RecordUnit2Monster(towerUnit.Id, "", rewardGold);
+                    }
+                }
+                else
+                {
+                    GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
+                    GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+                }
 
-            return towerUnit;
+                unitList.Add(towerUnit);
+            }
+            return unitList;
+        }
+
+        public static TeamFlagType GetHomeTeamFlagType(TeamFlagType teamFlagType)
+        {
+            if (teamFlagType == TeamFlagType.Monster1
+                || teamFlagType == TeamFlagType.TeamPlayer1
+                || teamFlagType == TeamFlagType.TeamGlobal1)
+            {
+                return TeamFlagType.TeamGlobal1;
+            }
+            else if (teamFlagType == TeamFlagType.Monster2
+                     || teamFlagType == TeamFlagType.TeamPlayer2
+                     || teamFlagType == TeamFlagType.TeamGlobal2)
+            {
+                return TeamFlagType.TeamGlobal2;
+            }
+            else if (teamFlagType == TeamFlagType.Monster3
+                     || teamFlagType == TeamFlagType.TeamPlayer3
+                     || teamFlagType == TeamFlagType.TeamGlobal3)
+            {
+                return TeamFlagType.TeamGlobal3;
+            }
+            else if (teamFlagType == TeamFlagType.Monster4
+                     || teamFlagType == TeamFlagType.TeamPlayer4
+                     || teamFlagType == TeamFlagType.TeamGlobal4)
+            {
+                return TeamFlagType.TeamGlobal4;
+            }
+            else if (teamFlagType == TeamFlagType.Monster5
+                     || teamFlagType == TeamFlagType.TeamPlayer5
+                     || teamFlagType == TeamFlagType.TeamGlobal5)
+            {
+                return TeamFlagType.TeamGlobal5;
+            }
+            else
+            {
+                return TeamFlagType.TeamGlobal1;
+            }
+        }
+
+        public static TeamFlagType GetMonsterTeamFlagType(TeamFlagType teamFlagType)
+        {
+            if (teamFlagType == TeamFlagType.Monster1
+                || teamFlagType == TeamFlagType.TeamPlayer1
+                || teamFlagType == TeamFlagType.TeamGlobal1)
+            {
+                return TeamFlagType.Monster1;
+            }
+            else if (teamFlagType == TeamFlagType.Monster2
+                     || teamFlagType == TeamFlagType.TeamPlayer2
+                     || teamFlagType == TeamFlagType.TeamGlobal2)
+            {
+                return TeamFlagType.Monster2;
+            }
+            else if (teamFlagType == TeamFlagType.Monster3
+                     || teamFlagType == TeamFlagType.TeamPlayer3
+                     || teamFlagType == TeamFlagType.TeamGlobal3)
+            {
+                return TeamFlagType.Monster3;
+            }
+            else if (teamFlagType == TeamFlagType.Monster4
+                     || teamFlagType == TeamFlagType.TeamPlayer4
+                     || teamFlagType == TeamFlagType.TeamGlobal4)
+            {
+                return TeamFlagType.Monster4;
+            }
+            else if (teamFlagType == TeamFlagType.Monster5
+                     || teamFlagType == TeamFlagType.TeamPlayer5
+                     || teamFlagType == TeamFlagType.TeamGlobal5)
+            {
+                return TeamFlagType.Monster5;
+            }
+            else
+            {
+                return TeamFlagType.Monster1;
+            }
         }
 
     }

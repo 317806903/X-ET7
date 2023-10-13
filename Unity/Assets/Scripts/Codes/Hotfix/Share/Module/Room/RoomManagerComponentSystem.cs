@@ -36,11 +36,11 @@ namespace ET
             if (roomComponent.ownerRoomMemberId == -1)
             {
                 roomComponent.ownerRoomMemberId = playerId;
-                roomComponent.AddRoomMember(playerId, true, RoomTeamId.Red, 0);
+                roomComponent.AddRoomMember(playerId, true, RoomTeamId.Green, 0);
             }
             else
             {
-                roomComponent.AddRoomMember(playerId, false, RoomTeamId.Red, -1);
+                roomComponent.AddRoomMember(playerId, false, RoomTeamId.Green, -1);
             }
             self.player2Room.Add(playerId, roomComponent.Id);
         }

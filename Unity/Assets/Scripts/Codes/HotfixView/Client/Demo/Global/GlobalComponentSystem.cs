@@ -36,12 +36,16 @@ namespace ET.Client
 
         public static void ShowDebugRoot(this GlobalComponent self)
         {
-            bool bShow = false;
-            //if (ResConfig.Instance.isShowDebugRoot)
+            self.DebugRoot.gameObject.SetActive(false);
+            ChkGesture chkGesture = self.Global.gameObject.GetComponent<ChkGesture>();
+            chkGesture.doShow = () =>
             {
-                bShow = true;
-            }
-            self.DebugRoot.gameObject.SetActive(bShow);
+                self.DebugRoot.gameObject.SetActive(true);
+            };
+            chkGesture.doHide = () =>
+            {
+                self.DebugRoot.gameObject.SetActive(false);
+            };
         }
     }
 }

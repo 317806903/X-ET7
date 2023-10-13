@@ -24,5 +24,6 @@ namespace ET.Client
 		WindowID_BattleTowerHUDShow,
 		WindowID_BattleTowerAR,
 		WindowID_BattleCfgChoose,
+		WindowID_GameModeAR,
 	}
 }

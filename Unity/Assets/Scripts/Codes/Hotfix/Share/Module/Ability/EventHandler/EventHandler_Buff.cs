@@ -241,16 +241,19 @@
 				}
 
 				Unit defenderUnit = args.defenderUnit;
-				AOIEntity aoiEntity = defenderUnit.GetComponent<AOIEntity>();
-				if (aoiEntity != null)
+				if (defenderUnit != null)
 				{
-					foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
+					AOIEntity aoiEntity = defenderUnit.GetComponent<AOIEntity>();
+					if (aoiEntity != null)
 					{
-						AOIEntity aoiEntityTmp = BeSeeUnit.Value;
-						Unit beSeeUnit = aoiEntityTmp?.Unit;
-						if (UnitHelper.ChkUnitAlive(beSeeUnit))
+						foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
 						{
-							EventHandlerHelper.Run(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnHit, args.attackerUnit, args.defenderUnit);
+							AOIEntity aoiEntityTmp = BeSeeUnit.Value;
+							Unit beSeeUnit = aoiEntityTmp?.Unit;
+							if (UnitHelper.ChkUnitAlive(beSeeUnit))
+							{
+								EventHandlerHelper.Run(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnHit, args.attackerUnit, args.defenderUnit);
+							}
 						}
 					}
 				}

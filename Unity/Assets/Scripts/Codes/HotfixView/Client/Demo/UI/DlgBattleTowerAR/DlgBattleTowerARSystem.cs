@@ -44,12 +44,13 @@ namespace ET.Client
             self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
             self.View.EButton_BuyButton.AddListenerAsync(self.TowerBuyShow);
             self.View.EButton_BuyCloseButton.AddListenerAsync(self.CloseTowerBuyShow);
-
+            self.View.EButton_ReadyWhenRestTimeButton.AddListenerAsync(self.ReadyWhenRestTime);
         }
 
         public static void ShowWindow(this DlgBattleTowerAR self, ShowWindowData contextData = null)
         {
-
+            self.needResetMyOwnTowList = true;
+            self.CheckIfPlaceSuccess();
             self.SetStep();
             self.RefreshCoin();
 
@@ -85,7 +86,7 @@ namespace ET.Client
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
@@ -93,15 +94,39 @@ namespace ET.Client
 
                 self.View.EButton_PutHomeButton.gameObject.SetActive(true);
                 self.View.EButton_PutMonsterPointButton.gameObject.SetActive(false);
-                if (gamePlayTowerDefenseComponent.ownerPlayerId == playerId)
+                // if (gamePlayTowerDefenseComponent.ownerPlayerId == playerId)
+                // {
+                //     self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = self.OnSelectHeadQuarter;
+                //     self.View.ELabel_PutHomeText.text = $"请按住拖拉放置大本营";
+                // }
+                // else
+                // {
+                //     self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = null;
+                //     self.View.ELabel_PutHomeText.text = $"请等待房主放置大本营";
+                // }
+
+
+                PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+                if (putHomeComponent != null)
                 {
-                    self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = self.OnSelectHeadQuarter;
-                    self.View.ELabel_PutHomeText.text = $"请按住拖拉放置大本营";
-                }
-                else
-                {
-                    self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = null;
-                    self.View.ELabel_PutHomeText.text = $"请等待房主放置大本营";
+                    (bool bCanPutHome, bool isDonePut) = putHomeComponent.ChkCanPutHome(myPlayerId);
+                    if (bCanPutHome)
+                    {
+                        self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = self.OnSelectHeadQuarter;
+                        self.View.ELabel_PutHomeText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutHomeText1");
+                    }
+                    else
+                    {
+                        self.View.EButton_PutHomeButton.gameObject.GetComponent<SelectImage>().onPointerDown = null;
+                        if (isDonePut)
+                        {
+                            self.View.ELabel_PutHomeText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutHomeText2");
+                        }
+                        else
+                        {
+                            self.View.ELabel_PutHomeText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutHomeText3");
+                        }
+                    }
                 }
 
                 self.ShowMesh().Coroutine();
@@ -115,15 +140,15 @@ namespace ET.Client
                 self.View.EButton_PutMonsterPointButton.gameObject.SetActive(true);
 
                 PutMonsterCallComponent putMonsterCallComponent = gamePlayTowerDefenseComponent.GetComponent<PutMonsterCallComponent>();
-                if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallUnitId != null && putMonsterCallComponent.MonsterCallUnitId.ContainsKey(playerId))
+                if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallUnitId != null && putMonsterCallComponent.MonsterCallUnitId.ContainsKey(myPlayerId))
                 {
                     self.View.EButton_PutMonsterPointButton.gameObject.GetComponent<SelectImage>().onPointerDown = null;
-                    self.View.ELabel_PutMonsterPointText.text = $"请等待其他玩家放置刷怪点{putMonsterCallComponent.GetMonsterCallCount()}";
+                    self.View.ELabel_PutMonsterPointText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutMonsterPoint1", putMonsterCallComponent.GetMonsterCallCount());
                 }
                 else
                 {
                     self.View.EButton_PutMonsterPointButton.gameObject.GetComponent<SelectImage>().onPointerDown = self.OnSelectMonsterCall;
-                    self.View.ELabel_PutMonsterPointText.text = $"请按住拖拉放置刷怪点";
+                    self.View.ELabel_PutMonsterPointText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutMonsterPoint2");
                 }
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.ShowStartEffect)
@@ -137,6 +162,15 @@ namespace ET.Client
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(true);
+                RestTimeComponent restTimeComponent = gamePlayTowerDefenseComponent.GetComponent<RestTimeComponent>();
+                if (restTimeComponent.isPlayerReadyForBattle[myPlayerId])
+                {
+                    self.View.EButton_ReadyWhenRestTimeButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    self.View.EButton_ReadyWhenRestTimeButton.gameObject.SetActive(true);
+                }
 
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleTowerBegin>();
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleTowerHUD>();
@@ -157,7 +191,7 @@ namespace ET.Client
                 self.SetCurLeftTimeInfo();
                 self.NotTowerBuyShowWhenBattle().Coroutine();
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameSuccess || gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameFailed)
+            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
             {
                 self.SetCurLeftTimeInfo();
                 self.NotTowerBuyShowWhenBattle().Coroutine();
@@ -182,7 +216,9 @@ namespace ET.Client
 
         public static void RefreshCoin(this DlgBattleTowerAR self)
         {
-            self.View.ELabel_TotalGoldText.text = $"{self.GetMyGold()}";
+            //self.View.ELabel_TotalGoldText.text = $"{self.GetMyGold()}";
+
+            self.View.ELabel_TotalGoldText.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(self.GetMyGold());
         }
 
         public static void SetCurLeftTimeInfo(this DlgBattleTowerAR self)
@@ -193,17 +229,18 @@ namespace ET.Client
             {
                 RestTimeComponent restTimeComponent = gamePlayTowerDefenseComponent.GetComponent<RestTimeComponent>();
                 self.curLeftTime = (long)(restTimeComponent.duration*1000) + TimeHelper.ClientNow();
-                self.curLeftTimeMsg = "下一波到来:{}s";
+
+                self.curLeftTimeMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_NextMonsterWaveTime");
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
             {
                 MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
                 self.curLeftTime = (long)(monsterWaveCallComponent.duration*1000) + TimeHelper.ClientNow();
-                self.curLeftTimeMsg = "当前波剩余时间:{}s";
+                self.curLeftTimeMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveLeftTime");
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameSuccess || gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameFailed)
+            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
             {
-                self.curLeftTimeMsg = "已结束";
+                self.curLeftTimeMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MonsterWaveOverTime");
             }
             else
             {
@@ -219,18 +256,30 @@ namespace ET.Client
                 return;
             }
             int leftTimeShow = (int)(leftTime / 1000f);
-            self.View.ELabel_LeftTimeText.text = self.curLeftTimeMsg.Replace("{}", leftTimeShow.ToString());
+            self.View.ELabel_LeftTimeText.text = self.curLeftTimeMsg.Replace("{0}", leftTimeShow.ToString());
         }
 
         public static void ShowMonsterWaveInfo(this DlgBattleTowerAR self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-            self.View.ELabel_LeftMonsterWaveText.text = $"波数:{monsterWaveCallComponent.curIndex + 1}/{monsterWaveCallComponent.totalCount}";
+
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+            PlayerGameMode playerGameMode = playerComponent.PlayerGameMode;
+            ARRoomType arRoomType = playerComponent.ARRoomType;
+            if (playerGameMode == PlayerGameMode.ARRoom && arRoomType == ARRoomType.EndlessChallenge)
+            {
+                self.View.ELabel_LeftMonsterWaveText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",monsterWaveCallComponent.curIndex + 1, monsterWaveCallComponent.totalCount);
+            }
+            else
+            {
+                self.View.ELabel_LeftMonsterWaveText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex",monsterWaveCallComponent.curIndex + 1, monsterWaveCallComponent.totalCount);
+            }
         }
 
         public static async ETTask RefreshUI(this DlgBattleTowerAR self)
         {
+            self.needResetMyOwnTowList = true;
             self.SetStep();
 
             int countBuy = self.GetTowerBuyList().Count;
@@ -257,11 +306,11 @@ namespace ET.Client
             string msg = "";
             if (leftCount == 0)
             {
-                msg = "已达到最大放置数量";
+                msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxPutTowerCount");
             }
             else
             {
-                msg = $"还可放置{leftCount}个预防塔";
+                msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurPutTowerCount", leftCount);
             }
             self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.text = msg;
 
@@ -271,7 +320,7 @@ namespace ET.Client
         {
             ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-            string msg = "是否确认退出战斗?";
+            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_IsQuitBattle");
             ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
             {
                 self._QuitBattle().Coroutine();
@@ -306,20 +355,44 @@ namespace ET.Client
             return playerOwnerTowersComponent.playerTowerBuyPoolBoughts[playerId];
         }
 
-        public static Dictionary<string, int> GetOwnerTowerList(this DlgBattleTowerAR self)
+        public static List<string> GetOwnerTowerList(this DlgBattleTowerAR self)
         {
+            if (self.needResetMyOwnTowList == false && self.myOwnTowerList.Count > 0)
+            {
+                return self.myOwnTowerList;
+            }
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             PlayerOwnerTowersComponent playerOwnerTowersComponent = gamePlayTowerDefenseComponent.GetComponent<PlayerOwnerTowersComponent>();
             long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-            self.myOwnTowList.Clear();
+            self.myOwnTowerDic.Clear();
             foreach (var list in playerOwnerTowersComponent.playerOwnerTowerId[playerId])
             {
                 if (list.Value > 0)
                 {
-                    self.myOwnTowList[list.Key] = list.Value;
+                    self.myOwnTowerDic[list.Key] = list.Value;
                 }
             }
-            return self.myOwnTowList;
+
+            self.myOwnTowerList.Clear();
+            foreach (var myOwnTower in self.myOwnTowerDic)
+            {
+                self.myOwnTowerList.Add(myOwnTower.Key);
+            }
+            self.myOwnTowerList.Sort((x, y) =>
+            {
+                TowerDefense_TowerCfg towerCfg1 = TowerDefense_TowerCfgCategory.Instance.Get(x);
+                TowerDefense_TowerCfg towerCfg2 = TowerDefense_TowerCfgCategory.Instance.Get(y);
+                if (towerCfg1.Type == towerCfg2.Type)
+                {
+                    return towerCfg2.Level[0].CompareTo(towerCfg1.Level[0]);
+                }
+                else
+                {
+                    return towerCfg2.Type.CompareTo(towerCfg1.Type);
+                }
+            });
+            self.needResetMyOwnTowList = false;
+            return self.myOwnTowerList;
         }
 
         public static async ETTask TowerBuyShow(this DlgBattleTowerAR self)
@@ -335,8 +408,8 @@ namespace ET.Client
 
             self.View.EButton_RefreshButton.AddListenerAsync(self.RefreshBuyTower);
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            self.View.ELabel_RefreshText.text = $"刷新(消耗金币:{gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost})";
 
+            self.View.ELabel_RefreshText.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost);
         }
 
         public static async ETTask CloseTowerBuyShow(this DlgBattleTowerAR self)
@@ -351,6 +424,7 @@ namespace ET.Client
         {
             self.View.E_TowerBuyShowImage.gameObject.SetActive(false);
             self.View.EButton_BuyButton.gameObject.SetActive(false);
+            self.View.EButton_ReadyWhenRestTimeButton.gameObject.SetActive(false);
         }
 
         public static string GetUnitPrefabName(this DlgBattleTowerAR self, UnitCfg unitCfg)
@@ -365,9 +439,9 @@ namespace ET.Client
             return resIconCfg.ResName;
         }
 
-        public static void OnSelectTower(this DlgBattleTowerAR self, string towerCfgId, UnitCfg unitCfg)
+        public static void OnSelectTower(this DlgBattleTowerAR self, string towerCfgId)
         {
-            int ownTowerCount = self.GetOwnerTowerList()[towerCfgId];
+            int ownTowerCount = self.myOwnTowerDic[towerCfgId];
             if (ownTowerCount <= 0)
             {
                 return;
@@ -378,52 +452,79 @@ namespace ET.Client
 
             self.currentPlaceObj = new GameObject("currentPlaceObj");
 
-            float resScale = unitCfg.ResScale;
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
 
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
-
-            GameObject goTmp = GameObject.Instantiate(go);
-            goTmp.transform.SetParent(self.currentPlaceObj.transform);
-            goTmp.transform.localPosition = Vector3.zero;
-            goTmp.transform.localScale = Vector3.one * resScale;
-
-            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
-            GameObject resEffectGo = ResComponent.Instance.LoadAsset<GameObject>(resEffectCfg.ResName);
-
-            GameObject resEffectGoTmp = GameObject.Instantiate(resEffectGo);
-            resEffectGoTmp.transform.SetParent(self.currentPlaceObj.transform);
-            resEffectGoTmp.transform.localPosition = Vector3.zero;
-            resEffectGoTmp.transform.localScale = Vector3.one * resScale;
-
-            Transform attackAreaTran = resEffectGoTmp.transform.Find("AttackArea");
-            Transform defaultShowTran = resEffectGoTmp.transform.Find("DefaultShow");
-            for (int i = 0; i < resEffectGoTmp.transform.childCount; i++)
+            for (int i = 0; i < towerCfg.UnitId.Count; i++)
             {
-                Transform child = resEffectGoTmp.transform.GetChild(i);
-                if (child == attackAreaTran || child == defaultShowTran)
+                string unitCfgId = towerCfg.UnitId[i];
+                float3 releativePos = float3.zero;
+                if (towerCfg.RelativePosition.Count > i)
                 {
-                    child.gameObject.SetActive(true);
+                    releativePos = new float3(towerCfg.RelativePosition[i].X, towerCfg.RelativePosition[i].Y, towerCfg.RelativePosition[i].Z);
                 }
-                else
-                {
-                    child.gameObject.SetActive(false);
-                }
-            }
-            float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, SkillSlotType.NormalAttack);
-            attackAreaTran.localScale = Vector3.one * skillDis*2 / resScale;
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+                float resScale = unitCfg.ResScale;
 
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-            float3 colorValue = gamePlayComponent.GetPlayerColor(playerId);
-            Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
-            ParticleSystem[] psList = attackAreaTran.gameObject.GetComponentsInChildren<ParticleSystem>(true);
-            foreach (ParticleSystem particleSystem in psList)
-            {
-                ParticleSystem.MainModule mainModule = particleSystem.main;
-                float alpha = mainModule.startColor.color.a;
-                color.a = alpha;
-                mainModule.startColor = new ParticleSystem.MinMaxGradient(color);
+                float3 forward = new float3(0, 0, 1);
+                string pathName = self.GetUnitPrefabName(unitCfg);
+                GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
+
+                GameObject goTmp = GameObject.Instantiate(go);
+                goTmp.transform.SetParent(self.currentPlaceObj.transform);
+                goTmp.transform.localPosition = releativePos;
+                goTmp.transform.localScale = Vector3.one * resScale;
+                goTmp.transform.forward = forward;
+
+                if (isTower)
+                {
+                    ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
+                    GameObject resEffectGo = ResComponent.Instance.LoadAsset<GameObject>(resEffectCfg.ResName);
+
+                    GameObject resEffectGoTmp = GameObject.Instantiate(resEffectGo);
+                    resEffectGoTmp.transform.SetParent(self.currentPlaceObj.transform);
+                    resEffectGoTmp.transform.localPosition = Vector3.zero;
+                    resEffectGoTmp.transform.localScale = Vector3.one * resScale;
+
+                    Transform attackAreaTran = resEffectGoTmp.transform.Find("AttackArea");
+                    Transform defaultShowTran = resEffectGoTmp.transform.Find("DefaultShow");
+                    for (int i1 = 0; i1 < resEffectGoTmp.transform.childCount; i1++)
+                    {
+                        Transform child = resEffectGoTmp.transform.GetChild(i1);
+                        if (child == attackAreaTran || child == defaultShowTran)
+                        {
+                            child.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            child.gameObject.SetActive(false);
+                        }
+                    }
+                    float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, SkillSlotType.NormalAttack);
+                    attackAreaTran.localScale = Vector3.one * skillDis*2 / resScale;
+
+                    long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                    GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+                    float3 colorValue = gamePlayComponent.GetPlayerColor(playerId);
+                    Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
+                    ParticleSystem[] psList = attackAreaTran.gameObject.GetComponentsInChildren<ParticleSystem>(true);
+                    foreach (ParticleSystem particleSystem in psList)
+                    {
+                        ParticleSystem.MainModule mainModule = particleSystem.main;
+                        float alpha = mainModule.startColor.color.a;
+                        color.a = alpha;
+                        mainModule.startColor = new ParticleSystem.MinMaxGradient(color);
+                    }
+                    psList = defaultShowTran.gameObject.GetComponentsInChildren<ParticleSystem>(true);
+                    foreach (ParticleSystem particleSystem in psList)
+                    {
+                        ParticleSystem.MainModule mainModule = particleSystem.main;
+                        float alpha = mainModule.startColor.color.a;
+                        color.a = alpha;
+                        mainModule.startColor = new ParticleSystem.MinMaxGradient(color);
+                    }
+
+                }
             }
 
             self.currentPlaceObj.gameObject.SetActive(false);
@@ -433,66 +534,127 @@ namespace ET.Client
         {
             Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
-            List<string> list = self.GetOwnerTowerList().Keys.ToList();
+            List<string> list = self.GetOwnerTowerList();
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(list[index]);
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId);
 
-            string icon = self.GetUnitIcon(unitCfg);
-            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-            itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.GetOwnerTowerList()[towerCfg.Id]}";
             string towerName = towerCfg.Name;
             if (string.IsNullOrEmpty(towerName))
             {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
                 towerName = unitCfg.Name;
             }
+
+            string icon = "";
+            if (string.IsNullOrEmpty(towerCfg.Icon))
+            {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
+                icon = self.GetUnitIcon(unitCfg);
+            }
+            else
+            {
+                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(towerCfg.Icon);
+                icon = resIconCfg.ResName;
+            }
+
+            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+            itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.myOwnTowerDic[towerCfg.Id]}";
+
             itemTower.ELabel_NameTextMeshProUGUI.text = $"{towerName}";
-            itemTower.EButton_SelectImage.sprite = sprite;
+            itemTower.EButton_TowerIcoImage.sprite = sprite;
             SelectImage selectImage = itemTower.EButton_SelectButton.GetComponent<SelectImage>();
-            selectImage.onPointerDown = () => { self.OnSelectTower(towerCfg.Id, unitCfg); };
+            selectImage.onPointerDown = () =>
+            {
+                self.OnSelectTower(towerCfg.Id);
+            };
+
+            itemTower.EButton_SelectButton.AddListener(() =>
+            {
+                itemTower.EButton_SelectButton.AddListener(() =>
+                {
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerHUD>(new DlgBattleTowerHUD_ShowWindowData()
+                    {
+                        towerCfgId = towerCfg.Id,
+                    }).Coroutine();
+                });
+            });
+			
+            itemTower.EG_IconStarRectTransform.SetVisible(true);
+            int starCount = towerCfg.Level[0];
+            itemTower.E_IconStar1Image.gameObject.SetActive(starCount>=1);
+            itemTower.E_IconStar2Image.gameObject.SetActive(starCount>=2);
+            itemTower.E_IconStar3Image.gameObject.SetActive(starCount>=3);
         }
 
         public static void AddTowerBuyListener(this DlgBattleTowerAR self, Transform transform, int index)
         {
-            Scroll_Item_TowerBuy itemTankBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
+            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
 
             List<string> list = self.GetTowerBuyList();
             List<bool> listBought = self.GetTowerBoughtsList();
 
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(list[index]);
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId);
+            string towerCfgId = list[index];
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
-            string icon = self.GetUnitIcon(unitCfg);
-            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-            if (listBought[index])
-            {
-                itemTankBuy.ELabel_ContentText.text = $"已买";
-                itemTankBuy.EButton_BuyButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                itemTankBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
-                itemTankBuy.EButton_BuyButton.gameObject.SetActive(true);
-            }
-            itemTankBuy.EButton_SelectImage.sprite = sprite;
-            itemTankBuy.EButton_BuyButton.AddListener(() =>
-            {
-                self.BuyTower(index).Coroutine();
-            });
             string towerName = towerCfg.Name;
             if (string.IsNullOrEmpty(towerName))
             {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
                 towerName = unitCfg.Name;
             }
-            itemTankBuy.EButton_nameTextMeshProUGUI.text = $"{towerName}";
-            if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
+
+            string icon = "";
+            if (string.IsNullOrEmpty(towerCfg.Icon))
             {
-                itemTankBuy.ELabel_BuyText.text = $"购买";
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
+                icon = self.GetUnitIcon(unitCfg);
             }
             else
             {
-                itemTankBuy.ELabel_BuyText.text = $"金币不足";
+                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(towerCfg.Icon);
+                icon = resIconCfg.ResName;
             }
+
+            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+            if (listBought[index])
+            {
+                itemTowerBuy.ELabel_ContentText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuyDone");
+                itemTowerBuy.EButton_BuyButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                itemTowerBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
+                itemTowerBuy.EButton_BuyButton.gameObject.SetActive(true);
+            }
+            itemTowerBuy.EButton_IconImage.sprite = sprite;
+            itemTowerBuy.EButton_BuyButton.AddListener(() =>
+            {
+                self.BuyTower(index).Coroutine();
+            });
+
+            itemTowerBuy.EButton_nameTextMeshProUGUI.text = $"{towerName}";
+            if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
+            {
+                itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuyButton");
+            }
+            else
+            {
+                itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
+            }
+
+            itemTowerBuy.EG_IconStarRectTransform.SetVisible(true);
+            int starCount = towerCfg.Level[0];
+            itemTowerBuy.E_IconStar1Image.gameObject.SetActive(starCount>=1);
+            itemTowerBuy.E_IconStar2Image.gameObject.SetActive(starCount>=2);
+            itemTowerBuy.E_IconStar3Image.gameObject.SetActive(starCount>=3);
+
+            itemTowerBuy.EButton_SelectButton.AddListener(() =>
+            {
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerHUD>(new DlgBattleTowerHUD_ShowWindowData()
+                {
+                    towerCfgId = towerCfgId,
+                }).Coroutine();
+            });
         }
 
         public static async ETTask BuyTower(this DlgBattleTowerAR self, int index)
@@ -529,6 +691,13 @@ namespace ET.Client
             await ET.Client.GamePlayTowerDefenseHelper.SendRefreshBuyPlayerTower(self.ClientScene());
         }
 
+        public static async ETTask ReadyWhenRestTime(this DlgBattleTowerAR self)
+        {
+            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+
+            await ET.Client.GamePlayTowerDefenseHelper.SendReadyWhenRestTime(self.ClientScene());
+        }
+
         public static void ChgScrollRectMoveStatus(this DlgBattleTowerAR self, bool status)
         {
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.enabled = status;
@@ -556,7 +725,17 @@ namespace ET.Client
                 self.ChgScrollRectMoveStatus(false);
                 self.MoveCurrentPlaceObj();
 
-                self.CheckCanPut(self.currentPlaceObj.transform.position);
+                bool canPut = self.ChkCanPut(self.currentPlaceObj.transform.position);
+                if (canPut)
+                {
+                    self.View.E_TipNodeImage.SetVisible(false);
+                    self.ChgCurrentPlaceObj(true);
+                }
+                else
+                {
+                    //self.currentPlaceObj.gameObject.SetActive(false);
+                    self.ChgCurrentPlaceObj(false);
+                }
             }
             else if (self.isDragging)
             {
@@ -564,14 +743,14 @@ namespace ET.Client
                 {
                     if (self.isRaycast == false)
                     {
-                        string tipMsg = $"当前放置位置 没有投射点";
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
                         ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                         self.CheckIfPlaceSuccess();
                         return;
                     }
                     if (self.isCliffy)
                     {
-                        string tipMsg = $"当前放置位置 太陡峭";
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
                         ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                         self.CheckIfPlaceSuccess();
                         return;
@@ -602,33 +781,65 @@ namespace ET.Client
             }
         }
 
-        public static bool CheckCanPut(this DlgBattleTowerAR self, Vector3 position)
+        public static void ChgCurrentPlaceObj(this DlgBattleTowerAR self, bool canPut)
+        {
+            Color colorNew;
+            if (canPut)
+            {
+                colorNew = Color.white;
+            }
+            else
+            {
+                colorNew = Color.red;
+            }
+
+            MeshRenderer[] rendererList = self.currentPlaceObj.gameObject.GetComponentsInChildren<MeshRenderer>(true);
+            foreach (MeshRenderer renderer in rendererList)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    Color color = material.color;
+                    material.color = new Color(colorNew.r, colorNew.g, colorNew.b, color.a);
+                }
+            }
+            SkinnedMeshRenderer[] rendererList2 = self.currentPlaceObj.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            foreach (SkinnedMeshRenderer renderer in rendererList2)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    Color color = material.color;
+                    material.color = new Color(colorNew.r, colorNew.g, colorNew.b, color.a);
+                }
+            }
+        }
+        public static bool ChkCanPut(this DlgBattleTowerAR self, Vector3 position)
         {
             long leftTime = self.curTipTime - TimeHelper.ClientNow();
             if (leftTime > 0)
             {
                 return false;
             }
-            self.curTipTime = TimeHelper.ClientNow() + 800;
+            //self.curTipTime = TimeHelper.ClientNow() + 800;
+            self.curTipTime = TimeHelper.ClientNow() + 0;
 
             if (self.isClickUGUI)
             {
-                string tipMsg = $"当前手指在UI上,请挪开";
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnUI");
+                self.ShowPutTipMsg(tipMsg);
                 return false;
             }
 
             if (self.isRaycast == false)
             {
-                string tipMsg = $"当前放置位置 没有投射点";
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
+                self.ShowPutTipMsg(tipMsg);
                 return false;
             }
 
             if (self.isCliffy)
             {
-                string tipMsg = $"当前放置位置 太陡峭";
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
+                self.ShowPutTipMsg(tipMsg);
                 return false;
             }
 
@@ -636,19 +847,27 @@ namespace ET.Client
             {
                 if (self.canPutMonsterCall == false)
                 {
-                    string tipMsg = $"当前放置位置 没法到达大本营,请重新选位置";
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+                    self.ShowPutTipMsg(tipMsg);
                     return false;
                 }
             }
             if (self.selectCfgType == UISelectCfgType.Tower)
             {
-                if (self.ChkIsNearTower(self.selectCfgId, position))
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.selectCfgId);
+                float radius = 0;
+                if (towerCfg.Radius <= 0)
                 {
-                    string tipMsg = $"当前放置位置 太靠近塔";
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    return false;
+                    UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
+                    radius = unitCfg.BodyRadius * unitCfg.ResScale;
                 }
+                else
+                {
+                    radius = towerCfg.Radius;
+                }
+
+                bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+                bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
 
                 long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -656,19 +875,34 @@ namespace ET.Client
                 if (bRet == false)
                 {
                     string tipMsg = msg;
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    self.ShowPutTipMsg(tipMsg);
                     return false;
                 }
 
-                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.selectCfgId);
-                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId);
-                float radius = unitCfg.BodyRadius * unitCfg.ResScale;
-
-                if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
+                if (isTower)
                 {
-                    string tipMsg = "不能放置在路线上";
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    return false;
+                    if (self.ChkIsNearTower(self.selectCfgId, position))
+                    {
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
+                        self.ShowPutTipMsg(tipMsg);
+                        return false;
+                    }
+
+                    if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
+                    {
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
+                        self.ShowPutTipMsg(tipMsg);
+                        return false;
+                    }
+                }
+                if (isCallMonster)
+                {
+                    if (self.ChkIsNearTower(self.selectCfgId, position) == false)
+                    {
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
+                        self.ShowPutTipMsg(tipMsg);
+                        return false;
+                    }
                 }
             }
             return true;
@@ -683,13 +917,19 @@ namespace ET.Client
             return Input.GetMouseButton(0);
         }
 
+        public static void ShowPutTipMsg(this DlgBattleTowerAR self, string tipMsg)
+        {
+            self.View.E_TipNodeImage.SetVisible(true);
+            self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
+        }
+
         public static async ETTask DoPutMonsterCall(this DlgBattleTowerAR self, float3 position)
         {
             ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
 
             if (self.canPutMonsterCall == false)
             {
-                string tipMsg = $"当前放置位置 没法到达大本营,请重新选位置";
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
                 ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 self.CheckIfPlaceSuccess();
                 return;
@@ -700,14 +940,6 @@ namespace ET.Client
 
         public static async ETTask DoPutOwnTower(this DlgBattleTowerAR self, float3 position)
         {
-            if (self.ChkIsNearTower(self.selectCfgId, position))
-            {
-                string tipMsg = $"当前放置位置 太靠近塔";
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                self.CheckIfPlaceSuccess();
-                return;
-            }
-
             ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
 
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
@@ -722,15 +954,48 @@ namespace ET.Client
             }
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.selectCfgId);
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId);
-            float radius = unitCfg.BodyRadius * unitCfg.ResScale;
+            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
 
-            if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
+            float radius = 0;
+            if (towerCfg.Radius <= 0)
             {
-                string tipMsg = "不能放置在路线上";
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                self.CheckIfPlaceSuccess();
-                return;
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
+                radius = unitCfg.BodyRadius * unitCfg.ResScale;
+            }
+            else
+            {
+                radius = towerCfg.Radius;
+            }
+
+            if (isTower)
+            {
+                if (self.ChkIsNearTower(self.selectCfgId, position))
+                {
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
+                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    self.CheckIfPlaceSuccess();
+                    return;
+                }
+
+                if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
+                {
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
+                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    self.CheckIfPlaceSuccess();
+                    return;
+                }
+            }
+
+            if (isCallMonster)
+            {
+                if (self.ChkIsNearTower(self.selectCfgId, position) == false)
+                {
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
+                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    self.CheckIfPlaceSuccess();
+                    return;
+                }
             }
             ET.Client.GamePlayTowerDefenseHelper.SendCallOwnTower(self.ClientScene(), self.selectCfgId, position).Coroutine();
         }
@@ -745,7 +1010,7 @@ namespace ET.Client
                 return;
             }
             Vector3 screenPosition = Input.mousePosition;
-            screenPosition += new Vector3(-160, 30, 0);
+            screenPosition += new Vector3(-130, 30, 0);
 
             Ray ray = ET.Client.CameraHelper.GetMainCamera(self.DomainScene()).ScreenPointToRay(screenPosition);
             RaycastHit hitInfo;
@@ -799,7 +1064,7 @@ namespace ET.Client
                     self.currentPlaceObj.gameObject.SetActive(true);
                 }
                 self.currentPlaceObj.transform.position = point + new Vector3(0, self._YOffset, 0);
-                self.currentPlaceObj.transform.localEulerAngles = new Vector3(0, 60, 0);
+                self.currentPlaceObj.transform.localEulerAngles = new Vector3(0, 0, 0);
 
             }
             else
@@ -841,8 +1106,7 @@ namespace ET.Client
 
             if (self.currentPlaceObj.gameObject.activeSelf == false)
             {
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-                await PathLineRendererComponent.Instance.ShowPath(myPlayerId, false, null);
+                await self._HideMonsterCall2HeadQuarter();
                 return;
             }
 
@@ -885,6 +1149,12 @@ namespace ET.Client
             return await gamePlayTowerDefenseComponent.DoDrawMyMonsterCall2HeadQuarter(pos);
         }
 
+        public static async ETTask _HideMonsterCall2HeadQuarter(this DlgBattleTowerAR self)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+            await gamePlayTowerDefenseComponent.DoHideMyMonsterCall2HeadQuarter();
+        }
+
         /// <summary>
         ///检测是否放置成功
         /// </summary>
@@ -896,6 +1166,7 @@ namespace ET.Client
                 GameObject.Destroy(self.currentPlaceObj);
                 self.currentPlaceObj = null;
             }
+            self.View.E_TipNodeImage.SetVisible(false);
             self.ChgScrollRectMoveStatus(true);
         }
 
@@ -935,20 +1206,45 @@ namespace ET.Client
             self.currentPlaceObj.SetActive(false);
         }
 
-        public static bool ChkIsNearTower(this DlgBattleTowerAR self, string towerId, float3 pos)
+        public static bool ChkIsNearTower(this DlgBattleTowerAR self, string towerCfgId, float3 pos)
         {
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerId);
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
             float3 targetPos = pos;
-            float targetUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(towerCfg.UnitId, false, false);
+            float radius = 0;
+            if (towerCfg.Radius <= 0)
+            {
+                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
+                radius = unitCfg.BodyRadius * unitCfg.ResScale;
+            }
+            else
+            {
+                radius = towerCfg.Radius;
+            }
+
+            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, targetUnitRadius + 0.5f);
+            if (isTower)
+            {
+                return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius + 0.3f, -1);
+            }
+            if (isCallMonster)
+            {
+                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius + 0.3f, myPlayerId);
+            }
+
+            return false;
         }
 
         public static async ETTask ShowMesh(this DlgBattleTowerAR self)
         {
-#if !UNITY_EDITOR
-            return;
-#endif
+
+            if (Application.isEditor == false)
+            {
+                return;
+            }
+
             GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
             if (gamePlayComponent == null)
             {

@@ -22,8 +22,8 @@ namespace ET
 
     public enum RoomTeamId: byte
     {
-        Red,
         Green,
+        Red,
         Blue,
     }
 

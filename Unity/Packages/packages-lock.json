@@ -15,7 +15,7 @@
         "com.unity.render-pipelines.universal": ">=12.1.6",
         "com.unity.xr.arfoundation": "^4.2.6"
       },
-      "hash": "8b38ba96b777dcecc02284afdeaef41376704637"
+      "hash": "32453494d94ff62d5d605b4e57cab4debcdae90b"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "file:com.deepmirror.mirrorverse.ui@8b38ba96b7",

@@ -20,7 +20,7 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Scene scene, OnPatchDownlodFailed a)
 		{
-			string msg = $"下载资源失败: {a.FileName} {a.Error}";
+			string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadResErr", a.FileName, a.Error);
 			UIManagerHelper.ShowConfirmNoClose(scene, msg);
 			Log.Error(msg);
 			await ETTask.CompletedTask;

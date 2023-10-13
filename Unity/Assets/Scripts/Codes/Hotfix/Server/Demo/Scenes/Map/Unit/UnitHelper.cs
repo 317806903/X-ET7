@@ -255,7 +255,7 @@ namespace ET.Server
                 M2C_GamePlayModeChgNotice _M2C_GamePlayModeChgNotice = new ()
                 {
                     GamePlayModeInfo = gamePlayModeComponent.ToBson(),
-                    Components = ListComponent<byte[]>.Create(),
+                    Components = new(),
                 };
                 foreach (Entity entity in gamePlayModeComponent.Components.Values)
                 {

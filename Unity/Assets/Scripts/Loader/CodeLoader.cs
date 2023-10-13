@@ -77,13 +77,4 @@ namespace ET
 			EventSystem.Instance.Add(types);
 		}
 	}
-
-	[Invoke]
-	public class GetCodeMode: AInvokeHandler<ConfigComponent.GetCodeMode, string>
-	{
-		public override string Handle(ConfigComponent.GetCodeMode args)
-		{
-			return GlobalConfig.Instance.CodeMode.ToString();
-		}
-	}
 }

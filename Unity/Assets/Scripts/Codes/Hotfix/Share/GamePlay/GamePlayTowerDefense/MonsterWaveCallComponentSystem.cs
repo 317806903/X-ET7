@@ -73,7 +73,7 @@ namespace ET
 
 		public static float3 GetCallMonsterPosition(this MonsterWaveCallComponent self, long playerId)
 		{
-			return self.GetParent<GamePlayTowerDefenseComponent>().GetCallMonsterPosition(playerId);
+			return self.GetGamePlayTowerDefense().GetCallMonsterPosition(playerId);
 		}
 
 		public static int GetWaveRewardGold(this MonsterWaveCallComponent self)
@@ -93,14 +93,14 @@ namespace ET
 
 		public static bool ChkIsGameEnd(this MonsterWaveCallComponent self)
 		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 
 			return gamePlayTowerDefenseComponent.ChkIsGameEnd();
 		}
 
 		public static void DoMonsterWaveCall(this MonsterWaveCallComponent self)
 		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
 			foreach (long playerId in playerList)
 			{
@@ -117,13 +117,23 @@ namespace ET
 			}
 		}
 
+		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this MonsterWaveCallComponent self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			return gamePlayTowerDefenseComponent;
+		}
+
 		public static Unit CallMonsterOnce(this MonsterWaveCallComponent self, long playerId, string monsterCfgId, int level, int rewardGold)
 		{
 			float3 pos = self.GetCallMonsterPosition(playerId);
 			float3 randomPos = pos + new float3(RandomGenerator.RandFloat01(), 0, RandomGenerator.RandFloat01());
 			float3 randomForward = new float3(RandomGenerator.RandFloat01(), 0, RandomGenerator.RandFloat01());
 
-			Unit monsterUnit = ET.GamePlayTowerDefenseHelper.CreateMonster(self.DomainScene(), monsterCfgId, level, randomPos, randomForward);
+
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+			TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetMonsterTeamFlagTypeByPlayer(playerId);
+
+			Unit monsterUnit = ET.GamePlayTowerDefenseHelper.CreateMonster(self.DomainScene(), playerId, monsterCfgId, level, randomPos, randomForward, teamFlagType);
 
 			self.RecordUnit2Monster(monsterUnit.Id, monsterCfgId, rewardGold);
 
@@ -132,7 +142,10 @@ namespace ET
 
 		public static void RecordUnit2Monster(this MonsterWaveCallComponent self, long unitId, string monsterCfgId, int rewardGold)
 		{
-			self.unitId2MonsterCfgId.Add(unitId, monsterCfgId);
+			if (string.IsNullOrEmpty(monsterCfgId) == false)
+			{
+				self.unitId2MonsterCfgId.Add(unitId, monsterCfgId);
+			}
 			self.unitId2RewardGold.Add(unitId, rewardGold);
 		}
 
@@ -195,11 +208,11 @@ namespace ET
 
 				if (self.curIndex == self.totalCount - 1)
 				{
-					self.GetParent<GamePlayTowerDefenseComponent>().TransToGameSuccess().Coroutine();
+					self.GetGamePlayTowerDefense().TransToGameEnd().Coroutine();
 				}
 				else
 				{
-					self.GetParent<GamePlayTowerDefenseComponent>().TransToRestTime().Coroutine();
+					self.GetGamePlayTowerDefense().TransToRestTime().Coroutine();
 				}
 				TimerComponent.Instance.Remove(ref self.Timer);
 			}

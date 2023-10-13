@@ -119,9 +119,10 @@ namespace ET.Client
 
 		public static void ChkMouseRightClick(this GamePlayPKComponent self)
 		{
-#if !UNITY_EDITOR
-			return;
-#endif
+			if (Application.isEditor == false)
+			{
+				return;
+			}
 
 			if (Input.GetMouseButtonUp(1))
 			{
@@ -201,7 +202,7 @@ namespace ET.Client
 			{
 				return;
 			}
-			self.lastSendTime = TimeHelper.ClientNow() + 1000;
+			self.lastSendTime = TimeHelper.ClientNow() + 2000;
 
 			Camera camera = CameraHelper.GetMainCamera(self.DomainScene());
 			float3 cameraPos = camera.transform.position;

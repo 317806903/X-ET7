@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.Ability;
 using Unity.Mathematics;
 
 namespace ET.Client
@@ -21,10 +22,11 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask<(float3, List<float3>)> SendGetMonsterCall2HeadQuarterPath(Scene scene, float3 pos)
+		public static async ETTask<(float3, List<float3>)> SendGetMonsterCall2HeadQuarterPath(Scene scene, TeamFlagType homeTeamFlagType, float3 pos)
 		{
 			M2C_GetMonsterCall2HeadQuarterPath _M2C_GetMonsterCall2HeadQuarterPath = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_GetMonsterCall2HeadQuarterPath()
 			{
+				HomeTeamFlagType = (int)homeTeamFlagType,
 				Position = pos,
 			}) as M2C_GetMonsterCall2HeadQuarterPath;
 			if (_M2C_GetMonsterCall2HeadQuarterPath.Error != ET.ErrorCode.ERR_Success)
@@ -154,6 +156,21 @@ namespace ET.Client
 			}
 		}
 
+		public static async ETTask SendReadyWhenRestTime(Scene scene)
+		{
+			C2M_ReadyWhenRestTime _C2M_ReadyWhenRestTime = new ()
+			{
+			};
+			M2C_ReadyWhenRestTime _M2C_ReadyWhenRestTime = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ReadyWhenRestTime) as M2C_ReadyWhenRestTime;
+			if (_M2C_ReadyWhenRestTime.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_ReadyWhenRestTime.Message,
+				});
+			}
+		}
+
 		//--------------------------------------------------------------------
 		public static async ETTask SendCallTower(Scene scene, string towerUnitCfgId, float3 position)
 		{
@@ -188,6 +205,38 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_CallMonster.Message,
+				});
+			}
+		}
+
+		public static async ETTask SendClearMyTower(Scene scene)
+		{
+			C2M_ClearMyTower _C2M_ClearMyTower = new ()
+			{
+			};
+			M2C_ClearMyTower _M2C_ClearMyTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ClearMyTower) as M2C_ClearMyTower;
+
+			if (_M2C_ClearMyTower.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_ClearMyTower.Message,
+				});
+			}
+		}
+
+		public static async ETTask SendClearAllMonster(Scene scene)
+		{
+			C2M_ClearAllMonster _C2M_ClearAllMonster = new ()
+			{
+			};
+			M2C_ClearAllMonster _M2C_ClearAllMonster = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ClearAllMonster) as M2C_ClearAllMonster;
+
+			if (_M2C_ClearAllMonster.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_ClearAllMonster.Message,
 				});
 			}
 		}

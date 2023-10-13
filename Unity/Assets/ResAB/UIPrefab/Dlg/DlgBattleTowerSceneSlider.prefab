@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 4287543996705724689}
   - component: {fileID: 2393224654844619115}
   - component: {fileID: 8310459191125387696}
+  - component: {fileID: 2281061286550644647}
   m_Layer: 0
   m_Name: ELabel_Next
   m_TagString: Untagged
@@ -438,6 +439,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u4E0B\u4E00\u6B65"
+--- !u!114 &2281061286550644647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3493794021432946705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: Canvas (Environment)/DlgBattleTowerSceneSlider/EButton_Next/ELabel_Next
+  localizeType: 0
 --- !u!1 &3802105910412128368
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,10 +490,10 @@ RectTransform:
   - {fileID: 7383528824332485616}
   m_Father: {fileID: 6885263567614322876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 144.64636, y: 157.00537}
-  m_SizeDelta: {x: 925.7193, y: 167.9607}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -815.35364, y: 157.00537}
+  m_SizeDelta: {x: 925.71924, y: 167.9607}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2580016209847103403
 CanvasRenderer:
@@ -885,6 +900,7 @@ GameObject:
   - component: {fileID: 7383528824332485616}
   - component: {fileID: 4751911584570018823}
   - component: {fileID: 609027479320206393}
+  - component: {fileID: 5536350830204259713}
   m_Layer: 5
   m_Name: E_title
   m_TagString: Untagged
@@ -1009,6 +1025,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5536350830204259713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4448699751927850822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: Canvas (Environment)/DlgBattleTowerSceneSlider/E_Slider/E_title
+  localizeType: 0
 --- !u!1 &4660638999668877061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,6 +1326,7 @@ GameObject:
   - component: {fileID: 7822646170379042909}
   - component: {fileID: 4018768248867191516}
   - component: {fileID: 305929244683815028}
+  - component: {fileID: 1313161195228760381}
   m_Layer: 0
   m_Name: ELabel_RePut
   m_TagString: Untagged
@@ -1364,6 +1395,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u91CD\u65B0\u653E\u7F6E"
+--- !u!114 &1313161195228760381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698368489352514176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: 
+  localizeType: 0
 --- !u!1 &7810858662837323046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1447,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -1399, y: 157}
-  m_SizeDelta: {x: 241.4698, y: 167.97}
+  m_SizeDelta: {x: 241.46973, y: 167.97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4916674548126465639
 CanvasRenderer:

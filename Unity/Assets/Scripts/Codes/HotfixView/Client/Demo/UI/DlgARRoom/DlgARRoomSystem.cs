@@ -16,6 +16,8 @@ namespace ET.Client
             self.View.E_QuitRoomButton.AddListenerAsync(self.QuitRoom);
             self.View.E_ShowQrCodeButton.AddListenerAsync(self.ShowQrCode);
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
+            self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
+            self.View.E_RoomMemberChgTeamButton.AddListenerAsync(self.OnChgTeam);
 
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.poolSize = 4;
@@ -26,6 +28,7 @@ namespace ET.Client
         public static void ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
         {
             self.GetRoomInfo().Coroutine();
+            self.ShowBattleCfgChoose().Coroutine();
         }
 
         public static async ETTask RefreshUI(this DlgARRoom self)
@@ -33,6 +36,26 @@ namespace ET.Client
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.RefreshCells();
 
             self.SetRoomMemberStatusText();
+        }
+
+        public static async ETTask ShowBattleCfgChoose(this DlgARRoom self)
+        {
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+            if (playerComponent.IsDebugMode)
+            {
+                self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(true);
+            }
+            else
+            {
+                self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
+            }
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask RefreshBattleCfgIdChoose(this DlgARRoom self, string gamePlayBattleLevelCfgId)
+        {
+            await RoomHelper.ChgRoomBattleLevelCfgAsync(self.ClientScene(), gamePlayBattleLevelCfgId);
         }
 
         public static void SetRoomMemberStatusText(this DlgARRoom self)
@@ -50,39 +73,39 @@ namespace ET.Client
             {
                 if (roomComponent.ChkIsAllReady())
                 {
-                    self.View.ELable_RoomMemberStatusText.text = "开始游戏";
+                    self.View.ELable_RoomMemberStatusText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_StartGame");
                 }
                 else
                 {
-                    self.View.ELable_RoomMemberStatusText.text = "等待全部准备";
+                    self.View.ELable_RoomMemberStatusText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_WaitAllReady");
                 }
 
-                self.View.E_InputFieldBattleLevelCfgInputField.readOnly = false;
-                self.View.E_InputFieldBattleLevelCfgInputField.onEndEdit.RemoveAllListeners();
-                self.View.E_InputFieldBattleLevelCfgInputField.onEndEdit.AddListener(
-                    (txt)=>
-                    {
-                        self.ChgRoomBattleLevelCfg().Coroutine();
-                    });
+                self.View.EButton_ChooseBattleCfgButton.gameObject.SetActive(true);
             }
             else
             {
                 RoomMember roomMember = roomComponent.GetRoomMember(myPlayerId);
                 bool isReady = roomMember.isReady;
 
-                self.View.ELable_RoomMemberStatusText.text = isReady? "取消准备" : "点击准备";
+                string textReady = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Ready");
+                string textCancelReady = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_CancelReady");
+                self.View.ELable_RoomMemberStatusText.text = isReady? textCancelReady : textReady;
 
-                self.View.E_InputFieldBattleLevelCfgInputField.readOnly = true;
+                self.View.EButton_ChooseBattleCfgButton.gameObject.SetActive(false);
             }
 
-            self.View.E_InputFieldBattleLevelCfgInputField.text = roomComponent.gamePlayBattleLevelCfgId;
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);
+            self.View.ELabel_BattleCfgIdTextMeshProUGUI.text = gamePlayBattleLevelCfg.Name;
+
+            bool isShowTeamChgButton = gamePlayBattleLevelCfg.TeamMode is PlayerTeam;
+            self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(isShowTeamChgButton);
         }
 
         public static async ETTask GetRoomInfo(this DlgARRoom self)
         {
-            Scene clientScene = self.ClientScene();
-            long roomId = clientScene.GetComponent<PlayerComponent>().RoomId;
-            await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+            long roomId = playerComponent.RoomId;
+            await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
             RoomComponent roomComponent = self.GetRoomComponent();
 
@@ -97,8 +120,8 @@ namespace ET.Client
 
         public static RoomComponent GetRoomComponent(this DlgARRoom self)
         {
-            Scene clientScene = self.ClientScene();
-            long roomId = clientScene.GetComponent<PlayerComponent>().RoomId;
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+            long roomId = playerComponent.RoomId;
             RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
             RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
             return roomComponent;
@@ -112,11 +135,12 @@ namespace ET.Client
 
             itemRoom.ELabel_Content_LvTextMeshProUGUI.gameObject.SetActive(false);
             itemRoom.EButton_OperatorButton.SetVisible(true);
+            itemRoom.EImage_TeamImage.SetVisible(false);
             long roomMemberId = roomComponent.roomMemberSeat[index];
             if (roomMemberId == -1)
             {
-                itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"空位:{index}";
-                itemRoom.ELabel_OperatorText.text = $"换位";
+                itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_SeatIndex", index);
+                itemRoom.ELabel_OperatorText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_ChgSeat");
                 itemRoom.EButton_OperatorButton.AddListener(() =>
                 {
                     self.ChgRoomSeat(index).Coroutine();
@@ -144,7 +168,7 @@ namespace ET.Client
 
                 if (myPlayerId == roomComponent.ownerRoomMemberId)
                 {
-                    itemRoom.ELabel_OperatorText.text = $"踢出房间";
+                    itemRoom.ELabel_OperatorText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_KickMember");
                     itemRoom.EButton_OperatorButton.AddListener(() =>
                     {
                         self.KickOutRoom(roomMemberId).Coroutine();
@@ -152,7 +176,7 @@ namespace ET.Client
                 }
                 else
                 {
-                    itemRoom.ELabel_OperatorText.text = $"查看信息";
+                    itemRoom.ELabel_OperatorText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_SeeMemberInfo");
                     itemRoom.EButton_OperatorButton.AddListener(() =>
                     {
                     });
@@ -161,7 +185,26 @@ namespace ET.Client
                 if (myPlayerId == roomMemberId)
                 {
                     itemRoom.EButton_OperatorButton.SetVisible(false);
-                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"[自己]";
+                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
+                }
+
+                GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);
+                bool isShowTeamChgButton = gamePlayBattleLevelCfg.TeamMode is PlayerTeam;
+                if (isShowTeamChgButton)
+                {
+                    itemRoom.EImage_TeamImage.SetVisible(true);
+                    if (roomMember.roomTeamId == RoomTeamId.Green)
+                    {
+                        itemRoom.EImage_TeamImage.color = Color.green;
+                    }
+                    else if (roomMember.roomTeamId == RoomTeamId.Red)
+                    {
+                        itemRoom.EImage_TeamImage.color = Color.red;
+                    }
+                    else if (roomMember.roomTeamId == RoomTeamId.Blue)
+                    {
+                        itemRoom.EImage_TeamImage.color = Color.blue;
+                    }
                 }
             }
 
@@ -178,7 +221,7 @@ namespace ET.Client
         {
             ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-            string msg = "是否确认退出房间?";
+            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_IsQuitRoom");
             ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
             {
                 self._QuitRoom().Coroutine();
@@ -189,7 +232,15 @@ namespace ET.Client
         {
             await RoomHelper.QuitRoomAsync(self.ClientScene());
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgARRoom>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>();
+            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
+            if (playerComponent.IsDebugMode)
+            {
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>();
+            }
+            else
+            {
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+            }
         }
 
         public static async ETTask ShowQrCode(this DlgARRoom self)
@@ -208,14 +259,15 @@ namespace ET.Client
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
-                if (roomComponent.ChkIsAllReady() == false)
+                (bool bRet, string msg) = roomComponent.ChkOwnerStartGame();
+                if (bRet == false)
                 {
-                    UIManagerHelper.ShowTip(self.DomainScene(), "等待全部准备");
+                    UIManagerHelper.ShowTip(self.DomainScene(), msg);
                     return;
                 }
             }
-            RoomMember roomMember = roomComponent.GetRoomMember(myPlayerId);
-            bool isReady = roomMember.isReady;
+            RoomMember myRoomMember = roomComponent.GetRoomMember(myPlayerId);
+            bool isReady = myRoomMember.isReady;
 
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
@@ -228,36 +280,56 @@ namespace ET.Client
             await RoomHelper.ChgRoomMemberSeatAsync(self.ClientScene(), newSeat);
         }
 
-        public static async ETTask ChgRoomBattleLevelCfg(this DlgARRoom self)
+        public static async ETTask OnChooseBattleCfg(this DlgARRoom self)
+        {
+            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData()
+            {
+                isGlobalMode = false,
+                isAR = true,
+            });
+        }
+
+        public static async ETTask OnChgTeam(this DlgARRoom self)
         {
             ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
             RoomComponent roomComponent = self.GetRoomComponent();
-            if(roomComponent == null)
-            {
-                return;
-            }
-
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-            if (myPlayerId == roomComponent.ownerRoomMemberId)
-            {
-                string newBattleLevelCfgId = self.View.E_InputFieldBattleLevelCfgInputField.text;
-                if (GamePlayBattleLevelCfgCategory.Instance.Contain(newBattleLevelCfgId) == false)
-                {
-                    Log.Error($"GamePlayBattleLevelCfg not exist when newBattleLevelCfgId[{newBattleLevelCfgId}]");
-                    self.View.E_InputFieldBattleLevelCfgInputField.text = roomComponent.gamePlayBattleLevelCfgId;
-                    return;
-                }
-                GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(newBattleLevelCfgId);
-                if (gamePlayBattleLevelCfg.IsGlobalMode)
-                {
-                    Log.Error($"gamePlayBattleLevelCfg.IsGlobalMode == true when newBattleLevelCfgId[{newBattleLevelCfgId}]");
-                    self.View.E_InputFieldBattleLevelCfgInputField.text = roomComponent.gamePlayBattleLevelCfgId;
-                    return;
-                }
+            RoomMember roomMember = roomComponent.GetRoomMember(myPlayerId);
+            RoomTeamId roomTeamId = roomMember.roomTeamId;
 
-                await RoomHelper.ChgRoomBattleLevelCfgAsync(self.ClientScene(), newBattleLevelCfgId);
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);
+            PlayerTeam playerTeam = gamePlayBattleLevelCfg.TeamMode as PlayerTeam;
+            if (playerTeam.MaxTeamCount == 2)
+            {
+                if (roomTeamId == RoomTeamId.Green)
+                {
+                    roomTeamId = RoomTeamId.Red;
+                }
+                else if (roomTeamId == RoomTeamId.Red)
+                {
+                    roomTeamId = RoomTeamId.Green;
+                }
             }
+            else if (playerTeam.MaxTeamCount == 3)
+            {
+                if (roomTeamId == RoomTeamId.Green)
+                {
+                    roomTeamId = RoomTeamId.Red;
+                }
+                else if (roomTeamId == RoomTeamId.Red)
+                {
+                    roomTeamId = RoomTeamId.Blue;
+                }
+                else if (roomTeamId == RoomTeamId.Blue)
+                {
+                    roomTeamId = RoomTeamId.Green;
+                }
+            }
+
+            await RoomHelper.ChgRoomMemberTeamAsync(self.ClientScene(), roomTeamId);
         }
 
     }

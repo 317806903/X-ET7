@@ -14,7 +14,7 @@ namespace ET.Client
 		public static void RegisterUIEvent(this DlgLobby self)
 		{
 			self.View.E_EnterMapButton.AddListenerAsync(self.EnterMap);
-			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
+			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnBack);
 			self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
 
 		}
@@ -38,7 +38,7 @@ namespace ET.Client
 
 		public static async ETTask EnterMap(this DlgLobby self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			string gamePlayBattleLevelCfgId = self.gamePlayBattleLevelCfgId;
 			if (GamePlayBattleLevelCfgCategory.Instance.Contain(gamePlayBattleLevelCfgId) == false)
@@ -57,16 +57,16 @@ namespace ET.Client
 			await EnterMapHelper.EnterMapAsync(self.ClientScene(), gamePlayBattleLevelCfgId);
 		}
 
-		public static async ETTask ReturnLogin(this DlgLobby self)
+		public static async ETTask ReturnBack(this DlgLobby self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-			await LoginHelper.LoginOut(self.ClientScene());
+			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
 		}
 
 		public static async ETTask OnChooseBattleCfg(this DlgLobby self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData()
 			{

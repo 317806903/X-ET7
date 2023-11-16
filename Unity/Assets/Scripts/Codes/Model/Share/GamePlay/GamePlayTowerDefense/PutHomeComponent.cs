@@ -16,5 +16,8 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<TeamFlagType, long> TeamFlagType2PlayerIdCanPutHome;
 
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<TeamFlagType, bool> TeamFlagType2Result;
+
 	}
 }

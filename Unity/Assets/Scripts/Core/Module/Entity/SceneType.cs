@@ -21,6 +21,10 @@ namespace ET
 		Benchmark = 1 << 13,
 		Room = 1 << 14,
 		Match = 1 << 15,
+		Account = 1 << 16,
+		Rank = 1 << 17,
+		PlayerCache = 1 << 18,
+		Mail = 1 << 19,
 
 		// 客户端Model层
 		Client = 1 << 30,

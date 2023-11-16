@@ -20,18 +20,18 @@ namespace ET.Server
 				PlayerId = playerId,
 				RoomId = roomId,
 			});
-			
+
 			response.Error = _R2G_QuitRoom.Error;
 			response.Message = _R2G_QuitRoom.Message;
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.None;
+				playerStatusComponent.SubRoomType = SubRoomType.None;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 				playerStatusComponent.RoomId = 0;
 
 				await playerStatusComponent.NoticeClient();
 			}
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

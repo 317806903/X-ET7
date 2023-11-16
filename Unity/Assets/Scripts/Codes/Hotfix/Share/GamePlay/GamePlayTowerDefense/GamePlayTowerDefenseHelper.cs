@@ -60,43 +60,56 @@ namespace ET
             for (int i = 0; i < count; i++)
             {
                 string unitCfgId = towerCfg.UnitId[i];
-                int unitLevel = towerCfg.Level[i];
+                int unitNum = 1;
+                if (towerCfg.Num.Count > i)
+                {
+                    unitNum = towerCfg.Num[i];
+                }
+                int unitLevel = 1;
+                if (towerCfg.Level.Count > i)
+                {
+                    unitLevel = towerCfg.Level[i];
+                }
                 float3 releativePos = float3.zero;
                 if (towerCfg.RelativePosition.Count > i)
                 {
                     releativePos = new float3(towerCfg.RelativePosition[i].X, towerCfg.RelativePosition[i].Y, towerCfg.RelativePosition[i].Z);
                 }
-                Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-                if (isTower)
+                for (int j = 0; j < unitNum; j++)
                 {
-                    TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
-                    towerComponent.towerCfgId = towerId;
-                    towerComponent.playerId = playerId;
-                }
+                    Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-                GamePlayHelper.AddUnitPathfinding(towerUnit);
-                if (isCallMonster)
-                {
-                    GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
-                    TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetPlayerCallMonsterTeamFlagTypeByPlayer(playerId, pos);
-                    GamePlayHelper.AddUnitTeamFlag(towerUnit, teamFlagType);
-
-                    MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-                    int rewardGold = 0;
-                    if (towerCfg.RewardGold.Count > i)
+                    if (isTower)
                     {
-                        rewardGold = towerCfg.RewardGold[i];
-                        monsterWaveCallComponent.RecordUnit2Monster(towerUnit.Id, "", rewardGold);
+                        TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
+                        towerComponent.towerCfgId = towerId;
+                        towerComponent.playerId = playerId;
                     }
-                }
-                else
-                {
-                    GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
-                    GamePlayHelper.AddUnitInfo(playerId, towerUnit);
-                }
 
-                unitList.Add(towerUnit);
+                    GamePlayHelper.AddUnitPathfinding(towerUnit);
+                    if (isCallMonster)
+                    {
+                        GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
+                        TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetPlayerCallMonsterTeamFlagTypeByPlayer(playerId, pos);
+                        GamePlayHelper.AddUnitTeamFlag(towerUnit, teamFlagType);
+
+                        MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+                        int rewardGold = 0;
+                        if (towerCfg.RewardGold.Count > i)
+                        {
+                            rewardGold = towerCfg.RewardGold[i];
+                            monsterWaveCallComponent.RecordUnit2Monster(towerUnit.Id, "", rewardGold);
+                        }
+                    }
+                    else
+                    {
+                        GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
+                        GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+                    }
+
+                    unitList.Add(towerUnit);
+                }
             }
             return unitList;
         }

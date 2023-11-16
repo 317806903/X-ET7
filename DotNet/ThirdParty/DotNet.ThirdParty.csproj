@@ -67,8 +67,16 @@
         <Link>runtimes\linux\native\libkcp.so</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="..\..\Unity\Assets\Scripts\ThirdParty\MeshDecode\libmesh_utils.dll">
+      <Content Include="..\..\Unity\Assets\Scripts\ThirdParty\MeshDecode\Windows\libmesh_utils.dll">
         <Link>runtimes\win\native\libmesh_utils.dll</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Unity\Assets\Scripts\ThirdParty\MeshDecode\Linux\libmesh_utils.so">
+        <Link>runtimes\linux\native\libmesh_utils.so</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Unity\Assets\Scripts\ThirdParty\MeshDecode\OSX\libmesh_utils.dylib">
+        <Link>runtimes\osx\native\libmesh_utils.dylib</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

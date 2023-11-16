@@ -7,10 +7,8 @@
 		{
 			Scene clientScene = session.ClientScene();
 
-			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
-
-			playerComponent.PlayerStatus = PlayerStatus.Battle;
-			playerComponent.MyId = message.Unit.UnitId;
+			Player player = ET.Client.PlayerHelper.GetMyPlayer(clientScene);
+			player.UnitId = message.Unit.UnitId;
 			// 通知场景切换协程继续往下走
 			session.DomainScene().GetComponent<ObjectWait>().Notify(new Wait_CreateMyUnit() {Message = message});
 			await ETTask.CompletedTask;

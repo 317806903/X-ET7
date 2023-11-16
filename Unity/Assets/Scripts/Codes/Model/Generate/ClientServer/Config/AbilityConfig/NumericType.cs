@@ -47,6 +47,14 @@ namespace ET.AbilityConfig
         SkillDisFinalAdd = 10034,
         SkillDisFinalPct = 10035,
         /// <summary>
+        /// 当前血量
+        /// </summary>
+        HpBase = 10051,
+        HpAdd = 10052,
+        HpPct = 10053,
+        HpFinalAdd = 10054,
+        HpFinalPct = 10055,
+        /// <summary>
         /// 总血量
         /// </summary>
         MaxHpBase = 10061,

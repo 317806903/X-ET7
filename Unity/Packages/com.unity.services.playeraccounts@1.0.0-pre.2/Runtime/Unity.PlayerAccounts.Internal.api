@@ -1,0 +1,70 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace Unity.Services.PlayerAccounts
+{
+    public interface IUnityPlayer
+    {
+        public event System.Action SignedIn;
+        public event System.Action SignedOut;
+        public event System.Action<Unity.Services.Core.RequestFailedException> SignInFailed;
+        public string AccessToken { get; }
+        public bool IsSignedIn { get; }
+        public System.Threading.Tasks.Task RefreshTokenAsync();
+        public System.Threading.Tasks.Task SignInAsync();
+        public void SignOut(bool clearCredentials = false);
+    }
+
+    public static class UnityPlayer
+    {
+        public static IUnityPlayer Instance { get; }
+    }
+
+    public class UnityPlayerSettings : UnityEngine.ScriptableObject
+    {
+        [UnityEngine.SerializeField] public string clientId;
+        public static string AccessTokenKey { get; }
+        public static string AuthUrl { get; }
+        public static string ClientId { get; }
+        public static string CodeChallengeMethod { get; }
+        public static UnityPlayerSettings Instance { get; }
+        public static UnityPlayerSettings NullableInstance { get; }
+        public static string RefreshTokenKey { get; }
+        public static string TokenUrl { get; }
+        public UnityPlayerSettings() {}
+    }
+}
+
+namespace Unity.Services.PlayerAccounts.Models
+{
+    public class BaseJwt
+    {
+        [Newtonsoft.Json.JsonProperty(@"exp")] public int ExpirationTimeUnix;
+        [Newtonsoft.Json.JsonProperty(@"iat")] public int IssuedAtTimeUnix;
+        [Newtonsoft.Json.JsonProperty(@"nbf")] public int NotBeforeTimeUnix;
+        [Newtonsoft.Json.JsonIgnore] public System.DateTime ExpirationTime { get; }
+        [Newtonsoft.Json.JsonIgnore] public System.DateTime IssuedAtTime { get; }
+        [Newtonsoft.Json.JsonIgnore] public System.DateTime NotBeforeTime { get; }
+        [UnityEngine.Scripting.Preserve] public BaseJwt() {}
+        protected System.DateTime ConvertTimestamp(int timestamp);
+    }
+}
+
+namespace Unity.Services.PlayerAccounts.Utilities
+{
+    public static class BrowserUtils
+    {
+        public static event System.Action<string> authCodeReceivedEvent;
+        public static void Dismiss();
+        public static string GetAuthCode(System.Net.HttpListenerContext context, string state);
+        public static string GetRedirectUri();
+        public static System.Threading.Tasks.Task<System.Threading.Tasks.Task> LaunchUrl(string url);
+        public static void SendBrowserResponse(System.Net.HttpListenerResponse response, System.Net.HttpListener http);
+    }
+
+    public class JwtDecoder
+    {
+        public static byte[] Base64UrlDecode(string input);
+        public T Decode<T>(string token) where T : Unity.Services.PlayerAccounts.Models.BaseJwt;
+    }
+}

@@ -86,5 +86,10 @@ namespace ET
 #endif
             ShellHelper.Run($"{tools} --AppType=Proto2CS --Console=1", "../Bin/");
         }
+
+        public static void RunMongoDBFromDocker()
+        {
+            ShellHelper.Run($"docker run -itd --restart=always --name mongo-db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=example -p 27017:27017 mongo",".");
+        } 
     }
 }

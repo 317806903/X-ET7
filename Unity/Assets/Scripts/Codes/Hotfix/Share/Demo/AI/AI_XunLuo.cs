@@ -5,7 +5,7 @@ namespace ET
 {
     public class AI_XunLuo: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AICfg aiConfig)
+        public override int Check(AIComponent aiComponent, AICfg aiConfig, bool isFirst)
         {
             Unit unit = aiComponent.GetUnit();
             if (unit == null)
@@ -32,7 +32,7 @@ namespace ET
             {
                 return;
             }
-            
+
             Log.Debug("开始巡逻");
 
             while (true)

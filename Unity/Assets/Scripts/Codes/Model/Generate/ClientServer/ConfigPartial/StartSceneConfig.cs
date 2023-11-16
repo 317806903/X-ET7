@@ -7,32 +7,56 @@ namespace ET
     public partial class StartSceneConfigCategory
     {
         public MultiMap<int, StartSceneConfig> Gates = new ();
-        
+
         public MultiDictionary<int, int, StartSceneConfig> ProcessScenes = new ();
-        
-        public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new ();
+
+        public MultiDictionary<long, string, StartSceneConfig> ClientScenesByName = new ();
 
         public StartSceneConfig LocationConfig;
 
         public List<StartSceneConfig> Realms = new ();
-        
+
         public List<StartSceneConfig> Routers = new ();
         public StartSceneConfig RouterManager;
-        
+
         public List<StartSceneConfig> Robots = new ();
 
         public StartSceneConfig BenchmarkServer;
-        public StartSceneConfig RoomManager;
+
         public MultiMap<int, StartSceneConfig> DynamicMaps = new ();
-        
+
         public Dictionary<int, StartSceneConfig> GetByProcess(int process)
         {
-            return this.ProcessScenes[process];
+            if (this.ProcessScenes.TryGetValue(process, out Dictionary<int, StartSceneConfig> configDic))
+            {
+                return configDic;
+            }
+            return null;
         }
-        
+
         public StartSceneConfig GetRoomManager(int zone)
         {
-            return this.RoomManager;
+            return GetBySceneName(zone, SceneType.Room.ToString());
+        }
+
+        public StartSceneConfig GetAccountManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.Account.ToString());
+        }
+
+        public StartSceneConfig GetRankManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.Rank.ToString());
+        }
+
+        public StartSceneConfig GetPlayerCacheManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.PlayerCache.ToString());
+        }
+
+        public StartSceneConfig GetMailManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.Mail.ToString());
         }
 
         public StartSceneConfig GetDynamicMap(int zone)
@@ -44,7 +68,11 @@ namespace ET
 
         public StartSceneConfig GetBySceneName(int zone, string name)
         {
-            return this.ClientScenesByName[zone][name];
+            if (this.ClientScenesByName.TryGetValue(zone, name, out StartSceneConfig config))
+            {
+                return config;
+            }
+            return null;
         }
 
         partial void PostResolve()
@@ -52,20 +80,16 @@ namespace ET
             foreach (StartSceneConfig startSceneConfig in this.GetAll().Values)
             {
                 this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig.Id, startSceneConfig);
-                
-                if (!this.ClientScenesByName.ContainsKey(startSceneConfig.Zone))
-                {
-                    this.ClientScenesByName.Add(startSceneConfig.Zone, new Dictionary<string, StartSceneConfig>());
-                }
+
                 if(startSceneConfig.Type == SceneType.Map && startSceneConfig.Name == "Dynamic")
                 {
                     this.DynamicMaps.Add(startSceneConfig.Zone, startSceneConfig);
                 }
                 else
                 {
-                    this.ClientScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
+                    this.ClientScenesByName.Add(startSceneConfig.Zone, startSceneConfig.Name, startSceneConfig);
                 }
-                
+
                 switch (startSceneConfig.Type)
                 {
                     case SceneType.Realm:
@@ -90,21 +114,28 @@ namespace ET
                         this.BenchmarkServer = startSceneConfig;
                         break;
                     case SceneType.Room:
-                        this.RoomManager = startSceneConfig;
                         break;
                     case SceneType.Match:
                         break;
                     case SceneType.Map:
                         break;
+                    case SceneType.Account:
+                        break;
+                    case SceneType.Rank:
+                        break;
+                    case SceneType.PlayerCache:
+                        break;
+                    case SceneType.Mail:
+                        break;
                 }
             }
         }
     }
-    
+
     public partial class StartSceneConfig
     {
         public long InstanceId;
-        
+
         public SceneType Type;
 
         public StartProcessConfig StartProcessConfig
@@ -114,7 +145,7 @@ namespace ET
                 return StartProcessConfigCategory.Instance.Get(this.Process);
             }
         }
-        
+
         public StartZoneConfig StartZoneConfig
         {
             get

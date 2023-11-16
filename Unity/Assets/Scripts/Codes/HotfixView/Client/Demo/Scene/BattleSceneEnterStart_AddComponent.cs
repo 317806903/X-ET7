@@ -28,23 +28,25 @@ namespace ET.Client
                 }
             }
 
-            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(scene);
-            if (playerComponent.PlayerGameMode == PlayerGameMode.None)
+            bool isAR = false;
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            if (playerStatusComponent.RoomType == RoomType.Normal)
             {
-                Log.Error("BattleSceneEnterStart_AddComponent playerComponent.PlayerGameMode == PlayerGameMode.None");
+                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
+                {
+                    isAR = true;
+                }
             }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.SingleMap)
+            else if (playerStatusComponent.RoomType == RoomType.AR)
             {
-                await SetMainCamera(currentScene);
+                isAR = true;
             }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.Room)
-            {
-                await SetMainCamera(currentScene);
-            }
-            else if (playerComponent.PlayerGameMode == PlayerGameMode.ARRoom)
-            {
 
+            if (isAR == false)
+            {
+                await SetMainCamera(currentScene);
             }
+
             Log.Debug("BattleSceneEnterStart_AddComponent 44");
         }
 

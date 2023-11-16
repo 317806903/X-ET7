@@ -422,6 +422,50 @@
     ]
   },
   {
+    "id": "Buff_Circle3",
+    "name": "毒雾3",
+    "icon": "",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerCircle3"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.2
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffResetDuration_2",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Circle1",
+        "actionCallParam": {
+          "$type": "ActionCallSelectLast"
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "Buff_AttackGetGold1",
     "name": "攻击偷钱",
     "icon": "",
@@ -687,7 +731,7 @@
     "selfPlayAnimator": "",
     "buffType": 1,
     "priority": 1,
-    "maxStack": 10,
+    "maxStack": 7,
     "isIgnoreCasterActor": true,
     "tickTime": [
       1
@@ -879,6 +923,49 @@
             "angle": 360
           },
           "isChgToSelectPos": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_SeedHeal1",
+    "name": "回血",
+    "icon": "",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      2
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_SeedHeal1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_SeedHeal1",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
         },
         "actionCondition1": [],
         "actionCondition2": []

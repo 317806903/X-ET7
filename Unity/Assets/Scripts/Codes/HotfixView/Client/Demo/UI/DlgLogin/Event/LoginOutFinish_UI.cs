@@ -5,6 +5,13 @@
     {
         protected override async ETTask Run(Scene scene, EventType.LoginOutFinish args)
         {
+            Player player = PlayerHelper.GetMyPlayer(scene);
+            Log.Debug($"--zpb player[{player}]");
+            if (player.LoginType == LoginType.UnitySDK)
+            {
+                ET.Client.LoginSDKComponent.Instance.SetClientRecordAccountLoginTimeNone();
+                ET.Client.LoginSDKComponent.Instance.SDKLoginOut(false).Coroutine();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,11 +29,13 @@ namespace ET.Client
 
 		public static void RegisterUIEvent(this DlgLoading self)
 		{
-
+			self.transBackground = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Background");
+			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Percentage");
 		}
 
 		public static void ShowWindow(this DlgLoading self, ShowWindowData contextData = null)
 		{
+			self.ShowProcess(0);
 			self.targetProcess = 0.5f;
 			self.curProcess = 0.2f;
 
@@ -53,6 +56,12 @@ namespace ET.Client
 			}
 		}
 
+		public static void ShowProcess(this DlgLoading self, float per)
+		{
+			self.transBackground.localScale = new Vector3(per, 1, 1);
+			self.transPercentage.gameObject.GetComponent<TextMeshProUGUI>().text = $"{(int)(per * 100)}%";
+		}
+
 		public static void Update(this DlgLoading self)
 		{
 			if (self.targetProcess >= 1)
@@ -66,7 +75,7 @@ namespace ET.Client
 			}
 
 			self.curProcess += 0.05f;
-			self.View.E_SliderSlider.value = self.curProcess;
+			self.ShowProcess(self.curProcess);
 		}
 	}
 }

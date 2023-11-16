@@ -459,9 +459,9 @@
     "id": "EffectCreate_PlayerLine3",
     "name": "直线火焰",
     "desc": "直线火焰",
-    "resEffectId": "ResEffect_Fire1",
+    "resEffectId": "ResEffect_Fire3",
     "playAudioActionId": "PlayAudio_line",
-    "key": "ResEffect_Fire1",
+    "key": "ResEffect_Fire3",
     "maxKeyNum": 1,
     "duration": -1,
     "isSceneEffect": false,
@@ -531,9 +531,9 @@
     "id": "EffectCreate_PlayerCircle3",
     "name": "圆形毒雾",
     "desc": "圆形毒雾",
-    "resEffectId": "ResEffect_Drag1",
+    "resEffectId": "ResEffect_Drag3",
     "playAudioActionId": "PlayAudio_circle",
-    "key": "ResEffect_Drag1",
+    "key": "ResEffect_Drag3",
     "maxKeyNum": 1,
     "duration": -1,
     "isSceneEffect": false,
@@ -1185,6 +1185,30 @@
     "maxKeyNum": 1,
     "duration": -1,
     "isSceneEffect": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_SeedHeal1",
+    "name": "种子治疗1",
+    "desc": "",
+    "resEffectId": "ResEffect_SeedHeal1",
+    "playAudioActionId": "",
+    "key": "SeedHeal1",
+    "maxKeyNum": -1,
+    "duration": 2,
+    "isSceneEffect": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {

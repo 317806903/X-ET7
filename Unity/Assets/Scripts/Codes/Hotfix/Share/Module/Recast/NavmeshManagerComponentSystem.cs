@@ -254,10 +254,17 @@ namespace ET
             foreach (RecastBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
             {
                 RcHeightfield rcHeightfield = recastBuilderResult.GetSolidHeightfield();
-                bool bHit = self._ChkHitPointOneHeightfield(rayPos, rcHeightfield);
-                if (bHit)
+                try
                 {
-                    return true;
+                    bool bHit = self._ChkHitPointOneHeightfield(rayPos, rcHeightfield);
+                    if (bHit)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
                 }
             }
 

@@ -14,17 +14,17 @@ namespace ET
     public class ComponentViewEditor: Editor
     {
         private bool publicFieldShow = true;
-        private bool publicPropertyShow;
+        private bool publicPropertyShow = true;
         private bool noPublicFieldShow;
         private bool noPublicPropertyShow;
-        
+
         public override void OnInspectorGUI()
         {
             ComponentView componentView = (ComponentView) target;
             Entity component = componentView.Component;
             BeginDraw(component);
         }
-        
+
         private void BeginDraw(Entity obj)
         {
             EditorGUIUtility.labelWidth = 144;
@@ -34,7 +34,7 @@ namespace ET
             EditorGUILayout.TextField("InstanceId", obj.InstanceId.ToString());
             EditorGUILayout.TextField("Id", obj.Id.ToString());
             EditorGUILayout.TextField("Zone", obj.DomainZone().ToString());
-            
+
             this.publicFieldShow = EditorGUILayout.BeginFoldoutHeaderGroup(this.publicFieldShow, "Public Field");
             if (this.publicFieldShow)
             {
@@ -47,7 +47,7 @@ namespace ET
                 }
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
-            
+
             this.publicPropertyShow = EditorGUILayout.BeginFoldoutHeaderGroup(this.publicPropertyShow, "Public Property");
             if (this.publicPropertyShow)
             {
@@ -60,7 +60,7 @@ namespace ET
                 }
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
-            
+
             this.noPublicFieldShow = EditorGUILayout.BeginFoldoutHeaderGroup(this.noPublicFieldShow, "No Public Field");
             if (this.noPublicFieldShow)
             {
@@ -73,7 +73,7 @@ namespace ET
                 }
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
-            
+
             this.noPublicPropertyShow = EditorGUILayout.BeginFoldoutHeaderGroup(this.noPublicPropertyShow, "No Public Property");
             if (this.noPublicPropertyShow)
             {
@@ -104,10 +104,10 @@ namespace ET
             public ITypeDrawer Drawer;
             public bool IsInterface => Target.IsInterface;
         }
-        
+
         private static readonly Dictionary<Type, TypeDrawer> typeDrawers = new Dictionary<Type, TypeDrawer>();
         private static readonly List<TypeDrawer> inheritDrawers = new List<TypeDrawer>();
-        
+
         static ComponentViewHelper()
         {
             Assembly assembly = typeof (ComponentViewHelper).Assembly;
@@ -195,7 +195,7 @@ namespace ET
                 }
             }
         }
-        
+
         public static void DrawObject(object obj, string label)
         {
             if (obj == null)
@@ -210,8 +210,15 @@ namespace ET
                 EditorGUILayout.LabelField(label, "Cyclic Reference");
                 return;
             }
-            
+
             var type = obj.GetType();
+            var publicFields1 = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            foreach (var info in publicFields1)
+            {
+                if (type.IsDefined(typeof (HideInInspector)))
+                    continue;
+                Draw(info.FieldType, info.GetValue(obj), info.Name);
+            }
             state[1001] = EditorGUILayout.Foldout(state[1001], label, "FoldoutHeader");
             if (state[1001])
             {
@@ -227,7 +234,7 @@ namespace ET
                         Draw(info.FieldType, info.GetValue(obj), info.Name);
                     }
                 }
-                
+
                 state[1003] = EditorGUILayout.Foldout(state[1003], "Public Property", "FoldoutHeader");
                 if (state[1003])
                 {
@@ -239,7 +246,7 @@ namespace ET
                         Draw(info.PropertyType, info.GetValue(obj), info.Name);
                     }
                 }
-                
+
                 state[1004] = EditorGUILayout.Foldout(state[1004], "No Public Field", "FoldoutHeader");
                 if (state[1004])
                 {
@@ -251,7 +258,7 @@ namespace ET
                         Draw(info.FieldType, info.GetValue(obj), info.Name);
                     }
                 }
-                
+
                 state[1005] = EditorGUILayout.Foldout(state[1005], "No Public Property", "FoldoutHeader");
                 if (state[1005])
                 {

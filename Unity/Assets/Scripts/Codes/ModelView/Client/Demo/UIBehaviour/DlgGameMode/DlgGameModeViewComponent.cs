@@ -24,23 +24,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EGBackGroundImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EGBackGroundImage == null )
-				{
-					this.m_EGBackGroundImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround");
-				}
-				return this.m_EGBackGroundImage;
-			}
-		}
-
 		public UnityEngine.UI.Button E_ReturnLoginButton
 		{
 			get
@@ -245,7 +228,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_ARRoomModeButton
+		public UnityEngine.UI.Button E_ARRoomModeCreateButton
 		{
 			get
 			{
@@ -254,15 +237,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ARRoomModeButton == null )
+				if( this.m_E_ARRoomModeCreateButton == null )
 				{
-					this.m_E_ARRoomModeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomMode");
+					this.m_E_ARRoomModeCreateButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeCreate");
 				}
-				return this.m_E_ARRoomModeButton;
+				return this.m_E_ARRoomModeCreateButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_ARRoomModeImage
+		public UnityEngine.UI.Image E_ARRoomModeCreateImage
 		{
 			get
 			{
@@ -271,15 +254,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ARRoomModeImage == null )
+				if( this.m_E_ARRoomModeCreateImage == null )
 				{
-					this.m_E_ARRoomModeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomMode");
+					this.m_E_ARRoomModeCreateImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeCreate");
 				}
-				return this.m_E_ARRoomModeImage;
+				return this.m_E_ARRoomModeCreateImage;
 			}
 		}
 
-		public UnityEngine.UI.Text E_ARRoomModeTextText
+		public UnityEngine.UI.Text E_ARRoomModeCreateTextText
 		{
 			get
 			{
@@ -288,15 +271,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ARRoomModeTextText == null )
+				if( this.m_E_ARRoomModeCreateTextText == null )
 				{
-					this.m_E_ARRoomModeTextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomMode/E_ARRoomModeText");
+					this.m_E_ARRoomModeCreateTextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeCreate/E_ARRoomModeCreateText");
 				}
-				return this.m_E_ARRoomModeTextText;
+				return this.m_E_ARRoomModeCreateTextText;
 			}
 		}
 
-		public UITextLocalizeMonoView E_ARRoomModeTextUITextLocalizeMonoView
+		public UITextLocalizeMonoView E_ARRoomModeCreateTextUITextLocalizeMonoView
 		{
 			get
 			{
@@ -305,18 +288,85 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ARRoomModeTextUITextLocalizeMonoView == null )
+				if( this.m_E_ARRoomModeCreateTextUITextLocalizeMonoView == null )
 				{
-					this.m_E_ARRoomModeTextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomMode/E_ARRoomModeText");
+					this.m_E_ARRoomModeCreateTextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeCreate/E_ARRoomModeCreateText");
 				}
-				return this.m_E_ARRoomModeTextUITextLocalizeMonoView;
+				return this.m_E_ARRoomModeCreateTextUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Button E_ARRoomModeJoinButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ARRoomModeJoinButton == null )
+				{
+					this.m_E_ARRoomModeJoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeJoin");
+				}
+				return this.m_E_ARRoomModeJoinButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ARRoomModeJoinImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ARRoomModeJoinImage == null )
+				{
+					this.m_E_ARRoomModeJoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeJoin");
+				}
+				return this.m_E_ARRoomModeJoinImage;
+			}
+		}
+
+		public UnityEngine.UI.Text E_ARRoomModeJoinTextText
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ARRoomModeJoinTextText == null )
+				{
+					this.m_E_ARRoomModeJoinTextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeJoin/E_ARRoomModeJoinText");
+				}
+				return this.m_E_ARRoomModeJoinTextText;
+			}
+		}
+
+		public UITextLocalizeMonoView E_ARRoomModeJoinTextUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ARRoomModeJoinTextUITextLocalizeMonoView == null )
+				{
+					this.m_E_ARRoomModeJoinTextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/E_ARRoomModeJoin/E_ARRoomModeJoinText");
+				}
+				return this.m_E_ARRoomModeJoinTextUITextLocalizeMonoView;
 			}
 		}
 
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
-			this.m_EGBackGroundImage = null;
 			this.m_E_ReturnLoginButton = null;
 			this.m_E_ReturnLoginImage = null;
 			this.m_E_ReturnTextText = null;
@@ -329,15 +379,18 @@ namespace ET.Client
 			this.m_E_RoomModeImage = null;
 			this.m_E_RoomModeTextText = null;
 			this.m_E_RoomModeTextUITextLocalizeMonoView = null;
-			this.m_E_ARRoomModeButton = null;
-			this.m_E_ARRoomModeImage = null;
-			this.m_E_ARRoomModeTextText = null;
-			this.m_E_ARRoomModeTextUITextLocalizeMonoView = null;
+			this.m_E_ARRoomModeCreateButton = null;
+			this.m_E_ARRoomModeCreateImage = null;
+			this.m_E_ARRoomModeCreateTextText = null;
+			this.m_E_ARRoomModeCreateTextUITextLocalizeMonoView = null;
+			this.m_E_ARRoomModeJoinButton = null;
+			this.m_E_ARRoomModeJoinImage = null;
+			this.m_E_ARRoomModeJoinTextText = null;
+			this.m_E_ARRoomModeJoinTextUITextLocalizeMonoView = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.RectTransform m_EGBackGroundRectTransform = null;
-		private UnityEngine.UI.Image m_EGBackGroundImage = null;
 		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
 		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
 		private UnityEngine.UI.Text m_E_ReturnTextText = null;
@@ -350,10 +403,14 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_RoomModeImage = null;
 		private UnityEngine.UI.Text m_E_RoomModeTextText = null;
 		private UITextLocalizeMonoView m_E_RoomModeTextUITextLocalizeMonoView = null;
-		private UnityEngine.UI.Button m_E_ARRoomModeButton = null;
-		private UnityEngine.UI.Image m_E_ARRoomModeImage = null;
-		private UnityEngine.UI.Text m_E_ARRoomModeTextText = null;
-		private UITextLocalizeMonoView m_E_ARRoomModeTextUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_E_ARRoomModeCreateButton = null;
+		private UnityEngine.UI.Image m_E_ARRoomModeCreateImage = null;
+		private UnityEngine.UI.Text m_E_ARRoomModeCreateTextText = null;
+		private UITextLocalizeMonoView m_E_ARRoomModeCreateTextUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_E_ARRoomModeJoinButton = null;
+		private UnityEngine.UI.Image m_E_ARRoomModeJoinImage = null;
+		private UnityEngine.UI.Text m_E_ARRoomModeJoinTextText = null;
+		private UITextLocalizeMonoView m_E_ARRoomModeJoinTextUITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

@@ -228,6 +228,10 @@ public class UITextLocalizeMonoView: MonoBehaviour
             while (selectChild.parent != null)
             {
                 selectChild = selectChild.parent;
+                if (selectChild.name == "Canvas (Environment)")
+                {
+                    break;
+                }
                 result = string.Format("{0}/{1}", selectChild.name, result);
                 if (selectChild.gameObject.GetComponent<Canvas>() != null)
                 {

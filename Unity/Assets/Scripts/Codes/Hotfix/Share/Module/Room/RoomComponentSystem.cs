@@ -19,9 +19,10 @@ namespace ET
             }
         }
 
-        public static void Init(this RoomComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
+        public static void Init(this RoomComponent self, RoomType roomType, SubRoomType subRoomType, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
         {
-            self.isARRoom = isARRoom;
+            self.roomType = roomType;
+            self.subRoomType = subRoomType;
             self.arSceneId = "";
             self.roomStatus = RoomStatus.Idle;
             self.ownerRoomMemberId = playerId;
@@ -180,6 +181,23 @@ namespace ET
         public static void ChgRoomBattleLevelCfg(this RoomComponent self, string newBattleCfgId)
         {
             self.gamePlayBattleLevelCfgId = newBattleCfgId;
+        }
+
+        public static bool IsARRoom(this RoomComponent self)
+        {
+            bool isAR = false;
+            if (self.roomType == RoomType.AR)
+            {
+                isAR = true;
+            }
+            else if(self.roomType == RoomType.Normal)
+            {
+                if (self.subRoomType == SubRoomType.NormalARCreate || self.subRoomType == SubRoomType.NormalARScanCode)
+                {
+                    isAR = true;
+                }
+            }
+            return isAR;
         }
 
         public static (bool, string) ChkOwnerStartGame(this RoomComponent self)

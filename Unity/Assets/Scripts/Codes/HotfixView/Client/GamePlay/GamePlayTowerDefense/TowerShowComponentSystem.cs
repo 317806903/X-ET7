@@ -143,8 +143,6 @@ namespace ET.Client
 
         public static bool CancelSelect(this TowerShowComponent self)
         {
-            Log.Debug($"ET.Client.TowerShowComponentSystem.CancelSelect unitId[{self.GetUnit().Id}] towerCfgId[{self.towerComponent.towerCfgId}]");
-
             bool bRet = false;
             if (self.transSelectShow.gameObject.activeSelf)
             {
@@ -152,6 +150,9 @@ namespace ET.Client
                 self.transSelectShow.gameObject.SetActive(false);
                 self.transAttackArea.gameObject.SetActive(false);
                 bRet = true;
+
+                Log.Debug($"ET.Client.TowerShowComponentSystem.CancelSelect unitId[{self.GetUnit().Id}] towerCfgId[{self.towerComponent.towerCfgId}]");
+
             }
             return bRet;
         }

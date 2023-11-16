@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
 
@@ -221,6 +222,11 @@ namespace ET.Client
 
             await handle;
 
+            if (typeof(T) == typeof (UnityEngine.GameObject))
+            {
+                self.ResetShaderWhenEditor((UnityEngine.GameObject)handle.AssetObject);
+            }
+
             return handle.GetAssetObject<T>();
         }
 
@@ -235,6 +241,11 @@ namespace ET.Client
             }
 
             await handle;
+
+            if (type == typeof (UnityEngine.GameObject))
+            {
+                self.ResetShaderWhenEditor((UnityEngine.GameObject)handle.AssetObject);
+            }
 
             return handle.AssetObject;
         }
@@ -257,6 +268,11 @@ namespace ET.Client
             if (handle.IsValid)
             {
                 await handle;
+            }
+
+            foreach (GameObject rootGameObject in handle.SceneObject.GetRootGameObjects())
+            {
+                self.ResetShaderWhenEditor(rootGameObject);
             }
 
             return handle.SceneObject;
@@ -306,6 +322,11 @@ namespace ET.Client
                 self.AssetsOperationHandles[location] = handle;
             }
 
+            if (typeof (T) == typeof (UnityEngine.GameObject))
+            {
+                self.ResetShaderWhenEditor((UnityEngine.GameObject)handle.AssetObject);
+            }
+
             return handle.AssetObject as T;
         }
 
@@ -319,7 +340,52 @@ namespace ET.Client
                 self.AssetsOperationHandles[location] = handle;
             }
 
+            if (type == typeof (UnityEngine.GameObject))
+            {
+                self.ResetShaderWhenEditor((UnityEngine.GameObject)handle.AssetObject);
+            }
+
             return handle.AssetObject;
+        }
+
+        public static void ResetShaderWhenEditor(this ResComponent self, UnityEngine.GameObject gameObject)
+        {
+#if UNITY_IPHONE
+            if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsEditor && UnityEngine.Application.isEditor)
+            {
+                var renderers = gameObject.GetComponentsInChildren<UnityEngine.Renderer>();
+
+                foreach (var renderer in renderers)
+                {
+                    if (renderer.sharedMaterials != null)
+                    {
+                        foreach (UnityEngine.Material material in renderer.sharedMaterials)
+                        {
+                            if (material != null)
+                            {
+                                string shaderName = material.shader.name;
+                                material.shader = Shader.Find(shaderName);
+                            }
+                        }
+                    }
+                }
+
+                var textMeshProUGUIs = gameObject.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+
+                foreach (var textMeshProUGUI in textMeshProUGUIs)
+                {
+                    if (textMeshProUGUI.fontSharedMaterial != null)
+                    {
+                        UnityEngine.Material material = textMeshProUGUI.fontSharedMaterial;
+                        if (material != null)
+                        {
+                            string shaderName = material.shader.name;
+                            material.shader = Shader.Find(shaderName);
+                        }
+                    }
+                }
+            }
+#endif
         }
 
         #endregion

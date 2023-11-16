@@ -33,11 +33,11 @@ namespace ET.Server
                 }
                 else if (configType.FullName.StartsWith("ET.AbilityConfig."))
                 {
-                    configFilePath = $"../Config/Excel/{configPath}/AbilityConfig/{configType.Name}.bytes";
+                    configFilePath = $"../Config/Excel/{configPath}/AbilityConfig/{configType.Name.ToLower()}.bytes";
                 }
                 else
                 {
-                    configFilePath = $"../Config/Excel/{configPath}/GameConfig/{configType.Name}.bytes";
+                    configFilePath = $"../Config/Excel/{configPath}/GameConfig/{configType.Name.ToLower()}.bytes";
                 }
                 Log.Debug($"GetAllConfigBytes {configFilePath}");
 

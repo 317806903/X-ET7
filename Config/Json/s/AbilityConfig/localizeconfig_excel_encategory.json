@@ -217,98 +217,662 @@
   },
   {
     "key": "Text_Key_Name_Tow1_1",
-    "text_en": "弩箭塔"
+    "text_en": "X-Bow"
   },
   {
     "key": "Text_Key_Name_Tow1_2",
-    "text_en": "弩箭塔"
+    "text_en": "X-Bow"
   },
   {
     "key": "Text_Key_Name_Tow1_3",
-    "text_en": "弩箭塔"
+    "text_en": "X-Bow"
   },
   {
     "key": "Text_Key_Name_Tow2_1",
-    "text_en": "加农炮"
+    "text_en": "Cannon"
   },
   {
     "key": "Text_Key_Name_Tow2_2",
-    "text_en": "加农炮"
+    "text_en": "Cannon"
   },
   {
     "key": "Text_Key_Name_Tow2_3",
-    "text_en": "加农炮"
+    "text_en": "Cannon"
   },
   {
     "key": "Text_Key_Name_Tow3_1",
-    "text_en": "火图腾"
+    "text_en": "Fire Totem"
   },
   {
     "key": "Text_Key_Name_Tow3_2",
-    "text_en": "火图腾"
+    "text_en": "Fire Totem"
   },
   {
     "key": "Text_Key_Name_Tow3_3",
-    "text_en": "火图腾"
+    "text_en": "Fire Totem"
   },
   {
     "key": "Text_Key_Name_Tow4_1",
-    "text_en": "毒雾塔"
+    "text_en": "Poison "
   },
   {
     "key": "Text_Key_Name_Tow4_2",
-    "text_en": "毒雾塔"
+    "text_en": "Poison "
   },
   {
     "key": "Text_Key_Name_Tow4_3",
-    "text_en": "毒雾塔"
+    "text_en": "Poison "
   },
   {
     "key": "Text_Key_Name_Tow5_1",
-    "text_en": "龙击炮"
+    "text_en": "Dragon Tower"
   },
   {
     "key": "Text_Key_Name_Tow5_2",
-    "text_en": "龙击炮"
+    "text_en": "Dragon Tower"
   },
   {
     "key": "Text_Key_Name_Tow5_3",
-    "text_en": "龙击炮"
+    "text_en": "Dragon Tower"
   },
   {
     "key": "Text_Key_Name_Tow6_1",
-    "text_en": "雷电塔"
+    "text_en": "Tesla"
   },
   {
     "key": "Text_Key_Name_Tow6_2",
-    "text_en": "雷电塔"
+    "text_en": "Tesla"
   },
   {
     "key": "Text_Key_Name_Tow6_3",
-    "text_en": "雷电塔"
+    "text_en": "Tesla"
   },
   {
     "key": "Text_Key_Name_Tow7_1",
-    "text_en": "冰魔塔"
+    "text_en": "Ice Tower"
   },
   {
     "key": "Text_Key_Name_Tow7_2",
-    "text_en": "冰魔塔"
+    "text_en": "Ice Tower"
   },
   {
     "key": "Text_Key_Name_Tow7_3",
-    "text_en": "冰魔塔"
+    "text_en": "Ice Tower"
   },
   {
     "key": "Text_Key_Name_Tow8_1",
-    "text_en": "加速塔"
+    "text_en": "Speed Tower"
   },
   {
     "key": "Text_Key_Name_Tow8_2",
-    "text_en": "加速塔"
+    "text_en": "Speed Tower"
   },
   {
     "key": "Text_Key_Name_Tow8_3",
-    "text_en": "加速塔"
+    "text_en": "Speed Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_1",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_2",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_3",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_1",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_2",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_3",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_1",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_2",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_3",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_1",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_2",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_3",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_1",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_2",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_3",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_1",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_2",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_3",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_1",
+    "text_en": "Ice Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_2",
+    "text_en": "Ice Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_3",
+    "text_en": "Ice Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_1",
+    "text_en": "Speed Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_2",
+    "text_en": "Speed Tower"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_3",
+    "text_en": "Speed Tower"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_1",
+    "text_en": "Assault Team"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_2",
+    "text_en": "Healing Team"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_3",
+    "text_en": "Monster Army"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_4",
+    "text_en": "Baron of Bats"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Aoe",
+    "text_en": "Aoe"
+  },
+  {
+    "key": "Text_Key_TowerLabel_ST",
+    "text_en": "ST"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalNum",
+    "text_en": "Total Downloads: {0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownNum",
+    "text_en": "Current Downloads: {0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalDownSize",
+    "text_en": "Total Download Size: {0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownSize",
+    "text_en": "Current Download Size: {0}"
+  },
+  {
+    "key": "TextCode_Key_GameMode_All",
+    "text_en": "All"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
+    "text_en": "Tower Defense"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPK1",
+    "text_en": "PK"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_All",
+    "text_en": "All"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_AllPlayersOneGroup",
+    "text_en": "All players in one team"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerAlone",
+    "text_en": "Every player fights individually"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerTeam",
+    "text_en": "Team Cooperation"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_StartGame",
+    "text_en": "Start"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_WaitAllReady",
+    "text_en": "Waiting for all to be ready"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Ready",
+    "text_en": "Ready"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_CancelReady",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeatIndex",
+    "text_en": "Empty : {0}"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_ChgSeat",
+    "text_en": "Swap"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_KickMember",
+    "text_en": "Kick from Room"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeeMemberInfo",
+    "text_en": "View Information"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Self",
+    "text_en": "[Self]"
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCount",
+    "text_en": "{0} player"
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCountVs",
+    "text_en": "{0}VS{1}"
+  },
+  {
+    "key": "TextCode_Key_IsQuitRoom",
+    "text_en": "Do you want to leave the room?"
+  },
+  {
+    "key": "TextCode_Key_Net_ChkDisconnect",
+    "text_en": "Failed to connect"
+  },
+  {
+    "key": "TextCode_Key_Net_ChkConnect",
+    "text_en": "Please check your network and try connecting again."
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadSuccess",
+    "text_en": "Update Complete"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateErr",
+    "text_en": "Resource Update Error: {0}"
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadResErr",
+    "text_en": "Failed to Download Resources: {0} {1}"
+  },
+  {
+    "key": "TextCode_Key_IsQuitBattle",
+    "text_en": "Do you want to quit the battle?"
+  },
+  {
+    "key": "TextCode_Key_Hall_RoomNotExist",
+    "text_en": "Room Does Not Exist"
+  },
+  {
+    "key": "TextCode_Key_Hall_CreateRoomError",
+    "text_en": "Room Creation Failed"
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnRoom",
+    "text_en": "We noticed you left a room without confirmation. Do you want to rejpin?"
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnBattle",
+    "text_en": "We noticed you exited a game without confirmation. It is still running. Do you want to continue?"
+  },
+  {
+    "key": "TextCode_Key_Battle_WaveRewardGold",
+    "text_en": "Wave End Reward Coins: {0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_InterestOnDeposit",
+    "text_en": "Received Wave Settlement Interest: {0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_DivideEquallyTeamCoin",
+    "text_en": "Evenly Distributed Monster Kill Coins during Battle, Received: {0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText1",
+    "text_en": "Drag to place the headquarter"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText2",
+    "text_en": "Wait for the components to place their headquarter"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText3",
+    "text_en": "Wait for your headquarter to be placed"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint1",
+    "text_en": "Wait for other players to place their spawn points"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint2",
+    "text_en": "Drag to place your spawn point"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex",
+    "text_en": "Wave {0}/{1}"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",
+    "text_en": "Wave {0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_NextMonsterWaveTime",
+    "text_en": "Next wave in {0}s"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveLeftTime",
+    "text_en": "Wave ends in {0}s"
+  },
+  {
+    "key": "TextCode_Key_Battle_MonsterWaveOverTime",
+    "text_en": "Completed"
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxPutTowerCount",
+    "text_en": "You've reached the tower placement limit"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurPutTowerCount",
+    "text_en": "You can still place {0}  towers"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyDone",
+    "text_en": "Purchased"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyButton",
+    "text_en": "Buy"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuy_NotEnough",
+    "text_en": "Not enough coins"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsRaycast",
+    "text_en": "Place it within the battle field"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsCliffy",
+    "text_en": "This area is too steep. Opt for a flatter location."
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnUI",
+    "text_en": "Move your finger from the UI"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsReachHome",
+    "text_en": "This spot can’t reach the basecamp. Try another place."
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNearTower",
+    "text_en": "Too close to other towers"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnRoad",
+    "text_en": "Can't place it on the attack path"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNotNearTower",
+    "text_en": "Place it near another tower"
+  },
+  {
+    "key": "TextCode_Key_Battle_Click_IsNotYouTower",
+    "text_en": "This is not your tower"
+  },
+  {
+    "key": "TextCode_Key_Battle_NotHaveThisTower",
+    "text_en": "No such tower"
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxLevelTower",
+    "text_en": "MaxLevel"
+  },
+  {
+    "key": "TextCode_Key_Battle_CanLevelUpTower",
+    "text_en": "CanUpgrade"
+  },
+  {
+    "key": "TextCode_Key_Battle_CannotLevelUpTower",
+    "text_en": "CannotUpgrade"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds1",
+    "text_en": "Survived <color=#ffffff><size=150>{0}</size></color> Waves"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds2",
+    "text_en": "Defeated {0}% of Players"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Title",
+    "text_en": "TIPS"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Cancel",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Confirm",
+    "text_en": "Sure"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Title",
+    "text_en": "Abandon current scan?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Des",
+    "text_en": "You will lose your progress and need to redo the scanning."
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Cancel",
+    "text_en": "Resume"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Confirm",
+    "text_en": "Abandon"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Title",
+    "text_en": "Close without saving?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Des",
+    "text_en": "No changes will be saved."
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Cancel",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Confirm",
+    "text_en": "Close"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Title",
+    "text_en": "Are you leaving?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Des",
+    "text_en": "Are you sure you wanna log out from {0}?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Cancel",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Confirm",
+    "text_en": "Log out"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Title",
+    "text_en": "Leave the room?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Des",
+    "text_en": "You'll have to wait for the current game to end before rejoining your friends."
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Cancel",
+    "text_en": "Stay"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Confirm",
+    "text_en": "Leave"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Title",
+    "text_en": "Leave the game?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Des",
+    "text_en": "This game will end and you’ll need to start over."
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Cancel",
+    "text_en": "Stay"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Confirm",
+    "text_en": "Leave"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Title",
+    "text_en": "Sell the tower?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Des",
+    "text_en": "You will trade the cannon for {0}?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Cancel",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Confirm",
+    "text_en": "Sell"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes1",
+    "text_en": "Evil spirits from a parallel realm have breached the boundaries of our reality."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes2",
+    "text_en": "They lurk in unseen dimensions, wreaking havoc on our homeland. "
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes3",
+    "text_en": "Fortunately, our top scientists have come up with “Space-Time Defense Towers' that put an end to their shenanigans. "
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes4",
+    "text_en": "Commander, annihilate the invaders and protect the world!"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PicDes1",
+    "text_en": "Find an empty surface (tabletop or ground). Set up some obstacles to construct a easily defendable terrain."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanBegin",
+    "text_en": "Move gently to survey the area and bring the battlefield to life! The lighting is better not too dark or bright."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanFinish",
+    "text_en": "Terrain thoroughly scanned? Click again to proceed."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanConfirm",
+    "text_en": "If you've created the ideal battlefield, click confirm!"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_RoomStart",
+    "text_en": "You may start the game once ready."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceHQ",
+    "text_en": "Hold and drag your HQ onto the battlefield. \nIf it falls to the enemy, game over! "
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceSP",
+    "text_en": "Place the spawn point for the spirits. They will head for your HQ. So strategize your defense!"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_BuyTower",
+    "text_en": "Purchase your preferred towers to fend off the invaders. "
+  },
+  {
+    "key": "TextCode_Key_TutorialText_CloseDLG",
+    "text_en": "Tap to close."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceTower",
+    "text_en": "Drag to deploy defense towers. "
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TapTower",
+    "text_en": "Tap the tower you just placed."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TowerDetail",
+    "text_en": "Remember, upgrades require 2 towers of the same type and level."
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WaveStart",
+    "text_en": "Ready to start? Hit it now!"
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Abandon_Des",
+    "text_en": "No changes will be saved."
+  },
+  {
+    "key": "TextCode_Key_BattlePut_IsOK",
+    "text_en": "Place it in this location?"
   }
 ]

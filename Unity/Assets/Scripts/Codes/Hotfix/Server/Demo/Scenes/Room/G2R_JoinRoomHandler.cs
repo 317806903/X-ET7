@@ -19,16 +19,17 @@ namespace ET.Server
 				response.Message = msg;
 				return;
 			}
-			
+
 			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponentOld != null)
 			{
 				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
 			}
 			roomManagerComponent.JoinRoom(playerId, roomId);
-			response.IsARRoom = roomComponent.isARRoom?1:0;
+			response.RoomType = (int)roomComponent.roomType;
+			response.SubRoomType = (int)roomComponent.subRoomType;
 
-			
+
 			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 
 			await ETTask.CompletedTask;

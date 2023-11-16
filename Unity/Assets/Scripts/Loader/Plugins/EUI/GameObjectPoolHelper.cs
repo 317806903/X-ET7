@@ -14,7 +14,7 @@ namespace ET.Client
             {
                 if (_poolRoot == null)
                 {
-                    _poolRoot = GameObject.Find("Global/PoolRoot");
+                    _poolRoot = GameObject.Find("/Init/GlobalRoot/PoolRoot");
                 }
                 return _poolRoot;
             }

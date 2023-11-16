@@ -9,49 +9,52 @@ namespace ET.Server
 		protected override async ETTask Run(Session session, C2G_LoginGate request, G2C_LoginGate response)
 		{
 			Scene scene = session.DomainScene();
-			string account = scene.GetComponent<GateSessionKeyComponent>().Get(request.Key);
-			if (account == null)
+			string accountId = scene.GetComponent<GateSessionKeyComponent>().GetAccountId(request.Key);
+			if (accountId == null)
 			{
 				response.Error = ErrorCore.ERR_ConnectGateKeyError;
 				response.Message = "Gate key验证失败!";
 				return;
 			}
+			StartSceneConfig accountSceneConfig = StartSceneConfigCategory.Instance.GetAccountManager(session.DomainZone());
+			A2G_GetAccountInfo _A2G_GetAccountInfo = (A2G_GetAccountInfo)await ActorMessageSenderComponent.Instance.Call(
+				accountSceneConfig.InstanceId, new G2A_GetAccountInfo() { AccountId = accountId });
+			if (_A2G_GetAccountInfo.Error == ErrorCore.ERR_ConnectGateKeyError)
+			{
+				response.Error = ErrorCore.ERR_ConnectGateKeyError;
+				response.Message = "获取账号信息失败!";
+				return;
+			}
+			byte[] AccountComponentBytes = _A2G_GetAccountInfo.AccountComponentBytes;
+			AccountComponent accountComponent = MongoHelper.Deserialize<AccountComponent>(AccountComponentBytes);
+			long playerId = accountComponent.playerId;
+			LoginType loginType = (LoginType)accountComponent.loginType;
+			accountComponent.Dispose();
 
 			session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
 			PlayerComponent playerComponent = scene.GetComponent<PlayerComponent>();
-			//Player player = playerComponent.AddChild<Player, string>(account);
 
-			long playerId = 0;
-			Player player;
-			if (string.IsNullOrEmpty(account))
+			await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);
+			Player player = playerComponent.GetChild<Player>(playerId);
+			if (player != null)
 			{
-				player = playerComponent.AddChild<Player, string>(account);
-				playerId = player.Id;
+				player.GetComponent<PlayerSessionComponent>()?.Session?.Dispose();
+				player.RemoveComponent<PlayerSessionComponent>();
+				player.RemoveComponent<MailBoxComponent>();
+				player.RemoveComponent<GateMapComponent>();
+				player.Init(accountId, "", loginType);
 			}
 			else
 			{
-				playerId = Convert.ToInt64(account);
-				await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);
-				player = playerComponent.GetChild<Player>(playerId);
-				if (player != null)
-				{
-                    player.GetComponent<PlayerSessionComponent>()?.Session?.Dispose();
-                    player.RemoveComponent<PlayerSessionComponent>();
-					player.RemoveComponent<MailBoxComponent>();
-					player.RemoveComponent<GateMapComponent>();
-				}
-				else
-				{
-					player = playerComponent.AddChildWithId<Player, string>(playerId, account);
-				}
+				player = playerComponent.AddChildWithId<Player>(playerId);
+				player.Init(accountId, "", loginType);
 			}
 
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			if (playerStatusComponent == null)
 			{
 				playerStatusComponent = player.AddComponent<PlayerStatusComponent>();
-				playerStatusComponent.ARRoomType = ARRoomType.Normal;
 			}
 
 
@@ -62,23 +65,16 @@ namespace ET.Server
 				PlayerId = playerId,
 			});
 
+			playerStatusComponent.RoomType = (RoomType)_R2G_GetRoomIdByPlayer.RoomType;
+			playerStatusComponent.SubRoomType = (SubRoomType)_R2G_GetRoomIdByPlayer.SubRoomType;
 			if (_R2G_GetRoomIdByPlayer.RoomId == 0)
 			{
-				playerStatusComponent.PlayerGameMode = PlayerGameMode.None;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 				playerStatusComponent.RoomId = 0;
 			}
 			else
 			{
-				if (_R2G_GetRoomIdByPlayer.IsARRoom == 1)
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
-				}
-				else
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
-				}
-				RoomStatus roomStatus = EnumHelper.FromString<RoomStatus>(_R2G_GetRoomIdByPlayer.RoomStatus);
+				RoomStatus roomStatus = (RoomStatus)_R2G_GetRoomIdByPlayer.RoomStatus;
 				if (roomStatus == RoomStatus.Idle)
 				{
 					playerStatusComponent.PlayerStatus = PlayerStatus.Room;
@@ -99,10 +95,9 @@ namespace ET.Server
 			session.AddComponent<SessionPlayerComponent>().Player = player;
 
 			response.PlayerId = playerId;
-			response.PlayerGameMode = playerStatusComponent.PlayerGameMode.ToString();
-			response.PlayerStatus = playerStatusComponent.PlayerStatus.ToString();
-			response.ARRoomType = playerStatusComponent.ARRoomType.ToString();
-			response.RoomId = playerStatusComponent.RoomId;
+			response.PlayerComponentBytes = player.ToBson();
+			response.PlayerStatusComponentBytes = playerStatusComponent.ToBson();
+
 			await ETTask.CompletedTask;
 		}
 	}

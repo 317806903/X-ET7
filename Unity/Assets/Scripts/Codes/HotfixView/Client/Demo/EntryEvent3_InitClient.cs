@@ -19,15 +19,32 @@ namespace ET.Client
             {
                 Game.AddSingleton<ConfigComponent>();
             }
+
+            Root.Instance.Scene.AddComponent<ResComponent>();
+
             Root.Instance.Scene.AddComponent<GlobalComponent>();
 
             Root.Instance.Scene.AddComponent<FsmDispatcherComponent>();
 
             Scene clientScene = await SceneFactory.CreateClientScene(1, "Game");
 
-            clientScene.AddComponent<ResComponent>();
-
-            LocalizeComponent.Instance.SwitchLanguage(LanguageType.EN, true);
+            LanguageType languageType;
+            switch (ResConfig.Instance.areaType)
+            {
+                case AreaType.CN:
+                    languageType = LanguageType.EN;
+                    break;
+                case AreaType.EN:
+                    languageType = LanguageType.EN;
+                    break;
+                case AreaType.TW:
+                    languageType = LanguageType.TW;
+                    break;
+                default:
+                    languageType = LanguageType.EN;
+                    break;
+            }
+            LocalizeComponent.Instance.SwitchLanguage(languageType, true);
 
             // 热更流程
             await ChkHotUpdateAsync(clientScene);
@@ -43,13 +60,16 @@ namespace ET.Client
                 if (retryTimes == 0)
                 {
                     string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkConnect");
-                    UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                    UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                     {
                         ChkHotUpdateAsync(clientScene).Coroutine();
                     });
                     return;
                 }
             }
+
+
+            ET.Client.DebugConnectHelper.RetSetResConfig();
 
             // 热更流程
             bool bRet = await HotUpdateAsync(clientScene);
@@ -97,7 +117,7 @@ namespace ET.Client
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -111,7 +131,7 @@ namespace ET.Client
                 Log.Error("ResourceComponent.UpdateManifest 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -125,7 +145,7 @@ namespace ET.Client
                 Log.Error("ResourceComponent.FsmCreateDownloader 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -184,7 +204,7 @@ namespace ET.Client
             if (modelChanged || hotfixChanged)
             {
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
-                UIManagerHelper.ShowConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                 {
                     ReloadAll(clientScene).Coroutine();
                 });
@@ -199,7 +219,7 @@ namespace ET.Client
 
         private static async ETTask ReloadAll(Scene scene)
         {
-            await GameObject.Find("Global").GetComponent<Init>().Restart();
+            await GameObject.Find("/Init").GetComponent<Init>().Restart();
         }
 
         private static async ETTask EnterLogin(Scene scene)

@@ -9,11 +9,11 @@ using UnityEngine.UI;
 namespace XGame
 {
     public abstract class DebugWindowBase
-    {  
+    {
         protected Rect _windowRect;
         protected bool _isInEditor;
         protected float _scale = 1.5f;
-        
+
         private bool _controlSize;
         private Vector2 _startPos;
         private Vector2 _startSize;
@@ -23,7 +23,7 @@ namespace XGame
             this._windowRect = winRect;
             this._isInEditor = isInEditor;
         }
-        
+
         public void Draw()
         {
 
@@ -72,7 +72,7 @@ namespace XGame
 
         protected abstract void OnDrawWindow(int id);
     }
-    
+
     public partial class DebugWindow : MonoBehaviour
     {
         private float _fps;
@@ -90,10 +90,10 @@ namespace XGame
         private DebugWindowBase[] _windows;
 
         private int _showIndex = 0;
-        
+
         private Type[] _windowTypes = new[]
         {
-            typeof (DebugWindowLog), 
+            typeof (DebugWindowLog),
             typeof (DebugWindowTools),
             typeof (DebugWindowServerCMD)
         };
@@ -123,17 +123,17 @@ namespace XGame
 
             var can = new GameObject("BlockCanvas").AddComponent<Canvas>();
             can.transform.parent = this.transform;
-            can.worldCamera = GameObject.Find("Global/UICamera").GetComponent<Camera>();
+            can.worldCamera = GameObject.Find("/Init/GlobalRoot/UICamera").GetComponent<Camera>();
             can.renderMode = RenderMode.ScreenSpaceCamera;
             can.sortingOrder = 30000;
 
             can.gameObject.AddComponent<GraphicRaycaster>();
-            
+
             this._block = new GameObject("Block").AddComponent<Image>();
             this._block.color = Color.clear;
             this._block.transform.SetParent(can.transform, false);
             this._block.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
-            
+
         }
 
         private void OnGUI()
@@ -197,9 +197,9 @@ namespace XGame
                 this._fps = 1 / Time.deltaTime;
                 this._lastRefresh = Time.time;
             }
-            
+
 #if UNITY_EDITOR
-            
+
             List<RaycastResult> m_RaycastResult = new List<RaycastResult>();
             if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.LeftControl))
             {
@@ -209,11 +209,11 @@ namespace XGame
                 if (m_RaycastResult.Count > 0)
                 {
                     UnityEditor.EditorGUIUtility.PingObject(m_RaycastResult[0].gameObject);
-                
+
                 }
             }
 #endif
         }
-        
+
     }
 }

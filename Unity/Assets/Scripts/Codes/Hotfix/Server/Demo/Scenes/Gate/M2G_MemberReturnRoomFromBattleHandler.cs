@@ -9,17 +9,10 @@ namespace ET.Server
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Room;
-			if (playerStatusComponent.PlayerGameMode == PlayerGameMode.Room
-			|| playerStatusComponent.PlayerGameMode == PlayerGameMode.ARRoom)
-			{
-				long playerId = player.Id;
-				long roomId = playerStatusComponent.RoomId;
 
-				StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(player.DomainZone());
-			}
-			
+
 			await playerStatusComponent.NoticeClient();
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

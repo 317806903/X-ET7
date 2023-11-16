@@ -40,7 +40,7 @@ namespace ET
 		[BsonIgnore]
 		public bool isTestARMesh = false;
 		[BsonIgnore]
-		public string isTestARMeshUrl = @"http://prod-cn-bj-alicloud-arsession-arsession-deepmirror-s3.oss-cn-beijing.aliyuncs.com/6501fe335252b55795bc8981.space_mesh?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5tPk1NHZtLxk3N1nm8nT%2F20230913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230913T182419Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=d5e5dbde71f0a58fff07bda9383cf281b74fd8d3ca30a3ce186b6d9f72c6c8ad";
+		public string isTestARMeshUrl = @"https://prod-us-nva-aws-arsession-arsession-deepmirror-s3.s3.us-east-1.amazonaws.com/65448b48a15af04c30d83e78.space_mesh?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVTJNBT3MTK7JNKFA%2F20231103%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231103T055605Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=f1d3606f9a64e775e6baaad1bd865e2d9353e3faf600a4f6dd70743899f8f079";
 
 		[BsonIgnore]
 		public HashSet<long> waitNoticeGamePlayToClientList;

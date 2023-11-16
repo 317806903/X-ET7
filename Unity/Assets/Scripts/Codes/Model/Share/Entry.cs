@@ -43,32 +43,24 @@
         }
     }
 
-    /// <summary>
-    /// 地图玩法类型
-    /// </summary>
-    public enum PlayerGameMode
-    {
-        None,
-        /// <summary>
-        /// 所有人都在同个地图
-        /// </summary>
-        SingleMap,
-        /// <summary>
-        /// 按房间分地图
-        /// </summary>
-        Room,
-        /// <summary>
-        /// 按AR分地图
-        /// </summary>
-        ARRoom,
-    }
-
-    public enum ARRoomType
+    public enum RoomType
     {
         Normal,
-        PVE,
-        PVP,
-        EndlessChallenge,
+        AR,
+    }
+
+    public enum SubRoomType
+    {
+        None,
+        NormalSingleMap,
+        NormalRoom,
+        NormalARCreate,
+        NormalARScanCode,
+        ARPVE,
+        ARPVP,
+        AREndlessChallenge,
+        ARScanCode,
+        ARTutorialFirst,
     }
 
     /// <summary>

@@ -12,13 +12,15 @@
         public long roomId = 0;
         public string arSceneId;
         public PlayerStatus playerStatusIn;
-        public ARRoomType _ARRoomTypeIn;
+        public RoomType RoomTypeIn;
+        public SubRoomType SubRoomTypeIn;
     }
 
     public class DlgARHall_ShowWindowData : ShowWindowData
     {
         public PlayerStatus playerStatus;
-        public ARRoomType _ARRoomType;
+        public RoomType RoomType;
+        public SubRoomType SubRoomType;
         public long arRoomId;
     }
 }

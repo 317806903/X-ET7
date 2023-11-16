@@ -7,15 +7,15 @@ namespace ET.Server
     {
         public static async ETTask NoticeClient(this PlayerStatusComponent self)
         {
-            G2C_PlayerStatusChgNotice _G2C_PlayerStatusChgNotice = new()
-            {
-                PlayerGameMode = self.PlayerGameMode.ToString(),
-                PlayerStatus = self.PlayerStatus.ToString(),
-                ARRoomType = self.ARRoomType.ToString(),
-                RoomId = self.RoomId,
-            };
             Player player = self.GetParent<Player>();
-            player?.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_PlayerStatusChgNotice);
+            if (player != null)
+            {
+                G2C_PlayerStatusChgNotice _G2C_PlayerStatusChgNotice = new()
+                {
+                    PlayerStatusComponentBytes = self.ToBson(),
+                };
+                player?.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_PlayerStatusChgNotice);
+            }
             await ETTask.CompletedTask;
         }
     }

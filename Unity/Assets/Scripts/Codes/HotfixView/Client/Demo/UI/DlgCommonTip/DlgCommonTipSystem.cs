@@ -56,7 +56,7 @@ namespace ET.Client
 
 			self._TipMove(uiRect).Coroutine();
 
-			await TimerComponent.Instance.WaitAsync(700);
+			await TimerComponent.Instance.WaitAsync(100);
 
 			self.isDoing = false;
 

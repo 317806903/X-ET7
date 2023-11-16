@@ -8,7 +8,7 @@ namespace ET
 {
     public class AI_TowerDefense_AttackWhenBlock: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AICfg aiConfig)
+        public override int Check(AIComponent aiComponent, AICfg aiConfig, bool isFirst)
         {
             Unit unit = aiComponent.GetUnit();
             if (unit == null)

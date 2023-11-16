@@ -19,6 +19,54 @@ namespace ET.Client
 			return this;
 		}
 
+		public BlurBackground.TranslucentImage E_BoxTranslucentImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_E_BoxTranslucentImage == null )
+					{
+						this.m_E_BoxTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Box");
+					}
+					return this.m_E_BoxTranslucentImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Box");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image E_EmptyLatticeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_E_EmptyLatticeImage == null )
+					{
+						this.m_E_EmptyLatticeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_EmptyLattice");
+					}
+					return this.m_E_EmptyLatticeImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_EmptyLattice");
+				}
+			}
+		}
+
 		public UnityEngine.UI.Image EButton_TowerIcoImage
 		{
 			get
@@ -139,30 +187,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image ELabel_Num_BoxImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_ELabel_Num_BoxImage == null )
-					{
-						this.m_ELabel_Num_BoxImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_Num_Box");
-					}
-					return this.m_ELabel_Num_BoxImage;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_Num_Box");
-				}
-			}
-		}
-
 		public TMPro.TextMeshProUGUI ELabel_NumTextMeshProUGUI
 		{
 			get
@@ -207,6 +231,102 @@ namespace ET.Client
 				else
 				{
 					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "ELabel_Name");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_Label1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EImage_Label1Image == null )
+					{
+						this.m_EImage_Label1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label1");
+					}
+					return this.m_EImage_Label1Image;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label1");
+				}
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Label1TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_ELabel_Label1TextMeshProUGUI == null )
+					{
+						this.m_ELabel_Label1TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label1/ELabel_Label1");
+					}
+					return this.m_ELabel_Label1TextMeshProUGUI;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label1/ELabel_Label1");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_Label2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EImage_Label2Image == null )
+					{
+						this.m_EImage_Label2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label2");
+					}
+					return this.m_EImage_Label2Image;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label2");
+				}
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Label2TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_ELabel_Label2TextMeshProUGUI == null )
+					{
+						this.m_ELabel_Label2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label2/ELabel_Label2");
+					}
+					return this.m_ELabel_Label2TextMeshProUGUI;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label2/ELabel_Label2");
 				}
 			}
 		}
@@ -285,14 +405,19 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
+			this.m_E_BoxTranslucentImage = null;
+			this.m_E_EmptyLatticeImage = null;
 			this.m_EButton_TowerIcoImage = null;
 			this.m_EG_IconStarRectTransform = null;
 			this.m_E_IconStar1Image = null;
 			this.m_E_IconStar2Image = null;
 			this.m_E_IconStar3Image = null;
-			this.m_ELabel_Num_BoxImage = null;
 			this.m_ELabel_NumTextMeshProUGUI = null;
 			this.m_ELabel_NameTextMeshProUGUI = null;
+			this.m_EImage_Label1Image = null;
+			this.m_ELabel_Label1TextMeshProUGUI = null;
+			this.m_EImage_Label2Image = null;
+			this.m_ELabel_Label2TextMeshProUGUI = null;
 			this.m_EButton_SelectedImage = null;
 			this.m_EButton_SelectButton = null;
 			this.m_EButton_SelectImage = null;
@@ -300,14 +425,19 @@ namespace ET.Client
 			this.DataId = 0;
 		}
 
+		private BlurBackground.TranslucentImage m_E_BoxTranslucentImage = null;
+		private UnityEngine.UI.Image m_E_EmptyLatticeImage = null;
 		private UnityEngine.UI.Image m_EButton_TowerIcoImage = null;
 		private UnityEngine.RectTransform m_EG_IconStarRectTransform = null;
 		private UnityEngine.UI.Image m_E_IconStar1Image = null;
 		private UnityEngine.UI.Image m_E_IconStar2Image = null;
 		private UnityEngine.UI.Image m_E_IconStar3Image = null;
-		private UnityEngine.UI.Image m_ELabel_Num_BoxImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_NumTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_NameTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_Label1Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_Label2Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label2TextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EButton_SelectedImage = null;
 		private UnityEngine.UI.Button m_EButton_SelectButton = null;
 		private UnityEngine.UI.Image m_EButton_SelectImage = null;

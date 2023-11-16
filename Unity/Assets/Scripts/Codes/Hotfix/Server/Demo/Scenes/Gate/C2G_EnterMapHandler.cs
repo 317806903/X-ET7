@@ -16,21 +16,22 @@ namespace ET.Server
 			player.RemoveComponent<GateMapComponent>();
 			GateMapComponent gateMapComponent = player.AddComponent<GateMapComponent>();
 
-			
+
 			string gamePlayBattleLevelCfgId = request.GamePlayBattleLevelCfgId;
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), gamePlayBattleLevelCfg.SceneMap);
 
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			playerStatusComponent.PlayerGameMode = PlayerGameMode.SingleMap;
+			playerStatusComponent.RoomType = RoomType.Normal;
+			playerStatusComponent.SubRoomType = SubRoomType.NormalSingleMap;
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
-			
+
 			await playerStatusComponent.NoticeClient();
 
 			G2C_EnterBattleNotice _G2C_EnterBattleNotice = new() { };
 			player.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_EnterBattleNotice);
 
-			TransferHelper.EnterMap(startSceneConfig.InstanceId, player.Id, 1, request.GamePlayBattleLevelCfgId).Coroutine();
+			TransferHelper.EnterMap(startSceneConfig.InstanceId, player.Id, player.Level, request.GamePlayBattleLevelCfgId).Coroutine();
 
 		}
 	}

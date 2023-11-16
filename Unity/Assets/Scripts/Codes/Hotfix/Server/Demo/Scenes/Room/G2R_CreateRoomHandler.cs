@@ -11,17 +11,18 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			string battleCfgId = request.BattleCfgId;
-			bool isARRoom = request.IsARRoom == 1? true : false;
-				
+			RoomType roomType = (RoomType)request.RoomType;
+			SubRoomType subRoomType = (SubRoomType)request.SubRoomType;
+
 			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponentOld != null)
 			{
 				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
 			}
-			
+
 			RoomTeamMode roomTeamMode = RoomTeamMode.Single;
-			RoomComponent roomComponent = roomManagerComponent.CreateRoom(isARRoom, playerId, roomTeamMode, battleCfgId);
-			
+			RoomComponent roomComponent = roomManagerComponent.CreateRoom(roomType, subRoomType, playerId, roomTeamMode, battleCfgId);
+
 			response.RoomId = roomComponent.Id;
 
 			await ETTask.CompletedTask;

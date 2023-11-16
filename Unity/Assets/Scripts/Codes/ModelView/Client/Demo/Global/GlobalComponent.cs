@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ET.Client
 {
     [ComponentOf(typeof(Scene))]
-    public class GlobalComponent: Entity, IAwake
+    public class GlobalComponent: Entity, IAwake, IDestroy, IUpdate
     {
         [StaticField]
         public static GlobalComponent Instance;
@@ -13,15 +13,10 @@ namespace ET.Client
         public Camera MainCamera { get; set; }
         public Camera UICamera { get; set; }
 
-        public Transform NormalRoot{ get; set; }
-        public Transform PopUpRoot{ get; set; }
-        public Transform FixedRoot{ get; set; }
-        public Transform NoticeRoot{ get; set; }
-        public Transform LoadingRoot{ get; set; }
-        public Transform HighestNoticeRoot{ get; set; }
-
         public Transform ClientManagerRoot{ get; set; }
         public Transform PoolRoot{ get; set; }
+        public Transform ErrerLogManagerRoot{ get; set; }
         public Transform DebugRoot{ get; set; }
+
     }
 }

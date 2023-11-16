@@ -40,7 +40,11 @@ namespace ET.Client
 
                 try
                 {
-
+                    if (self.ClientScene() == null)
+                    {
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                        return;
+                    }
                     long sessionId = session.Id;
 
                     (uint localConn, uint remoteConn) = await NetServices.Instance.GetChannelConn(session.ServiceId, sessionId);
@@ -49,6 +53,11 @@ namespace ET.Client
                     Log.Info($"get recvLocalConn start: {self.ClientScene().Id} {realAddress} {localConn} {remoteConn}");
 
                     (uint recvLocalConn, IPEndPoint routerAddress) = await RouterHelper.GetRouterAddress(self.ClientScene(), realAddress, localConn, remoteConn);
+                    if (self.ClientScene() == null)
+                    {
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                        return;
+                    }
                     if (recvLocalConn == 0)
                     {
                         Log.Error($"get recvLocalConn fail: {self.ClientScene().Id} {routerAddress} {realAddress} {localConn} {remoteConn}");
@@ -66,6 +75,7 @@ namespace ET.Client
                     Log.Error(e);
 
                     EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                    return;
                 }
             }
         }

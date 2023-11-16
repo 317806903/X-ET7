@@ -11,22 +11,6 @@ namespace ET.Client
     public static class GamePlayTowerDefenseComponentSystem
 	{
 		[ObjectSystem]
-		public class GamePlayTowerDefenseComponentAwakeSystem : AwakeSystem<GamePlayTowerDefenseComponent>
-		{
-			protected override void Awake(GamePlayTowerDefenseComponent self)
-			{
-			}
-		}
-
-		[ObjectSystem]
-		public class GamePlayTowerDefenseComponentDestroySystem : DestroySystem<GamePlayTowerDefenseComponent>
-		{
-			protected override void Destroy(GamePlayTowerDefenseComponent self)
-			{
-			}
-		}
-
-		[ObjectSystem]
 		public class GamePlayTowerDefenseComponentUpdateSystem : UpdateSystem<GamePlayTowerDefenseComponent>
 		{
 			protected override void Update(GamePlayTowerDefenseComponent self)
@@ -36,56 +20,49 @@ namespace ET.Client
 					return;
 				}
 
+				self.InitClient();
 				self.DoUpdate();
 			}
 		}
 
+		public static void InitClient(this GamePlayTowerDefenseComponent self)
+		{
+			if (self.isInitClient)
+			{
+				return;
+			}
+			self.isInitClient = true;
+
+			ET.Client.ModelClickManagerHelper.SetModelClickCallBack(self.DomainScene(), (rayHit) =>
+			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
+				self.DoClickModel(rayHit);
+			});
+			ET.Client.ModelClickManagerHelper.SetModelPressCallBack(self.DomainScene(), (rayHit) =>
+			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
+				self.DoPressModel(rayHit);
+			});
+		}
+
 		public static void DoUpdate(this GamePlayTowerDefenseComponent self)
 		{
-			self.ChkMouseClick();
 			self.DoDrawAllMonsterCall2HeadQuarter();
-			self.ChkMouseRightClick();
+			//self.ChkMouseRightClick();
 			self.SendARCameraPos();
 		}
 
-		public static void ChkMouseClick(this GamePlayTowerDefenseComponent self)
+		public static (bool, bool) ChkIsHitMapOrTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
 		{
-			if (Input.GetMouseButtonDown(0))
-			{
-				self.lastMouseDownTime = TimeHelper.ClientFrameTime();
-				self.lastMousePosition = Input.mousePosition;
-			}
-			if (Input.GetMouseButtonUp(0))
-			{
-				long disTime = TimeHelper.ClientFrameTime() - self.lastMouseDownTime;
-				if (disTime < 1000 * 0.3f)
-				{
-					self.DoMouseClick();
-				}
-			}
-		}
-
-		public static void DoMouseClick(this GamePlayTowerDefenseComponent self)
-		{
-			// if (ET.UGUIHelper.ChkMouseInput() == false)
-			// {
-			// 	return;
-			// }
-
-			bool bRet = ET.UGUIHelper.ChkMouseClick(self.DomainScene(), 1000, out RaycastHit hit);
-			if (bRet == false)
-			{
-				return;
-			}
-			if (ET.UGUIHelper.IsClickUGUI())
-			{
-				return;
-			}
-
 			GameObject hitGo = hit.collider.gameObject;
 			bool isHitMap = false;
 			bool isHitTower = false;
-
 			if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(hitGo))
 			{
 				isHitMap = true;
@@ -99,41 +76,59 @@ namespace ET.Client
 				isHitTower = true;
 			}
 
+			return (isHitMap, isHitTower);
+		}
+
+		public static void DoClickModel(this GamePlayTowerDefenseComponent self, RaycastHit hit)
+		{
+			(bool isHitMap, bool isHitTower) = self.ChkIsHitMapOrTower(hit);
 			if (isHitMap)
 			{
 				bool bRet1 = self.DoCancelSelectMyTower();
 				if (bRet1 == false)
 				{
-					if(math.abs(self.lastMousePosition.x - Input.mousePosition.x) < 5f
-					   && math.abs(self.lastMousePosition.y - Input.mousePosition.y) < 5f
-					   && math.abs(self.lastMousePosition.z - Input.mousePosition.z) < 5f)
-					{
-						self.OnHitMap(hit);
-					}
+					self.OnHitMap(hit);
 				}
 			}
+
 			if (isHitTower)
 			{
-				self.ChkHitTower(hit);
+				self.DoHitTower(hit);
+			}
+		}
+
+		public static void DoPressModel(this GamePlayTowerDefenseComponent self, RaycastHit hit)
+		{
+			(bool isHitMap, bool isHitTower) = self.ChkIsHitMapOrTower(hit);
+			if (isHitMap)
+			{
+				bool bRet1 = self.DoCancelSelectMyTower();
+				if (bRet1 == false)
+				{
+				}
 			}
 
+			if (isHitTower)
+			{
+				self.DoPressHitTower(hit);
+			}
 		}
 
 		public static void OnHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
 			self.OnPlayerMoveTarget(hit.point);
 		}
 
 		public static void OnPlayerMoveTarget(this GamePlayTowerDefenseComponent self, float3 targetPos)
 		{
-			C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
+			C2M_PathfindingResult c2MPathfindingResult = new ();
 			c2MPathfindingResult.Position = targetPos - new float3(0, 0f, 0);
 			ET.Client.SessionHelper.GetSession(self.DomainScene()).Send(c2MPathfindingResult);
 		}
 
-		public static void ChkHitTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
+		public static void DoHitTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
 		{
 			PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
 			if (playerOwnerTowersComponent == null)
@@ -158,7 +153,7 @@ namespace ET.Client
 					{
 						if (towerShowComponent.transCollider.gameObject == hitGo)
 						{
-							self.OnHitTower(towerShowComponent, hit);
+							towerShowComponent.DoSelect();
 						}
 						else
 						{
@@ -167,14 +162,59 @@ namespace ET.Client
 					}
 				}
 			}
-			Log.Debug($" hit.collider.name[{hit.collider.name}]");
 		}
 
-		public static void OnHitTower(this GamePlayTowerDefenseComponent self, TowerShowComponent towerShowComponent, RaycastHit hit)
+		public static void DoPressHitTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
+			if (playerOwnerTowersComponent == null)
+			{
+				return;
+			}
+			GameObject hitGo = hit.collider.gameObject;
 
-			towerShowComponent.DoSelect();
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			foreach (List<long> unitIds in playerOwnerTowersComponent.playerId2unitTowerId.Values)
+			{
+				foreach (long unitId in unitIds)
+				{
+					Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+					if (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
+					{
+						continue;
+					}
+
+					TowerShowComponent towerShowComponent = unit.GetComponent<TowerShowComponent>();
+					if (towerShowComponent != null)
+					{
+						if (towerShowComponent.transCollider.gameObject == hitGo)
+						{
+							towerShowComponent.CancelSelect();
+							self.DoMoveTower(towerShowComponent.towerComponent.towerCfgId, unitId);
+						}
+						else
+						{
+							towerShowComponent.CancelSelect();
+						}
+					}
+				}
+			}
+		}
+
+		public static void DoMoveTower(this GamePlayTowerDefenseComponent self, string towerCfgId, long towerUnitId)
+		{
+			Handheld.Vibrate();
+
+			DlgBattleDragItem_ShowWindowData showWindowData = new()
+			{
+				battleDragItemType = BattleDragItemType.MoveTower,
+				battleDragItemParam = towerCfgId,
+				moveTowerUnitId = towerUnitId,
+				callBack = () =>
+				{
+				},
+			};
+			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
 		}
 
 		public static void ChkAllMyTowerUpgrade(this GamePlayTowerDefenseComponent self)

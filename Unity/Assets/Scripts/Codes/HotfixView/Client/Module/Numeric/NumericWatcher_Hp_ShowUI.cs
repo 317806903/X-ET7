@@ -10,7 +10,7 @@ namespace ET.Client
 		public void Run(Unit unit, EventType.NumbericChange args)
 		{
 			//Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
-			unit.GetComponent<HealthBarComponent>()?.UpdateHealth();
+			unit.GetComponent<HealthBarComponent>()?.UpdateHealth(false);
 			ShootTextComponent.Instance.Show(unit, (int)((args.Old - args.New)/10000));
 		}
 	}

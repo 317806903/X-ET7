@@ -29,10 +29,8 @@ namespace ET.Client
 
 		public static async ETTask ShowEffect(this DlgBattleTowerEnd self)
 		{
-			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
-			PlayerGameMode playerGameMode = playerComponent.PlayerGameMode;
-			ARRoomType arRoomType = playerComponent.ARRoomType;
-			Log.Debug($"--ShowEffect playerGameMode[{playerGameMode.ToString()}] arRoomType[{arRoomType.ToString()}]");
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+			Log.Debug($"--ShowEffect playerStatusComponent[{playerStatusComponent}]");
 
 			Transform transEndlessChallenge = self.View.uiTransform.transform.Find("E_Effect_EndlessChallenge");
 			transEndlessChallenge.gameObject.SetActive(false);
@@ -40,6 +38,8 @@ namespace ET.Client
 			transPVE.gameObject.SetActive(false);
 			Transform transPVP = self.View.uiTransform.transform.Find("E_Effect_PVP");
 			transPVP.gameObject.SetActive(false);
+			Transform transNormal = self.View.uiTransform.transform.Find("E_Effect_Normal");
+			transNormal.gameObject.SetActive(false);
 
 			await TimerComponent.Instance.WaitAsync(500);
 
@@ -57,30 +57,64 @@ namespace ET.Client
 				}
 			}
 
-			if (playerGameMode == PlayerGameMode.Room)
+			if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE)
+			{
+				await self.ShowEffectPVE(success);
+			}
+			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge)
+			{
+				MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+				await self.ShowEffectEndlessChallenge(monsterWaveCallComponent.curIndex);
+
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "Infinity_finish",
+					properties = new()
+					{
+						{"is_finish", true},
+						{"max_wave", monsterWaveCallComponent.curIndex},
+						{"tower_num", 1},
+						{"coin_left", 1},
+						{"last_time", 0},
+					}
+				});
+
+			}
+			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP)
 			{
 				await self.ShowEffectPVP(success);
 			}
-			else if (playerGameMode == PlayerGameMode.ARRoom)
+			else
 			{
-				if (arRoomType == ARRoomType.Normal)
-				{
-					await self.ShowEffectPVP(success);
-				}
-				else if(arRoomType == ARRoomType.PVE)
-				{
-					await self.ShowEffectPVE(success);
-				}
-				else if(arRoomType == ARRoomType.PVP)
-				{
-					await self.ShowEffectPVP(success);
-				}
-				else if(arRoomType == ARRoomType.EndlessChallenge)
-				{
-					MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-					await self.ShowEffectEndlessChallenge(monsterWaveCallComponent.curIndex);
-				}
+				await self.ShowEffectNormal(success);
 			}
+		}
+
+		public static async ETTask ShowEffectNormal(this DlgBattleTowerEnd self, bool success)
+		{
+			Transform transPVP = self.View.uiTransform.transform.Find("E_Effect_Normal");
+			transPVP.gameObject.SetActive(true);
+
+			Transform loseTrans = transPVP.Find("Effect_GameEnd/EButton_GameEnd_lose");
+			Transform victoryTrans = transPVP.Find("Effect_GameEnd/EButton_GameEnd_victory");
+            if (success)
+            {
+	            loseTrans.gameObject.SetActive(false);
+	            victoryTrans.gameObject.SetActive(true);
+
+	            string resAudioCfgId = "ResAudio_UI_victory";
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+            }
+            else
+            {
+	            loseTrans.gameObject.SetActive(true);
+	            victoryTrans.gameObject.SetActive(false);
+
+	            string resAudioCfgId = "ResAudio_UI_failed";
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+            }
+
+            await TimerComponent.Instance.WaitAsync(2000);
 		}
 
 		public static async ETTask ShowEffectPVP(this DlgBattleTowerEnd self, bool success)
@@ -96,7 +130,7 @@ namespace ET.Client
 	            victoryTrans.gameObject.SetActive(true);
 
 	            string resAudioCfgId = "ResAudio_UI_victory";
-	            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
             else
             {
@@ -104,7 +138,7 @@ namespace ET.Client
 	            victoryTrans.gameObject.SetActive(false);
 
 	            string resAudioCfgId = "ResAudio_UI_failed";
-	            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -123,7 +157,7 @@ namespace ET.Client
 	            victoryTrans.gameObject.SetActive(true);
 
 	            string resAudioCfgId = "ResAudio_UI_victory";
-	            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
             else
             {
@@ -131,7 +165,7 @@ namespace ET.Client
 	            victoryTrans.gameObject.SetActive(false);
 
 	            string resAudioCfgId = "ResAudio_UI_failed";
-	            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -142,28 +176,24 @@ namespace ET.Client
 			Transform transEndlessChallenge = self.View.uiTransform.transform.Find("E_Effect_EndlessChallenge");
 			transEndlessChallenge.gameObject.SetActive(true);
 
-			string text1 = $"存活<color=#ffffff><size=150>{waveIndex}</size></color>波";
+
+
+			//string text1 = $"存活<color=#ffffff><size=150>{waveIndex}</size></color>波";
+			string text1 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
 			self.View.E_ChanllengeText_1TextMeshProUGUI.text = text1;
-			string text2 = $"战胜N%的玩家";
+			//string text2 = $"战胜N%的玩家";
+			string text2 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds2", "N");
 			self.View.E_ChanllengeText_2TextMeshProUGUI.text = text2;
 
-			// Transform transChanllengeText_1 = transEndlessChallenge.Find("Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_1");
-			// Transform transChanllengeText_2 = transEndlessChallenge.Find("Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2");
-			//
-			// //存活<color=#ffffff><size=150>19</size></color>波
-			// transChanllengeText_1.GetComponent<UITextLocalizeMonoView>().DynamicSet(waveIndex);
-			// //战胜82%的玩家
-			// transChanllengeText_2.GetComponent<UITextLocalizeMonoView>().DynamicSet("N");
-
 			string resAudioCfgId = "ResAudio_UI_victory";
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
 
             await TimerComponent.Instance.WaitAsync(2000);
 		}
 
 		public static async ETTask OnReturnRoom(this DlgBattleTowerEnd self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
 			await RoomHelper.MemberReturnRoomFromBattleAsync(self.ClientScene());
 			await SceneHelper.EnterHall(self.ClientScene());

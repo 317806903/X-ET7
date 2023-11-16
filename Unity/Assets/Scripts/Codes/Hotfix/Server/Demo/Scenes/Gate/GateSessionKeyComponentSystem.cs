@@ -3,13 +3,25 @@
     [FriendOf(typeof(GateSessionKeyComponent))]
     public static class GateSessionKeyComponentSystem
     {
-        public static void Add(this GateSessionKeyComponent self, long key, string account)
+        public static long Add(this GateSessionKeyComponent self, string account)
         {
+            long key = self.GetRandomKey(account);
             self.sessionKey.Add(key, account);
             self.TimeoutRemoveKey(key).Coroutine();
+            return key;
         }
 
-        public static string Get(this GateSessionKeyComponent self, long key)
+        public static long GetRandomKey(this GateSessionKeyComponent self, string account)
+        {
+            long key = RandomGenerator.RandInt64();
+            while (self.sessionKey.ContainsKey(key))
+            {
+                key = RandomGenerator.RandInt64();
+            }
+            return key;
+        }
+
+        public static string GetAccountId(this GateSessionKeyComponent self, long key)
         {
             string account = null;
             self.sessionKey.TryGetValue(key, out account);

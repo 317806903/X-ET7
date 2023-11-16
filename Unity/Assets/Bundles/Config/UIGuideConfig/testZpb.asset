@@ -1,0 +1,414 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: testZpb
+  m_EditorClassIdentifier: 
+  list:
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgLogin/Sprite_BackGround/DebugRoot/E_ToggleLoginEditorMode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: test0
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowStory
+    guideExecuteParam: 
+    trigExitCondition: 2
+    trigExitConditionStaticMethod: ChkIsNotShowStory
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 2
+    guideTextImgPath: Assets/ResAB/UI/common/Common_img_avatar_03.png
+    text: "\u6D4B\u8BD5\u4E0B\u4EE3\u7801"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: ChkIsNotShowStory
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgLogin/Sprite_BackGround/DebugRoot/E_ToggleDebugMode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: test1
+    specImgMatchType: 2
+    specImgPath: Assets/ResAB/UI/BattleMode/BattleMode_icon_box1.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgLogin/Sprite_BackGround/DebugRoot/E_ToggleDebugMode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: test2
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgLogin/Sprite_BackGround/DebugRoot/E_ToggleLoginEditorMode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: test3
+    specImgMatchType: 1
+    specImgPath: Assets/ResAB/UI/BattleMode/BattleMode_icon_box1.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenEditor/E_Login
+    guideTextType: 2
+    guideTextImgPath: Assets/ResAB/UI/common/common_img_CardBack.png
+    text: test4
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameMode/EGBackGround/E_RoomMode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: test5
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgHall/EGBackGround/E_CreateRoom
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u521B\u5EFARoom"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgRoom/EGBackGround/E_RoomMemberStatus
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u5F00\u59CB\u6E38\u620F"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u653E\u7F6E\u5927\u672C\u8425"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u62D6\u62C9\u653E\u7F6E\u5927\u672C\u8425"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 1
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NoticeRoot
+    hierarchyGuidePath: DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/Unit/HeadQuarter.prefab
+  - name: "\u653E\u7F6E\u51FA\u602A\u53E3"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint
+    guideTextType: 2
+    guideTextImgPath: 
+    text: "\u62D6\u62C9\u653E\u7F6E\u51FA\u602A\u53E3"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 1
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NoticeRoot
+    hierarchyGuidePath: DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/Unit/MonsterCall.prefab
+  - name: "\u8D2D\u4E70\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EButton_Buy
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u8D2D\u4E70\u5854"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/E_TowerBuyShow/EButton_BuyClose
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u70B9\u51FB\u5173\u95ED"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u653E\u7F6E\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower/EButton_Select
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u62D6\u653E\u653E\u7F6E\u5854"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 1
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 2
+    trigExitConditionStaticMethod: ChkTowerPut
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u653E\u7F6E\u7684\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u8BF7\u70B9\u51FB\u521A\u521A\u653E\u7F6E\u7684\u5854"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: ShowPointTower
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u67E5\u770B\u5854\u64CD\u4F5C"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTowerHUD/EG_MyTowerDesc
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u5DF2\u653E\u7F6E\u5854\u7684\u64CD\u4F5C\u83DC\u5355"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: HidePointTower
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u51C6\u5907\u597D"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u6211\u5DF2\u51C6\u5907\u597D"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u4EAB\u53D7\u6E38\u620F"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 1
+    guideTextImgPath: 
+    text: "\u4EAB\u53D7\u6E38\u620F"
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

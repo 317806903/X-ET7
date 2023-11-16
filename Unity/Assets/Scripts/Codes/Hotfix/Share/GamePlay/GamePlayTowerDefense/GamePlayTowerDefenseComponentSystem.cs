@@ -94,9 +94,10 @@ namespace ET
 		// 	EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
   //       }
 
-        public static void Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId)
+        public static void Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, GamePlayTowerDefenseMode gamePlayTowerDefenseMode)
         {
             self.gamePlayModeCfgId = gamePlayModeCfgId;
+            self.gamePlayTowerDefenseMode = gamePlayTowerDefenseMode;
             self.ownerPlayerId = ownerPlayerId;
             self.AddComponent<PlayerOwnerTowersComponent>();
             MonsterWaveCallComponent monsterWaveCallComponent = self.AddComponent<MonsterWaveCallComponent>();
@@ -111,6 +112,32 @@ namespace ET
         {
             await self.TransToPutHome();
             await ETTask.CompletedTask;
+        }
+
+        public static bool IsEndlessChallengeMonster(this GamePlayTowerDefenseComponent self)
+        {
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
+            return gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallengeMonster;
+        }
+
+        public static bool IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
+        {
+            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge;
+        }
+
+        public static bool IsPVEMode(this GamePlayTowerDefenseComponent self)
+        {
+            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE;
+        }
+
+        public static bool IsPVPMode(this GamePlayTowerDefenseComponent self)
+        {
+            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP;
+        }
+
+        public static bool IsTutorialFirstModel(this GamePlayTowerDefenseComponent self)
+        {
+            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_TutorialFirst;
         }
 
         public static void InitPlayerCoin(this GamePlayTowerDefenseComponent self)
@@ -262,8 +289,8 @@ namespace ET
             for (int i = 0; i < playerList.Count; i++)
             {
                 GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
-                int curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerList[i], CoinType.Gold);
-                int interestGold = (int)(curGold * interestOnDeposit * 0.01f);
+                float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerList[i], CoinType.Gold);
+                float interestGold = curGold * interestOnDeposit * 0.01f;
                 gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinType.Gold, interestGold, GetCoinType.InterestOnDeposit);
             }
 
@@ -293,6 +320,8 @@ namespace ET
         {
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
 
+            PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
+            putHomeComponent.BattleResult();
             GamePlayComponent gamePlayComponent = self.GetGamePlay();
             gamePlayComponent.GameEnd();
 
@@ -380,10 +409,21 @@ namespace ET
             return self.GetComponent<PlayerOwnerTowersComponent>().ReclaimPlayerTower(playerId, towerUnitId);
         }
 
+        public static (bool, string) ChkMovePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, float3 position)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().ChkMovePlayerTower(playerId, towerUnitId, position);
+        }
+
+        public static bool MovePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, float3 position)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().MovePlayerTower(playerId, towerUnitId, position);
+        }
+
         public static void SetReadyWhenRestTime(this GamePlayTowerDefenseComponent self, long playerId)
         {
             RestTimeComponent restTimeComponent = self.GetComponent<RestTimeComponent>();
             restTimeComponent?.SetReadyWhenRestTime(playerId);
+            self.NoticeToClientAll();
         }
 
         /// <summary>
@@ -479,15 +519,17 @@ namespace ET
             int rewardGold = monsterWaveCallComponent.GetMonsterRewardGoldByUnitId(beKillUnit.Id);
             if (rewardGold > 0)
             {
-                GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
-                if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
-                {
-                    ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
-                }
-                else
-                {
-                    ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
-                }
+                // GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
+                // if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
+                // {
+                //     ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                // }
+                // else
+                // {
+                //     ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                // }
+                ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+
             }
         }
 
@@ -497,10 +539,10 @@ namespace ET
             return playerOwnerTowersComponent.GetPutTowers(playerId);
         }
 
-        public static bool ChkIsNearTower(this GamePlayTowerDefenseComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1)
+        public static bool ChkIsNearTower(this GamePlayTowerDefenseComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1, long ignoreTowerUnitId = -1)
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
-            return playerOwnerTowersComponent.ChkIsNearTower(targetPos, targetUnitRadius, playerId);
+            return playerOwnerTowersComponent.ChkIsNearTower(targetPos, targetUnitRadius, playerId, ignoreTowerUnitId);
         }
 
         public static TeamFlagType GetHomeTeamFlagTypeByPlayer(this GamePlayTowerDefenseComponent self, long playerId)

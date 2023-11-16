@@ -137,6 +137,8 @@ message R2G_GetLoginKey // IActorRequest
 {
 	int32 RpcId = 1;
 	string Account = 2;
+	string Password = 3;  // 密码
+	int32 LoginType = 4;
 }
 
 message G2R_GetLoginKey // IActorResponse
@@ -146,6 +148,38 @@ message G2R_GetLoginKey // IActorResponse
 	string Message = 3;
 	int64 Key = 4;
 	int64 GateId = 5;
+}
+
+//ResponseType A2G_LoginByAccount
+message G2A_LoginByAccount // IActorRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;
+	string Password = 3;  // 密码
+	int32 LoginType = 4;
+}
+
+message A2G_LoginByAccount // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 PlayerId = 4;
+}
+
+//ResponseType A2G_GetAccountInfo
+message G2A_GetAccountInfo // IActorRequest
+{
+	int32 RpcId = 1;
+	string AccountId = 2;
+}
+
+message A2G_GetAccountInfo // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes AccountComponentBytes = 4;
 }
 
 message G2M_SessionDisconnect // IActorLocationMessage
@@ -190,8 +224,9 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 RoomId = 4;
-	string RoomStatus = 5;
-	int32 IsARRoom = 6;
+	int32 RoomStatus = 5;
+	int32 RoomType = 6;
+	int32 SubRoomType = 7;
 }
 
 //ResponseType R2G_GetRoomList
@@ -231,7 +266,8 @@ message G2R_CreateRoom // IActorRequest
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
 	string BattleCfgId = 3;
-	int32 IsARRoom = 4;
+	int32 RoomType = 4;
+	int32 SubRoomType = 5;
 }
 
 message R2G_CreateRoom // IActorResponse
@@ -255,7 +291,8 @@ message R2G_JoinRoom // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int32 IsARRoom = 4;
+	int32 RoomType = 4;
+	int32 SubRoomType = 5;
 }
 
 //ResponseType R2G_QuitRoom
@@ -565,6 +602,70 @@ message M2R_NoticeRoomBattleEnd // IActorRequest
 }
 
 message R2M_NoticeRoomBattleEnd // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType R2G_GetRank
+message G2R_GetRank // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 RankType = 3;
+}
+
+message R2G_GetRank // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes RankShowComponentBytes = 4;
+}
+
+//ResponseType R2G_SetPlayerRank
+message G2R_SetPlayerRank // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 RankType = 3;
+	int64 Score = 4;
+}
+
+message R2G_SetPlayerRank // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType P2G_GetPlayerCache
+message G2P_GetPlayerCache // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 PlayerModelType = 3;
+}
+
+message P2G_GetPlayerCache // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes PlayerModelComponentBytes = 4;
+}
+
+//ResponseType P2G_SetPlayerCache
+message G2P_SetPlayerCache // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 PlayerModelType = 3;
+	bytes PlayerModelComponentBytes = 4;
+}
+
+message P2G_SetPlayerCache // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

@@ -182,6 +182,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Effect_GameBegin
       objectReference: {fileID: 0}
+    - target: {fileID: 2938504071913816469, guid: bf1d17665cd43624d8403791a4c34065,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488362660992122, guid: bf1d17665cd43624d8403791a4c34065,
+        type: 3}
+      propertyPath: m_text
+      value: "\u6E38\u620F\u5F00\u59CB"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488362660992122, guid: bf1d17665cd43624d8403791a4c34065,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 06c6eee9ce12d024d8e06cd454fc6551,
+        type: 2}
+    - target: {fileID: 5232488362660992122, guid: bf1d17665cd43624d8403791a4c34065,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b076c7c4dd05dc847892fff09702d409, type: 2}
+    - target: {fileID: 5232488362660992122, guid: bf1d17665cd43624d8403791a4c34065,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6053853270698689070, guid: bf1d17665cd43624d8403791a4c34065,
         type: 3}
       propertyPath: m_Pivot.x

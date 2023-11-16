@@ -1,7 +1,7 @@
 [
   {
     "id": "Monster1_1",
-    "type": "1",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster1_1",
       "text": ""
@@ -15,7 +15,7 @@
   },
   {
     "id": "Monster2_1",
-    "type": "2",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster2_1",
       "text": ""
@@ -29,7 +29,7 @@
   },
   {
     "id": "Monster3_1",
-    "type": "3",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster3_1",
       "text": ""
@@ -43,7 +43,7 @@
   },
   {
     "id": "Monster4_1",
-    "type": "4",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster4_1",
       "text": ""
@@ -57,7 +57,7 @@
   },
   {
     "id": "Monster5_1",
-    "type": "5",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster5_1",
       "text": ""
@@ -71,7 +71,7 @@
   },
   {
     "id": "Monster6_1",
-    "type": "6",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster6_1",
       "text": ""
@@ -85,7 +85,7 @@
   },
   {
     "id": "Monster7_1",
-    "type": "7",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster7_1",
       "text": ""
@@ -99,7 +99,7 @@
   },
   {
     "id": "Monster8_1",
-    "type": "8",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster8_1",
       "text": ""
@@ -113,7 +113,7 @@
   },
   {
     "id": "Monster9_1",
-    "type": "9",
+    "type": 1,
     "name": {
       "key": "Text_Key_Name_Monster9_1",
       "text": ""
@@ -123,6 +123,20 @@
       "text": ""
     },
     "unitId": "Unit_Monster9",
+    "aiCfgId": "TowerDefense_Monster1"
+  },
+  {
+    "id": "Monster10_1",
+    "type": 1,
+    "name": {
+      "key": "Text_Key_Name_Monster10_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster10_1",
+      "text": ""
+    },
+    "unitId": "Unit_Monster10",
     "aiCfgId": "TowerDefense_Monster1"
   }
 ]

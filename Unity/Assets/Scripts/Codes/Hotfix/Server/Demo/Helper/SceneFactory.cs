@@ -60,6 +60,19 @@ namespace ET.Server
                     break;
                 case SceneType.Match:
                     break;
+                case SceneType.Account:
+                    scene.AddComponent<AccountManagerComponent>();
+                    break;
+                case SceneType.Rank:
+                    scene.AddComponent<RankManagerComponent>();
+                    scene.AddComponent<RankShowManagerComponent>();
+                    break;
+                case SceneType.PlayerCache:
+                    scene.AddComponent<PlayerCacheManagerComponent>();
+                    break;
+                case SceneType.Mail:
+                    scene.AddComponent<MailManagerComponent>();
+                    break;
             }
 
             return scene;

@@ -30,6 +30,11 @@
     "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/TowerStarBar.prefab"
   },
   {
+    "id": "ResEffect_PointTower_1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ClickMarker.prefab"
+  },
+  {
     "id": "ResEffect_PathLineRenderer_1",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/PathLineRenderer.prefab"
@@ -115,9 +120,19 @@
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/Fire1.prefab"
   },
   {
+    "id": "ResEffect_Fire3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Fire3.prefab"
+  },
+  {
     "id": "ResEffect_Drag1",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/Drag1.prefab"
+  },
+  {
+    "id": "ResEffect_Drag3",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Drag3.prefab"
   },
   {
     "id": "ResEffect_Arrow_Fire_1",
@@ -253,5 +268,10 @@
     "id": "ResEffect_TowerTime_Hit3",
     "name": "",
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/TowerTime_Hit3.prefab"
+  },
+  {
+    "id": "ResEffect_SeedHeal1",
+    "name": "",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
   }
 ]

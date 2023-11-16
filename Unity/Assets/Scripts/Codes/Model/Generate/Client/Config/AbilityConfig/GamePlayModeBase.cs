@@ -26,8 +26,12 @@ public abstract partial class GamePlayModeBase: Bright.Config.BeanBase
     {
         switch (_buf.ReadInt())
         {
-            case GamePlayTowerDefense1.__ID__: return new GamePlayTowerDefense1(_buf);
-            case GamePlayPK1.__ID__: return new GamePlayPK1(_buf);
+            case GamePlayTowerDefenseNormal.__ID__: return new GamePlayTowerDefenseNormal(_buf);
+            case GamePlayTowerDefenseTutorialFirst.__ID__: return new GamePlayTowerDefenseTutorialFirst(_buf);
+            case GamePlayTowerDefensePVE.__ID__: return new GamePlayTowerDefensePVE(_buf);
+            case GamePlayTowerDefenseEndlessChallenge.__ID__: return new GamePlayTowerDefenseEndlessChallenge(_buf);
+            case GamePlayTowerDefensePVP.__ID__: return new GamePlayTowerDefensePVP(_buf);
+            case GamePlayPKNormal.__ID__: return new GamePlayPKNormal(_buf);
             default: throw new SerializationException();
         }
     }

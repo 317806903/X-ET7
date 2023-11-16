@@ -78,10 +78,17 @@ namespace ET
 
 		public static int GetWaveRewardGold(this MonsterWaveCallComponent self)
 		{
-			int waveIndex = self.sortWaveIndex[self.curIndex];
+			bool bRet = self.GetRealWaveInfo(out int waveIndex, out float monsterWaveNumScalePercent,
+				out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
+			if(bRet == false)
+			{
+				return 0;
+			}
+
 			TowerDefense_MonsterWaveCallRuleCfg monsterWaveCallCfg = TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.Get(self.monsterWaveRule, waveIndex);
 
-			return monsterWaveCallCfg.WaveRewardGold;
+			int waveRewardGold = (int)math.floor(monsterWaveCallCfg.WaveRewardGold * (100 + waveRewardGoldScalePercent)*0.01f);
+			return waveRewardGold;
 		}
 
 		public static void DoNextMonsterWaveCall(this MonsterWaveCallComponent self)
@@ -105,8 +112,14 @@ namespace ET
 			foreach (long playerId in playerList)
 			{
 				MonsterWaveCallOnceComponent monsterWaveCallOnceComponent = self.AddChild<MonsterWaveCallOnceComponent>();
-				int waveIndex = self.sortWaveIndex[self.curIndex];
-				monsterWaveCallOnceComponent.Init(playerId, self.monsterWaveRule, waveIndex);
+				bool bRet = self.GetRealWaveInfo(out int waveIndex, out float monsterWaveNumScalePercent,
+					out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
+				if(bRet == false)
+				{
+					return;
+				}
+
+				monsterWaveCallOnceComponent.Init(playerId, self.monsterWaveRule, waveIndex, monsterWaveNumScalePercent, monsterWaveLevelScalePercent);
 
 				self.duration = monsterWaveCallOnceComponent.duration;
 				if (self.waveMonsterCallList.ContainsKey(playerId) == false)
@@ -115,6 +128,49 @@ namespace ET
 				}
 				self.waveMonsterCallList[playerId].Add(self.curIndex, monsterWaveCallOnceComponent);
 			}
+		}
+
+		public static bool GetRealWaveInfo(this MonsterWaveCallComponent self, out int waveIndex,
+		out float monsterWaveNumScalePercent, out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+			waveIndex = 0;
+			monsterWaveNumScalePercent = 0;
+			monsterWaveLevelScalePercent = 0;
+			waveRewardGoldScalePercent = 0;
+			if (self.curIndex >= self.sortWaveIndex.Count)
+			{
+				if (gamePlayTowerDefenseComponent.IsEndlessChallengeMonster() == false)
+				{
+					return false;
+				}
+
+				GamePlayBattleLevelCfg gamePlayBattleLevelCfg = gamePlayTowerDefenseComponent.GetGamePlay().GetGamePlayBattleConfig();
+				GamePlayTowerDefenseEndlessChallengeMonster gamePlayTowerDefenseEndlessChallengeMonster =
+					gamePlayBattleLevelCfg.GamePlayMode as GamePlayTowerDefenseEndlessChallengeMonster;
+				int repeatNum = gamePlayTowerDefenseEndlessChallengeMonster.RepeatNum;
+				float monsterWaveNumScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.MonsterWaveNumScalePercentCoefficient;
+				float monsterWaveLevelScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.MonsterWaveLevelScalePercentCoefficient;
+				float waveRewardGoldScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.WaveRewardGoldScalePercentCoefficient;
+				if (self.sortWaveIndex.Count < repeatNum)
+				{
+					repeatNum = self.sortWaveIndex.Count;
+				}
+
+				int tmp1 = (int)(1f * (self.curIndex - self.sortWaveIndex.Count) / repeatNum) + 1;
+				int tmp2 = (self.curIndex - self.sortWaveIndex.Count) % repeatNum;
+
+				waveIndex = self.sortWaveIndex[self.sortWaveIndex.Count - (repeatNum - tmp2)];
+				monsterWaveNumScalePercent = tmp1 * monsterWaveNumScalePercentCoefficient;
+				monsterWaveLevelScalePercent = tmp1 * monsterWaveLevelScalePercentCoefficient;
+				waveRewardGoldScalePercent = tmp1 * waveRewardGoldScalePercentCoefficient;
+			}
+			else
+			{
+				waveIndex = self.sortWaveIndex[self.curIndex];
+			}
+
+			return true;
 		}
 
 		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this MonsterWaveCallComponent self)
@@ -206,13 +262,20 @@ namespace ET
 				}
 				self.waveMonsterCallList.Clear();
 
-				if (self.curIndex == self.totalCount - 1)
+				if (self.GetGamePlayTowerDefense().IsEndlessChallengeMonster())
 				{
-					self.GetGamePlayTowerDefense().TransToGameEnd().Coroutine();
+					self.GetGamePlayTowerDefense().TransToRestTime().Coroutine();
 				}
 				else
 				{
-					self.GetGamePlayTowerDefense().TransToRestTime().Coroutine();
+					if (self.curIndex == self.totalCount - 1)
+					{
+						self.GetGamePlayTowerDefense().TransToGameEnd().Coroutine();
+					}
+					else
+					{
+						self.GetGamePlayTowerDefense().TransToRestTime().Coroutine();
+					}
 				}
 				TimerComponent.Instance.Remove(ref self.Timer);
 			}

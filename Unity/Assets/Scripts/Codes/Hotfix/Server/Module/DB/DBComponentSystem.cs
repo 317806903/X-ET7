@@ -19,14 +19,14 @@ namespace ET.Server
 
 	    private static IMongoCollection<T> GetCollection<T>(this DBComponent self, string collection = null)
 	    {
-		    return self.database.GetCollection<T>(collection ?? typeof (T).Name);
+		    return self.database.GetCollection<T>(collection ?? typeof (T).FullName);
 	    }
 
 	    private static IMongoCollection<Entity> GetCollection(this DBComponent self, string name)
 	    {
 		    return self.database.GetCollection<Entity>(name);
 	    }
-	    
+
 	    #region Query
 
 	    public static async ETTask<T> Query<T>(this DBComponent self, long id, string collection = null) where T : Entity
@@ -38,7 +38,7 @@ namespace ET.Server
 			    return await cursor.FirstOrDefaultAsync();
 		    }
 	    }
-	    
+
 	    public static async ETTask<List<T>> Query<T>(this DBComponent self, Expression<Func<T, bool>> filter, string collection = null)
 			    where T : Entity
 	    {
@@ -60,7 +60,7 @@ namespace ET.Server
 			    return await cursor.ToListAsync();
 		    }
 	    }
-	    
+
 	    public static async ETTask Query(this DBComponent self, long id, List<string> collectionNames, List<Entity> result)
 	    {
 		    if (collectionNames == null || collectionNames.Count == 0)
@@ -114,9 +114,9 @@ namespace ET.Server
 	    {
 		    if (collection == null)
 		    {
-			    collection = typeof (T).Name;
+			    collection = typeof (T).FullName;
 		    }
-		    
+
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
 		    {
 			    await self.GetCollection(collection).InsertManyAsync(list);
@@ -131,11 +131,11 @@ namespace ET.Server
 	    {
 		    if (entity == null)
 		    {
-			    Log.Error($"save entity is null: {typeof (T).Name}");
+			    Log.Error($"save entity is null: {typeof (T).FullName}");
 
 			    return;
 		    }
-		    
+
 		    if (collection == null)
 		    {
 			    collection = entity.GetType().FullName;
@@ -151,7 +151,7 @@ namespace ET.Server
 	    {
 		    if (entity == null)
 		    {
-			    Log.Error($"save entity is null: {typeof (T).Name}");
+			    Log.Error($"save entity is null: {typeof (T).FullName}");
 
 			    return;
 		    }
@@ -205,7 +205,7 @@ namespace ET.Server
 	    #endregion
 
 	    #region Remove
-	    
+
 	    public static async ETTask<long> Remove<T>(this DBComponent self, long id, string collection = null) where T : Entity
 	    {
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, id % DBComponent.TaskCount))

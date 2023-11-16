@@ -28,9 +28,12 @@ namespace ET
 			}
 		}
 
-		public static void Init(this PutMonsterCallComponent self, long playerId, string unitCfgId, float3 monsterCallPos, float3 forward)
+		public static bool Init(this PutMonsterCallComponent self, long playerId, string unitCfgId, float3 monsterCallPos, float3 forward)
 		{
-
+			if (self.MonsterCallUnitId.ContainsKey(playerId))
+			{
+				return false;
+			}
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 			TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetMonsterTeamFlagTypeByPlayer(playerId);
 
@@ -39,6 +42,7 @@ namespace ET
 			self.MonsterCallUnitId[playerId] = monsterCallUnit.Id;
 
 			self.ChkNextStep();
+			return true;
 		}
 
 		public static void InitWhenPVP(this PutMonsterCallComponent self, float3 midPos)

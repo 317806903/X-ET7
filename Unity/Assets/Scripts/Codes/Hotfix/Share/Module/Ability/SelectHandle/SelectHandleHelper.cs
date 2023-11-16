@@ -374,6 +374,9 @@ namespace ET.Ability
             float angleHalf = angle * 0.5f;
             bool IsAngleFirst = actionCallAutoUnit.IsAngleFirst;
 
+            bool IgnoringHeight = actionCallAutoUnit.UmbellateArea.IgnoringHeight;
+            bool KeepHorizontal = actionCallAutoUnit.UmbellateArea.KeepHorizontal;
+
             float3 curUnitPos;
             float3 curUnitForward;
             if (isResetPos)
@@ -386,17 +389,40 @@ namespace ET.Ability
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
             }
 
+            if (IgnoringHeight || KeepHorizontal)
+            {
+                curUnitForward.y = 0;
+            }
             curUnitForward = math.normalize(curUnitForward);
             float curUnitAttackPoint = ET.Ability.UnitHelper.GetAttackPointHeight(unit);
 
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                float disSq = math.distancesq(targetUnit.Position, curUnitPos);
+                float disSq;
+                if (IgnoringHeight)
+                {
+                    float3 tmp1 = targetUnit.Position - curUnitPos;
+                    tmp1.y = 0;
+                    disSq = math.lengthsq(tmp1);
+                }
+                else
+                {
+                    disSq = math.lengthsq(targetUnit.Position - curUnitPos);
+                }
                 if (disSq <= radiusSq)
                 {
                     float3 dir = math.normalize(targetUnit.Position - curUnitPos);
-                    float angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    float angleTmp;
+                    if (IgnoringHeight || KeepHorizontal)
+                    {
+                        dir.y = 0;
+                        angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    }
+                    else
+                    {
+                        angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    }
                     if (angleTmp < angleHalf)
                     {
                         (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
@@ -435,6 +461,9 @@ namespace ET.Ability
             float length = actionCallAutoUnit.RectangleArea.Length;
             ResetDis(ref length, ref actionContext);
 
+            bool IgnoringHeight = actionCallAutoUnit.RectangleArea.IgnoringHeight;
+            bool KeepHorizontal = actionCallAutoUnit.RectangleArea.KeepHorizontal;
+
             float3 curUnitPos;
             float3 curUnitForward;
             if (isResetPos)
@@ -446,6 +475,11 @@ namespace ET.Ability
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
             }
+
+            if (IgnoringHeight || KeepHorizontal)
+            {
+                curUnitForward.y = 0;
+            }
             curUnitForward = math.normalize(curUnitForward);
             float curUnitAttackPoint = ET.Ability.UnitHelper.GetAttackPointHeight(unit);
 
@@ -454,15 +488,40 @@ namespace ET.Ability
             {
                 Unit targetUnit = list[i];
                 float3 dir = math.normalize(targetUnit.Position - curUnitPos);
+                if (IgnoringHeight || KeepHorizontal)
+                {
+                    dir.y = 0;
+                }
                 float dot = math.dot(curUnitForward, dir);
                 if (dot >= 0)
                 {
-                    if (math.distancesq(targetUnit.Position, curUnitPos) > disSq)
+                    float disSq2;
+                    if (IgnoringHeight)
+                    {
+                        float3 tmp1 = targetUnit.Position - curUnitPos;
+                        tmp1.y = 0;
+                        disSq2 = math.lengthsq(tmp1);
+                    }
+                    else
+                    {
+                        disSq2 = math.lengthsq(targetUnit.Position - curUnitPos);
+                    }
+                    if (disSq2 > disSq)
                     {
                         continue;
                     }
                     float acos = math.acos(math.clamp(dot, -1, 1));
-                    float dis = math.distance(targetUnit.Position, curUnitPos);
+                    float dis;
+                    if (IgnoringHeight)
+                    {
+                        float3 tmp1 = targetUnit.Position - curUnitPos;
+                        tmp1.y = 0;
+                        dis = math.length(tmp1);
+                    }
+                    else
+                    {
+                        dis = math.length(targetUnit.Position - curUnitPos);
+                    }
                     float curHalfWidth = math.sin(acos) * dis;
                     float curLength = math.cos(acos) * dis;
                     //float angleTmp = math.degrees(acos);
@@ -586,6 +645,9 @@ namespace ET.Ability
             float angleHalf = angle * 0.5f;
             bool IsAngleFirst = actionCallAutoUnit.IsAngleFirst;
 
+            bool IgnoringHeight = actionCallAutoUnit.UmbellateArea.IgnoringHeight;
+            bool KeepHorizontal = actionCallAutoUnit.UmbellateArea.KeepHorizontal;
+
             float3 curUnitPos;
             float3 curUnitForward;
             if (isResetPos)
@@ -598,6 +660,10 @@ namespace ET.Ability
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
             }
 
+            if (IgnoringHeight || KeepHorizontal)
+            {
+                curUnitForward.y = 0;
+            }
             curUnitForward = math.normalize(curUnitForward);
             float curUnitAttackPoint = ET.Ability.UnitHelper.GetAttackPointHeight(unit);
 
@@ -608,11 +674,30 @@ namespace ET.Ability
                 {
                     return false;
                 }
-                float disSq = math.distancesq(targetUnit.Position, curUnitPos);
+                float disSq;
+                if (IgnoringHeight)
+                {
+                    float3 tmp1 = targetUnit.Position - curUnitPos;
+                    tmp1.y = 0;
+                    disSq = math.lengthsq(tmp1);
+                }
+                else
+                {
+                    disSq = math.lengthsq(targetUnit.Position - curUnitPos);
+                }
                 if (disSq <= radiusSq)
                 {
                     float3 dir = math.normalize(targetUnit.Position - curUnitPos);
-                    float angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    float angleTmp;
+                    if (IgnoringHeight || KeepHorizontal)
+                    {
+                        dir.y = 0;
+                        angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    }
+                    else
+                    {
+                        angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
+                    }
                     if (angleTmp < angleHalf)
                     {
                         (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
@@ -641,6 +726,9 @@ namespace ET.Ability
             float length = actionCallAutoUnit.RectangleArea.Length;
             ResetDis(ref length, ref actionContext);
 
+            bool IgnoringHeight = actionCallAutoUnit.RectangleArea.IgnoringHeight;
+            bool KeepHorizontal = actionCallAutoUnit.RectangleArea.KeepHorizontal;
+
             float3 curUnitPos;
             float3 curUnitForward;
             if (isResetPos)
@@ -651,6 +739,10 @@ namespace ET.Ability
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, actionCallAutoUnit.OffSetInfo);
+            }
+            if (IgnoringHeight || KeepHorizontal)
+            {
+                curUnitForward.y = 0;
             }
             curUnitForward = math.normalize(curUnitForward);
 
@@ -664,16 +756,41 @@ namespace ET.Ability
                     return false;
                 }
                 float3 dir = math.normalize(targetUnit.Position - curUnitPos);
+                if (IgnoringHeight || KeepHorizontal)
+                {
+                    dir.y = 0;
+                }
                 float dot = math.dot(curUnitForward, dir);
                 if (dot >= 0)
                 {
-                    if (math.distancesq(targetUnit.Position, curUnitPos) > disSq)
+                    float disSq2;
+                    if (IgnoringHeight)
+                    {
+                        float3 tmp1 = targetUnit.Position - curUnitPos;
+                        tmp1.y = 0;
+                        disSq2 = math.lengthsq(tmp1);
+                    }
+                    else
+                    {
+                        disSq2 = math.lengthsq(targetUnit.Position - curUnitPos);
+                    }
+                    if (disSq2 > disSq)
                     {
                         return false;
                     }
 
                     float acos = math.acos(math.clamp(dot, -1, 1));
-                    float dis = math.distance(targetUnit.Position, curUnitPos);
+                    float dis;
+                    if (IgnoringHeight)
+                    {
+                        float3 tmp1 = targetUnit.Position - curUnitPos;
+                        tmp1.y = 0;
+                        dis = math.length(tmp1);
+                    }
+                    else
+                    {
+                        dis = math.length(targetUnit.Position - curUnitPos);
+                    }
                     float curHalfWidth = math.sin(acos) * dis;
                     float curLength = math.cos(acos) * dis;
                     //float angleTmp = math.degrees(acos);

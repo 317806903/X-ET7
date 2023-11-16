@@ -20,7 +20,7 @@ message C2M_TestRequest // IActorLocationRequest
 	string request = 2;
 }
 
-message M2C_TestResponse // IActorResponse
+message M2C_TestResponse // IActorLocationResponse
 {
     int32 RpcId = 1;
 	int32 Error = 2;
@@ -64,10 +64,7 @@ message G2C_EnterBattleNotice // IActorMessage
 message G2C_PlayerStatusChgNotice // IActorMessage
 {
 	int32 RpcId = 1;
-	string PlayerGameMode = 2;
-	string PlayerStatus = 3;
-	string ARRoomType = 4;
-	int64 RoomId = 5;
+	bytes PlayerStatusComponentBytes = 2;
 }
 
 message MoveInfo
@@ -224,8 +221,9 @@ message M2C_Reload // IResponse
 message C2R_Login // IRequest
 {
 	int32 RpcId = 1;
-	string  Account = 2;  // 帐号
-	string  Password = 3;  // 密码
+	string Account = 2;  // 帐号
+	string Password = 3;  // 密码
+	int32 LoginType = 4;
 }
 
 message R2C_Login // IResponse
@@ -252,10 +250,8 @@ message G2C_LoginGate // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 PlayerId = 4;
-	string PlayerGameMode = 5;
-	string PlayerStatus = 6;
-	string ARRoomType = 7;
-	int64 RoomId = 8;
+	bytes PlayerComponentBytes = 5;
+	bytes PlayerStatusComponentBytes = 6;
 }
 
 //ResponseType G2C_LoginOut
@@ -285,10 +281,8 @@ message G2C_ReLogin // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 PlayerId = 4;
-	string PlayerGameMode = 5;
-	string PlayerStatus = 6;
-	string ARRoomType = 7;
-	int64 RoomId = 8;
+	bytes PlayerComponentBytes = 5;
+	bytes PlayerStatusComponentBytes = 6;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -475,8 +469,8 @@ message C2G_CreateRoom // IRequest
 {
 	int32 RpcId = 1;
 	string BattleCfgId = 2;
-	int32 IsARRoom = 3;
-	int32 IsARRoomTypeNormal = 4;
+	int32 RoomType = 3;
+	int32 SubRoomType = 4;
 }
 
 message G2C_CreateRoom // IResponse
@@ -781,6 +775,21 @@ message M2C_ReclaimPlayerTower // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_MovePlayerTower
+message C2M_MovePlayerTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+	Unity.Mathematics.float3 Position = 3;
+}
+
+message M2C_MovePlayerTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2C_ReadyWhenRestTime
 message C2M_ReadyWhenRestTime // IActorLocationRequest
 {
@@ -843,3 +852,50 @@ message M2C_SendARCameraPos // IActorLocationResponse
 	string Message = 3;
 }
 
+
+//ResponseType G2C_GetRank
+message C2G_GetRank // IRequest
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+}
+
+message G2C_GetRank // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes RankShowComponentBytes = 4;
+}
+
+//ResponseType G2C_GetPlayerCache
+message C2G_GetPlayerCache // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 PlayerModelType = 3;
+}
+
+message G2C_GetPlayerCache // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes PlayerModelComponentBytes = 4;
+}
+
+//ResponseType G2C_SetPlayerCache
+message C2G_SetPlayerCache // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 PlayerModelType = 3;
+	bytes PlayerModelComponentBytes = 4;
+}
+
+message G2C_SetPlayerCache // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ResConfig
   m_EditorClassIdentifier: 
   ResLoadMode: 0
-  ResHostServerIP: http://192.168.10.148
+  ResHostServerIP: http://192.168.10.58
   ResGameVersion: v1.0
-  RouterHttpHost: 8.134.156.170
+  RouterHttpHost: 127.0.0.1
   RouterHttpPort: 30300
-  isShowDebugRoot: 0
+  areaType: 0
+  IsShowDebugMode: 1
+  IsShowEditorLoginMode: 1

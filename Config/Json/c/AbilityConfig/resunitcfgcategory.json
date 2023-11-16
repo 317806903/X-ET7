@@ -189,6 +189,13 @@
     "res_name": "Assets/ResAB/UnitPrefab/Monster/Shadow.prefab"
   },
   {
+    "id": "ResUnit_Monster10",
+    "name": "种子1",
+    "desc": "",
+    "moveShowNatureSpeed": 3,
+    "res_name": "Assets/ResAB/UnitPrefab/Monster/Seed1.prefab"
+  },
+  {
     "id": "ResUnit_Tower_FireLine_1",
     "name": "火图腾1",
     "desc": "",

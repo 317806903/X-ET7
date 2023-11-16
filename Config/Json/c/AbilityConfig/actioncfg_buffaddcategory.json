@@ -103,6 +103,23 @@
     ]
   },
   {
+    "id": "BuffAdd_Circle3",
+    "name": "",
+    "desc": "新增buff：持续圆形攻击3",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Circle3"
+      }
+    ]
+  },
+  {
     "id": "BuffAdd_AttackGetGold1",
     "name": "",
     "desc": "攻击偷钱",
@@ -272,8 +289,8 @@
             "$type": "BuffActionModifyAttribute",
             "numericType": 10075,
             "baseValue": 0,
-            "stackValue": 10,
-            "maxChgValue": 100
+            "stackValue": 20,
+            "maxChgValue": 1000
           }
         ],
         "buffId": "Buff_AttackUp"
@@ -328,6 +345,23 @@
           }
         ],
         "buffId": "Buff_AddCDDown3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_SeedHeal1",
+    "name": "",
+    "desc": "恢复",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_SeedHeal1"
       }
     ]
   }

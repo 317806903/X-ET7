@@ -1,4 +1,5 @@
 ﻿using System;
+using BlurBackground;
 using UnityEngine;
 
 namespace ET.Client
@@ -8,17 +9,19 @@ namespace ET.Client
 	{
 		public GameObject ARSessoinGo;
 		public Transform StaticMeshTran;
+		public Transform QrCodeImageTran;
 		public Camera ARCamera;
 		public GameObject ScaleARCameraGo;
 		public Camera ScaleARCamera;
 		public Camera CurARCamera { get; set; }
+		public TranslucentImageSource translucentImageSource;
 
 		public Action OnMenuCancelCallBack;
 		public Action OnMenuFinishedCallBack;
 		public Action OnMenuCreateSceneCallBack;
-		public Action OnMenuQuitSceneCallBack;
-		public Action OnMenuJoinByExistSceneCallBack;
-		public Action<string> OnMenuJoinByQRCodeCallBack;
-		public Func<(bool, string)> OnGetQRCodeInfo;
+		public Action OnMenuExitSceneCallBack;
+		public Action OnMenuLoadRecentSceneCallBack;
+		public Action<string> OnMenuJoinSceneCallBack;
+		public Func<(bool, string)> OnRequestQRCodeExtraData;
 	}
 }

@@ -1,12 +1,16 @@
 [
   {
     "id": "GamePlayBattleLevel_Room11",
-    "name": "",
+    "name": "Room11",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+      "$type": "GamePlayTowerDefenseEndlessChallenge",
+      "gamePlayModeCfgId": "TowerDefenseCfg1",
+      "repeatNum": 5,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 600,
+      "waveRewardGoldScalePercentCoefficient": 0
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
@@ -103,12 +107,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Room12",
-    "name": "",
+    "name": "Room12",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+      "$type": "GamePlayTowerDefenseTutorialFirst",
+      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
@@ -210,12 +214,118 @@
   },
   {
     "id": "GamePlayBattleLevel_Room13",
-    "name": "",
+    "name": "Room13",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Room14",
+    "name": "EndlessChallenge",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseEndlessChallenge",
+      "gamePlayModeCfgId": "TowerDefenseCfg_test11",
+      "repeatNum": 3,
+      "monsterWaveNumScalePercentCoefficient": 100,
+      "monsterWaveLevelScalePercentCoefficient": 0,
+      "waveRewardGoldScalePercentCoefficient": 0
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
@@ -312,12 +422,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Room20",
-    "name": "",
+    "name": "PlayerAlone",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense2"
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg2"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -435,16 +545,16 @@
   },
   {
     "id": "GamePlayBattleLevel_Room30",
-    "name": "",
+    "name": "PlayerTeam",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense3"
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg3"
     },
     "teamMode": {
       "$type": "PlayerTeam",
-      "maxTeamCount": 3,
+      "maxTeamCount": 2,
       "isAllowDiffTeamMember": true
     },
     "sceneMap": "Map1",
@@ -560,12 +670,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Room80",
-    "name": "",
+    "name": "PK",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -683,12 +793,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Global1",
-    "name": "",
+    "name": "Global1",
     "isGlobalMode": true,
     "maxPlayerCount": 100,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -806,12 +916,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Global2",
-    "name": "",
+    "name": "Global2",
     "isGlobalMode": true,
     "maxPlayerCount": 100,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -913,12 +1023,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Global3",
-    "name": "",
+    "name": "Global3",
     "isGlobalMode": true,
     "maxPlayerCount": 100,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -1015,12 +1125,12 @@
   },
   {
     "id": "GamePlayBattleLevel_Global4",
-    "name": "",
+    "name": "Global4",
     "isGlobalMode": true,
     "maxPlayerCount": 100,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
@@ -1053,12 +1163,12 @@
   },
   {
     "id": "GamePlayBattleLevel_ARRoom",
-    "name": "",
+    "name": "ARRoom",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefense1",
-      "gamePlayModeCfgId": "GamePlayTowerDefense1"
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg1"
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
@@ -1154,16 +1264,559 @@
     ]
   },
   {
-    "id": "GamePlayBattleLevel_ARRoompk",
-    "name": "",
+    "id": "GamePlayBattleLevel_ARRoomPK",
+    "name": "PK",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
-      "$type": "GamePlayPK1",
-      "gamePlayModeCfgId": "GamePlayPK1"
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
     },
     "teamMode": {
       "$type": "PlayerAlone"
+    },
+    "sceneMap": "ARMap",
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_RoomTest1",
+    "name": "RoomTest1",
+    "isGlobalMode": false,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfgTest"
+    },
+    "teamMode": {
+      "$type": "PlayerTeam",
+      "maxTeamCount": 2,
+      "isAllowDiffTeamMember": true
+    },
+    "sceneMap": "Map1",
+    "mapScale": 1,
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomPVE",
+    "name": "ARRoomPVE",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomPVP",
+    "name": "ARRoomPVP",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVP",
+      "gamePlayModeCfgId": "TowerDefenseCfg2",
+      "repeatNum": 5,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 600,
+      "waveRewardGoldScalePercentCoefficient": 0
+    },
+    "teamMode": {
+      "$type": "PlayerTeam",
+      "maxTeamCount": 2,
+      "isAllowDiffTeamMember": true
+    },
+    "sceneMap": "ARMap",
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomEndlessChallenge",
+    "name": "ARRoomEndlessChallenge",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseEndlessChallenge",
+      "gamePlayModeCfgId": "TowerDefenseCfg1",
+      "repeatNum": 5,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 600,
+      "waveRewardGoldScalePercentCoefficient": 0
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomTutorialFirst",
+    "name": "ARRoomTutorialFirst",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseTutorialFirst",
+      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "ARMap",
     "mapScale": 30,

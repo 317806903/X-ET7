@@ -18,7 +18,7 @@ namespace YooAsset.Editor
 			{
 				Debug.LogWarning($"Create new {settingType.Name}.asset");
 				var setting = ScriptableObject.CreateInstance<TSetting>();
-				string filePath = $"Assets/{settingType.Name}.asset";
+				string filePath = $"Assets/Settings/{settingType.Name}.asset";
 				AssetDatabase.CreateAsset(setting, filePath);
 				AssetDatabase.SaveAssets();
 				AssetDatabase.Refresh();

@@ -17,6 +17,7 @@ namespace ET
 			{
 				self.HomeUnitIdList = new();
 				self.TeamFlagType2PlayerIdCanPutHome = new();
+				self.TeamFlagType2Result = new();
 
 				self.Init();
 			}
@@ -29,6 +30,7 @@ namespace ET
 			{
 				self.HomeUnitIdList?.Clear();
 				self.TeamFlagType2PlayerIdCanPutHome?.Clear();
+				self.TeamFlagType2Result?.Clear();
 			}
 		}
 
@@ -91,14 +93,19 @@ namespace ET
 			}
 		}
 
-		public static void InitHomeByPlayer(this PutHomeComponent self, long playerId, string unitCfgId, float3 homePos)
+		public static bool InitHomeByPlayer(this PutHomeComponent self, long playerId, string unitCfgId, float3 homePos)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 			TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetHomeTeamFlagTypeByPlayer(playerId);
+			if (self.HomeUnitIdList.ContainsKey(teamFlagType))
+			{
+				return false;
+			}
 			Unit homeUnit = self.CreateHome(unitCfgId, homePos, teamFlagType);
 			self.HomeUnitIdList[teamFlagType] = homeUnit.Id;
 
 			self.ChkNextStep().Coroutine();
+			return true;
 		}
 
 		public static async ETTask ChkNextStep(this PutHomeComponent self)
@@ -182,8 +189,17 @@ namespace ET
 		{
 			TeamFlagType myHomeTeamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
 
+			if (self.TeamFlagType2Result.ContainsKey(myHomeTeamFlagType))
+			{
+				return self.TeamFlagType2Result[myHomeTeamFlagType];
+			}
+			return false;
+		}
+
+		public static void BattleResult(this PutHomeComponent self)
+		{
 			float maxHomeHp = 0;
-			float myHomeHp = 0;
+			TeamFlagType maxHomeTeamFlagType = TeamFlagType.TeamGlobal1;
 			foreach (var homeUnitId in self.HomeUnitIdList)
 			{
 				TeamFlagType homeTeamFlagType = homeUnitId.Key;
@@ -200,21 +216,19 @@ namespace ET
 					if (maxHomeHp < hp)
 					{
 						maxHomeHp = hp;
+						maxHomeTeamFlagType = homeTeamFlagType;
 					}
 				}
-
-				if (homeTeamFlagType == myHomeTeamFlagType)
-				{
-					myHomeHp = hp;
-				}
 			}
 
-			if (myHomeHp > 0 && myHomeHp == maxHomeHp)
+			if (maxHomeHp > 0)
 			{
-				return true;
+				self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
 			}
-
-			return false;
+			else
+			{
+				self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
+			}
 		}
 
 		public static float3 GetMidPos(this PutHomeComponent self)
@@ -441,16 +455,13 @@ namespace ET
 			TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(playerTeamFlagType);
 			Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
 
-			float minDis = -1;
+			float minDisSq = -1;
+			float myHomeDisSq = -1;
 			TeamFlagType minTeamFlagType = TeamFlagType.TeamGlobal1;
 			Unit minHomeUnit = null;
 			foreach (var homeUnits in homeUnitList)
 			{
 				TeamFlagType curHomeTeamFlagType = homeUnits.Key;
-				if (curHomeTeamFlagType == homeTeamFlagType)
-				{
-					continue;
-				}
 
 				// bool isFriend = self.GetGamePlay().ChkIsFriend(homeTeamFlagType, curHomeTeamFlagType);
 				// if (isFriend)
@@ -462,12 +473,27 @@ namespace ET
 				if (homeUnit != null)
 				{
 					float curDisSq = math.lengthsq(homeUnit.Position - pos);
-					if (minDis == -1 || minDis > curDisSq)
+					if (curHomeTeamFlagType == homeTeamFlagType)
 					{
-						minDis = curDisSq;
-						minTeamFlagType = curHomeTeamFlagType;
-						minHomeUnit = homeUnit;
+						myHomeDisSq = curDisSq;
 					}
+					else
+					{
+						if (minDisSq == -1 || minDisSq > curDisSq)
+						{
+							minDisSq = curDisSq;
+							minTeamFlagType = curHomeTeamFlagType;
+							minHomeUnit = homeUnit;
+						}
+					}
+				}
+			}
+
+			if (minHomeUnit != null)
+			{
+				if (myHomeDisSq > minDisSq)
+				{
+					return (minTeamFlagType, null);
 				}
 			}
 

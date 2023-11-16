@@ -18,7 +18,7 @@ namespace ET
 				self.monsterWaveCallIsFinished = new();
 			}
 		}
-	
+
 		[ObjectSystem]
 		public class MonsterWaveCallOnceComponentDestroySystem : DestroySystem<MonsterWaveCallOnceComponent>
 		{
@@ -43,12 +43,14 @@ namespace ET
 				self.FixedUpdate(fixedDeltaTime);
 			}
 		}
-		
-		public static void Init(this MonsterWaveCallOnceComponent self, long playerId, string monsterWaveRule, int index)
+
+		public static void Init(this MonsterWaveCallOnceComponent self, long playerId, string monsterWaveRule, int index, float monsterWaveNumScalePercent, float monsterWaveLevelScalePercent)
 		{
 			self.playerId = playerId;
 			self.monsterWaveRule = monsterWaveRule;
 			self.waveIndex = index;
+			self.monsterWaveNumScalePercent = monsterWaveNumScalePercent;
+			self.monsterWaveLevelScalePercent = monsterWaveLevelScalePercent;
 			TowerDefense_MonsterWaveCallRuleCfg monsterWaveCallCfg = TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.Get(self.monsterWaveRule, self.waveIndex);
 			self.duration = monsterWaveCallCfg.Duration;
 			self.timeElapsed = 0;
@@ -60,7 +62,7 @@ namespace ET
 			{
 				self.duration -= fixedDeltaTime;
 			}
-			
+
             float wasTimeElapsed = self.timeElapsed;
             self.timeElapsed += fixedDeltaTime;
 
@@ -74,7 +76,7 @@ namespace ET
 	            {
 		            self.monsterWaveCallIsFinished[monsterWaveCallNode] = false;
 	            }
-	            
+
                 if (
 	                monsterWaveCallNode.TimeElapsed < self.timeElapsed &&
 	                monsterWaveCallNode.TimeElapsed >= wasTimeElapsed
@@ -83,7 +85,7 @@ namespace ET
 	                self.CallMonster(monsterWaveCallNode).Coroutine();
                 }
             }
-            
+
 		}
 
 		public static bool ChkIsGameEnd(this MonsterWaveCallOnceComponent self)
@@ -95,18 +97,21 @@ namespace ET
 		public static async ETTask CallMonster(this MonsterWaveCallOnceComponent self, MonsterWaveCallNode monsterWaveCallNode)
 		{
 			MonsterWaveCallComponent monsterWaveCallComponent = self.GetParent<MonsterWaveCallComponent>();
-			int leftNum = monsterWaveCallNode.TotalNum;
+			int leftNum = (int)math.floor(monsterWaveCallNode.TotalNum * (100 + self.monsterWaveNumScalePercent)*0.01f);
+			int onceNum = (int)math.floor(monsterWaveCallNode.OnceCallNum * (100 + self.monsterWaveNumScalePercent)*0.01f);
+			int monsterLevel = (int)math.floor(monsterWaveCallNode.Level * (100 + self.monsterWaveLevelScalePercent)*0.01f);
+			int monsterRewardGold = (int)math.floor(monsterWaveCallNode.RewardGold * (100 + self.monsterWaveLevelScalePercent)*0.01f);
 			while (leftNum > 0)
 			{
 				if (self.IsDisposed)
 				{
 					return;
 				}
-				for (int i = 0; i < monsterWaveCallNode.OnceCallNum; i++)
+				for (int i = 0; i < onceNum; i++)
 				{
-					Unit monsterUnit = monsterWaveCallComponent.CallMonsterOnce(self.playerId, monsterWaveCallNode.MonsterCfgId, monsterWaveCallNode.Level, monsterWaveCallNode.RewardGold);
+					Unit monsterUnit = monsterWaveCallComponent.CallMonsterOnce(self.playerId, monsterWaveCallNode.MonsterCfgId, monsterLevel, monsterRewardGold);
 					self.monsterWaveUnitList.Add(monsterUnit.Id);
-					
+
 					leftNum -= 1;
 					if (leftNum == 0)
 					{

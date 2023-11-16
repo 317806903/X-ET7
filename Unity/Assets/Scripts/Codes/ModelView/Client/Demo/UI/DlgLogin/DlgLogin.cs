@@ -6,7 +6,10 @@
 
 		public DlgLoginViewComponent View { get => this.GetComponent<DlgLoginViewComponent>(); }
 
-		 
+		public bool IsShowDebugMode;
+		public bool IsShowEditorLoginMode;
+		public bool IsDebugMode;
+		public bool IsEditorLoginMode;
 
 	}
 }

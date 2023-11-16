@@ -23,9 +23,18 @@ namespace ET.Client
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 			if (gamePlayComponent == null)
 			{
-				return null;
+				if (currentScene == null)
+				{
+					return null;
+				}
+				if (currentScene.GetComponent<CameraComponent>() == null)
+				{
+					return null;
+				}
+
+				return currentScene.GetComponent<CameraComponent>().MainCamera;
 			}
-			if (gamePlayComponent.isAR)
+			if (gamePlayComponent.IsAR())
 			{
 				Camera cameraAR = ET.Client.ARSessionHelper.GetMainCamera(scene);
 				if (cameraAR != null)
@@ -42,6 +51,21 @@ namespace ET.Client
 			}
 
 			return currentScene.GetComponent<CameraComponent>().MainCamera;
+		}
+
+		public static BlurBackground.TranslucentImageSource GetTranslucentImageSource(Scene scene)
+		{
+			var translucentImageSource = ET.Client.ARSessionHelper.GetTranslucentImageSource(scene);
+			if (translucentImageSource != null)
+			{
+				return translucentImageSource;
+			}
+			Camera camera = GetMainCamera(scene);
+			if (camera != null)
+			{
+				return camera.gameObject.GetComponent<BlurBackground.TranslucentImageSource>();
+			}
+			return null;
 		}
 	}
 }

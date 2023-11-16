@@ -42,7 +42,7 @@ namespace ET
 
 	[Message(OuterMessage.M2C_TestResponse)]
 	[ProtoContract]
-	public partial class M2C_TestResponse: ProtoObject, IActorResponse
+	public partial class M2C_TestResponse: ProtoObject, IActorLocationResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -131,16 +131,7 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public string PlayerGameMode { get; set; }
-
-		[ProtoMember(3)]
-		public string PlayerStatus { get; set; }
-
-		[ProtoMember(4)]
-		public string ARRoomType { get; set; }
-
-		[ProtoMember(5)]
-		public long RoomId { get; set; }
+		public byte[] PlayerStatusComponentBytes { get; set; }
 
 	}
 
@@ -463,6 +454,9 @@ namespace ET
 		[ProtoMember(3)]
 		public string Password { get; set; }
 
+		[ProtoMember(4)]
+		public int LoginType { get; set; }
+
 	}
 
 	[Message(OuterMessage.R2C_Login)]
@@ -522,16 +516,10 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(5)]
-		public string PlayerGameMode { get; set; }
+		public byte[] PlayerComponentBytes { get; set; }
 
 		[ProtoMember(6)]
-		public string PlayerStatus { get; set; }
-
-		[ProtoMember(7)]
-		public string ARRoomType { get; set; }
-
-		[ProtoMember(8)]
-		public long RoomId { get; set; }
+		public byte[] PlayerStatusComponentBytes { get; set; }
 
 	}
 
@@ -593,16 +581,10 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(5)]
-		public string PlayerGameMode { get; set; }
+		public byte[] PlayerComponentBytes { get; set; }
 
 		[ProtoMember(6)]
-		public string PlayerStatus { get; set; }
-
-		[ProtoMember(7)]
-		public string ARRoomType { get; set; }
-
-		[ProtoMember(8)]
-		public long RoomId { get; set; }
+		public byte[] PlayerStatusComponentBytes { get; set; }
 
 	}
 
@@ -977,10 +959,10 @@ namespace ET
 		public string BattleCfgId { get; set; }
 
 		[ProtoMember(3)]
-		public int IsARRoom { get; set; }
+		public int RoomType { get; set; }
 
 		[ProtoMember(4)]
-		public int IsARRoomTypeNormal { get; set; }
+		public int SubRoomType { get; set; }
 
 	}
 
@@ -1594,6 +1576,37 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(M2C_MovePlayerTower))]
+	[Message(OuterMessage.C2M_MovePlayerTower)]
+	[ProtoContract]
+	public partial class C2M_MovePlayerTower: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long TowerUnitId { get; set; }
+
+		[ProtoMember(3)]
+		public Unity.Mathematics.float3 Position { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_MovePlayerTower)]
+	[ProtoContract]
+	public partial class M2C_MovePlayerTower: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	[ResponseType(nameof(M2C_ReadyWhenRestTime))]
 	[Message(OuterMessage.C2M_ReadyWhenRestTime)]
 	[ProtoContract]
@@ -1724,6 +1737,105 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2C_GetRank))]
+	[Message(OuterMessage.C2G_GetRank)]
+	[ProtoContract]
+	public partial class C2G_GetRank: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int RankType { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_GetRank)]
+	[ProtoContract]
+	public partial class G2C_GetRank: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] RankShowComponentBytes { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2C_GetPlayerCache))]
+	[Message(OuterMessage.C2G_GetPlayerCache)]
+	[ProtoContract]
+	public partial class C2G_GetPlayerCache: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public int PlayerModelType { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_GetPlayerCache)]
+	[ProtoContract]
+	public partial class G2C_GetPlayerCache: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] PlayerModelComponentBytes { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2C_SetPlayerCache))]
+	[Message(OuterMessage.C2G_SetPlayerCache)]
+	[ProtoContract]
+	public partial class C2G_SetPlayerCache: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public int PlayerModelType { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] PlayerModelComponentBytes { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_SetPlayerCache)]
+	[ProtoContract]
+	public partial class G2C_SetPlayerCache: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -1837,13 +1949,21 @@ namespace ET
 		 public const ushort M2C_ScalePlayerTower = 10110;
 		 public const ushort C2M_ReclaimPlayerTower = 10111;
 		 public const ushort M2C_ReclaimPlayerTower = 10112;
-		 public const ushort C2M_ReadyWhenRestTime = 10113;
-		 public const ushort M2C_ReadyWhenRestTime = 10114;
-		 public const ushort C2M_GetMonsterCall2HeadQuarterPath = 10115;
-		 public const ushort M2C_GetMonsterCall2HeadQuarterPath = 10116;
-		 public const ushort C2M_ChkRay = 10117;
-		 public const ushort M2C_ChkRay = 10118;
-		 public const ushort C2M_SendARCameraPos = 10119;
-		 public const ushort M2C_SendARCameraPos = 10120;
+		 public const ushort C2M_MovePlayerTower = 10113;
+		 public const ushort M2C_MovePlayerTower = 10114;
+		 public const ushort C2M_ReadyWhenRestTime = 10115;
+		 public const ushort M2C_ReadyWhenRestTime = 10116;
+		 public const ushort C2M_GetMonsterCall2HeadQuarterPath = 10117;
+		 public const ushort M2C_GetMonsterCall2HeadQuarterPath = 10118;
+		 public const ushort C2M_ChkRay = 10119;
+		 public const ushort M2C_ChkRay = 10120;
+		 public const ushort C2M_SendARCameraPos = 10121;
+		 public const ushort M2C_SendARCameraPos = 10122;
+		 public const ushort C2G_GetRank = 10123;
+		 public const ushort G2C_GetRank = 10124;
+		 public const ushort C2G_GetPlayerCache = 10125;
+		 public const ushort G2C_GetPlayerCache = 10126;
+		 public const ushort C2G_SetPlayerCache = 10127;
+		 public const ushort G2C_SetPlayerCache = 10128;
 	}
 }

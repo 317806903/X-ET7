@@ -70,5 +70,14 @@
       "damageType": 7,
       "value": 0
     }
+  },
+  {
+    "id": "DamageUnit_8",
+    "name": "",
+    "desc": "固定回血",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -200
+    }
   }
 ]

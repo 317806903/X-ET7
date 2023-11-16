@@ -39,6 +39,11 @@ namespace ET.Client
 
         public static async ETTask Init(this ShootTextComponent self)
         {
+            if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
+            {
+                return;
+            }
+
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_ShootTextPrefab");
             GameObject shootTextRootGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
             self.shootTextRoot = shootTextRootGo.transform;
@@ -76,12 +81,21 @@ namespace ET.Client
 
         public static void Show(this ShootTextComponent self, Unit unit, int value)
         {
-            if (self.shootTextRoot.gameObject.activeSelf == false)
+            if (self.shootTextRoot == null || self.shootTextRoot.gameObject.activeSelf == false)
             {
                 return;
             }
 
-            self.shootTextProManager.CreatShootText($"-{value}", TextAnimationType.Normal, TextMoveType.LeftParabola, () =>
+            string showValue = "";
+            if (value > 0)
+            {
+                showValue = $"-{value}";
+            }
+            else
+            {
+                showValue = $"+{math.abs(value)}";
+            }
+            self.shootTextProManager.CreatShootText(showValue, TextAnimationType.Normal, TextMoveType.LeftParabola, () =>
             {
                 return self.GetShootTextTopPoint(unit);
             }, () =>

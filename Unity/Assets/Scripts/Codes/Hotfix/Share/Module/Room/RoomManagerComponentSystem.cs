@@ -19,10 +19,10 @@ namespace ET
             }
         }
 
-        public static RoomComponent CreateRoom(this RoomManagerComponent self, bool isARRoom, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
+        public static RoomComponent CreateRoom(this RoomManagerComponent self, RoomType roomType, SubRoomType subRoomType, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
         {
             RoomComponent roomComponent = self.AddChild<RoomComponent>();
-            roomComponent.Init(isARRoom, playerId, roomTeamMode, battleCfgId);
+            roomComponent.Init(roomType, subRoomType, playerId, roomTeamMode, battleCfgId);
 
             self.IdleRoomList.Add(roomComponent.Id);
             self.player2Room.Add(playerId, roomComponent.Id);
@@ -139,7 +139,7 @@ namespace ET
             foreach (long idleRoomId in self.IdleRoomList)
             {
                 RoomComponent roomComponent = self.GetRoom(idleRoomId);
-                if (roomComponent.isARRoom == isARRoom)
+                if (roomComponent.IsARRoom() == isARRoom)
                 {
                     list.Add(roomComponent.Id);
                 }

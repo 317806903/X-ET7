@@ -72,7 +72,7 @@ namespace ET
         public struct GamePlayCoinChg
         {
             public GetCoinType getCoinType;
-            public Dictionary<string, int> myCoinListChg;
+            public Dictionary<string, float> myCoinListChg;
         }
 
         public struct AfterUnitCreate
@@ -112,6 +112,11 @@ namespace ET
             public bool isAddEffect;
             public long effectObjId;
             public ET.Ability.EffectObj effectObj;
+        }
+
+        public struct NoticeGameEnd2Server
+        {
+            public GamePlayComponent gamePlayComponent;
         }
 
         public struct WaitNoticeGamePlayToClient
@@ -178,5 +183,11 @@ namespace ET
         {
         }
 
+        public struct NoticeEventLogging
+        {
+            public string eventName;
+            public Dictionary<string, object> properties;
+            public string timerKey;
+        }
     }
 }

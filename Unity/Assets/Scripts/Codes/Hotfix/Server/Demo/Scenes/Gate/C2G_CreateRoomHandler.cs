@@ -11,8 +11,8 @@ namespace ET.Server
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
 			string battleCfgId = request.BattleCfgId;
-			int isARRoom = request.IsARRoom;
-			bool isARRoomTypeNormal = request.IsARRoomTypeNormal == 1?true:false;
+			int RoomType = request.RoomType;
+			int SubRoomType = request.SubRoomType;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -20,7 +20,8 @@ namespace ET.Server
 			{
 				PlayerId = playerId,
 				BattleCfgId = battleCfgId,
-				IsARRoom = isARRoom,
+				RoomType = RoomType,
+				SubRoomType = SubRoomType,
 			});
 
 			response.Error = _R2G_CreateRoom.Error;
@@ -30,37 +31,10 @@ namespace ET.Server
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
 				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-				if (isARRoom == 1)
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
-				}
-				else
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
-				}
 				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 				playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
-
-				if (isARRoomTypeNormal)
-				{
-					playerStatusComponent.ARRoomType = ARRoomType.Normal;
-				}
-				else if (battleCfgId == GlobalSettingCfgCategory.Instance.ARPVECfgId)
-				{
-					playerStatusComponent.ARRoomType = ARRoomType.PVE;
-				}
-				else if (battleCfgId == GlobalSettingCfgCategory.Instance.ARPVPCfgId)
-				{
-					playerStatusComponent.ARRoomType = ARRoomType.PVP;
-				}
-				else if (battleCfgId == GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId)
-				{
-					playerStatusComponent.ARRoomType = ARRoomType.EndlessChallenge;
-				}
-				else
-				{
-					playerStatusComponent.ARRoomType = ARRoomType.Normal;
-				}
+				playerStatusComponent.RoomType = (RoomType)RoomType;
+				playerStatusComponent.SubRoomType = (SubRoomType)SubRoomType;
 
 				await playerStatusComponent.NoticeClient();
 			}

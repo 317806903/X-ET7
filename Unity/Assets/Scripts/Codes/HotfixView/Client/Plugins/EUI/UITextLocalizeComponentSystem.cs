@@ -30,6 +30,10 @@ namespace ET.Client
             UITextLocalizeMonoView[] list = go.GetComponentsInChildren<UITextLocalizeMonoView>(true);
             foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in list)
             {
+                if (uiTextLocalizeMonoView == null)
+                {
+                    continue;
+                }
                 self._UITextLocalizeMonoViewList.Add(uiTextLocalizeMonoView);
                 uiTextLocalizeMonoView.SetGetTextKeyValueActionBack(self.getTextKeyValueActionBack);
                 uiTextLocalizeMonoView.SetTextLocalizeAction(self.getTextKeyValue);

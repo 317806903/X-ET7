@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  * Unless otherwise licensed, this file cannot be copied or redistributed in any format without the explicit consent of the author.
  * (c) Preet Kamal Singh Minhas, http://marchingbytes.com
  * contact@marchingbytes.com
@@ -45,6 +45,7 @@ namespace ET.Client
 
             // In case the origin one is Destroyed, we should keep at least one
             GameObject go = GameObject.Instantiate(poolObjectPrefab);
+
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
             {
@@ -62,7 +63,7 @@ namespace ET.Client
         {
             //add to pool
             po.gameObject.SetActive(false);
-            po.gameObject.name = poolName;
+            po.gameObject.name = System.IO.Path.GetFileName(poolName);
             availableObjStack.Push(po);
             po.isPooled = true;
             //add to a root obj
@@ -75,10 +76,10 @@ namespace ET.Client
             {
                 PoolObject po = GameObject.Instantiate(availableObjStack.Peek());
                 AddObjectToPool(po);
-                
+
             }
         }
-        
+
         //o(1)
         public GameObject NextAvailableObject(bool autoActive)
         {
@@ -124,7 +125,7 @@ namespace ET.Client
                     }
                 }
             }
-            
+
             GameObject result = null;
             if (po != null)
             {
@@ -140,8 +141,8 @@ namespace ET.Client
             return result;
         }
 
-        
-        
+
+
         //o(1)
         public void ReturnObjectToPool(PoolObject po)
         {
@@ -149,7 +150,7 @@ namespace ET.Client
             {
                 objectsInUse--;
                 /* we could have used availableObjStack.Contains(po) to check if this object is in pool.
-                 * While that would have been more robust, it would have made this method O(n) 
+                 * While that would have been more robust, it would have made this method O(n)
                  */
                 if (po.isPooled)
                 {

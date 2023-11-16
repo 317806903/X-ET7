@@ -29,14 +29,23 @@ namespace ET
                     EditorGUILayout.BeginHorizontal("OL box flat");
                     if (GUILayout.Button(key.ToString(), GUILayout.Width(width / 2)))
                     {
-                        
+
                     }
 
-                    if (GUILayout.Button(dic[key]?.ToString() ?? "Null", GUILayout.Width(width / 2)))
+                    string tmp1 = "";
+                    try
                     {
-                        
+                        tmp1 = dic[key]?.ToString();
                     }
-                    
+                    catch (Exception e)
+                    {
+                        tmp1 = "Error Null";
+                    }
+                    if (GUILayout.Button(tmp1 ?? "Null", GUILayout.Width(width / 2)))
+                    {
+
+                    }
+
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUILayout.EndVertical();

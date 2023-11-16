@@ -2,7 +2,7 @@
   {
     "id": "ResIcon_NULL",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_3.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
   },
   {
     "id": "ResIcon_1",
@@ -17,17 +17,17 @@
   {
     "id": "ResIcon_Monster1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_2.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
   },
   {
     "id": "ResIcon_HeadQuarter1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_HeadQuarter1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
   },
   {
     "id": "ResIcon_MonsterCall",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_HeadQuarter1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_1.png"
   },
   {
     "id": "ResIcon_MachineGunTower_0",
@@ -88,5 +88,50 @@
     "id": "ResIcon_TowerTime1",
     "name": "",
     "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime_1.png"
+  },
+  {
+    "id": "ResIcon_Beginners_Guide1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_guide1.png"
+  },
+  {
+    "id": "ResIcon_Beginners_Guide2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_guide2.png"
+  },
+  {
+    "id": "ResIcon_Beginners_Guide3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_guide3.png"
+  },
+  {
+    "id": "ResIcon_Beginners_Guide4",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_guide4.png"
+  },
+  {
+    "id": "ResIcon_Avatar01",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/common/Common_img_avatar_01.png"
+  },
+  {
+    "id": "ResIcon_Avatar02",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/common/Common_img_avatar_02.png"
+  },
+  {
+    "id": "ResIcon_Avatar03",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/common/Common_img_avatar_03.png"
+  },
+  {
+    "id": "ResIcon_Avatar04",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/common/Common_img_avatar_04.png"
+  },
+  {
+    "id": "ResIcon_Avatar05",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/common/Common_img_avatar_05.png"
   }
 ]

@@ -298,7 +298,7 @@ namespace ET.Ability
             return hostileForces;
         }
 
-        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius, bool ignoreY = false)
+        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius, bool ignoreY = true)
         {
             if (ChkIsNear(curUnit, targetUnit, radius, ignoreY))
             {
@@ -616,6 +616,8 @@ namespace ET.Ability
 
         public static void ResetPos(Unit unit, float3 resetPos)
         {
+            unit.Position = resetPos;
+
             ET.Ability.MoveOrIdleHelper.StopMove(unit);
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
             pathfindingComponent?.ResetPos(resetPos);

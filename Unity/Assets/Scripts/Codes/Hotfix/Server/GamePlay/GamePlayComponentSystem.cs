@@ -272,5 +272,34 @@ namespace ET.Server
 				}
 			}
 		}
+
+		public static async ETTask GameEndWhenServer(this GamePlayComponent self)
+		{
+			if (self.gamePlayMode == GamePlayMode.TowerDefense)
+			{
+				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayMode() as GamePlayTowerDefenseComponent;
+
+				if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+				{
+					MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+					List<long> playerList = self.GetPlayerList();
+					for (int i = 0; i < playerList.Count; i++)
+					{
+						long playerId = playerList[i];
+						PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
+						if (playerBaseInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex)
+						{
+							playerBaseInfoComponent.EndlessChallengeScore = monsterWaveCallComponent.curIndex;
+							await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo);
+							await ET.Server.PlayerCacheHelper.SavePlayerRank(self.DomainScene(), playerId, RankType.EndlessChallenge, playerBaseInfoComponent.EndlessChallengeScore);
+						}
+					}
+				}
+
+			}
+
+			await ETTask.CompletedTask;
+		}
+
 	}
 }

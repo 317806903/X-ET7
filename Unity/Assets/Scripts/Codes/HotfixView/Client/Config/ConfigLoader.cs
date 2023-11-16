@@ -66,13 +66,13 @@ namespace ET.Client
                     }
                     else if(configType.FullName.StartsWith("ET.AbilityConfig."))
                     {
-                        configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configType.Name}.bytes";
+                        configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configType.Name.ToLower()}.bytes";
                     }
                     else
                     {
-                        configFilePath = $"../Config/Excel/{ct}/GameConfig/{configType.Name}.bytes";
+                        configFilePath = $"../Config/Excel/{ct}/GameConfig/{configType.Name.ToLower()}.bytes";
                     }
-                    Log.Debug($"GetAllConfigBytes {configType.Name} {configFilePath}");
+                    Log.Debug($"GetAllConfigBytes {configType.Name.ToLower()} {configFilePath}");
                     output[configType] = new ByteBuf(File.ReadAllBytes(configFilePath));
                 }
             }
@@ -90,7 +90,7 @@ namespace ET.Client
                     {
                         configFilePath = configType.Name.ToLower();
                     }
-                    Log.Debug($"GetAllConfigBytes {configType.Name}=>{configFilePath}");
+                    Log.Debug($"GetAllConfigBytes {configType.Name.ToLower()}=>{configFilePath}");
                     TextAsset v = ResComponent.Instance.LoadAsset<TextAsset>(configFilePath) as TextAsset;
                     output[configType] = new ByteBuf(v.bytes);
                 }

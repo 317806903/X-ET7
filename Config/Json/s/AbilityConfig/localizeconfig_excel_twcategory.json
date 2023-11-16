@@ -310,5 +310,569 @@
   {
     "key": "Text_Key_Name_Tow8_3",
     "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_4",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Aoe",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_ST",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalNum",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownNum",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalDownSize",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownSize",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GameMode_All",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPK1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TeamMode_All",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TeamMode_AllPlayersOneGroup",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerAlone",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerTeam",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_StartGame",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_WaitAllReady",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Ready",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_CancelReady",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeatIndex",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_ChgSeat",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_KickMember",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeeMemberInfo",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Self",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCount",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCountVs",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_IsQuitRoom",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Net_ChkDisconnect",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Net_ChkConnect",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadSuccess",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateErr",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadResErr",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_IsQuitBattle",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Hall_RoomNotExist",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Hall_CreateRoomError",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnRoom",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnBattle",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_WaveRewardGold",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_InterestOnDeposit",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_DivideEquallyTeamCoin",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText2",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText3",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint2",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_NextMonsterWaveTime",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveLeftTime",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_MonsterWaveOverTime",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxPutTowerCount",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CurPutTowerCount",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyDone",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyButton",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuy_NotEnough",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsRaycast",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsCliffy",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnUI",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsReachHome",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNearTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnRoad",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNotNearTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_Click_IsNotYouTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_NotHaveThisTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxLevelTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CanLevelUpTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_CannotLevelUpTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds2",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes2",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes3",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes4",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PicDes1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanBegin",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanFinish",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanConfirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_RoomStart",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceHQ",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceSP",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_BuyTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_CloseDLG",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TapTower",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TowerDetail",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WaveStart",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Abandon_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattlePut_IsOK",
+    "text_tw": ""
   }
 ]

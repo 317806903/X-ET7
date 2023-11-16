@@ -39,5 +39,9 @@ namespace ET
         // 进程启动是否创建该进程的scenes
         [Option("CreateScenes", Required = false, Default = 1)]
         public int CreateScenes { get; set; }
+
+        //
+        [Option("NeedDB", Required = false, Default = 0)]
+        public int NeedDB { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ET
 {
-	public class Init: MonoBehaviour
+	public class Init : MonoBehaviour
 	{
 		private void Start()
 		{
@@ -45,10 +45,13 @@ namespace ET
 					.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
 					.WithParsed(Game.AddSingleton);
 
+#if UNITY_EDITOR
+			Options.Instance.NeedDB = GlobalConfig.Instance.NeedDB?1:0;
+#endif
+
 			Game.AddSingleton<ET.CodeLoader>().Start();
 
 #if UNITY_EDITOR
-
 			while (Game.ChkIsExistSingleton<ConfigComponent>() == false)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();

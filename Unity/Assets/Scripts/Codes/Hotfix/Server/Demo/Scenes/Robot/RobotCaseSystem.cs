@@ -16,7 +16,7 @@ namespace ET.Server
                 }
             }
         }
-        
+
         // 创建机器人，生命周期是RobotCase
         public static async ETTask NewRobot(this RobotCase self, int count, List<Scene> scenes)
         {
@@ -77,7 +77,7 @@ namespace ET.Server
             try
             {
                 clientScene = await Client.SceneFactory.CreateClientScene(zone, name);
-                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString());
+                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString(), ET.LoginType.Robot);
                 await Client.EnterMapHelper.EnterMapAsync(clientScene, "Map1");
                 Log.Debug($"create robot ok: {zone}");
                 self.Scenes.Add(clientScene.Id);
@@ -98,7 +98,7 @@ namespace ET.Server
             try
             {
                 clientScene = await Client.SceneFactory.CreateClientScene(zone, $"Robot_{zone}");
-                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString());
+                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString(), ET.LoginType.Robot);
                 await Client.EnterMapHelper.EnterMapAsync(clientScene, "Map1");
                 Log.Debug($"create robot ok: {zone}");
                 self.Scenes.Add(clientScene.Id);

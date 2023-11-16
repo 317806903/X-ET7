@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
 
-namespace ET.Ability.Client
+namespace ET.Client
 {
     [FriendOf(typeof (Unit))]
     public static class UIAudioManagerHelper
@@ -57,6 +57,12 @@ namespace ET.Ability.Client
         {
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             _UIAudioManagerComponent.PlayUIAudio(resAudioCfgId).Coroutine();
+        }
+
+        public static void PlayUIGuideAudio(Scene scene, string audioPath)
+        {
+            UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
+            _UIAudioManagerComponent.PlayUIGuideAudio(audioPath).Coroutine();
         }
 
         public static void PlayMusicLogin(Scene scene)

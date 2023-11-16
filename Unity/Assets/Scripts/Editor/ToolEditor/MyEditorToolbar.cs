@@ -77,6 +77,7 @@ namespace ET
                 // }
                 globalConfig.CodeMode = CodeMode.ClientServer;
                 globalConfig.StartConfig = "Localhost";
+                globalConfig.NeedDB = false;
                 EditorUtility.SetDirty(globalConfig);
                 AssetDatabase.SaveAssets();
 
@@ -160,7 +161,7 @@ namespace ET
         {
             await BuildHelper.BuildModelAndHotfix();
 
-            await GameObject.Find("Global").GetComponent<Init>().Restart();
+            await GameObject.Find("/Init").GetComponent<Init>().Restart();
         }
     }
 }

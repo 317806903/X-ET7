@@ -36,5 +36,111 @@
         1
       ]
     ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_test",
+    "name": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ],
+      [
+        "TowCallMonster_1",
+        10
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_PVP",
+    "name": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ],
+      [
+        "TowCallMonster_1",
+        1
+      ],
+      [
+        "TowCallMonster_2",
+        1
+      ],
+      [
+        "TowCallMonster_3",
+        1
+      ],
+      [
+        "TowCallMonster_4",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_TutorialFirst",
+    "name": "",
+    "towerWeight": [
+      [
+        "Tow2_1",
+        1
+      ]
+    ]
   }
 ]

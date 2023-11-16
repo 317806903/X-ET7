@@ -15,7 +15,7 @@ namespace ET
             {
                 try
                 {
-                    self.Check();
+                    self.Check(false);
                 }
                 catch (Exception e)
                 {
@@ -31,6 +31,7 @@ namespace ET
             {
                 self.AICfgId = aiConfigId;
                 self.Timer = TimerComponent.Instance.NewRepeatedTimer(500, TimerInvokeType.AITimer, self);
+                self.FirstCheck().Coroutine();
             }
         }
 
@@ -46,6 +47,53 @@ namespace ET
             }
         }
 
+        public static async ETTask FirstCheck(this AIComponent self)
+        {
+            int retryCount = 10;
+            while (true)
+            {
+                if (self == null || self.IsDisposed)
+                {
+                    return;
+                }
+
+                if (retryCount <= 0)
+                {
+                    return;
+                }
+                var unit = self.GetUnit();
+                if (unit == null || unit.IsDisposed)
+                {
+                    return;
+                }
+                var AOIEntity = unit.GetComponent<AOIEntity>();
+                if (AOIEntity == null || AOIEntity.IsDisposed)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    retryCount--;
+                    continue;
+                }
+                var seeUnits = AOIEntity.GetSeeUnits();
+                if (seeUnits.Count == 0)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    retryCount--;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            int random = RandomGenerator.RandomNumber(0, 5);
+            for (int i = 0; i < random; i++)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+            }
+            self.Check(true);
+        }
+
         public static Unit GetUnit(this AIComponent self)
         {
             return self.GetParent<Unit>();
@@ -56,7 +104,7 @@ namespace ET
             return self.AICfgId;
         }
 
-        public static void Check(this AIComponent self)
+        public static void Check(this AIComponent self, bool isFirst)
         {
             if (self.Parent == null)
             {
@@ -85,7 +133,7 @@ namespace ET
                     continue;
                 }
 
-                int ret = aaiHandler.Check(self, aiConfig);
+                int ret = aaiHandler.Check(self, aiConfig, isFirst);
                 if (ret != 0)
                 {
                     continue;

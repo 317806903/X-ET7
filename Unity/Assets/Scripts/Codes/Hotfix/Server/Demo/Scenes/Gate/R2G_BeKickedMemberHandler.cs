@@ -10,11 +10,11 @@ namespace ET.Server
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			int isKickWhenBattle = 0;
-			playerStatusComponent.PlayerGameMode = PlayerGameMode.None;
 			if (playerStatusComponent.PlayerStatus == PlayerStatus.Battle)
 			{
 				isKickWhenBattle = 1;
 			}
+			playerStatusComponent.SubRoomType = SubRoomType.None;
 			playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 			playerStatusComponent.RoomId = 0;
 

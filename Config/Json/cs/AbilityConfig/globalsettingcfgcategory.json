@@ -6,6 +6,44 @@
     "testGlobalSetting4": [
       "hh1;hh2",
       "hh3,hh4"
+    ],
+    "ARTutorialFirstCfgId": "GamePlayBattleLevel_ARRoomTutorialFirst",
+    "ARPVECfgId": "GamePlayBattleLevel_ARRoomPVE",
+    "ARPVPCfgId": "GamePlayBattleLevel_ARRoomPVP",
+    "AREndlessChallengeCfgId": "GamePlayBattleLevel_ARRoomEndlessChallenge",
+    "ShowDamage": false,
+    "AvatarIcons": [
+      "ResIcon_Avatar01",
+      "ResIcon_Avatar02",
+      "ResIcon_Avatar03",
+      "ResIcon_Avatar04",
+      "ResIcon_Avatar05"
+    ],
+    "BeginnersGuideImgs": [
+      [
+        [
+          "ResIcon_Beginners_Guide1",
+          "TextCode_Key_TutorialText_WorldDes1"
+        ]
+      ],
+      [
+        [
+          "ResIcon_Beginners_Guide2",
+          "TextCode_Key_TutorialText_WorldDes2"
+        ]
+      ],
+      [
+        [
+          "ResIcon_Beginners_Guide3",
+          "TextCode_Key_TutorialText_WorldDes3"
+        ]
+      ],
+      [
+        [
+          "ResIcon_Beginners_Guide4",
+          "TextCode_Key_TutorialText_WorldDes4"
+        ]
+      ]
     ]
   }
 ]

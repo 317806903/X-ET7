@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -6,22 +6,44 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
-    [FriendOf(typeof (DlgLogin))]
+    [FriendOf(typeof(DlgLogin))]
     public static class DlgLoginSystem
     {
         public static void RegisterUIEvent(this DlgLogin self)
         {
-            self.View.E_LoginButton.AddListenerAsync(self.OnLoginClickHandler);
+            self.View.E_ToggleDebugModeToggle.AddListener(self.OnToggleDebugModeToggle);
+            self.View.E_ToggleLoginEditorModeToggle.AddListener(self.OnToggleLoginModeToggle);
+            self.View.E_LoginButton.AddListenerAsync(self.LoginWhenEditor);
+            self.View.E_Login_GuestButton.AddListenerAsync(self.LoginWhenGuest);
+            self.View.E_Login_SDKButton.AddListenerAsync(self.LoginWhenSDK);
         }
 
         public static void ShowWindow(this DlgLogin self, ShowWindowData contextData = null)
         {
             self.PrintSystemInfo();
-
-            self.InitAccount();
-            self.InitDebugMode();
-
             self.SetGameInfo();
+
+            self._ShowWindow().Coroutine();
+        }
+
+        public static async ETTask _ShowWindow(this DlgLogin self)
+        {
+            await self.ChkIsShowDebugUI();
+            await self.InitAccount();
+            await self.InitDebugMode();
+
+            await ETTask.CompletedTask;
+        }
+
+        public static void OnToggleDebugModeToggle(this DlgLogin self, bool status)
+        {
+            self.IsDebugMode = !self.IsDebugMode;
+        }
+
+        public static void OnToggleLoginModeToggle(this DlgLogin self, bool status)
+        {
+            self.IsEditorLoginMode = !self.IsEditorLoginMode;
+            self.InitAccount().Coroutine();
         }
 
         public static void PrintSystemInfo(this DlgLogin self)
@@ -56,7 +78,8 @@ namespace ET.Client
             if (Application.platform == RuntimePlatform.Android)
             {
                 Debug.Log("--[[ PrintSystemInfo Android");
-            }else if(Application.platform == RuntimePlatform.IPhonePlayer)
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 Debug.Log("--[[ PrintSystemInfo IOS");
             }
@@ -116,7 +139,65 @@ namespace ET.Client
             Screen.autorotateToPortraitUpsideDown = true;
         }
 
-        public static void InitAccount(this DlgLogin self)
+        public static async ETTask ChkIsShowDebugUI(this DlgLogin self)
+        {
+            await ETTask.CompletedTask;
+            if (Application.isEditor)
+            {
+                if (DebugConnectComponent.Instance.IsFirstShow)
+                {
+                    DebugConnectComponent.Instance.IsFirstShow = false;
+                    self.IsShowDebugMode = true;
+                    self.IsShowEditorLoginMode = true;
+
+                    self.IsDebugMode = true;
+                    self.IsEditorLoginMode = true;
+                }
+                else
+                {
+                    self.IsShowDebugMode = ResConfig.Instance.IsShowDebugMode;
+                    self.IsShowEditorLoginMode = ResConfig.Instance.IsShowEditorLoginMode;
+
+                    self.IsDebugMode = DebugConnectComponent.Instance.IsDebugMode;
+                    self.IsEditorLoginMode = DebugConnectComponent.Instance.IsEditorLoginMode;
+                }
+            }
+            else
+            {
+                self.IsShowDebugMode = ResConfig.Instance.IsShowDebugMode;
+                self.IsShowEditorLoginMode = ResConfig.Instance.IsShowEditorLoginMode;
+
+                self.IsDebugMode = DebugConnectComponent.Instance.IsDebugMode;
+                self.IsEditorLoginMode = DebugConnectComponent.Instance.IsEditorLoginMode;
+            }
+        }
+
+        public static async ETTask InitAccount(this DlgLogin self)
+        {
+            self.View.EG_LoginAccountRootRectTransform.SetVisible(false);
+            self.View.EG_LoginWhenSDKRectTransform.SetVisible(false);
+            self.View.EG_LoginWhenEditorRectTransform.SetVisible(false);
+            if (self.IsEditorLoginMode == false)
+            {
+                bool bSDKLoginDone = await ET.Client.LoginSDKComponent.Instance.ChkSDKLoginDone();
+                self.View.EG_LoginAccountRootRectTransform.SetVisible(true);
+                self.View.EG_LoginWhenSDKRectTransform.SetVisible(true);
+                if (bSDKLoginDone)
+                {
+                    await self.LoginWhenSDK_LoginDone();
+                }
+            }
+            else
+            {
+                self.View.EG_LoginAccountRootRectTransform.SetVisible(true);
+                self.View.EG_LoginWhenEditorRectTransform.SetVisible(true);
+                self.InitAccountWhenEditor();
+
+            }
+
+        }
+
+        public static void InitAccountWhenEditor(this DlgLogin self)
         {
             string AccountKey = "AccountId";
             string accountId = "";
@@ -124,9 +205,13 @@ namespace ET.Client
             {
                 accountId = PlayerPrefs.GetString(AccountKey);
             }
-            if(string.IsNullOrEmpty(accountId))
+            if (string.IsNullOrEmpty(accountId))
             {
-                accountId = (100000 + RandomGenerator.RandInt32()).ToString();
+                accountId = SystemInfo.deviceUniqueIdentifier;
+            }
+            if (string.IsNullOrEmpty(accountId))
+            {
+                accountId = IdGenerater.Instance.GenerateId().ToString();
             }
 
             string AccountPassWordKey = "AccountPassWord";
@@ -138,52 +223,132 @@ namespace ET.Client
 
             self.View.E_AccountInputField.text = accountId;
             self.View.E_PasswordInputField.text = accountPassWord;
+
         }
 
-        public static void InitDebugMode(this DlgLogin self)
+        public static async ETTask InitDebugMode(this DlgLogin self)
         {
-            // if (Application.isEditor == false)
-            // {
-            //     return;
-            // }
+            await ETTask.CompletedTask;
+            self.View.E_ToggleDebugModeToggle.SetIsOnWithoutNotify(self.IsDebugMode);
+            self.View.E_ToggleDebugModeToggle.gameObject.SetActive(self.IsShowDebugMode);
 
-#if UNITY_EDITOR
-            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
-            playerComponent.IsDebugMode = true;
-            self.View.E_ToggleDebugModeToggle.isOn = playerComponent.IsDebugMode;
-            self.View.E_ToggleDebugModeToggle.gameObject.SetActive(true);
-#else
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                self.View.E_ToggleDebugModeToggle.isOn = true;
-                self.View.E_ToggleDebugModeToggle.gameObject.SetActive(true);
-            }
-            else
-            {
-                self.View.E_ToggleDebugModeToggle.isOn = false;
-                self.View.E_ToggleDebugModeToggle.gameObject.SetActive(false);
-                //self.View.E_ToggleDebugModeToggle.gameObject.SetActive(true);
-            }
-#endif
+            self.View.E_ToggleLoginEditorModeToggle.SetIsOnWithoutNotify(self.IsEditorLoginMode);
+            self.View.E_ToggleLoginEditorModeToggle.gameObject.SetActive(self.IsShowEditorLoginMode);
         }
 
-        public static async ETTask OnLoginClickHandler(this DlgLogin self)
+        public static async ETTask OnSwitchPlayerClickHandler(this DlgLogin self)
         {
-            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            await ET.Client.LoginSDKComponent.Instance.SDKLoginOut(true);
+        }
+
+        public static async ETTask LoginWhenEditor(this DlgLogin self)
+        {
+            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
             string accountId = self.View.E_AccountInputField.text;
-            string accountPassWord = self.View.E_PasswordInputField.text;
+            string accountPwd = self.View.E_PasswordInputField.text;
+
+            if (string.IsNullOrEmpty(accountId))
+            {
+                UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), "account is null", null);
+                return;
+            }
 
             string AccountKey = "AccountId";
             string AccountPassWordKey = "AccountPassWord";
+            PlayerPrefs.SetString(AccountKey, accountId);
+            PlayerPrefs.SetString(AccountPassWordKey, accountPwd);
+
+            self.RecordIsDebugMode();
+
+            (bool bRet, string msg) = await LoginHelper.Login(self.ClientScene(), accountId, accountPwd, LoginType.Editor);
+            if (bRet == false)
+            {
+                UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, null);
+            }
+        }
+
+        public static async ETTask LoginWhenGuest(this DlgLogin self)
+        {
+            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            string AccountKey = "AccountId_Guest";
+            string AccountPassWordKey = "AccountPassWord_Guest";
+
+            string accountId = "";
+            if (PlayerPrefs.HasKey(AccountKey))
+            {
+                accountId = PlayerPrefs.GetString(AccountKey);
+            }
+            if (string.IsNullOrEmpty(accountId))
+            {
+                accountId = SystemInfo.deviceUniqueIdentifier;
+            }
+            if (string.IsNullOrEmpty(accountId))
+            {
+                accountId = IdGenerater.Instance.GenerateId().ToString();
+            }
+
+            string accountPassWord = "";
+            if (PlayerPrefs.HasKey(AccountPassWordKey))
+            {
+                accountPassWord = PlayerPrefs.GetString(AccountPassWordKey);
+            }
 
             PlayerPrefs.SetString(AccountKey, accountId);
             PlayerPrefs.SetString(AccountPassWordKey, accountPassWord);
 
-            PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
-            playerComponent.IsDebugMode = self.View.E_ToggleDebugModeToggle.isOn;
+            self.RecordIsDebugMode();
 
-            await LoginHelper.Login(self.ClientScene(), accountId.ToString(), accountPassWord);
+            (bool bRet, string msg) = await LoginHelper.Login(self.ClientScene(), accountId, accountPassWord, LoginType.Editor);
+            if (bRet == false)
+            {
+                UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, null);
+            }
         }
+
+        public static async ETTask LoginWhenSDK(this DlgLogin self)
+        {
+            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            await ET.Client.LoginSDKComponent.Instance.SDKLoginIn(() =>
+            {
+                self.LoginWhenSDK_LoginDone().Coroutine();
+            });
+        }
+
+        public static async ETTask LoginWhenSDK_LoginDone(this DlgLogin self)
+        {
+            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            self.RecordIsDebugMode();
+
+            string accountId = ET.Client.LoginSDKComponent.Instance.GetClientRecordAccountId();
+            ET.Client.LoginSDKComponent.Instance.SetClientRecordAccountLoginTime();
+            (bool bRet, string msg) = await LoginHelper.Login(self.ClientScene(), accountId, "", LoginType.UnitySDK);
+            if (bRet == false)
+            {
+                UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, null);
+            }
+        }
+
+        public static void RecordIsDebugMode(this DlgLogin self)
+        {
+            DebugConnectComponent.Instance.IsDebugMode = self.View.E_ToggleDebugModeToggle.isOn;
+            DebugConnectComponent.Instance.IsEditorLoginMode = self.View.E_ToggleLoginEditorModeToggle.isOn;
+
+            if (ResConfig.Instance.IsShowDebugMode == false)
+            {
+                ResConfig.Instance.IsShowDebugMode = self.View.E_ToggleDebugModeToggle.gameObject.activeSelf;
+            }
+
+            if (ResConfig.Instance.IsShowEditorLoginMode == false)
+            {
+                ResConfig.Instance.IsShowEditorLoginMode = self.View.E_ToggleLoginEditorModeToggle.gameObject.activeSelf;
+            }
+        }
+
     }
 }

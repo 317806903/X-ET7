@@ -15,27 +15,27 @@ namespace ET.Client
         {
             if (type == UIWindowType.Normal)
             {
-                return GlobalComponent.Instance.NormalRoot;
+                return UIManagerComponent.Instance.NormalRoot;
             }
             else if (type == UIWindowType.Fixed)
             {
-                return GlobalComponent.Instance.FixedRoot;
+                return UIManagerComponent.Instance.FixedRoot;
             }
             else if (type == UIWindowType.PopUp)
             {
-                return GlobalComponent.Instance.PopUpRoot;
+                return UIManagerComponent.Instance.PopUpRoot;
             }
             else if (type == UIWindowType.NoticeRoot)
             {
-                return GlobalComponent.Instance.NoticeRoot;
+                return UIManagerComponent.Instance.NoticeRoot;
             }
             else if (type == UIWindowType.LoadingRoot)
             {
-                return GlobalComponent.Instance.LoadingRoot;
+                return UIManagerComponent.Instance.LoadingRoot;
             }
             else if (type == UIWindowType.HighestNoticeRoot)
             {
-                return GlobalComponent.Instance.HighestNoticeRoot;
+                return UIManagerComponent.Instance.HighestNoticeRoot;
             }
 
             Log.Error("uiroot type is error: " + type.ToString());

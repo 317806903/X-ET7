@@ -89,8 +89,8 @@ namespace ET
                 {
                     this.viewGO = new UnityEngine.GameObject(this.ViewName);
                     this.viewGO.AddComponent<ComponentView>().Component = this;
-                    this.viewGO.transform.SetParent(this.Parent == null? 
-                            UnityEngine.GameObject.Find("Global").transform : this.Parent.viewGO.transform);
+                    this.viewGO.transform.SetParent(this.Parent == null?
+                            UnityEngine.GameObject.Find("/Init").transform : this.Parent.viewGO.transform);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace ET
                 return IsComponent;
             }
         }
-        
+
         [BsonIgnore]
         protected bool IsComponent
         {
@@ -218,7 +218,7 @@ namespace ET
 #if ENABLE_VIEW && UNITY_EDITOR
                 this.viewGO.GetComponent<ComponentView>().Component = this;
                 this.viewGO.transform.SetParent(this.Parent == null ?
-                        UnityEngine.GameObject.Find("Global").transform : this.Parent.viewGO.transform);
+                        UnityEngine.GameObject.Find("/Init").transform : this.Parent.viewGO.transform);
                 foreach (var child in this.Children.Values)
                 {
                     child.viewGO.transform.SetParent(this.viewGO.transform);

@@ -13,13 +13,19 @@ namespace ET
     {
         private class ExternalApi
         {
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+#if UNITY_IOS && !UNITY_EDITOR
+        public const string LIB_NAME = "__Internal";
+#elif UNITY_ANDROID && !UNITY_EDITOR
+        public const string LIB_NAME = "vlc_all_so_apk";
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             private const string LIB_NAME = "libmesh_utils";
+#elif UNITY_EDITOR_OSX
+        private const string LIB_NAME = "libmesh_utils";
 #else
-            // Linux editor and others.
-            private const string LIB_NAME = "libmesh_utils";
+        // Linux editor and others.
+        //private const string LIB_NAME = "libmesh_utils.so";
+        private const string LIB_NAME = "libmesh_utils";
 #endif
-
             [DllImport(LIB_NAME)]
             public static extern bool BytesToMesh(
                 IntPtr objData, int objDataSize,

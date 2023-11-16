@@ -108,6 +108,12 @@ namespace ET
                         EditorUtility.SetDirty(this.globalConfig);
                         AssetDatabase.SaveAssets();
                     }
+                    if (this.globalConfig.NeedDB != false)
+                    {
+                        this.globalConfig.NeedDB = false;
+                        EditorUtility.SetDirty(this.globalConfig);
+                        AssetDatabase.SaveAssets();
+                    }
                     if (this.resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                     {
                         this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
@@ -228,6 +234,26 @@ namespace ET
                 ToolsEditor.Proto2CS();
             }
 
+            GUILayout.Space(5);
+            var NeedDB = EditorGUILayout.Toggle("NeedDB: ", this.globalConfig.NeedDB);
+            if (NeedDB != this.globalConfig.NeedDB)
+            {
+                this.globalConfig.NeedDB = NeedDB;
+                EditorUtility.SetDirty(this.globalConfig);
+                AssetDatabase.SaveAssets();
+            }
+            if (GUILayout.Button("创建Mongodb (需要Docker安装了)"))
+            {
+                ToolsEditor.RunMongoDBFromDocker();
+            }
+            GUILayout.Space(5);
+            var areaType = (AreaType) EditorGUILayout.EnumPopup("AreaType: ", this.resConfig.areaType);
+            if (areaType != this.resConfig.areaType)
+            {
+                this.resConfig.areaType = areaType;
+                EditorUtility.SetDirty(this.resConfig);
+                AssetDatabase.SaveAssets();
+            }
             GUILayout.Space(5);
             EditorGUILayout.BeginHorizontal();
             {

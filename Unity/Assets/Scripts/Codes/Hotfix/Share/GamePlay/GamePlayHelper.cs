@@ -11,6 +11,10 @@ namespace ET
 	{
 		public static GamePlayComponent GetGamePlay(Scene scene)
 		{
+			if (scene == null)
+			{
+				return null;
+			}
 			GamePlayComponent gamePlayComponent = scene.GetComponent<GamePlayComponent>();
 			return gamePlayComponent;
 		}
@@ -332,7 +336,32 @@ namespace ET
 			gamePlayPlayerListComponent.ChgPlayerCoin(playerId, coinType, chgValue, GetCoinType.Normal);
 		}
 
-		public static int GetPlayerCoin(Scene scene, long playerId, CoinType coinType)
+		public static void ChgPlayerCoinShare(Scene scene, long playerId, CoinType coinType, int chgValue)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			TeamFlagType curTeamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
+			int playerNum = 0;
+			foreach (long playerIdTmp in gamePlayComponent.GetPlayerList())
+			{
+				TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerIdTmp);
+				if (teamFlagType == curTeamFlagType)
+				{
+					playerNum++;
+				}
+			}
+
+			int goldOne = (int)(1f*chgValue / playerNum);
+			foreach (long playerIdTmp in gamePlayComponent.GetPlayerList())
+			{
+				TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerIdTmp);
+				if (teamFlagType == curTeamFlagType)
+				{
+					ET.GamePlayHelper.ChgPlayerCoin(scene, playerIdTmp, coinType, goldOne);
+				}
+			}
+		}
+
+		public static float GetPlayerCoin(Scene scene, long playerId, CoinType coinType)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();

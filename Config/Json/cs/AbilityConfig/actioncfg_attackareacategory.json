@@ -753,5 +753,46 @@
         "actionCondition2": []
       }
     ]
+  },
+  {
+    "id": "AttackArea_SeedHeal1",
+    "name": "种子治疗",
+    "desc": "周围加血",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": false,
+      "selectNum": -1,
+      "isFriend": true,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": false,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "damageInfo": "DamageUnit_8",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
   }
 ]

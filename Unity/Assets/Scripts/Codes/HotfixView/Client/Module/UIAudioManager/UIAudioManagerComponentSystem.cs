@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Vector3 = System.Numerics.Vector3;
 
-namespace ET.Ability.Client
+namespace ET.Client
 {
     [FriendOf(typeof (UIAudioManagerComponent))]
     public static class UIAudioManagerComponentSystem
@@ -65,6 +65,14 @@ namespace ET.Ability.Client
 
             AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(resAudioCfg.ResName);
             self.audioSource.PlayOneShot(audioClip);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask PlayUIGuideAudio(this UIAudioManagerComponent self, string audioPath)
+        {
+            AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(audioPath);
+            self.audioSource.PlayOneShot(audioClip);
+            await ETTask.CompletedTask;
         }
 
         public static void PlayMusic(this UIAudioManagerComponent self, List<string> resAudioCfgIds)

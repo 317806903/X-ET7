@@ -36,6 +36,7 @@ namespace ET.Ability.Client
 				self.animationClips = null;
 				self.Parameter = null;
 				self.Animator = null;
+				self.curRecordAnimatorName = null;
 			}
 		}
 
@@ -62,6 +63,13 @@ namespace ET.Ability.Client
 			{
 				return;
 			}
+
+			self.curRecordAnimatorName = animator.gameObject.GetComponent<RecordAnimatorName>();
+			if (self.curRecordAnimatorName == null)
+			{
+				return;
+			}
+
 			self.Animator = animator;
 
 			self.CurMotionType = AnimatorMotionName.None;
@@ -78,6 +86,8 @@ namespace ET.Ability.Client
 				}
 				self.animationClips[animationClip.name] = animationClip;
 			}
+
+
 			foreach (AnimatorControllerParameter animatorControllerParameter in animator.parameters)
 			{
 				self.Parameter.Add(animatorControllerParameter.name, animatorControllerParameter.type);
@@ -147,19 +157,23 @@ namespace ET.Ability.Client
 
 			AnimatorMotionName nextAnimatorMotionName = AnimatorMotionName.None;
 			float motionSpeed = 1f;
+			long motionTickTime = 0;
 			if (animatorComponent != null)
 			{
 				if (animatorComponent.controlStateName != AnimatorMotionName.None)
 				{
 					nextAnimatorMotionName = animatorComponent.controlStateName;
+					motionTickTime = animatorComponent.controlAnimatorTickTime;
 				}
 				else
 				{
 					nextAnimatorMotionName = animatorComponent.name;
+					motionTickTime = animatorComponent.animatorTickTime;
 				}
 			}
 			if (nextAnimatorMotionName == AnimatorMotionName.None)
 			{
+				motionTickTime = 0;
 				float dis = 0.0001f;
 				if (self.CurMotionType == AnimatorMotionName.Idle)
 				{
@@ -201,7 +215,7 @@ namespace ET.Ability.Client
 			{
 				if (nextAnimatorMotionName != self.CurMotionType)
 				{
-					self.Play(nextAnimatorMotionName, motionSpeed);
+					self.Play(nextAnimatorMotionName, motionSpeed, motionTickTime);
 				}
 				else if(Math.Abs(self.Animator.speed - motionSpeed) > 0.01f)
 				{
@@ -241,12 +255,30 @@ namespace ET.Ability.Client
 				self.CurMotionType = self.NextMotionType;
 				self.NextMotionType = AnimatorMotionName.None;
 
+				float normalizedTime;
+				if (self.NextMotionTickTime == 0)
+				{
+					normalizedTime = 0;
+				}
+				else
+				{
+					float length = self.AnimationTime(self.CurMotionType);
+					if (length > 0)
+					{
+						long time = TimeHelper.ServerNow() - self.NextMotionTickTime;
+						normalizedTime = time*0.001f / length;
+					}
+					else
+					{
+						normalizedTime = 0;
+					}
+				}
 				//self.Animator.Play(self.CurMotionType.ToString());
-				self.Animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime);
+				self.Animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"动作播放失败: {self.NextMotionType}", ex);
+				throw new Exception($"动作播放失败: {self.CurMotionType}", ex);
 			}
 		}
 
@@ -273,24 +305,40 @@ namespace ET.Ability.Client
 
 		public static void PlayInTime(this AnimatorShowComponent self, AnimatorMotionName motionType, float time)
 		{
-			AnimationClip animationClip;
-			if (!self.animationClips.TryGetValue(motionType.ToString(), out animationClip))
+			float motionSpeed = 1;
+			if (self.curRecordAnimatorName == null)
 			{
-				throw new Exception($"找不到该动作: {motionType}");
+				throw new Exception($"self.curRecordAnimatorName == null: {self.Animator.name}");
+			}
+			else
+			{
+				AnimationClip animationClip;
+
+				string clipName = self.curRecordAnimatorName.GetRecordValue(motionType.ToString());
+				if (string.IsNullOrEmpty(clipName))
+				{
+					throw new Exception($"找不到该动作: {self.Animator.name} {motionType}");
+				}
+
+				if (!self.animationClips.TryGetValue(clipName, out animationClip))
+				{
+					throw new Exception($"找不到该动作: {self.Animator.name} {clipName}");
+				}
+
+				motionSpeed = animationClip.length / time;
+				if (motionSpeed < 0.01f || motionSpeed > 1000f)
+				{
+					Log.Error($"motionSpeed数值异常, {motionSpeed}, 此动作跳过");
+					return;
+				}
 			}
 
-			float motionSpeed = animationClip.length / time;
-			if (motionSpeed < 0.01f || motionSpeed > 1000f)
-			{
-				Log.Error($"motionSpeed数值异常, {motionSpeed}, 此动作跳过");
-				return;
-			}
 			self.NextMotionType = motionType;
 
 			self.SetAnimatorSpeed(motionSpeed);
 		}
 
-		public static void Play(this AnimatorShowComponent self, AnimatorMotionName motionType, float motionSpeed = 1f)
+		public static void Play(this AnimatorShowComponent self, AnimatorMotionName motionType, float motionSpeed = 1f, long motionTickTime = 0)
 		{
 			// AnimationClip animationClip;
 			// if (!self.animationClips.TryGetValue(motionType.ToString(), out animationClip))
@@ -298,18 +346,34 @@ namespace ET.Ability.Client
 			// 	throw new Exception($"找不到该动作: {motionType}");
 			// }
 			self.NextMotionType = motionType;
-
+			self.NextMotionTickTime = motionTickTime;
 			self.SetAnimatorSpeed(motionSpeed);
 		}
 
-		public static float AnimationTime(this AnimatorShowComponent self, AnimatorMotionName motionType)
+		public static float AnimationTime(this AnimatorShowComponent self, AnimatorMotionName animatorMotionName)
 		{
 			AnimationClip animationClip;
-			if (!self.animationClips.TryGetValue(motionType.ToString(), out animationClip))
+
+			if (self.curRecordAnimatorName == null)
 			{
-				throw new Exception($"找不到该动作: {motionType}");
+				throw new Exception($"self.curRecordAnimatorName == null: {self.Animator.name}");
 			}
-			return animationClip.length;
+			else
+			{
+				string clipName = self.curRecordAnimatorName.GetRecordValue(animatorMotionName.ToString());
+				if (string.IsNullOrEmpty(clipName))
+				{
+					Log.Error($"找不到该动作: {self.Animator.name} {animatorMotionName.ToString()}");
+					return 0;
+				}
+
+				if (!self.animationClips.TryGetValue(clipName, out animationClip))
+				{
+					Log.Error($"找不到该动作: {self.Animator.name} {clipName}");
+					return 0;
+				}
+				return animationClip.length;
+			}
 		}
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Session session, M2C_GamePlayChgNotice message)
 		{
-			Log.Debug($"M2C_GamePlayChgNotice 11");
+			//Log.Debug($"M2C_GamePlayChgNotice 11");
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 			while (currentScene == null || currentScene.IsDisposed)
@@ -16,9 +16,9 @@ namespace ET.Client
 				await TimerComponent.Instance.WaitFrameAsync();
 				currentScene = session.DomainScene().CurrentScene();
 			}
-			Log.Debug($"M2C_GamePlayChgNotice 22");
+			//Log.Debug($"M2C_GamePlayChgNotice 22");
 			currentScene.RemoveComponent<GamePlayComponent>();
-			Log.Debug($"M2C_GamePlayChgNotice 22 1");
+			//Log.Debug($"M2C_GamePlayChgNotice 22 1");
 
 			Entity gamePlayComponent = MongoHelper.Deserialize<Entity>(message.GamePlayInfo);
 			currentScene.AddComponent(gamePlayComponent);
@@ -31,7 +31,7 @@ namespace ET.Client
 				}
 			}
 
-			Log.Debug($"M2C_GamePlayChgNotice 33");
+			//Log.Debug($"M2C_GamePlayChgNotice 33");
 			await ETTask.CompletedTask;
 		}
 	}

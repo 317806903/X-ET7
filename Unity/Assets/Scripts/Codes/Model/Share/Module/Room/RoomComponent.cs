@@ -30,7 +30,8 @@ namespace ET
     [ChildOf(typeof(RoomManagerComponent))]
     public class RoomComponent : Entity, IAwake, IDestroy
     {
-        public bool isARRoom;
+        public RoomType roomType;
+        public SubRoomType subRoomType;
         public string arSceneId;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;

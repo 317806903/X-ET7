@@ -54,11 +54,14 @@ namespace ET.Server
 				PlayerStatusComponent playerStatusComponent = self.Player.GetComponent<PlayerStatusComponent>();
 				long roomId = playerStatusComponent.RoomId;
 				StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(self.DomainZone());
-				R2G_QuitRoom _R2G_QuitRoom = (R2G_QuitRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_QuitRoom()
+				if (roomSceneConfig != null)
 				{
-					PlayerId = playerId,
-					RoomId = roomId,
-				});
+					R2G_QuitRoom _R2G_QuitRoom = (R2G_QuitRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_QuitRoom()
+					{
+						PlayerId = playerId,
+						RoomId = roomId,
+					});
+				}
 			}
 			catch (Exception e)
 			{

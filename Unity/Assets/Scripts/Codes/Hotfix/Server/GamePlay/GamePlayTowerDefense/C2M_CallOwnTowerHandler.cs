@@ -36,11 +36,20 @@ namespace ET.Server
 				{
 					(TeamFlagType teamFlagType, Unit homeUnit) = gamePlayTowerDefenseComponent.GetNearHostileHomeByPlayerId(playerId, position);
 
-					bool canArrive = ET.RecastHelper.ChkArrive(observerUnit, position, homeUnit.Position);
-					if (canArrive == false)
+					if (homeUnit != null)
+					{
+						bool canArrive = ET.RecastHelper.ChkArrive(observerUnit, position, homeUnit.Position);
+						if (canArrive == false)
+						{
+							response.Error = ErrorCode.ERR_LogicError;
+							response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+							return;
+						}
+					}
+					else
 					{
 						response.Error = ErrorCode.ERR_LogicError;
-						response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+						response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearHostileHome");
 						return;
 					}
 				}

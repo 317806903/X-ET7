@@ -7,11 +7,13 @@ namespace ET.Ability.Client
     [ComponentOf]
 	public class AnimatorShowComponent: Entity, IAwake, IDestroy, IUpdate
     {
+        public RecordAnimatorName curRecordAnimatorName;
         public Dictionary<string, AnimationClip> animationClips;
         public Dictionary<string, AnimatorControllerParameterType> Parameter;
 
         public AnimatorMotionName CurMotionType;
         public AnimatorMotionName NextMotionType;
+        public long NextMotionTickTime;
 
         public long chgToIdleTime = -1;
 

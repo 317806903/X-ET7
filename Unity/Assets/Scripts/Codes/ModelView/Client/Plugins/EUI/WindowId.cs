@@ -25,5 +25,10 @@ namespace ET.Client
 		WindowID_BattleTowerAR,
 		WindowID_BattleCfgChoose,
 		WindowID_GameModeAR,
+		WindowID_BeginnersGuideStory,
+		WindowID_PersonalInformation,
+		WindowID_ARRoomPVP,
+		WindowID_RankEndlessChallenge,
+		WindowID_BattleDragItem,
 	}
 }

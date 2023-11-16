@@ -11,11 +11,17 @@
         "Unity.Loader",
         "Unity.RenderPipelines.Universal.Runtime",
         "MirrorVerse",
-        "MirrorVerse.UI.MirrorSceneDefaultUI",
+        "MirrorVerse.UI.MirrorSceneClassyUI",
         "MirrorVerse.UI.Renderers",
         "Unity.TextMeshPro",
         "DM.DOTween",
-        "ShootTextPro"
+        "ShootTextPro",
+        "Unity.Services.PlayerAccounts",
+        "Unity.Services.Authentication",
+        "Unity.Services.Core",
+        "BlurBackground",
+        "IngameDebugConsole.Runtime",
+        "EventLoggingAPIModule"
     ],
     "includePlatforms": [
         "Editor"

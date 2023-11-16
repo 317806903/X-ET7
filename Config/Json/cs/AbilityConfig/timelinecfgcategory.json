@@ -1113,6 +1113,25 @@
     ]
   },
   {
+    "id": "Timeline_PlayerCircle3",
+    "name": "毒雾3",
+    "desc": "圆形范围攻击",
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Circle3",
+        "actionCallParam": {
+          "$type": "ActionCallAutoSelf",
+          "isSave": false
+        },
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "Timeline_EnemySolo1",
     "name": "射击",
     "desc": "单体射击",

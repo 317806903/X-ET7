@@ -1,8 +1,0 @@
-[
-  {
-    "id": "BuffReduceStackCount_1",
-    "name": "",
-    "desc": "减少Buff层数",
-    "reduceStack": 1
-  }
-]

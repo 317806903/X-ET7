@@ -1,0 +1,8 @@
+{
+	"name": "com.dm.packages.runtimeinspector",
+	"displayName": "Dm RuntimeInspector",
+	"description": "RuntimeInspector",
+	"version": "1.0.0",
+	"unity": "2022.5",
+	"license": "MIT"
+}

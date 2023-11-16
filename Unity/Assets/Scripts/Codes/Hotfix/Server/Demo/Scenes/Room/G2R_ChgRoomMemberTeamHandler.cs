@@ -17,6 +17,7 @@ namespace ET.Server
 
 			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, false).Coroutine();
 
+
 			await ETTask.CompletedTask;
 		}
 	}

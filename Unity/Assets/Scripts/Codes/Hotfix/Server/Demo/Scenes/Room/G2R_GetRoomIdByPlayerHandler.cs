@@ -11,17 +11,20 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			RoomComponent roomComponent = roomManagerComponent.GetRoomByPlayerId(request.PlayerId);
 			long roomId = 0;
-			RoomStatus roomStatus = RoomStatus.Idle;
-			int isARRoom = 0;
+			int roomStatus = 0;
+			int roomType = 0;
+			int subRoomType = 0;
 			if (roomComponent != null)
 			{
 				roomId = roomComponent.Id;
-				roomStatus = roomComponent.roomStatus;
-				isARRoom = roomComponent.isARRoom? 1 : 0;
+				roomStatus = (int)roomComponent.roomStatus;
+				roomType = (int)roomComponent.roomType;
+				subRoomType = (int)roomComponent.subRoomType;
 			}
 			response.RoomId = roomId;
-			response.RoomStatus = roomStatus.ToString();
-			response.IsARRoom = isARRoom;
+			response.RoomStatus = roomStatus;
+			response.RoomType = roomType;
+			response.SubRoomType = subRoomType;
 			await ETTask.CompletedTask;
 		}
 	}

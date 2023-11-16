@@ -67,13 +67,13 @@ namespace ET
 		/// playerId对应的货币列表
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public MultiDictionary<long, string, int> playerId2CoinList;
+		public MultiDictionary<long, string, float> playerId2CoinList;
 
 		/// <summary>
 		/// team对应的货币列表
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public MultiDictionary<TeamFlagType, string, int> team2CoinList;
+		public MultiDictionary<TeamFlagType, string, float> team2CoinList;
 
 	}
 }

@@ -36,7 +36,8 @@ namespace ET
             self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
             self.roomId = roomComponent.Id;
             self.ownerPlayerId = roomComponent.ownerRoomMemberId;
-            self.isAR = roomComponent.isARRoom;
+
+            self.isAR = roomComponent.IsARRoom();
             self._ARMeshDownLoadUrl = _ARMeshDownLoadUrl;
 
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
@@ -169,6 +170,8 @@ namespace ET
             self.gamePlayStatus = GamePlayStatus.GameEnd;
             self.StopAllAI();
 
+            self.NoticeGameEnd2Server();
+
             self.NoticeToClientAll();
             self.NoticeGameEndToRoom();
         }
@@ -182,17 +185,41 @@ namespace ET
         public static void CreateGamePlayMode(this GamePlayComponent self)
         {
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
-            if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefense1 gamePlayTowerDefense1)
+            if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseNormal gamePlayTowerDefenseNormal)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefense1.GamePlayModeCfgId);
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseNormal.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_Normal);
             }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPK1 gamePlayPK1)
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseTutorialFirst gamePlayTowerDefenseTutorialFirst)
+            {
+                self.gamePlayMode = GamePlayMode.TowerDefense;
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseTutorialFirst.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_TutorialFirst);
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVE gamePlayTowerDefensePVE)
+            {
+                self.gamePlayMode = GamePlayMode.TowerDefense;
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVE.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVE);
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVP gamePlayTowerDefensePVP)
+            {
+                self.gamePlayMode = GamePlayMode.TowerDefense;
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVP.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVP);
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallenge gamePlayTowerDefenseEndlessChallenge)
+            {
+                self.gamePlayMode = GamePlayMode.TowerDefense;
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseEndlessChallenge.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge);
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPKNormal gamePlayPkNormal)
             {
                 self.gamePlayMode = GamePlayMode.PK;
                 GamePlayPKComponent gamePlayPKComponent = self.AddComponent<GamePlayPKComponent>();
-                gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPK1.GamePlayModeCfgId);
+                gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPkNormal.GamePlayModeCfgId);
             }
         }
 
@@ -313,6 +340,12 @@ namespace ET
         {
             EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new() { roomId = self.roomId, };
             EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
+        }
+
+        public static void NoticeGameEnd2Server(this GamePlayComponent self)
+        {
+            EventType.NoticeGameEnd2Server _NoticeGameEnd2Server = new() { gamePlayComponent = self, };
+            EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEnd2Server);
         }
 
         /// <summary>
@@ -461,7 +494,7 @@ namespace ET
             }
         }
 
-        public static int GetPlayerCoin(this GamePlayComponent self, long playerId, CoinType coinType)
+        public static float GetPlayerCoin(this GamePlayComponent self, long playerId, CoinType coinType)
         {
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
             return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);

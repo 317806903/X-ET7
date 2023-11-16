@@ -20,5 +20,8 @@
         public const int GamePlayChkMonsterWaveCallAllClear = 207;
         public const int HallTimer = 209;
         public const int LoadingTimer = 210;
+        public const int DataCacheClearChkTimer = 211;
+        public const int DataCacheWriteChkTimer = 212;
+        public const int BattleDragItemFrameTimer = 213;
     }
 }

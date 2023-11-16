@@ -62,5 +62,13 @@
       "damageType": 7,
       "value": 0
     }
+  },
+  {
+    "id": "DamageUnit_8",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -200
+    }
   }
 ]

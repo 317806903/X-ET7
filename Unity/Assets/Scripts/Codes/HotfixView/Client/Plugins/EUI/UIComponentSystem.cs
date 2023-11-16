@@ -517,8 +517,21 @@ namespace ET.Client
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnInitComponent(baseWindow);
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnRegisterUIEvent(baseWindow);
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(baseWindow.UIPrefabGameObject);
+            self.ReplaceTranslucentImage(baseWindow.UIPrefabGameObject);
 
             self.AllWindowsDic[(int)baseWindow.WindowID] = baseWindow;
+        }
+
+        private static void ReplaceTranslucentImage(this UIComponent self, GameObject gameObject)
+        {
+            BlurBackground.TranslucentImageSource translucentImageSource = ET.Client.CameraHelper.GetTranslucentImageSource(self.DomainScene());
+            if (translucentImageSource != null)
+            {
+                foreach (var translucentImage in gameObject.GetComponentsInChildren<BlurBackground.TranslucentImage>(true))
+                {
+                    translucentImage.source = translucentImageSource;
+                }
+            }
         }
 
         /// <summary>
@@ -548,6 +561,7 @@ namespace ET.Client
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnInitComponent(baseWindow);
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnRegisterUIEvent(baseWindow);
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(baseWindow.UIPrefabGameObject);
+            self.ReplaceTranslucentImage(baseWindow.UIPrefabGameObject);
 
             self.AllWindowsDic[(int)baseWindow.WindowID] = baseWindow;
         }

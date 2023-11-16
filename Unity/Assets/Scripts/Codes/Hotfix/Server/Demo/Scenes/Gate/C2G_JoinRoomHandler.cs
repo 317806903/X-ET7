@@ -19,27 +19,21 @@ namespace ET.Server
 				PlayerId = playerId,
 				RoomId = roomId,
 			});
-			
+
 			response.Error = _R2G_JoinRoom.Error;
 			response.Message = _R2G_JoinRoom.Message;
 
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
 				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-				if (_R2G_JoinRoom.IsARRoom == 1)
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.ARRoom;
-				}
-				else
-				{
-					playerStatusComponent.PlayerGameMode = PlayerGameMode.Room;
-				}
+				playerStatusComponent.RoomType = (RoomType)_R2G_JoinRoom.RoomType;
+				playerStatusComponent.SubRoomType = (SubRoomType)_R2G_JoinRoom.SubRoomType;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 				playerStatusComponent.RoomId = roomId;
 
 				await playerStatusComponent.NoticeClient();
 			}
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

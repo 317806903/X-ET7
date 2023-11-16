@@ -156,6 +156,23 @@ namespace ET.Client
 			}
 		}
 
+		public static async ETTask SendMovePlayerTower(Scene scene, long towerUnitId, float3 position)
+		{
+			C2M_MovePlayerTower _C2M_MovePlayerTower = new ()
+			{
+				TowerUnitId = towerUnitId,
+				Position = position,
+			};
+			M2C_MovePlayerTower _M2C_MovePlayerTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_MovePlayerTower) as M2C_MovePlayerTower;
+			if (_M2C_MovePlayerTower.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_MovePlayerTower.Message,
+				});
+			}
+		}
+
 		public static async ETTask SendReadyWhenRestTime(Scene scene)
 		{
 			C2M_ReadyWhenRestTime _C2M_ReadyWhenRestTime = new ()

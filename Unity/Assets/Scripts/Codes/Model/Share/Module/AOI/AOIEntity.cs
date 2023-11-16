@@ -8,6 +8,8 @@ namespace ET
     {
         public Unit Unit => this.GetParent<Unit>();
 
+        public bool bInit = false;
+
         public int ViewDistance;
 
         private EntityRef<Cell> cell;

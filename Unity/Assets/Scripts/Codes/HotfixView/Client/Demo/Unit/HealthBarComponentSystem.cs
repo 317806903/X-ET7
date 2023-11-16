@@ -1,6 +1,5 @@
 ﻿using System;
 using ET.AbilityConfig;
-using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -13,39 +12,25 @@ namespace ET.Client
         {
             protected override void Awake(HealthBarComponent self)
             {
-                string resName = "";
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-                if (gamePlayTowerDefenseComponent != null)
-                {
-                }
-
+                bool isHome = false;
                 if (self.GetUnit().GetComponent<HomeComponent>() != null)
                 {
-                    resName = "ResEffect_MainTowerBar";
+                    isHome = true;
                 }
                 else if (self.GetUnit().GetComponent<TowerComponent>() != null)
                 {
-                    resName = "ResEffect_MainTowerBar";
+                    isHome = true;
                 }
-                if(string.IsNullOrEmpty(resName))
+
+                self.isHome = isHome;
+                if (self.isHome)
                 {
-                    resName = "ResEffect_HealthBar_1";
+                    self.AddComponent<HealthBarHomeComponent>();
                 }
-
-                GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
-                GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
-                HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
-                float height = self.GetUnit().model.BodyHeight + 1f;
-                HealthBarGo.transform.localPosition = new float3(0, height, 0);
-                HealthBarGo.transform.localScale = Vector3.one;
-
-                self.go = HealthBarGo;
-                self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
-                self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
-                self.HpValueShowTrans = self.go.transform.Find("GameObject/HpValueShow");
-
-                self.UpdateHealth();
+                else
+                {
+                    self.AddComponent<HealthBarNormalComponent>();
+                }
             }
         }
 
@@ -54,17 +39,6 @@ namespace ET.Client
         {
             protected override void Destroy(HealthBarComponent self)
             {
-                //UnityEngine.Object.Destroy(self.go);
-                GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
-            }
-        }
-
-        [ObjectSystem]
-        public class UpdateSystem: UpdateSystem<HealthBarComponent>
-        {
-            protected override void Update(HealthBarComponent self)
-            {
-                self.Update();
             }
         }
 
@@ -73,58 +47,16 @@ namespace ET.Client
             return self.GetParent<Unit>();
         }
 
-        public static void UpdateHealth(this HealthBarComponent self)
+        public static void UpdateHealth(this HealthBarComponent self, bool isInit)
         {
-            NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
-            int curHp = math.max(numericComponent.GetAsInt(NumericType.Hp), 0);
-            int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
-            float normalizedHealth = (float)curHp / maxHp;
-            Vector3 scale = Vector3.one;
-
-            if (self.healthBar != null)
+            if (self.isHome)
             {
-                scale.x = normalizedHealth;
-                self.healthBar.transform.localScale = scale;
-            }
-
-            if (self.backgroundBar != null)
-            {
-                scale.x = 1 - normalizedHealth;
-                self.backgroundBar.transform.localScale = scale;
-            }
-            //Log.Debug($"normalizedHealth={normalizedHealth}");
-
-            if (self.HpValueShowTrans != null)
-            {
-                TextMeshPro textMeshPro = self.HpValueShowTrans.GetComponent<TextMeshPro>();
-                textMeshPro.text = $"{curHp}/{maxHp}";
-            }
-
-            if (normalizedHealth > 0f && normalizedHealth < 1.0f)
-            {
-                self.go.SetActive(true);
+                self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
             }
             else
             {
-                self.go.SetActive(false);
+                self.GetComponent<HealthBarNormalComponent>().UpdateHealth(isInit);
             }
         }
-
-        public static void Update(this HealthBarComponent self)
-        {
-            if (self.go == null)
-            {
-                return;
-            }
-            Transform transform = self.go.transform;
-            Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
-            if (mainCamera == null)
-            {
-                return;
-            }
-            Vector3 direction = mainCamera.transform.forward;
-            transform.forward = -direction;
-        }
-
     }
 }

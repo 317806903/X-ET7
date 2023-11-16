@@ -17,7 +17,7 @@ namespace ET
             }
         }
     }
-    
+
     [ObjectSystem]
     public class SessionIdleCheckerComponentAwakeSystem: AwakeSystem<SessionIdleCheckerComponent>
     {
@@ -39,7 +39,7 @@ namespace ET
     public static class SessionIdleCheckerComponentSystem
     {
         public const int CheckInteral = 2000;
-        
+
         public static void Check(this SessionIdleCheckerComponent self)
         {
             Session session = self.GetParent<Session>();
@@ -53,7 +53,10 @@ namespace ET
             Log.Info($"session timeout: {session.Id} {timeNow} {session.LastRecvTime} {session.LastSendTime} {timeNow - session.LastRecvTime} {timeNow - session.LastSendTime}");
             session.Error = ErrorCore.ERR_SessionSendOrRecvTimeout;
 
+            EventSystem.Instance.Publish(session.DomainScene(), new EventType.NoticeUIReconnect());
+
             session.Dispose();
+
         }
     }
 }

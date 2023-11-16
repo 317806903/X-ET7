@@ -36,6 +36,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
      public string TestGlobalSetting3 => _data.TestGlobalSetting3;
      public System.Collections.Generic.List<string> TestGlobalSetting4 => _data.TestGlobalSetting4;
     /// <summary>
+    /// AR模式新手指引关卡的cfgId
+    /// </summary>
+     public string ARTutorialFirstCfgId => _data.ARTutorialFirstCfgId;
+    /// <summary>
     /// AR模式PVE的cfgId
     /// </summary>
      public string ARPVECfgId => _data.ARPVECfgId;
@@ -47,6 +51,15 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// AR模式PVE无尽模式的cfgId
     /// </summary>
      public string AREndlessChallengeCfgId => _data.AREndlessChallengeCfgId;
+    /// <summary>
+    /// 是否显示伤害数字展示
+    /// </summary>
+     public bool ShowDamage => _data.ShowDamage;
+     public System.Collections.Generic.List<string> AvatarIcons => _data.AvatarIcons;
+    /// <summary>
+    /// 新手世界观信息
+    /// </summary>
+     public System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> BeginnersGuideImgs => _data.BeginnersGuideImgs;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

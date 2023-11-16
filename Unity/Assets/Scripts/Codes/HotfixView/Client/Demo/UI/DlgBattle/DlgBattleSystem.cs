@@ -110,8 +110,6 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgBattle self, ShowWindowData contextData = null)
         {
-            self.CheckIfPlaceSuccess();
-
             int countTower = self.towerList.Count;
             self.AddUIScrollItems(ref self.ScrollItemTowers, countTower);
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);
@@ -120,11 +118,10 @@ namespace ET.Client
             self.AddUIScrollItems(ref self.ScrollItemTanks, countTank);
             self.View.ELoopScrollList_TankLoopHorizontalScrollRect.SetVisible(true, countTank);
 
-            self._groundLayerMask = LayerMask.GetMask("Map");
-
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleFrameTimer, self);
 
             self.ShowMesh().Coroutine();
+            self.ShowPutTipMsg("");
 
             self.PlayMusic();
         }
@@ -143,13 +140,16 @@ namespace ET.Client
 
         public static async ETTask QuitBattle(this DlgBattle self)
         {
-            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_IsQuitBattle");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
+            string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Des");
+            string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Confirm");
+            string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Cancel");
+            string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Title");
+            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () =>
             {
                 self._QuitBattle().Coroutine();
-            }, null);
+            }, null, sureTxt, cancelTxt, titleTxt);
         }
 
         public static async ETTask _QuitBattle(this DlgBattle self)
@@ -158,67 +158,10 @@ namespace ET.Client
             await SceneHelper.EnterHall(self.ClientScene());
         }
 
-        public static string GetUnitPrefabName(this DlgBattle self, UnitCfg unitCfg)
-        {
-            ResUnitCfg resUnitCfg = ResUnitCfgCategory.Instance.Get(unitCfg.ResId);
-            return resUnitCfg.ResName;
-        }
-
         public static string GetUnitIcon(this DlgBattle self, UnitCfg unitCfg)
         {
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(unitCfg.Icon);
             return resIconCfg.ResName;
-        }
-
-        public static void OnSelectMonster(this DlgBattle self, string monsterCfgId)
-        {
-            self.selectCfgType = UISelectCfgType.Monster;
-            self.selectCfgId = monsterCfgId;
-
-            TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
-
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
-
-            self.currentPlaceObj = GameObject.Instantiate(go);
-            self.currentPlaceObj.gameObject.SetActive(false);
-        }
-
-        public static void OnSelectTower(this DlgBattle self, string towerCfgId)
-        {
-            self.selectCfgType = UISelectCfgType.Tower;
-            self.selectCfgId = towerCfgId;
-
-            self.currentPlaceObj = new GameObject("currentPlaceObj");
-
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-
-            for (int i = 0; i < towerCfg.UnitId.Count; i++)
-            {
-                string unitCfgId = towerCfg.UnitId[i];
-                float3 releativePos = float3.zero;
-                if (towerCfg.RelativePosition.Count > i)
-                {
-                    releativePos = new float3(towerCfg.RelativePosition[i].X, towerCfg.RelativePosition[i].Y, towerCfg.RelativePosition[i].Z);
-                }
-                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
-                float resScale = unitCfg.ResScale;
-
-                float3 forward = new float3(0, 0, 1);
-                string pathName = self.GetUnitPrefabName(unitCfg);
-                GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
-
-                GameObject goTmp = GameObject.Instantiate(go);
-                goTmp.transform.SetParent(self.currentPlaceObj.transform);
-                goTmp.transform.localPosition = releativePos;
-                goTmp.transform.localScale = Vector3.one * resScale;
-                goTmp.transform.forward = forward;
-
-            }
-
-            self.currentPlaceObj.gameObject.SetActive(false);
         }
 
         public static void AddTowerItemRefreshListener(this DlgBattle self, Transform transform, int index)
@@ -250,8 +193,20 @@ namespace ET.Client
 
             itemTower.ELabel_NameTextMeshProUGUI.text = $"{towerName}";
             itemTower.EButton_TowerIcoImage.sprite = sprite;
-            SelectImage selectImage = itemTower.EButton_SelectButton.GetComponent<SelectImage>();
-            selectImage.onPointerDown = () => { self.OnSelectTower(towerCfg.Id); };
+
+            ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
+            {
+                DlgBattleDragItem_ShowWindowData showWindowData = new()
+                {
+                    battleDragItemType = BattleDragItemType.PKTower,
+                    battleDragItemParam = towerCfg.Id,
+                    callBack = () =>
+                    {
+                    },
+                };
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
+            });
+
 
             itemTower.EG_IconStarRectTransform.SetVisible(true);
             int starCount = towerCfg.Level[0];
@@ -278,11 +233,21 @@ namespace ET.Client
             itemTank.ELabel_NumTextMeshProUGUI.text = $"1";
             itemTank.ELabel_NameTextMeshProUGUI.text = $"{monsterName}";
             itemTank.EButton_TowerIcoImage.sprite = sprite;
-            SelectImage selectImage = itemTank.EButton_SelectButton.GetComponent<SelectImage>();
-            selectImage.onPointerDown = () =>
+
+            ET.EventTriggerListener.Get(itemTank.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
             {
-                self.OnSelectMonster(monsterCfg.Id);
-            };
+                DlgBattleDragItem_ShowWindowData showWindowData = new()
+                {
+                    battleDragItemType = BattleDragItemType.PKMonster,
+                    battleDragItemParam = monsterCfg.Id,
+                    countOnce = int.Parse(self.View.E_InputFieldTMP_InputField.text),
+                    callBack = () =>
+                    {
+                    },
+                };
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
+            });
+
             itemTank.EG_IconStarRectTransform.SetVisible(false);
         }
 
@@ -294,232 +259,22 @@ namespace ET.Client
 
         public static void Update(this DlgBattle self)
         {
-            if (self.currentPlaceObj == null)
-            {
-                return;
-            }
-
-            //Log.Debug($"--- Update 44 self.currentPlaceObj[{self.currentPlaceObj}] self.isDragging[{self.isDragging}] self.isPlaceSuccess[{self.isPlaceSuccess}]");
-            if (self.CheckUserInput())
-            {
-                self.isClickUGUI = ET.UGUIHelper.IsClickUGUI();
-                if (self.isClickUGUI)
-                {
-                    return;
-                }
-
-                self.isDragging = true;
-                self.ChgScrollRectMoveStatus(false);
-                self.MoveCurrentPlaceObj();
-
-                bool canPut = self.ChkCanPut(self.currentPlaceObj.transform.position);
-                if (canPut)
-                {
-                    self.View.E_TipNodeImage.SetVisible(false);
-                    self.ChgCurrentPlaceObj(true);
-                }
-                else
-                {
-                    //self.currentPlaceObj.gameObject.SetActive(false);
-                    self.ChgCurrentPlaceObj(false);
-                }
-            }
-            else if (self.isDragging)
-            {
-                if (self.isClickUGUI == false)
-                {
-                    if (self.isRaycast == false)
-                    {
-                        string tipMsg = $"当前放置位置 没有投射点";
-                        ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                        self.CheckIfPlaceSuccess();
-                        return;
-                    }
-
-                    if (self.isCliffy)
-                    {
-                        string tipMsg = $"当前放置位置 太陡峭";
-                        ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                        self.CheckIfPlaceSuccess();
-                        return;
-                    }
-
-                    var position = self.currentPlaceObj.transform.position;
-                    if (self.selectCfgType == UISelectCfgType.Tower)
-                    {
-                        ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
-
-                        ET.Client.GamePlayTowerDefenseHelper.SendCallTower(self.ClientScene(), self.selectCfgId, position).Coroutine();
-                    }
-                    else if (self.selectCfgType == UISelectCfgType.Monster)
-                    {
-                        ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
-
-                        int count = int.Parse(self.View.E_InputFieldTMP_InputField.text);
-                        if (count > 50)
-                        {
-                            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUITip()
-                            {
-                                tipMsg = "太多了",
-                            });
-                            self.CheckIfPlaceSuccess();
-                            return;
-                        }
-                        ET.Client.GamePlayTowerDefenseHelper.SendCallMonster(self.ClientScene(), self.selectCfgId, position, count).Coroutine();
-                    }
-                }
-
-                self.CheckIfPlaceSuccess();
-            }
-            else if (self.currentPlaceObj != null)
-            {
-                self.CheckIfPlaceSuccess();
-            }
-        }
-
-        public static void ChgCurrentPlaceObj(this DlgBattle self, bool canPut)
-        {
-            Color colorNew;
-            if (canPut)
-            {
-                colorNew = Color.white;
-            }
-            else
-            {
-                colorNew = Color.red;
-            }
-
-            MeshRenderer[] rendererList = self.currentPlaceObj.gameObject.GetComponentsInChildren<MeshRenderer>(true);
-            foreach (MeshRenderer renderer in rendererList)
-            {
-                foreach (var material in renderer.materials)
-                {
-                    Color color = material.color;
-                    material.color = new Color(colorNew.r, colorNew.g, colorNew.b, color.a);
-                }
-            }
-            SkinnedMeshRenderer[] rendererList2 = self.currentPlaceObj.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-            foreach (SkinnedMeshRenderer renderer in rendererList2)
-            {
-                foreach (var material in renderer.materials)
-                {
-                    Color color = material.color;
-                    material.color = new Color(colorNew.r, colorNew.g, colorNew.b, color.a);
-                }
-            }
-        }
-
-        public static bool ChkCanPut(this DlgBattle self, Vector3 position)
-        {
-            long leftTime = self.curTipTime - TimeHelper.ClientNow();
-            if (leftTime > 0)
-            {
-                return false;
-            }
-            //self.curTipTime = TimeHelper.ClientNow() + 800;
-            self.curTipTime = TimeHelper.ClientNow();
-
-            if (self.isClickUGUI)
-            {
-                string tipMsg = $"当前手指在UI上,请挪开";
-                self.ShowPutTipMsg(tipMsg);
-                return false;
-            }
-
-            if (self.isRaycast == false)
-            {
-                string tipMsg = $"当前放置位置 没有投射点";
-                self.ShowPutTipMsg(tipMsg);
-                return false;
-            }
-
-            if (self.isCliffy)
-            {
-                string tipMsg = $"当前放置位置 太陡峭";
-                self.ShowPutTipMsg(tipMsg);
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        ///检测用户当前输入
-        /// </summary>
-        /// <returns></returns>
-        public static bool CheckUserInput(this DlgBattle self)
-        {
-            return Input.GetMouseButton(0);
         }
 
         public static void ShowPutTipMsg(this DlgBattle self, string tipMsg)
         {
+            if (string.IsNullOrEmpty(tipMsg))
+            {
+                self.HidePutTipMsg();
+                return;
+            }
             self.View.E_TipNodeImage.SetVisible(true);
             self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
         }
 
-        /// <summary>
-        ///让当前对象跟随鼠标移动
-        /// </summary>
-        public static void MoveCurrentPlaceObj(this DlgBattle self)
+        public static void HidePutTipMsg(this DlgBattle self)
         {
-            if (self.currentPlaceObj == null)
-            {
-                return;
-            }
-            Vector3 screenPosition = Input.mousePosition;
-            screenPosition += new Vector3(-130, 30, 0);
-
-            Ray ray = ET.Client.CameraHelper.GetMainCamera(self.DomainScene()).ScreenPointToRay(screenPosition);
-            RaycastHit hitInfo;
-            Vector3 point = Vector3.zero;
-            self.isRaycast = false;
-            self.isCliffy = false;
-            if (Physics.Raycast(ray, out hitInfo, 10000, self._groundLayerMask))
-            {
-                self.isRaycast = true;
-                Vector3 normal = hitInfo.normal;
-                //大概是66.6度
-                if (Vector3.Dot(normal, Vector3.up) < 0.5f)
-                {
-                    self.isCliffy = true;
-                }
-
-                point = hitInfo.point;
-            }
-
-            if (self.isRaycast)
-            {
-                if (self.currentPlaceObj.gameObject.activeSelf == false)
-                {
-                    self.currentPlaceObj.gameObject.SetActive(true);
-                }
-
-                self.currentPlaceObj.transform.position = point + new Vector3(0, self._YOffset, 0);
-                self.currentPlaceObj.transform.localEulerAngles = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                if (self.currentPlaceObj.gameObject.activeSelf)
-                {
-                    self.currentPlaceObj.gameObject.SetActive(false);
-                }
-            }
-        }
-
-        /// <summary>
-        ///检测是否放置成功
-        /// </summary>
-        public static void CheckIfPlaceSuccess(this DlgBattle self)
-        {
-            self.isDragging = false;
-            if (self.currentPlaceObj != null)
-            {
-                GameObject.Destroy(self.currentPlaceObj);
-                self.currentPlaceObj = null;
-            }
             self.View.E_TipNodeImage.SetVisible(false);
-            self.ChgScrollRectMoveStatus(true);
         }
 
         public static async ETTask ShowMesh(this DlgBattle self)

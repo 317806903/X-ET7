@@ -20,10 +20,12 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         Type = (PlayerTowerType)_buf.ReadInt();
         Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
         Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
         Icon = _buf.ReadString();
         Radius = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RelativePosition = new System.Collections.Generic.List<System.Numerics.Vector3>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Numerics.Vector3 _e0;  _e0 = _buf.ReadVector3(); RelativePosition.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);UnitId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); UnitId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Num = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Num.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Level = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Level.Add(_e0);}}
         BuyTowerCostGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RewardGold = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); RewardGold.Add(_e0);}}
@@ -53,6 +55,10 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     public string Desc { get; private set; }
     public string Desc_l10n_key { get; }
     /// <summary>
+    /// 标签
+    /// </summary>
+    public System.Collections.Generic.List<string> Labels { get; private set; }
+    /// <summary>
     /// icon资源路径
     /// </summary>
     public string Icon { get; private set; }
@@ -70,6 +76,10 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// </summary>
     public System.Collections.Generic.List<string> UnitId { get; private set; }
     public System.Collections.Generic.List<UnitCfg> UnitId_Ref { get; private set; }
+    /// <summary>
+    /// 数量
+    /// </summary>
+    public System.Collections.Generic.List<int> Num { get; private set; }
     /// <summary>
     /// 等级
     /// </summary>
@@ -128,10 +138,12 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         + "Type:" + Type + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
         + "Icon:" + Icon + ","
         + "Radius:" + Radius + ","
         + "RelativePosition:" + Bright.Common.StringUtil.CollectionToString(RelativePosition) + ","
         + "UnitId:" + Bright.Common.StringUtil.CollectionToString(UnitId) + ","
+        + "Num:" + Bright.Common.StringUtil.CollectionToString(Num) + ","
         + "Level:" + Bright.Common.StringUtil.CollectionToString(Level) + ","
         + "BuyTowerCostGold:" + BuyTowerCostGold + ","
         + "RewardGold:" + Bright.Common.StringUtil.CollectionToString(RewardGold) + ","

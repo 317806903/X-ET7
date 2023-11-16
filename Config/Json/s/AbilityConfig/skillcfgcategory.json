@@ -703,6 +703,43 @@
     "learn_action_id": []
   },
   {
+    "id": "Skill_PlayerCircle3",
+    "name": "毒雾3",
+    "dis": 15,
+    "cd": 0.2,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "timeline_id": "Timeline_PlayerCircle3",
+    "learn_action_id": []
+  },
+  {
     "id": "Skill_EnemySolo1",
     "name": "射击",
     "dis": 10,
@@ -775,7 +812,7 @@
     "id": "Skill_TowerDragon1",
     "name": "龙击炮1",
     "dis": 10,
-    "cd": 2,
+    "cd": 4,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -812,7 +849,7 @@
     "id": "Skill_TowerDragon2",
     "name": "龙击炮2",
     "dis": 10,
-    "cd": 1,
+    "cd": 2,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -849,7 +886,7 @@
     "id": "Skill_TowerDragon3",
     "name": "龙击炮3",
     "dis": 10,
-    "cd": 0.8,
+    "cd": 1.6,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -886,7 +923,7 @@
     "id": "Skill_TowerElec1",
     "name": "雷电塔1",
     "dis": 10,
-    "cd": 1,
+    "cd": 1.5,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -923,7 +960,7 @@
     "id": "Skill_TowerElec2",
     "name": "雷电塔2",
     "dis": 10,
-    "cd": 0.6,
+    "cd": 0.9,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -960,7 +997,7 @@
     "id": "Skill_TowerElec3",
     "name": "雷电塔3",
     "dis": 10,
-    "cd": 0.4,
+    "cd": 0.6,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -1147,6 +1184,21 @@
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AddCDDown3"
+    ]
+  },
+  {
+    "id": "Skill_SeedHeal1",
+    "name": "种子治疗",
+    "dis": 5,
+    "cd": 2,
+    "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf",
+      "isSave": false
+    },
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_SeedHeal1"
     ]
   }
 ]

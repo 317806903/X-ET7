@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Vector3 = System.Numerics.Vector3;
 
-namespace ET.Ability.Client
+namespace ET.Client
 {
     public class UIAudioManagerComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {

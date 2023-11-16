@@ -10,7 +10,11 @@ namespace ET.Client
             scene.AddComponent<RedDotComponent>();
             scene.AddComponent<UITextLocalizeComponent>();
             scene.AddComponent<UIComponent>();
-            scene.AddComponent<ET.Ability.Client.UIAudioManagerComponent>();
+            scene.AddComponent<UIAudioManagerComponent>();
+
+            scene.AddComponent<LoginSDKComponent>();
+            scene.AddComponent<EventLoggingSDKComponent>();
+            scene.AddComponent<ModelClickManagerComponent>();
 
             // scene.AddComponent<FUIEventComponent>();
             // scene.AddComponent<FUIAssetComponent>();

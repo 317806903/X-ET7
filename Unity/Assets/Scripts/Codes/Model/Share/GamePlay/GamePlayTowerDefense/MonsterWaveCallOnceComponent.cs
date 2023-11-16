@@ -12,6 +12,8 @@ namespace ET
 		public long playerId;
 		public string monsterWaveRule;
 		public int waveIndex;
+		public float monsterWaveNumScalePercent;
+		public float monsterWaveLevelScalePercent;
 		public float duration;
 		public float timeElapsed = 0;
 		public HashSet<long> monsterWaveUnitList;

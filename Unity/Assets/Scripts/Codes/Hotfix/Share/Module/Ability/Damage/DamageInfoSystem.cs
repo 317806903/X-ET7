@@ -107,7 +107,9 @@ namespace ET.Ability
 
             NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
             int curHp = numericComponent.GetAsInt(NumericType.Hp);
-            numericComponent.SetAsInt(NumericType.HpBase, curHp - damageValue);
+            int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
+            int newHp = math.min(math.max(0, curHp - damageValue), maxHp);
+            numericComponent.SetAsInt(NumericType.HpBase, newHp);
 
             //if (isHeal == true)
             {

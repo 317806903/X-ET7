@@ -10,6 +10,8 @@ namespace ET
 	public class GamePlayPKComponent : GamePlayModeComponent
 	{
 		[BsonIgnore]
+		public bool isInitClient;
+		[BsonIgnore]
 		public long lastSendTime;
 		[BsonIgnore]
 		public GamePlayPKCfg model
@@ -22,10 +24,5 @@ namespace ET
 
 		public long ownerPlayerId { get; set; }
 
-
-		[BsonIgnore]
-		public long lastMouseDownTime;
-		[BsonIgnore]
-		public float3 lastMousePosition;
 	}
 }

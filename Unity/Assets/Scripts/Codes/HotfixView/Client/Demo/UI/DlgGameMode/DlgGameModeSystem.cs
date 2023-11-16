@@ -14,7 +14,8 @@ namespace ET.Client
 		{
 			self.View.E_SingleMapModeButton.AddListenerAsync(self.EnterSingleMapMode);
 			self.View.E_RoomModeButton.AddListenerAsync(self.EnterRoomMode);
-			self.View.E_ARRoomModeButton.AddListenerAsync(self.EnterARRoomMode);
+			self.View.E_ARRoomModeCreateButton.AddListenerAsync(self.EnterARRoomCreateMode);
+			self.View.E_ARRoomModeJoinButton.AddListenerAsync(self.EnterARRoomJoinMode);
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
 		}
 
@@ -24,7 +25,7 @@ namespace ET.Client
 
 		public static async ETTask EnterSingleMapMode(this DlgGameMode self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgLobby>();
@@ -32,28 +33,47 @@ namespace ET.Client
 
 		public static async ETTask EnterRoomMode(this DlgGameMode self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgHall>();
 		}
 
-		public static async ETTask EnterARRoomMode(this DlgGameMode self)
+		public static async ETTask EnterARRoomCreateMode(this DlgGameMode self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
+			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+			{
+				playerStatus = PlayerStatus.Room,
+				RoomType = RoomType.Normal,
+				SubRoomType = SubRoomType.NormalARCreate,
+				arRoomId = 0,
+			};
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>();
+			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+		}
+
+		public static async ETTask EnterARRoomJoinMode(this DlgGameMode self)
+		{
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+			{
+				playerStatus = PlayerStatus.Room,
+				RoomType = RoomType.Normal,
+				SubRoomType = SubRoomType.NormalARScanCode,
+				arRoomId = 0,
+			};
+			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
+			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
 		}
 
 		public static async ETTask ReturnLogin(this DlgGameMode self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
 			await LoginHelper.LoginOut(self.ClientScene());
 		}
-
-
-
 	}
 }

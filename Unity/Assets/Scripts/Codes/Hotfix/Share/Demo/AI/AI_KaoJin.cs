@@ -5,7 +5,7 @@ namespace ET
 {
     public class AI_KaoJin: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AICfg aiConfig)
+        public override int Check(AIComponent aiComponent, AICfg aiConfig, bool isFirst)
         {
             Unit unit = aiComponent.GetUnit();
             if (unit == null)
@@ -17,10 +17,17 @@ namespace ET
                 return 1;
             }
 
-            long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
-            if (sec < 10)
+            if (isFirst)
             {
                 return 0;
+            }
+            else
+            {
+                long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
+                if (sec < 10)
+                {
+                    return 0;
+                }
             }
 
             return 1;

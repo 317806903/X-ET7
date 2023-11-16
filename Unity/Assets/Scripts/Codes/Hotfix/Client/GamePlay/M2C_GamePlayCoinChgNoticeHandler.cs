@@ -9,7 +9,7 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Session session, M2C_GamePlayCoinChgNotice message)
 		{
-			Log.Debug($"M2C_GamePlayCoinChgNotice 11");
+			//Log.Debug($"M2C_GamePlayCoinChgNotice 11");
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 			while (currentScene == null || currentScene.IsDisposed)
@@ -26,7 +26,7 @@ namespace ET.Client
 			}
 
 			GetCoinType getCoinType = (GetCoinType)message.GetCoinType;
-			Dictionary<string, int> myCoinListOld = null;
+			Dictionary<string, float> myCoinListOld = null;
 
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 			if (gamePlayPlayerListComponent != null)
@@ -52,9 +52,9 @@ namespace ET.Client
 				GamePlayPlayerListComponent gamePlayPlayerListComponentNew = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 
 				long myPlayerId = PlayerHelper.GetMyPlayerId(clientScene);
-				gamePlayPlayerListComponentNew.playerId2CoinList.TryGetDic(myPlayerId, out Dictionary<string, int> myCoinListNew);
+				gamePlayPlayerListComponentNew.playerId2CoinList.TryGetDic(myPlayerId, out Dictionary<string, float> myCoinListNew);
 
-				Dictionary<string, int> myCoinListChg = new();
+				Dictionary<string, float> myCoinListChg = new();
 				if (myCoinListOld == null)
 				{
 					myCoinListChg = myCoinListNew;
@@ -63,7 +63,7 @@ namespace ET.Client
 				{
 					foreach (var coinList in myCoinListNew)
 					{
-						if (myCoinListOld.TryGetValue(coinList.Key, out int oldValue) == false)
+						if (myCoinListOld.TryGetValue(coinList.Key, out float oldValue) == false)
 						{
 							oldValue = 0;
 						}
@@ -81,7 +81,7 @@ namespace ET.Client
 				EventSystem.Instance.Publish(clientScene, _GamePlayCoinChg);
 			}
 
-			Log.Debug($"M2C_GamePlayCoinChgNotice end");
+			//Log.Debug($"M2C_GamePlayCoinChgNotice end");
 			await ETTask.CompletedTask;
 		}
 	}

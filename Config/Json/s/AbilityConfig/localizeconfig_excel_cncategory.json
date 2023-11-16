@@ -310,5 +310,569 @@
   {
     "key": "Text_Key_Name_Tow8_3",
     "text_cn": "加速塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_1",
+    "text_cn": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_2",
+    "text_cn": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_3",
+    "text_cn": "弩箭塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_1",
+    "text_cn": "加农炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_2",
+    "text_cn": "加农炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_3",
+    "text_cn": "加农炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_1",
+    "text_cn": "火图腾"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_2",
+    "text_cn": "火图腾"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_3",
+    "text_cn": "火图腾"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_1",
+    "text_cn": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_2",
+    "text_cn": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_3",
+    "text_cn": "毒雾塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_1",
+    "text_cn": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_2",
+    "text_cn": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_3",
+    "text_cn": "龙击炮"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_1",
+    "text_cn": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_2",
+    "text_cn": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_3",
+    "text_cn": "雷电塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_1",
+    "text_cn": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_2",
+    "text_cn": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_3",
+    "text_cn": "冰魔塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_1",
+    "text_cn": "加速塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_2",
+    "text_cn": "加速塔"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_3",
+    "text_cn": "加速塔"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_1",
+    "text_cn": "突击小队"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_2",
+    "text_cn": "疗伤小队"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_3",
+    "text_cn": "怪物大军"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_4",
+    "text_cn": "蝙蝠男爵"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Aoe",
+    "text_cn": "Aoe"
+  },
+  {
+    "key": "Text_Key_TowerLabel_ST",
+    "text_cn": "ST"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalNum",
+    "text_cn": "总下载数量:{0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownNum",
+    "text_cn": "当前已下载数量:{0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_TotalDownSize",
+    "text_cn": "总下载大小:{0}"
+  },
+  {
+    "key": "TextCode_Key_UpdateRes_CurDownSize",
+    "text_cn": "当前已下载大小:{0}"
+  },
+  {
+    "key": "TextCode_Key_GameMode_All",
+    "text_cn": "所有"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
+    "text_cn": "塔防"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPK1",
+    "text_cn": "PK"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_All",
+    "text_cn": "所有"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_AllPlayersOneGroup",
+    "text_cn": "团体合作"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerAlone",
+    "text_cn": "各自为战"
+  },
+  {
+    "key": "TextCode_Key_TeamMode_PlayerTeam",
+    "text_cn": "组队合作"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_StartGame",
+    "text_cn": "开始游戏"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_WaitAllReady",
+    "text_cn": "等待全部准备"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Ready",
+    "text_cn": "点击准备"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_CancelReady",
+    "text_cn": "取消准备"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeatIndex",
+    "text_cn": "空位:{0}"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_ChgSeat",
+    "text_cn": "换位"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_KickMember",
+    "text_cn": "踢出房间"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_SeeMemberInfo",
+    "text_cn": "查看信息"
+  },
+  {
+    "key": "TextCode_Key_RoomMemberStatus_Self",
+    "text_cn": "[自己]"
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCount",
+    "text_cn": "{0}人"
+  },
+  {
+    "key": "TextCode_Key_Room_MemberCountVs",
+    "text_cn": "{0}VS{1}"
+  },
+  {
+    "key": "TextCode_Key_IsQuitRoom",
+    "text_cn": "是否确认退出房间?"
+  },
+  {
+    "key": "TextCode_Key_Net_ChkDisconnect",
+    "text_cn": "网络已断开"
+  },
+  {
+    "key": "TextCode_Key_Net_ChkConnect",
+    "text_cn": "当前没有联网，请您先联网后再进行操作！"
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadSuccess",
+    "text_cn": "更新完成"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateErr",
+    "text_cn": "资源更新发生错误:{0}"
+  },
+  {
+    "key": "TextCode_Key_Res_DownLoadResErr",
+    "text_cn": "下载资源失败: {0} {1}"
+  },
+  {
+    "key": "TextCode_Key_IsQuitBattle",
+    "text_cn": "是否确认退出战斗"
+  },
+  {
+    "key": "TextCode_Key_Hall_RoomNotExist",
+    "text_cn": "房间不存在"
+  },
+  {
+    "key": "TextCode_Key_Hall_CreateRoomError",
+    "text_cn": "房间创建失败"
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnRoom",
+    "text_cn": "检测到还在房间中,是否返回房间?"
+  },
+  {
+    "key": "TextCode_Key_Login_IsReturnBattle",
+    "text_cn": "检测到还在战斗中,是否返回战斗?"
+  },
+  {
+    "key": "TextCode_Key_Battle_WaveRewardGold",
+    "text_cn": "波次结束奖励金币:{0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_InterestOnDeposit",
+    "text_cn": "获得波次结算存款利息:{0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_DivideEquallyTeamCoin",
+    "text_cn": "平分战斗期间杀怪金币,得到:{0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText1",
+    "text_cn": "请按住拖拉放置大本营"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText2",
+    "text_cn": "请等待其他阵营进行放置"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutHomeText3",
+    "text_cn": "请等待本阵营进行放置"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint1",
+    "text_cn": "请等待其他玩家放置刷怪点{0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_PutMonsterPoint2",
+    "text_cn": "请按住拖拉放置刷怪点"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex",
+    "text_cn": "波数:{0}/{1}"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",
+    "text_cn": "波数:{0}"
+  },
+  {
+    "key": "TextCode_Key_Battle_NextMonsterWaveTime",
+    "text_cn": "下一波到来:{0}s"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurMonsterWaveLeftTime",
+    "text_cn": "当前波剩余时间:{0}s"
+  },
+  {
+    "key": "TextCode_Key_Battle_MonsterWaveOverTime",
+    "text_cn": "已结束"
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxPutTowerCount",
+    "text_cn": "已达到最大放置数量"
+  },
+  {
+    "key": "TextCode_Key_Battle_CurPutTowerCount",
+    "text_cn": "还可放置{0}个预防塔"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyDone",
+    "text_cn": "已买"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuyButton",
+    "text_cn": "购买"
+  },
+  {
+    "key": "TextCode_Key_Battle_TowerBuy_NotEnough",
+    "text_cn": "金币不足"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsRaycast",
+    "text_cn": "当前放置位置 没有投射点"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsCliffy",
+    "text_cn": "当前放置位置 太陡峭"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnUI",
+    "text_cn": "当前手指在UI上,请挪开"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsReachHome",
+    "text_cn": "当前放置位置 没法到达大本营,请重新选位置"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNearTower",
+    "text_cn": "当前放置位置 太靠近塔"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsOnRoad",
+    "text_cn": "不能放置在路线上"
+  },
+  {
+    "key": "TextCode_Key_Battle_ChkPutMesh_IsNotNearTower",
+    "text_cn": "当前放置位置 必须在塔附近"
+  },
+  {
+    "key": "TextCode_Key_Battle_Click_IsNotYouTower",
+    "text_cn": "这不是你的塔"
+  },
+  {
+    "key": "TextCode_Key_Battle_NotHaveThisTower",
+    "text_cn": "没有这个塔"
+  },
+  {
+    "key": "TextCode_Key_Battle_MaxLevelTower",
+    "text_cn": "最高级"
+  },
+  {
+    "key": "TextCode_Key_Battle_CanLevelUpTower",
+    "text_cn": "可以升级"
+  },
+  {
+    "key": "TextCode_Key_Battle_CannotLevelUpTower",
+    "text_cn": "无法升级"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds1",
+    "text_cn": "存活<color=#ffffff><size=150>{0}</size></color>波"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeEnds2",
+    "text_cn": "战胜{0}%的玩家"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Title",
+    "text_cn": "TIPS"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Cancel",
+    "text_cn": "取消"
+  },
+  {
+    "key": "TextCode_Key_Dialog_Confirm",
+    "text_cn": "确定"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Title",
+    "text_cn": "放弃当前扫描？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Des",
+    "text_cn": "这将丢失你的进度，需要重新扫描。"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Cancel",
+    "text_cn": "继续"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AbandonCurrentScan_Confirm",
+    "text_cn": "放弃"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Title",
+    "text_cn": "关闭而不保存？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Des",
+    "text_cn": "你的所有更改将不会被保存。"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Cancel",
+    "text_cn": "取消"
+  },
+  {
+    "key": "TextCode_Key_Dialog_CloseWithoutSaving_Confirm",
+    "text_cn": "关闭"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Title",
+    "text_cn": "确定要离开吗？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Des",
+    "text_cn": "你确定要登出{0}吗？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Cancel",
+    "text_cn": "取消"
+  },
+  {
+    "key": "TextCode_Key_Dialog_AreYouLeaving_Confirm",
+    "text_cn": "登出"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Title",
+    "text_cn": "离开房间？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Des",
+    "text_cn": "离开后，需要等待游戏结束、并重扫二维码加入"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Cancel",
+    "text_cn": "留下"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheRoom_Confirm",
+    "text_cn": "离开"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Title",
+    "text_cn": "退出游戏？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Des",
+    "text_cn": "离开后将无法回到本局游戏。"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Cancel",
+    "text_cn": "留下"
+  },
+  {
+    "key": "TextCode_Key_Dialog_LeaveTheGame_Confirm",
+    "text_cn": "离开"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Title",
+    "text_cn": "出售炮塔？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Des",
+    "text_cn": "是否以{0}价格出售炮塔?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Cancel",
+    "text_cn": "放弃"
+  },
+  {
+    "key": "TextCode_Key_Dialog_SaleTower_Confirm",
+    "text_cn": "出售"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes1",
+    "text_cn": "恶灵从另一个平行空间侵入现实世界。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes2",
+    "text_cn": "它们潜伏在看不见的位面中，肆虐着我们的家园。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes3",
+    "text_cn": "幸运的是，科学家们设计出了“时空防御塔”，阻止它们作乱。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WorldDes4",
+    "text_cn": "指挥官，歼灭入侵者，保卫世界！"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PicDes1",
+    "text_cn": "找一个空旷的表面（桌面或地面）。设置一些障碍物，构建一个易守的战场。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanBegin",
+    "text_cn": "缓慢移动，扫描地形，生成战场！光线最好不要太暗或太亮。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanFinish",
+    "text_cn": "地形扫描完毕？再次点击继续。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_ScanConfirm",
+    "text_cn": "如果生成了理想的战场，点击确认！"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_RoomStart",
+    "text_cn": "准备好后，您可以开始游戏。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceHQ",
+    "text_cn": "按住并拖动您的大本营到战场上。\r如果它被敌人摧毁，游戏结束！"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceSP",
+    "text_cn": "放置恶灵的生成点。\r它们将攻击您的大本营，谨慎设计路线！"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_BuyTower",
+    "text_cn": "购买您喜欢的防御塔来抵挡恶灵。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_CloseDLG",
+    "text_cn": "点击关闭。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_PlaceTower",
+    "text_cn": "拖动部署防御塔。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TapTower",
+    "text_cn": "点击放置的防御塔。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_TowerDetail",
+    "text_cn": "升级需要消耗2个相同类型和级别的塔。"
+  },
+  {
+    "key": "TextCode_Key_TutorialText_WaveStart",
+    "text_cn": "准备好战斗了吗？点击开始！"
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Abandon_Des",
+    "text_cn": "是否放弃修改?"
+  },
+  {
+    "key": "TextCode_Key_BattlePut_IsOK",
+    "text_cn": "是否在此位置进行放置?"
   }
 ]

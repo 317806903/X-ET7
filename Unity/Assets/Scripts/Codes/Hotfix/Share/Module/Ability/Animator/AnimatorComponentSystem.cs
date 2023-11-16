@@ -55,6 +55,7 @@ namespace ET.Ability
                 self.isNeedNoticeClient = true;
             }
             self.name = animatorMotionName;
+            self.animatorTickTime = TimeHelper.ServerNow();
         }
 
         public static void ResetControlStateAnimatorMotion(this AnimatorComponent self)
@@ -66,6 +67,7 @@ namespace ET.Ability
             }
             self.isStoppingAnimator = isStoppingAnimator;
             self.controlStateName = animatorMotionName;
+            self.controlAnimatorTickTime = TimeHelper.ServerNow();
         }
 
         public static void NoticeClient(this AnimatorComponent self)

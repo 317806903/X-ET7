@@ -45,55 +45,55 @@
     "propertyType": "Tower2",
     "level": 1,
     "Hp": 100,
-    "PhysicalAttack": 20
+    "PhysicalAttack": 33
   },
   {
     "propertyType": "Tower2",
     "level": 2,
     "Hp": 110,
-    "PhysicalAttack": 75
+    "PhysicalAttack": 133
   },
   {
     "propertyType": "Tower2",
     "level": 3,
     "Hp": 120,
-    "PhysicalAttack": 300
+    "PhysicalAttack": 625
   },
   {
     "propertyType": "Tower3",
+    "level": 1,
+    "Hp": 100,
+    "PhysicalAttack": 6
+  },
+  {
+    "propertyType": "Tower3",
+    "level": 2,
+    "Hp": 110,
+    "PhysicalAttack": 48
+  },
+  {
+    "propertyType": "Tower3",
+    "level": 3,
+    "Hp": 120,
+    "PhysicalAttack": 330
+  },
+  {
+    "propertyType": "Tower4",
     "level": 1,
     "Hp": 100,
     "PhysicalAttack": 2
   },
   {
-    "propertyType": "Tower3",
-    "level": 2,
-    "Hp": 110,
-    "PhysicalAttack": 18
-  },
-  {
-    "propertyType": "Tower3",
-    "level": 3,
-    "Hp": 120,
-    "PhysicalAttack": 120
-  },
-  {
-    "propertyType": "Tower4",
-    "level": 1,
-    "Hp": 100,
-    "PhysicalAttack": 1
-  },
-  {
     "propertyType": "Tower4",
     "level": 2,
     "Hp": 110,
-    "PhysicalAttack": 6
+    "PhysicalAttack": 16
   },
   {
     "propertyType": "Tower4",
     "level": 3,
     "Hp": 120,
-    "PhysicalAttack": 40
+    "PhysicalAttack": 110
   },
   {
     "propertyType": "Tower5",
@@ -105,31 +105,31 @@
     "propertyType": "Tower5",
     "level": 2,
     "Hp": 110,
-    "PhysicalAttack": 800
+    "PhysicalAttack": 1600
   },
   {
     "propertyType": "Tower5",
     "level": 3,
     "Hp": 120,
-    "PhysicalAttack": 5000
+    "PhysicalAttack": 15000
   },
   {
     "propertyType": "Tower6",
     "level": 1,
     "Hp": 100,
-    "PhysicalAttack": 58
+    "PhysicalAttack": 94
   },
   {
     "propertyType": "Tower6",
     "level": 2,
     "Hp": 110,
-    "PhysicalAttack": 290
+    "PhysicalAttack": 406
   },
   {
     "propertyType": "Tower6",
     "level": 3,
     "Hp": 120,
-    "PhysicalAttack": 1270
+    "PhysicalAttack": 2062
   },
   {
     "propertyType": "Tower7",
@@ -174,15 +174,357 @@
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster1",
+    "level": 2,
+    "Hp": 160,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 3,
+    "Hp": 240,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 4,
+    "Hp": 320,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 5,
+    "Hp": 400,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 6,
+    "Hp": 480,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 7,
+    "Hp": 560,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 8,
+    "Hp": 640,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 9,
+    "Hp": 720,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 10,
+    "Hp": 800,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 11,
+    "Hp": 880,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 12,
+    "Hp": 960,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 13,
+    "Hp": 1040,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 14,
+    "Hp": 1120,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 15,
+    "Hp": 1200,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 16,
+    "Hp": 1280,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 17,
+    "Hp": 1360,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 18,
+    "Hp": 1440,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 19,
+    "Hp": 1520,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster1",
+    "level": 20,
+    "Hp": 1600,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster2",
     "level": 1,
     "Hp": 900,
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster2",
+    "level": 2,
+    "Hp": 1800,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 3,
+    "Hp": 2700,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 4,
+    "Hp": 3600,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 5,
+    "Hp": 4500,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 6,
+    "Hp": 5400,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 7,
+    "Hp": 6300,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 8,
+    "Hp": 7200,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 9,
+    "Hp": 8100,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 10,
+    "Hp": 9000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 11,
+    "Hp": 9900,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 12,
+    "Hp": 10800,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 13,
+    "Hp": 11700,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 14,
+    "Hp": 12600,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 15,
+    "Hp": 13500,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 16,
+    "Hp": 14400,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 17,
+    "Hp": 15300,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 18,
+    "Hp": 16200,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 19,
+    "Hp": 17100,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster2",
+    "level": 20,
+    "Hp": 18000,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster3",
     "level": 1,
-    "Hp": 3600,
+    "Hp": 10000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 2,
+    "Hp": 20000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 3,
+    "Hp": 30000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 4,
+    "Hp": 40000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 5,
+    "Hp": 50000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 6,
+    "Hp": 60000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 7,
+    "Hp": 70000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 8,
+    "Hp": 80000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 9,
+    "Hp": 90000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 10,
+    "Hp": 100000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 11,
+    "Hp": 110000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 12,
+    "Hp": 120000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 13,
+    "Hp": 130000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 14,
+    "Hp": 140000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 15,
+    "Hp": 150000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 16,
+    "Hp": 160000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 17,
+    "Hp": 170000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 18,
+    "Hp": 180000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 19,
+    "Hp": 190000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster3",
+    "level": 20,
+    "Hp": 200000,
     "PhysicalAttack": 1
   },
   {
@@ -192,15 +534,357 @@
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster4",
+    "level": 2,
+    "Hp": 200,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 3,
+    "Hp": 300,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 4,
+    "Hp": 400,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 5,
+    "Hp": 500,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 6,
+    "Hp": 600,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 7,
+    "Hp": 700,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 8,
+    "Hp": 800,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 9,
+    "Hp": 900,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 10,
+    "Hp": 1000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 11,
+    "Hp": 1100,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 12,
+    "Hp": 1200,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 13,
+    "Hp": 1300,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 14,
+    "Hp": 1400,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 15,
+    "Hp": 1500,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 16,
+    "Hp": 1600,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 17,
+    "Hp": 1700,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 18,
+    "Hp": 1800,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 19,
+    "Hp": 1900,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster4",
+    "level": 20,
+    "Hp": 2000,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster5",
     "level": 1,
     "Hp": 1000,
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster5",
+    "level": 2,
+    "Hp": 2000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 3,
+    "Hp": 3000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 4,
+    "Hp": 4000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 5,
+    "Hp": 5000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 6,
+    "Hp": 6000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 7,
+    "Hp": 7000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 8,
+    "Hp": 8000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 9,
+    "Hp": 9000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 10,
+    "Hp": 10000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 11,
+    "Hp": 11000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 12,
+    "Hp": 12000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 13,
+    "Hp": 13000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 14,
+    "Hp": 14000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 15,
+    "Hp": 15000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 16,
+    "Hp": 16000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 17,
+    "Hp": 17000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 18,
+    "Hp": 18000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 19,
+    "Hp": 19000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster5",
+    "level": 20,
+    "Hp": 20000,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster6",
     "level": 1,
-    "Hp": 4500,
+    "Hp": 150000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 2,
+    "Hp": 300000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 3,
+    "Hp": 450000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 4,
+    "Hp": 600000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 5,
+    "Hp": 750000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 6,
+    "Hp": 900000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 7,
+    "Hp": 1050000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 8,
+    "Hp": 1200000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 9,
+    "Hp": 1350000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 10,
+    "Hp": 1500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 11,
+    "Hp": 1650000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 12,
+    "Hp": 1800000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 13,
+    "Hp": 1950000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 14,
+    "Hp": 2100000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 15,
+    "Hp": 2250000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 16,
+    "Hp": 2400000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 17,
+    "Hp": 2550000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 18,
+    "Hp": 2700000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 19,
+    "Hp": 2850000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster6",
+    "level": 20,
+    "Hp": 3000000,
     "PhysicalAttack": 1
   },
   {
@@ -210,15 +894,477 @@
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster7",
+    "level": 2,
+    "Hp": 120,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 3,
+    "Hp": 180,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 4,
+    "Hp": 240,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 5,
+    "Hp": 300,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 6,
+    "Hp": 360,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 7,
+    "Hp": 420,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 8,
+    "Hp": 480,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 9,
+    "Hp": 540,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 10,
+    "Hp": 600,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 11,
+    "Hp": 660,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 12,
+    "Hp": 720,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 13,
+    "Hp": 780,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 14,
+    "Hp": 840,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 15,
+    "Hp": 900,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 16,
+    "Hp": 960,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 17,
+    "Hp": 1020,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 18,
+    "Hp": 1080,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 19,
+    "Hp": 1140,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster7",
+    "level": 20,
+    "Hp": 1200,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster8",
     "level": 1,
     "Hp": 1000,
     "PhysicalAttack": 1
   },
   {
+    "propertyType": "Monster8",
+    "level": 2,
+    "Hp": 2000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 3,
+    "Hp": 3000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 4,
+    "Hp": 4000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 5,
+    "Hp": 5000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 6,
+    "Hp": 6000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 7,
+    "Hp": 7000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 8,
+    "Hp": 8000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 9,
+    "Hp": 9000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 10,
+    "Hp": 10000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 11,
+    "Hp": 11000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 12,
+    "Hp": 12000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 13,
+    "Hp": 13000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 14,
+    "Hp": 14000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 15,
+    "Hp": 15000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 16,
+    "Hp": 16000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 17,
+    "Hp": 17000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 18,
+    "Hp": 18000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 19,
+    "Hp": 19000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster8",
+    "level": 20,
+    "Hp": 20000,
+    "PhysicalAttack": 1
+  },
+  {
     "propertyType": "Monster9",
     "level": 1,
-    "Hp": 50000,
-    "PhysicalAttack": 20
+    "Hp": 500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 2,
+    "Hp": 1000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 3,
+    "Hp": 1500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 4,
+    "Hp": 2000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 5,
+    "Hp": 2500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 6,
+    "Hp": 3000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 7,
+    "Hp": 3500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 8,
+    "Hp": 4000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 9,
+    "Hp": 4500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 10,
+    "Hp": 5000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 11,
+    "Hp": 5500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 12,
+    "Hp": 6000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 13,
+    "Hp": 6500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 14,
+    "Hp": 7000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 15,
+    "Hp": 7500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 16,
+    "Hp": 8000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 17,
+    "Hp": 8500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 18,
+    "Hp": 9000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 19,
+    "Hp": 9500000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster9",
+    "level": 20,
+    "Hp": 10000000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 1,
+    "Hp": 1000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 2,
+    "Hp": 2000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 3,
+    "Hp": 3000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 4,
+    "Hp": 4000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 5,
+    "Hp": 5000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 6,
+    "Hp": 6000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 7,
+    "Hp": 7000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 8,
+    "Hp": 8000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 9,
+    "Hp": 9000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 10,
+    "Hp": 10000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 11,
+    "Hp": 11000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 12,
+    "Hp": 12000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 13,
+    "Hp": 13000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 14,
+    "Hp": 14000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 15,
+    "Hp": 15000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 16,
+    "Hp": 16000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 17,
+    "Hp": 17000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 18,
+    "Hp": 18000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 19,
+    "Hp": 19000,
+    "PhysicalAttack": 1
+  },
+  {
+    "propertyType": "Monster10",
+    "level": 20,
+    "Hp": 20000,
+    "PhysicalAttack": 1
   }
 ]

@@ -14,6 +14,7 @@ namespace ET
         OutNet_CN,
         InNetZpb,
         OutNet_EN,
+        OutNet_CN_Linux,
     }
 
     public static class BuildPack
@@ -124,6 +125,37 @@ namespace ET
             }
             BuildTarget buildTarget = BuildTarget.Android;
             await BuildPackInternal(buildTarget, PackName.OutNet_CN);
+        }
+
+        [MenuItem("Pack/BuildPack_Android_OutNet_CN_Linux", false, 302)]
+        public static async ETTask BuildPack_Android_OutNet_CN_Linux()
+        {
+            if(Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return;
+            }
+            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
+            {
+                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
+                return;
+            }
+            if (Define.EnableCodes)
+            {
+                if (true)
+                {
+                    ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", false);
+
+                    CompilingFinishedCallback.Set(typeof(BuildPack), "BuildPack_Android_OutNet_CN_Linux", null);
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("警告", "请 Remove EnableCodes ", "确定");
+                }
+                return;
+            }
+            BuildTarget buildTarget = BuildTarget.Android;
+            await BuildPackInternal(buildTarget, PackName.OutNet_CN_Linux);
         }
 
         [MenuItem("Pack/BuildPack_Android_InNetZpb", false, 303)]
@@ -256,6 +288,41 @@ namespace ET
             }
             BuildTarget buildTarget = BuildTarget.iOS;
             await BuildPackInternal(buildTarget, PackName.OutNet_CN);
+        }
+
+        [MenuItem("Pack/BuildPack_IOS_OutNet_CN_Linux", false, 322)]
+        public static async ETTask BuildPack_IOS_OutNet_CN_Linux()
+        {
+#if !UNITY_EDITOR_OSX
+            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
+            return;
+#endif
+            if(Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return;
+            }
+            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
+            {
+                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
+                return;
+            }
+            if (Define.EnableCodes)
+            {
+                if (true)
+                {
+                    ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", false);
+
+                    CompilingFinishedCallback.Set(typeof(BuildPack), "BuildPack_IOS_OutNet_CN_Linux", null);
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("警告", "请 Remove EnableCodes ", "确定");
+                }
+                return;
+            }
+            BuildTarget buildTarget = BuildTarget.iOS;
+            await BuildPackInternal(buildTarget, PackName.OutNet_CN_Linux);
         }
 
         [MenuItem("Pack/BuildPack_IOS_InNetZpb", false, 323)]
@@ -399,7 +466,9 @@ namespace ET
             if (packName == PackName.Local)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
-                ResConfig.Instance.isShowDebugRoot = true;
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = true;
+                ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"ARGame_Local";
                 packageName = $"com.dm.ARGameLocal";
             }
@@ -410,9 +479,11 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 30300;
-                ResConfig.Instance.isShowDebugRoot = true;
+                ResConfig.Instance.areaType = AreaType.CN;
                 productName = $"ARGame_InNet148";
                 packageName = $"com.dm.ARGameInNet148";
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.OutNet_CN)
@@ -422,9 +493,33 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "8.134.156.170";
                 ResConfig.Instance.RouterHttpPort = 30300;
-                ResConfig.Instance.isShowDebugRoot = false;
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
                 productName = $"ARGame_OutNet_CN";
                 packageName = $"com.dm.ARGameCN";
+            }
+            else if(packName == PackName.OutNet_CN_Linux)
+            {
+                // ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                // ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame";
+                // ResConfig.Instance.ResGameVersion = "v1.0";
+                // ResConfig.Instance.RouterHttpHost = "8.134.208.107";
+                // ResConfig.Instance.RouterHttpPort = 30300;
+                // ResConfig.Instance.areaType = AreaType.CN;
+                // ResConfig.Instance.IsShowDebugMode = false;
+                // ResConfig.Instance.IsShowEditorLoginMode = false;
+                // productName = $"ARGame_OutNet_CN_Linux";
+                // packageName = $"com.dm.ARGameCNLinux";
+
+                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.RouterHttpHost = "18.166.14.188";
+                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                productName = $"ARGame_OutNet_CN_Linux";
+                packageName = $"com.dm.ARGameCNLinux";
             }
             else if(packName == PackName.InNetZpb)
             {
@@ -433,7 +528,9 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.58";
                 ResConfig.Instance.RouterHttpPort = 30300;
-                ResConfig.Instance.isShowDebugRoot = false;
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = true;
+                ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"ARGame_InNetZpb";
                 packageName = $"com.dm.ARGameInNetZpb";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
@@ -445,7 +542,9 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "34.225.211.137";
                 ResConfig.Instance.RouterHttpPort = 30300;
-                ResConfig.Instance.isShowDebugRoot = false;
+                ResConfig.Instance.areaType = AreaType.EN;
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
                 productName = $"ARGame_OutNet_EN";
                 packageName = $"com.dm.ARGameEN";
             }

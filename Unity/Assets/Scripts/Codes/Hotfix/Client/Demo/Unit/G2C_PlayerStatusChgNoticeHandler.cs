@@ -11,11 +11,9 @@ namespace ET.Client
 		{
 			Scene clientScene = session.DomainScene();
 
-			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
-			playerComponent.PlayerGameMode = EnumHelper.FromString<PlayerGameMode>(message.PlayerGameMode);
-			playerComponent.PlayerStatus = EnumHelper.FromString<PlayerStatus>(message.PlayerStatus);
-			playerComponent.ARRoomType = EnumHelper.FromString<ARRoomType>(message.ARRoomType);
-			playerComponent.RoomId = message.RoomId;
+			byte[] byts = message.PlayerStatusComponentBytes;
+			Entity entity = MongoHelper.Deserialize<Entity>(byts);
+			PlayerHelper.RefreshMyPlayerStatus(clientScene, entity);
 
 			await ETTask.CompletedTask;
 		}

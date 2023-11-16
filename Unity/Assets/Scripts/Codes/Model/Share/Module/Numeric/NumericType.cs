@@ -41,9 +41,13 @@
 	    public const int AOIPct = AOI * 10 + 3;
 	    public const int AOIFinalAdd = AOI * 10 + 4;
 	    public const int AOIFinalPct = AOI * 10 + 5;
-	    
+
 	    public const int Hp = 1005;
 	    public const int HpBase = Hp * 10 + 1;
+	    public const int HpAdd = Hp * 10 + 2;
+	    public const int HpPct = Hp * 10 + 3;
+	    public const int HpFinalAdd = Hp * 10 + 4;
+	    public const int HpFinalPct = Hp * 10 + 5;
 
 	    public const int MaxHp = 1006;
 	    public const int MaxHpBase = MaxHp * 10 + 1;
@@ -58,11 +62,11 @@
 	    public const int PhysicalAttackPct = PhysicalAttack * 10 + 3;
 	    public const int PhysicalAttackFinalAdd = PhysicalAttack * 10 + 4;
 	    public const int PhysicalAttackFinalPct = PhysicalAttack * 10 + 5;
-	    
+
 	    // PhysicalDamage = 0, //物理伤害
 	    // FireDamage = 1, //元素-火伤害
 	    // IceDamage = 2, //元素-冰伤害
 	    // ThunderDamage = 3, //元素-雷伤害
-	    
+
     }
 }

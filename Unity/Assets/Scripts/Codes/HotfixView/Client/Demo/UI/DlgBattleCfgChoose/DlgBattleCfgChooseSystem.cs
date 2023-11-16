@@ -105,7 +105,7 @@ namespace ET.Client
 
         public static async ETTask OnChoose(this DlgBattleCfgChoose self, int newIndex)
         {
-            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
             self.curChooseIndex = newIndex;
             self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.RefreshCells();
@@ -113,14 +113,14 @@ namespace ET.Client
 
         public static async ETTask OnBack(this DlgBattleCfgChoose self)
         {
-            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleCfgChoose>();
         }
 
         public static async ETTask OnSure(this DlgBattleCfgChoose self)
         {
-            ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
             string gamePlayBattleLevelCfgId = self.GetCurChooseBattleCfgId();
             if (string.IsNullOrEmpty(gamePlayBattleLevelCfgId))
@@ -213,11 +213,11 @@ namespace ET.Client
 	        {
 		        isMatching = true;
 	        }
-	        else if (gameMode[0] == "GamePlayTowerDefense1" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefense1)
+	        else if (gameMode[0] == "GamePlayTowerDefenseNormal" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseNormal)
 	        {
 		        isMatching = true;
 	        }
-	        else if (gameMode[0] == "GamePlayPK1" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayPK1)
+	        else if (gameMode[0] == "GamePlayPKNormal" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayPKNormal)
 	        {
 		        isMatching = true;
 	        }

@@ -7,7 +7,7 @@ namespace ET
 {
     public class AI_Attack: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AICfg aiConfig)
+        public override int Check(AIComponent aiComponent, AICfg aiConfig, bool isFirst)
         {
             Unit unit = aiComponent.GetUnit();
             if (unit == null)

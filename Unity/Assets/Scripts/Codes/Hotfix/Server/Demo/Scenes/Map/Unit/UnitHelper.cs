@@ -83,6 +83,29 @@ namespace ET.Server
             protected override async ETTask Run(Scene scene, EventType.SyncUnitEffects args)
             {
                 Unit unit = args.unit;
+                AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
+                while (aoiEntity == null)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    if (unit == null || unit.IsDisposed)
+                    {
+                        return;
+                    }
+                    aoiEntity = unit.GetComponent<AOIEntity>();
+                }
+                if (aoiEntity.IsDisposed)
+                {
+                    return;
+                }
+                while (aoiEntity.bInit == false)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    if (unit.IsDisposed || aoiEntity.IsDisposed)
+                    {
+                        return;
+                    }
+                }
+
                 bool isAddEffect = args.isAddEffect;
                 long effectObjId = args.effectObjId;
                 ET.Ability.EffectObj effectObj = args.effectObj;
@@ -190,6 +213,17 @@ namespace ET.Server
 
                 GamePlayComponent gamePlayComponent = args.gamePlayComponent;
                 gamePlayComponent.AddWaitNoticeGamePlayModeToClientList(playerId);
+                await ETTask.CompletedTask;
+            }
+        }
+
+        [Event(SceneType.Map)]
+        public class NoticeGameEnd2Server: AEvent<Scene, EventType.NoticeGameEnd2Server>
+        {
+            protected override async ETTask Run(Scene scene, EventType.NoticeGameEnd2Server args)
+            {
+                GamePlayComponent gamePlayComponent = args.gamePlayComponent;
+                await gamePlayComponent.GameEndWhenServer();
                 await ETTask.CompletedTask;
             }
         }

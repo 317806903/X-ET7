@@ -80,15 +80,15 @@ namespace ET.Client
         /// <param name="battleCfgId"></param>
         /// <param name="isARRoom"></param>
         /// <returns></returns>
-        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, bool isARRoom, bool isARRoomTypeNormal)
+        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, RoomType roomType, SubRoomType subRoomType)
         {
             try
             {
                 G2C_CreateRoom _G2C_CreateRoom = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_CreateRoom()
                 {
                     BattleCfgId = battleCfgId,
-                    IsARRoom = isARRoom?1:0,
-                    IsARRoomTypeNormal = isARRoomTypeNormal?1:0,
+                    RoomType = (int)roomType,
+                    SubRoomType = (int)subRoomType,
                 }) as G2C_CreateRoom;
                 if (_G2C_CreateRoom.Error != ET.ErrorCode.ERR_Success)
                 {

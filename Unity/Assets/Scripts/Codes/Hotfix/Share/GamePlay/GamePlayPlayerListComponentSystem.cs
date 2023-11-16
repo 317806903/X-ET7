@@ -304,8 +304,6 @@ namespace ET
 					Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerUnitId);
 					if (playerUnit != null)
 					{
-						playerUnit.Position = pos;
-
 						ET.Ability.UnitHelper.ResetPos(playerUnit, pos);
 					}
 				}
@@ -320,24 +318,24 @@ namespace ET
 			self.NoticeCoinToClient(playerId, getCoinType);
 		}
 
-		public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int chgValue, GetCoinType getCoinType)
+		public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, float chgValue, GetCoinType getCoinType)
 		{
-			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out int curValue);
+			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out float curValue);
 			curValue = math.max(0, curValue + chgValue);
 			self.playerId2CoinList.Add(playerId, coinType.ToString(), curValue);
 
 			self.NoticeCoinToClient(playerId, getCoinType);
 		}
 
-		public static int GetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType)
+		public static float GetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType)
 		{
-			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out int curValue);
+			self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out float curValue);
 			return curValue;
 		}
 
 		public static void ChgTeamCoin(this GamePlayPlayerListComponent self, TeamFlagType teamFlagType, CoinType coinType, int chgValue, GetCoinType getCoinType)
 		{
-			self.team2CoinList.TryGetValue(teamFlagType, coinType.ToString(), out int curValue);
+			self.team2CoinList.TryGetValue(teamFlagType, coinType.ToString(), out float curValue);
 			curValue = math.max(0, curValue + chgValue);
 			self.team2CoinList.Add(teamFlagType, coinType.ToString(), curValue);
 		}

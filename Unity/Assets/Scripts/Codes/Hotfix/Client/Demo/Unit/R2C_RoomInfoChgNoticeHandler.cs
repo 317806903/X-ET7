@@ -11,8 +11,8 @@ namespace ET.Client
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 
-			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
-			long roomId = playerComponent.RoomId;
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
+			long roomId = playerStatusComponent.RoomId;
 			await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
 
 			EventSystem.Instance.Publish(clientScene, new EventType.RoomInfoChg());

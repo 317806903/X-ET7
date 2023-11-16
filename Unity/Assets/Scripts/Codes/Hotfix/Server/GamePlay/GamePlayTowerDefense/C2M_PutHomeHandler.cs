@@ -29,12 +29,12 @@ namespace ET.Server
 			}
 			else
 			{
-				//if (gamePlayComponent.isAR)
+				bool bRet = putHomeComponent.InitHomeByPlayer(playerId, unitCfgId, pos);
+				if (bRet)
 				{
 					TeamFlagType playerTeamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
 					gamePlayComponent.ResetPlayerBirthPos(playerTeamFlagType, pos);
 				}
-				putHomeComponent.InitHomeByPlayer(playerId, unitCfgId, pos);
 			}
 
 			await ETTask.CompletedTask;

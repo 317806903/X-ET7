@@ -1,14 +1,594 @@
 [
   {
-    "key": "DlgGameMode/EGBackGround/E_ReturnLogin/Text",
-    "text_en": "(en)重新登录"
-  },
-  {
-    "key": "DlgGameMode/EGBackGround/E_ReturnLogin/Text2",
-    "text_en": "(en)重新登录"
-  },
-  {
     "key": "DlgGameMode/EGBackGround/E_ReturnLogin/E_ReturnText",
-    "text_en": "(en)重新登录"
+    "text_en": "Re-login"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/Unopened/null/Text (TMP)",
+    "text_en": "Locked"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/TurnOn/TreasureChest_normal/Text (TMP)",
+    "text_en": "{0}"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/TurnOn/TreasureChest_Open/Text (TMP)",
+    "text_en": "Open"
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_Mode/E_RefreshRoomList/Text",
+    "text_en": "Rescan "
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_Mode/E_CreateRoom/Text",
+    "text_en": "Start"
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_ReturnLogin/Text",
+    "text_en": "Back"
+  },
+  {
+    "key": "Canvas (Environment)/E_QuitBattle/Text",
+    "text_en": "Exit"
+  },
+  {
+    "key": "DlgBattleTower/E_QuitBattle/Text",
+    "text_en": "Exit"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
+    "text_en": "Ready"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_QuitRoom/Text",
+    "text_en": "Exit"
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome",
+    "text_en": "Place Headquarters"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/GameObject/ELabel_TotalGold",
+    "text_en": "{0}"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/EButton_Buy/ELabel_Buy",
+    "text_en": "Purchase"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
+    "text_en": "{0}"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_BuyClose/ELabel_BuyClose",
+    "text_en": "Collapse"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text",
+    "text_en": "Tower Equipment"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/EButton_GameBegin_txt",
+    "text_en": "Start"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final",
+    "text_en": "Start"
+  },
+  {
+    "key": "DlgBattleTowerBegin/E_Effect/Effect_GameBegin/EButton_GameBegin/final (1)",
+    "text_en": "Start"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text",
+    "text_en": "Return"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text",
+    "text_en": "Home"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text",
+    "text_en": "Exit"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/EButton_GameEnd/ELabel_GameEnd",
+    "text_en": "Game Over"
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/ELabel_Content",
+    "text_en": "Coins: {0}"
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/EButton_Buy/ELabel_Buy",
+    "text_en": "Buy"
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/EButton_name",
+    "text_en": "Name"
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Sale/text",
+    "text_en": "Sell"
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Reclaim/text",
+    "text_en": "Recycle"
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Upgrade/text",
+    "text_en": "Upgrade"
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/Image/E_TowerName",
+    "text_en": "Flame Tower"
+  },
+  {
+    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/E_Slider/E_title",
+    "text_en": "Select Overall Size"
+  },
+  {
+    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/EButton_Next/ELabel_Next",
+    "text_en": "Next"
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
+    "text_en": "Cancel"
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure/Text",
+    "text_en": "Confirm"
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Sure/E_Sure/Text",
+    "text_en": "Confirm"
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_title/title",
+    "text_en": "Tips"
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_SingleMapMode/E_SingleMapText",
+    "text_en": "Global Map Mode"
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText",
+    "text_en": "Room Mode"
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText",
+    "text_en": "AR Room Mode"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_ReturnLogin/E_ReturnText",
+    "text_en": "Back"
+  },
+  {
+    "key": "DlgLobby/EGBackGround/E_EnterMap/Text",
+    "text_en": "Enter Map"
+  },
+  {
+    "key": "DlgLobby/EGBackGround/E_ReturnLogin/Text",
+    "text_en": "Back"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_Login/Text",
+    "text_en": "Login"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
+    "text_en": "Ready"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_QuitRoom/Text",
+    "text_en": "Exit"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_title",
+    "text_en": "All Set!!"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Room/ELabel_Content",
+    "text_en": "Slide List Item"
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/ELabel_Content_Name",
+    "text_en": "Name"
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/EButton_Operator/ELabel_Operator",
+    "text_en": "Operation"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Tower/ELabel_Name",
+    "text_en": "idsuhciud Hahaha12"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/E_PVEName",
+    "text_en": "Survived {0} Waves"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/title",
+    "text_en": "Infinite Mode"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVP/title",
+    "text_en": "PvP Battle"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Avatar/E_PlayerName",
+    "text_en": "Player Name123"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Backpack/Text (TMP)",
+    "text_en": "Card Pack"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_lose/txt",
+    "text_en": "Fail"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final",
+    "text_en": "Victory"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final (1)",
+    "text_en": "Victory"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final",
+    "text_en": "Game Over"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)",
+    "text_en": "Game Over"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/txt",
+    "text_en": "Fail"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content",
+    "text_en": "Coins: 10"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_en": "Buy"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_name",
+    "text_en": "Tower Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Text (TMP)",
+    "text_en": "Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1ELabel_Content",
+    "text_en": "Coins: 10"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_en": "Buy"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_name",
+    "text_en": "Tower Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Text (TMP)",
+    "text_en": "Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1ELabel_Content",
+    "text_en": "Coins: 10"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_en": "Buy"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_name",
+    "text_en": "Tower Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Text (TMP)",
+    "text_en": "Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/title/Text (TMP)",
+    "text_en": "Winner Draws a Card"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content",
+    "text_en": "Coins: 10"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_en": "Buy"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_name",
+    "text_en": "Tower Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Text (TMP)",
+    "text_en": "Name"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final",
+    "text_en": "Victory"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final (1)",
+    "text_en": "Victory"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
+    "text_en": "Switch Camp"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
+    "text_en": "Select Level"
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Sure/ELable_Sure",
+    "text_en": "Confirm"
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Back/Text",
+    "text_en": "Back"
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Menu/E_GameMode/Text",
+    "text_en": "Gameplay:"
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Menu/E_TeamMode/Text",
+    "text_en": "Team Mode:"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime/ELabel_ReadyWhenRestTime",
+    "text_en": "I'm Ready"
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_CreateRoom/Text",
+    "text_en": "Create Room"
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_ReturnLogin/Text",
+    "text_en": "Back"
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_RefreshRoomList/Text",
+    "text_en": "Refresh Room List"
+  },
+  {
+    "key": "DlgLobby/EGBackGround/EButton_ChooseBattleCfg/Text",
+    "text_en": "Select Level"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_Login_google/Text",
+    "text_en": "Login With Google"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
+    "text_en": "Switch Camp"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
+    "text_en": "Select Level"
+  },
+  {
+    "key": "Canvas (Environment)/Item_Room/EButton_Join/ELabel_Join",
+    "text_en": "Join"
+  },
+  {
+    "key": "UIGuidePanel/SkipNode/SkipText",
+    "text_en": "Skip the tutorial"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
+    "text_en": "START"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
+    "text_en": "Waiting to start"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_ShowQrCode/Text (TMP)",
+    "text_en": "INVITE"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/pvp/Text (TMP)",
+    "text_en": "{0}v{1}"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/title",
+    "text_en": "INFINITE MODE"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/Text (TMP)",
+    "text_en": "Hosted by"
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
+    "text_en": "Place Headquarters"
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
+    "text_en": "Place Monster Spawn Point"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/ELabel_LeftMonsterWave01",
+    "text_en": "Wave {0}/{1}"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/ELabel_LeftTime01",
+    "text_en": "Remaining Time"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
+    "text_en": "{0}"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text (TMP)",
+    "text_en": "get towers"
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_LeftCallPlayerTowerCount01",
+    "text_en": "You can still place {0} towers"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
+    "text_en": "Place Headquarters"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
+    "text_en": "Place Monster Spawn Point"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/GameObject/ELabel_TotalGold_01",
+    "text_en": "{0}"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftMonsterWave01",
+    "text_en": "Wave {0}/{1}"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftTime01",
+    "text_en": "Remaining Time"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
+    "text_en": "{0}"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/Text (TMP)",
+    "text_en": "get towers"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_LeftCallPlayerTowerCount01",
+    "text_en": "You can still place {0} towers"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_1",
+    "text_en": "Survived <color=#ffffff><size=150>{0}</size></color> waves."
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2",
+    "text_en": "Outperformed {0}% of all players"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_SwitchPlayer/Text",
+    "text_en": "Switch user"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
+    "text_en": "START"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
+    "text_en": "Waiting to start"
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/EG_None",
+    "text_en": "Vacant"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final (1)",
+    "text_en": "Start"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text12",
+    "text_en": "Room"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text12",
+    "text_en": "HOME"
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text12",
+    "text_en": "Quit"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd/EButton_GameEnd_lose/txt",
+    "text_en": "Failure"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd/EButton_GameEnd_victory/final (1)",
+    "text_en": "Victory"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)",
+    "text_en": "Challenge Complete"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)01",
+    "text_en": "CHALLENGE COMPLETE!"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_1",
+    "text_en": "surviveed<color=#FF6601><size=150>{0}</size></color>waves"
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_2",
+    "text_en": "Outperformed {0}% of all players"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_join/E_ScanCode/title",
+    "text_en": "Scan Code"
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/RoomMemberList/E_player",
+    "text_en": "{0} player"
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/E_Upgradeable/text",
+    "text_en": "Max Level"
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList/E_player",
+    "text_en": "{0} player"
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
+    "text_en": "Log out"
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/E_info/name/Text (TMP)",
+    "text_en": "Nickname"
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/EG_title/title",
+    "text_en": "PROFILE"
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
+    "text_en": "{0} "
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest/Text",
+    "text_en": "PLAY"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK/Text",
+    "text_en": "Login"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/Next/TextNext",
+    "text_en": "Tap to continue"
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/EG_Confirm/E_Save/Text",
+    "text_en": "Save"
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/E_info/Avatar/title",
+    "text_en": "Avatar"
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/E_info/name/E_InputField/Text Area/Text",
+    "text_en": "Name​"
   }
 ]

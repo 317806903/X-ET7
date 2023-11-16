@@ -268,6 +268,10 @@ namespace ET
             {
                 packName = PackName.OutNet_CN;
             }
+            else if (buildPackNameParam == "OutNet_CN_Linux")
+            {
+                packName = PackName.OutNet_CN_Linux;
+            }
             else if (buildPackNameParam == "OutNet_EN")
             {
                 packName = PackName.OutNet_EN;

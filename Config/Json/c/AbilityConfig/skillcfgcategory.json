@@ -724,6 +724,44 @@
     "learn_action_id": []
   },
   {
+    "id": "Skill_PlayerCircle3",
+    "name": "毒雾3",
+    "desc": "圆形范围攻击",
+    "dis": 15,
+    "cd": 0.2,
+    "skillSlotType": 1,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "isSave": true,
+      "selectNum": 1,
+      "isFriend": false,
+      "isOnlyPlayer": false,
+      "offSetInfo": {
+        "nodeName": "",
+        "offSetPosition": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relateForward": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "isAngleFirst": false,
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      },
+      "isChgToSelectPos": false
+    },
+    "timeline_id": "Timeline_PlayerCircle3",
+    "learn_action_id": []
+  },
+  {
     "id": "Skill_EnemySolo1",
     "name": "射击",
     "desc": "单体射击",
@@ -800,7 +838,7 @@
     "name": "龙击炮1",
     "desc": "单体",
     "dis": 10,
-    "cd": 2,
+    "cd": 4,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -838,7 +876,7 @@
     "name": "龙击炮2",
     "desc": "单体",
     "dis": 10,
-    "cd": 1,
+    "cd": 2,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -876,7 +914,7 @@
     "name": "龙击炮3",
     "desc": "单体",
     "dis": 10,
-    "cd": 0.8,
+    "cd": 1.6,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -914,7 +952,7 @@
     "name": "雷电塔1",
     "desc": "单体",
     "dis": 10,
-    "cd": 1,
+    "cd": 1.5,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -952,7 +990,7 @@
     "name": "雷电塔2",
     "desc": "单体",
     "dis": 10,
-    "cd": 0.6,
+    "cd": 0.9,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -990,7 +1028,7 @@
     "name": "雷电塔3",
     "desc": "单体",
     "dis": 10,
-    "cd": 0.4,
+    "cd": 0.6,
     "skillSlotType": 1,
     "skillSelectAction": {
       "$type": "ActionCallAutoUnitWhenUmbellate",
@@ -1183,6 +1221,22 @@
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AddCDDown3"
+    ]
+  },
+  {
+    "id": "Skill_SeedHeal1",
+    "name": "种子治疗",
+    "desc": "治疗同伴",
+    "dis": 5,
+    "cd": 2,
+    "skillSlotType": 3,
+    "skillSelectAction": {
+      "$type": "ActionCallAutoSelf",
+      "isSave": false
+    },
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_SeedHeal1"
     ]
   }
 ]

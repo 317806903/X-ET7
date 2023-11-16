@@ -33,7 +33,7 @@ namespace ET.Client
 			(transform, i));
 			self.View.E_CreateRoomButton.AddListenerAsync(self.CreateRoom);
 			self.View.E_RefreshRoomListButton.AddListenerAsync(self.RefreshRoomList);
-			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
+			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnBack);
 		}
 
 		public static void ShowWindow(this DlgHall self, ShowWindowData contextData = null)
@@ -84,10 +84,10 @@ namespace ET.Client
 
 		public static async ETTask CreateRoom(this DlgHall self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			string battleCfgId = "GamePlayBattleLevel_Room11";
-			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, false, true);
+			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, RoomType.Normal, SubRoomType.NormalRoom);
 			if (result)
 			{
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgHall>();
@@ -98,21 +98,20 @@ namespace ET.Client
 
 		public static async ETTask RefreshRoomList(this DlgHall self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
 
 			await self.GetRoomList();
 		}
 
-		public static async ETTask ReturnLogin(this DlgHall self)
+		public static async ETTask ReturnBack(this DlgHall self)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
-
-			await LoginHelper.LoginOut(self.ClientScene());
+			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
 		}
 
 		public static async ETTask JoinRoom(this DlgHall self, long roomId)
 		{
-			ET.Ability.Client.UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
 			bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
 			if (result)

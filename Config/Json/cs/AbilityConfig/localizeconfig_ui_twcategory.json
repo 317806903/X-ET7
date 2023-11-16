@@ -1,14 +1,594 @@
 [
   {
-    "key": "DlgGameMode/EGBackGround/E_ReturnLogin/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameMode/EGBackGround/E_ReturnLogin/Text2",
-    "text_tw": ""
-  },
-  {
     "key": "DlgGameMode/EGBackGround/E_ReturnLogin/E_ReturnText",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/Unopened/null/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/TurnOn/TreasureChest_normal/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Level/TurnOn/TreasureChest_Open/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_Mode/E_RefreshRoomList/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_Mode/E_CreateRoom/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "SinglePlayerMode/E_SinglePlayerMode/E_ReturnLogin/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/E_QuitBattle/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_QuitBattle/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_QuitRoom/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/GameObject/ELabel_TotalGold",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/EButton_Buy/ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_BuyClose/ELabel_BuyClose",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/EButton_GameBegin_txt",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerBegin/E_Effect/Effect_GameBegin/EButton_GameBegin/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/EButton_GameEnd/ELabel_GameEnd",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/EButton_Buy/ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_TowerBuy/EButton_name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Sale/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Reclaim/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Upgrade/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/E_OperatorMenu/Image/E_TowerName",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/E_Slider/E_title",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/EButton_Next/ELabel_Next",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Sure/E_Sure/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgCommonConfirm/EGBackGround/Root/EG_title/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_SingleMapMode/E_SingleMapText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_ReturnLogin/E_ReturnText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLobby/EGBackGround/E_EnterMap/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLobby/EGBackGround/E_ReturnLogin/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_Login/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_QuitRoom/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_title",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Room/ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/ELabel_Content_Name",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/EButton_Operator/ELabel_Operator",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Tower/ELabel_Name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/E_PVEName",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVP/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Avatar/E_PlayerName",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Backpack/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_lose/txt",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_victory/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/txt",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/title/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_name",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Sure/ELable_Sure",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Back/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Menu/E_GameMode/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleCfgChoose/EGBackGround/E_Menu/E_TeamMode/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime/ELabel_ReadyWhenRestTime",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_CreateRoom/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_ReturnLogin/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgHall/EGBackGround/E_RefreshRoomList/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLobby/EGBackGround/EButton_ChooseBattleCfg/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_Login_google/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_Room/EButton_Join/ELabel_Join",
+    "text_tw": ""
+  },
+  {
+    "key": "UIGuidePanel/SkipNode/SkipText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/E_ShowQrCode/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/pvp/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/ELabel_LeftMonsterWave01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/ELabel_LeftTime01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTower/E_Battle/E_LeftCallPlayerTowerCount01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/GameObject/ELabel_TotalGold_01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftMonsterWave01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftTime01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_LeftCallPlayerTowerCount01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_1",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/E_SwitchPlayer/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Item_RoomMember/EG_None",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text12",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text12",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text12",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd/EButton_GameEnd_lose/txt",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd/EButton_GameEnd_victory/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/final (1)01",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_2",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_join/E_ScanCode/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgARRoom/EGBackGround/RoomMemberList/E_player",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/E_Upgradeable/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRoom/EGBackGround/RoomMemberList/E_player",
+    "text_tw": ""
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/E_info/name/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "Dlg_Personal_Information/EGBackGround/Root/EG_title/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/Next/TextNext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/EG_Confirm/E_Save/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/E_info/Avatar/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPersonalInformation/EGBackGround/Root/E_info/name/E_InputField/Text Area/Text",
     "text_tw": ""
   }
 ]

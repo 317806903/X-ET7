@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ET
 {
-    [TypeDrawer(typeof(Entity), true)]
+    [TypeDrawer(typeof(EntityRef<>), true)]
     public class EntityRefTypeDrawer: ITypeDrawer
     {
         public bool HandlesType(Type type)

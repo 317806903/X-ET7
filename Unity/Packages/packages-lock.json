@@ -12,32 +12,44 @@
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.unity.render-pipelines.universal": ">=12.1.6",
-        "com.unity.xr.arfoundation": "^4.2.6"
+        "com.unity.render-pipelines.universal": ">=12.1.6"
       },
-      "hash": "32453494d94ff62d5d605b4e57cab4debcdae90b"
+      "hash": "39dd499aa542e5e9d26ccbba173da5a8d6078024"
     },
     "com.deepmirror.mirrorverse.ui": {
-      "version": "file:com.deepmirror.mirrorverse.ui@8b38ba96b7",
+      "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "0.1.4"
-      }
+        "com.deepmirror.mirrorverse": "0.1.5"
+      },
+      "hash": "39dd499aa542e5e9d26ccbba173da5a8d6078024"
+    },
+    "com.dm.packages.blurbackground": {
+      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/BlurBackground",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4d03b65ca96a232e9aa56065a6d7e7a6842c9b9b"
+    },
+    "com.dm.packages.eventlogging": {
+      "version": "https://github.com/deepmirrorinc/EventLoggingUnitySdk.git?path=/Assets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e433fb40dd19fdaa2d731de0dddecb1f90ae5aa1"
     },
     "com.dm.packages.ingamedebugconsole": {
-      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/IngameDebugConsole",
+      "version": "file:com.dm.packages.ingamedebugconsole@1fe3a61140",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1fe3a611408c09e103e1834dc1da500fea60a32a"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.dm.packages.runtimeinspector": {
-      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/RuntimeInspector",
+      "version": "file:com.dm.packages.runtimeinspector@1fe3a61140",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1fe3a611408c09e103e1834dc1da500fea60a32a"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -61,6 +73,13 @@
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.device-simulator.devices": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.editorcoroutines": {
@@ -87,7 +106,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -121,6 +140,13 @@
     "com.unity.mobile.android-logcat": {
       "version": "1.3.2",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -160,6 +186,40 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.services.authentication": {
+      "version": "3.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.services.core": "1.11.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.services.core": {
+      "version": "1.11.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.modules.androidjni": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.services.playeraccounts": {
+      "version": "file:com.unity.services.playeraccounts@1.0.0-pre.2",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.services.core": "1.10.1",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.ugui": "1.0.0"
+      }
     },
     "com.unity.shadergraph": {
       "version": "14.0.8",

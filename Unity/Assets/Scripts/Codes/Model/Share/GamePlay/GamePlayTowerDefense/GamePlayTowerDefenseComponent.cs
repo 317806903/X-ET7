@@ -6,6 +6,15 @@ using Unity.Mathematics;
 
 namespace ET
 {
+	public enum GamePlayTowerDefenseMode
+	{
+		TowerDefense_Normal,
+		TowerDefense_PVE,
+		TowerDefense_PVP,
+		TowerDefense_EndlessChallenge,
+		TowerDefense_TutorialFirst,
+	}
+
 	public enum GamePlayTowerDefenseStatus
 	{
 		ShowStartEffect,
@@ -20,6 +29,8 @@ namespace ET
 	public class GamePlayTowerDefenseComponent : GamePlayModeComponent
 	{
 		[BsonIgnore]
+		public bool isInitClient;
+		[BsonIgnore]
 		public long lastSendTime;
 		[BsonIgnore]
 		public GamePlayTowerDefenseCfg model
@@ -30,12 +41,10 @@ namespace ET
 			}
 		}
 
+		public GamePlayTowerDefenseMode gamePlayTowerDefenseMode { get; set; }
+		public GamePlayModeBase gamePlayModeBase { get; set; }
 		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus { get; set; }
 		public long ownerPlayerId { get; set; }
 
-		[BsonIgnore]
-		public long lastMouseDownTime;
-		[BsonIgnore]
-		public float3 lastMousePosition;
 	}
 }

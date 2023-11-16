@@ -19,6 +19,78 @@ namespace ET.Client
 			return this;
 		}
 
+		public UnityEngine.UI.Image EButton_boxImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EButton_boxImage == null )
+					{
+						this.m_EButton_boxImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_box");
+					}
+					return this.m_EButton_boxImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_box");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_shadowImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EButton_shadowImage == null )
+					{
+						this.m_EButton_shadowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_shadow");
+					}
+					return this.m_EButton_shadowImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_shadow");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_TeamImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EImage_TeamImage == null )
+					{
+						this.m_EImage_TeamImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+					}
+					return this.m_EImage_TeamImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+				}
+			}
+		}
+
 		public UnityEngine.UI.Button EButton_IconButton
 		{
 			get
@@ -163,6 +235,30 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image EG_ReadyImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EG_ReadyImage == null )
+					{
+						this.m_EG_ReadyImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_Ready");
+					}
+					return this.m_EG_ReadyImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_Ready");
+				}
+			}
+		}
+
 		public UnityEngine.UI.Button EButton_OperatorButton
 		{
 			get
@@ -235,7 +331,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_TeamImage
+		public UnityEngine.RectTransform EG_NoneRectTransform
 		{
 			get
 			{
@@ -246,45 +342,105 @@ namespace ET.Client
 				}
 				if (this.isCacheNode)
 				{
-					if( this.m_EImage_TeamImage == null )
+					if( this.m_EG_NoneRectTransform == null )
 					{
-						this.m_EImage_TeamImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+						this.m_EG_NoneRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_None");
 					}
-					return this.m_EImage_TeamImage;
+					return this.m_EG_NoneRectTransform;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
+					return UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_None");
+				}
+			}
+		}
+
+		public TMPro.TextMeshProUGUI EG_NoneTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EG_NoneTextMeshProUGUI == null )
+					{
+						this.m_EG_NoneTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_None");
+					}
+					return this.m_EG_NoneTextMeshProUGUI;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_None");
+				}
+			}
+		}
+
+		public UITextLocalizeMonoView EG_NoneUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EG_NoneUITextLocalizeMonoView == null )
+					{
+						this.m_EG_NoneUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EG_None");
+					}
+					return this.m_EG_NoneUITextLocalizeMonoView;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EG_None");
 				}
 			}
 		}
 
 		public void DestroyWidget()
 		{
+			this.m_EButton_boxImage = null;
+			this.m_EButton_shadowImage = null;
+			this.m_EImage_TeamImage = null;
 			this.m_EButton_IconButton = null;
 			this.m_EButton_IconImage = null;
 			this.m_ELabel_Content_NameTextMeshProUGUI = null;
 			this.m_ELabel_Content_LvTextMeshProUGUI = null;
 			this.m_ELabel_Content_LeaderImage = null;
 			this.m_EG_ReadyRectTransform = null;
+			this.m_EG_ReadyImage = null;
 			this.m_EButton_OperatorButton = null;
 			this.m_EButton_OperatorImage = null;
 			this.m_ELabel_OperatorText = null;
-			this.m_EImage_TeamImage = null;
+			this.m_EG_NoneRectTransform = null;
+			this.m_EG_NoneTextMeshProUGUI = null;
+			this.m_EG_NoneUITextLocalizeMonoView = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
 
+		private UnityEngine.UI.Image m_EButton_boxImage = null;
+		private UnityEngine.UI.Image m_EButton_shadowImage = null;
+		private UnityEngine.UI.Image m_EImage_TeamImage = null;
 		private UnityEngine.UI.Button m_EButton_IconButton = null;
 		private UnityEngine.UI.Image m_EButton_IconImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Content_NameTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Content_LvTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_ELabel_Content_LeaderImage = null;
 		private UnityEngine.RectTransform m_EG_ReadyRectTransform = null;
+		private UnityEngine.UI.Image m_EG_ReadyImage = null;
 		private UnityEngine.UI.Button m_EButton_OperatorButton = null;
 		private UnityEngine.UI.Image m_EButton_OperatorImage = null;
 		private UnityEngine.UI.Text m_ELabel_OperatorText = null;
-		private UnityEngine.UI.Image m_EImage_TeamImage = null;
+		private UnityEngine.RectTransform m_EG_NoneRectTransform = null;
+		private TMPro.TextMeshProUGUI m_EG_NoneTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_EG_NoneUITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

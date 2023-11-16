@@ -15,6 +15,7 @@ namespace ET
             protected override void Awake(AOIEntity self, int distance, float3 pos)
             {
                 self.ViewDistance = distance;
+                self.bInit = false;
                 //self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, pos.x, pos.z);
                 self.WaitNextFrame(pos.x, pos.z).Coroutine();
             }
@@ -60,6 +61,7 @@ namespace ET
                 return;
             }
             self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, posX, posZ);
+            self.bInit = true;
             await Task.CompletedTask;
         }
 

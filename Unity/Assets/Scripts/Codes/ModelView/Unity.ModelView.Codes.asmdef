@@ -8,7 +8,11 @@
         "Unity.Mathematics",
         "Unity.Loader",
         "Unity.TextMeshPro",
-        "ShootTextPro"
+        "ShootTextPro",
+        "Unity.Services.PlayerAccounts",
+        "Unity.Services.Authentication",
+        "Unity.Services.Core",
+        "BlurBackground"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using BlurBackground;
+using MirrorVerse;
+using MirrorVerse.UI.MirrorSceneClassyUI;
+using System;
 using System.Reflection;
 using UnityEngine;
-using MirrorVerse;
-using MirrorVerse.UI.MirrorSceneDefaultUI;
 using UnityEngine.Rendering.Universal;
 
 namespace ET.Client
 {
-	[FriendOf(typeof(ARSessionComponent))]
+    [FriendOf(typeof(ARSessionComponent))]
 	public static class ARSessionComponentSystem
 	{
 		[ObjectSystem]
@@ -41,21 +42,23 @@ namespace ET.Client
 		Action OnMenuCancelCallBack,
 		Action OnMenuFinishedCallBack,
 		Action OnMenuCreateSceneCallBack,
-		Action OnMenuQuitSceneCallBack,
-		Action OnMenuJoinByExistSceneCallBack,
-		Action<string> OnMenuJoinByQRCodeCallBack,
-		Func<(bool, string)> OnGetQRCodeInfo,
-		string arSceneId)
+		Action OnMenuExitSceneCallBack,
+		Action OnMenuLoadRecentSceneCallBack,
+		Action<string> OnMenuJoinSceneCallBack,
+		Func<(bool, string)> OnRequestQRCodeExtraData,
+		string arSceneId,
+		bool bForceIntoCreate,
+		bool bForceIntoScan)
 		{
 			self.OnMenuCancelCallBack = OnMenuCancelCallBack;
 			self.OnMenuFinishedCallBack = OnMenuFinishedCallBack;
 			self.OnMenuCreateSceneCallBack = OnMenuCreateSceneCallBack;
-			self.OnMenuQuitSceneCallBack = OnMenuQuitSceneCallBack;
-			self.OnMenuJoinByExistSceneCallBack = OnMenuJoinByExistSceneCallBack;
-			self.OnMenuJoinByQRCodeCallBack = OnMenuJoinByQRCodeCallBack;
-			self.OnGetQRCodeInfo = OnGetQRCodeInfo;
+			self.OnMenuExitSceneCallBack = OnMenuExitSceneCallBack;
+			self.OnMenuLoadRecentSceneCallBack = OnMenuLoadRecentSceneCallBack;
+			self.OnMenuJoinSceneCallBack = OnMenuJoinSceneCallBack;
+			self.OnRequestQRCodeExtraData = OnRequestQRCodeExtraData;
 
-			await self.InitCallBack(arSceneId);
+			await self.InitCallBack(arSceneId, bForceIntoCreate, bForceIntoScan);
 		}
 
 		public static async ETTask LoadARSession(this ARSessionComponent self)
@@ -70,19 +73,46 @@ namespace ET.Client
 			self.ARSessoinGo = ARSessionPrefab;
 
 			UnityEngine.Object.DontDestroyOnLoad(self.ARSessoinGo);
-			self.StaticMeshTran = self.ARSessoinGo.transform.Find("MirrorSceneAll/MirrorSceneRenderer/StaticMesh");
-			Transform ARCameraTrans = self.ARSessoinGo.transform.Find("MirrorSceneAll/ArFoundationAdapter/ArFoundationCamera");
+			self.StaticMeshTran = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneRenderer/StaticMesh");
+			Transform ARCameraTrans = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/ArFoundationAdapter/ArFoundationCamera");
 			self.ARCamera = ARCameraTrans.gameObject.GetComponent<Camera>();
 
-			self.ScaleARCameraGo = self.ARSessoinGo.transform.Find("MirrorSceneAll/ArScaleCamera").gameObject;
+			self.ScaleARCameraGo = self.ARSessoinGo.transform.Find("ArScaleCamera").gameObject;
 			self.ScaleARCamera = self.ScaleARCameraGo.transform.GetComponent<Camera>();
 
+			self.translucentImageSource = ARCameraTrans.gameObject.GetComponent<TranslucentImageSource>();
+
+			self.QrCodeImageTran = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneRenderer/CanvasRoot/MarkerCanvas/Canvas/Panel/QrCodeImage");
+
+			// Set backend by Language.
+			SetArSessionServiceEndpoint();
+
 			self.RegisterCallBack();
+			await TimerComponent.Instance.WaitFrameAsync();
+		}
+
+		private static void SetArSessionServiceEndpoint()
+		{
+			// If not CN, set the backend to AWS North America.
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
+			var setArSessionServiceEndpointMethod = coreValue.GetType().GetMethod("SetArSessionServiceEndpoint", InstanceBindFlags);
+			Log.Debug($"SetArSessionServiceEndpoint {setArSessionServiceEndpointMethod}");
+
+			string endpoint = ResConfig.Instance.areaType switch
+			{
+				AreaType.CN => "CN",
+				AreaType.EN => "US",
+				_ => "US"
+			};
+
+			Log.Debug($"SetArSessionServiceEndpoint is set to: [{endpoint}]");
+			setArSessionServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
 		}
 
 		public static void RegisterCallBack(this ARSessionComponent self)
 		{
-			DefaultUI.Instance.onMenuFinish += ()=>
+			ClassyUI.Instance.onMenuFinish += ()=>
 			{
 				GameObject go = null;
 				StatusOr<GameObject> sceneMesh = MirrorScene.Get().GetSceneMeshWrapperObject();
@@ -93,35 +123,39 @@ namespace ET.Client
 
 				self.OnMenuFinished(go);
 			};
-			DefaultUI.Instance.onMenuCancel += ()=>
+			ClassyUI.Instance.onMenuCancel += ()=>
 			{
+				self.OnMenuExitSceneCallBack();
 				self.OnMenuCancel();
 			};
-			DefaultUI.Instance.onMenuCreateScene += ()=>
+			ClassyUI.Instance.onMenuCreateScene += ()=>
 			{
 				self.OnMenuCreateSceneCallBack();
 			};
-			DefaultUI.Instance.onMenuQuitScene += ()=>
+			ClassyUI.Instance.onMenuExitScene += ()=>
 			{
-				self.OnMenuQuitSceneCallBack();
 			};
-			DefaultUI.Instance.onMenuJoinByExistScene += ()=>
+			ClassyUI.Instance.onMenuLoadRecentScene += ()=>
 			{
-				self.OnMenuJoinByExistSceneCallBack();
+				self.OnMenuLoadRecentSceneCallBack();
 			};
-			DefaultUI.Instance.onMenuJoinByQRCode += (sQRCodeInfo)=>
+			ClassyUI.Instance.onMenuJoinScene += (sQRCodeInfo)=>
 			{
-				self.OnMenuJoinByQRCodeCallBack(sQRCodeInfo);
+				self.OnMenuJoinSceneCallBack(sQRCodeInfo);
 			};
-			DefaultUI.Instance.onGetQRCodeInfo += ()=>
+			ClassyUI.Instance.onRequestQRCodeExtraData += ()=>
 			{
-				return self.OnGetQRCodeInfo();
+				return self.OnRequestQRCodeExtraData();
 			};
 
 		}
 
-		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId)
+		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId, bool bForceIntoCreate, bool bForceIntoScan)
 		{
+#if UNITY_EDITOR
+			self.OnMenuCancel();
+			return;
+#endif
 			await self.LoadARSession();
 
 			if (MirrorScene.IsAvailable())
@@ -130,7 +164,16 @@ namespace ET.Client
 
 				//self.SetMeshShow();
 
-				DefaultUI.Instance.Restart();
+				if(bForceIntoCreate)
+				{
+					ClassyUI.Instance.RestartToCreate();
+				}
+				else if(bForceIntoScan)
+				{
+					Log.Debug($"---InitCallBack-- 43 111 {ClassyUI.Instance}");
+					ClassyUI.Instance.RestartToJoin();
+					Log.Debug($"---InitCallBack-- 43 222");
+				}
 
 				Log.Debug($"arSceneId [{arSceneId}]");
 				if (string.IsNullOrEmpty(arSceneId) == false)
@@ -138,11 +181,11 @@ namespace ET.Client
 					Log.Debug($"InitCallBack 00");
 					ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
 					Log.Debug($"InitCallBack 11");
-					DefaultUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
+					ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
 					Log.Debug($"InitCallBack 22");
 					await TimerComponent.Instance.WaitFrameAsync();
 					Log.Debug($"InitCallBack 33");
-					DefaultUI.Instance.TriggerJoinScene(arSceneId);
+					ClassyUI.Instance.TriggerJoinScene(arSceneId);
 					Log.Debug($"InitCallBack 44");
 				}
 			}
@@ -157,7 +200,7 @@ namespace ET.Client
 			if (MirrorScene.IsAvailable())
 			{
 				self.ResetMainCamera(true);
-				DefaultUI.Instance.Restart();
+				ClassyUI.Instance.Restart();
 			}
 			else
 			{
@@ -169,7 +212,7 @@ namespace ET.Client
 		{
 			if (MirrorScene.IsAvailable())
 			{
-				DefaultUI.Instance.HideMenu();
+				ClassyUI.Instance.HideMenu();
 			}
 			else
 			{
@@ -187,7 +230,7 @@ namespace ET.Client
 			return "";
 		}
 
-		public static string GetARMeshDownLoadUrl(this ARSessionComponent self)
+		private static object GetCoreImplInternalObject()
 		{
 			Log.Debug($"====zpb xxxxxxxxxxxxxx 0==========");
 			IMirrorScene iMirrorScene = MirrorScene.Get();
@@ -197,7 +240,13 @@ namespace ET.Client
 			Log.Debug($"==== 111 = coreField={coreField}");
 			var coreValue = coreField.GetValue(iMirrorScene);
 			Log.Debug($"coreValue {coreValue}");
+			return coreValue;
+		}
 
+		public static string GetARMeshDownLoadUrl(this ARSessionComponent self)
+		{
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
 			var getSceneMeshUrlMethod = coreValue.GetType().GetMethod("GetSceneMeshUrl", InstanceBindFlags);
 			Log.Debug($"getSceneMeshUrlMethod {getSceneMeshUrlMethod}");
 			var meshUrlValue = getSceneMeshUrlMethod.Invoke(coreValue, null);
@@ -206,28 +255,40 @@ namespace ET.Client
 			return meshUrlValue.ToString();
 		}
 
+		public static void ResetQrCodeImageSize(this ARSessionComponent self)
+		{
+			self.QrCodeImageTran.localScale = Vector3.one / MainQualitySettingComponent.Instance.GetHeightScale();
+		}
+
 		public static void TriggerShowQrCode(this ARSessionComponent self)
 		{
-			DefaultUI.Instance.TriggerShowQrCode();
+			ClassyUI.Instance.TriggerShowQrCode();
+			self.ResetQrCodeImageSize();
 		}
 
 		public static bool ChkARSceneStatusCompleted(this ARSessionComponent self)
 		{
-			if (DefaultUI.Instance == null)
+			if (ClassyUI.Instance == null)
 			{
 				return false;
 			}
-			return DefaultUI.Instance.ChkSceneStatusCompleted();
-		}
+			return MirrorScene.Get().GetSceneStatus() == SceneStatus.Completed;
+        }
 
 		public static void ResetMainCamera(this ARSessionComponent self, bool isARCamera)
 		{
+			if (self.ARSessoinGo == null)
+			{
+				return;
+			}
+
 			self.SetScaleARCamera(1);
 			if (isARCamera)
 			{
 				if (self.ARSessoinGo != null)
 				{
 					self.ARSessoinGo.SetActive(true);
+					self.ResetQrCodeImageSize();
 				}
 
 				AudioListener audioListenerMain = GlobalComponent.Instance.MainCamera.gameObject.GetComponent<AudioListener>();
@@ -267,6 +328,11 @@ namespace ET.Client
 		public static Camera SetScaleARCamera(this ARSessionComponent self, float arScale)
 		{
 			Log.Debug($"ARSessionComponent SetScaleARCamera arScale[{arScale}] self.ScaleARCameraGo[{self.ScaleARCameraGo}]");
+
+			if (self.ARCamera == null)
+			{
+				return null;
+			}
 
 			AudioListener audioListenerAR = self.ARCamera.gameObject.GetComponent<AudioListener>();
 			audioListenerAR.enabled = false;
@@ -309,18 +375,28 @@ namespace ET.Client
 			self.OnMenuFinishedCallBack();
 		}
 
-		public static void SetMeshShow(this ARSessionComponent self)
+		public static void ShowARMesh(this ARSessionComponent self, bool show)
 		{
 			Log.Debug($"ARSessionComponent SetMeshShow");
 			Transform staticMeshTrans = self.StaticMeshTran;
 			MirrorVerse.UI.Renderers.StaticMeshRenderer staticMeshRenderer = staticMeshTrans.gameObject.GetComponent<MirrorVerse.UI.Renderers.StaticMeshRenderer>();
 			MirrorVerse.Options.StaticMeshRendererOptions staticMeshRendererOptions = staticMeshRenderer.options;
-			staticMeshRendererOptions.visible = true;
-			staticMeshRendererOptions.collidable = true;
-			staticMeshRendererOptions.withOcclusion = false;
-			staticMeshRendererOptions.castsShadow = false;
-			staticMeshRendererOptions.receivesShadow = false;
-
+			if (show)
+			{
+				staticMeshRendererOptions.visible = true;
+				staticMeshRendererOptions.collidable = true;
+				staticMeshRendererOptions.withOcclusion = false;
+				staticMeshRendererOptions.castsShadow = false;
+				staticMeshRendererOptions.receivesShadow = false;
+			}
+			else
+			{
+				staticMeshRendererOptions.visible = true;
+				staticMeshRendererOptions.collidable = true;
+				staticMeshRendererOptions.withOcclusion = true;
+				staticMeshRendererOptions.castsShadow = false;
+				staticMeshRendererOptions.receivesShadow = true;
+			}
 		}
 
 		public static void OnMenuCancel(this ARSessionComponent self)
@@ -328,6 +404,15 @@ namespace ET.Client
 			Log.Debug($"ARSessionComponent OnMenuCancel");
 			self.ResetMainCamera(false);
 			self.OnMenuCancelCallBack();
+		}
+
+		public static bool ChkARCameraEnable(this ARSessionComponent self)
+		{
+			if (self.ARCamera != null && self.ARCamera.enabled)
+			{
+				return true;
+			}
+			return false;
 		}
 
 	}

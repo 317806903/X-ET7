@@ -3,6 +3,13 @@ using YooAsset;
 
 namespace ET
 {
+	public enum AreaType
+	{
+		CN,
+		TW,
+		EN,
+	}
+
     [CreateAssetMenu(menuName = "ET/CreateResConfig", fileName = "ResConfig", order = 0)]
     public class ResConfig: ScriptableObject
     {
@@ -12,6 +19,9 @@ namespace ET
 		public string ResGameVersion = "v1.0";
 		public string RouterHttpHost = "127.0.0.1";
 		public int RouterHttpPort = 30300;
-		public bool isShowDebugRoot = false;
+		public AreaType areaType;
+		public bool IsShowDebugMode = false;
+		public bool IsShowEditorLoginMode = false;
+
     }
 }

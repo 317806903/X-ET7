@@ -10,7 +10,10 @@ namespace ET.Client
             Scene clientScene = null;
             if (scene == scene.ClientScene())
             {
-                currentScene = scene.GetComponent<CurrentScenesComponent>().Scene;
+                if (scene.GetComponent<CurrentScenesComponent>() != null)
+                {
+                    currentScene = scene.GetComponent<CurrentScenesComponent>().Scene;
+                }
                 clientScene = scene;
             }
             else
@@ -19,6 +22,10 @@ namespace ET.Client
                 clientScene = currentScene.Parent.GetParent<Scene>();
             }
 
+            if (currentScene == null)
+            {
+                return null;
+            }
             UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
             return unitComponent;
         }

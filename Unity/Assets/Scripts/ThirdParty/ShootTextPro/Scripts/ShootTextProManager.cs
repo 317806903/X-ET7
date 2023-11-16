@@ -406,7 +406,7 @@ public class ShootTextProManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("飘字数据不合法");
+            Debug.LogError($"飘字数据不合法 {shootTextInfo.content}");
         }
     }
 

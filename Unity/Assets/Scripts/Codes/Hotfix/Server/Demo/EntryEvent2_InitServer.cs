@@ -30,6 +30,10 @@ namespace ET.Server
 
             Root.Instance.Scene.AddComponent<NavmeshManagerComponent>();
 
+            DBManagerComponent dbManagerComponent = Root.Instance.Scene.AddComponent<DBManagerComponent>();
+            dbManagerComponent.NeedDB = Options.Instance.NeedDB == 1;
+            Log.Error($"--zpb-- Options.Instance.NeedDB {Options.Instance.NeedDB}");
+
             StartProcessConfig processConfig = StartProcessConfigCategory.Instance.Get(Options.Instance.Process);
             switch (Options.Instance.AppType)
             {

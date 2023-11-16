@@ -20,9 +20,13 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         TestGlobalSetting2 = _buf.ReadInt();
         TestGlobalSetting3 = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TestGlobalSetting4 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TestGlobalSetting4.Add(_e0);}}
+        ARTutorialFirstCfgId = _buf.ReadString();
         ARPVECfgId = _buf.ReadString();
         ARPVPCfgId = _buf.ReadString();
         AREndlessChallengeCfgId = _buf.ReadString();
+        ShowDamage = _buf.ReadBool();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AvatarIcons = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AvatarIcons.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeginnersGuideImgs = new System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.Dictionary<string, string> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.Dictionary<string, string>(n1 * 3 / 2);for(var i1 = 0 ; i1 < n1 ; i1++) { string _k1;  _k1 = _buf.ReadString(); string _v1;  _v1 = _buf.ReadString();     _e0.Add(_k1, _v1);}} BeginnersGuideImgs.Add(_e0);}}
         PostInit();
     }
 
@@ -42,6 +46,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public string TestGlobalSetting3 { get; private set; }
     public System.Collections.Generic.List<string> TestGlobalSetting4 { get; private set; }
     /// <summary>
+    /// AR模式新手指引关卡的cfgId
+    /// </summary>
+    public string ARTutorialFirstCfgId { get; private set; }
+    /// <summary>
     /// AR模式PVE的cfgId
     /// </summary>
     public string ARPVECfgId { get; private set; }
@@ -53,12 +61,23 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// AR模式PVE无尽模式的cfgId
     /// </summary>
     public string AREndlessChallengeCfgId { get; private set; }
+    /// <summary>
+    /// 是否显示伤害数字展示
+    /// </summary>
+    public bool ShowDamage { get; private set; }
+    public System.Collections.Generic.List<string> AvatarIcons { get; private set; }
+    public System.Collections.Generic.List<ResIconCfg> AvatarIcons_Ref { get; private set; }
+    /// <summary>
+    /// 新手世界观信息
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> BeginnersGuideImgs { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -73,9 +92,13 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "TestGlobalSetting2:" + TestGlobalSetting2 + ","
         + "TestGlobalSetting3:" + TestGlobalSetting3 + ","
         + "TestGlobalSetting4:" + Bright.Common.StringUtil.CollectionToString(TestGlobalSetting4) + ","
+        + "ARTutorialFirstCfgId:" + ARTutorialFirstCfgId + ","
         + "ARPVECfgId:" + ARPVECfgId + ","
         + "ARPVPCfgId:" + ARPVPCfgId + ","
         + "AREndlessChallengeCfgId:" + AREndlessChallengeCfgId + ","
+        + "ShowDamage:" + ShowDamage + ","
+        + "AvatarIcons:" + Bright.Common.StringUtil.CollectionToString(AvatarIcons) + ","
+        + "BeginnersGuideImgs:" + Bright.Common.StringUtil.CollectionToString(BeginnersGuideImgs) + ","
         + "}";
     }
     

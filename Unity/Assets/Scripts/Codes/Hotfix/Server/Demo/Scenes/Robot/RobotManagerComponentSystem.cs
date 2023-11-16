@@ -11,7 +11,7 @@ namespace ET.Server
             try
             {
                 clientScene = await Client.SceneFactory.CreateClientScene(zone, "Robot");
-                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString());
+                await Client.LoginHelper.Login(clientScene, zone.ToString(), zone.ToString(), ET.LoginType.Robot);
                 await Client.EnterMapHelper.EnterMapAsync(clientScene, "Map1");
                 Log.Debug($"create robot ok: {zone}");
                 return clientScene;
@@ -22,15 +22,15 @@ namespace ET.Server
                 throw new Exception($"RobotSceneManagerComponent create robot fail, zone: {zone}", e);
             }
         }
-        
+
         public static void RemoveAll(this RobotManagerComponent self)
         {
-            foreach (Entity robot in self.Children.Values.ToArray())        
+            foreach (Entity robot in self.Children.Values.ToArray())
             {
                 robot.Dispose();
             }
         }
-        
+
         public static void Remove(this RobotManagerComponent self, long id)
         {
             self.GetChild<Scene>(id)?.Dispose();

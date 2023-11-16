@@ -12,8 +12,8 @@ namespace ET.Client
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 
-			PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(clientScene);
-			playerComponent.PlayerStatus = PlayerStatus.Battle;
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
+			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 
 			// 等待场景切换完成
 			await clientScene.GetComponent<ObjectWait>().Wait<Wait_SceneChangeFinish>();

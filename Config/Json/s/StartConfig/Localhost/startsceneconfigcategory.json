@@ -88,6 +88,38 @@
     "OuterPort": 0
   },
   {
+    "Id": 12,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Account",
+    "Name": "Account",
+    "OuterPort": 0
+  },
+  {
+    "Id": 13,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Rank",
+    "Name": "Rank",
+    "OuterPort": 0
+  },
+  {
+    "Id": 14,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "PlayerCache",
+    "Name": "PlayerCache",
+    "OuterPort": 0
+  },
+  {
+    "Id": 15,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Mail",
+    "Name": "Mail",
+    "OuterPort": 0
+  },
+  {
     "Id": 200,
     "Process": 1,
     "Zone": 2,

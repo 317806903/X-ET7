@@ -32,8 +32,15 @@ namespace ET.Client
 
         public static async ETTask Awake(this LoginSDKComponent self)
         {
-            await UnityServices.InitializeAsync();
-            self.RegisterLoginCallBack();
+            try
+            {
+                await UnityServices.InitializeAsync();
+                self.RegisterLoginCallBack();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         public static void RegisterLoginCallBack(this LoginSDKComponent self)

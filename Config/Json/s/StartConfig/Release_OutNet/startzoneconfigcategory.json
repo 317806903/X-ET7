@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "DBConnection": "mongodb://127.0.0.1",
+    "DBConnection": "mongodb://admin:example@127.0.0.1:27017",
     "DBName": "ET1",
     "Desc": "游戏区"
   },

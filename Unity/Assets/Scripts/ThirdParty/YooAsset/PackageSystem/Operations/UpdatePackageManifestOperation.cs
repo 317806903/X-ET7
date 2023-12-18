@@ -85,10 +85,39 @@ namespace YooAsset
 			_autoSaveVersion = autoSaveVersion;
 			_timeout = timeout;
 		}
+
 		internal override void Start()
 		{
 			_steps = ESteps.CheckActiveManifest;
 		}
+
+		internal bool ChkIsNeedUpdate()
+		{
+			if (_impl.ActiveManifest == null)
+			{
+				return true;
+			}
+
+			YooLogger.Error($"比对版本 当前版本[{_impl.ActiveManifest.PackageVersion}] 远端版本[{this._packageVersion}]");
+
+			string [] curVersion = _impl.ActiveManifest.PackageVersion.Split("_");
+			string [] newVersion = _packageVersion.Split("_");
+
+			if (curVersion[0].CompareTo(newVersion[0]) < 0)
+			{
+				return true;
+			}
+			else if (curVersion[0].CompareTo(newVersion[0]) == 0)
+			{
+				if (int.Parse(curVersion[1]) < int.Parse(newVersion[1]))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		internal override void Update()
 		{
 			if (_steps == ESteps.None || _steps == ESteps.Done)
@@ -96,8 +125,9 @@ namespace YooAsset
 
 			if (_steps == ESteps.CheckActiveManifest)
 			{
-				// 检测当前激活的清单对象	
-				if (_impl.ActiveManifest != null && _impl.ActiveManifest.PackageVersion == _packageVersion)
+				// 检测当前激活的清单对象
+				//if (_impl.ActiveManifest != null && _impl.ActiveManifest.PackageVersion == _packageVersion)
+				if (ChkIsNeedUpdate() == false)
 				{
 					_steps = ESteps.Done;
 					Status = EOperationStatus.Succeed;
@@ -184,7 +214,7 @@ namespace YooAsset
 			}
 		}
 
-		public override void SavePackageVersion() 
+		public override void SavePackageVersion()
 		{
 			_impl.FlushManifestVersionFile();
 		}

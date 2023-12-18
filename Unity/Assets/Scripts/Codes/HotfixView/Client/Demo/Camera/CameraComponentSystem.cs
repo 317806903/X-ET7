@@ -37,7 +37,7 @@ namespace ET.Client
 			while (true)
 			{
 				Unit observerUnit = UnitHelper.GetMyObserverUnit(self.DomainScene());
-				if (ET.Ability.UnitHelper.ChkUnitAlive(observerUnit))
+				if (observerUnit != null)
 				{
 					self.Unit = observerUnit;
 					break;

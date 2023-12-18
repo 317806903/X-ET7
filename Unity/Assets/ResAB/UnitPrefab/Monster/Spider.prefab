@@ -635,7 +635,6 @@ GameObject:
   - component: {fileID: 8672787908860998838}
   - component: {fileID: 8672787908847035854}
   - component: {fileID: 7485465174493034471}
-  - component: {fileID: 5892394758585479079}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -763,20 +762,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 9215116557416871941}
   m_Enabled: 1
---- !u!114 &5892394758585479079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8672787908860700822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 8672787908847035854}
 --- !u!1 &8672787908860700824
 GameObject:
   m_ObjectHideFlags: 0

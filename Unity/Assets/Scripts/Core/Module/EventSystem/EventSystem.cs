@@ -13,7 +13,7 @@ namespace ET
             {
                 this.QueueFlag = new bool[count];
             }
-            
+
             public readonly UnOrderMultiMap<Type, object> Map = new();
             // 这里不用hash，数量比较少，直接for循环速度更快
             public readonly bool[] QueueFlag;
@@ -25,7 +25,7 @@ namespace ET
         {
             this.count = count;
         }
-        
+
         private readonly Dictionary<Type, OneTypeSystems> typeSystemsMap = new();
 
         public OneTypeSystems GetOrCreateOneTypeSystems(Type type)
@@ -65,13 +65,13 @@ namespace ET
             return systems;
         }
     }
-    
+
     public class EventSystem: Singleton<EventSystem>, ISingletonUpdate, ISingletonFixedUpdate, ISingletonLateUpdate
     {
         private class EventInfo
         {
             public IEvent IEvent { get; }
-            
+
             public SceneType SceneType {get; }
 
             public EventInfo(IEvent iEvent, SceneType sceneType)
@@ -80,14 +80,14 @@ namespace ET
                 this.SceneType = sceneType;
             }
         }
-        
+
         private readonly Dictionary<string, Type> allTypes = new();
 
         private readonly UnOrderMultiMapSet<Type, Type> types = new();
 
         private readonly Dictionary<Type, List<EventInfo>> allEvents = new();
-        
-        private Dictionary<Type, Dictionary<int, object>> allInvokes = new(); 
+
+        private Dictionary<Type, Dictionary<int, object>> allInvokes = new();
 
         private TypeSystems typeSystems;
 
@@ -105,16 +105,16 @@ namespace ET
         {
             this.allTypes.Clear();
             this.types.Clear();
-            
+
             foreach ((string fullName, Type type) in addTypes)
             {
                 this.allTypes[fullName] = type;
-                
+
                 if (type.IsAbstract)
                 {
                     continue;
                 }
-                
+
                 // 记录所有的有BaseAttribute标记的的类型
                 object[] objects = type.GetCustomAttributes(typeof(BaseAttribute), true);
 
@@ -150,7 +150,7 @@ namespace ET
                 {
                     throw new Exception($"type not is AEvent: {type.Name}");
                 }
-                
+
                 object[] attrs = type.GetCustomAttributes(typeof(EventAttribute), false);
                 foreach (object attr in attrs)
                 {
@@ -177,7 +177,7 @@ namespace ET
                 {
                     throw new Exception($"type not is callback: {type.Name}");
                 }
-                
+
                 object[] attrs = type.GetCustomAttributes(typeof(InvokeAttribute), false);
                 foreach (object attr in attrs)
                 {
@@ -186,9 +186,9 @@ namespace ET
                         dict = new Dictionary<int, object>();
                         this.allInvokes.Add(iInvoke.Type, dict);
                     }
-                    
+
                     InvokeAttribute invokeAttribute = attr as InvokeAttribute;
-                    
+
                     try
                     {
                         dict.Add(invokeAttribute.Type, obj);
@@ -230,7 +230,7 @@ namespace ET
                         }
                         throw new Exception($"action type duplicate: {iInvoke.Type.FullName} {invokeAttribute.Type}", e);
                     }
-                    
+
                 }
             }
         }
@@ -299,7 +299,7 @@ namespace ET
                 }
             }
         }
-        
+
         // GetComponentSystem
         public void GetComponent(Entity entity, Entity component)
         {
@@ -326,7 +326,7 @@ namespace ET
                 }
             }
         }
-        
+
         // AddComponentSystem
         public void AddComponent(Entity entity, Entity component)
         {
@@ -580,9 +580,7 @@ namespace ET
                 {
                     try
                     {
-                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iUpdateSystem.Run(component);
-                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {
@@ -622,9 +620,7 @@ namespace ET
                 {
                     try
                     {
-                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iFixedUpdateSystem.Run(component);
-                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {
@@ -664,9 +660,7 @@ namespace ET
                 {
                     try
                     {
-                        ProfilerSample.BeginSample($"{component.GetType()}");
                         iLateUpdateSystem.Run(component);
-                        ProfilerSample.EndSample();
                     }
                     catch (Exception e)
                     {
@@ -685,14 +679,14 @@ namespace ET
             }
 
             using ListComponent<ETTask> list = ListComponent<ETTask>.Create();
-            
+
             foreach (EventInfo eventInfo in iEvents)
             {
                 if (!scene.SceneType.HasSameFlag(eventInfo.SceneType))
                 {
                     continue;
                 }
-                    
+
                 if (!(eventInfo.IEvent is AEvent<S, T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().FullName}");
@@ -728,17 +722,17 @@ namespace ET
                     continue;
                 }
 
-                
+
                 if (!(eventInfo.IEvent is AEvent<S, T> aEvent))
                 {
                     Log.Error($"event error: {eventInfo.IEvent.GetType().FullName}");
                     continue;
                 }
-                
+
                 aEvent.Handle(scene, a).Coroutine();
             }
         }
-        
+
         // Invoke跟Publish的区别(特别注意)
         // Invoke类似函数，必须有被调用方，否则异常，调用者跟被调用者属于同一模块，比如MoveComponent中的Timer计时器，调用跟被调用的代码均属于移动模块
         // 既然Invoke跟函数一样，那么为什么不使用函数呢? 因为有时候不方便直接调用，比如Config加载，在客户端跟服务端加载方式不一样。比如TimerComponent需要根据Id分发
@@ -760,10 +754,10 @@ namespace ET
             {
                 throw new Exception($"Invoke error, not AInvokeHandler: {typeof(A).Name} {type}");
             }
-            
+
             aInvokeHandler.Handle(args);
         }
-        
+
         public T Invoke<A, T>(int type, A args) where A: struct
         {
             if (!this.allInvokes.TryGetValue(typeof(A), out var invokeHandlers))
@@ -780,15 +774,15 @@ namespace ET
             {
                 throw new Exception($"Invoke error, not AInvokeHandler: {typeof(T).Name} {type}");
             }
-            
+
             return aInvokeHandler.Handle(args);
         }
-        
+
         public void Invoke<A>(A args) where A: struct
         {
             Invoke(0, args);
         }
-        
+
         public T Invoke<A, T>(A args) where A: struct
         {
             return Invoke<A, T>(0, args);

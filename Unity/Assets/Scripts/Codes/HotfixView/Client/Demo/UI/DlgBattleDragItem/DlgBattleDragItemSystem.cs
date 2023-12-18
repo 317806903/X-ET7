@@ -43,14 +43,20 @@ namespace ET.Client
             self.moveTowerUnitId = showWindowData.moveTowerUnitId;
             self.countOnce = showWindowData.countOnce;
             self.callBack = showWindowData.callBack;
+            self.sceneIn = showWindowData.sceneIn;
 
             self.isConfirming = false;
             self.isClickUGUI = false;
             self.isDragging = false;
             self.isCliffy = false;
             self.isRaycast = false;
+            self.isChkPutMonsterCall = true;
+            self.canPutMonsterCall = true;
+
             self._groundLayerMask = LayerMask.GetMask("Map");
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleDragItemFrameTimer, self);
+
+            self.View.E_TipNodeImage.SetVisible(false);
 		}
 
         public static void InitPrefab(this DlgBattleDragItem self)
@@ -62,6 +68,12 @@ namespace ET.Client
                     break;
                 case BattleDragItemType.PKMonster:
                     self.OnSelectMonster(self.battleDragItemParam);
+                    break;
+                case BattleDragItemType.PKMoveTower:
+                    self.OnSelectTower(self.battleDragItemParam);
+                    break;
+                case BattleDragItemType.PKMovePlayer:
+                    self.OnSelectPlayer(self.battleDragItemParam);
                     break;
                 case BattleDragItemType.HeadQuarter:
                     self.battleDragItemParam = "Unit_HeadQuarter";
@@ -111,10 +123,10 @@ namespace ET.Client
             if (self.CheckUserInput())
             {
                 self.isClickUGUI = ET.UGUIHelper.IsClickUGUI();
-                if (self.isClickUGUI)
-                {
-                    return;
-                }
+                // if (self.isClickUGUI)
+                // {
+                //     return;
+                // }
 
                 self.isDragging = true;
                 self.MoveCurrentPlaceObj();
@@ -137,15 +149,15 @@ namespace ET.Client
                 {
                     if (self.isRaycast == false)
                     {
-                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
-                        ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                        //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
+                        //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                         self.CheckIfPlaceSuccess();
                         return;
                     }
                     if (self.isCliffy)
                     {
-                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
-                        ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                        //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
+                        //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                         self.CheckIfPlaceSuccess();
                         return;
                     }
@@ -158,6 +170,14 @@ namespace ET.Client
                     else if (self.battleDragItemType == BattleDragItemType.PKMonster)
                     {
                         self.DoPutPKMonster(position).Coroutine();
+                    }
+                    else if (self.battleDragItemType == BattleDragItemType.PKMoveTower)
+                    {
+                        self.DoPutPKMoveTower(position).Coroutine();
+                    }
+                    else if (self.battleDragItemType == BattleDragItemType.PKMovePlayer)
+                    {
+                        self.DoPutPKMovePlayer(position).Coroutine();
                     }
                     else if (self.battleDragItemType == BattleDragItemType.HeadQuarter)
                     {
@@ -310,6 +330,17 @@ namespace ET.Client
         {
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
+
+            string pathName = self.GetUnitPrefabName(unitCfg);
+            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
+
+            self.currentPlaceObj = GameObject.Instantiate(go);
+            self.currentPlaceObj.gameObject.SetActive(false);
+        }
+
+        public static void OnSelectPlayer(this DlgBattleDragItem self, string monsterCfgId)
+        {
+            UnitCfg unitCfg = UnitCfgCategory.Instance.Get("Unit_PlayerPK");
 
             string pathName = self.GetUnitPrefabName(unitCfg);
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
@@ -523,11 +554,11 @@ namespace ET.Client
             {
                 if (self.battleDragItemType == BattleDragItemType.MoveTower)
                 {
-                    return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius + 0.3f, -1, self.moveTowerUnitId);
+                    return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius, -1, self.moveTowerUnitId);
                 }
                 else
                 {
-                    return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius + 0.3f, -1);
+                    return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius, -1);
                 }
             }
             if (isCallMonster)
@@ -569,7 +600,7 @@ namespace ET.Client
 
             self.isConfirming = true;
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
+            /*ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
             {
                 self.isConfirming = false;
                 ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
@@ -578,25 +609,31 @@ namespace ET.Client
             {
                 self.isConfirming = false;
                 self.CheckIfPlaceSuccess();
-            });
+            });*/
+            self.isConfirming = false;
+            ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
 
         public static async ETTask<bool> DoPutMonsterCall(this DlgBattleDragItem self, float3 position)
         {
+            if (self.isChkPutMonsterCall == false)
+            {
+                return false;
+            }
             UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
 
             if (self.canPutMonsterCall == false)
             {
-                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+                //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 self.CheckIfPlaceSuccess();
                 return false;
             }
 
             self.isConfirming = true;
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
+            /*ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
             {
                 self.isConfirming = false;
                 ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
@@ -605,14 +642,16 @@ namespace ET.Client
             {
                 self.isConfirming = false;
                 self.CheckIfPlaceSuccess();
-            });
+            });*/
+            self.isConfirming = false;
+            ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
 
         public static async ETTask<bool> DoPutPKTower(this DlgBattleDragItem self, float3 position)
         {
             UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
-            ET.Client.GamePlayTowerDefenseHelper.SendCallTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
+            ET.Client.GamePlayPKHelper.SendCallTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
 
@@ -624,11 +663,11 @@ namespace ET.Client
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUITip()
                 {
-                    tipMsg = "太多了",
+                    tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Tip_TooMuch"),
                 });
                 return false;
             }
-            ET.Client.GamePlayTowerDefenseHelper.SendCallMonster(self.ClientScene(), self.battleDragItemParam, position, count).Coroutine();
+            ET.Client.GamePlayPKHelper.SendCallMonster(self.ClientScene(), self.battleDragItemParam, position, count).Coroutine();
             return true;
         }
 
@@ -641,8 +680,8 @@ namespace ET.Client
             (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(myPlayerId, self.battleDragItemParam);
             if (bRet == false)
             {
-                string tipMsg = msg;
-                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                //string tipMsg = msg;
+                //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 self.CheckIfPlaceSuccess();
                 return false;
             }
@@ -666,16 +705,16 @@ namespace ET.Client
             {
                 if (self.ChkIsNearTower(self.battleDragItemParam, position))
                 {
-                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
+                    //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                     self.CheckIfPlaceSuccess();
                     return false;
                 }
 
                 if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
                 {
-                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
+                    //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                     self.CheckIfPlaceSuccess();
                     return false;
                 }
@@ -685,8 +724,8 @@ namespace ET.Client
             {
                 if (self.ChkIsNearTower(self.battleDragItemParam, position) == false)
                 {
-                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
+                    //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                     self.CheckIfPlaceSuccess();
                     return false;
                 }
@@ -729,22 +768,38 @@ namespace ET.Client
             {
                 if (self.ChkIsNearTower(self.battleDragItemParam, position))
                 {
-                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
+                    //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                     self.CheckIfPlaceSuccess();
                     return false;
                 }
 
                 if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
                 {
-                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
-                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
+                    //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                     self.CheckIfPlaceSuccess();
                     return false;
                 }
             }
 
             ET.Client.GamePlayTowerDefenseHelper.SendMovePlayerTower(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
+            return true;
+        }
+
+        public static async ETTask<bool> DoPutPKMoveTower(this DlgBattleDragItem self, float3 position)
+        {
+            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+
+            ET.Client.GamePlayPKHelper.SendMovePKTower(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
+            return true;
+        }
+
+        public static async ETTask<bool> DoPutPKMovePlayer(this DlgBattleDragItem self, float3 position)
+        {
+            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+
+            ET.Client.GamePlayPKHelper.SendMovePKPlayer(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
             return true;
         }
 
@@ -893,6 +948,7 @@ namespace ET.Client
                 self.canPutMonsterCall = false;
             }
             self.lineRendererReqing = false;
+            self.isChkPutMonsterCall = true;
         }
 
         public static async ETTask<bool> _DrawMonsterCall2HeadQuarter(this DlgBattleDragItem self, float3 pos)
@@ -930,7 +986,17 @@ namespace ET.Client
                 GameObject.Destroy(self.currentPlaceObj);
                 self.currentPlaceObj = null;
             }
-            self.callBack?.Invoke();
+
+            try
+            {
+                self.callBack?.Invoke(self.sceneIn);
+                self.callBack = null;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+            self.sceneIn = null;
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
         }

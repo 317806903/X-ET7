@@ -38,7 +38,7 @@ namespace ET.Ability
             return timelineObj;
         }
 
-        public static void JumpTimeline(Unit unit, float newTimeElapsed, ActionContext actionContext)
+        public static void JumpTimeline(Unit unit, float newTimeElapsed, ref ActionContext actionContext)
         {
             long timeLineId = actionContext.timelineId;
             GetTimelineComponent(unit).JumpTimeline(timeLineId, newTimeElapsed);

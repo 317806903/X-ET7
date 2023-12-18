@@ -4,12 +4,6 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
-    public enum AccountType
-    {
-        General,
-        Black,
-    }
-
     public enum LoginType
     {
         Editor,
@@ -25,7 +19,7 @@ namespace ET
         public long playerId;
         public long createTime;
         public long loginTime;
-        public AccountType accountType;
+        public LoginType accountType;
         public LoginType loginType;
     }
 }

@@ -230,7 +230,9 @@ namespace ET.Client
                 }
             }
 
-            await ET.Client.UIGuideHelper.DoStaticMethodExecute(self.DomainScene(), executeStaticMethod);
+            string executeParam = self.curUIGuidePath.guideExecuteParam;
+
+            await ET.Client.UIGuideHelper.DoStaticMethodExecute(self.DomainScene(), executeStaticMethod, executeParam);
         }
 
         public static async ETTask _DoGuideStep(this UIGuideStepComponent self, bool isNeedChkCondition = true)
@@ -327,12 +329,12 @@ namespace ET.Client
             self.AddGuideClickInfo(self.guidePathGo);
 
             //高亮
-            self.ShowUIMask(self.guidePathGo.transform as RectTransform, self.canvasPathGo.GetComponent<Canvas>());
+            await self.ShowUIMask(self.guidePathGo.transform as RectTransform, self.canvasPathGo.GetComponent<Canvas>());
 
             self.isGuiding = true;
         }
 
-        public static Vector2 ShowUIMask(this UIGuideStepComponent self, RectTransform mask, Canvas canvas)
+        public static async ETTask<Vector2> ShowUIMask(this UIGuideStepComponent self, RectTransform mask, Canvas canvas)
         {
             float diaphaneity;
             if (self.curUIGuidePath.waitToNextUIGuideStep == WaitToNextUIGuideStep.Black)
@@ -411,7 +413,7 @@ namespace ET.Client
             self.SetTextShow(center, sizeX, sizeY, delayTime).Coroutine();
             self.SetAudio().Coroutine();
             self.SetImageShow(mask, center, sizeX, sizeY, delayTime).Coroutine();
-            self.DoGuideStepExecute().Coroutine();
+            await self.DoGuideStepExecute();
 
             return center;
         }

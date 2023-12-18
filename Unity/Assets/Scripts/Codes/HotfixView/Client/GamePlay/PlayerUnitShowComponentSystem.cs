@@ -1,0 +1,168 @@
+﻿using System;
+using System.Collections.Generic;
+using ET.AbilityConfig;
+using Unity.Mathematics;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+namespace ET.Client
+{
+    public static class PlayerUnitShowComponentSystem
+    {
+        [ObjectSystem]
+        public class AwakeSystem: AwakeSystem<PlayerUnitShowComponent>
+        {
+            protected override void Awake(PlayerUnitShowComponent self)
+            {
+            }
+        }
+
+        [ObjectSystem]
+        public class DestroySystem: DestroySystem<PlayerUnitShowComponent>
+        {
+            protected override void Destroy(PlayerUnitShowComponent self)
+            {
+                if (self.transRoot != null)
+                {
+                    GameObjectPoolHelper.ReturnTransformToPool(self.transRoot);
+                    self.transRoot = null;
+                }
+
+                self.playerUnitComponent = null;
+            }
+        }
+
+        [ObjectSystem]
+        public class UpdateSystem: UpdateSystem<PlayerUnitShowComponent>
+        {
+            protected override void Update(PlayerUnitShowComponent self)
+            {
+                // Transform transform = self.go.transform;
+                // Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
+                // if (mainCamera == null)
+                // {
+                //     return;
+                // }
+                // Vector3 direction = mainCamera.transform.forward;
+                // transform.forward = -direction;
+            }
+        }
+
+        public static Unit GetUnit(this PlayerUnitShowComponent self)
+        {
+            return self.GetParent<Unit>();
+        }
+
+        public static void Init(this PlayerUnitShowComponent self, PlayerUnitComponent playerUnitComponent)
+        {
+            self.playerUnitComponent = playerUnitComponent;
+            self.CreateShow().Coroutine();
+        }
+
+        public static async ETTask CreateShow(this PlayerUnitShowComponent self)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+            while (gamePlayComponent == null)
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
+                gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+            }
+
+            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            while (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
+                gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            }
+
+            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
+            GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
+            self.transRoot = TowerShowGo.transform;
+            TowerShowGo.transform.SetParent(gameObjectComponent.GetGo().transform);
+            TowerShowGo.transform.localPosition = new float3(0, 0, 0);
+
+            Unit unit = self.GetUnit();
+            float radius = Ability.UnitHelper.GetBodyRadius(unit) / Ability.UnitHelper.GetResScale(unit);
+            float height = Ability.UnitHelper.GetBodyHeight(unit) / Ability.UnitHelper.GetResScale(unit);
+            TowerShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
+
+            self.transCollider = self.transRoot.Find("ColliderRoot/Collider");
+            ET.Client.ModelClickManagerHelper.SetPlayerUnitInfoToClickInfo(self.DomainScene(), self.transCollider, self);
+
+            self.transDefaultShow = self.transRoot.Find("DefaultShow");
+            self.transSelectShow = self.transRoot.Find("SelectShow");
+            self.transCanUpgradeShow = self.transRoot.Find("CanUpgradeShow");
+            self.transAttackArea = self.transRoot.Find("AttackArea");
+
+            self.transDefaultShow.gameObject.SetActive(true);
+            self.transSelectShow.gameObject.SetActive(false);
+            self.transCanUpgradeShow.gameObject.SetActive(false);
+            self.transAttackArea.gameObject.SetActive(false);
+
+            self.ChgColor(self.transDefaultShow);
+            self.ChgColor(self.transSelectShow);
+            self.ChgColor(self.transAttackArea);
+
+        }
+
+        public static void ChgColor(this PlayerUnitShowComponent self, Transform trans)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+            float3 colorValue = gamePlayComponent.GetPlayerColor(self.playerUnitComponent.playerId);
+            Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
+            ParticleSystem[] psList = trans.gameObject.GetComponentsInChildren<ParticleSystem>(true);
+            foreach (ParticleSystem particleSystem in psList)
+            {
+                ParticleSystem.MainModule mainModule = particleSystem.main;
+                float alpha = mainModule.startColor.color.a;
+                color.a = alpha;
+                mainModule.startColor = new ParticleSystem.MinMaxGradient(color);
+            }
+        }
+
+        public static void ChgAttackArea(this PlayerUnitShowComponent self)
+        {
+            Unit unit = self.GetUnit();
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            float skillDis = numericComponent.GetAsFloat(NumericType.SkillDis);
+            if (skillDis <= 0)
+            {
+                self.transAttackArea.gameObject.SetActive(false);
+            }
+            else
+            {
+                self.transAttackArea.gameObject.SetActive(true);
+                float resScale = Ability.UnitHelper.GetResScale(unit);
+                self.transAttackArea.transform.localScale = Vector3.one * skillDis*2 / resScale;
+            }
+        }
+
+        public static void DoSelect(this PlayerUnitShowComponent self)
+        {
+            self.transDefaultShow.gameObject.SetActive(false);
+            self.transSelectShow.gameObject.SetActive(true);
+            self.ChgAttackArea();
+        }
+
+        public static bool CancelSelect(this PlayerUnitShowComponent self)
+        {
+            bool bRet = false;
+            if (self.transSelectShow.gameObject.activeSelf)
+            {
+                self.transDefaultShow.gameObject.SetActive(true);
+                self.transSelectShow.gameObject.SetActive(false);
+                self.transAttackArea.gameObject.SetActive(false);
+                bRet = true;
+            }
+            return bRet;
+        }
+    }
+}

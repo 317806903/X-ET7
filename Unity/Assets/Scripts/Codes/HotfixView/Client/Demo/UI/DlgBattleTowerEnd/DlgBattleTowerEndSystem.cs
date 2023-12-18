@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,10 +49,8 @@ namespace ET.Client
 			bool success = false;
 			if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
 			{
-				PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
 				long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-
-				if (putHomeComponent.ChkHomeWin(myPlayerId))
+				if (gamePlayTowerDefenseComponent.ChkHomeWin(myPlayerId))
 				{
 					success = true;
 				}
@@ -68,14 +67,13 @@ namespace ET.Client
 
 				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 				{
-					eventName = "Infinity_finish",
+					eventName = "InfinityEnded",
 					properties = new()
 					{
-						{"is_finish", true},
-						{"max_wave", monsterWaveCallComponent.curIndex},
-						{"tower_num", 1},
-						{"coin_left", 1},
-						{"last_time", 0},
+						{"finished", true},
+						{"max_wave_num", self.GetCurMonsterWave()},
+						{"tower_num", self.GetMyTowerList().Count},
+						{"coin_num", self.GetMyGold()},
 					}
 				});
 
@@ -95,8 +93,8 @@ namespace ET.Client
 			Transform transPVP = self.View.uiTransform.transform.Find("E_Effect_Normal");
 			transPVP.gameObject.SetActive(true);
 
-			Transform loseTrans = transPVP.Find("Effect_GameEnd/EButton_GameEnd_lose");
-			Transform victoryTrans = transPVP.Find("Effect_GameEnd/EButton_GameEnd_victory");
+			Transform loseTrans = transPVP.Find("Effect_GameEnd2/EButton_GameEnd_lose");
+			Transform victoryTrans = transPVP.Find("Effect_GameEnd2/EButton_GameEnd_victory");
             if (success)
             {
 	            loseTrans.gameObject.SetActive(false);
@@ -148,14 +146,22 @@ namespace ET.Client
 		{
 			Transform transPVE = self.View.uiTransform.transform.Find("E_Effect_PVE");
 			transPVE.gameObject.SetActive(true);
+			transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_lose").gameObject.SetActive(false);
+			transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_victory").gameObject.SetActive(false);
 
-			Transform loseTrans = transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_lose");
-			Transform victoryTrans = transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_victory");
+			Transform loseTrans = transPVE.Find("Effect_GameEnd_Model/EButton_ChallengeMode_lose");
+			Transform victoryTrans = transPVE.Find("Effect_GameEnd_Model/EButton_ChallengeMode_victory");
+
+			string cfgId = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()).GetGamePlay().GetGamePlayBattleConfig().Id;
+			string[] sArray = cfgId.Split('_');
+			string challengeLevel = sArray[2];
+			int level = int.Parse(challengeLevel.Replace("Level", ""));
+			
             if (success)
             {
 	            loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
-
+				self.View.E_ChanllengeLevel_Text_2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
 	            string resAudioCfgId = "ResAudio_UI_victory";
 	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
@@ -163,8 +169,8 @@ namespace ET.Client
             {
 	            loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
-
-	            string resAudioCfgId = "ResAudio_UI_failed";
+				self.View.E_ChanllengeLevel_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
+				string resAudioCfgId = "ResAudio_UI_failed";
 	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
             }
 
@@ -179,10 +185,11 @@ namespace ET.Client
 
 
 			//string text1 = $"存活<color=#ffffff><size=150>{waveIndex}</size></color>波";
-			string text1 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
-			self.View.E_ChanllengeText_1TextMeshProUGUI.text = text1;
+			//string text1 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
+			self.View.ELabel_ChanllengeNumText.text = waveIndex + "\n";
 			//string text2 = $"战胜N%的玩家";
-			string text2 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds2", "N");
+			int rankedMoreThan = await ET.Client.RankHelper.GetRankedMoreThan(self.DomainScene(), RankType.EndlessChallenge, waveIndex);
+			string text2 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds2", 100-rankedMoreThan);
 			self.View.E_ChanllengeText_2TextMeshProUGUI.text = text2;
 
 			string resAudioCfgId = "ResAudio_UI_victory";
@@ -197,6 +204,29 @@ namespace ET.Client
 
 			await RoomHelper.MemberReturnRoomFromBattleAsync(self.ClientScene());
 			await SceneHelper.EnterHall(self.ClientScene());
+		}
+
+		public static int GetCurMonsterWave(this DlgBattleTowerEnd self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+			MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+			return monsterWaveCallComponent.curIndex;
+		}
+
+		public static int GetMyGold(this DlgBattleTowerEnd self)
+		{
+			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+			long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
+			return curGoldValue;
+		}
+
+		public static List<long> GetMyTowerList(this DlgBattleTowerEnd self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			List<long> towerList = gamePlayTowerDefenseComponent.GetPutTowers(myPlayerId);
+			return towerList;
 		}
 	}
 }

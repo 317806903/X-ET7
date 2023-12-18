@@ -7,9 +7,9 @@ namespace ET.Ability
 {
     public static class CoinHelper
     {
-        public static void DealCoinAdd(Unit unit, ActionCfg_CoinAdd actionCfgCoinAdd, SelectHandle selectHandle, ActionContext actionContext)
+        public static void DealCoinAdd(Unit unit, ActionCfg_CoinAdd actionCfgCoinAdd, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext);
+            ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext);
             if (list == null)
             {
                 return;
@@ -19,6 +19,7 @@ namespace ET.Ability
             {
                 DoCoinAdd(list[i], actionCfgCoinAdd);
             }
+            list.Dispose();
         }
 
         public static void DoCoinAdd(Unit unit, ActionCfg_CoinAdd actionCfgCoinAdd)

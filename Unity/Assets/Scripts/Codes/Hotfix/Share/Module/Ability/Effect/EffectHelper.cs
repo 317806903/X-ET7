@@ -7,7 +7,8 @@ namespace ET.Ability
     [FriendOf(typeof (Unit))]
     public static class EffectHelper
     {
-        public static void AddEffect(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
+        public static async ETTask AddEffect(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle,
+        ActionContext actionContext)
         {
             if (actionCfgCreateEffect.Duration <= 0 && actionCfgCreateEffect.Duration != -1)
             {
@@ -18,15 +19,16 @@ namespace ET.Ability
 
             if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
             {
-                AddEffectWhenSelectUnits(unit, actionCfgCreateEffect, selectHandle, actionContext);
+                await AddEffectWhenSelectUnits(unit, actionCfgCreateEffect, selectHandle, actionContext);
             }
             else if (selectHandle.selectHandleType == SelectHandleType.SelectPosition)
             {
-                AddEffectWhenSelectPosition(unit, actionCfgCreateEffect, selectHandle, actionContext);
+                await AddEffectWhenSelectPosition(unit, actionCfgCreateEffect, selectHandle, actionContext);
             }
         }
 
-        public static void AddEffectWhenSelectUnits(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
+        public static async ETTask AddEffectWhenSelectUnits(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle,
+        ActionContext actionContext)
         {
             EffectComponent effectComponent;
             bool isSceneEffect = actionCfgCreateEffect.IsSceneEffect;
@@ -39,6 +41,7 @@ namespace ET.Ability
                     {
                         continue;
                     }
+
                     bool canAddEffect = ChkCanAddEffect(false, unitEffect, actionCfgCreateEffect);
                     if (canAddEffect == false)
                     {
@@ -56,8 +59,19 @@ namespace ET.Ability
                         actionCfgCreateEffect.OffSetInfo);
                     if (effectObj != null)
                     {
-                        EventType.SyncUnitEffects _SyncUnitEffects = new() { unit = unitEffect, isAddEffect = true, effectObj = effectObj, };
+                        EventType.SyncUnitEffects _SyncUnitEffects = new()
+                        {
+                            unit = unitEffect,
+                            isAddEffect = true,
+                            effectObj = effectObj,
+                            isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
+                        };
                         EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                    }
+
+                    if (IdGenerater.Instance.ChkGenerateIdFull())
+                    {
+                        await TimerComponent.Instance.WaitFrameAsync();
                     }
                 }
             }
@@ -70,6 +84,7 @@ namespace ET.Ability
                     {
                         continue;
                     }
+
                     bool canAddEffect = ChkCanAddEffect(true, unitEffect, actionCfgCreateEffect);
                     if (canAddEffect == false)
                     {
@@ -81,26 +96,41 @@ namespace ET.Ability
                     Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
                     effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
 
-                    EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum, actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration, actionCfgCreateEffect.OffSetInfo);
+                    EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
+                        actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
+                        actionCfgCreateEffect.OffSetInfo);
                     if (effectObj != null)
                     {
                         SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
                         sceneEffectComponent.RecordEffect(unitEffect, actionCfgCreateEffect.Key, effectObj);
 
-                        EventType.SyncUnitEffects _SyncUnitEffects = new() { unit = unitSceneEffect, isAddEffect = true, effectObj = effectObj, };
+                        EventType.SyncUnitEffects _SyncUnitEffects = new()
+                        {
+                            unit = unitSceneEffect,
+                            isAddEffect = true,
+                            effectObj = effectObj,
+                            isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
+                        };
                         EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                    }
+
+                    if (IdGenerater.Instance.ChkGenerateIdFull())
+                    {
+                        await TimerComponent.Instance.WaitFrameAsync();
                     }
                 }
             }
         }
 
-        public static void AddEffectWhenSelectPosition(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
+        public static async ETTask AddEffectWhenSelectPosition(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle,
+        ActionContext actionContext)
         {
             bool canAddEffect = ChkCanAddEffect(true, unit, actionCfgCreateEffect);
             if (canAddEffect == false)
             {
                 return;
             }
+
             EffectComponent effectComponent;
             float3 position = selectHandle.position;
             float3 forward = new float3(0, 0, 1);
@@ -108,15 +138,24 @@ namespace ET.Ability
             effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
 
             EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
-                actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration, actionCfgCreateEffect.OffSetInfo);
+                actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
+                actionCfgCreateEffect.OffSetInfo);
             if (effectObj != null)
             {
                 SceneEffectComponent sceneEffectComponent = unit.DomainScene().GetComponent<SceneEffectComponent>();
                 sceneEffectComponent.RecordEffect(unit, actionCfgCreateEffect.Key, effectObj);
 
-                EventType.SyncUnitEffects _SyncUnitEffects = new() { unit = unitSceneEffect, isAddEffect = true, effectObj = effectObj, };
+                EventType.SyncUnitEffects _SyncUnitEffects = new()
+                {
+                    unit = unitSceneEffect,
+                    isAddEffect = true,
+                    effectObj = effectObj,
+                    isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
+                };
                 EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
             }
+
+            await ETTask.CompletedTask;
         }
 
         public static void RemoveEffect(Unit unit, ActionCfg_EffectRemove actionCfg_RemoveEffect)
@@ -141,6 +180,7 @@ namespace ET.Ability
             {
                 return true;
             }
+
             if (maxKeyNum <= 0)
             {
                 return false;
@@ -158,6 +198,7 @@ namespace ET.Ability
                 {
                     return true;
                 }
+
                 return effectComponent.ChkCanAddEffect(unitEffect, key, maxKeyNum);
             }
         }
@@ -177,6 +218,7 @@ namespace ET.Ability
             {
                 return null;
             }
+
             EffectComponent effectComponent = unitEffect.GetComponent<EffectComponent>();
             if (effectComponent == null)
             {
@@ -188,12 +230,17 @@ namespace ET.Ability
                 actionCfgCreateEffect.OffSetInfo);
             if (effectObj != null)
             {
-                EventType.SyncUnitEffects _SyncUnitEffects = new() { unit = unitEffect, isAddEffect = true, effectObj = effectObj, };
+                EventType.SyncUnitEffects _SyncUnitEffects = new()
+                {
+                    unit = unitEffect,
+                    isAddEffect = true,
+                    effectObj = effectObj,
+                    isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
+                };
                 EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
             }
 
             return effectObj;
         }
-
     }
 }

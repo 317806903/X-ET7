@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,8 @@ namespace ET.Client
     {
         public static void RegisterUIEvent(this DlgRankEndlessChallenge self)
         {
-            self.View.E_QuitRankButton.AddListener(self.QuitRank);
-            self.View.E_BG_ClickButton.AddListener(self.OnBgClick);
+            self.View.E_QuitRankButton.AddListenerAsync(self.QuitRank);
+            self.View.E_BG_ClickButton.AddListenerAsync(self.OnBgClick);
 
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.prefabSource.prefabName = "Item_RankEndlessChallenge";
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.prefabSource.poolSize = 8;
@@ -48,19 +49,19 @@ namespace ET.Client
             }
         }
 
-
-        public static void QuitRank(this DlgRankEndlessChallenge self)
+        public static async ETTask QuitRank(this DlgRankEndlessChallenge self)
         {
             UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgRankEndlessChallenge>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
         }
-
 
         public static async ETTask ShowRankScrollItem(this DlgRankEndlessChallenge self)
         {
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
             var list = rankShowComponent.GetRankList();
             int count = list.Count;
+            self.View.ELabel_EmptyLeaderbordTextMeshProUGUI.SetVisible(count == 0);
             self.AddUIScrollItems(ref self.ScrollItemRankEndlessChallenges, count);
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.SetVisible(true, count);
         }
@@ -71,55 +72,82 @@ namespace ET.Client
 
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
             var list = rankShowComponent.GetRankList();
-            int rank = index + 1;
-            RankShowItemComponent rankShowItemComponent = list[rank];
-            //Log.Debug($"rank:{rank} playerId[{rankShowItemComponent.playerId}] score[{rankShowItemComponent.score}]");
-
+            RankShowItemComponent rankShowItemComponent = list[index];
+            int rank = rankShowItemComponent.rank;
             long playerId = rankShowItemComponent.playerId;
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                    await PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(), playerId);
-            List<string> avatarIconList = ET.Client.PlayerHelper.GetAvatarIconList();
-            await itemRank.EImage_AvatorImage.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(), playerId);
+            await itemRank.ES_AvatarShow.E_AvatarIconImage.SetPlayerIcon(self.DomainScene(), playerId);
             itemRank.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
-            if (rank <= 3)
+            
+            itemRank.EImage_NO1Image.gameObject.SetActive(rank == 1);
+            itemRank.EImage_NO2Image.gameObject.SetActive(rank == 2);
+            itemRank.EImage_NO3Image.gameObject.SetActive(rank == 3);
+
+            if (rank > 3)
             {
-                itemRank.EImage_RankBGImage.gameObject.SetActive(true);
+                itemRank.ELabel_RankNumTextMeshProUGUI.text = rank.ToString();
             }
             else
             {
-                itemRank.EImage_RankBGImage.gameObject.SetActive(false);
+                itemRank.ELabel_RankNumTextMeshProUGUI.text = "";
             }
-
-            itemRank.ELabel_RankNumTextMeshProUGUI.text = rank.ToString();
             itemRank.ELabel_WavesTextMeshProUGUI.text = rankShowItemComponent.score.ToString();
+            PlayerBaseInfoComponent myBaseInfoComponent =
+                    await PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            
+            itemRank.Eimage_MyBGImage.gameObject.SetActive(myBaseInfoComponent.Id == playerBaseInfoComponent.Id);
         }
 
         public static async ETTask ShowPersonalInfo(this DlgRankEndlessChallenge self)
         {
-            await self.View.EImage_AvatarImage.SetMyIcon(self.DomainScene());
+            await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            self.View.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
+            self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
 
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
-            var list = rankShowComponent.GetRankList();
-            foreach (var item in list)
+            RankShowItemComponent rankShowItemComponent = rankShowComponent.GetMyRankShowItemComponent();
+            long waveIndex = rankShowItemComponent.score;
+            if (waveIndex != -1)
             {
-                int rank = item.Key;
-                RankShowItemComponent rankShowItemComponent = item.Value;
-                if (rankShowItemComponent.playerId == playerBaseInfoComponent.Id)
-                {
-                    self.View.ELabel_RankNumTextMeshProUGUI.text = rank.ToString();
-                    long waveIndex = rankShowItemComponent.score;
-                    string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
-                    self.View.ELabel_ChanllengeTextMeshProUGUI.text = text;
-                }
+                string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
+                self.View.ELabel_ChanllengeTextMeshProUGUI.text = text;
             }
+            
+            int myRank = rankShowComponent.GetMyRank();
+            if (myRank == -1)
+            {
+                self.View.EImage_LongRankedBGImage.gameObject.SetActive(true);
+                if (waveIndex == -1)
+                {
+                    self.View.ELabel_LongRankNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoData");
+                }
+                else
+                {
+                    self.View.ELabel_LongRankNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoRank");
+                }
+                self.View.EImage_ShortRankedBGImage.gameObject.SetActive(false);
+                return;
+            }
+            if (myRank < 10000)
+            {
+                self.View.EImage_ShortRankedBGImage.gameObject.SetActive(true);
+                self.View.ELabel_ShortRankNumTextMeshProUGUI.text = myRank.ToString();
+                self.View.EImage_LongRankedBGImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                self.View.EImage_LongRankedBGImage.gameObject.SetActive(true);
+                self.View.ELabel_LongRankNumTextMeshProUGUI.text = myRank.ToString();
+                self.View.EImage_ShortRankedBGImage.gameObject.SetActive(false);
+            }
+           
         }
 
-        public static void OnBgClick(this DlgRankEndlessChallenge self)
+        public static async ETTask OnBgClick(this DlgRankEndlessChallenge self)
         {
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgRankEndlessChallenge>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
         }
     }
 }

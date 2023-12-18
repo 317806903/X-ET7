@@ -42,9 +42,7 @@ namespace ET
 			float3 position = float3.zero;
 			float3 forward = float3.zero;
 
-			string unitCfgId = "Unit_Observer";
-			int level = 1;
-			Unit unit = UnitHelper_Create.CreateWhenServer_CommonPlayerUnit(scene, playerId, unitCfgId, level, UnitType.ObserverUnit, position, forward);
+			Unit unit = UnitHelper_Create.CreateWhenServer_ObserverUnit(scene, playerId, position, forward);
 
 			GamePlayHelper.AddUnitPathfinding(unit);
 			GamePlayHelper.AddUnitInfo(playerId, unit);
@@ -73,8 +71,7 @@ namespace ET
 
 		public static Unit CreatePlayerUnit(Scene scene, long playerId, int playerLevel, float3 position, float3 forward)
 		{
-			long playerUnitId = -1;
-			Unit playerUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_PlayerUnit(scene, playerUnitId, playerLevel, position, forward);
+			Unit playerUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_PlayerUnit(scene, playerId, playerLevel, position, forward);
 
 			GamePlayHelper.AddUnitPathfinding(playerUnit);
 			GamePlayHelper.AddUnitInfo(playerId, playerUnit);
@@ -105,9 +102,9 @@ namespace ET
 			return bulletUnit;
 		}
 
-		public static Unit CreateActorByUnit(Scene scene, Unit unitCaster, ActionCfg_CallActor actionCfgCallActor, SelectHandle selectHandle, ActionContext actionContext)
+		public static Unit CreateActorByUnit(Scene scene, Unit unitCaster, ActionCfg_CallActor actionCfgCallActor, SelectHandle selectHandle, ref ActionContext actionContext)
 		{
-			Unit actorUnit = UnitHelper_Create.CreateWhenServer_CallActorUnit(scene, unitCaster, actionCfgCallActor, selectHandle, actionContext);
+			Unit actorUnit = UnitHelper_Create.CreateWhenServer_CallActorUnit(scene, unitCaster, actionCfgCallActor, selectHandle, ref actionContext);
 
 			if (actionCfgCallActor.Duration > 0)
 			{
@@ -124,7 +121,7 @@ namespace ET
 			return actorUnit;
 		}
 
-		public static Unit CreateAoeByUnit(Scene scene, Unit unitCaster, ActionCfg_CallAoe actionCfg_CallAoe, SelectHandle selectHandle, ActionContext actionContext)
+		public static Unit CreateAoeByUnit(Scene scene, Unit unitCaster, ActionCfg_CallAoe actionCfg_CallAoe, SelectHandle selectHandle, ref ActionContext actionContext)
 		{
 			Unit aoeUnit = UnitHelper_Create.CreateWhenServer_Aoe(scene, unitCaster, actionCfg_CallAoe, selectHandle, actionContext);
 
@@ -215,10 +212,10 @@ namespace ET
 			return gamePlayComponent.GetPlayerUnit(playerId);
 		}
 
-		public static long GetPlayerIdByUnitId(Unit unitCaster)
+		public static long GetPlayerIdByUnitId(Unit unit)
 		{
-			GamePlayComponent gamePlayComponent = GetGamePlay(unitCaster);
-			long playerId = gamePlayComponent.GetPlayerIdByUnitId(unitCaster.Id);
+			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
+			long playerId = gamePlayComponent.GetPlayerIdByUnitId(unit.Id);
 			return playerId;
 		}
 

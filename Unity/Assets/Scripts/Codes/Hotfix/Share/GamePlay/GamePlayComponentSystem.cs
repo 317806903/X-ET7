@@ -182,6 +182,18 @@ namespace ET
             gamePlayFriendTeamFlagCompent.StopAllAI();
         }
 
+        public static void PauseAllAI(this GamePlayComponent self)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.PauseAllAI();
+        }
+
+        public static void RecoveryAllAI(this GamePlayComponent self)
+        {
+            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
+            gamePlayFriendTeamFlagCompent.RecoveryAllAI();
+        }
+
         public static void CreateGamePlayMode(this GamePlayComponent self)
         {
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();

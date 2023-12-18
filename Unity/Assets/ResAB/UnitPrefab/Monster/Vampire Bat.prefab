@@ -998,7 +998,6 @@ GameObject:
   - component: {fileID: 6328325485107800000}
   - component: {fileID: 6328325485095941860}
   - component: {fileID: 24236161644305551}
-  - component: {fileID: 3769723367601692885}
   m_Layer: 0
   m_Name: Vampire Bat
   m_TagString: Untagged
@@ -1117,20 +1116,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5468345428837496637}
   m_Enabled: 1
---- !u!114 &3769723367601692885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6328325485107444704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 6328325485095941860}
 --- !u!1 &6328325485107444706
 GameObject:
   m_ObjectHideFlags: 0

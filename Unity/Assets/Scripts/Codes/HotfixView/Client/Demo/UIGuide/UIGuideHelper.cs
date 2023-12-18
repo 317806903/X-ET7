@@ -93,6 +93,9 @@ namespace ET.Client
 				case GuideConditionStaticMethodType.ChkIsNotShowStory:
 					return await UIGuideHelper_StaticMethod.ChkIsNotShowStory(scene);
 					break;
+				case GuideConditionStaticMethodType.ChkIsNotShowVideo:
+					return await UIGuideHelper_StaticMethod.ChkIsNotShowVideo(scene);
+					break;
 				case GuideConditionStaticMethodType.ChkWaitTime:
 					return await UIGuideHelper_StaticMethod.ChkWaitTime(scene, param);
 					break;
@@ -106,7 +109,7 @@ namespace ET.Client
 			return false;
 		}
 
-		public static async ETTask DoStaticMethodExecute(Scene scene, GuideExecuteStaticMethodType staticMethod)
+		public static async ETTask DoStaticMethodExecute(Scene scene, GuideExecuteStaticMethodType staticMethod, string executeParam)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -120,6 +123,9 @@ namespace ET.Client
 				case GuideExecuteStaticMethodType.ShowStory:
 					await UIGuideHelper_StaticMethod.ShowStory(scene);
 					break;
+				case GuideExecuteStaticMethodType.ShowVideo:
+					await UIGuideHelper_StaticMethod.ShowVideo(scene);
+					break;
 				case GuideExecuteStaticMethodType.EnterGuideBattle:
 					await UIGuideHelper_StaticMethod.EnterGuideBattle(scene);
 					break;
@@ -132,6 +138,24 @@ namespace ET.Client
 				case GuideExecuteStaticMethodType.HideTowerInfo:
 					await UIGuideHelper_StaticMethod.HideTowerInfo(scene);
 					break;
+				case GuideExecuteStaticMethodType.ShowBattleTowerReady:
+				{
+					bool isShow = bool.Parse(executeParam);
+					await UIGuideHelper_StaticMethod.ShowBattleTowerReady(scene, isShow);
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowBattleTowerQuit:
+				{
+					bool isShow = bool.Parse(executeParam);
+					await UIGuideHelper_StaticMethod.ShowBattleTowerQuit(scene, isShow);
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowScanQuit:
+				{
+					bool isShow = bool.Parse(executeParam);
+					UIGuideHelper_StaticMethod.ShowScanQuit(scene, isShow);
+					break;
+				}
 				default:
 					break;
 			}

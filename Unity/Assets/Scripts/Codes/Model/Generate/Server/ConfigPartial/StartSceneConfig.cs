@@ -59,11 +59,30 @@ namespace ET
             return GetBySceneName(zone, SceneType.Mail.ToString());
         }
 
-        public StartSceneConfig GetDynamicMap(int zone)
+        public StartSceneConfig GetRandomDynamicMap(int zone)
         {
             var dynamicMapList = this.DynamicMaps[zone];
             int n = RandomGenerator.RandomNumber(0, dynamicMapList.Count);
             return dynamicMapList[n];
+        }
+
+        public List<StartSceneConfig> GetDynamicMapAll(int zone)
+        {
+            var dynamicMapList = this.DynamicMaps[zone];
+            return dynamicMapList;
+        }
+
+        public StartSceneConfig GetRandomGate(int zone)
+        {
+            var gateList = this.Gates[zone];
+            int n = RandomGenerator.RandomNumber(0, gateList.Count);
+            return gateList[n];
+        }
+
+        public List<StartSceneConfig> GetGateAll(int zone)
+        {
+            var gateList = this.Gates[zone];
+            return gateList;
         }
 
         public StartSceneConfig GetBySceneName(int zone, string name)

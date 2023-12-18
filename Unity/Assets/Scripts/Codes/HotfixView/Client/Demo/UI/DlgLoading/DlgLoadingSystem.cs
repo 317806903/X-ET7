@@ -29,7 +29,8 @@ namespace ET.Client
 
 		public static void RegisterUIEvent(this DlgLoading self)
 		{
-			self.transBackground = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Background");
+			self.rectTransBackground = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Background");
+			self.rectTransValueImage = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Background/Value");
 			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Percentage");
 		}
 
@@ -58,7 +59,9 @@ namespace ET.Client
 
 		public static void ShowProcess(this DlgLoading self, float per)
 		{
-			self.transBackground.localScale = new Vector3(per, 1, 1);
+			float backgroudWidth = self.rectTransBackground.sizeDelta.x;
+			float newValueImageWidth = Mathf.Clamp(per * backgroudWidth, self.rectTransValueImage.sizeDelta.y, backgroudWidth);
+			self.rectTransValueImage.sizeDelta = new Vector2(newValueImageWidth, self.rectTransValueImage.sizeDelta.y);
 			self.transPercentage.gameObject.GetComponent<TextMeshProUGUI>().text = $"{(int)(per * 100)}%";
 		}
 
@@ -74,7 +77,7 @@ namespace ET.Client
 				return;
 			}
 
-			self.curProcess += 0.05f;
+			self.curProcess += 0.1f;
 			self.ShowProcess(self.curProcess);
 		}
 	}

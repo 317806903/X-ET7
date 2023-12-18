@@ -23,6 +23,21 @@ namespace ET.Ability
             return scene.GetComponent<UnitComponent>();
         }
 
+        public static RecycleSelectHandleComponent GetRecycleSelectHandleComponent(Scene scene)
+        {
+            return scene.GetComponent<RecycleSelectHandleComponent>();
+        }
+
+        public static UnitDelayRemoveComponent GetUnitDelayRemoveComponent(Scene scene)
+        {
+            return scene.GetComponent<UnitDelayRemoveComponent>();
+        }
+
+        public static void AddUnitDelayRemove(Scene scene, Unit unit)
+        {
+            GetUnitDelayRemoveComponent(scene).AddRemoveUnit(unit);
+        }
+
         public static Unit GetUnit(Scene scene, long unitId)
         {
             if (scene == null)
@@ -31,13 +46,23 @@ namespace ET.Ability
             }
 
             UnitComponent unitComponent = GetUnitComponent(scene);
-            if (unitComponent == null)
+            if (unitComponent != null)
             {
-                return null;
+                Unit unit = unitComponent.Get(unitId);
+                if (unit != null)
+                {
+                    return unit;
+                }
             }
 
-            Unit unit = unitComponent.Get(unitId);
-            return unit;
+            UnitDelayRemoveComponent unitDelayRemoveComponent = GetUnitDelayRemoveComponent(scene);
+            if (unitDelayRemoveComponent != null)
+            {
+                Unit unit = unitDelayRemoveComponent.Get(unitId);
+                return unit;
+            }
+
+            return null;
         }
 
         public static bool ChkUnitAlive(Scene scene, long unitId, bool isContainDeathShow = false)
@@ -207,9 +232,9 @@ namespace ET.Ability
             return false;
         }
 
-        public static ListComponent<Unit> GetFriends(Unit curUnit, bool isOnlyPlayer)
+        public static List<Unit> GetFriends(Unit curUnit, bool isOnlyPlayer)
         {
-            ListComponent<Unit> friends = ListComponent<Unit>.Create();
+            List<Unit> friends = ListComponent<Unit>.Create();
             foreach (Unit unit in GetUnitComponent(curUnit).playerList)
             {
                 if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
@@ -244,9 +269,9 @@ namespace ET.Ability
         /// <param name="curUnit"></param>
         /// <param name="isOnlyPlayer"></param>
         /// <returns></returns>
-        public static ListComponent<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
+        public static List<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
         {
-            ListComponent<Unit> hostileForces = ListComponent<Unit>.Create();
+            List<Unit> hostileForces = ListComponent<Unit>.Create();
 
             var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
             foreach (var seeUnit in seeUnits)
@@ -268,9 +293,7 @@ namespace ET.Ability
                     continue;
                 }
 
-                ProfilerSample.BeginSample("seeUnits ET.GamePlayHelper.ChkIsFriend");
                 bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
-                ProfilerSample.EndSample();
                 if (isFriend)
                 {
                     continue;
@@ -308,14 +331,14 @@ namespace ET.Ability
             return false;
         }
 
-        public static (bool, float3) ChkHitMesh(Unit curUnit, float3 curUnitPos, float curUnitHeight, Unit targetUnit)
+        public static (bool, float3) ChkHitMesh(Unit curUnit, float3 curUnitPos, float curUnitAttackPoint, Unit targetUnit)
         {
             if (IsNeedChkMesh(curUnit) == false)
             {
                 return (false, float3.zero);
             }
             float targetUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(targetUnit);
-            float3 startPos = curUnitPos + new float3(0, curUnitHeight * 0.5f, 0);
+            float3 startPos = curUnitPos + new float3(0, curUnitAttackPoint, 0);
             float3 endPos = targetUnit.Position + new float3(0, targetUnitHeight * 0.5f, 0);
             (bool bHitMesh, float3 hitPos) = RecastHelper.ChkHitMesh(targetUnit.DomainScene(), startPos, endPos);
             if (bHitMesh)
@@ -332,9 +355,9 @@ namespace ET.Ability
             {
                 return (false, float3.zero);
             }
-            float curUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(curUnit);
+            float curUnitAttackPoint = ET.Ability.UnitHelper.GetAttackPointHeight(curUnit);
             float targetUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(targetUnit);
-            float3 startPos = curUnit.Position + new float3(0, curUnitHeight * 0.5f, 0);
+            float3 startPos = curUnit.Position + new float3(0, curUnitAttackPoint, 0);
             float3 endPos = targetUnit.Position + new float3(0, targetUnitHeight * 0.5f, 0);
             (bool bHitMesh, float3 hitPos) = RecastHelper.ChkHitMesh(curUnit.DomainScene(), startPos, endPos);
             if (bHitMesh)
@@ -350,7 +373,7 @@ namespace ET.Ability
             if (UnitHelper.ChkIsBullet(curUnit))
             {
                 BulletObj bulletObj = curUnit.GetComponent<BulletObj>();
-                Unit casterPlayerUnit = bulletObj.GetCasterActorUnit();
+                Unit casterPlayerUnit = bulletObj?.GetCasterActorUnit();
                 if (casterPlayerUnit != null && casterPlayerUnit.model.IsNeedChkMesh == false)
                 {
                     return false;
@@ -478,14 +501,19 @@ namespace ET.Ability
             GetUnitComponent(unit).AddSyncNumericUnit(unit);
         }
 
+        public static void AddSyncNumericUnitByKey(Unit unit, int numericKey)
+        {
+            GetUnitComponent(unit).AddSyncNumericUnitByKey(unit, numericKey);
+        }
+
         public static void AddRecycleSelectHandles(Scene scene, SelectHandle selectHandle)
         {
-            GetUnitComponent(scene).AddRecycleSelectHandles(selectHandle);
+            GetRecycleSelectHandleComponent(scene).AddRecycleSelectHandles(selectHandle);
         }
 
         public static UnitInfo CreateUnitInfo(Unit unit)
         {
-            UnitInfo unitInfo = new UnitInfo();
+            UnitInfo unitInfo = new ();
             NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
             unitInfo.ConfigId = unit.CfgId;
@@ -516,7 +544,7 @@ namespace ET.Ability
                 unitInfo.KV.Add(key, value);
             }
 
-            unitInfo.Components = ListComponent<byte[]>.Create();
+            unitInfo.Components = new();
             foreach (Entity entity in unit.Components.Values)
             {
                 if (entity is ITransferClient)
@@ -542,21 +570,44 @@ namespace ET.Ability
         {
             UnitPosInfo unitInfo = new UnitPosInfo();
             unitInfo.UnitId = unit.Id;
-            unitInfo.Position = unit.Position;
-            unitInfo.Forward = unit.Forward;
+            unitInfo.PositionX = (int)(unit.Position.x * 100);
+            unitInfo.PositionY = (int)(unit.Position.y * 100);
+            unitInfo.PositionZ = (int)(unit.Position.z * 100);
+            unitInfo.ForwardX = (int)(unit.Forward.x * 100);
+            unitInfo.ForwardY = (int)(unit.Forward.y * 100);
+            unitInfo.ForwardZ = (int)(unit.Forward.z * 100);
 
             return unitInfo;
         }
 
         public static UnitNumericInfo SyncNumericUnitInfo(Unit unit)
         {
-            UnitNumericInfo unitInfo = new UnitNumericInfo();
+            UnitNumericInfo unitInfo = new ();
             unitInfo.UnitId = unit.Id;
             unitInfo.KV = new Dictionary<int, long>();
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             foreach ((int key, long value) in numericComponent.NumericDic)
             {
                 unitInfo.KV.Add(key, value);
+            }
+
+            return unitInfo;
+        }
+
+        public static UnitNumericInfo SyncNumericUnitInfoKey(Unit unit, List<int> keys)
+        {
+            UnitNumericInfo unitInfo = new ();
+            unitInfo.UnitId = unit.Id;
+            unitInfo.KV = new Dictionary<int, long>();
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+
+            for (int i = 0; i < keys.Count; i++)
+            {
+                int numericKey = keys[i];
+                if (numericComponent.NumericDic.TryGetValue(numericKey, out long numericValue))
+                {
+                    unitInfo.KV.Add(numericKey, numericValue);
+                }
             }
 
             return unitInfo;
@@ -583,6 +634,7 @@ namespace ET.Ability
         public static float GetTargetDirRadian(Unit curUnit, float3 targetDir)
         {
             float3 forward = math.normalize(curUnit.Forward);
+            targetDir.y = 0;
             targetDir = math.normalize(targetDir);
             //float angleTmp = math.degrees(math.acos(math.clamp(math.dot(forward, targetDir), -1, 1)));
             float angleTmp = math.acos(math.clamp(math.dot(forward, targetDir), -1, 1));
@@ -618,7 +670,7 @@ namespace ET.Ability
         {
             unit.Position = resetPos;
 
-            ET.Ability.MoveOrIdleHelper.StopMove(unit);
+            ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
             pathfindingComponent?.ResetPos(resetPos);
         }

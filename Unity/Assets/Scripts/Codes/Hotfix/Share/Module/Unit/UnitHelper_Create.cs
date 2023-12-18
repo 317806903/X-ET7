@@ -61,23 +61,17 @@ namespace ET.Ability
         public static void CreateWhenServer_Common_After(UnitComponent unitComponent, Unit unit)
         {
             unitComponent.Add(unit);
-            ET.Ability.MoveOrIdleHelper.DoIdle(unit);
+            ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
         }
 
-        public static Unit CreateWhenServer_CommonPlayerUnit(Scene scene, long playerId, string unitCfgId, int level, UnitType unitType, float3 position, float3 forward)
+        public static Unit CreateWhenServer_PlayerUnit(Scene scene, long playerId, int level, float3 position, float3 forward)
         {
+            string unitCfgId = "Unit_PlayerPK";
+            UnitType unitType = UnitType.PlayerUnit;
+
             UnitComponent unitComponent = GetUnitComponent(scene);
 
-            Unit unit;
-            if (playerId == -1)
-            {
-                unit = unitComponent.AddChild<Unit, string>(unitCfgId);
-                playerId = unit.Id;
-            }
-            else
-            {
-                unit = unitComponent.AddChildWithId<Unit, string>(playerId, unitCfgId);
-            }
+            Unit unit = unitComponent.AddChild<Unit, string>(unitCfgId);
 
             //unit.AddComponent<MoveByPathComponent>();
             unit.Position = position;
@@ -97,42 +91,43 @@ namespace ET.Ability
             unit.AddComponent<ET.Ability.MoveComponent>();
             unit.AddComponent<ET.Ability.RotateComponent>();
 
+            PlayerUnitComponent playerUnitComponent = unit.AddComponent<ET.PlayerUnitComponent>();
+            playerUnitComponent.playerId = playerId;
+
             SetUnitNumeric(numericComponent, unit.model.PropertyType, level);
 
             unitComponent.Add(unit);
-            ET.Ability.MoveOrIdleHelper.DoIdle(unit);
+            ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
 
             unit.AddComponent<AOIEntity, int, float3>(ET.GamePlayHelper.GetAOIDis(scene) * 1000, unit.Position);
             return unit;
         }
 
-        public static Unit CreateWhenServer_PlayerUnit(Scene scene, long playerId, int level, float3 position, float3 forward)
+        public static Unit CreateWhenServer_ObserverUnit(Scene scene, long playerId, float3 position, float3 forward)
         {
+            int level = 1;
+            string unitCfgId = "Unit_Observer";
+            UnitType unitType = UnitType.ObserverUnit;
+
             UnitComponent unitComponent = GetUnitComponent(scene);
-            Unit unit;
-            if (false)
-            {
-                //{
-                //    unit = CreateWhenServer_Common_Before(unitComponent, "Unit_MachineGunTower_0", UnitType.Player, TeamFlagType.Team1, position, forward);
-                // NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-                //
-                // UnitPropertyCfg unitPropertyCfg = UnitPropertyCfgCategory.Instance.Get(unit.model.PropertyType, level);
-                // numericComponent.Set(NumericType.MaxHp, unitPropertyCfg.Hp);
-                // numericComponent.Set(NumericType.Hp, unitPropertyCfg.Hp);
-                // numericComponent.Set(NumericType.PhysicalAttack, unitPropertyCfg.PhysicalAttack);
 
-                //    CreateWhenServer_Common_After(unitComponent, unit);
-                //}
-            }
-            else
-            {
-                {
-                    unit = CreateWhenServer_CommonPlayerUnit(scene, playerId, "Unit_PlayerPK", level, UnitType.PlayerUnit, position, forward);
-                    // 加入aoi
-                    //unit.AddComponent<AOIEntity, int, float3>(ET.GamePlayHelper.GetAOIDis(scene) * 1000, unit.Position);
-                }
-            }
+            Unit unit = unitComponent.AddChildWithId<Unit, string>(playerId, unitCfgId);
 
+            //unit.AddComponent<MoveByPathComponent>();
+            unit.Position = position;
+            unit.Forward = forward;
+            unit.Type = unitType;
+            unit.level = level;
+
+            NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+            numericComponent.SetAsFloat(NumericType.SpeedBase, unit.model.MoveSpeed);
+            numericComponent.SetAsFloat(NumericType.RotationSpeedBase, unit.model.RotationSpeed);
+
+            SetUnitNumeric(numericComponent, unit.model.PropertyType, level);
+
+            unitComponent.Add(unit);
+
+            unit.AddComponent<AOIEntity, int, float3>(ET.GamePlayHelper.GetAOIDis(scene) * 1000, unit.Position);
             return unit;
         }
 
@@ -182,7 +177,25 @@ namespace ET.Ability
             }
             CreateWhenServer_Common_After(unitComponent, unit);
 
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+            // UnitCfg unitCfg = UnitCfgCategory.Instance.Get(unitCfgId);
+            // int count = unitCfg.SkillList.Count;
+            // for (int i = 0; i < count; i++)
+            // {
+            //     SkillHelper.LearnSkill(unit, unitCfg.SkillList[i], 1, SkillSlotType.NormalAttack);
+            // }
+            //
+            // float maxSkillDis = ET.Ability.SkillHelper.GetMaxSkillDis(unit, SkillSlotType.NormalAttack);
+            // numericComponent.SetAsFloat(NumericType.SkillDisBase, maxSkillDis);
+
+            // 加入aoi
+            unit.AddComponent<AOIEntity, int, float3>(ET.GamePlayHelper.GetAOIDis(scene) * 1000, unit.Position);
+
+            return unit;
+        }
+
+        public static void ActorUnitLearnSkillWhenCreate(Unit unit)
+        {
+            UnitCfg unitCfg = unit.model;
             int count = unitCfg.SkillList.Count;
             for (int i = 0; i < count; i++)
             {
@@ -190,12 +203,8 @@ namespace ET.Ability
             }
 
             float maxSkillDis = ET.Ability.SkillHelper.GetMaxSkillDis(unit, SkillSlotType.NormalAttack);
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             numericComponent.SetAsFloat(NumericType.SkillDisBase, maxSkillDis);
-
-            // 加入aoi
-            unit.AddComponent<AOIEntity, int, float3>(ET.GamePlayHelper.GetAOIDis(scene) * 1000, unit.Position);
-
-            return unit;
         }
 
         /// <summary>
@@ -209,7 +218,7 @@ namespace ET.Ability
         /// <param name="aiCfg"></param>
         /// <param name="pathfindingMapName"></param>
         /// <returns></returns>
-        public static Unit CreateWhenServer_CallActorUnit(Scene scene, Unit unitCaster, ActionCfg_CallActor actionCfgCallActor, SelectHandle selectHandle, ActionContext actionContext)
+        public static Unit CreateWhenServer_CallActorUnit(Scene scene, Unit unitCaster, ActionCfg_CallActor actionCfgCallActor, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             (float3 newPosition, float3 newForward) = UnitHelper.GetNewNodePosition(unitCaster, actionCfgCallActor.OffSetInfo);
 
@@ -262,12 +271,14 @@ namespace ET.Ability
                 SetUnitNumeric(numericComponent, propertyType, unitLevel);
             }
 
+            ActorUnitLearnSkillWhenCreate(actorUnit);
+
             if (actionCfgCallActor.BeCallActorActionId.Count > 0)
             {
                 SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(actorUnit);
                 foreach (var actionId in actionCfgCallActor.BeCallActorActionId)
                 {
-                    ActionHandlerHelper.CreateAction(unitCaster, null, actionId, 0, selectHandleSelf, actionContext);
+                    ActionHandlerHelper.CreateAction(unitCaster, null, actionId, 0, selectHandleSelf, ref actionContext);
                 }
             }
             return actorUnit;
@@ -284,7 +295,7 @@ namespace ET.Ability
 
             BulletObj bulletObj = bulletUnit.AddComponent<BulletObj>();
             bulletObj.Init(unitCaster.Id, actionCfgFireBullet.BulletId, actionCfgFireBullet.Duration);
-            bulletObj.InitActionContext(actionContext);
+            bulletObj.InitActionContext(ref actionContext);
 
             NumericComponent numericComponentCaster = unitCaster.GetComponent<NumericComponent>();
             NumericComponent numericComponentBullet = bulletUnit.GetComponent<NumericComponent>();
@@ -316,7 +327,7 @@ namespace ET.Ability
 
             AoeObj aoeObj = aoeUnit.AddComponent<AoeObj>();
             aoeObj.Init(unitCaster.Id, actionCfgCallAoe.AoeId, actionCfgCallAoe.Duration, actionCfgCallAoe.AoeTargetCondition);
-            aoeObj.InitActionContext(actionContext);
+            aoeObj.InitActionContext(ref actionContext);
 
             NumericComponent numericComponentCaster = unitCaster.GetComponent<NumericComponent>();
             NumericComponent numericComponentAoe = aoeUnit.GetComponent<NumericComponent>();
@@ -344,7 +355,7 @@ namespace ET.Ability
                 SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(aoeUnit);
                 foreach (var actionId in actionCfgCallAoe.BeCallActorActionId)
                 {
-                    ActionHandlerHelper.CreateAction(unitCaster, null, actionId, 0, selectHandleSelf, actionContext);
+                    ActionHandlerHelper.CreateAction(unitCaster, null, actionId, 0, selectHandleSelf, ref actionContext);
                 }
             }
             return aoeUnit;
@@ -375,9 +386,18 @@ namespace ET.Ability
         public static void SetUnitNumeric(NumericComponent numericComponent, string propertyType, int unitLevel)
         {
             UnitPropertyCfg unitPropertyCfg = UnitPropertyCfgCategory.Instance.Get(propertyType, unitLevel);
-            numericComponent.SetAsInt(NumericType.MaxHpBase, unitPropertyCfg.Hp);
-            numericComponent.SetAsInt(NumericType.HpBase, unitPropertyCfg.Hp);
-            numericComponent.SetAsInt(NumericType.PhysicalAttackBase, unitPropertyCfg.PhysicalAttack);
+            if (unitPropertyCfg == null)
+            {
+                Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null [{propertyType}][{unitLevel}]");
+                return;
+            }
+            numericComponent.SetAsInt(NumericType.MaxHpBase, unitPropertyCfg.HpBase);
+            numericComponent.SetAsInt(NumericType.HpBase, unitPropertyCfg.HpBase);
+            numericComponent.SetAsInt(NumericType.PhysicalAttackBase, unitPropertyCfg.PhysicalAttackBase);
+            numericComponent.SetAsInt(NumericType.CriticalHitDamageBase, unitPropertyCfg.CriticalHitDamageBase);
+            numericComponent.SetAsInt(NumericType.CriticalStrikeRateBase, unitPropertyCfg.CriticalStrikeRateBase);
+            numericComponent.SetAsInt(NumericType.DamageDeepeningBase, unitPropertyCfg.DamageDeepeningBase);
+            numericComponent.SetAsInt(NumericType.DamageReliefBase, unitPropertyCfg.DamageReliefBase);
         }
 
         public static void CopyUnitNumeric(NumericComponent numericComponentFrom, NumericComponent numericComponentTo)
@@ -386,7 +406,6 @@ namespace ET.Ability
             {
                 numericComponentTo.SetAsLong(numeric.Key, numeric.Value);
             }
-            numericComponentTo.isFloatKey = numericComponentFrom.isFloatKey;
         }
     }
 }

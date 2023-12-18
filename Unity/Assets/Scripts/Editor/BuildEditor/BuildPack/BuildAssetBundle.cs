@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -13,8 +14,6 @@ namespace ET
 
         private static string Key_LastEnableView = "Key_LastEnableView";
         private static string Key_LastEnableCodes = "Key_LastEnableCodes";
-        private static bool _isDoAfterChgDefines;
-        private static string _funcInName;
 
         [MenuItem("Pack/BuildABOnlyRes_Android", false, 200)]
         public static async ETTask<BuildResult> BuildABOnlyRes_Android()
@@ -30,16 +29,18 @@ namespace ET
                 return null;
             }
 
-            return await _BuildABOnlyRes_Android("false");
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_Android", null))
+            {
+                return null;
+            }
+
+            return await _BuildABOnlyRes_Android();
         }
 
-        public static async ETTask<BuildResult> _BuildABOnlyRes_Android(string isDoAfterChgDefines)
+        public static async ETTask<BuildResult> _BuildABOnlyRes_Android()
         {
-            _isDoAfterChgDefines = isDoAfterChgDefines != "false";
-            _funcInName = "_BuildABOnlyRes_Android";
-
             BuildTarget buildTarget = BuildTarget.Android;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true);
+            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
         }
 
         [MenuItem("Pack/BuildABOnlyRes_IOS", false, 201)]
@@ -56,16 +57,18 @@ namespace ET
                 return null;
             }
 
-            return await _BuildABOnlyRes_IOS("false");
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_IOS", null))
+            {
+                return null;
+            }
+
+            return await _BuildABOnlyRes_IOS();
         }
 
-        public static async ETTask<BuildResult> _BuildABOnlyRes_IOS(string isDoAfterChgDefines)
+        public static async ETTask<BuildResult> _BuildABOnlyRes_IOS()
         {
-            _isDoAfterChgDefines = isDoAfterChgDefines != "false";
-            _funcInName = "_BuildABOnlyRes_IOS";
-
             BuildTarget buildTarget = BuildTarget.iOS;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true);
+            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
         }
 
         [MenuItem("Pack/BuildAB_Android", false, 210)]
@@ -82,16 +85,40 @@ namespace ET
                 return null;
             }
 
-            return await _BuildAB_Android("false");
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android", null))
+            {
+                return null;
+            }
+
+            return await _BuildAB_Android();
         }
 
-        public static async ETTask<BuildResult> _BuildAB_Android(string isDoAfterChgDefines)
+        [MenuItem("Pack/BuildAB_Android_Min", false, 210)]
+        public static async ETTask<BuildResult> BuildAB_Android_Min()
         {
-            _isDoAfterChgDefines = isDoAfterChgDefines != "false";
-            _funcInName = "_BuildAB_Android";
+            if(Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return null;
+            }
+            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
+            {
+                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
+                return null;
+            }
 
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android_Min", null))
+            {
+                return null;
+            }
+
+            return await BuildABInternal(BuildTarget.Android, PackName.OutNet_CN, false, false);
+        }
+
+        public static async ETTask<BuildResult> _BuildAB_Android()
+        {
             BuildTarget buildTarget = BuildTarget.Android;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false);
+            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
         }
 
         [MenuItem("Pack/BuildAB_IOS", false, 211)]
@@ -108,26 +135,51 @@ namespace ET
                 return null;
             }
 
-            return await _BuildAB_IOS("false");
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS", null))
+            {
+                return null;
+            }
+
+            return await _BuildAB_IOS();
         }
 
-        public static async ETTask<BuildResult> _BuildAB_IOS(string isDoAfterChgDefines)
+        [MenuItem("Pack/BuildAB_IOS_Min", false, 211)]
+        public static async ETTask<BuildResult> BuildAB_IOS_Min()
         {
-            _isDoAfterChgDefines = isDoAfterChgDefines != "false";
-            _funcInName = "_BuildAB_IOS";
+            if(Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return null;
+            }
+            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
+            {
+                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
+                return null;
+            }
+
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS_Min", null))
+            {
+                return null;
+            }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false);
+            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, false);
+        }
+
+        public static async ETTask<BuildResult> _BuildAB_IOS()
+        {
+            BuildTarget buildTarget = BuildTarget.iOS;
+            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
         }
 
         public static void BuildAB_CommandLine()
         {
             BuildTarget buildTarget = BuildHelper.GetBuildTargetFromCommandLine("BuildAB");
             PackName packName = BuildHelper.GetBuildPackNameFromCommandLine("PackName");
-            BuildABInternal(buildTarget, packName, false).Coroutine();
+            BuildABInternal(buildTarget, packName, false, true).Coroutine();
         }
 
-        public static async ETTask<BuildResult> BuildABInternal(BuildTarget buildTarget, PackName packName, bool OnlyRes)
+        public static async ETTask<BuildResult> BuildABInternal(BuildTarget buildTarget, PackName packName, bool OnlyRes, bool copyAllToSteamingAsset)
         {
             await InitInstance();
             bool bRet = await BuildAB_Pre(packName, OnlyRes);
@@ -138,7 +190,7 @@ namespace ET
             BuildResult buildResult = null;
             try
             {
-                buildResult = await BuildInternal(buildTarget);
+                buildResult = await BuildInternal(buildTarget, copyAllToSteamingAsset);
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
@@ -157,12 +209,6 @@ namespace ET
 
         private static async ETTask<bool> BuildAB_Pre(PackName packName, bool OnlyRes)
         {
-            if (_isDoAfterChgDefines)
-            {
-                await BuildHelper.BuildModelAndHotfix();
-                return true;
-            }
-
             EditorPrefs.SetInt(Key_LastCodeMode, (int)GlobalConfig.Instance.CodeMode);
             EditorPrefs.SetInt(Key_LastCodeOptimization, (int)GlobalConfig.Instance.codeOptimization);
 
@@ -193,18 +239,6 @@ namespace ET
 
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
             Log.Debug($"---defines[{defines}] Define.EnableView[{Define.EnableView}] Define.EnableCodes[{Define.EnableCodes}]");
-            if (Define.EnableView || Define.EnableCodes)
-            {
-                ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", false);
-
-                CompilingFinishedCallback.Set(typeof(BuildAssetBundle), _funcInName, "True");
-                //ET.BuildHelper.ReGenerateProjectFiles();
-                return false;
-            }
-            else
-            {
-                _isDoAfterChgDefines = true;
-            }
             await BuildHelper.BuildModelAndHotfix();
             return true;
         }
@@ -233,7 +267,7 @@ namespace ET
             return DateTime.Now.ToString("yyyy-MM-dd") + "_" + totalMinutes;
         }
 
-        private static async ETTask<BuildResult> BuildInternal(BuildTarget buildTarget)
+        private static async ETTask<BuildResult> BuildInternal(BuildTarget buildTarget, bool copyAllToSteamingAsset)
         {
             Debug.Log($"开始构建 : {buildTarget}");
 
@@ -250,7 +284,15 @@ namespace ET
             buildParameters.ShareAssetPackRule = new DefaultShareAssetPackRule();
             buildParameters.CompressOption = ECompressOption.LZ4;
             buildParameters.OutputNameStyle = EOutputNameStyle.BundleName_HashName;
-            buildParameters.CopyBuildinFileOption = ECopyBuildinFileOption.None;
+            if (copyAllToSteamingAsset)
+            {
+                buildParameters.CopyBuildinFileOption = ECopyBuildinFileOption.None;
+            }
+            else
+            {
+                buildParameters.CopyBuildinFileOption = ECopyBuildinFileOption.ClearAndCopyByTags;
+                buildParameters.CopyBuildinFileTags = "aotdlls;buildIn";
+            }
 
             if (buildParameters.BuildPipeline == EBuildPipeline.ScriptableBuildPipeline)
             {
@@ -265,7 +307,10 @@ namespace ET
             {
                 Debug.Log($"构建成功 : {buildResult.OutputPackageDirectory}");
                 EditorUtility.RevealInFinder(buildResult.OutputPackageDirectory);
-                CopyABToStreamingAssets(buildResult.OutputPackageDirectory);
+                if (copyAllToSteamingAsset)
+                {
+                    CopyABToStreamingAssets(buildTarget, buildResult.OutputPackageDirectory);
+                }
                 CopyABToCDN(buildTarget, buildResult.OutputPackageDirectory);
             }
             else
@@ -276,7 +321,7 @@ namespace ET
             return buildResult;
         }
 
-        private static void CopyABToStreamingAssets(string ABPath)
+        private static void CopyABToStreamingAssets(BuildTarget buildTarget, string ABPath)
         {
             string streamingAssets = YooAsset.Editor.AssetBundleBuilderHelper.GetStreamingAssetsFolderPath();
             if (Directory.Exists(streamingAssets))
@@ -311,6 +356,19 @@ namespace ET
             {
                 FileHelper.CopyDirectory(ABPath, cdnPath);
             }
+        }
+
+        public static bool ChkIsEnableCodes(Type type, string methodName, Dictionary<string, object> methodParamDic = null)
+        {
+            if (Define.EnableView || Define.EnableCodes)
+            {
+                ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", false);
+
+                CompilingFinishedCallback.SetMethodName(type, methodName, methodParamDic);
+                return true;
+            }
+
+            return false;
         }
 
     }

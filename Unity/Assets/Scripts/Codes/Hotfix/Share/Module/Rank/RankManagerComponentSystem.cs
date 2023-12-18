@@ -47,5 +47,17 @@ namespace ET
             return rankComponent.GetRankShow(playerId);
         }
 
+        public static (int, RankItemComponent) GetMyRankShow(this RankManagerComponent self, long playerId, RankType rankType)
+        {
+            RankComponent rankComponent = self.GetRank(rankType);
+            return rankComponent.GetMyRankShow(playerId);
+        }
+
+        public static int GetRankedMoreThan(this RankManagerComponent self, RankType rankType, long score)
+        {
+            RankComponent rankComponent = self.GetRank(rankType);
+            return rankComponent.GetRankedMoreThan(score);
+        }
+
     }
 }

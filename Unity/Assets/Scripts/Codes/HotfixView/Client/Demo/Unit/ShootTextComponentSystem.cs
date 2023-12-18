@@ -39,10 +39,13 @@ namespace ET.Client
 
         public static async ETTask Init(this ShootTextComponent self)
         {
+#if UNITY_EDITOR
+#else
             if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
             {
                 return;
             }
+#endif
 
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_ShootTextPrefab");
             GameObject shootTextRootGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);

@@ -43,9 +43,17 @@ namespace ET.Client
 
         public static void RemoveUITextLocalizeView(this UITextLocalizeComponent self, GameObject go)
         {
+            if (go == null || self == null || self.IsDisposed)
+            {
+                return;
+            }
             UITextLocalizeMonoView[] list = go.GetComponentsInChildren<UITextLocalizeMonoView>(true);
             foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in list)
             {
+                if (uiTextLocalizeMonoView == null)
+                {
+                    continue;
+                }
                 self._UITextLocalizeMonoViewList.Remove(uiTextLocalizeMonoView);
             }
         }

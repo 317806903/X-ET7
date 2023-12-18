@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 namespace ET.Client
 {
     [Event(SceneType.Client)]
-    public class LoginSceneEnterStart_UI: AEvent<Scene, EventType.LoginSceneEnterStart>
+    public class LoginSceneEnterStart_UI: AEvent<Scene, EventType.EnterLoginSceneStart>
     {
-        protected override async ETTask Run(Scene scene, EventType.LoginSceneEnterStart args)
+        protected override async ETTask Run(Scene scene, EventType.EnterLoginSceneStart args)
         {
             Scene clientScene = scene;
 

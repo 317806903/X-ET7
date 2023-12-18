@@ -17,7 +17,7 @@ namespace ET.Ability
             return buffComponent;
         }
 
-        public static void AddBuff(Unit casterUnit, ActionCfg_BuffAdd actionCfgAddBuff, SelectHandle selectHandle, ActionContext actionContext)
+        public static void AddBuff(Unit casterUnit, ActionCfg_BuffAdd actionCfgAddBuff, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
             {
@@ -35,7 +35,7 @@ namespace ET.Ability
                     }
                     foreach (AddBuffInfo addBuffInfo in actionCfgAddBuff.BuffList)
                     {
-                        AddBuff(casterUnit, unitSelect, addBuffInfo, actionContext);
+                        AddBuff(casterUnit, unitSelect, addBuffInfo, ref actionContext);
                     }
                 }
             }
@@ -45,7 +45,7 @@ namespace ET.Ability
             }
         }
 
-        public static void AddBuff(Unit casterUnit, Unit unit, AddBuffInfo addBuffInfo, ActionContext actionContext)
+        public static void AddBuff(Unit casterUnit, Unit unit, AddBuffInfo addBuffInfo, ref ActionContext actionContext)
         {
             BuffComponent buffComponent = _GetBuffComponent(unit);
             if (buffComponent == null)
@@ -55,20 +55,8 @@ namespace ET.Ability
             buffComponent.AddBuff(casterUnit, unit, addBuffInfo, actionContext).Coroutine();
         }
 
-        public static void RemoveBuff(Unit casterUnit, ActionCfg_BuffRemove actionCfgRemoveBuff, SelectHandle selectHandle, ActionContext actionContext)
+        public static void DealBuff(Unit casterUnit, ActionCfg_BuffDeal actionCfgBuffDeal, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            BuffRemoveType buffRemoveType = actionCfgRemoveBuff.BuffRemoveType;
-            if (buffRemoveType is BuffRemoveCur buffRemoveCur)
-            {
-                BuffObj buffObj = GetBuffObj(casterUnit, actionContext);
-                if (buffObj == null)
-                {
-                    return;
-                }
-                buffObj.ChgDuration(0);
-                return;
-            }
-
             if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
             {
                 int count = selectHandle.unitIds.Count;
@@ -80,29 +68,12 @@ namespace ET.Ability
                     {
                         continue;
                     }
-                    List<BuffObj> list = null;
-                    if (buffRemoveType is BuffRemoveByTag buffRemoveByTag)
-                    {
-                        list = buffComponent.GetBuffListByTag(buffRemoveByTag.BuffTagType);
-                    }
-                    else if (buffRemoveType is BuffRemoveByTagGroup buffRemoveByTagGroup)
-                    {
-                        list = buffComponent.GetBuffListByTagGroup(buffRemoveByTagGroup.BuffTagGroupType);
-                    }
-                    else if (buffRemoveType is BuffRemoveByType buffRemoveByType)
-                    {
-                        list = buffComponent.GetBuffListByType(buffRemoveByType.BuffType);
-                    }
-                    else
-                    {
-                        Log.Error($"ET.Ability.BuffHelper.RemoveBuff buffRemoveType[{buffRemoveType}]");
-                    }
-
+                    List<BuffObj> list = GetBuffListByBuffDeal(unitSelect, actionCfgBuffDeal, ref actionContext);
                     if (list != null)
                     {
                         foreach (BuffObj buffObj in list)
                         {
-                            buffObj.ChgDuration(0);
+                            DealBuffObj(buffObj, actionCfgBuffDeal, ref actionContext);
                         }
                     }
                 }
@@ -113,44 +84,128 @@ namespace ET.Ability
             }
         }
 
-        public static void ChgBuffStackCount(Unit unit, ActionCfg_BuffStackCountChg actionCfgBuffStackCountChg, ActionContext actionContext)
+        public static List<BuffObj> GetBuffListByBuffDeal(Unit unitSelect, ActionCfg_BuffDeal actionCfgBuffDeal, ref ActionContext actionContext)
         {
-            BuffObj buffObj = GetBuffObj(unit, actionContext);
+            BuffDealSelectCondition buffDealSelectCondition = actionCfgBuffDeal.BuffDealSelectCondition;
+            if (buffDealSelectCondition is CurBuff curBuff)
+            {
+                BuffObj buffObj = GetBuffObj(unitSelect, ref actionContext);
+                if (buffObj == null)
+                {
+                    return null;
+                }
+
+                List<BuffObj> buffObjs = new();
+                buffObjs.Add(buffObj);
+                return buffObjs;
+            }
+            else if (buffDealSelectCondition is AllBuff allBuff)
+            {
+                return GetAllBuffList(unitSelect);
+            }
+            else if (buffDealSelectCondition is ByBuffCfgId byBuffCfgId)
+            {
+                return GetBuffListByBuffCfgId(unitSelect, byBuffCfgId.BuffCfgId);
+            }
+            else if (buffDealSelectCondition is ByBuffType byBuffType)
+            {
+                return GetBuffListByBuffType(unitSelect, byBuffType.BuffType);
+            }
+            else if (buffDealSelectCondition is ByBuffTagType byBuffTagType)
+            {
+                return GetBuffListByTagType(unitSelect, byBuffTagType.BuffTagType);
+            }
+            else if (buffDealSelectCondition is ByBuffTagGroupType byBuffTagGroupType)
+            {
+                return GetBuffListByTagGroupType(unitSelect, byBuffTagGroupType.BuffTagGroupType);
+            }
+
+            return null;
+        }
+
+        public static void DealBuffObj(BuffObj buffObj, ActionCfg_BuffDeal actionCfgBuffDeal, ref ActionContext actionContext)
+        {
             if (buffObj == null)
             {
                 return;
             }
-            buffObj.AddStackCount(actionCfgBuffStackCountChg);
+            BuffDealType buffDealType = actionCfgBuffDeal.BuffDealType;
+            if (buffDealType is BuffRemove buffRemove)
+            {
+                buffObj.ChgDuration(0);
+            }
+            else if (buffDealType is BuffStackCountChg buffStackCountChg)
+            {
+                buffObj.AddStackCount(buffStackCountChg.Op, buffStackCountChg.ChgStack);
+            }
+            else if (buffDealType is BuffLeftTimeChgByLeftTime buffLeftTimeChgByLeftTime)
+            {
+                if (buffObj.permanent)
+                {
+                    return;
+                }
+                if (buffObj.duration <= 0)
+                {
+                    return;
+                }
+                float newDuration = buffObj.duration * buffLeftTimeChgByLeftTime.LeftTimeScale + buffLeftTimeChgByLeftTime.StackCountScale * buffObj.orgDuration * (buffObj.stack - 1);
+                buffObj.ChgDuration(newDuration);
+            }
+            else if (buffDealType is BuffLeftTimeChgByOrgTime buffLeftTimeChgByOrgTime)
+            {
+                if (buffObj.permanent)
+                {
+                    return;
+                }
+                if (buffObj.duration <= 0)
+                {
+                    return;
+                }
+                float newDuration = buffObj.orgDuration * buffLeftTimeChgByOrgTime.OrgTimeScale + buffLeftTimeChgByOrgTime.StackCountScale * buffObj.orgDuration * (buffObj.stack - 1);
+                buffObj.ChgDuration(newDuration);
+            }
+            else if (buffDealType is BuffDurationChgByOrgTime buffDurationChgByOrgTime)
+            {
+                if (buffObj.permanent)
+                {
+                    return;
+                }
+                if (buffObj.duration <= 0)
+                {
+                    return;
+                }
+                float newTotalDuration = buffObj.orgDuration * buffDurationChgByOrgTime.OrgTimeScale + buffDurationChgByOrgTime.StackCountScale * buffObj.orgDuration * (buffObj.stack - 1);
+                buffObj.ChgTotalDuration(newTotalDuration);
+            }
+            else if (buffDealType is BuffDurationChgByValue buffDurationChgByValue)
+            {
+                if (buffObj.permanent)
+                {
+                    return;
+                }
+                if (buffObj.duration <= 0)
+                {
+                    return;
+                }
+                float newTotalDuration = buffObj.orgDuration + buffDurationChgByValue.AddTime;
+                buffObj.ChgTotalDuration(newTotalDuration);
+            }
+            else if (buffDealType is BuffDurationChgByPercentValue buffDurationChgByPercentValue)
+            {
+                if (buffObj.permanent)
+                {
+                    return;
+                }
+                if (buffObj.duration <= 0)
+                {
+                    return;
+                }
+                float newTotalDuration = buffObj.orgDuration * (100 + buffDurationChgByPercentValue.AddPercent) * 0.01f;
+                buffObj.ChgTotalDuration(newTotalDuration);
+            }
         }
 
-        public static void ChgBuffDurationChg(Unit unit, BuffDurationChgType buffDurationChgType, ActionContext actionContext)
-        {
-            BuffObj buffObj = GetBuffObj(unit, actionContext);
-            if (buffObj == null)
-            {
-                return;
-            }
-            if (buffObj.permanent)
-            {
-                return;
-            }
-            if (buffObj.duration <= 0)
-            {
-                return;
-            }
-            float newDuration = buffObj.duration;
-            if (buffDurationChgType is BuffDurationChgCur buffDurationChgCur)
-            {
-                newDuration = buffObj.duration * buffDurationChgCur.LeftTimeScale + buffDurationChgCur.StackCountScale * buffObj.orgDuration * (buffObj.stack - 1);
-            }
-            else if (buffDurationChgType is BuffDurationChgOrg buffDurationChgorg)
-            {
-                newDuration = buffObj.orgDuration + buffDurationChgorg.StackCountScale * buffObj.orgDuration * (buffObj.stack - 1);
-            }
-            buffObj.ChgDuration(newDuration);
-        }
-
-        public static BuffObj GetBuffObj(Unit unit, ActionContext actionContext)
+        public static BuffObj GetBuffObj(Unit unit, ref ActionContext actionContext)
         {
             long buffId = actionContext.buffId;
             if (buffId == 0)
@@ -179,14 +234,94 @@ namespace ET.Ability
             return buffComponent.GetChild<BuffObj>(buffId);
         }
 
-        public static bool ChkBuffTagType(Unit unit, BuffTagType buffTagType)
+        public static bool ChkBuffByBuffCfgId(Unit unit, string buffCfgId)
         {
             BuffComponent buffComponent = _GetBuffComponent(unit);
             if (buffComponent == null)
             {
-                return true;
+                return false;
             }
-            return buffComponent.ChkBuffTagType(buffTagType);
+            return buffComponent.ChkBuffByBuffCfgId(buffCfgId);
+        }
+
+        public static bool ChkBuffByBuffType(Unit unit, BuffType buffType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return false;
+            }
+            return buffComponent.ChkBuffByBuffType(buffType);
+        }
+
+        public static bool ChkBuffByTagType(Unit unit, BuffTagType buffTagType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return false;
+            }
+            return buffComponent.ChkBuffByTagType(buffTagType);
+        }
+
+        public static bool ChkBuffByTagGroupType(Unit unit, BuffTagGroupType buffTagGroupType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return false;
+            }
+            return buffComponent.ChkBuffByTagGroupType(buffTagGroupType);
+        }
+
+        public static List<BuffObj> GetBuffListByBuffCfgId(Unit unit, string buffCfgId)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return null;
+            }
+            return buffComponent.GetBuffListByBuffCfgId(buffCfgId);
+        }
+
+        public static List<BuffObj> GetAllBuffList(Unit unit)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return null;
+            }
+            return buffComponent.GetAllBuffList();
+        }
+
+        public static List<BuffObj> GetBuffListByBuffType(Unit unit, BuffType buffType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return null;
+            }
+            return buffComponent.GetBuffListByBuffType(buffType);
+        }
+
+        public static List<BuffObj> GetBuffListByTagType(Unit unit, BuffTagType buffTagType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return null;
+            }
+            return buffComponent.GetBuffListByTagType(buffTagType);
+        }
+
+        public static List<BuffObj> GetBuffListByTagGroupType(Unit unit, BuffTagGroupType buffTagGroupType)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return null;
+            }
+            return buffComponent.GetBuffListByTagGroupType(buffTagGroupType);
         }
 
         public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
@@ -266,7 +401,7 @@ namespace ET.Ability
             return buffComponent.ChkCanBeDamage();
         }
 
-        public static bool ChkCanBeControl(Scene scene, ActionContext actionContext)
+        public static bool ChkCanBeControl(Scene scene, ref ActionContext actionContext)
         {
             Unit defenderUnit = UnitHelper.GetUnit(scene, actionContext.defenderUnitId);
             BuffComponent buffComponent = _GetBuffComponent(defenderUnit);
@@ -274,7 +409,7 @@ namespace ET.Ability
             {
                 return true;
             }
-            return buffComponent.ChkCanBeControl(actionContext);
+            return buffComponent.ChkCanBeControl(ref actionContext);
         }
 
         public static bool ChkCanBeControl(Unit attackerUnit, Unit defenderUnit)

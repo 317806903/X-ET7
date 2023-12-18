@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ET
 {
@@ -32,24 +34,62 @@ namespace ET
             return null;
         }
 
-        public static Entity SetPlayerModel(this PlayerDataComponent self, PlayerModelType playerModelType, byte[] bytes)
+        public static Entity SetPlayerModel(this PlayerDataComponent self, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
         {
             Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-            switch (playerModelType)
+            if (setPlayerKeys == null || setPlayerKeys.Count == 0)
             {
-                case PlayerModelType.BaseInfo:
-                    self.RemoveComponent<PlayerBaseInfoComponent>();
-                    break;
-                case PlayerModelType.BackPack:
-                    self.RemoveComponent<PlayerBackPackComponent>();
-                    break;
-                case PlayerModelType.BattleCard:
-                    self.RemoveComponent<PlayerBattleCardComponent>();
-                    break;
-                default:
-                    break;
+                switch (playerModelType)
+                {
+                    case PlayerModelType.BaseInfo:
+                        self.RemoveComponent<PlayerBaseInfoComponent>();
+                        break;
+                    case PlayerModelType.BackPack:
+                        self.RemoveComponent<PlayerBackPackComponent>();
+                        break;
+                    case PlayerModelType.BattleCard:
+                        self.RemoveComponent<PlayerBattleCardComponent>();
+                        break;
+                    default:
+                        break;
+                }
+                return self.AddComponent(entity);
             }
-            return self.AddComponent(entity);
+            else
+            {
+                switch (playerModelType)
+                {
+                    case PlayerModelType.BaseInfo:
+                        PlayerBaseInfoComponent playerBaseInfoComponent = self.GetComponent<PlayerBaseInfoComponent>();
+                        self.ChgFieldValue<PlayerBaseInfoComponent>(playerBaseInfoComponent, (PlayerBaseInfoComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerBaseInfoComponent;
+                    case PlayerModelType.BackPack:
+                        PlayerBackPackComponent playerBackPackComponent = self.GetComponent<PlayerBackPackComponent>();
+                        self.ChgFieldValue<PlayerBackPackComponent>(playerBackPackComponent, (PlayerBackPackComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerBackPackComponent;
+                    case PlayerModelType.BattleCard:
+                        PlayerBattleCardComponent battleCardComponent = self.GetComponent<PlayerBattleCardComponent>();
+                        self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return battleCardComponent;
+                    default:
+                        break;
+                }
+
+                return null;
+            }
+        }
+
+        public static void ChgFieldValue<T>(this PlayerDataComponent self, T entity, T entityNew, List<string> setPlayerKeys) where T:Entity
+        {
+            Type type = typeof(T);
+            for (int i = 0; i < setPlayerKeys.Count; i++)
+            {
+                FieldInfo field = type.GetField(setPlayerKeys[i]);
+                field.SetValue(entity, field.GetValue(entityNew));
+            }
         }
 
     }

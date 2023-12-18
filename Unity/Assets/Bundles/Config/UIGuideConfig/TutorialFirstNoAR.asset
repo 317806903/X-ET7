@@ -1,0 +1,319 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: TutorialFirstNoAR
+  m_EditorClassIdentifier: 
+  list:
+  - name: "\u4E16\u754C\u89C2"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowStory
+    guideExecuteParam: 
+    trigExitCondition: 2
+    trigExitConditionStaticMethod: ChkIsNotShowStory
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FBRoom\u6A21\u5F0F"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameMode/EGBackGround/E_RoomMode
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u521B\u5EFARoom"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: None
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgHall/EGBackGround/E_CreateRoom
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 2
+    trigExitConditionStaticMethod: None
+    trigExitConditionParam: 
+  - name: "\u623F\u95F4\u51C6\u5907"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgRoom/EGBackGround/E_RoomMemberStatus
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_RoomStart
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_btnStart.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u653E\u7F6E\u5927\u672C\u8425"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_PlaceHQ
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    curInNextType: 1
+    waitToNextUIGuideStep: 4
+    audioPath: 
+    guideExecuteStaticMethod: ShowBattleTowerQuit
+    guideExecuteParam: false
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u653E\u7F6E\u51FA\u602A\u53E3"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_PlaceSP
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_portal.png
+    curInNextType: 1
+    waitToNextUIGuideStep: 4
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u8D2D\u4E70\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_BuyTower
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_buybtn2.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u6536\u8D77\u8D2D\u4E70\u5217\u8868"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_CloseDLG
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img-back.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u9690\u85CFready\u6309\u94AE"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowBattleTowerReady
+    guideExecuteParam: false
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u653E\u7F6E\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower/EButton_Select
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_PlaceTower
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_card.png
+    curInNextType: 1
+    waitToNextUIGuideStep: 4
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 2
+    trigExitConditionStaticMethod: ChkTowerPut
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u653E\u7F6E\u7684\u5854"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_TapTower
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowPointTower
+    guideExecuteParam: 
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
+  - name: "\u67E5\u770B\u5854\u64CD\u4F5C"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_TowerDetail
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_detailcard.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: HidePointTower
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u79FB\u9664\u5854\u4FE1\u606F\u9762\u677F"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: HideTowerInfo
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u663E\u793A\u9000\u51FA\u6309\u94AE"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowBattleTowerQuit
+    guideExecuteParam: true
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u663E\u793Aready\u6309\u94AE"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowBattleTowerReady
+    guideExecuteParam: true
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u51C6\u5907\u597D"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_Ready/EButton_ReadyWhenRestTime
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_WaveStart
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_imreadybtn.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

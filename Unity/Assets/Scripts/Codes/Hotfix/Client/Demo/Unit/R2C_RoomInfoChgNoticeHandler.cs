@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mime;
 using ET.Ability;
 
 namespace ET.Client
@@ -16,6 +17,16 @@ namespace ET.Client
 			await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
 
 			EventSystem.Instance.Publish(clientScene, new EventType.RoomInfoChg());
+
+#if UNITY_EDITOR
+			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(clientScene);
+			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			if (roomComponent.dynamicMapInstanceId > 0)
+			{
+				var instanceIdStruct = new InstanceIdStruct(roomComponent.dynamicMapInstanceId);
+				Log.Error($"--zpb Process={instanceIdStruct.Process} Value={instanceIdStruct.Value}");
+			}
+#endif
 
 			await ETTask.CompletedTask;
 		}

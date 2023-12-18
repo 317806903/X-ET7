@@ -2,6 +2,7 @@
 using System.Linq;
 using ET.AbilityConfig;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Unity.Mathematics;
 
 namespace ET
@@ -17,11 +18,14 @@ namespace ET
 
 	public enum GamePlayTowerDefenseStatus
 	{
-		ShowStartEffect,
+		GameBegin,
 		PutHome,
 		PutMonsterPoint,
+		ShowStartEffect,
 		RestTime,
 		InTheBattle,
+		InTheBattleEnd,
+		Recover,
 		GameEnd,
 	}
 
@@ -45,6 +49,7 @@ namespace ET
 		public GamePlayModeBase gamePlayModeBase { get; set; }
 		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus { get; set; }
 		public long ownerPlayerId { get; set; }
-
+		
+		public bool canRecover;
 	}
 }

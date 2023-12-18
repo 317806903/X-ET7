@@ -14,9 +14,56 @@ public partial class UICodeSpawner
         Path2WidgetCachedDict?.Clear();
         Path2WidgetCachedDict = new Dictionary<string, List<Component>>();
         FindAllWidgets(gameObject.transform, "");
+        SpawnCodeForScrollLoopItem(gameObject);
         SpawnCodeForScrollLoopItemBehaviour(gameObject);
         SpawnCodeForScrollLoopItemViewSystem(gameObject);
         AssetDatabase.Refresh();
+    }
+
+    static void SpawnCodeForScrollLoopItem(GameObject gameObject)
+    {
+        string strDlgName = $"Scroll_{gameObject.name}";
+        string strFilePath = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UI/UIItem/" + strDlgName;
+
+        if (!System.IO.Directory.Exists(strFilePath))
+        {
+            System.IO.Directory.CreateDirectory(strFilePath);
+        }
+
+        strFilePath = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UI/UIItem/" + strDlgName + "/" + strDlgName + "System.cs";
+        if (System.IO.File.Exists(strFilePath))
+        {
+            Debug.LogError("已存在 " + strDlgName + "System.cs,将不会再次生成。");
+            return;
+        }
+
+        StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.AppendLine("using System.Collections;")
+            .AppendLine("using System.Collections.Generic;")
+            .AppendLine("using System;")
+            .AppendLine("using UnityEngine;")
+            .AppendLine("using UnityEngine.UI;\r\n");
+
+        strBuilder.AppendLine("namespace ET.Client");
+        strBuilder.AppendLine("{");
+
+        strBuilder.AppendFormat("\t[FriendOf(typeof({0}))]\r\n", strDlgName);
+
+        strBuilder.AppendFormat("\tpublic static class {0}\r\n", strDlgName + "System");
+        strBuilder.AppendLine("\t{");
+
+        strBuilder.AppendFormat("\t\tpublic static void Init(this {0} self)\n", strDlgName)
+            .AppendLine("\t\t{")
+            .AppendLine("\t\t}")
+            .AppendLine();
+
+        strBuilder.AppendLine("\t}");
+        strBuilder.AppendLine("}");
+
+        sw.Write(strBuilder);
+        sw.Flush();
+        sw.Close();
     }
 
     static void SpawnCodeForScrollLoopItemViewSystem(GameObject gameObject)
@@ -27,13 +74,13 @@ public partial class UICodeSpawner
         }
         string strDlgName = gameObject.name;
 
-        string strFilePath = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIItemBehaviour";
+        string strFilePath = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIBehaviour/UIItemBehaviour";
 
         if ( !System.IO.Directory.Exists(strFilePath) )
         {
             System.IO.Directory.CreateDirectory(strFilePath);
         }
-        strFilePath     = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIItemBehaviour/" + strDlgName + "ViewSystem.cs";
+        strFilePath     = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIBehaviour/UIItemBehaviour/" + strDlgName + "ViewSystem.cs";
         StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
 
         StringBuilder strBuilder = new StringBuilder();
@@ -70,13 +117,13 @@ public partial class UICodeSpawner
         }
         string strDlgName = gameObject.name;
 
-        string strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIItemBehaviour";
+        string strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/UIItemBehaviour";
 
         if ( !System.IO.Directory.Exists(strFilePath) )
         {
             System.IO.Directory.CreateDirectory(strFilePath);
         }
-        strFilePath     = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIItemBehaviour/" + strDlgName + ".cs";
+        strFilePath     = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/UIItemBehaviour/" + strDlgName + ".cs";
         StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
 
         StringBuilder strBuilder = new StringBuilder();

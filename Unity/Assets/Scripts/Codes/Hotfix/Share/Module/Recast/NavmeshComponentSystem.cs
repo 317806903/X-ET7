@@ -23,6 +23,8 @@ namespace ET
         {
             protected override void Awake(NavmeshComponent self)
             {
+                self.recordNearestPosDic = new();
+                self.recordNearestRefDic = new();
             }
         }
 
@@ -32,6 +34,9 @@ namespace ET
             protected override void Destroy(NavmeshComponent self)
             {
                 self.crowd = null;
+                self.arrivePath.Clear();
+                self.recordNearestPosDic.Clear();
+                self.recordNearestRefDic.Clear();
             }
         }
 
@@ -40,7 +45,7 @@ namespace ET
         {
             protected override void FixedUpdate(NavmeshComponent self)
             {
-                // if (self.DomainScene().SceneType != SceneType.Map)
+                // if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 // {
                 //     return;
                 // }
@@ -50,8 +55,14 @@ namespace ET
             }
         }
 
+        public static float GetRadius(this NavmeshComponent self)
+        {
+            return self.radius;
+        }
+
         public static async ETTask CreateCrowd(this NavmeshComponent self, float agentRadius)
         {
+            self.radius = agentRadius;
             await self._InitDtCrowd(agentRadius);
         }
 
@@ -159,17 +170,7 @@ namespace ET
 
         public static void ResetPos(this NavmeshComponent self, DtCrowdAgent ag, float3 position)
         {
-            DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
-            IDtQueryFilter filter = self.crowd.GetFilter(0);
-            RcVec3f halfExtents = self.crowd.GetQueryExtents();
-
-            RcVec3f centerPos = new RcVec3f(-position.x, position.y, position.z);
-            var status = navquery.FindNearestPoly(centerPos, halfExtents, filter, out var refs, out var nearestPt, out var _);
-            if (status.Failed())
-            {
-                nearestPt = centerPos;
-                refs = 0;
-            }
+            self.GetNearNavmeshPos(position, out var refs, out var nearestPt);
 
             ag.corridor.Reset(refs, nearestPt);
             ag.boundary.Reset();
@@ -250,14 +251,7 @@ namespace ET
 
             self.EnableAgent(ag);
 
-            DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
-            IDtQueryFilter filter = self.crowd.GetFilter(0);
-            RcVec3f halfExtents = self.crowd.GetQueryExtents();
-
-            RcVec3f centerPos = new RcVec3f(-pos.x, pos.y, pos.z);
-            RcVec3f targetPos;
-            long targetRef = 0;
-            navquery.FindNearestPoly(centerPos, halfExtents, filter, out targetRef, out targetPos, out var _);
+            self.GetNearNavmeshPos(pos, out var targetRef, out var targetPos);
             if (targetRef != 0)
             {
                 self.crowd.RequestMoveTarget(ag, targetRef, targetPos);
@@ -275,22 +269,17 @@ namespace ET
         {
             DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
             IDtQueryFilter filter = self.crowd.GetFilter(0);
-            RcVec3f halfExtents = self.crowd.GetQueryExtents();
 
-            RcVec3f startPos = new RcVec3f(-start.x, start.y, start.z);
-            RcVec3f startNearPos;
-            RcVec3f targetPos = new RcVec3f(-target.x, target.y, target.z);
-            RcVec3f targetNearPos;
-            long startNearRef = 0;
-            long targetNearRef = 0;
-            navquery.FindNearestPoly(startPos, halfExtents, filter, out startNearRef, out startNearPos, out var _);
-            navquery.FindNearestPoly(targetPos, halfExtents, filter, out targetNearRef, out targetNearPos, out var _);
+            self.GetNearNavmeshPos(start, out var startNearRef, out var startNearPos);
+            self.GetNearNavmeshPos(target, out var targetNearRef, out var targetNearPos);
+
             if (startNearRef != 0 && startNearRef == targetNearRef)
             {
                 return true;
             }
 
-            List<long> pathList = ListComponent<long>.Create();
+            using ListComponent<long> pathListComponent = ListComponent<long>.Create();
+            List<long> pathList = pathListComponent;
             var status = navquery.FindPath(startNearRef, targetNearRef, startNearPos, targetNearPos, filter, ref pathList, DtFindPathOption.NoOption);
             if (status.Succeeded())
             {
@@ -298,11 +287,19 @@ namespace ET
                 {
                     return false;
                 }
-                else
+                else if (pathList.Count == 1)
                 {
-                    if (pathList.Count == 1 && pathList[0] == startNearRef)
+                    if (pathList[0] == startNearRef)
                     {
                         return false;
+                    }
+                    return true;
+                }
+                else
+                {
+                    for (int i = 0; i < pathList.Count; i++)
+                    {
+
                     }
                     return true;
                 }
@@ -316,17 +313,8 @@ namespace ET
             IDtQueryFilter filter = self.crowd.GetFilter(0);
             RcVec3f halfExtents = self.crowd.GetQueryExtents();
 
-            RcVec3f startPos = new RcVec3f(-start.x, start.y, start.z);
-            RcVec3f startNearPos;
-            RcVec3f targetPos = new RcVec3f(-target.x, target.y, target.z);
-            RcVec3f targetNearPos;
-            long startNearRef = 0;
-            long targetNearRef = 0;
-            navquery.FindNearestPoly(startPos, halfExtents, filter, out startNearRef, out startNearPos, out var _);
-            navquery.FindNearestPoly(targetPos, halfExtents, filter, out targetNearRef, out targetNearPos, out var _);
-
-            List<float3> arrivePath = self.arrivePath;
-            arrivePath.Clear();
+            self.GetNearNavmeshPos(start, out var startNearRef, out var startNearPos);
+            self.GetNearNavmeshPos(target, out var targetNearRef, out var targetNearPos);
 
             using ListComponent<long> pathListTmp = ListComponent<long>.Create();
             List<long> pathList = pathListTmp;
@@ -335,13 +323,13 @@ namespace ET
             {
                 if (pathList.Count <= 0)
                 {
-                    return arrivePath;
+                    return null;
                 }
                 else
                 {
                     if (pathList.Count == 1 && pathList[0] == startNearRef)
                     {
-                        return arrivePath;
+                        return null;
                     }
 
                     // if (pathList[npolys - 1] != endRef)
@@ -353,30 +341,90 @@ namespace ET
                     var result = navquery.FindStraightPath(startNearPos, targetNearPos, pathList, ref straightPath, 100, 0);
                     if (result.Failed())
                     {
-                        return arrivePath;
+                        return null;
                     }
+
+                    List<float3> arrivePath = self.arrivePath;
+                    arrivePath.Clear();
+
                     for (int i = 0; i < straightPath.Count; i++)
                     {
                         RcVec3f pos = straightPath[i].pos;
-                        arrivePath.Add(new float3(-pos.x, pos.y, pos.z));
+                        float3 pos2 = new float3(-pos.x, pos.y, pos.z);
+                        arrivePath.Add(pos2);
+                    }
+
+                    if (self.ChkAllPointOK(arrivePath) == false)
+                    {
+                        return null;
                     }
                     return arrivePath;
                 }
             }
-            return arrivePath;
+            return null;
         }
 
-        public static float3 GetNearNavmeshPos(this NavmeshComponent self, float3 pos)
+        public static bool ChkAllPointOK(this NavmeshComponent self, List<float3> arrivePath)
         {
+            for (int i = 0; i < arrivePath.Count; i++)
+            {
+                float3 pos = arrivePath[i];
+                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos);
+                if (pos2.Equals(float3.zero))
+                {
+                    return false;
+                }
+                if (pos2.y > pos.y + 0.5f)
+                {
+                    return false;
+                }
+            }
+            for (int i = 0; i < arrivePath.Count-1; i++)
+            {
+                float3 pos = (arrivePath[i] + arrivePath[i+1])/2;
+                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos);
+                if (pos2.Equals(float3.zero))
+                {
+                    return false;
+                }
+                if (pos2.y > pos.y + 0.5f)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static float3 GetNearNavmeshPos(this NavmeshComponent self, float3 pos, out long nearestRefOut, out RcVec3f nearestPtOut)
+        {
+            int x = (int)(pos.x * 100);
+            int y = (int)(pos.y * 100);
+            int z = (int)(pos.z * 100);
+
+            (bool isRecord, float3 nearestPos, long nearestRef) = self.ChkNearestPosRecord(x, y, z);
+            if (isRecord)
+            {
+                nearestRefOut = nearestRef;
+                nearestPtOut = new RcVec3f(-nearestPos.x, nearestPos.y, nearestPos.z);
+                return nearestPos;
+            }
+
             DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
             IDtQueryFilter filter = self.crowd.GetFilter(0);
             RcVec3f halfExtents = self.crowd.GetQueryExtents();
 
             RcVec3f centerPos = new RcVec3f(-pos.x, pos.y, pos.z);
-            RcVec3f targetPos;
-            long targetRef = 0;
-            navquery.FindNearestPoly(centerPos, halfExtents, filter, out targetRef, out targetPos, out var _);
-            return new float3(-targetPos.x, targetPos.y, targetPos.z);
+            RcVec3f nearestPt;
+            navquery.FindNearestPoly(centerPos, halfExtents, filter, out nearestRef, out nearestPt, out var _);
+
+            nearestRefOut = nearestRef;
+            nearestPtOut = nearestPt;
+
+            nearestPos = new float3(-nearestPt.x, nearestPt.y, nearestPt.z);
+            self.RecordNearestPos(x, y, z, nearestPos, nearestRef);
+
+            return nearestPos;
         }
 
         public static DtCrowdAgentParams GetAgentParams(float radius, float separationWeight)
@@ -442,8 +490,62 @@ namespace ET
             {
                 return;
             }
-            self.crowd.Update(fixedDeltaTime, null);
+
+            if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
+            {
+                self.curFrameSyncPos = 0;
+
+                self.crowd.Update(fixedDeltaTime, null);
+            }
         }
 
+        public static (bool, float3, long) ChkNearestPosRecord(this NavmeshComponent self, int x, int y, int z)
+        {
+            if (self.recordNearestPosDic.TryGetValue(x, out var dic2))
+            {
+                if (dic2.TryGetValue(y, out var dic3))
+                {
+                    if (dic3.TryGetValue(z, out var nearestPos))
+                    {
+                        long nearestRef = self.recordNearestRefDic[x][y][z];
+                        return (true, nearestPos, nearestRef);
+                    }
+                }
+            }
+
+            return (false, float3.zero, 0);
+        }
+
+        public static void RecordNearestPos(this NavmeshComponent self, int x, int y, int z, float3 nearestPos, long nearestRef)
+        {
+            if (self.recordNearestPosDic.TryGetValue(x, out var dic2) == false)
+            {
+                dic2 = new();
+                self.recordNearestPosDic[x] = dic2;
+            }
+
+            if (dic2.TryGetValue(y, out var dic3) == false)
+            {
+                dic3 = new();
+                dic2[y] = dic3;
+            }
+
+            dic3[z] = nearestPos;
+
+
+            if (self.recordNearestRefDic.TryGetValue(x, out var dicRef2) == false)
+            {
+                dicRef2 = new();
+                self.recordNearestRefDic[x] = dicRef2;
+            }
+
+            if (dicRef2.TryGetValue(y, out var dicRef3) == false)
+            {
+                dicRef3 = new();
+                dicRef2[y] = dicRef3;
+            }
+
+            dicRef3[z] = nearestRef;
+        }
     }
 }

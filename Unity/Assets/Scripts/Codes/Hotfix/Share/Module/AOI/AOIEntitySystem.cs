@@ -28,12 +28,15 @@ namespace ET
             {
                 self.DomainScene().GetComponent<AOIManagerComponent>()?.Remove(self);
                 self.ViewDistance = 0;
+                self.Cell = null;
                 self.SeeUnits.Clear();
                 self.SeePlayers.Clear();
                 self.BeSeePlayers.Clear();
                 self.BeSeeUnits.Clear();
                 self.SubscribeEnterCells.Clear();
                 self.SubscribeLeaveCells.Clear();
+                self.enterHashSet.Clear();
+                self.leaveHashSet.Clear();
             }
         }
 
@@ -47,7 +50,7 @@ namespace ET
             }
             if (self.IsDisposed)
             {
-                Log.Debug(" self.IsDisposed");
+                //Log.Debug(" self.IsDisposed");
                 return;
             }
             if (self.DomainScene() == null)

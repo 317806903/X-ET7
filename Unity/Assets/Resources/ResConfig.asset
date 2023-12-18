@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: ResConfig
   m_EditorClassIdentifier: 
   ResLoadMode: 0
-  ResHostServerIP: http://192.168.10.58
+  ResHostServerIP: http://127.0.0.1
   ResGameVersion: v1.0
   RouterHttpHost: 127.0.0.1
   RouterHttpPort: 30300
   areaType: 0
   IsShowDebugMode: 1
   IsShowEditorLoginMode: 1
+  IsNeedSendEventLog: 0
+  MirrorARSessionAuthAppKey: 63f72bdc21c28002a4f4b218#mirrorsdk_dev
+  MirrorARSessionAuthAppSecret: 79395951c7cf78bd7ec1fe5b5b1c97ce

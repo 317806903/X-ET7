@@ -73,6 +73,20 @@ namespace ET.Server
             return entityDBList;
         }
 
+        public static async ETTask<long> GetDBCount<T>(Scene scene) where T :Entity
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+                return 0;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                return await dbComponent.QueryCount<T>();
+            }
+        }
+
         public static async ETTask<T> _LoadDB<T>(Scene scene, long Id) where T :Entity
         {
             if (DBManagerComponent.Instance.NeedDB == false)

@@ -10,7 +10,7 @@ namespace ET.Ability
     [FriendOf(typeof(NumericComponent))]
     public static class BulletHelper
     {
-        public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ActionContext actionContext)
+        public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             Unit bulletUnit = ET.GamePlayHelper.CreateBulletByUnit(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
 
@@ -123,55 +123,6 @@ namespace ET.Ability
                 lastPos = pos;
             }
             return (bHitUnit, bHitMesh, hitPos);
-
-            // float targetRadius = ET.Ability.UnitHelper.GetBodyRadius(unit);
-            // float3 dis = unitBullet.Position - unit.Position;
-            // if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= math.pow(bulletRadius + targetRadius, 2))
-            // {
-            //     return true;
-            // }
-            //
-            // MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
-            // if (moveTweenObj.speed > 10 && math.lengthsq(dis) <= 16)
-            // {
-            //     float3 targetPos = unit.Position;
-            //     float3 posBeforeBullet = moveTweenObj.lastPosition;
-            //     float3 posAfterBullet = unitBullet.Position;
-            //     float3 p1toT = targetPos - posBeforeBullet;
-            //     float3 p1toP2 = posAfterBullet - posBeforeBullet;
-            //     float3 p2toT = targetPos - posAfterBullet;
-            //     float3 p2toP1 = posBeforeBullet - posAfterBullet;
-            //     float cosTP1P2 = math.dot(math.normalize(p1toT), math.normalize(p1toP2));
-            //     float cosTP2P1 = math.dot(math.normalize(p2toT), math.normalize(p2toP1));
-            //     if (cosTP1P2 > 0 && cosTP2P1 <= 0)  //同侧靠近,但还未到
-            //     {
-            //         return false;
-            //     }
-            //     else if (cosTP1P2 <= 0 && cosTP2P1 > 0)  //同侧远离
-            //     {
-            //         //判断下移动前的那个点
-            //         if (math.pow(p1toT.x, 2) + math.pow(p1toT.z, 2) <= math.pow(bulletRadius + targetRadius, 2))
-            //         {
-            //             return true;
-            //         }
-            //         return false;
-            //     }
-            //     else if (cosTP1P2 > 0 && cosTP2P1 > 0) //target在中间
-            //     {
-            //         float disTmp = math.length(p1toT) * math.sin(math.acos(cosTP1P2));
-            //         //判断垂直距离
-            //         if (disTmp <= bulletRadius + targetRadius)
-            //         {
-            //             return true;
-            //         }
-            //         return false;
-            //     }
-            //     return false;
-            // }
-            // else
-            // {
-            //     return false;
-            // }
         }
 
         public static (bool, float3) _ChkBulletHitUnit(Unit unitBullet, Unit unit, float3 posBeforeBullet, float3 posAfterBullet)
@@ -247,13 +198,11 @@ namespace ET.Ability
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
             bulletObj.canHitTimes -= 1;
 
-            ProfilerSample.BeginSample("DoBulletHit");
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHit()
             {
                 attackerUnit = unitBullet,
                 defenderUnit = unit,
             });
-            ProfilerSample.EndSample();
 
             if (bulletObj.canHitTimes > 0)
             {

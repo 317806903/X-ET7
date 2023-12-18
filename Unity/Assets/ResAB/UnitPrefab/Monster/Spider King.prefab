@@ -666,7 +666,6 @@ GameObject:
   - component: {fileID: 9220383817017491281}
   - component: {fileID: 9220383817028693519}
   - component: {fileID: 4755322761886964719}
-  - component: {fileID: 7119353301477827290}
   m_Layer: 0
   m_Name: Spider King
   m_TagString: Untagged
@@ -805,20 +804,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2888064194524171630}
   m_Enabled: 1
---- !u!114 &7119353301477827290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9220383817017189041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 9220383817028693519}
 --- !u!1 &9220383817017189043
 GameObject:
   m_ObjectHideFlags: 0

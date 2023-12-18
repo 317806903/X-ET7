@@ -802,6 +802,11 @@ namespace YooAsset
 			//_bundleServices.ReLoadMap();
 			_isInitialize = false;
 		}
+
+		public void ResetHostServer(string hostServer)
+		{
+			((HostPlayModeImpl)_bundleServices)?.ResetHostServer(hostServer);
+		}
 		#endregion
 
 		#region 调试方法

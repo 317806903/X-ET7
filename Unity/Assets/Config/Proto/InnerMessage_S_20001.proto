@@ -148,6 +148,21 @@ message G2R_GetLoginKey // IActorResponse
 	string Message = 3;
 	int64 Key = 4;
 	int64 GateId = 5;
+	int32 IsFirstLogin = 6;
+}
+
+//ResponseType G2R_GetGatePlayerCount
+message R2G_GetGatePlayerCount // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2R_GetGatePlayerCount // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 PlayerCount = 4;
 }
 
 //ResponseType A2G_LoginByAccount
@@ -165,6 +180,7 @@ message A2G_LoginByAccount // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 PlayerId = 4;
+	int32 IsFirstLogin = 5;
 }
 
 //ResponseType A2G_GetAccountInfo
@@ -423,6 +439,20 @@ message R2G_ChgRoomBattleLevelCfg // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType M2R_GetDynamicMapCount
+message R2M_GetDynamicMapCount // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2R_GetDynamicMapCount // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 DynamicMapCount = 4;
+}
+
 //ResponseType M2R_CreateDynamicMap
 message R2M_CreateDynamicMap // IActorRequest
 {
@@ -624,6 +654,23 @@ message R2G_GetRank // IActorResponse
 	bytes RankShowComponentBytes = 4;
 }
 
+//ResponseType R2G_GetRankedMoreThan
+message G2R_GetRankedMoreThan // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 RankType = 3;
+	int64 Score = 4;
+}
+
+message R2G_GetRankedMoreThan // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 RankedMoreThan = 4;
+}
+
 //ResponseType R2G_SetPlayerRank
 message G2R_SetPlayerRank // IActorRequest
 {
@@ -663,6 +710,7 @@ message G2P_SetPlayerCache // IActorRequest
 	int64 PlayerId = 2;
 	int32 PlayerModelType = 3;
 	bytes PlayerModelComponentBytes = 4;
+	repeated string SetPlayerKeys = 5;
 }
 
 message P2G_SetPlayerCache // IActorResponse

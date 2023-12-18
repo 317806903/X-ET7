@@ -5,5 +5,6 @@
 	{
 		public DlgGameModeARViewComponent View { get => this.GetComponent<DlgGameModeARViewComponent>(); }
 
+		public long Timer;
 	}
 }

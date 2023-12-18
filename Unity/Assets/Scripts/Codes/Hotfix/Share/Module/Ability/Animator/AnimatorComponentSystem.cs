@@ -33,7 +33,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(AnimatorComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -48,11 +48,22 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void SetAnimatorMotion(this AnimatorComponent self, AnimatorMotionName animatorMotionName)
+        public static void SetAnimatorMotion(this AnimatorComponent self, AnimatorMotionName animatorMotionName, bool isOnlySelfShow)
         {
+            self.isOnlySelfShow = isOnlySelfShow;
             if (self.name != animatorMotionName)
             {
                 self.isNeedNoticeClient = true;
+            }
+            else
+            {
+                if (self.name == AnimatorMotionName.None || ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.name))
+                {
+                }
+                else
+                {
+                    self.isNeedNoticeClient = true;
+                }
             }
             self.name = animatorMotionName;
             self.animatorTickTime = TimeHelper.ServerNow();
@@ -75,6 +86,7 @@ namespace ET.Ability
             EventType.SyncPlayAnimator _SyncPlayAnimator = new()
             {
                 unit = self.GetUnit(),
+                isOnlySelfShow = self.isOnlySelfShow,
             };
             EventSystem.Instance.Publish(self.DomainScene(), _SyncPlayAnimator);
         }

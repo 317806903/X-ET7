@@ -56,6 +56,11 @@ namespace ET.Client
         /// <returns></returns>
         public static T GetDlgLogic<T>(this UIComponent self,bool isNeedShowState = false) where  T : Entity,IUILogic
         {
+            if (UIPathComponent.Instance == null || UIPathComponent.Instance.WindowTypeIdDict == null)
+            {
+                return null;
+            }
+
             WindowID windowsId = self.GetWindowIdByGeneric<T>();
             UIBaseWindow baseWindow = self.GetUIBaseWindow(windowsId);
             if ( null == baseWindow )
@@ -322,6 +327,10 @@ namespace ET.Client
             {
                 self.LoadBaseWindows(baseWindow);
             }
+            else
+            {
+                baseWindow.uiTransform.SetAsLastSibling();
+            }
             return baseWindow;
         }
 
@@ -350,6 +359,10 @@ namespace ET.Client
                 if (!baseWindow.IsPreLoad)
                 {
                     await self.LoadBaseWindowsAsync(baseWindow);
+                }
+                else
+                {
+                    baseWindow.uiTransform.SetAsLastSibling();
                 }
                 return baseWindow;
             }

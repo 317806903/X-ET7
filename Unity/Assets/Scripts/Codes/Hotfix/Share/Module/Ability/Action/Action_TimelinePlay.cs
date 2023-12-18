@@ -12,7 +12,7 @@ namespace ET.Ability
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
 
-			List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext);
+			ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext);
 			if (list == null)
 			{
 				return;
@@ -22,6 +22,7 @@ namespace ET.Ability
 			{
 				await ET.Ability.TimelineHelper.PlayTimeline(list[i], unit.Id, actionCfgTimelinePlay.NewTimelineCfgId, actionContext);
 			}
+			list.Dispose();
 			await ETTask.CompletedTask;
 		}
 	}

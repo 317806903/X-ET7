@@ -19,6 +19,11 @@ namespace ET.AbilityConfig
         BuffTagGroupType3 = 3,
         BuffTagGroupType4 = 4,
         BuffTagGroupCDDown = 5,
+        BuffTagGroupTowerFire = 6,
+        BuffTagGroupTowerLianJi = 7,
+        BuffTagGroupTowerwitch = 8,
+        BuffTagGroupTowerZaiE = 9,
+        BuffTagGroupTowerCurse = 10,
     }
 
 } 

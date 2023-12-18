@@ -8,6 +8,7 @@ namespace ET
     [ChildOf(typeof(RankShowComponent))]
     public class RankShowItemComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {
+        public int rank;
         public long score;
         public long playerId;
         public long recordTime;

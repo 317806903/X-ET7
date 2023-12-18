@@ -31,6 +31,12 @@ namespace YooAsset
 			return operation;
 		}
 
+		public void ResetHostServer(string hostServer)
+		{
+			_defaultHostServer = hostServer;
+			_fallbackHostServer = hostServer;
+		}
+
 		public void ReLoadMap()
 		{
 			_activeManifest.ResetInitAssetPathMapping();

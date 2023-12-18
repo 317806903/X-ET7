@@ -25,7 +25,7 @@ namespace ET.Server
 			if (canPut == false)
 			{
 				response.Error = ErrorCode.ERR_LogicError;
-				response.Message = "当前放置位置 没法连通大本营,请重新选位置";
+				response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Tip_NoWayToConnectHome");
 			}
 			else
 			{

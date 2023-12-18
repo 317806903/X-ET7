@@ -11,9 +11,9 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
-			
+
 			ActionCfg_CoinAdd actionCfgCoinAdd = ActionCfg_CoinAddCategory.Instance.Get(actionId);
-			CoinHelper.DealCoinAdd(unit, actionCfgCoinAdd, selectHandle, actionContext);
+			CoinHelper.DealCoinAdd(unit, actionCfgCoinAdd, selectHandle, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

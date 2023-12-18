@@ -30,5 +30,10 @@ namespace ET.Client
 		WindowID_ARRoomPVP,
 		WindowID_RankEndlessChallenge,
 		WindowID_BattleDragItem,
+		WindowID_VideoShow,
+		WindowID_PhysicalStrength,
+		WindowID_PhysicalStrengthTip,
+		WindowID_ChallengeMode,
+		WindowID_CommonLoading,
 	}
 }

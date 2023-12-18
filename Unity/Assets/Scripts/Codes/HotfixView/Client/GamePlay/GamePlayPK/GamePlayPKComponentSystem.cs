@@ -15,13 +15,40 @@ namespace ET.Client
 		{
 			protected override void Update(GamePlayPKComponent self)
 			{
-				if (self.DomainScene().SceneType != SceneType.Current)
+				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Current)
 				{
 					return;
 				}
 
+				self.InitClient();
 				self.DoUpdate();
 			}
+		}
+
+		public static void InitClient(this GamePlayPKComponent self)
+		{
+			if (self.isInitClient)
+			{
+				return;
+			}
+			self.isInitClient = true;
+
+			ET.Client.ModelClickManagerHelper.SetModelClickCallBack(self.DomainScene(), (rayHit) =>
+			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
+				self.DoClickModel(rayHit);
+			});
+			ET.Client.ModelClickManagerHelper.SetModelPressCallBack(self.DomainScene(), (rayHit) =>
+			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
+				self.DoPressModel(rayHit);
+			});
 		}
 
 		public static void DoUpdate(this GamePlayPKComponent self)
@@ -30,11 +57,10 @@ namespace ET.Client
 			self.SendARCameraPos();
 		}
 
-		public static (bool, bool) ChkIsHitMapOrTower(this GamePlayPKComponent self, RaycastHit hit)
+		public static bool ChkIsHitMap(this GamePlayPKComponent self, RaycastHit hit)
 		{
 			GameObject hitGo = hit.collider.gameObject;
 			bool isHitMap = false;
-			bool isHitTower = false;
 			if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(hitGo))
 			{
 				isHitMap = true;
@@ -43,38 +69,53 @@ namespace ET.Client
 			{
 				isHitMap = true;
 			}
-			else
-			{
-				isHitTower = true;
-			}
 
-			return (isHitMap, isHitTower);
+			return isHitMap;
 		}
 
 		public static void DoClickModel(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			(bool isHitMap, bool isHitTower) = self.ChkIsHitMapOrTower(hit);
+			self.DoCancelHitLast();
+			bool isHitMap = self.ChkIsHitMap(hit);
 			if (isHitMap)
 			{
 				self.OnHitMap(hit);
 			}
-
-			if (isHitTower)
+			else
 			{
-				self.DoHitTower(hit);
+				bool isHitTower = ET.Client.ModelClickManagerHelper.ChkIsHitTowerClickInfo(self.DomainScene(), hit);
+				if (isHitTower)
+				{
+					self.DoHitTower(hit);
+				}
+
+				bool isHitPlayerUnit = ET.Client.ModelClickManagerHelper.ChkIsHitPlayerUnitClickInfo(self.DomainScene(), hit);
+				if (isHitPlayerUnit)
+				{
+					self.DoHitPlayerUnit(hit);
+				}
 			}
 		}
 
 		public static void DoPressModel(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			(bool isHitMap, bool isHitTower) = self.ChkIsHitMapOrTower(hit);
+			bool isHitMap = self.ChkIsHitMap(hit);
 			if (isHitMap)
 			{
 			}
-
-			if (isHitTower)
+			else
 			{
-				self.DoPressHitTower(hit);
+				bool isHitTower = ET.Client.ModelClickManagerHelper.ChkIsHitTowerClickInfo(self.DomainScene(), hit);
+				if (isHitTower)
+				{
+					self.DoPressHitTower(hit);
+				}
+
+				bool isHitPlayerUnit = ET.Client.ModelClickManagerHelper.ChkIsHitPlayerUnitClickInfo(self.DomainScene(), hit);
+				if (isHitPlayerUnit)
+				{
+					self.DoPressPlayerUnit(hit);
+				}
 			}
 		}
 
@@ -87,7 +128,7 @@ namespace ET.Client
 
 		public static void OnPlayerMoveTarget(this GamePlayPKComponent self, float3 targetPos)
 		{
-			C2M_PathfindingResult c2MPathfindingResult = new C2M_PathfindingResult();
+			C2M_PathfindingResult c2MPathfindingResult = new ();
 			c2MPathfindingResult.Position = targetPos - new float3(0, 0f, 0);
 			ET.Client.SessionHelper.GetSession(self.DomainScene()).Send(c2MPathfindingResult);
 		}
@@ -95,56 +136,99 @@ namespace ET.Client
 		public static void DoHitTower(this GamePlayPKComponent self, RaycastHit hit)
 		{
 			Log.Debug($" hit.collider.name[{hit.collider.name}]");
+			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
+			curTowerShowComponent?.DoSelect();
+		}
+
+		public static void DoHitPlayerUnit(this GamePlayPKComponent self, RaycastHit hit)
+		{
+			Log.Debug($" hit.collider.name[{hit.collider.name}]");
+			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetPlayerUnitInfoFromClickInfo(self.DomainScene(), hit);
+			curPlayerUnitShowComponent?.DoSelect();
+		}
+
+		public static void DoCancelHitLast(this GamePlayPKComponent self)
+		{
+			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetLastClickTowerInfo(self.DomainScene());
+			curTowerShowComponent?.CancelSelect();
+			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetLastClickPlayerUnitInfo(self.DomainScene());
+			curPlayerUnitShowComponent?.CancelSelect();
 		}
 
 		public static void DoPressHitTower(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
-			if (playerOwnerTowersComponent == null)
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
+			if (myPlayerId != curTowerShowComponent.towerComponent.playerId)
 			{
 				return;
 			}
-			GameObject hitGo = hit.collider.gameObject;
-
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-			foreach (List<long> unitIds in playerOwnerTowersComponent.playerId2unitTowerId.Values)
-			{
-				foreach (long unitId in unitIds)
-				{
-					Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
-					if (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
-					{
-						continue;
-					}
-
-					TowerShowComponent towerShowComponent = unit.GetComponent<TowerShowComponent>();
-					if (towerShowComponent != null)
-					{
-						if (towerShowComponent.transCollider.gameObject == hitGo)
-						{
-							towerShowComponent.CancelSelect();
-							self.DoMoveTower(towerShowComponent.towerComponent.towerCfgId, unitId);
-						}
-						else
-						{
-							towerShowComponent.CancelSelect();
-						}
-					}
-				}
-			}
+			self.DoMoveTower(curTowerShowComponent.towerComponent.towerCfgId, curTowerShowComponent.GetUnit().Id);
 		}
 
 		public static void DoMoveTower(this GamePlayPKComponent self, string towerCfgId, long towerUnitId)
 		{
 			Handheld.Vibrate();
 
+			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+			GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
+			if (gameObjectComponent != null)
+			{
+				gameObjectComponent.ChgColor(true);
+			}
 			DlgBattleDragItem_ShowWindowData showWindowData = new()
 			{
-				battleDragItemType = BattleDragItemType.MoveTower,
+				battleDragItemType = BattleDragItemType.PKMoveTower,
 				battleDragItemParam = towerCfgId,
 				moveTowerUnitId = towerUnitId,
-				callBack = () =>
+				sceneIn = self.DomainScene(),
+				callBack = (scene) =>
 				{
+					Unit unitTower = Ability.UnitHelper.GetUnit(scene, towerUnitId);
+					GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
+					if (gameObjectComponent != null)
+					{
+						gameObjectComponent.ChgColor(false);
+					}
+				},
+			};
+			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
+		}
+
+		public static void DoPressPlayerUnit(this GamePlayPKComponent self, RaycastHit hit)
+		{
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetPlayerUnitInfoFromClickInfo(self.DomainScene(), hit);
+			if (myPlayerId != curPlayerUnitShowComponent.playerUnitComponent.playerId)
+			{
+				return;
+			}
+			self.DoMovePlayer(curPlayerUnitShowComponent.GetUnit().Id);
+		}
+
+		public static void DoMovePlayer(this GamePlayPKComponent self, long towerUnitId)
+		{
+			Handheld.Vibrate();
+
+			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+			GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
+			if (gameObjectComponent != null)
+			{
+				gameObjectComponent.ChgColor(true);
+			}
+			DlgBattleDragItem_ShowWindowData showWindowData = new()
+			{
+				battleDragItemType = BattleDragItemType.PKMovePlayer,
+				moveTowerUnitId = towerUnitId,
+				sceneIn = self.DomainScene(),
+				callBack = (scene) =>
+				{
+					Unit unitTower = Ability.UnitHelper.GetUnit(scene, towerUnitId);
+					GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
+					if (gameObjectComponent != null)
+					{
+						gameObjectComponent.ChgColor(false);
+					}
 				},
 			};
 			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
@@ -245,9 +329,9 @@ namespace ET.Client
 			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 10000, _groundLayerMask))
 			{
 				cameraHitPos = hitInfo.point;
+				ET.Client.GamePlayHelper.SendARCameraPos(self.DomainScene(), cameraPos, cameraHitPos).Coroutine();
 			}
 
-			ET.Client.GamePlayHelper.SendARCameraPos(self.DomainScene(), cameraPos, cameraHitPos).Coroutine();
 		}
 
 

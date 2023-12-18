@@ -123,9 +123,9 @@ MonoBehaviour:
   accelerateFactor: 3
   updateCreatDefualtTime: 0
   moveLifeTime: 0.6
-  shootTextMinHeight: 0
+  shootTextMinHeight: 50
   shootTextMaxHeight: 100
-  shootTextScaleFactor: 0.3
+  shootTextScaleFactor: 0.5
   delayMoveTime: 0.2
   initializedVerticalPositionOffset: 1.5
   initializedHorizontalPositionOffset: 0

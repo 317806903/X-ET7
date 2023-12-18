@@ -11,6 +11,8 @@ namespace ET.Ability
         ///</summary>
         public long unitId;
 
+        public bool isNeedChkHoldTime;
+
         ///<summary>
         ///速度，单位：米/秒
         ///</summary>

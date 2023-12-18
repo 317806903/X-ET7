@@ -30,7 +30,7 @@ namespace ET
 		{
 			protected override void FixedUpdate(RestTimeComponent self)
 			{
-				if (self.DomainScene().SceneType != SceneType.Map)
+				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
 				{
 					return;
 				}
@@ -99,7 +99,10 @@ namespace ET
 			}
 			if (needTransToBattle)
 			{
-				self.GetGamePlayTowerDefense().TransToBattle().Coroutine();
+
+				EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_RestTimeEnd());
+
+				self.GetGamePlayTowerDefense().DoNextStep().Coroutine();
 				return;
 			}
 		}

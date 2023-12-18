@@ -183,6 +183,7 @@ public class SerializableDictionary<TKey, TValue>:
     public void Clear()
     {
         list.Clear();
+        _keyPositions = new Lazy<Dictionary<TKey, int>>(MakeKeyPositions);
     }
 
     public bool Contains(KeyValuePair<TKey, TValue> kvp)

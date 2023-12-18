@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MongoDB.Bson;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,14 +19,24 @@ namespace ET
             AddTmpMethodName(methoedName);
         }
 
-        public static void Set(Type type, string methodName, string arg = null)
+        public static void SetMethodName(Type type, string methodName, Dictionary<string, object> methodParamDic = null)
         {
-            string methoedName = type.FullName + "." + methodName + "(" + arg + ")";
+            string methodParam = "";
+            if (methodParamDic != null)
+            {
+                methodParam = ET.JsonHelper.ToJson(methodParamDic);
+            }
+            string methoedName = type.FullName + "." + methodName + "(" + methodParam + ")";
             AddTmpMethodName(methoedName);
         }
 
         static string[] GetTmpMethodNameArr()
         {
+            string tmpMethodNames = GetTmpMethodNames();
+            if (string.IsNullOrEmpty(tmpMethodNames))
+            {
+                return null;
+            }
             return GetTmpMethodNames().Split(';').Where(value => value != null && value.Trim() != "").ToArray();
         }
 
@@ -55,11 +67,11 @@ namespace ET
         {
             var methods = GetTmpMethodNameArr();
             SetTmpMethodNames("");
-            if (methods.Length == 0)
+            if (methods == null || methods.Length == 0)
             {
                 return;
             }
-            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1f));
+            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(0.5f));
             // while(assemblyBuilder.status != AssemblyBuilderStatus.Finished)
             //     System.Threading.Thread.Sleep(10);
             foreach (var method in methods)
@@ -90,9 +102,26 @@ namespace ET
                 if (method1 != null && argName.Trim() == "")
                     method1.Invoke(null, null);
                 if (method2 != null && argName.Trim() != "")
-                    method2.Invoke(null, new object[] { argName });
+                {
+                    CallMethod(method2, argName);
+                }
             }
 
+        }
+
+        public static void CallMethod(MethodInfo invokeMethodWithNamedArgument, string methodParam)
+        {
+            Dictionary<string, object> methodParamDic = ET.JsonHelper.FromJson<Dictionary<string, object>>(methodParam);
+            ParameterInfo[] parameterInfos = invokeMethodWithNamedArgument.GetParameters();
+            object[] parameters = new object[parameterInfos.Length];
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (methodParamDic.TryGetValue(parameterInfos[i].Name, out var value))
+                {
+                    parameters[i] = value;
+                }
+            }
+            invokeMethodWithNamedArgument.Invoke(null, parameters);
         }
     }
 }

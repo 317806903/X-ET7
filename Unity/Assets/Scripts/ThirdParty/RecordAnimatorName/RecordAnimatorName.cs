@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ET
 {
+    [ExecuteInEditMode]
     public class RecordAnimatorName : MonoBehaviour
     {
         public SerializableDictionary<string, string> recordDic = new();
@@ -17,6 +19,14 @@ namespace ET
         }
 
 #if UNITY_EDITOR
+        private void Awake()
+        {
+            if (Application.isPlaying == false)
+            {
+                ResetRecordDic();
+            }
+        }
+
         [ContextMenu("---ResetRecordDic")]
         public void ResetRecordDic()
         {
@@ -30,8 +40,15 @@ namespace ET
             this.recordDic.Clear();
             foreach (UnityEditor.Animations.ChildAnimatorState childAnimatorState in animatorStateMachine.states)
             {
+                if (childAnimatorState.state.motion == null)
+                {
+                    Debug.LogError($"childAnimatorState.state.motion == null [{this.gameObject.name}][{childAnimatorState.state.name}]");
+                    continue;
+                }
                 this.recordDic[childAnimatorState.state.name] = childAnimatorState.state.motion.name;
             }
+            UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.AssetDatabase.SaveAssets();
         }
 #endif
     }

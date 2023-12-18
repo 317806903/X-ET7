@@ -50,6 +50,7 @@ public sealed partial class ParabolaMoveTweenType:  MoveTweenType
     public override string ToString()
     {
         return "{ "
+        + "HoldTime:" + HoldTime + ","
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "ParabolaTime:" + ParabolaTime + ","

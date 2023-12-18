@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -41,7 +42,7 @@ namespace ET
             {
                 return null;
             }
-            ListComponent<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false);
+            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false);
             Unit unitHostileForce = null;
             foreach (Unit hostileForce in hostileForces)
             {
@@ -85,6 +86,8 @@ namespace ET
             // 停在当前位置
             unit.Stop(WaitTypeError.Cancel);
 
+            aiComponent.ResetRepeatedTimerByAttack();
+
             //Log.Debug("开始攻击");
 
             bool ret;
@@ -100,6 +103,7 @@ namespace ET
                 unitHostileForce = GetHostileForce(unit, skillAttackDis);
                 if (unitHostileForce == null || Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
                 {
+                    await ET.Ability.MoveOrIdleHelper.DoIdle(unit);
                     aiComponent.Cancel();
                     return;
                 }

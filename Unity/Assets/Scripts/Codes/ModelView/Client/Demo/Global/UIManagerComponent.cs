@@ -16,6 +16,7 @@ namespace ET.Client
 
         public bool isInitUI;
         public bool isLandscape;
+        public Transform WorldHubRoot{ get; set; }
         public Transform NormalRoot{ get; set; }
         public Transform PopUpRoot{ get; set; }
         public Transform FixedRoot{ get; set; }

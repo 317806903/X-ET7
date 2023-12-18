@@ -67,6 +67,22 @@ namespace ET.Client
                             gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                         }
 
+                        if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+                        {
+                            EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+                            {
+                                eventName = "InfinityStarted",
+                                properties = new()
+                                {
+                                    {"player_num", gamePlayComponent.GetPlayerList().Count},
+                                }
+                            });
+
+                            EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+                            {
+                                eventName = "InfinityEnded",
+                            });
+                        }
                         if (gamePlayComponent.IsAR())
                         {
                             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTowerAR>();
@@ -114,6 +130,23 @@ namespace ET.Client
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
                         gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
+                    }
+
+                    if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+                    {
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+                        {
+                            eventName = "InfinityStarted",
+                            properties = new()
+                            {
+                                {"player_num", gamePlayComponent.GetPlayerList().Count},
+                            }
+                        });
+
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+                        {
+                            eventName = "InfinityEnded",
+                        });
                     }
 
                     if (gamePlayComponent.IsAR())

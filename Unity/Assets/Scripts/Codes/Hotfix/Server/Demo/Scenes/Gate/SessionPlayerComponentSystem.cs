@@ -21,11 +21,16 @@ namespace ET.Server
 				return;
 			}
 			long playerId = self.Player.Id;
-			PlayerComponent playerComponent = self.DomainScene().GetComponent<PlayerComponent>();
 			if (LocationProxyComponent.Instance == null)
 			{
 				return;
             }
+			if (ConfigComponent.Instance == null)
+			{
+				return;
+            }
+
+			PlayerComponent playerComponent = self.DomainScene().GetComponent<PlayerComponent>();
 
             long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId);
 			if (locationActorId != self.Player.InstanceId)

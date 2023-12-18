@@ -18,10 +18,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = (PlayerTowerType)_buf.ReadInt();
-        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
-        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
-        Icon = _buf.ReadString();
+        QualityRank = (QualityRank)_buf.ReadInt();
         Radius = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RelativePosition = new System.Collections.Generic.List<System.Numerics.Vector3>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Numerics.Vector3 _e0;  _e0 = _buf.ReadVector3(); RelativePosition.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);UnitId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); UnitId.Add(_e0);}}
@@ -46,23 +44,19 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// 这是id
     /// </summary>
     public string Id { get; private set; }
+    public ItemCfg Id_Ref { get; private set; }
     /// <summary>
     /// 类型
     /// </summary>
     public PlayerTowerType Type { get; private set; }
-    public string Name { get; private set; }
-    public string Name_l10n_key { get; }
-    public string Desc { get; private set; }
-    public string Desc_l10n_key { get; }
     /// <summary>
     /// 标签
     /// </summary>
     public System.Collections.Generic.List<string> Labels { get; private set; }
     /// <summary>
-    /// icon资源路径
+    /// 品阶
     /// </summary>
-    public string Icon { get; private set; }
-    public ResIconCfg Icon_Ref { get; private set; }
+    public QualityRank QualityRank { get; private set; }
     /// <summary>
     /// 半径
     /// </summary>
@@ -119,7 +113,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
+        this.Id_Ref = (_tables["ItemCfgCategory"] as ItemCfgCategory).GetOrDefault(Id);
         { UnitCfgCategory __table = (UnitCfgCategory)_tables["UnitCfgCategory"]; this.UnitId_Ref = new System.Collections.Generic.List<UnitCfg>(); foreach(var __e in UnitId) { this.UnitId_Ref.Add(__table.GetOrDefault(__e)); } }
         this.NextTowerId_Ref = (_tables["TowerDefense_TowerCfgCategory"] as TowerDefense_TowerCfgCategory).GetOrDefault(NextTowerId);
         PostResolve();
@@ -127,8 +121,6 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        Name = translator(Name_l10n_key, Name);
-        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -136,10 +128,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Type:" + Type + ","
-        + "Name:" + Name + ","
-        + "Desc:" + Desc + ","
         + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
-        + "Icon:" + Icon + ","
+        + "QualityRank:" + QualityRank + ","
         + "Radius:" + Radius + ","
         + "RelativePosition:" + Bright.Common.StringUtil.CollectionToString(RelativePosition) + ","
         + "UnitId:" + Bright.Common.StringUtil.CollectionToString(UnitId) + ","

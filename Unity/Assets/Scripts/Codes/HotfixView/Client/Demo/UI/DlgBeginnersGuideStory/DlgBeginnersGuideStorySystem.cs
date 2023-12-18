@@ -4,6 +4,7 @@ using System;
 using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace ET.Client
 {
@@ -12,15 +13,25 @@ namespace ET.Client
 	{
 		public static void RegisterUIEvent(this DlgBeginnersGuideStory self)
 		{
-			self.View.E_NextButton.AddListenerAsync(self.DoNext);
+			self.View.E_BG1Button.AddListenerAsync(self.DoNext);
+			self.View.E_BG2Button.AddListenerAsync(self.DoNext);
+			self.View.E_BG3Button.AddListenerAsync(self.DoNext);
+			self.View.E_BG4Button.AddListenerAsync(self.DoNext);
+			self.View.E_BG5Button.AddListenerAsync(self.DoNext);
 		}
 
 		public static void ShowWindow(this DlgBeginnersGuideStory self, ShowWindowData contextData = null)
 		{
-			self.index = 0;
+			self.index = 1;
 			DlgBeginnersGuideStory_ShowWindowData dlgBeginnersGuideStoryShowWindowData = (DlgBeginnersGuideStory_ShowWindowData)contextData;
 			self.finishCallBack = dlgBeginnersGuideStoryShowWindowData.finishCallBack;
 
+			for (int i = 0; i < self.totalNum; i++)
+			{
+				Transform trans = self.View.uiTransform.transform.Find($"story{i + 1}");
+				trans.gameObject.SetActive(false);
+			}
+			self.View.E_ImgBGImage.SetVisible(true);
 			self.DoNext().Coroutine();
 		}
 
@@ -33,33 +44,77 @@ namespace ET.Client
 
 		public static async ETTask ShowStory(this DlgBeginnersGuideStory self, int index)
 		{
-			var list = GlobalSettingCfgCategory.Instance.BeginnersGuideImgs;
-			if (index < list.Count)
+			if (index < self.totalNum)
 			{
-				foreach (var info in list[index])
-				{
-					string iconKey = info.Key;
-					string iconPath = ResIconCfgCategory.Instance.Get(iconKey).ResName;
-					string contextKey = info.Value;
-					string context = LocalizeComponent.Instance.GetTextValue(contextKey);
-					await self.DoShowStory(iconPath, context);
-				}
+				await self.DoShowStory(index);
+			}
+			else if (index == self.totalNum)
+			{
+				await self.ShowVideo(index);
 			}
 			else
 			{
-				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBeginnersGuideStory>();
+				UIManagerHelper.GetUIComponent(self.DomainScene()).CloseWindow<DlgBeginnersGuideStory>();
 				self.finishCallBack?.Invoke();
 			}
 		}
 
-		public static async ETTask DoShowStory(this DlgBeginnersGuideStory self, string iconPath, string context)
+		public static async ETTask DoShowStory(this DlgBeginnersGuideStory self, int index)
 		{
-			Image image = self.View.E_StoryImgImage;
-			string imgPath = iconPath;
-			await image.SetImageByPath(imgPath);
+			Transform oldTrans = null;
+			if (index > 1)
+			{
+				oldTrans = self.View.uiTransform.transform.Find($"story{index-1}");
+				if (index == 2)
+				{
+					self.View.E_ImgBGImage.SetVisible(true);
+				}
+			}
+			if (oldTrans != null)
+			{
+				Animator oldAnimator = oldTrans.gameObject.GetComponent<Animator>();
+				oldAnimator.Play("BeginnersGuideStory_end", 0, 0);
+			}
+			Transform newTrans = self.View.uiTransform.transform.Find($"story{index}");
+			newTrans.gameObject.SetActive(true);
+			Animator animator = newTrans.gameObject.GetComponent<Animator>();
+			animator.Play("BeginnersGuideStory_start", 0, 0);
 
-			self.View.E_TextContextTextMeshProUGUI.text = context;
 			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask ShowVideo(this DlgBeginnersGuideStory self, int index)
+		{
+			await self.DoShowStory(index);
+			Transform newTrans = self.View.uiTransform.transform.Find($"story{index}");
+			newTrans.gameObject.SetActive(true);
+			VideoPlayer videoPlayer = self.View.uiTransform.transform.Find("VideoPlay").gameObject.GetComponent<VideoPlayer>();
+			RawImage image = newTrans.Find("VideoImg").gameObject.GetComponent<RawImage>();
+			AudioSource audioSource = null;
+
+			videoPlayer.source = VideoSource.VideoClip;
+			if (audioSource == null)
+			{
+				videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
+			}
+			else
+			{
+				videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+				//videoPlayer.EnableAudioTrack(0, true);
+				videoPlayer.SetTargetAudioSource(0, audioSource);
+			}
+			videoPlayer.Prepare();
+			while (videoPlayer.isPrepared == false)
+			{
+				await TimerComponent.Instance.WaitFrameAsync();
+			}
+
+			image.texture = videoPlayer.texture;
+			videoPlayer.Play();
+			while (videoPlayer.isPlaying)
+			{
+				await TimerComponent.Instance.WaitFrameAsync();
+			}
 		}
 
 	}

@@ -45,6 +45,7 @@ public sealed partial class StraightMoveTweenType:  MoveTweenType
     public override string ToString()
     {
         return "{ "
+        + "HoldTime:" + HoldTime + ","
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "}";

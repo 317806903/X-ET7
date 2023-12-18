@@ -95,12 +95,8 @@ namespace ET.Client
             {
                 playerBaseInfoComponent.PlayerName = self.View.E_InputFieldTMP_InputField.text;
                 playerBaseInfoComponent.IconIndex = self.curSelectedIconIndex;
-                await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo);
+                await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"PlayerName", "IconIndex"});
             }
-            /*PlayerComponent playerComponent = ET.Client.PlayerHelper.GetMyPlayerComponent(self.DomainScene());
-            playerComponent.AccountName = self.View.E_InputFieldTMP_InputField.text;
-            string AccountName = "AccountName";
-            PlayerPrefs.SetString(AccountName,playerComponent.AccountName);*/
 
             self.HidePersonalInfo().Coroutine();
         }

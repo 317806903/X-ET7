@@ -37,6 +37,7 @@ namespace ET.Client
         //判断塔 是否被放置
         ChkTowerPut,
         ChkIsNotShowStory,
+        ChkIsNotShowVideo,
         ChkWaitTime,
         ChkARMeshShow,
     }
@@ -46,10 +47,14 @@ namespace ET.Client
         None,
         //进入故事展示
         ShowStory,
+        ShowVideo,
         //进入新手关卡
         EnterGuideBattle,
         ShowPointTower,
         HidePointTower,
         HideTowerInfo,
+        ShowBattleTowerReady,
+        ShowBattleTowerQuit,
+        ShowScanQuit,
     }
 }

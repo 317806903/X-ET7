@@ -737,7 +737,6 @@ GameObject:
   - component: {fileID: 1162074717682809297}
   - component: {fileID: 1162074717669370099}
   - component: {fileID: 4879786697657383135}
-  - component: {fileID: 3185324186299538476}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -849,20 +848,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6483898806833873208}
   m_Enabled: 1
---- !u!114 &3185324186299538476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162074717683033585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 1162074717669370099}
 --- !u!1 &1162074717683033587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,7 +1368,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: 0ac6ee151615bef489e8c2c5e151302d, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 9a7c9aff87b8e35429c84e7fd2a49458, type: 2}
   m_Bones:
   - {fileID: 1162074717682809337}
   - {fileID: 1162074717682809301}

@@ -8,7 +8,10 @@ namespace ET
     [ChildOf(typeof(RankShowPlayerComponent))]
     public class RankShowComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public SortedDictionary<int, long> rankIndex2PlayerId = new();
+        public List<long> rankList = new();
+        [BsonIgnore]
+        public List<EntityRef<RankShowItemComponent>> rankListTmp = new();
+
+        public long myRankShowItemComponentId;
     }
 }

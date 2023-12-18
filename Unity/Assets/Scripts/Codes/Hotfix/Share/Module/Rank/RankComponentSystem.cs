@@ -7,14 +7,66 @@ namespace ET
     [FriendOf(typeof(RankComponent))]
     public static class RankComponentSystem
     {
-        public static SortedDictionary<int, RankItemComponent> GetRankShow(this RankComponent self, long playerId)
+        public static (int, RankItemComponent) GetMyRankShow(this RankComponent self, long playerId)
         {
-            SortedDictionary<int, RankItemComponent> rankIndex2PlayerId = new();
+            RankItemComponent myRankItemComponent = self.GetChild<RankItemComponent>(playerId);
+
             int myRank = -1;
             if (self.playerId2Score.TryGetValue(playerId, out long score))
             {
                 myRank = (int)self.SkipList.GetRank(score, playerId);
+
+                if ((ulong)myRank > self.topRankPlayerCount)
+                {
+                    myRank = -1;
+                }
             }
+
+            return (myRank, myRankItemComponent);
+        }
+
+        public static ulong GetRankByScore(this RankComponent self, long score)
+        {
+            ulong rank = self.SkipList.GetRank(score, null);
+
+            if ((ulong)rank > self.topRankPlayerCount)
+            {
+                rank = 99999;
+            }
+            return rank;
+        }
+
+        public static int GetRankedMoreThan(this RankComponent self, long score)
+        {
+            ulong rank = self.GetRankByScore(score);
+            int rankedMoreThan = 0;
+            if (self.rankTotalNum == 0)
+            {
+                return 0;
+            }
+
+            if (rank > self.rankTotalNum)
+            {
+                rank = self.rankTotalNum;
+            }
+
+            if (self.rankTotalNum < self.topRankPlayerCount)
+            {
+                rankedMoreThan = (int)((float)rank / self.rankTotalNum * 100);
+            }
+            else
+            {
+                rankedMoreThan = (int)((float)rank / self.rankTotalNum * 100);
+            }
+
+            return rankedMoreThan;
+        }
+
+        public static SortedDictionary<int, RankItemComponent> GetRankShow(this RankComponent self, long playerId)
+        {
+
+            (int myRank, _) = self.GetMyRankShow(playerId);
+            SortedDictionary<int, RankItemComponent> rankIndex2PlayerId = new();
 
             int showTotalCount = 30;
             int showMyCount = 2;

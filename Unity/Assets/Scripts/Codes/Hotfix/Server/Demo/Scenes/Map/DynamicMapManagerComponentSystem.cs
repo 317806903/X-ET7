@@ -46,7 +46,7 @@ namespace ET.Server
 
         public static int GetDynamicMapIndex(this DynamicMapManagerComponent self)
         {
-            for (int i = 10000; i < 20000; i++)
+            for (int i = 10000; i < 30000; i++)
             {
                 if (self.dynamicUsedIndexList.Contains(i) == false)
                 {

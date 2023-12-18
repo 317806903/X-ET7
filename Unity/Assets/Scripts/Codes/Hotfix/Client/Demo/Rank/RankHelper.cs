@@ -43,12 +43,24 @@ namespace ET.Client
 				        {
 					        rankShowComponent.Dispose();
 				        }
-				        rankShowComponent = rankShowPlayerComponent.SetRankShow(rankType, (RankShowComponent)entityModel);
+				        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
+				        rankShowComponent = rankShowPlayerComponent.SetRankShow(myPlayerId, rankType, (RankShowComponent)entityModel);
 			        }
 		        }
 
 		        return rankShowComponent;
 	        }
+        }
+
+        public static async ETTask<int> GetRankedMoreThan(Scene scene, RankType rankType, long score)
+        {
+	        (bool bRet, int rankedMoreThan) = await SendGetRankedMoreThanAsync(scene, rankType, score);
+	        if (bRet)
+	        {
+		        return rankedMoreThan;
+	        }
+
+	        return 0;
         }
 
         public static async ETTask<(bool, Entity)> SendGetRankShowAsync(Scene clientScene, RankType rankType)
@@ -68,6 +80,26 @@ namespace ET.Client
 		        byte[] rankShowComponentBytes = _G2C_GetRank.RankShowComponentBytes;
 		        Entity entity = MongoHelper.Deserialize<Entity>(rankShowComponentBytes);
 		        return (true, entity);
+	        }
+        }
+
+        public static async ETTask<(bool, int)> SendGetRankedMoreThanAsync(Scene clientScene, RankType rankType, long score)
+        {
+	        G2C_GetRankedMoreThan _G2C_GetRankedMoreThan = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRankedMoreThan()
+		        {
+			        RankType = (int)rankType,
+			        Score = score,
+		        }) as
+		        G2C_GetRankedMoreThan;
+	        if (_G2C_GetRankedMoreThan.Error != ET.ErrorCode.ERR_Success)
+	        {
+		        Log.Error($"SendGetRankShowAsync Error==1 msg={_G2C_GetRankedMoreThan.Message}");
+		        return (false, 0);
+	        }
+	        else
+	        {
+		        int rankedMoreThan = _G2C_GetRankedMoreThan.RankedMoreThan;
+		        return (true, rankedMoreThan);
 	        }
         }
 

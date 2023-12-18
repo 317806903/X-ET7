@@ -22,6 +22,9 @@ namespace ET.Ability
         {
             protected override void Destroy(MoveTweenObj self)
             {
+                self.moveTweenType = null;
+                self.selectHandle?.Dispose();
+                self.selectHandle = null;
             }
         }
 
@@ -30,7 +33,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(MoveTweenObj self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -44,9 +47,26 @@ namespace ET.Ability
         {
             self.unitId = unitId;
             self.moveTweenType = moveTweenType;
-            self.selectHandle = selectHandle;
             self.speed = moveTweenType.Speed;
             self.forward = selectHandle.direction;
+            self.isNeedChkHoldTime = true;
+            self.lastPosition = self.GetUnit().Position;
+
+            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            {
+            }
+            else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+            }
+            else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+            }
+            else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+            }
         }
 
         public static Unit GetUnit(this MoveTweenObj self)
@@ -58,43 +78,51 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             self.timeElapsed += timePassed;
+            if (self.isNeedChkHoldTime)
+            {
+                if (self.ChkHoldTime())
+                {
+                    return;
+                }
+            }
             self.lastPosition = self.GetUnit().Position;
             self.DoMoveTween(fixedDeltaTime);
+        }
+
+        public static bool ChkHoldTime(this MoveTweenObj self)
+        {
+            if (self.timeElapsed > self.moveTweenType.HoldTime)
+            {
+                self.timeElapsed -= self.moveTweenType.HoldTime;
+                self.isNeedChkHoldTime = false;
+                return false;
+            }
+            return true;
         }
 
         public static void DoMoveTween(this MoveTweenObj self, float fixedDeltaTime)
         {
             if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
-                ProfilerSample.BeginSample("StraightMoveTweenType");
                 self.DoMoveTween_Straight(straightMoveTweenType, fixedDeltaTime);
-                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
             {
-                ProfilerSample.BeginSample("TrackingMoveTweenType");
                 self.DoMoveTween_Tracking(trackingMoveTweenType, fixedDeltaTime);
-                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
             {
-                ProfilerSample.BeginSample("AroundMoveTweenType");
                 self.DoMoveTween_Around(aroundMoveTweenType, fixedDeltaTime);
-                ProfilerSample.EndSample();
             }
             else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
             {
                 if (self.selectHandle.selectHandleType == SelectHandleType.SelectDirection)
                 {
-                    ProfilerSample.BeginSample("TargetMoveTweenType SelectDirection");
                     self.DoMoveTween_Straight(self.moveTweenType as StraightMoveTweenType, fixedDeltaTime);
-                    ProfilerSample.EndSample();
                 }
                 else
                 {
-                    ProfilerSample.BeginSample("TargetMoveTweenType");
                     self.DoMoveTween_Target(targetMoveTweenType, fixedDeltaTime);
-                    ProfilerSample.EndSample();
                 }
             }
             //Log.Debug($" DoMoveTween {self.GetUnit().Position} {self.GetUnit().Forward}");
@@ -112,17 +140,11 @@ namespace ET.Ability
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
 
-            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Forward");
             self.GetUnit().Forward = self.forward;
-            ProfilerSample.EndSample();
 
-            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Position 11");
             float3 pos = self.GetUnit().Position;
             pos += math.normalize(self.forward) * self.speed * fixedDeltaTime;
-            ProfilerSample.EndSample();
-            ProfilerSample.BeginSample($"DoMoveTween_Straight self.GetUnit().Position 22");
             self.GetUnit().Position = pos;
-            ProfilerSample.EndSample();
         }
 
         /// <summary>
@@ -243,14 +265,40 @@ namespace ET.Ability
             SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
             if (selectHandleType == SelectHandleType.SelectUnits)
             {
-                if (self.selectHandle.unitIds.Count > 0)
+                if (self.selectHandle == null || self.selectHandle.unitIds == null)
+                {
+                    if (self.selectHandle == null)
+                    {
+                        Log.Error($"DoMoveTween_Target self.selectHandle == null");
+                    }
+                    else if (self.selectHandle.unitIds == null)
+                    {
+                        Log.Error($"DoMoveTween_Target self.selectHandle.unitIds == null");
+                    }
+
+                    Unit unitTmp = self.GetUnit();
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                }
+                else if (self.selectHandle.unitIds.Count > 0)
                 {
                     long targetUnitId = self.selectHandle.unitIds[0];
                     Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
-                    if (UnitHelper.ChkUnitAlive(targetUnit, true))
+                    if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
                         targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
+                    }
+                    else if (UnitHelper.ChkUnitAlive(targetUnit, true))
+                    {
+                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        self.lastTargetPosition = targetPosition;
+
+                        Unit bulletUnit = self.GetUnit();
+                        if (bulletUnit.Position.Equals(self.lastTargetPosition))
+                        {
+                            //self.GetUnit().DestroyWithDeathShow();
+                            return;
+                        }
                     }
                     else
                     {

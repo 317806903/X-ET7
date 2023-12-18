@@ -10,7 +10,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.SkillOnCast, null, null);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.SkillOnCast, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -24,22 +24,22 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
 						}
 					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeHurt, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -53,22 +53,22 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
 						}
 					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeHurt, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -82,22 +82,22 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
 						}
 					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeKilled, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageBeforeOnBeKilled, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -111,22 +111,22 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
 						}
 					}
 				}
 				//if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.DamageAfterOnBeKilled, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -138,7 +138,7 @@
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitChgSaveSelectObj args)
 			{
 				Unit unit = args.unit;
-				EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitChgSaveSelectObj, null, null);
+				EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitChgSaveSelectObj, null, null);
 				await ETTask.CompletedTask;
 			}
 		}
@@ -151,22 +151,22 @@
 				Unit unit = args.unit;
 				if (UnitHelper.ChkUnitAlive(args.unit))
 				{
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnCreate, null, null);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnCreate, null, null);
 				}
 
-				AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
-				if (aoiEntity != null)
-				{
-					foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
-					{
-						AOIEntity aoiEntityTmp = BeSeeUnit.Value;
-						Unit beSeeUnit = aoiEntityTmp?.Unit;
-						if (UnitHelper.ChkUnitAlive(beSeeUnit))
-						{
-							EventHandlerHelper.Run(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnCreate, null, null);
-						}
-					}
-				}
+				// AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
+				// if (aoiEntity != null)
+				// {
+				// 	foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
+				// 	{
+				// 		AOIEntity aoiEntityTmp = BeSeeUnit.Value;
+				// 		Unit beSeeUnit = aoiEntityTmp?.Unit;
+				// 		if (UnitHelper.ChkUnitAlive(beSeeUnit))
+				// 		{
+				// 			EventHandlerHelper.Run_Buff(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnCreate, null, null);
+				// 		}
+				// 	}
+				// }
 				await ETTask.CompletedTask;
 			}
 		}
@@ -180,10 +180,10 @@
 				{
 					Unit bulletUnit = args.attackerUnit;
 					BulletObj bulletObj = bulletUnit.GetComponent<BulletObj>();
-					Unit unitActor = bulletObj.GetCasterActorUnit();
+					Unit unitActor = bulletObj?.GetCasterActorUnit();
 					if (unitActor != null)
                     {
-                        EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.BulletOnHitMesh, bulletUnit, null);
+                        EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.BulletOnHitMesh, bulletUnit, null);
                     }
 				}
 				await ETTask.CompletedTask;
@@ -198,15 +198,15 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHitMesh, unit, null);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnHitMesh, unit, null);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.UnitOnHitMesh, unit, null);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.UnitOnHitMesh, unit, null);
 						}
 					}
 				}
@@ -222,41 +222,41 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj.GetCasterActorUnit();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
 						if (unitActor != null)
 						{
-							EventHandlerHelper.Run(unitActor, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);
 						}
 					}
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnBeHurt, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 
-				Unit defenderUnit = args.defenderUnit;
-				if (defenderUnit != null)
-				{
-					AOIEntity aoiEntity = defenderUnit.GetComponent<AOIEntity>();
-					if (aoiEntity != null)
-					{
-						foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
-						{
-							AOIEntity aoiEntityTmp = BeSeeUnit.Value;
-							Unit beSeeUnit = aoiEntityTmp?.Unit;
-							if (UnitHelper.ChkUnitAlive(beSeeUnit))
-							{
-								EventHandlerHelper.Run(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnHit, args.attackerUnit, args.defenderUnit);
-							}
-						}
-					}
-				}
+				// Unit defenderUnit = args.defenderUnit;
+				// if (defenderUnit != null)
+				// {
+				// 	AOIEntity aoiEntity = defenderUnit.GetComponent<AOIEntity>();
+				// 	if (aoiEntity != null)
+				// 	{
+				// 		foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
+				// 		{
+				// 			AOIEntity aoiEntityTmp = BeSeeUnit.Value;
+				// 			Unit beSeeUnit = aoiEntityTmp?.Unit;
+				// 			if (UnitHelper.ChkUnitAlive(beSeeUnit))
+				// 			{
+				// 				EventHandlerHelper.Run_Buff(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnHit, args.attackerUnit, args.defenderUnit);
+				// 			}
+				// 		}
+				// 	}
+				// }
 				await ETTask.CompletedTask;
 			}
 		}
@@ -269,22 +269,22 @@
 				Unit unit = args.unit;
 				if (UnitHelper.ChkUnitAlive(unit))
 				{
-					EventHandlerHelper.Run(unit, AbilityBuffMonitorTriggerEvent.UnitOnRemoved, null, null);
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnRemoved, null, null);
 				}
 
-				AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
-				if (aoiEntity != null)
-				{
-					foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
-					{
-						AOIEntity aoiEntityTmp = BeSeeUnit.Value;
-						Unit beSeeUnit = aoiEntityTmp?.Unit;
-						if (UnitHelper.ChkUnitAlive(beSeeUnit))
-						{
-							EventHandlerHelper.Run(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnRemoved, null, null);
-						}
-					}
-				}
+				// AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
+				// if (aoiEntity != null)
+				// {
+				// 	foreach (var BeSeeUnit in aoiEntity.BeSeeUnits)
+				// 	{
+				// 		AOIEntity aoiEntityTmp = BeSeeUnit.Value;
+				// 		Unit beSeeUnit = aoiEntityTmp?.Unit;
+				// 		if (UnitHelper.ChkUnitAlive(beSeeUnit))
+				// 		{
+				// 			EventHandlerHelper.Run_Buff(beSeeUnit, AbilityBuffMonitorTriggerEvent.NearUnitOnRemoved, null, null);
+				// 		}
+				// 	}
+				// }
 				await ETTask.CompletedTask;
 			}
 		}

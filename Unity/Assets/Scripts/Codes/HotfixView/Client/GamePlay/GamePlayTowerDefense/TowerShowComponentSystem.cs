@@ -27,6 +27,8 @@ namespace ET.Client
                     GameObjectPoolHelper.ReturnTransformToPool(self.transRoot);
                     self.transRoot = null;
                 }
+
+                self.towerComponent = null;
             }
         }
 
@@ -54,17 +56,33 @@ namespace ET.Client
         public static void Init(this TowerShowComponent self, TowerComponent towerComponent)
         {
             self.towerComponent = towerComponent;
-            self.CreateShow();
-            self.ChkUpgradePlayerTower();
+            self.CreateShow().Coroutine();
         }
 
-        public static void CreateShow(this TowerShowComponent self)
+        public static async ETTask CreateShow(this TowerShowComponent self)
         {
-            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-            if (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+            while (gamePlayComponent == null)
             {
-                return;
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
+                gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
             }
+
+            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            while (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
+                gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            }
+
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
             GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
             self.transRoot = TowerShowGo.transform;
@@ -77,6 +95,8 @@ namespace ET.Client
             TowerShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
 
             self.transCollider = self.transRoot.Find("ColliderRoot/Collider");
+            ET.Client.ModelClickManagerHelper.SetTowerInfoToClickInfo(self.DomainScene(), self.transCollider, self);
+
             self.transDefaultShow = self.transRoot.Find("DefaultShow");
             self.transSelectShow = self.transRoot.Find("SelectShow");
             self.transCanUpgradeShow = self.transRoot.Find("CanUpgradeShow");
@@ -91,6 +111,7 @@ namespace ET.Client
             self.ChgColor(self.transSelectShow);
             self.ChgColor(self.transAttackArea);
 
+            self.ChkUpgradePlayerTower();
         }
 
         public static void ChgColor(this TowerShowComponent self, Transform trans)
@@ -168,7 +189,9 @@ namespace ET.Client
             {
                 return;
             }
-            (bool bRet, string msg, Dictionary<string, int> costTowers) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.towerComponent.playerId, self.GetUnit().Id);
+
+            bool onlyChkPool = false;
+            (bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.towerComponent.playerId, self.GetUnit().Id, onlyChkPool);
             if (bRet)
             {
                 self.transCanUpgradeShow.gameObject.SetActive(true);

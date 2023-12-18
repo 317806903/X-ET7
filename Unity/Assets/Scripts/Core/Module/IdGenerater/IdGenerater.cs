@@ -28,7 +28,7 @@ namespace ET
 
         public IdStruct(long id)
         {
-            ulong result = (ulong) id; 
+            ulong result = (ulong) id;
             this.Value = (ushort) (result & ushort.MaxValue);
             result >>= 16;
             this.Process = (int) (result & IdGenerater.Mask18bit);
@@ -74,7 +74,7 @@ namespace ET
             this.Process = process;
             this.Value = value;
         }
-        
+
         // 给SceneId使用
         public InstanceIdStruct(int process, uint value)
         {
@@ -88,7 +88,7 @@ namespace ET
             return $"process: {this.Process}, value: {this.Value} time: {this.Time}";
         }
     }
-    
+
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct UnitIdStruct
     {
@@ -114,7 +114,7 @@ namespace ET
             this.Value = value;
             this.Zone = (ushort)zone;
         }
-        
+
         public UnitIdStruct(long id)
         {
             ulong result = (ulong) id;
@@ -126,12 +126,12 @@ namespace ET
             result >>= 10;
             this.Time = (uint)result;
         }
-                        
+
         public override string ToString()
         {
             return $"ProcessMode: {this.ProcessMode}, value: {this.Value} time: {this.Time}";
         }
-        
+
         public static int GetUnitZone(long unitId)
         {
             int v = (int) ((unitId >> 24) & 0x03ff); // 取出10bit
@@ -144,17 +144,17 @@ namespace ET
         public const int Mask18bit = 0x03ffff;
 
         public const int MaxZone = 1024;
-        
+
         private long epoch2020;
         private ushort value;
         private uint lastIdTime;
 
-        
+
         private long epochThisYear;
         private uint instanceIdValue;
         private uint lastInstanceIdTime;
-        
-        
+
+
         private ushort unitIdValue;
         private uint lastUnitIdTime;
 
@@ -163,7 +163,7 @@ namespace ET
             long epoch1970tick = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000;
             this.epoch2020 = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000 - epoch1970tick;
             this.epochThisYear = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000 - epoch1970tick;
-            
+
             this.lastInstanceIdTime = TimeSinceThisYear();
             if (this.lastInstanceIdTime <= 0)
             {
@@ -186,16 +186,16 @@ namespace ET
 
         private uint TimeSince2020()
         {
-            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epoch2020) / 1000);
+            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epoch2020) * 0.001f);
             return a;
         }
-        
+
         private uint TimeSinceThisYear()
         {
-            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epochThisYear) / 1000);
+            uint a = (uint)((TimeInfo.Instance.FrameTime - this.epochThisYear) * 0.001f);
             return a;
         }
-        
+
         public long GenerateInstanceId()
         {
             uint time = TimeSinceThisYear();
@@ -208,7 +208,7 @@ namespace ET
             else
             {
                 ++this.instanceIdValue;
-                
+
                 if (this.instanceIdValue > IdGenerater.Mask18bit - 1) // 18bit
                 {
                     ++this.lastInstanceIdTime; // 借用下一秒
@@ -234,7 +234,7 @@ namespace ET
             else
             {
                 ++this.value;
-                
+
                 if (value > ushort.MaxValue - 1)
                 {
                     this.value = 0;
@@ -242,11 +242,28 @@ namespace ET
                     Log.Error($"id count per sec overflow: {time} {this.lastIdTime}");
                 }
             }
-            
+
             IdStruct idStruct = new IdStruct(this.lastIdTime, Options.Instance.Process, value);
             return idStruct.ToLong();
         }
-        
+
+        public bool ChkGenerateIdFull()
+        {
+            uint time = TimeSince2020();
+
+            if (time > this.lastIdTime)
+            {
+            }
+            else
+            {
+                if (this.value > ushort.MaxValue - 100)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public long GenerateUnitId(int zone)
         {
             if (zone > MaxZone)
@@ -263,7 +280,7 @@ namespace ET
             else
             {
                 ++this.unitIdValue;
-                
+
                 if (this.unitIdValue > ushort.MaxValue - 1)
                 {
                     this.unitIdValue = 0;

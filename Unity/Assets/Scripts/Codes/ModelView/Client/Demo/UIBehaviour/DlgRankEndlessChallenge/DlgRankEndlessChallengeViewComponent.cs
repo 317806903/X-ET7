@@ -160,7 +160,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_AvatarImage
+		public UnityEngine.UI.Image E_PlayerIcoImage
 		{
 			get
 			{
@@ -169,15 +169,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EImage_AvatarImage == null )
+				if( this.m_E_PlayerIcoImage == null )
 				{
-					this.m_EImage_AvatarImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/IndividualRank/EImage_Avatar");
+					this.m_E_PlayerIcoImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/IndividualRank/AvatarHome/Avatar/E_PlayerIco");
 				}
-				return this.m_EImage_AvatarImage;
+				return this.m_E_PlayerIcoImage;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI ELabel_NameTextMeshProUGUI
+		public TMPro.TextMeshProUGUI E_PlayerNameTextMeshProUGUI
 		{
 			get
 			{
@@ -186,15 +186,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELabel_NameTextMeshProUGUI == null )
+				if( this.m_E_PlayerNameTextMeshProUGUI == null )
 				{
-					this.m_ELabel_NameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/IndividualRank/ELabel_Name");
+					this.m_E_PlayerNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/IndividualRank/AvatarHome/E_PlayerName");
 				}
-				return this.m_ELabel_NameTextMeshProUGUI;
+				return this.m_E_PlayerNameTextMeshProUGUI;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI ELabel_RankNumTextMeshProUGUI
+		public UnityEngine.UI.Image EImage_ShortRankedBGImage
 		{
 			get
 			{
@@ -203,11 +203,62 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELabel_RankNumTextMeshProUGUI == null )
+				if( this.m_EImage_ShortRankedBGImage == null )
 				{
-					this.m_ELabel_RankNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/IndividualRank/Ranked/RankedBG/ELabel_RankNum");
+					this.m_EImage_ShortRankedBGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/IndividualRank/Ranked/EImage_ShortRankedBG");
 				}
-				return this.m_ELabel_RankNumTextMeshProUGUI;
+				return this.m_EImage_ShortRankedBGImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_ShortRankNumTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ShortRankNumTextMeshProUGUI == null )
+				{
+					this.m_ELabel_ShortRankNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/IndividualRank/Ranked/EImage_ShortRankedBG/ELabel_ShortRankNum");
+				}
+				return this.m_ELabel_ShortRankNumTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_LongRankedBGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_LongRankedBGImage == null )
+				{
+					this.m_EImage_LongRankedBGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/IndividualRank/Ranked/EImage_LongRankedBG");
+				}
+				return this.m_EImage_LongRankedBGImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_LongRankNumTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_LongRankNumTextMeshProUGUI == null )
+				{
+					this.m_ELabel_LongRankNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/IndividualRank/Ranked/EImage_LongRankedBG/ELabel_LongRankNum");
+				}
+				return this.m_ELabel_LongRankNumTextMeshProUGUI;
 			}
 		}
 
@@ -239,9 +290,43 @@ namespace ET.Client
 				}
 				if( this.m_ELoopScrollList_RankLoopVerticalScrollRect == null )
 				{
-					this.m_ELoopScrollList_RankLoopVerticalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopVerticalScrollRect>(this.uiTransform.gameObject, "EGRoot/AllPlayersRank/ELoopScrollList_Rank");
+					this.m_ELoopScrollList_RankLoopVerticalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopVerticalScrollRect>(this.uiTransform.gameObject, "EGRoot/Leaderboard/ELoopScrollList_Rank");
 				}
 				return this.m_ELoopScrollList_RankLoopVerticalScrollRect;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_EmptyLeaderbordTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_EmptyLeaderbordTextMeshProUGUI == null )
+				{
+					this.m_ELabel_EmptyLeaderbordTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/Leaderboard/ELabel_EmptyLeaderbord");
+				}
+				return this.m_ELabel_EmptyLeaderbordTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_EmptyLeaderbordUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_EmptyLeaderbordUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_EmptyLeaderbordUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/Leaderboard/ELabel_EmptyLeaderbord");
+				}
+				return this.m_ELabel_EmptyLeaderbordUITextLocalizeMonoView;
 			}
 		}
 
@@ -256,11 +341,16 @@ namespace ET.Client
 			this.m_EGRootRectTransform = null;
 			this.m_E_QuitRankButton = null;
 			this.m_E_QuitRankImage = null;
-			this.m_EImage_AvatarImage = null;
-			this.m_ELabel_NameTextMeshProUGUI = null;
-			this.m_ELabel_RankNumTextMeshProUGUI = null;
+			this.m_E_PlayerIcoImage = null;
+			this.m_E_PlayerNameTextMeshProUGUI = null;
+			this.m_EImage_ShortRankedBGImage = null;
+			this.m_ELabel_ShortRankNumTextMeshProUGUI = null;
+			this.m_EImage_LongRankedBGImage = null;
+			this.m_ELabel_LongRankNumTextMeshProUGUI = null;
 			this.m_ELabel_ChanllengeTextMeshProUGUI = null;
 			this.m_ELoopScrollList_RankLoopVerticalScrollRect = null;
+			this.m_ELabel_EmptyLeaderbordTextMeshProUGUI = null;
+			this.m_ELabel_EmptyLeaderbordUITextLocalizeMonoView = null;
 			this.uiTransform = null;
 		}
 
@@ -273,11 +363,16 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EGRootRectTransform = null;
 		private UnityEngine.UI.Button m_E_QuitRankButton = null;
 		private UnityEngine.UI.Image m_E_QuitRankImage = null;
-		private UnityEngine.UI.Image m_EImage_AvatarImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_NameTextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_ELabel_RankNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
+		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_ShortRankedBGImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_ShortRankNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_LongRankedBGImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_LongRankNumTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_ChanllengeTextMeshProUGUI = null;
 		private UnityEngine.UI.LoopVerticalScrollRect m_ELoopScrollList_RankLoopVerticalScrollRect = null;
+		private TMPro.TextMeshProUGUI m_ELabel_EmptyLeaderbordTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_EmptyLeaderbordUITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

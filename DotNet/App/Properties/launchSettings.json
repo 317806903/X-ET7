@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DotNet.App": {
+      "commandName": "Project",
+      "commandLineArgs": "--Process=1 --StartConfig=StartConfig/Release_Zpb --Console=1 --NeedDB=1"
+    },
+    "配置文件 1": {
+      "commandName": "Executable",
+      "commandLineArgs": "--Process=1 --StartConfig=StartConfig/Release_Zpb --Console=1 --NeedDB=1"
+    }
+  }
+}

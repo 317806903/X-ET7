@@ -60,6 +60,70 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 新手世界观信息
     /// </summary>
      public System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> BeginnersGuideImgs => _data.BeginnersGuideImgs;
+    /// <summary>
+    /// 初始体力值
+    /// </summary>
+     public int InitialPhysicalStrength => _data.InitialPhysicalStrength;
+    /// <summary>
+    /// 体力值上限
+    /// </summary>
+     public int UpperLimitOfPhysicalStrength => _data.UpperLimitOfPhysicalStrength;
+    /// <summary>
+    /// 体力值恢复时长
+    /// </summary>
+     public int RecoverTimeOfPhysicalStrength => _data.RecoverTimeOfPhysicalStrength;
+    /// <summary>
+    /// 体力值恢复增加量
+    /// </summary>
+     public int RecoverIncreaseOfPhysicalStrength => _data.RecoverIncreaseOfPhysicalStrength;
+    /// <summary>
+    /// 看广告体力值恢复量
+    /// </summary>
+     public int RecoverIncreaseOfPhysicalStrengthByAd => _data.RecoverIncreaseOfPhysicalStrengthByAd;
+    /// <summary>
+    /// AR模式PVE所需体力
+    /// </summary>
+     public int ARPVECfgTakePhsicalStrength => _data.ARPVECfgTakePhsicalStrength;
+    /// <summary>
+    /// AR模式PVP所需体力
+    /// </summary>
+     public int ARPVPCfgTakePhsicalStrength => _data.ARPVPCfgTakePhsicalStrength;
+    /// <summary>
+    /// AR模式PVE无尽模式所需体力
+    /// </summary>
+     public int AREndlessChallengeTakePhsicalStrength => _data.AREndlessChallengeTakePhsicalStrength;
+    /// <summary>
+    /// 挑战模式是否加锁
+    /// </summary>
+     public bool PVELock => _data.PVELock;
+    /// <summary>
+    /// PVP模式是否加锁
+    /// </summary>
+     public bool PVPLock => _data.PVPLock;
+    /// <summary>
+    /// 排行榜是否加锁
+    /// </summary>
+     public bool RankLock => _data.RankLock;
+    /// <summary>
+    /// 教程是否加锁
+    /// </summary>
+     public bool TutorialLock => _data.TutorialLock;
+    /// <summary>
+    /// 卡牌是否加锁
+    /// </summary>
+     public bool CardsLock => _data.CardsLock;
+    /// <summary>
+    /// 体力系统是否显示
+    /// </summary>
+     public bool PhysicalStrengthShow => _data.PhysicalStrengthShow;
+    /// <summary>
+    /// 两塔允许最近距离
+    /// </summary>
+     public float TowerDefenseNearTowerDis => _data.TowerDefenseNearTowerDis;
+    /// <summary>
+    /// 广告系统是否可用
+    /// </summary>
+     public bool AdmobAvailable => _data.AdmobAvailable;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

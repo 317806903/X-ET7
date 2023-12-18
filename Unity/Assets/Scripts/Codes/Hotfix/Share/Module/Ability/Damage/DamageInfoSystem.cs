@@ -132,8 +132,8 @@ namespace ET.Ability
                     defenderUnit = defenderUnit,
                     damageInfo = self,
                 });
-                defenderUnit.DestroyWithDeathShow();
 
+                defenderUnit.DestroyWithDeathShow();
             }
             //
             // //伤害流程走完，添加buff

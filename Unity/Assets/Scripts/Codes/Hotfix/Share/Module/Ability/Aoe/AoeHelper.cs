@@ -6,9 +6,9 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public static class AoeHelper
     {
-        public static void CreateAoe(Unit unit, ActionCfg_CallAoe actionCfg_CallAoe, SelectHandle selectHandle, ActionContext actionContext)
+        public static void CreateAoe(Unit unit, ActionCfg_CallAoe actionCfg_CallAoe, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            Unit aoeUnit = ET.GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), unit, actionCfg_CallAoe, selectHandle, actionContext);
+            Unit aoeUnit = ET.GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), unit, actionCfg_CallAoe, selectHandle, ref actionContext);
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {

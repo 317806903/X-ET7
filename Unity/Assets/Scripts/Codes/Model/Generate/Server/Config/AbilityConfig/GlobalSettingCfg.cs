@@ -27,6 +27,22 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         ShowDamage = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AvatarIcons = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AvatarIcons.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeginnersGuideImgs = new System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.Dictionary<string, string> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.Dictionary<string, string>(n1 * 3 / 2);for(var i1 = 0 ; i1 < n1 ; i1++) { string _k1;  _k1 = _buf.ReadString(); string _v1;  _v1 = _buf.ReadString();     _e0.Add(_k1, _v1);}} BeginnersGuideImgs.Add(_e0);}}
+        InitialPhysicalStrength = _buf.ReadInt();
+        UpperLimitOfPhysicalStrength = _buf.ReadInt();
+        RecoverTimeOfPhysicalStrength = _buf.ReadInt();
+        RecoverIncreaseOfPhysicalStrength = _buf.ReadInt();
+        RecoverIncreaseOfPhysicalStrengthByAd = _buf.ReadInt();
+        ARPVECfgTakePhsicalStrength = _buf.ReadInt();
+        ARPVPCfgTakePhsicalStrength = _buf.ReadInt();
+        AREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
+        PVELock = _buf.ReadBool();
+        PVPLock = _buf.ReadBool();
+        RankLock = _buf.ReadBool();
+        TutorialLock = _buf.ReadBool();
+        CardsLock = _buf.ReadBool();
+        PhysicalStrengthShow = _buf.ReadBool();
+        TowerDefenseNearTowerDis = _buf.ReadFloat();
+        AdmobAvailable = _buf.ReadBool();
         PostInit();
     }
 
@@ -71,6 +87,70 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 新手世界观信息
     /// </summary>
     public System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> BeginnersGuideImgs { get; private set; }
+    /// <summary>
+    /// 初始体力值
+    /// </summary>
+    public int InitialPhysicalStrength { get; private set; }
+    /// <summary>
+    /// 体力值上限
+    /// </summary>
+    public int UpperLimitOfPhysicalStrength { get; private set; }
+    /// <summary>
+    /// 体力值恢复时长
+    /// </summary>
+    public int RecoverTimeOfPhysicalStrength { get; private set; }
+    /// <summary>
+    /// 体力值恢复增加量
+    /// </summary>
+    public int RecoverIncreaseOfPhysicalStrength { get; private set; }
+    /// <summary>
+    /// 看广告体力值恢复量
+    /// </summary>
+    public int RecoverIncreaseOfPhysicalStrengthByAd { get; private set; }
+    /// <summary>
+    /// AR模式PVE所需体力
+    /// </summary>
+    public int ARPVECfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// AR模式PVP所需体力
+    /// </summary>
+    public int ARPVPCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// AR模式PVE无尽模式所需体力
+    /// </summary>
+    public int AREndlessChallengeTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 挑战模式是否加锁
+    /// </summary>
+    public bool PVELock { get; private set; }
+    /// <summary>
+    /// PVP模式是否加锁
+    /// </summary>
+    public bool PVPLock { get; private set; }
+    /// <summary>
+    /// 排行榜是否加锁
+    /// </summary>
+    public bool RankLock { get; private set; }
+    /// <summary>
+    /// 教程是否加锁
+    /// </summary>
+    public bool TutorialLock { get; private set; }
+    /// <summary>
+    /// 卡牌是否加锁
+    /// </summary>
+    public bool CardsLock { get; private set; }
+    /// <summary>
+    /// 体力系统是否显示
+    /// </summary>
+    public bool PhysicalStrengthShow { get; private set; }
+    /// <summary>
+    /// 两塔允许最近距离
+    /// </summary>
+    public float TowerDefenseNearTowerDis { get; private set; }
+    /// <summary>
+    /// 广告系统是否可用
+    /// </summary>
+    public bool AdmobAvailable { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -99,6 +179,22 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "ShowDamage:" + ShowDamage + ","
         + "AvatarIcons:" + Bright.Common.StringUtil.CollectionToString(AvatarIcons) + ","
         + "BeginnersGuideImgs:" + Bright.Common.StringUtil.CollectionToString(BeginnersGuideImgs) + ","
+        + "InitialPhysicalStrength:" + InitialPhysicalStrength + ","
+        + "UpperLimitOfPhysicalStrength:" + UpperLimitOfPhysicalStrength + ","
+        + "RecoverTimeOfPhysicalStrength:" + RecoverTimeOfPhysicalStrength + ","
+        + "RecoverIncreaseOfPhysicalStrength:" + RecoverIncreaseOfPhysicalStrength + ","
+        + "RecoverIncreaseOfPhysicalStrengthByAd:" + RecoverIncreaseOfPhysicalStrengthByAd + ","
+        + "ARPVECfgTakePhsicalStrength:" + ARPVECfgTakePhsicalStrength + ","
+        + "ARPVPCfgTakePhsicalStrength:" + ARPVPCfgTakePhsicalStrength + ","
+        + "AREndlessChallengeTakePhsicalStrength:" + AREndlessChallengeTakePhsicalStrength + ","
+        + "PVELock:" + PVELock + ","
+        + "PVPLock:" + PVPLock + ","
+        + "RankLock:" + RankLock + ","
+        + "TutorialLock:" + TutorialLock + ","
+        + "CardsLock:" + CardsLock + ","
+        + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
+        + "TowerDefenseNearTowerDis:" + TowerDefenseNearTowerDis + ","
+        + "AdmobAvailable:" + AdmobAvailable + ","
         + "}";
     }
     

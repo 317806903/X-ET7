@@ -23,7 +23,7 @@ namespace ET.Ability
 			// 	ET.Ability.TimelineHelper.JumpTimeline(list[i], actionCfgTimelineJumpTime.NewTimeElapsed, actionContext);
 			// }
 			ActionCfg_TimelineJumpTime actionCfgTimelineJumpTime = ActionCfg_TimelineJumpTimeCategory.Instance.Get(actionId);
-			ET.Ability.TimelineHelper.JumpTimeline(unit, actionCfgTimelineJumpTime.NewTimeElapsed, actionContext);
+			ET.Ability.TimelineHelper.JumpTimeline(unit, actionCfgTimelineJumpTime.NewTimeElapsed, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

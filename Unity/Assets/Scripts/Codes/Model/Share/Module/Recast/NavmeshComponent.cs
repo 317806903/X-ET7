@@ -12,6 +12,11 @@ namespace ET
     public class NavmeshComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
         public DtCrowd crowd;
+        public float radius;
         public List<float3> arrivePath = new();
+        public int waitFrameSyncPos = 0;
+        public int curFrameSyncPos = 0;
+        public Dictionary<int, Dictionary<int, Dictionary<int, float3>>> recordNearestPosDic;
+        public Dictionary<int, Dictionary<int, Dictionary<int, long>>> recordNearestRefDic;
     }
 }

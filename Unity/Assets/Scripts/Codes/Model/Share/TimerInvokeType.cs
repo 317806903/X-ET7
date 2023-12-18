@@ -8,20 +8,25 @@
         public const int SessionIdleChecker = 101;
         public const int ActorLocationSenderChecker = 102;
         public const int ActorMessageSenderChecker = 103;
-        public const int DynamicMapChecker = 104;
 
         // 框架层100-200，逻辑层的timer type 200-300
-        public const int MoveTimer = 201;
-        public const int AITimer = 202;
-        public const int SessionAcceptTimeout = 203;
-        public const int BattleFrameTimer = 204;
-        public const int BattleTowerFrameTimer = 205;
-        public const int BattleTowerARFrameTimer = 206;
-        public const int GamePlayChkMonsterWaveCallAllClear = 207;
-        public const int HallTimer = 209;
-        public const int LoadingTimer = 210;
-        public const int DataCacheClearChkTimer = 211;
-        public const int DataCacheWriteChkTimer = 212;
-        public const int BattleDragItemFrameTimer = 213;
+        public const int DynamicMapChecker = 201;
+        public const int RoomGetDynamicMapCountChecker = 202;
+        public const int ReamGetGatePlayerCountChecker = 203;
+        public const int MoveTimer = 204;
+        public const int AITimer = 205;
+        public const int SessionAcceptTimeout = 206;
+        public const int BattleFrameTimer = 207;
+        public const int BattleTowerFrameTimer = 208;
+        public const int BattleTowerARFrameTimer = 209;
+        public const int GamePlayChkMonsterWaveCallAllClear = 210;
+        public const int HallTimer = 211;
+        public const int LoadingTimer = 212;
+        public const int DataCacheClearChkTimer = 213;
+        public const int DataCacheWriteChkTimer = 214;
+        public const int BattleDragItemFrameTimer = 215;
+        public const int BattleTowerHUDShowFrameTimer = 216;
+        public const int PhysicalStrengthTimer = 217;
+        public const int GameModeARTimer = 218;
     }
 }

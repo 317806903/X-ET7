@@ -63,7 +63,7 @@ public class ShootTextComponent : MonoBehaviour
     {
         if (scale == 0)
         {
-            scale = 1;
+            scale = 0.01;
         }
         for (int i = 0; i < childTransformGroup.Count; i++)
         {

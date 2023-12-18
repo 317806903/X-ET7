@@ -86,7 +86,10 @@ namespace ET
 					return;
 				}
 			}
-			gamePlayTowerDefenseComponent.Start();
+
+			EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_PutMonsterPointEnd());
+
+			gamePlayTowerDefenseComponent.DoNextStep().Coroutine();
 		}
 
 		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this PutMonsterCallComponent self)

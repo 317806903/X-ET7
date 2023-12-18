@@ -31,7 +31,7 @@ namespace ET
         {
             protected override void FixedUpdate(SyncDataManager self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }

@@ -6,8 +6,6 @@
 	ActionCfg_EffectRemoveCategory,
 	ActionCfg_AttackAreaCategory,
 	ActionCfg_FaceToCategory,
-	ActionCfg_BuffStackCountChgCategory,
-	ActionCfg_BuffResetDurationCategory,
 	ActionCfg_CallActorCategory,
 	ActionCfg_CallAoeCategory,
 	ActionCfg_CoinAddCategory,
@@ -17,6 +15,7 @@
 	ActionCfg_TimelineReplaceCategory,
 	ActionCfg_TimelinePlayCategory,
 	ActionCfg_TimelineJumpTimeCategory,
+	ActionCfg_GlobalBuffAddCategory,
 	ActionCfg_BuffAddCategory,
-	ActionCfg_BuffRemoveCategory"/>
+	ActionCfg_BuffDealCategory"/>
 </module>

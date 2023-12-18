@@ -17,9 +17,9 @@ namespace ET.Ability
             return animatorComponent;
         }
 
-        public static void PlayAnimator(Unit unit, ActionCfg_PlayAnimator actionCfg_PlayAnimator, SelectHandle selectHandle, ActionContext actionContext)
+        public static void PlayAnimator(Unit unit, ActionCfg_PlayAnimator actionCfg_PlayAnimator, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext, true);
+            ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext, true);
             if (list == null)
             {
                 return;
@@ -28,14 +28,25 @@ namespace ET.Ability
             {
                 Unit targetUnit = list[i];
                 AnimatorComponent animatorComponent = _GetAnimatorComponent(targetUnit);
-                animatorComponent.SetAnimatorMotion(actionCfg_PlayAnimator.AnimatorName);
+                animatorComponent.SetAnimatorMotion(actionCfg_PlayAnimator.AnimatorName, actionCfg_PlayAnimator.IsOnlySelfShow);
             }
+            list.Dispose();
         }
 
         public static void ResetControlStateAnimatorMotion(Unit unit)
         {
             AnimatorComponent animatorComponent = _GetAnimatorComponent(unit);
             animatorComponent.ResetControlStateAnimatorMotion();
+        }
+
+        public static bool ChkIsLoopAnimatorMotion(AnimatorMotionName animatorMotionName)
+        {
+            if (animatorMotionName == AnimatorMotionName.Idle || animatorMotionName == AnimatorMotionName.Move)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

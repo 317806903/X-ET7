@@ -129,7 +129,14 @@ namespace ET
                     programName += ".exe";
                     break;
                 case BuildTarget.Android:
-                    programName += ".apk";
+                    if (EditorUserBuildSettings.buildAppBundle)
+                    {
+                        programName += ".aab";
+                    }
+                    else
+                    {
+                        programName += ".apk";
+                    }
                     break;
                 case BuildTarget.iOS:
                     break;
@@ -264,13 +271,13 @@ namespace ET
             {
                 packName = PackName.InNet148;
             }
+            else if (buildPackNameParam == "OutNet_Benchmark")
+            {
+                packName = PackName.OutNet_Benchmark;
+            }
             else if (buildPackNameParam == "OutNet_CN")
             {
                 packName = PackName.OutNet_CN;
-            }
-            else if (buildPackNameParam == "OutNet_CN_Linux")
-            {
-                packName = PackName.OutNet_CN_Linux;
             }
             else if (buildPackNameParam == "OutNet_EN")
             {

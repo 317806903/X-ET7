@@ -9,6 +9,7 @@ namespace ET.Ability
     {
         [BsonIgnore]
         public bool isNeedNoticeClient;
+        public bool isOnlySelfShow;
         public AnimatorMotionName name;
         public long animatorTickTime;
         public bool isStoppingAnimator;

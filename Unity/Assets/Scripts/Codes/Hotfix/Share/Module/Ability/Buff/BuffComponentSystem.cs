@@ -34,14 +34,23 @@ namespace ET.Ability
             protected override void Destroy(BuffComponent self)
             {
                 self.removeList.Clear();
+                self.removeList = null;
                 self.monitorTriggerList.Clear();
+                self.monitorTriggerList = null;
                 self.buffTagTypeList.Clear();
+                self.buffTagTypeList = null;
                 self.buffImmuneTagTypeList.Clear();
+                self.buffImmuneTagTypeList = null;
                 self.buffTagGroupTypeList.Clear();
+                self.buffTagGroupTypeList = null;
                 self.buffImmuneTagGroupTypeList.Clear();
+                self.buffImmuneTagGroupTypeList = null;
                 self.buffTypeList.Clear();
+                self.buffTypeList = null;
                 self.buffMotionList.Clear();
+                self.buffMotionList = null;
                 self.buffPlayAnimatorList.Clear();
+                self.buffPlayAnimatorList = null;
             }
         }
 
@@ -50,7 +59,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(BuffComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -95,7 +104,7 @@ namespace ET.Ability
                 buffObj = self.AddChild<BuffObj>();
                 buffObj.isEnabled = IsEnabled;
                 buffObj.Init(casterUnit, unit, addBuffInfo);
-                buffObj.InitActionContext(actionContext);
+                buffObj.InitActionContext(ref actionContext);
                 self.DealWhenAddBuff(buffObj);
 
                 //Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
@@ -115,9 +124,9 @@ namespace ET.Ability
             {
                 return (false, null);
             }
-            foreach (var buffObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                BuffObj buffObj = buffObjs.Value as BuffObj;
+                BuffObj buffObj = obj as BuffObj;
                 if (buffObj.CfgId != addBuffInfo.BuffId)
                 {
                     continue;
@@ -146,7 +155,7 @@ namespace ET.Ability
             self.AddBuffPlayAnimatorList(buffObj);
             self.AddBuffTypeList(buffObj);
 
-            buffObj.DealSelfEffectWhenAddBuff();
+            buffObj.DealSelfEffectWhenAddBuff().Coroutine();
             buffObj.DealSpecWhenAddBuff(false);
         }
 
@@ -228,9 +237,9 @@ namespace ET.Ability
 
             self.removeList.Clear();
             self.isForeaching = true;
-            foreach (var buffObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                BuffObj buffObj = buffObjs.Value as BuffObj;
+                BuffObj buffObj = obj as BuffObj;
                 buffObj.FixedUpdate(fixedDeltaTime);
 
                 if (buffObj.ChkNeedRemove())
@@ -251,6 +260,46 @@ namespace ET.Ability
             }
 
             self.removeList.Clear();
+        }
+
+        public static bool ChkBuffByBuffCfgId(this BuffComponent self, string buffCfgId)
+        {
+            foreach (var obj in self.Children.Values)
+            {
+                BuffObj buffObj = obj as BuffObj;
+
+                if (buffObj.CfgId == buffCfgId && buffObj.isEnabled)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static List<BuffObj> GetBuffListByBuffCfgId(this BuffComponent self, string buffCfgId)
+        {
+            List<BuffObj> buffList = new();
+            foreach (var buffObjs in self.Children)
+            {
+                BuffObj buffObj = buffObjs.Value as BuffObj;
+                if (buffObj.CfgId == buffCfgId)
+                {
+                    buffList.Add(buffObj);
+                }
+            }
+            return buffList;
+        }
+
+        public static List<BuffObj> GetAllBuffList(this BuffComponent self)
+        {
+            List<BuffObj> buffList = new();
+            foreach (var buffObjs in self.Children)
+            {
+                BuffObj buffObj = buffObjs.Value as BuffObj;
+
+                buffList.Add(buffObj);
+            }
+            return buffList;
         }
 
     }

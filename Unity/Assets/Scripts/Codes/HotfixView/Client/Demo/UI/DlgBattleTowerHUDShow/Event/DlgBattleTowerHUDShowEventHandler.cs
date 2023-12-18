@@ -6,7 +6,7 @@
 	{
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.windowType = UIWindowType.Normal;
+			uiBaseWindow.windowType = UIWindowType.WorldHub;
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
@@ -26,6 +26,7 @@
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)
 		{
+			uiBaseWindow.GetComponent<DlgBattleTowerHUDShow>().HideWindow();
 		}
 
 		public void BeforeUnload(UIBaseWindow uiBaseWindow)

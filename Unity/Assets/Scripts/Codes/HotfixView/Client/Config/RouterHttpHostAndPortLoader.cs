@@ -18,15 +18,4 @@ namespace ET.Client
             return (RouterHttpHost, RouterHttpPort);
         }
     }
-
-    [Invoke]
-    public class GetRouterHttpHostAndPortWhenEditor: AInvokeHandler<ConfigComponent.GetRouterHttpHostAndPortWhenEditor, (string, int)>
-    {
-        public override (string, int) Handle(ConfigComponent.GetRouterHttpHostAndPortWhenEditor args)
-        {
-            string RouterHttpHost = StartMachineConfigCategory.Instance.DataList[0].OuterIP;
-            int RouterHttpPort = StartSceneConfigCategory.Instance.RouterManager.OuterPort;
-            return (RouterHttpHost, RouterHttpPort);
-        }
-    }
 }

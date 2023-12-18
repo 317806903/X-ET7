@@ -32,7 +32,7 @@ namespace ET
 		{
 			protected override void FixedUpdate(GamePlayPKComponent self)
 			{
-				if (self.DomainScene().SceneType != SceneType.Map)
+				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
 				{
 					return;
 				}
@@ -82,7 +82,7 @@ namespace ET
 			self.gamePlayModeCfgId = gamePlayModeCfgId;
 			self.ownerPlayerId = ownerPlayerId;
 
-			self.Start();
+			self.Start().Coroutine();
 		}
 
 		/// <summary>
@@ -91,23 +91,25 @@ namespace ET
 		/// <param name="self"></param>
 		public static void DealFriendTeamFlagType(this GamePlayPKComponent self)
 		{
-			ListComponent<TeamFlagType> teamFlagTypes = ListComponent<TeamFlagType>.Create();
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.DealFriendTeamFlag(null, false, true);
 		}
 
-		public static void Start(this GamePlayPKComponent self)
+		public static async ETTask Start(this GamePlayPKComponent self)
 		{
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.Start();
 
 			self.DealFriendTeamFlagType();
 			self.NoticeToClientAll();
+			await ETTask.CompletedTask;
 		}
 
-		public static void TransToGameSuccess(this GamePlayPKComponent self)
+		public static async ETTask TransToGameSuccess(this GamePlayPKComponent self)
 		{
 			//self.GamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameSuccess;
+
+			await self.GameEnd();
 
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
 			gamePlayComponent.GameEnd();
@@ -117,6 +119,11 @@ namespace ET
 
 		public static void DealUnitBeKill(this GamePlayPKComponent self, Unit attackerUnit, Unit beKillUnit)
 		{
+		}
+
+		public static async ETTask GameEnd(this GamePlayPKComponent self)
+		{
+			await ETTask.CompletedTask;
 		}
 
 	}

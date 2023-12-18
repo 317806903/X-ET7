@@ -27,6 +27,7 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
         AreaType = _buf.ReadString();
         IsShowDebugMode = _buf.ReadBool();
         IsShowEditorLoginMode = _buf.ReadBool();
+        IsNeedSendEventLog = _buf.ReadBool();
         PostInit();
     }
 
@@ -79,6 +80,10 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
     /// 是否显示Editor登录方式
     /// </summary>
     public bool IsShowEditorLoginMode { get; private set; }
+    /// <summary>
+    /// 是否发送eventlog
+    /// </summary>
+    public bool IsNeedSendEventLog { get; private set; }
 
     public const int __ID__ = -1247692650;
     public override int GetTypeId() => __ID__;
@@ -106,6 +111,7 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
         + "AreaType:" + AreaType + ","
         + "IsShowDebugMode:" + IsShowDebugMode + ","
         + "IsShowEditorLoginMode:" + IsShowEditorLoginMode + ","
+        + "IsNeedSendEventLog:" + IsNeedSendEventLog + ","
         + "}";
     }
     

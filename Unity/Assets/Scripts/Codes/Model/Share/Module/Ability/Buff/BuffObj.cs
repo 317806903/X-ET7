@@ -65,7 +65,7 @@ namespace ET.Ability
         ///</summary>
         public int ticked = 0;
 
-        public MultiMap<AbilityBuffMonitorTriggerEvent, BuffActionCall> monitorTriggerList;
+        public MultiMapSimple<AbilityBuffMonitorTriggerEvent, BuffActionCall> monitorTriggerList;
 
         [BsonIgnore]
         public ActionContext actionContext;

@@ -20,6 +20,10 @@ namespace ET.Ability
         public static SelectHandle CreateSelectHandle(Unit unit, bool isResetPos, float3 resetPos, ActionCallParam actionCallParam, ref ActionContext
          actionContext)
         {
+            if (unit == null)
+            {
+                return null;
+            }
             SelectHandle saveSelectHandle;
             if (actionCallParam is ActionCallSelectLast)
             {
@@ -69,7 +73,18 @@ namespace ET.Ability
                 selectHandle.unitIds = ListComponent<long>.Create();
                 if (actionCallParam is ActionCallAutoUnitArea actionCallAutoUnitArea)
                 {
-                    GetUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea, selectHandle, ref actionContext);
+                    (bool bRecord, ListComponent<long> recordUnitIds) = ChkRecordUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea);
+                    if (bRecord)
+                    {
+                        selectHandle.unitIds.Clear();
+                        selectHandle.unitIds.AddRange(recordUnitIds);
+                    }
+                    else
+                    {
+                        GetUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea, selectHandle, ref actionContext);
+
+                        DoRecordUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea, selectHandle.unitIds);
+                    }
                     if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
                     {
                         isChgToSelectPos = actionCallAutoUnitWhenUmbellate.IsChgToSelectPos;
@@ -227,9 +242,20 @@ namespace ET.Ability
 
         public static SelectHandle CreateUnitSelectHandle(Unit unit, Unit targetUnit, ActionCallParam actionCallParam)
         {
+            if (targetUnit == null)
+            {
+                return null;
+            }
             SelectHandle selectHandle = SelectHandle.Create();
             selectHandle.selectHandleType = SelectHandleType.SelectUnits;
-            selectHandle.unitIds = ListComponent<long>.Create();
+            if (selectHandle.unitIds == null)
+            {
+                selectHandle.unitIds = ListComponent<long>.Create();
+            }
+            else
+            {
+                selectHandle.unitIds.Clear();
+            }
             selectHandle.unitIds.Add(targetUnit.Id);
             selectHandle.position = targetUnit.Position;
             selectHandle.direction = targetUnit.Forward;
@@ -296,13 +322,26 @@ namespace ET.Ability
             return selectHandle;
         }
 
-        private static MultiMap<float, Unit> tmp_dic = new();
+        private static MultiMapSimple<float, Unit> tmp_dic = new();
+
+        public static void DoRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, ActionCallAutoUnitArea actionCallAutoUnitArea, ListComponent<long> unitIds)
+        {
+            SelectHandleRecordManager selectHandleRecordManager = unit.DomainScene().GetComponent<SelectHandleRecordManager>();
+            selectHandleRecordManager.DoRecordUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea, unitIds);
+        }
+
+        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, ActionCallAutoUnitArea actionCallAutoUnitArea)
+        {
+            SelectHandleRecordManager selectHandleRecordManager = unit.DomainScene().GetComponent<SelectHandleRecordManager>();
+            return selectHandleRecordManager.ChkRecordUnitsByArea(unit, isResetPos, resetPos, actionCallAutoUnitArea);
+        }
+
         public static void GetUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             bool isFriend = actionCallAutoUnitArea.IsFriend;
             bool isOnlyPlayer = actionCallAutoUnitArea.IsOnlyPlayer;
 
-            ListComponent<Unit> list;
+            List<Unit> list;
             if (isFriend)
             {
                 list = UnitHelper.GetFriends(unit, isOnlyPlayer);
@@ -315,7 +354,7 @@ namespace ET.Ability
             int selectNum = actionCallAutoUnitArea.SelectNum;
 
             tmp_dic.Clear();
-            MultiMap<float, Unit> dic = tmp_dic;
+            MultiMapSimple<float, Unit> dic = tmp_dic;
             if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
             {
                 GetUnitsWhenUmbellate(unit, isResetPos, resetPos, list, dic, actionCallAutoUnitWhenUmbellate, ref actionContext);
@@ -365,7 +404,7 @@ namespace ET.Ability
         /// <param name="list"></param>
         /// <param name="dic"></param>
         /// <param name="actionCallAutoUnit"></param>
-        public static void GetUnitsWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMap<float, Unit> dic, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
+        public static void GetUnitsWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
         {
             float radius = actionCallAutoUnit.UmbellateArea.Radius;
             ResetDis(ref radius, ref actionContext);
@@ -417,6 +456,7 @@ namespace ET.Ability
                     if (IgnoringHeight || KeepHorizontal)
                     {
                         dir.y = 0;
+                        dir = math.normalize(dir);
                         angleTmp = math.degrees(math.acos(math.clamp(math.dot(curUnitForward, dir), -1, 1)));
                     }
                     else
@@ -455,7 +495,7 @@ namespace ET.Ability
         /// <param name="list"></param>
         /// <param name="dic"></param>
         /// <param name="actionCallAutoUnit"></param>
-        public static void GetUnitsWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMap<float, Unit> dic, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
+        public static void GetUnitsWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
         {
             float width = actionCallAutoUnit.RectangleArea.Width;
             float length = actionCallAutoUnit.RectangleArea.Length;
@@ -491,6 +531,7 @@ namespace ET.Ability
                 if (IgnoringHeight || KeepHorizontal)
                 {
                     dir.y = 0;
+                    dir = math.normalize(dir);
                 }
                 float dot = math.dot(curUnitForward, dir);
                 if (dot >= 0)
@@ -568,7 +609,7 @@ namespace ET.Ability
             }
         }
 
-        public static List<Unit> GetSelectUnitList(Unit unit, SelectHandle selectHandle, ActionContext actionContext, bool isContainDeathShow = false)
+        public static ListComponent<Unit> GetSelectUnitList(Unit unit, SelectHandle selectHandle, ref ActionContext actionContext, bool isContainDeathShow = false)
         {
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
@@ -604,10 +645,14 @@ namespace ET.Ability
                 return false;
             }
 
-            ListComponent<Unit> list = ListComponent<Unit>.Create();
+            using ListComponent<Unit> list = ListComponent<Unit>.Create();
             foreach (long unitId in saveSelectHandle.unitIds)
             {
                 Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                if (UnitHelper.ChkUnitAlive(unitSelect, true) == false)
+                {
+                    return false;
+                }
                 if (unitSelect == null)
                 {
                     return false;

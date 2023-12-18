@@ -37,6 +37,8 @@ namespace ET
         }
 
         public DtCrowdAgent navMeshAgent;
+        public int waitFrameSyncPos = 0;
+        public int curFrameSyncPos = 0;
 
     }
 }

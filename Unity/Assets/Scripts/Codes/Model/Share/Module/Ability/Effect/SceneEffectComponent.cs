@@ -9,6 +9,6 @@ namespace ET.Ability
         /// <summary>
         /// unitId -> effectKey -> effectObjId
         /// </summary>
-        public Dictionary<long, MultiMap<string, EntityRef<EffectObj>>> recordEffectList;
+        public Dictionary<long, MultiMapSimple<string, EntityRef<EffectObj>>> recordEffectList;
     }
 }

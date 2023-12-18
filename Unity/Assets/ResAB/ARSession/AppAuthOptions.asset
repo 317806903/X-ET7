@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa813f450bdf34d46bce2c8e994e04de, type: 3}
   m_Name: AppAuthOptions
   m_EditorClassIdentifier: 
-  appKey: 63f72bdc21c28002a4f4b218#mirrorsdk_dev
-  appSecret: 79395951c7cf78bd7ec1fe5b5b1c97ce
+  appKey: 
+  appSecret: 

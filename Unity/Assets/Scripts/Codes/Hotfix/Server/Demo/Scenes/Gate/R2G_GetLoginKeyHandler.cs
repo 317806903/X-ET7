@@ -26,6 +26,7 @@ namespace ET.Server
 			long key = scene.GetComponent<GateSessionKeyComponent>().Add(request.Account);
 			response.Key = key;
 			response.GateId = scene.Id;
+			response.IsFirstLogin = _A2G_GetPlayerIdByAccount.IsFirstLogin;
 
 			await ETTask.CompletedTask;
 		}

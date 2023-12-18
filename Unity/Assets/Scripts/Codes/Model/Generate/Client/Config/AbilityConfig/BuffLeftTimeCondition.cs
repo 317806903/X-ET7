@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 判断Buff剩余时间
+/// 判断当前Buff剩余时间
 /// </summary>
 public sealed partial class BuffLeftTimeCondition:  Condition 
 {

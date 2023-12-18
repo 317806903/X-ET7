@@ -14,30 +14,48 @@ namespace ET.Client
 
 		public static void RegisterUIEvent(this DlgUpdate self)
 		{
-			self.transBackground = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Downloading/Background");
-			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Downloading/Percentage");
+			self.rectTransBackground = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Background");
+			self.rectTransValueImage = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Background/Value");
+			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Percentage");
+			
+			self.transProgress = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent");
+			self.transCheckUpdate = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/CheckUpdate");
 		}
 
 		public static void ShowWindow(this DlgUpdate self, ShowWindowData contextData = null)
 		{
+			self.transProgress.gameObject.SetActive(false);
+			self.transCheckUpdate.gameObject.SetActive(true);
+			self.transCheckUpdate.GetComponent<TMP_Text>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
 			self.ShowProcess(0);
 		}
 
 		public static void ShowProcess(this DlgUpdate self, float per)
 		{
-			self.transBackground.localScale = new Vector3(per, 1, 1);
-			self.transPercentage.gameObject.GetComponent<TextMeshProUGUI>().text = $"{(int)(per * 100)}%";
+			float backgroudWidth = self.rectTransBackground.sizeDelta.x;
+			float newValueImageWidth = Mathf.Clamp(per * backgroudWidth, self.rectTransValueImage.sizeDelta.y, backgroudWidth);
+			self.rectTransValueImage.sizeDelta = new Vector2(newValueImageWidth, self.rectTransValueImage.sizeDelta.y);
 		}
 
 		public static void UpdateUI(this DlgUpdate self, OnPatchDownloadProgress a)
 		{
+			self.transProgress.gameObject.SetActive(true);
 			self.View.ELabel_TotalDownloadCountText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalNum", a.TotalDownloadCount);
 			self.View.ELabel_CurrentDownloadCountText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_CurDownNum", a.CurrentDownloadCount);
 			self.View.ELabel_TotalDownloadSizeBytesText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalDownSize", a.TotalDownloadSizeBytes);
 			self.View.ELabel_CurrentDownloadSizeBytesText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalNum", a.CurrentDownloadSizeBytes);
+			long totalDownloadSizeMB = a.TotalDownloadSizeBytes / (1024 * 1024);
+			long currentDownloadSizeMB = a.CurrentDownloadSizeBytes / (1024 * 1024);
+			self.transPercentage.gameObject.GetComponent<TextMeshProUGUI>().text =
+					LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownloadProgress", currentDownloadSizeMB, totalDownloadSizeMB);
+			
 			float per = (float)a.CurrentDownloadCount/a.TotalDownloadCount;
-
 			self.ShowProcess(per);
+		}
+
+		public static void HideCheckUpdateText(this DlgUpdate self)
+		{
+			self.transCheckUpdate.gameObject.SetActive(false);
 		}
 	}
 }

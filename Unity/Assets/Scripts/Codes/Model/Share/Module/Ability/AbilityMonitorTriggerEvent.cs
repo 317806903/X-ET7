@@ -185,4 +185,94 @@
         /// </summary>
         AoeOnExist,
     }
+
+    public enum AbilityGameMonitorTriggerEvent
+    {
+        /// <summary>
+        /// 监听 GlobalBuff在每个工作周期会执行的函数，如果这个函数为空，或者tickTime<=0，都不会发生周期性工作
+        /// </summary>
+        GlobalBuffOnTick1,
+        GlobalBuffOnTick2,
+        GlobalBuffOnTick3,
+
+        /// <summary>
+        /// 监听 附近unit被创建的事件
+        /// </summary>
+        NearUnitOnCreate,
+
+        /// <summary>
+        /// 监听 附近unit产生攻击的事件
+        /// </summary>
+        NearUnitOnHit,
+
+        /// <summary>
+        /// 监听 附近unit销毁的事件
+        /// </summary>
+        NearUnitOnRemoved,
+
+        /// <summary>
+        /// 监听 放置塔的事件
+        /// </summary>
+        GamePlayTowerDefense_PutTower,
+
+        /// <summary>
+        /// 监听 出售塔的事件
+        /// </summary>
+        GamePlayTowerDefense_ScaleTower,
+
+        /// <summary>
+        /// 监听 回收塔的事件
+        /// </summary>
+        GamePlayTowerDefense_ReclaimTower,
+
+        /// <summary>
+        /// 监听 升级塔的事件
+        /// </summary>
+        GamePlayTowerDefense_UpgradeTower,
+
+        /// <summary>
+        /// 监听 塔击杀monster的事件
+        /// </summary>
+        GamePlayTowerDefense_TowerKillMonster,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_PutHome 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_PutHomeBegin,
+        GamePlayTowerDefense_Status_PutHomeEnd,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_PutMonsterPoint 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_PutMonsterPointBegin,
+        GamePlayTowerDefense_Status_PutMonsterPointEnd,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_ShowStartEffect 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_ShowStartEffectBegin,
+        GamePlayTowerDefense_Status_ShowStartEffectEnd,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_RestTime 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_RestTimeBegin,
+        GamePlayTowerDefense_Status_RestTimeEnd,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_InTheBattle 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_InTheBattleBegin,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_InTheBattleEnd 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_InTheBattleEnd,
+
+        /// <summary>
+        /// 监听  GamePlayTowerDefense_Status_GameEnd 的事件
+        /// </summary>
+        GamePlayTowerDefense_Status_GameEnd,
+
+    }
 }

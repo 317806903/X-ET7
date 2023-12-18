@@ -88,17 +88,15 @@ namespace ET.Client
 
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
+                self.View.ELable_RoomMemberStatusTextMeshProUGUI.text =
+                        LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_StartGame");
                 if (roomComponent.ChkIsAllReady())
                 {
                     self.View.E_RoomMemberStatusImage.SetImageGray(false);
-                    self.View.ELable_RoomMemberStatusTextMeshProUGUI.text =
-                        LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_StartGame");
                 }
                 else
                 {
                     self.View.E_RoomMemberStatusImage.SetImageGray(true);
-                    self.View.ELable_RoomMemberStatusTextMeshProUGUI.text =
-                        LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_WaitAllReady");
                 }
 
                 self.View.EButton_ChooseBattleCfgButton.gameObject.SetActive(true);
@@ -157,18 +155,20 @@ namespace ET.Client
             return roomComponent;
         }
 
-        public static void AddMemberItemRefreshListener(this DlgARRoom self, Transform transform, int index)
+        public static async ETTask AddMemberItemRefreshListener(this DlgARRoom self, Transform transform, int index)
         {
+            self.SetSrcollOffset();
             RoomComponent roomComponent = self.GetRoomComponent();
 
             Scroll_Item_RoomMember itemRoom = self.ScrollItemRoomMembers[index].BindTrans(transform);
 
             itemRoom.ELabel_Content_LvTextMeshProUGUI.gameObject.SetActive(false);
-            itemRoom.EButton_OperatorButton.SetVisible(true);
+            //itemRoom.EButton_OperatorButton.SetVisible(true);
             itemRoom.EImage_TeamImage.SetVisible(false);
             long roomMemberId = roomComponent.roomMemberSeat[index];
             if (roomMemberId == -1)
             {
+                itemRoom.uiTransform.SetVisible(false);
                 itemRoom.ELabel_Content_NameTextMeshProUGUI.text =
                     LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_SeatIndex", index);
                 itemRoom.ELabel_OperatorText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_ChgSeat");
@@ -179,19 +179,20 @@ namespace ET.Client
             }
             else
             {
+                itemRoom.uiTransform.SetVisible(true);
                 long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
                 RoomMember roomMember = roomComponent.GetRoomMember(roomMemberId);
-                itemRoom.EButton_IconImage.gameObject.SetActive(true);
+                
                 itemRoom.EG_ReadyRectTransform.gameObject.SetActive(roomMember.isReady);
                 if (roomComponent.ownerRoomMemberId == roomMemberId)
                 {
                     itemRoom.ELabel_Content_LeaderImage.gameObject.SetActive(true);
-                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"{roomMemberId}";
+                    //itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"{roomMemberId}";
                 }
                 else
                 {
                     itemRoom.ELabel_Content_LeaderImage.gameObject.SetActive(false);
-                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"{roomMemberId}";
+                    //itemRoom.ELabel_Content_NameTextMeshProUGUI.text = $"{roomMemberId}";
                 }
 
                 if (myPlayerId == roomComponent.ownerRoomMemberId)
@@ -208,7 +209,7 @@ namespace ET.Client
                 if (myPlayerId == roomMemberId)
                 {
                     itemRoom.EButton_OperatorButton.SetVisible(false);
-                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
+                    //itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
                 }
 
                 GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);
@@ -229,6 +230,11 @@ namespace ET.Client
                         itemRoom.EImage_TeamImage.color = Color.blue;
                     }
                 }
+                PlayerBaseInfoComponent playerBaseInfoComponent =
+                        await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(),roomMemberId);
+                itemRoom.ELabel_Content_NameTextMeshProUGUI.text = playerBaseInfoComponent.GetPlayerName();
+                itemRoom.EButton_IconImage.gameObject.SetActive(true);
+                await itemRoom.EButton_IconImage.SetPlayerIcon(self.DomainScene(), roomMemberId);
             }
         }
 
@@ -257,7 +263,7 @@ namespace ET.Client
 
             ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
 
-            UIManagerHelper.ExitRoom(self.DomainScene());
+            await UIManagerHelper.ExitRoom(self.DomainScene());
         }
 
         public static async ETTask ShowQrCode(this DlgARRoom self)
@@ -290,20 +296,6 @@ namespace ET.Client
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
 
-            if (myPlayerId == roomComponent.ownerRoomMemberId)
-            {
-                if (roomComponent.subRoomType == SubRoomType.AREndlessChallenge)
-                {
-                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-                    {
-                        eventName = "Infinity_begin",
-                        properties = new()
-                        {
-                            {"player_num", 1},
-                        }
-                    });
-                }
-            }
         }
 
         public static async ETTask ChgRoomSeat(this DlgARRoom self, int newSeat)
@@ -360,6 +352,19 @@ namespace ET.Client
             }
 
             await RoomHelper.ChgRoomMemberTeamAsync(self.ClientScene(), roomTeamId);
+        }
+        
+        public static void SetSrcollOffset(this DlgARRoom self)
+        {
+            int width = (int)self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2;
+            int offset = width - (148 * 6);
+            RoomComponent roomComponent = self.GetRoomComponent();
+            int count = roomComponent.GetRoomMemberList().Count;
+            if (count < 6)
+            {
+                offset = width - (148 * count);
+            }
+            self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().padding.left = offset;
         }
     }
 }

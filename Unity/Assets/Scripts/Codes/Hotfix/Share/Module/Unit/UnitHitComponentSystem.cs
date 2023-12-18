@@ -17,6 +17,13 @@ namespace ET
 				{
 					continue;
 				}
+
+				BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
+				if (bulletObj.ChkCanTrigHit() == false)
+				{
+					continue;
+				}
+
 				var seeUnits = unitBullet.GetComponent<AOIEntity>().GetSeeUnits();
 				foreach (var seeUnit in seeUnits)
 				{
@@ -35,14 +42,10 @@ namespace ET
 					{
 						continue;
 					}
-					ProfilerSample.BeginSample("seeUnits ET.GamePlayHelper.ChkIsFriend");
 					bool isFriend = ET.GamePlayHelper.ChkIsFriend(unitBullet, unit);
-					ProfilerSample.EndSample();
 					if (isFriend == false)
 					{
-						ProfilerSample.BeginSample("seeUnits BulletHelper.ChkBulletHit");
 						(bool bHitUnit, bool bHitMesh, float3 hitPos) = BulletHelper.ChkBulletHit(unitBullet, unit);
-						ProfilerSample.EndSample();
 						if (bHitUnit)
 						{
 							BulletHelper.DoBulletHitUnit(unitBullet, unit);

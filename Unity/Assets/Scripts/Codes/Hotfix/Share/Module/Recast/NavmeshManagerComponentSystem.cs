@@ -20,6 +20,7 @@ namespace ET
             {
                 self.NavmeshByRadius = new ();
                 self.segPoints = new();
+                self.recordMeshHitDic = new();
             }
         }
 
@@ -27,6 +28,13 @@ namespace ET
         {
             self.NavmeshByRadius.Clear();
             self.segPoints.Clear();
+            self.objBytes = null;
+            self.m_nav = null;
+            self._sample = null;
+            self.soloNavMeshBuilder = null;
+            self.tileNavMeshBuilder = null;
+            self.segPoints = null;
+            self.recordMeshHitDic.Clear();
         }
 
         public static void InitByFile(this NavmeshManagerComponent self, string filePath)
@@ -76,17 +84,21 @@ namespace ET
 
         public static async ETTask<NavmeshComponent> CreateCrowd(this NavmeshManagerComponent self, float agentRadius)
         {
-            agentRadius = 0.5f;
+            while (self.m_nav == null)
+            {
+                if (self.IsDisposed)
+                {
+                    return null;
+                }
+                await TimerComponent.Instance.WaitAsync(100);
+            }
+            agentRadius = self._sample.GetSettings().agentRadius;
             NavmeshComponent navmeshComponent = self.GetNavmeshComponent(agentRadius);
             if (navmeshComponent != null)
             {
                 return navmeshComponent;
             }
 
-            while (self.m_nav == null)
-            {
-                await TimerComponent.Instance.WaitAsync(200);
-            }
             navmeshComponent = self.AddChild<NavmeshComponent>();
             await navmeshComponent.CreateCrowd(agentRadius);
 
@@ -176,7 +188,7 @@ namespace ET
                 pos.x = rayStart.x + (rayEnd.x - rayStart.x) * hitTime;
                 pos.y = rayStart.y + (rayEnd.y - rayStart.y) * hitTime;
                 pos.z = rayStart.z + (rayEnd.z - rayStart.z) * hitTime;
-                Log.Debug($"hitPos={pos}");
+                //Log.Debug($"hitPos={pos}");
                 return (true, pos);
             }
             else
@@ -247,8 +259,51 @@ namespace ET
             return self.segPoints;
         }
 
+        public static (bool, bool) ChkHitMeshOnPointRecord(this NavmeshManagerComponent self, int x, int y, int z)
+        {
+            if (self.recordMeshHitDic.TryGetValue(x, out var dic2))
+            {
+                if (dic2.TryGetValue(y, out var dic3))
+                {
+                    if (dic3.TryGetValue(z, out var isHitMesh))
+                    {
+                        return (true, isHitMesh);
+                    }
+                }
+            }
+
+            return (false, false);
+        }
+
+        public static void RecordHitMeshOnPoint(this NavmeshManagerComponent self, int x, int y, int z, bool isHitMesh)
+        {
+            if (self.recordMeshHitDic.TryGetValue(x, out var dic2) == false)
+            {
+                dic2 = new();
+                self.recordMeshHitDic[x] = dic2;
+            }
+
+            if (dic2.TryGetValue(y, out var dic3) == false)
+            {
+                dic3 = new();
+                dic2[y] = dic3;
+            }
+
+            dic3[z] = isHitMesh;
+        }
+
         public static bool ChkHitMeshOnPoint(this NavmeshManagerComponent self, float3 rayPosIn)
         {
+            int x = (int)(rayPosIn.x * 100);
+            int y = (int)(rayPosIn.y * 100);
+            int z = (int)(rayPosIn.z * 100);
+
+            (bool isRecord, bool isHitMesh) = self.ChkHitMeshOnPointRecord(x, y, z);
+            if (isRecord)
+            {
+                return isHitMesh;
+            }
+
             RcVec3f rayPos = new RcVec3f(-rayPosIn.x, rayPosIn.y, rayPosIn.z);
 
             foreach (RecastBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
@@ -259,6 +314,7 @@ namespace ET
                     bool bHit = self._ChkHitPointOneHeightfield(rayPos, rcHeightfield);
                     if (bHit)
                     {
+                        self.RecordHitMeshOnPoint(x, y, z, true);
                         return true;
                     }
                 }
@@ -268,6 +324,7 @@ namespace ET
                 }
             }
 
+            self.RecordHitMeshOnPoint(x, y, z, false);
             return false;
         }
 
@@ -300,7 +357,15 @@ namespace ET
             float disZ = (rayPosIn.z - orig.z) / cs;
             int indexZ = (int)Math.Floor(disZ);
 
-            RcSpan s = hf.spans[indexX + indexZ * w];
+            RcSpan s = null;
+            try
+            {
+                s = hf.spans[indexX + indexZ * w];
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
             while (s != null)
             {
                 if (rayPosIn.y >= orig.y + s.smin * ch && rayPosIn.y <= orig.y + s.smax * ch)

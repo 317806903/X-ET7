@@ -30,7 +30,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(SkillObj self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -76,7 +76,7 @@ namespace ET.Ability
                 };
                 foreach (var actionId in skillCfg.LearnActionId)
                 {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, actionContext);
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, ref actionContext);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace ET.Ability
             SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction, ref actionContext);
 
             TimelineObj timelineObj = await TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
-            timelineObj.InitActionContext(actionContext);
+            timelineObj.InitActionContext(ref actionContext);
 
             self.CostSkill();
             self.cdCountDown = self._GetSkillCD();

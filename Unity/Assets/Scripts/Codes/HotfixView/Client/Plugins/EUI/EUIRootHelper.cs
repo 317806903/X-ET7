@@ -13,7 +13,11 @@ namespace ET.Client
 
         public static Transform GetTargetRoot(UIWindowType type)
         {
-            if (type == UIWindowType.Normal)
+            if (type == UIWindowType.WorldHub)
+            {
+                return UIManagerComponent.Instance.WorldHubRoot;
+            }
+            else if (type == UIWindowType.Normal)
             {
                 return UIManagerComponent.Instance.NormalRoot;
             }

@@ -1,6 +1,7 @@
 using System;
 using ET.Ability;
 using ET.AbilityConfig;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -15,6 +16,10 @@ namespace ET
             {
                 try
                 {
+                    if (self.isEnable == false)
+                    {
+                        return;
+                    }
                     self.Check(false);
                 }
                 catch (Exception e)
@@ -29,8 +34,20 @@ namespace ET
         {
             protected override void Awake(AIComponent self, string aiConfigId)
             {
+                self.isEnable = true;
                 self.AICfgId = aiConfigId;
-                self.Timer = TimerComponent.Instance.NewRepeatedTimer(500, TimerInvokeType.AITimer, self);
+                self.curFrameIndex = new();
+
+                var oneAI = AICfgCategory.Instance.GetAI(self.AICfgId);
+                foreach (AICfg aiConfig in oneAI.Values)
+                {
+                    self.curFrameIndex.Add(aiConfig.Order, 0);
+                }
+
+
+                self.isNear = true;
+                self._ResetRepeatedTimer();
+
                 self.FirstCheck().Coroutine();
             }
         }
@@ -44,6 +61,58 @@ namespace ET
                 self.CancellationToken?.Cancel();
                 self.CancellationToken = null;
                 self.Current = "";
+            }
+        }
+
+        public static void ResetRepeatedTimerByDis(this AIComponent self, Unit chkDisUnit)
+        {
+            if (chkDisUnit == null)
+            {
+                return;
+            }
+            if (self.lastChkDisTime == 0 || self.lastChkDisTime < TimeHelper.ServerNow() - self.chkDisTimeInterval * 1000)
+            {
+                self.lastChkDisTime = TimeHelper.ServerNow();
+            }
+            else
+            {
+                return;
+            }
+            float curDisSq = math.lengthsq(self.GetUnit().Position - chkDisUnit.Position);
+            if (curDisSq > self.nearDis * self.nearDis)
+            {
+                self.isNear = false;
+            }
+            else
+            {
+                self.isNear = true;
+            }
+
+            self._ResetRepeatedTimer();
+        }
+
+        public static void ResetRepeatedTimerByAttack(this AIComponent self)
+        {
+            self.isNear = true;
+            self._ResetRepeatedTimer();
+        }
+
+        public static void _ResetRepeatedTimer(this AIComponent self)
+        {
+            int newRepeatedTimer;
+            if (self.isNear)
+            {
+                newRepeatedTimer = self.NewRepeatedTimerNear;
+            }
+            else
+            {
+                newRepeatedTimer = self.NewRepeatedTimerFast;
+            }
+            if (self.curNewRepeatedTimer != newRepeatedTimer)
+            {
+                TimerComponent.Instance?.Remove(ref self.Timer);
+                self.Timer = TimerComponent.Instance.NewRepeatedTimer(newRepeatedTimer, TimerInvokeType.AITimer, self);
+                self.curNewRepeatedTimer = newRepeatedTimer;
             }
         }
 
@@ -104,6 +173,17 @@ namespace ET
             return self.AICfgId;
         }
 
+        public static void PauseAI(this AIComponent self)
+        {
+            self.Cancel();
+            self.isEnable = false;
+        }
+
+        public static void RecoveryAI(this AIComponent self)
+        {
+            self.isEnable = true;
+        }
+
         public static void Check(this AIComponent self, bool isFirst)
         {
             if (self.Parent == null)
@@ -124,6 +204,19 @@ namespace ET
 
             foreach (AICfg aiConfig in oneAI.Values)
             {
+                if (isFirst == false && aiConfig.WaitFrameNum > 0)
+                {
+                    int waitFrameNum = aiConfig.WaitFrameNum;
+                    if (self.curFrameIndex[aiConfig.Order] < waitFrameNum)
+                    {
+                        self.curFrameIndex[aiConfig.Order]++;
+                        continue;
+                    }
+                    else
+                    {
+                        self.curFrameIndex[aiConfig.Order] = 0;
+                    }
+                }
 
                 AIDispatcherComponent.Instance.AIHandlers.TryGetValue(aiConfig.Name, out AAIHandler aaiHandler);
 

@@ -10,13 +10,13 @@ namespace ET.Server
 		{
 			bool isARRoom = request.IsARRoom == 1? true : false;
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
-			response.RoomInfos = ListComponent<byte[]>.Create();
+			response.RoomInfos = new ();
 			foreach (long roomId in roomManagerComponent.GetIdleRoomList(isARRoom))
 			{
 				RoomComponent roomComponent = roomManagerComponent.GetChild<RoomComponent>(roomId);
 				response.RoomInfos.Add(roomComponent.ToBson());
 			}
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

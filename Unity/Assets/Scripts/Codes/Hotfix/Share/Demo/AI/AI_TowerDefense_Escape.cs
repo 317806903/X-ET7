@@ -76,6 +76,8 @@ namespace ET
 
             Unit headQuarterUnit = GetHeadQuarter(unit);
 
+            aiComponent.ResetRepeatedTimerByDis(headQuarterUnit);
+
             //Log.Debug("开始靠近 11");
 
             while (true)
@@ -90,6 +92,8 @@ namespace ET
                     aiComponent.Cancel();
                     return;
                 }
+                aiComponent.ResetRepeatedTimerByDis(headQuarterUnit);
+
                 if (ChkIsBlockWhenToHeadQuarter(unit))
                 {
                     aiComponent.Cancel();
@@ -99,7 +103,7 @@ namespace ET
                 float3 nextTarget = headQuarterUnit.Position;
                 //Log.Debug($"开始靠近 22 {nextTarget}");
 
-                if (Ability.UnitHelper.ChkCanAttack(unit, headQuarterUnit, 0f, true))
+                if (Ability.UnitHelper.ChkCanAttack(unit, headQuarterUnit, 0f, false))
                 {
                     GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(unit.DomainScene());
                     gamePlayTowerDefenseComponent.DealEscape(unit);

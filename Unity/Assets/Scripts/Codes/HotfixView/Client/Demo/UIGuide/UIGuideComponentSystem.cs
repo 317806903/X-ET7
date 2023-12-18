@@ -138,6 +138,12 @@ namespace ET.Client
                 return;
             }
 
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+            {
+                eventName = "TutorialStepEnded",
+                timerKey = self.nowIndex.ToString(),
+            });
             if (self.CurUIGuideComponent != null)
             {
                 self.CurUIGuideComponent.Dispose();
@@ -159,6 +165,16 @@ namespace ET.Client
 
         public static void NextStepCallBack(this UIGuideComponent self)
         {
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "TutorialStepEnded",
+                properties = new()
+                {
+                    {"step_id_code", self.nowIndex},
+                },
+                timerKey = self.nowIndex.ToString(),
+            });
+
             self.nowIndex++;
             self.DoGuideStep().Coroutine();
         }

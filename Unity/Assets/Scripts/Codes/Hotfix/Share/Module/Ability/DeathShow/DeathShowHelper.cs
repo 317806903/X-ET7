@@ -21,6 +21,12 @@ namespace ET.Ability
             ActionCfg_DeathShow actionCfg_DeathShow = UnitHelper.GetDeathShow(unit);
             deathShowDuration = actionCfg_DeathShow.Duration;
 
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            if (numericComponent != null)
+            {
+                numericComponent.SetAsInt(NumericType.Hp, 0);
+            }
+
             if (deathShowDuration == 0)
             {
                 unit._Destroy();

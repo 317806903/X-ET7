@@ -9,20 +9,20 @@ namespace ET.Server
     {
         public static void NoticeUnitAdd(Unit unit, Unit sendUnit)
         {
-            M2C_CreateUnits createUnits = new() { Units = ListComponent<UnitInfo>.Create() };
+            M2C_CreateUnits createUnits = new() { Units = new() };
             createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(sendUnit));
             MessageHelper.SendToClient(unit, createUnits);
         }
 
         public static void NoticeUnitRemove(Unit unit, Unit sendUnit)
         {
-            M2C_RemoveUnits removeUnits = new() {Units = ListComponent<long>.Create()};
+            M2C_RemoveUnits removeUnits = new() {Units = new()};
             removeUnits.Units.Add(sendUnit.Id);
             MessageHelper.SendToClient(unit, removeUnits);
         }
 
-        private static MultiMap<long, Unit> playerSeeUnits = new();
-        public static MultiMap<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
+        private static MultiMapSimple<long, Unit> playerSeeUnits = new();
+        public static MultiMapSimple<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
         {
             playerSeeUnits.Clear();
             for (int i = 0; i < units.Count; i++)
@@ -73,12 +73,31 @@ namespace ET.Server
             oneTypeLocationType.Send(unit.Id, message);
         }
 
-        public static void SendToClient(long actionId, IActorMessage message, bool chkPlayerExist = true)
+        public static void SendToClient(long actionId, IActorMessage message, bool chkPlayerExist = true, bool needWait = false)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             if (chkPlayerExist && oneTypeLocationType.GetChild<Entity>(actionId) == null)
             {
+                if (needWait)
+                {
+                    WaitToSendToClient(actionId, message).Coroutine();
+                }
                 return;
+            }
+            oneTypeLocationType.Send(actionId, message);
+        }
+
+        public static async ETTask WaitToSendToClient(long actionId, IActorMessage message)
+        {
+            int retryCount = 20;
+            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+            while (oneTypeLocationType.GetChild<Entity>(actionId) == null)
+            {
+                if (retryCount-- <= 0)
+                {
+                    return;
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
             }
             oneTypeLocationType.Send(actionId, message);
         }

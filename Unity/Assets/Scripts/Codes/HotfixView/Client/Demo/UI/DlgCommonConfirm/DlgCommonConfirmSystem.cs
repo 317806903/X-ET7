@@ -91,13 +91,13 @@ namespace ET.Client
                 self.View.E_TitleTextTextMeshProUGUI.text = titleText;
             }
 
-            self.View.E_BG_ClickButton.AddListener(() =>
-            {
-                UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
-
-                self.Close();
-                confirmCallBack?.Invoke();
-            });
+            // self.View.E_BG_ClickButton.AddListener(() =>
+            // {
+            //     UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            //
+            //     self.Close();
+            //     confirmCallBack?.Invoke();
+            // });
             self.View.E_SureButton.AddListener(() =>
             {
                 UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());

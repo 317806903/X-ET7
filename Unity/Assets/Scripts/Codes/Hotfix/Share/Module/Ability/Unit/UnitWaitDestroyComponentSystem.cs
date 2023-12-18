@@ -31,7 +31,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(UnitWaitDestroyComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }

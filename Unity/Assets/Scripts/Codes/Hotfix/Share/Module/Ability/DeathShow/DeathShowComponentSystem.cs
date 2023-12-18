@@ -23,13 +23,13 @@ namespace ET.Ability
             {
             }
         }
-        
+
         [ObjectSystem]
         public class DeathShowComponentFixedUpdateSystem: FixedUpdateSystem<DeathShowComponent>
         {
             protected override void FixedUpdate(DeathShowComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -43,11 +43,12 @@ namespace ET.Ability
         {
             self.duration = actionCfg_DeathShow.Duration;
             self.timeElapsed = 0;
-            
+
             string actionId = actionCfg_DeathShow.Id;
 
+            ActionContext actionContext = new();
             SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
-            ET.Ability.ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, new ActionContext());
+            ET.Ability.ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, ref actionContext);
         }
 
         /// <summary>

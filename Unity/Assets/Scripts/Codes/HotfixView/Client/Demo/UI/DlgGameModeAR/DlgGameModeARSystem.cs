@@ -1,24 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ET.Client
 {
+    [Invoke(TimerInvokeType.GameModeARTimer)]
+    public class DlgGameModeARTimer: ATimer<DlgGameModeAR>
+    {
+        protected override void Run(DlgGameModeAR self)
+        {
+            try
+            {
+                if (self.IsDisposed)
+                {
+                    TimerComponent.Instance?.Remove(ref self.Timer);
+                    return;
+                }
+                self.UpdatePhysicalStrength().Coroutine();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"move timer error: {self.Id}\n{e}");
+            }
+        }
+    }
+
     [FriendOf(typeof (DlgGameModeAR))]
     public static class DlgGameModeARSystem
     {
         public static void RegisterUIEvent(this DlgGameModeAR self)
         {
-            self.View.E_PVEButton.AddListenerAsync(self.EnterAREndlessChallenge);
-            //self.View.E_PVEButton.AddListenerAsync(self.EnterARPVE);
-            self.View.E_PVPButton.AddListenerAsync(self.EnterARPVP);
+            self.View.E_EndlessChallengeButton.AddListenerAsync(self.EnterAREndlessChallenge);
+            self.View.E_PVEButton.AddListenerAsync(self.EnterARPVE);
+            self.View.EButton_PVPButton.AddListenerAsync(self.EnterARPVP);
             self.View.E_ScanCodeButton.AddListenerAsync(self.EnterScanCode);
             self.View.E_AvatarButton.AddListenerAsync(self.ClickAvatar);
-            self.View.E_tutorialButton.AddListenerAsync(self.ClickTutorial);
+            self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
             self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
             self.View.E_RankButton.AddListenerAsync(self.ClickRank);
+            self.View.EButton_PhysicalStrengthButton.AddListenerAsync(self.ClickPhysicalStrength);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -47,15 +70,48 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            self.View.E_PVENameUITextLocalizeMonoView.DynamicSet(playerBaseInfoComponent.EndlessChallengeScore);
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
-
             await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
+            self.UpdatePhysicalStrength().Coroutine();
+            self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.GameModeARTimer, self);
+
+            self.View.ELabel_WavesUITextLocalizeMonoView.DynamicSet(playerBaseInfoComponent.EndlessChallengeScore);
+            RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
+            int myRank = rankShowComponent.GetMyRank();
+            if (myRank == -1 || myRank > 1000)
+            {
+                self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet("1000+");
+            }
+            else
+            {
+                self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet(myRank);
+            }
+            
+            self.View.E_PVELockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVELock);
+            self.View.E_PVPLockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVPLock);
+            self.View.E_CardsLockButton.SetVisible(GlobalSettingCfgCategory.Instance.CardsLock);
+            self.View.E_CardsButton.SetVisible(!GlobalSettingCfgCategory.Instance.CardsLock);
+            self.View.E_TutorialLockButton.SetVisible(GlobalSettingCfgCategory.Instance.TutorialLock);
+            self.View.E_TutorialButton.SetVisible(!GlobalSettingCfgCategory.Instance.TutorialLock);
+            
+            self.View.EButton_PhysicalStrengthImage.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength.ToString();
+            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.text =
+                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength.ToString();
+            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength.ToString();
         }
 
         public static async ETTask EnterAREndlessChallenge(this DlgGameModeAR self)
         {
             UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength) == false)
+            {
+                return;
+            }
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
@@ -75,19 +131,17 @@ namespace ET.Client
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
-            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
-            {
-                playerStatus = PlayerStatus.Hall,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.ARPVE,
-                arRoomId = 0,
-            };
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgChallengeMode>();
         }
 
         public static async ETTask EnterARPVP(this DlgGameModeAR self)
         {
             UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+
+            if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength) == false)
+            {
+                return;
+            }
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
@@ -150,8 +204,7 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Des", playerBaseInfoComponent.PlayerName);
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Confirm");
@@ -163,7 +216,28 @@ namespace ET.Client
 
         public static async ETTask ClickRank(this DlgGameModeAR self)
         {
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRankEndlessChallenge>();
+        }
+
+        public static async ETTask ClickPhysicalStrength(this DlgGameModeAR self)
+        {
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPhysicalStrength>();
+        }
+
+        public static async ETTask UpdatePhysicalStrength(this DlgGameModeAR self)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
+            int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
+            string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
+            self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
+        }
+
+        public static void HideWindow(this DlgGameModeAR self)
+        {
+            TimerComponent.Instance?.Remove(ref self.Timer);
         }
     }
 }

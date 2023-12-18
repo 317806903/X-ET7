@@ -38,7 +38,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(BulletObj self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -59,7 +59,7 @@ namespace ET.Ability
             self.hitRecords = ListComponent<BulletHitRecord>.Create();
         }
 
-        public static void InitActionContext(this BulletObj self, ActionContext actionContext)
+        public static void InitActionContext(this BulletObj self, ref ActionContext actionContext)
         {
             actionContext.isBreakSoftBati = false;
             actionContext.isBreakStrongBati = false;
@@ -170,20 +170,25 @@ namespace ET.Ability
                 selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
             }
 
+            if (selectHandle == null)
+            {
+                return;
+            }
+
             SelectHandle curSelectHandle = selectHandle;
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, self.actionContext);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, self.actionContext);
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, ref self.actionContext);
             if (isChgSelect2)
             {
                 curSelectHandle = newSelectHandle2;
             }
             if (bRet1 && bRet2)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, self.actionContext);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, ref self.actionContext);
             }
         }
 
@@ -191,7 +196,6 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             self.duration -= timePassed;
-            //Log.Error(" self.duration:" + self.duration + " " + self.GetUnit().Id);
             self.timeElapsed += timePassed;
             if (self.hitRecords != null)
             {
@@ -216,12 +220,27 @@ namespace ET.Ability
             }
         }
 
-        public static bool CanHitUnit(this BulletObj self, Unit unit)
+        public static bool ChkCanTrigHit(this BulletObj self)
         {
             if (self.canHitTimes <= 0)
                 return false;
             if (self.canHitAfterCreated > 0)
                 return false;
+
+            MoveTweenObj moveTweenObj = self.GetUnit().GetComponent<MoveTweenObj>();
+            if (moveTweenObj != null && moveTweenObj.isNeedChkHoldTime)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CanHitUnit(this BulletObj self, Unit unit)
+        {
+            if (self.ChkCanTrigHit() == false)
+                return false;
+
             if (self.hitRecords != null)
             {
                 for (int i = 0; i < self.hitRecords.Count; i++)
@@ -238,14 +257,14 @@ namespace ET.Ability
 
         public static bool CanHitMesh(this BulletObj self)
         {
+            if (self.ChkCanTrigHit() == false)
+                return false;
+
             if (UnitHelper.IsNeedChkMesh(self.GetUnit()) == false)
             {
                 return false;
             }
-            if (self.canHitTimes <= 0)
-                return false;
-            if (self.canHitAfterCreated > 0)
-                return false;
+
             if (self.hitRecords != null)
             {
                 for (int i = 0; i < self.hitRecords.Count; i++)

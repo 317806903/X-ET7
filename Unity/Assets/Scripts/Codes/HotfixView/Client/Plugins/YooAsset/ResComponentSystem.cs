@@ -128,11 +128,25 @@ namespace ET.Client
             ResourceDownloaderOperation downloader = YooAssets.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
             if (downloader.TotalDownloadCount == 0)
             {
-                Log.Info("---CreateDownloader 没有发现需要下载的资源");
+                if (Application.isMobilePlatform)
+                {
+                    Log.Error("---CreateDownloader 没有发现需要下载的资源");
+                }
+                else
+                {
+                    Log.Info("---CreateDownloader 没有发现需要下载的资源");
+                }
             }
             else
             {
-                Log.Info("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
+                if (Application.isMobilePlatform)
+                {
+                    Log.Error("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
+                }
+                else
+                {
+                    Log.Info("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
+                }
                 self.Downloader = downloader;
             }
 
@@ -350,17 +364,36 @@ namespace ET.Client
 
         public static void ResetShaderWhenEditor(this ResComponent self, UnityEngine.GameObject gameObject)
         {
-#if UNITY_IPHONE
-            if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsEditor && UnityEngine.Application.isEditor)
+            try
             {
-                var renderers = gameObject.GetComponentsInChildren<UnityEngine.Renderer>();
 
-                foreach (var renderer in renderers)
+#if UNITY_IPHONE
+                if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsEditor && UnityEngine.Application.isEditor)
                 {
-                    if (renderer.sharedMaterials != null)
+                    var renderers = gameObject.GetComponentsInChildren<UnityEngine.Renderer>();
+
+                    foreach (var renderer in renderers)
                     {
-                        foreach (UnityEngine.Material material in renderer.sharedMaterials)
+                        if (renderer.sharedMaterials != null)
                         {
+                            foreach (UnityEngine.Material material in renderer.sharedMaterials)
+                            {
+                                if (material != null)
+                                {
+                                    string shaderName = material.shader.name;
+                                    material.shader = Shader.Find(shaderName);
+                                }
+                            }
+                        }
+                    }
+
+                    var textMeshProUGUIs = gameObject.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+
+                    foreach (var textMeshProUGUI in textMeshProUGUIs)
+                    {
+                        if (textMeshProUGUI.fontSharedMaterial != null)
+                        {
+                            UnityEngine.Material material = textMeshProUGUI.fontSharedMaterial;
                             if (material != null)
                             {
                                 string shaderName = material.shader.name;
@@ -369,23 +402,12 @@ namespace ET.Client
                         }
                     }
                 }
-
-                var textMeshProUGUIs = gameObject.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-
-                foreach (var textMeshProUGUI in textMeshProUGUIs)
-                {
-                    if (textMeshProUGUI.fontSharedMaterial != null)
-                    {
-                        UnityEngine.Material material = textMeshProUGUI.fontSharedMaterial;
-                        if (material != null)
-                        {
-                            string shaderName = material.shader.name;
-                            material.shader = Shader.Find(shaderName);
-                        }
-                    }
-                }
-            }
 #endif
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         #endregion

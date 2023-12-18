@@ -15,6 +15,6 @@ MonoBehaviour:
   CodeMode: 3
   codeOptimization: 3
   StartConfig: Localhost
-  ModelVersion: 543
-  HotFixVersion: 587
+  ModelVersion: 655
+  HotFixVersion: 693
   NeedDB: 0

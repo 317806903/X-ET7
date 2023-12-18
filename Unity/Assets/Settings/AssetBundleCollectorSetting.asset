@@ -35,7 +35,7 @@ MonoBehaviour:
         UserData: 
     - GroupName: Code_Dll
       GroupDesc: 
-      AssetTags: 
+      AssetTags: buildIn
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/Bundles/Code
@@ -48,7 +48,7 @@ MonoBehaviour:
         UserData: 
     - GroupName: Config_GlobalConfig
       GroupDesc: 
-      AssetTags: 
+      AssetTags: buildIn
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/Bundles/Config/GlobalConfig
@@ -61,7 +61,7 @@ MonoBehaviour:
         UserData: 
     - GroupName: Config_AbilityConfig
       GroupDesc: 
-      AssetTags: 
+      AssetTags: buildIn
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/Bundles/Config/AbilityConfig
@@ -74,7 +74,7 @@ MonoBehaviour:
         UserData: 
     - GroupName: Config_StartConfig
       GroupDesc: 
-      AssetTags: 
+      AssetTags: buildIn
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/Bundles/Config/StartConfig
@@ -213,6 +213,14 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+      - CollectPath: Assets/ResAB/Video
+        CollectorGUID: f98da048868ff894793bb771e4082718
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: Shader
       GroupDesc: 
       AssetTags: 
@@ -232,5 +240,18 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackShaderVariants
         FilterRuleName: CollectShaderVariants
+        AssetTags: 
+        UserData: 
+    - GroupName: UIRoot
+      GroupDesc: 
+      AssetTags: buildIn
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UIRoot
+        CollectorGUID: 822554e49f769104eb62bb87b976ae8e
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 

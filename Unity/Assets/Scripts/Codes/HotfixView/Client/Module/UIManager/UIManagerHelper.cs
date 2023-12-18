@@ -105,6 +105,14 @@ namespace ET.Client
             await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
         }
 
+        public static async ETTask SetPlayerIcon(this Image image, Scene scene, long playerId)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
+            List<string> avatarIconList = ET.Client.PlayerHelper.GetAvatarIconList();
+            await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+        }
+
         public static async ETTask SetImageByPath(this Image image, string imgPath)
         {
             Sprite sprite = await ResComponent.Instance.LoadAssetAsync<Sprite>(imgPath);
@@ -171,6 +179,22 @@ namespace ET.Client
             // {
             //     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
             // }
+        }
+
+        public static async ETTask<bool> ChkAndShowtip(Scene scene, int takePhsicalStrength)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            if (playerBaseInfoComponent.GetPhysicalStrength() < takePhsicalStrength)
+            {
+                UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+                _UIComponent.ShowWindow<DlgPhysicalStrengthTip>();
+                DlgPhysicalStrengthTip _DlgPhysicalStrengthTip = _UIComponent.GetDlgLogic<DlgPhysicalStrengthTip>(true);
+                _DlgPhysicalStrengthTip.SetText(takePhsicalStrength.ToString());
+                return false;
+            }
+
+            return true;
         }
 
     }

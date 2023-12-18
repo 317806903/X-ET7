@@ -7,497 +7,549 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    [FriendOf(typeof(PutHomeComponent))]
+    [FriendOf(typeof (PutHomeComponent))]
     public static class PutHomeComponentSystem
-	{
-		[ObjectSystem]
-		public class PutHomeComponentAwakeSystem : AwakeSystem<PutHomeComponent>
-		{
-			protected override void Awake(PutHomeComponent self)
-			{
-				self.HomeUnitIdList = new();
-				self.TeamFlagType2PlayerIdCanPutHome = new();
-				self.TeamFlagType2Result = new();
+    {
+        [ObjectSystem]
+        public class PutHomeComponentAwakeSystem: AwakeSystem<PutHomeComponent>
+        {
+            protected override void Awake(PutHomeComponent self)
+            {
+                self.HomeUnitIdList = new();
+                self.TeamFlagType2PlayerIdCanPutHome = new();
+                self.TeamFlagType2Result = new();
 
-				self.Init();
-			}
-		}
+                self.Init();
+            }
+        }
 
-		[ObjectSystem]
-		public class PutHomeComponentDestroySystem : DestroySystem<PutHomeComponent>
-		{
-			protected override void Destroy(PutHomeComponent self)
-			{
-				self.HomeUnitIdList?.Clear();
-				self.TeamFlagType2PlayerIdCanPutHome?.Clear();
-				self.TeamFlagType2Result?.Clear();
-			}
-		}
+        [ObjectSystem]
+        public class PutHomeComponentDestroySystem: DestroySystem<PutHomeComponent>
+        {
+            protected override void Destroy(PutHomeComponent self)
+            {
+                self.HomeUnitIdList?.Clear();
+                self.TeamFlagType2PlayerIdCanPutHome?.Clear();
+                self.TeamFlagType2Result?.Clear();
+            }
+        }
 
-		[ObjectSystem]
-		public class RestTimeComponentFixedUpdateSystem: FixedUpdateSystem<PutHomeComponent>
-		{
-			protected override void FixedUpdate(PutHomeComponent self)
-			{
-				if (self.DomainScene().SceneType != SceneType.Map)
-				{
-					return;
-				}
+        [ObjectSystem]
+        public class RestTimeComponentFixedUpdateSystem: FixedUpdateSystem<PutHomeComponent>
+        {
+            protected override void FixedUpdate(PutHomeComponent self)
+            {
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
 
-				float fixedDeltaTime = TimeHelper.FixedDetalTime;
-				self.FixedUpdate(fixedDeltaTime);
-			}
-		}
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
 
-		public static void FixedUpdate(this PutHomeComponent self, float fixedDeltaTime)
-		{
-			if (self.GetGamePlayTowerDefense().ChkIsGameEnd())
-			{
-				return;
-			}
-			self.ChkGameEnd();
-		}
+        public static void FixedUpdate(this PutHomeComponent self, float fixedDeltaTime)
+        {
+            if (self.GetGamePlayTowerDefense().ChkIsGameEnd() || self.GetGamePlayTowerDefense().ChkIsGameRecover())
+            {
+                return;
+            }
 
-		public static GamePlayComponent GetGamePlay(this PutHomeComponent self)
-		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-			GamePlayComponent gamePlayComponent = gamePlayTowerDefenseComponent.GetParent<GamePlayComponent>();
-			return gamePlayComponent;
-		}
+            self.ChkGameEnd();
+        }
 
-		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this PutHomeComponent self)
-		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-			return gamePlayTowerDefenseComponent;
-		}
+        public static GamePlayComponent GetGamePlay(this PutHomeComponent self)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+            GamePlayComponent gamePlayComponent = gamePlayTowerDefenseComponent.GetParent<GamePlayComponent>();
+            return gamePlayComponent;
+        }
 
-		public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this PutHomeComponent self)
-		{
-			GamePlayComponent gamePlayComponent = self.GetGamePlay();
-			return gamePlayComponent.GetGamePlayBattleConfig();
-		}
+        public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this PutHomeComponent self)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+            return gamePlayTowerDefenseComponent;
+        }
 
-		public static void Init(this PutHomeComponent self)
-		{
-			Dictionary<long, TeamFlagType> allPlayerTeamFlag = self.GetGamePlay().GetAllPlayerTeamFlag();
-			foreach (var playerTeamFlag in allPlayerTeamFlag)
-			{
-				TeamFlagType teamFlagType = playerTeamFlag.Value;
-				if(self.TeamFlagType2PlayerIdCanPutHome.ContainsKey(teamFlagType))
-				{
-					continue;
-				}
+        public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this PutHomeComponent self)
+        {
+            GamePlayComponent gamePlayComponent = self.GetGamePlay();
+            return gamePlayComponent.GetGamePlayBattleConfig();
+        }
 
-				long playerId = playerTeamFlag.Key;
-				self.TeamFlagType2PlayerIdCanPutHome.Add(teamFlagType, playerId);
-			}
-		}
+        public static void Init(this PutHomeComponent self)
+        {
+            Dictionary<long, TeamFlagType> allPlayerTeamFlag = self.GetGamePlay().GetAllPlayerTeamFlag();
+            foreach (var playerTeamFlag in allPlayerTeamFlag)
+            {
+                TeamFlagType teamFlagType = playerTeamFlag.Value;
+                if (self.TeamFlagType2PlayerIdCanPutHome.ContainsKey(teamFlagType))
+                {
+                    continue;
+                }
 
-		public static bool InitHomeByPlayer(this PutHomeComponent self, long playerId, string unitCfgId, float3 homePos)
-		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-			TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetHomeTeamFlagTypeByPlayer(playerId);
-			if (self.HomeUnitIdList.ContainsKey(teamFlagType))
-			{
-				return false;
-			}
-			Unit homeUnit = self.CreateHome(unitCfgId, homePos, teamFlagType);
-			self.HomeUnitIdList[teamFlagType] = homeUnit.Id;
+                long playerId = playerTeamFlag.Key;
+                self.TeamFlagType2PlayerIdCanPutHome.Add(teamFlagType, playerId);
+            }
+        }
 
-			self.ChkNextStep().Coroutine();
-			return true;
-		}
+        public static bool InitHomeByPlayer(this PutHomeComponent self, long playerId, string unitCfgId, float3 homePos)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetHomeTeamFlagTypeByPlayer(playerId);
+            if (self.HomeUnitIdList.ContainsKey(teamFlagType))
+            {
+                return false;
+            }
 
-		public static async ETTask ChkNextStep(this PutHomeComponent self)
-		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            int hp = gamePlayTowerDefenseComponent.model.HomeLife;
 
-			foreach (var teamFlag in self.TeamFlagType2PlayerIdCanPutHome.Keys)
-			{
-				TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlag);
-				if (self.HomeUnitIdList.ContainsKey(homeTeamFlagType) == false)
-				{
-					gamePlayTowerDefenseComponent.NoticeToClientAll();
-					return;
-				}
-			}
+            Unit homeUnit = self.CreateHome(unitCfgId, homePos, hp, teamFlagType);
+            self.HomeUnitIdList[teamFlagType] = homeUnit.Id;
 
-			gamePlayTowerDefenseComponent.DealFriendTeamFlagType();
-			await gamePlayTowerDefenseComponent.TransToPutMonsterPoint();
+            self.ChkNextStep().Coroutine();
+            return true;
+        }
 
-		}
+        public static async ETTask ChkNextStep(this PutHomeComponent self)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 
-		public static (bool, bool) ChkCanPutHome(this PutHomeComponent self, long playerId)
-		{
-			TeamFlagType homeTeamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
-			if (self.HomeUnitIdList.ContainsKey(homeTeamFlagType))
-			{
-				return (false, true);
-			}
-			foreach (var _playerId in self.TeamFlagType2PlayerIdCanPutHome.Values)
-			{
-				if (playerId == _playerId)
-				{
-					return (true, false);
-				}
-			}
+            foreach (var teamFlag in self.TeamFlagType2PlayerIdCanPutHome.Keys)
+            {
+                TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlag);
+                if (self.HomeUnitIdList.ContainsKey(homeTeamFlagType) == false)
+                {
+                    gamePlayTowerDefenseComponent.NoticeToClientAll();
+                    return;
+                }
+            }
 
-			return (false, false);
-		}
+            gamePlayTowerDefenseComponent.DealFriendTeamFlagType();
 
-		public static Unit CreateHome(this PutHomeComponent self, string unitCfgId, float3 pos, TeamFlagType teamFlagType)
-		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-			int hp = gamePlayTowerDefenseComponent.model.HomeLife;
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_PutHomeEnd());
 
-			return GamePlayTowerDefenseHelper.CreateHome(self.DomainScene(), unitCfgId, pos, hp, teamFlagType);
-		}
+            await gamePlayTowerDefenseComponent.DoNextStep();
+        }
 
-		public static Unit GetHomeUnit(this PutHomeComponent self, Unit unit)
-		{
-			TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnit(unit);
-			return self.GetHomeUnitByTeamFlagType(teamFlagType);
-		}
+        public static (bool, bool) ChkCanPutHome(this PutHomeComponent self, long playerId)
+        {
+            TeamFlagType homeTeamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
+            if (self.HomeUnitIdList.ContainsKey(homeTeamFlagType))
+            {
+                return (false, true);
+            }
 
-		public static Dictionary<TeamFlagType, long> GetHomeUnitList(this PutHomeComponent self)
-		{
-			return self.HomeUnitIdList;
-		}
+            foreach (var _playerId in self.TeamFlagType2PlayerIdCanPutHome.Values)
+            {
+                if (playerId == _playerId)
+                {
+                    return (true, false);
+                }
+            }
 
-		public static Unit GetHomeUnitByTeamFlagType(this PutHomeComponent self, TeamFlagType teamFlagType)
-		{
-			TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlagType);
-			return UnitHelper.GetUnit(self.DomainScene(), self.HomeUnitIdList[homeTeamFlagType]);
-		}
+            return (false, false);
+        }
 
-		public static bool ChkGameEnd(this PutHomeComponent self)
-		{
-			foreach (var homeUnitId in self.HomeUnitIdList)
-			{
-				Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
-				if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
-				{
-					self.GetGamePlayTowerDefense().TransToGameEnd().Coroutine();
-					return false;
-				}
-			}
+        public static Unit CreateHome(this PutHomeComponent self, string unitCfgId, float3 pos, int hp, TeamFlagType teamFlagType)
+        {
+            return GamePlayTowerDefenseHelper.CreateHome(self.DomainScene(), unitCfgId, pos, hp, teamFlagType);
+        }
 
-			return true;
-		}
+        public static Unit GetHomeUnit(this PutHomeComponent self, Unit unit)
+        {
+            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnit(unit);
+            return self.GetHomeUnitByTeamFlagType(teamFlagType);
+        }
 
-		public static bool ChkHomeWin(this PutHomeComponent self, long playerId)
-		{
-			TeamFlagType myHomeTeamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
+        public static Dictionary<TeamFlagType, long> GetHomeUnitList(this PutHomeComponent self)
+        {
+            return self.HomeUnitIdList;
+        }
 
-			if (self.TeamFlagType2Result.ContainsKey(myHomeTeamFlagType))
-			{
-				return self.TeamFlagType2Result[myHomeTeamFlagType];
-			}
-			return false;
-		}
+        public static Unit GetHomeUnitByTeamFlagType(this PutHomeComponent self, TeamFlagType teamFlagType)
+        {
+            TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlagType);
+            if (self.HomeUnitIdList.TryGetValue(homeTeamFlagType, out long homeUnitId))
+            {
+                return UnitHelper.GetUnit(self.DomainScene(), self.HomeUnitIdList[homeTeamFlagType]);
+            }
+            return null;
+        }
 
-		public static void BattleResult(this PutHomeComponent self)
-		{
-			float maxHomeHp = 0;
-			TeamFlagType maxHomeTeamFlagType = TeamFlagType.TeamGlobal1;
-			foreach (var homeUnitId in self.HomeUnitIdList)
-			{
-				TeamFlagType homeTeamFlagType = homeUnitId.Key;
-				Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
-				float hp = 0;
-				if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
-				{
-					hp = 0;
-				}
-				else
-				{
-					NumericComponent numericComponent = homeUnit.GetComponent<NumericComponent>();
-					hp = numericComponent.GetAsInt(NumericType.Hp);
-					if (maxHomeHp < hp)
-					{
-						maxHomeHp = hp;
-						maxHomeTeamFlagType = homeTeamFlagType;
-					}
-				}
-			}
+        public static bool ChkGameEnd(this PutHomeComponent self)
+        {
+            foreach (var homeUnitId in self.HomeUnitIdList)
+            {
+                Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
+                if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
+                {
+                    self.GetGamePlayTowerDefense().TransToGameResult(false).Coroutine();
+                    return false;
+                }
+            }
 
-			if (maxHomeHp > 0)
-			{
-				self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
-			}
-			else
-			{
-				self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
-			}
-		}
+            return true;
+        }
 
-		public static float3 GetMidPos(this PutHomeComponent self)
-		{
-			Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
-			if (homeUnitList.Count == 2)
-			{
-				return self.GetMidPosWhen2Homes(homeUnitList);
-			}
-			else if (homeUnitList.Count == 3)
-			{
-				return self.GetMidPosWhen3Homes(homeUnitList);
-			}
-			return float3.zero;
-		}
+        public static bool ChkHomeWin(this PutHomeComponent self, long playerId)
+        {
+            TeamFlagType myHomeTeamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
 
-		public static float3 GetMidPosWhen2Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
-		{
-			Unit homeUnit1 = null;
-			Unit homeUnit2 = null;
-			List<long> list = homeUnitList.Values.ToList();
-			for (int i = 0; i < list.Count; i++)
-			{
-				Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
-				if (i == 0)
-				{
-					homeUnit1 = homeUnit;
-				}
-				else if (i == 1)
-				{
-					homeUnit2 = homeUnit;
-				}
-			}
+            if (self.TeamFlagType2Result.TryGetValue(myHomeTeamFlagType, out bool win))
+            {
+                return win;
+            }
 
-			Unit observerUnit = self.GetOneObserverUnit();
+            return false;
+        }
 
-			List<float3> points = ET.RecastHelper.GetArrivePath(observerUnit, homeUnit1.Position, homeUnit2.Position);
-			if (points == null)
-			{
-				return float3.zero;
-			}
-			if (points.Count <= 1)
-			{
-				return float3.zero;
-			}
+        public static void BattleResult(this PutHomeComponent self)
+        {
+            float maxHomeHp = -1;
+            TeamFlagType maxHomeTeamFlagType = TeamFlagType.TeamGlobal1;
+            foreach (var homeUnitId in self.HomeUnitIdList)
+            {
+                TeamFlagType homeTeamFlagType = homeUnitId.Key;
+                Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
+                float hp = 0;
+                if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
+                {
+                    hp = 0;
+                    if (maxHomeHp < 0)
+                    {
+                        maxHomeHp = hp;
+                        maxHomeTeamFlagType = homeTeamFlagType;
+                    }
+                }
+                else
+                {
+                    NumericComponent numericComponent = homeUnit.GetComponent<NumericComponent>();
+                    hp = numericComponent.GetAsInt(NumericType.Hp);
+                    if (maxHomeHp < hp)
+                    {
+                        maxHomeHp = hp;
+                        maxHomeTeamFlagType = homeTeamFlagType;
+                    }
+                }
+            }
 
-			float totalLength = 0;
-			float3 midPos = float3.zero;
-			for (int i = 1; i < points.Count; i++)
-			{
-				totalLength += math.length(points[i] - points[i - 1]);
-			}
+            if (maxHomeHp > 0)
+            {
+                self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
+            }
+            else
+            {
+                self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
+            }
+        }
 
-			float curLength = 0;
-			for (int i = 1; i < points.Count; i++)
-			{
-				float lastLength = curLength;
-				curLength += math.length(points[i] - points[i - 1]);
-				if (lastLength <= 0.5f * totalLength && curLength > 0.5f * totalLength)
-				{
-					float needLength = 0.5f * totalLength - lastLength;
-					midPos = points[i - 1] + math.normalize(points[i] - points[i - 1]) * needLength;
-					break;
-				}
-			}
+        public static float3 GetMidPos(this PutHomeComponent self)
+        {
+            Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+            if (homeUnitList.Count == 2)
+            {
+                return self.GetMidPosWhen2Homes(homeUnitList);
+            }
+            else if (homeUnitList.Count == 3)
+            {
+                return self.GetMidPosWhen3Homes(homeUnitList);
+            }
 
-			return midPos;
-		}
+            return float3.zero;
+        }
 
-		public static float3 GetMidPosWhen3Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
-		{
-			Unit homeUnit1 = null;
-			Unit homeUnit2 = null;
-			Unit homeUnit3 = null;
-			List<long> list = homeUnitList.Values.ToList();
-			for (int i = 0; i < list.Count; i++)
-			{
-				Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
-				if (i == 0)
-				{
-					homeUnit1 = homeUnit;
-				}
-				else if (i == 1)
-				{
-					homeUnit2 = homeUnit;
-				}
-				else if (i == 2)
-				{
-					homeUnit3 = homeUnit;
-				}
-			}
+        public static float3 GetMidPosWhen2Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
+        {
+            Unit homeUnit1 = null;
+            Unit homeUnit2 = null;
+            List<long> list = homeUnitList.Values.ToList();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
+                if (i == 0)
+                {
+                    homeUnit1 = homeUnit;
+                }
+                else if (i == 1)
+                {
+                    homeUnit2 = homeUnit;
+                }
+            }
 
-			float2 circleCenter2D = GetCircleCenter(
-				new float2(homeUnit1.Position.x, homeUnit1.Position.z),
-				new float2(homeUnit2.Position.x, homeUnit2.Position.z),
-				new float2(homeUnit3.Position.x, homeUnit3.Position.z)
-				);
-			float3 circleCenterOrg = new float3(circleCenter2D.x, homeUnit1.Position.y, circleCenter2D.y);
+            Unit observerUnit = self.GetOneObserverUnit();
 
-			Func<Unit, float3, (bool, float3)> chkCanReach = (observerUnit, pos) =>
-			{
-				float3 centerPos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, pos);
+            List<float3> points = ET.RecastHelper.GetArrivePath(observerUnit, homeUnit1.Position, homeUnit2.Position);
+            if (points == null)
+            {
+                return float3.zero;
+            }
 
-				if (self.ChkHomeUnitPosition(homeUnit1, centerPos) == false)
-				{
-					return (false, float3.zero);
-				}
-				if (self.ChkHomeUnitPosition(homeUnit2, centerPos) == false)
-				{
-					return (false, float3.zero);
-				}
-				if (self.ChkHomeUnitPosition(homeUnit3, centerPos) == false)
-				{
-					return (false, float3.zero);
-				}
-				return (true, centerPos);
-			};
-			Unit observerUnit = self.GetOneObserverUnit();
-			float dis = 0.1f;
-			for (int i = 0; i < 100; i++)
-			{
-				for (int j = 0; j < i; j++)
-				{
-					float3 circleCenter = circleCenterOrg + new float3(dis*i, 0, dis*j);
-					(bool canReach, float3 point) = chkCanReach(observerUnit, circleCenter);
-					if (canReach)
-					{
-						return point;
-					}
-					circleCenter = circleCenterOrg + new float3(-dis*i, 0, dis*j);
-					(canReach, point) = chkCanReach(observerUnit, circleCenter);
-					if (canReach)
-					{
-						return point;
-					}
-					circleCenter = circleCenterOrg + new float3(-dis*i, 0, -dis*j);
-					(canReach, point) = chkCanReach(observerUnit, circleCenter);
-					if (canReach)
-					{
-						return point;
-					}
-					circleCenter = circleCenterOrg + new float3(dis*i, 0, -dis*j);
-					(canReach, point) = chkCanReach(observerUnit, circleCenter);
-					if (canReach)
-					{
-						return point;
-					}
-				}
+            if (points.Count <= 1)
+            {
+                return float3.zero;
+            }
 
-			}
-			return float3.zero;
-		}
+            float totalLength = 0;
+            float3 midPos = float3.zero;
+            for (int i = 1; i < points.Count; i++)
+            {
+                totalLength += math.length(points[i] - points[i - 1]);
+            }
 
-		public static Unit GetOneObserverUnit(this PutHomeComponent self)
-		{
-			Unit observerUnit = null;
-			UnitComponent unitComponent = UnitHelper.GetUnitComponent(self.DomainScene());
-			foreach (var _observerUnit in unitComponent.observerList)
-			{
-				observerUnit = _observerUnit;
-				break;
-			}
-			return observerUnit;
-		}
+            float curLength = 0;
+            for (int i = 1; i < points.Count; i++)
+            {
+                float lastLength = curLength;
+                curLength += math.length(points[i] - points[i - 1]);
+                if (lastLength <= 0.5f * totalLength && curLength > 0.5f * totalLength)
+                {
+                    float needLength = 0.5f * totalLength - lastLength;
+                    midPos = points[i - 1] + math.normalize(points[i] - points[i - 1]) * needLength;
+                    break;
+                }
+            }
 
-		public static bool ChkPosition(this PutHomeComponent self, float3 putHomePos)
-		{
-			Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
-			if (homeUnitList.Count == 0)
-			{
-				return true;
-			}
+            return midPos;
+        }
 
-			foreach (var homeUnits in homeUnitList)
-			{
-				long homeUnitId = homeUnits.Value;
-				Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
-				if (homeUnit != null)
-				{
-					bool bRet = self.ChkHomeUnitPosition(homeUnit, putHomePos);
-					if (bRet == false)
-					{
-						return false;
-					}
-				}
-			}
+        public static float3 GetMidPosWhen3Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
+        {
+            Unit homeUnit1 = null;
+            Unit homeUnit2 = null;
+            Unit homeUnit3 = null;
+            List<long> list = homeUnitList.Values.ToList();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
+                if (i == 0)
+                {
+                    homeUnit1 = homeUnit;
+                }
+                else if (i == 1)
+                {
+                    homeUnit2 = homeUnit;
+                }
+                else if (i == 2)
+                {
+                    homeUnit3 = homeUnit;
+                }
+            }
 
-			return true;
-		}
+            float2 circleCenter2D = GetCircleCenter(new float2(homeUnit1.Position.x, homeUnit1.Position.z),
+                new float2(homeUnit2.Position.x, homeUnit2.Position.z),
+                new float2(homeUnit3.Position.x, homeUnit3.Position.z));
+            float3 circleCenterOrg = new float3(circleCenter2D.x, homeUnit1.Position.y, circleCenter2D.y);
 
-		public static bool ChkHomeUnitPosition(this PutHomeComponent self, Unit homeUnit, float3 chkPos)
-		{
-			Unit observerUnit = self.GetOneObserverUnit();
-			float3 homePos = homeUnit.Position;
-			float3 startPos = chkPos;
+            Func<Unit, float3, (bool, float3)> chkCanReach = (observerUnit, pos) =>
+            {
+                float3 centerPos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, pos);
 
-			return ET.RecastHelper.ChkArrive(observerUnit, startPos, homePos);
-		}
+                if (self.ChkHomeUnitPosition(homeUnit1, centerPos) == false)
+                {
+                    return (false, float3.zero);
+                }
 
-		public static float2 GetCircleCenter(float2 p1, float2 p2, float2 p3)
-		{
-			float a = p1.x - p2.x;
-			float b = p1.y - p2.y;
-			float c = p1.x - p3.x;
-			float d = p1.y - p3.y;
-			float e = (math.pow(p1.x, 2) - math.pow(p2.x, 2) + math.pow(p1.y, 2) - math.pow(p2.y, 2)) / 2.0f;
-			float f = (math.pow(p1.x, 2) - math.pow(p3.x, 2) + math.pow(p1.y, 2) - math.pow(p3.y, 2)) / 2.0f;
-			float det = b * c - a * d;
-			if (math.abs(det) > 0)
-			{
-				//x0,y0为计算得到的原点
-				float x0 = -(d * e - b * f) / det;
-				float y0 = -(a * f - c * e) / det;
-				return new float2(x0, y0);
-			}
-			else
-			{
-				return new float2(0, 0);
-			}
-		}
+                if (self.ChkHomeUnitPosition(homeUnit2, centerPos) == false)
+                {
+                    return (false, float3.zero);
+                }
 
-		public static (TeamFlagType, Unit) GetNearHostileHomeByPlayerId(this PutHomeComponent self, TeamFlagType playerTeamFlagType, float3 pos)
-		{
-			TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(playerTeamFlagType);
-			Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+                if (self.ChkHomeUnitPosition(homeUnit3, centerPos) == false)
+                {
+                    return (false, float3.zero);
+                }
 
-			float minDisSq = -1;
-			float myHomeDisSq = -1;
-			TeamFlagType minTeamFlagType = TeamFlagType.TeamGlobal1;
-			Unit minHomeUnit = null;
-			foreach (var homeUnits in homeUnitList)
-			{
-				TeamFlagType curHomeTeamFlagType = homeUnits.Key;
+                return (true, centerPos);
+            };
+            Unit observerUnit = self.GetOneObserverUnit();
+            float dis = 0.1f;
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    float3 circleCenter = circleCenterOrg + new float3(dis * i, 0, dis * j);
+                    (bool canReach, float3 point) = chkCanReach(observerUnit, circleCenter);
+                    if (canReach)
+                    {
+                        return point;
+                    }
 
-				// bool isFriend = self.GetGamePlay().ChkIsFriend(homeTeamFlagType, curHomeTeamFlagType);
-				// if (isFriend)
-				// {
-				// 	continue;
-				// }
-				long homeUnitId = homeUnits.Value;
-				Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
-				if (homeUnit != null)
-				{
-					float curDisSq = math.lengthsq(homeUnit.Position - pos);
-					if (curHomeTeamFlagType == homeTeamFlagType)
-					{
-						myHomeDisSq = curDisSq;
-					}
-					else
-					{
-						if (minDisSq == -1 || minDisSq > curDisSq)
-						{
-							minDisSq = curDisSq;
-							minTeamFlagType = curHomeTeamFlagType;
-							minHomeUnit = homeUnit;
-						}
-					}
-				}
-			}
+                    circleCenter = circleCenterOrg + new float3(-dis * i, 0, dis * j);
+                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
+                    if (canReach)
+                    {
+                        return point;
+                    }
 
-			if (minHomeUnit != null)
-			{
-				if (myHomeDisSq > minDisSq)
-				{
-					return (minTeamFlagType, null);
-				}
-			}
+                    circleCenter = circleCenterOrg + new float3(-dis * i, 0, -dis * j);
+                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
+                    if (canReach)
+                    {
+                        return point;
+                    }
 
-			return (minTeamFlagType, minHomeUnit);
-		}
-	}
+                    circleCenter = circleCenterOrg + new float3(dis * i, 0, -dis * j);
+                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
+                    if (canReach)
+                    {
+                        return point;
+                    }
+                }
+            }
+
+            return float3.zero;
+        }
+
+        public static Unit GetOneObserverUnit(this PutHomeComponent self)
+        {
+            Unit observerUnit = null;
+            UnitComponent unitComponent = UnitHelper.GetUnitComponent(self.DomainScene());
+            foreach (var _observerUnit in unitComponent.observerList)
+            {
+                observerUnit = _observerUnit;
+                break;
+            }
+
+            return observerUnit;
+        }
+
+        public static bool ChkPosition(this PutHomeComponent self, float3 putHomePos)
+        {
+            Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+            if (homeUnitList.Count == 0)
+            {
+                return true;
+            }
+
+            foreach (var homeUnits in homeUnitList)
+            {
+                long homeUnitId = homeUnits.Value;
+                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
+                if (homeUnit != null)
+                {
+                    bool bRet = self.ChkHomeUnitPosition(homeUnit, putHomePos);
+                    if (bRet == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool ChkHomeUnitPosition(this PutHomeComponent self, Unit homeUnit, float3 chkPos)
+        {
+            Unit observerUnit = self.GetOneObserverUnit();
+            float3 homePos = homeUnit.Position;
+            float3 startPos = chkPos;
+
+            return ET.RecastHelper.ChkArrive(observerUnit, startPos, homePos);
+        }
+
+        public static float2 GetCircleCenter(float2 p1, float2 p2, float2 p3)
+        {
+            float a = p1.x - p2.x;
+            float b = p1.y - p2.y;
+            float c = p1.x - p3.x;
+            float d = p1.y - p3.y;
+            float e = (math.pow(p1.x, 2) - math.pow(p2.x, 2) + math.pow(p1.y, 2) - math.pow(p2.y, 2)) / 2.0f;
+            float f = (math.pow(p1.x, 2) - math.pow(p3.x, 2) + math.pow(p1.y, 2) - math.pow(p3.y, 2)) / 2.0f;
+            float det = b * c - a * d;
+            if (math.abs(det) > 0)
+            {
+                //x0,y0为计算得到的原点
+                float x0 = -(d * e - b * f) / det;
+                float y0 = -(a * f - c * e) / det;
+                return new float2(x0, y0);
+            }
+            else
+            {
+                return new float2(0, 0);
+            }
+        }
+
+        public static (TeamFlagType, Unit) GetNearHostileHomeByPlayerId(this PutHomeComponent self, TeamFlagType playerTeamFlagType, float3 pos)
+        {
+            TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(playerTeamFlagType);
+            Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+
+            float minDisSq = -1;
+            float myHomeDisSq = -1;
+            TeamFlagType minTeamFlagType = TeamFlagType.TeamGlobal1;
+            Unit minHomeUnit = null;
+            foreach (var homeUnits in homeUnitList)
+            {
+                TeamFlagType curHomeTeamFlagType = homeUnits.Key;
+
+                // bool isFriend = self.GetGamePlay().ChkIsFriend(homeTeamFlagType, curHomeTeamFlagType);
+                // if (isFriend)
+                // {
+                // 	continue;
+                // }
+                long homeUnitId = homeUnits.Value;
+                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
+                if (homeUnit != null)
+                {
+                    float curDisSq = math.lengthsq(homeUnit.Position - pos);
+                    if (curHomeTeamFlagType == homeTeamFlagType)
+                    {
+                        myHomeDisSq = curDisSq;
+                    }
+                    else
+                    {
+                        if (minDisSq == -1 || minDisSq > curDisSq)
+                        {
+                            minDisSq = curDisSq;
+                            minTeamFlagType = curHomeTeamFlagType;
+                            minHomeUnit = homeUnit;
+                        }
+                    }
+                }
+            }
+
+            if (minHomeUnit != null)
+            {
+                if (myHomeDisSq > minDisSq)
+                {
+                    return (minTeamFlagType, null);
+                }
+            }
+
+            return (minTeamFlagType, minHomeUnit);
+        }
+
+        public static void RecordHomeHp(this PutHomeComponent self)
+        {
+            Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+            foreach (var homeUnitId in homeUnitList)
+            {
+                Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
+                NumericComponent numericComponent = homeUnit.GetComponent<NumericComponent>();
+                int hp = numericComponent.GetAsInt(NumericType.Hp);
+                if (self.lastHomeHp.ContainsKey(homeUnitId.Value))
+                {
+                    self.lastHomeHp[homeUnitId.Value] = hp;
+                }
+                else
+                {
+                    self.lastHomeHp.Add(homeUnitId.Value, hp);
+                }
+            }
+        }
+
+        public static void RecoverHomeHp(this PutHomeComponent self)
+        {
+            Dictionary<TeamFlagType, long> tmpHomeUnitIdList = self.HomeUnitIdList;
+            self.HomeUnitIdList = new();
+            foreach (var homeUnitId in tmpHomeUnitIdList)
+            {
+                Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
+                Unit newHomeUnit = self.CreateHome(homeUnit.CfgId, homeUnit.Position, self.lastHomeHp[homeUnitId.Value], homeUnitId.Key);
+                self.HomeUnitIdList[homeUnitId.Key] = newHomeUnit.Id;
+            }
+        }
+    }
 }

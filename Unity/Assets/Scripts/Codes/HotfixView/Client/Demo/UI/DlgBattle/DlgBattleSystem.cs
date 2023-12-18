@@ -57,12 +57,12 @@ namespace ET.Client
 
             self.View.EButton_ClearMyTowerButton.AddListener(() =>
             {
-                ET.Client.GamePlayTowerDefenseHelper.SendClearMyTower(self.DomainScene()).Coroutine();
+                ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene()).Coroutine();
             });
 
             self.View.EButton_ClearAllMonsterButton.AddListener(() =>
             {
-                ET.Client.GamePlayTowerDefenseHelper.SendClearAllMonster(self.DomainScene()).Coroutine();
+                ET.Client.GamePlayPKHelper.SendClearAllMonster(self.DomainScene()).Coroutine();
             });
         }
 
@@ -158,81 +158,77 @@ namespace ET.Client
             await SceneHelper.EnterHall(self.ClientScene());
         }
 
-        public static string GetUnitIcon(this DlgBattle self, UnitCfg unitCfg)
-        {
-            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(unitCfg.Icon);
-            return resIconCfg.ResName;
-        }
-
         public static void AddTowerItemRefreshListener(this DlgBattle self, Transform transform, int index)
         {
             Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerList[index]);
-            string towerName = towerCfg.Name;
-            if (string.IsNullOrEmpty(towerName))
-            {
-                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-                towerName = unitCfg.Name;
-            }
+            string itemCfgId = self.towerList[index];
+            string towerName = ItemHelper.GetItemName(itemCfgId);
 
-            string icon = "";
-            if (string.IsNullOrEmpty(towerCfg.Icon))
+            string icon = ItemHelper.GetItemIcon(itemCfgId);
+            if (string.IsNullOrEmpty(icon) == false)
             {
-                UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-                icon = self.GetUnitIcon(unitCfg);
+                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+                itemTower.EButton_TowerIcoImage.sprite = sprite;
             }
-            else
-            {
-                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(towerCfg.Icon);
-                icon = resIconCfg.ResName;
-            }
-
-            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
             itemTower.ELabel_NumTextMeshProUGUI.text = "1";
 
             itemTower.ELabel_NameTextMeshProUGUI.text = $"{towerName}";
-            itemTower.EButton_TowerIcoImage.sprite = sprite;
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
             {
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
                     battleDragItemType = BattleDragItemType.PKTower,
-                    battleDragItemParam = towerCfg.Id,
-                    callBack = () =>
+                    battleDragItemParam = itemCfgId,
+                    callBack = (scene) =>
                     {
                     },
                 };
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
             });
 
-
             itemTower.EG_IconStarRectTransform.SetVisible(true);
-            int starCount = towerCfg.Level[0];
+            int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
             itemTower.E_IconStar1Image.gameObject.SetActive(starCount>=1);
             itemTower.E_IconStar2Image.gameObject.SetActive(starCount>=2);
             itemTower.E_IconStar3Image.gameObject.SetActive(starCount>=3);
+
+            List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
+            int labelCount = labels.Count;
+            itemTower.EImage_Label1Image.gameObject.SetActive((labelCount>=1));
+            itemTower.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
+            if (labelCount >= 1)
+            {
+                itemTower.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+            }
+            if (labelCount >= 2)
+            {
+                itemTower.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+            }
+
+            int towerQuality = (int)ItemHelper.GetItemQualityType(itemCfgId);
+            itemTower.EImage_LowImage.SetVisible(towerQuality == 0);
+            itemTower.EImage_MiddleImage.SetVisible(towerQuality == 1);
+            itemTower.EImage_HighImage.SetVisible(towerQuality == 2);
         }
 
         public static void AddTankItemRefreshListener(this DlgBattle self, Transform transform, int index)
         {
             Scroll_Item_Tower itemTank = self.ScrollItemTanks[index].BindTrans(transform);
 
-            TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(self.monsterList[index]);
-            string monsterName = monsterCfg.Name;
-            UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
-            if (string.IsNullOrEmpty(monsterName))
+            string itemCfgId = self.monsterList[index];
+            TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(itemCfgId);
+            string monsterName = ItemHelper.GetItemName(itemCfgId);
+
+            string icon = ItemHelper.GetItemIcon(itemCfgId);
+            if (string.IsNullOrEmpty(icon) == false)
             {
-                monsterName = unitCfg.Name;
+                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+                itemTank.EButton_TowerIcoImage.sprite = sprite;
             }
-
-            string icon = self.GetUnitIcon(unitCfg);
-
-            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
             itemTank.ELabel_NumTextMeshProUGUI.text = $"1";
             itemTank.ELabel_NameTextMeshProUGUI.text = $"{monsterName}";
-            itemTank.EButton_TowerIcoImage.sprite = sprite;
 
             ET.EventTriggerListener.Get(itemTank.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
             {
@@ -241,7 +237,7 @@ namespace ET.Client
                     battleDragItemType = BattleDragItemType.PKMonster,
                     battleDragItemParam = monsterCfg.Id,
                     countOnce = int.Parse(self.View.E_InputFieldTMP_InputField.text),
-                    callBack = () =>
+                    callBack = (scene) =>
                     {
                     },
                 };

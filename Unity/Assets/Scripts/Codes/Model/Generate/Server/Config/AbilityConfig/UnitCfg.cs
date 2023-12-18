@@ -17,8 +17,6 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public UnitCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
-        Icon = _buf.ReadString();
         ResId = _buf.ReadString();
         MoveSpeed = _buf.ReadFloat();
         RotationSpeed = _buf.ReadFloat();
@@ -44,13 +42,6 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// 这是id
     /// </summary>
     public string Id { get; private set; }
-    public string Name { get; private set; }
-    public string Name_l10n_key { get; }
-    /// <summary>
-    /// icon资源路径
-    /// </summary>
-    public string Icon { get; private set; }
-    public ResIconCfg Icon_Ref { get; private set; }
     /// <summary>
     /// 资源路径
     /// </summary>
@@ -114,7 +105,6 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
         this.ResId_Ref = (_tables["ResUnitCfgCategory"] as ResUnitCfgCategory).GetOrDefault(ResId);
         this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
         this.IdleTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(IdleTimelineId);
@@ -125,15 +115,12 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        Name = translator(Name_l10n_key, Name);
     }
 
     public override string ToString()
     {
         return "{ "
         + "Id:" + Id + ","
-        + "Name:" + Name + ","
-        + "Icon:" + Icon + ","
         + "ResId:" + ResId + ","
         + "MoveSpeed:" + MoveSpeed + ","
         + "RotationSpeed:" + RotationSpeed + ","

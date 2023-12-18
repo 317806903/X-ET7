@@ -26,7 +26,9 @@ namespace ET.Ability
             protected override void Destroy(EffectComponent self)
             {
                 self.removeList.Clear();
+                self.removeList = null;
                 self.recordEffectList.Clear();
+                self.recordEffectList = null;
             }
         }
 
@@ -35,7 +37,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(EffectComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -116,9 +118,9 @@ namespace ET.Ability
             }
 
             self.removeList.Clear();
-            foreach (var effectObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                EffectObj effectObj = effectObjs.Value as EffectObj;
+                EffectObj effectObj = obj as EffectObj;
                 effectObj.FixedUpdate(fixedDeltaTime);
 
                 if (effectObj.ChkNeedRemove())

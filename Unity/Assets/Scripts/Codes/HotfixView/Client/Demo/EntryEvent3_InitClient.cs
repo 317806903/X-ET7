@@ -28,6 +28,12 @@ namespace ET.Client
 
             Scene clientScene = await SceneFactory.CreateClientScene(1, "Game");
 
+            bool bChg = ET.Client.DebugConnectHelper.RetSetResConfig();
+            if (bChg)
+            {
+                await MonoResComponent.Instance.ReLoadWhenDebugConnect();
+            }
+
             LanguageType languageType;
             switch (ResConfig.Instance.areaType)
             {
@@ -68,9 +74,6 @@ namespace ET.Client
                 }
             }
 
-
-            ET.Client.DebugConnectHelper.RetSetResConfig();
-
             // 热更流程
             bool bRet = await HotUpdateAsync(clientScene);
             if (bRet)
@@ -103,10 +106,32 @@ namespace ET.Client
             }
         }
 
+        private static async ETTask ShowHotUpdateInfo(Scene clientScene)
+        {
+            if (Application.isMobilePlatform)
+            {
+                YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
+                if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
+                {
+                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.EditorSimulateMode");
+                }
+                else if (resLoadMode == YooAsset.EPlayMode.OfflinePlayMode)
+                {
+                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.OfflinePlayMode");
+                }
+                else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
+                {
+                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.HostPlayMode");
+                }
+            }
+            await ETTask.CompletedTask;
+        }
+
         private static async ETTask<bool> HotUpdateAsync(Scene clientScene)
         {
-            UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
+            await ShowHotUpdateInfo(clientScene);
 
+            UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
             // 打开热更界面
             await uiComponent.ShowWindowAsync<DlgUpdate>();
 
@@ -155,7 +180,28 @@ namespace ET.Client
             // Downloader不为空，说明有需要下载的资源
             if (ResComponent.Instance.Downloader != null)
             {
-                return await DownloadPatch(clientScene);
+                if (ResComponent.Instance.Downloader.TotalDownloadCount == 0)
+                {
+                    return true;
+                }
+                
+                UIComponent _UIComponent = UIManagerHelper.GetUIComponent(clientScene);
+                DlgUpdate _DlgUpdate = _UIComponent.GetDlgLogic<DlgUpdate>(true);
+                if (_DlgUpdate != null)
+                {
+                    _DlgUpdate.HideCheckUpdateText();
+                }
+
+                long totalDownloadMB = ResComponent.Instance.Downloader.TotalDownloadBytes / (1024 * 1024);
+                string msgTxt =
+                        LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTip", totalDownloadMB);
+                string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTitle");
+                string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Download");
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
+                {
+                    DownloadPatch(clientScene).Coroutine();
+                },sureTxt,null,titleTxt);
+                return false;
             }
             else
             {
@@ -201,20 +247,22 @@ namespace ET.Client
             bool modelChanged = modelVersion != GlobalConfig.Instance.ModelVersion;
             bool hotfixChanged = hotFixVersion != GlobalConfig.Instance.HotFixVersion;
 
-            if (modelChanged || hotfixChanged)
+            //if (modelChanged || hotfixChanged)
             {
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateSuccessDes");
+                string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Restart");
+                string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
                 {
                     ReloadAll(clientScene).Coroutine();
-                });
+                },sureTxt,null,titleTxt);
                 return false;
             }
-            else
-            {
-                // 只是资源更新就直接进入游戏。
-                return true;
-            }
+            // else
+            // {
+            //     // 只是资源更新就直接进入游戏。
+            //     return true;
+            // }
         }
 
         private static async ETTask ReloadAll(Scene scene)

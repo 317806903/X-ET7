@@ -12,8 +12,8 @@ namespace ET.Ability
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
 
-			ET.Ability.AudioPlayHelper.DoAudioPlay(unit, actionId, selectHandle, actionContext);
-			
+			ET.Ability.AudioPlayHelper.DoAudioPlay(unit, actionId, selectHandle, ref actionContext);
+
 			await ETTask.CompletedTask;
 		}
 	}

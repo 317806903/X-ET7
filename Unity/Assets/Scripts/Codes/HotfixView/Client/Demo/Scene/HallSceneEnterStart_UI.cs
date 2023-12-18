@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 namespace ET.Client
 {
     [Event(SceneType.Client)]
-    public class HallSceneEnterStart_UI: AEvent<Scene, EventType.HallSceneEnterStart>
+    public class HallSceneEnterStart_UI: AEvent<Scene, EventType.EnterHallSceneStart>
     {
-        protected override async ETTask Run(Scene scene, EventType.HallSceneEnterStart args)
+        protected override async ETTask Run(Scene scene, EventType.EnterHallSceneStart args)
         {
             Scene clientScene = scene;
 
@@ -118,7 +118,7 @@ namespace ET.Client
                 if (playerStatus == PlayerStatus.Hall)
                 {
                     //AR战斗自行退出 会进到这里
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>();
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
                 }
                 else if (playerStatus == PlayerStatus.Room)
                 {
@@ -148,7 +148,7 @@ namespace ET.Client
                             }, () =>
                             {
                                 RoomHelper.QuitRoomAsync(scene).Coroutine();
-                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>().Coroutine();
+                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
                             });
                         }
                         else
@@ -176,7 +176,7 @@ namespace ET.Client
                         }, () =>
                         {
                             RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
-                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>().Coroutine();
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
                         });
                     }
                     else

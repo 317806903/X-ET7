@@ -28,7 +28,7 @@ namespace ET
     }
 
     [ChildOf(typeof(RoomManagerComponent))]
-    public class RoomComponent : Entity, IAwake, IDestroy
+    public class RoomComponent : Entity, IAwake, IDestroy, IFixedUpdate
     {
         public RoomType roomType;
         public SubRoomType subRoomType;
@@ -39,5 +39,12 @@ namespace ET
         public long dynamicMapInstanceId;
         public string gamePlayBattleLevelCfgId;
         public List<long> roomMemberSeat;
+
+        [BsonIgnore]
+        public int waitFrameChk = 900;
+        [BsonIgnore]
+        public int curFrameChk = 0;
+        [BsonIgnore]
+        public Dictionary<long, long> playerWaitQuitTime;
     }
 }

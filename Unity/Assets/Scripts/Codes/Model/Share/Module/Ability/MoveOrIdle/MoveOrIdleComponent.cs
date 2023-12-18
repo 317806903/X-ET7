@@ -51,5 +51,6 @@ namespace ET.Ability
         public MoveInputType moveInputType;
         public float3 directionInput;
         public float3 targetPositionInput;
+        public bool isIdleCreating;
     }
 }

@@ -38,7 +38,7 @@ namespace ET.Ability
             float maxSpeedVectorValueSq = 0;
             foreach (BuffObj buffObj in self.buffMotionList)
             {
-                bool bCanBeMotion = self._ChkCanBeMotion(buffObj.actionContext);
+                bool bCanBeMotion = self._ChkCanBeMotion(ref buffObj.actionContext);
                 if (bCanBeMotion)
                 {
                     float3 curMotionSpeedVector = buffObj.GetMotionSpeedVector();

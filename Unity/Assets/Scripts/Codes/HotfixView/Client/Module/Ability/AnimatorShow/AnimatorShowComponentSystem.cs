@@ -47,6 +47,10 @@ namespace ET.Ability.Client
 			if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
 			{
 				animator = gameObjectComponent.GetGo().GetComponent<Animator>();
+				if (animator == null)
+				{
+					animator = gameObjectComponent.GetGo().GetComponentInChildren<Animator>();
+				}
 			}
 
 			if (animator == null)
@@ -123,7 +127,7 @@ namespace ET.Ability.Client
 
 			if (self.CurMotionType != AnimatorMotionName.None)
 			{
-				if (self.CurMotionType == AnimatorMotionName.Idle || self.CurMotionType == AnimatorMotionName.Move)
+				if (ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.CurMotionType))
 				{
 				}
 				else
@@ -133,7 +137,7 @@ namespace ET.Ability.Client
 					{
 						self.CurMotionType = AnimatorMotionName.None;
 					}
-					else if (stateInfo.loop == false && stateInfo.normalizedTime >= 0.95f)
+					else if (stateInfo.loop == false && stateInfo.normalizedTime >= 0.99f)
 					{
 						self.CurMotionType = AnimatorMotionName.None;
 					}
@@ -248,6 +252,14 @@ namespace ET.Ability.Client
 				return;
 			}
 
+			if (self.CurMotionType == self.NextMotionType)
+			{
+				if (ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.CurMotionType))
+				{
+					return;
+				}
+			}
+
 			try
 			{
 				float crossTime = 0.2f;
@@ -267,13 +279,17 @@ namespace ET.Ability.Client
 					{
 						long time = TimeHelper.ServerNow() - self.NextMotionTickTime;
 						normalizedTime = time*0.001f / length;
+						if (normalizedTime > 1)
+						{
+							normalizedTime = 1;
+						}
 					}
 					else
 					{
 						normalizedTime = 0;
 					}
 				}
-				//self.Animator.Play(self.CurMotionType.ToString());
+				//self.Animator.Play(self.CurMotionType.ToString(), 0, normalizedTime);
 				self.Animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
 			}
 			catch (Exception ex)

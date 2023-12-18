@@ -9,7 +9,7 @@
 			{
 				currentScene.Dispose();
 			}
-			await EventSystem.Instance.PublishAsync(scene, new EventType.LoginSceneEnterStart()
+			await EventSystem.Instance.PublishAsync(scene, new EventType.EnterLoginSceneStart()
 			{
 				isFromInit = isFromInit,
 			});
@@ -22,7 +22,7 @@
 			{
 				currentScene.Dispose();
 			}
-			await EventSystem.Instance.PublishAsync(scene, new EventType.HallSceneEnterStart()
+			await EventSystem.Instance.PublishAsync(scene, new EventType.EnterHallSceneStart()
 			{
 				isFromLogin = isFromLogin,
 			});

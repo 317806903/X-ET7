@@ -27,7 +27,13 @@ namespace ET.Client
 
         public static Session GetSession(Scene scene)
         {
-            return GetSessionCompent(scene).Session;
+            SessionComponent sessionComponent = GetSessionCompent(scene);
+            if (sessionComponent == null || sessionComponent.IsDisposed || sessionComponent.Session == null)
+            {
+                EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                return null;
+            }
+            return sessionComponent.Session;
         }
     }
 }

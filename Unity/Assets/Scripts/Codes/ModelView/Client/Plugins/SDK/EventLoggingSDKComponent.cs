@@ -9,6 +9,8 @@ namespace ET.Client
         [StaticField]
         public static EventLoggingSDKComponent Instance;
 
+        public bool IsOpenEventLogging;
+
         public bool enableLog;
         public bool enableAutoTrack;
         public string serverURL;

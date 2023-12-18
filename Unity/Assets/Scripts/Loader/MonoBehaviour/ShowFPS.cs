@@ -26,6 +26,18 @@ namespace ET
         private Rect m_fps, m_dtime;
         private GUIStyle m_styleRed = new GUIStyle();
         private GUIStyle m_styleGreen = new GUIStyle();
+        private string m_exShow;
+        public string ExShow
+        {
+            get
+            {
+                return this.m_exShow;
+            }
+            set
+            {
+                this.m_exShow = value;
+            }
+        }
 
         void Awake()
         {
@@ -65,7 +77,11 @@ namespace ET
             {
                 GUI.Label(m_fps, "FPS: " + m_FPS, this.m_styleRed);
             }
-            //GUI.Label(m_dtime, "间隔: " + m_frameDeltaTime, m_style);
+
+            if (string.IsNullOrEmpty(m_exShow) == false)
+            {
+                GUI.Label(m_dtime, m_exShow, this.m_styleGreen);
+            }
         }
     }
 }

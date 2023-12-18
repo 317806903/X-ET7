@@ -71,42 +71,83 @@ namespace ET.Client
 
 			return false;
 		}
-		public static void RetSetResConfig()
+
+		public static bool RetSetResConfig()
 		{
 			if (ChkDebugConnectNull())
 			{
-				return;
+				return false;
 			}
 			string key = "DebugConnect_Key";
 			string debugConnectKey = PlayerPrefs.GetString(key);
 			if (string.IsNullOrEmpty(debugConnectKey) || debugConnectKey == "Null")
 			{
-				return;
+				return false;
 			}
 			if (DebugConnetCfgCategory.Instance.Contain(debugConnectKey) == false)
 			{
 				Log.Error($"DebugConnetCfgCategory.Instance.Contain({debugConnectKey}) == false");
-				return;
+				return false;
 			}
 
+			bool isChging = false;
 			DebugConnetCfg debugConnetCfg = DebugConnetCfgCategory.Instance.Get(debugConnectKey);
 			if (debugConnetCfg.IsChgResUpdate)
 			{
-				ResConfig.Instance.ResHostServerIP = debugConnetCfg.ResHostServerIP;
-				ResConfig.Instance.ResGameVersion = debugConnetCfg.ResGameVersion;
+				if (ResConfig.Instance.ResHostServerIP != debugConnetCfg.ResHostServerIP)
+				{
+					isChging = true;
+					ResConfig.Instance.ResHostServerIP = debugConnetCfg.ResHostServerIP;
+				}
+
+				if (ResConfig.Instance.ResGameVersion != debugConnetCfg.ResGameVersion)
+				{
+					isChging = true;
+					ResConfig.Instance.ResGameVersion = debugConnetCfg.ResGameVersion;
+				}
 			}
 			if (debugConnetCfg.IsChgServer)
 			{
-				ResConfig.Instance.RouterHttpHost = debugConnetCfg.RouterHttpHost;
-				ResConfig.Instance.RouterHttpPort = debugConnetCfg.RouterHttpPort;
+				if (ResConfig.Instance.RouterHttpHost != debugConnetCfg.RouterHttpHost)
+				{
+					isChging = true;
+					ResConfig.Instance.RouterHttpHost = debugConnetCfg.RouterHttpHost;
+				}
+
+				if (ResConfig.Instance.RouterHttpPort != debugConnetCfg.RouterHttpPort)
+				{
+					isChging = true;
+					ResConfig.Instance.RouterHttpPort = debugConnetCfg.RouterHttpPort;
+				}
 			}
 
 			if (Enum.TryParse(debugConnetCfg.AreaType, out AreaType areaType))
 			{
-				ResConfig.Instance.areaType = areaType;
+				if (ResConfig.Instance.areaType != areaType)
+				{
+					isChging = true;
+					ResConfig.Instance.areaType = areaType;
+				}
 			}
-			ResConfig.Instance.IsShowDebugMode = debugConnetCfg.IsShowDebugMode;
-			ResConfig.Instance.IsShowEditorLoginMode = debugConnetCfg.IsShowEditorLoginMode;
+
+			if (ResConfig.Instance.IsShowDebugMode != debugConnetCfg.IsShowDebugMode)
+			{
+				isChging = true;
+				ResConfig.Instance.IsShowDebugMode = debugConnetCfg.IsShowDebugMode;
+			}
+
+			if (ResConfig.Instance.IsShowEditorLoginMode != debugConnetCfg.IsShowEditorLoginMode)
+			{
+				isChging = true;
+				ResConfig.Instance.IsShowEditorLoginMode = debugConnetCfg.IsShowEditorLoginMode;
+			}
+
+			if (ResConfig.Instance.IsNeedSendEventLog != debugConnetCfg.IsNeedSendEventLog)
+			{
+				isChging = true;
+				ResConfig.Instance.IsNeedSendEventLog = debugConnetCfg.IsNeedSendEventLog;
+			}
+			return isChging;
 		}
 	}
 }

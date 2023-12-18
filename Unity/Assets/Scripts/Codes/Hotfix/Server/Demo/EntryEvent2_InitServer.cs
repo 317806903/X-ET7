@@ -18,6 +18,28 @@ namespace ET.Server
                 await Game.AddSingleton<ConfigComponent>().LoadAsync();
             }
 
+            if (codeMode == "Server")
+            {
+                LanguageType languageType;
+                if (Options.Instance.LanguageType == "CN")
+                {
+                    languageType = LanguageType.EN;
+                }
+                else if (Options.Instance.LanguageType == "EN")
+                {
+                    languageType = LanguageType.EN;
+                }
+                else if (Options.Instance.LanguageType == "TW")
+                {
+                    languageType = LanguageType.EN;
+                }
+                else
+                {
+                    languageType = LanguageType.EN;
+                }
+                LocalizeComponent.Instance.SwitchLanguage(languageType, true);
+            }
+
             // 发送普通actor消息
             Root.Instance.Scene.AddComponent<ActorMessageSenderComponent>();
             // 发送location actor消息
@@ -34,6 +56,19 @@ namespace ET.Server
             dbManagerComponent.NeedDB = Options.Instance.NeedDB == 1;
             Log.Error($"--zpb-- Options.Instance.NeedDB {Options.Instance.NeedDB}");
 
+            while (true)
+            {
+                ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
+                if (configComponent.ChkFinishLoad() == false)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                }
+                else
+                {
+                    break;
+                }
+            }
+            //Options.Instance.Process = 2;
             StartProcessConfig processConfig = StartProcessConfigCategory.Instance.Get(Options.Instance.Process);
             switch (Options.Instance.AppType)
             {

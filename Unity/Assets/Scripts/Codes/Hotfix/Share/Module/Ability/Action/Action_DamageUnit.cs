@@ -12,7 +12,7 @@ namespace ET.Ability
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
 			ActionCfg_DamageUnit actionCfg_DamageUnit = ActionCfg_DamageUnitCategory.Instance.Get(actionId);
-			DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null);
+			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null);
 			await ETTask.CompletedTask;
 		}
 	}

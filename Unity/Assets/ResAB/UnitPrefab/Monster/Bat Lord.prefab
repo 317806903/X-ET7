@@ -1161,7 +1161,7 @@ MonoBehaviour:
     - Key: Take Damage
       Value: Take Damage
     - Key: Die
-      Value: Die
+      Value: Take Damage
     - Key: Turn Right
       Value: Turn Right
     - Key: Turn Left
@@ -1179,7 +1179,6 @@ GameObject:
   - component: {fileID: 2156180079196142819}
   - component: {fileID: 2156180079201578433}
   - component: {fileID: 6197543415969709830}
-  - component: {fileID: 534790629033379410}
   m_Layer: 0
   m_Name: Bat Lord
   m_TagString: Untagged
@@ -1336,20 +1335,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6286157979955759245}
   m_Enabled: 1
---- !u!114 &534790629033379410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2156180079196364995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 2156180079201578433}
 --- !u!1 &2156180079196364997
 GameObject:
   m_ObjectHideFlags: 0

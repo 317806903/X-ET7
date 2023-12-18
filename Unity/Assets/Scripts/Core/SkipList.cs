@@ -134,7 +134,7 @@ namespace ET
                 if (this.IsDescending)
                 {
                     while (x.Level[i].Forward != null && x.Level[i].Forward?.Score > score
-                           || (x.Level[i].Forward?.Score == score && x.Level[i].Forward?.obj.CompareTo(obj) > 0))
+                           || (x.Level[i].Forward?.Score == score && ((x.Level[i].Forward?.obj.GetType() == obj.GetType()) && x.Level[i].Forward?.obj.CompareTo(obj) > 0)))
                     {
                         rank[i] += x.Level[i].Span;
                         x = x.Level[i].Forward;
@@ -143,7 +143,7 @@ namespace ET
                 else
                 {
                     while (x.Level[i].Forward != null && x.Level[i].Forward?.Score < score
-                           || (x.Level[i].Forward?.Score == score && x.Level[i].Forward?.obj.CompareTo(obj) < 0))
+                           || (x.Level[i].Forward?.Score == score && ((x.Level[i].Forward?.obj.GetType() == obj.GetType()) && x.Level[i].Forward?.obj.CompareTo(obj) < 0)))
                     {
                         rank[i] += x.Level[i].Span;
                         x = x.Level[i].Forward;
@@ -262,7 +262,7 @@ namespace ET
             x = x.Level[0].Forward;
             bool isFind = false;
             //当分值和对象都相同时，删除该节点
-            while (x != null && score == x.Score && (obj == null || x.obj == obj))
+            while (x != null && score == x.Score && (obj == null || x.obj.CompareTo(obj) == 0))
             {
                 isFind = true;
                 this._DeleteNode(x, update);
@@ -527,10 +527,20 @@ namespace ET
         {
             SkipList skipList = SkipList.CreateList(true);
             skipList.Insert(1, "adsfasdf 1");
+            skipList.Insert(1, "adsfasdf 2");
+            skipList.Insert(1, 123123123);
+            skipList.Insert(1, 123);
             skipList.Insert(2, "adsfasdf 2");
             skipList.Insert(0, "adsfasdf 0");
             skipList.Insert(4, "adsfasd 4");
             skipList.Insert(4, "adsfasdfa 4");
+            skipList.Insert(14, 123123123123);
+            skipList.Insert(42, 4563456);
+
+
+
+            skipList.DeleteNode(4, "adsfasd 4");
+            skipList.DeleteNode(14, 123123123123);
 
             for (int i = 0; i < 100; i++)
             {

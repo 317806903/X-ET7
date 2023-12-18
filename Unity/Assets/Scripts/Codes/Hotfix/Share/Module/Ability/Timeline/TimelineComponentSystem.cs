@@ -29,7 +29,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(TimelineComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -67,14 +67,14 @@ namespace ET.Ability
             ActionContext actionContext = timelineObjOld.actionContext;
             self.RemoveChild(oldTimeLineId);
             TimelineObj timelineObj = await self.CreateTimeline(newTimelineCfgId, casterUnitId);
-            timelineObj.InitActionContext(actionContext);
+            timelineObj.InitActionContext(ref actionContext);
             return timelineObj;
         }
 
         public static async ETTask<TimelineObj> PlayTimeline(this TimelineComponent self, long casterUnitId, string timelineCfgId, ActionContext actionContext)
         {
             TimelineObj timelineObj = await self.CreateTimeline(timelineCfgId, casterUnitId);
-            timelineObj.InitActionContext(actionContext);
+            timelineObj.InitActionContext(ref actionContext);
             return timelineObj;
         }
 
@@ -116,15 +116,22 @@ namespace ET.Ability
                 self.removeList.Clear();
             }
             self.isForeaching = true;
-            foreach (var timelineObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                TimelineObj timelineObj = timelineObjs.Value as TimelineObj;
+                TimelineObj timelineObj = obj as TimelineObj;
                 timelineObj.FixedUpdate(fixedDeltaTime);
 
                 //判断timeline是否终结
                 if (timelineObj.duration <= timelineObj.timeElapsed)
                 {
-                    self.removeList.Add(timelineObjs.Key);
+                    if(timelineObj.model.IsLoop)
+                    {
+                        timelineObj.timeElapsed = 0;
+                    }
+                    else
+                    {
+                        self.removeList.Add(timelineObj.Id);
+                    }
                 }
             }
             self.isForeaching = false;

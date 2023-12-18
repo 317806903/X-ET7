@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -12,6 +13,13 @@ namespace ET
         public int EndlessChallengeScore;
 
         public bool isFinishTutorialFirst;
+
+        public int ChallengeClearLevel;
+        public int physicalStrength;
+        public long nextRecoverTime;
+        
+        
+        
 
     }
 }

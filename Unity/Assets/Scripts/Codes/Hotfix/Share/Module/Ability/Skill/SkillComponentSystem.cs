@@ -36,7 +36,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(SkillComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -54,7 +54,8 @@ namespace ET.Ability
         {
             if (self.GetSkillObj(skillCfgId) != null)
             {
-                return (false, "已经学过");
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_AlreadyLearned");
+                return (false, msg);
             }
 
             if (SkillCfgCategory.Instance.Contain(skillCfgId) == false)
@@ -111,7 +112,7 @@ namespace ET.Ability
             SkillObj skillObj = self.GetSkillObj(skillCfgId);
             if (skillObj == null)
             {
-                string msg = $"还没学习这个技能[{skillCfgId}]";
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_HaveNotLearned", skillCfgId);
                 return (false, msg);
             }
 
@@ -144,14 +145,14 @@ namespace ET.Ability
         {
             if (self.CurSkillTimelineObj != null)
             {
-                string msg = $"上个技能释放中";
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_LastSkillIsBeingReleased");
                 return (false, msg);
             }
 
             SkillObj skillObj = self.GetSkillObj(skillCfgId);
             if (skillObj == null)
             {
-                string msg = $"还没学习这个技能[{skillCfgId}]";
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_HaveNotLearned", skillCfgId);
                 return (false, msg);
             }
 

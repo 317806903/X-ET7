@@ -11,9 +11,9 @@ namespace ET.Ability
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
-			
+
 			ActionCfg_PlayAnimator actionCfg_PlayAnimator = ActionCfg_PlayAnimatorCategory.Instance.Get(actionId);
-			ET.Ability.AnimatorHelper.PlayAnimator(unit, actionCfg_PlayAnimator, selectHandle, actionContext);
+			ET.Ability.AnimatorHelper.PlayAnimator(unit, actionCfg_PlayAnimator, selectHandle, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

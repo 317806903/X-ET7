@@ -8,8 +8,29 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace ET.Client
 {
+    public enum ClickDataField
+    {
+        DataType,
+        PlayerId,
+        UnitId,
+        UnitCfgId,
+        TowerCfgId,
+    }
+
+    public enum ClickDataType
+    {
+        HomeWhenPutting,
+        MonsterCallWhenPutting,
+        Home,
+        MonsterCall,
+        Tower,
+        PlayerUnit,
+    }
+
     public class ModelClickManagerComponent: Entity, IAwake, IDestroy, IUpdate
     {
+        public ReferenceSimpleData recordReferenceSimpleData;
+
         public Action<RaycastHit> ModelClick;
         public Action<RaycastHit> ModelPress;
 

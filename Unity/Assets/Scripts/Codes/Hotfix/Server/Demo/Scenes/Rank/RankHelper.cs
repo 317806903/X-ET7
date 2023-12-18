@@ -31,11 +31,26 @@ namespace ET.Server
 			        await rankManagerComponent.LoadRank(rankType);
 		        }
 		        SortedDictionary<int, RankItemComponent> rankIndex2PlayerId = rankManagerComponent.GetRankShow(playerId, rankType);
+		        (int myRank, RankItemComponent myRankItemComponent) = rankManagerComponent.GetMyRankShow(playerId, rankType);
 
-		        rankShowComponent = rankShowManagerComponent.SetRankShow(playerId, rankType, rankIndex2PlayerId);
+		        rankShowComponent = rankShowManagerComponent.SetRankShow(playerId, rankType, myRank, myRankItemComponent, rankIndex2PlayerId);
 	        }
 
 	        return rankShowComponent;
+        }
+
+        public static async ETTask<int> GetRankedMoreThan(Scene scene, RankType rankType, long score)
+        {
+	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
+
+	        bool bRet = rankManagerComponent.ChkRankExist(rankType);
+	        if (bRet == false)
+	        {
+		        await rankManagerComponent.LoadRank(rankType);
+	        }
+
+	        int rankedMoreThan = rankManagerComponent.GetRankedMoreThan(rankType, score);
+	        return rankedMoreThan;
         }
 
         public static async ETTask ResetPlayerRank(Scene scene, long playerId, RankType rankType, long score)

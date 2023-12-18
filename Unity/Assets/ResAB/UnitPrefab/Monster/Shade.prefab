@@ -1696,7 +1696,6 @@ GameObject:
   - component: {fileID: 3118294153675890164}
   - component: {fileID: 3118294153689058512}
   - component: {fileID: 1182430190080832427}
-  - component: {fileID: 803889326023983626}
   m_Layer: 0
   m_Name: Shade
   m_TagString: Untagged
@@ -1841,20 +1840,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8155955162773283710}
   m_Enabled: 1
---- !u!114 &803889326023983626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118294153675456980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 3118294153689058512}
 --- !u!1 &3118294153675456982
 GameObject:
   m_ObjectHideFlags: 0

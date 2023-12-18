@@ -305,7 +305,7 @@ namespace ET.Ability
             }
         }
 
-        public static List<BuffObj> GetBuffListByTag(this BuffComponent self, BuffTagType buffTagType)
+        public static List<BuffObj> GetBuffListByTagType(this BuffComponent self, BuffTagType buffTagType)
         {
             if (self.buffTagTypeList.TryGetValue(buffTagType, out var buffObjList))
             {
@@ -314,7 +314,7 @@ namespace ET.Ability
             return null;
         }
 
-        public static List<BuffObj> GetBuffListByTagGroup(this BuffComponent self, BuffTagGroupType buffTagGroupType)
+        public static List<BuffObj> GetBuffListByTagGroupType(this BuffComponent self, BuffTagGroupType buffTagGroupType)
         {
             if (self.buffTagGroupTypeList.TryGetValue(buffTagGroupType, out var buffObjList))
             {
@@ -323,9 +323,26 @@ namespace ET.Ability
             return null;
         }
 
-        public static bool ChkBuffTagType(this BuffComponent self, BuffTagType buffTagType)
+        public static bool ChkBuffByTagType(this BuffComponent self, BuffTagType buffTagType)
         {
-            List<BuffObj> list = self.GetBuffListByTag(buffTagType);
+            List<BuffObj> list = self.GetBuffListByTagType(buffTagType);
+            if (list == null)
+            {
+                return false;
+            }
+            foreach (BuffObj buffObj in list)
+            {
+                if (buffObj.isEnabled)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ChkBuffByTagGroupType(this BuffComponent self, BuffTagGroupType buffTagGroupType)
+        {
+            List<BuffObj> list = self.GetBuffListByTagGroupType(buffTagGroupType);
             if (list == null)
             {
                 return false;

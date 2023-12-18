@@ -5,9 +5,9 @@ namespace ET.Ability
 {
     public static class RecordHandleHelper
     {
-        public static void DealRecordInt(Unit unit, ActionCfg_SetRecordInt actionCfgSetRecordInt, SelectHandle selectHandle, ActionContext actionContext)
+        public static void DealRecordInt(Unit unit, ActionCfg_SetRecordInt actionCfgSetRecordInt, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext, true);
+            ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext, true);
             if (list == null)
             {
                 return;
@@ -16,11 +16,12 @@ namespace ET.Ability
             {
                 DoRecordInt(list[i], actionCfgSetRecordInt);
             }
+            list.Dispose();
         }
 
-        public static void DealRecordString(Unit unit, ActionCfg_SetRecordString actionCfgSetRecordString, SelectHandle selectHandle, ActionContext actionContext)
+        public static void DealRecordString(Unit unit, ActionCfg_SetRecordString actionCfgSetRecordString, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext, true);
+            ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext, true);
             if (list == null)
             {
                 return;
@@ -29,6 +30,7 @@ namespace ET.Ability
             {
                 DoRecordString(list[i], actionCfgSetRecordString);
             }
+            list.Dispose();
         }
 
         public static void DoRecordInt(Unit unit, ActionCfg_SetRecordInt actionCfgSetRecordInt)

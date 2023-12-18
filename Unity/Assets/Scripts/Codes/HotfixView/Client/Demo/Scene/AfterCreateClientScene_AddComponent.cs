@@ -14,7 +14,7 @@ namespace ET.Client
 
             scene.AddComponent<LoginSDKComponent>();
             scene.AddComponent<EventLoggingSDKComponent>();
-            scene.AddComponent<ModelClickManagerComponent>();
+            scene.AddComponent<AdmobSDKComponent>();
 
             // scene.AddComponent<FUIEventComponent>();
             // scene.AddComponent<FUIAssetComponent>();

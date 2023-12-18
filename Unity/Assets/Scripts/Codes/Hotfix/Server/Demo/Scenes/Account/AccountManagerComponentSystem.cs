@@ -14,7 +14,7 @@ namespace ET.Server
             }
         }
 
-        public static async ETTask<long> AccountLogin(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
+        public static async ETTask<(long, bool)> AccountLogin(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
         {
             if (DBManagerComponent.Instance.NeedDB == false)
             {
@@ -26,8 +26,9 @@ namespace ET.Server
             }
         }
 
-        public static async ETTask<long> AccountLoginWithDB(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
+        public static async ETTask<(long, bool)> AccountLoginWithDB(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
         {
+            bool isFirstLogin = false;
             DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(self.DomainZone());
             AccountComponent accountComponent;
             if (self.AccountId2AccountComponents.TryGetValue(accountId, out long accountComponentId) == false)
@@ -45,13 +46,14 @@ namespace ET.Server
                     accountComponent.Init(accountId, password, loginType);
                 }
                 self.AccountId2AccountComponents[accountId] = accountComponent.Id;
+                isFirstLogin = true;
             }
             else
             {
                 accountComponent = self.GetChild<AccountComponent>(accountComponentId);
                 if (accountComponent.password != password)
                 {
-                    return 0;
+                    return (0, isFirstLogin);
                 }
             }
 
@@ -59,32 +61,34 @@ namespace ET.Server
             accountComponent.UpdateLoginTime();
             await dbComponent.SaveNotWait(accountComponent);
 
-            return accountComponent.GetPlayerId();
+            return (accountComponent.GetPlayerId(), isFirstLogin);
         }
 
-        public static async ETTask<long> AccountLoginNoDB(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
+        public static async ETTask<(long, bool)> AccountLoginNoDB(this AccountManagerComponent self, string accountId, string password, ET.LoginType loginType)
         {
             await ETTask.CompletedTask;
+            bool isFirstLogin = false;
             AccountComponent accountComponent;
             if (self.AccountId2AccountComponents.TryGetValue(accountId, out long accountComponentId) == false)
             {
                 accountComponent = self.AddChild<AccountComponent>();
                 accountComponent.Init(accountId, password, loginType);
                 self.AccountId2AccountComponents[accountId] = accountComponent.Id;
+                isFirstLogin = true;
             }
             else
             {
                 accountComponent = self.GetChild<AccountComponent>(accountComponentId);
                 if (accountComponent.password != password)
                 {
-                    return 0;
+                    return (0, isFirstLogin);
                 }
             }
 
             accountComponent.loginType = loginType;
             accountComponent.UpdateLoginTime();
 
-            return accountComponent.GetPlayerId();
+            return (accountComponent.GetPlayerId(), isFirstLogin);
         }
     }
 }

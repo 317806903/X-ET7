@@ -39,8 +39,7 @@ namespace ET.Server
 		    }
 	    }
 
-	    public static async ETTask<List<T>> Query<T>(this DBComponent self, Expression<Func<T, bool>> filter, string collection = null)
-			    where T : Entity
+	    public static async ETTask<List<T>> Query<T>(this DBComponent self, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
 	    {
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
 		    {
@@ -50,8 +49,7 @@ namespace ET.Server
 		    }
 	    }
 
-	    public static async ETTask<List<T>> Query<T>(this DBComponent self, long taskId, Expression<Func<T, bool>> filter, string collection = null)
-			    where T : Entity
+	    public static async ETTask<List<T>> Query<T>(this DBComponent self, long taskId, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
 	    {
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
 		    {
@@ -98,11 +96,65 @@ namespace ET.Server
 
 	    public static async ETTask<List<T>> QueryJson<T>(this DBComponent self, long taskId, string json, string collection = null) where T : Entity
 	    {
-		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
 		    {
 			    FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
 			    IAsyncCursor<T> cursor = await self.GetCollection<T>(collection).FindAsync(filterDefinition);
 			    return await cursor.ToListAsync();
+		    }
+	    }
+
+	    #endregion
+
+	    #region QueryCount
+
+	    public static async ETTask<long> QueryCount<T>(this DBComponent self, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
+		    {
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(null);
+		    }
+	    }
+
+	    public static async ETTask<long> QueryCount<T>(this DBComponent self, long id, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, id % DBComponent.TaskCount))
+		    {
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(d => d.Id == id);
+		    }
+	    }
+
+	    public static async ETTask<long> QueryCount<T>(this DBComponent self, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
+		    {
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(filter);
+		    }
+	    }
+
+	    public static async ETTask<long> QueryCount<T>(this DBComponent self, long taskId, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
+		    {
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(filter);
+		    }
+	    }
+
+	    public static async ETTask<long> QueryCountJson<T>(this DBComponent self, string json, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
+		    {
+			    FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(filterDefinition);
+		    }
+	    }
+
+	    public static async ETTask<long> QueryCountJson<T>(this DBComponent self, long taskId, string json, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
+		    {
+			    FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
+			    return await self.GetCollection<T>(collection).CountDocumentsAsync(filterDefinition);
 		    }
 	    }
 

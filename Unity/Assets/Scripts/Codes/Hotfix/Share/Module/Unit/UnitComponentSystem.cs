@@ -13,8 +13,8 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
-				self.waitRecycleSelectHandles = new();
 				self.NeedSyncNumericUnits = new();
+				self.NeedSyncNumericUnitsKey = new();
 				self.NeedSyncPosUnits = new();
 				self.waitRemoveList = new();
 				self.observerList = HashSetComponent<Unit>.Create();
@@ -33,18 +33,30 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
-				self.waitRecycleSelectHandles.Dispose();
 				self.NeedSyncNumericUnits.Dispose();
+				self.NeedSyncNumericUnits = null;
+				self.NeedSyncNumericUnitsKey.Clear();
+				self.NeedSyncNumericUnitsKey = null;
 				self.NeedSyncPosUnits.Dispose();
+				self.NeedSyncPosUnits = null;
 				self.waitRemoveList.Clear();
+				self.waitRemoveList = null;
 				self.observerList.Dispose();
+				self.observerList = null;
 				self.playerList.Dispose();
+				self.playerList = null;
 				self.actorList.Dispose();
+				self.actorList = null;
 				self.npcList.Dispose();
+				self.npcList = null;
 				self.sceneObjList.Dispose();
+				self.sceneObjList = null;
 				self.bulletList.Dispose();
+				self.bulletList = null;
 				self.aoeList.Dispose();
+				self.aoeList = null;
 				self.sceneEffectList.Dispose();
+				self.sceneEffectList = null;
 			}
 		}
 
@@ -53,7 +65,7 @@ namespace ET
 		{
 			protected override void FixedUpdate(UnitComponent self)
 			{
-				if (self.DomainScene().SceneType != SceneType.Map)
+				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
 				{
 					return;
 				}
@@ -65,35 +77,27 @@ namespace ET
 
 		public static void FixedUpdate(this UnitComponent self, float fixedDeltaTime)
 		{
-			ProfilerSample.BeginSample($"DoUnitHit");
 			self.DoUnitHit(fixedDeltaTime);
-			ProfilerSample.EndSample();
 
-			ProfilerSample.BeginSample($"DoUnitRemove");
 			self.DoUnitRemove();
-			ProfilerSample.EndSample();
 
-			if (self.curFrameSyncPos++ > self.waitFrameSyncPos)
+			if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
 			{
 				self.curFrameSyncPos = 0;
 
-				ProfilerSample.BeginSample($"SyncPosUnit");
-				self.SyncPosUnit();
-				ProfilerSample.EndSample();
+				self.SyncPosUnit().Coroutine();
 			}
-			if (self.curFrameSyncNumeric++ > self.waitFrameSyncNumeric)
+			if (++self.curFrameSyncNumeric >= self.waitFrameSyncNumeric)
 			{
 				self.curFrameSyncNumeric = 0;
 
-				ProfilerSample.BeginSample($"SyncNumericUnit");
-				self.SyncNumericUnit();
-				ProfilerSample.EndSample();
+				self.SyncNumericUnit().Coroutine();
 			}
-			if (self.curFrameRecycleSelectHandle++ > self.waitFrameRecycleSelectHandle)
+			if (++self.curFrameSyncNumericKey >= self.waitFrameSyncNumericKey)
 			{
-				self.curFrameRecycleSelectHandle = 0;
+				self.curFrameSyncNumericKey = 0;
 
-				self.RecycleSelectHandles();
+				self.SyncNumericUnitKey().Coroutine();
 			}
 		}
 
@@ -167,6 +171,8 @@ namespace ET
 				return;
 			}
 
+			ET.Ability.UnitHelper.AddUnitDelayRemove(self.DomainScene(), unit);
+
 			GamePlayHelper.RemoveUnitInfo(unit);
 
 			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
@@ -201,82 +207,188 @@ namespace ET
 			self.NeedSyncNumericUnits.Add(unit);
 		}
 
-		public static void AddRecycleSelectHandles(this UnitComponent self, SelectHandle selectHandle)
+		public static void AddSyncNumericUnitByKey(this UnitComponent self, Unit unit, int numericKey)
 		{
-			if (self.waitRecycleSelectHandles.Contains(selectHandle))
+			if (self.NeedSyncNumericUnitsKey.ContainsKey(unit.Id))
 			{
 				return;
 			}
-			self.waitRecycleSelectHandles.Add(selectHandle);
+			if (unit.GetComponent<AOIEntity>() == null)
+			{
+				return;
+			}
+			self.NeedSyncNumericUnitsKey.Add(unit.Id, numericKey);
 		}
 
-		public static void SyncPosUnit(this UnitComponent self)
+		public static async ETTask SyncPosUnit(this UnitComponent self)
 		{
             if (self.NeedSyncPosUnits.Count == 0)
                 return;
 
-            EventType.SyncPosUnits _SyncPosUnits = new ()
+            await ETTask.CompletedTask;
+            while (self.NeedSyncPosUnits.Count > 0)
             {
-	            units = ListComponent<Unit>.Create(),
-            };
-			//同步单位状态（位置、方向、）
-            foreach (Unit unit in self.NeedSyncPosUnits)
-            {
-                //if(unit.IsDisposed || (unit.Type == UnitType.Player || unit.Type == UnitType.Monster || unit.Type == UnitType.NPC))
-                if(unit.IsDisposed)
-	                continue;
-                MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
-                if (moveByPathComponent != null)
-                {
-	                if (moveByPathComponent.IsArrived() == false)
-	                {
-		                continue;
-	                }
-                }
+	            EventType.SyncPosUnits _SyncPosUnits = new ()
+	            {
+		            units = new(),
+	            };
 
-                _SyncPosUnits.units.Add(unit);
-            }
+	            self.NeedSyncPosUnitsTmp.Clear();
+	            int maxCount = 500;
+	            //同步单位状态（位置、方向、）
+	            foreach (Unit unit in self.NeedSyncPosUnits)
+	            {
+		            if (unit.IsDisposed)
+		            {
+			            self.NeedSyncPosUnitsTmp.Add(unit);
+			            continue;
+		            }
+		            MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
+		            if (moveByPathComponent != null)
+		            {
+			            if (moveByPathComponent.IsArrived() == false)
+			            {
+				            self.NeedSyncPosUnitsTmp.Add(unit);
+				            continue;
+			            }
+		            }
 
-            if (_SyncPosUnits.units.Count > 0)
-            {
-	            EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
+		            _SyncPosUnits.units.Add(unit);
+		            self.NeedSyncPosUnitsTmp.Add(unit);
+		            if (maxCount-- <= 0)
+		            {
+			            break;
+		            }
+	            }
+
+	            if (_SyncPosUnits.units.Count > 0)
+	            {
+		            try
+		            {
+			            EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
+		            }
+		            catch (Exception e)
+		            {
+			            Log.Error(e);
+		            }
+	            }
+
+	            foreach (Unit unit in self.NeedSyncPosUnitsTmp)
+	            {
+		            self.NeedSyncPosUnits.Remove(unit);
+	            }
+	            self.NeedSyncPosUnitsTmp.Clear();
             }
-            self.NeedSyncPosUnits.Clear();
 		}
 
-		public static void SyncNumericUnit(this UnitComponent self)
+		public static async ETTask SyncNumericUnit(this UnitComponent self)
 		{
             if (self.NeedSyncNumericUnits.Count == 0)
                 return;
 
-            EventType.SyncNumericUnits _SyncNumericUnits = new ()
+            await ETTask.CompletedTask;
+            while (self.NeedSyncNumericUnits.Count > 0)
             {
-	            units = ListComponent<Unit>.Create(),
-            };
-            foreach (Unit unit in self.NeedSyncNumericUnits)
-            {
-                if(unit.IsDisposed)
-	                continue;
+	            EventType.SyncNumericUnits _SyncNumericUnits = new ()
+	            {
+		            units = new(),
+	            };
 
-                _SyncNumericUnits.units.Add(unit);
+	            self.NeedSyncNumericUnitsTmp.Clear();
+	            int maxCount = 500;
+	            foreach (Unit unit in self.NeedSyncNumericUnits)
+	            {
+		            if (unit.IsDisposed)
+		            {
+			            self.NeedSyncNumericUnitsTmp.Add(unit);
+			            continue;
+		            }
+
+		            _SyncNumericUnits.units.Add(unit);
+		            self.NeedSyncNumericUnitsTmp.Add(unit);
+		            if (maxCount-- <= 0)
+		            {
+			            break;
+		            }
+	            }
+	            if (_SyncNumericUnits.units.Count > 0)
+	            {
+		            try
+		            {
+			            EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
+		            }
+		            catch (Exception e)
+		            {
+			            Log.Error(e);
+		            }
+	            }
+
+	            foreach (Unit unit in self.NeedSyncNumericUnitsTmp)
+	            {
+		            self.NeedSyncNumericUnits.Remove(unit);
+	            }
+	            self.NeedSyncNumericUnitsTmp.Clear();
             }
-            if (_SyncNumericUnits.units.Count > 0)
-            {
-	            EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
-            }
-            self.NeedSyncNumericUnits.Clear();
 		}
 
-		public static void RecycleSelectHandles(this UnitComponent self)
+		public static async ETTask SyncNumericUnitKey(this UnitComponent self)
 		{
-            if (self.waitRecycleSelectHandles.Count == 0)
+            if (self.NeedSyncNumericUnitsKey.Count == 0)
                 return;
 
-            foreach (SelectHandle selectHandle in self.waitRecycleSelectHandles)
+            await ETTask.CompletedTask;
+            while (self.NeedSyncNumericUnitsKey.Count > 0)
             {
-                selectHandle.Dispose();
+	            EventType.SyncNumericUnitsKey syncNumericUnitsKey = new ()
+	            {
+		            units = new(),
+		            keys = new(),
+	            };
+
+	            self.NeedSyncNumericUnitsKeyTmp.Clear();
+	            int maxCount = 500;
+	            foreach (var item in self.NeedSyncNumericUnitsKey)
+	            {
+		            long unitId = item.Key;
+		            Unit unit = self.Get(unitId);
+		            if (unit == null || unit.IsDisposed)
+		            {
+			            self.NeedSyncNumericUnitsKeyTmp.Add(unitId);
+			            continue;
+		            }
+
+		            syncNumericUnitsKey.units.Add(unit);
+		            var keys = new List<int>();
+		            syncNumericUnitsKey.keys.Add(keys);
+		            foreach (int key in item.Value)
+		            {
+			            keys.Add(key);
+		            }
+		            self.NeedSyncNumericUnitsKeyTmp.Add(unitId);
+		            if (maxCount-- <= 0)
+		            {
+			            break;
+		            }
+	            }
+	            if (syncNumericUnitsKey.units.Count > 0)
+	            {
+		            try
+		            {
+			            EventSystem.Instance.Publish(self.DomainScene(), syncNumericUnitsKey);
+		            }
+		            catch (Exception e)
+		            {
+			            Log.Error(e);
+		            }
+	            }
+
+	            foreach (long unitId in self.NeedSyncNumericUnitsKeyTmp)
+	            {
+		            self.NeedSyncNumericUnitsKey.Remove(unitId);
+	            }
+	            self.NeedSyncNumericUnitsKeyTmp.Clear();
             }
-            self.waitRecycleSelectHandles.Clear();
 		}
+
 	}
 }

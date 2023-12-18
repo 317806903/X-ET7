@@ -11,7 +11,8 @@ namespace ET.Client
 		public long Timer;
 
 
-		public Transform transBackground;
+		public RectTransform rectTransBackground;
+		public RectTransform rectTransValueImage;
 		public Transform transPercentage;
 	}
 }

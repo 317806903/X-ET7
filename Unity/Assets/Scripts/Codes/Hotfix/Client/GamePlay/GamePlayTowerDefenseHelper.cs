@@ -107,11 +107,12 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask SendUpgradePlayerTower(Scene scene, long towerUnitId)
+		public static async ETTask SendUpgradePlayerTower(Scene scene, long towerUnitId, bool onlyChkPool)
 		{
 			C2M_UpgradePlayerTower _C2M_UpgradePlayerTower = new ()
 			{
 				TowerUnitId = towerUnitId,
+				OnlyChkPool = onlyChkPool?1:0,
 			};
 			M2C_UpgradePlayerTower _M2C_UpgradePlayerTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_UpgradePlayerTower) as M2C_UpgradePlayerTower;
 			if (_M2C_UpgradePlayerTower.Error != ET.ErrorCode.ERR_Success)
@@ -188,72 +189,35 @@ namespace ET.Client
 			}
 		}
 
-		//--------------------------------------------------------------------
-		public static async ETTask SendCallTower(Scene scene, string towerUnitCfgId, float3 position)
-		{
-			C2M_CallTower _C2M_CallTower = new ()
-			{
-				TowerUnitCfgId = towerUnitCfgId,
-				Position = position,
-			};
-			M2C_CallTower _M2C_CallTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_CallTower) as M2C_CallTower;
 
-			if (_M2C_CallTower.Error != ET.ErrorCode.ERR_Success)
+		public static async ETTask SendGameRecoverCancel(Scene scene)
+		{
+			C2M_BattleRecoverCancel _C2M_BattleRecoverCancel = new ()
+			{
+			};
+			M2C_BattleRecoverCancel _M2C_BattleRecoverCancel = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverCancel) as M2C_BattleRecoverCancel;
+
+			if (_M2C_BattleRecoverCancel.Error != ET.ErrorCode.ERR_Success)
 			{
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
-					tipMsg = _M2C_CallTower.Message,
+					tipMsg = _M2C_BattleRecoverCancel.Message,
 				});
 			}
 		}
 
-		public static async ETTask SendCallMonster(Scene scene, string monsterUnitCfgId, float3 position, int count)
+		public static async ETTask SendGameRecoverConfirm(Scene scene)
 		{
-			C2M_CallMonster _C2M_CallMonster = new ()
+			C2M_BattleRecoverConfirm _C2M_BattleRecoverConfirm = new ()
 			{
-				MonsterUnitCfgId = monsterUnitCfgId,
-				Position = position,
-				Count = count,
 			};
-			M2C_CallMonster _M2C_CallMonster = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_CallMonster) as M2C_CallMonster;
+			M2C_BattleRecoverConfirm _M2C_BattleRecoverConfirm = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverConfirm) as M2C_BattleRecoverConfirm;
 
-			if (_M2C_CallMonster.Error != ET.ErrorCode.ERR_Success)
+			if (_M2C_BattleRecoverConfirm.Error != ET.ErrorCode.ERR_Success)
 			{
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
-					tipMsg = _M2C_CallMonster.Message,
-				});
-			}
-		}
-
-		public static async ETTask SendClearMyTower(Scene scene)
-		{
-			C2M_ClearMyTower _C2M_ClearMyTower = new ()
-			{
-			};
-			M2C_ClearMyTower _M2C_ClearMyTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ClearMyTower) as M2C_ClearMyTower;
-
-			if (_M2C_ClearMyTower.Error != ET.ErrorCode.ERR_Success)
-			{
-				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
-				{
-					tipMsg = _M2C_ClearMyTower.Message,
-				});
-			}
-		}
-
-		public static async ETTask SendClearAllMonster(Scene scene)
-		{
-			C2M_ClearAllMonster _C2M_ClearAllMonster = new ()
-			{
-			};
-			M2C_ClearAllMonster _M2C_ClearAllMonster = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ClearAllMonster) as M2C_ClearAllMonster;
-
-			if (_M2C_ClearAllMonster.Error != ET.ErrorCode.ERR_Success)
-			{
-				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
-				{
-					tipMsg = _M2C_ClearAllMonster.Message,
+					tipMsg = _M2C_BattleRecoverConfirm.Message,
 				});
 			}
 		}

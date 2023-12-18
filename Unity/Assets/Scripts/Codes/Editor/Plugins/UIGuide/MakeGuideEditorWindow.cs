@@ -225,8 +225,15 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                             makeGuide.list[i].trigEnterConditionStaticMethod = trigEnterConditionStaticMethod.ToString();
 
-                            makeGuide.list[i].trigEnterConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigEnterConditionParam);
-                            makeGuide.list[i].trigEnterConditionParam = makeGuide.list[i].trigEnterConditionParam.Trim();
+                            if (string.IsNullOrEmpty(makeGuide.list[i].trigEnterConditionParam))
+                            {
+                                makeGuide.list[i].trigEnterConditionParam = "";
+                            }
+                            else
+                            {
+                                makeGuide.list[i].trigEnterConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigEnterConditionParam);
+                                makeGuide.list[i].trigEnterConditionParam = makeGuide.list[i].trigEnterConditionParam.Trim();
+                            }
                         }
                         EditorGUI.indentLevel--;
 
@@ -468,6 +475,19 @@ public class UIGuidePathListEditorWindow: EditorWindow
                             guideExecuteStaticMethod = (ET.Client.GuideExecuteStaticMethodType) EditorGUILayout.EnumPopup("执行逻辑", guideExecuteStaticMethod);
 
                             makeGuide.list[i].guideExecuteStaticMethod = guideExecuteStaticMethod.ToString();
+
+                            if (guideExecuteStaticMethod != GuideExecuteStaticMethodType.None)
+                            {
+                                makeGuide.list[i].guideExecuteParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].guideExecuteParam);
+                                if (string.IsNullOrEmpty(makeGuide.list[i].guideExecuteParam))
+                                {
+                                    makeGuide.list[i].guideExecuteParam = "";
+                                }
+                                else
+                                {
+                                    makeGuide.list[i].guideExecuteParam = makeGuide.list[i].guideExecuteParam.Trim();
+                                }
+                            }
                         }
                         EditorGUI.indentLevel--;
 
@@ -540,8 +560,15 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                             makeGuide.list[i].trigExitConditionStaticMethod = trigExitConditionStaticMethod.ToString();
 
-                            makeGuide.list[i].trigExitConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigExitConditionParam);
-                            makeGuide.list[i].trigExitConditionParam = makeGuide.list[i].trigExitConditionParam.Trim();
+                            if (string.IsNullOrEmpty(makeGuide.list[i].trigExitConditionParam))
+                            {
+                                makeGuide.list[i].trigExitConditionParam = "";
+                            }
+                            else
+                            {
+                                makeGuide.list[i].trigExitConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigExitConditionParam);
+                                makeGuide.list[i].trigExitConditionParam = makeGuide.list[i].trigExitConditionParam.Trim();
+                            }
                         }
                         EditorGUI.indentLevel--;
 

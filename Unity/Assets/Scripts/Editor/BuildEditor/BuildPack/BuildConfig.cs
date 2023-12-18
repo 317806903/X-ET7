@@ -32,7 +32,18 @@ namespace ET
             await BuildConfigInternal(ToolsEditor.ConfigType.AbilityConfig);
         }
 
-        public static async ETTask BuildConfigInternal(ToolsEditor.ConfigType configType)
+        [MenuItem("Pack/BuildConfig_AbilityConfig_OnlyExcel", false, 101)]
+        public static async ETTask BuildConfig_AbilityConfig_OnlyExcel()
+        {
+            if(Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return;
+            }
+            await BuildConfigInternal(ToolsEditor.ConfigType.AbilityConfig, true);
+        }
+
+        public static async ETTask BuildConfigInternal(ToolsEditor.ConfigType configType, bool onlyExcel = false)
         {
             EditorApplication.isPlaying = false;
 
@@ -41,7 +52,7 @@ namespace ET
             try
             {
                 AssetDatabase.Refresh();
-                await BuildInternal(configType);
+                await BuildInternal(configType, onlyExcel);
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
@@ -74,21 +85,21 @@ namespace ET
             return DateTime.Now.ToString("yyyy-MM-dd") + "-" + totalMinutes;
         }
 
-        private static async ETTask BuildInternal(ToolsEditor.ConfigType configType)
+        private static async ETTask BuildInternal(ToolsEditor.ConfigType configType, bool onlyExcel)
         {
             if ((configType & ToolsEditor.ConfigType.AbilityConfig) > 0)
             {
-                await BuildInternal_AbilityConfig();
+                await BuildInternal_AbilityConfig(onlyExcel);
             }
             if ((configType & ToolsEditor.ConfigType.StartConfig) > 0)
             {
-                await BuildInternal_StartConfig();
+                await BuildInternal_StartConfig(onlyExcel);
             }
         }
 
-        private static async ETTask BuildInternal_AbilityConfig()
+        private static async ETTask BuildInternal_AbilityConfig(bool onlyExcel)
         {
-            ToolsEditor.ExcelExporter(CodeMode.ClientServer, "", ToolsEditor.ConfigType.AbilityConfig);
+            ToolsEditor.ExcelExporter(CodeMode.ClientServer, "", ToolsEditor.ConfigType.AbilityConfig, onlyExcel.ToString());
 
             string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/AbilityConfig";
             if (Directory.Exists(unityClientConfigForAB))
@@ -101,11 +112,11 @@ namespace ET
             AssetDatabase.Refresh();
         }
 
-        private static async ETTask BuildInternal_StartConfig()
+        private static async ETTask BuildInternal_StartConfig(bool onlyExcel)
         {
             foreach (string startConfig in startConfigs)
             {
-                ToolsEditor.ExcelExporter(CodeMode.ClientServer, startConfig, ToolsEditor.ConfigType.StartConfig);
+                ToolsEditor.ExcelExporter(CodeMode.ClientServer, startConfig, ToolsEditor.ConfigType.StartConfig, onlyExcel.ToString());
             }
 
             string unityClientConfigForAB = $"../Unity/Assets/Bundles/Config/StartConfig";

@@ -37,7 +37,11 @@ namespace ET
 			await MonoResComponent.Instance.InitAsync();
 
 #if UNITY_EDITOR
+			var modelVersion = GlobalConfig.Instance.ModelVersion;
+			var hotFixVersion = GlobalConfig.Instance.HotFixVersion;
 			GlobalConfig.Instance = UnityEditor.AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
+			GlobalConfig.Instance.ModelVersion = modelVersion;
+			GlobalConfig.Instance.HotFixVersion = hotFixVersion;
 #endif
 			// 命令行参数
 			string[] args = $"--StartConfig=StartConfig/{GlobalConfig.Instance.StartConfig}".Split(" ");
@@ -51,21 +55,17 @@ namespace ET
 
 			Game.AddSingleton<ET.CodeLoader>().Start();
 
-#if UNITY_EDITOR
-			while (Game.ChkIsExistSingleton<ConfigComponent>() == false)
-			{
-				await TimerComponent.Instance.WaitFrameAsync();
-			}
-			ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
-			while (configComponent.ChkFinishLoad() == false)
-			{
-				await TimerComponent.Instance.WaitFrameAsync();
-			}
-
-			(string RouterHttpHost, int RouterHttpPort) = EventSystem.Instance.Invoke<ConfigComponent.GetRouterHttpHostAndPortWhenEditor, (string, int)>(new ConfigComponent.GetRouterHttpHostAndPortWhenEditor());
-			ResConfig.Instance.RouterHttpHost = RouterHttpHost;
-			ResConfig.Instance.RouterHttpPort = RouterHttpPort;
-#endif
+// #if UNITY_EDITOR
+// 			while (Game.ChkIsExistSingleton<ConfigComponent>() == false)
+// 			{
+// 				await TimerComponent.Instance.WaitFrameAsync();
+// 			}
+// 			ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
+// 			while (configComponent.ChkFinishLoad() == false)
+// 			{
+// 				await TimerComponent.Instance.WaitFrameAsync();
+// 			}
+// #endif
 
 		}
 

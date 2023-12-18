@@ -33,6 +33,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// 这是id
     /// </summary>
     public string Id { get; private set; }
+    public ItemCfg Id_Ref { get; private set; }
     /// <summary>
     /// 类型
     /// </summary>
@@ -54,6 +55,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.Id_Ref = (_tables["ItemCfgCategory"] as ItemCfgCategory).GetOrDefault(Id);
         this.UnitId_Ref = (_tables["UnitCfgCategory"] as UnitCfgCategory).GetOrDefault(UnitId);
         PostResolve();
     }

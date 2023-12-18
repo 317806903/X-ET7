@@ -29,9 +29,10 @@ namespace ET.Ability
             self.casterUnitId = casterId;
             self.timeScale = 1.00f;
             self.duration = self.model.Duration;
+            self.timeElapsed = 0;
         }
 
-        public static void InitActionContext(this TimelineObj self, ActionContext actionContext)
+        public static void InitActionContext(this TimelineObj self, ref ActionContext actionContext)
         {
             actionContext.timelineCfgId = self.CfgId;
             actionContext.timelineId = self.Id;
@@ -59,13 +60,17 @@ namespace ET.Ability
                 )
                 {
                     SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam, ref self.actionContext);
+                    if (curSelectHandle == null)
+                    {
+                        continue;
+                    }
 
-                    (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, self.actionContext);
+                    (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, ref self.actionContext);
                     if (isChgSelect1)
                     {
                         curSelectHandle = newSelectHandle1;
                     }
-                    (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition2, self.actionContext);
+                    (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition2, ref self.actionContext);
                     if (isChgSelect2)
                     {
                         curSelectHandle = newSelectHandle2;
@@ -73,8 +78,8 @@ namespace ET.Ability
 
                     if (bRet1 && bRet2)
                     {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, self.actionContext);
-                        if (timelineNode.ActionId.Contains("TimelineJumpTime"))
+                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, ref self.actionContext);
+                        if (timelineNode.ActionId.StartsWith("TimelineJumpTime"))
                         {
                             self.timelineJumpNum++;
                             if (self.timelineJumpNum > 10)

@@ -56,7 +56,14 @@ namespace ET
                 {
                     if (type.IsDefined(typeof (HideInInspector)))
                         continue;
-                    ComponentViewHelper.Draw(info.PropertyType, info.GetValue(obj), info.Name);
+                    try
+                    {
+                        ComponentViewHelper.Draw(info.PropertyType, info.GetValue(obj), info.Name);
+                    }
+                    catch (Exception e)
+                    {
+                        //Console.WriteLine(e);
+                    }
                 }
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
@@ -82,7 +89,13 @@ namespace ET
                 {
                     if (type.IsDefined(typeof (HideInInspector)))
                         continue;
-                    ComponentViewHelper.Draw(info.PropertyType, info.GetValue(obj), info.Name);
+                    try
+                    {
+                        ComponentViewHelper.Draw(info.PropertyType, info.GetValue(obj), info.Name);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
             EditorGUILayout.EndFoldoutHeaderGroup();

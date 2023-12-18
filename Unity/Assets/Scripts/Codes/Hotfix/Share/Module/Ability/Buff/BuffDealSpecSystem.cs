@@ -91,7 +91,7 @@ namespace ET.Ability
             }
         }
 
-        public static void DealSelfEffectWhenAddBuff(this BuffObj self)
+        public static async ETTask DealSelfEffectWhenAddBuff(this BuffObj self)
         {
             if (self.model.SelfEffectList_Ref.Count == 0)
             {
@@ -107,6 +107,11 @@ namespace ET.Ability
                 if (effectObj != null)
                 {
                     self.selfEffectList.Add(effectObj);
+                }
+
+                if (IdGenerater.Instance.ChkGenerateIdFull())
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
                 }
             }
         }
@@ -131,7 +136,7 @@ namespace ET.Ability
         {
             if (isEnabled)
             {
-                self.DealSelfEffectWhenAddBuff();
+                self.DealSelfEffectWhenAddBuff().Coroutine();
             }
             else
             {

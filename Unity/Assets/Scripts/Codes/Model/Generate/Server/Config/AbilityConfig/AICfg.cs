@@ -20,6 +20,7 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         Order = _buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        WaitFrameNum = _buf.ReadInt();
         {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);NodeParams = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); NodeParams[__index0] = __e0;}}
         PostInit();
     }
@@ -46,6 +47,10 @@ public sealed partial class AICfg: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
+    /// 间隔多少帧执行
+    /// </summary>
+    public int WaitFrameNum { get; private set; }
+    /// <summary>
     /// 节点参数
     /// </summary>
     public int[] NodeParams { get; private set; }
@@ -69,6 +74,7 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         + "Order:" + Order + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "WaitFrameNum:" + WaitFrameNum + ","
         + "NodeParams:" + Bright.Common.StringUtil.CollectionToString(NodeParams) + ","
         + "}";
     }

@@ -20,12 +20,12 @@ namespace ET.Server
             Session replySession = NetInnerComponent.Instance.Get(fromProcess);
             replySession.Send(response);
         }
-        
+
         public static void HandleIActorResponse(IActorResponse response)
         {
             ActorMessageSenderComponent.Instance.HandleIActorResponse(response);
         }
-        
+
         /// <summary>
         /// 分发actor消息
         /// </summary>
@@ -53,7 +53,7 @@ namespace ET.Server
                 Reply(fromProcess, response);
                 return;
             }
-            
+
             switch (mailBoxComponent.MailboxType)
             {
                 case MailboxType.MessageDispatcher:
@@ -88,7 +88,7 @@ namespace ET.Server
                     throw new Exception($"no mailboxtype: {mailBoxComponent.MailboxType} {iActorRequest}");
             }
         }
-        
+
         /// <summary>
         /// 分发actor消息
         /// </summary>
@@ -99,14 +99,15 @@ namespace ET.Server
             int fromProcess = instanceIdStruct.Process;
             instanceIdStruct.Process = Options.Instance.Process;
             long realActorId = instanceIdStruct.ToLong();
-            
+
             Entity entity = Root.Instance.Get(realActorId);
             if (entity == null)
             {
-                Log.Error($"not found actor: {realActorId} {iActorMessage}");
+                //Log.Error($"not found actor: {realActorId} {iActorMessage}");
+                Log.Error($"not found actor: {realActorId}");
                 return;
             }
-            
+
             MailBoxComponent mailBoxComponent = entity.GetComponent<MailBoxComponent>();
             if (mailBoxComponent == null)
             {

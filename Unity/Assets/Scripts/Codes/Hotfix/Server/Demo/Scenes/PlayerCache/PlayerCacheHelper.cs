@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ET.AbilityConfig;
+using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -46,7 +47,7 @@ namespace ET.Server
 	        }
         }
 
-        public static async ETTask SetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes)
+        public static async ETTask SetPlayerModelByClient(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
@@ -56,12 +57,15 @@ namespace ET.Server
 		        return;
 	        }
 
-	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes);
-	        entityModel.AddComponent<DataCacheClearComponent>();
+	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
+	        if (entityModel.GetComponent<DataCacheClearComponent>() == null)
+	        {
+		        entityModel.AddComponent<DataCacheClearComponent>();
+	        }
 	        await ETTask.CompletedTask;
         }
 
-        public static async ETTask SavePlayerModel(Scene scene, long playerId, PlayerModelType playerModelType)
+        public static async ETTask SavePlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, List<string> setPlayerKeys)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
@@ -77,7 +81,7 @@ namespace ET.Server
 
 	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId))
 	        {
-		        await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes);
+		        await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes, setPlayerKeys);
 	        }
 	        await ETTask.CompletedTask;
         }
@@ -116,7 +120,7 @@ namespace ET.Server
 	        }
         }
 
-        public static async ETTask<bool> SendSavePlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes)
+        public static async ETTask<bool> SendSavePlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes, List<string> setPlayerKeys)
         {
 	        int PlayerModelType = (int)playerModelType;
 
@@ -127,6 +131,7 @@ namespace ET.Server
 		        PlayerId = playerId,
 		        PlayerModelType = PlayerModelType,
 		        PlayerModelComponentBytes = playerModelComponentBytes,
+		        SetPlayerKeys = setPlayerKeys,
 	        });
 
 	        if (_P2G_SetPlayerCache.Error != ET.ErrorCode.ERR_Success)
@@ -162,5 +167,24 @@ namespace ET.Server
 	        }
         }
 
+		public static async ETTask AddPhysicalStrenthByAd(Scene scene, long playerId)
+        {
+	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+
+	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+	        if (playerDataComponent == null)
+	        {
+		        return;
+	        }
+
+	        PlayerBaseInfoComponent playerBaseInfoComponent =
+				await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
+					PlayerBaseInfoComponent;
+			playerBaseInfoComponent.ChgPhysicalStrength(GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd);
+
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
+                        new() { "physicalStrength" });
+	        await ETTask.CompletedTask;
+        }
     }
 }

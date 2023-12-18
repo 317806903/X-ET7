@@ -18,6 +18,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        IsOnlySelfShow = _buf.ReadBool();
         ResEffectId = _buf.ReadString();
         PlayAudioActionId = _buf.ReadString();
         Key = _buf.ReadString();
@@ -41,6 +42,10 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 是否进自己可见
+    /// </summary>
+    public bool IsOnlySelfShow { get; private set; }
     /// <summary>
     /// 特效资源id
     /// </summary>
@@ -90,6 +95,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "IsOnlySelfShow:" + IsOnlySelfShow + ","
         + "ResEffectId:" + ResEffectId + ","
         + "PlayAudioActionId:" + PlayAudioActionId + ","
         + "Key:" + Key + ","

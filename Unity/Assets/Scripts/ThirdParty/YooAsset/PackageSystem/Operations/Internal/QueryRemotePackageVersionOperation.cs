@@ -23,7 +23,7 @@ namespace YooAsset
 		/// 包裹版本
 		/// </summary>
 		public string PackageVersion { private set; get; }
-		
+
 
 		public QueryRemotePackageVersionOperation(IRemoteServices remoteServices, string packageName, bool appendTimeTicks, int timeout)
 		{
@@ -48,7 +48,7 @@ namespace YooAsset
 				{
 					string fileName = YooAssetSettingsData.GetPackageVersionFileName(_packageName);
 					string webURL = GetPackageVersionRequestURL(fileName);
-					YooLogger.Log($"Beginning to request package version : {webURL}");
+					YooLogger.Error($"Beginning to request package version : {webURL}");
 					_downloader = new UnityWebDataRequester();
 					_downloader.SendRequest(webURL, _timeout);
 				}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -25,8 +26,40 @@ namespace ET
         Release,
     }
 
+    public enum ServerEnum
+    {
+        Localhost,
+        Release_148,
+        Release_Zpb,
+        Release_OutNet_CN,
+        Release_OutNet_EN,
+        Release_ExternalTest,
+    }
+
     public class BuildEditor: EditorWindow
     {
+        private Dictionary<ServerEnum, string> serverAddressList = new()
+        {
+            { ServerEnum.Localhost, "127.0.0.1"},
+            { ServerEnum.Release_148, "192.168.10.148"},
+            { ServerEnum.Release_Zpb, "192.168.10.58"},
+            { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
+            { ServerEnum.Release_OutNet_EN, "34.225.211.137"},
+            { ServerEnum.Release_ExternalTest, "artd-gateway.deepmirror.com"},
+        };
+        private Dictionary<ServerEnum, string> hotfixAddressList = new()
+        {
+            { ServerEnum.Localhost, "http://127.0.0.1"},
+            { ServerEnum.Release_148, "http://192.168.10.148"},
+            { ServerEnum.Release_Zpb, "http://192.168.10.58"},
+            { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
+            { ServerEnum.Release_OutNet_EN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN"},
+            { ServerEnum.Release_ExternalTest, "https://prod-us-sv-aws-artd-deepmirror-s3.oss-us-west-1.aliyuncs.com/resources"},
+        };
+
+        private ServerEnum serverEnumServerAddress;
+        private ServerEnum serverEnumHotfixAddress;
+
         private PlatformType activePlatform;
         private PlatformType platformType;
 
@@ -43,6 +76,27 @@ namespace ET
         public static void ShowWindow()
         {
             GetWindow<BuildEditor>(DockDefine.Types);
+        }
+
+        public void RefreshBase()
+        {
+            globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
+            resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
+            DirectoryInfo directoryInfo = new DirectoryInfo("Assets/Config/Excel/StartConfig");
+            this.startConfigs = directoryInfo.GetDirectories().Select(x => x.Name).ToArray();
+
+            for (int i = 0; i < this.startConfigs.Length; i++)
+            {
+                if (this.startConfigs[i] == this.globalConfig.StartConfig)
+                {
+                    this.selectStartConfigIndex = i;
+                }
+                if (this.startConfigs[i] == "Localhost")
+                {
+                    this.localHostStartConfigIndex = i;
+                }
+            }
+            this.selectStartConfigServerIP = GetServerIP(this.globalConfig.CodeMode, this.globalConfig.StartConfig);
         }
 
         public void Refresh()
@@ -64,11 +118,17 @@ namespace ET
                 }
             }
             this.selectStartConfigServerIP = GetServerIP(this.globalConfig.CodeMode, this.globalConfig.StartConfig);
+
+            if (EditorApplication.isPlayingOrWillChangePlaymode == false)
+            {
+                this.serverEnumServerAddress = ServerEnum.Localhost;
+                this.serverEnumHotfixAddress = ServerEnum.Localhost;
+            }
         }
 
         private void OnEnable()
         {
-            this.Refresh();
+            this.RefreshBase();
 
 #if UNITY_ANDROID
             activePlatform = PlatformType.Android;
@@ -114,6 +174,12 @@ namespace ET
                         EditorUtility.SetDirty(this.globalConfig);
                         AssetDatabase.SaveAssets();
                     }
+                    if (this.resConfig.IsNeedSendEventLog != false)
+                    {
+                        this.resConfig.IsNeedSendEventLog = false;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
                     if (this.resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                     {
                         this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
@@ -154,8 +220,17 @@ namespace ET
             }
             if (resLoadMode == EPlayMode.HostPlayMode)
             {
+                this.serverEnumHotfixAddress = (ServerEnum) EditorGUILayout.EnumPopup("ServerEnum: ", this.serverEnumHotfixAddress);
+                if (this.hotfixAddressList[this.serverEnumHotfixAddress] != this.resConfig.ResHostServerIP)
+                {
+                    this.resConfig.ResHostServerIP = this.hotfixAddressList[this.serverEnumHotfixAddress];
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+                // EditorGUILayout.LabelField("    资源热更新地址:", this.serverAdressList[this.serverEnum]);
+
                 EditorGUI.BeginChangeCheck();
-                string resHostIp = EditorGUILayout.TextField("资源热更新地址:", this.resConfig.ResHostServerIP);
+                string resHostIp = EditorGUILayout.TextField("    资源热更新地址:", this.resConfig.ResHostServerIP);
                 if (EditorGUI.EndChangeCheck())
                 {
                     if (resHostIp != this.resConfig.ResHostServerIP)
@@ -242,6 +317,13 @@ namespace ET
                 EditorUtility.SetDirty(this.globalConfig);
                 AssetDatabase.SaveAssets();
             }
+            var IsNeedSendEventLog = EditorGUILayout.Toggle("IsNeedSendEventLog: ", this.resConfig.IsNeedSendEventLog);
+            if (IsNeedSendEventLog != this.resConfig.IsNeedSendEventLog)
+            {
+                this.resConfig.IsNeedSendEventLog = IsNeedSendEventLog;
+                EditorUtility.SetDirty(this.resConfig);
+                AssetDatabase.SaveAssets();
+            }
             if (GUILayout.Button("创建Mongodb (需要Docker安装了)"))
             {
                 ToolsEditor.RunMongoDBFromDocker();
@@ -254,6 +336,15 @@ namespace ET
                 EditorUtility.SetDirty(this.resConfig);
                 AssetDatabase.SaveAssets();
             }
+            GUILayout.Space(5);
+            this.serverEnumServerAddress = (ServerEnum) EditorGUILayout.EnumPopup("ServerEnum: ", this.serverEnumServerAddress);
+            if (this.serverAddressList[this.serverEnumServerAddress] != this.resConfig.RouterHttpHost)
+            {
+                this.resConfig.RouterHttpHost = this.serverAddressList[this.serverEnumServerAddress];
+                EditorUtility.SetDirty(this.resConfig);
+                AssetDatabase.SaveAssets();
+            }
+            EditorGUILayout.LabelField("    对应服务器地址:", this.serverAddressList[this.serverEnumServerAddress]);
             GUILayout.Space(5);
             EditorGUILayout.BeginHorizontal();
             {
@@ -270,19 +361,11 @@ namespace ET
                     this.selectStartConfigServerIP = GetServerIP(codeMode, this.globalConfig.StartConfig);
                 }
 
-                if (GUILayout.Button("ExcelExporter"))
+                if (GUILayout.Button("StartConfigExporter"))
                 {
-                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.startConfigs[selectStartConfigIndex], ToolsEditor.ConfigType.All);
+                    ToolsEditor.ExcelExporter(globalConfig.CodeMode, this.startConfigs[selectStartConfigIndex], ToolsEditor.ConfigType.StartConfig, "False");
 
-                    string unityClientConfigForAB = "../Unity/Assets/Bundles/Config/AbilityConfig";
-                    if (Directory.Exists(unityClientConfigForAB))
-                    {
-                        Directory.Delete(unityClientConfigForAB, true);
-                    }
-
-                    FileHelper.CopyDirectory("../Config/Excel/c/AbilityConfig", unityClientConfigForAB);
-
-                    unityClientConfigForAB = $"../Unity/Assets/Bundles/Config/StartConfig";
+                    string unityClientConfigForAB = $"../Unity/Assets/Bundles/Config/StartConfig";
                     if (Directory.Exists(unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}"))
                     {
                         Directory.Delete(unityClientConfigForAB + $"/{this.startConfigs[selectStartConfigIndex]}", true);
@@ -294,7 +377,7 @@ namespace ET
                 }
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.LabelField("对应服务器地址:", this.selectStartConfigServerIP, GUILayout.MinHeight(120));
+            EditorGUILayout.LabelField("服务器模式预览:", this.selectStartConfigServerIP, GUILayout.MinHeight(120));
 
 
             GUILayout.Space(5);
@@ -330,21 +413,21 @@ namespace ET
 
         private static string GetServerIP(CodeMode codeMode, string StartConfigPath)
         {
-            string ct = "cs";
-            switch (codeMode)
-            {
-                case CodeMode.Client:
-                    ct = "c";
-                    break;
-                case CodeMode.Server:
-                    ct = "s";
-                    break;
-                case CodeMode.ClientServer:
-                    ct = "cs";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            string ct = "s";
+            // switch (codeMode)
+            // {
+            //     case CodeMode.Client:
+            //         ct = "c";
+            //         break;
+            //     case CodeMode.Server:
+            //         ct = "s";
+            //         break;
+            //     case CodeMode.ClientServer:
+            //         ct = "cs";
+            //         break;
+            //     default:
+            //         throw new ArgumentOutOfRangeException();
+            // }
             string configFile = "StartMachineConfigCategory";
             string configFilePath = $"../Config/Json/{ct}/StartConfig/{StartConfigPath}/{configFile.ToLower()}.json";
             if (File.Exists(configFilePath) == false)

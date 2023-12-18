@@ -14,7 +14,7 @@ namespace ET.Ability
 			ActionCfg_AttackArea actionCfg_AttackArea = ActionCfg_AttackAreaCategory.Instance.Get(actionId);
 			actionContext.isBreakSoftBati = actionCfg_AttackArea.IsBreakSoftBati;
 			actionContext.isBreakStrongBati = actionCfg_AttackArea.IsBreakStrongBati;
-			DamageHelper.DoAttackArea(unit, resetPosByUnit, actionCfg_AttackArea, selectHandle, actionContext);
+			await DamageHelper.DoAttackArea(unit, resetPosByUnit, actionCfg_AttackArea, selectHandle, actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

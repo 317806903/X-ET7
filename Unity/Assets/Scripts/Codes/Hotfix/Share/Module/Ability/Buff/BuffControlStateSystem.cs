@@ -31,7 +31,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static (bool, AnimatorMotionName) GetControlStateAnimatorMotion(this BuffComponent self)
         {
-            bool bStopAnimator = self.ChkBuffTagType(BuffTagType.StopAnimator);
+            bool bStopAnimator = self.ChkBuffByTagType(BuffTagType.StopAnimator);
             AnimatorMotionName animatorMotionName = AnimatorMotionName.None;
 
             BuffObj buffObjMaxPriority = null;
@@ -60,7 +60,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanMoveInput(this BuffComponent self)
         {
-            return self.ChkBuffTagType(BuffTagType.NoMoveInput) == false;
+            return self.ChkBuffByTagType(BuffTagType.NoMoveInput) == false;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanFaceChgInput(this BuffComponent self)
         {
-            return self.ChkBuffTagType(BuffTagType.NoFaceChgInput) == false;
+            return self.ChkBuffByTagType(BuffTagType.NoFaceChgInput) == false;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanSkillCastInput(this BuffComponent self)
         {
-            return self.ChkBuffTagType(BuffTagType.NoSkillCastInput) == false;
+            return self.ChkBuffByTagType(BuffTagType.NoSkillCastInput) == false;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanPlayAnimator(this BuffComponent self)
         {
-            return self.ChkBuffTagType(BuffTagType.StopAnimator) == false;
+            return self.ChkBuffByTagType(BuffTagType.StopAnimator) == false;
         }
 
         /// <summary>
@@ -100,12 +100,12 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanBeFind(this BuffComponent self, Unit seeUnit)
         {
-            bool bInvisible = self.ChkBuffTagType(BuffTagType.Invisible);
+            bool bInvisible = self.ChkBuffByTagType(BuffTagType.Invisible);
             if (bInvisible == false)
             {
                 return true;
             }
-            bool bBeBreakInvisible = self.ChkBuffTagType(BuffTagType.BeBreakInvisible);
+            bool bBeBreakInvisible = self.ChkBuffByTagType(BuffTagType.BeBreakInvisible);
             if (bBeBreakInvisible)
             {
                 return true;
@@ -126,7 +126,7 @@ namespace ET.Ability
         /// <returns>0 正常显示; 1 半透明; 2 全透明</returns>
         public static int GetGameObjectShowType(this BuffComponent self, long playerId)
         {
-            bool bInvisible = self.ChkBuffTagType(BuffTagType.Invisible);
+            bool bInvisible = self.ChkBuffByTagType(BuffTagType.Invisible);
             if (bInvisible == false)
             {
                 //表示直接看见
@@ -154,7 +154,7 @@ namespace ET.Ability
         /// <returns></returns>
         public static bool ChkCanBeDamage(this BuffComponent self)
         {
-            return self.ChkBuffTagType(BuffTagType.Invincible) == false;
+            return self.ChkBuffByTagType(BuffTagType.Invincible) == false;
         }
 
         /// <summary>
@@ -162,29 +162,29 @@ namespace ET.Ability
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static bool ChkCanBeControl(this BuffComponent self, ActionContext actionContext)
+        public static bool ChkCanBeControl(this BuffComponent self, ref ActionContext actionContext)
         {
             //受击者有无敌
-            if (self.ChkBuffTagType(BuffTagType.Invincible))
+            if (self.ChkBuffByTagType(BuffTagType.Invincible))
             {
                 return false;
             }
             //受击者有完全霸体
-            if (self.ChkBuffTagType(BuffTagType.FullBati))
+            if (self.ChkBuffByTagType(BuffTagType.FullBati))
             {
                 return false;
             }
 
-            if (self.ChkBuffTagType(BuffTagType.Weak))
+            if (self.ChkBuffByTagType(BuffTagType.Weak))
             {
                 return true;
             }
 
             Unit attackerUnit = UnitHelper.GetUnit(self.DomainScene(), actionContext.attackerUnitId);
             //受击者有强霸体
-            if (self.ChkBuffTagType(BuffTagType.StrongBati))
+            if (self.ChkBuffByTagType(BuffTagType.StrongBati))
             {
-                if (BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakStrongBati))
+                if (BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakStrongBati))
                 {
                     return true;
                 }
@@ -196,9 +196,9 @@ namespace ET.Ability
                 return false;
             }
             //受击者有弱霸体
-            if (self.ChkBuffTagType(BuffTagType.SoftBati))
+            if (self.ChkBuffByTagType(BuffTagType.SoftBati))
             {
-                if (BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakStrongBati) || BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakSoftBati))
+                if (BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakStrongBati) || BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakSoftBati))
                 {
                     return true;
                 }
@@ -221,20 +221,20 @@ namespace ET.Ability
         public static bool ChkCanBeControl(this BuffComponent self, Unit attackerUnit)
         {
             //受击者有完全霸体
-            if (self.ChkBuffTagType(BuffTagType.FullBati))
+            if (self.ChkBuffByTagType(BuffTagType.FullBati))
             {
                 return false;
             }
 
-            if (self.ChkBuffTagType(BuffTagType.Weak))
+            if (self.ChkBuffByTagType(BuffTagType.Weak))
             {
                 return true;
             }
 
             //受击者有强霸体
-            if (self.ChkBuffTagType(BuffTagType.StrongBati))
+            if (self.ChkBuffByTagType(BuffTagType.StrongBati))
             {
-                if (BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakStrongBati))
+                if (BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakStrongBati))
                 {
                     return true;
                 }
@@ -242,9 +242,9 @@ namespace ET.Ability
                 return false;
             }
             //受击者有弱霸体
-            if (self.ChkBuffTagType(BuffTagType.SoftBati))
+            if (self.ChkBuffByTagType(BuffTagType.SoftBati))
             {
-                if (BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakStrongBati) || BuffHelper.ChkBuffTagType(attackerUnit, BuffTagType.BreakSoftBati))
+                if (BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakStrongBati) || BuffHelper.ChkBuffByTagType(attackerUnit, BuffTagType.BreakSoftBati))
                 {
                     return true;
                 }
@@ -264,7 +264,7 @@ namespace ET.Ability
         {
             foreach (BuffObj buffObj in self.buffMotionList)
             {
-                bool bCanBeMotion = self._ChkCanBeMotion(buffObj.actionContext);
+                bool bCanBeMotion = self._ChkCanBeMotion(ref buffObj.actionContext);
                 if (bCanBeMotion)
                 {
                     return true;
@@ -279,14 +279,14 @@ namespace ET.Ability
         /// <param name="self"></param>
         /// <param name="actionContext"></param>
         /// <returns></returns>
-        public static bool _ChkCanBeMotion(this BuffComponent self, ActionContext actionContext)
+        public static bool _ChkCanBeMotion(this BuffComponent self, ref ActionContext actionContext)
         {
-            bool bNoMotion = self.ChkBuffTagType(BuffTagType.NoMotion);
+            bool bNoMotion = self.ChkBuffByTagType(BuffTagType.NoMotion);
             if (bNoMotion)
             {
                 return false;
             }
-            return self.ChkCanBeControl(actionContext);
+            return self.ChkCanBeControl(ref actionContext);
         }
 
     }

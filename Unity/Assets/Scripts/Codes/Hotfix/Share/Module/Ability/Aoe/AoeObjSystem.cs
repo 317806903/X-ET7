@@ -30,7 +30,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(AoeObj self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -51,7 +51,7 @@ namespace ET.Ability
             self.aoeTargetCondition = aoeTargetCondition;
         }
 
-        public static void InitActionContext(this AoeObj self, ActionContext actionContext)
+        public static void InitActionContext(this AoeObj self, ref ActionContext actionContext)
         {
             actionContext.aoeId = self.Id;
             self.actionContext = actionContext;
@@ -179,20 +179,25 @@ namespace ET.Ability
                 selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, aoeActionCall.ActionCallParam);
             }
 
+            if (selectHandle == null)
+            {
+                return;
+            }
+
             SelectHandle curSelectHandle = selectHandle;
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition1, self.actionContext);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition2, self.actionContext);
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition2, ref self.actionContext);
             if (isChgSelect2)
             {
                 curSelectHandle = newSelectHandle2;
             }
             if (bRet1 && bRet2)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, aoeActionCall.DelayTime, curSelectHandle, self.actionContext);
+                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, aoeActionCall.DelayTime, curSelectHandle, ref self.actionContext);
             }
         }
 
@@ -254,12 +259,12 @@ namespace ET.Ability
                 }
                 curSelectHandle.unitIds.Add(unit.Id);
             }
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, self.actionContext);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, self.actionContext);
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
             if (isChgSelect2)
             {
                 curSelectHandle = newSelectHandle2;

@@ -16,6 +16,10 @@ namespace ET
         {
             get
             {
+                if (Type == UnitType.Bullet || Type == UnitType.Aoe)
+                {
+                    return null;
+                }
                 return UnitCfgCategory.Instance.Get(this.CfgId);
             }
         }
@@ -32,6 +36,10 @@ namespace ET
             get => this.position;
             set
             {
+                if (this.position.Equals(value))
+                {
+                    return;
+                }
                 float3 oldPos = this.position;
                 this.position = value;
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangePosition() { Unit = this, OldPos = oldPos });
@@ -44,16 +52,20 @@ namespace ET
             get => math.mul(this.Rotation, math.forward());
             set => this.Rotation = quaternion.LookRotation(value, math.up());
         }
-        
+
         [BsonElement]
         private quaternion rotation;
-        
+
         [BsonIgnore]
         public quaternion Rotation
         {
             get => this.rotation;
             set
             {
+                if (this.rotation.Equals(value))
+                {
+                    return;
+                }
                 this.rotation = value;
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
             }

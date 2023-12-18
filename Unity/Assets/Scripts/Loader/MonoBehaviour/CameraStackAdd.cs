@@ -107,7 +107,8 @@ public class CameraStackAdd : MonoBehaviour
 		
 		if (curCamera != null)
 		{
-			curCamera.clearFlags = CameraClearFlags.Skybox;
+			// Currently all base cameras only use solid color.
+			curCamera.clearFlags = CameraClearFlags.Color;
 			curCamera.GetUniversalAdditionalCameraData().renderType = CameraRenderType.Base;
 		}
 

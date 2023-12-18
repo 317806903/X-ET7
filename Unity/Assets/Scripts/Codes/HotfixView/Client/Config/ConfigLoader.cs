@@ -62,6 +62,10 @@ namespace ET.Client
                     string configFilePath;
                     if (startConfigs.Contains(configType.Name))
                     {
+                        if (ct == "c")
+                        {
+                            continue;
+                        }
                         configFilePath = $"../Config/Excel/{ct}/{Options.Instance.StartConfig}/{configType.Name.ToLower()}.bytes";
                     }
                     else if(configType.FullName.StartsWith("ET.AbilityConfig."))

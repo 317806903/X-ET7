@@ -84,11 +84,26 @@ namespace ScreenAdapt
             // AdaptManager.Instance.Remove(this);
         }
 
+#if UNITY_EDITOR
+        public static bool IsLandscape()
+        {
+            var mouseOverWindow = UnityEditor.EditorWindow.mouseOverWindow;
+            System.Reflection.Assembly assembly = typeof(UnityEditor.EditorWindow).Assembly;
+            System.Type type = assembly.GetType("UnityEditor.PlayModeView");
+
+            Vector2 size = (Vector2) type.GetMethod(
+                "GetMainPlayModeViewTargetSize",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Static
+            ).Invoke(mouseOverWindow, null);
+            return size.y < size.x;
+        }
+#else
         public static bool IsLandscape()
         {
             return Screen.height < Screen.width;
         }
-
+#endif
         public virtual void OnChange()
         {
             LoadConfig();

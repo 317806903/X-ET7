@@ -22,6 +22,13 @@ namespace ET.Ability
             protected override void Destroy(BuffObj self)
             {
                 self.monitorTriggerList?.Clear();
+                self.monitorTriggerList = null;
+                self.buffActions = null;
+                if (self.selfEffectList != null)
+                {
+                    self.selfEffectList.Clear();
+                    self.selfEffectList = null;
+                }
             }
         }
 
@@ -50,7 +57,7 @@ namespace ET.Ability
             self.AddStackCount(addBuffInfo.AddStack, false);
         }
 
-        public static void InitActionContext(this BuffObj self, ActionContext actionContext)
+        public static void InitActionContext(this BuffObj self, ref ActionContext actionContext)
         {
             actionContext.buffUnitId = self.GetUnit().Id;
             actionContext.buffCfgId = self.CfgId;
@@ -58,25 +65,25 @@ namespace ET.Ability
             self.actionContext = actionContext;
         }
 
-        public static void AddStackCount(this BuffObj self, ActionCfg_BuffStackCountChg actionCfgBuffStackCountChg, bool needPublic = true)
+        public static void AddStackCount(this BuffObj self, ValueOperation op, int chgStack, bool needPublic = true)
         {
             int oldStackCount = self.stack;
-            if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Add)
+            if (op == ValueOperation.Add)
             {
-                self.stack = math.clamp(self.stack + actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+                self.stack = math.clamp(self.stack + chgStack, 0, self.model.MaxStack);
             }
-            else if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Reduce)
+            else if (op == ValueOperation.Reduce)
             {
-                self.stack = math.clamp(self.stack - actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+                self.stack = math.clamp(self.stack - chgStack, 0, self.model.MaxStack);
             }
-            else if (actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Set)
+            else if (op == ValueOperation.Set)
             {
-                self.stack = math.clamp(actionCfgBuffStackCountChg.ChgStack, 0, self.model.MaxStack);
+                self.stack = math.clamp(chgStack, 0, self.model.MaxStack);
             }
             self.DealSpecWhenChgBuffStackCount(oldStackCount, self.stack);
 
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
-            if (needPublic && actionCfgBuffStackCountChg.ValueOperation == ValueOperation.Add)
+            if (needPublic && op == ValueOperation.Add)
             {
                 self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
             }
@@ -102,8 +109,14 @@ namespace ET.Ability
 
         public static void ChgDuration(this BuffObj self, float duration)
         {
+            self.timeElapsed = 0;
             self.duration = duration;
             //Log.Debug($"---ChgDuration {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
+        }
+
+        public static void ChgTotalDuration(this BuffObj self, float newTotalDuration)
+        {
+            self.duration = newTotalDuration - self.timeElapsed;
         }
 
         public static void SetEnabled(this BuffObj self, bool isEnabled)
@@ -216,6 +229,13 @@ namespace ET.Ability
 
         public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
+            Unit casterActorUnit = self.GetCasterActorUnit();
+            if (casterActorUnit == null)
+            {
+                self.ChgDuration(0);
+                return;
+            }
+
             if (onAttackUnit != null)
             {
                 self.actionContext.attackerUnitId = onAttackUnit.Id;
@@ -263,20 +283,30 @@ namespace ET.Ability
                 selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, buffActionCall.ActionCallParam);
             }
 
+            if (selectHandle == null)
+            {
+                return;
+            }
+
             SelectHandle curSelectHandle = selectHandle;
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition1, self.actionContext);
+            if (curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0)
+            {
+                return;
+            }
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition2, self.actionContext);
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition2, ref self.actionContext);
             if (isChgSelect2)
             {
                 curSelectHandle = newSelectHandle2;
             }
             if (bRet1 && bRet2)
             {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, self.actionContext);
+                // ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, self.actionContext);
+                ActionHandlerHelper.CreateAction(self.GetCasterActorUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, ref self.actionContext);
             }
         }
 
@@ -290,5 +320,6 @@ namespace ET.Ability
 
             return false;
         }
+
     }
 }

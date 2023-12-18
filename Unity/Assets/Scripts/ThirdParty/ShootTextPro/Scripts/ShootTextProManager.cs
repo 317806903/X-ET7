@@ -454,7 +454,7 @@ public class ShootTextProManager : MonoBehaviour
     {
         float topValue = ShootTextCamera.WorldToScreenPoint(shootTextComponent.getShootTextTopPoint()).y;
         float bottomValue = ShootTextCamera.WorldToScreenPoint(shootTextComponent.getShootTextButtomPoint()).y;
-        return topValue - bottomValue;
+        return Mathf.Abs(topValue - bottomValue);
     }
 
     private bool IsAllowAddShootText()

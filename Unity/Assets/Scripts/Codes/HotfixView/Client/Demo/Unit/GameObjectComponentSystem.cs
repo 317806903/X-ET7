@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -92,20 +93,37 @@ namespace ET.Client
                 else
                 {
                     float moveSpeed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
-                    Vector3 dis = transform.position - (Vector3)unit.Position;
-                    if (dis.sqrMagnitude > moveSpeed * moveSpeed * 2 * 2)
+                    if (moveSpeed == 0)
                     {
                         transform.position = unit.Position;
-                    }
-                    else if (dis.sqrMagnitude > moveSpeed * moveSpeed * Time.deltaTime * Time.deltaTime)
-                    {
-                        float timeToCompleteMove = dis.magnitude / moveSpeed;
-                        float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
-                        transform.position = Vector3.Lerp(transform.position, unit.Position, donePercentageMove);
                     }
                     else
                     {
-                        transform.position = unit.Position;
+                        Vector3 dis = transform.position - (Vector3)unit.Position;
+                        if (dis.sqrMagnitude > moveSpeed * moveSpeed)
+                        {
+                            if (dis.sqrMagnitude > moveSpeed * moveSpeed * 2 * 2)
+                            {
+                                transform.position = unit.Position;
+                                ET.Client.UnitHelper.SendGetNumericUnit(unit);
+                            }
+                            else
+                            {
+                                float timeToCompleteMove = dis.magnitude / moveSpeed;
+                                float donePercentageMove = Mathf.Min(1f, 2 * Time.deltaTime / timeToCompleteMove);
+                                transform.position = Vector3.Lerp(transform.position, unit.Position, donePercentageMove);
+                            }
+                        }
+                        else if (dis.sqrMagnitude > moveSpeed * moveSpeed * Time.deltaTime * Time.deltaTime)
+                        {
+                            float timeToCompleteMove = dis.magnitude / moveSpeed;
+                            float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
+                            transform.position = Vector3.Lerp(transform.position, unit.Position, donePercentageMove);
+                        }
+                        else
+                        {
+                            transform.position = unit.Position;
+                        }
                     }
                 }
 
@@ -144,6 +162,94 @@ namespace ET.Client
         public static Unit GetUnit(this GameObjectComponent self)
         {
             return self.GetParent<Unit>();
+        }
+
+        public static void ChgColor(this GameObjectComponent self, bool isMoving)
+        {
+            TransparentSetter[] tss = self.gameObject.GetComponentsInChildren<TransparentSetter>();
+            if (isMoving)
+            {
+                foreach (var ts in tss)
+                {
+                    ts.SetTransparent(true, 0.6f);
+                }
+            }
+            else
+            {
+                foreach (var ts in tss)
+                {
+                    ts.SetTransparent(false, 1f);
+                }
+            }
+        }
+
+        public static void ChgColorOld(this GameObjectComponent self, bool isMoving)
+        {
+            if (isMoving)
+            {
+                Color colorNew = new Color(0.1f, 0.1f, 0.1f);
+                self._ChgColor(true, colorNew);
+            }
+            else
+            {
+                Color colorNew = Color.black;
+                self._ChgColor(false, colorNew);
+            }
+        }
+
+        public static void _ChgColor(this GameObjectComponent self, bool enableEmission, Color emissionColor)
+        {
+            MeshRenderer[] rendererList = self.gameObject.GetComponentsInChildren<MeshRenderer>(true);
+            foreach (MeshRenderer renderer in rendererList)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    if (material == null)
+                    {
+                        continue;
+                    }
+                    // if (material.HasColor("_Color"))
+                    // {
+                    //     Color color = material.color;
+                    //     material.color = new Color(colorNew.r, colorNew.g, colorNew.b, color.a);
+                    // }
+                    if (enableEmission)
+                    {
+                        material.EnableKeyword("_EMISSION");
+                        material.SetColor("_EmissionColor", emissionColor);
+                    }
+                    else
+                    {
+                        material.DisableKeyword("_EMISSION");
+                    }
+                }
+            }
+
+            SkinnedMeshRenderer[] rendererList2 = self.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            foreach (SkinnedMeshRenderer renderer in rendererList2)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    if (material == null)
+                    {
+                        continue;
+                    }
+                    // if (material.HasColor("_Color"))
+                    // {
+                    //     Color color = material.color;
+                    //     material.color = new Color(emissionColor.r, emissionColor.g, emissionColor.b, color.a);
+                    // }
+                    if (enableEmission)
+                    {
+                        material.EnableKeyword("_EMISSION");
+                        material.SetColor("_EmissionColor", emissionColor);
+                    }
+                    else
+                    {
+                        material.DisableKeyword("_EMISSION");
+                    }
+                }
+            }
         }
     }
 }

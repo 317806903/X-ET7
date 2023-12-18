@@ -14,7 +14,7 @@
 			// }
 			Unit unitChg = args.Unit;
 
-			Ability.UnitHelper.AddSyncNumericUnit(unitChg);
+			Ability.UnitHelper.AddSyncNumericUnitByKey(unitChg, ET.NumericType.Hp);
 		}
 	}
 }

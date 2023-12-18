@@ -22,7 +22,11 @@ namespace ET
 
             foreach (string aotDll in HybridCLRSettings.Instance.patchAOTAssemblies)
             {
-                File.Copy(Path.Combine(fromDir, aotDll), Path.Combine(toDir, $"{aotDll}.bytes"), true);
+                //Google Admob的dll分Android和iOS
+                if(File.Exists(Path.Combine(fromDir, aotDll)))
+                {
+                    File.Copy(Path.Combine(fromDir, aotDll), Path.Combine(toDir, $"{aotDll}.bytes"), true);
+                }
             }
 
             // 设置ab包

@@ -148,6 +148,7 @@ namespace ET.Client
                 if (null != self.ModelClick)
                 {
                     self.ModelClick.Invoke(rayHit.Value);
+                    self.RecordClickInfo(rayHit.Value);
                 }
             }
             self.needChkDownAgain = true;
@@ -212,5 +213,201 @@ namespace ET.Client
             return self.lastCacheMillis;
         }
 
+        public static void RecordClickInfo(this ModelClickManagerComponent self, RaycastHit rayHit)
+        {
+            ReferenceSimpleData referenceSimpleData = rayHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            self.recordReferenceSimpleData = referenceSimpleData;
+        }
+
+        public static void SetTowerInfoToClickInfo(this ModelClickManagerComponent self, Transform colliderTrans, TowerShowComponent towerShowComponent)
+        {
+            Collider collider = colliderTrans.gameObject.GetComponent<Collider>();
+            if (collider == null)
+            {
+                Log.Error($"SetTowerInfoToClickInfo collider == null");
+                return;
+            }
+            ReferenceSimpleData referenceSimpleData = colliderTrans.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                referenceSimpleData = colliderTrans.gameObject.AddComponent<ReferenceSimpleData>();
+            }
+            var dict = referenceSimpleData.dict;
+            dict.Clear();
+            dict.Add(ClickDataField.DataType.ToString(), ClickDataType.Tower.ToString());
+            dict.Add(ClickDataField.PlayerId.ToString(), towerShowComponent.towerComponent.playerId.ToString());
+            dict.Add(ClickDataField.UnitId.ToString(), towerShowComponent.GetUnit().Id.ToString());
+            dict.Add(ClickDataField.UnitCfgId.ToString(), towerShowComponent.GetUnit().CfgId.ToString());
+            dict.Add(ClickDataField.TowerCfgId.ToString(), towerShowComponent.towerComponent.towerCfgId.ToString());
+        }
+
+        public static bool ChkIsHitTowerClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return false;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return false;
+            }
+
+            if (value != ClickDataType.Tower.ToString())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static TowerShowComponent GetTowerInfoFromClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+
+            return self._GetTowerInfoFromClickInfo(referenceSimpleData);
+        }
+
+        public static void SetPlayerUnitInfoToClickInfo(this ModelClickManagerComponent self, Transform colliderTrans, PlayerUnitShowComponent playerUnitShowComponent)
+        {
+            Collider collider = colliderTrans.gameObject.GetComponent<Collider>();
+            if (collider == null)
+            {
+                Log.Error($"SetPlayerUnitInfoToClickInfo collider == null");
+                return;
+            }
+            ReferenceSimpleData referenceSimpleData = colliderTrans.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                referenceSimpleData = colliderTrans.gameObject.AddComponent<ReferenceSimpleData>();
+            }
+            var dict = referenceSimpleData.dict;
+            dict.Clear();
+            dict.Add(ClickDataField.DataType.ToString(), ClickDataType.PlayerUnit.ToString());
+            dict.Add(ClickDataField.PlayerId.ToString(), playerUnitShowComponent.playerUnitComponent.playerId.ToString());
+            dict.Add(ClickDataField.UnitId.ToString(), playerUnitShowComponent.GetUnit().Id.ToString());
+            dict.Add(ClickDataField.UnitCfgId.ToString(), playerUnitShowComponent.GetUnit().CfgId.ToString());
+        }
+
+        public static bool ChkIsHitPlayerUnitClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return false;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return false;
+            }
+
+            if (value != ClickDataType.PlayerUnit.ToString())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static PlayerUnitShowComponent GetPlayerUnitInfoFromClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+
+            return self._GetPlayerUnitInfoFromClickInfo(referenceSimpleData);
+        }
+
+        public static TowerShowComponent GetLastClickTowerInfo(this ModelClickManagerComponent self)
+        {
+            ReferenceSimpleData recordReferenceSimpleData = self.recordReferenceSimpleData;
+            if (recordReferenceSimpleData == null)
+            {
+                return null;
+            }
+            TowerShowComponent towerShowComponent = self._GetTowerInfoFromClickInfo(recordReferenceSimpleData);
+            return towerShowComponent;
+        }
+
+        public static PlayerUnitShowComponent GetLastClickPlayerUnitInfo(this ModelClickManagerComponent self)
+        {
+            ReferenceSimpleData recordReferenceSimpleData = self.recordReferenceSimpleData;
+            if (recordReferenceSimpleData == null)
+            {
+                return null;
+            }
+            PlayerUnitShowComponent playerUnitShowComponent = self._GetPlayerUnitInfoFromClickInfo(recordReferenceSimpleData);
+            return playerUnitShowComponent;
+        }
+
+        public static TowerShowComponent _GetTowerInfoFromClickInfo(this ModelClickManagerComponent self, ReferenceSimpleData referenceSimpleData)
+        {
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return null;
+            }
+
+            if (value != ClickDataType.Tower.ToString())
+            {
+                return null;
+            }
+            if (dict.TryGetValue(ClickDataField.UnitId.ToString(), out string unitIdValue) == false)
+            {
+                return null;
+            }
+
+            long unitId = long.Parse(unitIdValue);
+            Unit unit = Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+            if (unit == null)
+            {
+                return null;
+            }
+            TowerShowComponent towerShowComponent = unit.GetComponent<TowerShowComponent>();
+            return towerShowComponent;
+        }
+
+        public static PlayerUnitShowComponent _GetPlayerUnitInfoFromClickInfo(this ModelClickManagerComponent self, ReferenceSimpleData referenceSimpleData)
+        {
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return null;
+            }
+
+            if (value != ClickDataType.PlayerUnit.ToString())
+            {
+                return null;
+            }
+            if (dict.TryGetValue(ClickDataField.UnitId.ToString(), out string unitIdValue) == false)
+            {
+                return null;
+            }
+
+            long unitId = long.Parse(unitIdValue);
+            Unit unit = Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+            if (unit == null)
+            {
+                return null;
+            }
+            PlayerUnitShowComponent playerUnitShowComponent = unit.GetComponent<PlayerUnitShowComponent>();
+            return playerUnitShowComponent;
+        }
     }
 }

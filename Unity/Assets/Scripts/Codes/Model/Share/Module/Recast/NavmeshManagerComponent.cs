@@ -37,5 +37,7 @@ namespace ET
             new[] { 0f, 0f, 0f, 0f },
             new[] { 0f, 0f, 0f, 0f },
         };
+
+        public Dictionary<int, Dictionary<int, Dictionary<int, bool>>> recordMeshHitDic;
     }
 }

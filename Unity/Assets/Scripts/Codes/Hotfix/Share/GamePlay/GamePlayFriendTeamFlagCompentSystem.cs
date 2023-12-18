@@ -250,7 +250,16 @@ namespace ET
 
 		public static float3 GetPlayerColor(this GamePlayFriendTeamFlagCompent self, long playerId)
 		{
-			return self.playerId2Color[playerId];
+			if (self == null)
+			{
+				return new float3(0.2f, 0.46f, 1f);
+			}
+			if (self.playerId2Color.TryGetValue(playerId, out float3 color))
+			{
+				return color;
+			}
+
+			return self.playerColorList[0];
 		}
 
 		/// <summary>
@@ -317,7 +326,42 @@ namespace ET
 			foreach (long unitId in self.unitId2TeamFlag.Keys)
 			{
 				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
-				unit?.RemoveComponent<AIComponent>();
+				if (unit != null)
+				{
+					unit.RemoveComponent<AIComponent>();
+				}
+			}
+		}
+
+		public static void PauseAllAI(this GamePlayFriendTeamFlagCompent self)
+		{
+			foreach (long unitId in self.unitId2TeamFlag.Keys)
+			{
+				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+				if (unit != null)
+				{
+					AIComponent aiComponent = unit.GetComponent<AIComponent>();
+					if (aiComponent != null)
+					{
+						aiComponent.PauseAI();
+					}
+				}
+			}
+		}
+
+		public static void RecoveryAllAI(this GamePlayFriendTeamFlagCompent self)
+		{
+			foreach (long unitId in self.unitId2TeamFlag.Keys)
+			{
+				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+				if (unit != null)
+				{
+					AIComponent aiComponent = unit.GetComponent<AIComponent>();
+					if (aiComponent != null)
+					{
+						aiComponent.RecoveryAI();
+					}
+				}
 			}
 		}
 

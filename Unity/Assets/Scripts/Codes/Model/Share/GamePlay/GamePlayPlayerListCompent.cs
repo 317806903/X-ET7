@@ -38,7 +38,7 @@ namespace ET
 		/// playerId对应的unitId列表
 		/// </summary>
 		[BsonIgnore]
-		public MultiMapSet<long, long> playerId2UnitIds;
+		public MultiMapSetSimple<long, long> playerId2UnitIds;
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, long> playerId2PlayerUnitId;
@@ -75,5 +75,7 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiDictionary<TeamFlagType, string, float> team2CoinList;
 
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<long, float> lastPlayerGold = new Dictionary<long, float>();
 	}
 }

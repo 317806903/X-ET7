@@ -82,6 +82,7 @@ namespace ET
                 AssetDatabase.SaveAssets();
 
                 ResConfig resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
+                resConfig.IsNeedSendEventLog = false;
                 //if (resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                 {
                     resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using ET.AbilityConfig;
+using Unity.Mathematics;
 
 namespace ET.Ability
 {
     [FriendOf(typeof (Unit))]
     public static class DamageHelper
     {
-        public static void DoAttackArea(Unit unit, Unit resetPosByUnit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
+        public static async ETTask DoAttackArea(Unit unit, Unit resetPosByUnit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
         {
             SelectHandle selectHandle;
             if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
@@ -23,6 +24,11 @@ namespace ET.Ability
                 Log.Error($"ET.Ability.DamageHelper.DoAttackArea selectHandleOld.selectHandleType err");
                 return;
             }
+            if (selectHandle == null)
+            {
+                Log.Error($"DoAttackArea selectHandle == null");
+                return;
+            }
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
                 Log.Error($"DoAttackArea selectHandle.selectHandleType != SelectHandleType.SelectUnits");
@@ -36,11 +42,11 @@ namespace ET.Ability
             actionContext.attackerUnitId = unit.Id;
             int count = selectHandle.unitIds.Count;
             actionContext.selectUnitNum = count;
-            
+
             for (int i = 0; i < count; i++)
             {
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
-                
+
                 EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnHit()
                 {
                     attackerUnit = unit,
@@ -53,32 +59,31 @@ namespace ET.Ability
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
             {
                 SelectHandle curSelectHandle = selectHandleSelf;
-                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, actionContext);
+                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, ref actionContext);
                 if (isChgSelect1)
                 {
                     curSelectHandle = newSelectHandle1;
                 }
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, actionContext);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, ref actionContext);
                 if (isChgSelect2)
                 {
                     curSelectHandle = newSelectHandle2;
                 }
                 if (bRet1 && bRet2)
                 {
-                    ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, 
-                    actionContext);
+                    ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, ref actionContext);
                 }
             }
-            
+
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.TargetAttackActionCall)
             {
                 SelectHandle curSelectHandle = selectHandle;
-                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, actionContext);
+                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, ref actionContext);
                 if (isChgSelect1)
                 {
                     curSelectHandle = newSelectHandle1;
                 }
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, actionContext);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, ref actionContext);
                 if (isChgSelect2)
                 {
                     curSelectHandle = newSelectHandle2;
@@ -90,18 +95,18 @@ namespace ET.Ability
                     {
                         resetPosByUnitNew = UnitHelper.GetUnit(unit.DomainScene(), curSelectHandle.unitIds[0]);
                     }
-                    ActionHandlerHelper.CreateAction(unit, resetPosByUnitNew, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, actionContext);
+                    ActionHandlerHelper.CreateAction(unit, resetPosByUnitNew, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, ref actionContext);
                 }
-                
+
             }
 
             if (string.IsNullOrEmpty(actionCfg_AttackArea.DamageInfo) == false)
             {
-                DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot);
+                await DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot);
             }
         }
-        
-        public static void DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot)
+
+        public static async ETTask DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot)
         {
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
@@ -136,6 +141,7 @@ namespace ET.Ability
                 }
             }
 
+            int stopNum = 300;
             for (int i = 0; i < count; i++)
             {
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
@@ -146,14 +152,22 @@ namespace ET.Ability
                 Damage damage = GetDamage(unit, targetUnit, actionCfg_DamageUnit);
                 if (damageAllot is DamageAllotChg damageAllotChg)
                 {
-                    damage = damage * damageScale;
+                    damage *= damageScale;
                     damageScale *= ((100 + damageAllotChg.WeightChg) * 0.01f);
                 }
                 else
                 {
-                    damage = damage * damageScale;
+                    damage *= damageScale;
                 }
                 CreateDamageInfo(unit, targetUnit, damage, 0, 0, null);
+                if (i >= stopNum && i % stopNum == 0)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                }
+                else if(IdGenerater.Instance.ChkGenerateIdFull())
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                }
             }
         }
 
@@ -169,7 +183,7 @@ namespace ET.Ability
                 return initValue + GetIncreaseNum(valueNew, increasePer, count - 1);
             }
         }
-        
+
         public static Damage GetDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit)
         {
             float value = 0;
@@ -192,8 +206,7 @@ namespace ET.Ability
                     value = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PropertyBlood:
-                    value = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.PhysicalAttack);
-                    break;
+                    return GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value);
                 case DamageType.LastSelectBlood:
                     break;
                 default:
@@ -203,9 +216,35 @@ namespace ET.Ability
             Damage damage = new(NumericType.PhysicalAttack, value);
             return damage;
         }
-        
-        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, float damageDegree, float criticalRate,
-        DamageSourceTag[] tags)
+
+        public static Damage GetDamageByProperty(Unit attackerUnit, Unit targetUnit, float attackScale)
+        {
+            NumericComponent attackNumeric = attackerUnit.GetComponent<NumericComponent>();
+            NumericComponent targetNumeric = targetUnit.GetComponent<NumericComponent>();
+            float attacker_Attack = attackNumeric.GetAsFloat(NumericType.PhysicalAttack);
+            attacker_Attack *= attackScale;
+            //attacker_Attack = math.max(0, attacker_Attack);
+            float attacker_CriticalHitDamage = attackNumeric.GetAsFloat(NumericType.CriticalHitDamage);
+            attacker_CriticalHitDamage = math.max(0, attacker_CriticalHitDamage);
+            float attacker_CriticalStrikeRate = attackNumeric.GetAsFloat(NumericType.CriticalStrikeRate);
+            float attacker_DamageDeepening = attackNumeric.GetAsFloat(NumericType.DamageDeepening);
+            //attacker_DamageDeepening = math.max(0, attacker_DamageDeepening);
+            float target_DamageRelief = targetNumeric.GetAsFloat(NumericType.DamageRelief);
+            //target_DamageRelief = math.clamp(target_DamageRelief, 0, 100);
+
+            float damageValue = attacker_Attack;
+            if (RandomGenerator.RandFloat01() < attacker_CriticalStrikeRate * 0.01f)
+            {
+                damageValue *= ((100 + attacker_CriticalHitDamage) * 0.01f);
+            }
+            damageValue *= ((100 + attacker_DamageDeepening) * 0.01f);
+            damageValue *= math.max(0, (100 - target_DamageRelief) * 0.01f);
+
+            Damage damage = new(NumericType.PhysicalAttack, damageValue);
+            return damage;
+        }
+
+        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, float damageDegree, float criticalRate, DamageSourceTag[] tags)
         {
             Scene scene = unit.DomainScene();
             return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, damageDegree, criticalRate, tags);

@@ -47,6 +47,8 @@ namespace ET.Client
                     return (false, msg);
                 }
 
+                bool IsFirstLogin = r2CLogin.IsFirstLogin == 1?true:false;
+
                 // 创建一个gate Session,并且保存到SessionComponent中
                 Log.Debug(r2CLogin.Address + "+++++++++++++++++");
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(r2CLogin.Address));
@@ -69,18 +71,64 @@ namespace ET.Client
 
                 Log.Debug("登陆gate成功!");
 
+                long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(clientScene);
+                EventSystem.Instance.Publish(clientScene, new EventType.NoticeEventLoggingLoginIn() { playerId = myPlayerId});
+
                 EventSystem.Instance.Publish(clientScene, new EventType.NoticeEventLogging()
                 {
-                    eventName = "role_login",
+                    eventName = "RoleLoggedIn",
                     properties = new()
                     {
-                        {"first_login", false},
+                        {"first_login", IsFirstLogin},
+                    }
+                });
+
+                EventSystem.Instance.Publish(clientScene, new EventType.NoticeEventLoggingSetCommonProperties()
+                {
+                    properties = new()
+                    {
+                        {"account_type", loginType.ToString()},
                     }
                 });
 
                 await ET.Client.PlayerCacheHelper.GetMyPlayerModelAll(clientScene);
 
-                await EventSystem.Instance.PublishAsync(clientScene, new EventType.LoginFinish());
+                PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(clientScene);
+                if (IsFirstLogin)
+                {
+                    EventSystem.Instance.Publish(clientScene, new EventType.NoticeEventLoggingSetUserProperties()
+                    {
+                        properties = new()
+                        {
+                            //{"account_id", account},
+                            //{"role_id", playerBaseInfoComponent.GetPlayerId()},
+                            //{"role_name", playerBaseInfoComponent.GetPlayerName()},
+                            {"artd_first_login_dt", TimeHelper.ClientNow()},
+                            {"artd_infinity_max_num", playerBaseInfoComponent.GetEndlessChallengeScore()},
+                            {"artd_account_icon_id_code", playerBaseInfoComponent.GetIconIndex()},
+                            //{"account_type", loginType.ToString()},
+                        }
+                    });
+                }
+                else
+                {
+                    EventSystem.Instance.Publish(clientScene, new EventType.NoticeEventLoggingSetUserProperties()
+                    {
+                        properties = new()
+                        {
+                            //{"account_id", account},
+                            //{"role_id", playerBaseInfoComponent.GetPlayerId()},
+                            //{"role_name", playerBaseInfoComponent.GetPlayerName()},
+                            {"artd_infinity_max_num", playerBaseInfoComponent.GetEndlessChallengeScore()},
+                            {"artd_account_icon_id_code", playerBaseInfoComponent.GetIconIndex()},
+                            //{"account_type", loginType.ToString()},
+                        }
+                    });
+                }
+
+                await EventSystem.Instance.PublishAsync(clientScene, new EventType.LoginFinish()
+                {
+                });
                 return (true, "");
             }
             catch (Exception e)

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DotNet.ThirdParty": {
+      "commandName": "Project",
+      "commandLineArgs": "--Process=1 --StartConfig=StartConfig/Release_Zpb --Console=1 --NeedDB=1"
+    }
+  }
+}

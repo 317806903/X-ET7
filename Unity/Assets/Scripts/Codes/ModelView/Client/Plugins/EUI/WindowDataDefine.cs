@@ -7,6 +7,7 @@ namespace ET.Client
 
     public enum UIWindowType
     {
+        WorldHub,    // 普通主界面
         Normal,    // 普通主界面
         Fixed,     // 固定窗口
         PopUp,     // 弹出窗口

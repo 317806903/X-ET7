@@ -22,13 +22,13 @@ namespace ET.Ability
             {
             }
         }
-        
+
         [ObjectSystem]
         public class DamageComponentFixedUpdateSystem: FixedUpdateSystem<DamageComponent>
         {
             protected override void FixedUpdate(DamageComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -38,14 +38,14 @@ namespace ET.Ability
             }
         }
 
-        public static DamageInfo Add(this DamageComponent self, Unit attackerUnit, Unit targetUnit, Damage damage, float damageDegree, float 
+        public static DamageInfo Add(this DamageComponent self, Unit attackerUnit, Unit targetUnit, Damage damage, float damageDegree, float
         criticalRate, DamageSourceTag[] tags)
         {
             DamageInfo damageInfo = self.AddChild<DamageInfo>();
             damageInfo.Init(attackerUnit.Id, targetUnit.Id, damage, damageDegree, criticalRate, tags);
             return damageInfo;
         }
-        
+
         public static void FixedUpdate(this DamageComponent self, float fixedDeltaTime)
         {
             if (self.Children.Count <= 0)
@@ -55,9 +55,9 @@ namespace ET.Ability
 
             while (self.Children.Count > 0)
             {
-                foreach (var damageInfos in self.Children)
+                foreach (var obj in self.Children.Values)
                 {
-                    DamageInfo damageInfo = damageInfos.Value as DamageInfo;
+                    DamageInfo damageInfo = obj as DamageInfo;
                     damageInfo.DealWithDamage();
                     damageInfo.Dispose();
                     break;

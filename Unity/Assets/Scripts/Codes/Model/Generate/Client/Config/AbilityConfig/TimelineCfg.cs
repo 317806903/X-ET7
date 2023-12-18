@@ -19,6 +19,7 @@ public sealed partial class TimelineCfg: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        IsLoop = _buf.ReadBool();
         Duration = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Nodes = new System.Collections.Generic.List<TimelineNode>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { TimelineNode _e0;  _e0 = TimelineNode.DeserializeTimelineNode(_buf); Nodes.Add(_e0);}}
         PostInit();
@@ -41,6 +42,10 @@ public sealed partial class TimelineCfg: Bright.Config.BeanBase
     /// 描述
     /// </summary>
     public string Desc { get; private set; }
+    /// <summary>
+    /// 是否循环
+    /// </summary>
+    public bool IsLoop { get; private set; }
     /// <summary>
     /// 总时长(单位秒)
     /// </summary>
@@ -67,6 +72,7 @@ public sealed partial class TimelineCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "IsLoop:" + IsLoop + ","
         + "Duration:" + Duration + ","
         + "Nodes:" + Bright.Common.StringUtil.CollectionToString(Nodes) + ","
         + "}";

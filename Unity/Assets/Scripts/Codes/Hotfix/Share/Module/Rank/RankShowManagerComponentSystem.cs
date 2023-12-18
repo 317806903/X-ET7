@@ -27,14 +27,14 @@ namespace ET
             }
         }
 
-        public static RankShowComponent SetRankShow(this RankShowManagerComponent self, long playerId, RankType rankType, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
+        public static RankShowComponent SetRankShow(this RankShowManagerComponent self, long playerId, RankType rankType, int myRank, RankItemComponent myRankItemComponent, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
         {
             RankShowPlayerComponent rankShowPlayerComponent = self.GetChild<RankShowPlayerComponent>(playerId);
             if (rankShowPlayerComponent == null)
             {
                 rankShowPlayerComponent = self.AddChildWithId<RankShowPlayerComponent>(playerId);
             }
-            RankShowComponent rankShowComponent = rankShowPlayerComponent.SetRankShow(rankType, rankIndex2PlayerId);
+            RankShowComponent rankShowComponent = rankShowPlayerComponent.SetRankShow(playerId, rankType, myRank, myRankItemComponent, rankIndex2PlayerId);
             return rankShowComponent;
         }
 
@@ -45,7 +45,7 @@ namespace ET
             {
                 rankShowPlayerComponent = self.AddChildWithId<RankShowPlayerComponent>(playerId);
             }
-            rankShowComponent = rankShowPlayerComponent.SetRankShow(rankType, rankShowComponent);
+            rankShowComponent = rankShowPlayerComponent.SetRankShow(playerId, rankType, rankShowComponent);
             return rankShowComponent;
         }
 

@@ -42,6 +42,7 @@ namespace ET.Client
                     return;
                 }
 
+                self.Update();
             }
         }
 
@@ -89,6 +90,8 @@ namespace ET.Client
             MainQualitySettingComponent mainQualitySettingComponent = self.AddComponent<MainQualitySettingComponent>();
 
             self.AddComponent<DebugConnectComponent>();
+            DebugShowComponent debugShowComponent = self.AddComponent<DebugShowComponent>();
+            await debugShowComponent.Init(self.DebugRoot);
         }
 
         public static void ShowDebugRoot(this GlobalComponent self)
@@ -99,8 +102,6 @@ namespace ET.Client
             {
                 self.DebugRoot.gameObject.SetActive(true);
                 self.ErrerLogManagerRoot.gameObject.SetActive(false);
-
-
             };
             chkGesture.doHide = () =>
             {
@@ -117,15 +118,9 @@ namespace ET.Client
             IngameDebugConsole.DebugLogConsole.AddCommand<string>( "SetDebugConnect", "SetDebugConnect desc", (str) => ET.Client.DebugConnectHelper.SetDebugConnect(str) );
         }
 
-        public static void Test11(this GlobalComponent self)
+        public static void Update(this GlobalComponent self)
         {
-            int i = 0;
-        }
 
-        public static void Test22(this GlobalComponent self, string str)
-        {
-            int j = 4;
         }
-
     }
 }

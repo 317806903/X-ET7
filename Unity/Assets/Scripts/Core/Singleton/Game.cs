@@ -103,9 +103,7 @@ namespace ET
                 updates.Enqueue(singleton);
                 try
                 {
-                    ProfilerSample.BeginSample($"{update.GetType()}");
                     update.Update();
-                    ProfilerSample.EndSample();
                 }
                 catch (Exception e)
                 {
@@ -134,9 +132,7 @@ namespace ET
                 lateUpdates.Enqueue(singleton);
                 try
                 {
-                    ProfilerSample.BeginSample($"{lateUpdate.GetType()}");
                     lateUpdate.LateUpdate();
-                    ProfilerSample.EndSample();
                 }
                 catch (Exception e)
                 {

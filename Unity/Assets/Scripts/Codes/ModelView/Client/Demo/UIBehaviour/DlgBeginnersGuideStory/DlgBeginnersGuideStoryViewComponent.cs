@@ -7,7 +7,7 @@ namespace ET.Client
 	[EnableMethod]
 	public class DlgBeginnersGuideStoryViewComponent : Entity, IAwake, IDestroy
 	{
-		public UnityEngine.UI.Image E_StoryImgImage
+		public UnityEngine.UI.Image E_ImgBGImage
 		{
 			get
 			{
@@ -16,15 +16,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_StoryImgImage == null )
+				if( this.m_E_ImgBGImage == null )
 				{
-					this.m_E_StoryImgImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story/E_StoryImg");
+					this.m_E_ImgBGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ImgBG");
 				}
-				return this.m_E_StoryImgImage;
+				return this.m_E_ImgBGImage;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI E_TextContextTextMeshProUGUI
+		public UnityEngine.UI.Button E_BG1Button
 		{
 			get
 			{
@@ -33,15 +33,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_TextContextTextMeshProUGUI == null )
+				if( this.m_E_BG1Button == null )
 				{
-					this.m_E_TextContextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_TextContext");
+					this.m_E_BG1Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story1/next/E_BG1");
 				}
-				return this.m_E_TextContextTextMeshProUGUI;
+				return this.m_E_BG1Button;
 			}
 		}
 
-		public UnityEngine.UI.Button E_NextButton
+		public UnityEngine.UI.Image E_BG1Image
 		{
 			get
 			{
@@ -50,15 +50,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_NextButton == null )
+				if( this.m_E_BG1Image == null )
 				{
-					this.m_E_NextButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Next");
+					this.m_E_BG1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story1/next/E_BG1");
 				}
-				return this.m_E_NextButton;
+				return this.m_E_BG1Image;
 			}
 		}
 
-		public UnityEngine.UI.Image E_NextImage
+		public UnityEngine.UI.Button E_BG2Button
 		{
 			get
 			{
@@ -67,27 +67,160 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_NextImage == null )
+				if( this.m_E_BG2Button == null )
 				{
-					this.m_E_NextImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Next");
+					this.m_E_BG2Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story2/next/E_BG2");
 				}
-				return this.m_E_NextImage;
+				return this.m_E_BG2Button;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BG2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG2Image == null )
+				{
+					this.m_E_BG2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story2/next/E_BG2");
+				}
+				return this.m_E_BG2Image;
+			}
+		}
+
+		public UnityEngine.UI.Button E_BG3Button
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG3Button == null )
+				{
+					this.m_E_BG3Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story3/next/E_BG3");
+				}
+				return this.m_E_BG3Button;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BG3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG3Image == null )
+				{
+					this.m_E_BG3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story3/next/E_BG3");
+				}
+				return this.m_E_BG3Image;
+			}
+		}
+
+		public UnityEngine.UI.Button E_BG4Button
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG4Button == null )
+				{
+					this.m_E_BG4Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story4/next/E_BG4");
+				}
+				return this.m_E_BG4Button;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BG4Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG4Image == null )
+				{
+					this.m_E_BG4Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story4/next/E_BG4");
+				}
+				return this.m_E_BG4Image;
+			}
+		}
+
+		public UnityEngine.UI.Button E_BG5Button
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG5Button == null )
+				{
+					this.m_E_BG5Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story5/next/E_BG5");
+				}
+				return this.m_E_BG5Button;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BG5Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BG5Image == null )
+				{
+					this.m_E_BG5Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "story5/next/E_BG5");
+				}
+				return this.m_E_BG5Image;
 			}
 		}
 
 		public void DestroyWidget()
 		{
-			this.m_E_StoryImgImage = null;
-			this.m_E_TextContextTextMeshProUGUI = null;
-			this.m_E_NextButton = null;
-			this.m_E_NextImage = null;
+			this.m_E_ImgBGImage = null;
+			this.m_E_BG1Button = null;
+			this.m_E_BG1Image = null;
+			this.m_E_BG2Button = null;
+			this.m_E_BG2Image = null;
+			this.m_E_BG3Button = null;
+			this.m_E_BG3Image = null;
+			this.m_E_BG4Button = null;
+			this.m_E_BG4Image = null;
+			this.m_E_BG5Button = null;
+			this.m_E_BG5Image = null;
 			this.uiTransform = null;
 		}
 
-		private UnityEngine.UI.Image m_E_StoryImgImage = null;
-		private TMPro.TextMeshProUGUI m_E_TextContextTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_NextButton = null;
-		private UnityEngine.UI.Image m_E_NextImage = null;
+		private UnityEngine.UI.Image m_E_ImgBGImage = null;
+		private UnityEngine.UI.Button m_E_BG1Button = null;
+		private UnityEngine.UI.Image m_E_BG1Image = null;
+		private UnityEngine.UI.Button m_E_BG2Button = null;
+		private UnityEngine.UI.Image m_E_BG2Image = null;
+		private UnityEngine.UI.Button m_E_BG3Button = null;
+		private UnityEngine.UI.Image m_E_BG3Image = null;
+		private UnityEngine.UI.Button m_E_BG4Button = null;
+		private UnityEngine.UI.Image m_E_BG4Image = null;
+		private UnityEngine.UI.Button m_E_BG5Button = null;
+		private UnityEngine.UI.Image m_E_BG5Image = null;
 		public Transform uiTransform = null;
 	}
 }

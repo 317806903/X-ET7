@@ -7,6 +7,7 @@ namespace ET.Client
 	{
 		public DlgBeginnersGuideStoryViewComponent View { get => this.GetComponent<DlgBeginnersGuideStoryViewComponent>(); }
 
+		public int totalNum = 5;
 		public int index;
 		public Action finishCallBack;
 	}

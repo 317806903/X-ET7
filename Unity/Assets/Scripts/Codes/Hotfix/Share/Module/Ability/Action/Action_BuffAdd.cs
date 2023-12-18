@@ -22,7 +22,7 @@ namespace ET.Ability
 				actionContext.motionPosition = unit.Position;
 			}
 			ActionCfg_BuffAdd actionCfgAddBuff = ActionCfg_BuffAddCategory.Instance.Get(actionId);
-			BuffHelper.AddBuff(unit, actionCfgAddBuff, selectHandle, actionContext);
+			BuffHelper.AddBuff(unit, actionCfgAddBuff, selectHandle, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

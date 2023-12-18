@@ -22,6 +22,8 @@ namespace ET
 		public AreaType areaType;
 		public bool IsShowDebugMode = false;
 		public bool IsShowEditorLoginMode = false;
-
+		public bool IsNeedSendEventLog;
+		public string MirrorARSessionAuthAppKey = "";
+		public string MirrorARSessionAuthAppSecret = "";
     }
 }

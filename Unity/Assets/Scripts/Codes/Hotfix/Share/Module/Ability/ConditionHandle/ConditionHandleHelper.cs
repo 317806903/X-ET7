@@ -6,9 +6,7 @@ namespace ET.Ability
 {
     public static class ConditionHandleHelper
     {
-        public static (bool bPass, bool isChgSelect, SelectHandle newSelectHandle) ChkCondition(Unit unit, SelectHandle selectHandle, List<SubCondition>
-        conditions, ActionContext
-         actionContext)
+        public static (bool bPass, bool isChgSelect, SelectHandle newSelectHandle) ChkCondition(Unit unit, SelectHandle selectHandle, List<SubCondition> conditions, ref ActionContext actionContext)
         {
             if (conditions.Count == 0)
             {
@@ -36,7 +34,7 @@ namespace ET.Ability
                         continue;
                     }
                     actionContext.defenderUnitId = unitSelect.Id;
-                    bool bRetOne = ChkCondition(unitSelect, conditions, actionContext);
+                    bool bRetOne = ChkCondition(unitSelect, conditions, ref actionContext);
                     if (bRetOne == false)
                     {
                         isChgSelect = true;
@@ -62,7 +60,7 @@ namespace ET.Ability
             return (false, false, null);
         }
 
-        public static bool ChkCondition(Unit unit, List<SubCondition> conditions, ActionContext actionContext)
+        public static bool ChkCondition(Unit unit, List<SubCondition> conditions, ref ActionContext actionContext)
         {
             if (conditions.Count == 0)
             {
@@ -75,7 +73,7 @@ namespace ET.Ability
                 for (int j = 0; j < subCondition.Conditions.Count; j++)
                 {
                     Condition condition = subCondition.Conditions[j];
-                    bool bRet = ChkConditionOne(unit, condition, actionContext);
+                    bool bRet = ChkConditionOne(unit, condition, ref actionContext);
                     if (bRet == false)
                     {
                         bRetSub = false;
@@ -164,11 +162,11 @@ namespace ET.Ability
             return false;
         }
 
-        public static bool ChkConditionOne(Unit unit, Condition condition, ActionContext actionContext)
+        public static bool ChkConditionOne(Unit unit, Condition condition, ref ActionContext actionContext)
         {
             if (condition is BuffStackCountCondition buffStackCountCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -178,7 +176,7 @@ namespace ET.Ability
             }
             else if (condition is BuffStackCountRecordCondition buffStackCountRecordCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -189,7 +187,7 @@ namespace ET.Ability
             }
             else if (condition is BuffPassTimeCondition buffPassTimeCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -207,7 +205,7 @@ namespace ET.Ability
             }
             else if (condition is BuffPassTimeRecordCondition buffPassTimeRecordCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -226,7 +224,7 @@ namespace ET.Ability
             }
             else if (condition is BuffLeftTimeCondition buffLeftTimeCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -244,7 +242,7 @@ namespace ET.Ability
             }
             else if (condition is BuffLeftTimeRecordCondition buffLeftTimeRecordCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
+                BuffObj buffObj = BuffHelper.GetBuffObj(unit, ref actionContext);
                 if (buffObj == null)
                 {
                     return false;
@@ -261,69 +259,14 @@ namespace ET.Ability
                     return ChkCompare(buffObj.duration/buffObj.orgDuration, condition.ConditionCompare, recordIntValue);
                 }
             }
-            else if (condition is BuffIdCondition buffIdCondition)
+            else if (condition is BuffCfgIdCondition buffCfgIdCondition)
             {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
-                if (buffObj == null)
-                {
-                    return false;
-                }
+                string buffCfgId = buffCfgIdCondition.BuffCfgId;
+                bool buffObjExist = BuffHelper.ChkBuffByBuffCfgId(unit, buffCfgId);
 
-                string buffCfgId = buffObj.model.Id;
-                if (ChkCompare(buffIdCondition.BuffId, condition.ConditionCompare, buffCfgId))
-                {
-                    return true;
-                }
-                return false;
-            }
-            else if (condition is BuffTagTypeCondition buffTagTypeCondition)
-            {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
-                if (buffObj == null)
-                {
-                    return false;
-                }
-
-                List<BuffTagType> tags = buffObj.model.Tags;
                 if (condition.ConditionCompare == ConditionCompare.eq)
                 {
-                    foreach (BuffTagType buffTagType in tags)
-                    {
-                        if (ChkCompare((int)buffTagType, ConditionCompare.eq, (int)buffTagTypeCondition.BuffTagType))
-                        {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                else if (condition.ConditionCompare == ConditionCompare.ne)
-                {
-                    foreach (BuffTagType buffTagType in tags)
-                    {
-                        if (ChkCompare((int)buffTagType, ConditionCompare.eq, (int)buffTagTypeCondition.BuffTagType))
-                        {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (condition is BuffTypeCondition buffTypeCondition)
-            {
-                BuffObj buffObj = BuffHelper.GetBuffObj(unit, actionContext);
-                if (buffObj == null)
-                {
-                    return false;
-                }
-
-                BuffType buffType = buffObj.model.BuffType;
-                if (condition.ConditionCompare == ConditionCompare.eq)
-                {
-                    if (ChkCompare((int)buffType, ConditionCompare.eq, (int)buffTypeCondition.BuffType))
+                    if (buffObjExist)
                     {
                         return true;
                     }
@@ -331,16 +274,82 @@ namespace ET.Ability
                 }
                 else if (condition.ConditionCompare == ConditionCompare.ne)
                 {
-                    if (ChkCompare((int)buffType, ConditionCompare.eq, (int)buffTypeCondition.BuffType))
+                    if (buffObjExist == false)
                     {
-                        return false;
+                        return true;
                     }
-                    return true;
-                }
-                else
-                {
                     return false;
                 }
+                return false;
+            }
+            else if (condition is BuffTypeCondition buffTypeCondition)
+            {
+                BuffType buffType = buffTypeCondition.BuffType;
+                bool buffObjExist = BuffHelper.ChkBuffByBuffType(unit, buffType);
+
+                if (condition.ConditionCompare == ConditionCompare.eq)
+                {
+                    if (buffObjExist)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else if (condition.ConditionCompare == ConditionCompare.ne)
+                {
+                    if (buffObjExist == false)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            else if (condition is BuffTagTypeCondition buffTagTypeCondition)
+            {
+                BuffTagType buffTagType = buffTagTypeCondition.BuffTagType;
+                bool buffObjExist = BuffHelper.ChkBuffByTagType(unit, buffTagType);
+
+                if (condition.ConditionCompare == ConditionCompare.eq)
+                {
+                    if (buffObjExist)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else if (condition.ConditionCompare == ConditionCompare.ne)
+                {
+                    if (buffObjExist == false)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            else if (condition is BuffTagGroupTypeCondition buffTagGroupTypeCondition)
+            {
+                BuffTagGroupType buffTagGroupType = buffTagGroupTypeCondition.BuffTagGroupType;
+                bool buffObjExist = BuffHelper.ChkBuffByTagGroupType(unit, buffTagGroupType);
+
+                if (condition.ConditionCompare == ConditionCompare.eq)
+                {
+                    if (buffObjExist)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else if (condition.ConditionCompare == ConditionCompare.ne)
+                {
+                    if (buffObjExist == false)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
             }
             else if (condition is SkillIdCondition skillIdCondition)
             {
@@ -367,7 +376,7 @@ namespace ET.Ability
                 {
                     return false;
                 }
-                float numericValue = numericComponent.Get((int)attributeCondition.NumericType);
+                float numericValue = numericComponent.GetAsFloat((int)attributeCondition.NumericType);
                 return ChkCompare(numericValue, condition.ConditionCompare, attributeCondition.Value);
             }
             else if (condition is AttributeRecordCondition attributeRecordCondition)
@@ -377,7 +386,7 @@ namespace ET.Ability
                 {
                     return false;
                 }
-                float numericValue = numericComponent.Get((int)attributeRecordCondition.NumericType);
+                float numericValue = numericComponent.GetAsFloat((int)attributeRecordCondition.NumericType);
                 int recordIntValue = RecordHandleHelper.GetRecordInt(unit, attributeRecordCondition.RecordKey);
                 return ChkCompare(numericValue, condition.ConditionCompare, recordIntValue);
             }
@@ -461,7 +470,7 @@ namespace ET.Ability
             }
             else if (condition is OnHitChkCanBeControlCondition onHitChkCanBeControlCondition)
             {
-                bool beControl = BuffHelper.ChkCanBeControl(unit.DomainScene(), actionContext);
+                bool beControl = BuffHelper.ChkCanBeControl(unit.DomainScene(), ref actionContext);
                 return onHitChkCanBeControlCondition.BeControl == beControl;
             }
             else if (condition is ChkSelectUnitNumCondition chkSelectUnitNumCondition)
@@ -509,12 +518,12 @@ namespace ET.Ability
             }
             else if (condition is ProbabilityCondition probabilityCondition)
             {
-                int random = RandomGenerator.RandomNumber(1, 100);
+                int random = RandomGenerator.RandomNumber(0, 100);
                 return ChkCompare(random, condition.ConditionCompare, probabilityCondition.Value);
             }
             else if (condition is ProbabilityRecordCondition probabilityRecordCondition)
             {
-                int random = RandomGenerator.RandomNumber(1, 100);
+                int random = RandomGenerator.RandomNumber(0, 100);
                 int recordIntValue = RecordHandleHelper.GetRecordInt(unit, probabilityRecordCondition.RecordKey);
                 return ChkCompare(random, condition.ConditionCompare, recordIntValue);
             }

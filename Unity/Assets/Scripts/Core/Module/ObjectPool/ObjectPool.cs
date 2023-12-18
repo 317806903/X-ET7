@@ -5,8 +5,8 @@ namespace ET
 {
     public class ObjectPool: Singleton<ObjectPool>
     {
-        private readonly Dictionary<Type, Queue<object>> pool = new Dictionary<Type, Queue<object>>();
-        
+        private readonly Dictionary<Type, Queue<object>> pool = new ();
+
         public T Fetch<T>() where T: class
         {
             return this.Fetch(typeof (T)) as T;
@@ -38,7 +38,7 @@ namespace ET
             }
 
             // 一种对象最大为1000个
-            if (queue.Count > 1000)
+            if (queue.Count > 10000)
             {
                 return;
             }

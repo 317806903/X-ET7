@@ -7,6 +7,7 @@
     {
 	    public const int Max = 10000;
 
+	    //移动速度
 	    public const int Speed = 1000;
 	    public const int SpeedBase = Speed * 10 + 1;
 	    public const int SpeedAdd = Speed * 10 + 2;
@@ -14,6 +15,7 @@
 	    public const int SpeedFinalAdd = Speed * 10 + 4;
 	    public const int SpeedFinalPct = Speed * 10 + 5;
 
+	    //旋转速度
 	    public const int RotationSpeed = 1001;
 	    public const int RotationSpeedBase = RotationSpeed * 10 + 1;
 	    public const int RotationSpeedAdd = RotationSpeed * 10 + 2;
@@ -21,6 +23,7 @@
 	    public const int RotationSpeedFinalAdd = RotationSpeed * 10 + 4;
 	    public const int RotationSpeedFinalPct = RotationSpeed * 10 + 5;
 
+	    //技能cd
 	    public const int SkillCD = 1002;
 	    public const int SkillCDBase = SkillCD * 10 + 1;
 	    public const int SkillCDAdd = SkillCD * 10 + 2;
@@ -28,6 +31,7 @@
 	    public const int SkillCDFinalAdd = SkillCD * 10 + 4;
 	    public const int SkillCDFinalPct = SkillCD * 10 + 5;
 
+	    //技能施法距离
 	    public const int SkillDis = 1003;
 	    public const int SkillDisBase = SkillDis * 10 + 1;
 	    public const int SkillDisAdd = SkillDis * 10 + 2;
@@ -35,6 +39,7 @@
 	    public const int SkillDisFinalAdd = SkillDis * 10 + 4;
 	    public const int SkillDisFinalPct = SkillDis * 10 + 5;
 
+	    //AOI识别范围
 	    public const int AOI = 1004;
 	    public const int AOIBase = AOI * 10 + 1;
 	    public const int AOIAdd = AOI * 10 + 2;
@@ -56,12 +61,45 @@
 	    public const int MaxHpFinalAdd = MaxHp * 10 + 4;
 	    public const int MaxHpFinalPct = MaxHp * 10 + 5;
 
+	    //物理攻击力
 	    public const int PhysicalAttack = 1007;
 	    public const int PhysicalAttackBase = PhysicalAttack * 10 + 1;
 	    public const int PhysicalAttackAdd = PhysicalAttack * 10 + 2;
 	    public const int PhysicalAttackPct = PhysicalAttack * 10 + 3;
 	    public const int PhysicalAttackFinalAdd = PhysicalAttack * 10 + 4;
 	    public const int PhysicalAttackFinalPct = PhysicalAttack * 10 + 5;
+
+	    //暴击伤害(N%)
+	    public const int CriticalHitDamage = 1008;
+	    public const int CriticalHitDamageBase = CriticalHitDamage * 10 + 1;
+	    public const int CriticalHitDamageAdd = CriticalHitDamage * 10 + 2;
+	    public const int CriticalHitDamagePct = CriticalHitDamage * 10 + 3;
+	    public const int CriticalHitDamageFinalAdd = CriticalHitDamage * 10 + 4;
+	    public const int CriticalHitDamageFinalPct = CriticalHitDamage * 10 + 5;
+
+	    //暴击率(N%)
+	    public const int CriticalStrikeRate = 1009;
+	    public const int CriticalStrikeRateBase = CriticalStrikeRate * 10 + 1;
+	    public const int CriticalStrikeRateAdd = CriticalStrikeRate * 10 + 2;
+	    public const int CriticalStrikeRatePct = CriticalStrikeRate * 10 + 3;
+	    public const int CriticalStrikeRateFinalAdd = CriticalStrikeRate * 10 + 4;
+	    public const int CriticalStrikeRateFinalPct = CriticalStrikeRate * 10 + 5;
+
+	    //伤害加深系数(N%)
+	    public const int DamageDeepening = 1010;
+	    public const int DamageDeepeningBase = DamageDeepening * 10 + 1;
+	    public const int DamageDeepeningAdd = DamageDeepening * 10 + 2;
+	    public const int DamageDeepeningPct = DamageDeepening * 10 + 3;
+	    public const int DamageDeepeningFinalAdd = DamageDeepening * 10 + 4;
+	    public const int DamageDeepeningFinalPct = DamageDeepening * 10 + 5;
+
+	    //伤害减免系数(N%)
+	    public const int DamageRelief = 1011;
+	    public const int DamageReliefBase = DamageRelief * 10 + 1;
+	    public const int DamageReliefAdd = DamageRelief * 10 + 2;
+	    public const int DamageReliefPct = DamageRelief * 10 + 3;
+	    public const int DamageReliefFinalAdd = DamageRelief * 10 + 4;
+	    public const int DamageReliefFinalPct = DamageRelief * 10 + 5;
 
 	    // PhysicalDamage = 0, //物理伤害
 	    // FireDamage = 1, //元素-火伤害

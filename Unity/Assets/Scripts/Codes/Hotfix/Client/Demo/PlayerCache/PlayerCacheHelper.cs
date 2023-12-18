@@ -93,7 +93,7 @@ namespace ET.Client
 	        return entity as PlayerBattleCardComponent;
         }
 
-        public static async ETTask SaveMyPlayerModel(Scene scene, PlayerModelType playerModelType)
+        public static async ETTask SaveMyPlayerModel(Scene scene, PlayerModelType playerModelType, List<string> setPlayerKeys)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
@@ -108,7 +108,20 @@ namespace ET.Client
 	        entityModel.GetComponent<DataCacheClearComponent>().RefreshTime();
 	        byte[] bytes = entityModel.ToBson();
 
-	        await SendSavePlayerModelAsync(scene, myPlayerId, playerModelType, bytes);
+	        await SendSavePlayerModelAsync(scene, myPlayerId, playerModelType, bytes, setPlayerKeys);
+
+	        if (playerModelType == PlayerModelType.BaseInfo)
+	        {
+		        PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+		        EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingSetUserProperties()
+		        {
+			        properties = new()
+			        {
+				        {"artd_infinity_max_num", playerBaseInfoComponent.GetEndlessChallengeScore()},
+				        {"artd_account_icon_id_code", playerBaseInfoComponent.GetIconIndex()},
+			        }
+		        });
+	        }
 	        await ETTask.CompletedTask;
         }
 
@@ -151,13 +164,14 @@ namespace ET.Client
 	        }
         }
 
-        public static async ETTask<bool> SendSavePlayerModelAsync(Scene clientScene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes)
+        public static async ETTask<bool> SendSavePlayerModelAsync(Scene clientScene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes, List<string> setPlayerKeys)
         {
 	        G2C_SetPlayerCache _G2C_SetPlayerCache = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_SetPlayerCache()
 		        {
 			        PlayerId = playerId,
 			        PlayerModelType = (int)playerModelType,
 			        PlayerModelComponentBytes = playerModelComponentBytes,
+			        SetPlayerKeys = setPlayerKeys,
 		        }) as
 		        G2C_SetPlayerCache;
 	        if (_G2C_SetPlayerCache.Error != ET.ErrorCode.ERR_Success)
@@ -171,5 +185,24 @@ namespace ET.Client
 	        }
         }
 
+		public static async ETTask<bool> AddPlayerPhysicalStrenthByAdAsync(Scene clientScene)
+        {
+	        long playerId = ET.Client.PlayerHelper.GetMyPlayerId(clientScene);
+			G2C_AddPhysicalStrenthByAd _G2C_AddPhysicalStrenthByAd = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_AddPhysicalStrenthByAd()
+		        {
+			        PlayerId = playerId,
+		        }) as
+		        G2C_AddPhysicalStrenthByAd;
+	        if (_G2C_AddPhysicalStrenthByAd.Error != ET.ErrorCode.ERR_Success)
+	        {
+		        Log.Error($"AddPlayerPhysicalStrenthByAdAsync Error==1 msg={_G2C_AddPhysicalStrenthByAd.Message}");
+		        return false;
+	        }
+	        else
+	        {
+				Log.Info($"AddPlayerPhysicalStrenthByAdAsync Success");
+				return true;
+	        }
+        }
     }
 }

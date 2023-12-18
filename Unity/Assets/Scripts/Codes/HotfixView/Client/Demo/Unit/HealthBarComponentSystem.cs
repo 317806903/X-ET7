@@ -25,7 +25,8 @@ namespace ET.Client
                 self.isHome = isHome;
                 if (self.isHome)
                 {
-                    self.AddComponent<HealthBarHomeComponent>();
+                    //self.AddComponent<HealthBarHomeComponent>();
+                    self.AddComponent<HomeHealthBarComponent>();
                 }
                 else
                 {
@@ -51,7 +52,8 @@ namespace ET.Client
         {
             if (self.isHome)
             {
-                self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
+                //self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
+                self.GetComponent<HomeHealthBarComponent>()?.UpdateHealth(isInit);
             }
             else
             {

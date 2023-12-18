@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace ET.Server
 {
@@ -20,22 +20,10 @@ namespace ET.Server
 			}
 			PlayerModelType playerModelType = (PlayerModelType)request.PlayerModelType;
 			byte[] PlayerModelComponentBytes = request.PlayerModelComponentBytes;
+			List<string> setPlayerKeys = request.SetPlayerKeys;
 
-			await ET.Server.PlayerCacheHelper.SetPlayerModel(session.DomainScene(), playerId, playerModelType, PlayerModelComponentBytes);
-			await ET.Server.PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, playerModelType);
-
-			//
-			// StartSceneConfig playerCacheSceneConfig = StartSceneConfigCategory.Instance.GetPlayerCacheManager(session.DomainZone());
-			//
-			// P2G_SetPlayerCache _P2G_SetPlayerCache = (P2G_SetPlayerCache) await ActorMessageSenderComponent.Instance.Call(playerCacheSceneConfig.InstanceId, new G2P_SetPlayerCache()
-			// {
-			// 	PlayerId = playerId,
-			// 	PlayerModelType = (int)playerModelType,
-			// 	PlayerModelComponentBytes = PlayerModelComponentBytes,
-			// });
-			//
-			// response.Error = _P2G_SetPlayerCache.Error;
-			// response.Message = _P2G_SetPlayerCache.Message;
+			await ET.Server.PlayerCacheHelper.SetPlayerModelByClient(session.DomainScene(), playerId, playerModelType, PlayerModelComponentBytes, setPlayerKeys);
+			await ET.Server.PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, playerModelType, setPlayerKeys);
 
 			await ETTask.CompletedTask;
 		}

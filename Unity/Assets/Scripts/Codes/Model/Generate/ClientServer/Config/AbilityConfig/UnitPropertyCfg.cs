@@ -19,8 +19,12 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         PropertyType = _buf.ReadString();
         Level = _buf.ReadInt();
         Desc = _buf.ReadString();
-        Hp = _buf.ReadInt();
-        PhysicalAttack = _buf.ReadInt();
+        HpBase = _buf.ReadInt();
+        PhysicalAttackBase = _buf.ReadInt();
+        CriticalHitDamageBase = _buf.ReadInt();
+        CriticalStrikeRateBase = _buf.ReadInt();
+        DamageDeepeningBase = _buf.ReadInt();
+        DamageReliefBase = _buf.ReadInt();
         PostInit();
     }
 
@@ -38,11 +42,27 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
     /// <summary>
     /// 血量
     /// </summary>
-    public int Hp { get; private set; }
+    public int HpBase { get; private set; }
     /// <summary>
     /// 物理攻击
     /// </summary>
-    public int PhysicalAttack { get; private set; }
+    public int PhysicalAttackBase { get; private set; }
+    /// <summary>
+    /// 暴击伤害(N%)
+    /// </summary>
+    public int CriticalHitDamageBase { get; private set; }
+    /// <summary>
+    /// 暴击率(N%)
+    /// </summary>
+    public int CriticalStrikeRateBase { get; private set; }
+    /// <summary>
+    /// 伤害加深系数(N%)
+    /// </summary>
+    public int DamageDeepeningBase { get; private set; }
+    /// <summary>
+    /// 受击伤害减免系数(N%)
+    /// </summary>
+    public int DamageReliefBase { get; private set; }
 
     public const int __ID__ = -407369205;
     public override int GetTypeId() => __ID__;
@@ -62,8 +82,12 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         + "PropertyType:" + PropertyType + ","
         + "Level:" + Level + ","
         + "Desc:" + Desc + ","
-        + "Hp:" + Hp + ","
-        + "PhysicalAttack:" + PhysicalAttack + ","
+        + "HpBase:" + HpBase + ","
+        + "PhysicalAttackBase:" + PhysicalAttackBase + ","
+        + "CriticalHitDamageBase:" + CriticalHitDamageBase + ","
+        + "CriticalStrikeRateBase:" + CriticalStrikeRateBase + ","
+        + "DamageDeepeningBase:" + DamageDeepeningBase + ","
+        + "DamageReliefBase:" + DamageReliefBase + ","
         + "}";
     }
     

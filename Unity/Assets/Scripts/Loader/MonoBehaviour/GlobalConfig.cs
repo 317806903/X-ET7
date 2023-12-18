@@ -32,5 +32,6 @@ namespace ET
         public int HotFixVersion = 1;
 
         public bool NeedDB;
+
     }
 }

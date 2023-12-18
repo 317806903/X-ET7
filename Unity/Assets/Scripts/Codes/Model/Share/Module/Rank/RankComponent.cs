@@ -15,5 +15,7 @@ namespace ET
         public SkipList SkipList;
         [BsonIgnore]
         public Dictionary<long, long> playerId2Score;
+
+        public ulong rankTotalNum;
     }
 }

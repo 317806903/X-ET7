@@ -18,8 +18,7 @@ namespace ET.Client
                 ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerStarBar_1");
                 GameObject towerStarBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,5);
                 towerStarBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
-                float height = self.GetUnit().model.BodyHeight + 1f;
-                towerStarBarGo.transform.localPosition = new float3(0, height, 0);
+                towerStarBarGo.transform.position = Vector3.zero;
                 towerStarBarGo.transform.localScale = Vector3.one;
 
                 self.transRoot = towerStarBarGo.transform;
@@ -93,6 +92,7 @@ namespace ET.Client
             }
             Vector3 direction = mainCamera.transform.forward;
             transform.forward = -direction;
+            transform.position = (Vector3)self.GetUnit().Position - transform.right * 0.5f + transform.up * 0.5f;
         }
     }
 }

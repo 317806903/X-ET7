@@ -14,9 +14,10 @@ namespace ET.Server
 			long playerId = observerUnit.Id;
 
 			long towerUnitId = request.TowerUnitId;
+			bool onlyChkPool = request.OnlyChkPool == 1?true:false;
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
-			(bool bRet, string msg, Dictionary<string, int> costTowers) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(playerId, towerUnitId);
+			(bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(playerId, towerUnitId, onlyChkPool);
 			if (bRet == false)
 			{
 				response.Error = ErrorCode.ERR_LogicError;
@@ -24,7 +25,7 @@ namespace ET.Server
 			}
 			else
 			{
-				bool success = gamePlayTowerDefenseComponent.UpgradePlayerTower(playerId, towerUnitId);
+				bool success = gamePlayTowerDefenseComponent.UpgradePlayerTower(playerId, towerUnitId, onlyChkPool);
 				if (success == false)
 				{
 					response.Error = ErrorCode.ERR_LogicError;

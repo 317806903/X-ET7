@@ -16,31 +16,77 @@ namespace ET
             }
         }
 
-        public static void SetRankShow(this RankShowComponent self, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
+        public static void SetRankShow(this RankShowComponent self, long playerId, int myRank, RankItemComponent myRankItemComponent, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
         {
-            self.rankIndex2PlayerId.Clear();
+            RankShowItemComponent myRankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(playerId);
+            myRankShowItemComponent.rank = myRank;
+            if (myRankItemComponent != null)
+            {
+                myRankShowItemComponent.playerId = playerId;
+                myRankShowItemComponent.score = myRankItemComponent.score;
+                myRankShowItemComponent.recordTime = myRankItemComponent.recordTime;
+            }
+            else
+            {
+                myRankShowItemComponent.playerId = playerId;
+                myRankShowItemComponent.score = -1;
+            }
+
+            self.myRankShowItemComponentId = myRankShowItemComponent.Id;
+
+            self.rankList.Clear();
             foreach (var item in rankIndex2PlayerId)
             {
                 int rank = item.Key;
                 RankItemComponent rankItemComponent = item.Value;
-                long playerId = rankItemComponent.playerId;
-                self.rankIndex2PlayerId[rank] = rankItemComponent.playerId;
-                RankShowItemComponent rankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(playerId);
-                rankShowItemComponent.playerId = rankItemComponent.playerId;
-                rankShowItemComponent.score = rankItemComponent.score;
-                rankShowItemComponent.recordTime = rankItemComponent.recordTime;
+                long rankPlayerId = rankItemComponent.playerId;
+                if (rankPlayerId == playerId)
+                {
+                    self.rankList.Add(myRankShowItemComponent.Id);
+                }
+                else
+                {
+                    RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(rankPlayerId);
+                    if (rankShowItemComponent != null)
+                    {
+                        continue;
+                    }
+                    rankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(rankPlayerId);
+                    rankShowItemComponent.rank = rank;
+                    rankShowItemComponent.playerId = rankItemComponent.playerId;
+                    rankShowItemComponent.score = rankItemComponent.score;
+                    rankShowItemComponent.recordTime = rankItemComponent.recordTime;
+                    self.rankList.Add(rankShowItemComponent.Id);
+                }
             }
         }
 
-        public static SortedDictionary<int, RankShowItemComponent> GetRankList(this RankShowComponent self)
+        public static List<EntityRef<RankShowItemComponent>> GetRankList(this RankShowComponent self)
         {
-            SortedDictionary<int, RankShowItemComponent> rankIndex2PlayerId = new();
-            foreach (var item in self.rankIndex2PlayerId)
+            self.rankListTmp.Clear();
+            for (int i = 0; i < self.rankList.Count; i++)
             {
-                rankIndex2PlayerId.Add(item.Key, self.GetChild<RankShowItemComponent>(item.Value));
+                RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(self.rankList[i]);
+                self.rankListTmp.Add(rankShowItemComponent);
+            }
+            return self.rankListTmp;
+        }
+
+        public static int GetMyRank(this RankShowComponent self)
+        {
+            RankShowItemComponent rankShowItemComponent = self.GetMyRankShowItemComponent();
+            if (rankShowItemComponent != null)
+            {
+                return rankShowItemComponent.rank;
             }
 
-            return rankIndex2PlayerId;
+            return -1;
+        }
+
+        public static RankShowItemComponent GetMyRankShowItemComponent(this RankShowComponent self)
+        {
+            RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(self.myRankShowItemComponentId);
+            return rankShowItemComponent;
         }
 
     }

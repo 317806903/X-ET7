@@ -11,8 +11,9 @@ namespace ET.Server
 			string account = request.Account;
 			string password = request.Password;
 			ET.LoginType loginType = (ET.LoginType)request.LoginType;
-			long playerId = await ET.Server.AccountHelper.AccountLogin(scene, account, password, loginType);
+			(long playerId, bool isFirstLogin) = await ET.Server.AccountHelper.AccountLogin(scene, account, password, loginType);
 			response.PlayerId = playerId;
+			response.IsFirstLogin = isFirstLogin?1:0;
 			if (playerId == 0)
 			{
 				response.Error = ErrorCode.ERR_LogicError;

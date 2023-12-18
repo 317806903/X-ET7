@@ -28,7 +28,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(MoveComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }

@@ -23,10 +23,10 @@ namespace ET.Client
                 clientScene = scene.ClientScene();
             }
 
-            ModelClickManagerComponent _ModelClickManagerComponent = clientScene.GetComponent<ModelClickManagerComponent>();
+            ModelClickManagerComponent _ModelClickManagerComponent = currentScene.GetComponent<ModelClickManagerComponent>();
             if (_ModelClickManagerComponent == null)
             {
-                _ModelClickManagerComponent = clientScene.AddComponent<ModelClickManagerComponent>();
+                _ModelClickManagerComponent = currentScene.AddComponent<ModelClickManagerComponent>();
             }
             return _ModelClickManagerComponent;
         }
@@ -43,5 +43,52 @@ namespace ET.Client
             modelClickManagerComponent.ModelPress = modelPressCallBack;
         }
 
+        public static void SetTowerInfoToClickInfo(Scene scene, Transform colliderTrans, TowerShowComponent towerShowComponent)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            modelClickManagerComponent.SetTowerInfoToClickInfo(colliderTrans, towerShowComponent);
+        }
+
+        public static bool ChkIsHitTowerClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.ChkIsHitTowerClickInfo(raycastHit);
+        }
+
+        public static TowerShowComponent GetTowerInfoFromClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.GetTowerInfoFromClickInfo(raycastHit);
+        }
+
+        public static void SetPlayerUnitInfoToClickInfo(Scene scene, Transform colliderTrans, PlayerUnitShowComponent playerUnitShowComponent)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            modelClickManagerComponent.SetPlayerUnitInfoToClickInfo(colliderTrans, playerUnitShowComponent);
+        }
+
+        public static bool ChkIsHitPlayerUnitClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.ChkIsHitPlayerUnitClickInfo(raycastHit);
+        }
+
+        public static PlayerUnitShowComponent GetPlayerUnitInfoFromClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.GetPlayerUnitInfoFromClickInfo(raycastHit);
+        }
+
+        public static TowerShowComponent GetLastClickTowerInfo(Scene scene)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.GetLastClickTowerInfo();
+        }
+
+        public static PlayerUnitShowComponent GetLastClickPlayerUnitInfo(Scene scene)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.GetLastClickPlayerUnitInfo();
+        }
     }
 }

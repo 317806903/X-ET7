@@ -14,6 +14,7 @@ namespace ET
 		public int waveIndex;
 		public float monsterWaveNumScalePercent;
 		public float monsterWaveLevelScalePercent;
+		public float waveRewardGoldScalePercent;
 		public float duration;
 		public float timeElapsed = 0;
 		public HashSet<long> monsterWaveUnitList;

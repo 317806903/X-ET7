@@ -8,6 +8,8 @@ namespace ET.Client
 	{
 		PKTower,
 		PKMonster,
+		PKMoveTower,
+		PKMovePlayer,
 		HeadQuarter,
 		MonsterCall,
 		Tower,
@@ -25,7 +27,8 @@ namespace ET.Client
 		public string battleDragItemParam;
 		public long moveTowerUnitId;
 		public int countOnce;
-		public Action callBack;
+		public Action<Scene> callBack;
+		public Scene sceneIn;
 
 		public bool isConfirming = false;
 
@@ -36,6 +39,7 @@ namespace ET.Client
 		public bool isCliffy = false;
 		public bool isRaycast = false;
 
+		public bool isChkPutMonsterCall = false;
 		public bool canPutMonsterCall = true;
 
 		//坐标在Y轴上的偏移量
@@ -56,6 +60,7 @@ namespace ET.Client
 		public string battleDragItemParam;
 		public long moveTowerUnitId;
 		public int countOnce;
-		public Action callBack;
+		public Action<Scene> callBack;
+		public Scene sceneIn;
 	}
 }

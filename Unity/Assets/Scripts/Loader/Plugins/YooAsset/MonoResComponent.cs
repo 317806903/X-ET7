@@ -119,13 +119,29 @@ namespace ET
             YooAssets.Destroy();
         }
 
-        public async ETTask ReLoadMap()
+        public async ETTask ReLoadMap(bool releaseAB = false)
         {
-            //ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
-            //package.ForceUnloadAllAssets();
+            if (releaseAB)
+            {
+                ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
+                package.ForceUnloadAllAssets();
+            }
             defaultPackage.ReLoadMap();
             await InitPackage();
             await this.LoadGlobalConfigAsync();
+        }
+
+        public async ETTask ReLoadWhenDebugConnect()
+        {
+            EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
+            if (resLoadMode == EPlayMode.HostPlayMode)
+            {
+                string packageName = "DefaultPackage";
+                defaultPackage = YooAssets.TryGetPackage(packageName);
+                defaultPackage.ResetHostServer(GetHostServerURL());
+            }
+
+            await ETTask.CompletedTask;
         }
 
         public byte[] LoadRawFile(string location)

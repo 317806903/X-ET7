@@ -76,6 +76,10 @@ namespace ET.Client
 		public static string GetARSceneId(Scene scene)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene);
+			if (arSessionComponent == null)
+			{
+				return "";
+			}
 			string arSceneId = arSessionComponent.GetARSceneId();
 			return arSceneId;
 		}

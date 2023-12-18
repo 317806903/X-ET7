@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace ET.Server
 {
@@ -11,7 +11,8 @@ namespace ET.Server
 			long playerId = request.PlayerId;
 			PlayerModelType playerModelType = (PlayerModelType)request.PlayerModelType;
 			byte[] playerModelComponentBytes = request.PlayerModelComponentBytes;
-			await ET.Server.PlayerCacheLocalHelper.SetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes);
+			List<string> setPlayerKeys = request.SetPlayerKeys;
+			await ET.Server.PlayerCacheLocalHelper.SetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes, setPlayerKeys);
 
 			await ETTask.CompletedTask;
 		}

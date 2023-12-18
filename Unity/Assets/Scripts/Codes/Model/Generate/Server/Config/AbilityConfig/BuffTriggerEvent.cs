@@ -110,18 +110,6 @@ namespace ET.AbilityConfig
         /// 监听 unit销毁的事件
         /// </summary>
         UnitOnRemoved = 24,
-        /// <summary>
-        /// 监听 附近unit被创建的事件
-        /// </summary>
-        NearUnitOnCreate = 25,
-        /// <summary>
-        /// 监听 附近unit产生攻击的事件
-        /// </summary>
-        NearUnitOnHit = 26,
-        /// <summary>
-        /// 监听 附近unit销毁的事件
-        /// </summary>
-        NearUnitOnRemoved = 27,
     }
 
 } 

@@ -186,7 +186,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d55d1f022557384c98b03a52d2482f9, type: 2}
+  - {fileID: 2100000, guid: 6878d84d66e2c2f4ca57e3366484d2e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1986,7 +1986,6 @@ GameObject:
   - component: {fileID: 1734572081990703020}
   - component: {fileID: 1734572081993647880}
   - component: {fileID: 8683133583229752562}
-  - component: {fileID: 2020667998468255778}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -2135,20 +2134,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5253960270826648763}
   m_Enabled: 1
---- !u!114 &2020667998468255778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1734572081990470540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 1734572081993647880}
 --- !u!1 &1734572081990470560
 GameObject:
   m_ObjectHideFlags: 0

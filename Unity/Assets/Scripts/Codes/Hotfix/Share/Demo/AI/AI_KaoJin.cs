@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -24,7 +25,7 @@ namespace ET
             else
             {
                 long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
-                if (sec < 10)
+                if (true || sec < 10)
                 {
                     return 0;
                 }
@@ -42,14 +43,27 @@ namespace ET
                 return;
             }
 
-            ListComponent<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false);
+            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false);
             Unit unitPlayer = null;
+            float nearPlayerDisSq = 0;
             foreach (Unit hostileForce in hostileForces)
             {
                 if (Ability.UnitHelper.ChkIsPlayer(hostileForce))
                 {
-                    unitPlayer = hostileForce;
-                    break;
+                    float disSq = math.lengthsq(unit.Position - hostileForce.Position);
+                    if (unitPlayer == null)
+                    {
+                        unitPlayer = hostileForce;
+                        nearPlayerDisSq = disSq;
+                    }
+                    else
+                    {
+                        if (nearPlayerDisSq > disSq)
+                        {
+                            unitPlayer = hostileForce;
+                            nearPlayerDisSq = disSq;
+                        }
+                    }
                 }
             }
 
@@ -64,6 +78,7 @@ namespace ET
                 return;
             }
 
+            aiComponent.ResetRepeatedTimerByDis(unitPlayer);
 
             //Log.Debug("开始靠近 11");
 
@@ -78,6 +93,18 @@ namespace ET
                 {
                     aiComponent.Cancel();
                     return;
+                }
+                aiComponent.ResetRepeatedTimerByDis(unitPlayer);
+
+                if (ET.Ability.UnitHelper.ChkIsNear(unit, unitPlayer, 0, false))
+                {
+                    await ET.Ability.MoveOrIdleHelper.DoIdle(unit);
+                    await TimerComponent.Instance.WaitAsync(500, cancellationToken);
+                    if (cancellationToken.IsCancel())
+                    {
+                        return;
+                    }
+                    continue;
                 }
 
                 float3 nextTarget = unitPlayer.Position;

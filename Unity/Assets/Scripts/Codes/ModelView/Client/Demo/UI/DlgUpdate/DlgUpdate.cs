@@ -9,8 +9,11 @@ namespace ET.Client
 		public DlgUpdateViewComponent View { get => this.GetComponent<DlgUpdateViewComponent>(); }
 
 
-		public Transform transBackground;
+		public RectTransform rectTransBackground;
+		public RectTransform rectTransValueImage;
 		public Transform transPercentage;
 
+		public Transform transProgress;
+		public Transform transCheckUpdate;
 	}
 }

@@ -12,6 +12,7 @@ namespace ET.Ability
         {
             protected override void Awake(MoveOrIdleComponent self)
             {
+                self.isIdleCreating = false;
             }
         }
 
@@ -20,6 +21,8 @@ namespace ET.Ability
         {
             protected override void Destroy(MoveOrIdleComponent self)
             {
+                self.CurIdleTimelineObj = null;
+                self.CurMoveTimelineObj = null;
             }
         }
 
@@ -28,7 +31,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(MoveOrIdleComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -42,16 +45,14 @@ namespace ET.Ability
         {
             if (self.CurMoveTimelineObj != null)
             {
+                if (self.isIdleCreating)
+                {
+                    return;
+                }
                 bool isMoveFinished = ET.MoveHelper.ChkIsMoveFinished(self.GetUnit());
                 if (isMoveFinished)
                 {
-                    self.CurMoveTimelineObj.Dispose();
-                    if (self.CurIdleTimelineObj != null)
-                    {
-                        self.CurIdleTimelineObj.Dispose();
-                    }
-
-                    self.DoIdle();
+                    self.DoIdle().Coroutine();
                 }
             }
         }
@@ -63,19 +64,40 @@ namespace ET.Ability
 
         public static void StopMove(this MoveOrIdleComponent self)
         {
+            self.StopMoveAndIdle(false).Coroutine();
+        }
+
+        public static async ETTask StopMoveAndIdle(this MoveOrIdleComponent self, bool needEnterIdle)
+        {
             self.moveInputType = MoveInputType.Stop;
 
             Unit unit = self.GetUnit();
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
             pathfindingComponent?.StopMoveTarget();
 
-            if (self.CurIdleTimelineObj != null)
-            {
-                self.CurIdleTimelineObj.Dispose();
-            }
             if (self.CurMoveTimelineObj != null)
             {
                 self.CurMoveTimelineObj.Dispose();
+            }
+
+            if (needEnterIdle)
+            {
+                if (self.CurIdleTimelineObj == null)
+                {
+                    if (self.isIdleCreating == false)
+                    {
+                        self.isIdleCreating = true;
+                        await self._CreateIdleTimeLine();
+                        self.isIdleCreating = false;
+                    }
+                }
+            }
+            else
+            {
+                if (self.CurIdleTimelineObj != null)
+                {
+                    self.CurIdleTimelineObj.Dispose();
+                }
             }
         }
 
@@ -96,10 +118,9 @@ namespace ET.Ability
             await ETTask.CompletedTask;
         }
 
-        public static void DoIdle(this MoveOrIdleComponent self)
+        public static async ETTask DoIdle(this MoveOrIdleComponent self)
         {
-            self.StopMove();
-            self._CreateIdleTimeLine().Coroutine();
+            await self.StopMoveAndIdle(true);
         }
 
         public static async ETTask DoMoveInput_Direction(this MoveOrIdleComponent self, float3 directionInput)

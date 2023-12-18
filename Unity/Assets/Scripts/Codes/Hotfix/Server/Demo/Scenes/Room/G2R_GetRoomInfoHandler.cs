@@ -19,7 +19,7 @@ namespace ET.Server
 				return;
 			}
 			response.RoomInfo = roomComponent.ToBson();
-			response.RoomMemberInfos = ListComponent<byte[]>.Create();
+			response.RoomMemberInfos = new();
 			foreach (var roomMember in roomComponent.GetRoomMemberList())
 			{
 				response.RoomMemberInfos.Add(roomMember.ToBson());

@@ -32,14 +32,17 @@ namespace ET.Server
                     break;
                 case SceneType.Realm:
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
+                    scene.AddComponent<RealmGetGatePlayerCountComponent>();
                     break;
                 case SceneType.Gate:
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
                     scene.AddComponent<PlayerComponent>();
                     scene.AddComponent<GateSessionKeyComponent>();
+                    scene.AddComponent<ET.Ability.GlobalBuffComponent>();
                     break;
                 case SceneType.Map:
                     ET.Ability.SceneHelper.InitWhenServer(scene);
+                    scene.AddComponent<ET.Ability.GlobalBuffComponent>();
                     scene.AddComponent<AOIManagerComponent>();
                     break;
                 case SceneType.Location:
@@ -57,6 +60,7 @@ namespace ET.Server
                     break;
                 case SceneType.Room:
                     scene.AddComponent<RoomManagerComponent>();
+                    scene.AddComponent<RoomGetDynamicMapCountComponent>();
                     break;
                 case SceneType.Match:
                     break;

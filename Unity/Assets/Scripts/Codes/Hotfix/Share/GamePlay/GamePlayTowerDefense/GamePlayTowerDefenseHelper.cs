@@ -45,6 +45,8 @@ namespace ET
             GamePlayHelper.AddUnitPathfinding(monsterUnit);
             GamePlayHelper.AddUnitTeamFlag(monsterUnit, teamFlagType);
 
+            UnitHelper_Create.ActorUnitLearnSkillWhenCreate(monsterUnit);
+
             return monsterUnit;
         }
 
@@ -107,6 +109,8 @@ namespace ET
                         GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
                         GamePlayHelper.AddUnitInfo(playerId, towerUnit);
                     }
+
+                    UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
 
                     unitList.Add(towerUnit);
                 }

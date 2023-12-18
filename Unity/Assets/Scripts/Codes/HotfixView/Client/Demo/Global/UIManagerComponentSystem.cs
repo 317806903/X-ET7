@@ -43,6 +43,7 @@ namespace ET.Client
             self.UICamera = UICamera;
             self.UIRoot = UIRoot;
 
+            self.WorldHubRoot = UIRoot.Find("WorldHubRoot").transform;
             self.NormalRoot = UIRoot.Find("NormalRoot").transform;
             self.PopUpRoot = UIRoot.Find("PopUpRoot").transform;
             self.FixedRoot = UIRoot.Find("FixedRoot").transform;
@@ -88,6 +89,7 @@ namespace ET.Client
 
         public static void SetUIRootRotationAll(this UIManagerComponent self)
         {
+            self.SetUIRootRotation(self.WorldHubRoot);
             self.SetUIRootRotation(self.NormalRoot);
             self.SetUIRootRotation(self.PopUpRoot);
             self.SetUIRootRotation(self.FixedRoot);

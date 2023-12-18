@@ -8,53 +8,23 @@ namespace ET
     [FriendOf(typeof (NumericComponent))]
     public static class NumericComponentSystem
     {
-        public static float Get(this NumericComponent self, int numericType)
-        {
-            if (self.isFloatKey.Contains(numericType))
-            {
-                return self.GetAsFloat(numericType);
-            }
-
-            return self.GetAsInt(numericType);
-        }
-
         public static float GetAsFloat(this NumericComponent self, int numericType)
         {
-            if (self.isFloatKey.Contains(numericType) == false)
-            {
-                //Log.Error($"[{numericType}] is not floatKey, canot GetAsFloat ");
-            }
-
             return (float)(self.GetByKey(numericType) * 0.0001f);
         }
 
         public static int GetAsInt(this NumericComponent self, int numericType)
         {
-            if (self.isFloatKey.Contains(numericType))
-            {
-                //Log.Error($"[{numericType}] is floatKey, canot GetAsInt ");
-            }
-
-            return (int)(self.GetByKey(numericType) * 0.0001f);
+            return (int)(self.GetByKey(numericType) * 0.0001f + 0.0001f);
         }
 
         public static long GetAsLong(this NumericComponent self, int numericType)
         {
-            if (self.isFloatKey.Contains(numericType))
-            {
-                //Log.Error($"[{numericType}] is floatKey, canot GetAsLong ");
-            }
-
             return self.GetByKey(numericType);
         }
 
         public static void SetAsFloat(this NumericComponent self, int nt, float value)
         {
-            if (self.isFloatKey.Contains(nt) == false)
-            {
-                self.isFloatKey.Add(nt);
-            }
-
             self[nt] = (long)(value * 10000);
         }
 
@@ -120,7 +90,7 @@ namespace ET
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
             long result = (long)((((self.GetAsFloat(bas) + self.GetAsFloat(add)) * math.max(0, 100 + self.GetAsFloat(pct)) * 0.01f +
                     self.GetAsFloat(finalAdd)) *
-                math.max(0, 100 + self.GetAsFloat(finalPct)) * 0.01f) * 10000);
+                math.max(0, 100 + self.GetAsFloat(finalPct)) * 0.01f + 0.0001f) * 10000);
             self.Insert(final, result, isPublicEvent);
         }
     }
@@ -141,8 +111,6 @@ namespace ET
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, long> NumericDic = new();
-
-        public HashSet<int> isFloatKey = new();
 
         public long this[int numericType]
         {

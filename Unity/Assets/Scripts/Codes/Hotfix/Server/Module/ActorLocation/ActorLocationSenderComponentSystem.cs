@@ -133,6 +133,12 @@ namespace ET.Server
                 if (actorLocationSender.ActorId == 0)
                 {
                     actorLocationSender.ActorId = await LocationProxyComponent.Instance.Get(self.LocationType, actorLocationSender.Id);
+                    if (actorLocationSender.ActorId == 0)
+                    {
+                        actorLocationSender.Error = ErrorCore.ERR_NotFoundActor;
+                        self.RemoveChild(entityId);
+                        return;
+                    }
                     if (actorLocationSender.InstanceId != instanceId)
                     {
                         throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{message}");
@@ -169,6 +175,12 @@ namespace ET.Server
                 if (actorLocationSender.ActorId == 0)
                 {
                     actorLocationSender.ActorId = await LocationProxyComponent.Instance.Get(self.LocationType, actorLocationSender.Id);
+                    if (actorLocationSender.ActorId == 0)
+                    {
+                        actorLocationSender.Error = ErrorCore.ERR_NotFoundActor;
+                        self.RemoveChild(entityId);
+                        return ActorHelper.CreateResponse(request, ErrorCore.ERR_NotFoundActor);
+                    }
                     if (actorLocationSender.InstanceId != instanceId)
                     {
                         throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{request}");

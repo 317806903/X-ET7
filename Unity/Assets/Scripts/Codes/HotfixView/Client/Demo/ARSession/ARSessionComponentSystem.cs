@@ -67,12 +67,18 @@ namespace ET.Client
 			{
 				return;
 			}
+
+			MainQualitySettingComponent.Instance.ForceResetResoutionOrg();
+
 			GameObject ARSessionPrefab = await ResComponent.Instance.LoadAssetAsync<GameObject>("ARSession");
 			ARSessionPrefab = GameObject.Instantiate(ARSessionPrefab);
 			ARSessionPrefab.name = ARSessionPrefab.name.Replace("(Clone)", "");
 			self.ARSessoinGo = ARSessionPrefab;
 
 			UnityEngine.Object.DontDestroyOnLoad(self.ARSessoinGo);
+
+			MainQualitySettingComponent.Instance.ForceResetResoution();
+
 			self.StaticMeshTran = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneRenderer/StaticMesh");
 			Transform ARCameraTrans = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/ArFoundationAdapter/ArFoundationCamera");
 			self.ARCamera = ARCameraTrans.gameObject.GetComponent<Camera>();
@@ -84,8 +90,10 @@ namespace ET.Client
 
 			self.QrCodeImageTran = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneRenderer/CanvasRoot/MarkerCanvas/Canvas/Panel/QrCodeImage");
 
-			// Set backend by Language.
+			// Set backend by Area.
 			SetArSessionServiceEndpoint();
+
+			SetArSessionAppAuth();
 
 			self.RegisterCallBack();
 			await TimerComponent.Instance.WaitFrameAsync();
@@ -108,6 +116,16 @@ namespace ET.Client
 
 			Log.Debug($"SetArSessionServiceEndpoint is set to: [{endpoint}]");
 			setArSessionServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
+		}
+
+		private static void SetArSessionAppAuth()
+		{
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
+			var setAppAuthOptionsMethod = coreValue.GetType().GetMethod("SetAppAuthOptions", InstanceBindFlags);
+			Log.Debug($"SetAppAuthOptions {setAppAuthOptionsMethod}");
+			setAppAuthOptionsMethod.Invoke(coreValue, new object[] { ResConfig.Instance.MirrorARSessionAuthAppKey, ResConfig.Instance.MirrorARSessionAuthAppSecret });
+			Log.Debug($"SetAppAuthOptions succeeded. {ResConfig.Instance.MirrorARSessionAuthAppKey} {ResConfig.Instance.MirrorARSessionAuthAppSecret}");
 		}
 
 		public static void RegisterCallBack(this ARSessionComponent self)
@@ -161,32 +179,26 @@ namespace ET.Client
 			if (MirrorScene.IsAvailable())
 			{
 				self.ResetMainCamera(true);
-
 				//self.SetMeshShow();
 
-				if(bForceIntoCreate)
+				// Skip one frame here in order to have ClassyUI Start() is called first
+				// before the other calls here.
+				await TimerComponent.Instance.WaitFrameAsync();
+				if (bForceIntoCreate)
 				{
 					ClassyUI.Instance.RestartToCreate();
 				}
 				else if(bForceIntoScan)
 				{
-					Log.Debug($"---InitCallBack-- 43 111 {ClassyUI.Instance}");
 					ClassyUI.Instance.RestartToJoin();
-					Log.Debug($"---InitCallBack-- 43 222");
 				}
 
 				Log.Debug($"arSceneId [{arSceneId}]");
 				if (string.IsNullOrEmpty(arSceneId) == false)
 				{
-					Log.Debug($"InitCallBack 00");
 					ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
-					Log.Debug($"InitCallBack 11");
 					ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
-					Log.Debug($"InitCallBack 22");
-					await TimerComponent.Instance.WaitFrameAsync();
-					Log.Debug($"InitCallBack 33");
 					ClassyUI.Instance.TriggerJoinScene(arSceneId);
-					Log.Debug($"InitCallBack 44");
 				}
 			}
 			else
@@ -219,8 +231,24 @@ namespace ET.Client
 			}
 		}
 
+		public static void ShowQuit(this ARSessionComponent self, bool isShow)
+		{
+			if (MirrorScene.IsAvailable())
+			{
+				self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas/BackButton")
+						.SetVisible(isShow);
+			}
+			else
+			{
+			}
+		}
+
 		public static string GetARSceneId(this ARSessionComponent self)
 		{
+			if (MirrorScene.Get() == null)
+			{
+				return "";
+			}
 			StatusOr<SceneInfo> sceneInfo = MirrorScene.Get().GetSceneInfo();
 			if (sceneInfo.HasValue)
 			{
@@ -263,7 +291,7 @@ namespace ET.Client
 		public static void TriggerShowQrCode(this ARSessionComponent self)
 		{
 			ClassyUI.Instance.TriggerShowQrCode();
-			self.ResetQrCodeImageSize();
+			//self.ResetQrCodeImageSize();
 		}
 
 		public static bool ChkARSceneStatusCompleted(this ARSessionComponent self)
@@ -288,7 +316,7 @@ namespace ET.Client
 				if (self.ARSessoinGo != null)
 				{
 					self.ARSessoinGo.SetActive(true);
-					self.ResetQrCodeImageSize();
+					//self.ResetQrCodeImageSize();
 				}
 
 				AudioListener audioListenerMain = GlobalComponent.Instance.MainCamera.gameObject.GetComponent<AudioListener>();
@@ -344,6 +372,7 @@ namespace ET.Client
 				if (self.StaticMeshTran != null)
 				{
 					self.StaticMeshTran.localScale = Vector3.one;
+					UpdateMeshMaterialARScale(self.StaticMeshTran, 1);
 				}
 				return self.CurARCamera;
 			}
@@ -352,14 +381,27 @@ namespace ET.Client
 				self.ScaleARCameraGo.GetComponent<FollowARCamera>().ResetARCamera();
 				self.CurARCamera = self.ARCamera;
 				self.StaticMeshTran.localScale = Vector3.one;
-				return self.CurARCamera;
 			}
 			else
 			{
 				self.ScaleARCameraGo.GetComponent<FollowARCamera>().SetARCamera(self.ARCamera, arScale);
 				self.CurARCamera = self.ScaleARCamera;
 				self.StaticMeshTran.localScale = new Vector3(arScale, arScale, arScale);
-				return self.CurARCamera;
+			}
+			UpdateMeshMaterialARScale(self.StaticMeshTran, arScale);
+			return self.CurARCamera;
+		}
+
+		private static void UpdateMeshMaterialARScale(Transform staticMeshTrans, float arScale)
+		{
+			MirrorVerse.UI.Renderers.StaticMeshRenderer staticMeshRenderer = staticMeshTrans.gameObject.GetComponent<MirrorVerse.UI.Renderers.StaticMeshRenderer>();
+			MirrorVerse.Options.StaticMeshRendererOptions staticMeshRendererOptions = staticMeshRenderer.options;
+			// Update material's scale that require depth computation.
+			foreach (Material material in staticMeshRendererOptions.defaultMaterials)
+			{
+				// Note: expect materials assigned to this options are using the DepthAlpha shader:
+				// MirrorVerse.UI/Renderers/Shaders/Terrain/DepthAlpha.cginc
+				material.SetFloat("_CameraScale", arScale);
 			}
 		}
 
@@ -377,7 +419,7 @@ namespace ET.Client
 
 		public static void ShowARMesh(this ARSessionComponent self, bool show)
 		{
-			Log.Debug($"ARSessionComponent SetMeshShow");
+			//Log.Debug($"ARSessionComponent SetMeshShow");
 			Transform staticMeshTrans = self.StaticMeshTran;
 			MirrorVerse.UI.Renderers.StaticMeshRenderer staticMeshRenderer = staticMeshTrans.gameObject.GetComponent<MirrorVerse.UI.Renderers.StaticMeshRenderer>();
 			MirrorVerse.Options.StaticMeshRendererOptions staticMeshRendererOptions = staticMeshRenderer.options;

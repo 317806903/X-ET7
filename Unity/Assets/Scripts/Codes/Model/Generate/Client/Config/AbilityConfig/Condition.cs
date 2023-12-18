@@ -33,9 +33,10 @@ public abstract partial class Condition: Bright.Config.BeanBase
             case BuffPassTimeRecordCondition.__ID__: return new BuffPassTimeRecordCondition(_buf);
             case BuffLeftTimeCondition.__ID__: return new BuffLeftTimeCondition(_buf);
             case BuffLeftTimeRecordCondition.__ID__: return new BuffLeftTimeRecordCondition(_buf);
-            case BuffIdCondition.__ID__: return new BuffIdCondition(_buf);
-            case BuffTagTypeCondition.__ID__: return new BuffTagTypeCondition(_buf);
+            case BuffCfgIdCondition.__ID__: return new BuffCfgIdCondition(_buf);
             case BuffTypeCondition.__ID__: return new BuffTypeCondition(_buf);
+            case BuffTagTypeCondition.__ID__: return new BuffTagTypeCondition(_buf);
+            case BuffTagGroupTypeCondition.__ID__: return new BuffTagGroupTypeCondition(_buf);
             case AttributeCondition.__ID__: return new AttributeCondition(_buf);
             case AttributeRecordCondition.__ID__: return new AttributeRecordCondition(_buf);
             case CurHpCondition.__ID__: return new CurHpCondition(_buf);

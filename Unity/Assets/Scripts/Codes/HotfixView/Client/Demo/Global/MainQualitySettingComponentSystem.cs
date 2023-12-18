@@ -353,6 +353,12 @@ namespace ET.Client
 		    self.SetResoutionByQuality();
 	    }
 
+	    public static void ForceResetResoutionOrg(this MainQualitySettingComponent self)
+	    {
+		    bool bFullScreen = Screen.fullScreen;
+		    Screen.SetResolution(self.orgScreenWidth, self.orgScreenHeight, bFullScreen);
+	    }
+
 	    public static void ForceResetScreenOrientation(this MainQualitySettingComponent self)
 	    {
 		    self.forceResetResoution = true;

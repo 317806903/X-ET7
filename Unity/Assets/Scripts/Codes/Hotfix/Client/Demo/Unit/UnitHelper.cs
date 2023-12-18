@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -43,6 +44,12 @@ namespace ET.Client
             Unit observerUnit = GetMyObserverUnit(scene);
             Unit myPlayerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
             return myPlayerUnit;
+        }
+
+        public static void SendGetNumericUnit(Unit unit)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());
+            gamePlayComponent.RecordNeedGetNumericUnit(unit);
         }
 
     }

@@ -126,7 +126,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_SaleButton
+		public TMPro.TextMeshProUGUI ELabel_SellTextMeshProUGUI
 		{
 			get
 			{
@@ -135,15 +135,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_SaleButton == null )
+				if( this.m_ELabel_SellTextMeshProUGUI == null )
 				{
-					this.m_E_SaleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Sale");
+					this.m_ELabel_SellTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/ELabel_Sell");
 				}
-				return this.m_E_SaleButton;
+				return this.m_ELabel_SellTextMeshProUGUI;
 			}
 		}
 
-		public UnityEngine.UI.Image E_SaleImage
+		public UITextLocalizeMonoView ELabel_SellUITextLocalizeMonoView
 		{
 			get
 			{
@@ -152,11 +152,79 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_SaleImage == null )
+				if( this.m_ELabel_SellUITextLocalizeMonoView == null )
 				{
-					this.m_E_SaleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Sale");
+					this.m_ELabel_SellUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/ELabel_Sell");
 				}
-				return this.m_E_SaleImage;
+				return this.m_ELabel_SellUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_SaleButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_SaleButton == null )
+				{
+					this.m_EButton_SaleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale");
+				}
+				return this.m_EButton_SaleButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_SaleImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_SaleImage == null )
+				{
+					this.m_EButton_SaleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale");
+				}
+				return this.m_EButton_SaleImage;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ConfirmButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ConfirmButton == null )
+				{
+					this.m_EButton_ConfirmButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm");
+				}
+				return this.m_EButton_ConfirmButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ConfirmImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ConfirmImage == null )
+				{
+					this.m_EButton_ConfirmImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm");
+				}
+				return this.m_EButton_ConfirmImage;
 			}
 		}
 
@@ -171,7 +239,7 @@ namespace ET.Client
 				}
 				if( this.m_E_SaleMoney_textTextMeshProUGUI == null )
 				{
-					this.m_E_SaleMoney_textTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Sale/money/E_SaleMoney_text");
+					this.m_E_SaleMoney_textTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/money/E_SaleMoney_text");
 				}
 				return this.m_E_SaleMoney_textTextMeshProUGUI;
 			}
@@ -594,8 +662,12 @@ namespace ET.Client
 			this.m_E_IconStar1Image = null;
 			this.m_E_IconStar2Image = null;
 			this.m_E_IconStar3Image = null;
-			this.m_E_SaleButton = null;
-			this.m_E_SaleImage = null;
+			this.m_ELabel_SellTextMeshProUGUI = null;
+			this.m_ELabel_SellUITextLocalizeMonoView = null;
+			this.m_EButton_SaleButton = null;
+			this.m_EButton_SaleImage = null;
+			this.m_EButton_ConfirmButton = null;
+			this.m_EButton_ConfirmImage = null;
 			this.m_E_SaleMoney_textTextMeshProUGUI = null;
 			this.m_E_ReclaimButton = null;
 			this.m_E_ReclaimImage = null;
@@ -631,8 +703,12 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_IconStar1Image = null;
 		private UnityEngine.UI.Image m_E_IconStar2Image = null;
 		private UnityEngine.UI.Image m_E_IconStar3Image = null;
-		private UnityEngine.UI.Button m_E_SaleButton = null;
-		private UnityEngine.UI.Image m_E_SaleImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_SellTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_SellUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_EButton_SaleButton = null;
+		private UnityEngine.UI.Image m_EButton_SaleImage = null;
+		private UnityEngine.UI.Button m_EButton_ConfirmButton = null;
+		private UnityEngine.UI.Image m_EButton_ConfirmImage = null;
 		private TMPro.TextMeshProUGUI m_E_SaleMoney_textTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_ReclaimButton = null;
 		private UnityEngine.UI.Image m_E_ReclaimImage = null;

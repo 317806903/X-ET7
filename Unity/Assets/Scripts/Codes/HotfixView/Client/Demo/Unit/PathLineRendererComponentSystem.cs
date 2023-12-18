@@ -143,10 +143,16 @@ namespace ET.Client
                 meshFilter.sharedMesh = lineMesh;
                 try
                 {
+                    int retryNum = 10;
                     while (true)
                     {
                         lineRenderer.BakeMesh(lineMesh, CameraHelper.GetMainCamera(self.DomainScene()), true);
                         if (lineMesh.vertices.Length > 3)
+                        {
+                            break;
+                        }
+
+                        if (retryNum -- <= 0)
                         {
                             break;
                         }
@@ -191,6 +197,10 @@ namespace ET.Client
                 GameObject hitGo = hit.collider.gameObject;
                 if (self.ChkIsHitPath(hitGo))
                 {
+                    if (pos.y > hit.point.y + 1.5f)
+                    {
+                        continue;
+                    }
                     return true;
                 }
             }

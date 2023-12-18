@@ -31,7 +31,7 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(RotateComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -110,9 +110,9 @@ namespace ET.Ability
 
         public static void RunRotate(this RotateComponent self, float fixedDeltaTime)
         {
-            foreach (var rotateObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                RotateObj rotateObj = rotateObjs.Value as RotateObj;
+                RotateObj rotateObj = obj as RotateObj;
                 self.rotateDirectionInput += rotateObj.GetIncrementRotateInTime();
             }
 
@@ -139,9 +139,9 @@ namespace ET.Ability
 
 
             self.removeList.Clear();
-            foreach (var rotateObjs in self.Children)
+            foreach (var obj in self.Children.Values)
             {
-                RotateObj rotateObj = rotateObjs.Value as RotateObj;
+                RotateObj rotateObj = obj as RotateObj;
                 self.removeList.Add(rotateObj);
             }
 

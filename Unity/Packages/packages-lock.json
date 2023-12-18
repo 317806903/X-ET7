@@ -14,7 +14,7 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": ">=12.1.6"
       },
-      "hash": "39dd499aa542e5e9d26ccbba173da5a8d6078024"
+      "hash": "44ae35a7f70cb390ba493969974c8d80fb029579"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
@@ -23,21 +23,21 @@
       "dependencies": {
         "com.deepmirror.mirrorverse": "0.1.5"
       },
-      "hash": "39dd499aa542e5e9d26ccbba173da5a8d6078024"
+      "hash": "44ae35a7f70cb390ba493969974c8d80fb029579"
     },
     "com.dm.packages.blurbackground": {
       "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/BlurBackground",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4d03b65ca96a232e9aa56065a6d7e7a6842c9b9b"
+      "hash": "3f2c5c2cf96197845fc0c5c06a07bd6efe6bf5fa"
     },
     "com.dm.packages.eventlogging": {
       "version": "https://github.com/deepmirrorinc/EventLoggingUnitySdk.git?path=/Assets",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e433fb40dd19fdaa2d731de0dddecb1f90ae5aa1"
+      "hash": "77baee9d2658b35448e9785b18172d974ba47bc8"
     },
     "com.dm.packages.ingamedebugconsole": {
       "version": "file:com.dm.packages.ingamedebugconsole@1fe3a61140",
@@ -97,7 +97,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.25",
+      "version": "3.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -135,6 +135,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.memoryprofiler": {
+      "version": "1.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.android-logcat": {

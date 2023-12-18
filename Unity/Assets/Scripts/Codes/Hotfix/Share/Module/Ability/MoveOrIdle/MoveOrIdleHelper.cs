@@ -22,10 +22,10 @@ namespace ET.Ability
             moveOrIdleComponent.StopMove();
         }
 
-        public static void DoIdle(Unit unit)
+        public static async ETTask DoIdle(Unit unit)
         {
             MoveOrIdleComponent moveOrIdleComponent = _GetOrAddMoveOrIdleComponent(unit);
-            moveOrIdleComponent.DoIdle();
+            await moveOrIdleComponent.DoIdle();
         }
 
         public static async ETTask DoMoveDirection(Unit unit, float3 directionInput)

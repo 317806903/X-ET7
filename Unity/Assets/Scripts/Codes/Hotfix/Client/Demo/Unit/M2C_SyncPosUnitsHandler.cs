@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using Unity.Mathematics;
+
+namespace ET.Client
 {
 	[MessageHandler(SceneType.Client)]
 	public class M2C_SyncPosUnitsHandler : AMHandler<M2C_SyncPosUnits>
@@ -23,8 +25,8 @@
 					continue;
 				}
 
-				unit.Position = unitInfo.Position;
-				unit.Forward = unitInfo.Forward;
+				unit.Position = new float3(unitInfo.PositionX * 0.01f, unitInfo.PositionY * 0.01f, unitInfo.PositionZ * 0.01f);
+				unit.Forward = new float3(unitInfo.ForwardX * 0.01f, unitInfo.ForwardY * 0.01f, unitInfo.ForwardZ * 0.01f);
 			}
 			await ETTask.CompletedTask;
 		}

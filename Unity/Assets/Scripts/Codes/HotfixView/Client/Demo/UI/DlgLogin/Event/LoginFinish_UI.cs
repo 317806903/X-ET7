@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using NUnit.Framework;
+
+namespace ET.Client
 {
     [Event(SceneType.Client)]
     public class LoginFinish_UI: AEvent<Scene, EventType.LoginFinish>
@@ -16,19 +18,14 @@
                     {
                         FinishedCallBack(scene).Coroutine();
 
-                        EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
-                        {
-                            eventName = "tutorial_down",
-                            properties = new()
-                            {
-                                {"step_id", 0},
-                                {"last_time", 0},
-                            }
-                        });
-
                     }).Coroutine();
                 }
             }
+
+            SessionComponent sessionComponent = ET.Client.SessionHelper.GetSessionCompent(scene);
+            PingComponent pingComponent = sessionComponent.Session.GetComponent<PingComponent>();
+            DebugShowComponent.Instance.SetPing(pingComponent);
+
             await SceneHelper.EnterHall(scene, true);
         }
 
@@ -38,10 +35,9 @@
             {
                 return;
             }
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             playerBaseInfoComponent.isFinishTutorialFirst = true;
-            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(scene, PlayerModelType.BaseInfo);
+            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(scene, PlayerModelType.BaseInfo, new (){"isFinishTutorialFirst"});
         }
     }
 }

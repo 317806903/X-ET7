@@ -33,10 +33,7 @@ namespace ET
         {
         }
 
-        public struct GetRouterHttpHostAndPortWhenEditor
-        {
-        }
-
+        private readonly object lockObj = new object();
         private readonly Dictionary<string, IConfigSingleton> allConfig = new Dictionary<string, IConfigSingleton>(20);
 
         private bool isFinishLoad;
@@ -56,23 +53,27 @@ namespace ET
 
 		public object LoadOneConfig(Type configType)
 		{
-			this.allConfig.TryGetValue(configType.Name, out IConfigSingleton oneConfig);
-			if (oneConfig != null)
+			object category;
+			lock (lockObj)
 			{
-				oneConfig.Destroy();
+				this.allConfig.TryGetValue(configType.Name, out IConfigSingleton oneConfig);
+				if (oneConfig != null)
+				{
+					oneConfig.Destroy();
+				}
+
+				ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes()
+				{
+					ConfigName = configType.Name,
+					ConfigFullName = configType.FullName,
+				});
+
+				category = Activator.CreateInstance(configType, oneConfigBytes);
+				IConfigSingleton singleton = category as IConfigSingleton;
+				singleton.Register();
+
+				this.allConfig[configType.Name] = singleton;
 			}
-
-			ByteBuf oneConfigBytes = EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes()
-			{
-				ConfigName = configType.Name,
-				ConfigFullName = configType.FullName,
-			});
-
-			object category = Activator.CreateInstance(configType, oneConfigBytes);
-			IConfigSingleton singleton = category as IConfigSingleton;
-			singleton.Register();
-
-			this.allConfig[configType.Name] = singleton;
 			return category;
 		}
 
@@ -102,13 +103,18 @@ namespace ET
 
 		public async ETTask LoadAsync()
 		{
-			this.isFinishLoad = false;
-			foreach (var configSingleton in this.allConfig)
+			Dictionary<Type, ByteBuf> configBytes;
+			lock (lockObj)
 			{
-				configSingleton.Value.Destroy();
+				this.isFinishLoad = false;
+				foreach (var configSingleton in this.allConfig)
+				{
+					configSingleton.Value.Destroy();
+				}
+				this.allConfig.Clear();
+				configBytes = EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, ByteBuf>>(new GetAllConfigBytes());
+
 			}
-			this.allConfig.Clear();
-			Dictionary<Type, ByteBuf> configBytes = EventSystem.Instance.Invoke<GetAllConfigBytes, Dictionary<Type, ByteBuf>>(new GetAllConfigBytes());
 
 			using ListComponent<Task> listTasks = ListComponent<Task>.Create();
 

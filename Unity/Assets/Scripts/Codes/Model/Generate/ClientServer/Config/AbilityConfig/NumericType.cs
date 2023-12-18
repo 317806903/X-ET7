@@ -70,6 +70,38 @@ namespace ET.AbilityConfig
         PhysicalAttackPct = 10073,
         PhysicalAttackFinalAdd = 10074,
         PhysicalAttackFinalPct = 10075,
+        /// <summary>
+        /// 暴击伤害(N%)
+        /// </summary>
+        CriticalHitDamageBase = 10081,
+        CriticalHitDamageAdd = 10082,
+        CriticalHitDamagePct = 10083,
+        CriticalHitDamageFinalAdd = 10084,
+        CriticalHitDamageFinalPct = 10085,
+        /// <summary>
+        /// 暴击率(N%)
+        /// </summary>
+        CriticalStrikeRateBase = 10091,
+        CriticalStrikeRateAdd = 10092,
+        CriticalStrikeRatePct = 10093,
+        CriticalStrikeRateFinalAdd = 10094,
+        CriticalStrikeRateFinalPct = 10095,
+        /// <summary>
+        /// 伤害加深系数(N%)
+        /// </summary>
+        DamageDeepeningBase = 10101,
+        DamageDeepeningAdd = 10102,
+        DamageDeepeningPct = 10103,
+        DamageDeepeningFinalAdd = 10104,
+        DamageDeepeningFinalPct = 10105,
+        /// <summary>
+        /// 伤害减免系数(N%)
+        /// </summary>
+        DamageReliefBase = 10111,
+        DamageReliefAdd = 10112,
+        DamageReliefPct = 10113,
+        DamageReliefFinalAdd = 10114,
+        DamageReliefFinalPct = 10115,
     }
 
 } 

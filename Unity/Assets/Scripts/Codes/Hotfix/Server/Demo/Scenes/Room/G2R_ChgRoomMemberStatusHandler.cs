@@ -36,10 +36,15 @@ namespace ET.Server
 
 				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.EnteringBattle);
 
-				StartSceneConfig dynamicMapConfig = StartSceneConfigCategory.Instance.GetDynamicMap(scene.DomainZone());
+				StartSceneConfig dynamicMapConfig = scene.GetComponent<RoomGetDynamicMapCountComponent>().GetMinCountDynamicMap();
+				if (dynamicMapConfig == null)
+				{
+					dynamicMapConfig = StartSceneConfigCategory.Instance.GetRandomDynamicMap(scene.DomainZone());
+				}
+				scene.GetComponent<RoomGetDynamicMapCountComponent>().AddDynamicMapCount(dynamicMapConfig);
 
 				byte[] roomInfo = roomComponent.ToBson();
-				ListComponent<byte[]> roomMemberInfos = ListComponent<byte[]>.Create();
+				using ListComponent<byte[]> roomMemberInfos = ListComponent<byte[]>.Create();
 				foreach (var roomMember in roomMemberList)
 				{
 					roomMemberInfos.Add(roomMember.ToBson());
@@ -47,12 +52,18 @@ namespace ET.Server
 
 				if (roomComponent.dynamicMapInstanceId > 0)
 				{
-					R2M_DestroyDynamicMap _R2M_DestroyDynamicMap = new ()
+					try
 					{
-						DynamicMapInstanceId = roomComponent.dynamicMapInstanceId,
-					};
-					M2R_DestroyDynamicMap _M2R_DestroyDynamicMap = (M2R_DestroyDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig
-							.InstanceId, _R2M_DestroyDynamicMap);
+						R2M_DestroyDynamicMap _R2M_DestroyDynamicMap = new ()
+						{
+							DynamicMapInstanceId = roomComponent.dynamicMapInstanceId,
+						};
+						ActorMessageSenderComponent.Instance.Send(roomComponent.dynamicMapInstanceId, _R2M_DestroyDynamicMap);
+					}
+					catch (Exception e)
+					{
+						Log.Error(e);
+					}
 				}
 
 				R2M_CreateDynamicMap _R2M_CreateDynamicMap = new ()
@@ -61,8 +72,7 @@ namespace ET.Server
 					RoomMemberInfos = roomMemberInfos,
 					ARMeshDownLoadUrl = roomManagerComponent.GetARMeshDownLoadUrl(roomId),
 				};
-				M2R_CreateDynamicMap _M2R_CreateDynamicMap = (M2R_CreateDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig
-						.InstanceId, _R2M_CreateDynamicMap);
+				M2R_CreateDynamicMap _M2R_CreateDynamicMap = (M2R_CreateDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig.InstanceId, _R2M_CreateDynamicMap);
 				long dynamicMapInstanceId = _M2R_CreateDynamicMap.DynamicMapInstanceId;
 
 				roomComponent.dynamicMapInstanceId = dynamicMapInstanceId;

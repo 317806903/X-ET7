@@ -29,6 +29,16 @@ namespace ET.Ability
             list = new();
             list[damageType] = damageValue;
         }
+        //
+        // public void SetScale(float scale)
+        // {
+        //     list = new();
+        //     foreach (var damageInfo in list)
+        //     {
+        //         list[damageInfo.Key] = damageInfo.Value * scale;
+        //     }
+        //     return new Damage(list);
+        // }
 
         ///<summary>
         ///统计规则，在这个游戏里伤害和治疗不能共存在一个结果里，作为抵消用
@@ -75,6 +85,10 @@ namespace ET.Ability
 
         public static Damage operator *(Damage a, float scale)
         {
+            if (scale == 1)
+            {
+                return a;
+            }
             Dictionary<int, float> list = new();
             foreach (var damageInfo in a.list)
             {
@@ -82,5 +96,6 @@ namespace ET.Ability
             }
             return new Damage(list);
         }
+
     }
 }

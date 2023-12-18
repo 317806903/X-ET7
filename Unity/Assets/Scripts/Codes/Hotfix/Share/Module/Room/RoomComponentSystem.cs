@@ -204,7 +204,7 @@ namespace ET
         {
             if (self.ChkIsAllReady() == false)
             {
-                string msg = "请等待全部人员准备好";
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_WaitAllReady");
                 return (false, msg);
             }
 
@@ -236,14 +236,14 @@ namespace ET
                 {
                     if (countRoomTeamId_Green == 0 || countRoomTeamId_Red == 0)
                     {
-                        string msg = "必须每个阵营都有人";
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_EachCampHaveSomeone");
                         return (false, msg);
                     }
                     if (playerTeam.IsAllowDiffTeamMember == false)
                     {
                         if (countRoomTeamId_Green != countRoomTeamId_Red)
                         {
-                            string msg = "阵营人数不一致,请调整";
+                            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_CampNumberInconsistent");
                             return (false, msg);
                         }
                     }
@@ -252,7 +252,7 @@ namespace ET
                 {
                     if (countRoomTeamId_Green == 0 || countRoomTeamId_Red == 0 || countRoomTeamId_Blue == 0)
                     {
-                        string msg = "必须每个阵营都有人";
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_EachCampHaveSomeone");
                         return (false, msg);
                     }
                     if (playerTeam.IsAllowDiffTeamMember == false)
@@ -261,19 +261,19 @@ namespace ET
                             || countRoomTeamId_Green != countRoomTeamId_Blue
                             || countRoomTeamId_Red != countRoomTeamId_Blue)
                         {
-                            string msg = "阵营人数不一致,请调整";
+                            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_CampNumberInconsistent");
                             return (false, msg);
                         }
                     }
                 }
                 else if (playerTeam.MaxTeamCount < 2)
                 {
-                    string msg = "暂不支持小于2个阵营";
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_NotSupport",2);
                     return (false, msg);
                 }
                 else if (playerTeam.MaxTeamCount > 3)
                 {
-                    string msg = "暂不支持超过3个阵营";
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Room_NotSupport",3);
                     return (false, msg);
                 }
             }

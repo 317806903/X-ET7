@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e703cf961fb6e43bace01eb5aa72be, type: 3}
   m_Name: RaycastRendererOptions
   m_EditorClassIdentifier: 
-  cursorVisible: 1
+  cursorVisible: 0
   detectedPlaneVisible: 0
-  raycastOnMeshEnabled: 1
+  raycastOnMeshEnabled: 0
   raycastOnPlaneEnabled: 0
   cursorPrefab: {fileID: 2184116888779071606, guid: da3aebc523199b940b5aa3db177b6abe,
     type: 3}

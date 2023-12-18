@@ -2,7 +2,6 @@
 
 namespace ET.Client
 {
-    [FriendOf(typeof(GamePlayTowerDefenseComponent))]
     public static class GamePlayHelper
 	{
 		public static GamePlayComponent GetGamePlay(Scene scene)
@@ -37,6 +36,5 @@ namespace ET.Client
 				});
 			}
 		}
-
 	}
 }

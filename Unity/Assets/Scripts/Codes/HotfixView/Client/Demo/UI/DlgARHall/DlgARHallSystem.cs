@@ -29,6 +29,7 @@ namespace ET.Client
 				DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = contextData as DlgARHall_ShowWindowData;
 				self.RoomTypeIn = _DlgARHall_ShowWindowData.RoomType;
 				self.SubRoomTypeIn = _DlgARHall_ShowWindowData.SubRoomType;
+				self.PveLevel = _DlgARHall_ShowWindowData.PveLevel;
 				if (_DlgARHall_ShowWindowData.playerStatus == PlayerStatus.Hall)
 				{
 					self.roomId = 0;
@@ -124,6 +125,19 @@ namespace ET.Client
 			Log.Debug($"ET.Client.DlgARHallSystem.OnClose ");
 			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
 
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+			string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "ScanEnded",
+				properties = new()
+				{
+					{"success", false},
+					{"session_id", arSceneIdTmp},
+					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
+				}
+			});
+
 			await UIManagerHelper.ExitRoom(self.DomainScene());
 		}
 
@@ -142,12 +156,18 @@ namespace ET.Client
 
 			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 			{
-				eventName = "scan_begin",
+				eventName = "ScanStarted",
 				properties = new()
 				{
-					{"game_mode", "xxxx"},
+					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
 				}
 			});
+
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+			{
+				eventName = "ScanEnded",
+			});
+
 		}
 
 		public static async ETTask OnQuitRoomCallBack(this DlgARHall self)
@@ -161,6 +181,20 @@ namespace ET.Client
 				self.isHost = false;
 				self.roomId = 0;
 				Log.Debug($"ET.Client.DlgARHallSystem.OnQuitRoomCallBack end {self.roomId}");
+
+				PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+				string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "ScanEnded",
+					properties = new()
+					{
+						{"success", false},
+						{"session_id", arSceneIdTmp},
+						{"game_mode", playerStatusComponent.SubRoomType.ToString()},
+					}
+				});
+
 			}
 			catch (Exception e)
 			{
@@ -209,21 +243,21 @@ namespace ET.Client
 			Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack ");
 			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
 
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+			Log.Debug($"-OnFinishedCallBack self.playerStatusIn[{self.playerStatusIn.ToString()}] playerComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}]");
+
+			string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
 			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 			{
-				eventName = "scan_finish",
+				eventName = "ScanEnded",
 				properties = new()
 				{
-					{"is_success", true},
-					{"id_session", "123123123123"},
-					{"last_time", 0},
-					{"redo_num", 0},
-					{"game_mode", "xxxx"},
+					{"success", true},
+					{"session_id", arSceneIdTmp},
+					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
 				}
 			});
 
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
-			Log.Debug($"-OnFinishedCallBack self.playerStatusIn[{self.playerStatusIn.ToString()}] playerComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}]");
 			if (self.playerStatusIn != PlayerStatus.Hall)
 			{
 				if (playerStatusComponent.PlayerStatus == PlayerStatus.Battle)
@@ -305,7 +339,9 @@ namespace ET.Client
 			{
 				if (self.SubRoomTypeIn == SubRoomType.ARPVE)
 				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.ARPVECfgId;
+					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+                    	TowerDefense_ChallengeLevelCfgCategory.Instance.Get("Level" + self.PveLevel);
+					battleCfgId = challengeLevelCfg.BattleLevel;
 				}
 				else if (self.SubRoomTypeIn == SubRoomType.ARPVP)
 				{

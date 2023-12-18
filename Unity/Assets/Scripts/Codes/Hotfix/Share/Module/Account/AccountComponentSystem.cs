@@ -15,6 +15,7 @@
         {
             self.accountId = accountId;
             self.password = password;
+            self.accountType = loginType;
             self.loginType = loginType;
             self.playerId = IdGenerater.Instance.GenerateId();
             self.createTime = TimeHelper.ServerNow();

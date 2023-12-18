@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 判断Buff层数
+/// 判断当前Buff层数
 /// </summary>
 public sealed partial class BuffStackCountRecordCondition:  Condition 
 {

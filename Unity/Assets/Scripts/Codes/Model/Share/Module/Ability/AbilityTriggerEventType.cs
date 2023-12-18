@@ -156,5 +156,107 @@ namespace ET.Ability
             public Unit[] targetUnits;
         }
 
+        //=========================================================
+
+        public struct NearUnitOnCreate
+        {
+            public Unit unit;
+        }
+
+        public struct NearUnitOnHit
+        {
+            public Unit attackerUnit;
+            public Unit defenderUnit;
+        }
+
+        public struct NearUnitOnRemoved
+        {
+            public Unit unit;
+        }
+
+        public struct GamePlayTowerDefense_PutTower
+        {
+            public long playerId;
+            public Unit towerUnit;
+            public string towerCfgId;
+        }
+
+        public struct GamePlayTowerDefense_ScaleTower
+        {
+            public long playerId;
+            public Unit towerUnit;
+            public string towerCfgId;
+        }
+
+        public struct GamePlayTowerDefense_ReclaimTower
+        {
+            public long playerId;
+            public Unit towerUnit;
+            public string towerCfgId;
+        }
+
+        public struct GamePlayTowerDefense_UpgradeTower
+        {
+            public long playerId;
+            public Unit oldTowerUnit;
+            public string oldTowerCfgId;
+            public Unit newTowerUnit;
+            public string newTowerCfgId;
+        }
+
+        public struct GamePlayTowerDefense_TowerKillMonster
+        {
+            public long playerId;
+            public Unit towerUnit;
+            public string towerCfgId;
+            public Unit monsterUnit;
+        }
+
+        public struct GamePlayTowerDefense_Status_PutHomeBegin
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_PutHomeEnd
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_PutMonsterPointBegin
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_PutMonsterPointEnd
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_ShowStartEffectBegin
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_ShowStartEffectEnd
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_RestTimeBegin
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_RestTimeEnd
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_InTheBattleBegin
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_InTheBattleEnd
+        {
+        }
+
+        public struct GamePlayTowerDefense_Status_GameEnd
+        {
+        }
+
+        //=========================================================
+
     }
 }

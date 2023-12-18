@@ -29,9 +29,11 @@ namespace ET
                     if (self.NavMesh != null)
                     {
                         self.NavMesh.RemoveAgent(self.navMeshAgent);
+                        self.NavMesh = null;
                     }
                     self.navMeshAgent = null;
                 }
+                self.NavMesh = null;
             }
         }
 
@@ -40,7 +42,7 @@ namespace ET
         {
             protected override void FixedUpdate(PathfindingComponent self)
             {
-                if (self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
                     return;
                 }
@@ -56,6 +58,11 @@ namespace ET
             float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
             float radius = ET.Ability.UnitHelper.GetBodyRadius(unit);
             self.NavMesh = await navmeshManagerComponent.CreateCrowd(radius);
+
+            if (radius > self.NavMesh.GetRadius())
+            {
+                radius = self.NavMesh.GetRadius();
+            }
 
             if (self.NavMesh == null)
             {
@@ -80,7 +87,12 @@ namespace ET
 
         public static void FixedUpdate(this PathfindingComponent self, float fixedDeltaTime)
         {
-            self.ResetPosAndFace();
+            if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
+            {
+                self.curFrameSyncPos = 0;
+
+                self.ResetPosAndFace();
+            }
         }
 
         public static Unit GetUnit(this PathfindingComponent self)
@@ -169,6 +181,10 @@ namespace ET
                 return true;
             }
             Unit unit = self.GetUnit();
+            if (UnitHelper.ChkIsObserver(unit))
+            {
+                return false;
+            }
             MoveOrIdleComponent moveOrIdleComponent = unit.GetComponent<MoveOrIdleComponent>();
             if (moveOrIdleComponent.moveInputType == MoveInputType.Stop)
             {
@@ -181,8 +197,8 @@ namespace ET
         {
             if (self.NavMesh == null)
             {
-                Log.Debug("寻路| Find 失败 pathfinding ptr is zero");
-                throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
+                Log.Error($"ChkCanArrive pathfinding ptr is zero: {self.DomainScene().Name}");
+                return false;
             }
 
             return self.NavMesh.ChkCanArrive(startPos, targetPos);
@@ -192,8 +208,8 @@ namespace ET
         {
             if (self.NavMesh == null)
             {
-                Log.Debug("寻路| Find 失败 pathfinding ptr is zero");
-                throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
+                Log.Error($"GetArrivePath pathfinding ptr is zero: {self.DomainScene().Name}");
+                return null;
             }
 
             return self.NavMesh.GetArrivePath(startPos, targetPos);
@@ -335,7 +351,8 @@ namespace ET
         {
             if ( self.NavMesh == null)
             {
-                throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
+                Log.Error($"SetMoveTarget pathfinding ptr is zero: {self.DomainScene().Name}");
+                return;
             }
 
             self.NavMesh.SetMoveTarget(self.navMeshAgent, pos);
@@ -345,7 +362,8 @@ namespace ET
         {
             if ( self.NavMesh == null)
             {
-                throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
+                Log.Error($"SetMoveVelocity pathfinding ptr is zero: {self.DomainScene().Name}");
+                return;
             }
 
             self.NavMesh.SetMoveVelocity(self.navMeshAgent, velocity);
@@ -353,12 +371,13 @@ namespace ET
 
         public static float3 GetNearNavmeshPos(this PathfindingComponent self, float3 pos)
         {
-            if ( self.NavMesh == null)
+            if (self.NavMesh == null)
             {
-                throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
+                Log.Error($"GetNearNavmeshPos pathfinding ptr is zero: {self.DomainScene().Name}");
+                return pos;
             }
 
-            return self.NavMesh.GetNearNavmeshPos(pos);
+            return self.NavMesh.GetNearNavmeshPos(pos, out var _, out var _);
         }
     }
 }

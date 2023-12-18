@@ -13,7 +13,7 @@ namespace ET.Ability
 			}
 
 			ActionCfg_FireBullet actionCfgFireBullet = ActionCfg_FireBulletCategory.Instance.Get(actionId);
-			BulletHelper.CreateBullet(unit, actionCfgFireBullet, selectHandle, actionContext);
+			BulletHelper.CreateBullet(unit, actionCfgFireBullet, selectHandle, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

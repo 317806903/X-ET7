@@ -17,7 +17,7 @@ namespace ET.Client
 				self.OnClickBG();
 			});
 
-			self.View.E_SaleButton.AddListener(self.OnSale);
+			self.View.EButton_SaleButton.AddListener(self.OnSale);
 			self.View.E_ReclaimButton.AddListener(self.OnReclaim);
 			self.View.E_UpgradeButton.AddListener(self.OnUpgrade);
 		}
@@ -33,16 +33,21 @@ namespace ET.Client
 			self.View.EG_MyTowerDescRectTransform.SetVisible(false);
 			self.View.EG_OtherTowerDescRectTransform.SetVisible(false);
 
+			self.View.EButton_SaleButton.gameObject.SetActive(true);
+			self.View.EButton_ConfirmButton.gameObject.SetActive(false);
+
 			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
 			if (myPlayerId == self.playerId)
 			{
 				if (self.towerUnitId == 0)
 				{
+					self.onlyChkPool = true;
 					//self.ShowMyOwnerTower();
 					self.ShowOtherTower();
 				}
 				else
 				{
+					self.onlyChkPool = false;
 					self.ShowMyTower();
 				}
 			}
@@ -57,15 +62,13 @@ namespace ET.Client
 			self.View.EG_OperatorMenuRectTransform.SetVisible(true);
 			self.View.EG_MyTowerDescRectTransform.SetVisible(true);
 
+			string itemCfgId = self.towerCfgId;
+			string towerName = ItemHelper.GetItemName(itemCfgId);
+
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
-			string towerName = towerCfg.Name;
-			if (string.IsNullOrEmpty(towerName))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				towerName = unitCfg.Name;
-			}
+
 			self.View.E_TowerNameTextMeshProUGUI.text = towerName;
-			int starCount = towerCfg.Level[0];
+			int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
 			self.View.E_IconStar1Image.gameObject.SetActive(starCount>=1);
 			self.View.E_IconStar2Image.gameObject.SetActive(starCount>=2);
 			self.View.E_IconStar3Image.gameObject.SetActive(starCount>=3);
@@ -74,66 +77,61 @@ namespace ET.Client
 			self.View.E_SaleMoney_textTextMeshProUGUI.text = $"{towerCfg.ScaleTowerCostGold}";
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-			(bool bRet1, string msg1) = gamePlayTowerDefenseComponent.ChkIsUpgradeMaxPlayerTower(self.towerCfgId);
-			if (bRet1)
+			if (gamePlayTowerDefenseComponent != null)
 			{
-				string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxLevelTower");
-				self.View.E_Upgrade_number_TextTextMeshProUGUI.text = $"{tipMsg}";
-				self.View.E_UpgradeImage.SetImageGray(true);
-			}
-			else
-			{
-				(bool bRet, string msg, Dictionary<string, int> costTowers) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId);
-				if (bRet == false)
+				(bool bRet1, string msg1) = gamePlayTowerDefenseComponent.ChkIsUpgradeMaxPlayerTower(self.towerCfgId);
+				if (bRet1)
 				{
-					int curNum = 0;
-					if (costTowers == null || costTowers.TryGetValue(self.towerCfgId, out curNum) == false)
-					{
-						curNum = 0;
-					}
-					string tipMsg = $"({curNum}/{towerCfg.NewTowerCostCount-1})";
+					string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxLevelTower");
 					self.View.E_Upgrade_number_TextTextMeshProUGUI.text = $"{tipMsg}";
 					self.View.E_UpgradeImage.SetImageGray(true);
 				}
 				else
 				{
-					string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CanLevelUpTower");
-					self.View.E_Upgrade_number_TextTextMeshProUGUI.text = $"{tipMsg}";
-					self.View.E_UpgradeImage.SetImageGray(false);
+					(bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId, self.onlyChkPool);
+					if (bRet == false)
+					{
+						int curNum = 0;
+						if (costTowers == null || costTowers.TryGetValue(self.towerCfgId, out curNum) == false)
+						{
+							curNum = 0;
+						}
+						string tipMsg = $"({curNum}/{towerCfg.NewTowerCostCount-1})";
+						self.View.E_Upgrade_number_TextTextMeshProUGUI.text = $"{tipMsg}";
+						self.View.E_UpgradeImage.SetImageGray(true);
+					}
+					else
+					{
+						string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CanLevelUpTower");
+						self.View.E_Upgrade_number_TextTextMeshProUGUI.text = $"{tipMsg}";
+						self.View.E_UpgradeImage.SetImageGray(false);
+					}
 				}
 			}
 
-			string icon = towerCfg.Icon;
-			if (string.IsNullOrEmpty(icon))
+			string icon = ItemHelper.GetItemIcon(itemCfgId);
+			if (string.IsNullOrEmpty(icon) == false)
 			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				icon = unitCfg.Icon;
+				Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+				self.View.E_IconImage.sprite = sprite;
 			}
-			ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(icon);
-			icon = resIconCfg.ResName;
 
-			Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-			self.View.E_IconImage.sprite = sprite;
 
-			string desc = towerCfg.Desc;
-			if (string.IsNullOrEmpty(desc))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				desc = unitCfg.Desc;
-			}
+			string desc = ItemHelper.GetItemDesc(itemCfgId);
 			self.View.E_TextDescTextMeshProUGUI.text = desc;
 
-			int labelCount = towerCfg.Labels.Count;
+			List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
+			int labelCount = labels.Count;
 			self.View.EImage_Label1Image.gameObject.SetActive((labelCount>=1));
 			self.View.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
 
 			if (labelCount >= 1)
 			{
-				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(towerCfg.Labels[0]);
+				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
 			}
 			if (labelCount >= 2)
 			{
-				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(towerCfg.Labels[1]);
+				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
 			}
 		}
 
@@ -142,15 +140,12 @@ namespace ET.Client
 			self.View.EG_OperatorMenuRectTransform.SetVisible(true);
 			self.View.EG_MyTowerDescRectTransform.SetVisible(true);
 
+			string itemCfgId = self.towerCfgId;
+			string towerName = ItemHelper.GetItemName(itemCfgId);
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
-			string towerName = towerCfg.Name;
-			if (string.IsNullOrEmpty(towerName))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				towerName = unitCfg.Name;
-			}
+
 			self.View.E_TowerNameTextMeshProUGUI.text = towerName;
-			int starCount = towerCfg.Level[0];
+			int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
 			self.View.E_IconStar1Image.gameObject.SetActive(starCount>=1);
 			self.View.E_IconStar2Image.gameObject.SetActive(starCount>=2);
 			self.View.E_IconStar3Image.gameObject.SetActive(starCount>=3);
@@ -188,37 +183,28 @@ namespace ET.Client
 			// 	}
 			// }
 
-			string icon = towerCfg.Icon;
-			if (string.IsNullOrEmpty(icon))
+			string icon = ItemHelper.GetItemIcon(itemCfgId);
+			if (string.IsNullOrEmpty(icon) == false)
 			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				icon = unitCfg.Icon;
+				Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+				self.View.E_IconImage.sprite = sprite;
 			}
-			ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(icon);
-			icon = resIconCfg.ResName;
 
-			Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-			self.View.E_IconImage.sprite = sprite;
-
-			string desc = towerCfg.Desc;
-			if (string.IsNullOrEmpty(desc))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				desc = unitCfg.Desc;
-			}
+			string desc = ItemHelper.GetItemDesc(itemCfgId);
 			self.View.E_TextDescTextMeshProUGUI.text = desc;
 
-			int labelCount = towerCfg.Labels.Count;
+			List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
+			int labelCount = labels.Count;
 			self.View.EImage_Label1Image.gameObject.SetActive((labelCount>=1));
 			self.View.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
 
 			if (labelCount >= 1)
 			{
-				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(towerCfg.Labels[0]);
+				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
 			}
 			if (labelCount >= 2)
 			{
-				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(towerCfg.Labels[1]);
+				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
 			}
 		}
 
@@ -226,37 +212,24 @@ namespace ET.Client
 		{
 			self.View.EG_OtherTowerDescRectTransform.SetVisible(true);
 
-			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
-			string towerName = towerCfg.Name;
-			if (string.IsNullOrEmpty(towerName))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				towerName = unitCfg.Name;
-			}
+			string itemCfgId = self.towerCfgId;
+			string towerName = ItemHelper.GetItemName(itemCfgId);
+			//TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
+
 			self.View.E_OtherTowerNameTextMeshProUGUI.text = towerName;
-			int starCount = towerCfg.Level[0];
+			int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
 			self.View.E_OtherIconStar1Image.gameObject.SetActive(starCount>=1);
 			self.View.E_OtherIconStar2Image.gameObject.SetActive(starCount>=2);
 			self.View.E_OtherIconStar3Image.gameObject.SetActive(starCount>=3);
 
-			string icon = towerCfg.Icon;
-			if (string.IsNullOrEmpty(icon))
+			string icon = ItemHelper.GetItemIcon(itemCfgId);
+			if (string.IsNullOrEmpty(icon) == false)
 			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				icon = unitCfg.Icon;
+				Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+				self.View.E_OtherIconImage.sprite = sprite;
 			}
-			ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(icon);
-			icon = resIconCfg.ResName;
 
-			Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-			self.View.E_OtherIconImage.sprite = sprite;
-
-			string desc = towerCfg.Desc;
-			if (string.IsNullOrEmpty(desc))
-			{
-				UnitCfg unitCfg = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]);
-				desc = unitCfg.Desc;
-			}
+			string desc = ItemHelper.GetItemDesc(itemCfgId);
 			self.View.E_TextOtherDescTextMeshProUGUI.text = desc;
 		}
 
@@ -275,9 +248,11 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
 
-			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
+			self.View.EButton_SaleButton.gameObject.SetActive(false);
+			self.View.EButton_ConfirmButton.gameObject.SetActive(true);
+			self.View.EButton_ConfirmButton.AddListener(self.OnConfirmSale);
 
-			string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Des", towerCfg.ScaleTowerCostGold);
+			/*string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Des", towerCfg.ScaleTowerCostGold);
 			string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Confirm");
 			string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Cancel");
 			string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Title");
@@ -285,7 +260,14 @@ namespace ET.Client
 			{
 				ET.Client.GamePlayTowerDefenseHelper.SendScalePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
 				self.OnClose();
-			}, null, sureTxt, cancelTxt, titleTxt);
+			}, null, sureTxt, cancelTxt, titleTxt);*/
+		}
+
+		public static void OnConfirmSale(this DlgBattleTowerHUD self)
+		{
+			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+			ET.Client.GamePlayTowerDefenseHelper.SendScalePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+			self.OnClose();
 		}
 
 		public static void OnReclaim(this DlgBattleTowerHUD self)
@@ -310,7 +292,7 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-			(bool bRet, string msg, Dictionary<string, int> costTowers) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId);
+			(bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId, self.onlyChkPool);
 			if (bRet == false)
 			{
 				string tipMsg = msg;
@@ -318,7 +300,7 @@ namespace ET.Client
 				return;
 			}
 
-			ET.Client.GamePlayTowerDefenseHelper.SendUpgradePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+			ET.Client.GamePlayTowerDefenseHelper.SendUpgradePlayerTower(self.ClientScene(), self.towerUnitId, false).Coroutine();
 			self.OnClose();
 		}
 	}

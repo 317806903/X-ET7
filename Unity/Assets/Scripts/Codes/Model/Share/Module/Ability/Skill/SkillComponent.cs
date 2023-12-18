@@ -5,7 +5,7 @@ namespace ET.Ability
 	[ComponentOf(typeof(Unit))]
 	public class SkillComponent: Entity, IAwake, IDestroy, IFixedUpdate
 	{
-		public MultiMap<SkillSlotType, long> skillSlotType2SkillObjs;
+		public MultiMapSimple<SkillSlotType, long> skillSlotType2SkillObjs;
 		public Dictionary<string, long> skillCfgId2SkillObjs;
 		public List<long> sortPrioritySkillObjs;
 
@@ -21,6 +21,6 @@ namespace ET.Ability
 				this._SkillTimeLineObj = value;
 			}
 		}
-		
+
 	}
 }

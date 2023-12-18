@@ -31,6 +31,13 @@ namespace ET.Client
                 TowerStarBarComponent towerStarBarComponent = unit.AddComponent<TowerStarBarComponent>();
                 towerStarBarComponent.Init(towerComponent);
             }
+            PlayerUnitComponent playerUnitComponent = unit.GetComponent<PlayerUnitComponent>();
+            if (playerUnitComponent != null)
+            {
+                unit.RemoveComponent<PlayerUnitShowComponent>();
+                PlayerUnitShowComponent playerUnitShowComponent = unit.AddComponent<PlayerUnitShowComponent>();
+                playerUnitShowComponent.Init(playerUnitComponent);
+            }
 
             if (unit.GetComponent<ET.Ability.Client.AnimatorShowComponent>() == null)
             {

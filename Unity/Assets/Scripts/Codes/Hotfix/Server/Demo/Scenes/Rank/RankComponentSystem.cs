@@ -30,9 +30,11 @@ namespace ET.Server
             if (self.playerId2Score.TryGetValue(playerId, out long score))
             {
                 self.SkipList.DeleteNode(score, playerId);
+                self.rankTotalNum--;
             }
             self.SkipList.Insert(scoreNew, playerId);
             self.playerId2Score[playerId] = scoreNew;
+            self.rankTotalNum++;
 
             RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(playerId);
             if (rankItemComponent == null)
@@ -57,6 +59,11 @@ namespace ET.Server
         public static async ETTask<T> InitByDBOne<T>(this RankComponent self, long playerId) where T :Entity, IAwake, new()
         {
             return await ET.Server.DBHelper.LoadDBWithParent2Child<T>(self, playerId);
+        }
+
+        public static async ETTask<long> GetDBCount<T>(this RankComponent self) where T :Entity, IAwake, new()
+        {
+            return await ET.Server.DBHelper.GetDBCount<T>(self.DomainScene());
         }
 
         public static async ETTask SaveDB<T>(this RankComponent self) where T :Entity

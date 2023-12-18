@@ -76,6 +76,16 @@ namespace ET.Client
 			return false;
 		}
 
+		public static async ETTask<bool> ChkIsNotShowVideo(Scene scene)
+		{
+			DlgVideoShow _DlgVideoShow = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgVideoShow>(true);
+			if (_DlgVideoShow == null)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		//-----------------------------------------------------------------------------------------------
 
 		public static async ETTask ShowStory(Scene scene)
@@ -84,6 +94,12 @@ namespace ET.Client
 			{
 				finishCallBack = null,
 			});
+
+		}
+
+		public static async ETTask ShowVideo(Scene scene)
+		{
+			await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgVideoShow>();
 
 		}
 
@@ -189,5 +205,44 @@ namespace ET.Client
 			await ETTask.CompletedTask;
 		}
 
+		public static async ETTask ShowBattleTowerReady(Scene scene, bool isShow)
+		{
+			DlgBattleTowerAR dlgBattleTowerAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTowerAR>();
+			if (dlgBattleTowerAR != null)
+			{
+				dlgBattleTowerAR.View.EG_ReadyRectTransform.SetVisible(isShow);
+			}
+
+			DlgBattleTower dlgBattleTower = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTower>();
+			if (dlgBattleTower != null)
+			{
+				dlgBattleTower.View.EG_ReadyRectTransform.SetVisible(isShow);
+			}
+
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask ShowBattleTowerQuit(Scene scene, bool isShow)
+		{
+			DlgBattleTowerAR dlgBattleTowerAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTowerAR>();
+			if (dlgBattleTowerAR != null)
+			{
+				dlgBattleTowerAR.View.E_QuitBattleButton.SetVisible(isShow);
+			}
+
+			DlgBattleTower dlgBattleTower = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTower>();
+			if (dlgBattleTower != null)
+			{
+				dlgBattleTower.View.E_QuitBattleButton.SetVisible(isShow);
+			}
+
+			await ETTask.CompletedTask;
+		}
+
+		public static void ShowScanQuit(Scene scene, bool isShow)
+		{
+			ARSessionComponent arSessionComponent = ET.Client.ARSessionHelper.GetARSession(scene);
+			arSessionComponent.ShowQuit(isShow);
+		}
 	}
 }

@@ -13,7 +13,7 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 判断Buff tag
+/// 判断是否拥有BuffTagType
 /// </summary>
 public sealed partial class BuffTagTypeCondition:  Condition 
 {

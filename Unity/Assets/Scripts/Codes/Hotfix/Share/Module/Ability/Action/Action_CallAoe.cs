@@ -14,7 +14,7 @@ namespace ET.Ability
 
             ActionCfg_CallAoe actionCfgCallAoe = ActionCfg_CallAoeCategory.Instance.Get(actionId);
 
-            List<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, actionContext, true);
+            ListComponent<Unit> list = ET.Ability.SelectHandleHelper.GetSelectUnitList(unit, selectHandle, ref actionContext, true);
             if (list == null)
             {
                 return;
@@ -22,8 +22,9 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), targetUnit, actionCfgCallAoe, selectHandle, actionContext);
+                GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), targetUnit, actionCfgCallAoe, selectHandle, ref actionContext);
             }
+            list.Dispose();
 
             await ETTask.CompletedTask;
         }

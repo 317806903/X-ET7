@@ -10,12 +10,12 @@ namespace ET
             public LanguageType languageType;
         }
 
-        public struct LoginSceneEnterStart
+        public struct EnterLoginSceneStart
         {
             public bool isFromInit;
         }
 
-        public struct HallSceneEnterStart
+        public struct EnterHallSceneStart
         {
             public bool isFromLogin;
         }
@@ -95,15 +95,23 @@ namespace ET
             public List<Unit> units;
         }
 
+        public struct SyncNumericUnitsKey
+        {
+            public List<Unit> units;
+            public List<List<int>> keys;
+        }
+
         public struct SyncPlayAudio
         {
             public Unit unit;
             public string playAudioActionId;
+            public bool isOnlySelfShow;
         }
 
         public struct SyncPlayAnimator
         {
             public Unit unit;
+            public bool isOnlySelfShow;
         }
 
         public struct SyncUnitEffects
@@ -112,6 +120,7 @@ namespace ET
             public bool isAddEffect;
             public long effectObjId;
             public ET.Ability.EffectObj effectObj;
+            public bool isOnlySelfShow;
         }
 
         public struct NoticeGameEnd2Server
@@ -142,6 +151,7 @@ namespace ET
         {
             public HashSet<long> playerIds;
             public GamePlayComponent gamePlayComponent;
+            public bool needSendSuccess;
         }
 
         public struct NoticeGamePlayPlayerListToClient
@@ -149,12 +159,14 @@ namespace ET
             public HashSet<long> playerIds;
             public GetCoinType getCoinType;
             public GamePlayPlayerListComponent gamePlayPlayerListComponent;
+            public bool needSendSuccess;
         }
 
         public struct NoticeGamePlayModeToClient
         {
             public HashSet<long> playerIds;
             public GamePlayModeComponent gamePlayModeComponent;
+            public bool needSendSuccess;
         }
 
         public struct NoticeGameEndToRoom
@@ -183,11 +195,32 @@ namespace ET
         {
         }
 
+        public struct NoticeEventLoggingLoginIn
+        {
+            public long playerId;
+        }
+
+        public struct NoticeEventLoggingStart
+        {
+            public string eventName;
+            public string timerKey;
+        }
+
         public struct NoticeEventLogging
         {
             public string eventName;
             public Dictionary<string, object> properties;
             public string timerKey;
+        }
+
+        public struct NoticeEventLoggingSetCommonProperties
+        {
+            public Dictionary<string, object> properties;
+        }
+
+        public struct NoticeEventLoggingSetUserProperties
+        {
+            public Dictionary<string, object> properties;
         }
     }
 }

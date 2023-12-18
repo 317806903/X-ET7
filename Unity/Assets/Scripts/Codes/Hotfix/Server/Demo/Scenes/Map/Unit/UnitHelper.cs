@@ -26,13 +26,13 @@ namespace ET.Server
                     unitPosInfos.Add(unit, ET.Ability.UnitHelper.SyncPosUnitInfo(unit));
                 }
 
-                MultiMap<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
+                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
                 foreach (var playerSeeUnit in playerSeeUnits)
                 {
                     long playerId = playerSeeUnit.Key;
                     M2C_SyncPosUnits syncPosUnits = new ()
                     {
-                        Units = ListComponent<UnitPosInfo>.Create()
+                        Units = new(),
                     };
                     foreach (Unit unitChg in playerSeeUnit.Value)
                     {
@@ -58,19 +58,56 @@ namespace ET.Server
                     unitNumericInfos.Add(unit, ET.Ability.UnitHelper.SyncNumericUnitInfo(unit));
                 }
 
-                MultiMap<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
+                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
                 foreach (var playerSeeUnit in playerSeeUnits)
                 {
                     long playerId = playerSeeUnit.Key;
                     M2C_SyncNumericUnits syncNumericUnits = new ()
                     {
-                        Units = ListComponent<UnitNumericInfo>.Create()
+                        Units = new(),
                     };
                     foreach (Unit unitChg in playerSeeUnit.Value)
                     {
                         syncNumericUnits.Units.Add(unitNumericInfos[unitChg]);
                     }
                     MessageHelper.SendToClient(playerId, syncNumericUnits, true);
+                }
+
+                await ETTask.CompletedTask;
+            }
+        }
+
+        [Event(SceneType.Map)]
+        public class SyncNumericUnitKeyInfo2C: AEvent<Scene, EventType.SyncNumericUnitsKey>
+        {
+            protected override async ETTask Run(Scene scene, EventType.SyncNumericUnitsKey args)
+            {
+                List<Unit> list = args.units;
+                tmpNumericDic.Clear();
+                Dictionary<Unit, UnitNumericInfo> unitNumericInfos = tmpNumericDic;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Unit unit = list[i];
+                    List<int> keys = args.keys[i];
+                    unitNumericInfos.Add(unit, ET.Ability.UnitHelper.SyncNumericUnitInfoKey(unit, keys));
+                }
+                foreach (Unit unit in list)
+                {
+                }
+
+                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
+                foreach (var playerSeeUnit in playerSeeUnits)
+                {
+                    long playerId = playerSeeUnit.Key;
+                    M2C_SyncNumericUnits syncNumericUnitsKey = new ()
+                    {
+                        Units = new(),
+                    };
+                    foreach (Unit unitChg in playerSeeUnit.Value)
+                    {
+                        syncNumericUnitsKey.Units.Add(unitNumericInfos[unitChg]);
+                    }
+                    MessageHelper.SendToClient(playerId, syncNumericUnitsKey, true);
                 }
 
                 await ETTask.CompletedTask;
@@ -109,24 +146,55 @@ namespace ET.Server
                 bool isAddEffect = args.isAddEffect;
                 long effectObjId = args.effectObjId;
                 ET.Ability.EffectObj effectObj = args.effectObj;
-
-                M2C_SyncUnitEffects SyncUnitEffects = new ();
-                SyncUnitEffects.UnitId = unit.Id;
-                SyncUnitEffects.AddOrRemove = isAddEffect?0:1;
-                if (isAddEffect)
+                bool isOnlySelfShow = args.isOnlySelfShow;
+                if (isAddEffect == false)
                 {
-                    SyncUnitEffects.EffectComponent = effectObj.ToBson();
+                    isOnlySelfShow = false;
+                }
+                if (isOnlySelfShow)
+                {
+                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
+                    if (playerId != -1)
+                    {
+                        M2C_SyncUnitEffects SyncUnitEffects = new ();
+                        SyncUnitEffects.UnitId = unit.Id;
+                        SyncUnitEffects.AddOrRemove = isAddEffect?0:1;
+                        if (isAddEffect)
+                        {
+                            SyncUnitEffects.EffectComponent = effectObj.ToBson();
+                        }
+                        else
+                        {
+                            SyncUnitEffects.EffectObjId = effectObjId;
+                        }
+
+                        if (ET.Ability.UnitHelper.ChkIsSceneEffect(unit) && isAddEffect)
+                        {
+                            await TimerComponent.Instance.WaitFrameAsync();
+                        }
+                        MessageHelper.SendToClient(playerId, SyncUnitEffects);
+                    }
                 }
                 else
                 {
-                    SyncUnitEffects.EffectObjId = effectObjId;
-                }
+                    M2C_SyncUnitEffects SyncUnitEffects = new ();
+                    SyncUnitEffects.UnitId = unit.Id;
+                    SyncUnitEffects.AddOrRemove = isAddEffect?0:1;
+                    if (isAddEffect)
+                    {
+                        SyncUnitEffects.EffectComponent = effectObj.ToBson();
+                    }
+                    else
+                    {
+                        SyncUnitEffects.EffectObjId = effectObjId;
+                    }
 
-                if (ET.Ability.UnitHelper.ChkIsSceneEffect(unit) && isAddEffect)
-                {
-                    await TimerComponent.Instance.WaitFrameAsync();
+                    if (ET.Ability.UnitHelper.ChkIsSceneEffect(unit) && isAddEffect)
+                    {
+                        await TimerComponent.Instance.WaitFrameAsync();
+                    }
+                    MessageHelper.Broadcast(unit, SyncUnitEffects);
                 }
-                MessageHelper.Broadcast(unit, SyncUnitEffects);
                 await ETTask.CompletedTask;
             }
         }
@@ -138,12 +206,29 @@ namespace ET.Server
             {
                 Unit unit = args.unit;
                 string playAudioActionId = args.playAudioActionId;
+                bool isOnlySelfShow = args.isOnlySelfShow;
 
-                M2C_SyncPlayAudio _M2C_SyncPlayAudio = new ();
-                _M2C_SyncPlayAudio.UnitId = unit.Id;
-                _M2C_SyncPlayAudio.PlayAudioActionId = playAudioActionId;
+                if (isOnlySelfShow)
+                {
+                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
+                    if (playerId != -1)
+                    {
+                        M2C_SyncPlayAudio _M2C_SyncPlayAudio = new ();
+                        _M2C_SyncPlayAudio.UnitId = unit.Id;
+                        _M2C_SyncPlayAudio.PlayAudioActionId = playAudioActionId;
 
-                MessageHelper.Broadcast(unit, _M2C_SyncPlayAudio);
+                        MessageHelper.SendToClient(playerId, _M2C_SyncPlayAudio);
+                    }
+                }
+                else
+                {
+                    M2C_SyncPlayAudio _M2C_SyncPlayAudio = new ();
+                    _M2C_SyncPlayAudio.UnitId = unit.Id;
+                    _M2C_SyncPlayAudio.PlayAudioActionId = playAudioActionId;
+
+                    MessageHelper.Broadcast(unit, _M2C_SyncPlayAudio);
+                }
+
                 await ETTask.CompletedTask;
             }
         }
@@ -154,12 +239,29 @@ namespace ET.Server
             protected override async ETTask Run(Scene scene, EventType.SyncPlayAnimator args)
             {
                 Unit unit = args.unit;
+                bool isOnlySelfShow = args.isOnlySelfShow;
 
-                M2C_SyncPlayAnimator _M2C_SyncPlayAnimator = new ();
-                _M2C_SyncPlayAnimator.UnitId = unit.Id;
-                _M2C_SyncPlayAnimator.PlayAnimatorComponent = unit.GetComponent<AnimatorComponent>().ToBson();
+                if (isOnlySelfShow)
+                {
+                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
+                    if (playerId != -1)
+                    {
+                        M2C_SyncPlayAnimator _M2C_SyncPlayAnimator = new ();
+                        _M2C_SyncPlayAnimator.UnitId = unit.Id;
+                        _M2C_SyncPlayAnimator.PlayAnimatorComponent = unit.GetComponent<AnimatorComponent>().ToBson();
 
-                MessageHelper.Broadcast(unit, _M2C_SyncPlayAnimator);
+                        MessageHelper.SendToClient(playerId, _M2C_SyncPlayAnimator);
+                    }
+                }
+                else
+                {
+                    M2C_SyncPlayAnimator _M2C_SyncPlayAnimator = new ();
+                    _M2C_SyncPlayAnimator.UnitId = unit.Id;
+                    _M2C_SyncPlayAnimator.PlayAnimatorComponent = unit.GetComponent<AnimatorComponent>().ToBson();
+
+                    MessageHelper.Broadcast(unit, _M2C_SyncPlayAnimator);
+                }
+
                 await ETTask.CompletedTask;
             }
         }
@@ -238,7 +340,7 @@ namespace ET.Server
                 M2C_GamePlayChgNotice _M2C_GamePlayChgNotice = new ()
                 {
                     GamePlayInfo = gamePlayComponent.ToBson(),
-                    Components = ListComponent<byte[]>.Create(),
+                    Components = new(),
                 };
                 foreach (Entity entity in gamePlayComponent.Components.Values)
                 {
@@ -248,9 +350,10 @@ namespace ET.Server
                     }
                 }
 
+                bool needWait = args.needSendSuccess;
                 foreach (long playerId in playerIds)
                 {
-                    MessageHelper.SendToClient(playerId, _M2C_GamePlayChgNotice);
+                    MessageHelper.SendToClient(playerId, _M2C_GamePlayChgNotice, true, needWait);
                 }
                 await ETTask.CompletedTask;
             }
@@ -270,9 +373,10 @@ namespace ET.Server
                     GamePlayPlayerListComponent = gamePlayPlayerListComponent.ToBson(),
                 };
 
+                bool needWait = args.needSendSuccess;
                 foreach (long playerId in playerIds)
                 {
-                    MessageHelper.SendToClient(playerId, _M2C_GamePlayCoinChgNotice);
+                    MessageHelper.SendToClient(playerId, _M2C_GamePlayCoinChgNotice, true, needWait);
                 }
                 await ETTask.CompletedTask;
             }
@@ -299,9 +403,10 @@ namespace ET.Server
                     }
                 }
 
+                bool needWait = args.needSendSuccess;
                 foreach (long playerId in playerIds)
                 {
-                    MessageHelper.SendToClient(playerId, _M2C_GamePlayModeChgNotice);
+                    MessageHelper.SendToClient(playerId, _M2C_GamePlayModeChgNotice, true, needWait);
                 }
                 await ETTask.CompletedTask;
             }

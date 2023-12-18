@@ -101,8 +101,12 @@ message M2C_SyncDataList // IActorMessage
 message UnitPosInfo
 {
 	int64 UnitId = 1;
-	Unity.Mathematics.float3 Position = 4;
-	Unity.Mathematics.float3 Forward = 5;
+	int32 PositionX = 2;
+	int32 PositionY = 3;
+	int32 PositionZ = 4;
+	int32 ForwardX = 5;
+	int32 ForwardY = 6;
+	int32 ForwardZ = 7;
 }
 
 message M2C_SyncPosUnits // IActorMessage
@@ -234,6 +238,7 @@ message R2C_Login // IResponse
 	string Address = 4;
 	int64 Key = 5;
 	int64 GateId = 6;
+	int32 IsFirstLogin = 7;
 }
 
 //ResponseType G2C_LoginGate
@@ -396,6 +401,36 @@ message C2M_CallMonster // IActorLocationRequest
 }
 
 message M2C_CallMonster // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_PKMovePlayer
+message C2M_PKMovePlayer // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+	Unity.Mathematics.float3 Position = 3;
+}
+
+message M2C_PKMovePlayer // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_PKMoveTower
+message C2M_PKMoveTower // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+	Unity.Mathematics.float3 Position = 3;
+}
+
+message M2C_PKMoveTower // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -738,6 +773,7 @@ message C2M_UpgradePlayerTower // IActorLocationRequest
 {
 	int32 RpcId = 1;
 	int64 TowerUnitId = 2;
+	int32 OnlyChkPool = 3;
 }
 
 message M2C_UpgradePlayerTower // IActorLocationResponse
@@ -755,6 +791,20 @@ message C2M_ScalePlayerTower // IActorLocationRequest
 }
 
 message M2C_ScalePlayerTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_ScalePlayerTowerCard
+message C2M_ScalePlayerTowerCard // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	string TowerCfgId = 2;
+}
+
+message M2C_ScalePlayerTowerCard // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -852,6 +902,20 @@ message M2C_SendARCameraPos // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_GetNumericUnit
+message C2M_GetNumericUnit // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	repeated int64 UnitIdList = 2;
+	repeated int32 NumericKeyList = 3;
+}
+
+message M2C_GetNumericUnit // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
 
 //ResponseType G2C_GetRank
 message C2G_GetRank // IRequest
@@ -866,6 +930,22 @@ message G2C_GetRank // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	bytes RankShowComponentBytes = 4;
+}
+
+//ResponseType G2C_GetRankedMoreThan
+message C2G_GetRankedMoreThan // IRequest
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+	int64 Score = 3;
+}
+
+message G2C_GetRankedMoreThan // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 RankedMoreThan = 4;
 }
 
 //ResponseType G2C_GetPlayerCache
@@ -891,9 +971,50 @@ message C2G_SetPlayerCache // IRequest
 	int64 PlayerId = 2;
 	int32 PlayerModelType = 3;
 	bytes PlayerModelComponentBytes = 4;
+	repeated string SetPlayerKeys = 5;
 }
 
 message G2C_SetPlayerCache // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_AddPhysicalStrenthByAd
+message C2G_AddPhysicalStrenthByAd // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message G2C_AddPhysicalStrenthByAd // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_BattleRecoverCancel
+message C2M_BattleRecoverCancel // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_BattleRecoverCancel // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_BattleRecoverConfirm
+message C2M_BattleRecoverConfirm // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_BattleRecoverConfirm // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

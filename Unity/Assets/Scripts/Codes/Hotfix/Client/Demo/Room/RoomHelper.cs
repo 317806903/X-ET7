@@ -55,6 +55,10 @@ namespace ET.Client
         /// <param name="roomId"></param>
         public static async ETTask<bool> GetRoomInfoAsync(Scene clientScene, long roomId)
         {
+            if (roomId == 0)
+            {
+                return false;
+            }
             G2C_GetRoomInfo _G2C_GetRoomInfo = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomInfo()
                 {
                     RoomId = roomId,
@@ -113,6 +117,10 @@ namespace ET.Client
         /// <returns></returns>
         public static async ETTask<bool> JoinRoomAsync(Scene clientScene, long roomId)
         {
+            if (roomId == 0)
+            {
+                return false;
+            }
             try
             {
                 G2C_JoinRoom _G2C_JoinRoom = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_JoinRoom()

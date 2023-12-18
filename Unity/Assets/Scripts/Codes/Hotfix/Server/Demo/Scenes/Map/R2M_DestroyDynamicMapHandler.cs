@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, R2M_DestroyDynamicMap request, M2R_DestroyDynamicMap response)
 		{
-			DynamicMapManagerComponent dynamicMapManagerComponent = scene.GetComponent<DynamicMapManagerComponent>();
+			DynamicMapManagerComponent dynamicMapManagerComponent = scene.GetParent<DynamicMapManagerComponent>();
 			if (dynamicMapManagerComponent == null)
 			{
 				return;

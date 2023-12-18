@@ -60,6 +60,7 @@ public sealed partial class AroundMoveTweenType:  MoveTweenType
     public override string ToString()
     {
         return "{ "
+        + "HoldTime:" + HoldTime + ","
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "InitAngle:" + InitAngle + ","

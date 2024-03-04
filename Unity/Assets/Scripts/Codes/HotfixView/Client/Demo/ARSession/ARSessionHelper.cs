@@ -60,7 +60,14 @@ namespace ET.Client
 		public static void SetScaleARCamera(Scene scene, float fScaleAR)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene);
-			arSessionComponent.SetScaleARCamera(fScaleAR);
+			arSessionComponent.SetScaleARCamera(fScaleAR, true);
+		}
+
+		public static float GetScaleAR(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			float arScale = arSessionComponent.arScale;
+			return arScale;
 		}
 
 		public static void ResetMainCamera(Scene scene, bool isARCamera)
@@ -91,10 +98,37 @@ namespace ET.Client
 			return _ARMeshDownLoadUrl;
 		}
 
+		public static string GetAREntranceType(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			if (arSessionComponent == null)
+			{
+				return "";
+			}
+			string entranceType = arSessionComponent.EntranceType;
+			return entranceType;
+		}
+
+		public static void ResetAREntranceType(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			if (arSessionComponent == null)
+			{
+				return;
+			}
+			arSessionComponent.EntranceType = "";
+		}
+
 		public static void TriggerShowQrCode(Scene scene)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene);
 			arSessionComponent.TriggerShowQrCode();
+		}
+
+		public static void TriggerReScan(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			arSessionComponent.TriggerReScan();
 		}
 
 		public static void ShowARMesh(Scene scene, bool show)

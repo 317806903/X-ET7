@@ -18,8 +18,12 @@ namespace ET.Client
 		public List<string[]> gameModeList = new ()
 		{
 			new string[]{"-1", "TextCode_Key_GameMode_All"},
-			new string[]{"GamePlayTowerDefense1", "TextCode_Key_GameMode_GamePlayTowerDefense1"},
-			new string[]{"GamePlayPK1", "TextCode_Key_GameMode_GamePlayPK1"},
+			new string[]{"GamePlayTowerDefenseNormal", "TextCode_Key_GameMode_GamePlayTowerDefenseNormal"},
+			new string[]{"GamePlayTowerDefenseTutorialFirst", "TextCode_Key_GamePlayTowerDefenseTutorialFirst"},
+			new string[]{"GamePlayTowerDefensePVE", "TextCode_Key_GamePlayTowerDefensePVE"},
+			new string[]{"GamePlayTowerDefenseEndlessChallenge", "TextCode_Key_GamePlayTowerDefenseEndlessChallenge"},
+			new string[]{"GamePlayTowerDefensePVP", "TextCode_Key_GamePlayTowerDefensePVP"},
+			new string[]{"GamePlayPKNormal", "TextCode_Key_GameMode_GamePlayPKNormal"},
 		};
 		public List<string[]> teamModeList = new ()
 		{

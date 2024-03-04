@@ -236,78 +236,10 @@ namespace ET.Ability
                 return;
             }
 
-            if (onAttackUnit != null)
-            {
-                self.actionContext.attackerUnitId = onAttackUnit.Id;
-            }
-            string actionId = buffActionCall.ActionId;
-            Unit resetPosByUnit = null;
-            SelectHandle selectHandle;
-            if (buffActionCall.ActionCallParam is ActionCallSelectLast)
-            {
-                selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
-            }
-            else if (buffActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit, ref self.actionContext);
-            }
-            else if (buffActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf, ref self.actionContext);
-            }
-            else
-            {
-                Unit targetUnit;
-                if (buffActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
-                {
-                    targetUnit = self.GetCasterUnit();
-                }
-                else if (buffActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
-                {
-                    targetUnit = self.GetCasterActorUnit();
-                }
-                else if (buffActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
-                {
-                    targetUnit = onAttackUnit;
-                }
-                else if (buffActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
-                {
-                    targetUnit = beHurtUnit;
-                }
-                else
-                {
-                    targetUnit = self.GetUnit();
-                }
 
-                resetPosByUnit = targetUnit;
-                selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, buffActionCall.ActionCallParam);
-            }
+            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), buffActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
 
-            if (selectHandle == null)
-            {
-                return;
-            }
-
-            SelectHandle curSelectHandle = selectHandle;
-            if (curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0)
-            {
-                return;
-            }
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition1, ref self.actionContext);
-            if (isChgSelect1)
-            {
-                curSelectHandle = newSelectHandle1;
-            }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, buffActionCall.ActionCondition2, ref self.actionContext);
-            if (isChgSelect2)
-            {
-                curSelectHandle = newSelectHandle2;
-            }
-            if (bRet1 && bRet2)
-            {
-                // ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, self.actionContext);
-                ActionHandlerHelper.CreateAction(self.GetCasterActorUnit(), resetPosByUnit, actionId, buffActionCall.DelayTime, curSelectHandle, ref self.actionContext);
-            }
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
         }
 
         public static bool ChkNeedRemove(this BuffObj self)

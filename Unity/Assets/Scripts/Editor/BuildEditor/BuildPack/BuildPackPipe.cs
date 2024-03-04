@@ -34,7 +34,7 @@ namespace ET
         public static async ETTask BuildConfig_AbilityConfigAndBuildAB_AndroidAndBuildPack_Android_Local()
         {
             await ET.BuildConfig.BuildConfig_AbilityConfig();
-            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android();
+            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android(false);
             if (buildResult.Success)
             {
                 await ET.BuildPack.BuildPack_Android_Local();
@@ -45,7 +45,7 @@ namespace ET
         public static async ETTask BuildConfig_AbilityConfigAndBuildAB_AndroidAndBuildPack_Android_InNet148()
         {
             await ET.BuildConfig.BuildConfig_AbilityConfig();
-            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android();
+            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android(false);
             if (buildResult.Success)
             {
                 await ET.BuildPack.BuildPack_Android_InNet148();
@@ -56,7 +56,7 @@ namespace ET
         public static async ETTask BuildConfig_AbilityConfigAndBuildAB_AndroidAndBuildPack_Android_OutNet_CN()
         {
             await ET.BuildConfig.BuildConfig_AbilityConfig();
-            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android();
+            BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android(false);
             if (buildResult.Success)
             {
                 await ET.BuildPack.BuildPack_Android_OutNet_CN();

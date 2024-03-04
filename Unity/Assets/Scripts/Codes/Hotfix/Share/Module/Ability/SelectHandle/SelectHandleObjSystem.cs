@@ -34,9 +34,9 @@ namespace ET.Ability
             return unit;
         }
 
-        public static void SaveSelectHandle(this SelectHandleObj self, SelectHandle selectHandle)
+        public static void SaveSelectHandle(this SelectHandleObj self, SelectHandle selectHandle, bool isOnce)
         {
-            if (self.selectHandle != null)
+            if (self.selectHandle != null && self.selectHandle.isDisposed == false)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.UnitChgSaveSelectObj()
                 {
@@ -49,11 +49,30 @@ namespace ET.Ability
             }
             self.selectHandle = selectHandle;
             self.selectHandle.SetHolding(true);
+            self.isOnce = isOnce;
+        }
+
+        public static void ClearOnceSelectHandle(this SelectHandleObj self)
+        {
+            if (self.isOnce == false)
+            {
+                return;
+            }
+            if (self.selectHandle != null && self.selectHandle.isDisposed == false)
+            {
+                self.selectHandle.SetHolding(false);
+                ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), self.selectHandle);
+            }
+            self.selectHandle = null;
         }
 
         public static SelectHandle GetSaveSelectHandle(this SelectHandleObj self)
         {
-            return self.selectHandle;
+            if (self.selectHandle != null && self.selectHandle.isDisposed == false)
+            {
+                return self.selectHandle;
+            }
+            return null;
         }
     }
 }

@@ -20,10 +20,6 @@ namespace ET
 				self.playerTowerBuyPoolBoughts = new();
 				self.playerRefreshTowerCost = new();
 				self.playerId2unitTowerId = new();
-				self.towerCfgId2PreTowerCfgId = new();
-				self.towerCfgId2NextTowerCfgId = new();
-				self.baseTowerCfgId2towerCfgIds = new();
-				self.towerCfgId2BaseTowerCfgIdAndCount = new();
 
 				self.Init();
 			}
@@ -39,10 +35,7 @@ namespace ET
 				self.playerTowerBuyPoolBoughts.Clear();
 				self.playerRefreshTowerCost.Clear();
 				self.playerId2unitTowerId.Clear();
-				self.towerCfgId2PreTowerCfgId.Clear();
-				self.towerCfgId2NextTowerCfgId.Clear();
-				self.baseTowerCfgId2towerCfgIds.Clear();
-				self.towerCfgId2BaseTowerCfgIdAndCount.Clear();
+				self.existTowerDic?.Clear();
 			}
 		}
 
@@ -63,42 +56,6 @@ namespace ET
 
 		public static void InitTowerUpgradeConfig(this PlayerOwnerTowersComponent self)
 		{
-			List<TowerDefense_TowerCfg> towerCfgList = TowerDefense_TowerCfgCategory.Instance.DataList;
-			for (int i = 0; i < towerCfgList.Count; i++)
-			{
-				string curTowerId = towerCfgList[i].Id;
-				string nextTowerId = towerCfgList[i].NextTowerId;
-				if (string.IsNullOrEmpty(nextTowerId))
-				{
-					continue;
-				}
-				self.towerCfgId2PreTowerCfgId[nextTowerId] = curTowerId;
-				self.towerCfgId2NextTowerCfgId[curTowerId] = nextTowerId;
-			}
-
-			string curTowerCfgId = "";
-			string nextTowerCfgId = "";
-			for (int i = 0; i < towerCfgList.Count; i++)
-			{
-				curTowerCfgId = towerCfgList[i].Id;
-				if (self.towerCfgId2PreTowerCfgId.ContainsKey(curTowerCfgId) == false)
-				{
-					string baseTowerCfgId = curTowerCfgId;
-					int costCount = 1;
-
-					self.baseTowerCfgId2towerCfgIds.Add(baseTowerCfgId, curTowerCfgId);
-					self.towerCfgId2BaseTowerCfgIdAndCount.Add(curTowerCfgId, baseTowerCfgId, costCount);
-					while (self.towerCfgId2NextTowerCfgId.TryGetValue(curTowerCfgId, out nextTowerCfgId))
-					{
-						self.baseTowerCfgId2towerCfgIds.Add(baseTowerCfgId, nextTowerCfgId);
-						TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(curTowerCfgId);
-						costCount *= towerCfg.NewTowerCostCount;
-						self.towerCfgId2BaseTowerCfgIdAndCount.Add(nextTowerCfgId, baseTowerCfgId, costCount);
-						curTowerCfgId = nextTowerCfgId;
-					}
-				}
-			}
-
 		}
 
 		public static (bool, string) ChkRefreshTowerPool(this PlayerOwnerTowersComponent self, long playerId)
@@ -399,7 +356,8 @@ namespace ET
 		public static (bool, string) ChkIsUpgradeMaxPlayerTower(this PlayerOwnerTowersComponent self, string towerCfgId)
 		{
 			string msg = "";
-			if (self.towerCfgId2NextTowerCfgId.TryGetValue(towerCfgId, out string nextTowerId) == false)
+			TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(towerCfgId);
+			if (nextTowerCfg == null)
 			{
 				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxLevelTower");
 				return (true, msg);
@@ -463,7 +421,7 @@ namespace ET
 		public static (bool, string, Dictionary<string, int>) ChkUpgradePlayerTowerOnlyPool(this PlayerOwnerTowersComponent self, long playerId, ref string needTowerCfgId, ref int needCount)
 		{
 			string msg = "";
-			Dictionary<string, int> costPoolTowers = new();
+			Dictionary<string, int> costPoolTowers = DictionaryComponent<string, int>.Create();
 			bool bRet = self.GetUpgradePlayerTowerPoolCost(playerId, ref needTowerCfgId, ref needCount, ref costPoolTowers);
 			if (bRet == false)
 			{
@@ -513,8 +471,10 @@ namespace ET
 						//吐掉低级的
 						while (true)
 						{
-							if (self.towerCfgId2PreTowerCfgId.TryGetValue(towerCfgId, out string preTowerCfgId))
+							TowerDefense_TowerCfg preTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetPreTowerCfg(towerCfgId);
+							if (preTowerCfg != null)
 							{
+								string preTowerCfgId = preTowerCfg.Id;
 								if (costExistTowers.ContainsKey(preTowerCfgId))
 								{
 									(_, int PreCostCountTmp) = self.GetBaseTowerCfgIdAndCount(preTowerCfgId);
@@ -568,8 +528,10 @@ namespace ET
 								}
 								while (true)
 								{
-									if (self.towerCfgId2NextTowerCfgId.TryGetValue(towerCfgId, out string nextTowerCfgId))
+									TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(towerCfgId);
+									if (nextTowerCfg != null)
 									{
+										string nextTowerCfgId = nextTowerCfg.Id;
 										if (costPoolTowers.ContainsKey(nextTowerCfgId))
 										{
 											(_, int NextCostCountTmp) = self.GetBaseTowerCfgIdAndCount(nextTowerCfgId);
@@ -663,8 +625,8 @@ namespace ET
 			}
 
 			needCostBaseTowerCount = needCostBaseTowerCountOrg;
-			List<long> existTowerUnitIds = new();
-			Dictionary<string, int> costExistTowers = new();
+			List<long> existTowerUnitIds = ListComponent<long>.Create();
+			Dictionary<string, int> costExistTowers = DictionaryComponent<string, int>.Create();
 			bool bRet = self.ChkUpgradePlayerTowerWhenExistXXX222(baseTowerCfgId, needCostBaseTowerCount, costPoolTowers, costExistTowers, existTowerDic);
 			if (bRet == false)
 			{
@@ -704,11 +666,13 @@ namespace ET
 			Unit curTownUnit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
 			string curTowerId = curTownUnit.GetComponent<TowerComponent>().towerCfgId;
 
-			if (self.towerCfgId2NextTowerCfgId.TryGetValue(curTowerId, out string nextTowerId) == false)
+			TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(curTowerId);
+			if (nextTowerCfg == null)
 			{
-				//Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] string.IsNullOrEmpty(nextTowerId)");
 				return false;
 			}
+
+			string nextTowerId = nextTowerCfg.Id;
 
 			if (costPoolTowers != null)
 			{
@@ -730,6 +694,7 @@ namespace ET
 			{
 				foreach (long existTowerUnitId in existTowerUnitIds)
 				{
+					self.playerId2unitTowerId.Remove(playerId, existTowerUnitId);
 					Unit existTowerUnit = UnitHelper.GetUnit(self.DomainScene(), existTowerUnitId);
 					existTowerUnit.DestroyNotDeathShow();
 				}
@@ -784,6 +749,38 @@ namespace ET
 
 			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
 			curTownUnit.DestroyNotDeathShow();
+
+			self.NoticeToClient(playerId);
+
+			return true;
+		}
+
+		public static bool ScalePlayerTowerCard(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId)
+		{
+			if (self.playerOwnerTowerId.TryGetValue(playerId, towerCfgId, out int count) == false)
+			{
+				Log.Debug($"playerId[{playerId}], towerUnitId[{towerCfgId}] not exist in self.playerOwnerTowerId");
+				return false;
+			}
+
+			if (count <= 0)
+			{
+				Log.Debug($"playerId[{playerId}], the count of towerUnitId[{towerCfgId}] is less than 0");
+				return false;
+			}
+
+			TowerDefense_TowerCfg curTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+			int scaleTowerCostGold = curTowerCfg.ScaleTowerCostGold;
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, scaleTowerCostGold);
+
+			// EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_ScaleTower()
+			// {
+			// 	playerId = playerId,
+			// 	towerUnit = curTownUnit,
+			// 	towerCfgId = curTowerId,
+			// });
+
+			self.playerOwnerTowerId[playerId][towerCfgId] = count - 1;
 
 			self.NoticeToClient(playerId);
 
@@ -907,9 +904,10 @@ namespace ET
 				costPoolTowers[needTowerCfgId] = count;
 				needCount -= count;
 
-				if (self.towerCfgId2PreTowerCfgId.TryGetValue(needTowerCfgId, out string preTowerId))
+				TowerDefense_TowerCfg preTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetPreTowerCfg(needTowerCfgId);
+				if (preTowerCfg != null)
 				{
-					TowerDefense_TowerCfg preTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(preTowerId);
+					string preTowerId = preTowerCfg.Id;
 					needCount *= preTowerCfg.NewTowerCostCount;
 					needTowerCfgId = preTowerId;
 					return self.GetUpgradePlayerTowerPoolCost(playerId, ref needTowerCfgId, ref needCount, ref costPoolTowers);
@@ -924,17 +922,22 @@ namespace ET
 
 		public static (string, int) GetBaseTowerCfgIdAndCount(this PlayerOwnerTowersComponent self, string curTowerCfgId)
 		{
-			self.towerCfgId2BaseTowerCfgIdAndCount.TryGetDic(curTowerCfgId, out var baseTowerInfo);
-			string baseTowerCfgId = baseTowerInfo.Keys.ToList()[0];
-			int costCount = baseTowerInfo.Values.ToList()[0];
-			return (baseTowerCfgId, costCount);
+			return TowerDefense_TowerCfgCategory.Instance.GetBaseTowerCfgIdAndCount(curTowerCfgId);
 		}
 
 		public static MultiMap<string, long> GetExistTowerList(this PlayerOwnerTowersComponent self, long playerId, long curTowerUnitId, string curTowerCfgId)
 		{
 			(string baseTowerCfgId, _) = self.GetBaseTowerCfgIdAndCount(curTowerCfgId);
 
-			MultiMap<string, long> existTowerDic = new();
+			if (self.existTowerDic == null)
+			{
+				self.existTowerDic = new();
+			}
+			else
+			{
+				self.existTowerDic.Clear();
+			}
+			MultiMap<string, long> existTowerDic = self.existTowerDic;
 			foreach (var towerUnitId in self.playerId2unitTowerId[playerId])
 			{
 				if (curTowerUnitId == towerUnitId)
@@ -947,7 +950,7 @@ namespace ET
 					continue;
 				}
 				string towerCfgId = towerUnit.GetComponent<TowerComponent>().towerCfgId;
-				if (self.baseTowerCfgId2towerCfgIds.Contains(baseTowerCfgId, towerCfgId))
+				if (TowerDefense_TowerCfgCategory.Instance.ChkIsSameBaseTowerCfg(baseTowerCfgId, towerCfgId))
 				{
 					existTowerDic.Add(towerCfgId, towerUnitId);
 				}
@@ -958,6 +961,14 @@ namespace ET
 		public static List<long> GetPutTowers(this PlayerOwnerTowersComponent self, long playerId)
 		{
 			return self.playerId2unitTowerId[playerId];
+		}
+
+		public static Dictionary<string, int> GetPlayerOwnerTowers(this PlayerOwnerTowersComponent self, long playerId)
+		{
+			if (self.playerOwnerTowerId.TryGetValue(playerId, out var playerOwnerTowers))
+			{
+			}
+			return playerOwnerTowers;
 		}
 
 		public static bool ChkIsNearTower(this PlayerOwnerTowersComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1, long ignoreTowerUnitId = -1)

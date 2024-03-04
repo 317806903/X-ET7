@@ -15,11 +15,15 @@ namespace ET.Client
 			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 
+			EventSystem.Instance.Publish(clientScene, new EventType.NoticeUIShowCommonLoading());
+
 			// 等待场景切换完成
 			await clientScene.GetComponent<ObjectWait>().Wait<Wait_SceneChangeFinish>();
 
 			Log.Debug("G2C_EnterBattleNotice 22");
 			EventSystem.Instance.Publish(clientScene, new EventType.EnterMapFinish());
+
+			EventSystem.Instance.Publish(clientScene, new EventType.NoticeUIHideCommonLoading());
 
 			Log.Debug("G2C_EnterBattleNotice 33");
 			await ETTask.CompletedTask;

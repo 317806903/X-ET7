@@ -16,9 +16,16 @@ namespace ET.Server
 			string unitCfgId = request.UnitCfgId;
 			float3 pos = request.Position;
 
+			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());
+			if (gamePlayComponent.ChkNavMeshReady() == false)
+			{
+				response.Error = ErrorCode.ERR_LogicError;
+				response.Message = "NavMesh not ready";
+				return;
+			}
+
 			pos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, pos);
 
-			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
 			bool canPut = putHomeComponent.ChkPosition(pos);

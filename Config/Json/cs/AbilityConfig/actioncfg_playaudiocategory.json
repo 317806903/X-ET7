@@ -3,6 +3,7 @@
     "id": "PlayAudio_1",
     "name": "播放音效1",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_1",
     "duration": 2,
     "isLoop": false
@@ -11,40 +12,1350 @@
     "id": "PlayAudio_dead",
     "name": "播放音效2",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_dead",
     "duration": 2,
     "isLoop": false
   },
   {
     "id": "PlayAudio_solo",
-    "name": "播放音效1",
+    "name": "弩箭开火音效",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_solo",
     "duration": 2,
     "isLoop": false
   },
   {
     "id": "PlayAudio_aoe",
-    "name": "播放音效2",
+    "name": "加农开火音效",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_aoe",
     "duration": 3,
     "isLoop": false
   },
   {
     "id": "PlayAudio_line",
-    "name": "播放音效3",
+    "name": "火焰塔开火音效",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_line",
     "duration": -1,
     "isLoop": true
   },
   {
     "id": "PlayAudio_circle",
-    "name": "播放音效4",
+    "name": "毒雾塔开火音效",
     "desc": "",
+    "isOnlySelfShow": false,
     "res_id": "ResAudio_circle",
     "duration": -1,
     "isLoop": true
+  },
+  {
+    "id": "PlayAudio_BossAppear",
+    "name": "播放boss出场音效",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_BossAppear",
+    "duration": 10,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDragon1",
+    "name": "龙击炮开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDragon1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDragon2",
+    "name": "龙击炮开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDragon2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDragon3",
+    "name": "龙击炮开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDragon3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIce1",
+    "name": "冰魔塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIce1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIce2",
+    "name": "冰魔塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIce2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIce3",
+    "name": "冰魔塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIce3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerArrow1",
+    "name": "弩箭塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerArrow1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerArrow2",
+    "name": "弩箭塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerArrow2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerArrow3",
+    "name": "弩箭塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerArrow3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCannon1",
+    "name": "加农炮开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCannon1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCannon2",
+    "name": "加农炮开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCannon2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCannon3",
+    "name": "加农炮开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCannon3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFlame1",
+    "name": "火焰塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFlame1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFlame2",
+    "name": "火焰塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFlame2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFlame3",
+    "name": "火焰塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFlame3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerToxMist1",
+    "name": "毒雾塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerToxMist1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerToxMist2",
+    "name": "毒雾塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerToxMist2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerToxMist3",
+    "name": "毒雾塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerToxMist3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThunder1",
+    "name": "雷电塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThunder1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThunder2",
+    "name": "雷电塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThunder2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThunder3",
+    "name": "雷电塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThunder3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTimeSwift1",
+    "name": "加速塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTimeSwift1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTimeSwift2",
+    "name": "加速塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTimeSwift2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTimeSwift3",
+    "name": "加速塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTimeSwift3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerMystOrb1",
+    "name": "奥术天球开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerMystOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerMystOrb2",
+    "name": "奥术天球开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerMystOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerMystOrb3",
+    "name": "奥术天球开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerMystOrb3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAlchemy1",
+    "name": "炼金塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAlchemy1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAlchemy2",
+    "name": "炼金塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAlchemy2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAlchemy3",
+    "name": "炼金塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAlchemy3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerScorpio1",
+    "name": "毒蝎塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerScorpio1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerScorpio2",
+    "name": "毒蝎塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerScorpio2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerScorpio3",
+    "name": "毒蝎塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerScorpio3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerBreaker1",
+    "name": "破甲诅咒开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerBreaker1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerBreaker2",
+    "name": "破甲诅咒开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerBreaker2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerBreaker3",
+    "name": "破甲诅咒开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerBreaker3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerEnchanter1",
+    "name": "附魔塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerEnchanter1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerEnchanter2",
+    "name": "附魔塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerEnchanter2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerEnchanter3",
+    "name": "附魔塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerEnchanter3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIceArrow1",
+    "name": "冰刺箭开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIceArrow1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIceArrow2",
+    "name": "冰刺箭开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIceArrow2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerIceArrow3",
+    "name": "冰刺箭开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerIceArrow3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDizzyOrb1",
+    "name": "水球塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDizzyOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDizzyOrb2",
+    "name": "水球塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDizzyOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerDizzyOrb3",
+    "name": "水球塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerDizzyOrb3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTesla1",
+    "name": "电磁塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTesla1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTesla2",
+    "name": "电磁塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTesla2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerTesla3",
+    "name": "电磁塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerTesla3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCritTotem1",
+    "name": "暴击图腾开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCritTotem1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCritTotem2",
+    "name": "暴击图腾开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCritTotem2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerCritTotem3",
+    "name": "暴击图腾开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerCritTotem3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerHellFire1",
+    "name": "奥术精灵开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerHellFire1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerHellFire2",
+    "name": "奥术精灵开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerHellFire2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerHellFire3",
+    "name": "奥术精灵开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerHellFire3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerOvercharge1",
+    "name": "连击斧开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerOvercharge1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerOvercharge2",
+    "name": "连击斧开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerOvercharge2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerOvercharge3",
+    "name": "连击斧开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerOvercharge3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAmplifyCurse1",
+    "name": "灾厄塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAmplifyCurse1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAmplifyCurse2",
+    "name": "灾厄塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAmplifyCurse2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerAmplifyCurse3",
+    "name": "灾厄塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerAmplifyCurse3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThief1",
+    "name": "窃贼哥布林开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThief1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThief2",
+    "name": "窃贼哥布林开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThief2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerThief3",
+    "name": "窃贼哥布林开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerThief3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerSting1",
+    "name": "鱼刺塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerSting1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerSting2",
+    "name": "鱼刺塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerSting2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerSting3",
+    "name": "鱼刺塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerSting3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerRocket1",
+    "name": "火箭塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerRocket1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerRocket2",
+    "name": "火箭塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerRocket2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerRocket3",
+    "name": "火箭塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerRocket3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFireOrb1",
+    "name": "火球塔开火音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFireOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFireOrb2",
+    "name": "火球塔开火音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFireOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_FireTowerFireOrb3",
+    "name": "火球塔开火音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_FireTowerFireOrb3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerArrow1",
+    "name": "弩箭塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerArrow1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerArrow2",
+    "name": "弩箭塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerArrow2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerArrow3",
+    "name": "弩箭塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerArrow3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCannon1",
+    "name": "加农炮命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCannon1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCannon2",
+    "name": "加农炮命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCannon2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCannon3",
+    "name": "加农炮命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCannon3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFlame1",
+    "name": "火焰塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFlame1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFlame2",
+    "name": "火焰塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFlame2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFlame3",
+    "name": "火焰塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFlame3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerToxMist1",
+    "name": "毒雾塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerToxMist1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerToxMist2",
+    "name": "毒雾塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerToxMist2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerToxMist3",
+    "name": "毒雾塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerToxMist3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDragon1",
+    "name": "龙击炮命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDragon1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDragon2",
+    "name": "龙击炮命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDragon2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDragon3",
+    "name": "龙击炮命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDragon3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThunder1",
+    "name": "雷电塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThunder1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThunder2",
+    "name": "雷电塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThunder2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThunder3",
+    "name": "雷电塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThunder3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIce1",
+    "name": "冰魔塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIce1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIce2",
+    "name": "冰魔塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIce2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIce3",
+    "name": "冰魔塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIce3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTimeSwift1",
+    "name": "加速塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTimeSwift1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTimeSwift2",
+    "name": "加速塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTimeSwift2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTimeSwift3",
+    "name": "加速塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTimeSwift3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerMystOrb1",
+    "name": "奥术天球命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerMystOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerMystOrb2",
+    "name": "奥术天球命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerMystOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerMystOrb3",
+    "name": "奥术天球命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerMystOrb3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAlchemy1",
+    "name": "炼金塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAlchemy1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAlchemy2",
+    "name": "炼金塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAlchemy2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAlchemy3",
+    "name": "炼金塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAlchemy3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerScorpio1",
+    "name": "毒蝎塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerScorpio1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerScorpio2",
+    "name": "毒蝎塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerScorpio2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerScorpio3",
+    "name": "毒蝎塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerScorpio3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerBreaker1",
+    "name": "破甲诅咒命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerBreaker1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerBreaker2",
+    "name": "破甲诅咒命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerBreaker2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerBreaker3",
+    "name": "破甲诅咒命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerBreaker3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerEnchanter1",
+    "name": "附魔塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerEnchanter1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerEnchanter2",
+    "name": "附魔塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerEnchanter2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerEnchanter3",
+    "name": "附魔塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerEnchanter3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIceArrow1",
+    "name": "冰刺箭命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIceArrow1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIceArrow2",
+    "name": "冰刺箭命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIceArrow2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerIceArrow3",
+    "name": "冰刺箭命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerIceArrow3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDizzyOrb1",
+    "name": "水球塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDizzyOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDizzyOrb2",
+    "name": "水球塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDizzyOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerDizzyOrb3",
+    "name": "水球塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerDizzyOrb3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTesla1",
+    "name": "电磁塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTesla1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTesla2",
+    "name": "电磁塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTesla2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerTesla3",
+    "name": "电磁塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerTesla3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCritTotem1",
+    "name": "暴击图腾命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCritTotem1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCritTotem2",
+    "name": "暴击图腾命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCritTotem2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerCritTotem3",
+    "name": "暴击图腾命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerCritTotem3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerHellFire1",
+    "name": "奥术精灵命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerHellFire1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerHellFire2",
+    "name": "奥术精灵命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerHellFire2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerHellFire3",
+    "name": "奥术精灵命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerHellFire3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerOvercharge1",
+    "name": "连击斧命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerOvercharge1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerOvercharge2",
+    "name": "连击斧命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerOvercharge2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerOvercharge3",
+    "name": "连击斧命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerOvercharge3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAmplifyCurse1",
+    "name": "灾厄塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAmplifyCurse1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAmplifyCurse2",
+    "name": "灾厄塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAmplifyCurse2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerAmplifyCurse3",
+    "name": "灾厄塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerAmplifyCurse3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThief1",
+    "name": "窃贼哥布林命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThief1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThief2",
+    "name": "窃贼哥布林命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThief2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerThief3",
+    "name": "窃贼哥布林命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerThief3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerSting1",
+    "name": "鱼刺塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerSting1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerSting2",
+    "name": "鱼刺塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerSting2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerSting3",
+    "name": "鱼刺塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerSting3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerRocket1",
+    "name": "火箭塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerRocket1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerRocket2",
+    "name": "火箭塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerRocket2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerRocket3",
+    "name": "火箭塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerRocket3",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFireOrb1",
+    "name": "火球塔命中音效1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFireOrb1",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFireOrb2",
+    "name": "火球塔命中音效2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFireOrb2",
+    "duration": 2,
+    "isLoop": false
+  },
+  {
+    "id": "PlayAudio_HitTowerFireOrb3",
+    "name": "火球塔命中音效3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "res_id": "ResAudio_HitTowerFireOrb3",
+    "duration": 2,
+    "isLoop": false
   }
 ]

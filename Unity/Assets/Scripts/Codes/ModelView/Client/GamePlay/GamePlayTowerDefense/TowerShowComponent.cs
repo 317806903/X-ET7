@@ -24,5 +24,6 @@ namespace ET.Client
         public Transform transSelectShow { get; set; }
         public Transform transCanUpgradeShow { get; set; }
         public Transform transAttackArea { get; set; }
+        public Transform transMyTowerShow { get; set; }
     }
 }

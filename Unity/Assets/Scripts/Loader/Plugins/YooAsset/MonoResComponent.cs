@@ -18,14 +18,20 @@ namespace ET
 
         public async ETTask InitAsync()
         {
+            Log.Debug($"ET.MonoResComponent.InitAsync 11");
             // 初始化资源系统
             YooAssets.Initialize();
+            Log.Debug($"ET.MonoResComponent.InitAsync 22");
             YooAssets.SetOperationSystemMaxTimeSlice(30);
+            Log.Debug($"ET.MonoResComponent.InitAsync 33");
 
             this.LoadResConfig();
+            Log.Debug($"ET.MonoResComponent.InitAsync 44");
             await InitPackage();
+            Log.Debug($"ET.MonoResComponent.InitAsync 55");
 
             await this.LoadGlobalConfig();
+            Log.Debug($"ET.MonoResComponent.InitAsync 66");
         }
 
         public async ETTask RestartAsync()
@@ -90,14 +96,21 @@ namespace ET
 
         private async ETTask LoadGlobalConfig()
         {
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 11");
             AssetOperationHandle handler = YooAssets.LoadAssetAsync<GlobalConfig>("GlobalConfig");
+
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 22");
             while (handler.IsDone == false)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
             }
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 33");
             GlobalConfig.Instance = handler.AssetObject as GlobalConfig;
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 44");
             handler.Release();
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 55");
             defaultPackage.UnloadUnusedAssets();
+            Log.Debug($"ET.MonoResComponent.LoadGlobalConfig 66");
         }
 
         private void LoadResConfig()
@@ -172,6 +185,36 @@ namespace ET
             }
 
             return addresses;
+        }
+
+        /// <summary>
+        /// 获取资源服务器版本地址
+        /// </summary>
+        public static string GetHostServerVersionURL()
+        {
+            //string hostServerIP = "http://10.0.2.2"; //安卓模拟器地址
+            string hostServerIP = ResConfig.Instance.ResHostServerIP;
+            string version = "Version.txt";
+
+#if UNITY_EDITOR
+            if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
+                return $"{hostServerIP}/CDN/Android/{version}";
+            else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
+                return $"{hostServerIP}/CDN/IOS/{version}";
+            else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
+                return $"{hostServerIP}/CDN/WebGL/{version}";
+            else
+                return $"{hostServerIP}/CDN/PC/{version}";
+#else
+		    if (Application.platform == RuntimePlatform.Android)
+			    return $"{hostServerIP}/CDN/Android/{version}";
+		    else if (Application.platform == RuntimePlatform.IPhonePlayer)
+			    return $"{hostServerIP}/CDN/IOS/{version}";
+		    else if (Application.platform == RuntimePlatform.WebGLPlayer)
+			    return $"{hostServerIP}/CDN/WebGL/{version}";
+		    else
+			    return $"{hostServerIP}/CDN/PC/{version}";
+#endif
         }
 
         /// <summary>

@@ -126,6 +126,57 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI ELabel_IDTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_IDTextMeshProUGUI == null )
+				{
+					this.m_ELabel_IDTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/ELabel_ID");
+				}
+				return this.m_ELabel_IDTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button E_SaveButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_SaveButton == null )
+				{
+					this.m_E_SaveButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Save");
+				}
+				return this.m_E_SaveButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_SaveImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_SaveImage == null )
+				{
+					this.m_E_SaveImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Save");
+				}
+				return this.m_E_SaveImage;
+			}
+		}
+
 		public UnityEngine.RectTransform EG_ConfirmRectTransform
 		{
 			get
@@ -177,7 +228,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_SaveButton
+		public UnityEngine.RectTransform EG_AccountRectTransform
 		{
 			get
 			{
@@ -186,15 +237,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_SaveButton == null )
+				if( this.m_EG_AccountRectTransform == null )
 				{
-					this.m_E_SaveButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Confirm/E_Save");
+					this.m_EG_AccountRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account");
 				}
-				return this.m_E_SaveButton;
+				return this.m_EG_AccountRectTransform;
 			}
 		}
 
-		public UnityEngine.UI.Image E_SaveImage
+		public UnityEngine.UI.Button E_Logout_SdkButton
 		{
 			get
 			{
@@ -203,11 +254,181 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_SaveImage == null )
+				if( this.m_E_Logout_SdkButton == null )
 				{
-					this.m_E_SaveImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Confirm/E_Save");
+					this.m_E_Logout_SdkButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Logout_Sdk");
 				}
-				return this.m_E_SaveImage;
+				return this.m_E_Logout_SdkButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Logout_SdkImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Logout_SdkImage == null )
+				{
+					this.m_E_Logout_SdkImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Logout_Sdk");
+				}
+				return this.m_E_Logout_SdkImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_AccountButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_AccountButton == null )
+				{
+					this.m_E_AccountButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account");
+				}
+				return this.m_E_AccountButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_AccountImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_AccountImage == null )
+				{
+					this.m_E_AccountImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account");
+				}
+				return this.m_E_AccountImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_Account_TextTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Account_TextTextMeshProUGUI == null )
+				{
+					this.m_E_Account_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account/E_Account_Text");
+				}
+				return this.m_E_Account_TextTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView E_Account_TextUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Account_TextUITextLocalizeMonoView == null )
+				{
+					this.m_E_Account_TextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account/E_Account_Text");
+				}
+				return this.m_E_Account_TextUITextLocalizeMonoView;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_Account_TitleTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Account_TitleTextMeshProUGUI == null )
+				{
+					this.m_E_Account_TitleTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account/E_Account_Title");
+				}
+				return this.m_E_Account_TitleTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button E_GoogleLoginButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GoogleLoginButton == null )
+				{
+					this.m_E_GoogleLoginButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_GoogleLogin");
+				}
+				return this.m_E_GoogleLoginButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_GoogleLoginImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GoogleLoginImage == null )
+				{
+					this.m_E_GoogleLoginImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_GoogleLogin");
+				}
+				return this.m_E_GoogleLoginImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_IphoneLoginButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_IphoneLoginButton == null )
+				{
+					this.m_E_IphoneLoginButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_IphoneLogin");
+				}
+				return this.m_E_IphoneLoginButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_IphoneLoginImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_IphoneLoginImage == null )
+				{
+					this.m_E_IphoneLoginImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_IphoneLogin");
+				}
+				return this.m_E_IphoneLoginImage;
 			}
 		}
 
@@ -305,11 +526,24 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
+			this.m_ELabel_IDTextMeshProUGUI = null;
+			this.m_E_SaveButton = null;
+			this.m_E_SaveImage = null;
 			this.m_EG_ConfirmRectTransform = null;
 			this.m_E_LogoutButton = null;
 			this.m_E_LogoutImage = null;
-			this.m_E_SaveButton = null;
-			this.m_E_SaveImage = null;
+			this.m_EG_AccountRectTransform = null;
+			this.m_E_Logout_SdkButton = null;
+			this.m_E_Logout_SdkImage = null;
+			this.m_E_AccountButton = null;
+			this.m_E_AccountImage = null;
+			this.m_E_Account_TextTextMeshProUGUI = null;
+			this.m_E_Account_TextUITextLocalizeMonoView = null;
+			this.m_E_Account_TitleTextMeshProUGUI = null;
+			this.m_E_GoogleLoginButton = null;
+			this.m_E_GoogleLoginImage = null;
+			this.m_E_IphoneLoginButton = null;
+			this.m_E_IphoneLoginImage = null;
 			this.m_ELoopScrollList_AvatarLoopHorizontalScrollRect = null;
 			this.m_E_InputFieldTMP_InputField = null;
 			this.m_E_InputFieldImage = null;
@@ -325,11 +559,24 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_IDTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_SaveButton = null;
+		private UnityEngine.UI.Image m_E_SaveImage = null;
 		private UnityEngine.RectTransform m_EG_ConfirmRectTransform = null;
 		private UnityEngine.UI.Button m_E_LogoutButton = null;
 		private UnityEngine.UI.Image m_E_LogoutImage = null;
-		private UnityEngine.UI.Button m_E_SaveButton = null;
-		private UnityEngine.UI.Image m_E_SaveImage = null;
+		private UnityEngine.RectTransform m_EG_AccountRectTransform = null;
+		private UnityEngine.UI.Button m_E_Logout_SdkButton = null;
+		private UnityEngine.UI.Image m_E_Logout_SdkImage = null;
+		private UnityEngine.UI.Button m_E_AccountButton = null;
+		private UnityEngine.UI.Image m_E_AccountImage = null;
+		private TMPro.TextMeshProUGUI m_E_Account_TextTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_E_Account_TextUITextLocalizeMonoView = null;
+		private TMPro.TextMeshProUGUI m_E_Account_TitleTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_GoogleLoginButton = null;
+		private UnityEngine.UI.Image m_E_GoogleLoginImage = null;
+		private UnityEngine.UI.Button m_E_IphoneLoginButton = null;
+		private UnityEngine.UI.Image m_E_IphoneLoginImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_AvatarLoopHorizontalScrollRect = null;
 		private TMPro.TMP_InputField m_E_InputFieldTMP_InputField = null;
 		private UnityEngine.UI.Image m_E_InputFieldImage = null;

@@ -160,6 +160,74 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_Login_SDKButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_SDKButton == null )
+				{
+					this.m_E_Login_SDKButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK");
+				}
+				return this.m_E_Login_SDKButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Login_SDKImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_SDKImage == null )
+				{
+					this.m_E_Login_SDKImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK");
+				}
+				return this.m_E_Login_SDKImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_Login_AppleButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_AppleButton == null )
+				{
+					this.m_E_Login_AppleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Apple");
+				}
+				return this.m_E_Login_AppleButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Login_AppleImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_AppleImage == null )
+				{
+					this.m_E_Login_AppleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Apple");
+				}
+				return this.m_E_Login_AppleImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_Login_GuestButton
 		{
 			get
@@ -194,7 +262,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_Login_SDKButton
+		public TMPro.TextMeshProUGUI E_LoggingTextTextMeshProUGUI
 		{
 			get
 			{
@@ -203,15 +271,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_Login_SDKButton == null )
+				if( this.m_E_LoggingTextTextMeshProUGUI == null )
 				{
-					this.m_E_Login_SDKButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK");
+					this.m_E_LoggingTextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/E_LoggingText");
 				}
-				return this.m_E_Login_SDKButton;
+				return this.m_E_LoggingTextTextMeshProUGUI;
 			}
 		}
 
-		public UnityEngine.UI.Image E_Login_SDKImage
+		public UITextLocalizeMonoView E_LoggingTextUITextLocalizeMonoView
 		{
 			get
 			{
@@ -220,11 +288,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_Login_SDKImage == null )
+				if( this.m_E_LoggingTextUITextLocalizeMonoView == null )
 				{
-					this.m_E_Login_SDKImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK");
+					this.m_E_LoggingTextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/E_LoggingText");
 				}
-				return this.m_E_Login_SDKImage;
+				return this.m_E_LoggingTextUITextLocalizeMonoView;
 			}
 		}
 
@@ -262,6 +330,23 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI ELabel_VersionTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_VersionTextMeshProUGUI == null )
+				{
+					this.m_ELabel_VersionTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "ELabel_Version");
+				}
+				return this.m_ELabel_VersionTextMeshProUGUI;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EG_LoginAccountRootRectTransform = null;
@@ -273,12 +358,17 @@ namespace ET.Client
 			this.m_E_LoginButton = null;
 			this.m_E_LoginImage = null;
 			this.m_EG_LoginWhenSDKRectTransform = null;
-			this.m_E_Login_GuestButton = null;
-			this.m_E_Login_GuestImage = null;
 			this.m_E_Login_SDKButton = null;
 			this.m_E_Login_SDKImage = null;
+			this.m_E_Login_AppleButton = null;
+			this.m_E_Login_AppleImage = null;
+			this.m_E_Login_GuestButton = null;
+			this.m_E_Login_GuestImage = null;
+			this.m_E_LoggingTextTextMeshProUGUI = null;
+			this.m_E_LoggingTextUITextLocalizeMonoView = null;
 			this.m_E_ToggleDebugModeToggle = null;
 			this.m_E_ToggleLoginEditorModeToggle = null;
+			this.m_ELabel_VersionTextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
@@ -291,12 +381,17 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_LoginButton = null;
 		private UnityEngine.UI.Image m_E_LoginImage = null;
 		private UnityEngine.RectTransform m_EG_LoginWhenSDKRectTransform = null;
-		private UnityEngine.UI.Button m_E_Login_GuestButton = null;
-		private UnityEngine.UI.Image m_E_Login_GuestImage = null;
 		private UnityEngine.UI.Button m_E_Login_SDKButton = null;
 		private UnityEngine.UI.Image m_E_Login_SDKImage = null;
+		private UnityEngine.UI.Button m_E_Login_AppleButton = null;
+		private UnityEngine.UI.Image m_E_Login_AppleImage = null;
+		private UnityEngine.UI.Button m_E_Login_GuestButton = null;
+		private UnityEngine.UI.Image m_E_Login_GuestImage = null;
+		private TMPro.TextMeshProUGUI m_E_LoggingTextTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_E_LoggingTextUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Toggle m_E_ToggleDebugModeToggle = null;
 		private UnityEngine.UI.Toggle m_E_ToggleLoginEditorModeToggle = null;
+		private TMPro.TextMeshProUGUI m_ELabel_VersionTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

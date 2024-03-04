@@ -1,22 +1,2663 @@
 [
   {
+    "id": "GamePlayBattleLevel_ARRoomTutorialFirst",
+    "name": "ARRoomTutorialFirst",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseTutorialFirst",
+      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomEndlessChallenge",
+    "name": "ARRoomEndlessChallenge",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseEndlessChallenge",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Infinite",
+      "repeatNum": 20,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 100,
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_ARRoomPVP",
+    "name": "ARRoomEndlessChallenge",
+    "isGlobalMode": false,
+    "maxPlayerCount": 6,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVP",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Infinite",
+      "repeatNum": 5,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 600,
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_RoomTutorialFirst",
+    "name": "RoomTutorialFirst",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseTutorialFirst",
+      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge1",
+    "name": "挑战关卡1",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge2",
+    "name": "挑战关卡2",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge2"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge3",
+    "name": "挑战关卡3",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge3"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge4",
+    "name": "挑战关卡4",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge4"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge5",
+    "name": "挑战关卡5",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge5"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge6",
+    "name": "挑战关卡6",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge6"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge7",
+    "name": "挑战关卡7",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge7"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge8",
+    "name": "挑战关卡8",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge8"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge9",
+    "name": "挑战关卡9",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge9"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge10",
+    "name": "挑战关卡10",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge10"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge1",
+    "name": "挑战关卡1",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge2",
+    "name": "挑战关卡2",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge2"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge3",
+    "name": "挑战关卡3",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge3"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge4",
+    "name": "挑战关卡4",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge4"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge5",
+    "name": "挑战关卡5",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge5"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge6",
+    "name": "挑战关卡6",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge6"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge7",
+    "name": "挑战关卡7",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge7"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge8",
+    "name": "挑战关卡8",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge8"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge9",
+    "name": "挑战关卡9",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge9"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge10",
+    "name": "挑战关卡10",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Challenge10"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_TutorialFirst",
+    "name": "TutorialFirst",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseTutorialFirst",
+      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Room10",
+    "name": "Room10",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseEndlessChallenge",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Infinite",
+      "repeatNum": 20,
+      "monsterWaveNumScalePercentCoefficient": 0,
+      "monsterWaveLevelScalePercentCoefficient": 100,
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
     "id": "GamePlayBattleLevel_Room11",
     "name": "Room11",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
     "gamePlayMode": {
       "$type": "GamePlayTowerDefenseEndlessChallenge",
-      "gamePlayModeCfgId": "TowerDefenseCfg1",
-      "repeatNum": 5,
+      "gamePlayModeCfgId": "TowerDefenseCfg_Infinite",
+      "repeatNum": 20,
       "monsterWaveNumScalePercentCoefficient": 0,
-      "monsterWaveLevelScalePercentCoefficient": 600,
-      "waveRewardGoldScalePercentCoefficient": 0
+      "monsterWaveLevelScalePercentCoefficient": 100,
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "Map3",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -118,7 +2759,6 @@
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "Map2",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -225,7 +2865,6 @@
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "Map3",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -325,13 +2964,13 @@
       "repeatNum": 3,
       "monsterWaveNumScalePercentCoefficient": 100,
       "monsterWaveLevelScalePercentCoefficient": 0,
-      "waveRewardGoldScalePercentCoefficient": 0
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "Map3",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -433,7 +3072,6 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map1",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -558,7 +3196,6 @@
       "isAllowDiffTeamMember": true
     },
     "sceneMap": "Map1",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -681,7 +3318,6 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map1",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -792,6 +3428,218 @@
     ]
   },
   {
+    "id": "GamePlayBattleLevel_RoomZpb",
+    "name": "RoomZpb",
+    "isGlobalMode": false,
+    "maxPlayerCount": 10,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg_testZpb"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_RoomzpbTestSnow",
+    "name": "RoomzpbTestSnow",
+    "isGlobalMode": false,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg_testZpb"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "zpbTestSnow",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_RoomzpbTestHome",
+    "name": "RoomzpbTestHome",
+    "isGlobalMode": false,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg_testZpb"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "zpbTestHome",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 26.566118,
+          "y": -26.258795,
+          "z": -21.470251
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_RoomzpbTestDouble",
+    "name": "RoomzpbTestDouble",
+    "isGlobalMode": false,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefenseNormal",
+      "gamePlayModeCfgId": "TowerDefenseCfg_testZpb"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "zpbTestDouble",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -2.8899689,
+          "y": -14.858688,
+          "z": -43.641586
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
     "id": "GamePlayBattleLevel_Global1",
     "name": "Global1",
     "isGlobalMode": true,
@@ -804,7 +3652,6 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map1",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -927,7 +3774,6 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map2",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -1034,7 +3880,6 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "Map3",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -1124,8 +3969,8 @@
     ]
   },
   {
-    "id": "GamePlayBattleLevel_Global4",
-    "name": "Global4",
+    "id": "GamePlayBattleLevel_GlobalzpbTest",
+    "name": "GlobalzpbTest",
     "isGlobalMode": true,
     "maxPlayerCount": 100,
     "gamePlayMode": {
@@ -1136,13 +3981,123 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "zpbTest",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
           "x": 158.9,
           "y": -15.57,
           "z": 104.18
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_GlobalzpbTestSnow",
+    "name": "GlobalzpbTestSnow",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "zpbTestSnow",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_GlobalzpbTestHome",
+    "name": "GlobalzpbTestHome",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "zpbTestHome",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 26.566118,
+          "y": -26.258795,
+          "z": -21.470251
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 158.9,
+          "y": -15.57,
+          "z": 104.18
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_GlobalzpbTestDouble",
+    "name": "GlobalzpbTestDouble",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "zpbTestDouble",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -2.8899689,
+          "y": -14.858688,
+          "z": -43.641586
         }
       ]
     ],
@@ -1174,7 +4129,6 @@
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "ARMap",
-    "mapScale": 30,
     "playerBirthPosList": [
       [
         {
@@ -1276,7 +4230,107 @@
       "$type": "PlayerAlone"
     },
     "sceneMap": "ARMap",
-    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge_Level1",
+    "name": "Challenge",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level1"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
     "playerBirthPosList": [
       [
         {
@@ -1380,7 +4434,6 @@
       "isAllowDiffTeamMember": true
     },
     "sceneMap": "Map1",
-    "mapScale": 1,
     "playerBirthPosList": [
       [
         {
@@ -1491,109 +4544,7 @@
     ]
   },
   {
-    "id": "GamePlayBattleLevel_ARRoomPVE",
-    "name": "ARRoomPVE",
-    "isGlobalMode": false,
-    "maxPlayerCount": 10,
-    "gamePlayMode": {
-      "$type": "GamePlayTowerDefensePVE",
-      "gamePlayModeCfgId": "TowerDefenseCfg1"
-    },
-    "teamMode": {
-      "$type": "AllPlayersOneGroup"
-    },
-    "sceneMap": "ARMap",
-    "mapScale": 30,
-    "playerBirthPosList": [
-      [
-        {
-          "x": -16.229446,
-          "y": 10.557671,
-          "z": -14.007315
-        }
-      ],
-      [
-        {
-          "x": -14.315218,
-          "y": 10.761445,
-          "z": 2.029736
-        }
-      ],
-      [
-        {
-          "x": -10.136951,
-          "y": 10.557671,
-          "z": 17.083515
-        }
-      ],
-      [
-        {
-          "x": 8.257639,
-          "y": 13.057671,
-          "z": 11.905651
-        }
-      ],
-      [
-        {
-          "x": 1.02016,
-          "y": 17.200642,
-          "z": 19.498
-        }
-      ],
-      [
-        {
-          "x": -37.60639,
-          "y": 13.057671,
-          "z": -4.442848
-        }
-      ]
-    ],
-    "monsterCallPosList": [
-      [
-        {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        {
-          "x": 2,
-          "y": 2,
-          "z": 2
-        }
-      ],
-      [
-        {
-          "x": 10,
-          "y": 10,
-          "z": 10
-        },
-        {
-          "x": 11,
-          "y": 11,
-          "z": 11
-        }
-      ],
-      [
-        {
-          "x": 20,
-          "y": 20,
-          "z": 20
-        }
-      ]
-    ],
-    "musicList": [
-      "ResAudio_Music_game1",
-      "ResAudio_Music_game2",
-      "ResAudio_Music_game3"
-    ]
-  },
-  {
-    "id": "GamePlayBattleLevel_ARRoomPVP",
+    "id": "GamePlayBattleLevel_ARRoomPVPTest",
     "name": "ARRoomPVP",
     "isGlobalMode": false,
     "maxPlayerCount": 10,
@@ -1603,7 +4554,8 @@
       "repeatNum": 5,
       "monsterWaveNumScalePercentCoefficient": 0,
       "monsterWaveLevelScalePercentCoefficient": 600,
-      "waveRewardGoldScalePercentCoefficient": 0
+      "waveRewardGoldScalePercentCoefficient": 0,
+      "createActionIds": []
     },
     "teamMode": {
       "$type": "PlayerTeam",
@@ -1611,7 +4563,6 @@
       "isAllowDiffTeamMember": true
     },
     "sceneMap": "ARMap",
-    "mapScale": 30,
     "playerBirthPosList": [
       [
         {
@@ -1701,23 +4652,994 @@
     ]
   },
   {
-    "id": "GamePlayBattleLevel_ARRoomEndlessChallenge",
-    "name": "ARRoomEndlessChallenge",
-    "isGlobalMode": false,
-    "maxPlayerCount": 10,
+    "id": "GamePlayBattleLevel_Benchmark1",
+    "name": "Benchmark1",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefenseEndlessChallenge",
-      "gamePlayModeCfgId": "TowerDefenseCfg1",
-      "repeatNum": 5,
-      "monsterWaveNumScalePercentCoefficient": 0,
-      "monsterWaveLevelScalePercentCoefficient": 600,
-      "waveRewardGoldScalePercentCoefficient": 0
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark1",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark2",
+    "name": "Benchmark2",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark2",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark3",
+    "name": "Benchmark3",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark4",
+    "name": "Benchmark4",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark4",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark5",
+    "name": "Benchmark5",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark5",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark6",
+    "name": "Benchmark6",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark6",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark7",
+    "name": "Benchmark7",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark7",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "GamePlayBattleLevel_Benchmark8",
+    "name": "Benchmark8",
+    "isGlobalMode": true,
+    "maxPlayerCount": 100,
+    "gamePlayMode": {
+      "$type": "GamePlayPKNormal",
+      "gamePlayModeCfgId": "PKCfg1"
+    },
+    "teamMode": {
+      "$type": "PlayerAlone"
+    },
+    "sceneMap": "Benchmark8",
+    "playerBirthPosList": [
+      [
+        {
+          "x": 32.47901,
+          "y": 0.09153199,
+          "z": 25.64863
+        }
+      ],
+      [
+        {
+          "x": 5.3036385,
+          "y": 0.09153199,
+          "z": 25.377892
+        }
+      ],
+      [
+        {
+          "x": -11.32815,
+          "y": 0.09153199,
+          "z": 19.428177
+        }
+      ],
+      [
+        {
+          "x": -21.791573,
+          "y": 0.09153199,
+          "z": 7.824051
+        }
+      ],
+      [
+        {
+          "x": -23.75347,
+          "y": 0.09153199,
+          "z": -10.634224
+        }
+      ],
+      [
+        {
+          "x": 6.5113716,
+          "y": 0.09153199,
+          "z": -33.988983
+        }
+      ],
+      [
+        {
+          "x": -4.8139887,
+          "y": 0.09153199,
+          "z": -24.230585
+        }
+      ],
+      [
+        {
+          "x": -11.316156,
+          "y": 0.09153199,
+          "z": -15.966864
+        }
+      ],
+      [
+        {
+          "x": -22.839828,
+          "y": 0.09153199,
+          "z": -8.597555
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel1",
+    "name": "（单卡教学）挑战关卡1",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level1"
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
     },
-    "sceneMap": "ARMap",
-    "mapScale": 30,
+    "sceneMap": "Map3",
     "playerBirthPosList": [
       [
         {
@@ -1807,19 +5729,2846 @@
     ]
   },
   {
-    "id": "GamePlayBattleLevel_ARRoomTutorialFirst",
-    "name": "ARRoomTutorialFirst",
+    "id": "ChallengeLevel2",
+    "name": "（单卡教学）挑战关卡2",
     "isGlobalMode": false,
-    "maxPlayerCount": 10,
+    "maxPlayerCount": 4,
     "gamePlayMode": {
-      "$type": "GamePlayTowerDefenseTutorialFirst",
-      "gamePlayModeCfgId": "TowerDefenseCfgTutorialFirst"
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level2"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel3",
+    "name": "（单卡教学）挑战关卡3",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level3"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel4",
+    "name": "（单卡教学）挑战关卡4",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level4"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel5",
+    "name": "（单卡教学）挑战关卡5",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level5"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel6",
+    "name": "（单卡教学）挑战关卡6",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level6"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel7",
+    "name": "（单卡教学）挑战关卡7",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level7"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel8",
+    "name": "（单卡教学）挑战关卡8",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level8"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel9",
+    "name": "（单卡教学）挑战关卡9",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level9"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel10",
+    "name": "（单卡教学）挑战关卡10",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level10"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel11",
+    "name": "（单卡教学）挑战关卡11",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level11"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel12",
+    "name": "（单卡教学）挑战关卡12",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level12"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel13",
+    "name": "（单卡教学）挑战关卡13",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level13"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel14",
+    "name": "（单卡教学）挑战关卡14",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level14"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "ChallengeLevel15",
+    "name": "（单卡教学）挑战关卡15",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level15"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "Map3",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel1",
+    "name": "（单卡教学）挑战关卡1",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level1"
     },
     "teamMode": {
       "$type": "AllPlayersOneGroup"
     },
     "sceneMap": "ARMap",
-    "mapScale": 30,
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel2",
+    "name": "（单卡教学）挑战关卡2",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level2"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel3",
+    "name": "（单卡教学）挑战关卡3",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level3"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel4",
+    "name": "（单卡教学）挑战关卡4",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level4"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel5",
+    "name": "（单卡教学）挑战关卡5",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level5"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel6",
+    "name": "（单卡教学）挑战关卡6",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level6"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel7",
+    "name": "（单卡教学）挑战关卡7",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level7"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel8",
+    "name": "（单卡教学）挑战关卡8",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level8"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel9",
+    "name": "（单卡教学）挑战关卡9",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level9"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel10",
+    "name": "（单卡教学）挑战关卡10",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level10"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel11",
+    "name": "（单卡教学）挑战关卡11",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level11"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel12",
+    "name": "（单卡教学）挑战关卡12",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level12"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel13",
+    "name": "（单卡教学）挑战关卡13",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level13"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel14",
+    "name": "（单卡教学）挑战关卡14",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level14"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
+    "playerBirthPosList": [
+      [
+        {
+          "x": -16.229446,
+          "y": 10.557671,
+          "z": -14.007315
+        }
+      ],
+      [
+        {
+          "x": -14.315218,
+          "y": 10.761445,
+          "z": 2.029736
+        }
+      ],
+      [
+        {
+          "x": -10.136951,
+          "y": 10.557671,
+          "z": 17.083515
+        }
+      ],
+      [
+        {
+          "x": 8.257639,
+          "y": 13.057671,
+          "z": 11.905651
+        }
+      ],
+      [
+        {
+          "x": 1.02016,
+          "y": 17.200642,
+          "z": 19.498
+        }
+      ],
+      [
+        {
+          "x": -37.60639,
+          "y": 13.057671,
+          "z": -4.442848
+        }
+      ]
+    ],
+    "monsterCallPosList": [
+      [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      ],
+      [
+        {
+          "x": 10,
+          "y": 10,
+          "z": 10
+        },
+        {
+          "x": 11,
+          "y": 11,
+          "z": 11
+        }
+      ],
+      [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 20
+        }
+      ]
+    ],
+    "musicList": [
+      "ResAudio_Music_game1",
+      "ResAudio_Music_game2",
+      "ResAudio_Music_game3"
+    ]
+  },
+  {
+    "id": "AR_ChallengeLevel15",
+    "name": "（单卡教学）挑战关卡15",
+    "isGlobalMode": false,
+    "maxPlayerCount": 4,
+    "gamePlayMode": {
+      "$type": "GamePlayTowerDefensePVE",
+      "gamePlayModeCfgId": "TowerDefenseCfg_Level15"
+    },
+    "teamMode": {
+      "$type": "AllPlayersOneGroup"
+    },
+    "sceneMap": "ARMap",
     "playerBirthPosList": [
       [
         {

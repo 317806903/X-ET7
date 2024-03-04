@@ -17,8 +17,7 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgBattleTowerBegin self, ShowWindowData contextData = null)
 		{
-			string resAudioCfgId = "ResAudio_UI_ready_go";
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.ReadyGo);
 		}
 	}
 }

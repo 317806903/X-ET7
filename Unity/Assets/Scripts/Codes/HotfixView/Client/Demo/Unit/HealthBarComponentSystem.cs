@@ -19,7 +19,8 @@ namespace ET.Client
                 }
                 else if (self.GetUnit().GetComponent<TowerComponent>() != null)
                 {
-                    isHome = true;
+                    //isHome = true;
+                    isHome = false;
                 }
 
                 self.isHome = isHome;
@@ -53,6 +54,7 @@ namespace ET.Client
             if (self.isHome)
             {
                 //self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Attacked);
                 self.GetComponent<HomeHealthBarComponent>()?.UpdateHealth(isInit);
             }
             else

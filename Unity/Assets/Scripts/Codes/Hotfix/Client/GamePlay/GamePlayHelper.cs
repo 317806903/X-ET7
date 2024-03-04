@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -27,14 +28,21 @@ namespace ET.Client
 				ARCameraPosition = ARCameraPosition,
 				ARCameraHitPosition = ARCameraHitPosition,
 			};
-			M2C_SendARCameraPos _M2C_SendARCameraPos = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_SendARCameraPos) as M2C_SendARCameraPos;
-			if (_M2C_SendARCameraPos.Error != ET.ErrorCode.ERR_Success)
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_SendARCameraPos);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask SendNeedReNoticeUnitIds(Scene scene, List<long> unitIds)
+		{
+			if (unitIds == null || unitIds.Count == 0)
 			{
-				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
-				{
-					tipMsg = _M2C_SendARCameraPos.Message,
-				});
+				return;
 			}
+			C2M_NeedReNoticeUnitIds _C2M_NeedReNoticeUnitIds = new ();
+			_C2M_NeedReNoticeUnitIds.UnitIds = new();
+			_C2M_NeedReNoticeUnitIds.UnitIds.AddRange(unitIds);
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_NeedReNoticeUnitIds);
+			await ETTask.CompletedTask;
 		}
 	}
 }

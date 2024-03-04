@@ -10,8 +10,10 @@ public enum TextAnimationType
 {
     None = 0,
     Normal = 1,
-    Burst = 2
+    Burst = 2,
+    Gold = 3,
 }
+
 public enum TextMoveType
 {
     None,
@@ -29,14 +31,13 @@ public enum TextMoveType
 
 public class ShootTextProManager : MonoBehaviour
 {
-    public static ShootTextProManager Instance;
-
     private readonly string operatorPlusKeyPostfix = "_operator_plus";
     private readonly string operatorMinusKeyPostfix = "_operator_minus";
     private readonly string numberPrefix = "_NumberImage_";
 
     public List<GameObject> normalNumber = new();
     public List<GameObject> burstNumber = new();
+    public List<GameObject> goldNumber = new();
     public Dictionary<string, GameObject> numberDic = new Dictionary<string, GameObject>();
 
     private List<ShootTextComponent> handleShootTextGroup = new List<ShootTextComponent>();
@@ -135,7 +136,6 @@ public class ShootTextProManager : MonoBehaviour
     public GameObject shootTextPrefab = null;
     void Start()
     {
-        Instance = this;
         Initialized();
     }
 
@@ -156,6 +156,14 @@ public class ShootTextProManager : MonoBehaviour
         for (int i = 0; i < this.burstNumber.Count; i++)
         {
             GameObject go = this.burstNumber[i];
+            if (go != null)
+            {
+                numberDic.Add(go.name, go);
+            }
+        }
+        for (int i = 0; i < this.goldNumber.Count; i++)
+        {
+            GameObject go = this.goldNumber[i];
             if (go != null)
             {
                 numberDic.Add(go.name, go);
@@ -431,6 +439,14 @@ public class ShootTextProManager : MonoBehaviour
 
         //出现字体时对应的动画类型
         animationType = shootTextInfo.animationType == TextAnimationType.None ? TextAnimationType.Normal.ToString() : shootTextInfo.animationType.ToString();
+        if (shootTextInfo.animationType == TextAnimationType.None)
+        {
+            animationType = TextAnimationType.Normal.ToString();
+        }
+        else
+        {
+            animationType = shootTextInfo.animationType.ToString();
+        }
 
         #region 运算符
         GameObject operatorObj = null;

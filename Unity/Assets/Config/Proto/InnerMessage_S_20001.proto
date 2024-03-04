@@ -116,12 +116,27 @@ message ObjectRemoveResponse // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType L2A_RemoveObjectLocationResponse
+message L2A_RemoveObjectLocationRequest // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 Type = 2;
+	int64 Key = 3;
+}
+message L2A_RemoveObjectLocationResponse // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType ObjectGetResponse
 message ObjectGetRequest // IActorRequest
 {
 	int32 RpcId = 1;
 	int32 Type = 2;
 	int64 Key = 3;
+	int64 SceneInstanceId = 4;
 }
 message ObjectGetResponse // IActorResponse
 {
@@ -139,6 +154,7 @@ message R2G_GetLoginKey // IActorRequest
 	string Account = 2;
 	string Password = 3;  // 密码
 	int32 LoginType = 4;
+	string LoginIP = 5;
 }
 
 message G2R_GetLoginKey // IActorResponse
@@ -172,6 +188,7 @@ message G2A_LoginByAccount // IActorRequest
 	string Account = 2;
 	string Password = 3;  // 密码
 	int32 LoginType = 4;
+	string LoginIP = 5;
 }
 
 message A2G_LoginByAccount // IActorResponse
@@ -181,6 +198,23 @@ message A2G_LoginByAccount // IActorResponse
 	string Message = 3;
 	int64 PlayerId = 4;
 	int32 IsFirstLogin = 5;
+}
+
+//ResponseType A2G_BindAccountWithAuth
+message G2A_BindAccountWithAuth // IActorRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;
+	string BindAccount = 3;  // 第三方账号
+	int32 LoginType = 4;
+}
+
+message A2G_BindAccountWithAuth // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsBindSuccess = 5;
 }
 
 //ResponseType A2G_GetAccountInfo
@@ -243,6 +277,7 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 	int32 RoomStatus = 5;
 	int32 RoomType = 6;
 	int32 SubRoomType = 7;
+	string BattleCfgId = 8;
 }
 
 //ResponseType R2G_GetRoomList
@@ -414,6 +449,7 @@ message G2R_SetARRoomInfo // IActorRequest
 	int64 RoomId = 3;
 	string ARSceneId = 4;
 	string ARMeshDownLoadUrl = 5;
+	int32 ARMapScale = 6;
 }
 
 message R2G_SetARRoomInfo // IActorResponse
@@ -558,6 +594,7 @@ message G2M_MemberQuitBattle // IActorResponse
 message M2G_MemberReturnRoomFromBattle // IActorRequest
 {
 	int32 RpcId = 1;
+	int32 BattleResult = 2;
 }
 
 message G2M_MemberReturnRoomFromBattle // IActorResponse
@@ -629,6 +666,8 @@ message M2R_NoticeRoomBattleEnd // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 RoomId = 2;
+	int32 IsReady = 3;
+	repeated int64 WinPlayers = 4;
 }
 
 message R2M_NoticeRoomBattleEnd // IActorResponse
@@ -668,7 +707,8 @@ message R2G_GetRankedMoreThan // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int32 RankedMoreThan = 4;
+	int64 Rank = 4;
+	int32 RankedMoreThan = 5;
 }
 
 //ResponseType R2G_SetPlayerRank
@@ -678,6 +718,7 @@ message G2R_SetPlayerRank // IActorRequest
 	int64 PlayerId = 2;
 	int32 RankType = 3;
 	int64 Score = 4;
+	int32 KillNum = 5;
 }
 
 message R2G_SetPlayerRank // IActorResponse

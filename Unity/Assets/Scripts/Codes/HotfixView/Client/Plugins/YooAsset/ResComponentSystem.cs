@@ -90,7 +90,56 @@ namespace ET.Client
 
         #region 热更相关
 
-        public static async ETTask<int> UpdateVersionAsync(this ResComponent self, int timeout = 30)
+
+        public static async ETTask<(bool, int)> UpdateVersionAsync(this ResComponent self)
+        {
+            YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
+            if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
+            {
+                return (false, ErrorCode.ERR_Success);
+            }
+            else if (resLoadMode == YooAsset.EPlayMode.OfflinePlayMode)
+            {
+                return (false, ErrorCode.ERR_Success);
+            }
+            else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
+            {
+            }
+
+            string url = $"{MonoResComponent.GetHostServerVersionURL()}?v={RandomGenerator.RandUInt32()}";
+            Log.Debug($"UpdateVersionAsync url: {url}");
+            try
+            {
+                string versionInfo = await HttpClientHelper.Get(url);
+                versionInfo = versionInfo.Trim();
+                Log.Debug($"UpdateVersionAsync versionInfo: {versionInfo}");
+                // HttpGetRouterResponse httpGetRouterResponse = JsonHelper.FromJson<HttpGetRouterResponse>(routerInfo);
+
+                string [] curVersion = ResConfig.Instance.Version.Split(".");
+                string [] newVersion = versionInfo.Split(".");
+                Log.Debug($"UpdateVersionAsync curVersion[{ResConfig.Instance.Version}], newVersion[{versionInfo}]");
+
+                if (curVersion[0].CompareTo(newVersion[0]) < 0)
+                {
+                    return (true, ErrorCode.ERR_Success);
+                }
+                else if (curVersion[0].CompareTo(newVersion[0]) == 0)
+                {
+                    if (int.Parse(curVersion[1]) < int.Parse(newVersion[1]))
+                    {
+                        return (true, ErrorCode.ERR_Success);
+                    }
+                }
+                return (false, ErrorCode.ERR_Success);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"UpdateVersionAsync Exception[{e.Message}]");
+                return (false, ErrorCode.ERR_ResourceInitError);
+            }
+        }
+
+        public static async ETTask<int> UpdateMainifestVersionAsync(this ResComponent self, int timeout = 30)
         {
             var package = YooAssets.GetPackage("DefaultPackage");
             var operation = package.UpdatePackageVersionAsync();
@@ -106,19 +155,19 @@ namespace ET.Client
             return ErrorCode.ERR_Success;
         }
 
-        public static async ETTask<int> UpdateManifestAsync(this ResComponent self)
+        public static async ETTask<(int, UpdatePackageManifestOperation)> UpdateManifestAsync(this ResComponent self)
         {
             var package = YooAssets.GetPackage("DefaultPackage");
-            var operation = package.UpdatePackageManifestAsync(self.PackageVersion);
+            var operation = package.UpdatePackageManifestAsync(self.PackageVersion, false);
 
             await operation.GetAwaiter();
 
             if (operation.Status != EOperationStatus.Succeed)
             {
-                return ErrorCode.ERR_ResourceUpdateManifestError;
+                return (ErrorCode.ERR_ResourceUpdateManifestError, null);
             }
 
-            return ErrorCode.ERR_Success;
+            return (ErrorCode.ERR_Success, operation);
         }
 
         public static int CreateDownloader(this ResComponent self)
@@ -126,28 +175,14 @@ namespace ET.Client
             int downloadingMaxNum = 10;
             int failedTryAgain = 3;
             ResourceDownloaderOperation downloader = YooAssets.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
+            self.Downloader = downloader;
             if (downloader.TotalDownloadCount == 0)
             {
-                if (Application.isMobilePlatform)
-                {
-                    Log.Error("---CreateDownloader 没有发现需要下载的资源");
-                }
-                else
-                {
-                    Log.Info("---CreateDownloader 没有发现需要下载的资源");
-                }
+                Log.Debug("---CreateDownloader 没有发现需要下载的资源");
             }
             else
             {
-                if (Application.isMobilePlatform)
-                {
-                    Log.Error("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
-                }
-                else
-                {
-                    Log.Info("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
-                }
-                self.Downloader = downloader;
+                Log.Debug("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
             }
 
             return ErrorCode.ERR_Success;
@@ -364,11 +399,10 @@ namespace ET.Client
 
         public static void ResetShaderWhenEditor(this ResComponent self, UnityEngine.GameObject gameObject)
         {
-            try
+#if UNITY_ANDROID || UNITY_IOS
+            if (UnityEngine.Application.isMobilePlatform == false)
             {
-
-#if UNITY_IPHONE
-                if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsEditor && UnityEngine.Application.isEditor)
+                try
                 {
                     var renderers = gameObject.GetComponentsInChildren<UnityEngine.Renderer>();
 
@@ -402,12 +436,12 @@ namespace ET.Client
                         }
                     }
                 }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
 #endif
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
-            }
         }
 
         #endregion

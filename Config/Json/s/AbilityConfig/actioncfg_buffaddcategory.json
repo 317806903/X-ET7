@@ -1,5 +1,1165 @@
 [
   {
+    "id": "BuffAdd_Infinite_9_2_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_9_2_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_10_2_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_10_2_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_11_1_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_11_1_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_12_2_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_12_2_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_12_3_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_12_3_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_13_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_13_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_14_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_14_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_15_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_15_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_15_2_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_15_2_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_16_2_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_16_2_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_17_2_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_17_2_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_18_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_18_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_19_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_19_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_19_3_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_19_3_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_20_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_20_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_20_2_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_20_2_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_20_3_ZhongZi",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_20_3_ZhongZi"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Infinite_20_4_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Infinite_20_4_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Infinite_13_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Infinite_13_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Infinite_14_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Infinite_14_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Infinite_15_1_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Infinite_15_1_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Infinite_16_2_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Infinite_16_2_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Infinite_20_2_Gui",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Infinite_20_2_Gui"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Infinite_17_2_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Stun_Infinite_17_2_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Infinite_18_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Stun_Infinite_18_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Infinite_19_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Stun_Infinite_19_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Infinite_20_1_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Stun_Infinite_20_1_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Infinite_20_4_Dan",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 4,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Stun_Infinite_20_4_Dan"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge3_1_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge3_1_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge3_2_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge3_2_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge3_3_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge3_3_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge3_4_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge3_4_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge3_5_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge3_5_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_5_2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_5_2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_5_3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_5_3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_1_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_1_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_2_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_2_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_3_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_3_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_4_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_4_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge4_5_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge4_5_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_3_3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_3_3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_4_2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_4_2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_5_2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_5_2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_1_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_1_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_2_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_2_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_3_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_3_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_4_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_4_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_5_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_5_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge5_5_4",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge5_5_4"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge_Niao1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge_Niao1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge_Niao2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge_Niao2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Challenge_Niao3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Monster_Challenge_Niao3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge4_1_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge4_1_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge4_2_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge4_2_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge4_3_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge4_3_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge4_4_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge4_4_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge4_5_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge4_5_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge5_3_3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge5_3_3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge5_4_2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge5_4_2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible_Monster_Challenge5_5_2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 6,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible_Monster_Challenge5_5_2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_1_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_1_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_2_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_2_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_3_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_3_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_4_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_4_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_5_1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_5_1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Stun_Monster_Challenge5_5_4",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 8,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10075,
+            "baseValue": -80,
+            "stackValue": 0,
+            "maxChgValue": -80
+          }
+        ],
+        "buffId": "Buff_Stun_Monster_Challenge5_5_4"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Niao1_SpeedUp",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10001,
+            "baseValue": 2,
+            "stackValue": 0,
+            "maxChgValue": 2
+          }
+        ],
+        "buffId": "Buff_SpeedUp"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Niao2_SpeedUp",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10001,
+            "baseValue": 2,
+            "stackValue": 0,
+            "maxChgValue": 2
+          }
+        ],
+        "buffId": "Buff_SpeedUp"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Monster_Niao3_SpeedUp",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10001,
+            "baseValue": 2,
+            "stackValue": 0,
+            "maxChgValue": 2
+          }
+        ],
+        "buffId": "Buff_SpeedUp"
+      }
+    ]
+  },
+  {
     "id": "BuffAdd_1",
     "name": "",
     "buffList": [
@@ -38,7 +1198,7 @@
     "name": "",
     "buffList": [
       {
-        "duration": 1,
+        "duration": 0.5,
         "addStack": 1,
         "buffActions": [
           {
@@ -54,7 +1214,7 @@
     "name": "",
     "buffList": [
       {
-        "duration": 1,
+        "duration": 0.5,
         "addStack": 1,
         "buffActions": [
           {
@@ -70,7 +1230,7 @@
     "name": "",
     "buffList": [
       {
-        "duration": 1,
+        "duration": 0.5,
         "addStack": 1,
         "buffActions": [
           {
@@ -86,7 +1246,7 @@
     "name": "",
     "buffList": [
       {
-        "duration": 1,
+        "duration": 0.5,
         "addStack": 1,
         "buffActions": [
           {
@@ -98,11 +1258,27 @@
     ]
   },
   {
+    "id": "BuffAdd_Circle2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 0.5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Circle2"
+      }
+    ]
+  },
+  {
     "id": "BuffAdd_Circle3",
     "name": "",
     "buffList": [
       {
-        "duration": 1,
+        "duration": 0.5,
         "addStack": 1,
         "buffActions": [
           {
@@ -110,6 +1286,22 @@
           }
         ],
         "buffId": "Buff_Circle3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_HuoYan1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_HuoYan1"
       }
     ]
   },
@@ -177,7 +1369,27 @@
     ]
   },
   {
-    "id": "BuffAdd_Slow",
+    "id": "BuffAdd_Slow1",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -25,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_Slow"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Slow2",
     "name": "",
     "buffList": [
       {
@@ -197,6 +1409,26 @@
     ]
   },
   {
+    "id": "BuffAdd_Slow3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -75,
+            "stackValue": 0,
+            "maxChgValue": -75
+          }
+        ],
+        "buffId": "Buff_Slow"
+      }
+    ]
+  },
+  {
     "id": "BuffAdd_CDDown1",
     "name": "",
     "buffList": [
@@ -207,11 +1439,11 @@
           {
             "$type": "BuffActionModifySkillAttribute",
             "numericType": 10025,
-            "baseValue": -10,
+            "baseValue": -30,
             "stackValue": 0,
             "skillId": "",
             "skillSlotType": 1,
-            "maxChgValue": -10
+            "maxChgValue": -30
           }
         ],
         "buffId": "Buff_CDDown1"
@@ -229,11 +1461,11 @@
           {
             "$type": "BuffActionModifySkillAttribute",
             "numericType": 10025,
-            "baseValue": -20,
+            "baseValue": -50,
             "stackValue": 0,
             "skillId": "",
             "skillSlotType": 1,
-            "maxChgValue": -20
+            "maxChgValue": -50
           }
         ],
         "buffId": "Buff_CDDown2"
@@ -251,11 +1483,11 @@
           {
             "$type": "BuffActionModifySkillAttribute",
             "numericType": 10025,
-            "baseValue": -50,
+            "baseValue": -70,
             "stackValue": 0,
             "skillId": "",
             "skillSlotType": 1,
-            "maxChgValue": -50
+            "maxChgValue": -70
           }
         ],
         "buffId": "Buff_CDDown3"
@@ -343,6 +1575,712 @@
           }
         ],
         "buffId": "Buff_SeedHeal1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_SeedHeal2",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_SeedHeal2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_SeedHeal3",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_SeedHeal3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_CanInvisible",
+    "name": "",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_CanInvisible"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Invisible",
+    "name": "",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Invisible"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFire1",
+    "name": "火图腾1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFire1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFire2",
+    "name": "火图腾2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFire2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFire3",
+    "name": "火图腾3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFire3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerFire1",
+    "name": "火图腾附魔1",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10094,
+            "baseValue": 25,
+            "stackValue": 0,
+            "maxChgValue": 100
+          }
+        ],
+        "buffId": "Buff_AddTowerFire1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerFire2",
+    "name": "火图腾附魔2",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10094,
+            "baseValue": 50,
+            "stackValue": 0,
+            "maxChgValue": 100
+          }
+        ],
+        "buffId": "Buff_AddTowerFire2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerFire3",
+    "name": "火图腾附魔3",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10094,
+            "baseValue": 100,
+            "stackValue": 0,
+            "maxChgValue": 100
+          }
+        ],
+        "buffId": "Buff_AddTowerFire3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerLianJi1",
+    "name": "连击斧1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerLianJi1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerLianJi2",
+    "name": "连击斧2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerLianJi2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerLianJi3",
+    "name": "连击斧3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerLianJi3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerLianJi1",
+    "name": "连击斧附魔1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 2,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -99,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -99
+          }
+        ],
+        "buffId": "Buff_AddTowerLianJi1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerLianJi2",
+    "name": "连击斧附魔2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 4,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -99,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -99
+          }
+        ],
+        "buffId": "Buff_AddTowerLianJi2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerLianJi3",
+    "name": "连击斧附魔3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 6,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifySkillAttribute",
+            "numericType": 10025,
+            "baseValue": -99,
+            "stackValue": 0,
+            "skillId": "",
+            "skillSlotType": 1,
+            "maxChgValue": -99
+          }
+        ],
+        "buffId": "Buff_AddTowerLianJi3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Towerwitch1",
+    "name": "巫毒塔1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Towerwitch1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Towerwitch2",
+    "name": "巫毒塔2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Towerwitch2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_Towerwitch3",
+    "name": "巫毒塔3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_Towerwitch3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerwitch1",
+    "name": "巫毒塔附魔1",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10074,
+            "baseValue": 33,
+            "stackValue": 0,
+            "maxChgValue": 33
+          }
+        ],
+        "buffId": "Buff_AddTowerwitch1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerwitch2",
+    "name": "巫毒塔附魔2",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10074,
+            "baseValue": 75,
+            "stackValue": 0,
+            "maxChgValue": 75
+          }
+        ],
+        "buffId": "Buff_AddTowerwitch2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerwitch3",
+    "name": "巫毒塔附魔3",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10074,
+            "baseValue": 337,
+            "stackValue": 0,
+            "maxChgValue": 337
+          }
+        ],
+        "buffId": "Buff_AddTowerwitch3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerZaiE1",
+    "name": "灾厄塔1",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerZaiE1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerZaiE2",
+    "name": "灾厄塔2",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerZaiE2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerZaiE3",
+    "name": "灾厄塔3",
+    "buffList": [
+      {
+        "duration": -1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerZaiE3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerZaiE1",
+    "name": "灾厄塔附魔1",
+    "buffList": [
+      {
+        "duration": 3,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddTowerZaiE1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerZaiE2",
+    "name": "灾厄塔附魔2",
+    "buffList": [
+      {
+        "duration": 2,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddTowerZaiE2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_AddTowerZaiE3",
+    "name": "灾厄塔附魔3",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_AddTowerZaiE3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerWater1",
+    "name": "水图腾1",
+    "buffList": [
+      {
+        "duration": 0.5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -100,
+            "stackValue": 0,
+            "maxChgValue": -100
+          }
+        ],
+        "buffId": "Buff_TowerWater1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerWater2",
+    "name": "水图腾2",
+    "buffList": [
+      {
+        "duration": 1,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -100,
+            "stackValue": 0,
+            "maxChgValue": -100
+          }
+        ],
+        "buffId": "Buff_TowerWater2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerWater3",
+    "name": "水图腾3",
+    "buffList": [
+      {
+        "duration": 1.5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10005,
+            "baseValue": -100,
+            "stackValue": 0,
+            "maxChgValue": -100
+          }
+        ],
+        "buffId": "Buff_TowerWater3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerScorpio1",
+    "name": "毒蝎塔1",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerScorpio1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerScorpio2",
+    "name": "毒蝎塔2",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerScorpio2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerScorpio3",
+    "name": "毒蝎塔3",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerScorpio3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFireBall1",
+    "name": "火球塔1",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFireBall1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFireBall2",
+    "name": "火球塔2",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFireBall2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerFireBall3",
+    "name": "火球塔3",
+    "buffList": [
+      {
+        "duration": 10,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionNone"
+          }
+        ],
+        "buffId": "Buff_TowerFireBall3"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerCurse1",
+    "name": "诅咒塔1",
+    "buffList": [
+      {
+        "duration": 5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10115,
+            "baseValue": -50,
+            "stackValue": 0,
+            "maxChgValue": -50
+          }
+        ],
+        "buffId": "Buff_TowerCurse1"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerCurse2",
+    "name": "诅咒塔2",
+    "buffList": [
+      {
+        "duration": 5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10115,
+            "baseValue": -100,
+            "stackValue": 0,
+            "maxChgValue": -100
+          }
+        ],
+        "buffId": "Buff_TowerCurse2"
+      }
+    ]
+  },
+  {
+    "id": "BuffAdd_TowerCurse3",
+    "name": "诅咒塔3",
+    "buffList": [
+      {
+        "duration": 5,
+        "addStack": 1,
+        "buffActions": [
+          {
+            "$type": "BuffActionModifyAttribute",
+            "numericType": 10115,
+            "baseValue": -200,
+            "stackValue": 0,
+            "maxChgValue": -200
+          }
+        ],
+        "buffId": "Buff_TowerCurse3"
       }
     ]
   }

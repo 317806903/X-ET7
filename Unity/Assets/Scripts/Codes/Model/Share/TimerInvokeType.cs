@@ -28,5 +28,10 @@
         public const int BattleTowerHUDShowFrameTimer = 216;
         public const int PhysicalStrengthTimer = 217;
         public const int GameModeARTimer = 218;
+        public const int LoginTimer = 219;
+        public const int UIAudioManagerTimer = 220;
+        public const int DlgARSceneSliderFrameTimer = 221;
+        public const int DlgARSceneSliderSimpleFrameTimer = 222;
+        public const int DlgVideoShowFrameTimer = 223;
     }
 }

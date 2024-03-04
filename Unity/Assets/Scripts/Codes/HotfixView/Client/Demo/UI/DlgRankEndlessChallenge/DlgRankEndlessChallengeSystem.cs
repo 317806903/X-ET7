@@ -16,14 +16,14 @@ namespace ET.Client
             self.View.E_BG_ClickButton.AddListenerAsync(self.OnBgClick);
 
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.prefabSource.prefabName = "Item_RankEndlessChallenge";
-            self.View.ELoopScrollList_RankLoopVerticalScrollRect.prefabSource.poolSize = 8;
+            self.View.ELoopScrollList_RankLoopVerticalScrollRect.prefabSource.poolSize = 15;
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.AddItemRefreshListener(((transform, i) =>
                     self.AddRankItemRefreshListener(transform, i).Coroutine()));
         }
 
         public static void ShowWindow(this DlgRankEndlessChallenge self, ShowWindowData contextData = null)
         {
-            self.ShowBg().Coroutine();
+            self.ShowBg();
             self._ShowWindow().Coroutine();
         }
 
@@ -33,7 +33,7 @@ namespace ET.Client
             await self.ShowRankScrollItem();
         }
 
-        public static async ETTask ShowBg(this DlgRankEndlessChallenge self)
+        public static void ShowBg(this DlgRankEndlessChallenge self)
         {
             bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
             isARCameraEnable = false;
@@ -51,7 +51,7 @@ namespace ET.Client
 
         public static async ETTask QuitRank(this DlgRankEndlessChallenge self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgRankEndlessChallenge>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
         }
@@ -72,13 +72,15 @@ namespace ET.Client
 
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
             var list = rankShowComponent.GetRankList();
-            RankShowItemComponent rankShowItemComponent = list[index];
+            RankEndlessChallengeShowItemComponent rankShowItemComponent = (RankEndlessChallengeShowItemComponent)list[index];
             int rank = rankShowItemComponent.rank;
             long playerId = rankShowItemComponent.playerId;
+            long wave = rankShowItemComponent.score;
             PlayerBaseInfoComponent playerBaseInfoComponent = await PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(), playerId);
             await itemRank.ES_AvatarShow.E_AvatarIconImage.SetPlayerIcon(self.DomainScene(), playerId);
             itemRank.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
-            
+            itemRank.ELabel_WavesTextMeshProUGUI.text = wave.ToString();
+            itemRank.ELabel_KillNumsTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_KillNum", rankShowItemComponent.killNum);
             itemRank.EImage_NO1Image.gameObject.SetActive(rank == 1);
             itemRank.EImage_NO2Image.gameObject.SetActive(rank == 2);
             itemRank.EImage_NO3Image.gameObject.SetActive(rank == 3);
@@ -91,10 +93,22 @@ namespace ET.Client
             {
                 itemRank.ELabel_RankNumTextMeshProUGUI.text = "";
             }
-            itemRank.ELabel_WavesTextMeshProUGUI.text = rankShowItemComponent.score.ToString();
+            
+            long lastPlayerWave = -1, nextPlayerWave = -1;
+            if (index - 1 >= 0)
+            {
+                RankEndlessChallengeShowItemComponent lastRankShowItemComponent = (RankEndlessChallengeShowItemComponent)list[index - 1];
+                lastPlayerWave = lastRankShowItemComponent.score;
+            }
+            if (index + 1 < list.Count)
+            {
+                RankEndlessChallengeShowItemComponent nextRankShowItemComponent = (RankEndlessChallengeShowItemComponent)list[index + 1];
+                nextPlayerWave = nextRankShowItemComponent.score;
+            }
+            itemRank.EImage_KillNumsBgImage.SetVisible(wave == lastPlayerWave || wave == nextPlayerWave);
+            
             PlayerBaseInfoComponent myBaseInfoComponent =
                     await PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            
             itemRank.Eimage_MyBGImage.gameObject.SetActive(myBaseInfoComponent.Id == playerBaseInfoComponent.Id);
         }
 
@@ -113,7 +127,7 @@ namespace ET.Client
                 string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
                 self.View.ELabel_ChanllengeTextMeshProUGUI.text = text;
             }
-            
+
             int myRank = rankShowComponent.GetMyRank();
             if (myRank == -1)
             {
@@ -141,7 +155,7 @@ namespace ET.Client
                 self.View.ELabel_LongRankNumTextMeshProUGUI.text = myRank.ToString();
                 self.View.EImage_ShortRankedBGImage.gameObject.SetActive(false);
             }
-           
+
         }
 
         public static async ETTask OnBgClick(this DlgRankEndlessChallenge self)

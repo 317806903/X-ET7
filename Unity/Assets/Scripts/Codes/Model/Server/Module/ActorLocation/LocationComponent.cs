@@ -12,7 +12,7 @@ namespace ET.Server
         public const int RoomMember = 4;
         public const int Max = 100;
     }
-    
+
     [ChildOf(typeof(LocationOneType))]
     public class LockInfo: Entity, IAwake<long, CoroutineLock>, IDestroy
     {
@@ -25,7 +25,9 @@ namespace ET.Server
     public class LocationOneType: Entity, IAwake<int>
     {
         public int LocationType;
-        
+
+        public MultiMapSetSimple<long, long> recordKey2Scene = new();
+
         public readonly Dictionary<long, long> locations = new Dictionary<long, long>();
 
         public readonly Dictionary<long, LockInfo> lockInfos = new Dictionary<long, LockInfo>();

@@ -1,5 +1,10 @@
 [
   {
+    "id": "ResAudio_BossAppear",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/BossAppear.wav"
+  },
+  {
     "id": "ResAudio_1",
     "name": "",
     "res_name": "Assets/ResAB/Audio/AudioBattle/bomb.wav"
@@ -12,12 +17,12 @@
   {
     "id": "ResAudio_solo",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioBattle/solo.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
   },
   {
     "id": "ResAudio_aoe",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioBattle/aoe.wav"
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
   },
   {
     "id": "ResAudio_line",
@@ -32,7 +37,7 @@
   {
     "id": "ResAudio_UI_ready_go",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/ready_go.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/begin.wav"
   },
   {
     "id": "ResAudio_UI_victory",
@@ -47,46 +52,851 @@
   {
     "id": "ResAudio_UI_Click",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/click.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/click.wav"
   },
   {
     "id": "ResAudio_UI_Back",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/back.ogg"
+    "res_name": "Assets/ResAB/Audio/AudioUI/back.wav"
   },
   {
     "id": "ResAudio_UI_Confirm",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/confirm.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/click.wav"
   },
   {
     "id": "ResAudio_TowerPush",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/set.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/place.wav"
+  },
+  {
+    "id": "ResAudio_UI_Pop-up",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/Pop-up.wav"
+  },
+  {
+    "id": "ResAudio_UI_Join",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/join.wav"
+  },
+  {
+    "id": "ResAudio_UI_Quit",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/quit.wav"
+  },
+  {
+    "id": "ResAudio_UI_Reward",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/reward.wav"
+  },
+  {
+    "id": "ResAudio_UI_Scan",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/scan.wav"
+  },
+  {
+    "id": "ResAudio_UI_Upgradation",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/upgradation.wav"
+  },
+  {
+    "id": "ResAudio_UI_Recovery",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/recovery.wav"
+  },
+  {
+    "id": "ResAudio_UI_Buy",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/buy.wav"
+  },
+  {
+    "id": "ResAudio_UI_Sell",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/sell.wav"
+  },
+  {
+    "id": "ResAudio_UI_Victory",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/victory_1.wav"
+  },
+  {
+    "id": "ResAudio_UI_Attacked",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/attacked.wav"
+  },
+  {
+    "id": "ResAudio_UI_Forbidden",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/forbidden.wav"
+  },
+  {
+    "id": "ResAudio_UI_Battle_forbidden",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioUI/battle_forbidden.wav"
   },
   {
     "id": "ResAudio_Music_login",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/Music/login.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/login.wav"
   },
   {
     "id": "ResAudio_Music_main",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/Music/main.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/main.wav"
   },
   {
     "id": "ResAudio_Music_game1",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/Music/game1.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game1.wav"
   },
   {
     "id": "ResAudio_Music_game2",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/Music/game2.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game2.wav"
   },
   {
     "id": "ResAudio_Music_game3",
     "name": "",
-    "res_name": "Assets/ResAB/Audio/Music/game3.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game3.wav"
+  },
+  {
+    "id": "ResAudio_Music_ARStarted",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/ar.wav"
+  },
+  {
+    "id": "ResAudio_Music_Finish",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/finish.wav"
+  },
+  {
+    "id": "ResAudio_Music_Win",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/win.wav"
+  },
+  {
+    "id": "ResAudio_Music_Fail",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/Music/fail.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerSting1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerSting2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerSting3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerThief1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThief2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThief3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb1",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb2",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb3",
+    "name": "",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
   }
 ]

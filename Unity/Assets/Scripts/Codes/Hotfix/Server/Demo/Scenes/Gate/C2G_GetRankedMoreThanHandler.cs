@@ -25,6 +25,7 @@ namespace ET.Server
 			response.Error = _R2G_GetRankedMoreThan.Error;
 			response.Message = _R2G_GetRankedMoreThan.Message;
 			response.RankedMoreThan = _R2G_GetRankedMoreThan.RankedMoreThan;
+			response.Rank = _R2G_GetRankedMoreThan.Rank;
 
 			await ETTask.CompletedTask;
 		}

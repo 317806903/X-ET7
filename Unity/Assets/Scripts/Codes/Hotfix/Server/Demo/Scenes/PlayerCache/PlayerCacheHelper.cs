@@ -86,11 +86,11 @@ namespace ET.Server
 	        await ETTask.CompletedTask;
         }
 
-        public static async ETTask SavePlayerRank(Scene scene, long playerId, RankType rankType, long score)
+        public static async ETTask SavePlayerRank(Scene scene, long playerId, RankType rankType, long score, int killNum)
         {
 	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.Rank, playerId))
 	        {
-		        await SendSavePlayerRankAsync(scene, playerId, rankType, score);
+		        await SendSavePlayerRankAsync(scene, playerId, rankType, score, killNum);
 	        }
 	        await ETTask.CompletedTask;
         }
@@ -145,7 +145,7 @@ namespace ET.Server
 	        }
         }
 
-        public static async ETTask<bool> SendSavePlayerRankAsync(Scene scene, long playerId, RankType rankType, long score)
+        public static async ETTask<bool> SendSavePlayerRankAsync(Scene scene, long playerId, RankType rankType, long score, int killNum)
         {
 	        StartSceneConfig rankSceneConfig = StartSceneConfigCategory.Instance.GetRankManager(scene.DomainZone());
 
@@ -154,6 +154,7 @@ namespace ET.Server
 		        PlayerId = playerId,
 		        RankType = (int)rankType,
 		        Score = score,
+		        KillNum = killNum,
 	        });
 
 	        if (_R2G_SetPlayerRank.Error != ET.ErrorCode.ERR_Success)
@@ -167,8 +168,13 @@ namespace ET.Server
 	        }
         }
 
-		public static async ETTask AddPhysicalStrenthByAd(Scene scene, long playerId)
+		public static async ETTask AddPhysicalStrenth(Scene scene, long playerId, int chgValue, PlayerModelChgType playerModelChgType)
         {
+	        if (chgValue < 0)
+	        {
+		        Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+		        return;
+	        }
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
 	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
@@ -180,11 +186,111 @@ namespace ET.Server
 	        PlayerBaseInfoComponent playerBaseInfoComponent =
 				await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
 					PlayerBaseInfoComponent;
-			playerBaseInfoComponent.ChgPhysicalStrength(GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd);
+			playerBaseInfoComponent.ChgPhysicalStrength(chgValue);
 
 			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
-                        new() { "physicalStrength" });
+                        new() { "physicalStrength", "nextRecoverTime"});
 	        await ETTask.CompletedTask;
         }
+
+		public static async ETTask ReducePhysicalStrenth(Scene scene, long playerId, int chgValue, PlayerModelChgType playerModelChgType)
+		{
+			if (chgValue < 0)
+			{
+				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+				return;
+			}
+			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+
+			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			if (playerDataComponent == null)
+			{
+				return;
+			}
+
+			PlayerBaseInfoComponent playerBaseInfoComponent =
+					await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
+							PlayerBaseInfoComponent;
+			playerBaseInfoComponent.ChgPhysicalStrength(-chgValue);
+
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
+				new() { "physicalStrength", "nextRecoverTime"});
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask AddItem(Scene scene, long playerId, string itemCfgId, int count)
+		{
+			if (count <= 0)
+			{
+				Log.Error($"Quantity must be positive, count:{count}");
+				return;
+			}
+			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+
+			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			if (playerDataComponent == null)
+			{
+				return;
+			}
+
+			PlayerBackPackComponent playerBackPackComponent =
+					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
+							PlayerBackPackComponent;
+			playerBackPackComponent.AddItem(itemCfgId, count);
+
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask DeleteItem(Scene scene, long playerId, string itemCfgId, int count)
+		{
+			if (count <= 0)
+			{
+				Log.Error($"Quantity must be positive, count:{count}");
+				return;
+			}
+			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+
+			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			if (playerDataComponent == null)
+			{
+				return;
+			}
+
+			PlayerBackPackComponent playerBackPackComponent =
+					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
+							PlayerBackPackComponent;
+			playerBackPackComponent.AddItem(itemCfgId, -count);
+
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask AddItems(Scene scene, long playerId, Dictionary<string, int> items)
+		{
+			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+
+			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			if (playerDataComponent == null)
+			{
+				return;
+			}
+
+			PlayerBackPackComponent playerBackPackComponent =
+					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
+							PlayerBackPackComponent;
+							
+			foreach((string itemCfgId, int count) in items)
+            {
+				if (count <= 0)
+				{
+					Log.Error($"Quantity must be positive, count:{count}");
+					continue;
+				}
+				playerBackPackComponent.AddItem(itemCfgId, count);
+			}
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			await ETTask.CompletedTask;
+		}
     }
 }

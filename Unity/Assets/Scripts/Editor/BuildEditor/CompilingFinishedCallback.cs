@@ -24,7 +24,17 @@ namespace ET
             string methodParam = "";
             if (methodParamDic != null)
             {
-                methodParam = ET.JsonHelper.ToJson(methodParamDic);
+                foreach (var item in methodParamDic)
+                {
+                    if (string.IsNullOrEmpty(methodParam))
+                    {
+                        methodParam += $"{item.Key}={item.Value}";
+                    }
+                    else
+                    {
+                        methodParam += $"|{item.Key}={item.Value}";
+                    }
+                }
             }
             string methoedName = type.FullName + "." + methodName + "(" + methodParam + ")";
             AddTmpMethodName(methoedName);
@@ -76,9 +86,11 @@ namespace ET
             //     System.Threading.Thread.Sleep(10);
             foreach (var method in methods)
             {
-                var pointIndex = method.LastIndexOf(".");
                 var left = method.LastIndexOf("(");
                 var right = method.LastIndexOf(")");
+                string methodTmp = method.Substring(0, left);
+                var pointIndex = methodTmp.LastIndexOf(".");
+
                 string className = method.Substring(0, pointIndex);
                 string methodName = method.Substring(pointIndex + 1, left - pointIndex - 1);
                 string argName = method.Substring(left + 1, right - left - 1);
@@ -89,36 +101,70 @@ namespace ET
                     continue;
                 }
 
-                var method1 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, new Type[] { },
-                    null);
-                var method2 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null,
-                    new Type[] { typeof (string) }, null);
-                if (method1 == null && method2 == null)
+                var method1 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, new Type[] { }, null);
+                if (method1 != null && argName.Trim() == "")
                 {
-                    Debug.LogError("method1 == null && method2 == null");
+                    Debug.Log("method1.Invoke");
+                    method1.Invoke(null, null);
+                    return;
+                }
+
+                var method2 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, new Type[] { typeof (string) }, null);
+                if (method2 != null && argName.Trim() != "")
+                {
+                    Debug.Log("CallMethod(method2, argName");
+                    CallMethod(method2, argName);
+                    return;
+                }
+
+                var method3 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                if (method3 != null)
+                {
+                    Debug.Log("CallMethod(method3, argName)");
+                    CallMethod(method3, argName);
+                    return;
+                }
+
+                if (method1 == null && method2 == null && method3 == null)
+                {
+                    Debug.LogError("method1 == null && method2 == null && method3 == null");
                     continue;
                 }
 
-                if (method1 != null && argName.Trim() == "")
-                    method1.Invoke(null, null);
-                if (method2 != null && argName.Trim() != "")
-                {
-                    CallMethod(method2, argName);
-                }
             }
 
         }
 
         public static void CallMethod(MethodInfo invokeMethodWithNamedArgument, string methodParam)
         {
-            Dictionary<string, object> methodParamDic = ET.JsonHelper.FromJson<Dictionary<string, object>>(methodParam);
             ParameterInfo[] parameterInfos = invokeMethodWithNamedArgument.GetParameters();
-            object[] parameters = new object[parameterInfos.Length];
-            for (int i = 0; i < parameters.Length; i++)
+            if (parameterInfos.Length == 0)
             {
-                if (methodParamDic.TryGetValue(parameterInfos[i].Name, out var value))
+                invokeMethodWithNamedArgument.Invoke(null, null);
+                return;
+            }
+            object[] parameters = new object[parameterInfos.Length];
+            if (string.IsNullOrEmpty(methodParam) == false)
+            {
+                Dictionary<string, object> methodParamDic = new();
+                var list = methodParam.Split("|");
+                foreach (string item in list)
                 {
-                    parameters[i] = value;
+                    if (string.IsNullOrEmpty(item))
+                    {
+                        continue;
+                    }
+
+                    var item2 = item.Split("=");
+                    methodParamDic[item2[0]] = item2[1];
+                }
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    if (methodParamDic.TryGetValue(parameterInfos[i].Name, out var value))
+                    {
+                        Type type = parameterInfos[i].ParameterType;
+                        parameters[i] = Convert.ChangeType(value, type);
+                    }
                 }
             }
             invokeMethodWithNamedArgument.Invoke(null, parameters);

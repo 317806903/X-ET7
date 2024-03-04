@@ -20,10 +20,7 @@
         "aoeTrig": 1,
         "delayTime": 0,
         "action_id": "EffectCreate_3",
-        "actionCallParam": {
-          "$type": "ActionCallCasterUnit",
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_CasterUnit",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -31,10 +28,7 @@
         "aoeTrig": 2,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit",
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_OnAttackUnit",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -42,10 +36,7 @@
         "aoeTrig": 3,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -53,10 +44,7 @@
         "aoeTrig": 4,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }

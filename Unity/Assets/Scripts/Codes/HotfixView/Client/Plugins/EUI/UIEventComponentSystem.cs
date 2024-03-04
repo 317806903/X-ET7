@@ -19,7 +19,10 @@ namespace ET.Client
         {
             self.UIEventHandlers.Clear();
             self.IsClicked = false;
-            UIEventComponent.Instance = null;
+            if (UIEventComponent.Instance == self)
+            {
+                UIEventComponent.Instance = null;
+            }
         }
     }
     

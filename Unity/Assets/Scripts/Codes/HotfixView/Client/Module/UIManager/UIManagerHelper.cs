@@ -31,6 +31,36 @@ namespace ET.Client
             return _UIComponent;
         }
 
+        public static void ShowCommonLoading(Scene scene)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            if (_DlgCommonLoading == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonLoading>();
+                _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            }
+            if (_DlgCommonLoading != null)
+            {
+                _DlgCommonLoading.Show();
+            }
+        }
+
+        public static void HideCommonLoading(Scene scene, bool bForceHide)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            if (_DlgCommonLoading == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonLoading>();
+                _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            }
+            if (_DlgCommonLoading != null)
+            {
+                _DlgCommonLoading.Hide(bForceHide);
+            }
+        }
+
         public static void ShowTip(Scene scene, string tipMsg)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
@@ -43,6 +73,41 @@ namespace ET.Client
             if (_DlgCommonTip != null)
             {
                 _DlgCommonTip.ShowTip(tipMsg);
+            }
+        }
+        
+        public static void ShowTipNode(Scene scene, string tipMsg)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonTipNode _DlgCommonTipNode = _UIComponent.GetDlgLogic<DlgCommonTipNode>(true);
+            if (_DlgCommonTipNode == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonTipNode>();
+                _DlgCommonTipNode = _UIComponent.GetDlgLogic<DlgCommonTipNode>(true);
+            }
+            if (_DlgCommonTipNode != null)
+            {
+                _DlgCommonTipNode.ShowTip(tipMsg);
+            }
+        }
+
+        public static void HideConfirm(Scene scene)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            _UIComponent.HideWindow<DlgCommonConfirm>();
+        }
+
+        public static void PreLoadConfirm(Scene scene)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            if (_UIComponent != null)
+            {
+                DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(false);
+                if (_DlgCommonConfirm == null)
+                {
+                    _UIComponent.ShowWindow<DlgCommonConfirm>();
+                    _UIComponent.HideWindow<DlgCommonConfirm>();
+                }
             }
         }
 
@@ -127,6 +192,7 @@ namespace ET.Client
 
         public static async ETTask EnterRoom(Scene scene)
         {
+            UIAudioManagerHelper.PlayUIAudio(scene, SoundEffectType.JoinRoom);
             UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
             PlayerStatusComponent playerStatusComponent = PlayerHelper.GetMyPlayerStatusComponent(scene);
             if (playerStatusComponent.PlayerStatus != PlayerStatus.Room || playerStatusComponent.RoomId == 0)

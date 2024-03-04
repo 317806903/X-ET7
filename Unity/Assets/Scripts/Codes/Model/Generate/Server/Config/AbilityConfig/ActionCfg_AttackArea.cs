@@ -20,7 +20,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
         Name = _buf.ReadString();
         IsBreakSoftBati = _buf.ReadBool();
         IsBreakStrongBati = _buf.ReadBool();
-        ActionCallAutoUnitArea = ActionCallParam.DeserializeActionCallParam(_buf);
+        ActionCallAutoUnitArea = _buf.ReadString();
         DamageInfo = _buf.ReadString();
         DamageAllot = DamageAllot.DeserializeDamageAllot(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelfAttackActionCall = new System.Collections.Generic.List<AttackActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { AttackActionCall _e0;  _e0 = AttackActionCall.DeserializeAttackActionCall(_buf); SelfAttackActionCall.Add(_e0);}}
@@ -49,7 +49,11 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
     /// 是否破强霸体
     /// </summary>
     public bool IsBreakStrongBati { get; private set; }
-    public ActionCallParam ActionCallAutoUnitArea { get; private set; }
+    /// <summary>
+    /// 对象选择器
+    /// </summary>
+    public string ActionCallAutoUnitArea { get; private set; }
+    public SelectObjectConfig ActionCallAutoUnitArea_Ref { get; private set; }
     /// <summary>
     /// 伤害类型
     /// </summary>
@@ -67,7 +71,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        ActionCallAutoUnitArea?.Resolve(_tables);
+        this.ActionCallAutoUnitArea_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(ActionCallAutoUnitArea);
         this.DamageInfo_Ref = (_tables["ActionCfg_DamageUnitCategory"] as ActionCfg_DamageUnitCategory).GetOrDefault(DamageInfo);
         DamageAllot?.Resolve(_tables);
         foreach(var _e in SelfAttackActionCall) { _e?.Resolve(_tables); }
@@ -77,7 +81,6 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        ActionCallAutoUnitArea?.TranslateText(translator);
         DamageAllot?.TranslateText(translator);
         foreach(var _e in SelfAttackActionCall) { _e?.TranslateText(translator); }
         foreach(var _e in TargetAttackActionCall) { _e?.TranslateText(translator); }

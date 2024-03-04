@@ -108,7 +108,7 @@ namespace ET
             game?.ShowNotification(new GUIContent($"{tips}"));
         }
 
-        public static void Build(BuildTarget buildTarget, BuildOptions buildOptions, string packName)
+        public static (bool, string) Build(BuildTarget buildTarget, BuildOptions buildOptions, string packName)
         {
             string programName;
             if (string.IsNullOrEmpty(packName))
@@ -159,11 +159,13 @@ namespace ET
 
                 FileInfo fileInfo = new ($"{relativeDirPrefix}/{programName}");
                 EditorUtility.RevealInFinder(fileInfo.FullName);
+                return (true, fileInfo.FullName);
             }
             else if (summary.result == BuildResult.Failed)
             {
                 Debug.LogError("----Build failed");
             }
+            return (false, "");
         }
 
 

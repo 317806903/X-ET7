@@ -41,6 +41,10 @@ namespace ET.Client
 			transPVP.gameObject.SetActive(false);
 			Transform transNormal = self.View.uiTransform.transform.Find("E_Effect_Normal");
 			transNormal.gameObject.SetActive(false);
+			Transform transChallenge = self.View.uiTransform.transform.Find("E_Effect_EndChallengeMode");
+			transChallenge.gameObject.SetActive(false);
+			
+			self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
 
 			await TimerComponent.Instance.WaitAsync(500);
 
@@ -55,7 +59,6 @@ namespace ET.Client
 					success = true;
 				}
 			}
-
 			if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE)
 			{
 				await self.ShowEffectPVE(success);
@@ -64,18 +67,6 @@ namespace ET.Client
 			{
 				MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
 				await self.ShowEffectEndlessChallenge(monsterWaveCallComponent.curIndex);
-
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-				{
-					eventName = "InfinityEnded",
-					properties = new()
-					{
-						{"finished", true},
-						{"max_wave_num", self.GetCurMonsterWave()},
-						{"tower_num", self.GetMyTowerList().Count},
-						{"coin_num", self.GetMyGold()},
-					}
-				});
 
 			}
 			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP)
@@ -86,6 +77,19 @@ namespace ET.Client
 			{
 				await self.ShowEffectNormal(success);
 			}
+
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "LevelEnded",
+				properties = new()
+				{
+					{"finished", true},
+					{"max_wave_num", self.GetCurMonsterWave()},
+					{"tower_num", self.GetMyTowerList().Count},
+					{"coin_num", self.GetMyGold()},
+				}
+			});
+
 		}
 
 		public static async ETTask ShowEffectNormal(this DlgBattleTowerEnd self, bool success)
@@ -100,16 +104,14 @@ namespace ET.Client
 	            loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 
-	            string resAudioCfgId = "ResAudio_UI_victory";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
             }
             else
             {
 	            loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
 
-	            string resAudioCfgId = "ResAudio_UI_failed";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -127,16 +129,14 @@ namespace ET.Client
 	            loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 
-	            string resAudioCfgId = "ResAudio_UI_victory";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
             }
             else
             {
 	            loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
 
-	            string resAudioCfgId = "ResAudio_UI_failed";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -144,34 +144,72 @@ namespace ET.Client
 
 		public static async ETTask ShowEffectPVE(this DlgBattleTowerEnd self, bool success)
 		{
-			Transform transPVE = self.View.uiTransform.transform.Find("E_Effect_PVE");
+			Transform transPVE = self.View.uiTransform.transform.Find("E_Effect_EndChallengeMode");
 			transPVE.gameObject.SetActive(true);
-			transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_lose").gameObject.SetActive(false);
-			transPVE.Find("Effect_GameEnd_Model/EButton_GameEnd_victory").gameObject.SetActive(false);
-
-			Transform loseTrans = transPVE.Find("Effect_GameEnd_Model/EButton_ChallengeMode_lose");
-			Transform victoryTrans = transPVE.Find("Effect_GameEnd_Model/EButton_ChallengeMode_victory");
-
-			string cfgId = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()).GetGamePlay().GetGamePlayBattleConfig().Id;
-			string[] sArray = cfgId.Split('_');
-			string challengeLevel = sArray[2];
-			int level = int.Parse(challengeLevel.Replace("Level", ""));
+			self.View.E_victoryImage.gameObject.SetActive(true);
+			Transform loseTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_lose");
+			Transform victoryTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory");
+			Transform rewardCardTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward");
+			Transform rewardGoldTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_GoldCoins");
 			
+			loseTrans.gameObject.SetActive(false);
+			victoryTrans.gameObject.SetActive(false);
+			rewardCardTrans.gameObject.SetActive(false);
+			rewardGoldTrans.gameObject.SetActive(false);
+			self.View.E_NewcardImage.gameObject.SetActive(false);
+
+			string cfgId = GamePlayHelper.GetGamePlay(self.DomainScene()).GetGamePlayBattleConfig().Id;
+			int level = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeIndex(cfgId);
+			self.View.ELabel_LvTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
             if (success)
             {
-	            loseTrans.gameObject.SetActive(false);
+	            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
+				loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
-				self.View.E_ChanllengeLevel_Text_2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
-	            string resAudioCfgId = "ResAudio_UI_victory";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
+				
+				long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+				Dictionary<string, int> dropItems = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerDropItemsInfo(myPlayerId);
+				foreach((string itemCfgId, int itemCnt) in dropItems)
+				{
+					if (ItemHelper.ChkIsTower(itemCfgId))
+					{
+						self.View.EButton_nameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
+						await self.View.EButton_IconImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId));
+
+						List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
+						int labelCount = labels.Count;
+						self.View.EImage_Label1Image.gameObject.SetActive(labelCount >= 1);
+						self.View.EImage_Label2Image.gameObject.SetActive(labelCount >= 2);
+						if (labelCount >= 1)
+						{
+							self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+						}
+
+						if (labelCount >= 2)
+						{
+							self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+						}
+
+						int towerQuality = (int)ItemHelper.GetItemQualityType(itemCfgId);
+						self.View.EImage_LowImage.SetVisible(towerQuality == 0);
+						self.View.EImage_MiddleImage.SetVisible(towerQuality == 1);
+						self.View.EImage_HighImage.SetVisible(towerQuality == 2);
+
+						await TimerComponent.Instance.WaitAsync(2000);
+						self.View.E_victoryImage.gameObject.SetActive(false);
+						rewardCardTrans.gameObject.SetActive(true);
+						self.View.E_NewcardImage.gameObject.SetActive(true);
+						break;
+					}
+				}
             }
             else
             {
-	            loseTrans.gameObject.SetActive(true);
+	            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
+				loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
-				self.View.E_ChanllengeLevel_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
-				string resAudioCfgId = "ResAudio_UI_failed";
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -182,28 +220,45 @@ namespace ET.Client
 			Transform transEndlessChallenge = self.View.uiTransform.transform.Find("E_Effect_EndlessChallenge");
 			transEndlessChallenge.gameObject.SetActive(true);
 
-
-
 			//string text1 = $"存活<color=#ffffff><size=150>{waveIndex}</size></color>波";
 			//string text1 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
-			self.View.ELabel_ChanllengeNumText.text = waveIndex + "\n";
-			//string text2 = $"战胜N%的玩家";
-			int rankedMoreThan = await ET.Client.RankHelper.GetRankedMoreThan(self.DomainScene(), RankType.EndlessChallenge, waveIndex);
-			string text2 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds2", 100-rankedMoreThan);
-			self.View.E_ChanllengeText_2TextMeshProUGUI.text = text2;
+			self.View.ELabel_ChanllengeNumText.text = waveIndex.ToString();
+			LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.E_ChanllengeLevel_TextTextMeshProUGUI.GetComponent<RectTransform>());
 
-			string resAudioCfgId = "ResAudio_UI_victory";
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), resAudioCfgId);
+			//string text2 = $"战胜N%的玩家";
+			// int rankedMoreThan = await ET.Client.RankHelper.GetRankedMoreThan(self.DomainScene(), RankType.EndlessChallenge, waveIndex);
+			// string text2 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds2", 100-rankedMoreThan);
+			// self.View.E_ChanllengeText_2TextMeshProUGUI.text = text2;
+
+			(ulong rankIndex, int rankedMoreThan) = await ET.Client.RankHelper.GetRankedMoreThan(self.DomainScene(), RankType.EndlessChallenge, waveIndex);
+			//Log.Debug($"rankIndex={rankIndex} rankedMoreThan={rankedMoreThan}");
+			if (rankIndex == 0 || rankIndex == 99999)
+			{
+				string noRank = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoRank");
+				self.View.ELabel_RankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_Rank", noRank);
+			}
+			else
+			{
+				self.View.ELabel_RankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_Rank", rankIndex);
+			}
+
+			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+
+			int killNum = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerKillNum(myPlayerId);
+			self.View.ELabel_KillNumTextMeshProUGUI.text =
+					LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_KillNum", killNum);
+
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFinish);
 
             await TimerComponent.Instance.WaitAsync(2000);
 		}
 
 		public static async ETTask OnReturnRoom(this DlgBattleTowerEnd self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			await RoomHelper.MemberReturnRoomFromBattleAsync(self.ClientScene());
-			await SceneHelper.EnterHall(self.ClientScene());
+			await SceneHelper.EnterHall(self.ClientScene(), false, false);
 		}
 
 		public static int GetCurMonsterWave(this DlgBattleTowerEnd self)

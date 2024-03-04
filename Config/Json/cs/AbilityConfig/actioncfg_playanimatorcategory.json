@@ -3,24 +3,70 @@
     "id": "PlayAnimator_None",
     "name": "Idle和Move动作指定为None,客户端会根据是否到位转换",
     "desc": "",
+    "isOnlySelfShow": false,
     "animator_name": 1
   },
   {
     "id": "PlayAnimator_1",
     "name": "播放动作1",
     "desc": "",
+    "isOnlySelfShow": false,
     "animator_name": 2
   },
   {
     "id": "PlayAnimator_2",
     "name": "播放动作2",
     "desc": "",
+    "isOnlySelfShow": false,
     "animator_name": 2
   },
   {
     "id": "PlayAnimator_Die",
     "name": "播放死亡",
     "desc": "",
+    "isOnlySelfShow": false,
     "animator_name": 7
+  },
+  {
+    "id": "PlayAnimator_TowerAoShu1_Attack",
+    "name": "奥术精灵攻击1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
+  },
+  {
+    "id": "PlayAnimator_TowerAoShu2_Attack",
+    "name": "奥术精灵攻击2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
+  },
+  {
+    "id": "PlayAnimator_TowerAoShu3_Attack",
+    "name": "奥术精灵攻击3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
+  },
+  {
+    "id": "PlayAnimator_TowerGoblin1_Attack",
+    "name": "哥布林攻击1",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
+  },
+  {
+    "id": "PlayAnimator_TowerGoblin2_Attack",
+    "name": "哥布林攻击2",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
+  },
+  {
+    "id": "PlayAnimator_TowerGoblin3_Attack",
+    "name": "哥布林攻击3",
+    "desc": "",
+    "isOnlySelfShow": false,
+    "animator_name": 4
   }
 ]

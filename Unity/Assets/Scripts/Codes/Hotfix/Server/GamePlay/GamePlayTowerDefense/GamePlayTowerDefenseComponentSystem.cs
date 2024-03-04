@@ -29,17 +29,24 @@ namespace ET.Server
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
+
+                int killNum = self.GetGamePlay().GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerKillNum(playerId);
+
                 PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as
                         PlayerBaseInfoComponent;
-                if (playerBaseInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex)
+                if (playerBaseInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex || (playerBaseInfoComponent.EndlessChallengeScore == monsterWaveCallComponent.curIndex && playerBaseInfoComponent.EndlessChallengeKillNum < killNum))
                 {
                     playerBaseInfoComponent.EndlessChallengeScore = monsterWaveCallComponent.curIndex;
+                    playerBaseInfoComponent.EndlessChallengeKillNum = killNum;
                     await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo,
-                        new() { "EndlessChallengeScore" });
+                        new() { "EndlessChallengeScore", "EndlessChallengeKillNum"});
                     await ET.Server.PlayerCacheHelper.SavePlayerRank(self.DomainScene(), playerId, RankType.EndlessChallenge,
-                        playerBaseInfoComponent.EndlessChallengeScore);
+                        playerBaseInfoComponent.EndlessChallengeScore, playerBaseInfoComponent.EndlessChallengeKillNum);
                 }
+
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), playerId,
+                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength, PlayerModelChgType.PlayerBaseInfo_111);
             }
 
             await ETTask.CompletedTask;
@@ -51,37 +58,54 @@ namespace ET.Server
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
+                PlayerBaseInfoComponent playerBaseInfoComponent =
+                        await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as
+                                PlayerBaseInfoComponent;
                 bool bHomeWin = self.ChkHomeWin(playerId);
+
+                string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
+                TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+                    TowerDefense_ChallengeLevelCfgCategory.Instance.Get(cfgId);
+                int level = challengeLevelCfg.Index;
+
                 if (bHomeWin == false)
                 {
+                    //非陪玩失败才扣体力
+                    if(playerBaseInfoComponent.ChallengeClearLevel >= level - 1){
+                        await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), playerId,
+                            GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength, PlayerModelChgType.PlayerBaseInfo_111);
+                    }
                     continue;
                 }
 
-                PlayerBaseInfoComponent playerBaseInfoComponent =
-                    await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as
-                        PlayerBaseInfoComponent;
-                string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
-                string[] sArray = cfgId.Split('_');
-                string challengeLevel = sArray[2];
-                string result = System.Text.RegularExpressions.Regex.Replace(challengeLevel, @"[^0-9]+", "");
-                if(result == ""){
-                    await ETTask.CompletedTask;
-                }
-                TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-                    TowerDefense_ChallengeLevelCfgCategory.Instance.Get(challengeLevel);
-                int level = int.Parse(result);
                 if (playerBaseInfoComponent.ChallengeClearLevel + 1 == level)
                 {
-                    //发放首通奖励 challengeLevelCfg.FirstClearDropItem
-                    //扣玩家体力 challengeLevelCfg.EnergyCost
-                    playerBaseInfoComponent.ChallengeClearLevel = level;
-                    await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo,
-                        new() { "ChallengeClearLevel" });
+                    if(playerBaseInfoComponent.ChkPhysicalStrength(GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength))
+                    {
+                        playerBaseInfoComponent.ChallengeClearLevel = level;
+                        await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo,
+                            new() { "ChallengeClearLevel"});
+                        //发放首通奖励
+                        Dictionary<string, int> dropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
+                        await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, dropItems);
+                        self.GetGamePlay().GetComponent<GamePlayStatisticalDataManagerComponent>().AddPlayerDropItemsInfo(playerId, dropItems);
+                        //扣玩家体力
+                        await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), playerId,
+                            GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength, PlayerModelChgType.PlayerBaseInfo_111);
+                    }
                 }
                 else if (playerBaseInfoComponent.ChallengeClearLevel >= level)
                 {
-                    //重复通关奖励 challengeLevelCfg.RepeatClearDropItem
-                    //扣玩家体力 challengeLevelCfg.EnergyCost
+                    if(playerBaseInfoComponent.ChkPhysicalStrength(GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength))
+                    {
+                        //重复通关奖励
+                        Dictionary<string, int> dropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.RepeatClearDropItem);
+                        await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, dropItems);
+                        self.GetGamePlay().GetComponent<GamePlayStatisticalDataManagerComponent>().AddPlayerDropItemsInfo(playerId, dropItems);
+                        //扣玩家体力
+                        await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), playerId,
+                            GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength, PlayerModelChgType.PlayerBaseInfo_111);
+                    }
                 }
                 else
                 {

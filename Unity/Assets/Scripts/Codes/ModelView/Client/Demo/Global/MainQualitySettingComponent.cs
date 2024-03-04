@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [ComponentOf(typeof(Scene))]
+    [ComponentOf(typeof(GlobalComponent))]
     public class MainQualitySettingComponent: Entity, IAwake, IDestroy, IUpdate
     {
         [StaticField]

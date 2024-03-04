@@ -14,7 +14,7 @@ namespace ET
             int myRank = -1;
             if (self.playerId2Score.TryGetValue(playerId, out long score))
             {
-                myRank = (int)self.SkipList.GetRank(score, playerId);
+                myRank = (int)self.SkipList.GetRank(score, myRankItemComponent);
 
                 if ((ulong)myRank > self.topRankPlayerCount)
                 {
@@ -36,13 +36,13 @@ namespace ET
             return rank;
         }
 
-        public static int GetRankedMoreThan(this RankComponent self, long score)
+        public static (ulong, int) GetRankedMoreThan(this RankComponent self, long score)
         {
             ulong rank = self.GetRankByScore(score);
             int rankedMoreThan = 0;
             if (self.rankTotalNum == 0)
             {
-                return 0;
+                return (0, 0);
             }
 
             if (rank > self.rankTotalNum)
@@ -59,7 +59,7 @@ namespace ET
                 rankedMoreThan = (int)((float)rank / self.rankTotalNum * 100);
             }
 
-            return rankedMoreThan;
+            return (rank, rankedMoreThan);
         }
 
         public static SortedDictionary<int, RankItemComponent> GetRankShow(this RankComponent self, long playerId)
@@ -73,7 +73,8 @@ namespace ET
             List<SkipListNode> topList = self.SkipList.GetNodeListByRank(0, (uint)showTotalCount);
             for (int i = 0; i < topList.Count; i++)
             {
-                RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>((long)topList[i].obj);
+                RankItemComponent tmp = (RankItemComponent)topList[i].obj;
+                RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
                 rankIndex2PlayerId[i+1] = rankItemComponent;
             }
 
@@ -88,8 +89,9 @@ namespace ET
             List<SkipListNode> nearMyList = self.SkipList.GetNodeListByRank((uint)playerIndexBegin, (uint)playerIndexEnd);
             for (int i = 0; i < nearMyList.Count; i++)
             {
-                RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>((long)nearMyList[i].obj);
-                rankIndex2PlayerId[playerIndexBegin + i + 1] = rankItemComponent;
+                RankItemComponent tmp = (RankItemComponent)nearMyList[i].obj;
+                RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
+                rankIndex2PlayerId[playerIndexBegin + i] = rankItemComponent;
             }
             return rankIndex2PlayerId;
         }

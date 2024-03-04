@@ -10,7 +10,13 @@ namespace ET
         public virtual void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
+        }
+
+        public virtual void Reuse()
+        {
+            _disposed = false;
+            //GC.ReRegisterForFinalize(this);
         }
 
         ~DisposablClass()

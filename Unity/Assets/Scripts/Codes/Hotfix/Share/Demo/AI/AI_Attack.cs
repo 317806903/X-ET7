@@ -42,7 +42,7 @@ namespace ET
             {
                 return null;
             }
-            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false);
+            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false, true);
             Unit unitHostileForce = null;
             foreach (Unit hostileForce in hostileForces)
             {

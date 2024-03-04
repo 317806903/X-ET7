@@ -24,6 +24,9 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         CriticalStrikeRateBase = _buf.ReadInt();
         DamageDeepeningBase = _buf.ReadInt();
         DamageReliefBase = _buf.ReadInt();
+        UIAttribute1 = UIAttribute.DeserializeUIAttribute(_buf);
+        UIAttribute2 = UIAttribute.DeserializeUIAttribute(_buf);
+        UIAttribute3 = UIAttribute.DeserializeUIAttribute(_buf);
         PostInit();
     }
 
@@ -58,17 +61,26 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
     /// 受击伤害减免系数(N%)
     /// </summary>
     public int DamageReliefBase { get; private set; }
+    public UIAttribute UIAttribute1 { get; private set; }
+    public UIAttribute UIAttribute2 { get; private set; }
+    public UIAttribute UIAttribute3 { get; private set; }
 
     public const int __ID__ = -407369205;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        UIAttribute1?.Resolve(_tables);
+        UIAttribute2?.Resolve(_tables);
+        UIAttribute3?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        UIAttribute1?.TranslateText(translator);
+        UIAttribute2?.TranslateText(translator);
+        UIAttribute3?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -82,6 +94,9 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         + "CriticalStrikeRateBase:" + CriticalStrikeRateBase + ","
         + "DamageDeepeningBase:" + DamageDeepeningBase + ","
         + "DamageReliefBase:" + DamageReliefBase + ","
+        + "UIAttribute1:" + UIAttribute1 + ","
+        + "UIAttribute2:" + UIAttribute2 + ","
+        + "UIAttribute3:" + UIAttribute3 + ","
         + "}";
     }
     

@@ -50,6 +50,7 @@ public sealed partial class GamePlayTowerDefensePVP:  GamePlayTowerDefenseEndles
         + "MonsterWaveNumScalePercentCoefficient:" + MonsterWaveNumScalePercentCoefficient + ","
         + "MonsterWaveLevelScalePercentCoefficient:" + MonsterWaveLevelScalePercentCoefficient + ","
         + "WaveRewardGoldScalePercentCoefficient:" + WaveRewardGoldScalePercentCoefficient + ","
+        + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
         + "}";
     }
     

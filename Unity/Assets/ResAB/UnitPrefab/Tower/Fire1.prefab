@@ -34512,6 +34512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire_Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 4051548549070460468, guid: 2659170c69c7f9f478e495863edd1def,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7447479392850861837, guid: 2659170c69c7f9f478e495863edd1def,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime0
@@ -34560,7 +34565,7 @@ PrefabInstance:
     - target: {fileID: 7627283308123629299, guid: 2659170c69c7f9f478e495863edd1def,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 7627283308123629299, guid: 2659170c69c7f9f478e495863edd1def,
         type: 3}

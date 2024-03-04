@@ -58,7 +58,10 @@ namespace ET
             float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
             float radius = ET.Ability.UnitHelper.GetBodyRadius(unit);
             self.NavMesh = await navmeshManagerComponent.CreateCrowd(radius);
-
+            if (self.NavMesh == null)
+            {
+                return;
+            }
             if (radius > self.NavMesh.GetRadius())
             {
                 radius = self.NavMesh.GetRadius();

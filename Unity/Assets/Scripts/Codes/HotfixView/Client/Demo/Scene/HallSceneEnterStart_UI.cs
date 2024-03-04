@@ -1,3 +1,4 @@
+using ET.AbilityConfig;
 using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,7 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
             //zpb UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
 
-            UIAudioManagerHelper.PlayMusicMain(scene);
+            UIAudioManagerHelper.PlayMusic(scene, MusicType.Main);
 
             ET.Client.ARSessionHelper.ResetMainCamera(scene, false);
 
@@ -26,6 +27,8 @@ namespace ET.Client
             RoomType roomType = playerStatusComponent.RoomType;
 
             bool isFromLogin = args.isFromLogin;
+            bool isRelogin = args.isRelogin;
+
             bool isDebugMode;
             if (isFromLogin)
             {
@@ -36,23 +39,39 @@ namespace ET.Client
                 isDebugMode = roomType == RoomType.Normal;
             }
 
+            Log.Debug($"--ET.Client.HallSceneEnterStart_UI.Run isFromLogin[{isFromLogin}] isRelogin[{isRelogin}]");
             if (isDebugMode)
             {
-                await DealWhenIsDebugMode(clientScene, playerStatusComponent, isFromLogin);
+                await DealWhenIsDebugMode(clientScene, playerStatusComponent, isFromLogin, isRelogin);
             }
             else
             {
-                await DealWhenNotDebugMode(clientScene, playerStatusComponent, isFromLogin);
+                await DealWhenNotDebugMode(clientScene, playerStatusComponent, isFromLogin, isRelogin);
             }
 
         }
 
-        protected async ETTask DealWhenIsDebugMode(Scene scene, PlayerStatusComponent playerStatusComponent, bool isFromLogin)
+        protected async ETTask DealWhenIsDebugMode(Scene scene, PlayerStatusComponent playerStatusComponent, bool isFromLogin, bool isRelogin)
         {
             RoomType roomType = playerStatusComponent.RoomType;
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
-            Log.Debug($"--DealWhenIsDebugMode playerStatusComponent={playerStatusComponent}");
+
+            Log.Debug($"--DealWhenIsDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult}]");
+
+            if (roomType == RoomType.AR)
+            {
+                if (playerStatus == PlayerStatus.Room)
+                {
+                    await RoomHelper.QuitRoomAsync(scene);
+                }
+                else if (playerStatus == PlayerStatus.Battle)
+                {
+                    await RoomHelper.MemberQuitBattleAsync(scene);
+                }
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
+                return;
+            }
 
             if (subRoomType == SubRoomType.None)
             {
@@ -85,6 +104,10 @@ namespace ET.Client
                             UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>().Coroutine();
                         });
                     }
+                    else if (isRelogin)
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
+                    }
                     else
                     {
                         await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
@@ -104,6 +127,10 @@ namespace ET.Client
                             RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
                             UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgHall>().Coroutine();
                         });
+                    }
+                    else if (isRelogin)
+                    {
+                        await RoomHelper.ReturnBackBattle(scene);
                     }
                     else
                     {
@@ -151,6 +178,10 @@ namespace ET.Client
                                 UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
                             });
                         }
+                        else if (isRelogin)
+                        {
+                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                        }
                         else
                         {
                             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
@@ -179,6 +210,12 @@ namespace ET.Client
                             UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
                         });
                     }
+                    else if (isRelogin)
+                    {
+                        //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                        ET.Client.ARSessionHelper.ResetMainCamera(scene, true);
+                        await RoomHelper.ReturnBackBattle(scene);
+                    }
                     else
                     {
                         await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
@@ -188,12 +225,27 @@ namespace ET.Client
 
         }
 
-        protected async ETTask DealWhenNotDebugMode(Scene scene, PlayerStatusComponent playerStatusComponent, bool isFromLogin)
+        protected async ETTask DealWhenNotDebugMode(Scene scene, PlayerStatusComponent playerStatusComponent, bool isFromLogin, bool isRelogin)
         {
             RoomType roomType = playerStatusComponent.RoomType;
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
-            Log.Debug($"--DealWhenNotDebugMode playerStatusComponent={playerStatusComponent}");
+
+            Log.Debug($"--DealWhenNotDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult}]");
+
+            if (roomType == RoomType.Normal)
+            {
+                if (playerStatus == PlayerStatus.Room)
+                {
+                    await RoomHelper.QuitRoomAsync(scene);
+                }
+                else if (playerStatus == PlayerStatus.Battle)
+                {
+                    await RoomHelper.MemberQuitBattleAsync(scene);
+                }
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                return;
+            }
 
             if (subRoomType == SubRoomType.None)
             {
@@ -202,10 +254,22 @@ namespace ET.Client
             }
             else if (subRoomType == SubRoomType.ARTutorialFirst)
             {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
-                return;
+                if (isRelogin == false)
+                {
+                    if (playerStatus == PlayerStatus.Room)
+                    {
+                        await RoomHelper.QuitRoomAsync(scene);
+                    }
+                    else if (playerStatus == PlayerStatus.Battle)
+                    {
+                        await RoomHelper.MemberQuitBattleAsync(scene);
+                    }
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                    DlgGameModeAR _DlgGameModeAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgGameModeAR>(true);
+                    _DlgGameModeAR.View.E_RedDotImage.SetVisible(true);
+                    return;
+                }
             }
-            ET.Client.ARSessionHelper.ResetMainCamera(scene, true);
 
             if (playerStatus == PlayerStatus.Hall)
             {
@@ -214,11 +278,29 @@ namespace ET.Client
             }
             else if (playerStatus == PlayerStatus.Room)
             {
+                if (subRoomType == SubRoomType.ARPVE)
+                {
+                    if (playerStatusComponent.LastBattleResult == 1)
+                    {
+                        string gamePlayBattleLevelCfgId = playerStatusComponent.LastBattleCfgId;
+                        TowerDefense_ChallengeLevelCfg nextChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(gamePlayBattleLevelCfgId);
+                        if(nextChallengeLevelCfg != null)
+                        {
+                            string nextBattleCfgId = nextChallengeLevelCfg.Id;
+                            await RoomHelper.ChgRoomBattleLevelCfgAsync(scene, nextBattleCfgId);
+                        }
+                    }
+                    // await RoomHelper.QuitRoomAsync(scene);
+                    // await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgChallengeMode>();
+                    // return;
+                }
+
                 bool _ARSceneStatusCompleted = ET.Client.ARSessionHelper.ChkARSceneStatusCompleted(scene);
                 Log.Debug($"_ARSceneStatusCompleted[{_ARSceneStatusCompleted}]");
                 if (_ARSceneStatusCompleted)
                 {
                     //AR战斗后返回 会进到这里
+                    ET.Client.ARSessionHelper.ResetMainCamera(scene, true);
                     //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
                     await UIManagerHelper.EnterRoom(scene);
 
@@ -245,6 +327,10 @@ namespace ET.Client
                             UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>().Coroutine();
                         });
                     }
+                    else if (isRelogin)
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                    }
                     else
                     {
                         await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
@@ -270,10 +356,14 @@ namespace ET.Client
                     }, () =>
                     {
                         RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
-                        _DlgARHall_ShowWindowData.playerStatus = PlayerStatus.Hall;
-                        _DlgARHall_ShowWindowData.arRoomId = 0;
-                        UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                        UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>().Coroutine();
                     });
+                }
+                else if (isRelogin)
+                {
+                    //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                    ET.Client.ARSessionHelper.ResetMainCamera(scene, true);
+                    await RoomHelper.ReturnBackBattle(scene);
                 }
                 else
                 {

@@ -36,16 +36,18 @@ namespace ET.Server
 
 		public static async ETTask ChkPlayerOffline(this RoomComponent self)
 		{
+			await ETTask.CompletedTask;
 			if (self.playerWaitQuitTime == null)
 			{
 				self.playerWaitQuitTime = new();
 			}
 
+			//ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 			foreach (RoomMember roomMember in self.GetRoomMemberList())
 			{
 				long playerId = roomMember.Id;
 
-				long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId);
+				long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, self.DomainScene().InstanceId);
 				if (locationActorId == 0)
 				{
 					if (self.playerWaitQuitTime.ContainsKey(playerId) == false)
@@ -76,15 +78,26 @@ namespace ET.Server
 				// }
 			}
 
-			foreach (var playerWaitQuitTime in self.playerWaitQuitTime)
+			while (true)
 			{
-				long playerId = playerWaitQuitTime.Key;
-				long time = playerWaitQuitTime.Value;
-				if (time != -1 && time < TimeHelper.ServerNow())
+				bool bWhile = false;
+				foreach (var playerWaitQuitTime in self.playerWaitQuitTime)
 				{
-					self.playerWaitQuitTime[playerId] = -1;
+					long playerId = playerWaitQuitTime.Key;
+					long time = playerWaitQuitTime.Value;
+					if (time != -1 && time < TimeHelper.ServerNow())
+					{
+						self.playerWaitQuitTime[playerId] = -1;
+						bWhile = true;
 
-					ET.Server.M2R_MemberQuitRoomHandler.KickMember(self.DomainScene(), playerId, self.Id).Coroutine();
+						ET.Server.M2R_MemberQuitRoomHandler.KickMember(self.DomainScene(), playerId, self.Id).Coroutine();
+						break;
+					}
+				}
+
+				if (bWhile == false)
+				{
+					break;
 				}
 			}
 		}

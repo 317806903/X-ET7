@@ -9,6 +9,7 @@ namespace ET.Client
             //scene.AddComponent<FUIComponent>();
             scene.AddComponent<PathLineRendererComponent>();
             scene.AddComponent<ShootTextComponent>();
+            scene.AddComponent<ShowGetGoldTextComponent>();
             scene.AddComponent<ModelClickManagerComponent>();
             await ETTask.CompletedTask;
         }

@@ -36,7 +36,11 @@ namespace ET.Client
                 }
                 self.lineRendererTrans.Clear();
                 self.lineRenderers.Clear();
-                PathLineRendererComponent.Instance = null;
+
+                if (PathLineRendererComponent.Instance == self)
+                {
+                    PathLineRendererComponent.Instance = null;
+                }
             }
         }
 

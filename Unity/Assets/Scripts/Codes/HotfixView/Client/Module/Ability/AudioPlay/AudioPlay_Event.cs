@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace ET.Client
 {
-    [Event(SceneType.Client)]
+    [Event(SceneType.Current)]
     public class AudioPlay_Event: AEvent<Scene, EventType.SyncPlayAudio>
     {
         protected override async ETTask Run(Scene scene, EventType.SyncPlayAudio args)

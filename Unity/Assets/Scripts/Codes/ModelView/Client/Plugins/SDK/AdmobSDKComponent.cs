@@ -11,9 +11,12 @@ namespace ET.Client
         [StaticField]
         public static AdmobSDKComponent Instance;
 
+        public bool isAdmobAvailable = false;
+
         //激励视频
+        public int retryCount;
         public string rewardedAdUnitId;
         public RewardedAd rewardedAd;
-        public UnityAction rewardCallback;
+        public bool isShowRewardedAding;
     }
 }

@@ -24,6 +24,21 @@ namespace ET
 					continue;
 				}
 
+				HashSet<long> preHitUnitIds = bulletObj.GetPreHitUnit();
+				if (preHitUnitIds != null)
+				{
+					foreach (long preHitUnitId in preHitUnitIds)
+					{
+						Unit preHitUnit = UnitHelper.GetUnit(self.DomainScene(), preHitUnitId);
+						BulletHelper.DoBulletHitUnit(unitBullet, preHitUnit);
+					}
+					bulletObj.ResetPreHitUnit();
+					if (bulletObj.ChkCanTrigHit() == false)
+					{
+						continue;
+					}
+				}
+
 				var seeUnits = unitBullet.GetComponent<AOIEntity>().GetSeeUnits();
 				foreach (var seeUnit in seeUnits)
 				{

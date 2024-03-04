@@ -13,11 +13,11 @@ namespace ET.Ability
             SelectHandle selectHandle;
             if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea, ref actionContext);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
             }
             else if(selectHandleOld.selectHandleType == SelectHandleType.SelectPosition)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea, ref actionContext);
+                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
             }
             else
             {
@@ -34,7 +34,7 @@ namespace ET.Ability
                 Log.Error($"DoAttackArea selectHandle.selectHandleType != SelectHandleType.SelectUnits");
                 return;
             }
-            if (actionCfg_AttackArea.ActionCallAutoUnitArea is ActionCallAutoUnitOne actionCallAutoUnitOne)
+            if (actionCfg_AttackArea.ActionCallAutoUnitArea_Ref.ActionCallParam is ActionCallAutoUnitOne actionCallAutoUnitOne)
             {
                 selectHandle.unitIds.Clear();
                 selectHandle.unitIds.AddRange(selectHandleOld.unitIds);
@@ -59,44 +59,20 @@ namespace ET.Ability
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
             {
                 SelectHandle curSelectHandle = selectHandleSelf;
-                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, ref actionContext);
-                if (isChgSelect1)
-                {
-                    curSelectHandle = newSelectHandle1;
-                }
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, ref actionContext);
-                if (isChgSelect2)
-                {
-                    curSelectHandle = newSelectHandle2;
-                }
-                if (bRet1 && bRet2)
-                {
-                    ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, ref actionContext);
-                }
+
+                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, null, ref actionContext);
             }
 
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.TargetAttackActionCall)
             {
                 SelectHandle curSelectHandle = selectHandle;
-                (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, ref actionContext);
-                if (isChgSelect1)
+
+                Unit resetPosByUnitNew = null;
+                if (curSelectHandle.unitIds.Count > 0)
                 {
-                    curSelectHandle = newSelectHandle1;
+                    resetPosByUnitNew = UnitHelper.GetUnit(unit.DomainScene(), curSelectHandle.unitIds[0]);
                 }
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, ref actionContext);
-                if (isChgSelect2)
-                {
-                    curSelectHandle = newSelectHandle2;
-                }
-                if (bRet1 && bRet2)
-                {
-                    Unit resetPosByUnitNew = null;
-                    if (curSelectHandle.unitIds.Count > 0)
-                    {
-                        resetPosByUnitNew = UnitHelper.GetUnit(unit.DomainScene(), curSelectHandle.unitIds[0]);
-                    }
-                    ActionHandlerHelper.CreateAction(unit, resetPosByUnitNew, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, ref actionContext);
-                }
+                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, resetPosByUnitNew, ref actionContext);
 
             }
 
@@ -116,6 +92,10 @@ namespace ET.Ability
 
             float damageScale = 0;
             int count = selectHandle.unitIds.Count;
+            if (count == 0)
+            {
+                return;
+            }
             if (damageAllot == null)
             {
                 damageScale = 1;
@@ -186,38 +166,75 @@ namespace ET.Ability
 
         public static Damage GetDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit)
         {
-            float value = 0;
+            float damageValue = 0;
             ET.AbilityConfig.DamageInfo damageInfo = actionCfg_DamageUnit.DamageInfo;
             switch (damageInfo.DamageType)
             {
                 case DamageType.FixedBlood:
-                    value = damageInfo.Value;
+                    damageValue = damageInfo.Value;
                     break;
                 case DamageType.PercentTotalBloodAttacker:
-                    value = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
+                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
                     break;
                 case DamageType.PercentTotalBloodBeHurter:
-                    value = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
+                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
                     break;
                 case DamageType.PercentCurBloodAttacker:
-                    value = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
+                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PercentCurBloodBeHurter:
-                    value = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
+                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PropertyBlood:
-                    return GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value);
+                    damageValue = GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value);
+                    break;
                 case DamageType.LastSelectBlood:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            Damage damage = new(NumericType.PhysicalAttack, value);
+            ChgDamageByScaleDisOrHeight(attackerUnit,  targetUnit, damageInfo, ref damageValue);
+
+            Damage damage = new(NumericType.PhysicalAttack, damageValue);
             return damage;
         }
 
-        public static Damage GetDamageByProperty(Unit attackerUnit, Unit targetUnit, float attackScale)
+        public static void ChgDamageByScaleDisOrHeight(Unit attackerUnit, Unit targetUnit, ET.AbilityConfig.DamageInfo damageInfo, ref float damageValue)
+        {
+            if (damageInfo.ScaleByDis != 0)
+            {
+                Unit casterActorUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+
+                //按照距离变化(>0表示越远伤害越高,<0表示越近伤害越高)
+                float dis = math.length(casterActorUnit.Position - targetUnit.Position);
+                if (damageInfo.ScaleByDis > 0)
+                {
+                    damageValue *= (1 + math.min(dis * math.abs(damageInfo.ScaleByDis), math.abs(damageInfo.ScaleByDisMax))*0.01f);
+                }
+                else
+                {
+                    damageValue *= (1 + math.max(math.abs(damageInfo.ScaleByDisMax) - dis * math.abs(damageInfo.ScaleByDis), 0)*0.01f);
+                }
+            }
+
+            if (damageInfo.ScaleByHeight != 0)
+            {
+                Unit casterActorUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+
+                //按照高度变化(>0表示往上越远伤害越高,<0表示往下越远伤害越高)
+                if (
+                    (damageInfo.ScaleByHeight > 0 && casterActorUnit.Position.y < targetUnit.Position.y)
+                    || (damageInfo.ScaleByHeight < 0 && casterActorUnit.Position.y > targetUnit.Position.y)
+                    )
+                {
+                    float disHeight = math.abs(casterActorUnit.Position.y - targetUnit.Position.y);
+                    damageValue *= (1 + math.min(disHeight * math.abs(damageInfo.ScaleByHeight), math.abs(damageInfo.ScaleByHeightMax))*0.01f);
+                }
+            }
+        }
+
+        public static float GetDamageByProperty(Unit attackerUnit, Unit targetUnit, float attackScale)
         {
             NumericComponent attackNumeric = attackerUnit.GetComponent<NumericComponent>();
             NumericComponent targetNumeric = targetUnit.GetComponent<NumericComponent>();
@@ -240,8 +257,7 @@ namespace ET.Ability
             damageValue *= ((100 + attacker_DamageDeepening) * 0.01f);
             damageValue *= math.max(0, (100 - target_DamageRelief) * 0.01f);
 
-            Damage damage = new(NumericType.PhysicalAttack, damageValue);
-            return damage;
+            return damageValue;
         }
 
         public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, float damageDegree, float criticalRate, DamageSourceTag[] tags)

@@ -55,6 +55,18 @@ namespace ET
             self._InitNavMeshBuilder();
         }
 
+        public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes)
+        {
+            self.objBytes = bytes;
+
+            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes);
+
+            self._sample = new Sample(geom, null, null);
+            self.ResetSampleSettings(self._sample, 1);
+
+            self._InitNavMeshBuilder();
+        }
+
         public static void InitByMeshData(this NavmeshManagerComponent self, MeshHelper.MeshData meshData, float scale)
         {
             self.meshData = meshData;
@@ -360,6 +372,10 @@ namespace ET
             RcSpan s = null;
             try
             {
+                if (indexX + indexZ * w >= hf.spans.Length)
+                {
+                    return false;
+                }
                 s = hf.spans[indexX + indexZ * w];
             }
             catch (Exception e)

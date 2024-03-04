@@ -12,12 +12,16 @@ namespace ET.Client
                 {
                     GamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId,
                 }) as G2C_EnterMap;
+                if (g2CEnterMap.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"EnterMapAsync Error==1 msg={g2CEnterMap.Message}");
+                }
             }
             catch (Exception e)
             {
                 Log.Error(e);
-            }	
+            }
         }
-        
+
     }
 }

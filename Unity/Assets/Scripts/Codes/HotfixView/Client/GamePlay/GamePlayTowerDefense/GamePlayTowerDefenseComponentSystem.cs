@@ -56,6 +56,7 @@ namespace ET.Client
 			self.DoDrawAllMonsterCall2HeadQuarter();
 			//self.ChkMouseRightClick();
 			self.SendARCameraPos();
+			self.SendNeedReNoticeUnitIds();
 		}
 
 		public static bool ChkIsHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
@@ -120,7 +121,7 @@ namespace ET.Client
 
 		public static void OnHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			self.OnPlayerMoveTarget(hit.point);
 		}
@@ -308,11 +309,13 @@ namespace ET.Client
 
 		public static void DoDrawAllMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self)
 		{
-			// GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-			// if (gamePlayComponent.gamePlayStatus != GamePlayStatus.Gaming)
-			// {
-			// 	return;
-			// }
+			if (self.ChkIsGameEnd()
+			    || self.ChkIsGameRecover()
+			    || self.ChkIsGameRecovering())
+			{
+				return;
+			}
+
 			PutMonsterCallComponent putMonsterCallComponent = self.GetComponent<PutMonsterCallComponent>();
 			if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallUnitId != null)
 			{
@@ -435,6 +438,58 @@ namespace ET.Client
 				cameraHitPos = hitInfo.point;
 				ET.Client.GamePlayHelper.SendARCameraPos(self.DomainScene(), cameraPos, cameraHitPos).Coroutine();
 			}
+		}
+
+		public static void SendNeedReNoticeUnitIds(this GamePlayTowerDefenseComponent self)
+		{
+			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+
+			if (gamePlayComponent.gamePlayStatus != GamePlayStatus.Gaming)
+			{
+				return;
+			}
+
+			long leftTime = self.lastChkUnitExistTime - TimeHelper.ClientNow();
+			if (leftTime > 0)
+			{
+				return;
+			}
+			self.lastChkUnitExistTime = TimeHelper.ClientNow() + 5000;
+
+			List<long> needReNoticeUnitIds = ListComponent<long>.Create();
+
+			PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
+			if (putHomeComponent == null)
+			{
+				return;
+			}
+			Dictionary<TeamFlagType, long> homeUnitList = putHomeComponent.GetHomeUnitList();
+			foreach (var homeUnits in homeUnitList)
+			{
+				long homeUnitId = homeUnits.Value;
+				Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
+				if (homeUnit == null)
+				{
+					needReNoticeUnitIds.Add(homeUnitId);
+				}
+			}
+
+			PutMonsterCallComponent putMonsterCallComponent = self.GetComponent<PutMonsterCallComponent>();
+			if (putMonsterCallComponent != null)
+			{
+				foreach (var monsterCallUnits in putMonsterCallComponent.MonsterCallUnitId)
+				{
+					long monsterCallUnitId = monsterCallUnits.Value;
+					Unit monsterCallUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), monsterCallUnitId);
+					if (monsterCallUnit == null)
+					{
+						needReNoticeUnitIds.Add(monsterCallUnitId);
+					}
+				}
+
+			}
+
+			ET.Client.GamePlayHelper.SendNeedReNoticeUnitIds(self.DomainScene(), needReNoticeUnitIds).Coroutine();
 		}
 	}
 }

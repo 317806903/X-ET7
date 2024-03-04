@@ -68,11 +68,35 @@
     "Process": 1,
     "Zone": 1,
     "SceneType": "Map",
-    "Name": "Dynamic",
+    "Name": "zpbTestSnow",
     "OuterPort": 0
   },
   {
     "Id": 10,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "zpbTestHome",
+    "OuterPort": 0
+  },
+  {
+    "Id": 11,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "zpbTestDouble",
+    "OuterPort": 0
+  },
+  {
+    "Id": 12,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "Dynamic",
+    "OuterPort": 0
+  },
+  {
+    "Id": 13,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Room",
@@ -80,7 +104,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 11,
+    "Id": 14,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Match",
@@ -88,7 +112,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 12,
+    "Id": 15,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Account",
@@ -96,7 +120,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 13,
+    "Id": 16,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Rank",
@@ -104,7 +128,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 14,
+    "Id": 17,
     "Process": 1,
     "Zone": 1,
     "SceneType": "PlayerCache",
@@ -112,7 +136,7 @@
     "OuterPort": 0
   },
   {
-    "Id": 15,
+    "Id": 18,
     "Process": 1,
     "Zone": 1,
     "SceneType": "Mail",
@@ -133,7 +157,7 @@
     "Zone": 3,
     "SceneType": "RouterManager",
     "Name": "RouterManager",
-    "OuterPort": 30300
+    "OuterPort": 3478
   },
   {
     "Id": 301,

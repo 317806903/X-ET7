@@ -20,24 +20,32 @@ namespace ET.Client
 			{
 				return;
 			}
-			
+
 			UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
 			if (unitComponent == null)
 			{
 				return;
 			}
+
 			Unit unit = unitComponent.Get(unitId);
-			if (unit == null)
+			int retryNum = 30;
+			while (unit == null)
 			{
-				return;
+				await TimerComponent.Instance.WaitFrameAsync();
+				unit = unitComponent.Get(unitId);
+				if (retryNum-- < 0)
+				{
+					return;
+				}
 			}
+
 			EventType.SyncPlayAudio _SyncPlayAudio = new ()
 			{
 				unit = unit,
 				playAudioActionId = playAudioActionId,
 			};
 			EventSystem.Instance.Publish(unit.DomainScene(), _SyncPlayAudio);
-			
+
 			await ETTask.CompletedTask;
 		}
 	}

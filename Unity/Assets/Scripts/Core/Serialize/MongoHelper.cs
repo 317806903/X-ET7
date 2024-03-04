@@ -164,6 +164,21 @@ namespace ET
 
         public static void Init()
         {
+            Type typeBsonClassMap = typeof(MongoDB.Bson.Serialization.BsonClassMap);
+
+            var __knownTypesQueue = typeBsonClassMap.GetField("__knownTypesQueue", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var bsonClassMap_dic1 = ((Queue<Type>)__knownTypesQueue.GetValue(null));
+            bsonClassMap_dic1.Clear();
+
+            var __classMaps = typeBsonClassMap.GetField("__classMaps", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            var bsonClassMap_dic2 = ((Dictionary<Type, BsonClassMap>)__classMaps.GetValue(null));
+            bsonClassMap_dic2.Clear();
+
+            var __freezeNestingLevel = typeBsonClassMap.GetField("__freezeNestingLevel", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);
+            __freezeNestingLevel.SetValue(null, 0);
+
+
+            ////=====================================================
             Type typeBson = typeof(MongoDB.Bson.Serialization.BsonSerializer);
 
             var _idGenerators = typeBson.GetField("__idGenerators", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | BindingFlags.NonPublic);

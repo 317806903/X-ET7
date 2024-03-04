@@ -14,6 +14,7 @@ namespace ET.Client
 		{
 			self.View.E_SingleMapModeButton.AddListenerAsync(self.EnterSingleMapMode);
 			self.View.E_RoomModeButton.AddListenerAsync(self.EnterRoomMode);
+			self.View.E_KnapsackModeButton.AddListenerAsync(self.EnterKnapsackMode);
 			self.View.E_ARRoomModeCreateButton.AddListenerAsync(self.EnterARRoomCreateMode);
 			self.View.E_ARRoomModeJoinButton.AddListenerAsync(self.EnterARRoomJoinMode);
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
@@ -25,7 +26,7 @@ namespace ET.Client
 
 		public static async ETTask EnterSingleMapMode(this DlgGameMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgLobby>();
@@ -33,15 +34,28 @@ namespace ET.Client
 
 		public static async ETTask EnterRoomMode(this DlgGameMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgHall>();
 		}
 
+		public static async ETTask EnterKnapsackMode(this DlgGameMode self)
+		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+
+			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
+			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgKnapsack>();
+		}
+
 		public static async ETTask EnterARRoomCreateMode(this DlgGameMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+
+#if UNITY_EDITOR
+			Log.Error($" UNITY_EDITOR ");
+			return;
+#endif
 
 			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
 			{
@@ -56,7 +70,12 @@ namespace ET.Client
 
 		public static async ETTask EnterARRoomJoinMode(this DlgGameMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+
+#if UNITY_EDITOR
+			Log.Error($" UNITY_EDITOR ");
+			return;
+#endif
 
 			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
 			{
@@ -71,7 +90,7 @@ namespace ET.Client
 
 		public static async ETTask ReturnLogin(this DlgGameMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
 			await LoginHelper.LoginOut(self.ClientScene());
 		}

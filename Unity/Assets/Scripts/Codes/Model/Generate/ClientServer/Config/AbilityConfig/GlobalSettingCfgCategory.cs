@@ -55,6 +55,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 是否显示伤害数字展示
     /// </summary>
      public bool ShowDamage => _data.ShowDamage;
+    /// <summary>
+    /// 是否显示金币获得展示
+    /// </summary>
+     public bool ShowGetGold => _data.ShowGetGold;
      public System.Collections.Generic.List<string> AvatarIcons => _data.AvatarIcons;
     /// <summary>
     /// 新手世界观信息
@@ -124,6 +128,18 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 广告系统是否可用
     /// </summary>
      public bool AdmobAvailable => _data.AdmobAvailable;
+    /// <summary>
+    /// AR无尽模式复活增加生命
+    /// </summary>
+     public int AREndlessChallengeRecoverHp => _data.AREndlessChallengeRecoverHp;
+    /// <summary>
+    /// AR无尽模式复活增加金币
+    /// </summary>
+     public int AREndlessChallengeRecoverGold => _data.AREndlessChallengeRecoverGold;
+    /// <summary>
+    /// 初始背包物体
+    /// </summary>
+     public System.Collections.Generic.List<string> InitialBackpackItem => _data.InitialBackpackItem;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

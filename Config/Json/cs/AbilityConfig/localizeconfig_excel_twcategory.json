@@ -216,102 +216,6 @@
     "text_tw": ""
   },
   {
-    "key": "Text_Key_Name_Tow1_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow1_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow1_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow2_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow2_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow2_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow3_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow3_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow3_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow4_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow4_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow4_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow5_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow5_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow5_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow6_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow6_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow6_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow7_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow7_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow7_3",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow8_1",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow8_2",
-    "text_tw": ""
-  },
-  {
-    "key": "Text_Key_Name_Tow8_3",
-    "text_tw": ""
-  },
-  {
     "key": "Text_Key_Desc_Tow1_1",
     "text_tw": ""
   },
@@ -408,6 +312,198 @@
     "text_tw": ""
   },
   {
+    "key": "Text_Key_Desc_Tow9_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_3",
+    "text_tw": ""
+  },
+  {
     "key": "Text_Key_Name_TowCallMonster_1",
     "text_tw": ""
   },
@@ -428,7 +524,487 @@
     "text_tw": ""
   },
   {
-    "key": "Text_Key_TowerLabel_ST",
+    "key": "Text_Key_TowerLabel_Solo",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Line",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Freeze",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Enhance",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Buff",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_Debuff",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_DOT",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_TowerLabel_GetCoins",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow1_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow1_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow1_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow2_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow2_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow2_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow3_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow3_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow3_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow4_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow4_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow4_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow5_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow5_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow5_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow6_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow6_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow6_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow7_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow7_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow7_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow8_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow8_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow8_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow9_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow9_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow9_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow10_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow10_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow10_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow11_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow11_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow11_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow12_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow12_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow12_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow13_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow13_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow13_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow14_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow14_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow14_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow15_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow15_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow15_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow16_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow16_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow16_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow17_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow17_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow17_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow18_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow18_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow18_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow19_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow19_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow19_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow20_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow20_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow20_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow21_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow21_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow21_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow22_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow22_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow22_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow23_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow23_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow23_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow24_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow24_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_Tow24_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow7_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow7_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow7_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow8_1",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow8_2",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Name_TestTow8_3",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_GongJi",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_GongSu",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_GongJiJiaCheng",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_GongSuJiaCheng",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_HuoDeJinBi",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_BaoJi",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_LianJi",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_CD",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_JianSu",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_DOT",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Break",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Dizzy",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Steal",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Num",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Percent",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Wave",
+    "text_tw": ""
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Seconds",
     "text_tw": ""
   },
   {
@@ -452,11 +1028,27 @@
     "text_tw": ""
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefenseNormal",
     "text_tw": ""
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayPK1",
+    "key": "TextCode_Key_GamePlayTowerDefenseTutorialFirst",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVE",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefenseEndlessChallenge",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVP",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPKNormal",
     "text_tw": ""
   },
   {
@@ -536,11 +1128,27 @@
     "text_tw": ""
   },
   {
+    "key": "TextCode_Key_NewGameVersion",
+    "text_tw": ""
+  },
+  {
     "key": "TextCode_Key_Res_UpdateErr",
     "text_tw": ""
   },
   {
     "key": "TextCode_Key_Res_DownLoadResErr",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Btn",
     "text_tw": ""
   },
   {
@@ -873,6 +1481,174 @@
   },
   {
     "key": "TextCode_Key_BattlePut_IsOK",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Rank_NoRank",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Rank_NoData",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Tip_NoWayToConnectHome",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Tip_TooMuch",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Skill_AlreadyLearned",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Skill_HaveNotLearned",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Skill_LastSkillIsBeingReleased",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_WaitAllReady",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_EachCampHaveSomeone",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_CampNumberInconsistent",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Room_NotSupport",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeLevel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_Recover",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Retry",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Next",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTip",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTitle",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_Download",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_CheckUpdate",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_Restart",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateSuccessDes",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Res_DownloadProgress",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_PhysicalStrength_IsFull",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentNull",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitle1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitleTest1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentTest1",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BindAccount_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BindAccount_FailBtn",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BindAccount_AuthFail",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BindAccount_BindFail",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Reward_Without_RewardAd",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Update",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_Rank",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_KillNum",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_NeedCameraPermission",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_OwnerRescan_Member",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Title",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Des",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Cancel",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Confirm",
+    "text_tw": ""
+  },
+  {
+    "key": "TextCode_Key_Battle_Tip_NoReward",
     "text_tw": ""
   }
 ]

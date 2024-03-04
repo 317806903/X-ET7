@@ -228,12 +228,14 @@ namespace ET.Client
 			if (dlgBattleTowerAR != null)
 			{
 				dlgBattleTowerAR.View.E_QuitBattleButton.SetVisible(isShow);
+				dlgBattleTowerAR.View.E_ReScanButton.SetVisible(isShow);
 			}
 
 			DlgBattleTower dlgBattleTower = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTower>();
 			if (dlgBattleTower != null)
 			{
 				dlgBattleTower.View.E_QuitBattleButton.SetVisible(isShow);
+				dlgBattleTower.View.E_ReScanButton.SetVisible(isShow);
 			}
 
 			await ETTask.CompletedTask;

@@ -101,7 +101,7 @@ namespace ET
 			this.isFinishLoad = true;
 		}
 
-		public async ETTask LoadAsync()
+		public async ETTask LoadAsync(Action<float> process)
 		{
 			Dictionary<Type, ByteBuf> configBytes;
 			lock (lockObj)
@@ -125,6 +125,24 @@ namespace ET
 				listTasks.Add(task);
 			}
 
+			while (process != null)
+			{
+				int total = listTasks.Count;
+				int finishNum = 0;
+				foreach (Task task in listTasks)
+				{
+					if (task.IsCompleted)
+					{
+						finishNum++;
+					}
+				}
+
+				if (finishNum == total)
+				{
+					break;
+				}
+				process?.Invoke((float)finishNum / total);
+			}
 			await Task.WhenAll(listTasks.ToArray());
 
 			foreach (IConfigSingleton category in this.allConfig.Values)

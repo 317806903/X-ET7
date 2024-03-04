@@ -23,7 +23,7 @@ namespace ET.Client
 			}
 		}
 	}
-	
+
 	[FriendOf(typeof(DlgPhysicalStrength))]
 	public static class DlgPhysicalStrengthSystem
 	{
@@ -31,7 +31,7 @@ namespace ET.Client
 		{
 			self.View.EButton_CloseButton.AddListener(self.OnCloseBtnClick);
 			self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
-			
+
 			self.View.EButton_WatchADButton.AddListenerAsync(self.GetPhysicalStrenthByADAsync);
 			self.View.EButton_CoinButton.AddListener(self.GetPhysicalStrengthByCoin);
 
@@ -39,13 +39,17 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgPhysicalStrength self, ShowWindowData contextData = null)
 		{
-			self.ShowBg().Coroutine();
+			self.ShowBg();
 			self.Update().Coroutine();
-			
+
+			self.View.ELabel_GetPhysicalStrengthNumTextMeshProUGUI.text =
+					GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd.ToString();
+			self.View.ELabel_RcoverNumTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength.ToString();
+
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.PhysicalStrengthTimer, self);
 		}
-		
-		public static async ETTask ShowBg(this DlgPhysicalStrength self)
+
+		public static void ShowBg(this DlgPhysicalStrength self)
 		{
 			bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
 			isARCameraEnable = false;
@@ -75,17 +79,16 @@ namespace ET.Client
 			string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
 			self.View.ELabel_PercentageTextMeshProUGUI.text = msg;
 			self.View.E_PhysicalStrengthSlider.value = (float)curPhysicalStrength / maxPhysicalStrength;
-			
+
 			TimeSpan timeSpan = TimeSpan.FromSeconds(playerBaseInfoComponent.GetRevoerLeftTime());
 			self.View.ELabel_RecoverLeftTImeTextMeshProUGUI.text = timeSpan.ToString();
-			self.View.ELabel_RcoverNumTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength.ToString();
 		}
 
 		public static void OnCloseBtnClick(this DlgPhysicalStrength self)
 		{
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
 		}
-		
+
 		public static void OnBGClick(this DlgPhysicalStrength self)
 		{
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
@@ -93,10 +96,24 @@ namespace ET.Client
 
 		public static async ETTask GetPhysicalStrenthByADAsync(this DlgPhysicalStrength self)
 		{
-			await ET.Client.AdmobSDKComponent.Instance.ShowRewardedAd(async () =>
-            {
-				await ET.Client.PlayerCacheHelper.AddPlayerPhysicalStrenthByAdAsync(self.DomainScene());
-            });
+			PlayerBaseInfoComponent playerBaseInfoComponent =
+					await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+			int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
+			if (playerBaseInfoComponent.physicalStrength == maxPhysicalStrength)
+			{
+				string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_IsFull");
+				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, null, null, null);
+			}
+			else
+			{
+				await ET.Client.AdmobSDKComponent.Instance.ShowRewardedAd(() =>
+				{
+					ET.Client.PlayerCacheHelper.AddPlayerPhysicalStrenthByAdAsync(self.DomainScene()).Coroutine();
+				},()=>{
+					string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Reward_Without_RewardAd");
+            		ET.Client.UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, () => { ET.Client.PlayerCacheHelper.AddPlayerPhysicalStrenthByAdAsync(self.DomainScene()).Coroutine(); });
+				});
+			}
 		}
 
 		public static void GetPhysicalStrengthByCoin(this DlgPhysicalStrength self)

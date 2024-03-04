@@ -228,6 +228,23 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI E_Return_TextTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Return_TextTextMeshProUGUI == null )
+				{
+					this.m_E_Return_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom/E_Return_Text");
+				}
+				return this.m_E_Return_TextTextMeshProUGUI;
+			}
+		}
+
 		public UnityEngine.UI.Button EButton_GameEndButton
 		{
 			get
@@ -568,7 +585,7 @@ namespace ET.Client
 			}
 		}
 
-		public TMPro.TextMeshProUGUI E_ChanllengeText_2TextMeshProUGUI
+		public TMPro.TextMeshProUGUI ELabel_RankTextMeshProUGUI
 		{
 			get
 			{
@@ -577,15 +594,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ChanllengeText_2TextMeshProUGUI == null )
+				if( this.m_ELabel_RankTextMeshProUGUI == null )
 				{
-					this.m_E_ChanllengeText_2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2");
+					this.m_ELabel_RankTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/info_box/ELabel_Rank");
 				}
-				return this.m_E_ChanllengeText_2TextMeshProUGUI;
+				return this.m_ELabel_RankTextMeshProUGUI;
 			}
 		}
 
-		public UITextLocalizeMonoView E_ChanllengeText_2UITextLocalizeMonoView
+		public TMPro.TextMeshProUGUI ELabel_KillNumTextMeshProUGUI
 		{
 			get
 			{
@@ -594,11 +611,708 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ChanllengeText_2UITextLocalizeMonoView == null )
+				if( this.m_ELabel_KillNumTextMeshProUGUI == null )
 				{
-					this.m_E_ChanllengeText_2UITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_2");
+					this.m_ELabel_KillNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/info_box (1)/ELabel_KillNum");
 				}
-				return this.m_E_ChanllengeText_2UITextLocalizeMonoView;
+				return this.m_ELabel_KillNumTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Effect_EndChallengeModeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Effect_EndChallengeModeImage == null )
+				{
+					this.m_E_Effect_EndChallengeModeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode");
+				}
+				return this.m_E_Effect_EndChallengeModeImage;
+			}
+		}
+
+		public UnityEngine.UI.Button Effect_GameEnd_ChallengeModeEndsButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Effect_GameEnd_ChallengeModeEndsButton == null )
+				{
+					this.m_Effect_GameEnd_ChallengeModeEndsButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds");
+				}
+				return this.m_Effect_GameEnd_ChallengeModeEndsButton;
+			}
+		}
+
+		public UnityEngine.UI.Image Effect_GameEnd_ChallengeModeEndsImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Effect_GameEnd_ChallengeModeEndsImage == null )
+				{
+					this.m_Effect_GameEnd_ChallengeModeEndsImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds");
+				}
+				return this.m_Effect_GameEnd_ChallengeModeEndsImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_overImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_overImage == null )
+				{
+					this.m_E_overImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_lose/E_over");
+				}
+				return this.m_E_overImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_victoryImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_victoryImage == null )
+				{
+					this.m_E_victoryImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_victory");
+				}
+				return this.m_E_victoryImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Item_TowerRewardImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Item_TowerRewardImage == null )
+				{
+					this.m_E_Item_TowerRewardImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward");
+				}
+				return this.m_E_Item_TowerRewardImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_NoneImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_NoneImage == null )
+				{
+					this.m_E_NoneImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/E_None");
+				}
+				return this.m_E_NoneImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_TowerBuyShowImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_TowerBuyShowImage == null )
+				{
+					this.m_EImage_TowerBuyShowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow");
+				}
+				return this.m_EImage_TowerBuyShowImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BoxImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BoxImage == null )
+				{
+					this.m_E_BoxImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/E_Box");
+				}
+				return this.m_E_BoxImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_LowImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_LowImage == null )
+				{
+					this.m_EImage_LowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/E_Box/EImage_Low");
+				}
+				return this.m_EImage_LowImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_MiddleImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_MiddleImage == null )
+				{
+					this.m_EImage_MiddleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/E_Box/EImage_Middle");
+				}
+				return this.m_EImage_MiddleImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_HighImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_HighImage == null )
+				{
+					this.m_EImage_HighImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/E_Box/EImage_High");
+				}
+				return this.m_EImage_HighImage;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_IconButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_IconButton == null )
+				{
+					this.m_EButton_IconButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EButton_Icon");
+				}
+				return this.m_EButton_IconButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_IconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_IconImage == null )
+				{
+					this.m_EButton_IconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EButton_Icon");
+				}
+				return this.m_EButton_IconImage;
+			}
+		}
+
+		public UnityEngine.RectTransform EG_IconStarRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_IconStarRectTransform == null )
+				{
+					this.m_EG_IconStarRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EG_IconStar");
+				}
+				return this.m_EG_IconStarRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image E_IconStar1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_IconStar1Image == null )
+				{
+					this.m_E_IconStar1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EG_IconStar/E_IconStar1");
+				}
+				return this.m_E_IconStar1Image;
+			}
+		}
+
+		public UnityEngine.UI.Image E_IconStar2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_IconStar2Image == null )
+				{
+					this.m_E_IconStar2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EG_IconStar/E_IconStar2");
+				}
+				return this.m_E_IconStar2Image;
+			}
+		}
+
+		public UnityEngine.UI.Image E_IconStar3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_IconStar3Image == null )
+				{
+					this.m_E_IconStar3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EG_IconStar/E_IconStar3");
+				}
+				return this.m_E_IconStar3Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI EButton_nameTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_nameTextMeshProUGUI == null )
+				{
+					this.m_EButton_nameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EButton_name");
+				}
+				return this.m_EButton_nameTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_SelectButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_SelectButton == null )
+				{
+					this.m_EButton_SelectButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EButton_Select");
+				}
+				return this.m_EButton_SelectButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_SelectImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_SelectImage == null )
+				{
+					this.m_EButton_SelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EButton_Select");
+				}
+				return this.m_EButton_SelectImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_Label1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_Label1Image == null )
+				{
+					this.m_EImage_Label1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label1");
+				}
+				return this.m_EImage_Label1Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Label1TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_Label1TextMeshProUGUI == null )
+				{
+					this.m_ELabel_Label1TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label1/ELabel_Label1");
+				}
+				return this.m_ELabel_Label1TextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_Label2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_Label2Image == null )
+				{
+					this.m_EImage_Label2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label2");
+				}
+				return this.m_EImage_Label2Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Label2TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_Label2TextMeshProUGUI == null )
+				{
+					this.m_ELabel_Label2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label2/ELabel_Label2");
+				}
+				return this.m_ELabel_Label2TextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_Label3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_Label3Image == null )
+				{
+					this.m_EImage_Label3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label3");
+				}
+				return this.m_EImage_Label3Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Label3TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_Label3TextMeshProUGUI == null )
+				{
+					this.m_ELabel_Label3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Label3/ELabel_Label3");
+				}
+				return this.m_ELabel_Label3TextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_BuyBGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_BuyBGImage == null )
+				{
+					this.m_EImage_BuyBGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG");
+				}
+				return this.m_EImage_BuyBGImage;
+			}
+		}
+
+		public UnityEngine.UI.Text ELabel_BuyText
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_BuyText == null )
+				{
+					this.m_ELabel_BuyText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG/ELabel_Buy");
+				}
+				return this.m_ELabel_BuyText;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_BuyUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_BuyUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_BuyUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG/ELabel_Buy");
+				}
+				return this.m_ELabel_BuyUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_BuyButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_BuyButton == null )
+				{
+					this.m_EButton_BuyButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy");
+				}
+				return this.m_EButton_BuyButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_BuyImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_BuyImage == null )
+				{
+					this.m_EButton_BuyImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy");
+				}
+				return this.m_EButton_BuyImage;
+			}
+		}
+
+		public UnityEngine.UI.Image ELabel_UnableBuy_iconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_UnableBuy_iconImage == null )
+				{
+					this.m_ELabel_UnableBuy_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_BuyBG/ELabel_UnableBuy_icon");
+				}
+				return this.m_ELabel_UnableBuy_iconImage;
+			}
+		}
+
+		public UnityEngine.UI.Text ELabel_ContentText
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ContentText == null )
+				{
+					this.m_ELabel_ContentText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/ELabel_Content");
+				}
+				return this.m_ELabel_ContentText;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_ContentUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ContentUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_ContentUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/ELabel_Content");
+				}
+				return this.m_ELabel_ContentUITextLocalizeMonoView;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_Content12TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_Content12TextMeshProUGUI == null )
+				{
+					this.m_ELabel_Content12TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/ELabel_Content12");
+				}
+				return this.m_ELabel_Content12TextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image EImage_PurchasedImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EImage_PurchasedImage == null )
+				{
+					this.m_EImage_PurchasedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward/E_Item_TowerReward/EImage_TowerBuyShow/EImage_Purchased");
+				}
+				return this.m_EImage_PurchasedImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_NewcardImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_NewcardImage == null )
+				{
+					this.m_E_NewcardImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_Newcard");
+				}
+				return this.m_E_NewcardImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_NewCardTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_NewCardTextMeshProUGUI == null )
+				{
+					this.m_ELabel_NewCardTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_Newcard/ELabel_NewCard");
+				}
+				return this.m_ELabel_NewCardTextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_numTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_numTextMeshProUGUI == null )
+				{
+					this.m_E_numTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/E_GoldCoins/E_num");
+				}
+				return this.m_E_numTextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_LvTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_LvTextMeshProUGUI == null )
+				{
+					this.m_ELabel_LvTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/ELabel_Lv");
+				}
+				return this.m_ELabel_LvTextMeshProUGUI;
 			}
 		}
 
@@ -653,23 +1367,6 @@ namespace ET.Client
 			}
 		}
 
-		public UITextLocalizeMonoView E_ChanllengeLevel_TextUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_ChanllengeLevel_TextUITextLocalizeMonoView == null )
-				{
-					this.m_E_ChanllengeLevel_TextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Effect_PVE/Effect_GameEnd_Model/EButton_ChallengeMode_lose/info_box/E_ChanllengeLevel_Text");
-				}
-				return this.m_E_ChanllengeLevel_TextUITextLocalizeMonoView;
-			}
-		}
-
 		public TMPro.TextMeshProUGUI E_ChanllengeLevel_Text_2TextMeshProUGUI
 		{
 			get
@@ -684,23 +1381,6 @@ namespace ET.Client
 					this.m_E_ChanllengeLevel_Text_2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_PVE/Effect_GameEnd_Model/EButton_ChallengeMode_victory/info_box/E_ChanllengeLevel_Text_2");
 				}
 				return this.m_E_ChanllengeLevel_Text_2TextMeshProUGUI;
-			}
-		}
-
-		public UITextLocalizeMonoView E_ChanllengeLevel_Text_2UITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_ChanllengeLevel_Text_2UITextLocalizeMonoView == null )
-				{
-					this.m_E_ChanllengeLevel_Text_2UITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Effect_PVE/Effect_GameEnd_Model/EButton_ChallengeMode_victory/info_box/E_ChanllengeLevel_Text_2");
-				}
-				return this.m_E_ChanllengeLevel_Text_2UITextLocalizeMonoView;
 			}
 		}
 
@@ -719,6 +1399,7 @@ namespace ET.Client
 			this.m_E_btn_02Image = null;
 			this.m_E_ReturnRoomButton = null;
 			this.m_E_ReturnRoomImage = null;
+			this.m_E_Return_TextTextMeshProUGUI = null;
 			this.m_EButton_GameEndButton = null;
 			this.m_EButton_GameEndImage = null;
 			this.m_ELabel_GameEndText = null;
@@ -739,14 +1420,53 @@ namespace ET.Client
 			this.m_E_ChanllengeText_4TextMeshProUGUI = null;
 			this.m_E_ChanllengeText_4UITextLocalizeMonoView = null;
 			this.m_ELabel_ChanllengeNumText = null;
-			this.m_E_ChanllengeText_2TextMeshProUGUI = null;
-			this.m_E_ChanllengeText_2UITextLocalizeMonoView = null;
+			this.m_ELabel_RankTextMeshProUGUI = null;
+			this.m_ELabel_KillNumTextMeshProUGUI = null;
+			this.m_E_Effect_EndChallengeModeImage = null;
+			this.m_Effect_GameEnd_ChallengeModeEndsButton = null;
+			this.m_Effect_GameEnd_ChallengeModeEndsImage = null;
+			this.m_E_overImage = null;
+			this.m_E_victoryImage = null;
+			this.m_E_Item_TowerRewardImage = null;
+			this.m_E_NoneImage = null;
+			this.m_EImage_TowerBuyShowImage = null;
+			this.m_E_BoxImage = null;
+			this.m_EImage_LowImage = null;
+			this.m_EImage_MiddleImage = null;
+			this.m_EImage_HighImage = null;
+			this.m_EButton_IconButton = null;
+			this.m_EButton_IconImage = null;
+			this.m_EG_IconStarRectTransform = null;
+			this.m_E_IconStar1Image = null;
+			this.m_E_IconStar2Image = null;
+			this.m_E_IconStar3Image = null;
+			this.m_EButton_nameTextMeshProUGUI = null;
+			this.m_EButton_SelectButton = null;
+			this.m_EButton_SelectImage = null;
+			this.m_EImage_Label1Image = null;
+			this.m_ELabel_Label1TextMeshProUGUI = null;
+			this.m_EImage_Label2Image = null;
+			this.m_ELabel_Label2TextMeshProUGUI = null;
+			this.m_EImage_Label3Image = null;
+			this.m_ELabel_Label3TextMeshProUGUI = null;
+			this.m_EImage_BuyBGImage = null;
+			this.m_ELabel_BuyText = null;
+			this.m_ELabel_BuyUITextLocalizeMonoView = null;
+			this.m_EButton_BuyButton = null;
+			this.m_EButton_BuyImage = null;
+			this.m_ELabel_UnableBuy_iconImage = null;
+			this.m_ELabel_ContentText = null;
+			this.m_ELabel_ContentUITextLocalizeMonoView = null;
+			this.m_ELabel_Content12TextMeshProUGUI = null;
+			this.m_EImage_PurchasedImage = null;
+			this.m_E_NewcardImage = null;
+			this.m_ELabel_NewCardTextMeshProUGUI = null;
+			this.m_E_numTextMeshProUGUI = null;
+			this.m_ELabel_LvTextMeshProUGUI = null;
 			this.m_Effect_GameEnd_ModelButton = null;
 			this.m_Effect_GameEnd_ModelImage = null;
 			this.m_E_ChanllengeLevel_TextTextMeshProUGUI = null;
-			this.m_E_ChanllengeLevel_TextUITextLocalizeMonoView = null;
 			this.m_E_ChanllengeLevel_Text_2TextMeshProUGUI = null;
-			this.m_E_ChanllengeLevel_Text_2UITextLocalizeMonoView = null;
 			this.uiTransform = null;
 		}
 
@@ -763,6 +1483,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_btn_02Image = null;
 		private UnityEngine.UI.Button m_E_ReturnRoomButton = null;
 		private UnityEngine.UI.Image m_E_ReturnRoomImage = null;
+		private TMPro.TextMeshProUGUI m_E_Return_TextTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_EButton_GameEndButton = null;
 		private UnityEngine.UI.Image m_EButton_GameEndImage = null;
 		private UnityEngine.UI.Text m_ELabel_GameEndText = null;
@@ -783,14 +1504,53 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_E_ChanllengeText_4TextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_E_ChanllengeText_4UITextLocalizeMonoView = null;
 		private UnityEngine.UI.Text m_ELabel_ChanllengeNumText = null;
-		private TMPro.TextMeshProUGUI m_E_ChanllengeText_2TextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_E_ChanllengeText_2UITextLocalizeMonoView = null;
+		private TMPro.TextMeshProUGUI m_ELabel_RankTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_ELabel_KillNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_Effect_EndChallengeModeImage = null;
+		private UnityEngine.UI.Button m_Effect_GameEnd_ChallengeModeEndsButton = null;
+		private UnityEngine.UI.Image m_Effect_GameEnd_ChallengeModeEndsImage = null;
+		private UnityEngine.UI.Image m_E_overImage = null;
+		private UnityEngine.UI.Image m_E_victoryImage = null;
+		private UnityEngine.UI.Image m_E_Item_TowerRewardImage = null;
+		private UnityEngine.UI.Image m_E_NoneImage = null;
+		private UnityEngine.UI.Image m_EImage_TowerBuyShowImage = null;
+		private UnityEngine.UI.Image m_E_BoxImage = null;
+		private UnityEngine.UI.Image m_EImage_LowImage = null;
+		private UnityEngine.UI.Image m_EImage_MiddleImage = null;
+		private UnityEngine.UI.Image m_EImage_HighImage = null;
+		private UnityEngine.UI.Button m_EButton_IconButton = null;
+		private UnityEngine.UI.Image m_EButton_IconImage = null;
+		private UnityEngine.RectTransform m_EG_IconStarRectTransform = null;
+		private UnityEngine.UI.Image m_E_IconStar1Image = null;
+		private UnityEngine.UI.Image m_E_IconStar2Image = null;
+		private UnityEngine.UI.Image m_E_IconStar3Image = null;
+		private TMPro.TextMeshProUGUI m_EButton_nameTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButton_SelectButton = null;
+		private UnityEngine.UI.Image m_EButton_SelectImage = null;
+		private UnityEngine.UI.Image m_EImage_Label1Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_Label2Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label2TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_Label3Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label3TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_BuyBGImage = null;
+		private UnityEngine.UI.Text m_ELabel_BuyText = null;
+		private UITextLocalizeMonoView m_ELabel_BuyUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_EButton_BuyButton = null;
+		private UnityEngine.UI.Image m_EButton_BuyImage = null;
+		private UnityEngine.UI.Image m_ELabel_UnableBuy_iconImage = null;
+		private UnityEngine.UI.Text m_ELabel_ContentText = null;
+		private UITextLocalizeMonoView m_ELabel_ContentUITextLocalizeMonoView = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Content12TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_PurchasedImage = null;
+		private UnityEngine.UI.Image m_E_NewcardImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_NewCardTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_E_numTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_ELabel_LvTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_Effect_GameEnd_ModelButton = null;
 		private UnityEngine.UI.Image m_Effect_GameEnd_ModelImage = null;
 		private TMPro.TextMeshProUGUI m_E_ChanllengeLevel_TextTextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_E_ChanllengeLevel_TextUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_E_ChanllengeLevel_Text_2TextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_E_ChanllengeLevel_Text_2UITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

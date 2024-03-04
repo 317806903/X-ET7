@@ -14,12 +14,29 @@ namespace ET.Server
 
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
-			
-			G2C_EnterBattleNotice _G2C_EnterBattleNotice = new() { };
-			player.GetComponent<PlayerSessionComponent>()?.Session?.Send(_G2C_EnterBattleNotice);
+			playerStatusComponent.LastBattleCfgId = request.GamePlayBattleLevelCfgId;
+			playerStatusComponent.LastBattleResult = 0;
+			await playerStatusComponent.NoticeClient();
+
+			if (player.GetComponent<PlayerSessionComponent>() == null)
+			{
+				Log.Error($"player.GetComponent<PlayerSessionComponent>() == null");
+			}
+			else
+			{
+				Session session = player.GetComponent<PlayerSessionComponent>().Session;
+				if (session == null)
+				{
+					Log.Error($"player.GetComponent<PlayerSessionComponent>().Session == null");
+				}
+				else
+				{
+					G2C_EnterBattleNotice _G2C_EnterBattleNotice = new() { };
+					session.Send(_G2C_EnterBattleNotice);
+				}
+			}
 
 			TransferHelper.EnterMap(request.DynamicMapInstanceId, player.Id, player.Level, request.GamePlayBattleLevelCfgId).Coroutine();
-
 
             await ETTask.CompletedTask;
         }

@@ -11,7 +11,8 @@ namespace ET.Server
 			string account = request.Account;
 			string password = request.Password;
 			ET.LoginType loginType = (ET.LoginType)request.LoginType;
-			(long playerId, bool isFirstLogin) = await ET.Server.AccountHelper.AccountLogin(scene, account, password, loginType);
+			string loginIP = request.LoginIP;
+			(long playerId, bool isFirstLogin) = await ET.Server.AccountHelper.AccountLogin(scene, account, password, loginType, loginIP);
 			response.PlayerId = playerId;
 			response.IsFirstLogin = isFirstLogin?1:0;
 			if (playerId == 0)

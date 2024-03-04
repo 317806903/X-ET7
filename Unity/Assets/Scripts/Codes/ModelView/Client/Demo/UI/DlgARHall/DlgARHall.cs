@@ -14,7 +14,7 @@
         public PlayerStatus playerStatusIn;
         public RoomType RoomTypeIn;
         public SubRoomType SubRoomTypeIn;
-        public int PveLevel = 1;
+        public string battleCfgId;
     }
 
     public class DlgARHall_ShowWindowData : ShowWindowData
@@ -23,6 +23,6 @@
         public RoomType RoomType;
         public SubRoomType SubRoomType;
         public long arRoomId;
-        public int PveLevel;
+        public string battleCfgId;
     }
 }

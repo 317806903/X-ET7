@@ -4,6 +4,7 @@
     "Order": 1,
     "Name": "AI_Attack",
     "Desc": "攻击",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -11,6 +12,7 @@
     "Order": 2,
     "Name": "AI_XunLuo",
     "Desc": "巡逻",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -18,6 +20,7 @@
     "Order": 1,
     "Name": "AI_Attack",
     "Desc": "攻击",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -25,6 +28,7 @@
     "Order": 2,
     "Name": "AI_KaoJin",
     "Desc": "靠近",
+    "WaitFrameNum": 5,
     "NodeParams": []
   },
   {
@@ -32,6 +36,7 @@
     "Order": 1,
     "Name": "AI_Attack",
     "Desc": "攻击",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -39,6 +44,7 @@
     "Order": 1,
     "Name": "AI_TowerDefense_AttackWhenBlock",
     "Desc": "被堵路时攻击",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -46,6 +52,7 @@
     "Order": 2,
     "Name": "AI_TowerDefense_Escape",
     "Desc": "往大本营前进",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -53,6 +60,7 @@
     "Order": 3,
     "Name": "AI_Attack",
     "Desc": "攻击",
+    "WaitFrameNum": 0,
     "NodeParams": []
   },
   {
@@ -60,6 +68,7 @@
     "Order": 4,
     "Name": "AI_KaoJin",
     "Desc": "靠近",
+    "WaitFrameNum": 5,
     "NodeParams": []
   },
   {
@@ -67,6 +76,7 @@
     "Order": 1,
     "Name": "AI_XunLuo",
     "Desc": "巡逻",
+    "WaitFrameNum": 0,
     "NodeParams": []
   }
 ]

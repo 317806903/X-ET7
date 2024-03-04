@@ -21,6 +21,10 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
     {
         DamageType = (DamageType)_buf.ReadInt();
         Value = _buf.ReadFloat();
+        ScaleByDis = _buf.ReadFloat();
+        ScaleByDisMax = _buf.ReadFloat();
+        ScaleByHeight = _buf.ReadFloat();
+        ScaleByHeightMax = _buf.ReadFloat();
         PostInit();
     }
 
@@ -37,6 +41,22 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
     /// 数值
     /// </summary>
     public float Value { get; private set; }
+    /// <summary>
+    /// 按照距离变化(&gt;0表示越远伤害越高,&lt;0表示越近伤害越高)
+    /// </summary>
+    public float ScaleByDis { get; private set; }
+    /// <summary>
+    /// (上限)按照距离变化
+    /// </summary>
+    public float ScaleByDisMax { get; private set; }
+    /// <summary>
+    /// 按照高度变化(&gt;0表示往上越远伤害越高,&lt;0表示往下越远伤害越高)
+    /// </summary>
+    public float ScaleByHeight { get; private set; }
+    /// <summary>
+    /// (上限)按照高度变化
+    /// </summary>
+    public float ScaleByHeightMax { get; private set; }
 
     public const int __ID__ = 218231005;
     public override int GetTypeId() => __ID__;
@@ -55,6 +75,10 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
         return "{ "
         + "DamageType:" + DamageType + ","
         + "Value:" + Value + ","
+        + "ScaleByDis:" + ScaleByDis + ","
+        + "ScaleByDisMax:" + ScaleByDisMax + ","
+        + "ScaleByHeight:" + ScaleByHeight + ","
+        + "ScaleByHeightMax:" + ScaleByHeightMax + ","
         + "}";
     }
     

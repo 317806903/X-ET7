@@ -15,7 +15,7 @@ namespace ET.Server
 
             if (Game.ChkIsExistSingleton<ConfigComponent>() == false)
             {
-                await Game.AddSingleton<ConfigComponent>().LoadAsync();
+                await Game.AddSingleton<ConfigComponent>().LoadAsync(null);
             }
 
             if (codeMode == "Server")

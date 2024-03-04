@@ -30,17 +30,30 @@ namespace ET.Client
 					return;
 				}
 				Unit unit = unitComponent.Get(unitId);
-				if (unit == null)
+				int retryNum = 30;
+				while (unit == null)
 				{
-					return;
+					await TimerComponent.Instance.WaitFrameAsync();
+					unit = unitComponent.Get(unitId);
+					if (retryNum-- < 0)
+					{
+						return;
+					}
 				}
-				
+
 				effectComponent = unit.GetComponent<EffectComponent>();
 			}
 			if (addOrRemove == 0)
 			{
 				Entity entity = MongoHelper.Deserialize<Entity>(message.EffectComponent);
-				effectComponent.AddChild(entity);
+				if (entity != null && effectComponent.GetChild<Entity>(entity.Id) != null)
+				{
+					entity.Dispose();
+				}
+				else
+				{
+					effectComponent.AddChild(entity);
+				}
 			}
 			else
 			{

@@ -30,7 +30,7 @@ namespace ET.Server
 				};
 
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-				await oneTypeLocationType.Call(playerId, _R2G_StartBattle);
+				await oneTypeLocationType.Call(playerId, _R2G_StartBattle, scene.InstanceId);
 			}
 			else
 			{

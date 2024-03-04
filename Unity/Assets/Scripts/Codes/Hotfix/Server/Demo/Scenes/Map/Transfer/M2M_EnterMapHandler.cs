@@ -12,7 +12,7 @@ namespace ET.Server
 			long playerId = request.PlayerId;
 			// 通知客户端开始切场景
 			M2C_StartSceneChange m2CStartSceneChange = new () {SceneInstanceId = scene.InstanceId, SceneName = scene.Name};
-			MessageHelper.SendToClient(playerId, m2CStartSceneChange, false);
+			MessageHelper.SendToClient(playerId, m2CStartSceneChange, scene.InstanceId, false);
 
 			string gamePlayBattleLevelCfgId = request.GamePlayBattleLevelCfgId;
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);

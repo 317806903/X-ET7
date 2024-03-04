@@ -30,7 +30,10 @@ namespace ET.Client
                     self.shootTextRoot = null;
                     self.shootTextProManager = null;
                 }
-                ShootTextComponent.Instance = null;
+                if (ShootTextComponent.Instance == self)
+                {
+                    ShootTextComponent.Instance = null;
+                }
 
                 UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
                 _UIComponent.HideWindow<DlgBattleTowerHUDShow>();
@@ -39,7 +42,7 @@ namespace ET.Client
 
         public static async ETTask Init(this ShootTextComponent self)
         {
-#if UNITY_EDITOR
+#if false//UNITY_EDITOR
 #else
             if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
             {
@@ -47,7 +50,7 @@ namespace ET.Client
             }
 #endif
 
-            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_ShootTextPrefab");
+            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_ShootDamageTextPrefab");
             GameObject shootTextRootGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
             self.shootTextRoot = shootTextRootGo.transform;
             shootTextRootGo.transform.SetParent(GlobalComponent.Instance.ClientManagerRoot);
@@ -74,7 +77,7 @@ namespace ET.Client
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
             _UIComponent.ShowWindow<DlgBattleTowerHUDShow>();
             DlgBattleTowerHUDShow _DlgBattleTowerHUDShow = _UIComponent.GetDlgLogic<DlgBattleTowerHUDShow>(true);
-            self.shootTextProManager.ShootTextCanvas = _DlgBattleTowerHUDShow.View.EGRootRectTransform.transform;
+            self.shootTextProManager.ShootTextCanvas = _DlgBattleTowerHUDShow.View.EGDamageRootRectTransform.transform;
         }
 
         public static Unit GetUnit(this ShootTextComponent self)
@@ -82,7 +85,7 @@ namespace ET.Client
             return self.GetParent<Unit>();
         }
 
-        public static void Show(this ShootTextComponent self, Unit unit, int value)
+        public static void ShowShootDamage(this ShootTextComponent self, Unit unit, int value)
         {
             if (self.shootTextRoot == null || self.shootTextRoot.gameObject.activeSelf == false)
             {

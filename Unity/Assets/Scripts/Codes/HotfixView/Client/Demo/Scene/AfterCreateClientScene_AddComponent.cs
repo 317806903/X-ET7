@@ -11,10 +11,7 @@ namespace ET.Client
             scene.AddComponent<UITextLocalizeComponent>();
             scene.AddComponent<UIComponent>();
             scene.AddComponent<UIAudioManagerComponent>();
-
-            scene.AddComponent<LoginSDKComponent>();
-            scene.AddComponent<EventLoggingSDKComponent>();
-            scene.AddComponent<AdmobSDKComponent>();
+            scene.AddComponent<AuthorizedPermissionManagerComponent>();
 
             // scene.AddComponent<FUIEventComponent>();
             // scene.AddComponent<FUIAssetComponent>();

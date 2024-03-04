@@ -16,160 +16,199 @@ namespace ET
         private static string Key_LastEnableCodes = "Key_LastEnableCodes";
 
         [MenuItem("Pack/BuildABOnlyRes_Android", false, 200)]
-        public static async ETTask<BuildResult> BuildABOnlyRes_Android()
+        public static async ETTask<BuildResult> Menu_BuildABOnlyRes_Android()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
-
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_Android", null))
-            {
-                return null;
-            }
-
-            return await _BuildABOnlyRes_Android();
+            return await BuildABOnlyRes_Android();
         }
 
-        public static async ETTask<BuildResult> _BuildABOnlyRes_Android()
+        public static async ETTask<BuildResult> BuildABOnlyRes_Android(bool needChk = true)
         {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_Android", new(){["needChk"]=needChk}))
+            {
+                return null;
+            }
+
             BuildTarget buildTarget = BuildTarget.Android;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildABOnlyRes_Android", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, true, true).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
+            }
         }
 
         [MenuItem("Pack/BuildABOnlyRes_IOS", false, 201)]
-        public static async ETTask<BuildResult> BuildABOnlyRes_IOS()
+        public static async ETTask<BuildResult> Menu_BuildABOnlyRes_IOS()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
-
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_IOS", null))
-            {
-                return null;
-            }
-
-            return await _BuildABOnlyRes_IOS();
+            return await BuildABOnlyRes_IOS();
         }
 
-        public static async ETTask<BuildResult> _BuildABOnlyRes_IOS()
+        public static async ETTask<BuildResult> BuildABOnlyRes_IOS(bool needChk = true)
         {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildABOnlyRes_IOS", new(){["needChk"]=needChk}))
+            {
+                return null;
+            }
+
             BuildTarget buildTarget = BuildTarget.iOS;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildABOnlyRes_IOS", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, true, true).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, true, true);
+            }
         }
 
         [MenuItem("Pack/BuildAB_Android", false, 210)]
-        public static async ETTask<BuildResult> BuildAB_Android()
+        public static async ETTask<BuildResult> Menu_BuildAB_Android()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
+            return await BuildAB_Android();
+        }
 
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android", null))
+        public static async ETTask<BuildResult> BuildAB_Android(bool needChk = true)
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android", new(){["needChk"]=needChk}))
             {
                 return null;
             }
 
-            return await _BuildAB_Android();
+            BuildTarget buildTarget = BuildTarget.Android;
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildAB_Android", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, false, true).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
+            }
+        }
+
+        [MenuItem("Pack/BuildAB_Android_Local", false, 210)]
+        public static async ETTask<BuildResult> Menu_BuildAB_Android_Local()
+        {
+            return await BuildAB_Android_Local();
+        }
+
+        public static async ETTask<BuildResult> BuildAB_Android_Local(bool needChk = true)
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android_Local", new(){["needChk"]=needChk}))
+            {
+                return null;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildAB_Android_Local", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.Local, false, true).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.Local, false, true);
+            }
         }
 
         [MenuItem("Pack/BuildAB_Android_Min", false, 210)]
-        public static async ETTask<BuildResult> BuildAB_Android_Min()
+        public static async ETTask<BuildResult> Menu_BuildAB_Android_Min()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
-
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android_Min", null))
-            {
-                return null;
-            }
-
-            return await BuildABInternal(BuildTarget.Android, PackName.OutNet_CN, false, false);
+            return await BuildAB_Android_Min();
         }
 
-        public static async ETTask<BuildResult> _BuildAB_Android()
+        public static async ETTask<BuildResult> BuildAB_Android_Min(bool needChk = true)
         {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_Android_Min", new(){["needChk"]=needChk}))
+            {
+                return null;
+            }
+
             BuildTarget buildTarget = BuildTarget.Android;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildAB_Android_Min", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, false, false).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, false);
+            }
         }
 
         [MenuItem("Pack/BuildAB_IOS", false, 211)]
-        public static async ETTask<BuildResult> BuildAB_IOS()
+        public static async ETTask<BuildResult> Menu_BuildAB_IOS()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
+            return await BuildAB_IOS();
+        }
 
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS", null))
+        public static async ETTask<BuildResult> BuildAB_IOS(bool needChk = true)
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS", new(){["needChk"]=needChk}))
             {
                 return null;
             }
 
-            return await _BuildAB_IOS();
+            BuildTarget buildTarget = BuildTarget.iOS;
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildAB_IOS", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, false, true).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
+            }
         }
 
         [MenuItem("Pack/BuildAB_IOS_Min", false, 211)]
-        public static async ETTask<BuildResult> BuildAB_IOS_Min()
+        public static async ETTask<BuildResult> Menu_BuildAB_IOS_Min()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return null;
-            }
-            if(Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return null;
-            }
-
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS_Min", null))
-            {
-                return null;
-            }
-
-            BuildTarget buildTarget = BuildTarget.iOS;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, false);
+            return await BuildAB_IOS_Min();
         }
 
-        public static async ETTask<BuildResult> _BuildAB_IOS()
+        public static async ETTask<BuildResult> BuildAB_IOS_Min(bool needChk = true)
         {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildAssetBundle), "BuildAB_IOS_Min", new(){["needChk"]=needChk}))
+            {
+                return null;
+            }
+
             BuildTarget buildTarget = BuildTarget.iOS;
-            return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, true);
+            if (needChk)
+            {
+                ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildAB_IOS_Min", () =>
+                {
+                    BuildABInternal(buildTarget, PackName.OutNet_CN, false, false).Coroutine();
+                });
+                return null;
+            }
+            else
+            {
+                return await BuildABInternal(buildTarget, PackName.OutNet_CN, false, false);
+            }
         }
 
         public static void BuildAB_CommandLine()
@@ -263,8 +302,9 @@ namespace ET
 
         private static string GetBuildPackageVersion()
         {
-            int totalMinutes = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
-            return DateTime.Now.ToString("yyyy-MM-dd") + "_" + totalMinutes;
+            // int totalMinutes = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
+            // return DateTime.Now.ToString("yyyy-MM-dd") + "_" + totalMinutes;
+            return DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
         }
 
         private static async ETTask<BuildResult> BuildInternal(BuildTarget buildTarget, bool copyAllToSteamingAsset)
@@ -334,6 +374,10 @@ namespace ET
 
         private static void CopyABToCDN(BuildTarget buildTarget, string ABPath)
         {
+            if (Directory.Exists($"{Application.dataPath}/../Bundles/CDN") == false)
+            {
+                return;
+            }
             string gameVersion = ResConfig.Instance.ResGameVersion;
             string cdnPath = "";
             if (buildTarget == BuildTarget.Android)
@@ -354,12 +398,24 @@ namespace ET
             }
             if (Directory.Exists(cdnPath))
             {
-                FileHelper.CopyDirectory(ABPath, cdnPath);
+                Directory.Delete(cdnPath, true);
             }
+            FileHelper.CopyDirectory(ABPath, cdnPath);
         }
 
         public static bool ChkIsEnableCodes(Type type, string methodName, Dictionary<string, object> methodParamDic = null)
         {
+            if (Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
+                return true;
+            }
+            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
+            {
+                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
+                return true;
+            }
+
             if (Define.EnableView || Define.EnableCodes)
             {
                 ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", false);
@@ -369,6 +425,28 @@ namespace ET
             }
 
             return false;
+        }
+
+        public static void ChkTarget(BuildTarget buildTarget, string message, Action action)
+        {
+#if UNITY_ANDROID
+            if (buildTarget == BuildTarget.Android)
+            {
+                action.Invoke();
+                return;
+            }
+#elif UNITY_IPHONE
+            if (buildTarget == BuildTarget.iOS)
+            {
+                action.Invoke();
+                return;
+            }
+#endif
+            if (EditorUtility.DisplayDialog("确定一下", message, "确定", "不了"))
+            {
+                action.Invoke();
+            }
+            return;
         }
 
     }

@@ -7,5 +7,6 @@ namespace ET.Ability
     public class SelectHandleObj: Entity, IAwake, IDestroy
     {
         public SelectHandle selectHandle;
+        public bool isOnce;
     }
 }

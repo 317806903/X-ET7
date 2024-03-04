@@ -205,6 +205,54 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image EImage_KillNumsBgImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EImage_KillNumsBgImage == null )
+					{
+						this.m_EImage_KillNumsBgImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_KillNumsBg");
+					}
+					return this.m_EImage_KillNumsBgImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_KillNumsBg");
+				}
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_KillNumsTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_ELabel_KillNumsTextMeshProUGUI == null )
+					{
+						this.m_ELabel_KillNumsTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_KillNumsBg/ELabel_KillNums");
+					}
+					return this.m_ELabel_KillNumsTextMeshProUGUI;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_KillNumsBg/ELabel_KillNums");
+				}
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_Eimage_MyBGImage = null;
@@ -216,6 +264,8 @@ namespace ET.Client
 			this.m_es_avatarshow = null;
 			this.m_ELabel_NameTextMeshProUGUI = null;
 			this.m_ELabel_WavesTextMeshProUGUI = null;
+			this.m_EImage_KillNumsBgImage = null;
+			this.m_ELabel_KillNumsTextMeshProUGUI = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
@@ -228,6 +278,8 @@ namespace ET.Client
 		private ES_AvatarShow m_es_avatarshow = null;
 		private TMPro.TextMeshProUGUI m_ELabel_NameTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_WavesTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_KillNumsBgImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_KillNumsTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

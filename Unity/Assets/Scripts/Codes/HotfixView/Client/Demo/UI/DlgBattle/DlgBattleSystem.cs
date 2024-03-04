@@ -110,6 +110,7 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgBattle self, ShowWindowData contextData = null)
         {
+            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Game);
             int countTower = self.towerList.Count;
             self.AddUIScrollItems(ref self.ScrollItemTowers, countTower);
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);
@@ -123,15 +124,15 @@ namespace ET.Client
             self.ShowMesh().Coroutine();
             self.ShowPutTipMsg("");
 
-            self.PlayMusic();
+            //self.PlayMusic();
         }
 
-        public static void PlayMusic(this DlgBattle self)
-        {
-            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-            List<string> musicList = gamePlayComponent.GetGamePlayBattleConfig().MusicList;
-            UIAudioManagerHelper.PlayMusic(self.DomainScene(), musicList);
-        }
+        // public static void PlayMusic(this DlgBattle self)
+        // {
+        //     GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+        //     List<string> musicList = gamePlayComponent.GetGamePlayBattleConfig().MusicList;
+        //     UIAudioManagerHelper.PlayMusic(self.DomainScene(), musicList);
+        // }
 
         public static void HideWindow(this DlgBattle self)
         {
@@ -140,7 +141,7 @@ namespace ET.Client
 
         public static async ETTask QuitBattle(this DlgBattle self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Des");
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheGame_Confirm");
@@ -188,29 +189,9 @@ namespace ET.Client
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
             });
 
-            itemTower.EG_IconStarRectTransform.SetVisible(true);
-            int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
-            itemTower.E_IconStar1Image.gameObject.SetActive(starCount>=1);
-            itemTower.E_IconStar2Image.gameObject.SetActive(starCount>=2);
-            itemTower.E_IconStar3Image.gameObject.SetActive(starCount>=3);
-
-            List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
-            int labelCount = labels.Count;
-            itemTower.EImage_Label1Image.gameObject.SetActive((labelCount>=1));
-            itemTower.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
-            if (labelCount >= 1)
-            {
-                itemTower.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
-            }
-            if (labelCount >= 2)
-            {
-                itemTower.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
-            }
-
-            int towerQuality = (int)ItemHelper.GetItemQualityType(itemCfgId);
-            itemTower.EImage_LowImage.SetVisible(towerQuality == 0);
-            itemTower.EImage_MiddleImage.SetVisible(towerQuality == 1);
-            itemTower.EImage_HighImage.SetVisible(towerQuality == 2);
+            itemTower.SetLevel(itemCfgId);
+            itemTower.SetLabels(itemCfgId);
+            itemTower.SetQuality(itemCfgId);
         }
 
         public static void AddTankItemRefreshListener(this DlgBattle self, Transform transform, int index)
@@ -289,51 +270,83 @@ namespace ET.Client
             if (gamePlayComponent.isTestARMesh)
             {
                 gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARMeshUrl;
+
+                // Draco bytes
+                byte[] bytes = await gamePlayComponent.DownloadFileBytesAsync(gamePlayComponent._ARMeshDownLoadUrl);
+                MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
+                CreateMeshFromData(meshData, gamePlayComponent.GetARScale());
+            }
+            else if (gamePlayComponent.isTestARObj)
+            {
+                gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARObjUrl;
+
+                string content = await gamePlayComponent.DownloadFileTextAsync(gamePlayComponent._ARMeshDownLoadUrl);
+                ET.LoadMesh.ObjMesh objInstace = new ET.LoadMesh.ObjMesh();
+                objInstace = objInstace.LoadFromObj(content);
+
+                CreateMesh(objInstace.VertexArray, objInstace.TriangleArray, objInstace.NormalArray, objInstace.UVArray, gamePlayComponent.GetARScale());
             }
             else if(gamePlayComponent.ChkIsAR() == false)
             {
                 return;
             }
 
-            // Draco bytes
-            byte[] bytes = await gamePlayComponent.DownloadFileAsync(gamePlayComponent._ARMeshDownLoadUrl);
-            MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
-            CreateMeshFromData(meshData, gamePlayComponent.GetARScale());
         }
 
         public static Mesh CreateMeshFromData(MeshHelper.MeshData meshData, float3 scale)
         {
+            var vertices = new Vector3[meshData.vertices.Length];
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = meshData.vertices[i];
+            }
+            var normals = new Vector3[meshData.normals.Length];
+            for (int i = 0; i < meshData.normals.Length; i++)
+            {
+                normals[i] = meshData.normals[i];
+            }
+            var uv = new Vector2[meshData.uv.Length];
+            for (int i = 0; i < meshData.uv.Length; i++)
+            {
+                uv[i] = meshData.uv[i];
+            }
+
+            return CreateMesh(vertices, meshData.triangles, normals, uv, scale);
+        }
+
+        public static Mesh CreateMesh(Vector3[] verticesIn, int[] trianglesIn, Vector3[] normalsIn, Vector2[] uvIn, float3 scale)
+        {
             Mesh mesh = new Mesh();
             mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-            if (meshData.vertices != null)
+            if (verticesIn != null)
             {
-                var vertices = new Vector3[meshData.vertices.Length];
-                for (int i = 0; i < meshData.vertices.Length; i++)
+                var vertices = new Vector3[verticesIn.Length];
+                for (int i = 0; i < vertices.Length; i++)
                 {
-                    vertices[i] = meshData.vertices[i] * scale;
+                    vertices[i] = verticesIn[i] * scale;
                 }
                 mesh.vertices = vertices;
             }
-            if (meshData.triangles != null)
+            if (trianglesIn != null)
             {
-                mesh.triangles = meshData.triangles;
+                mesh.triangles = trianglesIn;
             }
-            if (meshData.normals != null)
+            if (normalsIn != null)
             {
-                var normals = new Vector3[meshData.normals.Length];
-                for (int i = 0; i < meshData.normals.Length; i++)
+                var normals = new Vector3[normalsIn.Length];
+                for (int i = 0; i < normalsIn.Length; i++)
                 {
-                    normals[i] = meshData.normals[i];
+                    normals[i] = normalsIn[i];
                 }
 
                 mesh.normals = normals;
             }
-            if (meshData.uv != null)
+            if (uvIn != null)
             {
-                var uv = new Vector2[meshData.uv.Length];
-                for (int i = 0; i < meshData.uv.Length; i++)
+                var uv = new Vector2[uvIn.Length];
+                for (int i = 0; i < uvIn.Length; i++)
                 {
-                    uv[i] = meshData.uv[i];
+                    uv[i] = uvIn[i];
                 }
                 mesh.uv = uv;
             }
@@ -344,13 +357,18 @@ namespace ET.Client
             mesh.Optimize();
             mesh.UploadMeshData(false);
 
-            GameObject go = new GameObject("zpb");
-            GameObject.DontDestroyOnLoad(go);
-            go.transform.localScale = new Vector3(1, 1, 1);
-            go.layer = LayerMask.NameToLayer("Map");
-            go.AddComponent<MeshCollider>().sharedMesh = mesh;
-            go.AddComponent<MeshRenderer>();
-            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            GameObject zpbTestObj = GameObject.Find("zpbTestObj");
+            if (zpbTestObj != null)
+            {
+                GameObject.Destroy(zpbTestObj);
+            }
+            zpbTestObj = new GameObject("zpbTestObj");
+            GameObject.DontDestroyOnLoad(zpbTestObj);
+            zpbTestObj.transform.localScale = new Vector3(1, 1, 1);
+            zpbTestObj.layer = LayerMask.NameToLayer("Map");
+            zpbTestObj.AddComponent<MeshCollider>().sharedMesh = mesh;
+            zpbTestObj.AddComponent<MeshRenderer>();
+            zpbTestObj.AddComponent<MeshFilter>().sharedMesh = mesh;
             // Mesh without wireframe data.
             return mesh;
         }

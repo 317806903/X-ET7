@@ -7,9 +7,10 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     [SerializeField] private RectTransform dragTarget;
     [SerializeField] private Canvas canvas;
     Vector3 lastUIPosition;
-    private float needHoldTime = 0.1f;
+    private float needHoldTime = 0.3f;
     private float curHoldTime = 0;
     private bool isDraging = false;
+    private bool isMovingPannel = false;
     public bool needRaycast = false;
 
     void Start()
@@ -19,7 +20,7 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (this.isDraging == false)
+        if (this.isMovingPannel == false)
         {
             Raycast(eventData, ExecuteEvents.dragHandler);
             return;
@@ -33,14 +34,14 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         this.curHoldTime = Time.time + this.needHoldTime;
-        this.isDraging = false;
+        this.isMovingPannel = false;
 
         Raycast(eventData, ExecuteEvents.pointerDownHandler);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (this.isDraging)
+        if (this.isMovingPannel || this.isDraging)
         {
             return;
         }
@@ -49,7 +50,7 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (this.isDraging)
+        if (this.isMovingPannel || this.isDraging)
         {
             return;
         }
@@ -58,6 +59,7 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+		this.isDraging = true;
         if (this.curHoldTime == 0)
         {
         }
@@ -67,11 +69,11 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
         else
         {
-            this.isDraging = false;
+            this.isMovingPannel = false;
             Raycast(eventData, ExecuteEvents.beginDragHandler);
             return;
         }
-        this.isDraging = true;
+        this.isMovingPannel = true;
 
         Vector3 uiPosition;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(dragTarget, eventData.position, eventData.enterEventCamera, out uiPosition);
@@ -80,10 +82,11 @@ public class DragPannel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (this.isDraging)
+		this.isDraging = false;
+        if (this.isMovingPannel)
         {
             this.curHoldTime = 0;
-            this.isDraging = false;
+            this.isMovingPannel = false;
         }
         else
         {

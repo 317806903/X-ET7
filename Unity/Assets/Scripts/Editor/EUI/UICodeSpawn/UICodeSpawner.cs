@@ -112,6 +112,11 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("\t\t}")
             .AppendLine();
 
+        strBuilder.AppendFormat("\t\tpublic static void HideWindow(this {0} self)\n", strDlgName);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t}")
+            .AppendLine();
+
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
 
@@ -223,7 +228,7 @@ public partial class UICodeSpawner
 
         strBuilder.AppendLine("\t\tpublic void OnHideWindow(UIBaseWindow uiBaseWindow)")
             .AppendLine("\t\t{");
-
+        strBuilder.AppendFormat("\t\t\tuiBaseWindow.GetComponent<{0}>().HideWindow();\r\n", strDlgName);
         strBuilder.AppendLine("\t\t}")
             .AppendLine();
 
@@ -626,6 +631,7 @@ public partial class UICodeSpawner
         WidgetInterfaceList.Add("LoopHorizontalScrollRect");
         WidgetInterfaceList.Add("UnityEngine.EventSystems.EventTrigger");
         WidgetInterfaceList.Add("UITextLocalizeMonoView");
+        WidgetInterfaceList.Add("LoopListView2");
     }
 
     private static Dictionary<string, List<Component>> Path2WidgetCachedDict = null;

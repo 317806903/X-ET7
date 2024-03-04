@@ -30,6 +30,7 @@ namespace ET
     {
         Localhost,
         Release_148,
+        Release_148Release,
         Release_Zpb,
         Release_OutNet_CN,
         Release_OutNet_EN,
@@ -42,15 +43,28 @@ namespace ET
         {
             { ServerEnum.Localhost, "127.0.0.1"},
             { ServerEnum.Release_148, "192.168.10.148"},
+            { ServerEnum.Release_148Release, "192.168.10.148"},
             { ServerEnum.Release_Zpb, "192.168.10.58"},
             { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
             { ServerEnum.Release_OutNet_EN, "34.225.211.137"},
             { ServerEnum.Release_ExternalTest, "artd-gateway.deepmirror.com"},
         };
+        private Dictionary<ServerEnum, int> serverAddressPortList = new()
+        {
+            { ServerEnum.Localhost, 3478},
+            { ServerEnum.Release_148, 5478},
+            { ServerEnum.Release_148Release, 3478},
+            { ServerEnum.Release_Zpb, 3478},
+            { ServerEnum.Release_OutNet_CN, 3478},
+            { ServerEnum.Release_OutNet_EN, 3478},
+            { ServerEnum.Release_ExternalTest, 3478},
+        };
         private Dictionary<ServerEnum, string> hotfixAddressList = new()
         {
             { ServerEnum.Localhost, "http://127.0.0.1"},
-            { ServerEnum.Release_148, "http://192.168.10.148"},
+            //{ ServerEnum.Release_148, "http://192.168.10.148"},
+            { ServerEnum.Release_148, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148"},
+            { ServerEnum.Release_148Release, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release"},
             { ServerEnum.Release_Zpb, "http://192.168.10.58"},
             { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
             { ServerEnum.Release_OutNet_EN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN"},
@@ -122,7 +136,21 @@ namespace ET
             if (EditorApplication.isPlayingOrWillChangePlaymode == false)
             {
                 this.serverEnumServerAddress = ServerEnum.Localhost;
+                if (this.serverAddressList[this.serverEnumServerAddress] != this.resConfig.RouterHttpHost)
+                {
+                    this.resConfig.RouterHttpHost = this.serverAddressList[this.serverEnumServerAddress];
+                    this.resConfig.RouterHttpPort = this.serverAddressPortList[this.serverEnumServerAddress];
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+
                 this.serverEnumHotfixAddress = ServerEnum.Localhost;
+                if (this.hotfixAddressList[this.serverEnumHotfixAddress] != this.resConfig.ResHostServerIP)
+                {
+                    this.resConfig.ResHostServerIP = this.hotfixAddressList[this.serverEnumHotfixAddress];
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
             }
         }
 
@@ -201,33 +229,73 @@ namespace ET
             GUILayout.Label("====================================");
             GUILayout.Space(5);
 
+            EditorGUI.BeginChangeCheck();
             var codeOptimization = (CodeOptimization) EditorGUILayout.EnumPopup("CodeOptimization ", this.globalConfig.codeOptimization);
-            if (codeOptimization != this.globalConfig.codeOptimization)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.globalConfig.codeOptimization = codeOptimization;
-                EditorUtility.SetDirty(this.globalConfig);
-                AssetDatabase.SaveAssets();
+                if (codeOptimization != this.globalConfig.codeOptimization)
+                {
+                    this.globalConfig.codeOptimization = codeOptimization;
+                    EditorUtility.SetDirty(this.globalConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (codeOptimization != this.globalConfig.codeOptimization)
+                {
+                    codeOptimization = this.globalConfig.codeOptimization;
+                }
             }
 
             GUILayout.Label("");
 
+            EditorGUI.BeginChangeCheck();
             var resLoadMode = (EPlayMode) EditorGUILayout.EnumPopup("ResLoadMode: ", this.resConfig.ResLoadMode);
-            if (resLoadMode != this.resConfig.ResLoadMode)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.resConfig.ResLoadMode = resLoadMode;
-                EditorUtility.SetDirty(this.resConfig);
-                AssetDatabase.SaveAssets();
-            }
-            if (resLoadMode == EPlayMode.HostPlayMode)
-            {
-                this.serverEnumHotfixAddress = (ServerEnum) EditorGUILayout.EnumPopup("ServerEnum: ", this.serverEnumHotfixAddress);
-                if (this.hotfixAddressList[this.serverEnumHotfixAddress] != this.resConfig.ResHostServerIP)
+                if (resLoadMode != this.resConfig.ResLoadMode)
                 {
-                    this.resConfig.ResHostServerIP = this.hotfixAddressList[this.serverEnumHotfixAddress];
+                    this.resConfig.ResLoadMode = resLoadMode;
                     EditorUtility.SetDirty(this.resConfig);
                     AssetDatabase.SaveAssets();
                 }
-                // EditorGUILayout.LabelField("    资源热更新地址:", this.serverAdressList[this.serverEnum]);
+            }
+            else
+            {
+                if (resLoadMode != this.resConfig.ResLoadMode)
+                {
+                    resLoadMode = this.resConfig.ResLoadMode;
+                }
+            }
+
+            if (resLoadMode == EPlayMode.HostPlayMode)
+            {
+                EditorGUI.BeginChangeCheck();
+                this.serverEnumHotfixAddress = (ServerEnum) EditorGUILayout.EnumPopup("ServerEnum: ", this.serverEnumHotfixAddress);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    if (this.hotfixAddressList[this.serverEnumHotfixAddress] != this.resConfig.ResHostServerIP)
+                    {
+                        this.resConfig.ResHostServerIP = this.hotfixAddressList[this.serverEnumHotfixAddress];
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+                else
+                {
+                    if (this.hotfixAddressList[this.serverEnumHotfixAddress] != this.resConfig.ResHostServerIP)
+                    {
+                        foreach (var item in this.hotfixAddressList)
+                        {
+                            if (item.Value == this.resConfig.ResHostServerIP)
+                            {
+                                this.serverEnumHotfixAddress = item.Key;
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 EditorGUI.BeginChangeCheck();
                 string resHostIp = EditorGUILayout.TextField("    资源热更新地址:", this.resConfig.ResHostServerIP);
@@ -238,6 +306,13 @@ namespace ET
                         this.resConfig.ResHostServerIP = resHostIp;
                         EditorUtility.SetDirty(this.resConfig);
                         AssetDatabase.SaveAssets();
+                    }
+                }
+                else
+                {
+                    if (resHostIp != this.resConfig.ResHostServerIP)
+                    {
+                        resHostIp = this.resConfig.ResHostServerIP;
                     }
                 }
             }
@@ -276,12 +351,23 @@ namespace ET
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(5);
 
+            EditorGUI.BeginChangeCheck();
             var codeMode = (CodeMode) EditorGUILayout.EnumPopup("CodeMode: ", this.globalConfig.CodeMode);
-            if (codeMode != this.globalConfig.CodeMode)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.globalConfig.CodeMode = codeMode;
-                EditorUtility.SetDirty(this.globalConfig);
-                AssetDatabase.SaveAssets();
+                if (codeMode != this.globalConfig.CodeMode)
+                {
+                    this.globalConfig.CodeMode = codeMode;
+                    EditorUtility.SetDirty(this.globalConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (codeMode != this.globalConfig.CodeMode)
+                {
+                    codeMode = this.globalConfig.CodeMode;
+                }
             }
             GUILayout.Space(5);
 
@@ -310,51 +396,108 @@ namespace ET
             }
 
             GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
             var NeedDB = EditorGUILayout.Toggle("NeedDB: ", this.globalConfig.NeedDB);
-            if (NeedDB != this.globalConfig.NeedDB)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.globalConfig.NeedDB = NeedDB;
-                EditorUtility.SetDirty(this.globalConfig);
-                AssetDatabase.SaveAssets();
+                if (NeedDB != this.globalConfig.NeedDB)
+                {
+                    this.globalConfig.NeedDB = NeedDB;
+                    EditorUtility.SetDirty(this.globalConfig);
+                    AssetDatabase.SaveAssets();
+                }
             }
-            var IsNeedSendEventLog = EditorGUILayout.Toggle("IsNeedSendEventLog: ", this.resConfig.IsNeedSendEventLog);
-            if (IsNeedSendEventLog != this.resConfig.IsNeedSendEventLog)
+            else
             {
-                this.resConfig.IsNeedSendEventLog = IsNeedSendEventLog;
-                EditorUtility.SetDirty(this.resConfig);
-                AssetDatabase.SaveAssets();
+                if (NeedDB != this.globalConfig.NeedDB)
+                {
+                    NeedDB = this.globalConfig.NeedDB;
+                }
+            }
+            EditorGUI.BeginChangeCheck();
+            var IsNeedSendEventLog = EditorGUILayout.Toggle("IsNeedSendEventLog: ", this.resConfig.IsNeedSendEventLog);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (IsNeedSendEventLog != this.resConfig.IsNeedSendEventLog)
+                {
+                    this.resConfig.IsNeedSendEventLog = IsNeedSendEventLog;
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (IsNeedSendEventLog != this.resConfig.IsNeedSendEventLog)
+                {
+                    IsNeedSendEventLog = this.resConfig.IsNeedSendEventLog;
+                }
             }
             if (GUILayout.Button("创建Mongodb (需要Docker安装了)"))
             {
                 ToolsEditor.RunMongoDBFromDocker();
             }
             GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
             var areaType = (AreaType) EditorGUILayout.EnumPopup("AreaType: ", this.resConfig.areaType);
-            if (areaType != this.resConfig.areaType)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.resConfig.areaType = areaType;
-                EditorUtility.SetDirty(this.resConfig);
-                AssetDatabase.SaveAssets();
+                if (areaType != this.resConfig.areaType)
+                {
+                    this.resConfig.areaType = areaType;
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
             }
+            else
+            {
+                if (areaType != this.resConfig.areaType)
+                {
+                    areaType = this.resConfig.areaType;
+                }
+            }
+
             GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
             this.serverEnumServerAddress = (ServerEnum) EditorGUILayout.EnumPopup("ServerEnum: ", this.serverEnumServerAddress);
-            if (this.serverAddressList[this.serverEnumServerAddress] != this.resConfig.RouterHttpHost)
+            if (EditorGUI.EndChangeCheck())
             {
-                this.resConfig.RouterHttpHost = this.serverAddressList[this.serverEnumServerAddress];
-                EditorUtility.SetDirty(this.resConfig);
-                AssetDatabase.SaveAssets();
+                if (this.serverAddressList[this.serverEnumServerAddress] != this.resConfig.RouterHttpHost)
+                {
+                    this.resConfig.RouterHttpHost = this.serverAddressList[this.serverEnumServerAddress];
+                    this.resConfig.RouterHttpPort = this.serverAddressPortList[this.serverEnumServerAddress];
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
             }
-            EditorGUILayout.LabelField("    对应服务器地址:", this.serverAddressList[this.serverEnumServerAddress]);
+            else
+            {
+                if (this.serverAddressList[this.serverEnumServerAddress] != this.resConfig.RouterHttpHost)
+                {
+                    foreach (var item in this.serverAddressList)
+                    {
+                        if (item.Value == this.resConfig.RouterHttpHost)
+                        {
+                            this.serverEnumServerAddress = item.Key;
+                            break;
+                        }
+                    }
+                }
+            }
+            EditorGUILayout.LabelField("    对应服务器地址:", this.serverAddressList[this.serverEnumServerAddress] + ":" + this.serverAddressPortList[this.serverEnumServerAddress]);
             GUILayout.Space(5);
             EditorGUILayout.BeginHorizontal();
             {
+                EditorGUI.BeginChangeCheck();
                 selectStartConfigIndex = EditorGUILayout.Popup("服务器模式:", selectStartConfigIndex, this.startConfigs, GUILayout.MinWidth(150));
-                if (this.startConfigs[selectStartConfigIndex] != this.globalConfig.StartConfig)
+                if (EditorGUI.EndChangeCheck())
                 {
-                    this.globalConfig.StartConfig = this.startConfigs[selectStartConfigIndex];
-                    EditorUtility.SetDirty(this.globalConfig);
-                    AssetDatabase.SaveAssets();
-                    this.selectStartConfigServerIP = GetServerIP(codeMode, this.globalConfig.StartConfig);
+                    if (this.startConfigs[selectStartConfigIndex] != this.globalConfig.StartConfig)
+                    {
+                        this.globalConfig.StartConfig = this.startConfigs[selectStartConfigIndex];
+                        EditorUtility.SetDirty(this.globalConfig);
+                        AssetDatabase.SaveAssets();
+                        this.selectStartConfigServerIP = GetServerIP(codeMode, this.globalConfig.StartConfig);
+                    }
                 }
                 if (string.IsNullOrEmpty(this.selectStartConfigServerIP))
                 {

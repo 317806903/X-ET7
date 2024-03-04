@@ -42,8 +42,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2308979254280784550, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308979254280784550, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
       propertyPath: lengthInSec
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2789796292843263524, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2789796292843263524, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}
@@ -102,13 +112,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519655873583882703, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519655873583882703, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
       propertyPath: lengthInSec
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4660748714572109060, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4660748714572109060, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
       propertyPath: lengthInSec
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922799109792737820, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4922799109792737820, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}
@@ -119,6 +144,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8187003497169405860, guid: 30e96bb92b57c314486b5c40806eee21,
+        type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187003497169405860, guid: 30e96bb92b57c314486b5c40806eee21,
         type: 3}

@@ -329,6 +329,7 @@ namespace ET
 				if (unit != null)
 				{
 					unit.RemoveComponent<AIComponent>();
+					ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
 				}
 			}
 		}
@@ -344,6 +345,7 @@ namespace ET
 					if (aiComponent != null)
 					{
 						aiComponent.PauseAI();
+						ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
 					}
 				}
 			}

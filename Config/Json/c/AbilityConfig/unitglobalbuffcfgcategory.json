@@ -1,0 +1,353 @@
+[
+  {
+    "id": "UnitGlobalBuff_1",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 4,
+        "delayTime": 0,
+        "action_id": "CoinAdd_Attack_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_2",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 5,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_3",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 6,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_4",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 7,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_5",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 8,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_6",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 9,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_7",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 10,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_8",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 11,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_9",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 12,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_10",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 13,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_11",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 14,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_12",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 15,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_13",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 16,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_14",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 17,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_15",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 18,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_16",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 19,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_17",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 20,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_18",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_19",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 22,
+        "delayTime": 0,
+        "action_id": "CallAoe_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy1",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "CoinAdd_TowerAlchemy1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "EffectCreate_BuffTowerAlchemy1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy2",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "CoinAdd_TowerAlchemy2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "EffectCreate_BuffTowerAlchemy2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy3",
+    "name": "",
+    "desc": "",
+    "tickTime": [],
+    "monitorTriggers": [
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "CoinAdd_TowerAlchemy3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "globalBuffTrig": 21,
+        "delayTime": 0,
+        "action_id": "EffectCreate_BuffTowerAlchemy3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  }
+]

@@ -11,7 +11,7 @@ namespace ET.Server
             self.LockInstanceId = lockInstanceId;
         }
     }
-    
+
     [ObjectSystem]
     public class LockInfoDestroySystem: DestroySystem<LockInfo>
     {
@@ -21,7 +21,7 @@ namespace ET.Server
             self.LockInstanceId = 0;
         }
     }
-    
+
     [FriendOf(typeof(LocationOneType))]
     [FriendOf(typeof(LockInfo))]
     public static class LocationOneTypeSystem
@@ -34,7 +34,7 @@ namespace ET.Server
                 self.LocationType = locationType;
             }
         }
-        
+
         public static async ETTask Add(this LocationOneType self, long key, long instanceId)
         {
             int coroutineLockType = (self.LocationType << 16) | CoroutineLockType.Location;
@@ -52,6 +52,7 @@ namespace ET.Server
             {
                 self.locations.Remove(key);
                 Log.Info($"location remove key: {key}");
+                self.NoticeRemove2RecordScene(key);
             }
         }
 
@@ -116,8 +117,42 @@ namespace ET.Server
                 return instanceId;
             }
         }
-    }
 
+        public static void RecordSceneByKey(this LocationOneType self, long key, long sceneInstanceId)
+        {
+            if (self.LocationType != LocationType.Player)
+            {
+                return;
+            }
+            self.recordKey2Scene.Add(key, sceneInstanceId);
+        }
+
+        public static void NoticeRemove2RecordScene(this LocationOneType self, long key)
+        {
+            if (self.recordKey2Scene.TryGetValue(key, out var list))
+            {
+                foreach (long sceneInstanceId in list)
+                {
+                    try
+                    {
+                        L2A_RemoveObjectLocationRequest _L2A_RemoveObjectLocationRequest = new()
+                        {
+                            Type = self.LocationType,
+                            Key = key,
+                        };
+
+                        ActorMessageSenderComponent.Instance.Send(sceneInstanceId, _L2A_RemoveObjectLocationRequest);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+
+                self.recordKey2Scene.Remove(key);
+            }
+        }
+    }
 
     [FriendOf(typeof (LocationManagerComoponent))]
     public static class LocationComoponentSystem
@@ -133,7 +168,7 @@ namespace ET.Server
                 }
             }
         }
-        
+
         public static LocationOneType Get(this LocationManagerComoponent self, int locationType)
         {
             return self.LocationOneTypes[locationType];

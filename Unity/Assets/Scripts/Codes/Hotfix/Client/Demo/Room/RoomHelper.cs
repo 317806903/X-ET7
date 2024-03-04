@@ -31,7 +31,7 @@ namespace ET.Client
         {
             try
             {
-                G2C_GetRoomList _G2C_GetRoomList = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomList()) as G2C_GetRoomList;
+                G2C_GetRoomList _G2C_GetRoomList = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomList(), false) as G2C_GetRoomList;
                 if (_G2C_GetRoomList.Error != ET.ErrorCode.ERR_Success)
                 {
                     Log.Error($"ET.Client.RoomHelper.GetRoomListAsync Error==1 msg={_G2C_GetRoomList.Message}");
@@ -236,7 +236,7 @@ namespace ET.Client
         /// </summary>
         /// <param name="clientScene"></param>
         /// <param name="newBattleCfgId"></param>
-        public static async ETTask<bool> SetARRoomInfoAsync(Scene clientScene, string arSceneId, string ARMeshDownLoadUrl)
+        public static async ETTask<bool> SetARRoomInfoAsync(Scene clientScene, string arSceneId, string arMeshDownLoadUrl, float arMapScale)
         {
             try
             {
@@ -244,7 +244,8 @@ namespace ET.Client
                         C2G_SetARRoomInfo()
                 {
                     ARSceneId = arSceneId,
-                    ARMeshDownLoadUrl = ARMeshDownLoadUrl,
+                    ARMeshDownLoadUrl = arMeshDownLoadUrl,
+                    ARMapScale = (int)(arMapScale * 100),
                 }) as G2C_SetARRoomInfo;
                 if (_G2C_SetARRoomInfo.Error != ET.ErrorCode.ERR_Success)
                 {

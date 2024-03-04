@@ -145,6 +145,10 @@ namespace ET.Client
             }
             else if (self.isDragging)
             {
+                if (!self.ChkCanPut(self.currentPlaceObj.transform.position))
+                {
+                    UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
+                }
                 if (self.isClickUGUI == false)
                 {
                     if (self.isRaycast == false)
@@ -214,6 +218,7 @@ namespace ET.Client
         public static void OnSelectHeadQuarter(this DlgBattleDragItem self, string headQuarterUnitCfgId)
         {
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(headQuarterUnitCfgId);
+            float resScale = unitCfg.ResScale;
 
             if (self.currentPlaceObj != null)
             {
@@ -224,6 +229,7 @@ namespace ET.Client
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 
             self.currentPlaceObj = GameObject.Instantiate(go);
+            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
             self.currentPlaceObj.SetActive(false);
 
         }
@@ -231,6 +237,7 @@ namespace ET.Client
         public static void OnSelectMonsterCall(this DlgBattleDragItem self, string monsterCallUnitCfgId)
         {
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCallUnitCfgId);
+            float resScale = unitCfg.ResScale;
 
             if (self.currentPlaceObj != null)
             {
@@ -241,6 +248,7 @@ namespace ET.Client
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 
             self.currentPlaceObj = GameObject.Instantiate(go);
+            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
             self.currentPlaceObj.SetActive(false);
 
         }
@@ -330,22 +338,26 @@ namespace ET.Client
         {
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
+            float resScale = unitCfg.ResScale;
 
             string pathName = self.GetUnitPrefabName(unitCfg);
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 
             self.currentPlaceObj = GameObject.Instantiate(go);
+            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
             self.currentPlaceObj.gameObject.SetActive(false);
         }
 
         public static void OnSelectPlayer(this DlgBattleDragItem self, string monsterCfgId)
         {
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get("Unit_PlayerPK");
+            float resScale = unitCfg.ResScale;
 
             string pathName = self.GetUnitPrefabName(unitCfg);
             GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 
             self.currentPlaceObj = GameObject.Instantiate(go);
+            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
             self.currentPlaceObj.gameObject.SetActive(false);
         }
 
@@ -596,7 +608,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutHome(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             self.isConfirming = true;
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
@@ -621,7 +633,7 @@ namespace ET.Client
             {
                 return false;
             }
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             if (self.canPutMonsterCall == false)
             {
@@ -650,14 +662,14 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutPKTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
             ET.Client.GamePlayPKHelper.SendCallTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
 
         public static async ETTask<bool> DoPutPKMonster(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
             int count = self.countOnce;
             if (count > 50)
             {
@@ -673,7 +685,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutOwnTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -736,7 +748,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutMoveTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -789,7 +801,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutPKMoveTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             ET.Client.GamePlayPKHelper.SendMovePKTower(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
             return true;
@@ -797,7 +809,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutPKMovePlayer(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             ET.Client.GamePlayPKHelper.SendMovePKPlayer(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
             return true;

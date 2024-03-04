@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -19,7 +20,7 @@ namespace ET.Server
 				return;
 			}
 
-			await ET.Server.PlayerCacheHelper.AddPhysicalStrenthByAd(session.DomainScene(), playerId);
+			await ET.Server.PlayerCacheHelper.AddPhysicalStrenth(session.DomainScene(), playerId, GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd, PlayerModelChgType.PlayerBaseInfo_111);
 
 			await ETTask.CompletedTask;
 		}

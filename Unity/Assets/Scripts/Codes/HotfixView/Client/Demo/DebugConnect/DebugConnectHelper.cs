@@ -24,7 +24,8 @@ namespace ET.Client
 		{
 			if (ChkDebugConnectNull())
 			{
-				Log.Error($"当前没有指定，使用的是原生的链接");
+				string resConfigJson1 = ET.JsonHelper.ToJson(ResConfig.Instance);
+				Log.Error($"当前没有指定，使用的是原生的链接 [{resConfigJson1}]");
 				return;
 			}
 			string key = "DebugConnect_Key";

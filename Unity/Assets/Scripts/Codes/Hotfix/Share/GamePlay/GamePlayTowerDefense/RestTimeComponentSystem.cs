@@ -73,6 +73,13 @@ namespace ET
 
 		public static void FixedUpdate(this RestTimeComponent self, float fixedDeltaTime)
 		{
+			if (self.GetGamePlayTowerDefense().ChkIsGameEnd()
+			    || self.GetGamePlayTowerDefense().ChkIsGameRecover()
+			    || self.GetGamePlayTowerDefense().ChkIsGameRecovering())
+			{
+				return;
+			}
+
 			if (self.duration > 0)
 			{
 				self.duration -= fixedDeltaTime;

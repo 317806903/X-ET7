@@ -160,6 +160,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_VideoImgButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_VideoImgButton == null )
+				{
+					this.m_E_VideoImgButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "story5/E_VideoImg");
+				}
+				return this.m_E_VideoImgButton;
+			}
+		}
+
+		public UnityEngine.UI.RawImage E_VideoImgRawImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_VideoImgRawImage == null )
+				{
+					this.m_E_VideoImgRawImage = UIFindHelper.FindDeepChild<UnityEngine.UI.RawImage>(this.uiTransform.gameObject, "story5/E_VideoImg");
+				}
+				return this.m_E_VideoImgRawImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_BG5Button
 		{
 			get
@@ -194,6 +228,57 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_ReturnLoginButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReturnLoginButton == null )
+				{
+					this.m_E_ReturnLoginButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ReturnLogin");
+				}
+				return this.m_E_ReturnLoginButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ReturnLoginImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReturnLoginImage == null )
+				{
+					this.m_E_ReturnLoginImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ReturnLogin");
+				}
+				return this.m_E_ReturnLoginImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_SKIPTUTORIALButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_SKIPTUTORIALButton == null )
+				{
+					this.m_E_SKIPTUTORIALButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_SKIPTUTORIAL");
+				}
+				return this.m_E_SKIPTUTORIALButton;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_E_ImgBGImage = null;
@@ -205,8 +290,13 @@ namespace ET.Client
 			this.m_E_BG3Image = null;
 			this.m_E_BG4Button = null;
 			this.m_E_BG4Image = null;
+			this.m_E_VideoImgButton = null;
+			this.m_E_VideoImgRawImage = null;
 			this.m_E_BG5Button = null;
 			this.m_E_BG5Image = null;
+			this.m_E_ReturnLoginButton = null;
+			this.m_E_ReturnLoginImage = null;
+			this.m_E_SKIPTUTORIALButton = null;
 			this.uiTransform = null;
 		}
 
@@ -219,8 +309,13 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_BG3Image = null;
 		private UnityEngine.UI.Button m_E_BG4Button = null;
 		private UnityEngine.UI.Image m_E_BG4Image = null;
+		private UnityEngine.UI.Button m_E_VideoImgButton = null;
+		private UnityEngine.UI.RawImage m_E_VideoImgRawImage = null;
 		private UnityEngine.UI.Button m_E_BG5Button = null;
 		private UnityEngine.UI.Image m_E_BG5Image = null;
+		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
+		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
+		private UnityEngine.UI.Button m_E_SKIPTUTORIALButton = null;
 		public Transform uiTransform = null;
 	}
 }

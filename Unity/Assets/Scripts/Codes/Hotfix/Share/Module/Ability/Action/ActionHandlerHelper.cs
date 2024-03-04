@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -16,5 +17,43 @@ namespace ET.Ability
             }
             unit.DomainScene().GetComponent<ActionHandlerComponent>().Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext).Coroutine();
         }
+
+        public static bool DoActionTriggerHandler(Unit triggerUnit, Unit actionUnit, float delayTime, string actionId, List<SubCondition> actionCondition1, List<SubCondition> actionCondition2, SelectHandle curSelectHandle, Unit resetPosByUnit, ref ActionContext actionContext)
+        {
+            if (curSelectHandle == null)
+            {
+#if UNITY_EDITOR
+                Log.Error($"curSelectHandle == null");
+#endif
+                return false;
+            }
+            if (curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0)
+            {
+#if UNITY_EDITOR
+                Log.Error($"curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0");
+#endif
+                return false;
+            }
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition1, ref actionContext);
+            if (isChgSelect1)
+            {
+                curSelectHandle = newSelectHandle1;
+            }
+            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition2, ref actionContext);
+            if (isChgSelect2)
+            {
+                curSelectHandle = newSelectHandle2;
+            }
+            if (bRet1 && bRet2)
+            {
+                ActionHandlerHelper.CreateAction(actionUnit, resetPosByUnit, actionId, delayTime, curSelectHandle, ref actionContext);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ET.Client
 {
-    [ComponentOf(typeof(Scene))]
+    [ComponentOf(typeof(GlobalComponent))]
     public class UIManagerComponent: Entity, IAwake, IDestroy, IUpdate
     {
         [StaticField]
@@ -23,5 +24,7 @@ namespace ET.Client
         public Transform NoticeRoot{ get; set; }
         public Transform LoadingRoot{ get; set; }
         public Transform HighestNoticeRoot{ get; set; }
+
+        public HashSet<Transform> UIRootRotationTranList = new();
     }
 }

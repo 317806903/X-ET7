@@ -14,17 +14,20 @@ namespace ET.Server
 			int roomStatus = 0;
 			int roomType = 0;
 			int subRoomType = 0;
+			string battleCfgId = "";
 			if (roomComponent != null)
 			{
 				roomId = roomComponent.Id;
 				roomStatus = (int)roomComponent.roomStatus;
 				roomType = (int)roomComponent.roomType;
 				subRoomType = (int)roomComponent.subRoomType;
+				battleCfgId = roomComponent.gamePlayBattleLevelCfgId;
 			}
 			response.RoomId = roomId;
 			response.RoomStatus = roomStatus;
 			response.RoomType = roomType;
 			response.SubRoomType = subRoomType;
+			response.BattleCfgId = battleCfgId;
 			await ETTask.CompletedTask;
 		}
 	}

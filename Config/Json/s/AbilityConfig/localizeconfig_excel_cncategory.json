@@ -216,6 +216,346 @@
     "text_cn": "(cn)弩箭塔"
   },
   {
+    "key": "Text_Key_Desc_Tow1_1",
+    "text_cn": "快速攻击单个敌人。虽然威力较低，但优秀的射程和便宜的价格让它相当好用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_2",
+    "text_cn": "快速攻击单个敌人。虽然威力较低，但优秀的射程和便宜的价格让它相当好用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_3",
+    "text_cn": "快速攻击单个敌人。虽然威力较低，但优秀的射程和便宜的价格让它相当好用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_1",
+    "text_cn": "快速地炮击敌群，布置在任何地方都能发挥不错的威力。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_2",
+    "text_cn": "快速地炮击敌群，布置在任何地方都能发挥不错的威力。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_3",
+    "text_cn": "快速地炮击敌群，布置在任何地方都能发挥不错的威力。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_1",
+    "text_cn": "持续喷出直线火焰。在笔直的通道里，它将是敌人的噩梦。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_2",
+    "text_cn": "持续喷出直线火焰。在笔直的通道里，它将是敌人的噩梦。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_3",
+    "text_cn": "持续喷出直线火焰。在笔直的通道里，它将是敌人的噩梦。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_1",
+    "text_cn": "产生圆环形的毒雾。最强的生化武器，如果你能想办法让敌人徘徊在毒雾中的话。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_2",
+    "text_cn": "产生圆环形的毒雾。最强的生化武器，如果你能想办法让敌人徘徊在毒雾中的话。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_3",
+    "text_cn": "产生圆环形的毒雾。最强的生化武器，如果你能想办法让敌人徘徊在毒雾中的话。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_1",
+    "text_cn": "长时间蓄力后将发射出强大炮弹。当然，你不会把他用来对付小喽啰的吧？"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_2",
+    "text_cn": "长时间蓄力后将发射出强大炮弹。当然，你不会把他用来对付小喽啰的吧？"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_3",
+    "text_cn": "长时间蓄力后将发射出强大炮弹。当然，你不会把他用来对付小喽啰的吧？"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_1",
+    "text_cn": "召唤雷电攻击单个敌人。因为需要积蓄云层中的能量，所以它相对敌人的位置越高，伤害越高。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_2",
+    "text_cn": "召唤雷电攻击单个敌人。因为需要积蓄云层中的能量，所以它相对敌人的位置越高，伤害越高。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_3",
+    "text_cn": "召唤雷电攻击单个敌人。因为需要积蓄云层中的能量，所以它相对敌人的位置越高，伤害越高。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_1",
+    "text_cn": "发射冰球减速大片敌人。可惜的是，它难以对敌人造成有效的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_2",
+    "text_cn": "发射冰球减速大片敌人。可惜的是，它难以对敌人造成有效的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_3",
+    "text_cn": "发射冰球减速大片敌人。可惜的是，它难以对敌人造成有效的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_1",
+    "text_cn": "它能增加附近防御塔的攻击速度。虽然范围有限，但相信值得强化的友军也没有那么多！"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_2",
+    "text_cn": "它能增加附近防御塔的攻击速度。虽然范围有限，但相信值得强化的友军也没有那么多！"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_3",
+    "text_cn": "它能增加附近防御塔的攻击速度。虽然范围有限，但相信值得强化的友军也没有那么多！"
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_1",
+    "text_cn": "一座拥有着神秘魔法的防御塔，会不断产出能够进行范围攻击的魔法球。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_2",
+    "text_cn": "一座拥有着神秘魔法的防御塔，会不断产出能够进行范围攻击的魔法球。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_3",
+    "text_cn": "一座拥有着神秘魔法的防御塔，会不断产出能够进行范围攻击的魔法球。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_1",
+    "text_cn": "能将任何物质变为金币的魔法塔，会在回合结束给你一笔钱。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_2",
+    "text_cn": "能将任何物质变为金币的魔法塔，会在回合结束给你一笔钱。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_3",
+    "text_cn": "能将任何物质变为金币的魔法塔，会在回合结束给你一笔钱。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_1",
+    "text_cn": "毒蝎射出带毒的子弹，让命中的怪物中毒并持续掉血。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_2",
+    "text_cn": "毒蝎射出带毒的子弹，让命中的怪物中毒并持续掉血。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_3",
+    "text_cn": "毒蝎射出带毒的子弹，让命中的怪物中毒并持续掉血。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_1",
+    "text_cn": "发射一颗带有诅咒的炮弹，能够造成范围伤害，降低怪物的防御。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_2",
+    "text_cn": "发射一颗带有诅咒的炮弹，能够造成范围伤害，降低怪物的防御。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_3",
+    "text_cn": "发射一颗带有诅咒的炮弹，能够造成范围伤害，降低怪物的防御。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_1",
+    "text_cn": "给攻击塔添加附魔，来提升它们每次攻击造成的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_2",
+    "text_cn": "给攻击塔添加附魔，来提升它们每次攻击造成的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_3",
+    "text_cn": "给攻击塔添加附魔，来提升它们每次攻击造成的伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_1",
+    "text_cn": "发射密集的冰箭，带给怪物刺骨的寒冷与疼痛。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_2",
+    "text_cn": "发射密集的冰箭，带给怪物刺骨的寒冷与疼痛。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_3",
+    "text_cn": "发射密集的冰箭，带给怪物刺骨的寒冷与疼痛。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_1",
+    "text_cn": "发射凝聚魔法之力的水球，能造成范围伤害，让怪物眩晕一会儿。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_2",
+    "text_cn": "发射凝聚魔法之力的水球，能造成范围伤害，让怪物眩晕一会儿。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_3",
+    "text_cn": "发射凝聚魔法之力的水球，能造成范围伤害，让怪物眩晕一会儿。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_1",
+    "text_cn": "发射闪着电弧的小雷球，造成单体伤害，频率快，伤害足。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_2",
+    "text_cn": "发射闪着电弧的小雷球，造成单体伤害，频率快，伤害足。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_3",
+    "text_cn": "发射闪着电弧的小雷球，造成单体伤害，频率快，伤害足。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_1",
+    "text_cn": "被祝福的火水晶，有概率触发暴击，从而增加你的攻击伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_2",
+    "text_cn": "被祝福的火水晶，有概率触发暴击，从而增加你的攻击伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_3",
+    "text_cn": "被祝福的火水晶，有概率触发暴击，从而增加你的攻击伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_1",
+    "text_cn": "异界前来帮助的精灵，有着强大的魔法，发射的魔法球能对范围内怪物造成大量伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_2",
+    "text_cn": "异界前来帮助的精灵，有着强大的魔法，发射的魔法球能对范围内怪物造成大量伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_3",
+    "text_cn": "异界前来帮助的精灵，有着强大的魔法，发射的魔法球能对范围内怪物造成大量伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_1",
+    "text_cn": "短时间蓄能，蓄能完毕后让子弹类攻击塔发出一段连击。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_2",
+    "text_cn": "短时间蓄能，蓄能完毕后让子弹类攻击塔发出一段连击。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_3",
+    "text_cn": "短时间蓄能，蓄能完毕后让子弹类攻击塔发出一段连击。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_1",
+    "text_cn": "诅咒怪物，延长它们身上debuff的时间。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_2",
+    "text_cn": "诅咒怪物，延长它们身上debuff的时间。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_3",
+    "text_cn": "诅咒怪物，延长它们身上debuff的时间。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_1",
+    "text_cn": "攻击怪物时从它们手中额外获取金币，赚取金钱的好帮手。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_2",
+    "text_cn": "攻击怪物时从它们手中额外获取金币，赚取金钱的好帮手。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_3",
+    "text_cn": "攻击怪物时从它们手中额外获取金币，赚取金钱的好帮手。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_1",
+    "text_cn": "发射造成单体攻击的刺箭，对高血量怪物很有用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_2",
+    "text_cn": "发射造成单体攻击的刺箭，对高血量怪物很有用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_3",
+    "text_cn": "发射造成单体攻击的刺箭，对高血量怪物很有用。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_1",
+    "text_cn": "能够进行大范围远距离打击的火箭炮。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_2",
+    "text_cn": "能够进行大范围远距离打击的火箭炮。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_3",
+    "text_cn": "能够进行大范围远距离打击的火箭炮。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_1",
+    "text_cn": "释放燃烧的火球，让敌人附加燃烧效果，造成持续伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_2",
+    "text_cn": "释放燃烧的火球，让敌人附加燃烧效果，造成持续伤害。"
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_3",
+    "text_cn": "释放燃烧的火球，让敌人附加燃烧效果，造成持续伤害。"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_1",
+    "text_cn": "突击小队"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_2",
+    "text_cn": "疗伤小队"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_3",
+    "text_cn": "怪物大军"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_4",
+    "text_cn": "蝙蝠男爵"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Aoe",
+    "text_cn": "群体"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Solo",
+    "text_cn": "单体"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Line",
+    "text_cn": "直线"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Freeze",
+    "text_cn": "冻结"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Enhance",
+    "text_cn": "强化"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Buff",
+    "text_cn": "直线"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Debuff",
+    "text_cn": "冻结"
+  },
+  {
+    "key": "Text_Key_TowerLabel_DOT",
+    "text_cn": "强化"
+  },
+  {
+    "key": "Text_Key_TowerLabel_GetCoins",
+    "text_cn": "强化"
+  },
+  {
     "key": "Text_Key_Name_Tow1_1",
     "text_cn": "弩箭塔"
   },
@@ -241,15 +581,15 @@
   },
   {
     "key": "Text_Key_Name_Tow3_1",
-    "text_cn": "火图腾"
+    "text_cn": "火焰塔"
   },
   {
     "key": "Text_Key_Name_Tow3_2",
-    "text_cn": "火图腾"
+    "text_cn": "火焰塔"
   },
   {
     "key": "Text_Key_Name_Tow3_3",
-    "text_cn": "火图腾"
+    "text_cn": "火焰塔"
   },
   {
     "key": "Text_Key_Name_Tow4_1",
@@ -312,124 +652,360 @@
     "text_cn": "加速塔"
   },
   {
-    "key": "Text_Key_Desc_Tow1_1",
+    "key": "Text_Key_Name_Tow9_1",
+    "text_cn": "奥术天球"
+  },
+  {
+    "key": "Text_Key_Name_Tow9_2",
+    "text_cn": "奥术天球"
+  },
+  {
+    "key": "Text_Key_Name_Tow9_3",
+    "text_cn": "奥术天球"
+  },
+  {
+    "key": "Text_Key_Name_Tow10_1",
+    "text_cn": "炼金塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow10_2",
+    "text_cn": "炼金塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow10_3",
+    "text_cn": "炼金塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow11_1",
+    "text_cn": "毒蝎塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow11_2",
+    "text_cn": "毒蝎塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow11_3",
+    "text_cn": "毒蝎塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow12_1",
+    "text_cn": "破甲诅咒"
+  },
+  {
+    "key": "Text_Key_Name_Tow12_2",
+    "text_cn": "破甲诅咒"
+  },
+  {
+    "key": "Text_Key_Name_Tow12_3",
+    "text_cn": "破甲诅咒"
+  },
+  {
+    "key": "Text_Key_Name_Tow13_1",
+    "text_cn": "附魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow13_2",
+    "text_cn": "附魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow13_3",
+    "text_cn": "附魔塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow14_1",
+    "text_cn": "冰刺箭"
+  },
+  {
+    "key": "Text_Key_Name_Tow14_2",
+    "text_cn": "冰刺箭"
+  },
+  {
+    "key": "Text_Key_Name_Tow14_3",
+    "text_cn": "冰刺箭"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_1",
+    "text_cn": "水球塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_2",
+    "text_cn": "水球塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_3",
+    "text_cn": "水球塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow16_1",
+    "text_cn": "电磁塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow16_2",
+    "text_cn": "电磁塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow16_3",
+    "text_cn": "电磁塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow17_1",
+    "text_cn": "暴击图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow17_2",
+    "text_cn": "暴击图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow17_3",
+    "text_cn": "暴击图腾"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_1",
+    "text_cn": "奥术精灵"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_2",
+    "text_cn": "奥术精灵"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_3",
+    "text_cn": "奥术精灵"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_1",
+    "text_cn": "连击斧"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_2",
+    "text_cn": "连击斧"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_3",
+    "text_cn": "连击斧"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_1",
+    "text_cn": "灾厄塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_2",
+    "text_cn": "灾厄塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_3",
+    "text_cn": "灾厄塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_1",
+    "text_cn": "窃贼哥布林"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_2",
+    "text_cn": "窃贼哥布林"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_3",
+    "text_cn": "窃贼哥布林"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_1",
+    "text_cn": "鱼刺塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_2",
+    "text_cn": "鱼刺塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_3",
+    "text_cn": "鱼刺塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_1",
+    "text_cn": "火箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_2",
+    "text_cn": "火箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_3",
+    "text_cn": "火箭塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_1",
+    "text_cn": "火球塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_2",
+    "text_cn": "火球塔"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_3",
+    "text_cn": "火球塔"
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_1",
     "text_cn": "弩箭塔"
   },
   {
-    "key": "Text_Key_Desc_Tow1_2",
+    "key": "Text_Key_Name_TestTow1_2",
     "text_cn": "弩箭塔"
   },
   {
-    "key": "Text_Key_Desc_Tow1_3",
+    "key": "Text_Key_Name_TestTow1_3",
     "text_cn": "弩箭塔"
   },
   {
-    "key": "Text_Key_Desc_Tow2_1",
+    "key": "Text_Key_Name_TestTow2_1",
     "text_cn": "加农炮"
   },
   {
-    "key": "Text_Key_Desc_Tow2_2",
+    "key": "Text_Key_Name_TestTow2_2",
     "text_cn": "加农炮"
   },
   {
-    "key": "Text_Key_Desc_Tow2_3",
+    "key": "Text_Key_Name_TestTow2_3",
     "text_cn": "加农炮"
   },
   {
-    "key": "Text_Key_Desc_Tow3_1",
-    "text_cn": "火图腾"
+    "key": "Text_Key_Name_TestTow3_1",
+    "text_cn": "火焰塔"
   },
   {
-    "key": "Text_Key_Desc_Tow3_2",
-    "text_cn": "火图腾"
+    "key": "Text_Key_Name_TestTow3_2",
+    "text_cn": "火焰塔"
   },
   {
-    "key": "Text_Key_Desc_Tow3_3",
-    "text_cn": "火图腾"
+    "key": "Text_Key_Name_TestTow3_3",
+    "text_cn": "火焰塔"
   },
   {
-    "key": "Text_Key_Desc_Tow4_1",
+    "key": "Text_Key_Name_TestTow4_1",
     "text_cn": "毒雾塔"
   },
   {
-    "key": "Text_Key_Desc_Tow4_2",
+    "key": "Text_Key_Name_TestTow4_2",
     "text_cn": "毒雾塔"
   },
   {
-    "key": "Text_Key_Desc_Tow4_3",
+    "key": "Text_Key_Name_TestTow4_3",
     "text_cn": "毒雾塔"
   },
   {
-    "key": "Text_Key_Desc_Tow5_1",
+    "key": "Text_Key_Name_TestTow5_1",
     "text_cn": "龙击炮"
   },
   {
-    "key": "Text_Key_Desc_Tow5_2",
+    "key": "Text_Key_Name_TestTow5_2",
     "text_cn": "龙击炮"
   },
   {
-    "key": "Text_Key_Desc_Tow5_3",
+    "key": "Text_Key_Name_TestTow5_3",
     "text_cn": "龙击炮"
   },
   {
-    "key": "Text_Key_Desc_Tow6_1",
+    "key": "Text_Key_Name_TestTow6_1",
     "text_cn": "雷电塔"
   },
   {
-    "key": "Text_Key_Desc_Tow6_2",
+    "key": "Text_Key_Name_TestTow6_2",
     "text_cn": "雷电塔"
   },
   {
-    "key": "Text_Key_Desc_Tow6_3",
+    "key": "Text_Key_Name_TestTow6_3",
     "text_cn": "雷电塔"
   },
   {
-    "key": "Text_Key_Desc_Tow7_1",
+    "key": "Text_Key_Name_TestTow7_1",
     "text_cn": "冰魔塔"
   },
   {
-    "key": "Text_Key_Desc_Tow7_2",
+    "key": "Text_Key_Name_TestTow7_2",
     "text_cn": "冰魔塔"
   },
   {
-    "key": "Text_Key_Desc_Tow7_3",
+    "key": "Text_Key_Name_TestTow7_3",
     "text_cn": "冰魔塔"
   },
   {
-    "key": "Text_Key_Desc_Tow8_1",
+    "key": "Text_Key_Name_TestTow8_1",
     "text_cn": "加速塔"
   },
   {
-    "key": "Text_Key_Desc_Tow8_2",
+    "key": "Text_Key_Name_TestTow8_2",
     "text_cn": "加速塔"
   },
   {
-    "key": "Text_Key_Desc_Tow8_3",
+    "key": "Text_Key_Name_TestTow8_3",
     "text_cn": "加速塔"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_1",
-    "text_cn": "突击小队"
+    "key": "Text_Key_Tower_UIAttribute_GongJi",
+    "text_cn": "攻击"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_2",
-    "text_cn": "疗伤小队"
+    "key": "Text_Key_Tower_UIAttribute_GongSu",
+    "text_cn": "攻速"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_3",
-    "text_cn": "怪物大军"
+    "key": "Text_Key_Tower_UIAttribute_GongJiJiaCheng",
+    "text_cn": "攻击加成"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_4",
-    "text_cn": "蝙蝠男爵"
+    "key": "Text_Key_Tower_UIAttribute_GongSuJiaCheng",
+    "text_cn": "攻速加成"
   },
   {
-    "key": "Text_Key_TowerLabel_Aoe",
-    "text_cn": "Aoe"
+    "key": "Text_Key_Tower_UIAttribute_HuoDeJinBi",
+    "text_cn": "获得金币"
   },
   {
-    "key": "Text_Key_TowerLabel_ST",
-    "text_cn": "ST"
+    "key": "Text_Key_Tower_UIAttribute_BaoJi",
+    "text_cn": "增加暴击率"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_LianJi",
+    "text_cn": "连击次数"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_CD",
+    "text_cn": "施法间隔"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_JianSu",
+    "text_cn": "减速"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_DOT",
+    "text_cn": "持续伤害"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Break",
+    "text_cn": "伤害加深"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Dizzy",
+    "text_cn": "眩晕"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Steal",
+    "text_cn": "偷取金币"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Num",
+    "text_cn": "{0}"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Percent",
+    "text_cn": "{0}%"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Wave",
+    "text_cn": "{0}/波"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Seconds",
+    "text_cn": "{0}/秒"
   },
   {
     "key": "TextCode_Key_UpdateRes_TotalNum",
@@ -452,12 +1028,28 @@
     "text_cn": "所有"
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
-    "text_cn": "塔防"
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefenseNormal",
+    "text_cn": "塔防Normal"
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayPK1",
-    "text_cn": "PK"
+    "key": "TextCode_Key_GamePlayTowerDefenseTutorialFirst",
+    "text_cn": "塔防TutorialFirst"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVE",
+    "text_cn": "塔防PVE"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefenseEndlessChallenge",
+    "text_cn": "塔防EndlessChallenge"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVP",
+    "text_cn": "塔防PVP"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPKNormal",
+    "text_cn": "PKNormal"
   },
   {
     "key": "TextCode_Key_TeamMode_All",
@@ -536,12 +1128,28 @@
     "text_cn": "更新完成"
   },
   {
+    "key": "TextCode_Key_NewGameVersion",
+    "text_cn": "请下载新版本"
+  },
+  {
     "key": "TextCode_Key_Res_UpdateErr",
     "text_cn": "资源更新发生错误:{0}"
   },
   {
     "key": "TextCode_Key_Res_DownLoadResErr",
     "text_cn": "下载资源失败: {0} {1}"
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Title",
+    "text_cn": "连接失败"
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Des",
+    "text_cn": "当前无法连接服务器，请稍后再试"
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Btn",
+    "text_cn": "重试"
   },
   {
     "key": "TextCode_Key_IsQuitBattle",
@@ -609,7 +1217,7 @@
   },
   {
     "key": "TextCode_Key_Battle_CurMonsterWaveLeftTime",
-    "text_cn": "当前波剩余时间:{0}s"
+    "text_cn": "{0}秒后失败"
   },
   {
     "key": "TextCode_Key_Battle_MonsterWaveOverTime",
@@ -621,7 +1229,7 @@
   },
   {
     "key": "TextCode_Key_Battle_CurPutTowerCount",
-    "text_cn": "还可放置{0}个预防塔"
+    "text_cn": "{0}/{1}"
   },
   {
     "key": "TextCode_Key_Battle_TowerBuyDone",
@@ -685,7 +1293,7 @@
   },
   {
     "key": "TextCode_Key_BattleEnd_ChallengeEnds1",
-    "text_cn": "存活<color=#ffffff><size=150>{0}</size></color>波"
+    "text_cn": "存活<size=40>{0}</size>波"
   },
   {
     "key": "TextCode_Key_BattleEnd_ChallengeEnds2",
@@ -821,15 +1429,15 @@
   },
   {
     "key": "TextCode_Key_TutorialText_ScanBegin",
-    "text_cn": "缓慢移动，扫描地形，生成战场！光线最好不要太暗或太亮。"
+    "text_cn": "点击后开始扫描战场，请缓慢拍摄场景。"
   },
   {
     "key": "TextCode_Key_TutorialText_ScanFinish",
-    "text_cn": "地形扫描完毕？再次点击继续。"
+    "text_cn": "生成足够的地形后，点击继续。"
   },
   {
     "key": "TextCode_Key_TutorialText_ScanConfirm",
-    "text_cn": "如果生成了理想的战场，点击确认！"
+    "text_cn": "选择理想的尺寸，点击继续。"
   },
   {
     "key": "TextCode_Key_TutorialText_RoomStart",
@@ -837,15 +1445,15 @@
   },
   {
     "key": "TextCode_Key_TutorialText_PlaceHQ",
-    "text_cn": "按住并拖动您的大本营到战场上。\r如果它被敌人摧毁，游戏结束！"
+    "text_cn": "拖动您的城堡到战场上并保护它。"
   },
   {
     "key": "TextCode_Key_TutorialText_PlaceSP",
-    "text_cn": "放置恶灵的生成点。\r它们将攻击您的大本营，谨慎设计路线！"
+    "text_cn": "将传送门拖到战场上。它将生成怪物攻击您的城堡。"
   },
   {
     "key": "TextCode_Key_TutorialText_BuyTower",
-    "text_cn": "购买您喜欢的防御塔来抵挡恶灵。"
+    "text_cn": "点击购买防御塔。"
   },
   {
     "key": "TextCode_Key_TutorialText_CloseDLG",
@@ -861,7 +1469,7 @@
   },
   {
     "key": "TextCode_Key_TutorialText_TowerDetail",
-    "text_cn": "升级需要消耗2个相同类型和级别的塔。"
+    "text_cn": "消耗2个相同的塔进行升级。"
   },
   {
     "key": "TextCode_Key_TutorialText_WaveStart",
@@ -874,5 +1482,173 @@
   {
     "key": "TextCode_Key_BattlePut_IsOK",
     "text_cn": "是否在此位置进行放置?"
+  },
+  {
+    "key": "TextCode_Key_Rank_NoRank",
+    "text_cn": "未上榜"
+  },
+  {
+    "key": "TextCode_Key_Rank_NoData",
+    "text_cn": "无数据"
+  },
+  {
+    "key": "TextCode_Key_Tip_NoWayToConnectHome",
+    "text_cn": "当前放置位置 没法连通大本营,请重新选位置"
+  },
+  {
+    "key": "TextCode_Key_Tip_TooMuch",
+    "text_cn": "太多了"
+  },
+  {
+    "key": "TextCode_Key_Skill_AlreadyLearned",
+    "text_cn": "已经学过"
+  },
+  {
+    "key": "TextCode_Key_Skill_HaveNotLearned",
+    "text_cn": "还未学习这个技能 {0}"
+  },
+  {
+    "key": "TextCode_Key_Skill_LastSkillIsBeingReleased",
+    "text_cn": "上个技能释放中"
+  },
+  {
+    "key": "TextCode_Key_Room_WaitAllReady",
+    "text_cn": "请等待所有人员准备好"
+  },
+  {
+    "key": "TextCode_Key_Room_EachCampHaveSomeone",
+    "text_cn": "必须每个阵营都有人"
+  },
+  {
+    "key": "TextCode_Key_Room_CampNumberInconsistent",
+    "text_cn": "阵营人数不一致,请调整"
+  },
+  {
+    "key": "TextCode_Key_Room_NotSupport",
+    "text_cn": "暂不支持小于{0}个阵营"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeLevel",
+    "text_cn": "关卡 {0} "
+  },
+  {
+    "key": "TextCode_Key_Battle_Recover",
+    "text_cn": "复活？"
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Retry",
+    "text_cn": "重试"
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Next",
+    "text_cn": "下一关"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTip",
+    "text_cn": "下载最新的资源\n文件大小为：{0}MB"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTitle",
+    "text_cn": "更新可用"
+  },
+  {
+    "key": "TextCode_Key_Res_Download",
+    "text_cn": "下载"
+  },
+  {
+    "key": "TextCode_Key_Res_CheckUpdate",
+    "text_cn": "检查更新中…"
+  },
+  {
+    "key": "TextCode_Key_Res_Restart",
+    "text_cn": "重新开始"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateSuccessDes",
+    "text_cn": "现在重新开始游戏！"
+  },
+  {
+    "key": "TextCode_Key_Res_DownloadProgress",
+    "text_cn": "下载中 {0}MB/{1}MB"
+  },
+  {
+    "key": "TextCode_Key_PhysicalStrength_IsFull",
+    "text_cn": "体力已满"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentNull",
+    "text_cn": "{0}"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitle1",
+    "text_cn": "攻击"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitleTest1",
+    "text_cn": "测试title"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentTest1",
+    "text_cn": "测试{0}/s,而且{1}回合"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_Title",
+    "text_cn": "账号绑定"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_FailBtn",
+    "text_cn": "好的"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_AuthFail",
+    "text_cn": "账号验证失败"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_BindFail",
+    "text_cn": "账号已绑定或不可用，绑定失败"
+  },
+  {
+    "key": "TextCode_Key_Reward_Without_RewardAd",
+    "text_cn": "当前无法获取广告，您将直接获得奖励。"
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Update",
+    "text_cn": "个人信息已更新"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_Rank",
+    "text_cn": "排名 {0}"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_KillNum",
+    "text_cn": "{0} 击杀"
+  },
+  {
+    "key": "TextCode_Key_NeedCameraPermission",
+    "text_cn": "需要摄像机权限才能继续游戏"
+  },
+  {
+    "key": "TextCode_Key_OwnerRescan_Member",
+    "text_cn": "队长想要重新扫描，即将退出"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Title",
+    "text_cn": "重新扫描"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Des",
+    "text_cn": "是否离开本局游戏，并重新扫描战场？"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Cancel",
+    "text_cn": "留下"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Confirm",
+    "text_cn": "离开"
+  },
+  {
+    "key": "TextCode_Key_Battle_Tip_NoReward",
+    "text_cn": "本次游戏不会获得任何奖励"
   }
 ]

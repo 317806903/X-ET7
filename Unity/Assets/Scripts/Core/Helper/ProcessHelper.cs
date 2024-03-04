@@ -13,23 +13,21 @@ namespace ET
             //Log.Debug($"Process Run exe:{exe} ,arguments:{arguments} ,workingDirectory:{workingDirectory}");
             try
             {
-                bool redirectStandardOutput = true;
-                bool redirectStandardError = true;
+                bool redirectStandardOutput = false;
+                bool redirectStandardError = false;
                 bool useShellExecute = false;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    redirectStandardOutput = false;
-                    redirectStandardError = false;
                     useShellExecute = true;
                 }
-                
+
                 if (waitExit)
                 {
                     redirectStandardOutput = true;
                     redirectStandardError = true;
                     useShellExecute = false;
                 }
-                
+
                 ProcessStartInfo info = new ProcessStartInfo
                 {
                     FileName = exe,
@@ -55,7 +53,7 @@ namespace ET
                 throw new Exception($"dir: {Path.GetFullPath(workingDirectory)}, command: {exe} {arguments}", e);
             }
         }
-        
+
         private static async ETTask WaitExitAsync(Process process)
         {
             await process.WaitForExitAsync();
@@ -63,7 +61,7 @@ namespace ET
             Log.Info($"process exit, exitcode: {process.ExitCode} {process.StandardOutput.ReadToEnd()} {process.StandardError.ReadToEnd()}");
 #endif
         }
-        
+
 #if UNITY
         private static async Task WaitForExitAsync(this Process self)
         {
@@ -88,7 +86,7 @@ namespace ET
             var tcs = new TaskCompletionSource<bool>();
 
             void Handler(object s, EventArgs e) => tcs.TrySetResult(true);
-            
+
             self.Exited += Handler;
 
             try

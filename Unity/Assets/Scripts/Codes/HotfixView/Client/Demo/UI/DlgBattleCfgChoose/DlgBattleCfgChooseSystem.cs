@@ -60,6 +60,7 @@ namespace ET.Client
 			self.isGlobalMode = dlgBattleCfgChooseShowWindowData.isGlobalMode;
 			self.isAR = dlgBattleCfgChooseShowWindowData.isAR;
 
+			Log.Debug($"self.isAR {self.isAR}");
 			self.ShowBattleCfgList();
 		}
 
@@ -105,7 +106,7 @@ namespace ET.Client
 
         public static async ETTask OnChoose(this DlgBattleCfgChoose self, int newIndex)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             self.curChooseIndex = newIndex;
             self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.RefreshCells();
@@ -113,14 +114,14 @@ namespace ET.Client
 
         public static async ETTask OnBack(this DlgBattleCfgChoose self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleCfgChoose>();
         }
 
         public static async ETTask OnSure(this DlgBattleCfgChoose self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
             string gamePlayBattleLevelCfgId = self.GetCurChooseBattleCfgId();
             if (string.IsNullOrEmpty(gamePlayBattleLevelCfgId))
@@ -214,6 +215,22 @@ namespace ET.Client
 		        isMatching = true;
 	        }
 	        else if (gameMode[0] == "GamePlayTowerDefenseNormal" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseNormal)
+	        {
+		        isMatching = true;
+	        }
+	        else if (gameMode[0] == "GamePlayTowerDefenseTutorialFirst" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseTutorialFirst)
+	        {
+		        isMatching = true;
+	        }
+	        else if (gameMode[0] == "GamePlayTowerDefensePVE" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVE)
+	        {
+		        isMatching = true;
+	        }
+	        else if (gameMode[0] == "GamePlayTowerDefenseEndlessChallenge" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallenge)
+	        {
+		        isMatching = true;
+	        }
+	        else if (gameMode[0] == "GamePlayTowerDefensePVP" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVP)
 	        {
 		        isMatching = true;
 	        }

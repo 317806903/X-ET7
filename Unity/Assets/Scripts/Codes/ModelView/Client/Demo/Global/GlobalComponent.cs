@@ -10,9 +10,11 @@ namespace ET.Client
 
         public Transform Global;
         public Transform Unit { get; set; }
+        public Transform UIRoot { get; set; }
         public Camera MainCamera { get; set; }
         public Camera UICamera { get; set; }
 
+        public Transform ChkApplicationStatus{ get; set; }
         public Transform ClientManagerRoot{ get; set; }
         public Transform PoolRoot{ get; set; }
         public Transform ErrerLogManagerRoot{ get; set; }

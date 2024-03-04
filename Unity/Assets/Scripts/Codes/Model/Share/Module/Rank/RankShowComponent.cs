@@ -8,6 +8,7 @@ namespace ET
     [ChildOf(typeof(RankShowPlayerComponent))]
     public class RankShowComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {
+        public RankType rankType;
         public List<long> rankList = new();
         [BsonIgnore]
         public List<EntityRef<RankShowItemComponent>> rankListTmp = new();

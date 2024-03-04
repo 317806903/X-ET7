@@ -9708,6 +9708,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1187112132588562832, guid: 91895162e582a4b4b9559fad4bc5685a,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187112132588562832, guid: 91895162e582a4b4b9559fad4bc5685a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187112132588562832, guid: 91895162e582a4b4b9559fad4bc5685a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187112132588562832, guid: 91895162e582a4b4b9559fad4bc5685a,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}

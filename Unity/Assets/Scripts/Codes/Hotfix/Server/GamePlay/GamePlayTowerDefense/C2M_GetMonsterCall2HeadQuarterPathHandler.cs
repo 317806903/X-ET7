@@ -18,7 +18,13 @@ namespace ET.Server
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-			float3 homePos = putHomeComponent.GetHomeUnitByTeamFlagType(homeTeamFlagType).Position;
+			Unit homeUnit = putHomeComponent.GetHomeUnitByTeamFlagType(homeTeamFlagType);
+			if (homeUnit == null)
+			{
+				response.Points = null;
+				return;
+			}
+			float3 homePos = homeUnit.Position;
 
 			List<float3> points = ET.RecastHelper.GetArrivePath(observerUnit, startPos, homePos);
 			response.Position = homePos;

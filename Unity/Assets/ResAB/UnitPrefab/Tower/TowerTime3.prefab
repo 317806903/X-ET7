@@ -24692,19 +24692,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4575061381052198, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 14
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4575061381052198, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 14
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4575061381052198, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 14.000016
+      value: 30.000034
       objectReference: {fileID: 0}
     - target: {fileID: 4575061381052198, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4575061381052198, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -24753,6 +24753,16 @@ PrefabInstance:
     - target: {fileID: 4911045058186230, guid: e353fcc5b6536db4291d0c1743e0986b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431690995786610, guid: e353fcc5b6536db4291d0c1743e0986b,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199551563392104904, guid: e353fcc5b6536db4291d0c1743e0986b,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 9999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

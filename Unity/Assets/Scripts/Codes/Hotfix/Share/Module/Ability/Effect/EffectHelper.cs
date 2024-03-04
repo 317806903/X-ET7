@@ -32,6 +32,7 @@ namespace ET.Ability
         {
             EffectComponent effectComponent;
             bool isSceneEffect = actionCfgCreateEffect.IsSceneEffect;
+            bool IsScaleByUnit = actionCfgCreateEffect.IsScaleByUnit;
             if (isSceneEffect == false)
             {
                 foreach (var unitId in selectHandle.unitIds)
@@ -56,7 +57,7 @@ namespace ET.Ability
 
                     EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
                         actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                        actionCfgCreateEffect.OffSetInfo);
+                        actionCfgCreateEffect.OffSetInfo, actionCfgCreateEffect.IsScaleByUnit);
                     if (effectObj != null)
                     {
                         EventType.SyncUnitEffects _SyncUnitEffects = new()
@@ -98,7 +99,7 @@ namespace ET.Ability
 
                     EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
                         actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                        actionCfgCreateEffect.OffSetInfo);
+                        actionCfgCreateEffect.OffSetInfo, false);
                     if (effectObj != null)
                     {
                         SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
@@ -139,7 +140,7 @@ namespace ET.Ability
 
             EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
                 actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                actionCfgCreateEffect.OffSetInfo);
+                actionCfgCreateEffect.OffSetInfo, false);
             if (effectObj != null)
             {
                 SceneEffectComponent sceneEffectComponent = unit.DomainScene().GetComponent<SceneEffectComponent>();
@@ -227,7 +228,7 @@ namespace ET.Ability
 
             EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
                 actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                actionCfgCreateEffect.OffSetInfo);
+                actionCfgCreateEffect.OffSetInfo, actionCfgCreateEffect.IsScaleByUnit);
             if (effectObj != null)
             {
                 EventType.SyncUnitEffects _SyncUnitEffects = new()

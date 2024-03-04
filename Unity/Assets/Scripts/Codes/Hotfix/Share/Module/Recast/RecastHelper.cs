@@ -15,9 +15,9 @@ namespace ET
             return pathfindingComponent.GetNearNavmeshPos(pos);
         }
 
-        public static float3 GetHitNavmeshPos(Scene scene, float3 pos)
+        public static float3 GetHitNavmeshPos(Scene scene, float3 pos, float height = 1)
         {
-            (bool bRet, float3 hitPoint) = OnRaycast(scene, pos + new float3(0, 1, 0), pos + new float3(0, -1, 0));
+            (bool bRet, float3 hitPoint) = OnRaycast(scene, pos + new float3(0, height, 0), pos + new float3(0, -height, 0));
 
             return hitPoint;
         }

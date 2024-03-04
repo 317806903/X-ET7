@@ -50,9 +50,11 @@ namespace ET.Client
         {
             await self.CreateGlobalRoot();
             self.Unit = self.Global.Find("Unit").transform;
+            self.UIRoot = self.Global.Find("UIRoot").transform;
             self.MainCamera = self.Global.Find("MainCamera").GetComponent<Camera>();
             self.UICamera = self.Global.Find("UICamera").GetComponent<Camera>();
 
+            self.ChkApplicationStatus =  self.Global.Find("ChkApplicationStatus").transform;
             self.ClientManagerRoot =  self.Global.Find("ClientManagerRoot").transform;
             self.PoolRoot =  self.Global.Find("PoolRoot").transform;
             self.ErrerLogManagerRoot =  self.Global.Find("ErrerLogManagerRoot").transform;
@@ -84,8 +86,11 @@ namespace ET.Client
 
         public static async ETTask AddComponents(this GlobalComponent self)
         {
+            ApplicationStatusComponent applicationPauseComponent = self.AddComponent<ApplicationStatusComponent>();
+            await applicationPauseComponent.Init(self.ChkApplicationStatus);
+
             UIManagerComponent uiManagerComponent = self.AddComponent<UIManagerComponent>();
-            await uiManagerComponent.Init(self.UICamera, self.Global.Find("UIRoot"));
+            await uiManagerComponent.Init(self.UICamera, self.UIRoot);
 
             MainQualitySettingComponent mainQualitySettingComponent = self.AddComponent<MainQualitySettingComponent>();
 
@@ -116,6 +121,21 @@ namespace ET.Client
             IngameDebugConsole.DebugLogConsole.AddCommand("SeeCurDebugConnect", "SeeCurDebugConnect desc", () => ET.Client.DebugConnectHelper.SeeCurDebugConnect());
             IngameDebugConsole.DebugLogConsole.AddCommand("SetDebugConnectNull", "SetDebugConnectNull desc", () => ET.Client.DebugConnectHelper.SetDebugConnectNull());
             IngameDebugConsole.DebugLogConsole.AddCommand<string>( "SetDebugConnect", "SetDebugConnect desc", (str) => ET.Client.DebugConnectHelper.SetDebugConnect(str) );
+            IngameDebugConsole.DebugLogConsole.AddCommand( "zz", "zz desc", () =>
+            {
+                Scene clientScene = null;
+                var childs = ClientSceneManagerComponent.Instance.Children;
+                foreach (var child in childs.Values)
+                {
+                    Scene scene = (Scene)child;
+                    if (scene.SceneType == SceneType.Client)
+                    {
+                        clientScene = scene;
+                        break;
+                    }
+                }
+                LoginHelper.LoginOut(clientScene).Coroutine();
+            });
         }
 
         public static void Update(this GlobalComponent self)

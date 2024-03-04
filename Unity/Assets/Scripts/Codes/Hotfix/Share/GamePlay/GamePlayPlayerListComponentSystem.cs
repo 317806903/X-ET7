@@ -416,7 +416,8 @@ namespace ET
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
-                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, (int)self.lastPlayerGold[playerId]);
+                int recoverGold = GlobalSettingCfgCategory.Instance.AREndlessChallengeRecoverGold + (int)self.lastPlayerGold[playerId];
+                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, recoverGold);
             }
         }
 

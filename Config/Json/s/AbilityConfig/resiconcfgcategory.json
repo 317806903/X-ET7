@@ -70,24 +70,364 @@
     "res_name": "Assets/ResAB/UI/Icon/Icon_Hovertank.png"
   },
   {
+    "id": "ResIcon_TowerMagicBall1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerMagicBall1.png"
+  },
+  {
+    "id": "ResIcon_TowerMagicBall2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerMagicBall2.png"
+  },
+  {
+    "id": "ResIcon_TowerMagicBall3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerMagicBall3.png"
+  },
+  {
+    "id": "ResIcon_TowerAlchemy1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAlchemy1.png"
+  },
+  {
+    "id": "ResIcon_TowerAlchemy2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAlchemy2.png"
+  },
+  {
+    "id": "ResIcon_TowerAlchemy3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAlchemy3.png"
+  },
+  {
+    "id": "ResIcon_TowerScorpio1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerScorpio1.png"
+  },
+  {
+    "id": "ResIcon_TowerScorpio2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerScorpio2.png"
+  },
+  {
+    "id": "ResIcon_TowerScorpio3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerScorpio3.png"
+  },
+  {
+    "id": "ResIcon_TowerCurse1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCurse1.png"
+  },
+  {
+    "id": "ResIcon_TowerCurse2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCurse2.png"
+  },
+  {
+    "id": "ResIcon_TowerCurse3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCurse3.png"
+  },
+  {
+    "id": "ResIcon_Towerwitch1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Towerwitch1.png"
+  },
+  {
+    "id": "ResIcon_Towerwitch2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Towerwitch2.png"
+  },
+  {
+    "id": "ResIcon_Towerwitch3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_Towerwitch3.png"
+  },
+  {
+    "id": "ResIcon_TowerIceArrow1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIceArrow1.png"
+  },
+  {
+    "id": "ResIcon_TowerIceArrow2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIceArrow2.png"
+  },
+  {
+    "id": "ResIcon_TowerIceArrow3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIceArrow3.png"
+  },
+  {
+    "id": "ResIcon_TowerWater1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerWater1.png"
+  },
+  {
+    "id": "ResIcon_TowerWater2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerWater2.png"
+  },
+  {
+    "id": "ResIcon_TowerWater3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerWater3.png"
+  },
+  {
+    "id": "ResIcon_TowerElectromagnetic1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElectromagnetic1.png"
+  },
+  {
+    "id": "ResIcon_TowerElectromagnetic2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElectromagnetic2.png"
+  },
+  {
+    "id": "ResIcon_TowerElectromagnetic3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElectromagnetic3.png"
+  },
+  {
+    "id": "ResIcon_TowerFire1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFire1.png"
+  },
+  {
+    "id": "ResIcon_TowerFire2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFire2.png"
+  },
+  {
+    "id": "ResIcon_TowerFire3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFire3.png"
+  },
+  {
+    "id": "ResIcon_TowerAoShu1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAoShu1.png"
+  },
+  {
+    "id": "ResIcon_TowerAoShu2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAoShu2.png"
+  },
+  {
+    "id": "ResIcon_TowerAoShu3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerAoShu3.png"
+  },
+  {
+    "id": "ResIcon_TowerLianJi1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerLianJi1.png"
+  },
+  {
+    "id": "ResIcon_TowerLianJi2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerLianJi2.png"
+  },
+  {
+    "id": "ResIcon_TowerLianJi3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerLianJi3.png"
+  },
+  {
+    "id": "ResIcon_TowerZaiE1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerZaiE1.png"
+  },
+  {
+    "id": "ResIcon_TowerZaiE2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerZaiE2.png"
+  },
+  {
+    "id": "ResIcon_TowerZaiE3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerZaiE3.png"
+  },
+  {
+    "id": "ResIcon_TowerGoblin1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerGoblin1.png"
+  },
+  {
+    "id": "ResIcon_TowerGoblin2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerGoblin2.png"
+  },
+  {
+    "id": "ResIcon_TowerGoblin3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerGoblin3.png"
+  },
+  {
+    "id": "ResIcon_TowerDuCi1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDuCi1.png"
+  },
+  {
+    "id": "ResIcon_TowerDuCi2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDuCi2.png"
+  },
+  {
+    "id": "ResIcon_TowerDuCi3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDuCi3.png"
+  },
+  {
+    "id": "ResIcon_TowerRocket1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerRocket1.png"
+  },
+  {
+    "id": "ResIcon_TowerRocket2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerRocket2.png"
+  },
+  {
+    "id": "ResIcon_TowerRocket3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerRocket3.png"
+  },
+  {
+    "id": "ResIcon_TowerFireBall1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireBall1.png"
+  },
+  {
+    "id": "ResIcon_TowerFireBall2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireBall2.png"
+  },
+  {
+    "id": "ResIcon_TowerFireBall3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireBall3.png"
+  },
+  {
+    "id": "ResIcon_TowerArrowSolo1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerArrowSolo1.png"
+  },
+  {
+    "id": "ResIcon_TowerArrowSolo2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerArrowSolo2.png"
+  },
+  {
+    "id": "ResIcon_TowerArrowSolo3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerArrowSolo3.png"
+  },
+  {
+    "id": "ResIcon_TowerCanon1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCanon1.png"
+  },
+  {
+    "id": "ResIcon_TowerCanon2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCanon2.png"
+  },
+  {
+    "id": "ResIcon_TowerCanon3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerCanon3.png"
+  },
+  {
     "id": "ResIcon_TowerDragon1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragon_1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragon1.png"
+  },
+  {
+    "id": "ResIcon_TowerDragon2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragon2.png"
+  },
+  {
+    "id": "ResIcon_TowerDragon3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragon3.png"
   },
   {
     "id": "ResIcon_TowerElec1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElec_1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElec1.png"
+  },
+  {
+    "id": "ResIcon_TowerElec2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElec2.png"
+  },
+  {
+    "id": "ResIcon_TowerElec3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerElec3.png"
   },
   {
     "id": "ResIcon_TowerIce1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIce_1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIce1.png"
+  },
+  {
+    "id": "ResIcon_TowerIce2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIce2.png"
+  },
+  {
+    "id": "ResIcon_TowerIce3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerIce3.png"
   },
   {
     "id": "ResIcon_TowerTime1",
     "name": "",
-    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime_1.png"
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime1.png"
+  },
+  {
+    "id": "ResIcon_TowerTime2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime2.png"
+  },
+  {
+    "id": "ResIcon_TowerTime3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerTime3.png"
+  },
+  {
+    "id": "ResIcon_TowerFireLine1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireLine1.png"
+  },
+  {
+    "id": "ResIcon_TowerFireLine2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireLine2.png"
+  },
+  {
+    "id": "ResIcon_TowerFireLine3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerFireLine3.png"
+  },
+  {
+    "id": "ResIcon_TowerDragCircle1",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragCircle1.png"
+  },
+  {
+    "id": "ResIcon_TowerDragCircle2",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragCircle2.png"
+  },
+  {
+    "id": "ResIcon_TowerDragCircle3",
+    "name": "",
+    "res_name": "Assets/ResAB/UI/Icon/Icon_TowerDragCircle3.png"
   },
   {
     "id": "ResIcon_Beginners_Guide1",

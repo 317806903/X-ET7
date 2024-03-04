@@ -269,7 +269,7 @@ namespace ET.Ability
         /// <param name="curUnit"></param>
         /// <param name="isOnlyPlayer"></param>
         /// <returns></returns>
-        public static List<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer)
+        public static List<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer, bool isNeedChkCanBeFind)
         {
             List<Unit> hostileForces = ListComponent<Unit>.Create();
 
@@ -299,10 +299,13 @@ namespace ET.Ability
                     continue;
                 }
 
-                bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
-                if (isBeFind == false)
+                if (isNeedChkCanBeFind)
                 {
-                    continue;
+                    bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
+                    if (isBeFind == false)
+                    {
+                        continue;
+                    }
                 }
 
                 if (UnitHelper.ChkUnitAlive(unit))
@@ -441,9 +444,20 @@ namespace ET.Ability
             }
             else
             {
-                if (math.lengthsq(dis) <= targetDisSq)
+                if (dis.y + math.max(curUnitHeight, targetUnitRadius*0.5f) < 0)
                 {
-                    return true;
+                    targetDisSq = math.pow(radius + curUnitRadius, 2);
+                    if (math.lengthsq(dis) <= targetDisSq)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (math.lengthsq(dis) <= targetDisSq)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -466,9 +480,15 @@ namespace ET.Ability
 
         public static (float3, float3) GetNewNodePosition(Unit unit, OffSetInfo offSetInfo)
         {
-            string nodeName = offSetInfo.NodeName;
-            Vector3 offSetPosition = offSetInfo.OffSetPosition;
-            Vector3 relateForward = offSetInfo.RelateForward;
+            string nodeName = "";
+            Vector3 offSetPosition = Vector3.Zero;
+            Vector3 relateForward = Vector3.Zero;
+            if (offSetInfo != null)
+            {
+                nodeName = offSetInfo.NodeName;
+                offSetPosition = offSetInfo.OffSetPosition;
+                relateForward = offSetInfo.RelateForward;
+            }
 
             float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             offSetPos *= Ability.UnitHelper.GetResScale(unit);
@@ -480,15 +500,31 @@ namespace ET.Ability
 
         public static float3 GetNewNodePosition(Unit unit, float3 resetPos, OffSetInfo offSetInfo)
         {
-            string nodeName = offSetInfo.NodeName;
-            Vector3 offSetPosition = offSetInfo.OffSetPosition;
-            Vector3 relateForward = offSetInfo.RelateForward;
+            string nodeName = "";
+            Vector3 offSetPosition = Vector3.Zero;
+            Vector3 relateForward = Vector3.Zero;
+            if (offSetInfo != null)
+            {
+                nodeName = offSetInfo.NodeName;
+                offSetPosition = offSetInfo.OffSetPosition;
+                relateForward = offSetInfo.RelateForward;
+            }
 
             float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             offSetPos *= Ability.UnitHelper.GetResScale(unit);
             var t1 = math.rotate(unit.Rotation, offSetPos);
             float3 newPosition = resetPos + t1;
             return newPosition;
+        }
+
+        public static void AddSyncNoticeUnitAdd(Unit beNoticeUnit, Unit unit)
+        {
+            GetUnitComponent(beNoticeUnit).AddSyncNoticeUnitAdd(beNoticeUnit, unit);
+        }
+
+        public static void AddSyncNoticeUnitRemove(Unit beNoticeUnit, long unitId)
+        {
+            GetUnitComponent(beNoticeUnit).AddSyncNoticeUnitRemove(beNoticeUnit, unitId);
         }
 
         public static void AddSyncPosUnit(Unit unit)
@@ -508,13 +544,15 @@ namespace ET.Ability
 
         public static void AddRecycleSelectHandles(Scene scene, SelectHandle selectHandle)
         {
-            GetRecycleSelectHandleComponent(scene).AddRecycleSelectHandles(selectHandle);
+            {
+                return;
+            }
+            //GetRecycleSelectHandleComponent(scene).AddRecycleSelectHandles(selectHandle);
         }
 
         public static UnitInfo CreateUnitInfo(Unit unit)
         {
             UnitInfo unitInfo = new ();
-            NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
             unitInfo.ConfigId = unit.CfgId;
             unitInfo.Level = unit.level;
@@ -539,9 +577,13 @@ namespace ET.Ability
 
             unitInfo.KV = new Dictionary<int, long>();
 
-            foreach ((int key, long value) in nc.NumericDic)
+            NumericComponent nc = unit.GetComponent<NumericComponent>();
+            if (nc != null && nc.NumericDic != null)
             {
-                unitInfo.KV.Add(key, value);
+                foreach ((int key, long value) in nc.NumericDic)
+                {
+                    unitInfo.KV.Add(key, value);
+                }
             }
 
             unitInfo.Components = new();
@@ -557,7 +599,7 @@ namespace ET.Ability
             if (effectComponent != null)
             {
                 unitInfo.EffectComponents = ListComponent<byte[]>.Create();
-                foreach (Entity entity in effectComponent.Components.Values)
+                foreach (Entity entity in effectComponent.Children.Values)
                 {
                     unitInfo.EffectComponents.Add(entity.ToBson());
                 }
@@ -649,7 +691,7 @@ namespace ET.Ability
             }
         }
 
-        public static void SaveSelectHandle(Unit curUnit, SelectHandle selectHandle)
+        public static void SaveSelectHandle(Unit curUnit, SelectHandle selectHandle, bool isOnce)
         {
             SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
             if (selectHandleObj == null)
@@ -657,7 +699,17 @@ namespace ET.Ability
                 selectHandleObj = curUnit.AddComponent<SelectHandleObj>();
             }
 
-            selectHandleObj.SaveSelectHandle(selectHandle);
+            selectHandleObj.SaveSelectHandle(selectHandle, isOnce);
+        }
+
+        public static void ClearOnceSelectHandle(Unit curUnit)
+        {
+            SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
+            if (selectHandleObj == null)
+            {
+                return;
+            }
+            selectHandleObj.ClearOnceSelectHandle();
         }
 
         public static SelectHandle GetSaveSelectHandle(Unit curUnit)
@@ -973,15 +1025,35 @@ namespace ET.Ability
             Unit casterPlayerUnit = null;
             if (UnitHelper.ChkIsBullet(unit))
             {
-                casterPlayerUnit = unit.GetComponent<BulletObj>().GetCasterActorUnit();
+                BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                if (bulletObj == null)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"bulletObj == null");
+#endif
+                }
+                else
+                {
+                    casterPlayerUnit = bulletObj.GetCasterActorUnit();
+                }
             }
             else if (UnitHelper.ChkIsAoe(unit))
             {
-                casterPlayerUnit = unit.GetComponent<AoeObj>().GetCasterActorUnit();
+                AoeObj aoeObj = unit.GetComponent<AoeObj>();
+                if (aoeObj == null)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"aoeObj == null");
+#endif
+                }
+                else
+                {
+                    casterPlayerUnit = aoeObj.GetCasterActorUnit();
+                }
             }
             else
             {
-                casterPlayerUnit = null;
+                casterPlayerUnit = unit;
             }
 
             return casterPlayerUnit;
@@ -998,6 +1070,11 @@ namespace ET.Ability
                     break;
                 }
 
+                if (casterUnit == unit)
+                {
+                    break;
+                }
+
                 unit = casterUnit;
             }
 
@@ -1010,6 +1087,11 @@ namespace ET.Ability
             {
                 Unit casterUnit = UnitHelper.GetCasterUnit(unit);
                 if (casterUnit == null)
+                {
+                    break;
+                }
+
+                if (casterUnit == unit)
                 {
                     break;
                 }

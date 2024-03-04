@@ -26,6 +26,8 @@ namespace ET
 		InTheBattle,
 		InTheBattleEnd,
 		Recover,
+		Recovering,
+		WaitRescan,
 		GameEnd,
 	}
 
@@ -36,6 +38,8 @@ namespace ET
 		public bool isInitClient;
 		[BsonIgnore]
 		public long lastSendTime;
+		[BsonIgnore]
+		public long lastChkUnitExistTime;
 		[BsonIgnore]
 		public GamePlayTowerDefenseCfg model
 		{
@@ -49,7 +53,7 @@ namespace ET
 		public GamePlayModeBase gamePlayModeBase { get; set; }
 		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus { get; set; }
 		public long ownerPlayerId { get; set; }
-		
+
 		public bool canRecover;
 	}
 }

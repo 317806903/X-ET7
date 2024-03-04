@@ -1,12 +1,18 @@
-﻿using NUnit.Framework;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [Event(SceneType.Client)]
     public class LoginFinish_UI: AEvent<Scene, EventType.LoginFinish>
     {
         protected override async ETTask Run(Scene scene, EventType.LoginFinish args)
         {
+            SessionComponent sessionComponent = ET.Client.SessionHelper.GetSessionCompent(scene);
+            PingComponent pingComponent = sessionComponent.Session.GetComponent<PingComponent>();
+            DebugShowComponent.Instance.SetPing(pingComponent);
+
+            sessionComponent.Session.AddComponent<ReLoginComponent>();
+
+            await SceneHelper.EnterHall(scene, true, false);
+
             if (DebugConnectComponent.Instance.IsDebugMode == false)
             {
                 PlayerBaseInfoComponent playerBaseInfoComponent =
@@ -22,11 +28,6 @@ namespace ET.Client
                 }
             }
 
-            SessionComponent sessionComponent = ET.Client.SessionHelper.GetSessionCompent(scene);
-            PingComponent pingComponent = sessionComponent.Session.GetComponent<PingComponent>();
-            DebugShowComponent.Instance.SetPing(pingComponent);
-
-            await SceneHelper.EnterHall(scene, true);
         }
 
         protected async ETTask FinishedCallBack(Scene scene)

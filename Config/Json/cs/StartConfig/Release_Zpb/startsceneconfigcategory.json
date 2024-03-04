@@ -133,7 +133,7 @@
     "Zone": 3,
     "SceneType": "RouterManager",
     "Name": "RouterManager",
-    "OuterPort": 30300
+    "OuterPort": 3478
   },
   {
     "Id": 301,

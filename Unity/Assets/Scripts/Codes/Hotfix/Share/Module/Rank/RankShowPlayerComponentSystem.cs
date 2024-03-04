@@ -40,6 +40,8 @@ namespace ET
                 self.RankList.Remove(rankType);
             }
             rankShowComponent = self.AddChild<RankShowComponent>();
+            rankShowComponent.Init(rankType);
+
             rankShowComponent.SetRankShow(playerId, myRank, myRankItemComponent, rankIndex2PlayerId);
             DataCacheClearComponent dataCacheClearComponent = rankShowComponent.AddComponent<DataCacheClearComponent>();
             dataCacheClearComponent.ResetChkTimeInterval(10);

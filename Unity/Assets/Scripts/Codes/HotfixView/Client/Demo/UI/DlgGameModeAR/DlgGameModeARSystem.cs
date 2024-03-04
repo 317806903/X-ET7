@@ -19,7 +19,8 @@ namespace ET.Client
                     TimerComponent.Instance?.Remove(ref self.Timer);
                     return;
                 }
-                self.UpdatePhysicalStrength().Coroutine();
+
+                self.ChkUpdatePhysicalStrength().Coroutine();
             }
             catch (Exception e)
             {
@@ -42,6 +43,7 @@ namespace ET.Client
             self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
             self.View.E_RankButton.AddListenerAsync(self.ClickRank);
             self.View.EButton_PhysicalStrengthButton.AddListenerAsync(self.ClickPhysicalStrength);
+            self.View.E_CardsButton.AddListenerAsync(self.ClickCards);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -68,11 +70,14 @@ namespace ET.Client
 
         public static async ETTask _ShowWindow(this DlgGameModeAR self)
         {
+            self.View.E_RedDotImage.SetVisible(false);
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
             await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
             self.UpdatePhysicalStrength().Coroutine();
+
+            self.isTimerRunning = false;
             self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.GameModeARTimer, self);
 
             self.View.ELabel_WavesUITextLocalizeMonoView.DynamicSet(playerBaseInfoComponent.EndlessChallengeScore);
@@ -86,14 +91,14 @@ namespace ET.Client
             {
                 self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet(myRank);
             }
-            
+
             self.View.E_PVELockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVELock);
             self.View.E_PVPLockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVPLock);
             self.View.E_CardsLockButton.SetVisible(GlobalSettingCfgCategory.Instance.CardsLock);
             self.View.E_CardsButton.SetVisible(!GlobalSettingCfgCategory.Instance.CardsLock);
             self.View.E_TutorialLockButton.SetVisible(GlobalSettingCfgCategory.Instance.TutorialLock);
             self.View.E_TutorialButton.SetVisible(!GlobalSettingCfgCategory.Instance.TutorialLock);
-            
+
             self.View.EButton_PhysicalStrengthImage.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
             self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
             self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
@@ -106,7 +111,7 @@ namespace ET.Client
 
         public static async ETTask EnterAREndlessChallenge(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength) == false)
             {
@@ -127,7 +132,7 @@ namespace ET.Client
 
         public static async ETTask EnterARPVE(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
@@ -136,9 +141,10 @@ namespace ET.Client
 
         public static async ETTask EnterARPVP(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength) == false)
+            bool bRet = await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+            if (bRet == false)
             {
                 return;
             }
@@ -157,7 +163,7 @@ namespace ET.Client
 
         public static async ETTask EnterScanCode(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
@@ -173,7 +179,7 @@ namespace ET.Client
 
         public static async ETTask EnterTutorialFirst(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
@@ -189,20 +195,21 @@ namespace ET.Client
 
         public static async ETTask ClickAvatar(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersonalInformation>();
         }
 
         public static async ETTask ClickTutorial(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            Application.OpenURL("http://artd.corp.deepmirror.com/");
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
+            //Application.OpenURL("http://artd.corp.deepmirror.com/");
         }
 
         public static async ETTask ReturnLogin(this DlgGameModeAR self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
             PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
@@ -225,10 +232,32 @@ namespace ET.Client
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPhysicalStrength>();
         }
 
+        public static async ETTask ClickCards(this DlgGameModeAR self)
+        {
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBag>();
+        }
+
+        public static async ETTask ChkUpdatePhysicalStrength(this DlgGameModeAR self)
+        {
+            if (self.isTimerRunning)
+            {
+                return;
+            }
+
+            self.isTimerRunning = true;
+            await self.UpdatePhysicalStrength();
+            self.isTimerRunning = false;
+        }
+
         public static async ETTask UpdatePhysicalStrength(this DlgGameModeAR self)
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            if (playerBaseInfoComponent == null)
+            {
+                return;
+            }
             int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
             int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
             string msg = curPhysicalStrength + "/" + maxPhysicalStrength;

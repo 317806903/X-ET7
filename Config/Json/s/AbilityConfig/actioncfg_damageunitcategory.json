@@ -1,74 +1,518 @@
 [
   {
-    "id": "DamageUnit_0",
-    "name": "",
-    "damageInfo": {
-      "damageType": 1,
-      "value": 0
-    }
-  },
-  {
-    "id": "DamageUnit_1",
-    "name": "",
-    "damageInfo": {
-      "damageType": 1,
-      "value": 5
-    }
-  },
-  {
-    "id": "DamageUnit_2",
-    "name": "",
-    "damageInfo": {
-      "damageType": 2,
-      "value": 2
-    }
-  },
-  {
-    "id": "DamageUnit_3",
-    "name": "",
-    "damageInfo": {
-      "damageType": 3,
-      "value": 2
-    }
-  },
-  {
-    "id": "DamageUnit_4",
-    "name": "",
-    "damageInfo": {
-      "damageType": 4,
-      "value": 10
-    }
-  },
-  {
-    "id": "DamageUnit_5",
-    "name": "",
-    "damageInfo": {
-      "damageType": 5,
-      "value": 10
-    }
-  },
-  {
-    "id": "DamageUnit_6",
+    "id": "DamageUnit_Attribute",
     "name": "",
     "damageInfo": {
       "damageType": 6,
-      "value": 0
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
     }
   },
   {
-    "id": "DamageUnit_7",
+    "id": "DamageUnit_AttributeDisAdd_PlayerCircle1",
     "name": "",
     "damageInfo": {
-      "damageType": 7,
-      "value": 0
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 20,
+      "scaleByDisMax": 300,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
     }
   },
   {
-    "id": "DamageUnit_8",
+    "id": "DamageUnit_AttributeDisAdd_PlayerCircle2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 20,
+      "scaleByDisMax": 300,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeDisAdd_PlayerCircle3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 20,
+      "scaleByDisMax": 300,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeHeightPlus_TowerElec1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": -60,
+      "scaleByHeightMax": 300
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeHeightPlus_TowerElec2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": -60,
+      "scaleByHeightMax": 300
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeHeightPlus_TowerElec3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": -60,
+      "scaleByHeightMax": 300
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_9_2_ZhongZi",
     "name": "",
     "damageInfo": {
       "damageType": 1,
-      "value": -200
+      "value": -4860,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_10_2_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -5130,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_11_1_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -5400,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_12_2_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -6480,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_12_3_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -6480,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_15_2_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -8100,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_19_3_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -9990,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Infinite_20_3_ZhongZi",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -10260,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge3_1_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -240,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge3_2_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -480,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge3_3_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -720,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge3_4_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -840,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge3_5_1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -960,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge4_5_2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -1920,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Monster_Challenge5_5_3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -1920,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Empty",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": 0,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Const",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": 5,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttackerHpPercent",
+    "name": "",
+    "damageInfo": {
+      "damageType": 2,
+      "value": 2,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HitterHpPercent",
+    "name": "",
+    "damageInfo": {
+      "damageType": 3,
+      "value": 2,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttackerCurHpPercent",
+    "name": "",
+    "damageInfo": {
+      "damageType": 4,
+      "value": 10,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HitterCurHpPercent",
+    "name": "",
+    "damageInfo": {
+      "damageType": 5,
+      "value": 10,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_Source",
+    "name": "",
+    "damageInfo": {
+      "damageType": 7,
+      "value": 0,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HealConst",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -50000,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HealConst1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -10000,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HealConst2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -40000,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_HealConst3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 1,
+      "value": -100000,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerScorpio1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.05,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerScorpio2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.05,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerScorpio3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.05,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerFireBall1",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.0375,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerFireBall2",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.0375,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_BuffTowerFireBall3",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 0.0375,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeDisAdd",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 10,
+      "scaleByDisMax": 40,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeDisPlus",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": -10,
+      "scaleByDisMax": 40,
+      "scaleByHeight": 0,
+      "scaleByHeightMax": 0
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeHeightAdd",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": 10,
+      "scaleByHeightMax": 40
+    }
+  },
+  {
+    "id": "DamageUnit_AttributeHeightPlus",
+    "name": "",
+    "damageInfo": {
+      "damageType": 6,
+      "value": 1,
+      "scaleByDis": 0,
+      "scaleByDisMax": 0,
+      "scaleByHeight": -10,
+      "scaleByHeightMax": 40
     }
   }
 ]

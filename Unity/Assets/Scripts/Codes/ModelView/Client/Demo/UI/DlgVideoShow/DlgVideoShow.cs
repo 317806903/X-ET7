@@ -9,5 +9,7 @@ namespace ET.Client
 	{
 		public DlgVideoShowViewComponent View { get => this.GetComponent<DlgVideoShowViewComponent>(); }
 		public string videoPath;
+		public VideoPlayer videoPlayer;
+		public long Timer;
 	}
 }

@@ -9,16 +9,20 @@ namespace ET.Server
     {
         public static void NoticeUnitAdd(Unit unit, Unit sendUnit)
         {
-            M2C_CreateUnits createUnits = new() { Units = new() };
-            createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(sendUnit));
-            MessageHelper.SendToClient(unit, createUnits);
+            // M2C_CreateUnits createUnits = new() { Units = new() };
+            // createUnits.Units.Add(ET.Ability.UnitHelper.CreateUnitInfo(sendUnit));
+            // MessageHelper.SendToClient(unit, createUnits);
+
+            ET.Ability.UnitHelper.AddSyncNoticeUnitAdd(unit, sendUnit);
         }
 
         public static void NoticeUnitRemove(Unit unit, Unit sendUnit)
         {
-            M2C_RemoveUnits removeUnits = new() {Units = new()};
-            removeUnits.Units.Add(sendUnit.Id);
-            MessageHelper.SendToClient(unit, removeUnits);
+            // M2C_RemoveUnits removeUnits = new() {Units = new()};
+            // removeUnits.Units.Add(sendUnit.Id);
+            // MessageHelper.SendToClient(unit, removeUnits);
+
+            ET.Ability.UnitHelper.AddSyncNoticeUnitRemove(unit, sendUnit.Id);
         }
 
         private static MultiMapSimple<long, Unit> playerSeeUnits = new();
@@ -59,57 +63,67 @@ namespace ET.Server
                 {
                     continue;
                 }
-                oneTypeLocationType.Send(unitId, message);
+                oneTypeLocationType.Send(unitId, message, unit.DomainScene().InstanceId);
             }
         }
 
         public static void SendToClient(Unit unit, IActorMessage message, bool chkPlayerExist = true)
         {
+            if (unit == null || unit.IsDisposed)
+            {
+                return;
+            }
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             if (chkPlayerExist && oneTypeLocationType.GetChild<Entity>(unit.Id) == null)
             {
                 return;
             }
-            oneTypeLocationType.Send(unit.Id, message);
+            oneTypeLocationType.Send(unit.Id, message, unit.DomainScene().InstanceId);
         }
 
-        public static void SendToClient(long actionId, IActorMessage message, bool chkPlayerExist = true, bool needWait = false)
+        public static void SendToClient(long actionId, IActorMessage message, long sceneInstanceId, bool chkPlayerExist = true, bool needWait = false)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             if (chkPlayerExist && oneTypeLocationType.GetChild<Entity>(actionId) == null)
             {
                 if (needWait)
                 {
-                    WaitToSendToClient(actionId, message).Coroutine();
+                    WaitToSendToClient(actionId, message, sceneInstanceId).Coroutine();
                 }
                 return;
             }
-            oneTypeLocationType.Send(actionId, message);
+            oneTypeLocationType.Send(actionId, message, sceneInstanceId);
         }
 
-        public static async ETTask WaitToSendToClient(long actionId, IActorMessage message)
+        public static async ETTask WaitToSendToClient(long actionId, IActorMessage message, long sceneInstanceId)
         {
-            int retryCount = 20;
+            // 此处需要actionId指定的Player出现，但有可能出现等很久都没有（一直是null）。目前把重试次数调大，但需要找个更鲁棒的方法确保消息能发给player
+            int retryCount = 120;
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
             while (oneTypeLocationType.GetChild<Entity>(actionId) == null)
             {
                 if (retryCount-- <= 0)
                 {
+                    Log.Error($"A message of type [{message.GetType().Name}] should be sent to player [{actionId}] but failed to sent after all retries of waiting.");
                     return;
                 }
                 await TimerComponent.Instance.WaitFrameAsync();
             }
-            oneTypeLocationType.Send(actionId, message);
+            if (retryCount < 100)
+            {
+                Log.Debug($"A message of type [{message.GetType().Name}] is sending player [{actionId}] after unexpected long retries of waiting {120 - retryCount}.");
+            }
+            oneTypeLocationType.Send(actionId, message, sceneInstanceId);
         }
 
-        public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message, bool needChkExist = true)
+        public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message, long sceneInstanceId, bool needChkExist = true)
         {
             ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(locationType);
             if (needChkExist && oneTypeLocationType.GetChild<Entity>(id) == null)
             {
                 return;
             }
-            oneTypeLocationType.Send(id, message);
+            oneTypeLocationType.Send(id, message, sceneInstanceId);
         }
 
         /// <summary>

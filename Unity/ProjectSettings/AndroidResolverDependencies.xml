@@ -1,18 +1,26 @@
 <dependencies>
   <packages>
+    <package>androidx.fragment:fragment:1.6.2</package>
+    <package>com.google.ads.mediation:unity:4.9.2.0</package>
     <package>com.google.android.gms:play-services-ads:22.5.0</package>
+    <package>com.google.android.gms:play-services-auth:20+</package>
     <package>com.google.android.ump:user-messaging-platform:2.1.0</package>
+    <package>com.google.signin:google-signin-support:1.0.4</package>
+    <package>com.unity3d.ads:unity-ads:4.8.0</package>
   </packages>
-  <files />
+  <files>
+    <file>Assets/Scripts/ThirdParty/Google/GeneratedLocalRepo/Scripts/ThirdParty/Google/GoogleSignIn/Editor/m2repository/com/google/signin/google-signin-support/1.0.4/google-signin-support-1.0.4.aar</file>
+    <file>Assets/Scripts/ThirdParty/Google/GeneratedLocalRepo/Scripts/ThirdParty/Google/GoogleSignIn/Editor/m2repository/com/google/signin/google-signin-support/1.0.4/google-signin-support-1.0.4.pom</file>
+  </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a" />
-    <setting name="bundleId" value="com.dm.ARGameInNet148" />
+    <setting name="bundleId" value="com.dm.ARGameInNetZpb" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="True" />
     <setting name="gradleTemplateEnabled" value="True" />
     <setting name="installAndroidPackages" value="True" />
-    <setting name="localMavenRepoDir" value="Assets/GeneratedLocalRepo" />
+    <setting name="localMavenRepoDir" value="Assets/Scripts/ThirdParty/Google/GeneratedLocalRepo" />
     <setting name="packageDir" value="Assets/Plugins/Android" />
     <setting name="patchAndroidManifest" value="True" />
     <setting name="patchMainTemplateGradle" value="True" />

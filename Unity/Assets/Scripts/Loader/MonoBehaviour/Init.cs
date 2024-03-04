@@ -93,6 +93,7 @@ namespace ET
 
 			await MonoResComponent.Instance.InitAsync();
 
+			Log.Debug($"Restart CodeLoader.Start Before]");
 			Game.AddSingleton<ET.CodeLoader>().Start();
 		}
 

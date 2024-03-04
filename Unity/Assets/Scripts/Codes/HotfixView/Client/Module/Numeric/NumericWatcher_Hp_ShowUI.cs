@@ -11,7 +11,7 @@ namespace ET.Client
 		{
 			//Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
 			unit.GetComponent<HealthBarComponent>()?.UpdateHealth(false);
-			ShootTextComponent.Instance.Show(unit, (int)((args.Old - args.New)/10000));
+			ShootTextComponent.Instance.ShowShootDamage(unit, (int)((args.Old - args.New)/10000));
 		}
 	}
 }

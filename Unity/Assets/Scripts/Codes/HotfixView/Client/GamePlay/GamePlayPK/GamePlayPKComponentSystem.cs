@@ -121,7 +121,7 @@ namespace ET.Client
 
 		public static void OnHitMap(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			self.OnPlayerMoveTarget(hit.point);
 		}

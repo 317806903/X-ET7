@@ -39,14 +39,7 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiMapSimple<long, long> playerId2unitTowerId;
 
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<string, string> towerCfgId2PreTowerCfgId;
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<string, string> towerCfgId2NextTowerCfgId;
-
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public MultiMapSimple<string, string> baseTowerCfgId2towerCfgIds;
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public MultiDictionary<string, string, int> towerCfgId2BaseTowerCfgIdAndCount;
+		[BsonIgnore]
+		public MultiMap<string, long> existTowerDic;
 	}
 }

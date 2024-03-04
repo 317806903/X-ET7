@@ -247,6 +247,24 @@ namespace UnityEditor.UI
 
             go.name = "ELabel_";
         }
+        
+        [MenuItem("GameObject/EUI/Loop Horizontal List View", false, -508)]
+        static public void AddLoopHorizontalListView(MenuCommand menuCommand)
+        {
+            GameObject go = LoopScrollRectDefaultControls.CreateLoopHorizontalListView(GetStandardResources());
+            PlaceUIElementRoot(go, menuCommand);
+
+            go.name = "ELoopListView_";
+        }
+        
+        [MenuItem("GameObject/EUI/Loop Vertical List View", false, -509)]
+        static public void AddLoopVerticalListView(MenuCommand menuCommand)
+        {
+            GameObject go = LoopScrollRectDefaultControls.CreateLoopVerticalListView(GetStandardResources());
+            PlaceUIElementRoot(go, menuCommand);
+
+            go.name = "ELoopListView_";
+        }
 
     }
 }

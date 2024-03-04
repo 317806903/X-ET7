@@ -309,6 +309,11 @@ namespace ET
 
         public static List<float3> GetArrivePath(this NavmeshComponent self, float3 start, float3 target)
         {
+            // start = new float3(11.938713073730469f, -20.010421752929688f, -27.78343391418457f);
+            // target = new float3(-0.83235251903533936f, -15.153124809265137f, -44.560817718505859f);
+            // start = new float3(55.34029f, -15.42707f, -26.54941f);
+            // target = new float3(12.41908f, -18.55572f, -38.11686f);
+
             DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
             IDtQueryFilter filter = self.crowd.GetFilter(0);
             RcVec3f halfExtents = self.crowd.GetQueryExtents();
@@ -338,7 +343,7 @@ namespace ET
                     // }
                     using ListComponent<StraightPathItem> straightPathTmp = ListComponent<StraightPathItem>.Create();
                     List<StraightPathItem> straightPath = straightPathTmp;
-                    var result = navquery.FindStraightPath(startNearPos, targetNearPos, pathList, ref straightPath, 100, 0);
+                    var result = navquery.FindStraightPath(startNearPos, targetNearPos, pathList, ref straightPath, 100, DtNavMeshQuery.DT_STRAIGHTPATH_ALL_CROSSINGS);
                     if (result.Failed())
                     {
                         return null;
@@ -372,22 +377,40 @@ namespace ET
                 float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos);
                 if (pos2.Equals(float3.zero))
                 {
-                    return false;
+                    continue;
+                    //return false;
                 }
-                if (pos2.y > pos.y + 0.5f)
+                if (pos2.y < pos.y - 2f || pos2.y > pos.y + 2f)
                 {
                     return false;
                 }
             }
             for (int i = 0; i < arrivePath.Count-1; i++)
             {
+                float absDisY = math.abs(arrivePath[i].y - arrivePath[i + 1].y);
+                if (absDisY < 3)
+                {
+                    continue;
+                }
+                //float lowHeight = math.min(arrivePath[i].y, arrivePath[i+1].y);
                 float3 pos = (arrivePath[i] + arrivePath[i+1])/2;
-                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos);
+                float disY = math.max(1, absDisY * 0.5f);
+                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos, disY);
                 if (pos2.Equals(float3.zero))
                 {
                     return false;
+                    // if (math.abs(arrivePath[i].y - arrivePath[i+1].y) > 4)
+                    // {
+                    //     return false;
+                    // }
+                    // continue;
                 }
-                if (pos2.y > pos.y + 0.5f)
+
+                if (pos2.y > arrivePath[i].y && pos2.y > arrivePath[i+1].y)
+                {
+                    continue;
+                }
+                if (pos2.y < pos.y - 2f || pos2.y > pos.y + 2f)
                 {
                     return false;
                 }

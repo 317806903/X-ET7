@@ -15,6 +15,7 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgCommonConfirm self, ShowWindowData contextData = null)
         {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
             bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
             if (isARCameraEnable)
             {
@@ -93,14 +94,14 @@ namespace ET.Client
 
             // self.View.E_BG_ClickButton.AddListener(() =>
             // {
-            //     UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            //     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
             //
             //     self.Close();
             //     confirmCallBack?.Invoke();
             // });
             self.View.E_SureButton.AddListener(() =>
             {
-                UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
                 self.Close();
                 confirmCallBack?.Invoke();
@@ -132,7 +133,7 @@ namespace ET.Client
             {
                 self.View.E_BG_ClickButton.AddListener(()=>
                 {
-                    UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+                    //UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
                     self.Close();
                 });
             }
@@ -142,14 +143,14 @@ namespace ET.Client
             }
             self.View.E_ConfirmSureButton.AddListener(() =>
             {
-                UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
                 self.Close();
                 confirmCallBack?.Invoke();
             });
             self.View.E_ConfirmCancelButton.AddListener(() =>
             {
-                UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
                 self.Close();
                 cancelCallBack?.Invoke();

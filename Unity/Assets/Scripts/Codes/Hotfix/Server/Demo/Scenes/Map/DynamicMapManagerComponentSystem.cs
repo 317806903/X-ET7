@@ -94,6 +94,9 @@ namespace ET.Server
             }
 
             long dynamicMapBaseId = self.dynamicMapList[dynamicMapInstanceId];
+            Scene scene = self.GetChild<Scene>(dynamicMapBaseId);
+            Log.Debug($"DestroyDynamicMap [{scene.SceneType.ToString()}] [{scene.Id}] [{scene.InstanceId}]");
+
             self.dynamicMapList.Remove(dynamicMapInstanceId);
             self.dynamicUsedIndexList.Remove((int)dynamicMapBaseId);
 

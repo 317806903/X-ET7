@@ -15,6 +15,12 @@ namespace ET.Client
 		public Camera ScaleARCamera;
 		public Camera CurARCamera { get; set; }
 		public TranslucentImageSource translucentImageSource;
+		public float arScale;
+		public int meshFaceCount;
+
+		public string EntranceType;  // Could be "scan", "load" (recent) or "join" (from QR code) or "reconnect" (after recover)
+		public string CurrentARSceneId;
+		public bool ARScenePrepared;
 
 		public Action OnMenuCancelCallBack;
 		public Action OnMenuFinishedCallBack;

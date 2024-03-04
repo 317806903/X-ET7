@@ -101,7 +101,7 @@ namespace ET
             self.ownerPlayerId = ownerPlayerId;
             self.AddComponent<PlayerOwnerTowersComponent>();
             MonsterWaveCallComponent monsterWaveCallComponent = self.AddComponent<MonsterWaveCallComponent>();
-            monsterWaveCallComponent.Init(self.model.MonsterWaveCallRuleCfgId);
+            monsterWaveCallComponent.Init(self.model.MonsterWaveCallRuleCfgId, self.model.MonsterWaveCallStartWaveIndex);
 
             self.canRecover = GlobalSettingCfgCategory.Instance.AdmobAvailable;
 
@@ -164,6 +164,10 @@ namespace ET
 
         public static async ETTask DoNextStep(this GamePlayTowerDefenseComponent self)
         {
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
+            {
+                return;
+            }
             Dictionary<GamePlayTowerDefenseStatus, GamePlayTowerDefenseStatus> nextStep = new()
             {
                 { GamePlayTowerDefenseStatus.GameBegin, GamePlayTowerDefenseStatus.PutHome },
@@ -189,7 +193,7 @@ namespace ET
                     await self.TransToRestTime();
                     break;
                 case GamePlayTowerDefenseStatus.InTheBattle:
-                    await self.TransToBattle();
+                    await self.TransToInTheBattleBegin();
                     break;
             }
         }
@@ -246,7 +250,7 @@ namespace ET
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask TransToBattle(this GamePlayTowerDefenseComponent self)
+        public static async ETTask TransToInTheBattleBegin(this GamePlayTowerDefenseComponent self)
         {
             self.RecordPlayerInfo();
             self.RemoveComponent<RestTimeComponent>();
@@ -261,12 +265,17 @@ namespace ET
 
         public static async ETTask TransToInTheBattleEnd(this GamePlayTowerDefenseComponent self)
         {
-            if(self.ChkIsGameRecover()){
+            if(self.ChkIsGameEnd() || self.ChkIsGameRecover() || self.ChkIsGameRecovering())
+            {
                 return;
             }
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_InTheBattleEnd());
 
             //self.GetComponent<PlayerOwnerTowersComponent>().RefreshAllPlayerTowerPool();
+
+            self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.InTheBattleEnd;
+            self.NoticeToClientAll();
+            await TimerComponent.Instance.WaitAsync(100);
 
             bool bRet = self.DoPlayerCoinDivideEquallyTeamCoin();
             if (bRet)
@@ -297,9 +306,6 @@ namespace ET
                     return;
                 }
             }
-
-            self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.InTheBattleEnd;
-            self.NoticeToClientAll();
 
             await self.DoNextStep();
         }
@@ -390,6 +396,26 @@ namespace ET
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask TransToWaitRescan(this GamePlayTowerDefenseComponent self)
+        {
+            GamePlayComponent gamePlayComponent = self.GetGamePlay();
+            gamePlayComponent.StopAllAI();
+            gamePlayComponent.NoticeGameEndToRoom(false);
+
+            self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.WaitRescan;
+
+            self.NoticeToClientAll();
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask TransToRecovering(this GamePlayTowerDefenseComponent self)
+        {
+            self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.Recovering;
+
+            self.NoticeToClientAll();
+            await ETTask.CompletedTask;
+        }
+
         public static bool ChkNeedToRecover(this GamePlayTowerDefenseComponent self)
         {
             if (self.IsEndlessChallengeMode() && self.canRecover)
@@ -400,11 +426,11 @@ namespace ET
             return false;
         }
 
-        public static async ETTask TransToGameResult(this GamePlayTowerDefenseComponent self, bool bSuccess)
+        public static async ETTask TransToGameResult(this GamePlayTowerDefenseComponent self, bool bSuccess, bool isTimeOut = false)
         {
             if (bSuccess)
             {
-                await self.TransToGameEnd();
+                await self.TransToGameEnd(isTimeOut);
             }
             else
             {
@@ -415,17 +441,17 @@ namespace ET
                 }
                 else
                 {
-                    await self.TransToGameEnd();
+                    await self.TransToGameEnd(isTimeOut);
                 }
             }
         }
 
-        public static async ETTask TransToGameEnd(this GamePlayTowerDefenseComponent self)
+        public static async ETTask TransToGameEnd(this GamePlayTowerDefenseComponent self, bool isTimeOut = false)
         {
 
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
 
-            await self.GameEnd();
+            await self.GameEnd(isTimeOut);
 
             GamePlayComponent gamePlayComponent = self.GetGamePlay();
             gamePlayComponent.GameEnd();
@@ -437,10 +463,10 @@ namespace ET
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask GameEnd(this GamePlayTowerDefenseComponent self)
+        public static async ETTask GameEnd(this GamePlayTowerDefenseComponent self, bool isTimeOut = false)
         {
             PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
-            putHomeComponent.BattleResult();
+            putHomeComponent.BattleResult(isTimeOut);
 
             await ETTask.CompletedTask;
         }
@@ -465,10 +491,31 @@ namespace ET
             return false;
         }
 
+        public static bool ChkIsGameRecovering(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool ChkHomeWin(this GamePlayTowerDefenseComponent self, long playerId)
         {
             PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
             return putHomeComponent.ChkHomeWin(playerId);
+        }
+
+        public static Dictionary<long, bool> GetPlayerWinResult(this GamePlayTowerDefenseComponent self)
+        {
+            DictionaryComponent<long, bool> dic = DictionaryComponent<long, bool>.Create();
+            List<long> playerList = self.GetPlayerList();
+            foreach (long playerId in playerList)
+            {
+                dic[playerId] = self.ChkHomeWin(playerId);
+            }
+            return dic;
         }
 
         public static GamePlayTowerDefenseStatus GetGamePlayTowerDefenseStatus(this GamePlayTowerDefenseComponent self)
@@ -529,6 +576,11 @@ namespace ET
         public static bool ScalePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId)
         {
             return self.GetComponent<PlayerOwnerTowersComponent>().ScalePlayerTower(playerId, towerUnitId);
+        }
+
+        public static bool ScalePlayerTowerCard(this GamePlayTowerDefenseComponent self, long playerId, string towerCfgId)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().ScalePlayerTowerCard(playerId, towerCfgId);
         }
 
         public static (bool, string) ChkReclaimPlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId)
@@ -638,7 +690,7 @@ namespace ET
             monsterWaveCallComponent.RecoverWaveIndex();
 
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
-            gamePlayPlayerListComponent.RecordPlayerGold();
+            gamePlayPlayerListComponent.RecoverPlayerGold();
 
             PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
             putHomeComponent.RecoverHomeHp();
@@ -672,21 +724,24 @@ namespace ET
                 return;
             }
 
-            MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
-            int rewardGold = monsterWaveCallComponent.GetMonsterRewardGoldByUnitId(beKillUnit.Id);
-            if (rewardGold > 0)
+            MonsterComponent monsterComponent = beKillUnit.GetComponent<MonsterComponent>();
+            if (monsterComponent != null)
             {
-                // GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
-                // if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
-                // {
-                //     ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
-                // }
-                // else
-                // {
-                //     ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
-                // }
-                ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                int rewardGold = monsterComponent.rewardGold;
+                if (rewardGold > 0)
+                {
+                    // GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
+                    // if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
+                    // {
+                    //     ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                    // }
+                    // else
+                    // {
+                    //     ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                    // }
+                    ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold, beKillUnit);
 
+                }
             }
         }
 
@@ -694,6 +749,12 @@ namespace ET
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
             return playerOwnerTowersComponent.GetPutTowers(playerId);
+        }
+
+        public static Dictionary<string, int> GetPlayerOwnerTowers(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
+            return playerOwnerTowersComponent.GetPlayerOwnerTowers(playerId);
         }
 
         public static bool ChkIsNearTower(this GamePlayTowerDefenseComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1, long ignoreTowerUnitId = -1)

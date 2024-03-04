@@ -52,6 +52,19 @@ namespace ET.Client
             go.transform.localScale = UnityEngine.Vector3.one;
             self.audioSource = go.AddComponent<AudioSource>();
             self.musicSource = go.AddComponent<AudioSource>();
+            self.needLoopPlay = false;
+            self.intervalTime = 5;
+        }
+
+        public static void PlayScanAudio(this UIAudioManagerComponent self, string resAudioCfgId, bool needLoopPlay)
+        {
+            self.needLoopPlay = needLoopPlay;
+            if (self.needLoopPlay)
+            {
+                self.lastPlayTime = TimeHelper.ServerNow();
+                self.needLoopAudioCfgId = resAudioCfgId;
+                self.PlayUIAudio(resAudioCfgId).Coroutine();
+            }
         }
 
         public static async ETTask PlayUIAudio(this UIAudioManagerComponent self, string resAudioCfgId)
@@ -63,12 +76,11 @@ namespace ET.Client
                 return;
             }
 
-            AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(resAudioCfg.ResName);
-            self.audioSource.PlayOneShot(audioClip);
+            await self.PlayUIAudioByPath(resAudioCfg.ResName);
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask PlayUIGuideAudio(this UIAudioManagerComponent self, string audioPath)
+        public static async ETTask PlayUIAudioByPath(this UIAudioManagerComponent self, string audioPath)
         {
             AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(audioPath);
             self.audioSource.PlayOneShot(audioClip);
@@ -79,8 +91,21 @@ namespace ET.Client
         {
             self.resAudioCfgIds = resAudioCfgIds;
             self.musicSource.Stop();
+            self.isMute = false;
 
             self._PlayNextMusicOne().Coroutine();
+        }
+
+        public static void StopMusic(this UIAudioManagerComponent self)
+        {
+            self.isMute = true;
+            self.musicSource.mute = true;
+        }
+
+        public static void ResumeMusic(this UIAudioManagerComponent self)
+        {
+            self.isMute = false;
+            self.musicSource.mute = false;
         }
 
         public static async ETTask _PlayNextMusicOne(this UIAudioManagerComponent self)
@@ -116,7 +141,7 @@ namespace ET.Client
             self.musicSource.playOnAwake = false;
             self.musicSource.spatialBlend = 0;
             self.musicSource.loop = false;
-            self.musicSource.mute = false;
+            self.musicSource.mute = self.isMute;
             self.musicSource.volume = 0.1f;
             self.musicSource.pitch = 1;
             self.musicSource.Play();
@@ -125,6 +150,11 @@ namespace ET.Client
 
         public static void FixedUpdate(this UIAudioManagerComponent self, float fixedDeltaTime)
         {
+            if (self.needLoopPlay && self.lastPlayTime + self.intervalTime * 1000 <= TimeHelper.ServerNow())
+            {
+                self.lastPlayTime = TimeHelper.ServerNow();
+                self.PlayUIAudio(self.needLoopAudioCfgId).Coroutine();
+            }
             if (self.resAudioCfgIds == null || self.resAudioCfgIds.Count == 0)
             {
                 return;
@@ -136,6 +166,5 @@ namespace ET.Client
 
             self._PlayNextMusicOne().Coroutine();
         }
-
     }
 }

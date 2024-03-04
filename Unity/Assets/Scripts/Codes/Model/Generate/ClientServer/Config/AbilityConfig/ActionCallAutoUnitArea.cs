@@ -19,10 +19,6 @@ public abstract partial class ActionCallAutoUnitArea:  ActionCallAutoUnit
 {
     public ActionCallAutoUnitArea(ByteBuf _buf)  : base(_buf) 
     {
-        SelectNum = _buf.ReadInt();
-        IsFriend = _buf.ReadBool();
-        IsOnlyPlayer = _buf.ReadBool();
-        OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
         PostInit();
     }
 
@@ -36,42 +32,22 @@ public abstract partial class ActionCallAutoUnitArea:  ActionCallAutoUnit
         }
     }
 
-    /// <summary>
-    /// 选取的数量(-1表示不限制)
-    /// </summary>
-    public int SelectNum { get; private set; }
-    /// <summary>
-    /// 是否选取友军(否则选取敌军)
-    /// </summary>
-    public bool IsFriend { get; private set; }
-    /// <summary>
-    /// 是否只选取玩家
-    /// </summary>
-    public bool IsOnlyPlayer { get; private set; }
-    public OffSetInfo OffSetInfo { get; private set; }
 
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         base.Resolve(_tables);
-        OffSetInfo?.Resolve(_tables);
         PostResolve();
     }
 
     public override void TranslateText(System.Func<string, string, string> translator)
     {
         base.TranslateText(translator);
-        OffSetInfo?.TranslateText(translator);
     }
 
     public override string ToString()
     {
         return "{ "
-        + "IsSave:" + IsSave + ","
-        + "SelectNum:" + SelectNum + ","
-        + "IsFriend:" + IsFriend + ","
-        + "IsOnlyPlayer:" + IsOnlyPlayer + ","
-        + "OffSetInfo:" + OffSetInfo + ","
         + "}";
     }
     

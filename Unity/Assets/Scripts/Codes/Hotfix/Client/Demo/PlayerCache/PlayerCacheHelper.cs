@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace ET.Client
@@ -28,7 +29,7 @@ namespace ET.Client
 		    return playerCacheManagerComponent;
 	    }
 
-        public static async ETTask<Entity> GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, bool forceReGet)
+        public static async ETTask<Entity> _GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, bool forceReGet)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
@@ -69,27 +70,27 @@ namespace ET.Client
         public static async ETTask<Entity> GetMyPlayerModel(Scene scene, PlayerModelType playerModelType, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
-	        return await GetPlayerModel(scene, myPlayerId, playerModelType, forceReGet);
+	        return await _GetPlayerModel(scene, myPlayerId, playerModelType, forceReGet);
         }
 
         public static async ETTask<PlayerBaseInfoComponent> GetMyPlayerBaseInfo(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
-	        Entity entity = await GetPlayerModel(scene, myPlayerId, PlayerModelType.BaseInfo, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.BaseInfo, forceReGet);
 	        return entity as PlayerBaseInfoComponent;
         }
 
         public static async ETTask<PlayerBackPackComponent> GetMyPlayerBackPack(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
-	        Entity entity = await GetPlayerModel(scene, myPlayerId, PlayerModelType.BackPack, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.BackPack, forceReGet);
 	        return entity as PlayerBackPackComponent;
         }
 
         public static async ETTask<PlayerBattleCardComponent> GetMyPlayerBattleCard(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
-	        Entity entity = await GetPlayerModel(scene, myPlayerId, PlayerModelType.BattleCard, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.BattleCard, forceReGet);
 	        return entity as PlayerBattleCardComponent;
         }
 
@@ -104,7 +105,7 @@ namespace ET.Client
 		        return;
 	        }
 
-	        Entity entityModel = await GetPlayerModel(scene, myPlayerId, playerModelType, false);
+	        Entity entityModel = await _GetPlayerModel(scene, myPlayerId, playerModelType, false);
 	        entityModel.GetComponent<DataCacheClearComponent>().RefreshTime();
 	        byte[] bytes = entityModel.ToBson();
 
@@ -127,25 +128,30 @@ namespace ET.Client
 
         public static async ETTask<PlayerBaseInfoComponent> GetOtherPlayerBaseInfo(Scene scene, long playerId, bool forceReGet = false)
         {
-	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, forceReGet);
 	        return entity as PlayerBaseInfoComponent;
         }
 
         public static async ETTask<PlayerBackPackComponent> GetOtherPlayerBackPack(Scene scene, long playerId, bool forceReGet = false)
         {
-	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, playerId, PlayerModelType.BackPack, forceReGet);
 	        return entity as PlayerBackPackComponent;
         }
 
         public static async ETTask<PlayerBattleCardComponent> GetOtherPlayerBattleCard(Scene scene, long playerId, bool forceReGet = false)
         {
-	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BattleCard, forceReGet);
+	        Entity entity = await _GetPlayerModel(scene, playerId, PlayerModelType.BattleCard, forceReGet);
 	        return entity as PlayerBattleCardComponent;
         }
 
         public static async ETTask<(bool, Entity)> SendGetPlayerModelAsync(Scene clientScene, long playerId, PlayerModelType playerModelType)
         {
-	        G2C_GetPlayerCache _G2C_GetPlayerCache = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetPlayerCache()
+	        Session session = ET.Client.SessionHelper.GetSession(clientScene);
+	        if (session == null)
+	        {
+		        return (false, null);
+	        }
+	        G2C_GetPlayerCache _G2C_GetPlayerCache = await session.Call(new C2G_GetPlayerCache()
 		        {
 			        PlayerId = playerId,
 			        PlayerModelType = (int)playerModelType,
@@ -185,24 +191,59 @@ namespace ET.Client
 	        }
         }
 
-		public static async ETTask<bool> AddPlayerPhysicalStrenthByAdAsync(Scene clientScene)
+		public static async ETTask<bool> AddPlayerPhysicalStrenthByAdAsync(Scene scene)
         {
-	        long playerId = ET.Client.PlayerHelper.GetMyPlayerId(clientScene);
-			G2C_AddPhysicalStrenthByAd _G2C_AddPhysicalStrenthByAd = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_AddPhysicalStrenthByAd()
-		        {
-			        PlayerId = playerId,
-		        }) as
-		        G2C_AddPhysicalStrenthByAd;
-	        if (_G2C_AddPhysicalStrenthByAd.Error != ET.ErrorCode.ERR_Success)
+	        try
 	        {
-		        Log.Error($"AddPlayerPhysicalStrenthByAdAsync Error==1 msg={_G2C_AddPhysicalStrenthByAd.Message}");
+		        scene = scene.ClientScene();
+		        EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
+		        {
+			        IsAdmobAvailable = false,
+		        });
+
+		        while (true)
+		        {
+			        if (scene.IsDisposed)
+			        {
+				        return false;
+			        }
+			        if (ReLoginComponent.Instance != null && ReLoginComponent.Instance.isReCreateSessioning == false)
+			        {
+				        break;
+			        }
+			        await TimerComponent.Instance.WaitFrameAsync();
+		        }
+
+		        long playerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
+		        G2C_AddPhysicalStrenthByAd _G2C_AddPhysicalStrenthByAd = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_AddPhysicalStrenthByAd()
+			        {
+				        PlayerId = playerId,
+			        }) as
+			        G2C_AddPhysicalStrenthByAd;
+		        if (_G2C_AddPhysicalStrenthByAd.Error != ET.ErrorCode.ERR_Success)
+		        {
+			        Log.Error($"AddPlayerPhysicalStrenthByAdAsync Error==1 msg={_G2C_AddPhysicalStrenthByAd.Message}");
+			        return false;
+		        }
+		        else
+		        {
+			        Log.Info($"AddPlayerPhysicalStrenthByAdAsync Success");
+			        return true;
+		        }
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
 		        return false;
 	        }
-	        else
+	        finally
 	        {
-				Log.Info($"AddPlayerPhysicalStrenthByAdAsync Success");
-				return true;
+		        EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
+		        {
+			        IsAdmobAvailable = true,
+		        });
 	        }
+
         }
     }
 }

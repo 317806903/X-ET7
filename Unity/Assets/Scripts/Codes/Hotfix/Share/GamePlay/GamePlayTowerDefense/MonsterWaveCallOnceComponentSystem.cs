@@ -66,6 +66,10 @@ namespace ET
             {
                 self.duration -= fixedDeltaTime;
             }
+            else
+            {
+
+            }
 
             float wasTimeElapsed = self.timeElapsed;
             self.timeElapsed += fixedDeltaTime;
@@ -105,6 +109,7 @@ namespace ET
             int onceNum = (int)math.floor(monsterWaveCallNode.OnceCallNum * (100 + self.monsterWaveNumScalePercent) * 0.01f);
             int monsterLevel = (int)math.floor(monsterWaveCallNode.Level * (100 + self.monsterWaveLevelScalePercent) * 0.01f);
             int monsterRewardGold = (int)math.floor(monsterWaveCallNode.RewardGold * (100 + self.waveRewardGoldScalePercent) * 0.01f);
+            List<string> createActionIds = monsterWaveCallNode.CreateActionIds;
             while (leftNum > 0)
             {
                 if (self.IsDisposed)
@@ -117,6 +122,8 @@ namespace ET
                     Unit monsterUnit =
                         monsterWaveCallComponent.CallMonsterOnce(self.playerId, monsterWaveCallNode.MonsterCfgId, monsterLevel, monsterRewardGold);
                     self.monsterWaveUnitList.Add(monsterUnit.Id);
+
+                    ET.GamePlayHelper.DoCreateActions(monsterUnit, createActionIds);
 
                     leftNum -= 1;
                     if (leftNum == 0)

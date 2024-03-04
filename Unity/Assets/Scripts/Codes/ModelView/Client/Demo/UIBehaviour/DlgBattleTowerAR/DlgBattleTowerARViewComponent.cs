@@ -143,7 +143,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_TowerLoopHorizontalScrollRect
+		public BlurBackground.TranslucentImage E_CoinsAndTowersTranslucentImage
 		{
 			get
 			{
@@ -152,11 +152,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELoopScrollList_TowerLoopHorizontalScrollRect == null )
+				if( this.m_E_CoinsAndTowersTranslucentImage == null )
 				{
-					this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_Battle/ELoopScrollList_Tower");
+					this.m_E_CoinsAndTowersTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers");
 				}
-				return this.m_ELoopScrollList_TowerLoopHorizontalScrollRect;
+				return this.m_E_CoinsAndTowersTranslucentImage;
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_shadow02Image == null )
 				{
-					this.m_ELabel_shadow02Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/GameObject/ELabel_shadow02");
+					this.m_ELabel_shadow02Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_shadow02");
 				}
 				return this.m_ELabel_shadow02Image;
 			}
@@ -188,7 +188,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_TotalGoldTextMeshProUGUI == null )
 				{
-					this.m_ELabel_TotalGoldTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/GameObject/ELabel_TotalGold");
+					this.m_ELabel_TotalGoldTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_TotalGold");
 				}
 				return this.m_ELabel_TotalGoldTextMeshProUGUI;
 			}
@@ -205,7 +205,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_TotalGoldUITextLocalizeMonoView == null )
 				{
-					this.m_ELabel_TotalGoldUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Battle/GameObject/ELabel_TotalGold");
+					this.m_ELabel_TotalGoldUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_TotalGold");
 				}
 				return this.m_ELabel_TotalGoldUITextLocalizeMonoView;
 			}
@@ -222,7 +222,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_goldImage == null )
 				{
-					this.m_ELabel_goldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/GameObject/ELabel_gold");
+					this.m_ELabel_goldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_gold");
 				}
 				return this.m_ELabel_goldImage;
 			}
@@ -239,9 +239,43 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_shadowImage == null )
 				{
-					this.m_ELabel_shadowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/GameObject/ELabel_shadow");
+					this.m_ELabel_shadowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_shadow");
 				}
 				return this.m_ELabel_shadowImage;
+			}
+		}
+
+		public UnityEngine.UI.Image ELabel_towerImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_towerImage == null )
+				{
+					this.m_ELabel_towerImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/ELabel_tower");
+				}
+				return this.m_ELabel_towerImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_LeftCallPlayerTowerCountTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI == null )
+				{
+					this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/E_CoinsAndTowers/E_LeftCallPlayerTowerCount");
+				}
+				return this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI;
 			}
 		}
 
@@ -273,7 +307,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_LeftMonsterWaveTextMeshProUGUI == null )
 				{
-					this.m_ELabel_LeftMonsterWaveTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/ELabel_LeftMonsterWave");
+					this.m_ELabel_LeftMonsterWaveTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/ELabel_LeftMonsterWave_box/ELabel_LeftMonsterWave");
 				}
 				return this.m_ELabel_LeftMonsterWaveTextMeshProUGUI;
 			}
@@ -293,23 +327,6 @@ namespace ET.Client
 					this.m_ELabel_LeftTimeTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/ELabel_LeftTime");
 				}
 				return this.m_ELabel_LeftTimeTextMeshProUGUI;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_LeftCallPlayerTowerCountTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI == null )
-				{
-					this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/E_LeftCallPlayerTowerCount");
-				}
-				return this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI;
 			}
 		}
 
@@ -518,57 +535,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button EButton_BuyCloseButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_BuyCloseButton == null )
-				{
-					this.m_EButton_BuyCloseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
-				}
-				return this.m_EButton_BuyCloseButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_BuyCloseImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_BuyCloseImage == null )
-				{
-					this.m_EButton_BuyCloseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
-				}
-				return this.m_EButton_BuyCloseImage;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_BuyClose_iconImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_BuyClose_iconImage == null )
-				{
-					this.m_EButton_BuyClose_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose/BuyClose/EButton_BuyClose_icon");
-				}
-				return this.m_EButton_BuyClose_iconImage;
-			}
-		}
-
 		public BlurBackground.TranslucentImage E_TowerBuyShow_boxTranslucentImage
 		{
 			get
@@ -705,6 +671,108 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button EButton_BuyCloseButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_BuyCloseButton == null )
+				{
+					this.m_EButton_BuyCloseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
+				}
+				return this.m_EButton_BuyCloseButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_BuyCloseImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_BuyCloseImage == null )
+				{
+					this.m_EButton_BuyCloseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
+				}
+				return this.m_EButton_BuyCloseImage;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_BuyClose_iconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_BuyClose_iconImage == null )
+				{
+					this.m_EButton_BuyClose_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose/BuyClose/EButton_BuyClose_icon");
+				}
+				return this.m_EButton_BuyClose_iconImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_Sprite_BGButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Sprite_BGButton == null )
+				{
+					this.m_E_Sprite_BGButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/E_Sprite_BG");
+				}
+				return this.m_E_Sprite_BGButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Sprite_BGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Sprite_BGImage == null )
+				{
+					this.m_E_Sprite_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_Sprite_BG");
+				}
+				return this.m_E_Sprite_BGImage;
+			}
+		}
+
+		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_TowerLoopHorizontalScrollRect
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELoopScrollList_TowerLoopHorizontalScrollRect == null )
+				{
+					this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_Battle/ELoopScrollList_Tower");
+				}
+				return this.m_ELoopScrollList_TowerLoopHorizontalScrollRect;
+			}
+		}
+
 		public UnityEngine.UI.Image E_TipNodeImage
 		{
 			get
@@ -773,6 +841,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_ReScanButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReScanButton == null )
+				{
+					this.m_E_ReScanButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ReScan");
+				}
+				return this.m_E_ReScanButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ReScanImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReScanImage == null )
+				{
+					this.m_E_ReScanImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ReScan");
+				}
+				return this.m_E_ReScanImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_E_PutHomeAndMonsterPointImage = null;
@@ -783,16 +885,17 @@ namespace ET.Client
 			this.m_EButton_PutMonsterPointImage = null;
 			this.m_ELabel_PutMonsterPoint_iconImage = null;
 			this.m_E_BattleImage = null;
-			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
+			this.m_E_CoinsAndTowersTranslucentImage = null;
 			this.m_ELabel_shadow02Image = null;
 			this.m_ELabel_TotalGoldTextMeshProUGUI = null;
 			this.m_ELabel_TotalGoldUITextLocalizeMonoView = null;
 			this.m_ELabel_goldImage = null;
 			this.m_ELabel_shadowImage = null;
+			this.m_ELabel_towerImage = null;
+			this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI = null;
 			this.m_ELabel_LeftMonsterWave_boxTranslucentImage = null;
 			this.m_ELabel_LeftMonsterWaveTextMeshProUGUI = null;
 			this.m_ELabel_LeftTimeTextMeshProUGUI = null;
-			this.m_E_LeftCallPlayerTowerCountTextMeshProUGUI = null;
 			this.m_EG_ReadyRectTransform = null;
 			this.m_EButton_ReadyWhenRestTimeButton = null;
 			this.m_EButton_ReadyWhenRestTimeImage = null;
@@ -806,9 +909,6 @@ namespace ET.Client
 			this.m_ELabel_BuyText = null;
 			this.m_ELabel_BuyUITextLocalizeMonoView = null;
 			this.m_E_TowerBuyShowImage = null;
-			this.m_EButton_BuyCloseButton = null;
-			this.m_EButton_BuyCloseImage = null;
-			this.m_EButton_BuyClose_iconImage = null;
 			this.m_E_TowerBuyShow_boxTranslucentImage = null;
 			this.m_ELoopScrollList_BuyLoopHorizontalScrollRect = null;
 			this.m_EButton_RefreshButton = null;
@@ -817,10 +917,18 @@ namespace ET.Client
 			this.m_ELabel_RefreshUITextLocalizeMonoView = null;
 			this.m_EButton_Refresh_iconImage = null;
 			this.m_EButton_Refresh_icon_goldImage = null;
+			this.m_EButton_BuyCloseButton = null;
+			this.m_EButton_BuyCloseImage = null;
+			this.m_EButton_BuyClose_iconImage = null;
+			this.m_E_Sprite_BGButton = null;
+			this.m_E_Sprite_BGImage = null;
+			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 			this.m_E_TipNodeImage = null;
 			this.m_E_TipTextTextMeshProUGUI = null;
 			this.m_E_QuitBattleButton = null;
 			this.m_E_QuitBattleImage = null;
+			this.m_E_ReScanButton = null;
+			this.m_E_ReScanImage = null;
 			this.uiTransform = null;
 		}
 
@@ -832,16 +940,17 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EButton_PutMonsterPointImage = null;
 		private UnityEngine.UI.Image m_ELabel_PutMonsterPoint_iconImage = null;
 		private UnityEngine.UI.Image m_E_BattleImage = null;
-		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
+		private BlurBackground.TranslucentImage m_E_CoinsAndTowersTranslucentImage = null;
 		private UnityEngine.UI.Image m_ELabel_shadow02Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_TotalGoldTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_ELabel_TotalGoldUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Image m_ELabel_goldImage = null;
 		private UnityEngine.UI.Image m_ELabel_shadowImage = null;
+		private UnityEngine.UI.Image m_ELabel_towerImage = null;
+		private TMPro.TextMeshProUGUI m_E_LeftCallPlayerTowerCountTextMeshProUGUI = null;
 		private BlurBackground.TranslucentImage m_ELabel_LeftMonsterWave_boxTranslucentImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_LeftMonsterWaveTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_LeftTimeTextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_E_LeftCallPlayerTowerCountTextMeshProUGUI = null;
 		private UnityEngine.RectTransform m_EG_ReadyRectTransform = null;
 		private UnityEngine.UI.Button m_EButton_ReadyWhenRestTimeButton = null;
 		private UnityEngine.UI.Image m_EButton_ReadyWhenRestTimeImage = null;
@@ -854,9 +963,6 @@ namespace ET.Client
 		private UnityEngine.UI.Text m_ELabel_BuyText = null;
 		private UITextLocalizeMonoView m_ELabel_BuyUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Image m_E_TowerBuyShowImage = null;
-		private UnityEngine.UI.Button m_EButton_BuyCloseButton = null;
-		private UnityEngine.UI.Image m_EButton_BuyCloseImage = null;
-		private UnityEngine.UI.Image m_EButton_BuyClose_iconImage = null;
 		private BlurBackground.TranslucentImage m_E_TowerBuyShow_boxTranslucentImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_BuyLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_EButton_RefreshButton = null;
@@ -865,10 +971,18 @@ namespace ET.Client
 		private UITextLocalizeMonoView m_ELabel_RefreshUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Image m_EButton_Refresh_iconImage = null;
 		private UnityEngine.UI.Image m_EButton_Refresh_icon_goldImage = null;
+		private UnityEngine.UI.Button m_EButton_BuyCloseButton = null;
+		private UnityEngine.UI.Image m_EButton_BuyCloseImage = null;
+		private UnityEngine.UI.Image m_EButton_BuyClose_iconImage = null;
+		private UnityEngine.UI.Button m_E_Sprite_BGButton = null;
+		private UnityEngine.UI.Image m_E_Sprite_BGImage = null;
+		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Image m_E_TipNodeImage = null;
 		private TMPro.TextMeshProUGUI m_E_TipTextTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
 		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
+		private UnityEngine.UI.Button m_E_ReScanButton = null;
+		private UnityEngine.UI.Image m_E_ReScanImage = null;
 		public Transform uiTransform = null;
 	}
 }

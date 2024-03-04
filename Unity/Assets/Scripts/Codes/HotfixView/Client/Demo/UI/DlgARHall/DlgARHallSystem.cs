@@ -29,7 +29,7 @@ namespace ET.Client
 				DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = contextData as DlgARHall_ShowWindowData;
 				self.RoomTypeIn = _DlgARHall_ShowWindowData.RoomType;
 				self.SubRoomTypeIn = _DlgARHall_ShowWindowData.SubRoomType;
-				self.PveLevel = _DlgARHall_ShowWindowData.PveLevel;
+				self.battleCfgId = _DlgARHall_ShowWindowData.battleCfgId;
 				if (_DlgARHall_ShowWindowData.playerStatus == PlayerStatus.Hall)
 				{
 					self.roomId = 0;
@@ -87,6 +87,24 @@ namespace ET.Client
 				self.arSceneId, bForceIntoCreate, bForceIntoScan
 				);
 
+			// 此时进入AR场景，开始扫图或扫码，或加载上次扫图
+			UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.ARStart);
+			Log.Debug($"AR Prepare Start. game mode is {self.SubRoomTypeIn}.");
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				// 准备阶段开始
+				eventName = "PrepareStarted",
+				properties = new()
+						{
+							{"game_mode", self.SubRoomTypeIn.ToString()},
+						}
+			});
+			
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+			{
+				// 准备阶段结束计时开始
+				eventName = "PrepareEnded",
+			});
 		}
 
 		public static async ETTask ReStart(this DlgARHall self)
@@ -103,40 +121,56 @@ namespace ET.Client
 
 		public static async ETTask TriggerJoinScene(this DlgARHall self)
 		{
-			if (self.playerStatusIn == PlayerStatus.Hall)
+			if (self.roomId == 0)
 			{
+				if (string.IsNullOrEmpty(self.battleCfgId))
+				{
+					self.battleCfgId = ET.GamePlayHelper.GetBattleCfgId(self.RoomTypeIn, self.SubRoomTypeIn, 0);
+				}
+				Log.Debug($"self.roomId==0 {self.battleCfgId}");
 				return;
 			}
 
 			bool roomExist = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
 			if (roomExist == false)
 			{
+				if (string.IsNullOrEmpty(self.battleCfgId))
+				{
+					self.battleCfgId = ET.GamePlayHelper.GetBattleCfgId(self.RoomTypeIn, self.SubRoomTypeIn, 0);
+				}
+				Log.Debug($"roomExist==false {self.battleCfgId}");
 				return;
 			}
 
 			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(self.roomId);
 			self.arSceneId = roomComponent.arSceneId;
+			self.battleCfgId = roomComponent.gamePlayBattleLevelCfgId;
 			await Task.CompletedTask;
 		}
 
 		public static async ETTask OnClose(this DlgARHall self)
 		{
 			Log.Debug($"ET.Client.DlgARHallSystem.OnClose ");
-			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
-			string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
+			// 此时AR准备阶段被用户取消，AR界面关闭，回到主界面。
+			string entranceType = ARSessionHelper.GetAREntranceType(self.DomainScene());
+			Log.Debug($"AR Prepare End with cancellation. EntranceType={entranceType}");
 			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 			{
-				eventName = "ScanEnded",
+				// 准备阶段结束计时结束
+				eventName = "PrepareEnded",
 				properties = new()
-				{
-					{"success", false},
-					{"session_id", arSceneIdTmp},
-					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
-				}
+						{
+							{"success", false },
+							{"session_id", ""},
+							{"game_mode", self.SubRoomTypeIn.ToString()},
+							{"mesh_source", entranceType}
+						}
 			});
+			// 重置entrance type给下一个session
+			ARSessionHelper.ResetAREntranceType(self.DomainScene());
 
 			await UIManagerHelper.ExitRoom(self.DomainScene());
 		}
@@ -144,7 +178,8 @@ namespace ET.Client
 		public static async ETTask OnCreateRoomCallBack(this DlgARHall self)
 		{
 			Log.Debug("ET.Client.DlgARHallSystem.OnCreateRoomCallBack begin");
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+			//UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, true);
 
 			self.roomId = 0;
 			await self.CreateRoom();
@@ -153,21 +188,6 @@ namespace ET.Client
 			self.isHost = true;
 			self.roomId = roomId;
 			Log.Debug($"ET.Client.DlgARHallSystem.OnCreateRoomCallBack end {self.roomId}");
-
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-			{
-				eventName = "ScanStarted",
-				properties = new()
-				{
-					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
-				}
-			});
-
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
-			{
-				eventName = "ScanEnded",
-			});
-
 		}
 
 		public static async ETTask OnQuitRoomCallBack(this DlgARHall self)
@@ -175,26 +195,12 @@ namespace ET.Client
 			try
 			{
 				Log.Debug($"ET.Client.DlgARHallSystem.OnQuitRoomCallBack begin self=[{self}]");
-				UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+				UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 				self.QuitRoom().Coroutine();
 				self.isHost = false;
 				self.roomId = 0;
 				Log.Debug($"ET.Client.DlgARHallSystem.OnQuitRoomCallBack end {self.roomId}");
-
-				PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
-				string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-				{
-					eventName = "ScanEnded",
-					properties = new()
-					{
-						{"success", false},
-						{"session_id", arSceneIdTmp},
-						{"game_mode", playerStatusComponent.SubRoomType.ToString()},
-					}
-				});
-
 			}
 			catch (Exception e)
 			{
@@ -204,7 +210,7 @@ namespace ET.Client
 
 		public static (bool, string) GetQRCodeInfo(this DlgARHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			if (self.roomId == 0)
 			{
@@ -218,7 +224,7 @@ namespace ET.Client
 		public static async ETTask OnJoinByQRCodeCallBack(this DlgARHall self, string sQRCodeInfo)
 		{
 			Log.Debug($"ET.Client.DlgARHallSystem.OnJoinByQRCodeCallBack end {sQRCodeInfo}");
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			self.isHost = false;
 			self.roomId = long.Parse(sQRCodeInfo);
@@ -232,31 +238,26 @@ namespace ET.Client
 				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
 				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
 				{
-					self.ReStart().Coroutine();
+					//self.ReStart().Coroutine();
+					self.OnClose().Coroutine();
 				});
 				return;
+			}
+			else
+			{
+				bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), self.roomId);
 			}
 		}
 
 		public static async ETTask OnFinishedCallBack(this DlgARHall self)
 		{
 			Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack ");
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
 			Log.Debug($"-OnFinishedCallBack self.playerStatusIn[{self.playerStatusIn.ToString()}] playerComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}]");
 
-			string arSceneIdTmp = ARSessionHelper.GetARSceneId(self.DomainScene());
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-			{
-				eventName = "ScanEnded",
-				properties = new()
-				{
-					{"success", true},
-					{"session_id", arSceneIdTmp},
-					{"game_mode", playerStatusComponent.SubRoomType.ToString()},
-				}
-			});
+			string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
 
 			if (self.playerStatusIn != PlayerStatus.Hall)
 			{
@@ -276,16 +277,23 @@ namespace ET.Client
 						string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
 						UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
 						{
-							self.ReStart().Coroutine();
+							//self.ReStart().Coroutine();
+							self.OnClose().Coroutine();
 						});
 						return;
 					}
 
-					string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
-					string _ARMeshDownLoadUrl = ARSessionHelper.GetARMeshDownLoadUrl(self.DomainScene());
-					await self.SetARRoomInfoAsync(arSceneId, _ARMeshDownLoadUrl);
+					if (self.isHost)
+					{
+						await self.SetARRoomInfoAsync();
 
-					await self.EnterARRoomUI();
+						await self.EnterARRoomUI();
+					}
+					else
+					{
+						//从机 会走这里
+						await self.JoinRoom(self.roomId);
+					}
 
 					return;
 				}
@@ -295,9 +303,7 @@ namespace ET.Client
 
 					await self.CreateRoom();
 
-					string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
-					string _ARMeshDownLoadUrl = ARSessionHelper.GetARMeshDownLoadUrl(self.DomainScene());
-					await self.SetARRoomInfoAsync(arSceneId, _ARMeshDownLoadUrl);
+					await self.SetARRoomInfoAsync();
 
 					await self.EnterARRoomUI();
 
@@ -313,9 +319,7 @@ namespace ET.Client
 
 			if (self.isHost)
 			{
-				string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
-				string _ARMeshDownLoadUrl = ARSessionHelper.GetARMeshDownLoadUrl(self.DomainScene());
-				await self.SetARRoomInfoAsync(arSceneId, _ARMeshDownLoadUrl);
+				await self.SetARRoomInfoAsync();
 				//主机 会走这里
 				await self.EnterARRoomUI();
 			}
@@ -324,40 +328,37 @@ namespace ET.Client
 				//从机 会走这里
 				await self.JoinRoom(self.roomId);
 			}
+
+			// 此时AR准备阶段完全结束，玩家已经加入房间等待
+			string entranceType = ARSessionHelper.GetAREntranceType(self.DomainScene());
+			Log.Debug($"AR Prepare End. EntranceType={entranceType} sessionID={arSceneId}");
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				// 准备阶段结束计时结束
+				eventName = "PrepareEnded",
+				properties = new()
+						{
+							{"success", true },
+							{"session_id", arSceneId},
+							{"game_mode", self.SubRoomTypeIn.ToString()},
+							{"mesh_source", entranceType}
+						}
+			});
+			// 重置entrance type给下一个session
+			ARSessionHelper.ResetAREntranceType(self.DomainScene());
 		}
 
 		public static async ETTask CreateRoom(this DlgARHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-			string battleCfgId = "";
-			if (self.RoomTypeIn == RoomType.Normal)
+			if (GamePlayBattleLevelCfgCategory.Instance.Contain(self.battleCfgId) == false)
 			{
-				battleCfgId = "GamePlayBattleLevel_ARRoom";
-			}
-			else if (self.RoomTypeIn == RoomType.AR)
-			{
-				if (self.SubRoomTypeIn == SubRoomType.ARPVE)
-				{
-					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-                    	TowerDefense_ChallengeLevelCfgCategory.Instance.Get("Level" + self.PveLevel);
-					battleCfgId = challengeLevelCfg.BattleLevel;
-				}
-				else if (self.SubRoomTypeIn == SubRoomType.ARPVP)
-				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.ARPVPCfgId;
-				}
-				else if (self.SubRoomTypeIn == SubRoomType.AREndlessChallenge)
-				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
-				}
-				else if (self.SubRoomTypeIn == SubRoomType.ARTutorialFirst)
-				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.ARTutorialFirstCfgId;
-				}
+				Log.Error($"GamePlayBattleLevelCfgCategory.Instance.Contain({self.battleCfgId}) == false");
+				return;
 			}
 
-			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, self.RoomTypeIn, self.SubRoomTypeIn);
+			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), self.battleCfgId, self.RoomTypeIn, self.SubRoomTypeIn);
 			if (result)
 			{
 			}
@@ -367,14 +368,15 @@ namespace ET.Client
 				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_CreateRoomError");
 				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
 				{
-					self.ReStart().Coroutine();
+					//self.ReStart().Coroutine();
+					self.OnClose().Coroutine();
 				});
 			}
 		}
 
 		public static async ETTask QuitRoom(this DlgARHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			await RoomHelper.QuitRoomAsync(self.ClientScene());
 		}
@@ -386,25 +388,33 @@ namespace ET.Client
 
 		public static async ETTask JoinRoom(this DlgARHall self, long roomId)
 		{
-			bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
-			if (result)
-			{
-				await self.EnterARRoomUI();
-			}
-			else
-			{
-				self.HideMenu().Coroutine();
-				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
-				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
-				{
-					self.ReStart().Coroutine();
-				});
-			}
+			await self.EnterARRoomUI();
+			// bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
+			// if (result)
+			// {
+			// 	await self.EnterARRoomUI();
+			// }
+			// else
+			// {
+			// 	self.HideMenu().Coroutine();
+			// 	string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomNotExist");
+			// 	UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
+			// 	{
+			// 		self.ReStart().Coroutine();
+			// 	});
+			// }
 		}
 
-		public static async ETTask SetARRoomInfoAsync(this DlgARHall self, string arSceneId, string ARMeshDownLoadUrl)
+		public static async ETTask SetARRoomInfoAsync(this DlgARHall self)
 		{
-			bool result = await RoomHelper.SetARRoomInfoAsync(self.ClientScene(), arSceneId, ARMeshDownLoadUrl);
+			string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
+			string arMeshDownLoadUrl = ARSessionHelper.GetARMeshDownLoadUrl(self.DomainScene());
+			float arMapScale = ARSessionHelper.GetScaleAR(self.DomainScene());
+			if (arMapScale == 0)
+			{
+				arMapScale = 30;
+			}
+			bool result = await RoomHelper.SetARRoomInfoAsync(self.ClientScene(), arSceneId, arMeshDownLoadUrl, arMapScale);
 			if (result)
 			{
 			}

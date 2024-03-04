@@ -36,16 +36,8 @@
     "text_cn": "退出战斗"
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
-    "text_cn": "准备"
-  },
-  {
     "key": "DlgARRoom/EGBackGround/E_QuitRoom/Text",
     "text_cn": "退出房间"
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome",
-    "text_cn": "放置大本营"
   },
   {
     "key": "DlgBattleTower/E_Battle/GameObject/ELabel_TotalGold",
@@ -60,10 +52,6 @@
     "text_cn": "{0}"
   },
   {
-    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_BuyClose/ELabel_BuyClose",
-    "text_cn": "收起"
-  },
-  {
     "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text",
     "text_cn": "防御塔装备"
   },
@@ -76,10 +64,6 @@
     "text_cn": "游戏开始"
   },
   {
-    "key": "DlgBattleTowerBegin/E_Effect/Effect_GameBegin/EButton_GameBegin/final (1)",
-    "text_cn": "游戏开始"
-  },
-  {
     "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text",
     "text_cn": "回到房间"
   },
@@ -89,7 +73,7 @@
   },
   {
     "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text",
-    "text_cn": "退出战斗"
+    "text_cn": "重试"
   },
   {
     "key": "DlgBattleTowerEnd/E_Root/EButton_GameEnd/ELabel_GameEnd",
@@ -108,10 +92,6 @@
     "text_cn": "防御塔名称"
   },
   {
-    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Sale/text",
-    "text_cn": "出售"
-  },
-  {
     "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Reclaim/text",
     "text_cn": "回收"
   },
@@ -120,32 +100,8 @@
     "text_cn": "升级"
   },
   {
-    "key": "DlgBattleTowerHUD/E_OperatorMenu/Image/E_TowerName",
-    "text_cn": "火焰塔"
-  },
-  {
-    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/E_Slider/E_title",
+    "key": "DlgARSceneSlider/E_Slider/E_title",
     "text_cn": "请选择整体大小"
-  },
-  {
-    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/EButton_Next/ELabel_Next",
-    "text_cn": "下一步"
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
-    "text_cn": "取消"
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure/Text",
-    "text_cn": "确定"
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Sure/E_Sure/Text",
-    "text_cn": "确定"
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_title/title",
-    "text_cn": "提示"
   },
   {
     "key": "DlgGameMode/EGBackGround/E_SingleMapMode/E_SingleMapText",
@@ -154,10 +110,6 @@
   {
     "key": "DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText",
     "text_cn": "房间模式"
-  },
-  {
-    "key": "DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText",
-    "text_cn": "AR房间模式"
   },
   {
     "key": "DlgGameModeAR/E_HomePage/E_ReturnLogin/E_ReturnText",
@@ -180,48 +132,12 @@
     "text_cn": "准备"
   },
   {
-    "key": "DlgRoom/EGBackGround/E_QuitRoom/Text",
-    "text_cn": "退出房间"
-  },
-  {
     "key": "DlgRoom/EGBackGround/RoomMemberList_title",
     "text_cn": "一切就绪!!"
   },
   {
-    "key": "Canvas (Environment)/Item_Room/ELabel_Content",
-    "text_cn": "滑动列表项"
-  },
-  {
-    "key": "Canvas (Environment)/Item_RoomMember/ELabel_Content_Name",
-    "text_cn": "名称"
-  },
-  {
-    "key": "Canvas (Environment)/Item_RoomMember/EButton_Operator/ELabel_Operator",
-    "text_cn": "操作"
-  },
-  {
-    "key": "Canvas (Environment)/Item_Tower/ELabel_Name",
-    "text_cn": "idsuhciud哈哈哈12"
-  },
-  {
     "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/E_PVEName",
     "text_cn": "最高存活{0}波"
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/title",
-    "text_cn": "无限模式"
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVP/title",
-    "text_cn": "对战模式"
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_Avatar/E_PlayerName",
-    "text_cn": "玩家名称123"
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Backpack/Text (TMP)",
-    "text_cn": "卡包"
   },
   {
     "key": "DlgBattleTowerEnd/E_Effect_PVP/Effect_GameEnd/EButton_GameEnd_lose/txt",
@@ -324,10 +240,6 @@
     "text_cn": "胜利"
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
-    "text_cn": "切换阵营"
-  },
-  {
     "key": "DlgARRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
     "text_cn": "选择关卡"
   },
@@ -349,7 +261,7 @@
   },
   {
     "key": "DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime/ELabel_ReadyWhenRestTime",
-    "text_cn": "我已准备好"
+    "text_cn": "开始下一波"
   },
   {
     "key": "DlgHall/EGBackGround/E_CreateRoom/Text",
@@ -368,16 +280,8 @@
     "text_cn": "选择关卡"
   },
   {
-    "key": "DlgLogin/Sprite_BackGround/E_Login_google/Text",
-    "text_cn": "谷歌账号登录"
-  },
-  {
     "key": "DlgRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
     "text_cn": "切换阵营"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
-    "text_cn": "选择关卡"
   },
   {
     "key": "Canvas (Environment)/Item_Room/EButton_Join/ELabel_Join",
@@ -388,88 +292,16 @@
     "text_cn": "跳过指引"
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
-    "text_cn": "开始"
-  },
-  {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
-    "text_cn": "等待开始"
+    "key": "DlgARRoom/EGBackGround/E_Rescan/Text (TMP)",
+    "text_cn": "重扫战场"
   },
   {
     "key": "DlgARRoom/EGBackGround/E_ShowQrCode/Text (TMP)",
     "text_cn": "邀请"
   },
   {
-    "key": "DlgRoom/EGBackGround/pvp/Text (TMP)",
-    "text_cn": "{0}v{1}"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/title",
-    "text_cn": "无限模式"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/Text (TMP)",
-    "text_cn": "房主"
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
-    "text_cn": "放置大本营"
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
-    "text_cn": "放置出怪口"
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/ELabel_LeftMonsterWave01",
-    "text_cn": "波数 {0}/{1}"
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/ELabel_LeftTime01",
-    "text_cn": "下波开始时间"
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
-    "text_cn": "{0}"
-  },
-  {
     "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text (TMP)",
     "text_cn": "获得防御塔"
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/E_LeftCallPlayerTowerCount01",
-    "text_cn": "还可放置{0}个防御塔"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
-    "text_cn": "放置大本营"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
-    "text_cn": "放置出怪口"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/GameObject/ELabel_TotalGold_01",
-    "text_cn": "{0}"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftMonsterWave01",
-    "text_cn": "波数 {0}/{1}"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftTime01",
-    "text_cn": "下波开始时间"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
-    "text_cn": "{0}"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/Text (TMP)",
-    "text_cn": "获得防御塔"
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_LeftCallPlayerTowerCount01",
-    "text_cn": "还可放置{0}个防御塔"
   },
   {
     "key": "DlgBattleTowerEnd/E_Effect_EndlessChallenge/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/E_ChanllengeText_1",
@@ -480,36 +312,12 @@
     "text_cn": "战胜{0}%的玩家"
   },
   {
-    "key": "DlgLogin/Sprite_BackGround/E_SwitchPlayer/Text",
-    "text_cn": "切换用户"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
-    "text_cn": "开始"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
-    "text_cn": "等待开始"
-  },
-  {
     "key": "Canvas (Environment)/Item_RoomMember/EG_None",
     "text_cn": "空缺"
   },
   {
     "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final (1)",
     "text_cn": "开始游戏"
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text12",
-    "text_cn": "房间"
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text12",
-    "text_cn": "首页"
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text12",
-    "text_cn": "退出"
   },
   {
     "key": "Canvas (Environment)/Effect_GameEnd/EButton_GameEnd_lose/txt",
@@ -529,7 +337,7 @@
   },
   {
     "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_1",
-    "text_cn": "成功存活 <color=#FF6601><size=150>{0}</size></color> 波"
+    "text_cn": "成功存活<size=40>{0}</size> 波"
   },
   {
     "key": "Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_2",
@@ -540,16 +348,8 @@
     "text_cn": "扫描二维码"
   },
   {
-    "key": "DlgARRoom/EGBackGround/RoomMemberList/E_player",
-    "text_cn": "{0} 名玩家"
-  },
-  {
     "key": "DlgBattleTowerHUD/EG_OperatorMenu/E_Upgradeable/text",
     "text_cn": "满级"
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList/E_player",
-    "text_cn": "{0} 名玩家"
   },
   {
     "key": "Dlg_Personal_Information/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
@@ -564,20 +364,12 @@
     "text_cn": "个人简介"
   },
   {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
-    "text_cn": "{0} "
-  },
-  {
     "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest/Text",
     "text_cn": "开始游戏"
   },
   {
     "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK/Text",
     "text_cn": "登录账号"
-  },
-  {
-    "key": "DlgBeginnersGuideStory/Next/TextNext",
-    "text_cn": "点击继续"
   },
   {
     "key": "DlgPersonalInformation/EGBackGround/Root/EG_Confirm/E_Save/Text",
@@ -590,5 +382,153 @@
   {
     "key": "DlgPersonalInformation/EGBackGround/Root/E_info/name/E_InputField/Text Area/Text",
     "text_cn": "姓名​"
+  },
+  {
+    "key": "DlgVideoShow/Sprite_BackGround/E_TextContext",
+    "text_cn": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_PVP/locking/Text",
+    "text_cn": "即将开放"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_join/locking/Text",
+    "text_cn": "即将开放"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story1/TextContext",
+    "text_cn": "恶灵从另一个平行空间侵入现实世界。"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story2/TextContext",
+    "text_cn": "它们潜伏在看不见的位面中，肆虐着我们的家园。"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story3/TextContext",
+    "text_cn": "幸运的是，科学家们设计出了“时空防御塔”，阻止它们作乱。"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story4/TextContext",
+    "text_cn": "指挥官，歼灭入侵者，保卫世界！"
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story5/TextContext",
+    "text_cn": ""
+  },
+  {
+    "key": "Effect_GameEnd/EButton_ChallengeMode_victory/title",
+    "text_cn": "挑战模式"
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale/text",
+    "text_cn": "卖出"
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm/text",
+    "text_cn": "确认"
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomModeCreate/E_ARRoomModeCreateText",
+    "text_cn": "AR创建房间"
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomModeJoin/E_ARRoomModeJoinText",
+    "text_cn": "AR加入"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/title",
+    "text_cn": "无尽模式"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves",
+    "text_cn": "存活 {0} 波"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank",
+    "text_cn": "世界排名 #{0}"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_PVE/title",
+    "text_cn": "挑战"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_tutorial/Text (TMP)",
+    "text_cn": "教程"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Rank/Text (TMP)",
+    "text_cn": "排行榜"
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Cards/Text (TMP)",
+    "text_cn": "卡牌"
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text01",
+    "text_cn": "你需要"
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text02",
+    "text_cn": "进行游戏。"
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/IndividualRank/Ranked",
+    "text_cn": "排名"
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/AllPlayersRank/title",
+    "text_cn": "在无尽模式中存活最多波次"
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/Leaderboard/ELabel_EmptyLeaderbord",
+    "text_cn": "还没有人上榜"
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info012/Text01",
+    "text_cn": "回复"
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info012/ELabel_RecoverLeftTIme2",
+    "text_cn": "在 {0}后"
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info022/Text01",
+    "text_cn": "获得"
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info022/Text03",
+    "text_cn": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/EButton_WatchAD/E_CancelText",
+    "text_cn": "观看广告"
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/EG_title2/E_TitleText2",
+    "text_cn": "回复能量"
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/E_info01/Text01",
+    "text_cn": "回复"
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/E_info01/ELabel_RecoverLeftTIme",
+    "text_cn": "在 {0}后"
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/EG_title/E_TitleText",
+    "text_cn": "能量不足"
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/EG_title/E_TitleText",
+    "text_cn": "能量不足"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/Hot updates/ProgressPrarent/Processing/Text",
+    "text_cn": "下载中 {0}/{1} MB"
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/Hot updates/txt_updates",
+    "text_cn": "检查更新…"
   }
 ]

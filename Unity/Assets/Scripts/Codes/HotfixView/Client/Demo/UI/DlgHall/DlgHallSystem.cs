@@ -38,6 +38,7 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgHall self, ShowWindowData contextData = null)
 		{
+			UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.ARStart);
 			self.GetRoomList().Coroutine();
 
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(5000, TimerInvokeType.HallTimer, self);
@@ -84,9 +85,9 @@ namespace ET.Client
 
 		public static async ETTask CreateRoom(this DlgHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-			string battleCfgId = "GamePlayBattleLevel_Room11";
+			string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(RoomType.Normal, SubRoomType.NormalRoom, 0);
 			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, RoomType.Normal, SubRoomType.NormalRoom);
 			if (result)
 			{
@@ -98,24 +99,25 @@ namespace ET.Client
 
 		public static async ETTask RefreshRoomList(this DlgHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			await self.GetRoomList();
 		}
 
 		public static async ETTask ReturnBack(this DlgHall self)
 		{
-			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
 		}
 
 		public static async ETTask JoinRoom(this DlgHall self, long roomId)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			bool result = await RoomHelper.JoinRoomAsync(self.ClientScene(), roomId);
 			if (result)
 			{
+				UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.JoinRoom);
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
 				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRoom>();
 			}

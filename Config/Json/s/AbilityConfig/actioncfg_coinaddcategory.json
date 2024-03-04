@@ -18,5 +18,65 @@
         1
       ]
     ]
+  },
+  {
+    "id": "CoinAdd_Attack_TowerGoblin1",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_Attack_TowerGoblin2",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        5
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_Attack_TowerGoblin3",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        20
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_TowerAlchemy1",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        30
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_TowerAlchemy2",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        120
+      ]
+    ]
+  },
+  {
+    "id": "CoinAdd_TowerAlchemy3",
+    "name": "",
+    "coinAdd": [
+      [
+        1,
+        480
+      ]
+    ]
   }
 ]

@@ -3,6 +3,6 @@
     "Id": 1,
     "InnerIP": "192.168.10.148",
     "OuterIP": "192.168.10.148",
-    "WatcherPort": "10000"
+    "WatcherPort": "11000"
   }
 ]

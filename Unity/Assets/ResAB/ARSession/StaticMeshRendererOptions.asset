@@ -24,5 +24,5 @@ MonoBehaviour:
   occlusionMaterial: {fileID: 2100000, guid: 28eddc6bc314fcf428b320b177bf5d25, type: 2}
   occlusionShadowCasterMaterial: {fileID: 2100000, guid: 3067febfab094af4c8f07a1323cf2fbd,
     type: 2}
-  shadowReceiverMaterial: {fileID: 2100000, guid: 30c5f515767db244fb2c80d1ba35c45a,
+  shadowReceiverMaterial: {fileID: 2100000, guid: 6236d416c65237d4f822e7717e29b126,
     type: 2}

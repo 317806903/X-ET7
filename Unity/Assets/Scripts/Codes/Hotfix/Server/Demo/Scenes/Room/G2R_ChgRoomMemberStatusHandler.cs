@@ -85,7 +85,7 @@ namespace ET.Server
 						GamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId,
 					};
 					ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-					await oneTypeLocationType.Call(roomMember.Id, _R2G_StartBattle);
+					await oneTypeLocationType.Call(roomMember.Id, _R2G_StartBattle, scene.InstanceId);
 				}
 
 				roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.InTheBattle);

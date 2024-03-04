@@ -9,7 +9,7 @@ namespace ET.Client
         {
             var translateUI = LocalizeComponent.Instance.GetCurrentTranslator_UI(arg.languageType);
 
-            UITextLocalizeComponent.Instance.SetGetTextKeyValueActionBack((languageType) =>
+            UITextLocalizeComponent.Instance?.SetGetTextKeyValueActionBack((languageType) =>
             {
                 if (languageType == "CN")
                 {
@@ -26,8 +26,8 @@ namespace ET.Client
                 return LocalizeComponent.Instance.GetCurrentTranslator_UI(LanguageType.CN);
             });
 
-            UITextLocalizeComponent.Instance.SetTextLocalizeAction(translateUI);
-            UITextLocalizeComponent.Instance.DoRefreshTextValue();
+            UITextLocalizeComponent.Instance?.SetTextLocalizeAction(translateUI);
+            UITextLocalizeComponent.Instance?.DoRefreshTextValue();
 
             await ETTask.CompletedTask;
         }

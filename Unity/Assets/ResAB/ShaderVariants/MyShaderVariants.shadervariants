@@ -13,14 +13,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: -6465566751694194690, guid: c1eb8e75032c43142a788d2148623595,
-      type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
-        passType: 13
   - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
@@ -29,7 +21,7 @@ ShaderVariantCollection:
   - first: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
-      - keywords: 
+      - keywords: SHADOWS_DEPTH
         passType: 8
   - first: {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
     second:
@@ -46,11 +38,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 202, guid: 0000000000000000f000000000000000, type: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
@@ -61,6 +48,22 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 207, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: _ALPHABLEND_ON
+        passType: 0
+      - keywords: _ALPHABLEND_ON _COLORCOLOR_ON _FADING_ON
+        passType: 0
+      - keywords: _ALPHABLEND_ON _FADING_ON
+        passType: 0
+      - keywords: PROCEDURAL_INSTANCING_ON _ALPHABLEND_ON
+        passType: 8
   - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
@@ -116,6 +119,11 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
   - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
     second:
       variants:
@@ -133,68 +141,23 @@ ShaderVariantCollection:
         passType: 8
       - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
         passType: 8
-      - keywords: _ADDITIONAL_LIGHTS _ALPHAMODULATE_ON _MAIN_LIGHT_SHADOWS_CASCADE
-          _RECEIVE_SHADOWS_OFF _SURFACE_TYPE_TRANSPARENT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _ENVIRONMENTREFLECTIONS_OFF _MAIN_LIGHT_SHADOWS_CASCADE
-          _RECEIVE_SHADOWS_OFF _SPECULARHIGHLIGHTS_OFF
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE _METALLICSPECGLOSSMAP
-          _NORMALMAP _OCCLUSIONMAP
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE _RECEIVE_SHADOWS_OFF
-          _SPECULARHIGHLIGHTS_OFF
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE _SPECULARHIGHLIGHTS_OFF
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE _SURFACE_TYPE_TRANSPARENT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ENVIRONMENTREFLECTIONS_OFF _MAIN_LIGHT_SHADOWS_CASCADE
-          _SPECULARHIGHLIGHTS_OFF _SPECULAR_SETUP
-        passType: 13
       - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _METALLICSPECGLOSSMAP
           _OCCLUSIONMAP
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _METALLICSPECGLOSSMAP
-          _SPECULAR_SETUP
+          _OCCLUSIONMAP _RECEIVE_SHADOWS_OFF
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _RECEIVE_SHADOWS_OFF
-          _SURFACE_TYPE_TRANSPARENT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _SPECULARHIGHLIGHTS_OFF
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _SPECULAR_SETUP
         passType: 13
   - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
     second:
       variants:
-      - keywords: _ALPHATEST_ON _EMISSION
-        passType: 0
-      - keywords: _COLORADDSUBDIFF_ON _EMISSION _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-      - keywords: _COLORADDSUBDIFF_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 0
       - keywords: _EMISSION _FADING_ON _SOFTPARTICLES_ON _SURFACE_TYPE_TRANSPARENT
         passType: 0
       - keywords: _EMISSION _SURFACE_TYPE_TRANSPARENT
         passType: 0
-  - first: {fileID: -6465566751694194690, guid: ba856a89471a82c448fdb32fbc5218cd,
-      type: 3}
-    second:
-      variants:
-      - keywords: _MAIN_LIGHT_SHADOWS_CASCADE
-        passType: 0
-  - first: {fileID: 4800000, guid: 6be327315190c8447825e4c9e95a68ad, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: 
-        passType: 8
   - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
     second:
       variants:
@@ -204,36 +167,22 @@ ShaderVariantCollection:
         passType: 0
       - keywords: UNDERLAY_ON
         passType: 0
+  - first: {fileID: 4800000, guid: 6be327315190c8447825e4c9e95a68ad, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
   - first: {fileID: 4800000, guid: 8d2bb70cbf9db8d4da26e15b26e74248, type: 3}
     second:
       variants:
       - keywords: 
         passType: 8
-      - keywords: _GLOSSINESS_FROM_BASE_ALPHA
-        passType: 8
-      - keywords: _ADDITIONAL_LIGHTS _GLOSSINESS_FROM_BASE_ALPHA _MAIN_LIGHT_SHADOWS_CASCADE
-          _SPECULAR_COLOR
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
-        passType: 13
   - first: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
     second:
       variants:
       - keywords: 
         passType: 0
-      - keywords: _SURFACE_TYPE_TRANSPARENT
-        passType: 0
   - first: {fileID: 4800000, guid: bd6af5d577c618947b73aa60db554e51, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 94c34ce502d5fa24fb199e6b1d5db058, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 77138d32aff0d294daa875524d41ca30, type: 3}
     second:
       variants:
       - keywords: 
@@ -243,43 +192,41 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
-    second:
-      variants:
-      - keywords: _ADDITIONAL_LIGHTS _EMISSION _FADING_ON _MAIN_LIGHT_SHADOWS_CASCADE
-          _NORMALMAP _SOFTPARTICLES_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 13
   - first: {fileID: 4800000, guid: b68b99c2e57cef4419465c63c527201b, type: 3}
     second:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
-    second:
-      variants:
-      - keywords: OUTLINE_ON
-        passType: 0
-  - first: {fileID: 4800000, guid: e260cfa7296ee7642b167f1eb5be5023, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 13
-  - first: {fileID: 4800000, guid: 5013fef196b720c42aaf687cee32ed3e, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: a54ad232dace898ebbbbd00dc7f35804, type: 3}
-    second:
-      variants:
-      - keywords: _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-  - first: {fileID: -6465566751694194690, guid: 0e5de5884b867ee479c95cd9a70764a5,
+  - first: {fileID: -6465566751694194690, guid: 059c54c80a2721b4fb6d0685952e49e0,
       type: 3}
     second:
       variants:
       - keywords: 
+        passType: 8
+  - first: {fileID: 4800000, guid: 0bf068526a8b4af48b092394026ec12b, type: 3}
+    second:
+      variants:
+      - keywords: 
         passType: 0
+  - first: {fileID: -6465566751694194690, guid: 2280f576a6e24d848ab42f9114ad2b47,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+  - first: {fileID: 4800000, guid: 537c8e4cd41209648b2e44ebeb34b4fd, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 6a39a903c0355b94e83ad8bde66075c7,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: INSTANCING_ON
+        passType: 8
   - first: {fileID: 4800000, guid: 1bc9b14ff230e2242b248daff64546f6, type: 3}
     second:
       variants:
@@ -295,22 +242,23 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: 3185c40b292b5344c83e0a3da9561dbb, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 537c8e4cd41209648b2e44ebeb34b4fd, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 0bf068526a8b4af48b092394026ec12b, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: 516608295ff2b1240a72de76bb5e5569, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 9c57b6815e205024eadb1d825fc7c4ff,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+  - first: {fileID: 4800000, guid: 3301c8c1628187942a9e783f9c6d6f1e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 5d4bf47ff020f9141b77c5a640350b82, type: 3}
     second:
       variants:
       - keywords: 

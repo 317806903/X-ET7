@@ -67,10 +67,12 @@ namespace ET.Server
 
 			playerStatusComponent.RoomType = (RoomType)_R2G_GetRoomIdByPlayer.RoomType;
 			playerStatusComponent.SubRoomType = (SubRoomType)_R2G_GetRoomIdByPlayer.SubRoomType;
-			if (_R2G_GetRoomIdByPlayer.RoomId == 0)
+			playerStatusComponent.RoomId = _R2G_GetRoomIdByPlayer.RoomId;
+			playerStatusComponent.LastBattleCfgId = "";
+			playerStatusComponent.LastBattleResult = 0;
+			if (playerStatusComponent.RoomId == 0)
 			{
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
-				playerStatusComponent.RoomId = 0;
 			}
 			else
 			{
@@ -83,7 +85,6 @@ namespace ET.Server
 				{
 					playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 				}
-				playerStatusComponent.RoomId = _R2G_GetRoomIdByPlayer.RoomId;
 			}
 
             player.AddComponent<PlayerSessionComponent>().Session = session;

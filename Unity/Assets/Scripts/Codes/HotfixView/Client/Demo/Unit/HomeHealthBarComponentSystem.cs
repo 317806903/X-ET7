@@ -48,7 +48,8 @@ namespace ET.Client
             }
             else
             {
-                self.go.SetActive(false);
+                // self.go.SetActive(false);
+                self.go.SetActive(true);
             }
 
             self.go.transform.GetComponent<Slider>().value = normalizedHealth;
@@ -56,7 +57,7 @@ namespace ET.Client
 
         public static void OnBeforeRenderUpdate(this HomeHealthBarComponent self)
         {
-            if (self.go == null || self.go.activeSelf == false || self.camera == null)
+            if (self.IsDisposed || self.go == null || self.go.activeSelf == false || self.camera == null)
             {
                 return;
             }
@@ -133,10 +134,18 @@ namespace ET.Client
             while (camera == null)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
+                if (self.IsDisposed)
+                {
+                    return;
+                }
                 camera = CameraHelper.GetMainCamera(self.DomainScene());
                 if (camera != null)
                 {
                     await TimerComponent.Instance.WaitAsync(1000);
+                    if (self.IsDisposed)
+                    {
+                        return;
+                    }
                     camera = CameraHelper.GetMainCamera(self.DomainScene());
                 }
             }
@@ -145,8 +154,7 @@ namespace ET.Client
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
             _UIComponent.ShowWindow<DlgBattleTowerHUDShow>();
             DlgBattleTowerHUDShow _DlgBattleTowerHUDShow = _UIComponent.GetDlgLogic<DlgBattleTowerHUDShow>(true);
-            //self.canvas = _DlgBattleTowerHUDShow.View.EGRootRectTransform;
-            self.canvas = _DlgBattleTowerHUDShow.View.EGRootRectTransform.transform.gameObject.GetComponentInParent<CanvasScaler>().transform as RectTransform;
+            self.canvas = _DlgBattleTowerHUDShow.View.EGHPRootRectTransform;
 
             self.rectTrans = ((RectTransform)healthBarGo.transform);
             self.rectTrans.SetParent(_DlgBattleTowerHUDShow.View.EGRootRectTransform);

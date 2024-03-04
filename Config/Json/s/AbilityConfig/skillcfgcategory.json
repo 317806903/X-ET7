@@ -1,38 +1,818 @@
 [
   {
+    "id": "Skill_PlayerSolo1",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerSolo1",
+    "timeline_id": "Timeline_PlayerSolo1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerSolo2",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerSolo2",
+    "timeline_id": "Timeline_PlayerSolo2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerSolo3",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerSolo3",
+    "timeline_id": "Timeline_PlayerSolo3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerAoe1",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerAoe1",
+    "timeline_id": "Timeline_PlayerAoe1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerAoe2",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerAoe2",
+    "timeline_id": "Timeline_PlayerAoe2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerAoe3",
+    "name": "",
+    "dis": 15,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerAoe3",
+    "timeline_id": "Timeline_PlayerAoe3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerLine1",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerLine1",
+    "timeline_id": "Timeline_PlayerLine1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerLine2",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerLine2",
+    "timeline_id": "Timeline_PlayerLine2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerLine3",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerLine3",
+    "timeline_id": "Timeline_PlayerLine3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerCircle1",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerCircle1",
+    "timeline_id": "Timeline_PlayerCircle1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerCircle2",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerCircle2",
+    "timeline_id": "Timeline_PlayerCircle2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_PlayerCircle3",
+    "name": "",
+    "dis": 15,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_PlayerCircle3",
+    "timeline_id": "Timeline_PlayerCircle3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerDragon1",
+    "name": "",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerDragon1",
+    "timeline_id": "Timeline_TowerDragon1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerDragon2",
+    "name": "",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerDragon2",
+    "timeline_id": "Timeline_TowerDragon2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerDragon3",
+    "name": "",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerDragon3",
+    "timeline_id": "Timeline_TowerDragon3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerElec1",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerElec1",
+    "timeline_id": "Timeline_TowerElec1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerElec2",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerElec2",
+    "timeline_id": "Timeline_TowerElec2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerElec3",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerElec3",
+    "timeline_id": "Timeline_TowerElec3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerIce1",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerIce1",
+    "timeline_id": "Timeline_TowerIce1",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerIce2",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerIce2",
+    "timeline_id": "Timeline_TowerIce2",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerIce3",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Skill_TowerIce3",
+    "timeline_id": "Timeline_TowerIce3",
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerTime1",
+    "name": "",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_AddCDDown1",
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerTime2",
+    "name": "",
+    "dis": 8.75,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_AddCDDown2",
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_TowerTime3",
+    "name": "",
+    "dis": 10,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_AddCDDown3",
+      "EffectCreate_LevelUp"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_9_2_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_9_2_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_10_2_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_10_2_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_11_1_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_11_1_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_12_2_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_12_2_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_12_3_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_12_3_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_13_1_Gui",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_13_1_Gui"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_14_1_Gui",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_14_1_Gui"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_15_1_Gui",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_15_1_Gui"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_15_2_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_15_2_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_16_2_Gui",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_16_2_Gui"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_17_2_Dan",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_17_2_Dan"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_18_1_Dan",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_18_1_Dan"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_19_1_Dan",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_19_1_Dan"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_19_3_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_19_3_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_20_1_Dan",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_20_1_Dan"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_20_2_Gui",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_20_2_Gui"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_20_3_ZhongZi",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_20_3_ZhongZi"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_20_4_Dan",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Infinite_20_4_Dan"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Infinite_Boss",
+    "name": "",
+    "dis": 1,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "PlayAudio_BossAppear"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge3_1_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge3_1_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge3_2_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge3_2_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge3_3_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge3_3_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge3_4_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge3_4_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge3_5_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge3_5_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_5_2",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_5_2"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_5_3",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_5_3"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_1_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_1_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_2_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_2_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_3_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_3_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_4_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_4_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge4_5_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge4_5_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_3_3",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_3_3"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_4_2",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_4_2"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_5_2",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_5_2"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_1_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_1_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_2_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_2_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_3_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_3_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_4_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_4_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_5_1",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_5_1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge5_5_4",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge5_5_4"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge_Niao1",
+    "name": "",
+    "dis": 3,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge_Niao1"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge_Niao2",
+    "name": "",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge_Niao2"
+    ]
+  },
+  {
+    "id": "Skill_Monster_Challenge_Niao3",
+    "name": "",
+    "dis": 8,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Monster_Challenge_Niao3"
+    ]
+  },
+  {
     "id": "Skill_1",
     "name": "技能1",
     "dis": 10,
     "cd": 4,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_3",
     "learn_action_id": []
   },
@@ -42,10 +822,7 @@
     "dis": 10,
     "cd": 8,
     "skillSlotType": 2,
-    "skillSelectAction": {
-      "$type": "ActionCallSelectUnit",
-      "isSave": true
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "Timeline_2",
     "learn_action_id": []
   },
@@ -55,10 +832,7 @@
     "dis": 10,
     "cd": 4,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": true
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "Timeline_3",
     "learn_action_id": []
   },
@@ -68,33 +842,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "width": 10,
-        "length": 6
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_Player1",
     "learn_action_id": []
   },
@@ -104,34 +852,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_Player3",
     "learn_action_id": []
   },
@@ -141,10 +862,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": true
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_1"
@@ -156,36 +874,11 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_MachineGunTower1",
-    "learn_action_id": []
+    "learn_action_id": [
+      "EffectCreate_LevelUp"
+    ]
   },
   {
     "id": "Skill_RocketTower_1",
@@ -193,34 +886,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_RocketTower_1",
     "learn_action_id": []
   },
@@ -230,34 +896,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_LaserTower_0",
     "learn_action_id": []
   },
@@ -267,34 +906,7 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_EnergyPylon_2",
     "learn_action_id": []
   },
@@ -304,439 +916,8 @@
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_HoverTank1",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerSolo1",
-    "name": "射击",
-    "dis": 10,
-    "cd": 0.5,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerSolo1",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerSolo2",
-    "name": "射击",
-    "dis": 10,
-    "cd": 0.3,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerSolo2",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerSolo3",
-    "name": "射击",
-    "dis": 10,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerSolo3",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerAoe1",
-    "name": "炮击",
-    "dis": 10,
-    "cd": 1,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerAoe1",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerAoe2",
-    "name": "炮击",
-    "dis": 10,
-    "cd": 0.5,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerAoe2",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerAoe3",
-    "name": "炮击",
-    "dis": 10,
-    "cd": 0.3,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerAoe3",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerLine1",
-    "name": "火柱",
-    "dis": 15,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": true,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "width": 100,
-        "length": 10
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerLine1",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerLine2",
-    "name": "火柱",
-    "dis": 15,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": true,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "width": 100,
-        "length": 10
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerLine2",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerLine3",
-    "name": "火柱",
-    "dis": 15,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": true,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "width": 100,
-        "length": 10
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerLine3",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerCircle1",
-    "name": "毒雾",
-    "dis": 15,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerCircle1",
-    "learn_action_id": []
-  },
-  {
-    "id": "Skill_PlayerCircle3",
-    "name": "毒雾3",
-    "dis": 15,
-    "cd": 0.2,
-    "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "timeline_id": "Timeline_PlayerCircle3",
     "learn_action_id": []
   },
   {
@@ -745,37 +926,58 @@
     "dis": 10,
     "cd": 0.5,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_EnemySolo1",
     "learn_action_id": [
       "BuffAdd_HitBack1"
+    ]
+  },
+  {
+    "id": "Skill_CanInvisible",
+    "name": "隐身",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_CanInvisible"
+    ]
+  },
+  {
+    "id": "Skill_SeedHeal1",
+    "name": "种子治疗",
+    "dis": 5,
+    "cd": 4,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_SeedHeal1"
+    ]
+  },
+  {
+    "id": "Skill_SeedHeal2",
+    "name": "种子治疗",
+    "dis": 5,
+    "cd": 4,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_SeedHeal2"
+    ]
+  },
+  {
+    "id": "Skill_SeedHeal3",
+    "name": "种子治疗",
+    "dis": 5,
+    "cd": 4,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_SeedHeal3"
     ]
   },
   {
@@ -784,10 +986,7 @@
     "dis": 10,
     "cd": 8,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AttackGetGold1"
@@ -799,406 +998,756 @@
     "dis": 10,
     "cd": 8,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AutoGetGold1"
     ]
   },
   {
-    "id": "Skill_TowerDragon1",
+    "id": "Skill_TowerMagicBall1",
+    "name": "奥术天球1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerMagicBall1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerMagicBall2",
+    "name": "奥术天球2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerMagicBall2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerMagicBall3",
+    "name": "奥术天球3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerMagicBall3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerAlchemy1",
+    "name": "炼金塔1",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "GlobalBuffAdd_TowerAlchemy1"
+    ]
+  },
+  {
+    "id": "Skill_TowerAlchemy2",
+    "name": "炼金塔2",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "GlobalBuffAdd_TowerAlchemy2"
+    ]
+  },
+  {
+    "id": "Skill_TowerAlchemy3",
+    "name": "炼金塔3",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "GlobalBuffAdd_TowerAlchemy3"
+    ]
+  },
+  {
+    "id": "Skill_TowerScorpio1",
+    "name": "毒蝎塔1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_Scorpoio1",
+    "timeline_id": "Timeline_TowerScorpio1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerScorpio2",
+    "name": "毒蝎塔2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerScorpio2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerScorpio3",
+    "name": "毒蝎塔3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerScorpio3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerCurse1",
+    "name": "诅咒塔1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerCurse1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerCurse2",
+    "name": "诅咒塔2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerCurse2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerCurse3",
+    "name": "诅咒塔3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerCurse3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_Towerwitch1",
+    "name": "巫毒塔1",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Towerwitch1"
+    ]
+  },
+  {
+    "id": "Skill_Towerwitch2",
+    "name": "巫毒塔2",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Towerwitch2"
+    ]
+  },
+  {
+    "id": "Skill_Towerwitch3",
+    "name": "巫毒塔3",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_Towerwitch3"
+    ]
+  },
+  {
+    "id": "Skill_TowerIceArrow1",
+    "name": "冰枪塔1",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerIceArrow1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerIceArrow2",
+    "name": "冰枪塔2",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerIceArrow2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerIceArrow3",
+    "name": "冰枪塔3",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerIceArrow3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerWater1",
+    "name": "水图腾1",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerWater1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerWater2",
+    "name": "水图腾2",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerWater2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerWater3",
+    "name": "水图腾3",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerWater3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerElectromagnetic1",
+    "name": "电磁塔1",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerElectromagnetic1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerElectromagnetic2",
+    "name": "电磁塔2",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerElectromagnetic2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerElectromagnetic3",
+    "name": "电磁塔3",
+    "dis": 7.5,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerElectromagnetic3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerFire1",
+    "name": "火图腾1",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerFire1"
+    ]
+  },
+  {
+    "id": "Skill_TowerFire2",
+    "name": "火图腾2",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerFire2"
+    ]
+  },
+  {
+    "id": "Skill_TowerFire3",
+    "name": "火图腾3",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerFire3"
+    ]
+  },
+  {
+    "id": "Skill_TowerAoShu1",
+    "name": "奥术精灵1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerAoShu1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerAoShu2",
+    "name": "奥术精灵2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerAoShu2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerAoShu3",
+    "name": "奥术精灵3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerAoShu3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerLianJi1",
+    "name": "连击斧1",
+    "dis": 5,
+    "cd": 3,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerLianJi1"
+    ]
+  },
+  {
+    "id": "Skill_TowerLianJi2",
+    "name": "连击斧2",
+    "dis": 5,
+    "cd": 3,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerLianJi2"
+    ]
+  },
+  {
+    "id": "Skill_TowerLianJi3",
+    "name": "连击斧3",
+    "dis": 5,
+    "cd": 3,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerLianJi3"
+    ]
+  },
+  {
+    "id": "Skill_TowerZaiE1",
+    "name": "灾厄塔1",
+    "dis": 5,
+    "cd": 3,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerZaiE1"
+    ]
+  },
+  {
+    "id": "Skill_TowerZaiE2",
+    "name": "灾厄塔2",
+    "dis": 5,
+    "cd": 2,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerZaiE2"
+    ]
+  },
+  {
+    "id": "Skill_TowerZaiE3",
+    "name": "灾厄塔3",
+    "dis": 5,
+    "cd": 1,
+    "skillSlotType": 3,
+    "skillSelectAction": "SelectObjectConfig_Self",
+    "timeline_id": "",
+    "learn_action_id": [
+      "BuffAdd_TowerZaiE3"
+    ]
+  },
+  {
+    "id": "Skill_TowerGoblin1",
+    "name": "窃贼哥布林1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerGoblin1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerGoblin2",
+    "name": "窃贼哥布林2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerGoblin2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerGoblin3",
+    "name": "窃贼哥布林3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerGoblin3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerDuCi1",
+    "name": "毒刺塔1",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerDuCi1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerDuCi2",
+    "name": "毒刺塔2",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerDuCi2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerDuCi3",
+    "name": "毒刺塔3",
+    "dis": 7.5,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerDuCi3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerRocket1",
+    "name": "火箭塔1",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerRocket1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerRocket2",
+    "name": "火箭塔2",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerRocket2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerRocket3",
+    "name": "火箭塔3",
+    "dis": 15,
+    "cd": 3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerRocket3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerFireBall1",
+    "name": "火球塔1",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerFireBall1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerFireBall2",
+    "name": "火球塔2",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerFireBall2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TowerFireBall3",
+    "name": "火球塔3",
+    "dis": 7.5,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_TowerFireBall3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerSolo1",
+    "name": "射击",
+    "dis": 10,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerSolo1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerSolo2",
+    "name": "射击",
+    "dis": 10,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerSolo2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerSolo3",
+    "name": "射击",
+    "dis": 10,
+    "cd": 0.2,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerSolo3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerAoe1",
+    "name": "炮击",
+    "dis": 10,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerAoe1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerAoe2",
+    "name": "炮击",
+    "dis": 10,
+    "cd": 0.5,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerAoe2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerAoe3",
+    "name": "炮击",
+    "dis": 10,
+    "cd": 0.3,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerAoe3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerLine1",
+    "name": "火柱",
+    "dis": 15,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Rectangle_All",
+    "timeline_id": "Timeline_PlayerLine1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerLine2",
+    "name": "火柱",
+    "dis": 15,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Rectangle_All",
+    "timeline_id": "Timeline_PlayerLine2",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerLine3",
+    "name": "火柱",
+    "dis": 15,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Rectangle_All",
+    "timeline_id": "Timeline_PlayerLine3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerCircle1",
+    "name": "毒雾",
+    "dis": 15,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerCircle1",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestPlayerCircle3",
+    "name": "毒雾3",
+    "dis": 15,
+    "cd": 1,
+    "skillSlotType": 1,
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
+    "timeline_id": "Timeline_PlayerCircle3",
+    "learn_action_id": []
+  },
+  {
+    "id": "Skill_TestTowerDragon1",
     "name": "龙击炮1",
     "dis": 10,
     "cd": 4,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerDragon1",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerDragon2",
+    "id": "Skill_TestTowerDragon2",
     "name": "龙击炮2",
     "dis": 10,
     "cd": 2,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerDragon2",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerDragon3",
+    "id": "Skill_TestTowerDragon3",
     "name": "龙击炮3",
     "dis": 10,
     "cd": 1.6,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerDragon3",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerElec1",
+    "id": "Skill_TestTowerElec1",
     "name": "雷电塔1",
     "dis": 10,
     "cd": 1.5,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerElec1",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerElec2",
+    "id": "Skill_TestTowerElec2",
     "name": "雷电塔2",
     "dis": 10,
     "cd": 0.9,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerElec2",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerElec3",
+    "id": "Skill_TestTowerElec3",
     "name": "雷电塔3",
     "dis": 10,
     "cd": 0.6,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerElec3",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerIce1",
+    "id": "Skill_TestTowerIce1",
     "name": "冰魔塔1",
     "dis": 10,
     "cd": 2,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerIce1",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerIce2",
+    "id": "Skill_TestTowerIce2",
     "name": "冰魔塔2",
     "dis": 10,
     "cd": 1,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerIce2",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerIce3",
+    "id": "Skill_TestTowerIce3",
     "name": "冰魔塔3",
     "dis": 10,
     "cd": 0.5,
     "skillSlotType": 1,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": true,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Umbellate_1",
     "timeline_id": "Timeline_TowerIce3",
     "learn_action_id": []
   },
   {
-    "id": "Skill_TowerTime1",
+    "id": "Skill_TestTowerTime1",
     "name": "加速塔1",
     "dis": 5,
     "cd": 0.5,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AddCDDown1"
     ]
   },
   {
-    "id": "Skill_TowerTime2",
+    "id": "Skill_TestTowerTime2",
     "name": "加速塔2",
     "dis": 5,
     "cd": 0.5,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AddCDDown2"
     ]
   },
   {
-    "id": "Skill_TowerTime3",
+    "id": "Skill_TestTowerTime3",
     "name": "加速塔3",
     "dis": 5,
     "cd": 0.5,
     "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
+    "skillSelectAction": "SelectObjectConfig_Self",
     "timeline_id": "",
     "learn_action_id": [
       "BuffAdd_AddCDDown3"
-    ]
-  },
-  {
-    "id": "Skill_SeedHeal1",
-    "name": "种子治疗",
-    "dis": 5,
-    "cd": 2,
-    "skillSlotType": 3,
-    "skillSelectAction": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
-    "timeline_id": "",
-    "learn_action_id": [
-      "BuffAdd_SeedHeal1"
     ]
   }
 ]

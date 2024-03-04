@@ -106,7 +106,7 @@ public class WorldCameraController : MonoBehaviour
 #endif
     }
 
-    //记录上一次手机触摸位置判断用户是在左放大还是缩小手势  
+    //记录上一次手机触摸位置判断用户是在左放大还是缩小手势
     private Vector2 oldPosition1;
     private Vector2 oldPosition2;
 
@@ -114,17 +114,17 @@ public class WorldCameraController : MonoBehaviour
     /*
     private void ScaleCamera()
     {
-        //计算出当前两点触摸点的位置  
+        //计算出当前两点触摸点的位置
         var tempPosition1 = Input.GetTouch(0).position;
         var tempPosition2 = Input.GetTouch(1).position;
         float currentTouchDistance = Vector3.Distance(tempPosition1, tempPosition2);
         float lastTouchDistance = Vector3.Distance(oldPosition1, oldPosition2);
-        //计算上次和这次双指触摸之间的距离差距  
-        //然后去更改摄像机的距离  
+        //计算上次和这次双指触摸之间的距离差距
+        //然后去更改摄像机的距离
         distance -= ( currentTouchDistance - lastTouchDistance ) * scaleFactor * Time.deltaTime;
-        //把距离限制住在min和max之间  
+        //把距离限制住在min和max之间
         distance = Mathf.Clamp(distance, minDistance, maxDistance);
-        //备份上一次触摸点的位置，用于对比  
+        //备份上一次触摸点的位置，用于对比
         oldPosition1 = tempPosition1;
         oldPosition2 = tempPosition2;
     }
@@ -184,7 +184,7 @@ public class WorldCameraController : MonoBehaviour
 
         return false;
     }
-    
+
     private bool isPressLeft = false;//是否刚刚开始旋转
     private Vector3 oldPosition;
     private Vector3 newPosition;
@@ -218,7 +218,7 @@ public class WorldCameraController : MonoBehaviour
                     }
                     oldPosition = newPosition;
                 }
-                
+
             }
 
         }
@@ -249,7 +249,7 @@ public class WorldCameraController : MonoBehaviour
                 {
                     firstTouch = Input.touches[0];
                     secTouch = Input.touches[1];
-                    //计算出当前两点触摸点的位置  
+                    //计算出当前两点触摸点的位置
                     if (m_IsSingleFinger)
                     {
                         oldPosition1 = firstTouch.position;
@@ -266,16 +266,16 @@ public class WorldCameraController : MonoBehaviour
                         float currentTouchDistance = Vector3.Distance(tempPosition1, tempPosition2);
                         float lastTouchDistance = Vector3.Distance(oldPosition1, oldPosition2);
 
-                        //计算上次和这次双指触摸之间的距离差距  
-                        //然后去更改摄像机的距离  
+                        //计算上次和这次双指触摸之间的距离差距
+                        //然后去更改摄像机的距离
                         targetDistance -= (currentTouchDistance - lastTouchDistance) * Time.deltaTime * mouseSettings.wheelSensitivity;
                         //  m_debugTip.text = ( currentTouchDistance - lastTouchDistance ).ToString() + " + " + targetDistance.ToString();
 
 
-                        //把距离限制住在min和max之间  
+                        //把距离限制住在min和max之间
 
 
-                        //备份上一次触摸点的位置，用于对比  
+                        //备份上一次触摸点的位置，用于对比
                         oldPosition1 = tempPosition1;
                         oldPosition2 = tempPosition2;
                         m_IsSingleFinger = false;
@@ -326,6 +326,7 @@ public class WorldCameraController : MonoBehaviour
         // transform.position = target.position - Vector3.forward * CurrentDistance;
     }
 
+    private bool isFirstClick = true;
     /// <summary>
     /// Camera around target by mouse input.
     /// </summary>
@@ -335,12 +336,21 @@ public class WorldCameraController : MonoBehaviour
         {
             if (Input.GetMouseButton(mouseSettings.mouseButtonID))
             {
+                if (isFirstClick)
+                {
+                    isFirstClick = false;
+                    return;
+                }
                 //Mouse pointer.
                 targetAngles.y += Input.GetAxis("Mouse X") * mouseSettings.pointerSensitivity;
                 targetAngles.x -= Input.GetAxis("Mouse Y") * mouseSettings.pointerSensitivity;
 
                 //Range.
                 targetAngles.x = Mathf.Clamp(targetAngles.x, angleRange.min, angleRange.max);
+            }
+            else
+            {
+                isFirstClick = true;
             }
 
             //Mouse scrollwheel.

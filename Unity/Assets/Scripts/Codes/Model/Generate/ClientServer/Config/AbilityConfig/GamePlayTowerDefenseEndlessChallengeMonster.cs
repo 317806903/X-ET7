@@ -24,6 +24,7 @@ public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  Game
         MonsterWaveNumScalePercentCoefficient = _buf.ReadFloat();
         MonsterWaveLevelScalePercentCoefficient = _buf.ReadFloat();
         WaveRewardGoldScalePercentCoefficient = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
         PostInit();
     }
 
@@ -58,6 +59,10 @@ public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  Game
     /// 每重复最后关卡时关卡奖励增加y%
     /// </summary>
     public float WaveRewardGoldScalePercentCoefficient { get; private set; }
+    /// <summary>
+    /// 生成时Action事件id
+    /// </summary>
+    public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
 
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
@@ -80,6 +85,7 @@ public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  Game
         + "MonsterWaveNumScalePercentCoefficient:" + MonsterWaveNumScalePercentCoefficient + ","
         + "MonsterWaveLevelScalePercentCoefficient:" + MonsterWaveLevelScalePercentCoefficient + ","
         + "WaveRewardGoldScalePercentCoefficient:" + WaveRewardGoldScalePercentCoefficient + ","
+        + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
         + "}";
     }
     

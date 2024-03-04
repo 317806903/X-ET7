@@ -15,20 +15,9 @@ namespace ET.Ability
 			foreach (AttackActionCall attackActionCall in actionCfg_DeathShow.DeathShowActionCall)
 			{
 				SelectHandle curSelectHandle = selectHandle;
-				(bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition1, ref actionContext);
-				if (isChgSelect1)
-				{
-					curSelectHandle = newSelectHandle1;
-				}
-				(bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(unit, curSelectHandle, attackActionCall.ActionCondition2, ref actionContext);
-				if (isChgSelect2)
-				{
-					curSelectHandle = newSelectHandle2;
-				}
-				if (bRet1 && bRet2)
-				{
-					ActionHandlerHelper.CreateAction(unit, null, attackActionCall.ActionId, attackActionCall.DelayTime, curSelectHandle, ref actionContext);
-				}
+
+				bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, null, ref actionContext);
+
 			}
 			await ETTask.CompletedTask;
 		}

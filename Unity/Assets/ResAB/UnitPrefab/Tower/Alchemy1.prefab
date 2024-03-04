@@ -25074,6 +25074,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alchemy_effect
       objectReference: {fileID: 0}
+    - target: {fileID: 41941934535765683, guid: 8347acb235341d14291e056a2097d7c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 800048796376983177, guid: 8347acb235341d14291e056a2097d7c4,
         type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState

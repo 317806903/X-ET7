@@ -9,16 +9,19 @@ namespace ET
     [ExecuteInEditMode]
     public class BGScaler: MonoBehaviour
     {
-        int designWidthOrg = 1920; //开发时分辨率宽
-        int designHeightOrg = 1080; //开发时分辨率高
+        public bool isShowBlack = false;
+        public int designWidthOrg = 1920; //开发时分辨率宽
+        public int designHeightOrg = 1080; //开发时分辨率高
         private int lastWidth;
         private int lastHeight;
+        private float lastHeight2Width;
 
         // Start is called before the first frame update
         void Start()
         {
             this.lastWidth = Screen.width;
             this.lastHeight = Screen.height;
+            this.lastHeight2Width = this.height2Width();
             Scaler();
         }
 
@@ -39,17 +42,33 @@ namespace ET
 
             float designWidth = this.designWidthOrg;
             float designHeight = this.designHeightOrg;
-            float s1 = (float)designWidth / (float)designHeight;
-            float s2 = (float)width / (float)height;
-            if (s1 < s2)
+            float s1 = (float)designWidth / designHeight;
+            float s2 = (float)width / height;
+            if (this.isShowBlack == false)
             {
-                designWidth = width;
-                designHeight = (int)Mathf.FloorToInt(designWidth / s1);
+                if (s1 < s2)
+                {
+                    designWidth = width;
+                    designHeight = designWidth / s1;
+                }
+                else
+                {
+                    designHeight = height;
+                    designWidth = designHeight * s1;
+                }
             }
             else
             {
-                designHeight = height;
-                designWidth = (int)Mathf.FloorToInt(designHeight * s1);
+                if (s1 < s2)
+                {
+                    designHeight = height;
+                    designWidth = designHeight * s1;
+                }
+                else
+                {
+                    designWidth = width;
+                    designHeight = designWidth / s1;
+                }
             }
 
             if (rectTransform != null)
@@ -58,6 +77,7 @@ namespace ET
                 rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
                 rectTransform.pivot = new Vector2(0.5f, 0.5f);
                 rectTransform.localPosition = Vector3.zero;
+                rectTransform.localScale = Vector3.one;
                 rectTransform.sizeDelta = new Vector2(designWidth, designHeight);
             }
         }
@@ -65,8 +85,13 @@ namespace ET
         public void Update()
         {
 #if UNITY_EDITOR
-            //editor模式下测试用
-            Scaler();
+            //if (this.lastHeight2Width != this.height2Width())
+            {
+                this.lastHeight2Width = this.height2Width();
+
+                //editor模式下测试用
+                Scaler();
+            }
 #else
             if (this.lastWidth != Screen.width || this.lastHeight != Screen.height)
             {
@@ -76,5 +101,26 @@ namespace ET
             }
 #endif
         }
+
+#if UNITY_EDITOR
+        public float height2Width()
+        {
+            var mouseOverWindow = UnityEditor.EditorWindow.mouseOverWindow;
+            System.Reflection.Assembly assembly = typeof(UnityEditor.EditorWindow).Assembly;
+            System.Type type = assembly.GetType("UnityEditor.PlayModeView");
+
+            Vector2 size = (Vector2) type.GetMethod(
+                "GetMainPlayModeViewTargetSize",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Static
+            ).Invoke(mouseOverWindow, null);
+            return size.y / size.x;
+        }
+#else
+        public float height2Width()
+        {
+            return Screen.height / Screen.width;
+        }
+#endif
     }
 }

@@ -14,8 +14,18 @@ namespace ET.Server
             }
         }
 
+		public static Session GetSession(this SessionPlayerComponent self)
+		{
+			return self.GetParent<Session>();
+		}
+
 		public static async ETTask DoDestroy(this SessionPlayerComponent self)
 		{
+			if (self.GetSession().IsTimeOut == false)
+			{
+				return;
+			}
+
 			if (self.Player == null)
 			{
 				return;
@@ -30,9 +40,21 @@ namespace ET.Server
 				return;
             }
 
+			long sceneInstanceId = self.DomainScene().InstanceId;
+
 			PlayerComponent playerComponent = self.DomainScene().GetComponent<PlayerComponent>();
 
-            long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId);
+			Player player = playerComponent.GetChild<Player>(playerId);
+			if (player != null)
+			{
+				PlayerSessionComponent playerSessionComponent = player.GetComponent<PlayerSessionComponent>();
+				if (playerSessionComponent.Session != null && playerSessionComponent.Session != self.GetSession())
+				{
+					return;
+				}
+			}
+
+            long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, sceneInstanceId);
 			if (locationActorId != self.Player.InstanceId)
 			{
 				return;
@@ -47,7 +69,7 @@ namespace ET.Server
             {
 	            // 发送断线消息
 	            ActorLocationSenderOneType actorLocationSenderOneType = ActorLocationSenderComponent.Instance?.Get(LocationType.Unit);
-	            await actorLocationSenderOneType.Call(playerId, new G2M_SessionDisconnect());
+	            await actorLocationSenderOneType?.Call(playerId, new G2M_SessionDisconnect(), sceneInstanceId);
             }
             catch (Exception e)
             {

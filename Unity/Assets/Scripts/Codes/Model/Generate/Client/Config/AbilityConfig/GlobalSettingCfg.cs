@@ -25,6 +25,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         ARPVPCfgId = _buf.ReadString();
         AREndlessChallengeCfgId = _buf.ReadString();
         ShowDamage = _buf.ReadBool();
+        ShowGetGold = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AvatarIcons = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AvatarIcons.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeginnersGuideImgs = new System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.Dictionary<string, string> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.Dictionary<string, string>(n1 * 3 / 2);for(var i1 = 0 ; i1 < n1 ; i1++) { string _k1;  _k1 = _buf.ReadString(); string _v1;  _v1 = _buf.ReadString();     _e0.Add(_k1, _v1);}} BeginnersGuideImgs.Add(_e0);}}
         InitialPhysicalStrength = _buf.ReadInt();
@@ -43,6 +44,9 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         PhysicalStrengthShow = _buf.ReadBool();
         TowerDefenseNearTowerDis = _buf.ReadFloat();
         AdmobAvailable = _buf.ReadBool();
+        AREndlessChallengeRecoverHp = _buf.ReadInt();
+        AREndlessChallengeRecoverGold = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
         PostInit();
     }
 
@@ -81,6 +85,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 是否显示伤害数字展示
     /// </summary>
     public bool ShowDamage { get; private set; }
+    /// <summary>
+    /// 是否显示金币获得展示
+    /// </summary>
+    public bool ShowGetGold { get; private set; }
     public System.Collections.Generic.List<string> AvatarIcons { get; private set; }
     public System.Collections.Generic.List<ResIconCfg> AvatarIcons_Ref { get; private set; }
     /// <summary>
@@ -151,6 +159,19 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 广告系统是否可用
     /// </summary>
     public bool AdmobAvailable { get; private set; }
+    /// <summary>
+    /// AR无尽模式复活增加生命
+    /// </summary>
+    public int AREndlessChallengeRecoverHp { get; private set; }
+    /// <summary>
+    /// AR无尽模式复活增加金币
+    /// </summary>
+    public int AREndlessChallengeRecoverGold { get; private set; }
+    /// <summary>
+    /// 初始背包物体
+    /// </summary>
+    public System.Collections.Generic.List<string> InitialBackpackItem { get; private set; }
+    public System.Collections.Generic.List<ItemCfg> InitialBackpackItem_Ref { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -158,6 +179,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
+        { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.InitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in InitialBackpackItem) { this.InitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -177,6 +199,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "ARPVPCfgId:" + ARPVPCfgId + ","
         + "AREndlessChallengeCfgId:" + AREndlessChallengeCfgId + ","
         + "ShowDamage:" + ShowDamage + ","
+        + "ShowGetGold:" + ShowGetGold + ","
         + "AvatarIcons:" + Bright.Common.StringUtil.CollectionToString(AvatarIcons) + ","
         + "BeginnersGuideImgs:" + Bright.Common.StringUtil.CollectionToString(BeginnersGuideImgs) + ","
         + "InitialPhysicalStrength:" + InitialPhysicalStrength + ","
@@ -195,6 +218,9 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
         + "TowerDefenseNearTowerDis:" + TowerDefenseNearTowerDis + ","
         + "AdmobAvailable:" + AdmobAvailable + ","
+        + "AREndlessChallengeRecoverHp:" + AREndlessChallengeRecoverHp + ","
+        + "AREndlessChallengeRecoverGold:" + AREndlessChallengeRecoverGold + ","
+        + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
         + "}";
     }
     

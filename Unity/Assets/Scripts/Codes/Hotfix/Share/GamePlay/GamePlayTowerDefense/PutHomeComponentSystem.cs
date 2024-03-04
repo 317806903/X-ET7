@@ -51,7 +51,9 @@ namespace ET
 
         public static void FixedUpdate(this PutHomeComponent self, float fixedDeltaTime)
         {
-            if (self.GetGamePlayTowerDefense().ChkIsGameEnd() || self.GetGamePlayTowerDefense().ChkIsGameRecover())
+            if (self.GetGamePlayTowerDefense().ChkIsGameEnd()
+                || self.GetGamePlayTowerDefense().ChkIsGameRecover()
+                || self.GetGamePlayTowerDefense().ChkIsGameRecovering())
             {
                 return;
             }
@@ -81,6 +83,11 @@ namespace ET
         public static void Init(this PutHomeComponent self)
         {
             Dictionary<long, TeamFlagType> allPlayerTeamFlag = self.GetGamePlay().GetAllPlayerTeamFlag();
+
+            long ownerPlayerId = self.GetGamePlay().ownerPlayerId;
+            TeamFlagType ownerTeamFlagType = allPlayerTeamFlag[ownerPlayerId];
+            self.TeamFlagType2PlayerIdCanPutHome[ownerTeamFlagType] = ownerPlayerId;
+
             foreach (var playerTeamFlag in allPlayerTeamFlag)
             {
                 TeamFlagType teamFlagType = playerTeamFlag.Value;
@@ -104,8 +111,7 @@ namespace ET
             }
 
             int hp = gamePlayTowerDefenseComponent.model.HomeLife;
-
-            Unit homeUnit = self.CreateHome(unitCfgId, homePos, hp, teamFlagType);
+            Unit homeUnit = self.CreateHome(unitCfgId, homePos, hp, hp, teamFlagType);
             self.HomeUnitIdList[teamFlagType] = homeUnit.Id;
 
             self.ChkNextStep().Coroutine();
@@ -152,14 +158,20 @@ namespace ET
             return (false, false);
         }
 
-        public static Unit CreateHome(this PutHomeComponent self, string unitCfgId, float3 pos, int hp, TeamFlagType teamFlagType)
+        public static Unit CreateHome(this PutHomeComponent self, string unitCfgId, float3 pos, int maxHp, int hp, TeamFlagType teamFlagType)
         {
-            return GamePlayTowerDefenseHelper.CreateHome(self.DomainScene(), unitCfgId, pos, hp, teamFlagType);
+            return GamePlayTowerDefenseHelper.CreateHome(self.DomainScene(), unitCfgId, pos, maxHp, hp, teamFlagType);
         }
 
         public static Unit GetHomeUnit(this PutHomeComponent self, Unit unit)
         {
             TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnit(unit);
+            return self.GetHomeUnitByTeamFlagType(teamFlagType);
+        }
+
+        public static Unit GetHomeUnit(this PutHomeComponent self, long playerId)
+        {
+            TeamFlagType teamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
             return self.GetHomeUnitByTeamFlagType(teamFlagType);
         }
 
@@ -185,7 +197,7 @@ namespace ET
                 Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
                 if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
                 {
-                    self.GetGamePlayTowerDefense().TransToGameResult(false).Coroutine();
+                    self.GetGamePlayTowerDefense().TransToGameResult(false, false).Coroutine();
                     return false;
                 }
             }
@@ -205,7 +217,7 @@ namespace ET
             return false;
         }
 
-        public static void BattleResult(this PutHomeComponent self)
+        public static void BattleResult(this PutHomeComponent self, bool isTimeOut = false)
         {
             float maxHomeHp = -1;
             TeamFlagType maxHomeTeamFlagType = TeamFlagType.TeamGlobal1;
@@ -235,13 +247,33 @@ namespace ET
                 }
             }
 
-            if (maxHomeHp > 0)
+            if (self.TeamFlagType2Result.Count > 1)
             {
-                self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
+                if (maxHomeHp > 0)
+                {
+                    self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
+                }
+                else
+                {
+                    self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
+                }
             }
             else
             {
-                self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
+                if (isTimeOut)
+                {
+                }
+                else
+                {
+                    if (maxHomeHp > 0)
+                    {
+                        self.TeamFlagType2Result[maxHomeTeamFlagType] = true;
+                    }
+                    else
+                    {
+                        self.TeamFlagType2Result[maxHomeTeamFlagType] = false;
+                    }
+                }
             }
         }
 
@@ -528,15 +560,11 @@ namespace ET
             {
                 Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
                 NumericComponent numericComponent = homeUnit.GetComponent<NumericComponent>();
+                string homeCfgId = homeUnit.CfgId;
+                float3 homePos = homeUnit.Position;
+                int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
                 int hp = numericComponent.GetAsInt(NumericType.Hp);
-                if (self.lastHomeHp.ContainsKey(homeUnitId.Value))
-                {
-                    self.lastHomeHp[homeUnitId.Value] = hp;
-                }
-                else
-                {
-                    self.lastHomeHp.Add(homeUnitId.Value, hp);
-                }
+                self.RecordHomeInfo[homeUnitId.Value] = (homeCfgId, homePos, maxHp, hp);
             }
         }
 
@@ -546,8 +574,10 @@ namespace ET
             self.HomeUnitIdList = new();
             foreach (var homeUnitId in tmpHomeUnitIdList)
             {
-                Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
-                Unit newHomeUnit = self.CreateHome(homeUnit.CfgId, homeUnit.Position, self.lastHomeHp[homeUnitId.Value], homeUnitId.Key);
+                (string homeCfgId, float3 homePos, int maxHp, int curHp) = self.RecordHomeInfo[homeUnitId.Value];
+                TeamFlagType teamFlagType = homeUnitId.Key;
+                curHp = math.min(GlobalSettingCfgCategory.Instance.AREndlessChallengeRecoverHp + curHp, maxHp);
+                Unit newHomeUnit = self.CreateHome(homeCfgId, homePos, maxHp, curHp, teamFlagType);
                 self.HomeUnitIdList[homeUnitId.Key] = newHomeUnit.Id;
             }
         }

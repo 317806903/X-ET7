@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -6,6 +7,69 @@ namespace ET
 {
     public static class ItemHelper
     {
+        public static bool ChkIsTower(string itemCfgId)
+        {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            if (TowerDefense_TowerCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemType != ItemType.Tower)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsCallMonster(string itemCfgId)
+        {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            if (TowerDefense_MonsterCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemType != ItemType.CallMonster)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsMonster(string itemCfgId)
+        {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            if (TowerDefense_MonsterCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemType != ItemType.Monster)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static string GetItemName(string itemCfgId)
         {
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
@@ -29,6 +93,12 @@ namespace ET
             return resIconCfg.ResName;
         }
 
+        public static bool ChkItemCanStack(string itemCfgId)
+        {
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            return itemCfg.CanStack;
+        }
+
         public static QualityType GetItemQualityType(string itemCfgId)
         {
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
@@ -47,5 +117,52 @@ namespace ET
             return towerCfg.Labels;
         }
 
+        public static string GetTowerItemPreTowerConfigId(string itemCfgId)
+        {
+            TowerDefense_TowerCfg preTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetPreTowerCfg(itemCfgId);
+            if (preTowerCfg == null)
+                return null;
+            return preTowerCfg.Id;
+        }
+
+        public static string GetTowerItemNextTowerConfigId(string itemCfgId)
+        {
+            TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(itemCfgId);
+            if (nextTowerCfg == null)
+                return null;
+            return nextTowerCfg.Id;
+        }
+
+        public static List<(string title, string content)> GetTowerAttribute(string itemCfgId, int level)
+        {
+            List<(string, string)> attributesList = new ();
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
+            UnitPropertyCfg unitPropertyCfg =
+                    UnitPropertyCfgCategory.Instance.Get(UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]).PropertyType, level);
+            
+            UIAttribute attribute = unitPropertyCfg.UIAttribute1;
+            AddAttribute(attribute, ref attributesList);
+            attribute = unitPropertyCfg.UIAttribute2;
+            AddAttribute(attribute, ref attributesList);
+            attribute = unitPropertyCfg.UIAttribute3;
+            AddAttribute(attribute, ref attributesList);
+
+            return attributesList;
+        }
+
+        static void AddAttribute(UIAttribute attribute, ref List<(string, string)> attributesList)
+        {
+            string title = attribute.Title;
+            if (!string.IsNullOrEmpty(title))
+            {
+                string content = attribute.Content;
+                List<float> replaceValue = attribute.ContentValue;
+                for (int i = 0; i < replaceValue.Count; i++)
+                {
+                    content = content.Replace($"{{{i}}}", replaceValue[i].ToString());
+                }
+                attributesList.Add((title, content));
+            }
+        }
     }
 }

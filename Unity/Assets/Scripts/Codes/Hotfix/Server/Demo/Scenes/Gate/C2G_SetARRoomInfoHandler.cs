@@ -14,6 +14,7 @@ namespace ET.Server
 			long roomId = playerStatusComponent.RoomId;
 			string ARSceneId = request.ARSceneId;
 			string ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
+			int ARMapScale = request.ARMapScale;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -23,6 +24,7 @@ namespace ET.Server
 				RoomId = roomId,
 				ARSceneId = ARSceneId,
 				ARMeshDownLoadUrl = ARMeshDownLoadUrl,
+				ARMapScale = ARMapScale,
 			});
 
 			response.Error = _R2G_SetARRoomInfo.Error;

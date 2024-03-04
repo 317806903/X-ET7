@@ -38,7 +38,7 @@ namespace ET.Client
 
 		public static async ETTask EnterMap(this DlgLobby self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			string gamePlayBattleLevelCfgId = self.gamePlayBattleLevelCfgId;
 			if (GamePlayBattleLevelCfgCategory.Instance.Contain(gamePlayBattleLevelCfgId) == false)
@@ -59,14 +59,14 @@ namespace ET.Client
 
 		public static async ETTask ReturnBack(this DlgLobby self)
 		{
-			UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
 			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
 		}
 
 		public static async ETTask OnChooseBattleCfg(this DlgLobby self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData()
 			{

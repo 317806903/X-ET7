@@ -230,7 +230,7 @@ namespace YooAsset
 					}
 				}
 
-				// Check error			
+				// Check error
 				if (CacheBundle == null)
 				{
 					_steps = ESteps.Done;
@@ -281,6 +281,15 @@ namespace YooAsset
 			_isWaitForAsyncComplete = true;
 
 			int frame = 1000;
+			float size = MainBundleInfo.Bundle.FileSize / 1024f / 1024;
+			if (size > 1)
+			{
+				frame = 1000 * ((int)size + 1);
+				if (frame > 50000)
+				{
+					frame = 50000;
+				}
+			}
 			while (true)
 			{
 				// 文件解压

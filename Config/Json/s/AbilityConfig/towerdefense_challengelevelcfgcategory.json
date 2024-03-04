@@ -1,0 +1,178 @@
+[
+  {
+    "id": "GamePlayBattleLevel_Challenge1",
+    "name": "",
+    "index": 1,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge2",
+    "name": "",
+    "index": 2,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge3",
+    "name": "",
+    "index": 3,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge4",
+    "name": "",
+    "index": 4,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "GamePlayBattleLevel_Challenge5",
+    "name": "",
+    "index": 5,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel6",
+    "name": "",
+    "index": 6,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel7",
+    "name": "",
+    "index": 7,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel8",
+    "name": "",
+    "index": 8,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel9",
+    "name": "",
+    "index": 9,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel10",
+    "name": "",
+    "index": 10,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel11",
+    "name": "",
+    "index": 11,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "ChallengeLevel12",
+    "name": "",
+    "index": 12,
+    "isAR": false,
+    "firstClearDropItem": "DropItemRule_1",
+    "repeatClearDropItem": "DropItemRule_2"
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge1",
+    "name": "",
+    "index": 1,
+    "isAR": true,
+    "firstClearDropItem": "DropItemRule_First_Ar_Challenge1",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge2",
+    "name": "",
+    "index": 2,
+    "isAR": true,
+    "firstClearDropItem": "DropItemRule_First_Ar_Challenge2",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge3",
+    "name": "",
+    "index": 3,
+    "isAR": true,
+    "firstClearDropItem": "DropItemRule_First_Ar_Challenge3",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge4",
+    "name": "",
+    "index": 4,
+    "isAR": true,
+    "firstClearDropItem": "DropItemRule_First_Ar_Challenge4",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge5",
+    "name": "",
+    "index": 5,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge6",
+    "name": "",
+    "index": 6,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge7",
+    "name": "",
+    "index": 7,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge8",
+    "name": "",
+    "index": 8,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge9",
+    "name": "",
+    "index": 9,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  },
+  {
+    "id": "GamePlayBattleLevel_Ar_Challenge10",
+    "name": "",
+    "index": 10,
+    "isAR": true,
+    "firstClearDropItem": "",
+    "repeatClearDropItem": ""
+  }
+]

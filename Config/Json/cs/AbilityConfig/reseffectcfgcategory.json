@@ -1,5 +1,275 @@
 [
   {
+    "id": "ResEffect_Infinite_9_2_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_10_2_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_11_1_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_12_2_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_12_3_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_13_1_Gui",
+    "name": "",
+    "desc": "无限模式怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_14_1_Gui",
+    "name": "",
+    "desc": "无限模式怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_15_1_Gui",
+    "name": "",
+    "desc": "无限模式怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_15_2_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_16_2_Gui",
+    "name": "",
+    "desc": "无限模式怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_17_2_Dan",
+    "name": "",
+    "desc": "无限模式怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_18_1_Dan",
+    "name": "",
+    "desc": "无限模式怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_19_1_Dan",
+    "name": "",
+    "desc": "无限模式怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_19_3_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_20_1_Dan",
+    "name": "",
+    "desc": "无限模式怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_20_2_Gui",
+    "name": "",
+    "desc": "无限模式怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_20_3_ZhongZi",
+    "name": "",
+    "desc": "无限模式怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Infinite_20_4_Dan",
+    "name": "",
+    "desc": "无限模式怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Buff_Stun",
+    "name": "",
+    "desc": "减攻速特效",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerZaiE1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge3_1_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge3_2_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge3_3_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge3_4_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge3_5_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_5_2",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_5_3",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_恢复",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_1_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_2_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_3_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_4_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge4_5_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_3_3",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_4_2",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_5_2",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_隐身",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Fog.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_1_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_2_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_3_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_4_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_5_1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge5_5_4",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/SkillStun.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge_Niao1",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_加速1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Niao1.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge_Niao2",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_加速2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Niao2.prefab"
+  },
+  {
+    "id": "ResEffect_Monster_Challenge_Niao3",
+    "name": "",
+    "desc": "挑战关卡怪物技能特效_加速3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/Niao3.prefab"
+  },
+  {
+    "id": "ResEffect_LevelUp",
+    "name": "",
+    "desc": "塔出场/升级",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/LevelUp.prefab"
+  },
+  {
+    "id": "ResEffect_Placed",
+    "name": "",
+    "desc": "塔出场/升级",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/Placed.prefab"
+  },
+  {
     "id": "ResEffect_HealthBar_1",
     "name": "",
     "desc": "血量显示",
@@ -12,10 +282,16 @@
     "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/MainTowerBar.prefab"
   },
   {
-    "id": "ResEffect_ShootTextPrefab",
+    "id": "ResEffect_ShootDamageTextPrefab",
     "name": "",
     "desc": "飘血",
-    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ShootTextPrefab.prefab"
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ShootDamageTextPrefab.prefab"
+  },
+  {
+    "id": "ResEffect_ShowGetGoldTextPrefab",
+    "name": "",
+    "desc": "获得金币显示",
+    "res_name": "Assets/ResAB/EffectPrefab/BattleEffect/ShowGetGoldTextPrefab.prefab"
   },
   {
     "id": "ResEffect_AudioSource",
@@ -328,5 +604,569 @@
     "name": "",
     "desc": "种子治疗1",
     "res_name": "Assets/ResAB/EffectPrefab/FireShow/SeedHeal1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerAoShu1",
+    "name": "",
+    "desc": "奥术精灵1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerAoShu1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerAoShu2",
+    "name": "",
+    "desc": "奥术精灵2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerAoShu2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerAoShu3",
+    "name": "",
+    "desc": "奥术精灵3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerAoShu3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerCurse1",
+    "name": "",
+    "desc": "诅咒塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerCurse1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerCurse2",
+    "name": "",
+    "desc": "诅咒塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerCurse2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerCurse3",
+    "name": "",
+    "desc": "诅咒塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerCurse3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerDuCi1",
+    "name": "",
+    "desc": "毒刺塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerDuCi1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerDuCi2",
+    "name": "",
+    "desc": "毒刺塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerDuCi2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerDuCi3",
+    "name": "",
+    "desc": "毒刺塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerDuCi3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerElectromagnetic1",
+    "name": "",
+    "desc": "电磁塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerElectromagnetic1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerElectromagnetic2",
+    "name": "",
+    "desc": "电磁塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerElectromagnetic2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerElectromagnetic3",
+    "name": "",
+    "desc": "电磁塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerElectromagnetic3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerFireBall1",
+    "name": "",
+    "desc": "火球塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerFireBall1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerFireBall2",
+    "name": "",
+    "desc": "火球塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerFireBall2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerFireBall3",
+    "name": "",
+    "desc": "火球塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerFireBall3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerGoblin1",
+    "name": "",
+    "desc": "窃贼哥布林1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerGoblin1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerGoblin2",
+    "name": "",
+    "desc": "窃贼哥布林2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerGoblin2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerGoblin3",
+    "name": "",
+    "desc": "窃贼哥布林3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerGoblin3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerIceArrow1",
+    "name": "",
+    "desc": "冰枪塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerIceArrow1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerIceArrow2",
+    "name": "",
+    "desc": "冰枪塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerIceArrow2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerIceArrow3",
+    "name": "",
+    "desc": "冰枪塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerIceArrow3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerRocket1",
+    "name": "",
+    "desc": "火箭塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerRocket1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerRocket2",
+    "name": "",
+    "desc": "火箭塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerRocket2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerRocket3",
+    "name": "",
+    "desc": "火箭塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerRocket3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerScorpio1",
+    "name": "",
+    "desc": "毒蝎塔1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerScorpio1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerScorpio2",
+    "name": "",
+    "desc": "毒蝎塔2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerScorpio2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerScorpio3",
+    "name": "",
+    "desc": "毒蝎塔3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerScorpio3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerWater1",
+    "name": "",
+    "desc": "水图腾1开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerWater1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerWater2",
+    "name": "",
+    "desc": "水图腾2开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerWater2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerWater3",
+    "name": "",
+    "desc": "水图腾3开火",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerWater3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerAoShu1",
+    "name": "",
+    "desc": "奥术精灵1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerAoShu1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerAoShu2",
+    "name": "",
+    "desc": "奥术精灵2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerAoShu2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerAoShu3",
+    "name": "",
+    "desc": "奥术精灵3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerAoShu3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerCurse1",
+    "name": "",
+    "desc": "诅咒塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerCurse1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerCurse2",
+    "name": "",
+    "desc": "诅咒塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerCurse2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerCurse3",
+    "name": "",
+    "desc": "诅咒塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerCurse3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerDuCi1",
+    "name": "",
+    "desc": "毒刺塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerDuCi1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerDuCi2",
+    "name": "",
+    "desc": "毒刺塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerDuCi2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerDuCi3",
+    "name": "",
+    "desc": "毒刺塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerDuCi3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerElectromagnetic1",
+    "name": "",
+    "desc": "电磁塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerElectromagnetic1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerElectromagnetic2",
+    "name": "",
+    "desc": "电磁塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerElectromagnetic2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerElectromagnetic3",
+    "name": "",
+    "desc": "电磁塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerElectromagnetic3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerFireBall1",
+    "name": "",
+    "desc": "火球塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerFireBall1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerFireBall2",
+    "name": "",
+    "desc": "火球塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerFireBall2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerFireBall3",
+    "name": "",
+    "desc": "火球塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerFireBall3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerIceArrow1",
+    "name": "",
+    "desc": "冰枪塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerIceArrow1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerIceArrow2",
+    "name": "",
+    "desc": "冰枪塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerIceArrow2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerIceArrow3",
+    "name": "",
+    "desc": "冰枪塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerIceArrow3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerMagicBall1",
+    "name": "",
+    "desc": "奥术天球1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerMagicBall1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerMagicBall2",
+    "name": "",
+    "desc": "奥术天球2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerMagicBall2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerMagicBall3",
+    "name": "",
+    "desc": "奥术天球3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerMagicBall3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerRocket1",
+    "name": "",
+    "desc": "火箭塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerRocket1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerRocket2",
+    "name": "",
+    "desc": "火箭塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerRocket2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerRocket3",
+    "name": "",
+    "desc": "火箭塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerRocket3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerScorpio1",
+    "name": "",
+    "desc": "毒蝎塔1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerScorpio1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerScorpio2",
+    "name": "",
+    "desc": "毒蝎塔2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerScorpio2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerScorpio3",
+    "name": "",
+    "desc": "毒蝎塔3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerScorpio3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerWater1",
+    "name": "",
+    "desc": "水图腾1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerWater1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerWater2",
+    "name": "",
+    "desc": "水图腾2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerWater2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerWater3",
+    "name": "",
+    "desc": "水图腾3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerWater3.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerGoblin1",
+    "name": "",
+    "desc": "窃贼哥布林1命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerGoblin1.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerGoblin2",
+    "name": "",
+    "desc": "窃贼哥布林2命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerGoblin2.prefab"
+  },
+  {
+    "id": "ResEffect_HitTowerGoblin3",
+    "name": "",
+    "desc": "窃贼哥布林3命中",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/HitTowerGoblin3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerAlchemy1",
+    "name": "",
+    "desc": "炼金塔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerAlchemy1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerAlchemy2",
+    "name": "",
+    "desc": "炼金塔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerAlchemy2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerAlchemy3",
+    "name": "",
+    "desc": "炼金塔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerAlchemy3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerFire1",
+    "name": "",
+    "desc": "火图腾附魔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerFire1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerFire2",
+    "name": "",
+    "desc": "火图腾附魔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerFire2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerFire3",
+    "name": "",
+    "desc": "火图腾附魔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerFire3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerLianJi1",
+    "name": "",
+    "desc": "连击斧附魔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerLianJi1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerLianJi2",
+    "name": "",
+    "desc": "连击斧附魔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerLianJi2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerLianJi3",
+    "name": "",
+    "desc": "连击斧附魔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerLianJi3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerwitch1",
+    "name": "",
+    "desc": "巫毒塔附魔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerwitch1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerwitch2",
+    "name": "",
+    "desc": "巫毒塔附魔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerwitch2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerwitch3",
+    "name": "",
+    "desc": "巫毒塔附魔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerwitch3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerZaiE1",
+    "name": "",
+    "desc": "灾厄塔附魔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerZaiE1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerZaiE2",
+    "name": "",
+    "desc": "灾厄塔附魔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerZaiE2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffAddTowerZaiE3",
+    "name": "",
+    "desc": "灾厄塔附魔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffAddTowerZaiE3.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerZaiE1",
+    "name": "",
+    "desc": "灾厄塔施法1",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerZaiE1.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerZaiE2",
+    "name": "",
+    "desc": "灾厄塔施法2",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerZaiE2.prefab"
+  },
+  {
+    "id": "ResEffect_FireTowerZaiE3",
+    "name": "",
+    "desc": "灾厄塔施法3",
+    "res_name": "Assets/ResAB/EffectPrefab/FireShow/FireTowerZaiE3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerScorpio1",
+    "name": "",
+    "desc": "毒蝎塔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerScorpio1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerScorpio2",
+    "name": "",
+    "desc": "毒蝎塔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerScorpio2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerScorpio3",
+    "name": "",
+    "desc": "毒蝎塔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerScorpio3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerFireBall1",
+    "name": "",
+    "desc": "火球塔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerFireBall1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerFireBall2",
+    "name": "",
+    "desc": "火球塔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerFireBall2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerFireBall3",
+    "name": "",
+    "desc": "火球塔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerFireBall3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerCurse1",
+    "name": "",
+    "desc": "诅咒塔1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerCurse1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerCurse2",
+    "name": "",
+    "desc": "诅咒塔2",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerCurse2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerCurse3",
+    "name": "",
+    "desc": "诅咒塔3",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerCurse3.prefab"
+  },
+  {
+    "id": "ResEffect_BuffHuoYan1",
+    "name": "",
+    "desc": "火焰塔灼烧buff1",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffHuoYan1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerWater1",
+    "name": "",
+    "desc": "水球塔弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerWater1.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerWater2",
+    "name": "",
+    "desc": "水球塔弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerWater2.prefab"
+  },
+  {
+    "id": "ResEffect_BuffTowerWater3",
+    "name": "",
+    "desc": "水球塔弱化",
+    "res_name": "Assets/ResAB/EffectPrefab/BeHitShow/BuffTowerWater3.prefab"
   }
 ]

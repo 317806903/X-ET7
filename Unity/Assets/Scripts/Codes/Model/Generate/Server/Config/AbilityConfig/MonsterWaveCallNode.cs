@@ -25,6 +25,7 @@ public sealed partial class MonsterWaveCallNode: Bright.Config.BeanBase
         OnceCallNum = _buf.ReadInt();
         MonsterCfgId = _buf.ReadString();
         Level = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
         RewardGold = _buf.ReadInt();
         PostInit();
     }
@@ -59,6 +60,10 @@ public sealed partial class MonsterWaveCallNode: Bright.Config.BeanBase
     /// </summary>
     public int Level { get; private set; }
     /// <summary>
+    /// 生成时Action事件id（对应ActionConfig文件夹下表格）
+    /// </summary>
+    public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
+    /// <summary>
     /// 单个击杀奖励金币
     /// </summary>
     public int RewardGold { get; private set; }
@@ -84,6 +89,7 @@ public sealed partial class MonsterWaveCallNode: Bright.Config.BeanBase
         + "OnceCallNum:" + OnceCallNum + ","
         + "MonsterCfgId:" + MonsterCfgId + ","
         + "Level:" + Level + ","
+        + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
         + "RewardGold:" + RewardGold + ","
         + "}";
     }

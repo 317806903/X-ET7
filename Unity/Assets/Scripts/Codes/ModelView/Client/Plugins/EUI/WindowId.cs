@@ -35,5 +35,12 @@ namespace ET.Client
 		WindowID_PhysicalStrengthTip,
 		WindowID_ChallengeMode,
 		WindowID_CommonLoading,
+		WindowID_Knapsack,
+		WindowID_Bag,
+		WindowID_Details,
+		WindowID_ARSceneSlider,
+		WindowID_ARSceneSliderSimple,
+		WindowID_CommonTipNode,
+		WindowID_ARRoomPVE,
 	}
 }

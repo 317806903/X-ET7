@@ -59,26 +59,15 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
-                    SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam, ref self.actionContext);
+                    SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam_Ref, ref self.actionContext);
                     if (curSelectHandle == null)
                     {
                         continue;
                     }
 
-                    (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition1, ref self.actionContext);
-                    if (isChgSelect1)
+                    bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), timelineNode.DelayTime, timelineNode.ActionId, timelineNode.ActionCondition1, timelineNode.ActionCondition2, curSelectHandle, null, ref self.actionContext);
+                    if (bRet)
                     {
-                        curSelectHandle = newSelectHandle1;
-                    }
-                    (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, timelineNode.ActionCondition2, ref self.actionContext);
-                    if (isChgSelect2)
-                    {
-                        curSelectHandle = newSelectHandle2;
-                    }
-
-                    if (bRet1 && bRet2)
-                    {
-                        ActionHandlerHelper.CreateAction(self.GetUnit(), null, timelineNode.ActionId, timelineNode.DelayTime, curSelectHandle, ref self.actionContext);
                         if (timelineNode.ActionId.StartsWith("TimelineJumpTime"))
                         {
                             self.timelineJumpNum++;
@@ -90,6 +79,7 @@ namespace ET.Ability
                             return;
                         }
                     }
+
                 }
             }
         }

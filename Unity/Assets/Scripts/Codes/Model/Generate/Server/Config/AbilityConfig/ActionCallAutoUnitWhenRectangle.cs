@@ -20,7 +20,6 @@ public sealed partial class ActionCallAutoUnitWhenRectangle:  ActionCallAutoUnit
     public ActionCallAutoUnitWhenRectangle(ByteBuf _buf)  : base(_buf) 
     {
         RectangleArea = RectangleArea.DeserializeRectangleArea(_buf);
-        IsChgToSelectPos = _buf.ReadBool();
         PostInit();
     }
 
@@ -33,10 +32,6 @@ public sealed partial class ActionCallAutoUnitWhenRectangle:  ActionCallAutoUnit
     /// 矩形信息
     /// </summary>
     public RectangleArea RectangleArea { get; private set; }
-    /// <summary>
-    /// 是否转为记录成Pos位置信息(需要在特定位置施法有效,因为unit可能已走开)
-    /// </summary>
-    public bool IsChgToSelectPos { get; private set; }
 
     public const int __ID__ = -612145970;
     public override int GetTypeId() => __ID__;
@@ -57,13 +52,7 @@ public sealed partial class ActionCallAutoUnitWhenRectangle:  ActionCallAutoUnit
     public override string ToString()
     {
         return "{ "
-        + "IsSave:" + IsSave + ","
-        + "SelectNum:" + SelectNum + ","
-        + "IsFriend:" + IsFriend + ","
-        + "IsOnlyPlayer:" + IsOnlyPlayer + ","
-        + "OffSetInfo:" + OffSetInfo + ","
         + "RectangleArea:" + RectangleArea + ","
-        + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "}";
     }
     

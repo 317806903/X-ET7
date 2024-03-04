@@ -34,6 +34,10 @@
         <Link>ETTask/%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
 
+    <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\IPAddressRange\**\*.cs">
+        <Link>IPAddressRange/%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+
     <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\Kcp\Kcp.cs">
       <Link>Kcp\Kcp.cs</Link>
     </Compile>

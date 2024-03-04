@@ -39,24 +39,25 @@ namespace ET.Client
                 "StartSceneConfigCategory",
                 "StartZoneConfigCategory",
             };
+
+            string ct = "cs";
+            CodeMode codeMode = GlobalConfig.Instance.CodeMode;
+            switch (codeMode)
+            {
+                case CodeMode.Client:
+                    ct = "c";
+                    break;
+                case CodeMode.Server:
+                    ct = "s";
+                    break;
+                case CodeMode.ClientServer:
+                    ct = "cs";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             if (isReadEditor)
             {
-                string ct = "cs";
-                CodeMode codeMode = GlobalConfig.Instance.CodeMode;
-                switch (codeMode)
-                {
-                    case CodeMode.Client:
-                        ct = "c";
-                        break;
-                    case CodeMode.Server:
-                        ct = "s";
-                        break;
-                    case CodeMode.ClientServer:
-                        ct = "cs";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
                 foreach (Type configType in configTypes)
                 {
                     string configFilePath;
@@ -88,6 +89,19 @@ namespace ET.Client
                     string configFilePath;
                     if (startConfigs.Contains(configType.Name))
                     {
+                        if (ct == "c")
+                        {
+                            continue;
+                        }
+                        if (ct == "cs")
+                        {
+                            if (Application.isMobilePlatform == false)
+                            {
+                                configFilePath = $"../Config/Excel/{ct}/{Options.Instance.StartConfig}/{configType.Name.ToLower()}.bytes";
+                                output[configType] = new ByteBuf(File.ReadAllBytes(configFilePath));
+                                continue;
+                            }
+                        }
                         configFilePath = $"{startConfigPath}_{configType.Name.ToLower()}";
                     }
                     else
@@ -136,25 +150,26 @@ namespace ET.Client
                 "StartSceneConfigCategory",
                 "StartZoneConfigCategory",
             };
+
+            string ct = "cs";
+            CodeMode codeMode = GlobalConfig.Instance.CodeMode;
+            switch (codeMode)
+            {
+                case CodeMode.Client:
+                    ct = "c";
+                    break;
+                case CodeMode.Server:
+                    ct = "s";
+                    break;
+                case CodeMode.ClientServer:
+                    ct = "cs";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             if (isReadEditor)
             {
-                string ct = "cs";
-                CodeMode codeMode = GlobalConfig.Instance.CodeMode;
-                switch (codeMode)
-                {
-                    case CodeMode.Client:
-                        ct = "c";
-                        break;
-                    case CodeMode.Server:
-                        ct = "s";
-                        break;
-                    case CodeMode.ClientServer:
-                        ct = "cs";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
                 string configFilePath;
                 if (startConfigs.Contains(configName))
                 {
@@ -177,6 +192,15 @@ namespace ET.Client
                 string configFilePath;
                 if (startConfigs.Contains(configName))
                 {
+                    if (ct == "cs")
+                    {
+                        if (Application.isMobilePlatform == false)
+                        {
+                            configFilePath = $"../Config/Excel/{ct}/{Options.Instance.StartConfig}/{configName.ToLower()}.bytes";
+                            configBytes = new ByteBuf(File.ReadAllBytes(configFilePath));
+                            return configBytes;
+                        }
+                    }
                     configFilePath = $"{startConfigPath}_{configName.ToLower()}";
                 }
                 else

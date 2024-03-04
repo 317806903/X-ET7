@@ -15,6 +15,7 @@ namespace ET.Server
 					Account = request.Account,
 					Password = request.Password,
 					LoginType = request.LoginType,
+					LoginIP = request.LoginIP,
 				});
 
 			if (_A2G_GetPlayerIdByAccount.Error == ErrorCode.ERR_LogicError)

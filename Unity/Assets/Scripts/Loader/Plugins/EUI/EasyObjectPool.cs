@@ -70,6 +70,16 @@ namespace ET.Client
             po.gameObject.transform.SetParent(rootObj.transform, false);
         }
 
+        public bool ChkObjAvailability()
+        {
+            var item = this.availableObjStack.Peek();
+            if (item == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void populatePool(int initialCount)
         {
             for (int index = 0; index < initialCount; index++)

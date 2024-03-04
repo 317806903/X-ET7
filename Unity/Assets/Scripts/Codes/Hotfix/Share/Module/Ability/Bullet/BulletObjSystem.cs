@@ -30,6 +30,8 @@ namespace ET.Ability
                     self.hitRecords.Dispose();
                     self.hitRecords = null;
                 }
+
+                self.preHitUnitIds = null;
             }
         }
 
@@ -124,72 +126,9 @@ namespace ET.Ability
 
         public static void EventHandler(this BulletObj self, BulletActionCall bulletActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
-            if (onAttackUnit != null)
-            {
-                self.actionContext.attackerUnitId = onAttackUnit.Id;
-            }
-            string actionId = bulletActionCall.ActionId;
-            SelectHandle selectHandle;
-            Unit resetPosByUnit = null;
-            if (bulletActionCall.ActionCallParam is ActionCallSelectLast)
-            {
-                selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
-            }
-            else if (bulletActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit, ref self.actionContext);
-            }
-            else if (bulletActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf, ref self.actionContext);
-            }
-            else
-            {
-                Unit targetUnit;
-                if (bulletActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
-                {
-                    targetUnit = self.GetCasterUnit();
-                }
-                else if (bulletActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
-                {
-                    targetUnit = self.GetCasterActorUnit();
-                }
-                else if (bulletActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
-                {
-                    targetUnit = onAttackUnit;
-                }
-                else if (bulletActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
-                {
-                    targetUnit = beHurtUnit;
-                }
-                else
-                {
-                    targetUnit = self.GetUnit();
-                }
-                resetPosByUnit = targetUnit;
-                selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, bulletActionCall.ActionCallParam);
-            }
+            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), bulletActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
 
-            if (selectHandle == null)
-            {
-                return;
-            }
-
-            SelectHandle curSelectHandle = selectHandle;
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition1, ref self.actionContext);
-            if (isChgSelect1)
-            {
-                curSelectHandle = newSelectHandle1;
-            }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, bulletActionCall.ActionCondition2, ref self.actionContext);
-            if (isChgSelect2)
-            {
-                curSelectHandle = newSelectHandle2;
-            }
-            if (bRet1 && bRet2)
-            {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, bulletActionCall.DelayTime, curSelectHandle, ref self.actionContext);
-            }
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), bulletActionCall.DelayTime, bulletActionCall.ActionId, bulletActionCall.ActionCondition1, bulletActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
         }
 
         public static void FixedUpdate(this BulletObj self, float fixedDeltaTime)
@@ -277,6 +216,26 @@ namespace ET.Ability
             }
 
             return true;
+        }
+
+        public static void AddPreHitUnit(this BulletObj self, long unitId)
+        {
+            if (self.preHitUnitIds == null)
+            {
+                self.preHitUnitIds = new();
+            }
+
+            self.preHitUnitIds.Add(unitId);
+        }
+
+        public static void ResetPreHitUnit(this BulletObj self)
+        {
+            self.preHitUnitIds = null;
+        }
+
+        public static HashSet<long> GetPreHitUnit(this BulletObj self)
+        {
+            return self.preHitUnitIds;
         }
     }
 }

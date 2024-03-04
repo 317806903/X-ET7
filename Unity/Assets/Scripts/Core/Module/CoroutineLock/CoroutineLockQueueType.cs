@@ -5,7 +5,7 @@ namespace ET
     public class CoroutineLockQueueType
     {
         private readonly int type;
-        
+
         private readonly Dictionary<long, CoroutineLockQueue> coroutineLockQueues = new Dictionary<long, CoroutineLockQueue>();
 
         public CoroutineLockQueueType(int type)
@@ -47,13 +47,13 @@ namespace ET
             {
                 return;
             }
-            
+
+            queue.Notify(level);
+
             if (queue.Count == 0)
             {
                 this.Remove(key);
             }
-
-            queue.Notify(level);
         }
     }
 }

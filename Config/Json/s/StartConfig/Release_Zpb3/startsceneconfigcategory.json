@@ -1,0 +1,162 @@
+[
+  {
+    "Id": 1,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Realm",
+    "Name": "Realm",
+    "OuterPort": 30002
+  },
+  {
+    "Id": 2,
+    "Process": 1,
+    "Zone": 1,
+    "SceneType": "Location",
+    "Name": "Location",
+    "OuterPort": 0
+  },
+  {
+    "Id": 3,
+    "Process": 2,
+    "Zone": 1,
+    "SceneType": "Room",
+    "Name": "Room",
+    "OuterPort": 0
+  },
+  {
+    "Id": 4,
+    "Process": 2,
+    "Zone": 1,
+    "SceneType": "Match",
+    "Name": "Match",
+    "OuterPort": 0
+  },
+  {
+    "Id": 5,
+    "Process": 3,
+    "Zone": 1,
+    "SceneType": "Rank",
+    "Name": "Rank",
+    "OuterPort": 0
+  },
+  {
+    "Id": 6,
+    "Process": 4,
+    "Zone": 1,
+    "SceneType": "Account",
+    "Name": "Account",
+    "OuterPort": 0
+  },
+  {
+    "Id": 7,
+    "Process": 4,
+    "Zone": 1,
+    "SceneType": "Mail",
+    "Name": "Mail",
+    "OuterPort": 0
+  },
+  {
+    "Id": 8,
+    "Process": 4,
+    "Zone": 1,
+    "SceneType": "PlayerCache",
+    "Name": "PlayerCache",
+    "OuterPort": 0
+  },
+  {
+    "Id": 9,
+    "Process": 5,
+    "Zone": 1,
+    "SceneType": "Gate",
+    "Name": "Gate1",
+    "OuterPort": 30003
+  },
+  {
+    "Id": 10,
+    "Process": 6,
+    "Zone": 1,
+    "SceneType": "Gate",
+    "Name": "Gate2",
+    "OuterPort": 30004
+  },
+  {
+    "Id": 11,
+    "Process": 7,
+    "Zone": 1,
+    "SceneType": "Gate",
+    "Name": "Gate3",
+    "OuterPort": 30005
+  },
+  {
+    "Id": 12,
+    "Process": 8,
+    "Zone": 1,
+    "SceneType": "Gate",
+    "Name": "Gate4",
+    "OuterPort": 30006
+  },
+  {
+    "Id": 13,
+    "Process": 9,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "Dynamic",
+    "OuterPort": 0
+  },
+  {
+    "Id": 14,
+    "Process": 10,
+    "Zone": 1,
+    "SceneType": "Map",
+    "Name": "Dynamic",
+    "OuterPort": 0
+  },
+  {
+    "Id": 200,
+    "Process": 1,
+    "Zone": 2,
+    "SceneType": "Robot",
+    "Name": "Robot01",
+    "OuterPort": 0
+  },
+  {
+    "Id": 300,
+    "Process": 1,
+    "Zone": 3,
+    "SceneType": "RouterManager",
+    "Name": "RouterManager",
+    "OuterPort": 3478
+  },
+  {
+    "Id": 301,
+    "Process": 1,
+    "Zone": 3,
+    "SceneType": "Router",
+    "Name": "Router01",
+    "OuterPort": 30301
+  },
+  {
+    "Id": 302,
+    "Process": 1,
+    "Zone": 3,
+    "SceneType": "Router",
+    "Name": "Router02",
+    "OuterPort": 30302
+  },
+  {
+    "Id": 303,
+    "Process": 1,
+    "Zone": 3,
+    "SceneType": "Router",
+    "Name": "Router03",
+    "OuterPort": 30303
+  },
+  {
+    "Id": 304,
+    "Process": 1,
+    "Zone": 3,
+    "SceneType": "Router",
+    "Name": "Router04",
+    "OuterPort": 30304
+  }
+]

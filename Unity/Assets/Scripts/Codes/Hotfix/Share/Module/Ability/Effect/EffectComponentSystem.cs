@@ -64,10 +64,10 @@ namespace ET.Ability
             return true;
         }
 
-        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo)
+        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo, bool isScaleByUnit)
         {
             EffectObj effectObj = self.AddChild<EffectObj>();
-            effectObj.Init(unitId, key, effectCfgId, playAudioActionId, duration, offSetInfo);
+            effectObj.Init(unitId, key, effectCfgId, playAudioActionId, duration, offSetInfo, isScaleByUnit);
 
             if (string.IsNullOrEmpty(key) == false)
             {

@@ -10,7 +10,7 @@ namespace ET.Server
             LocationProxyComponent.Instance = self;
         }
     }
-    
+
     [ObjectSystem]
     public class LocationProxyComponentDestroySystem: DestroySystem<LocationProxyComponent>
     {
@@ -55,7 +55,7 @@ namespace ET.Server
                 new ObjectRemoveRequest() { Type = type, Key = key });
         }
 
-        public static async ETTask<long> Get(this LocationProxyComponent self, int type, long key)
+        public static async ETTask<long> Get(this LocationProxyComponent self, int type, long key, long sceneInstanceId)
         {
             if (key == 0)
             {
@@ -65,7 +65,7 @@ namespace ET.Server
             // location server配置到共享区，一个大战区可以配置N多个location server,这里暂时为1
             ObjectGetResponse response =
                     (ObjectGetResponse) await ActorMessageSenderComponent.Instance.Call(GetLocationSceneId(key),
-                        new ObjectGetRequest() { Type = type, Key = key });
+                        new ObjectGetRequest() { Type = type, Key = key, SceneInstanceId = sceneInstanceId });
             return response.InstanceId;
         }
 
@@ -78,7 +78,7 @@ namespace ET.Server
         {
             await LocationProxyComponent.Instance.RemoveLocation(self.Id, type);
         }
-        
+
         public static async ETTask RemoveLocation(this LocationProxyComponent self, long id, int type)
         {
             await LocationProxyComponent.Instance.Remove(type, id);

@@ -14,7 +14,8 @@ namespace ET
             this.TryGetValue(t, out list);
             if (list == null)
             {
-                list = new HashSet<K>();
+                //list = new HashSet<K>();
+                list = HashSetComponent<K>.Create();
                 this.Add(t, list);
             }
             list.Add(k);

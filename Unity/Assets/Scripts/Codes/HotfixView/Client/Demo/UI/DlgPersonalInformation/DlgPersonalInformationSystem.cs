@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -12,8 +12,11 @@ namespace ET.Client
         public static void RegisterUIEvent(this DlgPersonalInformation self)
         {
             self.View.E_LogoutButton.AddListener(self.OnLogout);
+            self.View.E_Logout_SdkButton.AddListener(self.OnLogout);
+            self.View.E_GoogleLoginButton.AddListenerAsync(self.OnClickBindAccount);
+            self.View.E_IphoneLoginButton.AddListenerAsync(self.OnClickBindAccount);
             self.View.E_SaveButton.AddListenerAsync(self.OnSave);
-            self.View.E_BG_ClickButton.AddListenerAsync(self.OnBGClick);
+            self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
             self.View.E_InputFieldTMP_InputField.onEndEdit.AddListener(self.OnEndEdit);
             self.View.E_InputFieldTMP_InputField.onValueChanged.AddListener(self.OnValueChanged);
 
@@ -49,9 +52,24 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            self.View.E_InputFieldTMP_InputField.text = playerBaseInfoComponent.PlayerName;
-            self.curSelectedIconIndex = playerBaseInfoComponent.IconIndex;
-
+            self.oldName = playerBaseInfoComponent.PlayerName;
+            self.View.E_InputFieldTMP_InputField.text = self.oldName;
+            self.oldIconIndex = playerBaseInfoComponent.IconIndex;
+            self.curSelectedIconIndex = self.oldIconIndex;
+            self.View.ELabel_IDTextMeshProUGUI.text = $"ID:{playerBaseInfoComponent.GetPlayerId()}";
+            self.View.E_SaveButton.SetVisible(false);
+            
+            self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
+            self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
+            self.View.E_AccountButton.SetVisible(playerBaseInfoComponent.BindLoginType != LoginType.Editor);
+            self.View.E_Account_TextTextMeshProUGUI.text = playerBaseInfoComponent.BindEmail;
+            if(playerBaseInfoComponent.BindLoginType == LoginType.GoogleSDK){
+                self.View.E_Account_TitleTextMeshProUGUI.text = "Google Account:";
+            }else if(playerBaseInfoComponent.BindLoginType == LoginType.AppleSDK){
+                self.View.E_Account_TitleTextMeshProUGUI.text = "Apple ID:";
+            }else{
+                self.View.E_Account_TitleTextMeshProUGUI.text = "Account:";
+            }
             await self.CreateAvatarScrollItem();
 
             self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
@@ -64,7 +82,7 @@ namespace ET.Client
 
         public static async ETTask Logout(this DlgPersonalInformation self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 
             PlayerBaseInfoComponent playerBaseInfoComponent =
@@ -80,33 +98,31 @@ namespace ET.Client
 
         public static async ETTask OnSave(this DlgPersonalInformation self)
         {
-            string Name = self.View.E_InputFieldTMP_InputField.text;
-            if (!self.DetermineNameLength(Name))
+            if (!self.DetermineNameLength(self.curName))
             {
                 return;
             }
 
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            if (playerBaseInfoComponent.PlayerName != self.View.E_InputFieldTMP_InputField.text ||
-                playerBaseInfoComponent.IconIndex != self.curSelectedIconIndex)
-            {
-                playerBaseInfoComponent.PlayerName = self.View.E_InputFieldTMP_InputField.text;
-                playerBaseInfoComponent.IconIndex = self.curSelectedIconIndex;
-                await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"PlayerName", "IconIndex"});
-            }
+            playerBaseInfoComponent.PlayerName = self.curName;
+            playerBaseInfoComponent.IconIndex = self.curSelectedIconIndex;
+            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"PlayerName", "IconIndex"});
 
-            self.HidePersonalInfo().Coroutine();
+            self.oldName = self.curName;
+            self.oldIconIndex = self.curSelectedIconIndex;
+            self.View.E_SaveButton.SetVisible(false);
+            
+            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PersonalInfo_Update");
+            ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+            //self.HidePersonalInfo().Coroutine();
         }
 
-        public static async ETTask OnBGClick(this DlgPersonalInformation self)
+        public static void OnBGClick(this DlgPersonalInformation self)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            if (playerBaseInfoComponent.PlayerName != self.View.E_InputFieldTMP_InputField.text ||
-                playerBaseInfoComponent.IconIndex != self.curSelectedIconIndex)
+            if (self.ChkInfoChanged())
             {
                 string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PersonalInfo_Abandon_Des");
                 ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { self.HidePersonalInfo().Coroutine(); }, null
@@ -150,7 +166,9 @@ namespace ET.Client
 
         public static void OnValueChanged(this DlgPersonalInformation self, string name)
         {
-            //判断name是否合法
+            self.curName = name;
+            //TODO 判断name是否合法
+            self.ChkInfoChanged();
         }
 
         public static async ETTask CreateAvatarScrollItem(this DlgPersonalInformation self)
@@ -181,6 +199,81 @@ namespace ET.Client
         {
             self.curSelectedIconIndex = index;
             self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
+
+            self.ChkInfoChanged();
+        }
+
+        public static async ETTask OnClickBindAccount(this DlgPersonalInformation self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "BindClick",
+            });
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+			{
+				eventName = "BindEnded",
+			});
+            string AccountKey = "AccountId_Guest";
+            string accountId = "";
+            if (PlayerPrefs.HasKey(AccountKey))
+            {
+                accountId = PlayerPrefs.GetString(AccountKey);
+            }
+            await ET.Client.LoginSDKManagerComponent.Instance.SDKLoginIn(async () =>
+            {
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+                await TimerComponent.Instance.WaitAsync(1000);
+                string bindAccountId = ET.Client.LoginSDKManagerComponent.Instance.GetClientRecordAccountId();
+                string accountName = ET.Client.LoginSDKManagerComponent.Instance.GetClientRecordAccountName();
+                string token = ET.Client.LoginSDKManagerComponent.Instance.GetSDKToken();
+                string email = ET.Client.LoginSDKManagerComponent.Instance.GetSDKEmail();
+                LoginType loginType = ET.Client.LoginSDKManagerComponent.Instance.GetLoginType();
+                ET.Client.LoginSDKManagerComponent.Instance.SetClientRecordAccountLoginTime();
+                (bool bRet, string msg) = await LoginHelper.BindAccountWithAuth(self.ClientScene(), accountId, bindAccountId, loginType, accountName, token, email);
+                if (bRet == false)
+                {
+                    string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BindAccount_Title");
+                    string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BindAccount_FailBtn");
+                    UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, () =>
+                    {
+                        ET.Client.LoginSDKManagerComponent.Instance.SetClientRecordAccountLoginTimeNone();
+                        ET.Client.LoginSDKManagerComponent.Instance.SDKLoginOut(false).Coroutine();
+                    }, sureTxt, null, titleTxt);
+                }else{
+                    self.View.E_InputFieldTMP_InputField.text = accountName;
+                    self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && loginType == LoginType.Editor);
+                    self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && loginType == LoginType.Editor);
+                    self.View.E_AccountButton.SetVisible(loginType != LoginType.Editor);
+                    self.View.E_Account_TextTextMeshProUGUI.text = email;
+                    if(loginType == LoginType.GoogleSDK){
+                        self.View.E_Account_TitleTextMeshProUGUI.text = "Google Account:";
+                    }else if(loginType == LoginType.AppleSDK){
+                        self.View.E_Account_TitleTextMeshProUGUI.text = "Apple ID:";
+                    }else{
+                        self.View.E_Account_TitleTextMeshProUGUI.text = "Account:";
+                    }
+                }
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "BindEnded",
+                    properties = new()
+                    {
+                        {"success", bRet},
+                    }
+                });
+            });
+        }
+
+        public static bool ChkInfoChanged(this DlgPersonalInformation self)
+        {
+            if (self.curSelectedIconIndex != self.oldIconIndex || self.curName != self.oldName)
+            {
+                self.View.E_SaveButton.SetVisible(true);
+                return true;
+            }
+            self.View.E_SaveButton.SetVisible(false);
+            return false;
         }
     }
 }

@@ -1,0 +1,1514 @@
+[
+  {
+    "id": "SelectObjectConfig_Skill_PlayerSolo1",
+    "name": "弩箭塔LV1攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerSolo2",
+    "name": "弩箭塔LV2攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerSolo3",
+    "name": "弩箭塔LV3攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerAoe1",
+    "name": "加农炮LV1攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerAoe2",
+    "name": "加农炮LV2攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerAoe3",
+    "name": "加农炮LV3攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerLine1",
+    "name": "火焰塔LV1攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerLine2",
+    "name": "火焰塔LV2攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerLine3",
+    "name": "火焰塔LV3攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerCircle1",
+    "name": "毒雾塔LV1攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerCircle2",
+    "name": "毒雾塔LV2攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_PlayerCircle3",
+    "name": "毒雾塔LV3攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerDragon1",
+    "name": "龙击炮LV1攻击对象选择",
+    "desc": "高血量优先；改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "CurHpOrder",
+        "isDescending": true
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerDragon2",
+    "name": "龙击炮LV2攻击对象选择",
+    "desc": "高血量优先；改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "CurHpOrder",
+        "isDescending": true
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerDragon3",
+    "name": "龙击炮LV3攻击对象选择",
+    "desc": "高血量优先；改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "CurHpOrder",
+        "isDescending": true
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerElec1",
+    "name": "雷电塔LV1攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerElec2",
+    "name": "雷电塔LV2攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerElec3",
+    "name": "雷电塔LV3攻击对象选择",
+    "desc": "近距离优先；不改目标",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerIce1",
+    "name": "冰魔塔LV1攻击对象选择",
+    "desc": "无减速buff优先，改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "BuffExistOrder",
+        "isDescending": false,
+        "buffDealSelectCondition": {
+          "$type": "ByBuffCfgId",
+          "buffCfgId": "Buff_Slow"
+        }
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerIce2",
+    "name": "冰魔塔LV2攻击对象选择",
+    "desc": "无减速buff优先，改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "BuffExistOrder",
+        "isDescending": false,
+        "buffDealSelectCondition": {
+          "$type": "ByBuffCfgId",
+          "buffCfgId": "Buff_Slow"
+        }
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Skill_TowerIce3",
+    "name": "冰魔塔LV3攻击对象选择",
+    "desc": "无减速buff优先，改目标",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "BuffExistOrder",
+        "isDescending": false,
+        "buffDealSelectCondition": {
+          "$type": "ByBuffCfgId",
+          "buffCfgId": "Buff_Slow"
+        }
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_PlayerSolo1",
+    "name": "弩箭塔LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_PlayerSolo2",
+    "name": "弩箭塔LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_PlayerSolo3",
+    "name": "弩箭塔LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_PlayerAoe1_All",
+    "name": "加农炮LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_PlayerAoe2_All",
+    "name": "加农炮LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_PlayerAoe3_All",
+    "name": "加农炮LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_1Line1_All",
+    "name": "火焰塔LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 3,
+        "length": 40
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_1Line2_All",
+    "name": "火焰塔LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 3,
+        "length": 40
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_1Line3_All",
+    "name": "火焰塔LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 3,
+        "length": 40
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_Circle1_All",
+    "name": "毒雾塔LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 15,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_Circle2_All",
+    "name": "毒雾塔LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 15,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_Circle3_All",
+    "name": "毒雾塔LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 15,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_TowerDragon1",
+    "name": "龙击炮LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_TowerDragon2",
+    "name": "龙击炮LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_TowerDragon3",
+    "name": "龙击炮LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_Elec1",
+    "name": "雷电塔LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_Elec2",
+    "name": "雷电塔LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne_Elec3",
+    "name": "雷电塔LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_TowerIce1_All",
+    "name": "冰魔塔LV1伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_TowerIce2_All",
+    "name": "冰魔塔LV2伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_TowerIce3_All",
+    "name": "冰魔塔LV3伤害对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Buff_AddCDDown1",
+    "name": "加速塔LV1友军对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 7.5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Buff_AddCDDown2",
+    "name": "加速塔LV2友军对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 8.75,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Buff_AddCDDown3",
+    "name": "加速塔LV3友军对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 10,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_All_Stun",
+    "name": "弱化怪物对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 7.5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Monster_Niao1_SpeedUp",
+    "name": "加速怪1对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 3,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Monster_Niao2_SpeedUp",
+    "name": "加速怪2对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Monster_Niao3_SpeedUp",
+    "name": "加速怪3对象选择",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 8,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Self",
+    "name": "自身",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoSelf"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_SelectLast",
+    "name": "上次的选择",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallSelectLast"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_1",
+    "name": "伞形选择1个",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_All",
+    "name": "伞形选择所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_5_All",
+    "name": "伞形选择(5)所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_30_All",
+    "name": "伞形选择(30)所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 30,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_1",
+    "name": "矩形选择1个",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 100,
+        "length": 10
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_All",
+    "name": "矩形选择所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 100,
+        "length": 10
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Rectangle_15_All",
+    "name": "矩形选择(15)所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 2,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 3,
+        "length": 40
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_UmbellateFriend_5_1",
+    "name": "伞形选择1个",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 1,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_UmbellateFriend_5_All",
+    "name": "伞形选择所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 7.5,
+        "angle": 360
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_RectangleFriend_1",
+    "name": "矩形选择1个",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 1,
+    "selectOrder": [
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 100,
+        "length": 10
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_RectangleFriend_All",
+    "name": "矩形选择所有",
+    "desc": "",
+    "isSaveTarget": true,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": 1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenRectangle",
+      "rectangleArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "width": 100,
+        "length": 10
+      }
+    }
+  },
+  {
+    "id": "SelectObjectConfig_AutoUnitOne",
+    "name": "仅ActionCfg_AttackArea中使用,表示使用调用时传入的对象进行处理",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitOne"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_OnAoeChgUnit",
+    "name": "Aoe刚进入或刚退出的unit",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallOnAoeChgUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_OnAoeInUnit",
+    "name": "Aoe中的unit",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallOnAoeInUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_CasterUnit",
+    "name": "子弹(Buff)的上级发送者(可能是子弹)",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallCasterUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_CasterPlayerUnit",
+    "name": "子弹(Buff)的递归发送者(一定是player或monster)",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallCasterPlayerUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_OnAttackUnit",
+    "name": "攻击者(可能是子弹,也可能是人)",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallOnAttackUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_BeHurtUnit",
+    "name": "被攻击者",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": false,
+    "isChgToSelectPos": false,
+    "selectNum": -1,
+    "selectObjectType": -1,
+    "selectOrder": [],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallBeHurtUnit"
+    }
+  },
+  {
+    "id": "SelectObjectConfig_Umbellate_Scorpoio1",
+    "name": "伞形选择1个(无Debuff)",
+    "desc": "",
+    "isSaveTarget": false,
+    "isSaveTargetOnce": true,
+    "isChgToSelectPos": false,
+    "selectNum": 1,
+    "selectObjectType": 2,
+    "selectOrder": [
+      {
+        "$type": "BuffExistOrder",
+        "isDescending": false,
+        "buffDealSelectCondition": {
+          "$type": "ByBuffType",
+          "buffType": 2
+        }
+      },
+      {
+        "$type": "DisOrder",
+        "isDescending": false
+      }
+    ],
+    "selectPreCondition": [],
+    "actionCallParam": {
+      "$type": "ActionCallAutoUnitWhenUmbellate",
+      "umbellateArea": {
+        "ignoringHeight": true,
+        "keepHorizontal": true,
+        "radius": 100,
+        "angle": 360
+      }
+    }
+  }
+]

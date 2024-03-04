@@ -11,11 +11,11 @@ namespace ET.Ability
     {
         public bool isSceneEffect;
         public long unitId;
-        
+
         public string CfgId { get; set; }
-        
+
         public string PlayAudioActionId { get; set; }
-        
+
         ///<summary>
         ///这是个什么Effect
         ///</summary>
@@ -32,22 +32,22 @@ namespace ET.Ability
         ///挂载点,用于查找出这个transform后添加为子节点
         ///</summary>
         public string hangPointName;
-        
+
         ///<summary>
         ///相对挂载点的偏移位置
         ///</summary>
         public float3 offSet;
-        
+
         ///<summary>
         ///相对挂载点的旋转
         ///</summary>
         public float3 rotation;
-        
+
         ///<summary>
         ///标志key，用来记录后便于准确删除
         ///</summary>
         public string key;
-        
+
         ///<summary>
         ///剩余多久，单位：秒
         ///</summary>
@@ -63,5 +63,6 @@ namespace ET.Ability
         ///</summary>
         public float timeElapsed = 0.00f;
 
+        public bool isScaleByUnit;
     }
 }

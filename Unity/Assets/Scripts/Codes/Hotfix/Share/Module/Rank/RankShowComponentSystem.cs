@@ -16,15 +16,68 @@ namespace ET
             }
         }
 
+        public static void Init(this RankShowComponent self, RankType rankType)
+        {
+            self.rankType = rankType;
+        }
+
+        public static RankShowItemComponent AddRankShowItemComponent(this RankShowComponent self, long playerId)
+        {
+            RankShowItemComponent rankShowItemComponent = null;
+            switch (self.rankType)
+            {
+                case RankType.PVE:
+                {
+                    rankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(playerId);
+                    break;
+                }
+                case RankType.EndlessChallenge:
+                {
+                    rankShowItemComponent = self.AddChildWithId<RankEndlessChallengeShowItemComponent>(playerId);
+                    break;
+                }
+                default:
+                    break;
+            }
+
+            return rankShowItemComponent;
+        }
+
+        public static RankShowItemComponent GetRankShowItemComponent(this RankShowComponent self, long playerId)
+        {
+            RankShowItemComponent rankShowItemComponent = null;
+            switch (self.rankType)
+            {
+                case RankType.PVE:
+                {
+                    rankShowItemComponent = self.GetChild<RankShowItemComponent>(playerId);
+                    break;
+                }
+                case RankType.EndlessChallenge:
+                {
+                    rankShowItemComponent = self.GetChild<RankEndlessChallengeShowItemComponent>(playerId);
+                    break;
+                }
+                default:
+                    break;
+            }
+
+            return rankShowItemComponent;
+        }
+
         public static void SetRankShow(this RankShowComponent self, long playerId, int myRank, RankItemComponent myRankItemComponent, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
         {
-            RankShowItemComponent myRankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(playerId);
+            RankShowItemComponent myRankShowItemComponent = self.AddRankShowItemComponent(playerId);
             myRankShowItemComponent.rank = myRank;
             if (myRankItemComponent != null)
             {
                 myRankShowItemComponent.playerId = playerId;
                 myRankShowItemComponent.score = myRankItemComponent.score;
                 myRankShowItemComponent.recordTime = myRankItemComponent.recordTime;
+                if (myRankItemComponent is RankEndlessChallengeItemComponent rankEndlessChallengeItemComponent && myRankShowItemComponent is RankEndlessChallengeShowItemComponent rankEndlessChallengeShowItemComponent)
+                {
+                    rankEndlessChallengeShowItemComponent.killNum = rankEndlessChallengeItemComponent.killNum;
+                }
             }
             else
             {
@@ -46,16 +99,20 @@ namespace ET
                 }
                 else
                 {
-                    RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(rankPlayerId);
+                    RankShowItemComponent rankShowItemComponent = self.GetRankShowItemComponent(rankPlayerId);
                     if (rankShowItemComponent != null)
                     {
                         continue;
                     }
-                    rankShowItemComponent = self.AddChildWithId<RankShowItemComponent>(rankPlayerId);
+                    rankShowItemComponent = self.AddRankShowItemComponent(rankPlayerId);
                     rankShowItemComponent.rank = rank;
                     rankShowItemComponent.playerId = rankItemComponent.playerId;
                     rankShowItemComponent.score = rankItemComponent.score;
                     rankShowItemComponent.recordTime = rankItemComponent.recordTime;
+                    if (rankItemComponent is RankEndlessChallengeItemComponent rankEndlessChallengeItemComponent && rankShowItemComponent is RankEndlessChallengeShowItemComponent rankEndlessChallengeShowItemComponent)
+                    {
+                        rankEndlessChallengeShowItemComponent.killNum = rankEndlessChallengeItemComponent.killNum;
+                    }
                     self.rankList.Add(rankShowItemComponent.Id);
                 }
             }
@@ -66,7 +123,7 @@ namespace ET
             self.rankListTmp.Clear();
             for (int i = 0; i < self.rankList.Count; i++)
             {
-                RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(self.rankList[i]);
+                RankShowItemComponent rankShowItemComponent = self.GetRankShowItemComponent(self.rankList[i]);
                 self.rankListTmp.Add(rankShowItemComponent);
             }
             return self.rankListTmp;
@@ -85,7 +142,7 @@ namespace ET
 
         public static RankShowItemComponent GetMyRankShowItemComponent(this RankShowComponent self)
         {
-            RankShowItemComponent rankShowItemComponent = self.GetChild<RankShowItemComponent>(self.myRankShowItemComponentId);
+            RankShowItemComponent rankShowItemComponent = self.GetRankShowItemComponent(self.myRankShowItemComponentId);
             return rankShowItemComponent;
         }
 

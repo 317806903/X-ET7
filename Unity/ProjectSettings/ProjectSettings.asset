@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 0
   companyName: DeepMirror
-  productName: 148_RealityGuard
+  productName: Zpb_RealityGuard
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
@@ -137,7 +137,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 1.0
+  bundleVersion: 1.36585503
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -158,7 +158,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.dm.ARGameInNet148
+    Android: com.dm.ARGameInNetZpb
     Standalone: com.dm.ARTowerDefense
     Tizen: com.dm.ARTowerDefense
     iPhone: com.dm.ARGameInNet148
@@ -166,10 +166,10 @@ PlayerSettings:
   buildNumber:
     Standalone: 0
     VisionOS: 0
-    iPhone: 29907571
+    iPhone: 36585503
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 29907571
+  AndroidBundleVersionCode: 36585503
   AndroidMinSdkVersion: 29
   AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 1
@@ -263,8 +263,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: realityguarddebug.keystore'
+  AndroidKeyaliasName: realityguarddebug
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
@@ -507,6 +507,13 @@ PlayerSettings:
       m_Height: 76
       m_Kind: 0
       m_SubKind: iPad
+  - m_BuildTarget: VisionOS
+    m_Icons:
+    - m_Textures: []
+      m_Width: 1024
+      m_Height: 1024
+      m_Kind: 0
+      m_SubKind: 
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs:
@@ -648,6 +655,7 @@ PlayerSettings:
   switchSocketConcurrencyLimit: 14
   switchScreenResolutionBehavior: 2
   switchUseCPUProfiler: 0
+  switchEnableFileSystemTrace: 0
   switchUseGOLDLinker: 0
   switchLTOSetting: 0
   switchApplicationID: 72140675890085890
@@ -893,7 +901,7 @@ PlayerSettings:
     Server: UNITY;ENABLE_VIEW;ENABLE_CODES
     Standalone: UNITY;SINGLE_THREAD;ENABLE_VIEW;ENABLE_CODES
     WebGL: UNITY;ENABLE_VIEW;ENABLE_CODES
-    iPhone: UNITY;SINGLE_THREAD;UNITY_XR_ARKIT_LOADER_ENABLED
+    iPhone: UNITY;SINGLE_THREAD;UNITY_XR_ARKIT_LOADER_ENABLED;ENABLE_VIEW;ENABLE_CODES
   additionalCompilerArguments: {}
   platformArchitecture:
     iPhone: 1
@@ -1018,10 +1026,16 @@ PlayerSettings:
   apiCompatibilityLevel: 3
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: d6dbb7a7-acfa-43c9-845a-51f67e4c6e4e
+  cloudProjectId: 1d444a30-deb6-4e35-82ad-a65e42ab5981
   framebufferDepthMemorylessMode: 0
-  qualitySettingsNames: []
-  projectName: Unity
+  qualitySettingsNames:
+  - Fastest
+  - Fast
+  - Simple
+  - Good
+  - Beautiful
+  - Fantastic
+  projectName: ARTowerDefense
   organizationId: jiabei-lei
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

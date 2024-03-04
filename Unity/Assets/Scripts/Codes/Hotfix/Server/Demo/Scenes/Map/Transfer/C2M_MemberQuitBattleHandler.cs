@@ -13,7 +13,7 @@ namespace ET.Server
 
 			M2G_MemberQuitBattle _M2G_MemberQuitBattle = new();
 			ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-			await oneTypeLocationType.Call(playerId, _M2G_MemberQuitBattle);
+			await oneTypeLocationType.Call(playerId, _M2G_MemberQuitBattle, observerUnit.DomainScene().InstanceId);
 
 			observerUnit.RemoveLocation(LocationType.Unit).Coroutine();
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());

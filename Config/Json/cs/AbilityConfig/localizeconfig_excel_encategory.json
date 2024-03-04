@@ -216,6 +216,346 @@
     "text_en": "(en)弩箭塔"
   },
   {
+    "key": "Text_Key_Desc_Tow1_1",
+    "text_en": "Swiftly attacks a single enemy. Despite its lower power, its excellent range and affordable price make it quite effective."
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_2",
+    "text_en": "Swiftly attacks a single enemy. Despite its lower power, its excellent range and affordable price make it quite effective."
+  },
+  {
+    "key": "Text_Key_Desc_Tow1_3",
+    "text_en": "Swiftly attacks a single enemy. Despite its lower power, its excellent range and affordable price make it quite effective."
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_1",
+    "text_en": "Rapidly shells enemy groups, performing well when placed anywhere."
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_2",
+    "text_en": "Rapidly shells enemy groups, performing well when placed anywhere."
+  },
+  {
+    "key": "Text_Key_Desc_Tow2_3",
+    "text_en": "Rapidly shells enemy groups, performing well when placed anywhere."
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_1",
+    "text_en": "Emits a continuous straight-line flame. In straight pathways, it becomes the enemy's nightmare."
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_2",
+    "text_en": "Emits a continuous straight-line flame. In straight pathways, it becomes the enemy's nightmare."
+  },
+  {
+    "key": "Text_Key_Desc_Tow3_3",
+    "text_en": "Emits a continuous straight-line flame. In straight pathways, it becomes the enemy's nightmare."
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_1",
+    "text_en": "Generates a circular ring of toxic mist. The most potent biochemical weapon, especially effective if you can lure enemies into the mist."
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_2",
+    "text_en": "Generates a circular ring of toxic mist. The most potent biochemical weapon, especially effective if you can lure enemies into the mist."
+  },
+  {
+    "key": "Text_Key_Desc_Tow4_3",
+    "text_en": "Generates a circular ring of toxic mist. The most potent biochemical weapon, especially effective if you can lure enemies into the mist."
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_1",
+    "text_en": "Launches a powerful projectile after a long charge. Of course, you wouldn't use it against small fry, would you?"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_2",
+    "text_en": "Launches a powerful projectile after a long charge. Of course, you wouldn't use it against small fry, would you?"
+  },
+  {
+    "key": "Text_Key_Desc_Tow5_3",
+    "text_en": "Launches a powerful projectile after a long charge. Of course, you wouldn't use it against small fry, would you?"
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_1",
+    "text_en": "Summons lightning to strike a single enemy. Since it requires accumulating energy from the cloud layer, the higher it is from the enemy, the greater the damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_2",
+    "text_en": "Summons lightning to strike a single enemy. Since it requires accumulating energy from the cloud layer, the higher it is from the enemy, the greater the damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow6_3",
+    "text_en": "Summons lightning to strike a single enemy. Since it requires accumulating energy from the cloud layer, the higher it is from the enemy, the greater the damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_1",
+    "text_en": "Fires ice orbs to slow down a large group of enemies. Unfortunately, it struggles to deal effective damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_2",
+    "text_en": "Fires ice orbs to slow down a large group of enemies. Unfortunately, it struggles to deal effective damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow7_3",
+    "text_en": "Fires ice orbs to slow down a large group of enemies. Unfortunately, it struggles to deal effective damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_1",
+    "text_en": "Increases the attack speed of nearby  towers. Although its range is limited, there aren't that many allies worth reinforcing!"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_2",
+    "text_en": "Increases the attack speed of nearby  towers. Although its range is limited, there aren't that many allies worth reinforcing!"
+  },
+  {
+    "key": "Text_Key_Desc_Tow8_3",
+    "text_en": "Increases the attack speed of nearby  towers. Although its range is limited, there aren't that many allies worth reinforcing!"
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_1",
+    "text_en": "A tower with mystical magic that will continuously produce orbs capable of area attacks."
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_2",
+    "text_en": "A tower with mystical magic that will continuously produce orbs capable of area attacks."
+  },
+  {
+    "key": "Text_Key_Desc_Tow9_3",
+    "text_en": "A tower with mystical magic that will continuously produce orbs capable of area attacks."
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_1",
+    "text_en": "A magic tower that can turn any substance into gold. It will give you a sum of money at the end of the round."
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_2",
+    "text_en": "A magic tower that can turn any substance into gold. It will give you a sum of money at the end of the round."
+  },
+  {
+    "key": "Text_Key_Desc_Tow10_3",
+    "text_en": "A magic tower that can turn any substance into gold. It will give you a sum of money at the end of the round."
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_1",
+    "text_en": "The scorpion fires poisonous bullets. Monsters hit by it are poisoned and lose health over time."
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_2",
+    "text_en": "The scorpion fires poisonous bullets. Monsters hit by it are poisoned and lose health over time."
+  },
+  {
+    "key": "Text_Key_Desc_Tow11_3",
+    "text_en": "The scorpion fires poisonous bullets. Monsters hit by it are poisoned and lose health over time."
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_1",
+    "text_en": "Fires a cannonball with a curse that deals area damage and reduces the monster's defense."
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_2",
+    "text_en": "Fires a cannonball with a curse that deals area damage and reduces the monster's defense."
+  },
+  {
+    "key": "Text_Key_Desc_Tow12_3",
+    "text_en": "Fires a cannonball with a curse that deals area damage and reduces the monster's defense."
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_1",
+    "text_en": "Add enchantments to attack towers to increase the damage they deal per attack."
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_2",
+    "text_en": "Add enchantments to attack towers to increase the damage they deal per attack."
+  },
+  {
+    "key": "Text_Key_Desc_Tow13_3",
+    "text_en": "Add enchantments to attack towers to increase the damage they deal per attack."
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_1",
+    "text_en": "It can shoot dense ice arrows, bringing chilling cold and pain to monsters."
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_2",
+    "text_en": "It can shoot dense ice arrows, bringing chilling cold and pain to monsters."
+  },
+  {
+    "key": "Text_Key_Desc_Tow14_3",
+    "text_en": "It can shoot dense ice arrows, bringing chilling cold and pain to monsters."
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_1",
+    "text_en": "Fires a water orb that condenses the power of magic, dealing area damage and stunning monsters for a while."
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_2",
+    "text_en": "Fires a water orb that condenses the power of magic, dealing area damage and stunning monsters for a while."
+  },
+  {
+    "key": "Text_Key_Desc_Tow15_3",
+    "text_en": "Fires a water orb that condenses the power of magic, dealing area damage and stunning monsters for a while."
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_1",
+    "text_en": "Fires a small thunderball that deals single damage, with a fast frequency and enough damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_2",
+    "text_en": "Fires a small thunderball that deals single damage, with a fast frequency and enough damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow16_3",
+    "text_en": "Fires a small thunderball that deals single damage, with a fast frequency and enough damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_1",
+    "text_en": "Blessed Fire Crystals have a chance to trigger critical hits, increasing your attack damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_2",
+    "text_en": "Blessed Fire Crystals have a chance to trigger critical hits, increasing your attack damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow17_3",
+    "text_en": "Blessed Fire Crystals have a chance to trigger critical hits, increasing your attack damage."
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_1",
+    "text_en": "The elves from the other world who come to help have powerful magic, and the magic orbs they fire can cause a lot of damage to monsters in the area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_2",
+    "text_en": "The elves from the other world who come to help have powerful magic, and the magic orbs they fire can cause a lot of damage to monsters in the area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow18_3",
+    "text_en": "The elves from the other world who come to help have powerful magic, and the magic orbs they fire can cause a lot of damage to monsters in the area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_1",
+    "text_en": "Charge for a short period of time, and after the charge is complete, it will cause the bullet attack tower to unleash a combo."
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_2",
+    "text_en": "Charge for a short period of time, and after the charge is complete, it will cause the bullet attack tower to unleash a combo."
+  },
+  {
+    "key": "Text_Key_Desc_Tow19_3",
+    "text_en": "Charge for a short period of time, and after the charge is complete, it will cause the bullet attack tower to unleash a combo."
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_1",
+    "text_en": "Curse monsters, extending the duration of the debuff on them."
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_2",
+    "text_en": "Curse monsters, extending the duration of the debuff on them."
+  },
+  {
+    "key": "Text_Key_Desc_Tow20_3",
+    "text_en": "Curse monsters, extending the duration of the debuff on them."
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_1",
+    "text_en": "Earn extra gold from monsters when attacking them, making it a great way to earn money."
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_2",
+    "text_en": "Earn extra gold from monsters when attacking them, making it a great way to earn money."
+  },
+  {
+    "key": "Text_Key_Desc_Tow21_3",
+    "text_en": "Earn extra gold from monsters when attacking them, making it a great way to earn money."
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_1",
+    "text_en": "Fires stabbing arrows that deal single attacks, useful against monsters with high HP."
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_2",
+    "text_en": "Fires stabbing arrows that deal single attacks, useful against monsters with high HP."
+  },
+  {
+    "key": "Text_Key_Desc_Tow22_3",
+    "text_en": "Fires stabbing arrows that deal single attacks, useful against monsters with high HP."
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_1",
+    "text_en": "Rocket artillery capable of striking at long distances over a wide area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_2",
+    "text_en": "Rocket artillery capable of striking at long distances over a wide area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow23_3",
+    "text_en": "Rocket artillery capable of striking at long distances over a wide area."
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_1",
+    "text_en": "Unleashes a flaming fireball that inflicts a burning effect on enemies, dealing damage over time."
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_2",
+    "text_en": "Unleashes a flaming fireball that inflicts a burning effect on enemies, dealing damage over time."
+  },
+  {
+    "key": "Text_Key_Desc_Tow24_3",
+    "text_en": "Unleashes a flaming fireball that inflicts a burning effect on enemies, dealing damage over time."
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_1",
+    "text_en": "Assault Team"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_2",
+    "text_en": "Healing Team"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_3",
+    "text_en": "Monster Army"
+  },
+  {
+    "key": "Text_Key_Name_TowCallMonster_4",
+    "text_en": "Baron of Bats"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Aoe",
+    "text_en": "AOE"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Solo",
+    "text_en": "SOLO"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Line",
+    "text_en": "LINE"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Freeze",
+    "text_en": "FREEZE"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Enhance",
+    "text_en": "ENHANCE"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Buff",
+    "text_en": "BUFF"
+  },
+  {
+    "key": "Text_Key_TowerLabel_Debuff",
+    "text_en": "DEBUFF"
+  },
+  {
+    "key": "Text_Key_TowerLabel_DOT",
+    "text_en": "DOT"
+  },
+  {
+    "key": "Text_Key_TowerLabel_GetCoins",
+    "text_en": "GET COINS"
+  },
+  {
     "key": "Text_Key_Name_Tow1_1",
     "text_en": "X-Bow"
   },
@@ -241,51 +581,51 @@
   },
   {
     "key": "Text_Key_Name_Tow3_1",
-    "text_en": "Fire Totem"
+    "text_en": "Flame"
   },
   {
     "key": "Text_Key_Name_Tow3_2",
-    "text_en": "Fire Totem"
+    "text_en": "Flame"
   },
   {
     "key": "Text_Key_Name_Tow3_3",
-    "text_en": "Fire Totem"
+    "text_en": "Flame"
   },
   {
     "key": "Text_Key_Name_Tow4_1",
-    "text_en": "Poison "
+    "text_en": "Tox Mist"
   },
   {
     "key": "Text_Key_Name_Tow4_2",
-    "text_en": "Poison "
+    "text_en": "Tox Mist"
   },
   {
     "key": "Text_Key_Name_Tow4_3",
-    "text_en": "Poison "
+    "text_en": "Tox Mist"
   },
   {
     "key": "Text_Key_Name_Tow5_1",
-    "text_en": "Dragon Tower"
+    "text_en": "Draco"
   },
   {
     "key": "Text_Key_Name_Tow5_2",
-    "text_en": "Dragon Tower"
+    "text_en": "Draco"
   },
   {
     "key": "Text_Key_Name_Tow5_3",
-    "text_en": "Dragon Tower"
+    "text_en": "Draco"
   },
   {
     "key": "Text_Key_Name_Tow6_1",
-    "text_en": "Tesla"
+    "text_en": "Thunder"
   },
   {
     "key": "Text_Key_Name_Tow6_2",
-    "text_en": "Tesla"
+    "text_en": "Thunder"
   },
   {
     "key": "Text_Key_Name_Tow6_3",
-    "text_en": "Tesla"
+    "text_en": "Thunder"
   },
   {
     "key": "Text_Key_Name_Tow7_1",
@@ -301,135 +641,371 @@
   },
   {
     "key": "Text_Key_Name_Tow8_1",
-    "text_en": "Speed Tower"
+    "text_en": "Time Swift"
   },
   {
     "key": "Text_Key_Name_Tow8_2",
-    "text_en": "Speed Tower"
+    "text_en": "Time Swift"
   },
   {
     "key": "Text_Key_Name_Tow8_3",
-    "text_en": "Speed Tower"
+    "text_en": "Time Swift"
   },
   {
-    "key": "Text_Key_Desc_Tow1_1",
-    "text_en": "X-Bow"
+    "key": "Text_Key_Name_Tow9_1",
+    "text_en": "Myst Orb"
   },
   {
-    "key": "Text_Key_Desc_Tow1_2",
-    "text_en": "X-Bow"
+    "key": "Text_Key_Name_Tow9_2",
+    "text_en": "Myst Orb"
   },
   {
-    "key": "Text_Key_Desc_Tow1_3",
-    "text_en": "X-Bow"
+    "key": "Text_Key_Name_Tow9_3",
+    "text_en": "Myst Orb"
   },
   {
-    "key": "Text_Key_Desc_Tow2_1",
-    "text_en": "Cannon"
+    "key": "Text_Key_Name_Tow10_1",
+    "text_en": "Alchemy"
   },
   {
-    "key": "Text_Key_Desc_Tow2_2",
-    "text_en": "Cannon"
+    "key": "Text_Key_Name_Tow10_2",
+    "text_en": "Alchemy"
   },
   {
-    "key": "Text_Key_Desc_Tow2_3",
-    "text_en": "Cannon"
+    "key": "Text_Key_Name_Tow10_3",
+    "text_en": "Alchemy"
   },
   {
-    "key": "Text_Key_Desc_Tow3_1",
-    "text_en": "Fire Totem"
+    "key": "Text_Key_Name_Tow11_1",
+    "text_en": "Scorpio"
   },
   {
-    "key": "Text_Key_Desc_Tow3_2",
-    "text_en": "Fire Totem"
+    "key": "Text_Key_Name_Tow11_2",
+    "text_en": "Scorpio"
   },
   {
-    "key": "Text_Key_Desc_Tow3_3",
-    "text_en": "Fire Totem"
+    "key": "Text_Key_Name_Tow11_3",
+    "text_en": "Scorpio"
   },
   {
-    "key": "Text_Key_Desc_Tow4_1",
-    "text_en": "Poison "
+    "key": "Text_Key_Name_Tow12_1",
+    "text_en": "Breaker"
   },
   {
-    "key": "Text_Key_Desc_Tow4_2",
-    "text_en": "Poison "
+    "key": "Text_Key_Name_Tow12_2",
+    "text_en": "Breaker"
   },
   {
-    "key": "Text_Key_Desc_Tow4_3",
-    "text_en": "Poison "
+    "key": "Text_Key_Name_Tow12_3",
+    "text_en": "Breaker"
   },
   {
-    "key": "Text_Key_Desc_Tow5_1",
-    "text_en": "Dragon Tower"
+    "key": "Text_Key_Name_Tow13_1",
+    "text_en": "Enchanter"
   },
   {
-    "key": "Text_Key_Desc_Tow5_2",
-    "text_en": "Dragon Tower"
+    "key": "Text_Key_Name_Tow13_2",
+    "text_en": "Enchanter"
   },
   {
-    "key": "Text_Key_Desc_Tow5_3",
-    "text_en": "Dragon Tower"
+    "key": "Text_Key_Name_Tow13_3",
+    "text_en": "Enchanter"
   },
   {
-    "key": "Text_Key_Desc_Tow6_1",
+    "key": "Text_Key_Name_Tow14_1",
+    "text_en": "Ice Arrow"
+  },
+  {
+    "key": "Text_Key_Name_Tow14_2",
+    "text_en": "Ice Arrow"
+  },
+  {
+    "key": "Text_Key_Name_Tow14_3",
+    "text_en": "Ice Arrow"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_1",
+    "text_en": "Dizzy Orb"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_2",
+    "text_en": "Dizzy Orb"
+  },
+  {
+    "key": "Text_Key_Name_Tow15_3",
+    "text_en": "Dizzy Orb"
+  },
+  {
+    "key": "Text_Key_Name_Tow16_1",
     "text_en": "Tesla"
   },
   {
-    "key": "Text_Key_Desc_Tow6_2",
+    "key": "Text_Key_Name_Tow16_2",
     "text_en": "Tesla"
   },
   {
-    "key": "Text_Key_Desc_Tow6_3",
+    "key": "Text_Key_Name_Tow16_3",
     "text_en": "Tesla"
   },
   {
-    "key": "Text_Key_Desc_Tow7_1",
+    "key": "Text_Key_Name_Tow17_1",
+    "text_en": "Crit Totem"
+  },
+  {
+    "key": "Text_Key_Name_Tow17_2",
+    "text_en": "Crit Totem"
+  },
+  {
+    "key": "Text_Key_Name_Tow17_3",
+    "text_en": "Crit Totem"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_1",
+    "text_en": "Hell Fire"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_2",
+    "text_en": "Hell Fire"
+  },
+  {
+    "key": "Text_Key_Name_Tow18_3",
+    "text_en": "Hell Fire"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_1",
+    "text_en": "Overcharge"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_2",
+    "text_en": "Overcharge"
+  },
+  {
+    "key": "Text_Key_Name_Tow19_3",
+    "text_en": "Overcharge"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_1",
+    "text_en": "Amplify Curse"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_2",
+    "text_en": "Amplify Curse"
+  },
+  {
+    "key": "Text_Key_Name_Tow20_3",
+    "text_en": "Amplify Curse"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_1",
+    "text_en": "Thief"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_2",
+    "text_en": "Thief"
+  },
+  {
+    "key": "Text_Key_Name_Tow21_3",
+    "text_en": "Thief"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_1",
+    "text_en": "Sting"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_2",
+    "text_en": "Sting"
+  },
+  {
+    "key": "Text_Key_Name_Tow22_3",
+    "text_en": "Sting"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_1",
+    "text_en": "Rocket"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_2",
+    "text_en": "Rocket"
+  },
+  {
+    "key": "Text_Key_Name_Tow23_3",
+    "text_en": "Rocket"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_1",
+    "text_en": "Fire Orb"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_2",
+    "text_en": "Fire Orb"
+  },
+  {
+    "key": "Text_Key_Name_Tow24_3",
+    "text_en": "Fire Orb"
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_1",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_2",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Name_TestTow1_3",
+    "text_en": "X-Bow"
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_1",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_2",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Name_TestTow2_3",
+    "text_en": "Cannon"
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_1",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_2",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Name_TestTow3_3",
+    "text_en": "Fire Totem"
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_1",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_2",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Name_TestTow4_3",
+    "text_en": "Poison "
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_1",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_2",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Name_TestTow5_3",
+    "text_en": "Dragon Tower"
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_1",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_2",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Name_TestTow6_3",
+    "text_en": "Tesla"
+  },
+  {
+    "key": "Text_Key_Name_TestTow7_1",
     "text_en": "Ice Tower"
   },
   {
-    "key": "Text_Key_Desc_Tow7_2",
+    "key": "Text_Key_Name_TestTow7_2",
     "text_en": "Ice Tower"
   },
   {
-    "key": "Text_Key_Desc_Tow7_3",
+    "key": "Text_Key_Name_TestTow7_3",
     "text_en": "Ice Tower"
   },
   {
-    "key": "Text_Key_Desc_Tow8_1",
+    "key": "Text_Key_Name_TestTow8_1",
     "text_en": "Speed Tower"
   },
   {
-    "key": "Text_Key_Desc_Tow8_2",
+    "key": "Text_Key_Name_TestTow8_2",
     "text_en": "Speed Tower"
   },
   {
-    "key": "Text_Key_Desc_Tow8_3",
+    "key": "Text_Key_Name_TestTow8_3",
     "text_en": "Speed Tower"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_1",
-    "text_en": "Assault Team"
+    "key": "Text_Key_Tower_UIAttribute_GongJi",
+    "text_en": "Attack"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_2",
-    "text_en": "Healing Team"
+    "key": "Text_Key_Tower_UIAttribute_GongSu",
+    "text_en": "Attack Speed"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_3",
-    "text_en": "Monster Army"
+    "key": "Text_Key_Tower_UIAttribute_GongJiJiaCheng",
+    "text_en": "Attack+"
   },
   {
-    "key": "Text_Key_Name_TowCallMonster_4",
-    "text_en": "Baron of Bats"
+    "key": "Text_Key_Tower_UIAttribute_GongSuJiaCheng",
+    "text_en": "Attack Speed+"
   },
   {
-    "key": "Text_Key_TowerLabel_Aoe",
-    "text_en": "Aoe"
+    "key": "Text_Key_Tower_UIAttribute_HuoDeJinBi",
+    "text_en": "Gain Coins"
   },
   {
-    "key": "Text_Key_TowerLabel_ST",
-    "text_en": "ST"
+    "key": "Text_Key_Tower_UIAttribute_BaoJi",
+    "text_en": "Crit Rate"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_LianJi",
+    "text_en": "Fast Attack"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_CD",
+    "text_en": "CD"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_JianSu",
+    "text_en": "Slows"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_DOT",
+    "text_en": "DoT"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Break",
+    "text_en": "Damage+"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Dizzy",
+    "text_en": "Dizzy"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Steal",
+    "text_en": "Steal Coins"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Num",
+    "text_en": "{0}"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Percent",
+    "text_en": "{0}%"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Wave",
+    "text_en": "{0}/wave"
+  },
+  {
+    "key": "Text_Key_Tower_UIAttribute_Content_Seconds",
+    "text_en": "{0}/s"
   },
   {
     "key": "TextCode_Key_UpdateRes_TotalNum",
@@ -452,12 +1028,28 @@
     "text_en": "All"
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayTowerDefense1",
-    "text_en": "Tower Defense"
+    "key": "TextCode_Key_GameMode_GamePlayTowerDefenseNormal",
+    "text_en": "Tower Defense Normal"
   },
   {
-    "key": "TextCode_Key_GameMode_GamePlayPK1",
-    "text_en": "PK"
+    "key": "TextCode_Key_GamePlayTowerDefenseTutorialFirst",
+    "text_en": "Tower Defense TutorialFirst"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVE",
+    "text_en": "Tower Defense PVE"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefenseEndlessChallenge",
+    "text_en": "Tower Defense EndlessChallenge"
+  },
+  {
+    "key": "TextCode_Key_GamePlayTowerDefensePVP",
+    "text_en": "Tower Defense PVP"
+  },
+  {
+    "key": "TextCode_Key_GameMode_GamePlayPKNormal",
+    "text_en": "PK Normal"
   },
   {
     "key": "TextCode_Key_TeamMode_All",
@@ -493,7 +1085,7 @@
   },
   {
     "key": "TextCode_Key_RoomMemberStatus_SeatIndex",
-    "text_en": "Empty : {0}"
+    "text_en": "Empty: {0}"
   },
   {
     "key": "TextCode_Key_RoomMemberStatus_ChgSeat",
@@ -536,12 +1128,28 @@
     "text_en": "Update Complete"
   },
   {
+    "key": "TextCode_Key_NewGameVersion",
+    "text_en": "Please download the new version"
+  },
+  {
     "key": "TextCode_Key_Res_UpdateErr",
     "text_en": "Resource Update Error: {0}"
   },
   {
     "key": "TextCode_Key_Res_DownLoadResErr",
     "text_en": "Failed to Download Resources: {0} {1}"
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Title",
+    "text_en": "Connection Failed"
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Des",
+    "text_en": "Unable to connect to the server at the moment. Please try again later."
+  },
+  {
+    "key": "TextCode_Key_ServerFail_Btn",
+    "text_en": "Retry"
   },
   {
     "key": "TextCode_Key_IsQuitBattle",
@@ -557,7 +1165,7 @@
   },
   {
     "key": "TextCode_Key_Login_IsReturnRoom",
-    "text_en": "We noticed you left a room without confirmation. Do you want to rejpin?"
+    "text_en": "We noticed you left a room without confirmation. Do you want to rejoin?"
   },
   {
     "key": "TextCode_Key_Login_IsReturnBattle",
@@ -609,7 +1217,7 @@
   },
   {
     "key": "TextCode_Key_Battle_CurMonsterWaveLeftTime",
-    "text_en": "Wave ends in {0}s"
+    "text_en": "Fail in {0} s"
   },
   {
     "key": "TextCode_Key_Battle_MonsterWaveOverTime",
@@ -621,7 +1229,7 @@
   },
   {
     "key": "TextCode_Key_Battle_CurPutTowerCount",
-    "text_en": "You can still place {0}  towers"
+    "text_en": "{0}/{1}"
   },
   {
     "key": "TextCode_Key_Battle_TowerBuyDone",
@@ -649,7 +1257,7 @@
   },
   {
     "key": "TextCode_Key_Battle_ChkPutMesh_IsReachHome",
-    "text_en": "This spot can’t reach the basecamp. Try another place."
+    "text_en": "This spot can't reach the basecamp. Try another place."
   },
   {
     "key": "TextCode_Key_Battle_ChkPutMesh_IsNearTower",
@@ -677,15 +1285,15 @@
   },
   {
     "key": "TextCode_Key_Battle_CanLevelUpTower",
-    "text_en": "CanUpgrade"
+    "text_en": "Can Upgrade"
   },
   {
     "key": "TextCode_Key_Battle_CannotLevelUpTower",
-    "text_en": "CannotUpgrade"
+    "text_en": "Cannot Upgrade"
   },
   {
     "key": "TextCode_Key_BattleEnd_ChallengeEnds1",
-    "text_en": "Survived <color=#ffffff><size=150>{0}</size></color> Waves"
+    "text_en": "Survived <size=40>{0}</size> Waves"
   },
   {
     "key": "TextCode_Key_BattleEnd_ChallengeEnds2",
@@ -773,7 +1381,7 @@
   },
   {
     "key": "TextCode_Key_Dialog_LeaveTheGame_Des",
-    "text_en": "This game will end and you’ll need to start over."
+    "text_en": "This game will end and you'll need to start over."
   },
   {
     "key": "TextCode_Key_Dialog_LeaveTheGame_Cancel",
@@ -809,7 +1417,7 @@
   },
   {
     "key": "TextCode_Key_TutorialText_WorldDes3",
-    "text_en": "Fortunately, our top scientists have come up with “Space-Time Defense Towers' that put an end to their shenanigans. "
+    "text_en": "Fortunately, our top scientists have come up with \"Space-Time Defense Towers\" that put an end to their shenanigans. "
   },
   {
     "key": "TextCode_Key_TutorialText_WorldDes4",
@@ -817,19 +1425,19 @@
   },
   {
     "key": "TextCode_Key_TutorialText_PicDes1",
-    "text_en": "Find an empty surface (tabletop or ground). Set up some obstacles to construct a easily defendable terrain."
+    "text_en": "Find an empty surface, then set up some obstacles to construct a easily defendable terrain. Survey the area with your phone camera."
   },
   {
     "key": "TextCode_Key_TutorialText_ScanBegin",
-    "text_en": "Move gently to survey the area and bring the battlefield to life! The lighting is better not too dark or bright."
+    "text_en": "Tap to start scanning the battlefield. Please take the scene slowly."
   },
   {
     "key": "TextCode_Key_TutorialText_ScanFinish",
-    "text_en": "Terrain thoroughly scanned? Click again to proceed."
+    "text_en": "After scanning a large enough battlefield, Tap to continue."
   },
   {
     "key": "TextCode_Key_TutorialText_ScanConfirm",
-    "text_en": "If you've created the ideal battlefield, click confirm!"
+    "text_en": "Select the ideal scale, tap to continue."
   },
   {
     "key": "TextCode_Key_TutorialText_RoomStart",
@@ -837,15 +1445,15 @@
   },
   {
     "key": "TextCode_Key_TutorialText_PlaceHQ",
-    "text_en": "Hold and drag your HQ onto the battlefield. \nIf it falls to the enemy, game over! "
+    "text_en": "Drag your castle onto the battlefield and protect it."
   },
   {
     "key": "TextCode_Key_TutorialText_PlaceSP",
-    "text_en": "Place the spawn point for the spirits. They will head for your HQ. So strategize your defense!"
+    "text_en": "Drag the portal onto the battlefield. It will spawn monsters to attack your castle."
   },
   {
     "key": "TextCode_Key_TutorialText_BuyTower",
-    "text_en": "Purchase your preferred towers to fend off the invaders. "
+    "text_en": "Tap to purchase a tower."
   },
   {
     "key": "TextCode_Key_TutorialText_CloseDLG",
@@ -853,7 +1461,7 @@
   },
   {
     "key": "TextCode_Key_TutorialText_PlaceTower",
-    "text_en": "Drag to deploy defense towers. "
+    "text_en": "Drag the tower onto the battlefield."
   },
   {
     "key": "TextCode_Key_TutorialText_TapTower",
@@ -861,11 +1469,11 @@
   },
   {
     "key": "TextCode_Key_TutorialText_TowerDetail",
-    "text_en": "Remember, upgrades require 2 towers of the same type and level."
+    "text_en": "Upgrade by consuming two identical towers."
   },
   {
     "key": "TextCode_Key_TutorialText_WaveStart",
-    "text_en": "Ready to start? Hit it now!"
+    "text_en": "Tap to start."
   },
   {
     "key": "TextCode_Key_PersonalInfo_Abandon_Des",
@@ -874,5 +1482,173 @@
   {
     "key": "TextCode_Key_BattlePut_IsOK",
     "text_en": "Place it in this location?"
+  },
+  {
+    "key": "TextCode_Key_Rank_NoRank",
+    "text_en": "1000+"
+  },
+  {
+    "key": "TextCode_Key_Rank_NoData",
+    "text_en": "1000+"
+  },
+  {
+    "key": "TextCode_Key_Tip_NoWayToConnectHome",
+    "text_en": "The current placement cannot connect to the headquarters, please choose a new location."
+  },
+  {
+    "key": "TextCode_Key_Tip_TooMuch",
+    "text_en": "Too many."
+  },
+  {
+    "key": "TextCode_Key_Skill_AlreadyLearned",
+    "text_en": "Already learned."
+  },
+  {
+    "key": "TextCode_Key_Skill_HaveNotLearned",
+    "text_en": "Haven't learned this skill yet {0}."
+  },
+  {
+    "key": "TextCode_Key_Skill_LastSkillIsBeingReleased",
+    "text_en": "Previous skill still in use."
+  },
+  {
+    "key": "TextCode_Key_Room_WaitAllReady",
+    "text_en": "Please wait for all players to be ready."
+  },
+  {
+    "key": "TextCode_Key_Room_EachCampHaveSomeone",
+    "text_en": "Each camp must have at least one player."
+  },
+  {
+    "key": "TextCode_Key_Room_CampNumberInconsistent",
+    "text_en": "Unequal number of players in camps, please adjust."
+  },
+  {
+    "key": "TextCode_Key_Room_NotSupport",
+    "text_en": "Support for fewer than {0} camps is not available at the moment."
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_ChallengeLevel",
+    "text_en": "Level {0} "
+  },
+  {
+    "key": "TextCode_Key_Battle_Recover",
+    "text_en": "Revive？"
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Retry",
+    "text_en": "Retry"
+  },
+  {
+    "key": "TextCode_Key_Battle_End_Next",
+    "text_en": "Next"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTip",
+    "text_en": "Download the latest package to play.\nFile Size:{0}MB"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateTitle",
+    "text_en": "Update available"
+  },
+  {
+    "key": "TextCode_Key_Res_Download",
+    "text_en": "Download"
+  },
+  {
+    "key": "TextCode_Key_Res_CheckUpdate",
+    "text_en": "Checking updates…"
+  },
+  {
+    "key": "TextCode_Key_Res_Restart",
+    "text_en": "Restart"
+  },
+  {
+    "key": "TextCode_Key_Res_UpdateSuccessDes",
+    "text_en": "Restart the game now！"
+  },
+  {
+    "key": "TextCode_Key_Res_DownloadProgress",
+    "text_en": "Downloading {0}MB/{1}MB"
+  },
+  {
+    "key": "TextCode_Key_PhysicalStrength_IsFull",
+    "text_en": "Energy is full"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentNull",
+    "text_en": "{0}"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitle1",
+    "text_en": "Attack"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeTitleTest1",
+    "text_en": "测试title"
+  },
+  {
+    "key": "TextCode_Key_TowerUIAttributeContentTest1",
+    "text_en": "测试{0}/s,而且{1}回合"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_Title",
+    "text_en": "Account Binding"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_FailBtn",
+    "text_en": "Okay"
+  },
+  {
+    "key": "TextCode_Key_BindAccount_AuthFail",
+    "text_en": "Account verification failed."
+  },
+  {
+    "key": "TextCode_Key_BindAccount_BindFail",
+    "text_en": "Account already bound or unavailable, binding failed."
+  },
+  {
+    "key": "TextCode_Key_Reward_Without_RewardAd",
+    "text_en": "Unable to retrieve ads at the moment. You will receive the reward directly."
+  },
+  {
+    "key": "TextCode_Key_PersonalInfo_Update",
+    "text_en": "Profile updated"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_Rank",
+    "text_en": "Rank {0}"
+  },
+  {
+    "key": "TextCode_Key_BattleEnd_KillNum",
+    "text_en": "{0} kills"
+  },
+  {
+    "key": "TextCode_Key_NeedCameraPermission",
+    "text_en": "You need camera permission to continue the game."
+  },
+  {
+    "key": "TextCode_Key_OwnerRescan_Member",
+    "text_en": "The captain wants to rescan and is about to exit."
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Title",
+    "text_en": "Rescan"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Des",
+    "text_en": "Do you want to leave the current game and rescan the battlefield?"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Cancel",
+    "text_en": "Stay"
+  },
+  {
+    "key": "TextCode_Key_Dialog_RescanTheGame_Confirm",
+    "text_en": "Leave"
+  },
+  {
+    "key": "TextCode_Key_Battle_Tip_NoReward",
+    "text_en": "There will be no rewards for this game"
   }
 ]

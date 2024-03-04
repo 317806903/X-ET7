@@ -34,6 +34,7 @@ namespace ET.Server
                 self.waitNoticeGamePlayToClientList = new();
                 self.waitNoticeGamePlayModeToClientList = new();
                 self.waitNoticeGamePlayPlayerListToClientList = new();
+                self.waitNoticeGamePlayStatisticalToClientList = new();
             }
         }
 
@@ -46,6 +47,7 @@ namespace ET.Server
                 self.waitNoticeGamePlayToClientList?.Clear();
                 self.waitNoticeGamePlayModeToClientList?.Clear();
                 self.waitNoticeGamePlayPlayerListToClientList?.Clear();
+                self.waitNoticeGamePlayStatisticalToClientList?.Clear();
             }
         }
 
@@ -68,10 +70,15 @@ namespace ET.Server
         {
             self.ChkNeedNoticeClient();
 
-            bool willDestroy = self.ChkGamePlayWaitDestroy();
-            if (willDestroy == false)
+            if (++self.curFrameChk >= self.waitFrameChk)
             {
-                self.ChkPlayerWaitDestroy();
+                self.curFrameChk = 0;
+
+                bool willDestroy = self.ChkGamePlayWaitDestroy();
+                if (willDestroy == false)
+                {
+                    self.ChkPlayerWaitDestroy().Coroutine();
+                }
             }
 
             if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
@@ -112,6 +119,16 @@ namespace ET.Server
             self.waitNoticeGamePlayPlayerListToClientList.Add(playerId);
         }
 
+        public static void AddWaitNoticeGamePlayStatisticalToClientList(this GamePlayComponent self, long playerId)
+        {
+            if (self.waitNoticeGamePlayStatisticalToClientList.Contains(playerId))
+            {
+                return;
+            }
+
+            self.waitNoticeGamePlayStatisticalToClientList.Add(playerId);
+        }
+
         public static void ChkNeedNoticeClient(this GamePlayComponent self)
         {
             while (self.waitNoticeGamePlayToClientList.Count > 0)
@@ -137,33 +154,6 @@ namespace ET.Server
                 }
 
                 self.waitNoticeGamePlayToClientList.Clear();
-            }
-
-            while (self.waitNoticeGamePlayModeToClientList.Count > 0)
-            {
-                try
-                {
-                    bool needSendSuccess = false;
-                    if (self.isFirstSendGamePlayModeToClient == false)
-                    {
-                        self.isFirstSendGamePlayModeToClient = true;
-                        needSendSuccess = true;
-                    }
-
-                    EventType.NoticeGamePlayModeToClient _NoticeGamePlayModeToClient = new()
-                    {
-                        playerIds = self.waitNoticeGamePlayModeToClientList,
-                        gamePlayModeComponent = self.GetGamePlayMode(),
-                        needSendSuccess = needSendSuccess,
-                    };
-                    EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayModeToClient);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e);
-                }
-
-                self.waitNoticeGamePlayModeToClientList.Clear();
             }
 
             while (self.waitNoticeGamePlayPlayerListToClientList.Count > 0)
@@ -192,6 +182,55 @@ namespace ET.Server
                 }
 
                 self.waitNoticeGamePlayPlayerListToClientList.Clear();
+            }
+
+            while (self.waitNoticeGamePlayStatisticalToClientList.Count > 0)
+            {
+                try
+                {
+                    foreach (long playerId in self.waitNoticeGamePlayStatisticalToClientList)
+                    {
+                        EventType.NoticeGamePlayStatisticalToClient _NoticeGamePlayStatisticalToClient = new()
+                        {
+                            playerId = playerId,
+                            gamePlayStatisticalDataComponent = self.GetComponent<GamePlayStatisticalDataManagerComponent>(). GetGamePlayStatisticalData(playerId),
+                        };
+                        EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayStatisticalToClient);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+
+                self.waitNoticeGamePlayStatisticalToClientList.Clear();
+            }
+
+            while (self.waitNoticeGamePlayModeToClientList.Count > 0)
+            {
+                try
+                {
+                    bool needSendSuccess = false;
+                    if (self.isFirstSendGamePlayModeToClient == false)
+                    {
+                        self.isFirstSendGamePlayModeToClient = true;
+                        needSendSuccess = true;
+                    }
+
+                    EventType.NoticeGamePlayModeToClient _NoticeGamePlayModeToClient = new()
+                    {
+                        playerIds = self.waitNoticeGamePlayModeToClientList,
+                        gamePlayModeComponent = self.GetGamePlayMode(),
+                        needSendSuccess = needSendSuccess,
+                    };
+                    EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayModeToClient);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+
+                self.waitNoticeGamePlayModeToClientList.Clear();
             }
         }
 
@@ -267,17 +306,46 @@ namespace ET.Server
             return false;
         }
 
-        public static void ChkPlayerWaitDestroy(this GamePlayComponent self)
+        public static async ETTask ChkPlayerWaitDestroy(this GamePlayComponent self)
         {
+            await ETTask.CompletedTask;
+            List<long> playerList = self.GetPlayerList();
+            if (playerList == null)
+            {
+                return;
+            }
             if (self.playerWaitQuitTime == null)
             {
                 self.playerWaitQuitTime = new();
             }
 
-            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-            foreach (long playerId in self.GetPlayerList())
+            if (self.playerListTmp == null)
             {
-                if (oneTypeLocationType.GetChild<Entity>(playerId) == null)
+                self.playerListTmp = new();
+            }
+            else
+            {
+                if (self.playerListTmp.Count > 0)
+                {
+                    return;
+                }
+            }
+
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                self.playerListTmp.Add(playerList[i]);
+            }
+
+            //ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+            foreach (long playerId in self.playerListTmp)
+            {
+                long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, self.DomainScene().InstanceId);
+                if (self.IsDisposed)
+                {
+                    Log.Error($" ChkPlayerWaitDestroy self.IsDisposed==true ");
+                    return;
+                }
+                if (locationActorId == 0)
                 {
                     if (self.playerWaitQuitTime.ContainsKey(playerId) == false)
                     {
@@ -291,16 +359,43 @@ namespace ET.Server
                         self.playerWaitQuitTime.Remove(playerId);
                     }
                 }
+                // if (oneTypeLocationType.GetChild<Entity>(playerId) == null)
+                // {
+                //     if (self.playerWaitQuitTime.ContainsKey(playerId) == false)
+                //     {
+                //         self.playerWaitQuitTime[playerId] = TimeHelper.ServerNow() + 5000;
+                //     }
+                // }
+                // else
+                // {
+                //     if (self.playerWaitQuitTime.ContainsKey(playerId))
+                //     {
+                //         self.playerWaitQuitTime.Remove(playerId);
+                //     }
+                // }
             }
 
-            foreach (var playerWaitQuitTime in self.playerWaitQuitTime)
+            self.playerListTmp.Clear();
+
+            while (true)
             {
-                long playerId = playerWaitQuitTime.Key;
-                long time = playerWaitQuitTime.Value;
-                if (time != -1 && time < TimeHelper.ServerNow())
+                bool bWhile = false;
+                foreach (var playerWaitQuitTime in self.playerWaitQuitTime)
                 {
-                    self.playerWaitQuitTime[playerId] = -1;
-                    self.TrigDestroyPlayer(playerId).Coroutine();
+                    long playerId = playerWaitQuitTime.Key;
+                    long time = playerWaitQuitTime.Value;
+                    if (time != -1 && time < TimeHelper.ServerNow())
+                    {
+                        self.playerWaitQuitTime[playerId] = -1;
+                        bWhile = true;
+
+                        await self.TrigDestroyPlayer(playerId);
+                        break;
+                    }
+                }
+
+                if (bWhile == false)
+                {
                     break;
                 }
             }

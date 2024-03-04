@@ -116,89 +116,9 @@ namespace ET.Ability
 
         public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall, Unit onAttackUnit, Unit beHurtUnit)
         {
-            if (onAttackUnit != null)
-            {
-                self.actionContext.attackerUnitId = onAttackUnit.Id;
-            }
+            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), aoeActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
 
-            string actionId = aoeActionCall.ActionId;
-            SelectHandle selectHandle;
-            Unit resetPosByUnit = null;
-            if (aoeActionCall.ActionCallParam is ActionCallSelectLast)
-            {
-                selectHandle = UnitHelper.GetSaveSelectHandle(self.GetUnit());
-            }
-            else if (aoeActionCall.ActionCallParam is ActionCallAutoUnit actionCallAutoUnit)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), beHurtUnit, actionCallAutoUnit, ref self.actionContext);
-            }
-            else if (aoeActionCall.ActionCallParam is ActionCallAutoSelf actionCallAutoSelf)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, actionCallAutoSelf, ref self.actionContext);
-            }
-            else if (aoeActionCall.ActionCallParam is ActionCallOnAoeChgUnit actionCallOnAoeChgUnit)
-            {
-                selectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
-                foreach (long unitId in self.chgUnitList)
-                {
-                    selectHandle.unitIds.Add(unitId);
-                }
-            }
-            else if (aoeActionCall.ActionCallParam is ActionCallOnAoeInUnit actionCallOnAoeInUnit)
-            {
-                selectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
-                foreach (long unitId in self.unitIds)
-                {
-                    selectHandle.unitIds.Add(unitId);
-                }
-            }
-            else
-            {
-                Unit targetUnit;
-                if (aoeActionCall.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
-                {
-                    targetUnit = self.GetCasterUnit();
-                }
-                else if (aoeActionCall.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
-                {
-                    targetUnit = self.GetCasterActorUnit();
-                }
-                else if (aoeActionCall.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
-                {
-                    targetUnit = onAttackUnit;
-                }
-                else if (aoeActionCall.ActionCallParam is ActionCallBeHurtUnit actionCallBeHurtUnit)
-                {
-                    targetUnit = beHurtUnit;
-                }
-                else
-                {
-                    targetUnit = self.GetUnit();
-                }
-                resetPosByUnit = targetUnit;
-                selectHandle = SelectHandleHelper.CreateUnitSelectHandle(self.GetUnit(), targetUnit, aoeActionCall.ActionCallParam);
-            }
-
-            if (selectHandle == null)
-            {
-                return;
-            }
-
-            SelectHandle curSelectHandle = selectHandle;
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition1, ref self.actionContext);
-            if (isChgSelect1)
-            {
-                curSelectHandle = newSelectHandle1;
-            }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, aoeActionCall.ActionCondition2, ref self.actionContext);
-            if (isChgSelect2)
-            {
-                curSelectHandle = newSelectHandle2;
-            }
-            if (bRet1 && bRet2)
-            {
-                ActionHandlerHelper.CreateAction(self.GetUnit(), resetPosByUnit,  actionId, aoeActionCall.DelayTime, curSelectHandle, ref self.actionContext);
-            }
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
         }
 
         public static void FixedUpdate(this AoeObj self, float fixedDeltaTime)
@@ -252,6 +172,10 @@ namespace ET.Ability
             foreach (var seeUnit in seeUnits)
             {
                 AOIEntity aoiEntityTmp = seeUnit.Value;
+                if (aoiEntityTmp == null)
+                {
+                    continue;
+                }
                 Unit unit = aoiEntityTmp.Unit;
                 if (unit == null)
                 {

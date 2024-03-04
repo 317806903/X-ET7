@@ -13,10 +13,16 @@ namespace ET.Client
 	        unit.Position = unitInfo.Position;
 	        unit.Forward = unitInfo.Forward;
 
-	        foreach (byte[] bytes in unitInfo.Components)
+	        if (unitInfo.Components != null)
 	        {
-		        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-		        unit.AddComponent(entity);
+		        foreach (byte[] bytes in unitInfo.Components)
+		        {
+			        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
+			        if (entity != null)
+			        {
+				        unit.AddComponent(entity);
+			        }
+		        }
 	        }
 
 	        EffectComponent effectComponent = unit.AddComponent<EffectComponent>();
@@ -25,7 +31,10 @@ namespace ET.Client
 		        foreach (byte[] bytes in unitInfo.EffectComponents)
 		        {
 			        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-			        effectComponent.AddChild(entity);
+			        if (entity != null)
+			        {
+				        effectComponent.AddChild(entity);
+			        }
 		        }
 	        }
 

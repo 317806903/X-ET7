@@ -61,6 +61,20 @@ message G2C_EnterBattleNotice // IActorMessage
 	int32 RpcId = 1;
 }
 
+//ResponseType G2C_GetPlayerStatus
+message C2G_GetPlayerStatus // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_GetPlayerStatus // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes PlayerStatusComponentBytes = 4;
+}
+
 message G2C_PlayerStatusChgNotice // IActorMessage
 {
 	int32 RpcId = 1;
@@ -133,6 +147,13 @@ message M2C_SyncUnitEffects // IActorMessage
 	bytes EffectComponent = 4;
 }
 
+message M2C_SyncGetCoinShow // IActorMessage
+{
+	int64 UnitId = 1;
+	int32 CoinType = 2;
+	int32 ChgValue = 3;
+}
+
 message M2C_SyncPlayAudio // IActorMessage
 {
 	int64 UnitId = 1;
@@ -148,6 +169,12 @@ message M2C_SyncPlayAnimator // IActorMessage
 message M2C_CreateMyUnit // IActorMessage
 {
 	UnitInfo Unit = 1;
+}
+
+message C2M_NeedReNoticeUnitIds // IActorLocationMessage
+{
+	int32 RpcId = 1;
+	repeated int64 UnitIds = 2;
 }
 
 message M2C_StartSceneChange // IActorMessage
@@ -241,6 +268,47 @@ message R2C_Login // IResponse
 	int32 IsFirstLogin = 7;
 }
 
+//ResponseType R2C_LoginWithAuth
+message C2R_LoginWithAuth // IRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;  // 帐号
+	string Password = 3;  // 密码
+	int32 LoginType = 4;
+	string Name = 5;
+	string Token = 6;
+}
+
+message R2C_LoginWithAuth // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string Address = 4;
+	int64 Key = 5;
+	int64 GateId = 6;
+	int32 IsFirstLogin = 7;
+}
+
+//ResponseType G2C_BindAccountWithAuth
+message C2G_BindAccountWithAuth // IRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;  // 帐号
+	string BindAccount = 3;  // 第三方账号
+	int32 LoginType = 4;
+	string Name = 5;
+	string Token = 6;
+}
+
+message G2C_BindAccountWithAuth // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsBindSuccess = 4;
+}
+
 //ResponseType G2C_LoginGate
 message C2G_LoginGate // IRequest
 {
@@ -272,22 +340,18 @@ message G2C_LoginOut // IResponse
 	string Message = 3;
 }
 
-//ResponseType G2C_ReLogin
-message C2G_ReLogin // IRequest
+//ResponseType G2C_ReLoginGate
+message C2G_ReLoginGate // IRequest
 {
 	int32 RpcId = 1;
-	int64 Key = 2;  // 帐号
-	int64 GateId = 3;
+	int64 PlayerId = 2;
 }
 
-message G2C_ReLogin // IResponse
+message G2C_ReLoginGate // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int64 PlayerId = 4;
-	bytes PlayerComponentBytes = 5;
-	bytes PlayerStatusComponentBytes = 6;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -612,6 +676,7 @@ message C2G_SetARRoomInfo // IRequest
 	int32 RpcId = 1;
 	string ARSceneId = 2;
 	string ARMeshDownLoadUrl = 3;
+	int32 ARMapScale = 4;
 }
 
 message G2C_SetARRoomInfo // IResponse
@@ -686,6 +751,12 @@ message M2C_GamePlayCoinChgNotice // IActorMessage
 	int32 RpcId = 1;
 	int32 GetCoinType = 2;
 	bytes GamePlayPlayerListComponent = 3;
+}
+
+message M2C_GamePlayStatisticalDataChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	bytes GamePlayStatisticalDataComponent = 2;
 }
 
 message M2C_GamePlayModeChgNotice // IActorMessage
@@ -853,6 +924,19 @@ message M2C_ReadyWhenRestTime // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_ReScan
+message C2M_ReScan // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ReScan // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2C_GetMonsterCall2HeadQuarterPath
 message C2M_GetMonsterCall2HeadQuarterPath // IActorLocationRequest
 {
@@ -945,7 +1029,8 @@ message G2C_GetRankedMoreThan // IResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int32 RankedMoreThan = 4;
+	int64 Rank = 4;
+	int32 RankedMoreThan = 5;
 }
 
 //ResponseType G2C_GetPlayerCache
@@ -999,6 +1084,7 @@ message G2C_AddPhysicalStrenthByAd // IResponse
 message C2M_BattleRecoverCancel // IActorLocationRequest
 {
 	int32 RpcId = 1;
+	int32 IsFinished = 2;
 }
 
 message M2C_BattleRecoverCancel // IActorLocationResponse
@@ -1012,6 +1098,7 @@ message M2C_BattleRecoverCancel // IActorLocationResponse
 message C2M_BattleRecoverConfirm // IActorLocationRequest
 {
 	int32 RpcId = 1;
+	int32 IsFinished = 2;
 }
 
 message M2C_BattleRecoverConfirm // IActorLocationResponse

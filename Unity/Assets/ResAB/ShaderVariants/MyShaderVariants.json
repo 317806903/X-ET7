@@ -1,6 +1,6 @@
 {
-    "ShaderTotalCount": 48,
-    "VariantTotalCount": 75,
+    "ShaderTotalCount": 45,
+    "VariantTotalCount": 57,
     "ShaderVariantInfos": [
         {
             "AssetPath": "Resources/unity_builtin_extra",
@@ -10,25 +10,6 @@
                     "PassType": 0,
                     "Keywords": [
                         ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Assets/Res/Model/Model/Magic Portals and Props/Shaders/portal_shader.shadergraph",
-            "ShaderName": "Shader Graphs/portal_shader",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 8,
-                    "Keywords": [
-                        ""
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE"
                     ]
                 }
             ]
@@ -52,7 +33,7 @@
                 {
                     "PassType": 8,
                     "Keywords": [
-                        ""
+                        "SHADOWS_DEPTH"
                     ]
                 }
             ]
@@ -95,18 +76,6 @@
         },
         {
             "AssetPath": "Resources/unity_builtin_extra",
-            "ShaderName": "Legacy Shaders/Particles/Additive (Soft)",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Resources/unity_builtin_extra",
             "ShaderName": "Legacy Shaders/Particles/Alpha Blended",
             "ShaderVariantElements": [
                 {
@@ -125,6 +94,52 @@
                     "PassType": 0,
                     "Keywords": [
                         ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Legacy Shaders/Particles/Alpha Blended Premultiply",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Particles/Standard Unlit",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_ALPHABLEND_ON"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_COLORCOLOR_ON",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "PROCEDURAL_INSTANCING_ON",
+                        "_ALPHABLEND_ON"
                     ]
                 }
             ]
@@ -262,6 +277,18 @@
             ]
         },
         {
+            "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Utils/CopyDepth.shader",
+            "ShaderName": "Hidden/Universal Render Pipeline/CopyDepth",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
             "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader",
             "ShaderName": "Hidden/Universal Render Pipeline/FallbackError",
             "ShaderVariantElements": [
@@ -305,85 +332,6 @@
                     "PassType": 13,
                     "Keywords": [
                         "_ADDITIONAL_LIGHTS",
-                        "_ALPHAMODULATE_ON",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_RECEIVE_SHADOWS_OFF",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_ENVIRONMENTREFLECTIONS_OFF",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_RECEIVE_SHADOWS_OFF",
-                        "_SPECULARHIGHLIGHTS_OFF"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_METALLICSPECGLOSSMAP",
-                        "_NORMALMAP",
-                        "_OCCLUSIONMAP"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_RECEIVE_SHADOWS_OFF",
-                        "_SPECULARHIGHLIGHTS_OFF"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SPECULARHIGHLIGHTS_OFF"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_ENVIRONMENTREFLECTIONS_OFF",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SPECULARHIGHLIGHTS_OFF",
-                        "_SPECULAR_SETUP"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
                         "_MAIN_LIGHT_SHADOWS_CASCADE"
                     ]
                 },
@@ -402,7 +350,8 @@
                         "_ADDITIONAL_LIGHTS",
                         "_MAIN_LIGHT_SHADOWS_CASCADE",
                         "_METALLICSPECGLOSSMAP",
-                        "_SPECULAR_SETUP"
+                        "_OCCLUSIONMAP",
+                        "_RECEIVE_SHADOWS_OFF"
                     ]
                 },
                 {
@@ -410,24 +359,7 @@
                     "Keywords": [
                         "_ADDITIONAL_LIGHTS",
                         "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_RECEIVE_SHADOWS_OFF",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SPECULARHIGHLIGHTS_OFF"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SPECULAR_SETUP"
+                        "_RECEIVE_SHADOWS_OFF"
                     ]
                 }
             ]
@@ -436,28 +368,6 @@
             "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Particles/ParticlesUnlit.shader",
             "ShaderName": "Universal Render Pipeline/Particles/Unlit",
             "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        "_ALPHATEST_ON",
-                        "_EMISSION"
-                    ]
-                },
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        "_COLORADDSUBDIFF_ON",
-                        "_EMISSION",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                },
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        "_COLORADDSUBDIFF_ON",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                },
                 {
                     "PassType": 0,
                     "Keywords": [
@@ -472,36 +382,6 @@
                     "Keywords": [
                         "_EMISSION",
                         "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/ARShadowReceiver.shadergraph",
-            "ShaderName": "Shader Graphs/ARShadowReceiver",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        "_MAIN_LIGHT_SHADOWS_CASCADE"
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/AROcclusionShadowCaster.shader",
-            "ShaderName": "MirrorVerse/AR Occlusion Shadow Caster",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                },
-                {
-                    "PassType": 8,
-                    "Keywords": [
-                        ""
                     ]
                 }
             ]
@@ -532,6 +412,18 @@
             ]
         },
         {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/AROcclusionShadowCaster.shader",
+            "ShaderName": "MirrorVerse/AR Occlusion Shadow Caster",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
             "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/SimpleLit.shader",
             "ShaderName": "Universal Render Pipeline/Simple Lit",
             "ShaderVariantElements": [
@@ -539,28 +431,6 @@
                     "PassType": 8,
                     "Keywords": [
                         ""
-                    ]
-                },
-                {
-                    "PassType": 8,
-                    "Keywords": [
-                        "_GLOSSINESS_FROM_BASE_ALPHA"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_GLOSSINESS_FROM_BASE_ALPHA",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_SPECULAR_COLOR"
-                    ]
-                },
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE"
                     ]
                 }
             ]
@@ -574,42 +444,12 @@
                     "Keywords": [
                         ""
                     ]
-                },
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
                 }
             ]
         },
         {
             "AssetPath": "Assets/Res/TmpRes5/Hovl Studio/AAA Projectiles Vol 1/Shaders/Add_CenterGlow.shader",
             "ShaderName": "Hovl/Particles/Add_CenterGlow",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/VertexColor.shader",
-            "ShaderName": "MirrorVerse/VertexColor",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/Wireframe/Wireframe.shader",
-            "ShaderName": "MirrorVerse/Wireframe",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -632,24 +472,6 @@
             ]
         },
         {
-            "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Particles/ParticlesLit.shader",
-            "ShaderName": "Universal Render Pipeline/Particles/Lit",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 13,
-                    "Keywords": [
-                        "_ADDITIONAL_LIGHTS",
-                        "_EMISSION",
-                        "_FADING_ON",
-                        "_MAIN_LIGHT_SHADOWS_CASCADE",
-                        "_NORMALMAP",
-                        "_SOFTPARTICLES_ON",
-                        "_SURFACE_TYPE_TRANSPARENT"
-                    ]
-                }
-            ]
-        },
-        {
             "AssetPath": "Assets/Res/TmpRes5/Hovl Studio/AAA Projectiles Vol 1/Shaders/Blend_CenterGlow.shader",
             "ShaderName": "Hovl/Particles/Blend_CenterGlow",
             "ShaderVariantElements": [
@@ -662,23 +484,11 @@
             ]
         },
         {
-            "AssetPath": "Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader",
-            "ShaderName": "TextMeshPro/Mobile/Distance Field",
+            "AssetPath": "Assets/ResAB/Shader/ARShadowReceiver.shadergraph",
+            "ShaderName": "Shader Graphs/ARShadowReceiver",
             "ShaderVariantElements": [
                 {
-                    "PassType": 0,
-                    "Keywords": [
-                        "OUTLINE_ON"
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/2D/Sprite-Lit-Default.shader",
-            "ShaderName": "Universal Render Pipeline/2D/Sprite-Lit-Default",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 13,
+                    "PassType": 8,
                     "Keywords": [
                         ""
                     ]
@@ -686,8 +496,8 @@
             ]
         },
         {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/AROcclusion.shader",
-            "ShaderName": "MirrorVerse/AR Occlusion",
+            "AssetPath": "Assets/ResAB/EffectPrefab/Route_Effect02/Shader/MoveToTrailUV_Add.shader",
+            "ShaderName": "MoveToTrailUV/MoveToTrailUV_Add",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -698,25 +508,43 @@
             ]
         },
         {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/UnlitNoDepth.shader",
-            "ShaderName": "MirrorVerse/Unlit_nodepth",
+            "AssetPath": "Assets/Res/VFX/VFX 8/VFX_Klaus/Shaders/HCFX_Particle_apb.shadergraph",
+            "ShaderName": "Shader Graphs/HCFX_Particle_apb",
             "ShaderVariantElements": [
                 {
-                    "PassType": 0,
+                    "PassType": 8,
                     "Keywords": [
-                        "_SURFACE_TYPE_TRANSPARENT"
+                        ""
                     ]
                 }
             ]
         },
         {
-            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/AirWall/LimitZone.shadergraph",
-            "ShaderName": "Shader Graphs/LimitZone",
+            "AssetPath": "Assets/Scripts/Loader/Plugins/UIGuide/Shaders/RectGuideMaskShader.shader",
+            "ShaderName": "UI/UIMask/RectGuideMask",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
                     "Keywords": [
                         ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/tower1127/Model/StylizedFantasyElementalsPack/Shaders/Elementals_Shader.shadergraph",
+            "ShaderName": "Shader Graphs/Elementals_Shader",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "INSTANCING_ON"
                     ]
                 }
             ]
@@ -758,44 +586,44 @@
             ]
         },
         {
-            "AssetPath": "Assets/Scripts/Loader/Plugins/UIGuide/Shaders/CircleGuideMaskShader.shader",
-            "ShaderName": "UI/UIMask/CircleGuideMask",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Assets/Scripts/Loader/Plugins/UIGuide/Shaders/RectGuideMaskShader.shader",
-            "ShaderName": "UI/UIMask/RectGuideMask",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
-            "AssetPath": "Assets/ResAB/EffectPrefab/Route_Effect02/Shader/MoveToTrailUV_Add.shader",
-            "ShaderName": "MoveToTrailUV/MoveToTrailUV_Add",
-            "ShaderVariantElements": [
-                {
-                    "PassType": 0,
-                    "Keywords": [
-                        ""
-                    ]
-                }
-            ]
-        },
-        {
             "AssetPath": "Assets/ResAB/Shader/UI/UIGray.shader",
             "ShaderName": "Custom/UIGray",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/VFX/VFX 8/VFX_Klaus/Shaders/HCFX_Particle_add.shadergraph",
+            "ShaderName": "Shader Graphs/HCFX_Particle_add",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/ResAB/Shader/UI/RectShader.shader",
+            "ShaderName": "CustomBoold/RectShader",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/Shader/scene_arrow.shader",
+            "ShaderName": "DM/scene_arrow",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,

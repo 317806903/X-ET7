@@ -53,8 +53,9 @@ namespace ET
             Log.Info($"session timeout: {session.Id} {timeNow} {session.LastRecvTime} {session.LastSendTime} {timeNow - session.LastRecvTime} {timeNow - session.LastSendTime}");
             session.Error = ErrorCore.ERR_SessionSendOrRecvTimeout;
 
-            EventSystem.Instance.Publish(session.DomainScene(), new EventType.NoticeUIReconnect());
+            EventSystem.Instance.Publish(session.DomainScene(), new EventType.NoticeNetDisconnected());
 
+            session.IsTimeOut = true;
             session.Dispose();
 
         }

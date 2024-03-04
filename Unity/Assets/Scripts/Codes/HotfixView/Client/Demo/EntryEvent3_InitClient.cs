@@ -53,11 +53,21 @@ namespace ET.Client
             LocalizeComponent.Instance.SwitchLanguage(languageType, true);
 
             // 热更流程
-            await ChkHotUpdateAsync(clientScene);
+            bool bRet = await ChkHotUpdateAsync(clientScene);
+            if (bRet == false)
+            {
+            }
         }
 
-        public static async ETTask ChkHotUpdateAsync(Scene clientScene)
+        public static async ETTask<bool> ChkHotUpdateAsync(Scene clientScene, bool onlyChk = false)
         {
+            if (onlyChk == false)
+            {
+                UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
+                // 打开热更界面
+                await uiComponent.ShowWindowAsync<DlgUpdate>();
+            }
+
             int retryTimes = 10;
             while (IsNetworkReachability() == false)
             {
@@ -66,11 +76,12 @@ namespace ET.Client
                 if (retryTimes == 0)
                 {
                     string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkConnect");
+                    string title = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkDisconnect");
                     UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
                     {
                         ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
-                    return;
+                    },null,null,title);
+                    return false;
                 }
             }
 
@@ -78,16 +89,44 @@ namespace ET.Client
             bool bRet = await HotUpdateAsync(clientScene);
             if (bRet)
             {
-                ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
-                if (configComponent.ChkFinishLoad() == false)
+                if (onlyChk == false)
                 {
-                    await Game.GetExistSingleton<ConfigComponent>().LoadAsync();
+                    await DoAfterChkHotUpdate(clientScene);
                 }
-
-                LocalizeComponent.Instance.ResetLanguage();
-
-                await EnterLogin(clientScene);
+                return true;
             }
+            return false;
+        }
+
+        public static async ETTask DoAfterChkHotUpdate(Scene clientScene)
+        {
+            ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
+            if (configComponent.ChkFinishLoad() == false)
+            {
+                UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
+                // 打开热更界面
+                await uiComponent.ShowWindowAsync<DlgLoading>();
+                DlgLoading _DlgLoading = uiComponent.GetDlgLogic<DlgLoading>(true);
+
+                await Game.GetExistSingleton<ConfigComponent>().LoadAsync(_DlgLoading.UpdateProcess);
+            }
+
+            LocalizeComponent.Instance.ResetLanguage();
+
+            if (clientScene.GetComponent<LoginSDKManagerComponent>() == null)
+            {
+                clientScene.AddComponent<LoginSDKManagerComponent>();
+            }
+            if (clientScene.GetComponent<EventLoggingSDKComponent>() == null)
+            {
+                clientScene.AddComponent<EventLoggingSDKComponent>();
+            }
+            if (clientScene.GetComponent<AdmobSDKComponent>() == null)
+            {
+                clientScene.AddComponent<AdmobSDKComponent>();
+            }
+
+            await EnterLogin(clientScene);
         }
 
         public static bool IsNetworkReachability()
@@ -113,15 +152,15 @@ namespace ET.Client
                 YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
                 if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
                 {
-                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.EditorSimulateMode");
+                    Log.Debug($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.EditorSimulateMode");
                 }
                 else if (resLoadMode == YooAsset.EPlayMode.OfflinePlayMode)
                 {
-                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.OfflinePlayMode");
+                    Log.Debug($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.OfflinePlayMode");
                 }
                 else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
                 {
-                    Log.Error($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.HostPlayMode");
+                    Log.Debug($"--ShowHotUpdateInfo resLoadMode == YooAsset.EPlayMode.HostPlayMode");
                 }
             }
             await ETTask.CompletedTask;
@@ -131,12 +170,52 @@ namespace ET.Client
         {
             await ShowHotUpdateInfo(clientScene);
 
-            UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
-            // 打开热更界面
-            await uiComponent.ShowWindowAsync<DlgUpdate>();
+            // UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
+            // // 打开热更界面
+            // await uiComponent.ShowWindowAsync<DlgUpdate>();
+            UIManagerHelper.PreLoadConfirm(clientScene);
 
+            Log.Debug($"NetWork.GetIP[{NetWork.GetIP()}]");
             // 更新版本号
-            int errorCode = await ResComponent.Instance.UpdateVersionAsync();
+            (bool bNeedUpdate, int errorCode) = await ResComponent.Instance.UpdateVersionAsync();
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                {
+                    ChkHotUpdateAsync(clientScene).Coroutine();
+                });
+                return false;
+            }
+            if (bNeedUpdate)
+            {
+                Log.Debug("bNeedUpdate == true");
+
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
+                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                {
+                    if (ResConfig.Instance.Channel == "10001")
+                    {
+                        Application.OpenURL("https://play.google.com/store/apps/details?id=com.dm.realityguard&hl=en-US&gl=US");
+                    }
+                    else if (ResConfig.Instance.Channel == "10002")
+                    {
+                        Application.OpenURL("https://testflight.apple.com/join/WUOiuC2s");
+                    }
+                    else
+                    {
+                        Application.OpenURL("http://artd.corp.deepmirror.com/");
+                    }
+
+                    ChkHotUpdateAsync(clientScene).Coroutine();
+                });
+                return false;
+            }
+
+            // 更新资源版本号
+            errorCode = await ResComponent.Instance.UpdateMainifestVersionAsync();
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
@@ -149,8 +228,9 @@ namespace ET.Client
                 return false;
             }
 
+            YooAsset.UpdatePackageManifestOperation updatePackageManifestOperation = null;
             // 更新Manifest
-            errorCode = await ResComponent.Instance.UpdateManifestAsync();
+            (errorCode, updatePackageManifestOperation) = await ResComponent.Instance.UpdateManifestAsync();
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("ResourceComponent.UpdateManifest 出错！{0}".Fmt(errorCode));
@@ -184,32 +264,30 @@ namespace ET.Client
                 {
                     return true;
                 }
-                
-                UIComponent _UIComponent = UIManagerHelper.GetUIComponent(clientScene);
-                DlgUpdate _DlgUpdate = _UIComponent.GetDlgLogic<DlgUpdate>(true);
-                if (_DlgUpdate != null)
-                {
-                    _DlgUpdate.HideCheckUpdateText();
-                }
 
                 long totalDownloadMB = ResComponent.Instance.Downloader.TotalDownloadBytes / (1024 * 1024);
+                if (totalDownloadMB == 0)
+                {
+                    totalDownloadMB = 1;
+                }
                 string msgTxt =
                         LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTip", totalDownloadMB);
                 string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTitle");
                 string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Download");
                 UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
                 {
-                    DownloadPatch(clientScene).Coroutine();
+                    DownloadPatch(clientScene, updatePackageManifestOperation).Coroutine();
                 },sureTxt,null,titleTxt);
                 return false;
             }
             else
             {
+                updatePackageManifestOperation.SavePackageVersion();
                 return true;
             }
         }
 
-        private static async ETTask<bool> DownloadPatch(Scene clientScene)
+        private static async ETTask<bool> DownloadPatch(Scene clientScene, YooAsset.UpdatePackageManifestOperation updatePackageManifestOperation)
         {
             // 下载资源
             Log.Info("Count: {0}, Bytes: {1}".Fmt(ResComponent.Instance.Downloader.TotalDownloadCount, ResComponent.Instance.Downloader.TotalDownloadBytes));
@@ -240,34 +318,41 @@ namespace ET.Client
                 Log.Error("ResourceComponent.FsmDonwloadWebFiles 出错！{0}".Fmt(errorCode));
                 return false;
             }
+            else
+            {
+                updatePackageManifestOperation.SavePackageVersion();
+            }
 
             int modelVersion = GlobalConfig.Instance.ModelVersion;
             int hotFixVersion = GlobalConfig.Instance.HotFixVersion;
             await MonoResComponent.Instance.RestartAsync();
             bool modelChanged = modelVersion != GlobalConfig.Instance.ModelVersion;
             bool hotfixChanged = hotFixVersion != GlobalConfig.Instance.HotFixVersion;
+            Log.Debug($" OldModelVersion[{modelVersion}] NewModelVersion[{GlobalConfig.Instance.ModelVersion}]");
+            Log.Debug($" OldHotFixVersion[{hotFixVersion}] NewHotFixVersion[{GlobalConfig.Instance.HotFixVersion}]");
 
-            //if (modelChanged || hotfixChanged)
+            string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateSuccessDes");
+            string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Restart");
+            string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
+            UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
             {
-                string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateSuccessDes");
-                string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Restart");
-                string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
+                if (modelChanged || hotfixChanged)
                 {
                     ReloadAll(clientScene).Coroutine();
-                },sureTxt,null,titleTxt);
-                return false;
-            }
-            // else
-            // {
-            //     // 只是资源更新就直接进入游戏。
-            //     return true;
-            // }
+                }
+                else
+                {
+                    // 只是资源更新就直接进入游戏。
+                    DoAfterChkHotUpdate(clientScene).Coroutine();
+                }
+            },sureTxt,null,titleTxt);
+            return false;
         }
 
         private static async ETTask ReloadAll(Scene scene)
         {
-            await GameObject.Find("/Init").GetComponent<Init>().Restart();
+            await TimerComponent.Instance.WaitFrameAsync();
+            GameObject.Find("/Init").GetComponent<Init>().Restart().Coroutine();
         }
 
         private static async ETTask EnterLogin(Scene scene)

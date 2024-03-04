@@ -19,8 +19,8 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<TeamFlagType, bool> TeamFlagType2Result;
 
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, int> lastHomeHp = new Dictionary<long, int>();
+		[BsonIgnore]
+		public Dictionary<long, (string, float3, int, int)> RecordHomeInfo = new ();
 
 	}
 }

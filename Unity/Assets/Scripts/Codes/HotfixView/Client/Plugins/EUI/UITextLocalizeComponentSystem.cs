@@ -21,7 +21,10 @@ namespace ET.Client
             protected override void Destroy(UITextLocalizeComponent self)
             {
                 self._UITextLocalizeMonoViewList.Clear();
-                UITextLocalizeComponent.Instance = null;
+                if (UITextLocalizeComponent.Instance == self)
+                {
+                    UITextLocalizeComponent.Instance = null;
+                }
             }
         }
 

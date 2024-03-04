@@ -1,37 +1,720 @@
 [
   {
+    "id": "AttackArea_PlayerSolo1",
+    "name": "弩箭塔LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_PlayerSolo1",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerSolo2",
+    "name": "弩箭塔LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_PlayerSolo2",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerSolo3",
+    "name": "弩箭塔LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_PlayerSolo3",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe1",
+    "name": "加农炮LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_PlayerAoe1_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe2",
+    "name": "加农炮LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_PlayerAoe2_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_PlayerAoe3",
+    "name": "加农炮LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_PlayerAoe3_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Line1",
+    "name": "火焰塔LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Rectangle_1Line1_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Line2",
+    "name": "火焰塔LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Rectangle_1Line2_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Line3",
+    "name": "火焰塔LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Rectangle_1Line3_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Circle1",
+    "name": "毒雾塔LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_Circle1_All",
+    "damageInfo": "DamageUnit_AttributeDisAdd_PlayerCircle1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Circle2",
+    "name": "毒雾塔LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_Circle2_All",
+    "damageInfo": "DamageUnit_AttributeDisAdd_PlayerCircle2",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Circle3",
+    "name": "毒雾塔LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_Circle3_All",
+    "damageInfo": "DamageUnit_AttributeDisAdd_PlayerCircle3",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerDragon1",
+    "name": "龙击炮LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_TowerDragon1",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerDragon2",
+    "name": "龙击炮LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_TowerDragon2",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerDragon3",
+    "name": "龙击炮LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_TowerDragon3",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElec1",
+    "name": "雷电塔LV1伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_Elec1",
+    "damageInfo": "DamageUnit_AttributeHeightPlus_TowerElec1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElec2",
+    "name": "雷电塔LV2伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_Elec2",
+    "damageInfo": "DamageUnit_AttributeHeightPlus_TowerElec2",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElec3",
+    "name": "雷电塔LV3伤害",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne_Elec3",
+    "damageInfo": "DamageUnit_AttributeHeightPlus_TowerElec3",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_SlowAoe1",
+    "name": "群体减速",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_SlowAoe2",
+    "name": "群体减速",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_SlowAoe3",
+    "name": "群体减速",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Slow3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Infinite_9_2_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_9_2_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_10_2_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_10_2_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_11_1_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_11_1_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_12_2_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_12_2_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_12_3_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_12_3_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_15_2_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_15_2_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_19_3_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_19_3_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_20_3_ZhongZi",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Infinite_20_3_ZhongZi",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Infinite_17_2_Dan",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Infinite_17_2_Dan",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Infinite_18_1_Dan",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Infinite_18_1_Dan",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Infinite_19_1_Dan",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Infinite_19_1_Dan",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Infinite_20_1_Dan",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Infinite_20_1_Dan",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Infinite_20_4_Dan",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Infinite_20_4_Dan",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge3_1_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge3_1_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge3_2_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge3_2_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge3_3_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge3_3_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge3_4_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge3_4_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge3_5_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge3_5_1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge4_5_2",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge4_5_2",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_5_3",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_Monster_Challenge5_5_3",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_1_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_1_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_2_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_2_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_3_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_3_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_4_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_4_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_5_1",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_5_1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_Monster_Challenge5_5_4",
+    "name": "",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All_Stun",
+    "damageInfo": "DamageUnit_Empty",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_Stun_Monster_Challenge5_5_4",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "AttackArea_1",
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "width": 10,
-        "length": 6
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_1",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Rectangle_All",
+    "damageInfo": "DamageUnit_Const",
     "damageAllot": {
       "$type": "DamageAllotChg",
       "weightChg": 20,
@@ -65,35 +748,8 @@
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_1",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_All",
+    "damageInfo": "DamageUnit_Const",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -125,10 +781,7 @@
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
     "damageInfo": "",
     "damageAllot": {
       "$type": "DamageAllotTotal"
@@ -155,11 +808,8 @@
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -185,11 +835,8 @@
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_1",
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Const",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -215,11 +862,8 @@
     "name": "",
     "isBreakSoftBati": true,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -241,108 +885,12 @@
     ]
   },
   {
-    "id": "AttackArea_PlayerSolo1",
-    "name": "单体",
-    "isBreakSoftBati": false,
-    "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
-    "damageAllot": {
-      "$type": "DamageAllotTotal"
-    },
-    "SelfAttackActionCall": [],
-    "TargetAttackActionCall": [
-      {
-        "delayTime": 0,
-        "action_id": "EffectCreate_PlayerSolo1_Hit",
-        "actionCondition1": [],
-        "actionCondition2": []
-      }
-    ]
-  },
-  {
-    "id": "AttackArea_PlayerSolo2",
-    "name": "单体",
-    "isBreakSoftBati": false,
-    "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
-    "damageAllot": {
-      "$type": "DamageAllotTotal"
-    },
-    "SelfAttackActionCall": [],
-    "TargetAttackActionCall": [
-      {
-        "delayTime": 0,
-        "action_id": "EffectCreate_PlayerSolo1_Hit",
-        "actionCondition1": [],
-        "actionCondition2": []
-      }
-    ]
-  },
-  {
-    "id": "AttackArea_PlayerSolo3",
-    "name": "单体",
-    "isBreakSoftBati": false,
-    "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
-    "damageAllot": {
-      "$type": "DamageAllotTotal"
-    },
-    "SelfAttackActionCall": [],
-    "TargetAttackActionCall": [
-      {
-        "delayTime": 0,
-        "action_id": "EffectCreate_PlayerSolo1_Hit",
-        "actionCondition1": [],
-        "actionCondition2": []
-      }
-    ]
-  },
-  {
     "id": "AttackArea_PlayerAoe1First",
     "name": "群体的目标",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": 1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 100,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_0",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_1",
+    "damageInfo": "DamageUnit_Empty",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -353,7 +901,21 @@
         "action_id": "AttackArea_PlayerAoe1",
         "actionCondition1": [],
         "actionCondition2": []
-      },
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_SeedHeal1",
+    "name": "种子治疗",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_HealConst1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
       {
         "delayTime": 0,
         "action_id": "EffectCreate_PlayerAoe1_Hit",
@@ -363,135 +925,52 @@
     ]
   },
   {
-    "id": "AttackArea_PlayerAoe1",
-    "name": "群体",
+    "id": "AttackArea_SeedHeal2",
+    "name": "种子治疗",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_HealConst2",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
     "SelfAttackActionCall": [],
-    "TargetAttackActionCall": []
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerAoe1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
   },
   {
-    "id": "AttackArea_PlayerAoe2",
-    "name": "群体",
+    "id": "AttackArea_SeedHeal3",
+    "name": "种子治疗",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_UmbellateFriend_5_All",
+    "damageInfo": "DamageUnit_HealConst3",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
     "SelfAttackActionCall": [],
-    "TargetAttackActionCall": []
-  },
-  {
-    "id": "AttackArea_PlayerAoe3",
-    "name": "群体",
-    "isBreakSoftBati": false,
-    "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
-    "damageAllot": {
-      "$type": "DamageAllotTotal"
-    },
-    "SelfAttackActionCall": [],
-    "TargetAttackActionCall": []
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_PlayerAoe1_Hit",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
   },
   {
     "id": "AttackArea_EnemySolo1",
     "name": "敌人单体",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitOne",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -499,78 +978,12 @@
     "TargetAttackActionCall": []
   },
   {
-    "id": "AttackArea_Line1",
-    "name": "直线火焰",
+    "id": "AttackArea_Buff_HuoYan1",
+    "name": "火焰灼烧buff1",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenRectangle",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "rectangleArea": {
-        "ignoringHeight": true,
-        "keepHorizontal": true,
-        "width": 10,
-        "length": 100
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
-    "damageAllot": {
-      "$type": "DamageAllotTotal"
-    },
-    "SelfAttackActionCall": [],
-    "TargetAttackActionCall": []
-  },
-  {
-    "id": "AttackArea_Circle1",
-    "name": "圆形毒雾",
-    "isBreakSoftBati": false,
-    "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 15,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -582,11 +995,8 @@
     "name": "中毒",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoSelf",
-      "isSave": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Self",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -594,39 +1004,51 @@
     "TargetAttackActionCall": []
   },
   {
-    "id": "AttackArea_SlowAoe1",
-    "name": "群体减速",
+    "id": "AttackArea_TowerAoShu1",
+    "name": "奥术精灵1",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
     },
-    "damageInfo": "DamageUnit_6",
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerAoShu2",
+    "name": "奥术精灵2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerAoShu3",
+    "name": "奥术精灵3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerCurse1",
+    "name": "诅咒塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -634,46 +1056,19 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "BuffAdd_Slow",
+        "action_id": "BuffAdd_TowerCurse1",
         "actionCondition1": [],
         "actionCondition2": []
       }
     ]
   },
   {
-    "id": "AttackArea_SlowAoe2",
-    "name": "群体减速",
+    "id": "AttackArea_TowerCurse2",
+    "name": "诅咒塔2",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -681,46 +1076,19 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "BuffAdd_Slow",
+        "action_id": "BuffAdd_TowerCurse2",
         "actionCondition1": [],
         "actionCondition2": []
       }
     ]
   },
   {
-    "id": "AttackArea_SlowAoe3",
-    "name": "群体减速",
+    "id": "AttackArea_TowerCurse3",
+    "name": "诅咒塔3",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": false,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
-    },
-    "damageInfo": "DamageUnit_6",
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },
@@ -728,46 +1096,519 @@
     "TargetAttackActionCall": [
       {
         "delayTime": 0,
-        "action_id": "BuffAdd_Slow",
+        "action_id": "BuffAdd_TowerCurse3",
         "actionCondition1": [],
         "actionCondition2": []
       }
     ]
   },
   {
-    "id": "AttackArea_SeedHeal1",
-    "name": "种子治疗",
+    "id": "AttackArea_TowerDuCi1",
+    "name": "毒刺塔1",
     "isBreakSoftBati": false,
     "isBreakStrongBati": false,
-    "actionCallAutoUnitArea": {
-      "$type": "ActionCallAutoUnitWhenUmbellate",
-      "isSave": false,
-      "selectNum": -1,
-      "isFriend": true,
-      "isOnlyPlayer": false,
-      "offSetInfo": {
-        "nodeName": "",
-        "offSetPosition": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "relateForward": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "isAngleFirst": false,
-      "umbellateArea": {
-        "ignoringHeight": false,
-        "keepHorizontal": true,
-        "radius": 5,
-        "angle": 360
-      },
-      "isChgToSelectPos": false
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
     },
-    "damageInfo": "DamageUnit_8",
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerDuCi2",
+    "name": "毒刺塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerDuCi3",
+    "name": "毒刺塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElectromagnetic1",
+    "name": "电磁塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElectromagnetic2",
+    "name": "电磁塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerElectromagnetic3",
+    "name": "电磁塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerFireBall1",
+    "name": "火球塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerFireBall1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerFireBall2",
+    "name": "火球塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerFireBall2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerFireBall3",
+    "name": "火球塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerFireBall3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerIceArrow1",
+    "name": "冰枪塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerIceArrow2",
+    "name": "冰枪塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerIceArrow3",
+    "name": "冰枪塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerMagicBall1",
+    "name": "奥术天球1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerMagicBall2",
+    "name": "奥术天球2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerMagicBall3",
+    "name": "奥术天球3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerRocket1",
+    "name": "火箭塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerRocket2",
+    "name": "火箭塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerRocket3",
+    "name": "火箭塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_TowerScorpio1",
+    "name": "毒蝎塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerScorpio1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerScorpio2",
+    "name": "毒蝎塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerScorpio2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerScorpio3",
+    "name": "毒蝎塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerScorpio3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerWater1",
+    "name": "水图腾1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerWater1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerWater2",
+    "name": "水图腾2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerWater2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerWater3",
+    "name": "水图腾3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_Umbellate_5_All",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "BuffAdd_TowerWater3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerGoblin1",
+    "name": "窃贼哥布林1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_HitTowerGoblin1",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerGoblin2",
+    "name": "窃贼哥布林2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_HitTowerGoblin2",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_TowerGoblin3",
+    "name": "窃贼哥布林3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_Attribute",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": [
+      {
+        "delayTime": 0,
+        "action_id": "EffectCreate_HitTowerGoblin3",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "AttackArea_BuffTowerScorpio1",
+    "name": "毒蝎塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerScorpio1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_BuffTowerScorpio2",
+    "name": "毒蝎塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerScorpio2",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_BuffTowerScorpio3",
+    "name": "毒蝎塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerScorpio3",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_BuffTowerFireBall1",
+    "name": "火球塔1",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerFireBall1",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_BuffTowerFireBall2",
+    "name": "火球塔2",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerFireBall2",
+    "damageAllot": {
+      "$type": "DamageAllotTotal"
+    },
+    "SelfAttackActionCall": [],
+    "TargetAttackActionCall": []
+  },
+  {
+    "id": "AttackArea_BuffTowerFireBall3",
+    "name": "火球塔3",
+    "isBreakSoftBati": false,
+    "isBreakStrongBati": false,
+    "actionCallAutoUnitArea": "SelectObjectConfig_AutoUnitOne",
+    "damageInfo": "DamageUnit_BuffTowerFireBall3",
     "damageAllot": {
       "$type": "DamageAllotTotal"
     },

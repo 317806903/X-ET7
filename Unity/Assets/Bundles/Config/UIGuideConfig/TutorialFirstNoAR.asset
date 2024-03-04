@@ -127,17 +127,55 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u8D2D\u4E70\u5854"
+  - name: "\u8D2D\u4E70\u58541"
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_buybtn2.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u8D2D\u4E70\u58542"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_1/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_BuyTower
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u8D2D\u4E70\u58543"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_2/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_BuyTower
+    specImgMatchType: 0
+    specImgPath: 
     curInNextType: 0
     waitToNextUIGuideStep: 0
     audioPath: 
@@ -189,7 +227,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower_0/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_PlaceTower
@@ -222,19 +260,19 @@ MonoBehaviour:
     trigExitCondition: 1
     trigExitConditionStaticMethod: 
     trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
-  - name: "\u67E5\u770B\u5854\u64CD\u4F5C"
+  - name: "\u5347\u7EA7\u5854"
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
+    hierarchyGuidePath: DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/E_Upgrade
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_TowerDetail
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_detailcard.png
     curInNextType: 0
-    waitToNextUIGuideStep: 3
+    waitToNextUIGuideStep: 0
     audioPath: 
     guideExecuteStaticMethod: HidePointTower
     guideExecuteParam: 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ET.Server
@@ -20,22 +21,13 @@ namespace ET.Server
             {
                 T rankItemComponent = await self.InitByDBOne<T>(playerId);
 
-                self.SkipList.Insert(rankItemComponent.score, playerId);
+                self.SkipList.Insert(rankItemComponent.score, rankItemComponent);
                 self.playerId2Score.Add(playerId, rankItemComponent.score);
             }
         }
 
-        public static async ETTask ResetRankItem<T>(this RankComponent self, long playerId, long scoreNew)where T :RankItemComponent, new()
+        public static async ETTask ResetRankItem<T>(this RankComponent self, long playerId, long scoreNew, int killNum)where T :RankItemComponent, new()
         {
-            if (self.playerId2Score.TryGetValue(playerId, out long score))
-            {
-                self.SkipList.DeleteNode(score, playerId);
-                self.rankTotalNum--;
-            }
-            self.SkipList.Insert(scoreNew, playerId);
-            self.playerId2Score[playerId] = scoreNew;
-            self.rankTotalNum++;
-
             RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(playerId);
             if (rankItemComponent == null)
             {
@@ -43,15 +35,26 @@ namespace ET.Server
                 rankItemComponent.playerId = playerId;
             }
             rankItemComponent.score = scoreNew;
+            if (rankItemComponent is RankEndlessChallengeItemComponent)
+            {
+                RankEndlessChallengeItemComponent rankEndlessChallengeItemComponent = (RankEndlessChallengeItemComponent)rankItemComponent;
+                rankEndlessChallengeItemComponent.killNum = killNum;
+            }
             rankItemComponent.recordTime = TimeHelper.ServerNow();
             rankItemComponent.GetComponent<DataCacheWriteComponent>().SetNeedSave();
 
-            if (self.SkipList.GetRank(scoreNew, playerId) < self.topRankPlayerCount)
+            if (self.playerId2Score.TryGetValue(playerId, out long score))
             {
-                if (self.topRankPlayerList.Contains(playerId) == false)
-                {
-                    self.topRankPlayerList.Add(playerId);
-                }
+                self.SkipList.DeleteNode(score, rankItemComponent);
+                self.rankTotalNum--;
+            }
+            self.SkipList.Insert(scoreNew, rankItemComponent);
+            self.playerId2Score[playerId] = scoreNew;
+            self.rankTotalNum++;
+
+            if (self.SkipList.GetRank(scoreNew, rankItemComponent) < self.topRankPlayerCount)
+            {
+                self.topRankPlayerList.Add(playerId);
                 self.GetComponent<DataCacheWriteComponent>().SetNeedSave();
             }
         }

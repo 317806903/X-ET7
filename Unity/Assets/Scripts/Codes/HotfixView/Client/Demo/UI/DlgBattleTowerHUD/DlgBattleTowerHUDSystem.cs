@@ -235,7 +235,7 @@ namespace ET.Client
 
 		public static void OnClickBG(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 			self.OnClose();
 		}
 
@@ -246,7 +246,7 @@ namespace ET.Client
 
 		public static void OnSale(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			self.View.EButton_SaleButton.gameObject.SetActive(false);
 			self.View.EButton_ConfirmButton.gameObject.SetActive(true);
@@ -265,14 +265,14 @@ namespace ET.Client
 
 		public static void OnConfirmSale(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Sell);
 			ET.Client.GamePlayTowerDefenseHelper.SendScalePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
 			self.OnClose();
 		}
 
 		public static void OnReclaim(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Reclaim);
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkReclaimPlayerTower(self.playerId, self.towerUnitId);
@@ -289,18 +289,18 @@ namespace ET.Client
 
 		public static void OnUpgrade(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudioTowerPush(self.DomainScene());
-
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			(bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId, self.onlyChkPool);
 			if (bRet == false)
 			{
+				UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
 				string tipMsg = msg;
 				ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
 				return;
 			}
 
-			ET.Client.GamePlayTowerDefenseHelper.SendUpgradePlayerTower(self.ClientScene(), self.towerUnitId, false).Coroutine();
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Upgradation);
+			ET.Client.GamePlayTowerDefenseHelper.SendUpgradePlayerTower(self.ClientScene(), self.towerUnitId, self.towerCfgId, false).Coroutine();
 			self.OnClose();
 		}
 	}

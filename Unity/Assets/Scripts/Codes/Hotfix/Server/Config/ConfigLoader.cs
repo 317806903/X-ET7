@@ -70,7 +70,11 @@ namespace ET.Server
     {
         public override string Handle(ConfigComponent.GetCodeMode args)
         {
+#if DOTNET
             return "Server";
+#else
+            return GlobalConfig.Instance.CodeMode.ToString();
+#endif
         }
     }
 }

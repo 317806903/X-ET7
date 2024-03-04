@@ -12,7 +12,7 @@ namespace ET
         {
             protected override void Awake(PlayerBaseInfoComponent self)
             {
-                self.PlayerName = self.GetPlayerId().ToString();
+                self.PlayerName = $"player{RandomGenerator.RandomNumber(100000, 1000000)}";
                 self.IconIndex = 0;
                 self.EndlessChallengeScore = 0;
 
@@ -20,6 +20,9 @@ namespace ET
 
                 self.physicalStrength = GlobalSettingCfgCategory.Instance.InitialPhysicalStrength;
                 self.nextRecoverTime = TimeHelper.ServerNow() + (GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000);
+
+                self.BindLoginType = LoginType.Editor;
+                self.BindEmail = "";
             }
         }
 
@@ -74,17 +77,27 @@ namespace ET
             {
                 return;
             }
-            int recoverTime = GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000;
+            
+            long recoverTime = GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000;
             int recoverPhysiacalStrength = GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength;
             int maxPysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
             
-            if (self.physicalStrength >= maxPysicalStrength)
+            // if (self.physicalStrength >= maxPysicalStrength)
+            // {
+            //     self.physicalStrength = maxPysicalStrength;
+            //     self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime;
+            //     return;
+            // }
+
+            long elapsedTime = TimeHelper.ServerNow() - self.nextRecoverTime;
+            var create = (elapsedTime / recoverTime + 1) * recoverPhysiacalStrength;
+            if (create > maxPysicalStrength)
             {
                 self.physicalStrength = maxPysicalStrength;
                 self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime;
                 return;
             }
-            self.physicalStrength += ((int)(TimeHelper.ServerNow() - self.nextRecoverTime) / recoverTime + 1) * recoverPhysiacalStrength;
+            self.physicalStrength += (int)create;
             if (self.physicalStrength > maxPysicalStrength)
             {
                 self.physicalStrength = maxPysicalStrength;
@@ -92,13 +105,13 @@ namespace ET
             }
             else
             {
-                self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime - (TimeHelper.ServerNow() - self.nextRecoverTime) % recoverTime;
+                self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime - elapsedTime % recoverTime;
             }
         }
 
         public static int GetRevoerLeftTime(this PlayerBaseInfoComponent self)
         {
-            self.UpdatePhysicalStrength();
+            //self.UpdatePhysicalStrength();
             if (self.physicalStrength == GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength)
                 return 0;
             return (int)((self.nextRecoverTime - TimeHelper.ServerNow()) / 1000);
@@ -114,6 +127,7 @@ namespace ET
         {
             if (self.physicalStrength + chgValue < 0)
             {
+                Log.Error($"Lack of physical strength, needPhysicalStrength:{chgValue}, curPhysicalStrength:{self.physicalStrength}");
                 return false;
             }
             return true;
@@ -121,9 +135,37 @@ namespace ET
 
         public static void ChgPhysicalStrength(this PlayerBaseInfoComponent self, int chgValue)
         {
-            self.physicalStrength += chgValue;
             self.UpdatePhysicalStrength();
+            self.physicalStrength += chgValue;
+            if (self.physicalStrength < 0)
+            {
+                self.physicalStrength = 0;
+            }
+            int maxPysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
+            if (self.physicalStrength > maxPysicalStrength)
+            {
+                self.physicalStrength = maxPysicalStrength;
+            }
         }
         
+        public static LoginType GetBindLoginType(this PlayerBaseInfoComponent self)
+        {
+            return self.BindLoginType;
+        }
+
+        public static void SetBindLoginType(this PlayerBaseInfoComponent self, LoginType loginType)
+        {
+            self.BindLoginType = loginType;
+        }
+
+        public static string GetBindEmail(this PlayerBaseInfoComponent self)
+        {
+            return self.BindEmail;
+        }
+
+        public static void SetBindEmail(this PlayerBaseInfoComponent self, string email)
+        {
+            self.BindEmail = email;
+        }
     }
 }

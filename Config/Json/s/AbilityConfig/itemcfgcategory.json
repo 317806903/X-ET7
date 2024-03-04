@@ -1,0 +1,6518 @@
+[
+  {
+    "id": "TowCallMonster_999",
+    "name": {
+      "key": "Text_Key_Name_TowCallMonster_999",
+      "text": "怪物卡1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TowCallMonster_999",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 1,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TowCallMonster_1",
+    "name": {
+      "key": "Text_Key_Name_TowCallMonster_1",
+      "text": "突击小队"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TowCallMonster_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 1,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TowCallMonster_2",
+    "name": {
+      "key": "Text_Key_Name_TowCallMonster_2",
+      "text": "疗伤小队"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TowCallMonster_2",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 1,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TowCallMonster_3",
+    "name": {
+      "key": "Text_Key_Name_TowCallMonster_3",
+      "text": "怪物大军"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TowCallMonster_3",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 1,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TowCallMonster_4",
+    "name": {
+      "key": "Text_Key_Name_TowCallMonster_4",
+      "text": "蝙蝠男爵"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TowCallMonster_4",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 1,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow1_1",
+    "name": {
+      "key": "Text_Key_Name_Tow1_1",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow1_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow1_2",
+    "name": {
+      "key": "Text_Key_Name_Tow1_2",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow1_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow1_3",
+    "name": {
+      "key": "Text_Key_Name_Tow1_3",
+      "text": "弩箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow1_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow2_1",
+    "name": {
+      "key": "Text_Key_Name_Tow2_1",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow2_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow2_2",
+    "name": {
+      "key": "Text_Key_Name_Tow2_2",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow2_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow2_3",
+    "name": {
+      "key": "Text_Key_Name_Tow2_3",
+      "text": "加农炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow2_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow3_1",
+    "name": {
+      "key": "Text_Key_Name_Tow3_1",
+      "text": "火焰塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow3_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow3_2",
+    "name": {
+      "key": "Text_Key_Name_Tow3_2",
+      "text": "火焰塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow3_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow3_3",
+    "name": {
+      "key": "Text_Key_Name_Tow3_3",
+      "text": "火焰塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow3_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow4_1",
+    "name": {
+      "key": "Text_Key_Name_Tow4_1",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow4_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow4_2",
+    "name": {
+      "key": "Text_Key_Name_Tow4_2",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow4_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow4_3",
+    "name": {
+      "key": "Text_Key_Name_Tow4_3",
+      "text": "毒雾塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow4_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow5_1",
+    "name": {
+      "key": "Text_Key_Name_Tow5_1",
+      "text": "龙击炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow5_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow5_2",
+    "name": {
+      "key": "Text_Key_Name_Tow5_2",
+      "text": "龙击炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow5_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow5_3",
+    "name": {
+      "key": "Text_Key_Name_Tow5_3",
+      "text": "龙击炮"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow5_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow6_1",
+    "name": {
+      "key": "Text_Key_Name_Tow6_1",
+      "text": "雷电塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow6_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow6_2",
+    "name": {
+      "key": "Text_Key_Name_Tow6_2",
+      "text": "雷电塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow6_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow6_3",
+    "name": {
+      "key": "Text_Key_Name_Tow6_3",
+      "text": "雷电塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow6_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow7_1",
+    "name": {
+      "key": "Text_Key_Name_Tow7_1",
+      "text": "冰魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow7_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow7_2",
+    "name": {
+      "key": "Text_Key_Name_Tow7_2",
+      "text": "冰魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow7_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow7_3",
+    "name": {
+      "key": "Text_Key_Name_Tow7_3",
+      "text": "冰魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow7_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow8_1",
+    "name": {
+      "key": "Text_Key_Name_Tow8_1",
+      "text": "加速塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow8_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime1",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow8_2",
+    "name": {
+      "key": "Text_Key_Name_Tow8_2",
+      "text": "加速塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow8_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime2",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow8_3",
+    "name": {
+      "key": "Text_Key_Name_Tow8_3",
+      "text": "加速塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow8_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime3",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow9_1",
+    "name": {
+      "key": "Text_Key_Name_Tow9_1",
+      "text": "奥术天球"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow9_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerMagicBall1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow9_2",
+    "name": {
+      "key": "Text_Key_Name_Tow9_2",
+      "text": "奥术天球"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow9_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerMagicBall2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow9_3",
+    "name": {
+      "key": "Text_Key_Name_Tow9_3",
+      "text": "奥术天球"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow9_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerMagicBall3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow10_1",
+    "name": {
+      "key": "Text_Key_Name_Tow10_1",
+      "text": "炼金塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow10_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAlchemy1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow10_2",
+    "name": {
+      "key": "Text_Key_Name_Tow10_2",
+      "text": "炼金塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow10_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAlchemy2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow10_3",
+    "name": {
+      "key": "Text_Key_Name_Tow10_3",
+      "text": "炼金塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow10_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAlchemy3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow11_1",
+    "name": {
+      "key": "Text_Key_Name_Tow11_1",
+      "text": "毒蝎塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow11_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerScorpio1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow11_2",
+    "name": {
+      "key": "Text_Key_Name_Tow11_2",
+      "text": "毒蝎塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow11_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerScorpio2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow11_3",
+    "name": {
+      "key": "Text_Key_Name_Tow11_3",
+      "text": "毒蝎塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow11_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerScorpio3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow12_1",
+    "name": {
+      "key": "Text_Key_Name_Tow12_1",
+      "text": "破甲诅咒"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow12_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCurse1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow12_2",
+    "name": {
+      "key": "Text_Key_Name_Tow12_2",
+      "text": "破甲诅咒"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow12_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCurse2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow12_3",
+    "name": {
+      "key": "Text_Key_Name_Tow12_3",
+      "text": "破甲诅咒"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow12_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCurse3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow13_1",
+    "name": {
+      "key": "Text_Key_Name_Tow13_1",
+      "text": "附魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow13_1",
+      "text": ""
+    },
+    "icon": "ResIcon_Towerwitch1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow13_2",
+    "name": {
+      "key": "Text_Key_Name_Tow13_2",
+      "text": "附魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow13_2",
+      "text": ""
+    },
+    "icon": "ResIcon_Towerwitch2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow13_3",
+    "name": {
+      "key": "Text_Key_Name_Tow13_3",
+      "text": "附魔塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow13_3",
+      "text": ""
+    },
+    "icon": "ResIcon_Towerwitch3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow14_1",
+    "name": {
+      "key": "Text_Key_Name_Tow14_1",
+      "text": "冰刺箭"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow14_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIceArrow1",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow14_2",
+    "name": {
+      "key": "Text_Key_Name_Tow14_2",
+      "text": "冰刺箭"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow14_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIceArrow2",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow14_3",
+    "name": {
+      "key": "Text_Key_Name_Tow14_3",
+      "text": "冰刺箭"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow14_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIceArrow3",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow15_1",
+    "name": {
+      "key": "Text_Key_Name_Tow15_1",
+      "text": "水球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow15_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerWater1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow15_2",
+    "name": {
+      "key": "Text_Key_Name_Tow15_2",
+      "text": "水球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow15_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerWater2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow15_3",
+    "name": {
+      "key": "Text_Key_Name_Tow15_3",
+      "text": "水球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow15_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerWater3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow16_1",
+    "name": {
+      "key": "Text_Key_Name_Tow16_1",
+      "text": "电磁塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow16_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElectromagnetic1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow16_2",
+    "name": {
+      "key": "Text_Key_Name_Tow16_2",
+      "text": "电磁塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow16_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElectromagnetic2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow16_3",
+    "name": {
+      "key": "Text_Key_Name_Tow16_3",
+      "text": "电磁塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow16_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElectromagnetic3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow17_1",
+    "name": {
+      "key": "Text_Key_Name_Tow17_1",
+      "text": "暴击图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow17_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFire1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow17_2",
+    "name": {
+      "key": "Text_Key_Name_Tow17_2",
+      "text": "暴击图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow17_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFire2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow17_3",
+    "name": {
+      "key": "Text_Key_Name_Tow17_3",
+      "text": "暴击图腾"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow17_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFire3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow18_1",
+    "name": {
+      "key": "Text_Key_Name_Tow18_1",
+      "text": "奥术精灵"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow18_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAoShu1",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow18_2",
+    "name": {
+      "key": "Text_Key_Name_Tow18_2",
+      "text": "奥术精灵"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow18_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAoShu2",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow18_3",
+    "name": {
+      "key": "Text_Key_Name_Tow18_3",
+      "text": "奥术精灵"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow18_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerAoShu3",
+    "qualityType": 2,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow19_1",
+    "name": {
+      "key": "Text_Key_Name_Tow19_1",
+      "text": "连击斧"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow19_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerLianJi1",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow19_2",
+    "name": {
+      "key": "Text_Key_Name_Tow19_2",
+      "text": "连击斧"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow19_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerLianJi2",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow19_3",
+    "name": {
+      "key": "Text_Key_Name_Tow19_3",
+      "text": "连击斧"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow19_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerLianJi3",
+    "qualityType": 1,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow20_1",
+    "name": {
+      "key": "Text_Key_Name_Tow20_1",
+      "text": "灾厄塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow20_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerZaiE1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow20_2",
+    "name": {
+      "key": "Text_Key_Name_Tow20_2",
+      "text": "灾厄塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow20_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerZaiE2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow20_3",
+    "name": {
+      "key": "Text_Key_Name_Tow20_3",
+      "text": "灾厄塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow20_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerZaiE3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow21_1",
+    "name": {
+      "key": "Text_Key_Name_Tow21_1",
+      "text": "窃贼哥布林"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow21_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerGoblin1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow21_2",
+    "name": {
+      "key": "Text_Key_Name_Tow21_2",
+      "text": "窃贼哥布林"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow21_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerGoblin2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow21_3",
+    "name": {
+      "key": "Text_Key_Name_Tow21_3",
+      "text": "窃贼哥布林"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow21_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerGoblin3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow22_1",
+    "name": {
+      "key": "Text_Key_Name_Tow22_1",
+      "text": "鱼刺塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow22_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDuCi1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow22_2",
+    "name": {
+      "key": "Text_Key_Name_Tow22_2",
+      "text": "鱼刺塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow22_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDuCi2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow22_3",
+    "name": {
+      "key": "Text_Key_Name_Tow22_3",
+      "text": "鱼刺塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow22_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDuCi3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow23_1",
+    "name": {
+      "key": "Text_Key_Name_Tow23_1",
+      "text": "火箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow23_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerRocket1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow23_2",
+    "name": {
+      "key": "Text_Key_Name_Tow23_2",
+      "text": "火箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow23_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerRocket2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow23_3",
+    "name": {
+      "key": "Text_Key_Name_Tow23_3",
+      "text": "火箭塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow23_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerRocket3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow24_1",
+    "name": {
+      "key": "Text_Key_Name_Tow24_1",
+      "text": "火球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow24_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireBall1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow24_2",
+    "name": {
+      "key": "Text_Key_Name_Tow24_2",
+      "text": "火球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow24_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireBall2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Tow24_3",
+    "name": {
+      "key": "Text_Key_Name_Tow24_3",
+      "text": "火球塔"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Tow24_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireBall3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow1_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow1_1",
+      "text": "弩箭塔Lv1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow1_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow1_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow1_2",
+      "text": "弩箭塔Lv2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow1_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow1_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow1_3",
+      "text": "弩箭塔Lv3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow1_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerArrowSolo3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow2_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow2_1",
+      "text": "加农炮Lv1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow2_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow2_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow2_2",
+      "text": "加农炮Lv2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow2_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow2_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow2_3",
+      "text": "加农炮Lv3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow2_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerCanon3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow3_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow3_1",
+      "text": "火焰塔Lv1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow3_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow3_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow3_2",
+      "text": "火焰塔Lv2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow3_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow3_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow3_3",
+      "text": "火焰塔Lv3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow3_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerFireLine3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow4_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow4_1",
+      "text": "毒雾塔Lv1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow4_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow4_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow4_2",
+      "text": "毒雾塔Lv2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow4_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow4_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow4_3",
+      "text": "毒雾塔Lv3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow4_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragCircle3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow5_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow5_1",
+      "text": "龙击炮LV1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow5_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow5_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow5_2",
+      "text": "龙击炮LV2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow5_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow5_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow5_3",
+      "text": "龙击炮LV3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow5_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerDragon3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow6_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow6_1",
+      "text": "雷电塔LV1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow6_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow6_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow6_2",
+      "text": "雷电塔LV2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow6_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow6_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow6_3",
+      "text": "雷电塔LV3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow6_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerElec3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow7_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow7_1",
+      "text": "冰魔塔LV1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow7_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow7_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow7_2",
+      "text": "冰魔塔LV2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow7_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow7_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow7_3",
+      "text": "冰魔塔LV3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow7_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerIce3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow8_1",
+    "name": {
+      "key": "Text_Key_Name_TestTow8_1",
+      "text": "加速塔LV1"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow8_1",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime1",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow8_2",
+    "name": {
+      "key": "Text_Key_Name_TestTow8_2",
+      "text": "加速塔LV2"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow8_2",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime2",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "TestTow8_3",
+    "name": {
+      "key": "Text_Key_Name_TestTow8_3",
+      "text": "加速塔LV3"
+    },
+    "desc": {
+      "key": "Text_Key_Desc_TestTow8_3",
+      "text": ""
+    },
+    "icon": "ResIcon_TowerTime3",
+    "qualityType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Tutorial",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge1_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge2_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge3_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge4_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge5_5_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_6_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_6_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_7_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_7_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_8_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_8_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_9_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_9_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_10_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_10_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_11_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_11_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_12_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_12_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_12_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_13_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_14_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_14_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_15_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_15_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_16_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_16_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_17_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_17_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_18_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_18_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_19_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_19_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_19_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_20_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_20_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_20_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Infinite_20_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster1_1",
+    "name": {
+      "key": "Text_Key_Name_Monster1_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster1_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster2_1",
+    "name": {
+      "key": "Text_Key_Name_Monster2_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster2_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster3_1",
+    "name": {
+      "key": "Text_Key_Name_Monster3_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster3_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster4_1",
+    "name": {
+      "key": "Text_Key_Name_Monster4_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster4_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster5_1",
+    "name": {
+      "key": "Text_Key_Name_Monster5_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster5_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster6_1",
+    "name": {
+      "key": "Text_Key_Name_Monster6_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster6_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster7_1",
+    "name": {
+      "key": "Text_Key_Name_Monster7_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster7_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster8_1",
+    "name": {
+      "key": "Text_Key_Name_Monster8_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster8_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster9_1",
+    "name": {
+      "key": "Text_Key_Name_Monster9_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster9_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster10_1",
+    "name": {
+      "key": "Text_Key_Name_Monster10_1",
+      "text": ""
+    },
+    "desc": {
+      "key": "Text_Key_Desc_Monster10_1",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_6_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_6_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_7_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_7_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_8_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_8_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_9_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_9_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_10_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_10_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_11_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_11_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_12_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_12_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_13_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_13_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_14_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_14_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_15_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_15_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_16_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_16_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_17_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_17_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_18_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_18_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_19_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_19_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_20_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_InfiniteTest_20_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_1_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_2_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_6_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_6_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_6_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_7_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_7_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_7_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_8_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_8_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_8_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_9_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_9_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_9_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_10_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_10_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_10_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_11_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_11_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_11_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_12_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_12_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_12_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_13_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_13_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_13_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_14_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_14_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_14_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_15_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_15_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge_15_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge6_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_2_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_4_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge7_5_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_2_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_4_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge8_5_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_2_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge9_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_1_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_1_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_2_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_2_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_2_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_3_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_3_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_3_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_3_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_4_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_4_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_4_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_5_1",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_5_2",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_5_3",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  },
+  {
+    "id": "Monster_Challenge10_5_4",
+    "name": {
+      "key": "",
+      "text": ""
+    },
+    "desc": {
+      "key": "",
+      "text": ""
+    },
+    "icon": "",
+    "qualityType": 0,
+    "itemType": 2,
+    "itemSubType": 0,
+    "canStack": true,
+    "showPriority": 0,
+    "price": 0
+  }
+]

@@ -41,6 +41,8 @@ namespace ET
             self.translateExcel = self.GetCurrentTranslator_Excel(self.CurrentLanguage);
             self.translateUI = self.GetCurrentTranslator_UI(self.CurrentLanguage);
 
+            self.PreLoad(self.CurrentLanguage);
+
             ConfigComponent.Instance.TranslateText(self.translateExcel);
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.SwitchLanguage() {languageType = language});
@@ -106,6 +108,23 @@ namespace ET
             }
         }
 
+        public static void PreLoad(this LocalizeComponent self, LanguageType languageType)
+        {
+            switch (languageType)
+            {
+                case LanguageType.CN:
+                    self._PreLoad_CN();
+                    return;
+                case LanguageType.TW:
+                    self._PreLoad_TW();
+                    return;
+                case LanguageType.EN:
+                default:
+                    self._PreLoad_EN();
+                    return;
+            }
+        }
+
         public static Func<string, string, string> GetCurrentTranslator_UI(this LocalizeComponent self, LanguageType languageType)
         {
             switch (languageType)
@@ -120,6 +139,21 @@ namespace ET
                 default:
                     return self._Translate_UI_EN;
             }
+        }
+
+        private static void _PreLoad_CN(this LocalizeComponent self)
+        {
+            var tmp = LocalizeConfig_Excel_CNCategory.Instance;
+        }
+
+        private static void _PreLoad_TW(this LocalizeComponent self)
+        {
+            var tmp = LocalizeConfig_Excel_TWCategory.Instance;
+        }
+
+        private static void _PreLoad_EN(this LocalizeComponent self)
+        {
+            var tmp = LocalizeConfig_Excel_ENCategory.Instance;
         }
 
         private static string _Translate_Excel_CN(this LocalizeComponent self, string key, string originText)

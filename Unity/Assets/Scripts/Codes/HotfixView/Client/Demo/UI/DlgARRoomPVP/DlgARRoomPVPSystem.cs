@@ -14,6 +14,7 @@ namespace ET.Client
         {
             self.View.E_QuitRoomButton.AddListenerAsync(self.QuitRoom);
             self.View.E_ShowQrCodeButton.AddListenerAsync(self.ShowQrCode);
+            self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
             self.View.E_RoomMemberChgTeamButton.AddListenerAsync(self.OnChgTeam);
 
@@ -30,8 +31,10 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgARRoomPVP self, ShowWindowData contextData = null)
         {
+            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
 
+            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
             self.GetRoomInfo().Coroutine();
         }
 
@@ -53,12 +56,22 @@ namespace ET.Client
                 if (roomComponent.IsARRoom())
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(true);
+                    long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                    if (myPlayerId == roomComponent.ownerRoomMemberId)
+                    {
+                        self.View.E_ReScanButton.SetVisible(true);
+                    }
+                    else
+                    {
+                        self.View.E_ReScanButton.SetVisible(false);
+                    }
                     self.View.E_BGImage.SetVisible(false);
                     self.View.E_BGARTranslucentImage.SetVisible(true);
                 }
                 else
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(false);
+                    self.View.E_ReScanButton.SetVisible(false);
                     self.View.E_BGImage.SetVisible(true);
                     self.View.E_BGARTranslucentImage.SetVisible(false);
                 }
@@ -292,14 +305,14 @@ namespace ET.Client
 
         public static async ETTask KickOutRoom(this DlgARRoomPVP self, long beKickedPlayerId)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await RoomHelper.KickMemberOutRoomAsync(self.ClientScene(), beKickedPlayerId);
         }
 
         public static async ETTask QuitRoom(this DlgARRoomPVP self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheRoom_Des");
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheRoom_Confirm");
@@ -314,19 +327,43 @@ namespace ET.Client
             await RoomHelper.QuitRoomAsync(self.ClientScene());
 
             await UIManagerHelper.ExitRoom(self.DomainScene());
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "LeaveRoomClicked",
+            });
+
         }
 
         public static async ETTask ShowQrCode(this DlgARRoomPVP self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             ARSessionHelper.TriggerShowQrCode(self.DomainScene());
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "InviteClicked",
+            });
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ReScan(this DlgARRoomPVP self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            ARSessionHelper.TriggerReScan(self.DomainScene());
+
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
+            _UIComponent.HideWindow<DlgARRoomPVP>();
+
             await ETTask.CompletedTask;
         }
 
         public static async ETTask ChgRoomMemberStatus(this DlgARRoomPVP self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             RoomComponent roomComponent = self.GetRoomComponent();
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
@@ -345,18 +382,24 @@ namespace ET.Client
 
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "ReadyClicked",
+            });
+
         }
 
         public static async ETTask ChgRoomSeat(this DlgARRoomPVP self, int newSeat)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await RoomHelper.ChgRoomMemberSeatAsync(self.ClientScene(), newSeat);
         }
 
         public static async ETTask OnChooseBattleCfg(this DlgARRoomPVP self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await UIManagerHelper.GetUIComponent(self.DomainScene())
                 .ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData() { isGlobalMode = false, isAR = true, });
@@ -364,7 +407,7 @@ namespace ET.Client
 
         public static async ETTask OnChgTeam(this DlgARRoomPVP self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             RoomComponent roomComponent = self.GetRoomComponent();
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());

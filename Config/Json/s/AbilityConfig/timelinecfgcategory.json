@@ -1,16 +1,47 @@
 [
   {
+    "id": "Timeline_Idle1",
+    "name": "待机",
+    "isLoop": true,
+    "duration": 5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_None",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_Move1",
+    "name": "移动",
+    "isLoop": true,
+    "duration": 5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_None",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "Timeline_1",
     "name": "",
+    "isLoop": false,
     "duration": 2,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "PlayAnimator_1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -48,9 +79,7 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -58,34 +87,7 @@
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "FireBullet_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -94,40 +96,14 @@
   {
     "id": "Timeline_2",
     "name": "",
+    "isLoop": false,
     "duration": 2,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "PlayAnimator_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -135,34 +111,7 @@
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "FireBullet_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -171,40 +120,14 @@
   {
     "id": "Timeline_3",
     "name": "",
+    "isLoop": false,
     "duration": 2,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "PlayAnimator_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -212,34 +135,7 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -247,10 +143,7 @@
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "FireBullet_5",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -259,40 +152,14 @@
   {
     "id": "Timeline_Player1",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -300,33 +167,7 @@
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "AttackArea_One1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenRectangle",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "rectangleArea": {
-            "ignoringHeight": false,
-            "keepHorizontal": true,
-            "width": 10,
-            "length": 6
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Rectangle_1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -335,40 +176,14 @@
   {
     "id": "Timeline_Player2",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "AttackArea_One1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": false,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Umbellate_1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -377,16 +192,14 @@
   {
     "id": "Timeline_Player3",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 1,
         "delayTime": 0,
         "action_id": "BuffAdd_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -395,15 +208,14 @@
   {
     "id": "Timeline_RocketTower_1",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -411,9 +223,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -431,9 +241,7 @@
         "timeElapsed": 0.2,
         "delayTime": 0,
         "action_id": "FireBullet_RocketProjectile_1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -442,15 +250,14 @@
   {
     "id": "Timeline_MachineGunTower1",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -458,9 +265,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -478,10 +283,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_MachineGunLvl1Effect_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -489,9 +291,7 @@
         "timeElapsed": 0.2,
         "delayTime": 0,
         "action_id": "AttackArea_One1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -500,15 +300,14 @@
   {
     "id": "Timeline_LaserTower_0",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -516,9 +315,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -536,10 +333,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_LaserFireEffect1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -547,9 +341,7 @@
         "timeElapsed": 0.2,
         "delayTime": 0,
         "action_id": "AttackArea_One1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -558,15 +350,14 @@
   {
     "id": "Timeline_EnergyPylon_2",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -574,9 +365,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -594,10 +383,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_EneryPylon_PFX1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -605,9 +391,7 @@
         "timeElapsed": 0.2,
         "delayTime": 0,
         "action_id": "AttackArea_One1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -616,15 +400,14 @@
   {
     "id": "Timeline_HoverTank1",
     "name": "",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -632,9 +415,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -652,10 +433,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_HoverTankFireShow1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -663,9 +441,7 @@
         "timeElapsed": 0.2,
         "delayTime": 0,
         "action_id": "AttackArea_HoverTank1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -674,15 +450,14 @@
   {
     "id": "Timeline_PlayerSolo1",
     "name": "射击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -690,9 +465,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -707,23 +480,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Arrow_Bullet_1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Arrow_Fire_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerArrow1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -732,15 +516,14 @@
   {
     "id": "Timeline_PlayerSolo2",
     "name": "射击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -748,9 +531,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -765,23 +546,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Arrow_Bullet_2",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Arrow_Fire_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerArrow2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -790,15 +582,14 @@
   {
     "id": "Timeline_PlayerSolo3",
     "name": "射击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -806,9 +597,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -823,23 +612,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Arrow_Bullet_3",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Arrow_Fire_3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerArrow3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -848,15 +648,14 @@
   {
     "id": "Timeline_PlayerAoe1",
     "name": "炮击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -864,9 +663,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -881,23 +678,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Cannon_Bullet_1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Cannon_Fire_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerCannon1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -906,15 +714,14 @@
   {
     "id": "Timeline_PlayerAoe2",
     "name": "炮击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -922,9 +729,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -939,23 +744,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Cannon_Bullet_2",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Cannon_Fire_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerCannon2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -964,15 +780,14 @@
   {
     "id": "Timeline_PlayerAoe3",
     "name": "炮击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -980,9 +795,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -997,23 +810,34 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_Tower_Cannon_Bullet_3",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_Cannon_Fire_3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerCannon3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1022,16 +846,40 @@
   {
     "id": "Timeline_PlayerLine1",
     "name": "火柱1",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
         "action_id": "BuffAdd_Line1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1040,16 +888,40 @@
   {
     "id": "Timeline_PlayerLine2",
     "name": "火柱2",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
         "action_id": "BuffAdd_Line2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1058,16 +930,40 @@
   {
     "id": "Timeline_PlayerLine3",
     "name": "火柱3",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
         "action_id": "BuffAdd_Line3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1076,16 +972,30 @@
   {
     "id": "Timeline_PlayerCircle1",
     "name": "毒雾",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "BuffAdd_Circle1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_PlayerCircle2",
+    "name": "毒雾2",
+    "isLoop": false,
+    "duration": 1,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Circle2",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1094,16 +1004,14 @@
   {
     "id": "Timeline_PlayerCircle3",
     "name": "毒雾3",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "BuffAdd_Circle3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1112,15 +1020,14 @@
   {
     "id": "Timeline_EnemySolo1",
     "name": "射击",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1128,9 +1035,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1148,10 +1053,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "EffectCreate_EnemySolo1_Fire",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1159,45 +1061,7 @@
         "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_EnemySolo1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      }
-    ]
-  },
-  {
-    "id": "Timeline_Idle1",
-    "name": "待机",
-    "duration": 5,
-    "nodes": [
-      {
-        "timeElapsed": 0,
-        "delayTime": 0,
-        "action_id": "PlayAnimator_None",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      }
-    ]
-  },
-  {
-    "id": "Timeline_Move1",
-    "name": "移动",
-    "duration": 5,
-    "nodes": [
-      {
-        "timeElapsed": 0,
-        "delayTime": 0,
-        "action_id": "PlayAnimator_None",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1206,15 +1070,14 @@
   {
     "id": "Timeline_TowerDragon1",
     "name": "龙击炮1",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1222,9 +1085,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1239,12 +1100,26 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDragon1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerDragon_Bullet1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1253,15 +1128,14 @@
   {
     "id": "Timeline_TowerDragon2",
     "name": "龙击炮2",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1269,9 +1143,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1286,12 +1158,26 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerDragon_Bullet2",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDragon2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1299,16 +1185,15 @@
   },
   {
     "id": "Timeline_TowerDragon3",
-    "name": "龙击炮1",
+    "name": "龙击炮3",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1316,9 +1201,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1333,12 +1216,26 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerDragon_Bullet3",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDragon3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1347,15 +1244,14 @@
   {
     "id": "Timeline_TowerElec1",
     "name": "雷电塔1",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0.1,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "AttackArea_TowerElec1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1363,10 +1259,7 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Skill1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1374,20 +1267,23 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Hit1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "BuffAdd_AttackUp",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "PlayAudio_HitTowerThunder1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1396,15 +1292,14 @@
   {
     "id": "Timeline_TowerElec2",
     "name": "雷电塔2",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0.1,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "AttackArea_TowerElec2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1412,10 +1307,7 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Skill2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1423,20 +1315,23 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Hit2",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "BuffAdd_AttackUp",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "PlayAudio_HitTowerThunder2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1445,15 +1340,14 @@
   {
     "id": "Timeline_TowerElec3",
     "name": "雷电塔3",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0.1,
         "delayTime": 0,
-        "action_id": "AttackArea_PlayerSolo1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "AttackArea_TowerElec3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1461,10 +1355,7 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Skill3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1472,20 +1363,23 @@
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "EffectCreate_TowerElec_Hit3",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "timeElapsed": 0,
         "delayTime": 0,
-        "action_id": "BuffAdd_AttackUp",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "PlayAudio_HitTowerThunder3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1494,15 +1388,14 @@
   {
     "id": "Timeline_TowerIce1",
     "name": "冰魔塔1",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1510,9 +1403,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1527,12 +1418,26 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerIce_Bullet1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIce1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1541,15 +1446,14 @@
   {
     "id": "Timeline_TowerIce2",
     "name": "冰魔塔2",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1557,9 +1461,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1574,12 +1476,26 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerIce_Bullet2",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIce2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -1588,15 +1504,14 @@
   {
     "id": "Timeline_TowerIce3",
     "name": "冰魔塔3",
+    "isLoop": false,
     "duration": 1,
     "nodes": [
       {
         "timeElapsed": 0,
         "delayTime": 0,
         "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -1604,9 +1519,7 @@
         "timeElapsed": 0.05,
         "delayTime": 0,
         "action_id": "TimelineJumpTime_0_05",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [
           {
             "conditions": [
@@ -1621,12 +1534,2048 @@
         "actionCondition2": []
       },
       {
-        "timeElapsed": 0.2,
+        "timeElapsed": 0.1,
         "delayTime": 0,
         "action_id": "FireBullet_TowerIce_Bullet3",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIce3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerMagicBall1",
+    "name": "奥术天球1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerMagicBall1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerMystOrb1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerMagicBall2",
+    "name": "奥术天球2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerMagicBall2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerMystOrb2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerMagicBall3",
+    "name": "奥术天球3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerMagicBall3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerMystOrb3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerScorpio1",
+    "name": "毒蝎塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerScorpio1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerScorpio1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerScorpio1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerScorpio2",
+    "name": "毒蝎塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerScorpio2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerScorpio2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerScorpio2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerScorpio3",
+    "name": "毒蝎塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerScorpio3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerScorpio3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerScorpio3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerCurse1",
+    "name": "诅咒塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerCurse1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerCurse1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerBreaker1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerCurse2",
+    "name": "诅咒塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerCurse2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerCurse2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerBreaker2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerCurse3",
+    "name": "诅咒塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerCurse3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerCurse3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerBreaker3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIceArrow1",
+    "name": "冰枪塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerIceArrow1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIceArrow1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIceArrow1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIceArrow2",
+    "name": "冰枪塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerIceArrow2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIceArrow2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIceArrow2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerIceArrow3",
+    "name": "冰枪塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerIceArrow3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerIceArrow3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerIceArrow3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerWater1",
+    "name": "水图腾1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerWater1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerWater1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDizzyOrb1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerWater2",
+    "name": "水图腾2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerWater2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerWater2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDizzyOrb2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerWater3",
+    "name": "水图腾3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerWater3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerWater3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerDizzyOrb3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElectromagnetic1",
+    "name": "电磁塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerElectromagnetic1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerElectromagnetic1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerTesla1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElectromagnetic2",
+    "name": "电磁塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerElectromagnetic2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerElectromagnetic2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerTesla2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerElectromagnetic3",
+    "name": "电磁塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerElectromagnetic3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerElectromagnetic3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerTesla3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerAoShu1",
+    "name": "奥术精灵1",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerAoShu1_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerAoShu1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerHellFire1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerAoShu2",
+    "name": "奥术精灵2",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerAoShu2_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerAoShu2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerHellFire2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerAoShu3",
+    "name": "奥术精灵3",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerAoShu3_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerAoShu3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerHellFire3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerGoblin1",
+    "name": "窃贼哥布林1",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerGoblin1_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_HitTowerThief1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_TowerGoblin1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "CoinAdd_Attack_TowerGoblin1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerGoblin2",
+    "name": "窃贼哥布林2",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerGoblin2_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_HitTowerThief2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_TowerGoblin2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "CoinAdd_Attack_TowerGoblin2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerGoblin3",
+    "name": "窃贼哥布林3",
+    "isLoop": false,
+    "duration": 0.5,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAnimator_TowerGoblin3_Attack",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_HitTowerThief3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "AttackArea_TowerGoblin3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "CoinAdd_Attack_TowerGoblin3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDuCi1",
+    "name": "毒刺塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerDuCi1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDuCi1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerSting1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDuCi2",
+    "name": "毒刺塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerDuCi2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDuCi2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerSting2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerDuCi3",
+    "name": "毒刺塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerDuCi3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerDuCi3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerSting3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerRocket1",
+    "name": "火箭塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerRocket1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerRocket1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerRocket1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerRocket2",
+    "name": "火箭塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerRocket2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerRocket2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerRocket2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerRocket3",
+    "name": "火箭塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerRocket3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerRocket3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerRocket3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerFireBall1",
+    "name": "火球塔1",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerFireBall1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerFireBall1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerFireOrb1",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerFireBall2",
+    "name": "火球塔2",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerFireBall2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerFireBall2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerFireOrb2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Timeline_TowerFireBall3",
+    "name": "火球塔3",
+    "isLoop": false,
+    "duration": 0.2,
+    "nodes": [
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "FaceTo_Forward_ForceSetFace",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.05,
+        "delayTime": 0,
+        "action_id": "TimelineJumpTime_0_05",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "AngleCondition",
+                "conditionCompare": 4,
+                "angle": 30
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerFireBall3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "FireBullet_TowerFireBall3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0.1,
+        "delayTime": 0,
+        "action_id": "PlayAudio_FireTowerFireOrb3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "timeElapsed": 0,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }

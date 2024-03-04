@@ -13,6 +13,7 @@ namespace ET.Server
             scene.AddComponent<MailBoxComponent, MailboxType>(MailboxType.UnOrderMessageDispatcher);
             //scene.AddComponent<NavmeshManagerComponent>();
 
+            Log.Debug($"CreateServerScene [{scene.SceneType.ToString()}] [{scene.Id}] [{scene.InstanceId}]");
             switch (scene.SceneType)
             {
                 case SceneType.Router:

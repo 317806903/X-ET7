@@ -21,10 +21,17 @@ namespace ET.Client
 			{
 				return;
 			}
+
 			Unit unit = unitComponent.Get(unitId);
-			if (unit == null)
+			int retryNum = 30;
+			while (unit == null)
 			{
-				return;
+				await TimerComponent.Instance.WaitFrameAsync();
+				unit = unitComponent.Get(unitId);
+				if (retryNum-- < 0)
+				{
+					return;
+				}
 			}
 
 			Entity entity = MongoHelper.Deserialize<Entity>(message.PlayAnimatorComponent);

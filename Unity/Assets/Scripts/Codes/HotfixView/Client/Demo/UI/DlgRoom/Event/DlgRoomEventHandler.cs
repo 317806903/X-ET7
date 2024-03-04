@@ -7,7 +7,7 @@
 
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.windowType = UIWindowType.Normal; 
+			uiBaseWindow.windowType = UIWindowType.Normal;
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
@@ -17,12 +17,12 @@
 
 		public void OnRegisterUIEvent(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.GetComponent<DlgRoom>().RegisterUIEvent(); 
+			uiBaseWindow.GetComponent<DlgRoom>().RegisterUIEvent();
 		}
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgRoom>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgRoom>().ShowWindow(contextData);
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

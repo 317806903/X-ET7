@@ -23,7 +23,9 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
         QualityType = (QualityType)_buf.ReadInt();
         ItemType = (ItemType)_buf.ReadInt();
         ItemSubType = (ItemSubType)_buf.ReadInt();
+        CanStack = _buf.ReadBool();
         ShowPriority = _buf.ReadInt();
+        Price = _buf.ReadInt();
         PostInit();
     }
 
@@ -58,9 +60,17 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
     /// </summary>
     public ItemSubType ItemSubType { get; private set; }
     /// <summary>
+    /// 能否叠起来
+    /// </summary>
+    public bool CanStack { get; private set; }
+    /// <summary>
     /// 界面展示优先级(越大越前)
     /// </summary>
     public int ShowPriority { get; private set; }
+    /// <summary>
+    /// 售价
+    /// </summary>
+    public int Price { get; private set; }
 
     public const int __ID__ = -514136015;
     public override int GetTypeId() => __ID__;
@@ -87,7 +97,9 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
         + "QualityType:" + QualityType + ","
         + "ItemType:" + ItemType + ","
         + "ItemSubType:" + ItemSubType + ","
+        + "CanStack:" + CanStack + ","
         + "ShowPriority:" + ShowPriority + ","
+        + "Price:" + Price + ","
         + "}";
     }
     

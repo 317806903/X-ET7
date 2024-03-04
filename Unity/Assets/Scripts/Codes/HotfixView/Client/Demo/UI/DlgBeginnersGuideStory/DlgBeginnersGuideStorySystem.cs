@@ -18,11 +18,15 @@ namespace ET.Client
 			self.View.E_BG3Button.AddListenerAsync(self.DoNext);
 			self.View.E_BG4Button.AddListenerAsync(self.DoNext);
 			self.View.E_BG5Button.AddListenerAsync(self.DoNext);
+			self.View.E_SKIPTUTORIALButton.AddListenerAsync(self.DoNext);
+			self.View.E_VideoImgButton.AddListenerAsync(self.ClickVideo);
 		}
 
 		public static void ShowWindow(this DlgBeginnersGuideStory self, ShowWindowData contextData = null)
 		{
-			self.index = 1;
+			//self.index = 1;
+			self.index = self.totalNum;
+
 			DlgBeginnersGuideStory_ShowWindowData dlgBeginnersGuideStoryShowWindowData = (DlgBeginnersGuideStory_ShowWindowData)contextData;
 			self.finishCallBack = dlgBeginnersGuideStoryShowWindowData.finishCallBack;
 
@@ -35,9 +39,14 @@ namespace ET.Client
 			self.DoNext().Coroutine();
 		}
 
+		public static void HideWindow(this DlgBeginnersGuideStory self)
+		{
+			ET.Client.UIAudioManagerHelper.ResumeMusic(self.DomainScene());
+		}
+
 		public static async ETTask DoNext(this DlgBeginnersGuideStory self)
 		{
-			UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			await self.ShowStory(self.index++);
 		}
@@ -85,24 +94,28 @@ namespace ET.Client
 
 		public static async ETTask ShowVideo(this DlgBeginnersGuideStory self, int index)
 		{
+			ET.Client.UIAudioManagerHelper.StopMusic(self.DomainScene());
+
 			await self.DoShowStory(index);
 			Transform newTrans = self.View.uiTransform.transform.Find($"story{index}");
 			newTrans.gameObject.SetActive(true);
 			VideoPlayer videoPlayer = self.View.uiTransform.transform.Find("VideoPlay").gameObject.GetComponent<VideoPlayer>();
-			RawImage image = newTrans.Find("VideoImg").gameObject.GetComponent<RawImage>();
+			RawImage image = self.View.E_VideoImgRawImage.gameObject.GetComponent<RawImage>();
 			AudioSource audioSource = null;
 
 			videoPlayer.source = VideoSource.VideoClip;
-			if (audioSource == null)
-			{
-				videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
-			}
-			else
-			{
-				videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-				//videoPlayer.EnableAudioTrack(0, true);
-				videoPlayer.SetTargetAudioSource(0, audioSource);
-			}
+			// if (audioSource == null)
+			// {
+			// 	videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
+			// }
+			// else
+			// {
+			// 	videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+			// 	//videoPlayer.EnableAudioTrack(0, true);
+			// 	videoPlayer.SetTargetAudioSource(0, audioSource);
+			// }
+			videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+
 			videoPlayer.Prepare();
 			while (videoPlayer.isPrepared == false)
 			{
@@ -115,7 +128,13 @@ namespace ET.Client
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
 			}
+
 		}
 
+		public static async ETTask ClickVideo(this DlgBeginnersGuideStory self)
+		{
+			bool curStatus = self.View.E_SKIPTUTORIALButton.gameObject.activeInHierarchy;
+			self.View.E_SKIPTUTORIALButton.SetVisible(!curStatus);
+		}
 	}
 }

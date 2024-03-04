@@ -24,12 +24,12 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo)
+        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo, bool isScaleByUnit)
         {
             string nodeName = offSetInfo.NodeName;
             float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
             float3 relateForward = new float3(offSetInfo.RelateForward.X, offSetInfo.RelateForward.Y, offSetInfo.RelateForward.Z);
-            
+
             self.isSceneEffect = unitId == 0? true : false;
             self.unitId = unitId;
             self.CfgId = effectCfgId;
@@ -41,8 +41,9 @@ namespace ET.Ability
             self.offSet = offSetPosition;
             self.rotation = relateForward;
             self.key = key;
+            self.isScaleByUnit = isScaleByUnit;
         }
-        
+
         public static Unit GetUnit(this EffectObj self)
         {
             EffectComponent effectComponent = self.GetParent<EffectComponent>();
@@ -60,7 +61,7 @@ namespace ET.Ability
         {
             self.duration = 0;
         }
-        
+
         public static bool ChkNeedRemove(this EffectObj self)
         {
             //只要duration <= 0，不管是否是permanent都移除掉

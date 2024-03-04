@@ -24,22 +24,32 @@
 
         public static void Start()
         {
+            Log.Debug($"ET.Entry.Start In]");
             StartAsync().Coroutine();
         }
 
         private static async ETTask StartAsync()
         {
+            Log.Debug($"ET.Entry.StartAsync 1]");
             WinPeriod.Init();
 
+            Log.Debug($"ET.Entry.StartAsync 2]");
             MongoHelper.Init();
+            Log.Debug($"ET.Entry.StartAsync 3]");
             ProtobufHelper.Init();
 
+            Log.Debug($"ET.Entry.StartAsync 4]");
             Game.AddSingleton<NetServices>();
+            Log.Debug($"ET.Entry.StartAsync 5]");
             Game.AddSingleton<Root>();
 
+            Log.Debug($"ET.Entry.StartAsync 6]");
             await EventSystem.Instance.PublishAsync(Root.Instance.Scene, new EventType.EntryEvent1());
+            Log.Debug($"ET.Entry.StartAsync 7]");
             await EventSystem.Instance.PublishAsync(Root.Instance.Scene, new EventType.EntryEvent3());
+            Log.Debug($"ET.Entry.StartAsync 8]");
             await EventSystem.Instance.PublishAsync(Root.Instance.Scene, new EventType.EntryEvent2());
+            Log.Debug($"ET.Entry.StartAsync 9]");
         }
     }
 

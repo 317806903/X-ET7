@@ -76,13 +76,15 @@ namespace ET.Ability
                 };
                 foreach (var actionId in skillCfg.LearnActionId)
                 {
-                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0, selectHandleSelf, ref actionContext);
+                    ActionHandlerHelper.CreateAction(self.GetUnit(), null, actionId, 0.1f, selectHandleSelf, ref actionContext);
                 }
             }
         }
 
         public static async ETTask<TimelineObj> CastSkill(this SkillObj self)
         {
+            ET.Ability.UnitHelper.ClearOnceSelectHandle(self.GetUnit());
+
             SkillCfg skillCfg = self.model;
             ActionContext actionContext = new ActionContext()
             {
@@ -92,7 +94,7 @@ namespace ET.Ability
                 skillSlotType = self.skillSlotType,
                 skillLevel = self.skillLevel,
             };
-            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction, ref actionContext);
+            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction_Ref, ref actionContext);
 
             TimelineObj timelineObj = await TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
             timelineObj.InitActionContext(ref actionContext);

@@ -23,7 +23,7 @@ namespace ET.Ability
             protected override void Destroy(MoveTweenObj self)
             {
                 self.moveTweenType = null;
-                self.selectHandle?.Dispose();
+                //self.selectHandle?.Dispose();
                 self.selectHandle = null;
             }
         }
@@ -261,6 +261,7 @@ namespace ET.Ability
         /// <param name="fixedDeltaTime"></param>
         public static void DoMoveTween_Target(this MoveTweenObj self, TargetMoveTweenType moveTweenType, float fixedDeltaTime)
         {
+            Unit targetUnit = null;
             float3 targetPosition;
             SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
             if (selectHandleType == SelectHandleType.SelectUnits)
@@ -282,7 +283,7 @@ namespace ET.Ability
                 else if (self.selectHandle.unitIds.Count > 0)
                 {
                     long targetUnitId = self.selectHandle.unitIds[0];
-                    Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                    targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                     if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
                         targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
@@ -334,12 +335,29 @@ namespace ET.Ability
             float dirLengthSq = math.lengthsq(dir);
             if (dirLengthSq == 0)
             {
+                if (targetUnit != null)
+                {
+                    if (UnitHelper.ChkIsBullet(unit))
+                    {
+                        BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                        bulletObj.AddPreHitUnit(targetUnit.Id);
+                    }
+                }
             }
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
             {
                 self.forward = math.normalize(dir);
                 unit.Forward = self.forward;
                 unit.Position = targetPosition;
+
+                if (targetUnit != null)
+                {
+                    if (UnitHelper.ChkIsBullet(unit))
+                    {
+                        BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                        bulletObj.AddPreHitUnit(targetUnit.Id);
+                    }
+                }
             }
             else
             {

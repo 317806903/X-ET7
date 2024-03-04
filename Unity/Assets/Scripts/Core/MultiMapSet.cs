@@ -7,14 +7,15 @@ namespace ET
     public class MultiMapSet<T, K>: SortedDictionary<T, HashSet<K>>
     {
         private readonly HashSet<K> Empty = new HashSet<K>();
-		
+
         public void Add(T t, K k)
         {
             HashSet<K> list;
             this.TryGetValue(t, out list);
             if (list == null)
             {
-                list = new HashSet<K>();
+                //list = new HashSet<K>();
+                list = HashSetComponent<K>.Create();
                 this.Add(t, list);
             }
             list.Add(k);

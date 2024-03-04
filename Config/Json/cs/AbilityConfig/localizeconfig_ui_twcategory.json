@@ -36,15 +36,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus",
-    "text_tw": ""
-  },
-  {
     "key": "DlgARRoom/EGBackGround/E_QuitRoom/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome",
     "text_tw": ""
   },
   {
@@ -60,10 +52,6 @@
     "text_tw": ""
   },
   {
-    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_BuyClose/ELabel_BuyClose",
-    "text_tw": ""
-  },
-  {
     "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text",
     "text_tw": ""
   },
@@ -73,10 +61,6 @@
   },
   {
     "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerBegin/E_Effect/Effect_GameBegin/EButton_GameBegin/final (1)",
     "text_tw": ""
   },
   {
@@ -108,10 +92,6 @@
     "text_tw": ""
   },
   {
-    "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Sale/text",
-    "text_tw": ""
-  },
-  {
     "key": "DlgBattleTowerHUD/E_OperatorMenu/E_Reclaim/text",
     "text_tw": ""
   },
@@ -120,31 +100,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgBattleTowerHUD/E_OperatorMenu/Image/E_TowerName",
-    "text_tw": ""
-  },
-  {
-    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/E_Slider/E_title",
-    "text_tw": ""
-  },
-  {
-    "key": "Canvas (Environment)/DlgBattleTowerSceneSlider/EButton_Next/ELabel_Next",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmCancel/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Confirm/E_ConfirmSure/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_Sure/E_Sure/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgCommonConfirm/EGBackGround/Root/EG_title/title",
+    "key": "DlgARSceneSlider/E_Slider/E_title",
     "text_tw": ""
   },
   {
@@ -153,10 +109,6 @@
   },
   {
     "key": "DlgGameMode/EGBackGround/E_RoomMode/E_RoomModeText",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameMode/EGBackGround/E_ARRoomMode/E_ARRoomModeText",
     "text_tw": ""
   },
   {
@@ -180,47 +132,11 @@
     "text_tw": ""
   },
   {
-    "key": "DlgRoom/EGBackGround/E_QuitRoom/Text",
-    "text_tw": ""
-  },
-  {
     "key": "DlgRoom/EGBackGround/RoomMemberList_title",
     "text_tw": ""
   },
   {
-    "key": "Canvas (Environment)/Item_Room/ELabel_Content",
-    "text_tw": ""
-  },
-  {
-    "key": "Canvas (Environment)/Item_RoomMember/ELabel_Content_Name",
-    "text_tw": ""
-  },
-  {
-    "key": "Canvas (Environment)/Item_RoomMember/EButton_Operator/ELabel_Operator",
-    "text_tw": ""
-  },
-  {
-    "key": "Canvas (Environment)/Item_Tower/ELabel_Name",
-    "text_tw": ""
-  },
-  {
     "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/E_PVEName",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVE/title",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_GameMode/E_PVP/title",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_Avatar/E_PlayerName",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Backpack/Text (TMP)",
     "text_tw": ""
   },
   {
@@ -324,10 +240,6 @@
     "text_tw": ""
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
-    "text_tw": ""
-  },
-  {
     "key": "DlgARRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
     "text_tw": ""
   },
@@ -368,15 +280,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgLogin/Sprite_BackGround/E_Login_google/Text",
-    "text_tw": ""
-  },
-  {
     "key": "DlgRoom/EGBackGround/E_RoomMemberChgTeam/ELable_RoomMemberChgTeam",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/EG_ChooseBattleCfg/EButton_ChooseBattleCfg/Text",
     "text_tw": ""
   },
   {
@@ -388,11 +292,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgARRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
+    "key": "DlgARRoom/EGBackGround/E_Rescan/Text (TMP)",
     "text_tw": ""
   },
   {
@@ -400,75 +300,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgRoom/EGBackGround/pvp/Text (TMP)",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/title",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList_INVITE/Text (TMP)",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/ELabel_LeftMonsterWave01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/ELabel_LeftTime01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
-    "text_tw": ""
-  },
-  {
     "key": "DlgBattleTower/E_Battle/E_TowerBuyShow/Text (TMP)",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTower/E_Battle/E_LeftCallPlayerTowerCount01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutHome/ELabel_PutHome01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint/ELabel_PutMonsterPoint_01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/GameObject/ELabel_TotalGold_01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftMonsterWave01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/ELabel_LeftTime01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh01",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/Text (TMP)",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerAR/E_Battle/E_LeftCallPlayerTowerCount01",
     "text_tw": ""
   },
   {
@@ -480,35 +312,11 @@
     "text_tw": ""
   },
   {
-    "key": "DlgLogin/Sprite_BackGround/E_SwitchPlayer/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Grey/ELable_Grey",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/E_RoomMemberStatus_Waiting/ELable_Waiting",
-    "text_tw": ""
-  },
-  {
     "key": "Canvas (Environment)/Item_RoomMember/EG_None",
     "text_tw": ""
   },
   {
     "key": "Canvas (Environment)/Effect_GameBegin/EButton_GameBegin/final (1)",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text12",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text12",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBattleTowerEnd/E_Root/E_ReturnRoom/Text12",
     "text_tw": ""
   },
   {
@@ -540,15 +348,7 @@
     "text_tw": ""
   },
   {
-    "key": "DlgARRoom/EGBackGround/RoomMemberList/E_player",
-    "text_tw": ""
-  },
-  {
     "key": "DlgBattleTowerHUD/EG_OperatorMenu/E_Upgradeable/text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgRoom/EGBackGround/RoomMemberList/E_player",
     "text_tw": ""
   },
   {
@@ -564,19 +364,11 @@
     "text_tw": ""
   },
   {
-    "key": "DlgBattleTowerAR/E_Battle/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh",
-    "text_tw": ""
-  },
-  {
     "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest/Text",
     "text_tw": ""
   },
   {
     "key": "DlgLogin/Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_SDK/Text",
-    "text_tw": ""
-  },
-  {
-    "key": "DlgBeginnersGuideStory/Next/TextNext",
     "text_tw": ""
   },
   {
@@ -589,6 +381,154 @@
   },
   {
     "key": "DlgPersonalInformation/EGBackGround/Root/E_info/name/E_InputField/Text Area/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgVideoShow/Sprite_BackGround/E_TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_PVP/locking/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_join/locking/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story1/TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story2/TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story3/TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story4/TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBeginnersGuideStory/story5/TextContext",
+    "text_tw": ""
+  },
+  {
+    "key": "Effect_GameEnd/EButton_ChallengeMode_victory/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm/text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomModeCreate/E_ARRoomModeCreateText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameMode/EGBackGround/E_ARRoomModeJoin/E_ARRoomModeJoinText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_PVE/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_tutorial/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Rank/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgGameModeAR/E_HomePage/E_Function/E_Cards/Text (TMP)",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text02",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/IndividualRank/Ranked",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/AllPlayersRank/title",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgRankEndlessChallenge/EGRoot/Leaderboard/ELabel_EmptyLeaderbord",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info012/Text01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info012/ELabel_RecoverLeftTIme2",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info022/Text01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/E_info022/Text03",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/EButton_WatchAD/E_CancelText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength/EGBackGround/PhysicalStrength/EG_title2/E_TitleText2",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/E_info01/Text01",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/E_info01/ELabel_RecoverLeftTIme",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrength02/EGBackGround/PhysicalStrength02/EG_title/E_TitleText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgPhysicalStrengthTip/EGBackGround/tips/EG_title/E_TitleText",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/Hot updates/ProgressPrarent/Processing/Text",
+    "text_tw": ""
+  },
+  {
+    "key": "DlgLogin/Sprite_BackGround/Hot updates/txt_updates",
     "text_tw": ""
   }
 ]

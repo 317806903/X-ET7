@@ -84,7 +84,18 @@ namespace ET.Client
         {
             GameObject result = null;
 
-            if (!poolDict.ContainsKey(poolName) && autoCreate > 0)
+            bool bRet = poolDict.ContainsKey(poolName);
+            if (bRet)
+            {
+                GameObjectPool pool = poolDict[poolName];
+                bRet = pool.ChkObjAvailability();
+                if (bRet == false)
+                {
+                    poolDict.Remove(poolName);
+                    InitPool(poolName, autoCreate, PoolInflationType.INCREMENT);
+                }
+            }
+            else if (autoCreate > 0)
             {
                 InitPool(poolName, autoCreate, PoolInflationType.INCREMENT);
             }

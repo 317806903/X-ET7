@@ -8,6 +8,8 @@ namespace ET
     {
         Editor,
         UnitySDK,
+        GoogleSDK,
+        AppleSDK,
         Robot,
     }
 
@@ -15,11 +17,14 @@ namespace ET
     public class AccountComponent : Entity, IAwake, IDestroy
     {
         public string accountId;
+        public string bindAccountId;
         public string password;
         public long playerId;
         public long createTime;
         public long loginTime;
         public LoginType accountType;
         public LoginType loginType;
+        public string createIP;
+        public string loginIP;
     }
 }

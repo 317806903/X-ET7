@@ -101,11 +101,14 @@ namespace ET.Client
             self.transSelectShow = self.transRoot.Find("SelectShow");
             self.transCanUpgradeShow = self.transRoot.Find("CanUpgradeShow");
             self.transAttackArea = self.transRoot.Find("AttackArea");
+            self.transMyTowerShow = self.transRoot.Find("MyTowerShow");
 
             self.transDefaultShow.gameObject.SetActive(true);
             self.transSelectShow.gameObject.SetActive(false);
             self.transCanUpgradeShow.gameObject.SetActive(false);
             self.transAttackArea.gameObject.SetActive(false);
+            long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(self.DomainScene());
+            self.transMyTowerShow.gameObject.SetActive(myPlayerId == self.towerComponent.playerId);
 
             self.ChgColor(self.transDefaultShow);
             self.ChgColor(self.transSelectShow);

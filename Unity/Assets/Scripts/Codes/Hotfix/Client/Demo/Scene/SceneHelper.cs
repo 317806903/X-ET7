@@ -15,7 +15,7 @@
 			});
 		}
 
-		public static async ETTask EnterHall(Scene scene, bool isFromLogin = false)
+		public static async ETTask EnterHall(Scene scene, bool isFromLogin = false, bool isRelogin = false)
 		{
 			Scene currentScene = scene.CurrentScene();
 			if (currentScene != null)
@@ -25,6 +25,7 @@
 			await EventSystem.Instance.PublishAsync(scene, new EventType.EnterHallSceneStart()
 			{
 				isFromLogin = isFromLogin,
+				isRelogin = isRelogin,
 			});
 		}
 

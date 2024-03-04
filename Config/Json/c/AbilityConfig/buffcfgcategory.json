@@ -1,5 +1,2226 @@
 [
   {
+    "id": "Buff_Infinite_9_2_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_9_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_9_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_10_2_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_10_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_10_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_11_1_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_11_1_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_11_1_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_12_2_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_12_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_12_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_12_3_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_12_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_12_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_13_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Infinite_13_1_Gui",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_14_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Infinite_14_1_Gui",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_15_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Infinite_15_1_Gui",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_15_2_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_15_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_15_2_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_16_2_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Infinite_16_2_Gui",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_17_2_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_17_2_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_17_2_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_18_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_18_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_18_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_19_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_19_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_19_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_19_3_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_19_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_19_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_20_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_20_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_20_1_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_20_2_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Infinite_20_2_Gui",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_20_3_ZhongZi",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_20_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_20_3_ZhongZi",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Infinite_20_4_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Infinite_20_4_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Infinite_20_4_Dan",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Invisible_Infinite_13_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Infinite_13_1_Gui"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Infinite_14_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Infinite_14_1_Gui"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Infinite_15_1_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Infinite_15_1_Gui"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Infinite_16_2_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Infinite_16_2_Gui"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Infinite_20_2_Gui",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Infinite_20_2_Gui"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Stun_Infinite_17_2_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Infinite_18_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Infinite_19_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Infinite_20_1_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Infinite_20_4_Dan",
+    "name": "",
+    "icon": "",
+    "desc": "无限模式怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge3_1_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge3_1_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge3_1_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge3_2_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge3_2_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge3_2_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge3_3_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge3_3_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge3_3_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge3_4_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge3_4_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge3_4_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge3_5_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge3_5_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge3_5_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_5_2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge4_5_2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge4_5_2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_5_3",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_恢复",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_5_3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_5_3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_1_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge4_1_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_2_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge4_2_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_3_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge4_3_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_4_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge4_4_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge4_5_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge4_5_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_3_3",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge5_3_3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_4_2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge5_4_2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_5_2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_隐身",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible_Monster_Challenge5_5_2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_1_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_1_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_1_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_2_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_2_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_2_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_3_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_3_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_3_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_4_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_4_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_4_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_5_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_5_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_5_1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge5_5_4",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge5_5_4",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Monster_Challenge5_5_4",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge_Niao1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_加速",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge_Niao1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Monster_Niao1_SpeedUp",
+        "actionCallParam": "SelectObjectConfig_Monster_Niao1_SpeedUp",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge_Niao2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_加速",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge_Niao2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Monster_Niao2_SpeedUp",
+        "actionCallParam": "SelectObjectConfig_Monster_Niao2_SpeedUp",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Monster_Challenge_Niao3",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能_加速",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_Monster_Challenge_Niao3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Monster_Niao3_SpeedUp",
+        "actionCallParam": "SelectObjectConfig_Monster_Niao3_SpeedUp",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge4_1_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge4_1_1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge4_2_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge4_2_1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge4_3_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge4_3_1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge4_4_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge4_4_1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge4_5_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge4_5_1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge5_3_3",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge5_3_3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge5_4_2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge5_4_2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Invisible_Monster_Challenge5_5_2",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_隐身",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Monster_Challenge5_5_2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_1_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_2_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_3_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_4_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_5_1",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Stun_Monster_Challenge5_5_4",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_弱化",
+    "tags": [
+      9
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Buff_Stun"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_SpeedUp",
+    "name": "",
+    "icon": "",
+    "desc": "挑战关卡怪物技能效果_加速",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
     "id": "Buff_1",
     "name": "",
     "icon": "ResIcon_1",
@@ -29,33 +2250,24 @@
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "BuffStackCountChg_Reduce1",
-        "actionCallParam": {
-          "$type": "ActionCallCasterUnit",
-          "isChgToSelectPos": true
-        },
+        "action_id": "BuffDeal_BuffStackCountChgCurReduce",
+        "actionCallParam": "SelectObjectConfig_CasterUnit",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_1",
-        "actionCallParam": {
-          "$type": "ActionCallCasterUnit",
-          "isChgToSelectPos": true
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByLeftTimeCur",
+        "actionCallParam": "SelectObjectConfig_CasterUnit",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "BuffRemove_3",
-        "actionCallParam": {
-          "$type": "ActionCallCasterUnit",
-          "isChgToSelectPos": true
-        },
+        "action_id": "BuffDeal_BuffRemoveByBuffType",
+        "actionCallParam": "SelectObjectConfig_CasterUnit",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -88,10 +2300,7 @@
         "buffTrig": 10,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallOnAttackUnit",
-          "isChgToSelectPos": true
-        },
+        "actionCallParam": "SelectObjectConfig_OnAttackUnit",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -99,10 +2308,7 @@
         "buffTrig": 14,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallCasterPlayerUnit",
-          "isChgToSelectPos": true
-        },
+        "actionCallParam": "SelectObjectConfig_CasterPlayerUnit",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -134,10 +2340,7 @@
         "buffTrig": 14,
         "delayTime": 0,
         "action_id": "PlayAudio_1",
-        "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit",
-          "isChgToSelectPos": true
-        },
+        "actionCallParam": "SelectObjectConfig_BeHurtUnit",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -162,52 +2365,14 @@
     "maxStack": 1,
     "isIgnoreCasterActor": false,
     "tickTime": [
-      0.2
+      0.3
     ],
     "monitorTriggers": [
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "buffTrig": 5,
-        "delayTime": 0,
-        "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": false,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -215,9 +2380,7 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "AttackArea_Line1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -242,62 +2405,22 @@
     "maxStack": 1,
     "isIgnoreCasterActor": false,
     "tickTime": [
-      0.2
+      0.3
     ],
     "monitorTriggers": [
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": false,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
-        "actionCondition1": [],
-        "actionCondition2": []
-      },
-      {
-        "buffTrig": 5,
-        "delayTime": 0,
-        "action_id": "AttackArea_Line1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "AttackArea_Line2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -322,62 +2445,62 @@
     "maxStack": 1,
     "isIgnoreCasterActor": false,
     "tickTime": [
-      0.2
+      0.3
     ],
     "monitorTriggers": [
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "FaceTo_Forward_ForceSetFace",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": 1,
-          "isFriend": false,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": false,
-            "keepHorizontal": true,
-            "radius": 100,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "action_id": "AttackArea_Line3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_HuoYan1",
+    "name": "火焰塔灼烧buff1",
+    "icon": "",
+    "desc": "单体毒",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffHuoYan1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Buff_HuoYan1",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
-        "buffTrig": 5,
+        "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "AttackArea_Line1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -402,17 +2525,14 @@
     "maxStack": 1,
     "isIgnoreCasterActor": false,
     "tickTime": [
-      0.2
+      0.3
     ],
     "monitorTriggers": [
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -420,9 +2540,47 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "AttackArea_Circle1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "actionCallParam": "SelectObjectConfig_SelectLast",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Circle2",
+    "name": "毒雾2",
+    "icon": "",
+    "desc": "圆形毒雾",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_PlayerCircle1"
+    ],
+    "selfPlayAnimator": "PlayAnimator_1",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_Circle2",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -447,27 +2605,22 @@
     "maxStack": 1,
     "isIgnoreCasterActor": false,
     "tickTime": [
-      0.2
+      0.3
     ],
     "monitorTriggers": [
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 5,
         "delayTime": 0,
-        "action_id": "AttackArea_Circle1",
-        "actionCallParam": {
-          "$type": "ActionCallSelectLast"
-        },
+        "action_id": "AttackArea_Circle3",
+        "actionCallParam": "SelectObjectConfig_SelectLast",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -497,10 +2650,7 @@
         "buffTrig": 22,
         "delayTime": 0,
         "action_id": "CoinAdd_Attack_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -530,10 +2680,7 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "CoinAdd_Auto_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -563,10 +2710,7 @@
         "buffTrig": 22,
         "delayTime": 0,
         "action_id": "BuffAdd_BeHitBack1",
-        "actionCallParam": {
-          "$type": "ActionCallBeHurtUnit",
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_BeHurtUnit",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -616,11 +2760,8 @@
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -652,11 +2793,8 @@
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -688,11 +2826,8 @@
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -724,11 +2859,8 @@
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -757,22 +2889,16 @@
       {
         "buffTrig": 4,
         "delayTime": 0,
-        "action_id": "BuffResetDuration_2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
       {
         "buffTrig": 18,
         "delayTime": 0,
-        "action_id": "BuffRemove_1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "action_id": "BuffDeal_BuffRemoveCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -802,34 +2928,7 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "BuffAdd_CDDown1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": -1,
-          "isFriend": true,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 5,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Buff_AddCDDown1",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -859,34 +2958,7 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "BuffAdd_CDDown2",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": -1,
-          "isFriend": true,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 5,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Buff_AddCDDown2",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -916,34 +2988,7 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "BuffAdd_CDDown3",
-        "actionCallParam": {
-          "$type": "ActionCallAutoUnitWhenUmbellate",
-          "isSave": true,
-          "selectNum": -1,
-          "isFriend": true,
-          "isOnlyPlayer": false,
-          "offSetInfo": {
-            "nodeName": "",
-            "offSetPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "relateForward": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            }
-          },
-          "isAngleFirst": false,
-          "umbellateArea": {
-            "ignoringHeight": true,
-            "keepHorizontal": true,
-            "radius": 5,
-            "angle": 360
-          },
-          "isChgToSelectPos": false
-        },
+        "actionCallParam": "SelectObjectConfig_Buff_AddCDDown3",
         "actionCondition1": [],
         "actionCondition2": []
       }
@@ -966,17 +3011,14 @@
     "maxStack": 1,
     "isIgnoreCasterActor": true,
     "tickTime": [
-      2
+      4
     ],
     "monitorTriggers": [
       {
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "EffectCreate_SeedHeal1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       },
@@ -984,10 +3026,1431 @@
         "buffTrig": 5,
         "delayTime": 0,
         "action_id": "AttackArea_SeedHeal1",
-        "actionCallParam": {
-          "$type": "ActionCallAutoSelf",
-          "isSave": false
-        },
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_SeedHeal2",
+    "name": "回血",
+    "icon": "",
+    "desc": "恢复生命",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      4
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_SeedHeal2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_SeedHeal2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_SeedHeal3",
+    "name": "回血",
+    "icon": "",
+    "desc": "恢复生命",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      4
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_SeedHeal3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_SeedHeal3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_CanInvisible",
+    "name": "隐身技能",
+    "icon": "",
+    "desc": "",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      4
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_Invisible",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Invisible",
+    "name": "隐身",
+    "icon": "",
+    "desc": "",
+    "tags": [
+      11
+    ],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_Placed"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": []
+  },
+  {
+    "id": "Buff_TowerFire1",
+    "name": "火图腾1",
+    "icon": "",
+    "desc": "友方加暴击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerFire1",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerFire2",
+    "name": "火图腾2",
+    "icon": "",
+    "desc": "友方加暴击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerFire2",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerFire3",
+    "name": "火图腾3",
+    "icon": "",
+    "desc": "友方加暴击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerFire3",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerFire1",
+    "name": "火图腾附魔1",
+    "icon": "",
+    "desc": "加暴击",
+    "tags": [],
+    "tagGroup": 6,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerFire1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerFire2",
+    "name": "火图腾附魔2",
+    "icon": "",
+    "desc": "加暴击",
+    "tags": [],
+    "tagGroup": 6,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerFire2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerFire3",
+    "name": "火图腾附魔3",
+    "icon": "",
+    "desc": "加暴击",
+    "tags": [],
+    "tagGroup": 6,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerFire3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerLianJi1",
+    "name": "连击斧1",
+    "icon": "",
+    "desc": "友方连击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      4
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi1",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi1",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerLianJi2",
+    "name": "连击斧2",
+    "icon": "",
+    "desc": "友方连击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      4
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi2",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi2",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerLianJi3",
+    "name": "连击斧3",
+    "icon": "",
+    "desc": "友方连击",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi3",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerLianJi3",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerLianJi1",
+    "name": "连击斧附魔1",
+    "icon": "",
+    "desc": "连击",
+    "tags": [],
+    "tagGroup": 7,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerLianJi1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 2,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerLianJi2",
+    "name": "连击斧附魔2",
+    "icon": "",
+    "desc": "连击",
+    "tags": [],
+    "tagGroup": 7,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerLianJi2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 4,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerLianJi3",
+    "name": "连击斧附魔3",
+    "icon": "",
+    "desc": "连击",
+    "tags": [],
+    "tagGroup": 7,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerLianJi3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 6,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Towerwitch1",
+    "name": "巫毒塔1",
+    "icon": "",
+    "desc": "友方攻击加额外伤害",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerwitch1",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Towerwitch2",
+    "name": "巫毒塔2",
+    "icon": "",
+    "desc": "友方攻击加额外伤害",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerwitch2",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_Towerwitch3",
+    "name": "巫毒塔3",
+    "icon": "",
+    "desc": "友方攻击加额外伤害",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 0,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerwitch3",
+        "actionCallParam": "SelectObjectConfig_UmbellateFriend_5_All",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerwitch1",
+    "name": "巫毒塔附魔1",
+    "icon": "",
+    "desc": "攻击加额外伤害",
+    "tags": [],
+    "tagGroup": 8,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerwitch1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerwitch2",
+    "name": "巫毒塔附魔2",
+    "icon": "",
+    "desc": "攻击加额外伤害",
+    "tags": [],
+    "tagGroup": 8,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerwitch2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerwitch3",
+    "name": "巫毒塔附魔3",
+    "icon": "",
+    "desc": "攻击加额外伤害",
+    "tags": [],
+    "tagGroup": 8,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerwitch3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerZaiE1",
+    "name": "灾厄塔1",
+    "icon": "",
+    "desc": "敌方debuff重置",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      3
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerZaiE1",
+        "actionCallParam": "SelectObjectConfig_Umbellate_5_All",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "BuffTypeCondition",
+                "conditionCompare": 2,
+                "buffType": 2
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerZaiE1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerZaiE2",
+    "name": "灾厄塔2",
+    "icon": "",
+    "desc": "敌方debuff重置",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      2
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerZaiE2",
+        "actionCallParam": "SelectObjectConfig_Umbellate_5_All",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "BuffTypeCondition",
+                "conditionCompare": 2,
+                "buffType": 2
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerZaiE2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerZaiE3",
+    "name": "灾厄塔3",
+    "icon": "",
+    "desc": "敌方debuff重置",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      1
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "BuffAdd_AddTowerZaiE3",
+        "actionCallParam": "SelectObjectConfig_Umbellate_5_All",
+        "actionCondition1": [
+          {
+            "conditions": [
+              {
+                "$type": "BuffTypeCondition",
+                "conditionCompare": 2,
+                "buffType": 2
+              }
+            ]
+          }
+        ],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "EffectCreate_FireTowerZaiE3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerZaiE1",
+    "name": "灾厄塔附魔1",
+    "icon": "",
+    "desc": "debuff重置",
+    "tags": [],
+    "tagGroup": 9,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerZaiE1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerZaiE2",
+    "name": "灾厄塔附魔2",
+    "icon": "",
+    "desc": "debuff重置",
+    "tags": [],
+    "tagGroup": 9,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerZaiE2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_AddTowerZaiE3",
+    "name": "灾厄塔附魔3",
+    "icon": "",
+    "desc": "debuff重置",
+    "tags": [],
+    "tagGroup": 9,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffAddTowerZaiE3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 1,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 3,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerWater1",
+    "name": "水图腾1",
+    "icon": "",
+    "desc": "敌人弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerWater1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerWater2",
+    "name": "水图腾2",
+    "icon": "",
+    "desc": "敌人弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerWater2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerWater3",
+    "name": "水图腾3",
+    "icon": "",
+    "desc": "敌人弱化",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerWater3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerScorpio1",
+    "name": "毒蝎塔1",
+    "icon": "",
+    "desc": "单体毒",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerScorpio1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerScorpio1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerScorpio2",
+    "name": "毒蝎塔2",
+    "icon": "",
+    "desc": "单体毒",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerScorpio2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerScorpio2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerScorpio3",
+    "name": "毒蝎塔3",
+    "icon": "",
+    "desc": "单体毒",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerScorpio3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerScorpio3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerFireBall1",
+    "name": "火球塔1",
+    "icon": "",
+    "desc": "群体灼烧",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerFireBall1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerFireBall1",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerFireBall2",
+    "name": "火球塔2",
+    "icon": "",
+    "desc": "群体灼烧",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerFireBall2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerFireBall2",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerFireBall3",
+    "name": "火球塔3",
+    "icon": "",
+    "desc": "群体灼烧",
+    "tags": [],
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerFireBall3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": false,
+    "tickTime": [
+      0.5
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 5,
+        "delayTime": 0,
+        "action_id": "AttackArea_BuffTowerFireBall3",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      },
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerCurse1",
+    "name": "诅咒塔1",
+    "icon": "",
+    "desc": "敌人或弱化",
+    "tags": [],
+    "tagGroup": 10,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerCurse1"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 1,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerCurse2",
+    "name": "诅咒塔2",
+    "icon": "",
+    "desc": "敌人或弱化",
+    "tags": [],
+    "tagGroup": 10,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerCurse2"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 2,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
+        "actionCondition1": [],
+        "actionCondition2": []
+      }
+    ]
+  },
+  {
+    "id": "Buff_TowerCurse3",
+    "name": "诅咒塔3",
+    "icon": "",
+    "desc": "敌人或弱化",
+    "tags": [],
+    "tagGroup": 10,
+    "removeTags": [],
+    "removeTagGroups": [],
+    "immuneTags": [],
+    "immuneTagGroups": [],
+    "selfEffectList": [
+      "EffectCreate_BuffTowerCurse3"
+    ],
+    "selfPlayAnimator": "",
+    "buffType": 2,
+    "priority": 3,
+    "maxStack": 1,
+    "isIgnoreCasterActor": true,
+    "tickTime": [
+      0
+    ],
+    "monitorTriggers": [
+      {
+        "buffTrig": 4,
+        "delayTime": 0,
+        "action_id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+        "actionCallParam": "SelectObjectConfig_Self",
         "actionCondition1": [],
         "actionCondition2": []
       }

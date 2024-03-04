@@ -19,7 +19,7 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
         BuffTrig = (BuffTriggerEvent)_buf.ReadInt();
         DelayTime = _buf.ReadFloat();
         ActionId = _buf.ReadString();
-        ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
+        ActionCallParam = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition1.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition2.Add(_e0);}}
         PostInit();
@@ -45,7 +45,8 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
     /// <summary>
     /// 对象选择器
     /// </summary>
-    public ActionCallParam ActionCallParam { get; private set; }
+    public string ActionCallParam { get; private set; }
+    public SelectObjectConfig ActionCallParam_Ref { get; private set; }
     /// <summary>
     /// 条件1
     /// </summary>
@@ -60,7 +61,7 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        ActionCallParam?.Resolve(_tables);
+        this.ActionCallParam_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(ActionCallParam);
         foreach(var _e in ActionCondition1) { _e?.Resolve(_tables); }
         foreach(var _e in ActionCondition2) { _e?.Resolve(_tables); }
         PostResolve();
@@ -68,7 +69,6 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        ActionCallParam?.TranslateText(translator);
         foreach(var _e in ActionCondition1) { _e?.TranslateText(translator); }
         foreach(var _e in ActionCondition2) { _e?.TranslateText(translator); }
     }

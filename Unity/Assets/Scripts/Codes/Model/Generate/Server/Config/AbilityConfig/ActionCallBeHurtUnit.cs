@@ -19,7 +19,6 @@ public sealed partial class ActionCallBeHurtUnit:  ActionCallParam
 {
     public ActionCallBeHurtUnit(ByteBuf _buf)  : base(_buf) 
     {
-        IsChgToSelectPos = _buf.ReadBool();
         PostInit();
     }
 
@@ -28,10 +27,6 @@ public sealed partial class ActionCallBeHurtUnit:  ActionCallParam
         return new ActionCallBeHurtUnit(_buf);
     }
 
-    /// <summary>
-    /// 是否转为记录成Pos位置信息(需要在特定位置施法有效,因为unit可能已走开)
-    /// </summary>
-    public bool IsChgToSelectPos { get; private set; }
 
     public const int __ID__ = 519510154;
     public override int GetTypeId() => __ID__;
@@ -50,7 +45,6 @@ public sealed partial class ActionCallBeHurtUnit:  ActionCallParam
     public override string ToString()
     {
         return "{ "
-        + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "}";
     }
     

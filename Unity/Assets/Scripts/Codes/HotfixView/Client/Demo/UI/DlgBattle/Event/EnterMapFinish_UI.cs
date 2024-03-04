@@ -11,9 +11,8 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.EnterMapFinish args)
         {
-            Log.Debug("EnterMapFinish 11");
+            Log.Debug("EnterMapFinish begins.");
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
-
             bool isAR = false;
             if (playerStatusComponent.RoomType == RoomType.Normal)
             {
@@ -27,101 +26,116 @@ namespace ET.Client
                 isAR = true;
             }
 
+            Log.Debug($"EnterMapFinish isAR={isAR} RoomType={playerStatusComponent.RoomType} SubRoomType={playerStatusComponent.SubRoomType}");
+
+            EventSystem.Instance.Publish(scene, new EventType.NoticeUIShowCommonLoading());
+
+            Scene currentScene = scene.CurrentScene();
+            while (currentScene == null || currentScene.IsDisposed)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+                currentScene = scene.CurrentScene();
+            }
+
+            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+            while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+                gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+            }
+
+            EventSystem.Instance.Publish(scene, new EventType.NoticeUIHideCommonLoading());
+
             if (isAR == false)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalSingleMap)
-                {
-                    Scene currentScene = scene.CurrentScene();
-                    GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                    while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
-                    {
-                        await TimerComponent.Instance.WaitFrameAsync();
-                        gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                    }
-
-                    Log.Debug("EnterMapFinish 22");
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
-                    Log.Debug("EnterMapFinish 33");
-                }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalRoom)
-                {
-                    Scene currentScene = scene.CurrentScene();
-                    while (currentScene == null || currentScene.IsDisposed)
-                    {
-                        await TimerComponent.Instance.WaitFrameAsync();
-                        currentScene = scene.CurrentScene();
-                    }
-                    GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
-                    while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
-                    {
-                        await TimerComponent.Instance.WaitFrameAsync();
-                        gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
-                    }
-
-                    if (gamePlayComponent.gamePlayMode == GamePlayMode.TowerDefense)
-                    {
-                        GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
-                        while (gamePlayTowerDefenseComponent == null || gamePlayTowerDefenseComponent.IsDisposed)
-                        {
-                            await TimerComponent.Instance.WaitFrameAsync();
-                            gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
-                        }
-
-                        if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
-                        {
-                            EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
-                            {
-                                eventName = "InfinityStarted",
-                                properties = new()
-                                {
-                                    {"player_num", gamePlayComponent.GetPlayerList().Count},
-                                }
-                            });
-
-                            EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
-                            {
-                                eventName = "InfinityEnded",
-                            });
-                        }
-                        if (gamePlayComponent.IsAR())
-                        {
-                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTowerAR>();
-                        }
-                        else
-                        {
-                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTower>();
-                        }
-                    }
-                    else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
-                    {
-                        GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                        while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
-                        {
-                            await TimerComponent.Instance.WaitFrameAsync();
-                            gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                        }
-
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
-                    }
-                }
+                await EnterMap_WhenNoAR(scene);
             }
             else
             {
-                Scene currentScene = scene.CurrentScene();
-                while (currentScene == null || currentScene.IsDisposed)
+                await EnterMap_WhenAR(scene);
+            }
+            Log.Debug($"EnterMapFinish ends.");
+            await ETTask.CompletedTask;
+        }
+
+        public async ETTask EnterMap_WhenAR(Scene scene)
+        {
+            Scene currentScene = scene.CurrentScene();
+
+            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+
+            float fARScale = gamePlayComponent.GetARScale();
+            ET.Client.ARSessionHelper.SetScaleARCamera(currentScene, fARScale);
+
+            Log.Debug($"EnterMapFinish AR GamePlay ready. Game mode: {gamePlayComponent.gamePlayMode} AR scale: {fARScale}.");
+            if (gamePlayComponent.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
+                while (gamePlayTowerDefenseComponent == null || gamePlayTowerDefenseComponent.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
-                    currentScene = scene.CurrentScene();
-                }
-                GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
-                while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
-                {
-                    await TimerComponent.Instance.WaitFrameAsync();
-                    gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+                    gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                 }
 
-                float fARScale = gamePlayComponent.GetARScale();
-                ET.Client.ARSessionHelper.SetScaleARCamera(currentScene, fARScale);
+                //if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+                {
+                    EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+                    {
+                        eventName = "LevelStarted",
+                        properties = new()
+                        {
+                            {"player_num", gamePlayComponent.GetPlayerList().Count},
+                        }
+                    });
+
+                    EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+                    {
+                        eventName = "BasePlaced",
+                    });
+                    EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+                    {
+                        eventName = "LevelEnded",
+                    });
+                }
+
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTowerAR>();
+            }
+            else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                }
+
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
+            }
+            await ETTask.CompletedTask;
+        }
+
+        public async ETTask EnterMap_WhenNoAR(Scene scene)
+        {
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            if (playerStatusComponent.SubRoomType == SubRoomType.NormalSingleMap)
+            {
+                Scene currentScene = scene.CurrentScene();
+                GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
+                {
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                }
+
+                Log.Debug($"EnterMapFinish nonAR NormalSingleMap ready.");
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
+            }
+            else if (playerStatusComponent.SubRoomType == SubRoomType.NormalRoom)
+            {
+                Scene currentScene = scene.CurrentScene();
+                GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+
+                Log.Debug($"EnterMapFinish nonAR NormalRoom GamePlay ready. Game mode: {gamePlayComponent.gamePlayMode}");
 
                 if (gamePlayComponent.gamePlayMode == GamePlayMode.TowerDefense)
                 {
@@ -131,12 +145,11 @@ namespace ET.Client
                         await TimerComponent.Instance.WaitFrameAsync();
                         gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                     }
-
-                    if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+                    //if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
                     {
                         EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
                         {
-                            eventName = "InfinityStarted",
+                            eventName = "LevelStarted",
                             properties = new()
                             {
                                 {"player_num", gamePlayComponent.GetPlayerList().Count},
@@ -145,18 +158,15 @@ namespace ET.Client
 
                         EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
                         {
-                            eventName = "InfinityEnded",
+                            eventName = "BasePlaced",
+                        });
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+                        {
+                            eventName = "LevelEnded",
                         });
                     }
 
-                    if (gamePlayComponent.IsAR())
-                    {
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTowerAR>();
-                    }
-                    else
-                    {
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTower>();
-                    }
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTower>();
                 }
                 else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
                 {
@@ -166,12 +176,9 @@ namespace ET.Client
                         await TimerComponent.Instance.WaitFrameAsync();
                         gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
                     }
-
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
                 }
             }
-
-
             await ETTask.CompletedTask;
         }
     }

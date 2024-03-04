@@ -1,0 +1,116 @@
+[
+  {
+    "dropRuleId": "DropItemRule_1",
+    "dropRuleType": 1,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 10000,
+        "itemId": "Tow1_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_2",
+    "dropRuleType": 2,
+    "dropItems": [
+      {
+        "$type": "DropRuleOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "dropRuleId": "DropItemRule_2_1"
+      },
+      {
+        "$type": "DropRuleOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "dropRuleId": "DropItemRule_2_2"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_2_1",
+    "dropRuleType": 2,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "itemId": "Tow1_1"
+      },
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "itemId": "Tow2_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_2_2",
+    "dropRuleType": 2,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "itemId": "Tow3_1"
+      },
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 5000,
+        "itemId": "Tow4_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_First_Ar_Challenge1",
+    "dropRuleType": 1,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 10000,
+        "itemId": "Tow7_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_First_Ar_Challenge2",
+    "dropRuleType": 1,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 10000,
+        "itemId": "Tow6_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_First_Ar_Challenge3",
+    "dropRuleType": 1,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 10000,
+        "itemId": "Tow4_1"
+      }
+    ]
+  },
+  {
+    "dropRuleId": "DropItemRule_First_Ar_Challenge4",
+    "dropRuleType": 1,
+    "dropItems": [
+      {
+        "$type": "DropItemOne",
+        "dropNum": 1,
+        "dropRatio": 10000,
+        "itemId": "Tow8_1"
+      }
+    ]
+  }
+]

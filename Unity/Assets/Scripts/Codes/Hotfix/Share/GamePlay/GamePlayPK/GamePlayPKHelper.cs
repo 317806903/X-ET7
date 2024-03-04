@@ -15,10 +15,17 @@ namespace ET
 			TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
 			Unit monsterUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, monsterCfg.UnitId, level, pos, forward, monsterCfg.AiCfgId);
 
+            MonsterComponent monsterComponent = monsterUnit.AddComponent<MonsterComponent>();
+            monsterComponent.monsterCfgId = monsterCfgId;
+            monsterComponent.rewardGold = 0;
+            monsterComponent.waveIndex = 1;
+            monsterComponent.circleWaveIndex = 0;
+
 			GamePlayHelper.AddUnitPathfinding(monsterUnit);
 			GamePlayHelper.AddUnitTeamFlag(monsterUnit, TeamFlagType.Monster1);
 
             UnitHelper_Create.ActorUnitLearnSkillWhenCreate(monsterUnit);
+            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds);
 
 			return monsterUnit;
 		}
@@ -86,6 +93,8 @@ namespace ET
                     GamePlayHelper.AddUnitInfo(playerId, towerUnit);
 
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
+                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds);
+
 
                     unitList.Add(towerUnit);
                 }

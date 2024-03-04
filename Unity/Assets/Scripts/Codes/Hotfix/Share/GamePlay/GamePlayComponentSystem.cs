@@ -38,6 +38,7 @@ namespace ET
             self.ownerPlayerId = roomComponent.ownerRoomMemberId;
 
             self.isAR = roomComponent.IsARRoom();
+            self.arMapScale = roomComponent.arMapScale;
             self._ARMeshDownLoadUrl = _ARMeshDownLoadUrl;
 
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
@@ -46,11 +47,14 @@ namespace ET
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
             gamePlayFriendTeamFlagCompent.InitWhenRoom(roomComponent, roomMemberList);
 
+            GamePlayStatisticalDataManagerComponent gamePlayStatisticalDataManagerComponent = self.AddComponent<GamePlayStatisticalDataManagerComponent>();
+            gamePlayStatisticalDataManagerComponent.Init();
+
             await self.DownloadMapRecast();
 
             self.CreateGamePlayMode();
 
-            self.gamePlayStatus = GamePlayStatus.WaitForStart;
+            //self.gamePlayStatus = GamePlayStatus.WaitForStart;
 
             self.NoticeToClientAll();
             await ETTask.CompletedTask;
@@ -72,6 +76,9 @@ namespace ET
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.AddComponent<GamePlayFriendTeamFlagCompent>();
             gamePlayFriendTeamFlagCompent.InitWhenGlobal();
 
+            GamePlayStatisticalDataManagerComponent gamePlayStatisticalDataManagerComponent = self.AddComponent<GamePlayStatisticalDataManagerComponent>();
+            gamePlayStatisticalDataManagerComponent.Init();
+
             await self.DownloadMapRecast();
 
             self.CreateGamePlayMode();
@@ -80,7 +87,7 @@ namespace ET
             await ETTask.CompletedTask;
         }
 
-        public static Task<byte[]> DownloadFileAsync(this GamePlayComponent self, string url)
+        public static Task<byte[]> DownloadFileBytesAsync(this GamePlayComponent self, string url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -92,6 +99,18 @@ namespace ET
             return httpClient.GetByteArrayAsync(url);
         }
 
+        public static Task<string> DownloadFileTextAsync(this GamePlayComponent self, string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                Log.Info("Empty URL, return an empty task.");
+                return Task.FromResult<string>(null);
+            }
+
+            HttpClient httpClient = new();
+            return httpClient.GetStringAsync(url);
+        }
+
         public static async ETTask DownloadMapRecast(this GamePlayComponent self)
         {
             string pathfindingMapName = self.GetPathfindingMapName();
@@ -101,26 +120,76 @@ namespace ET
             if (self.isTestARMesh)
             {
                 self._ARMeshDownLoadUrl = self.isTestARMeshUrl;
+                self.LoadByMeshData().Coroutine();
+            }
+            else if (self.isTestARObj)
+            {
+                self._ARMeshDownLoadUrl = self.isTestARObjUrl;
+                self.LoadByObjURL().Coroutine();
+                return;
             }
             else if (self.ChkIsAR() == false)
             {
-                var tmp = Task.Run(() =>
-                {
-                    navmeshManagerComponent.InitByFile(pathfindingMapName);
-                });
+                self.LoadByFile().Coroutine();
                 return;
             }
+            else
+            {
+                self.LoadByMeshData().Coroutine();
+            }
 
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask LoadByFile(this GamePlayComponent self)
+        {
+            string pathfindingMapName = self.GetPathfindingMapName();
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            Task task = new Task(
+                    () => {
+                        navmeshManagerComponent.InitByFile(pathfindingMapName);
+                    }
+                );
+            task.Start();
+
+            // var tmp = Task.Run(() =>
+            // {
+            //     navmeshManagerComponent.InitByFile(pathfindingMapName);
+            // });
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask LoadByObjURL(this GamePlayComponent self)
+        {
+            byte[] bytes = await self.DownloadFileBytesAsync(self._ARMeshDownLoadUrl);
+            string pathfindingMapName = self.GetPathfindingMapName();
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            Task task = new Task(
+                    () => {
+                        navmeshManagerComponent.InitByFileBytes(bytes);
+                    }
+                );
+            task.Start();
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask LoadByMeshData(this GamePlayComponent self)
+        {
             if (string.IsNullOrEmpty(self._ARMeshDownLoadUrl))
             {
                 return;
             }
 
+            string pathfindingMapName = self.GetPathfindingMapName();
+
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+
             // Mesh URL
             string mapUrl = self._ARMeshDownLoadUrl;
 
             // Draco bytes
-            byte[] bytes = await self.DownloadFileAsync(mapUrl);
+            byte[] bytes = await self.DownloadFileBytesAsync(mapUrl);
 
             Log.Info($"====================Draco bytes length {bytes.Length}");
 
@@ -129,10 +198,17 @@ namespace ET
 
             Log.Info($"====================MeshData {meshData.vertices.Length}, {meshData.normals.Length}, {meshData.triangles.Length}");
 
-            var tmp2 = Task.Run(() =>
-            {
-                navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
-            });
+            Task task = new Task(
+                () => {
+                    navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
+                }
+            );
+            task.Start();
+
+            // var tmp2 = Task.Run(() =>
+            // {
+            //     navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
+            // });
 
             await ETTask.CompletedTask;
         }
@@ -173,7 +249,8 @@ namespace ET
             self.NoticeGameEnd2Server();
 
             self.NoticeToClientAll();
-            self.NoticeGameEndToRoom();
+            self.NoticeGamePlayStatisticalData2Client();
+            self.NoticeGameEndToRoom(false);
         }
 
         public static void StopAllAI(this GamePlayComponent self)
@@ -348,10 +425,29 @@ namespace ET
             EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayChgToClient);
         }
 
-        public static void NoticeGameEndToRoom(this GamePlayComponent self)
+        public static void NoticeGameEndToRoom(this GamePlayComponent self, bool isReady)
         {
-            EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new() { roomId = self.roomId, };
+            EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new()
+            {
+                roomId = self.roomId,
+                isReady = isReady,
+            };
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                _NoticeGameEndToRoom.playerWinResult = gamePlayTowerDefenseComponent.GetPlayerWinResult();
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                // GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                // gamePlayPKComponent.NoticeToClient(playerId);
+            }
             EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
+        }
+
+        public static void NoticeGamePlayStatisticalData2Client(this GamePlayComponent self)
+        {
+            self.GetComponent<GamePlayStatisticalDataManagerComponent>().NoticeToClientAll();
         }
 
         public static void NoticeGameEnd2Server(this GamePlayComponent self)
@@ -442,6 +538,16 @@ namespace ET
             pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>()).Coroutine();
         }
 
+        public static bool ChkNavMeshReady(this GamePlayComponent self)
+        {
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            if (navmeshManagerComponent.GetNavMesh() == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static bool ChkIsAR(this GamePlayComponent self)
         {
             string sceneMap = self.GetGamePlayBattleConfig().SceneMap;
@@ -455,15 +561,14 @@ namespace ET
 
         public static float GetARScale(this GamePlayComponent self)
         {
-            if (self.isTestARMesh)
+            if (self.isTestARMesh || self.isTestARObj)
             {
                 return 30f;
             }
 
             if (self.ChkIsAR())
             {
-                float mapScale = self.GetGamePlayBattleConfig().MapScale;
-                return mapScale;
+                return self.arMapScale;
             }
 
             return 1;
@@ -494,6 +599,9 @@ namespace ET
 
         public static void DealUnitBeKill(this GamePlayComponent self, Unit attackerUnit, Unit beKillUnit)
         {
+            GamePlayStatisticalDataManagerComponent gamePlayStatisticalDataManagerComponent = self.GetComponent<GamePlayStatisticalDataManagerComponent>();
+            gamePlayStatisticalDataManagerComponent.AddKillInfo(attackerUnit, beKillUnit);
+
             if (self.gamePlayMode == GamePlayMode.TowerDefense)
             {
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();

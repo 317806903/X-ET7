@@ -21,6 +21,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
         Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
         UnitId = _buf.ReadString();
         AiCfgId = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
         PostInit();
     }
 
@@ -49,6 +50,10 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// aiCfgId
     /// </summary>
     public string AiCfgId { get; private set; }
+    /// <summary>
+    /// 生成时Action事件id（对应ActionConfig文件夹下表格）
+    /// </summary>
+    public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
 
     public const int __ID__ = 1330503794;
     public override int GetTypeId() => __ID__;
@@ -73,6 +78,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "UnitId:" + UnitId + ","
         + "AiCfgId:" + AiCfgId + ","
+        + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
         + "}";
     }
     

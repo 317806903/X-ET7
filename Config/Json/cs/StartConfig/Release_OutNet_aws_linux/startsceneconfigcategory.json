@@ -141,7 +141,7 @@
     "Zone": 3,
     "SceneType": "RouterManager",
     "Name": "RouterManager",
-    "OuterPort": 30300
+    "OuterPort": 3478
   },
   {
     "Id": 301,
@@ -149,7 +149,7 @@
     "Zone": 3,
     "SceneType": "Router",
     "Name": "Router01",
-    "OuterPort": 30301
+    "OuterPort": 3479
   },
   {
     "Id": 302,
@@ -157,7 +157,7 @@
     "Zone": 3,
     "SceneType": "Router",
     "Name": "Router02",
-    "OuterPort": 30302
+    "OuterPort": 3480
   },
   {
     "Id": 303,
@@ -165,7 +165,7 @@
     "Zone": 3,
     "SceneType": "Router",
     "Name": "Router03",
-    "OuterPort": 30303
+    "OuterPort": 3481
   },
   {
     "Id": 304,
@@ -173,6 +173,6 @@
     "Zone": 3,
     "SceneType": "Router",
     "Name": "Router04",
-    "OuterPort": 30304
+    "OuterPort": 3482
   }
 ]

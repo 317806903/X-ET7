@@ -14,6 +14,7 @@ namespace ET.Client
         {
             self.View.E_QuitRoomButton.AddListenerAsync(self.QuitRoom);
             self.View.E_ShowQrCodeButton.AddListenerAsync(self.ShowQrCode);
+            self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
             self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
             self.View.E_RoomMemberChgTeamButton.AddListenerAsync(self.OnChgTeam);
@@ -26,9 +27,11 @@ namespace ET.Client
 
         public static void ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
         {
+            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
 
+            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
             self.GetRoomInfo().Coroutine();
         }
 
@@ -56,12 +59,23 @@ namespace ET.Client
                 if (roomComponent.IsARRoom())
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(true);
+
+                    long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                    if (myPlayerId == roomComponent.ownerRoomMemberId)
+                    {
+                        self.View.E_ReScanButton.SetVisible(true);
+                    }
+                    else
+                    {
+                        self.View.E_ReScanButton.SetVisible(false);
+                    }
                     self.View.E_BGImage.SetVisible(false);
                     self.View.E_BGARTranslucentImage.SetVisible(true);
                 }
                 else
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(false);
+                    self.View.E_ReScanButton.SetVisible(false);
                     self.View.E_BGImage.SetVisible(true);
                     self.View.E_BGARTranslucentImage.SetVisible(false);
                 }
@@ -136,6 +150,8 @@ namespace ET.Client
             await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
             RoomComponent roomComponent = self.GetRoomComponent();
+            self.View.E_RoomMemberList_titleImage.SetVisible(roomComponent.subRoomType != SubRoomType.ARPVE);
+            self.View.E_RoomMemberList_title_ChallengeImage.SetVisible(roomComponent.subRoomType == SubRoomType.ARPVE);
 
             int count = roomComponent.roomMemberSeat.Count;
             self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
@@ -182,7 +198,7 @@ namespace ET.Client
                 itemRoom.uiTransform.SetVisible(true);
                 long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
                 RoomMember roomMember = roomComponent.GetRoomMember(roomMemberId);
-                
+
                 itemRoom.EG_ReadyRectTransform.gameObject.SetActive(roomMember.isReady);
                 if (roomComponent.ownerRoomMemberId == roomMemberId)
                 {
@@ -240,14 +256,14 @@ namespace ET.Client
 
         public static async ETTask KickOutRoom(this DlgARRoom self, long beKickedPlayerId)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await RoomHelper.KickMemberOutRoomAsync(self.ClientScene(), beKickedPlayerId);
         }
 
         public static async ETTask QuitRoom(this DlgARRoom self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Quit);
 
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheRoom_Des");
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_LeaveTheRoom_Confirm");
@@ -264,19 +280,43 @@ namespace ET.Client
             ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
 
             await UIManagerHelper.ExitRoom(self.DomainScene());
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "LeaveRoomClicked",
+            });
+
         }
 
         public static async ETTask ShowQrCode(this DlgARRoom self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             ARSessionHelper.TriggerShowQrCode(self.DomainScene());
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "InviteClicked",
+            });
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ReScan(this DlgARRoom self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            ARSessionHelper.TriggerReScan(self.DomainScene());
+
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
+            _UIComponent.HideWindow<DlgARRoom>();
+
             await ETTask.CompletedTask;
         }
 
         public static async ETTask ChgRoomMemberStatus(this DlgARRoom self)
         {
-            UIAudioManagerHelper.PlayUIAudioConfirm(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             RoomComponent roomComponent = self.GetRoomComponent();
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
@@ -296,18 +336,23 @@ namespace ET.Client
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
 
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "ReadyClicked",
+            });
+
         }
 
         public static async ETTask ChgRoomSeat(this DlgARRoom self, int newSeat)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await RoomHelper.ChgRoomMemberSeatAsync(self.ClientScene(), newSeat);
         }
 
         public static async ETTask OnChooseBattleCfg(this DlgARRoom self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await UIManagerHelper.GetUIComponent(self.DomainScene())
                 .ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData() { isGlobalMode = false, isAR = true, });
@@ -315,7 +360,7 @@ namespace ET.Client
 
         public static async ETTask OnChgTeam(this DlgARRoom self)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             RoomComponent roomComponent = self.GetRoomComponent();
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
@@ -353,7 +398,7 @@ namespace ET.Client
 
             await RoomHelper.ChgRoomMemberTeamAsync(self.ClientScene(), roomTeamId);
         }
-        
+
         public static void SetSrcollOffset(this DlgARRoom self)
         {
             int width = (int)self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2;

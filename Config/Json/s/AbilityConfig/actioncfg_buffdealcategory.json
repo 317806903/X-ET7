@@ -1,0 +1,174 @@
+[
+  {
+    "id": "BuffDeal_BuffRemoveCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveAll",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "AllBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveByBuffCfgId",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffCfgId",
+      "buffCfgId": "Buff_Slow"
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveByBuffType",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffType",
+      "buffType": 2
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveByBuffTagType",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffTagType",
+      "buffTagType": 1
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveByBuffTagGroupType",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffTagGroupType",
+      "buffTagGroupType": 5
+    },
+    "buffDealType": {
+      "$type": "BuffRemove"
+    }
+  },
+  {
+    "id": "BuffDeal_BuffStackCountChgCurAdd",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffStackCountChg",
+      "op": 1,
+      "chgStack": 1
+    }
+  },
+  {
+    "id": "BuffDeal_BuffStackCountChgCurReduce",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffStackCountChg",
+      "op": 2,
+      "chgStack": 1
+    }
+  },
+  {
+    "id": "BuffDeal_BuffLeftTimeChgByLeftTimeCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffLeftTimeChgByLeftTime",
+      "leftTimeScale": 2,
+      "stackCountScale": 0
+    }
+  },
+  {
+    "id": "BuffDeal_BuffLeftTimeChgByOrgTimeCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffLeftTimeChgByOrgTime",
+      "orgTimeScale": 1,
+      "stackCountScale": 0
+    }
+  },
+  {
+    "id": "BuffDeal_BuffDurationChgByOrgTimeCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffDurationChgByOrgTime",
+      "orgTimeScale": 3,
+      "stackCountScale": 0
+    }
+  },
+  {
+    "id": "BuffDeal_BuffDurationChgByValueCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffDurationChgByValue",
+      "addTime": 5
+    }
+  },
+  {
+    "id": "BuffDeal_BuffDurationChgByPercentValueCur",
+    "name": "",
+    "buffDealSelectCondition": {
+      "$type": "CurBuff"
+    },
+    "buffDealType": {
+      "$type": "BuffDurationChgByPercentValue",
+      "addPercent": 20
+    }
+  },
+  {
+    "id": "BuffDeal_BuffRemoveByBuffTagGroupTypeTowerLianJi",
+    "name": "移除连击斧",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffTagGroupType",
+      "buffTagGroupType": 7
+    },
+    "buffDealType": {
+      "$type": "BuffStackCountChg",
+      "op": 2,
+      "chgStack": 1
+    }
+  },
+  {
+    "id": "BuffDeal_BuffLeftTimeChgByOrgTimeCurZaiE",
+    "name": "灾厄塔附魔",
+    "buffDealSelectCondition": {
+      "$type": "ByBuffType",
+      "buffType": 2
+    },
+    "buffDealType": {
+      "$type": "BuffLeftTimeChgByOrgTime",
+      "orgTimeScale": 10,
+      "stackCountScale": 0
+    }
+  }
+]

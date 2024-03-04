@@ -2,19 +2,10 @@
   {
     "id": "Tow1_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow1_1",
-      "text": "弩箭塔Lv1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow1_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -26,30 +17,22 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 150,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 120,
     "nextTowerId": "Tow1_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow1_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow1_2",
-      "text": "弩箭塔Lv2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow1_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -61,30 +44,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 450,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 360,
     "nextTowerId": "Tow1_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow1_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow1_3",
-      "text": "弩箭塔Lv3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow1_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -96,30 +71,22 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 1350,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 1080,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow2_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow2_1",
-      "text": "加农炮Lv1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow2_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -131,30 +98,22 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 150,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 120,
     "nextTowerId": "Tow2_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow2_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow2_2",
-      "text": "加农炮Lv2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow2_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -166,30 +125,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 450,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 360,
     "nextTowerId": "Tow2_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow2_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow2_3",
-      "text": "加农炮Lv3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow2_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -201,30 +152,23 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 1350,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 1080,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow3_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow3_1",
-      "text": "火图腾Lv1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow3_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -236,30 +180,23 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 200,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 160,
     "nextTowerId": "Tow3_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow3_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow3_2",
-      "text": "火图腾Lv2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow3_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -271,30 +208,23 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 600,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 480,
     "nextTowerId": "Tow3_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow3_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow3_3",
-      "text": "火图腾Lv3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow3_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -306,30 +236,22 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 1800,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 1440,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow4_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow4_1",
-      "text": "毒雾塔Lv1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow4_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -341,30 +263,22 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 200,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 160,
     "nextTowerId": "Tow4_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow4_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow4_2",
-      "text": "毒雾塔Lv2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow4_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -376,30 +290,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 600,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 480,
     "nextTowerId": "Tow4_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow4_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow4_3",
-      "text": "毒雾塔Lv3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow4_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -411,30 +317,22 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 180,
+    "BuyTowerCostGold": 1800,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 126,
+    "ScaleTowerCostGold": 1440,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow5_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow5_1",
-      "text": "龙击炮LV1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow5_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -449,27 +347,19 @@
     "BuyTowerCostGold": 200,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 160,
     "nextTowerId": "Tow5_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow5_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow5_2",
-      "text": "龙击炮LV2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow5_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -481,30 +371,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 600,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 480,
     "nextTowerId": "Tow5_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow5_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow5_3",
-      "text": "龙击炮LV3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow5_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -516,30 +398,22 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 1800,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 1440,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow6_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow6_1",
-      "text": "雷电塔LV1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow6_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -551,30 +425,22 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 250,
+    "BuyTowerCostGold": 200,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 175,
+    "ScaleTowerCostGold": 160,
     "nextTowerId": "Tow6_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow6_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow6_2",
-      "text": "雷电塔LV2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow6_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -586,30 +452,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 250,
+    "BuyTowerCostGold": 600,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 175,
+    "ScaleTowerCostGold": 480,
     "nextTowerId": "Tow6_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow6_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow6_3",
-      "text": "雷电塔LV3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow6_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Solo"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -621,30 +479,23 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 250,
+    "BuyTowerCostGold": 1800,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 175,
+    "ScaleTowerCostGold": 1440,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow7_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow7_1",
-      "text": "冰魔塔LV1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow7_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -656,30 +507,23 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 250,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 200,
     "nextTowerId": "Tow7_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow7_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow7_2",
-      "text": "冰魔塔LV2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow7_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -691,30 +535,23 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 750,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 600,
     "nextTowerId": "Tow7_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow7_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow7_3",
-      "text": "冰魔塔LV3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow7_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -726,30 +563,22 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 2250,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 1800,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow8_1",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow8_1",
-      "text": "加速塔LV1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow8_1",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Buff"
     ],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -761,30 +590,22 @@
     "level": [
       1
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 250,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 200,
     "nextTowerId": "Tow8_2",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow8_2",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow8_2",
-      "text": "加速塔LV2"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow8_2",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Buff"
     ],
-    "icon": "",
+    "qualityRank": 2,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -796,30 +617,22 @@
     "level": [
       2
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 750,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 600,
     "nextTowerId": "Tow8_3",
     "newTowerCostCount": 3,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "Tow8_3",
     "type": 2,
-    "name": {
-      "key": "Text_Key_Name_Tow8_3",
-      "text": "加速塔LV3"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_Tow8_3",
-      "text": ""
-    },
     "labels": [
-      "Text_Key_TowerLabel_Aoe",
-      "Text_Key_TowerLabel_ST"
+      "Text_Key_TowerLabel_Buff"
     ],
-    "icon": "",
+    "qualityRank": 3,
     "radius": 0,
     "relativePosition": [],
     "unitId": [
@@ -831,27 +644,20 @@
     "level": [
       3
     ],
-    "BuyTowerCostGold": 200,
+    "BuyTowerCostGold": 2250,
     "rewardGold": [],
     "ReclaimTowerCostGold": 0,
-    "ScaleTowerCostGold": 140,
+    "ScaleTowerCostGold": 1800,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Tower1"
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   },
   {
     "id": "TowCallMonster_999",
     "type": 3,
-    "name": {
-      "key": "Text_Key_Name_TowCallMonster_999",
-      "text": "怪物卡1"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_TowCallMonster_999",
-      "text": ""
-    },
     "labels": [],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 5,
     "relativePosition": [
       {
@@ -891,21 +697,14 @@
     "ScaleTowerCostGold": 0,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Monster1"
+    "aiCfgId": "TowerDefense_Monster1",
+    "createActionIds": []
   },
   {
     "id": "TowCallMonster_1",
     "type": 3,
-    "name": {
-      "key": "Text_Key_Name_TowCallMonster_1",
-      "text": "突击小队"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_TowCallMonster_1",
-      "text": ""
-    },
     "labels": [],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 5,
     "relativePosition": [
       {
@@ -937,21 +736,14 @@
     "ScaleTowerCostGold": 0,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Monster1"
+    "aiCfgId": "TowerDefense_Monster1",
+    "createActionIds": []
   },
   {
     "id": "TowCallMonster_2",
     "type": 3,
-    "name": {
-      "key": "Text_Key_Name_TowCallMonster_2",
-      "text": "疗伤小队"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_TowCallMonster_2",
-      "text": ""
-    },
     "labels": [],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 5,
     "relativePosition": [
       {
@@ -983,21 +775,14 @@
     "ScaleTowerCostGold": 0,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Monster1"
+    "aiCfgId": "TowerDefense_Monster1",
+    "createActionIds": []
   },
   {
     "id": "TowCallMonster_3",
     "type": 3,
-    "name": {
-      "key": "Text_Key_Name_TowCallMonster_3",
-      "text": "怪物大军"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_TowCallMonster_3",
-      "text": ""
-    },
     "labels": [],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 5,
     "relativePosition": [
       {
@@ -1029,21 +814,14 @@
     "ScaleTowerCostGold": 0,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Monster1"
+    "aiCfgId": "TowerDefense_Monster1",
+    "createActionIds": []
   },
   {
     "id": "TowCallMonster_4",
     "type": 3,
-    "name": {
-      "key": "Text_Key_Name_TowCallMonster_4",
-      "text": "蝙蝠男爵"
-    },
-    "desc": {
-      "key": "Text_Key_Desc_TowCallMonster_4",
-      "text": ""
-    },
     "labels": [],
-    "icon": "",
+    "qualityRank": 1,
     "radius": 5,
     "relativePosition": [
       {
@@ -1067,6 +845,1972 @@
     "ScaleTowerCostGold": 0,
     "nextTowerId": "",
     "newTowerCostCount": 0,
-    "aiCfgId": "TowerDefense_Monster1"
+    "aiCfgId": "TowerDefense_Monster1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow9_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerMagicBall1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow9_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow9_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerMagicBall2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow9_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow9_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerMagicBall3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow10_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAlchemy1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow10_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow10_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAlchemy2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow10_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow10_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAlchemy3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow11_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerScorpio1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow11_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow11_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerScorpio2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow11_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow11_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerScorpio3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow12_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerCurse1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow12_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow12_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerCurse2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow12_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow12_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerCurse3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow13_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_Towerwitch1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow13_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow13_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_Towerwitch2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow13_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow13_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_Towerwitch3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow14_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerIceArrow1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 255,
+    "nextTowerId": "Tow14_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow14_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerIceArrow2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 600,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 765,
+    "nextTowerId": "Tow14_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow14_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerIceArrow3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1800,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 2295,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow15_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerWater1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow15_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow15_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerWater2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow15_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow15_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerWater3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow16_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerElectromagnetic1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow16_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow16_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerElectromagnetic2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow16_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow16_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerElectromagnetic3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow17_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFire1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow17_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow17_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFire2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow17_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow17_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFire3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow18_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAoShu1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 255,
+    "nextTowerId": "Tow18_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow18_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAoShu2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 600,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 765,
+    "nextTowerId": "Tow18_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow18_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerAoShu3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1800,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 2295,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow19_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerLianJi1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 170,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 170,
+    "nextTowerId": "Tow19_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow19_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerLianJi2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 510,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 510,
+    "nextTowerId": "Tow19_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow19_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Buff"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerLianJi3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1530,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1530,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow20_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerZaiE1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow20_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow20_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerZaiE2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow20_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow20_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Debuff"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerZaiE3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow21_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerGoblin1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow21_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow21_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerGoblin2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow21_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow21_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_GetCoins",
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerGoblin3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow22_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerDuCi1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow22_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow22_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerDuCi2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow22_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow22_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerDuCi3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow23_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerRocket1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow23_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow23_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerRocket2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow23_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow23_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerRocket3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow24_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFireBall1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 150,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 127,
+    "nextTowerId": "Tow24_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow24_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFireBall2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 450,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 382,
+    "nextTowerId": "Tow24_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "Tow24_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_DOT",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TowerFireBall3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 1350,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1147,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow1_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow1_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 140,
+    "nextTowerId": "TestTow1_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow1_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow1_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 420,
+    "nextTowerId": "TestTow1_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow1_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow1_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1260,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow2_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow2_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 126,
+    "nextTowerId": "TestTow2_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow2_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow2_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 378,
+    "nextTowerId": "TestTow2_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow2_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow2_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1134,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow3_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Line",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow3_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 126,
+    "nextTowerId": "TestTow3_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow3_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Line",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow3_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 378,
+    "nextTowerId": "TestTow3_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow3_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Line",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow3_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1134,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow4_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow4_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 126,
+    "nextTowerId": "TestTow4_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow4_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow4_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 378,
+    "nextTowerId": "TestTow4_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow4_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow4_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 180,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1134,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow5_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow5_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 140,
+    "nextTowerId": "TestTow5_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow5_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow5_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 420,
+    "nextTowerId": "TestTow5_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow5_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow5_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1260,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow6_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow6_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 250,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 175,
+    "nextTowerId": "TestTow6_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow6_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow6_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 250,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 525,
+    "nextTowerId": "TestTow6_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow6_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Solo"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow6_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 250,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1575,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow7_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Freeze",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow7_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 140,
+    "nextTowerId": "TestTow7_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow7_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Freeze",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow7_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 420,
+    "nextTowerId": "TestTow7_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow7_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Freeze",
+      "Text_Key_TowerLabel_Aoe"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow7_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1260,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow8_1",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Enhance"
+    ],
+    "qualityRank": 1,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow8_1"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      1
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 140,
+    "nextTowerId": "TestTow8_2",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow8_2",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Enhance"
+    ],
+    "qualityRank": 2,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow8_2"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      2
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 420,
+    "nextTowerId": "TestTow8_3",
+    "newTowerCostCount": 3,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
+  },
+  {
+    "id": "TestTow8_3",
+    "type": 2,
+    "labels": [
+      "Text_Key_TowerLabel_Enhance"
+    ],
+    "qualityRank": 3,
+    "radius": 0,
+    "relativePosition": [],
+    "unitId": [
+      "Unit_TestTow8_3"
+    ],
+    "num": [
+      1
+    ],
+    "level": [
+      3
+    ],
+    "BuyTowerCostGold": 200,
+    "rewardGold": [],
+    "ReclaimTowerCostGold": 0,
+    "ScaleTowerCostGold": 1260,
+    "nextTowerId": "",
+    "newTowerCostCount": 0,
+    "aiCfgId": "TowerDefense_Tower1",
+    "createActionIds": []
   }
 ]

@@ -100,5 +100,25 @@ namespace ET.Client
             return avatarIconList;
         }
 
+        public static async ETTask SendGetPlayerStatus(Scene scene)
+        {
+            G2C_GetPlayerStatus _G2C_GetPlayerStatus = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_GetPlayerStatus()) as G2C_GetPlayerStatus;
+
+            if (_G2C_GetPlayerStatus.Error != ET.ErrorCode.ERR_Success)
+            {
+                EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+                {
+                    tipMsg = _G2C_GetPlayerStatus.Message,
+                });
+            }
+            else
+            {
+                byte[] byts = _G2C_GetPlayerStatus.PlayerStatusComponentBytes;
+                Entity entity = MongoHelper.Deserialize<Entity>(byts);
+                PlayerHelper.RefreshMyPlayerStatus(scene, entity);
+            }
+
+            await ETTask.CompletedTask;
+        }
     }
 }

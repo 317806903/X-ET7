@@ -12,6 +12,7 @@
     "ARPVPCfgId": "GamePlayBattleLevel_ARRoomPVP",
     "AREndlessChallengeCfgId": "GamePlayBattleLevel_ARRoomEndlessChallenge",
     "ShowDamage": false,
+    "ShowGetGold": true,
     "AvatarIcons": [
       "ResIcon_Avatar01",
       "ResIcon_Avatar02",
@@ -44,6 +45,34 @@
           "TextCode_Key_TutorialText_WorldDes4"
         ]
       ]
+    ],
+    "InitialPhysicalStrength": 50,
+    "UpperLimitOfPhysicalStrength": 50,
+    "RecoverTimeOfPhysicalStrength": 60,
+    "RecoverIncreaseOfPhysicalStrength": 2,
+    "RecoverIncreaseOfPhysicalStrengthByAd": 5,
+    "ARPVECfgTakePhsicalStrength": 0,
+    "ARPVPCfgTakePhsicalStrength": 0,
+    "AREndlessChallengeTakePhsicalStrength": 0,
+    "PVELock": false,
+    "PVPLock": true,
+    "RankLock": false,
+    "TutorialLock": false,
+    "CardsLock": false,
+    "PhysicalStrengthShow": false,
+    "TowerDefenseNearTowerDis": 1.45,
+    "AdmobAvailable": false,
+    "AREndlessChallengeRecoverHp": 5,
+    "AREndlessChallengeRecoverGold": 50,
+    "InitialBackpackItem": [
+      "Tow1_1",
+      "Tow2_1",
+      "Tow3_1",
+      "Tow4_1",
+      "Tow5_1",
+      "Tow6_1",
+      "Tow7_1",
+      "Tow8_1"
     ]
   }
 ]

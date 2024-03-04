@@ -1,7 +1,18 @@
 [
   {
-    "id": "BuyTowerRefreshRule_1",
-    "name": "",
+    "id": "BuyTowerRefreshRule_TutorialFirst",
+    "name": "新手引导",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow2_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Infinite",
+    "name": "无限模式",
     "desc": "",
     "towerWeight": [
       [
@@ -39,8 +50,397 @@
     ]
   },
   {
+    "id": "BuyTowerRefreshRule_Challenge1",
+    "name": "挑战关卡1",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge2",
+    "name": "挑战关卡2",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge3",
+    "name": "挑战关卡3",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge4",
+    "name": "挑战关卡4",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge5",
+    "name": "挑战关卡5",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge6",
+    "name": "挑战关卡6",
+    "desc": "活动",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge7",
+    "name": "挑战关卡7",
+    "desc": "活动",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge8",
+    "name": "挑战关卡8",
+    "desc": "活动",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge9",
+    "name": "挑战关卡9",
+    "desc": "活动",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_Challenge10",
+    "name": "挑战关卡10",
+    "desc": "活动",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow2_1",
+        1
+      ],
+      [
+        "Tow3_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ],
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow8_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_1",
+    "name": "调试",
+    "desc": "",
+    "towerWeight": [
+      [
+        "TestTow1_1",
+        1
+      ],
+      [
+        "TestTow2_1",
+        1
+      ],
+      [
+        "TestTow3_1",
+        1
+      ],
+      [
+        "TestTow4_1",
+        1
+      ],
+      [
+        "TestTow5_1",
+        1
+      ],
+      [
+        "TestTow6_1",
+        1
+      ],
+      [
+        "TestTow7_1",
+        1
+      ],
+      [
+        "TestTow8_1",
+        1
+      ]
+    ]
+  },
+  {
     "id": "BuyTowerRefreshRule_test",
-    "name": "",
+    "name": "调试",
     "desc": "",
     "towerWeight": [
       [
@@ -83,7 +483,7 @@
   },
   {
     "id": "BuyTowerRefreshRule_PVP",
-    "name": "",
+    "name": "调试",
     "desc": "",
     "towerWeight": [
       [
@@ -137,12 +537,249 @@
     ]
   },
   {
-    "id": "BuyTowerRefreshRule_TutorialFirst",
-    "name": "",
+    "id": "BuyTowerRefreshRule_Zpb1",
+    "name": "调试",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow10_1",
+        37
+      ],
+      [
+        "Tow10_2",
+        37
+      ],
+      [
+        "Tow10_3",
+        18
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel1",
+    "name": "（单卡教学）挑战关卡1",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow1_1",
+        1
+      ],
+      [
+        "Tow22_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel2",
+    "name": "（单卡教学）挑战关卡2",
     "desc": "",
     "towerWeight": [
       [
         "Tow2_1",
+        1
+      ],
+      [
+        "Tow18_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel3",
+    "name": "（单卡教学）挑战关卡3",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow9_1",
+        1
+      ],
+      [
+        "Tow16_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel4",
+    "name": "（单卡教学）挑战关卡4",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow14_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel5",
+    "name": "（单卡教学）挑战关卡5",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow11_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel6",
+    "name": "（单卡教学）挑战关卡6",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow7_1",
+        1
+      ],
+      [
+        "Tow21_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel7",
+    "name": "（单卡教学）挑战关卡7",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow8_1",
+        1
+      ],
+      [
+        "Tow18_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel8",
+    "name": "（单卡教学）挑战关卡8",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow17_1",
+        1
+      ],
+      [
+        "Tow6_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel9",
+    "name": "（单卡教学）挑战关卡9",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow12_1",
+        1
+      ],
+      [
+        "Tow14_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel10",
+    "name": "（单卡教学）挑战关卡10",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow15_1",
+        1
+      ],
+      [
+        "Tow9_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel11",
+    "name": "（单卡教学）挑战关卡11",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow13_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel12",
+    "name": "（单卡教学）挑战关卡12",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow19_1",
+        1
+      ],
+      [
+        "Tow5_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel13",
+    "name": "（单卡教学）挑战关卡13",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow19_1",
+        1
+      ],
+      [
+        "Tow21_1",
+        1
+      ],
+      [
+        "Tow18_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel14",
+    "name": "（单卡教学）挑战关卡14",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow13_1",
+        1
+      ],
+      [
+        "Tow4_1",
+        1
+      ],
+      [
+        "Tow1_1",
+        1
+      ]
+    ]
+  },
+  {
+    "id": "BuyTowerRefreshRule_ChallengeLevel15",
+    "name": "（单卡教学）挑战关卡15",
+    "desc": "",
+    "towerWeight": [
+      [
+        "Tow19_1",
+        1
+      ],
+      [
+        "Tow21_1",
+        1
+      ],
+      [
+        "Tow18_1",
         1
       ]
     ]

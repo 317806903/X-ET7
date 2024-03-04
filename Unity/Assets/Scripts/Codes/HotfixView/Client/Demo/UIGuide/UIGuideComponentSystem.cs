@@ -25,8 +25,15 @@ namespace ET.Client
         {
             protected override void Destroy(UIGuideComponent self)
             {
-                UIGuideComponent.Instance = null;
-
+                if (UIGuideComponent.Instance == self)
+                {
+                    UIGuideComponent.Instance = null;
+                }
+                if (self.CurUIGuideComponent != null)
+                {
+                    self.CurUIGuideComponent.Dispose();
+                    self.CurUIGuideComponent = null;
+                }
                 self._UIGuidePathList = null;
                 if (self.RootTrans != null)
                 {

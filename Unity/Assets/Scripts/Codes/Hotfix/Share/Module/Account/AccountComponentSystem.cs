@@ -11,12 +11,14 @@
             }
         }
 
-        public static void Init(this AccountComponent self, string accountId, string password, ET.LoginType loginType)
+        public static void Init(this AccountComponent self, string accountId, string password, ET.LoginType loginType, string loginIP)
         {
             self.accountId = accountId;
+            self.bindAccountId = accountId;
             self.password = password;
             self.accountType = loginType;
             self.loginType = loginType;
+            self.loginIP = loginIP;
             self.playerId = IdGenerater.Instance.GenerateId();
             self.createTime = TimeHelper.ServerNow();
         }

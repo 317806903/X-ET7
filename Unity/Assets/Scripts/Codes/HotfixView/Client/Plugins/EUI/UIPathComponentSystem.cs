@@ -20,7 +20,10 @@ namespace ET.Client
         {
             self.WindowPrefabPath.Clear();
             self.WindowTypeIdDict.Clear();
-            UIPathComponent.Instance = null;
+            if (UIPathComponent.Instance == self)
+            {
+                UIPathComponent.Instance = null;
+            }
         }
     }
     

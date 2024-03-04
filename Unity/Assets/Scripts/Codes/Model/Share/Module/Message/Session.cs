@@ -66,6 +66,8 @@ namespace ET
             if (ErrorCore.IsRpcNeedThrowException(response.Error))
             {
                 action.Tcs.SetException(new Exception($"Rpc error, request: {action.Request} response: {response}"));
+
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIHideCommonLoading());
                 return;
             }
             action.Tcs.SetResult(response);
@@ -122,7 +124,7 @@ namespace ET
             return false;
         }
 
-        public static async ETTask<IResponse> Call(this Session self, IRequest request)
+        public static async ETTask<IResponse> Call(this Session self, IRequest request, bool needShowLoading = true)
         {
             if (self.ChkSessionDestroy())
             {
@@ -132,8 +134,20 @@ namespace ET
             RpcInfo rpcInfo = new RpcInfo(request);
             self.requestCallbacks[rpcId] = rpcInfo;
             request.RpcId = rpcId;
+
+            if (needShowLoading)
+            {
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIShowCommonLoading());
+            }
+
             self.Send(request);
-            return await rpcInfo.Tcs;
+            IResponse response = await rpcInfo.Tcs;
+
+            if (needShowLoading)
+            {
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIHideCommonLoading());
+            }
+            return response;
         }
 
         public static void Send(this Session self, IMessage message)
@@ -157,6 +171,8 @@ namespace ET
     public sealed class Session: Entity, IAwake<int>, IDestroy
     {
         public int ServiceId { get; set; }
+
+        public bool IsTimeOut { get; set; }
 
         public static int RpcId
         {

@@ -25,6 +25,10 @@ namespace ET.Ability
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitSelect = UnitHelper.GetUnit(casterUnit.DomainScene(), unitId);
+                    if (unitSelect == null)
+                    {
+                        continue;
+                    }
                     if (unitSelect.Id == actionContext.motionUnitId)
                     {
                         actionContext.motionDirection = unitSelect.Forward;
@@ -68,7 +72,8 @@ namespace ET.Ability
                     {
                         continue;
                     }
-                    List<BuffObj> list = GetBuffListByBuffDeal(unitSelect, actionCfgBuffDeal, ref actionContext);
+                    BuffDealSelectCondition buffDealSelectCondition = actionCfgBuffDeal.BuffDealSelectCondition;
+                    List<BuffObj> list = GetBuffListByCondition(unitSelect, buffDealSelectCondition, ref actionContext);
                     if (list != null)
                     {
                         foreach (BuffObj buffObj in list)
@@ -84,9 +89,8 @@ namespace ET.Ability
             }
         }
 
-        public static List<BuffObj> GetBuffListByBuffDeal(Unit unitSelect, ActionCfg_BuffDeal actionCfgBuffDeal, ref ActionContext actionContext)
+        public static List<BuffObj> GetBuffListByCondition(Unit unitSelect, BuffDealSelectCondition buffDealSelectCondition, ref ActionContext actionContext)
         {
-            BuffDealSelectCondition buffDealSelectCondition = actionCfgBuffDeal.BuffDealSelectCondition;
             if (buffDealSelectCondition is CurBuff curBuff)
             {
                 BuffObj buffObj = GetBuffObj(unitSelect, ref actionContext);
@@ -232,6 +236,43 @@ namespace ET.Ability
             }
 
             return buffComponent.GetChild<BuffObj>(buffId);
+        }
+
+        public static bool ChkBuffByCondition(Unit unitSelect, BuffDealSelectCondition buffDealSelectCondition)
+        {
+            if (buffDealSelectCondition is AllBuff allBuff)
+            {
+                List<BuffObj> buffList = GetAllBuffList(unitSelect);
+                if (buffList != null)
+                {
+                    foreach (BuffObj buffObj in buffList)
+                    {
+                        if (buffObj.isEnabled && buffObj.stack > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            else if (buffDealSelectCondition is ByBuffCfgId byBuffCfgId)
+            {
+                return ChkBuffByBuffCfgId(unitSelect, byBuffCfgId.BuffCfgId);
+            }
+            else if (buffDealSelectCondition is ByBuffType byBuffType)
+            {
+                return ChkBuffByBuffType(unitSelect, byBuffType.BuffType);
+            }
+            else if (buffDealSelectCondition is ByBuffTagType byBuffTagType)
+            {
+                return ChkBuffByTagType(unitSelect, byBuffTagType.BuffTagType);
+            }
+            else if (buffDealSelectCondition is ByBuffTagGroupType byBuffTagGroupType)
+            {
+                return ChkBuffByTagGroupType(unitSelect, byBuffTagGroupType.BuffTagGroupType);
+            }
+
+            return false;
         }
 
         public static bool ChkBuffByBuffCfgId(Unit unit, string buffCfgId)

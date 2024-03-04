@@ -15,7 +15,7 @@ namespace ET.Client
 
             UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
 
-            UIAudioManagerHelper.PlayMusicLogin(scene);
+            UIAudioManagerHelper.PlayMusic(scene, MusicType.Login);
 
             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLoading>();
             DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);

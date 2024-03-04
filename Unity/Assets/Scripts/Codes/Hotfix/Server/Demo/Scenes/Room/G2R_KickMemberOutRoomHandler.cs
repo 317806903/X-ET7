@@ -75,7 +75,7 @@ namespace ET.Server
 			{
 				R2G_BeKickedMember _R2G_BeKickedMember = new ();
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-				await oneTypeLocationType.Call(beKickPlayerId, _R2G_BeKickedMember);
+				await oneTypeLocationType.Call(beKickPlayerId, _R2G_BeKickedMember, scene.InstanceId);
 			}
 			catch (Exception e)
 			{

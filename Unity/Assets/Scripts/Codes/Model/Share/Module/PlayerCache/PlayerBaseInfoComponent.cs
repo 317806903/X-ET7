@@ -11,15 +11,15 @@ namespace ET
         public string PlayerName;
         public int IconIndex;
         public int EndlessChallengeScore;
+        public int EndlessChallengeKillNum;
 
         public bool isFinishTutorialFirst;
 
         public int ChallengeClearLevel;
         public int physicalStrength;
         public long nextRecoverTime;
-        
-        
-        
 
+        public LoginType BindLoginType;
+        public string BindEmail;
     }
 }

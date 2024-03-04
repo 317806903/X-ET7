@@ -26,6 +26,7 @@
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)
 		{
+			uiBaseWindow.GetComponent<DlgBeginnersGuideStory>().HideWindow();
 		}
 
 		public void BeforeUnload(UIBaseWindow uiBaseWindow)

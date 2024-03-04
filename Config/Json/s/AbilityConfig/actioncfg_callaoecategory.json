@@ -25,6 +25,7 @@
     },
     "moveType": {
       "$type": "StraightMoveTweenType",
+      "holdTime": 0,
       "speed": 3,
       "acceleratedSpeed": 0
     }

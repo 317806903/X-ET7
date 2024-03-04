@@ -214,6 +214,10 @@ namespace ET
 
 		public static long GetPlayerIdByUnitId(Unit unit)
 		{
+			if (unit == null)
+			{
+				return -1;
+			}
 			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
 			long playerId = gamePlayComponent.GetPlayerIdByUnitId(unit.Id);
 			return playerId;
@@ -333,7 +337,7 @@ namespace ET
 			gamePlayPlayerListComponent.ChgPlayerCoin(playerId, coinType, chgValue, GetCoinType.Normal);
 		}
 
-		public static void ChgPlayerCoinShare(Scene scene, long playerId, CoinType coinType, int chgValue)
+		public static void ChgPlayerCoinShare(Scene scene, long playerId, CoinType coinType, int chgValue, Unit showGetCoinUnit)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			TeamFlagType curTeamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
@@ -348,12 +352,25 @@ namespace ET
 			}
 
 			int goldOne = (int)(1f*chgValue / playerNum);
+			if (chgValue != 0 && goldOne == 0)
+			{
+				goldOne = 1;
+			}
 			foreach (long playerIdTmp in gamePlayComponent.GetPlayerList())
 			{
 				TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerIdTmp);
 				if (teamFlagType == curTeamFlagType)
 				{
 					ET.GamePlayHelper.ChgPlayerCoin(scene, playerIdTmp, coinType, goldOne);
+
+					EventType.SyncGetCoinShow _SyncGetCoinShow = new ()
+					{
+						playerId = playerIdTmp,
+						unit = showGetCoinUnit,
+						coinType = coinType,
+						chgValue = chgValue,
+					};
+					EventSystem.Instance.Publish(scene, _SyncGetCoinShow);
 				}
 			}
 		}
@@ -378,6 +395,93 @@ namespace ET
 			TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 			gamePlayPlayerListComponent.ChgTeamCoin(teamFlagType, coinType, chgValue, GetCoinType.Normal);
+		}
+
+		public static float GetARScale(Scene scene)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			float fARScale = gamePlayComponent.GetARScale();
+			return fARScale;
+		}
+
+		public static float GetAudioMaxDis(Scene scene)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			if (gamePlayComponent == null)
+			{
+				return 300;
+			}
+			if (ChkIsAR(scene))
+			{
+				return GetARScale(scene) * 10;
+			}
+			else
+			{
+				return 300;
+			}
+		}
+
+		public static string GetBattleCfgId(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, int pveIndex)
+		{
+			string battleCfgId = "";
+			if (RoomTypeIn == RoomType.Normal)
+			{
+				if (SubRoomTypeIn == SubRoomType.NormalRoom)
+				{
+					battleCfgId = "GamePlayBattleLevel_Room11";
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalARCreate)
+				{
+					battleCfgId = "GamePlayBattleLevel_ARRoom";
+				}
+			}
+			else if (RoomTypeIn == RoomType.AR)
+			{
+				if (SubRoomTypeIn == SubRoomType.ARPVE)
+				{
+					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, pveIndex);
+					battleCfgId = challengeLevelCfg.Id;
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARPVP)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.ARPVPCfgId;
+				}
+				else if (SubRoomTypeIn == SubRoomType.AREndlessChallenge)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARTutorialFirst)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.ARTutorialFirstCfgId;
+				}
+			}
+
+			if (GamePlayBattleLevelCfgCategory.Instance.Contain(battleCfgId) == false)
+			{
+				Log.Error($"GamePlayBattleLevelCfgCategory.Instance.Contain({battleCfgId}) == false");
+				return "";
+			}
+
+			return battleCfgId;
+		}
+
+		public static void DoCreateActions(Unit unit, List<string> createActionIds)
+		{
+			if (createActionIds == null || createActionIds.Count == 0)
+			{
+				return;
+			}
+
+			SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
+			ActionContext actionContext = new ActionContext()
+			{
+				unitId = unit.Id,
+			};
+			foreach (var actionId in createActionIds)
+			{
+				ActionHandlerHelper.CreateAction(unit, null, actionId, 0.1f, selectHandleSelf, ref actionContext);
+			}
 		}
 
 	}

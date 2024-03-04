@@ -59,14 +59,14 @@ namespace ET.Client
 
 		public static async ETTask Back(this DlgChallengeMode self)
         {
-            UIAudioManagerHelper.PlayUIAudioBack(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgChallengeMode>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
         }
 
 		public static async ETTask Select(this DlgChallengeMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength) == false)
             {
@@ -75,20 +75,21 @@ namespace ET.Client
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgChallengeMode>();
 
+			string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(RoomType.AR, SubRoomType.ARPVE, self.selectIndex + 1);
 			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
                 playerStatus = PlayerStatus.Hall,
                 RoomType = RoomType.AR,
                 SubRoomType = SubRoomType.ARPVE,
                 arRoomId = 0,
-				PveLevel = self.selectIndex + 1,
+                battleCfgId = battleCfgId,
             };
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
 		}
 
 		public static async ETTask Unlocked(this DlgChallengeMode self)
 		{
-			UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 		}
 
 		public static async ETTask ShowListScrollItem(this DlgChallengeMode self)
@@ -96,7 +97,7 @@ namespace ET.Client
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 			self.selectIndex = playerBaseInfoComponent.ChallengeClearLevel;
-			int count = ET.Client.ChallengeHelper.GetChallengeLevelCount();
+			int count = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenges(true).Count;
             self.AddUIScrollItems(ref self.ScrollItemChallengeList, count);
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.SetVisible(true, count);
         }
@@ -114,16 +115,16 @@ namespace ET.Client
 			Scroll_Item_ChallengeList challengeList = self.ScrollItemChallengeList[index].BindTrans(transform);
 			challengeList.ELabel_NormalTextMeshProUGUI.text = (index + 1).ToString();
 			challengeList.ELabel_UnlockedTextMeshProUGUI.text = (index + 1).ToString();
-			if(index % 2 == 1){
-				challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, -84, 0);
-				challengeList.E_Normal_lineImage.transform.localScale = new Vector3(-1, 1, 1);
-				challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(1, 1, 1);
-			}
-			else{
-				challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, 118, 0);
-				challengeList.E_Normal_lineImage.transform.localScale = new Vector3(1, 1, 1);
-				challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(-1, 1, 1);
-			}
+			// if(index % 2 == 1){
+			// 	challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, -84, 0);
+			// 	challengeList.E_Normal_lineImage.transform.localScale = new Vector3(-1, 1, 1);
+			// 	challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(1, 1, 1);
+			// }
+			// else{
+			// 	challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, 118, 0);
+			// 	challengeList.E_Normal_lineImage.transform.localScale = new Vector3(1, 1, 1);
+			// 	challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(-1, 1, 1);
+			// }
 			PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 			int clearLevel = playerBaseInfoComponent.ChallengeClearLevel;
@@ -132,18 +133,18 @@ namespace ET.Client
 			challengeList.E_NormalImage.gameObject.SetActive(index <= clearLevel);
 			challengeList.E_UnlockedImage.gameObject.SetActive(index > clearLevel);
 			challengeList.E_Normal_lineImage.gameObject.SetActive(index < clearLevel);
-			challengeList.E_Unlocked_lineImage.gameObject.SetActive(index >= clearLevel);
+			challengeList.EG_Unlocked_lineRectTransform.gameObject.SetActive(index >= clearLevel);
 
-			if(index == ET.Client.ChallengeHelper.GetChallengeLevelCount() - 1){
+			if(index == TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenges(true).Count - 1){
 				challengeList.E_Normal_lineImage.gameObject.SetActive(false);
-				challengeList.E_Unlocked_lineImage.gameObject.SetActive(false);
+				challengeList.EG_Unlocked_lineRectTransform.gameObject.SetActive(false);
 			}
 			challengeList.EButton_dotButton.AddListener(() => { self.SelectLevel(index).Coroutine(); });
 		}
 
 		public static async ETTask SelectLevel(this DlgChallengeMode self, int level)
         {
-            UIAudioManagerHelper.PlayUIAudioClick(self.DomainScene());
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
             self.selectIndex = level;
 			self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.RefreshCells();
 			PlayerBaseInfoComponent playerBaseInfoComponent =

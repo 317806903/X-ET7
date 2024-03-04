@@ -518,6 +518,34 @@ MonoBehaviour:
       Value: Idle
     - Key: Turn Left
       Value: Turn Left
+    - Key: Idle 1
+      Value: Idle
+    - Key: Idle 2
+      Value: Idle
+    - Key: Right Slash Attack
+      Value: Right Slash Attack
+    - Key: Idle 3
+      Value: Idle
+    - Key: Idle 4
+      Value: Idle
+    - Key: Idle 5
+      Value: Idle
+    - Key: Idle 6
+      Value: Idle
+    - Key: Left Slash Attack
+      Value: Left Slash Attack
+    - Key: Cast Spell
+      Value: Cast Spell
+    - Key: Take Damage
+      Value: Take Damage
+    - Key: Die
+      Value: Die
+    - Key: Projectile Attack
+      Value: Projectile Attack
+    - Key: Idle 7
+      Value: Idle
+    - Key: Move
+      Value: Walk Forward In Place
 --- !u!1 &1734572081990470154
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public abstract partial class ActionCallAuto:  ActionCallParam
 {
     public ActionCallAuto(ByteBuf _buf)  : base(_buf) 
     {
-        IsSave = _buf.ReadBool();
         PostInit();
     }
 
@@ -32,10 +31,6 @@ public abstract partial class ActionCallAuto:  ActionCallParam
         }
     }
 
-    /// <summary>
-    /// 是否存储选择结果
-    /// </summary>
-    public bool IsSave { get; private set; }
 
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
@@ -52,7 +47,6 @@ public abstract partial class ActionCallAuto:  ActionCallParam
     public override string ToString()
     {
         return "{ "
-        + "IsSave:" + IsSave + ","
         + "}";
     }
     

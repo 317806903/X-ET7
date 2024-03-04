@@ -15,19 +15,26 @@ namespace ET.Server
 			{
 				return;
 			}
-			
+
 			roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.Idle);
-			
+
 			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 
+			bool isReady = request.IsReady == 1?true:false;
+			List<long> winPlayers = request.WinPlayers;
 			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
 			for (int i = 0; i < roomMemberList.Count; i++)
 			{
 				RoomMember roomMember = roomMemberList[i];
 				long playerId = roomMember.Id;
-				M2G_MemberReturnRoomFromBattle _M2G_MemberReturnRoomFromBattle = new();
+				roomMember.isReady = isReady;
+				int battleResult = (winPlayers != null && winPlayers.Contains(playerId))? 1 : -1;
+				M2G_MemberReturnRoomFromBattle _M2G_MemberReturnRoomFromBattle = new()
+				{
+					BattleResult = battleResult,
+				};
 				ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-				await oneTypeLocationType.Call(playerId, _M2G_MemberReturnRoomFromBattle);
+				await oneTypeLocationType.Call(playerId, _M2G_MemberReturnRoomFromBattle, scene.InstanceId);
 			}
 
 			await ETTask.CompletedTask;

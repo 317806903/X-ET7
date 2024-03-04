@@ -24,6 +24,21 @@ namespace ET
             self._InitComponent();
         }
 
+        public static int GetCount(this ItemComponent self)
+        {
+            return self.count;
+        }
+
+        public static void AddCount(this ItemComponent self, int count)
+        {
+            self.count += count;
+        }
+
+        public static void SetCount(this ItemComponent self, int count)
+        {
+            self.count = count;
+        }
+
         public static void _InitComponent(this ItemComponent self)
         {
             if (self.model.ItemType == ItemType.Tower)
@@ -46,6 +61,11 @@ namespace ET
         {
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(self.model.Icon);
             return resIconCfg.ResName;
+        }
+
+        public static bool ChkItemCanStack(this ItemComponent self)
+        {
+            return self.model.CanStack;
         }
 
         public static QualityType GetItemQualityType(this ItemComponent self)

@@ -29,6 +29,8 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         HomeLife = _buf.ReadInt();
         BuyTowerRefreshRuleCfgId = _buf.ReadString();
         MonsterWaveCallRuleCfgId = _buf.ReadString();
+        MonsterWaveCallStartWaveIndex = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterWaveCallCreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterWaveCallCreateActionIds.Add(_e0);}}
         PostInit();
     }
 
@@ -90,6 +92,14 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// 刷怪点刷怪规则
     /// </summary>
     public string MonsterWaveCallRuleCfgId { get; private set; }
+    /// <summary>
+    /// 刷怪点刷怪开始进来时波次(下一波+1)
+    /// </summary>
+    public int MonsterWaveCallStartWaveIndex { get; private set; }
+    /// <summary>
+    /// 刷怪点刷怪生成时Action事件id（对应ActionConfig文件夹下表格）
+    /// </summary>
+    public System.Collections.Generic.List<string> MonsterWaveCallCreateActionIds { get; private set; }
 
     public const int __ID__ = -1245243737;
     public override int GetTypeId() => __ID__;
@@ -120,6 +130,8 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         + "HomeLife:" + HomeLife + ","
         + "BuyTowerRefreshRuleCfgId:" + BuyTowerRefreshRuleCfgId + ","
         + "MonsterWaveCallRuleCfgId:" + MonsterWaveCallRuleCfgId + ","
+        + "MonsterWaveCallStartWaveIndex:" + MonsterWaveCallStartWaveIndex + ","
+        + "MonsterWaveCallCreateActionIds:" + Bright.Common.StringUtil.CollectionToString(MonsterWaveCallCreateActionIds) + ","
         + "}";
     }
     

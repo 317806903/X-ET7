@@ -1,13 +1,1140 @@
 [
   {
+    "id": "EffectCreate_Infinite_9_2_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_9_2_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_10_2_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_10_2_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_11_1_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_11_1_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_12_2_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_12_2_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_12_3_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_12_3_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_13_1_Gui",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_13_1_Gui",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_14_1_Gui",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_14_1_Gui",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_15_1_Gui",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_15_1_Gui",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_15_2_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_15_2_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_16_2_Gui",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_16_2_Gui",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_17_2_Dan",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_17_2_Dan",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_18_1_Dan",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_18_1_Dan",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_19_1_Dan",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_19_1_Dan",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_19_3_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_19_3_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_20_1_Dan",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_20_1_Dan",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_20_2_Gui",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_20_2_Gui",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_20_3_ZhongZi",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_20_3_ZhongZi",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Infinite_20_4_Dan",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Infinite_20_4_Dan",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Buff_Stun",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Buff_Stun",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": false,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge3_1_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge3_1_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge3_2_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge3_2_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge3_3_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge3_3_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge3_4_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge3_4_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge3_5_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge3_5_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_5_2",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_5_2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_5_3",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_5_3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_1_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_1_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_2_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_2_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_3_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_3_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_4_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_4_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge4_5_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge4_5_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_3_3",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_3_3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_4_2",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_4_2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_5_2",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_5_2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_1_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_1_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_2_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_2_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_3_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_3_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_4_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_4_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_5_1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_5_1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge5_5_4",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge5_5_4",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge_Niao1",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge_Niao1",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge_Niao2",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge_Niao2",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Monster_Challenge_Niao3",
+    "name": "",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Monster_Challenge_Niao3",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_LevelUp",
+    "name": "升级/塔放置特效",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_LevelUp",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 2,
+    "isSceneEffect": false,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_Placed",
+    "name": "升级/塔放置特效",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_Placed",
+    "playAudioActionId": "",
+    "key": "",
+    "maxKeyNum": 1,
+    "duration": 2,
+    "isSceneEffect": false,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
     "id": "EffectCreate_1",
     "name": "创建特效1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_1",
     "playAudioActionId": "",
     "key": "CreateEffect_1",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -25,12 +1152,14 @@
   {
     "id": "EffectCreate_2",
     "name": "创建特效2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_2",
     "playAudioActionId": "",
     "key": "CreateEffect_2",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -48,12 +1177,14 @@
   {
     "id": "EffectCreate_3",
     "name": "创建特效3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_3",
     "playAudioActionId": "PlayAudio_1",
     "key": "CreateEffect_3",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -71,12 +1202,14 @@
   {
     "id": "EffectCreate_4",
     "name": "创建特效4",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -94,12 +1227,14 @@
   {
     "id": "EffectCreate_MachineGunLvl1Effect_1",
     "name": "Tower火花+子弹特效",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_MachineGunLvl1Effect_1",
     "playAudioActionId": "PlayAudio_1",
     "key": "",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -117,12 +1252,14 @@
   {
     "id": "EffectCreate_EneryPylon_PFX1",
     "name": "Tower火花+子弹特效",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_EneryPylon_PFX",
     "playAudioActionId": "PlayAudio_1",
     "key": "",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -140,12 +1277,14 @@
   {
     "id": "EffectCreate_LaserFireEffect1",
     "name": "Tower火花+子弹特效",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_LaserFireEffect",
     "playAudioActionId": "PlayAudio_1",
     "key": "",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -163,12 +1302,14 @@
   {
     "id": "EffectCreate_HoverTankFireShow1",
     "name": "HoverTank火花+子弹特效",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_EnemyShootEffect_1",
     "playAudioActionId": "PlayAudio_1",
     "key": "",
     "maxKeyNum": 1,
     "duration": 5,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -186,12 +1327,14 @@
   {
     "id": "EffectCreate_BeHit1",
     "name": "被击中",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_BeHitShow_1",
     "playAudioActionId": "PlayAudio_1",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -209,12 +1352,14 @@
   {
     "id": "EffectCreate_Death_1",
     "name": "死亡",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_DeathShow_1",
     "playAudioActionId": "PlayAudio_dead",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -232,12 +1377,14 @@
   {
     "id": "EffectCreate_PlayerSolo1_Fire",
     "name": "机枪开火弹道",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_BulletSolo1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -255,12 +1402,14 @@
   {
     "id": "EffectCreate_PlayerSolo1_Flash",
     "name": "机枪开火火光",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_FlashSolo1",
     "playAudioActionId": "PlayAudio_solo",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -278,12 +1427,14 @@
   {
     "id": "EffectCreate_PlayerSolo1_Hit",
     "name": "机枪开火命中",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_HitSolo1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -301,12 +1452,14 @@
   {
     "id": "EffectCreate_PlayerAoe1_Fire",
     "name": "炮击开火弹道",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_BulletAoe1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -324,12 +1477,14 @@
   {
     "id": "EffectCreate_PlayerAoe1_Flash",
     "name": "炮击开火火光",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_FlashAoe1",
     "playAudioActionId": "PlayAudio_aoe",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": false,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -347,12 +1502,14 @@
   {
     "id": "EffectCreate_PlayerAoe1_Hit",
     "name": "炮击开火命中",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_HitAoe1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 1,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -370,12 +1527,14 @@
   {
     "id": "EffectCreate_EnemySolo1_Fire",
     "name": "射击开火",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_FlashSolo1",
     "playAudioActionId": "PlayAudio_1",
     "key": "EnemySolo1_Fire",
     "maxKeyNum": 10,
     "duration": 1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -393,12 +1552,14 @@
   {
     "id": "EffectCreate_PlayerLine1",
     "name": "直线火焰",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Fire1",
     "playAudioActionId": "PlayAudio_line",
     "key": "ResEffect_Fire1",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -416,12 +1577,14 @@
   {
     "id": "EffectCreate_PlayerLine2",
     "name": "直线火焰",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Fire1",
     "playAudioActionId": "PlayAudio_line",
     "key": "ResEffect_Fire1",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -439,12 +1602,14 @@
   {
     "id": "EffectCreate_PlayerLine3",
     "name": "直线火焰",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Fire3",
     "playAudioActionId": "PlayAudio_line",
     "key": "ResEffect_Fire3",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -462,12 +1627,14 @@
   {
     "id": "EffectCreate_PlayerCircle1",
     "name": "圆形毒雾",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Drag1",
     "playAudioActionId": "PlayAudio_circle",
     "key": "ResEffect_Drag1",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -485,12 +1652,14 @@
   {
     "id": "EffectCreate_PlayerCircle2",
     "name": "圆形毒雾",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Drag1",
     "playAudioActionId": "PlayAudio_circle",
     "key": "ResEffect_Drag1",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -508,12 +1677,14 @@
   {
     "id": "EffectCreate_PlayerCircle3",
     "name": "圆形毒雾",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Drag3",
     "playAudioActionId": "PlayAudio_circle",
     "key": "ResEffect_Drag3",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -531,12 +1702,14 @@
   {
     "id": "EffectCreate_Arrow_Fire_1",
     "name": "弩箭开火1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Fire_1",
     "playAudioActionId": "PlayAudio_solo",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -554,12 +1727,14 @@
   {
     "id": "EffectCreate_Arrow_Fire_2",
     "name": "弩箭开火2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Fire_2",
     "playAudioActionId": "PlayAudio_solo",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -577,12 +1752,14 @@
   {
     "id": "EffectCreate_Arrow_Fire_3",
     "name": "弩箭开火3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Fire_3",
     "playAudioActionId": "PlayAudio_solo",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -600,12 +1777,14 @@
   {
     "id": "EffectCreate_Arrow_Hit_1",
     "name": "弩箭命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Hit_1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -623,12 +1802,14 @@
   {
     "id": "EffectCreate_Arrow_Hit_2",
     "name": "弩箭命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Hit_2",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -646,12 +1827,14 @@
   {
     "id": "EffectCreate_Arrow_Hit_3",
     "name": "弩箭命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Arrow_Hit_3",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -669,12 +1852,14 @@
   {
     "id": "EffectCreate_Cannon_Fire_1",
     "name": "加农炮开火1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Fire_1",
     "playAudioActionId": "PlayAudio_aoe",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -692,12 +1877,14 @@
   {
     "id": "EffectCreate_Cannon_Fire_2",
     "name": "加农炮开火2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Fire_2",
     "playAudioActionId": "PlayAudio_aoe",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -715,12 +1902,14 @@
   {
     "id": "EffectCreate_Cannon_Fire_3",
     "name": "加农炮开火3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Fire_3",
     "playAudioActionId": "PlayAudio_aoe",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -738,12 +1927,14 @@
   {
     "id": "EffectCreate_Cannon_Hit_1",
     "name": "加农炮命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Hit_1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -761,12 +1952,14 @@
   {
     "id": "EffectCreate_Cannon_Hit_2",
     "name": "加农炮命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Hit_2",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -784,12 +1977,14 @@
   {
     "id": "EffectCreate_Cannon_Hit_3",
     "name": "加农炮命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_Cannon_Hit_3",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -807,12 +2002,14 @@
   {
     "id": "EffectCreate_TowerDragon_Hit1",
     "name": "龙击炮命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerDragon_Hit1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -830,12 +2027,14 @@
   {
     "id": "EffectCreate_TowerDragon_Hit2",
     "name": "龙击炮命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerDragon_Hit2",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -853,12 +2052,14 @@
   {
     "id": "EffectCreate_TowerDragon_Hit3",
     "name": "龙击炮命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerDragon_Hit3",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -876,12 +2077,14 @@
   {
     "id": "EffectCreate_TowerElec_Hit1",
     "name": "雷电塔命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Hit1",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -899,12 +2102,14 @@
   {
     "id": "EffectCreate_TowerElec_Hit2",
     "name": "雷电塔命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Hit2",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -922,12 +2127,14 @@
   {
     "id": "EffectCreate_TowerElec_Hit3",
     "name": "雷电塔命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Hit3",
     "playAudioActionId": "",
     "key": "",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -945,12 +2152,14 @@
   {
     "id": "EffectCreate_TowerElec_Skill1",
     "name": "雷电塔施法1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Skill1",
     "playAudioActionId": "",
     "key": "TowerElec_Skill1",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -968,12 +2177,14 @@
   {
     "id": "EffectCreate_TowerElec_Skill2",
     "name": "雷电塔施法2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Skill2",
     "playAudioActionId": "",
     "key": "TowerElec_Skill2",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -991,12 +2202,14 @@
   {
     "id": "EffectCreate_TowerElec_Skill3",
     "name": "雷电塔施法3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerElec_Skill3",
     "playAudioActionId": "",
     "key": "TowerElec_Skill3",
     "maxKeyNum": 1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1014,12 +2227,14 @@
   {
     "id": "EffectCreate_TowerIce_Hit1",
     "name": "冰魔塔命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerIce_Hit1",
     "playAudioActionId": "",
     "key": "TowerIce_Hit1",
     "maxKeyNum": -1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1037,12 +2252,14 @@
   {
     "id": "EffectCreate_TowerIce_Hit2",
     "name": "冰魔塔命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerIce_Hit2",
     "playAudioActionId": "",
     "key": "TowerIce_Hit2",
     "maxKeyNum": -1,
     "duration": 3,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1060,12 +2277,14 @@
   {
     "id": "EffectCreate_TowerIce_Hit3",
     "name": "冰魔塔命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerIce_Hit3",
     "playAudioActionId": "",
     "key": "TowerIce_Hit3",
     "maxKeyNum": -1,
     "duration": 3,
     "isSceneEffect": true,
+    "isScaleByUnit": false,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1083,12 +2302,14 @@
   {
     "id": "EffectCreate_TowerTime_Hit1",
     "name": "加速塔命中1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerTime_Hit1",
     "playAudioActionId": "",
     "key": "TowerTime_Hit1",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1106,12 +2327,14 @@
   {
     "id": "EffectCreate_TowerTime_Hit2",
     "name": "加速塔命中2",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerTime_Hit2",
     "playAudioActionId": "",
     "key": "TowerTime_Hit2",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1129,12 +2352,14 @@
   {
     "id": "EffectCreate_TowerTime_Hit3",
     "name": "加速塔命中3",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_TowerTime_Hit3",
     "playAudioActionId": "",
     "key": "TowerTime_Hit3",
     "maxKeyNum": 1,
     "duration": -1,
-    "isSceneEffect": false,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
@@ -1152,17 +2377,2419 @@
   {
     "id": "EffectCreate_SeedHeal1",
     "name": "种子治疗1",
+    "isOnlySelfShow": false,
     "resEffectId": "ResEffect_SeedHeal1",
     "playAudioActionId": "",
     "key": "SeedHeal1",
     "maxKeyNum": -1,
     "duration": 2,
     "isSceneEffect": true,
+    "isScaleByUnit": true,
     "offSetInfo": {
       "nodeName": "",
       "offSetPosition": {
         "x": 0,
         "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_SeedHeal2",
+    "name": "种子治疗2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_SeedHeal1",
+    "playAudioActionId": "",
+    "key": "SeedHeal2",
+    "maxKeyNum": -1,
+    "duration": 2,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_SeedHeal3",
+    "name": "种子治疗3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_SeedHeal1",
+    "playAudioActionId": "",
+    "key": "SeedHeal3",
+    "maxKeyNum": -1,
+    "duration": 2,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerAoShu1",
+    "name": "奥术精灵1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerAoShu1",
+    "playAudioActionId": "",
+    "key": "FireTowerAoShu1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.77,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerAoShu2",
+    "name": "奥术精灵2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerAoShu2",
+    "playAudioActionId": "",
+    "key": "FireTowerAoShu2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerAoShu3",
+    "name": "奥术精灵3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerAoShu3",
+    "playAudioActionId": "",
+    "key": "FireTowerAoShu3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.3,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerCurse1",
+    "name": "诅咒塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerCurse1",
+    "playAudioActionId": "",
+    "key": "FireTowerCurse1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.5,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerCurse2",
+    "name": "诅咒塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerCurse2",
+    "playAudioActionId": "",
+    "key": "FireTowerCurse2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.2,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerCurse3",
+    "name": "诅咒塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerCurse3",
+    "playAudioActionId": "",
+    "key": "FireTowerCurse3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.45,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerDuCi1",
+    "name": "毒刺塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerDuCi1",
+    "playAudioActionId": "",
+    "key": "FireTowerDuCi1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.3,
+        "z": 0.72
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerDuCi2",
+    "name": "毒刺塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerDuCi2",
+    "playAudioActionId": "",
+    "key": "FireTowerDuCi2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.64,
+        "z": 1.03
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerDuCi3",
+    "name": "毒刺塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerDuCi3",
+    "playAudioActionId": "",
+    "key": "FireTowerDuCi3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.1,
+        "z": 1.25
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerElectromagnetic1",
+    "name": "电磁塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerElectromagnetic1",
+    "playAudioActionId": "",
+    "key": "FireTowerElectromagnetic1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.95,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerElectromagnetic2",
+    "name": "电磁塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerElectromagnetic2",
+    "playAudioActionId": "",
+    "key": "FireTowerElectromagnetic2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.4,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerElectromagnetic3",
+    "name": "电磁塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerElectromagnetic3",
+    "playAudioActionId": "",
+    "key": "FireTowerElectromagnetic3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.92,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerFireBall1",
+    "name": "火球塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerFireBall1",
+    "playAudioActionId": "",
+    "key": "FireTowerFireBall1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.82,
+        "z": 0.26
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerFireBall2",
+    "name": "火球塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerFireBall2",
+    "playAudioActionId": "",
+    "key": "FireTowerFireBall2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.4,
+        "z": 0.32
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerFireBall3",
+    "name": "火球塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerFireBall3",
+    "playAudioActionId": "",
+    "key": "FireTowerFireBall3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3,
+        "z": 0.37
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerGoblin1",
+    "name": "窃贼哥布林1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerGoblin1",
+    "playAudioActionId": "",
+    "key": "FireTowerGoblin1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.77,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerGoblin2",
+    "name": "窃贼哥布林2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerGoblin2",
+    "playAudioActionId": "",
+    "key": "FireTowerGoblin2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerGoblin3",
+    "name": "窃贼哥布林3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerGoblin3",
+    "playAudioActionId": "",
+    "key": "FireTowerGoblin3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.3,
+        "z": 0.6
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerIceArrow1",
+    "name": "冰枪塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerIceArrow1",
+    "playAudioActionId": "",
+    "key": "FireTowerIceArrow1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.835,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerIceArrow2",
+    "name": "冰枪塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerIceArrow2",
+    "playAudioActionId": "",
+    "key": "FireTowerIceArrow2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.323,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerIceArrow3",
+    "name": "冰枪塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerIceArrow3",
+    "playAudioActionId": "",
+    "key": "FireTowerIceArrow3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.645,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerRocket1",
+    "name": "火箭塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerRocket1",
+    "playAudioActionId": "",
+    "key": "FireTowerRocket1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0.017,
+        "y": 1.81,
+        "z": 0.37
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerRocket2",
+    "name": "火箭塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerRocket2",
+    "playAudioActionId": "",
+    "key": "FireTowerRocket2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0.02,
+        "y": 2.1,
+        "z": 0.66
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerRocket3",
+    "name": "火箭塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerRocket3",
+    "playAudioActionId": "",
+    "key": "FireTowerRocket3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.46,
+        "z": 0.88
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerScorpio1",
+    "name": "毒蝎塔1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerScorpio1",
+    "playAudioActionId": "",
+    "key": "FireTowerScorpio1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.64,
+        "z": 0.42
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerScorpio2",
+    "name": "毒蝎塔2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerScorpio2",
+    "playAudioActionId": "",
+    "key": "FireTowerScorpio2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.7,
+        "z": 0.34
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerScorpio3",
+    "name": "毒蝎塔3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerScorpio3",
+    "playAudioActionId": "",
+    "key": "FireTowerScorpio3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.2,
+        "z": 0.82
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerWater1",
+    "name": "水图腾1开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerWater1",
+    "playAudioActionId": "",
+    "key": "FireTowerWater1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1.7,
+        "z": 0.24
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerWater2",
+    "name": "水图腾2开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerWater2",
+    "playAudioActionId": "",
+    "key": "FireTowerWater2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.3,
+        "z": 0.21
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerWater3",
+    "name": "水图腾3开火",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerWater3",
+    "playAudioActionId": "",
+    "key": "FireTowerWater3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.7,
+        "z": 0.36
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerAoShu1",
+    "name": "奥术精灵1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerAoShu1",
+    "playAudioActionId": "",
+    "key": "HitTowerAoShu1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerAoShu2",
+    "name": "奥术精灵2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerAoShu2",
+    "playAudioActionId": "",
+    "key": "HitTowerAoShu2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerAoShu3",
+    "name": "奥术精灵3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerAoShu3",
+    "playAudioActionId": "",
+    "key": "HitTowerAoShu3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerCurse1",
+    "name": "诅咒塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerCurse1",
+    "playAudioActionId": "",
+    "key": "HitTowerCurse1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerCurse2",
+    "name": "诅咒塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerCurse2",
+    "playAudioActionId": "",
+    "key": "HitTowerCurse2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerCurse3",
+    "name": "诅咒塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerCurse3",
+    "playAudioActionId": "",
+    "key": "HitTowerCurse3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerDuCi1",
+    "name": "毒刺塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerDuCi1",
+    "playAudioActionId": "",
+    "key": "HitTowerDuCi1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerDuCi2",
+    "name": "毒刺塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerDuCi2",
+    "playAudioActionId": "",
+    "key": "HitTowerDuCi2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerDuCi3",
+    "name": "毒刺塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerDuCi3",
+    "playAudioActionId": "",
+    "key": "HitTowerDuCi3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerElectromagnetic1",
+    "name": "电磁塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerElectromagnetic1",
+    "playAudioActionId": "",
+    "key": "HitTowerElectromagnetic1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerElectromagnetic2",
+    "name": "电磁塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerElectromagnetic2",
+    "playAudioActionId": "",
+    "key": "HitTowerElectromagnetic2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerElectromagnetic3",
+    "name": "电磁塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerElectromagnetic3",
+    "playAudioActionId": "",
+    "key": "HitTowerElectromagnetic3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerFireBall1",
+    "name": "火球塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerFireBall1",
+    "playAudioActionId": "",
+    "key": "HitTowerFireBall1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerFireBall2",
+    "name": "火球塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerFireBall2",
+    "playAudioActionId": "",
+    "key": "HitTowerFireBall2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerFireBall3",
+    "name": "火球塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerFireBall3",
+    "playAudioActionId": "",
+    "key": "HitTowerFireBall3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerIceArrow1",
+    "name": "冰枪塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerIceArrow1",
+    "playAudioActionId": "",
+    "key": "HitTowerIceArrow1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerIceArrow2",
+    "name": "冰枪塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerIceArrow2",
+    "playAudioActionId": "",
+    "key": "HitTowerIceArrow2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerIceArrow3",
+    "name": "冰枪塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerIceArrow3",
+    "playAudioActionId": "",
+    "key": "HitTowerIceArrow3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerMagicBall1",
+    "name": "奥术天球1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerMagicBall1",
+    "playAudioActionId": "",
+    "key": "HitTowerMagicBall1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerMagicBall2",
+    "name": "奥术天球2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerMagicBall2",
+    "playAudioActionId": "",
+    "key": "HitTowerMagicBall2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerMagicBall3",
+    "name": "奥术天球3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerMagicBall3",
+    "playAudioActionId": "",
+    "key": "HitTowerMagicBall3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerRocket1",
+    "name": "火箭塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerRocket1",
+    "playAudioActionId": "",
+    "key": "HitTowerRocket1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerRocket2",
+    "name": "火箭塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerRocket2",
+    "playAudioActionId": "",
+    "key": "HitTowerRocket2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerRocket3",
+    "name": "火箭塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerRocket3",
+    "playAudioActionId": "",
+    "key": "HitTowerRocket3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerScorpio1",
+    "name": "毒蝎塔1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerScorpio1",
+    "playAudioActionId": "",
+    "key": "HitTowerScorpio1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerScorpio2",
+    "name": "毒蝎塔2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerScorpio2",
+    "playAudioActionId": "",
+    "key": "HitTowerScorpio2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerScorpio3",
+    "name": "毒蝎塔3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerScorpio3",
+    "playAudioActionId": "",
+    "key": "HitTowerScorpio3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerWater1",
+    "name": "水图腾1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerWater1",
+    "playAudioActionId": "",
+    "key": "HitTowerWater1",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerWater2",
+    "name": "水图腾2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerWater2",
+    "playAudioActionId": "",
+    "key": "HitTowerWater2",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerWater3",
+    "name": "水图腾3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerWater3",
+    "playAudioActionId": "",
+    "key": "HitTowerWater3",
+    "maxKeyNum": -1,
+    "duration": 3,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0.7,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerGoblin1",
+    "name": "窃贼哥布林1命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerGoblin1",
+    "playAudioActionId": "",
+    "key": "HitTowerGoblin1",
+    "maxKeyNum": -1,
+    "duration": 1,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerGoblin2",
+    "name": "窃贼哥布林2命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerGoblin2",
+    "playAudioActionId": "",
+    "key": "HitTowerGoblin2",
+    "maxKeyNum": -1,
+    "duration": 1,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_HitTowerGoblin3",
+    "name": "窃贼哥布林3命中",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_HitTowerGoblin3",
+    "playAudioActionId": "",
+    "key": "HitTowerGoblin3",
+    "maxKeyNum": -1,
+    "duration": 1,
+    "isSceneEffect": true,
+    "isScaleByUnit": false,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerAlchemy1",
+    "name": "炼金塔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerAlchemy1",
+    "playAudioActionId": "",
+    "key": "BuffTowerAlchemy1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerAlchemy2",
+    "name": "炼金塔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerAlchemy2",
+    "playAudioActionId": "",
+    "key": "BuffTowerAlchemy2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerAlchemy3",
+    "name": "炼金塔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerAlchemy3",
+    "playAudioActionId": "",
+    "key": "BuffTowerAlchemy3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.5,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerFire1",
+    "name": "火图腾附魔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerFire1",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerFire1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerFire2",
+    "name": "火图腾附魔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerFire2",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerFire2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerFire3",
+    "name": "火图腾附魔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerFire3",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerFire3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerLianJi1",
+    "name": "连击斧附魔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerLianJi1",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerLianJi1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 2.3,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerLianJi2",
+    "name": "连击斧附魔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerLianJi2",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerLianJi2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.2,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerLianJi3",
+    "name": "连击斧附魔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerLianJi3",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerLianJi3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 3.83,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerwitch1",
+    "name": "巫毒塔附魔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerwitch1",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerwitch1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerwitch2",
+    "name": "巫毒塔附魔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerwitch2",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerwitch2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerwitch3",
+    "name": "巫毒塔附魔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerwitch3",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerwitch3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerZaiE1",
+    "name": "灾厄塔附魔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerZaiE1",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerZaiE1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerZaiE2",
+    "name": "灾厄塔附魔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerZaiE2",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerZaiE2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffAddTowerZaiE3",
+    "name": "灾厄塔附魔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffAddTowerZaiE3",
+    "playAudioActionId": "",
+    "key": "BuffAddTowerZaiE3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerZaiE1",
+    "name": "灾厄塔施法1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerZaiE1",
+    "playAudioActionId": "",
+    "key": "FireTowerZaiE1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerZaiE2",
+    "name": "灾厄塔施法2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerZaiE2",
+    "playAudioActionId": "",
+    "key": "FireTowerZaiE2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_FireTowerZaiE3",
+    "name": "灾厄塔施法3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_FireTowerZaiE3",
+    "playAudioActionId": "",
+    "key": "FireTowerZaiE3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerScorpio1",
+    "name": "毒蝎塔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerScorpio1",
+    "playAudioActionId": "",
+    "key": "BuffTowerScorpio1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerScorpio2",
+    "name": "毒蝎塔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerScorpio2",
+    "playAudioActionId": "",
+    "key": "BuffTowerScorpio2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerScorpio3",
+    "name": "毒蝎塔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerScorpio3",
+    "playAudioActionId": "",
+    "key": "BuffTowerScorpio3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerFireBall1",
+    "name": "火球塔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerFireBall1",
+    "playAudioActionId": "",
+    "key": "BuffTowerFireBall1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerFireBall2",
+    "name": "火球塔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerFireBall2",
+    "playAudioActionId": "",
+    "key": "BuffTowerFireBall2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerFireBall3",
+    "name": "火球塔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerFireBall3",
+    "playAudioActionId": "",
+    "key": "BuffTowerFireBall3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerCurse1",
+    "name": "诅咒塔1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerCurse1",
+    "playAudioActionId": "",
+    "key": "BuffTowerCurse1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerCurse2",
+    "name": "诅咒塔2",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerCurse2",
+    "playAudioActionId": "",
+    "key": "BuffTowerCurse2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerCurse3",
+    "name": "诅咒塔3",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerCurse3",
+    "playAudioActionId": "",
+    "key": "BuffTowerCurse3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffHuoYan1",
+    "name": "火焰塔灼烧buff1",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffHuoYan1",
+    "playAudioActionId": "",
+    "key": "BuffHuoYan1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerWater1",
+    "name": "水球塔弱化",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerWater1",
+    "playAudioActionId": "",
+    "key": "BuffTowerWater1",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerWater2",
+    "name": "水球塔弱化",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerWater2",
+    "playAudioActionId": "",
+    "key": "BuffTowerWater2",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "relateForward": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  {
+    "id": "EffectCreate_BuffTowerWater3",
+    "name": "水球塔弱化",
+    "isOnlySelfShow": false,
+    "resEffectId": "ResEffect_BuffTowerWater3",
+    "playAudioActionId": "",
+    "key": "BuffTowerWater3",
+    "maxKeyNum": -1,
+    "duration": -1,
+    "isSceneEffect": true,
+    "isScaleByUnit": true,
+    "offSetInfo": {
+      "nodeName": "",
+      "offSetPosition": {
+        "x": 0,
+        "y": 1,
         "z": 0
       },
       "relateForward": {

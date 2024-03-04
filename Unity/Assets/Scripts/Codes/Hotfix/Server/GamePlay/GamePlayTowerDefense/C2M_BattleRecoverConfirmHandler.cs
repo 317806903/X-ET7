@@ -11,8 +11,32 @@ namespace ET.Server
 
 			long playerId = observerUnit.Id;
 
+			bool isFinished = request.IsFinished == 1?true:false;
+
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
-			gamePlayTowerDefenseComponent.DealRecover();
+			if (isFinished)
+			{
+				if (gamePlayTowerDefenseComponent.ChkIsGameRecovering() == false)
+				{
+					// response.Error = ErrorCode.ERR_LogicError;
+					// response.Message = "Game Is Not in Recover";
+					return;
+				}
+
+				gamePlayTowerDefenseComponent.DealRecover();
+			}
+			else
+			{
+				if (gamePlayTowerDefenseComponent.ChkIsGameRecover() == false)
+				{
+					// response.Error = ErrorCode.ERR_LogicError;
+					// response.Message = "Game Is Not in Recover";
+					return;
+				}
+
+				await gamePlayTowerDefenseComponent.TransToRecovering();
+			}
+
 
 			await ETTask.CompletedTask;
 		}

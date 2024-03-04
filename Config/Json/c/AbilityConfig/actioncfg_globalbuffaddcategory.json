@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GlobalBuffAdd_TowerAlchemy1",
+    "name": "炼金塔1",
+    "desc": "回合加钱",
+    "globalBuffId": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy1"
+  },
+  {
+    "id": "GlobalBuffAdd_TowerAlchemy2",
+    "name": "炼金塔2",
+    "desc": "回合加钱",
+    "globalBuffId": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy2"
+  },
+  {
+    "id": "GlobalBuffAdd_TowerAlchemy3",
+    "name": "炼金塔3",
+    "desc": "回合加钱",
+    "globalBuffId": "UnitGlobalBuff_AddCoinWhenBattleEnd_TowerAlchemy3"
+  }
+]

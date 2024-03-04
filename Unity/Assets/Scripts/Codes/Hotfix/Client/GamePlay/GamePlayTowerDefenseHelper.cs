@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ET.Ability;
 using Unity.Mathematics;
 
@@ -20,6 +21,17 @@ namespace ET.Client
 					tipMsg = _M2C_PutHomeAndMonsterCall.Message,
 				});
 			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+				{
+					eventName = "BasePlaced",
+				});
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLoggingStart()
+				{
+					eventName = "PortalPlaced",
+				});
+			}
 		}
 
 		public static async ETTask<(float3, List<float3>)> SendGetMonsterCall2HeadQuarterPath(Scene scene, TeamFlagType homeTeamFlagType, float3 pos)
@@ -28,7 +40,7 @@ namespace ET.Client
 			{
 				HomeTeamFlagType = (int)homeTeamFlagType,
 				Position = pos,
-			}) as M2C_GetMonsterCall2HeadQuarterPath;
+			}, false) as M2C_GetMonsterCall2HeadQuarterPath;
 			if (_M2C_GetMonsterCall2HeadQuarterPath.Error != ET.ErrorCode.ERR_Success)
 			{
 				//Log.Error($"SendPutMonsterCall Error==1 msg={_M2C_GetMonsterCall2HeadQuarterPath.Message}");
@@ -59,11 +71,18 @@ namespace ET.Client
 				});
 				return (false, _M2C_PutMonsterCall.Message);
 			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+				{
+					eventName = "PortalPlaced",
+				});
+			}
 
 			return (true, "");
 		}
 
-		public static async ETTask SendBuyPlayerTower(Scene scene, int index)
+		public static async ETTask SendBuyPlayerTower(Scene scene, int index, string towerCfgId)
 		{
 			M2C_BuyPlayerTower _M2C_BuyPlayerTower = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_BuyPlayerTower()
 			{
@@ -74,6 +93,17 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_BuyPlayerTower.Message,
+				});
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+				{
+					eventName = "TowerPurchased",
+					properties = new()
+					{
+						{"towerCfgId", towerCfgId},
+					}
 				});
 			}
 		}
@@ -107,7 +137,7 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask SendUpgradePlayerTower(Scene scene, long towerUnitId, bool onlyChkPool)
+		public static async ETTask SendUpgradePlayerTower(Scene scene, long towerUnitId, string towerCfgId, bool onlyChkPool)
 		{
 			C2M_UpgradePlayerTower _C2M_UpgradePlayerTower = new ()
 			{
@@ -120,6 +150,17 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_UpgradePlayerTower.Message,
+				});
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+				{
+					eventName = "TowerUpgraded",
+					properties = new()
+					{
+						{"towerCfgId", towerCfgId},
+					}
 				});
 			}
 		}
@@ -137,6 +178,23 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_ScalePlayerTower.Message,
+				});
+			}
+		}
+
+		public static async ETTask SendScalePlayerTowerCard(Scene scene, string towerCfgId)
+		{
+			C2M_ScalePlayerTowerCard _C2M_ScalePlayerTowerCard = new ()
+			{
+				TowerCfgId = towerCfgId,
+			};
+			M2C_ScalePlayerTowerCard _M2C_ScalePlayerTowerCard = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ScalePlayerTowerCard) as M2C_ScalePlayerTowerCard;
+
+			if (_M2C_ScalePlayerTowerCard.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_ScalePlayerTowerCard.Message,
 				});
 			}
 		}
@@ -189,37 +247,119 @@ namespace ET.Client
 			}
 		}
 
-
-		public static async ETTask SendGameRecoverCancel(Scene scene)
+		public static async ETTask SendReScan(Scene scene)
 		{
-			C2M_BattleRecoverCancel _C2M_BattleRecoverCancel = new ()
+			C2M_ReScan _C2M_ReScan = new ()
 			{
 			};
-			M2C_BattleRecoverCancel _M2C_BattleRecoverCancel = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverCancel) as M2C_BattleRecoverCancel;
-
-			if (_M2C_BattleRecoverCancel.Error != ET.ErrorCode.ERR_Success)
+			M2C_ReScan _M2C_ReScan = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ReScan) as M2C_ReScan;
+			if (_M2C_ReScan.Error != ET.ErrorCode.ERR_Success)
 			{
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
-					tipMsg = _M2C_BattleRecoverCancel.Message,
+					tipMsg = _M2C_ReScan.Message,
 				});
 			}
 		}
 
-		public static async ETTask SendGameRecoverConfirm(Scene scene)
+		public static async ETTask SendGameRecoverCancel(Scene scene, bool isFinished)
 		{
-			C2M_BattleRecoverConfirm _C2M_BattleRecoverConfirm = new ()
+			try
 			{
-			};
-			M2C_BattleRecoverConfirm _M2C_BattleRecoverConfirm = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverConfirm) as M2C_BattleRecoverConfirm;
-
-			if (_M2C_BattleRecoverConfirm.Error != ET.ErrorCode.ERR_Success)
-			{
-				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				scene = scene.ClientScene();
+				EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
 				{
-					tipMsg = _M2C_BattleRecoverConfirm.Message,
+					IsAdmobAvailable = false,
+				});
+
+				while (true)
+				{
+					if (scene.IsDisposed)
+					{
+						return;
+					}
+					if (ReLoginComponent.Instance != null && ReLoginComponent.Instance.isReCreateSessioning == false)
+					{
+						break;
+					}
+					await TimerComponent.Instance.WaitFrameAsync();
+				}
+
+				C2M_BattleRecoverCancel _C2M_BattleRecoverCancel = new ()
+				{
+					IsFinished = isFinished?1:0,
+				};
+				M2C_BattleRecoverCancel _M2C_BattleRecoverCancel = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverCancel) as M2C_BattleRecoverCancel;
+
+				if (_M2C_BattleRecoverCancel.Error != ET.ErrorCode.ERR_Success)
+				{
+					EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+					{
+						tipMsg = _M2C_BattleRecoverCancel.Message,
+					});
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+			}
+			finally
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
+				{
+					IsAdmobAvailable = true,
 				});
 			}
+
+		}
+
+		public static async ETTask SendGameRecoverConfirm(Scene scene, bool isFinished)
+		{
+			try
+			{
+				scene = scene.ClientScene();
+				EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
+				{
+					IsAdmobAvailable = false,
+				});
+				while (true)
+				{
+					if (scene.IsDisposed)
+					{
+						return;
+					}
+					if (ReLoginComponent.Instance != null && ReLoginComponent.Instance.isReCreateSessioning == false)
+					{
+						break;
+					}
+					await TimerComponent.Instance.WaitFrameAsync();
+				}
+				C2M_BattleRecoverConfirm _C2M_BattleRecoverConfirm = new ()
+				{
+					IsFinished = isFinished?1:0,
+				};
+				M2C_BattleRecoverConfirm _M2C_BattleRecoverConfirm = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverConfirm) as M2C_BattleRecoverConfirm;
+
+				if (_M2C_BattleRecoverConfirm.Error != ET.ErrorCode.ERR_Success)
+				{
+					EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+					{
+						tipMsg = _M2C_BattleRecoverConfirm.Message,
+					});
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+			}
+			finally
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeAdmobSDKStatus()
+				{
+					IsAdmobAvailable = true,
+				});
+			}
+
 		}
 	}
 }

@@ -5,5 +5,6 @@
 	{
 		public DlgCommonLoadingViewComponent View { get => this.GetComponent<DlgCommonLoadingViewComponent>(); }
 
+		public int showNum;
 	}
 }

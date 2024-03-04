@@ -52,15 +52,15 @@ namespace ET.Client
 	        }
         }
 
-        public static async ETTask<int> GetRankedMoreThan(Scene scene, RankType rankType, long score)
+        public static async ETTask<(ulong, int)> GetRankedMoreThan(Scene scene, RankType rankType, long score)
         {
-	        (bool bRet, int rankedMoreThan) = await SendGetRankedMoreThanAsync(scene, rankType, score);
+	        (bool bRet, ulong rank, int rankedMoreThan) = await SendGetRankedMoreThanAsync(scene, rankType, score);
 	        if (bRet)
 	        {
-		        return rankedMoreThan;
+		        return (rank, rankedMoreThan);
 	        }
 
-	        return 0;
+	        return (0, 0);
         }
 
         public static async ETTask<(bool, Entity)> SendGetRankShowAsync(Scene clientScene, RankType rankType)
@@ -83,7 +83,7 @@ namespace ET.Client
 	        }
         }
 
-        public static async ETTask<(bool, int)> SendGetRankedMoreThanAsync(Scene clientScene, RankType rankType, long score)
+        public static async ETTask<(bool, ulong, int)> SendGetRankedMoreThanAsync(Scene clientScene, RankType rankType, long score)
         {
 	        G2C_GetRankedMoreThan _G2C_GetRankedMoreThan = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRankedMoreThan()
 		        {
@@ -94,12 +94,13 @@ namespace ET.Client
 	        if (_G2C_GetRankedMoreThan.Error != ET.ErrorCode.ERR_Success)
 	        {
 		        Log.Error($"SendGetRankShowAsync Error==1 msg={_G2C_GetRankedMoreThan.Message}");
-		        return (false, 0);
+		        return (false, 0, 0);
 	        }
 	        else
 	        {
+		        ulong rank = (ulong)_G2C_GetRankedMoreThan.Rank;
 		        int rankedMoreThan = _G2C_GetRankedMoreThan.RankedMoreThan;
-		        return (true, rankedMoreThan);
+		        return (true, rank, rankedMoreThan);
 	        }
         }
 

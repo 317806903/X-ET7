@@ -11,9 +11,12 @@ namespace ET.Server
 
 			long playerId = observerUnit.Id;
 
-			M2G_MemberReturnRoomFromBattle _M2G_MemberReturnRoomFromBattle = new();
-			ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-			await oneTypeLocationType.Call(playerId, _M2G_MemberReturnRoomFromBattle);
+			// M2G_MemberReturnRoomFromBattle _M2G_MemberReturnRoomFromBattle = new()
+			// {
+			// 	BattleResult =
+			// };
+			// ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+			// await oneTypeLocationType.Call(playerId, _M2G_MemberReturnRoomFromBattle, observerUnit.DomainScene().InstanceId);
 
 			observerUnit.RemoveLocation(LocationType.Unit).Coroutine();
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());

@@ -26,7 +26,7 @@ namespace ET.Server
 				// {
 				// 	continue;
 				// }
-				MessageHelper.SendToClient(roomMember.Id, _R2C_RoomInfoChgNotice, false);
+				MessageHelper.SendToClient(roomMember.Id, _R2C_RoomInfoChgNotice, self.DomainScene().InstanceId, false);
 			}
 			await ETTask.CompletedTask;
         }

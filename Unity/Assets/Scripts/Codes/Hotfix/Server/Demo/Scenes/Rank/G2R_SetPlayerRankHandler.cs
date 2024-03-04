@@ -11,7 +11,8 @@ namespace ET.Server
 			long playerId = request.PlayerId;
 			RankType rankType = (RankType)request.RankType;
 			long score = request.Score;
-			await ET.Server.RankHelper.ResetPlayerRank(scene, playerId, rankType, score);
+			int killNum = request.KillNum;
+			await ET.Server.RankHelper.ResetPlayerRank(scene, playerId, rankType, score, killNum);
 
 			await ETTask.CompletedTask;
 		}

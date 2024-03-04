@@ -117,6 +117,7 @@ namespace ET.Ability.Client
             audioSource.mute = false;
             audioSource.volume = 1;
             audioSource.pitch = 1;
+            audioSource.maxDistance = ET.GamePlayHelper.GetAudioMaxDis(self.DomainScene());
             audioSource.Play();
         }
 

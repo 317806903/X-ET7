@@ -245,6 +245,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_RoomMemberList_titleImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_RoomMemberList_titleImage == null )
+				{
+					this.m_E_RoomMemberList_titleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_RoomMemberList_title");
+				}
+				return this.m_E_RoomMemberList_titleImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_RoomMemberList_title_ChallengeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_RoomMemberList_title_ChallengeImage == null )
+				{
+					this.m_E_RoomMemberList_title_ChallengeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_RoomMemberList_title_Challenge");
+				}
+				return this.m_E_RoomMemberList_title_ChallengeImage;
+			}
+		}
+
 		public TMPro.TextMeshProUGUI E_playerCountTextMeshProUGUI
 		{
 			get
@@ -327,6 +361,40 @@ namespace ET.Client
 					this.m_E_ShowQrCode2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_ShowQrCode/E_ShowQrCode2");
 				}
 				return this.m_E_ShowQrCode2Image;
+			}
+		}
+
+		public UnityEngine.UI.Button E_ReScanButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReScanButton == null )
+				{
+					this.m_E_ReScanButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_ReScan");
+				}
+				return this.m_E_ReScanButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ReScanImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ReScanImage == null )
+				{
+					this.m_E_ReScanImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_ReScan");
+				}
+				return this.m_E_ReScanImage;
 			}
 		}
 
@@ -414,11 +482,15 @@ namespace ET.Client
 			this.m_ELable_RoomMemberChgTeamUITextLocalizeMonoView = null;
 			this.m_E_QuitRoomButton = null;
 			this.m_E_QuitRoomImage = null;
+			this.m_E_RoomMemberList_titleImage = null;
+			this.m_E_RoomMemberList_title_ChallengeImage = null;
 			this.m_E_playerCountTextMeshProUGUI = null;
 			this.m_ELoopScrollList_MemberLoopHorizontalScrollRect = null;
 			this.m_E_ShowQrCodeButton = null;
 			this.m_E_ShowQrCodeImage = null;
 			this.m_E_ShowQrCode2Image = null;
+			this.m_E_ReScanButton = null;
+			this.m_E_ReScanImage = null;
 			this.m_EG_ChooseBattleCfgRectTransform = null;
 			this.m_EButton_ChooseBattleCfgButton = null;
 			this.m_EButton_ChooseBattleCfgImage = null;
@@ -440,11 +512,15 @@ namespace ET.Client
 		private UITextLocalizeMonoView m_ELable_RoomMemberChgTeamUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_E_QuitRoomButton = null;
 		private UnityEngine.UI.Image m_E_QuitRoomImage = null;
+		private UnityEngine.UI.Image m_E_RoomMemberList_titleImage = null;
+		private UnityEngine.UI.Image m_E_RoomMemberList_title_ChallengeImage = null;
 		private TMPro.TextMeshProUGUI m_E_playerCountTextMeshProUGUI = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_MemberLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_E_ShowQrCodeButton = null;
 		private UnityEngine.UI.Image m_E_ShowQrCodeImage = null;
 		private UnityEngine.UI.Image m_E_ShowQrCode2Image = null;
+		private UnityEngine.UI.Button m_E_ReScanButton = null;
+		private UnityEngine.UI.Image m_E_ReScanImage = null;
 		private UnityEngine.RectTransform m_EG_ChooseBattleCfgRectTransform = null;
 		private UnityEngine.UI.Button m_EButton_ChooseBattleCfgButton = null;
 		private UnityEngine.UI.Image m_EButton_ChooseBattleCfgImage = null;

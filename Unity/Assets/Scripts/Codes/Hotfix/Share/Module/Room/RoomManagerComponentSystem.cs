@@ -96,6 +96,12 @@ namespace ET
             roomComponent.arSceneId = ARSceneId;
         }
 
+        public static void SetARMapScale(this RoomManagerComponent self, long roomId, int SetARMapScale)
+        {
+            RoomComponent roomComponent = self.GetRoom(roomId);
+            roomComponent.arMapScale = SetARMapScale * 0.01f;
+        }
+
         public static void SetARMeshDownLoadUrl(this RoomManagerComponent self, long roomId, string _ARMeshDownLoadUrl)
         {
             //     @"http://prod-cn-bj-alicloud-arsession-arsession-deepmirror-s3.oss-cn-beijing.aliyuncs.com/64d0dfbf5252b55795bc8507.space_mesh?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5tPk1NHZtLxk3N1nm8nT%2F20230807%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230807T121319Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=040086f469d411292adf293aa8372ddff823450c77304d7c5e701a8e58f440e9";

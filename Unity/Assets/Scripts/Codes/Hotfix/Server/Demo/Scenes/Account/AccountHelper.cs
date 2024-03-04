@@ -11,10 +11,16 @@ namespace ET.Server
 		    return AccountManagerComponent;
 	    }
 
-        public static async ETTask<(long, bool)> AccountLogin(Scene scene, string accountId, string password, ET.LoginType loginType)
+        public static async ETTask<(long, bool)> AccountLogin(Scene scene, string accountId, string password, ET.LoginType loginType, string loginIP)
         {
 	        AccountManagerComponent accountManagerComponent = GetAccountManager(scene);
-	        return await accountManagerComponent.AccountLogin(accountId, password, loginType);
+	        return await accountManagerComponent.AccountLogin(accountId, password, loginType, loginIP);
+        }
+
+		public static async ETTask<bool> AccountBind(Scene scene, string accountId, string bindAccountId, ET.LoginType loginType)
+        {
+	        AccountManagerComponent accountManagerComponent = GetAccountManager(scene);
+	        return await accountManagerComponent.AccountBind(accountId, bindAccountId, loginType);
         }
 
         public static AccountComponent GetAccountComponent(Scene scene, string accountId)

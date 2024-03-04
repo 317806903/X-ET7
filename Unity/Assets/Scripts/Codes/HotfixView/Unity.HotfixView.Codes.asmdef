@@ -14,14 +14,15 @@
         "MirrorVerse.UI.MirrorSceneClassyUI",
         "MirrorVerse.UI.Renderers",
         "Unity.TextMeshPro",
-        "DM.DOTween",
         "ShootTextPro",
         "Unity.Services.PlayerAccounts",
         "Unity.Services.Authentication",
         "Unity.Services.Core",
         "BlurBackground",
         "IngameDebugConsole.Runtime",
-        "EventLoggingAPIModule"
+        "EventLoggingAPIModule",
+        "DOTwee.Pro.Runtime",
+        "DOTween.Runtime"
     ],
     "includePlatforms": [
         "Editor"

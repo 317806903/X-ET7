@@ -13,6 +13,7 @@ namespace ET.Server
 			long roomId = request.RoomId;
 			string ARSceneId = request.ARSceneId;
 			string ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
+			int ARMapScale = request.ARMapScale;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 
 			if (roomComponent.ownerRoomMemberId != playerId)
@@ -26,6 +27,7 @@ namespace ET.Server
 
 			roomManagerComponent.SetARSceneId(roomId, ARSceneId);
 			roomManagerComponent.SetARMeshDownLoadUrl(roomId, ARMeshDownLoadUrl);
+			roomManagerComponent.SetARMapScale(roomId, ARMapScale);
 
 			await ETTask.CompletedTask;
 		}

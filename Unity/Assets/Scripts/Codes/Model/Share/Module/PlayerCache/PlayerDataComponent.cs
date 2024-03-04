@@ -11,6 +11,13 @@ namespace ET
         BattleCard,
     }
 
+    public enum PlayerModelChgType
+    {
+        PlayerBaseInfo_111 = 100,
+        PlayerBackPack_111 = 200,
+        PlayerBattleCard_111 = 300,
+    }
+    
     [ChildOf(typeof(PlayerCacheManagerComponent))]
     public class PlayerDataComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {

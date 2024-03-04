@@ -19,9 +19,7 @@ public sealed partial class ActionCallAutoUnitWhenUmbellate:  ActionCallAutoUnit
 {
     public ActionCallAutoUnitWhenUmbellate(ByteBuf _buf)  : base(_buf) 
     {
-        IsAngleFirst = _buf.ReadBool();
         UmbellateArea = UmbellateArea.DeserializeUmbellateArea(_buf);
-        IsChgToSelectPos = _buf.ReadBool();
         PostInit();
     }
 
@@ -31,17 +29,9 @@ public sealed partial class ActionCallAutoUnitWhenUmbellate:  ActionCallAutoUnit
     }
 
     /// <summary>
-    /// 是否优先筛选角度(否则优先距离)
-    /// </summary>
-    public bool IsAngleFirst { get; private set; }
-    /// <summary>
     /// 伞型信息
     /// </summary>
     public UmbellateArea UmbellateArea { get; private set; }
-    /// <summary>
-    /// 是否转为记录成Pos位置信息(需要在特定位置施法有效,因为unit可能已走开)
-    /// </summary>
-    public bool IsChgToSelectPos { get; private set; }
 
     public const int __ID__ = -1988808586;
     public override int GetTypeId() => __ID__;
@@ -62,14 +52,7 @@ public sealed partial class ActionCallAutoUnitWhenUmbellate:  ActionCallAutoUnit
     public override string ToString()
     {
         return "{ "
-        + "IsSave:" + IsSave + ","
-        + "SelectNum:" + SelectNum + ","
-        + "IsFriend:" + IsFriend + ","
-        + "IsOnlyPlayer:" + IsOnlyPlayer + ","
-        + "OffSetInfo:" + OffSetInfo + ","
-        + "IsAngleFirst:" + IsAngleFirst + ","
         + "UmbellateArea:" + UmbellateArea + ","
-        + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "}";
     }
     

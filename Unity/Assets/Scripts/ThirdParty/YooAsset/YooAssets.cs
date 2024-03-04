@@ -258,6 +258,12 @@ namespace YooAsset
 			YooLogger.Warning("Clear sandbox folder files, Finally, restart the application !");
 			PersistentHelper.DeleteSandbox();
 		}
+
+		public static void ClearSandboxManifestFolder()
+		{
+			YooLogger.Warning("Clear DeleteManifestFolder !");
+			PersistentHelper.DeleteManifestFolder();
+		}
 		#endregion
 
 		#region 调试信息

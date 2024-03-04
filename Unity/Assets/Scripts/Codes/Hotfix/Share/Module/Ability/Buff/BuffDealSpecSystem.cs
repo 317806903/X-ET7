@@ -19,6 +19,14 @@ namespace ET.Ability
                 {
                     self.AddBuffWhenModifyAttribute(buffActionModifyAttribute);
                 }
+                else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
+                {
+                    self.AddBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
+                }
+                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
+                {
+                    self.AddBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
+                }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {
                     self.AddBuffWhenModifySkillAttribute(buffActionModifySkillAttribute);
@@ -43,6 +51,14 @@ namespace ET.Ability
                 if (buffAction is BuffActionModifyAttribute buffActionModifyAttribute)
                 {
                     self.RemoveBuffWhenModifyAttribute(buffActionModifyAttribute);
+                }
+                else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
+                {
+                    self.RemoveBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
+                }
+                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
+                {
+                    self.RemoveBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {
@@ -79,6 +95,14 @@ namespace ET.Ability
                 if (buffAction is BuffActionModifyAttribute buffActionModifyAttribute)
                 {
                     self.ChgBuffStackCountWhenModifyAttribute(buffActionModifyAttribute, oldStackCount, newStackCount);
+                }
+                else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
+                {
+                    self.ChgBuffStackCountWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex, oldStackCount, newStackCount);
+                }
+                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
+                {
+                    self.ChgBuffStackCountWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex, oldStackCount, newStackCount);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {

@@ -21,7 +21,8 @@ namespace ET.Client
                 HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
                 float height = self.GetUnit().model.BodyHeight + 1f;
                 HealthBarGo.transform.localPosition = new float3(0, height, 0);
-                HealthBarGo.transform.localScale = Vector3.one;
+                float scaleX = gameObjectComponent.gameObject.transform.localScale.x;
+                HealthBarGo.transform.localScale = Vector3.one / scaleX;
 
                 self.go = HealthBarGo;
                 self.healthBar = self.go.transform.Find("Bar/Root/GreenAnchor");

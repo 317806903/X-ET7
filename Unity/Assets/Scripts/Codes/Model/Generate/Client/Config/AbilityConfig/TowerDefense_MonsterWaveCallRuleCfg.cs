@@ -52,7 +52,7 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
     /// </summary>
     public int WaveRewardGold { get; private set; }
     /// <summary>
-    /// 总时长(单位秒)
+    /// 总时长(单位秒,超出后失败)
     /// </summary>
     public float Duration { get; private set; }
     public System.Collections.Generic.List<MonsterWaveCallNode> Nodes { get; private set; }

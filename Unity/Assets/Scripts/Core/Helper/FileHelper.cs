@@ -12,7 +12,7 @@ namespace ET
 			GetAllFiles(list, dir, searchPattern);
 			return list;
 		}
-		
+
 		public static void GetAllFiles(List<string> files, string dir, string searchPattern = "*")
 		{
 			string[] fls = Directory.GetFiles(dir);
@@ -27,7 +27,15 @@ namespace ET
 				GetAllFiles(files, subDir, searchPattern);
 			}
 		}
-		
+
+		public static void CreateDirectory(string filePath)
+		{
+			string directoryName = Path.GetDirectoryName(filePath); // 获取文件所在的目录名称
+			if (directoryName != null && !Directory.Exists(directoryName)) {
+				Directory.CreateDirectory(directoryName); // 创建目录（若不存在）
+			}
+		}
+
 		public static void CleanDirectory(string dir)
 		{
 			if (!Directory.Exists(dir))
@@ -36,7 +44,7 @@ namespace ET
 			}
 			foreach (string subdir in Directory.GetDirectories(dir))
 			{
-				Directory.Delete(subdir, true);		
+				Directory.Delete(subdir, true);
 			}
 
 			foreach (string subFile in Directory.GetFiles(dir))
@@ -49,37 +57,37 @@ namespace ET
 		{
 			DirectoryInfo source = new DirectoryInfo(srcDir);
 			DirectoryInfo target = new DirectoryInfo(tgtDir);
-	
+
 			if (target.FullName.StartsWith(source.FullName, StringComparison.CurrentCultureIgnoreCase))
 			{
 				throw new Exception("父目录不能拷贝到子目录！");
 			}
-	
+
 			if (!source.Exists)
 			{
 				return;
 			}
-	
+
 			if (!target.Exists)
 			{
 				target.Create();
 			}
-	
+
 			FileInfo[] files = source.GetFiles();
-	
+
 			for (int i = 0; i < files.Length; i++)
 			{
 				File.Copy(files[i].FullName, Path.Combine(target.FullName, files[i].Name), true);
 			}
-	
+
 			DirectoryInfo[] dirs = source.GetDirectories();
-	
+
 			for (int j = 0; j < dirs.Length; j++)
 			{
 				CopyDirectory(dirs[j].FullName, Path.Combine(target.FullName, dirs[j].Name));
 			}
 		}
-		
+
 		public static void ReplaceExtensionName(string srcDir, string extensionName, string newExtensionName)
 		{
 			if (Directory.Exists(srcDir))

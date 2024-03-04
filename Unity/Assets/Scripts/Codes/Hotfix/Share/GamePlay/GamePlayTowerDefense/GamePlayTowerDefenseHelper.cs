@@ -10,7 +10,7 @@ namespace ET
     [FriendOf(typeof (Unit))]
     public static class GamePlayTowerDefenseHelper
     {
-        public static Unit CreateHome(Scene scene, string unitCfgId, float3 pos, int hp, TeamFlagType teamFlagType)
+        public static Unit CreateHome(Scene scene, string unitCfgId, float3 pos, int maxHp, int hp, TeamFlagType teamFlagType)
         {
             float3 forward = new float3(0, 0, 1);
 
@@ -19,7 +19,7 @@ namespace ET
             HomeComponent homeComponent = headQuarterUnit.AddComponent<HomeComponent>();
 
             NumericComponent numericComponent = headQuarterUnit.GetComponent<NumericComponent>();
-            numericComponent.SetAsInt(NumericType.MaxHpBase, hp);
+            numericComponent.SetAsInt(NumericType.MaxHpBase, maxHp);
             numericComponent.SetAsInt(NumericType.HpBase, hp);
 
             //GamePlayHelper.AddUnitPathfinding(headQuarterUnit);
@@ -37,15 +37,23 @@ namespace ET
             return monsterCallUnit;
         }
 
-        public static Unit CreateMonster(Scene scene, long playerId, string monsterCfgId, int level, float3 pos, float3 forward, TeamFlagType teamFlagType)
+        public static Unit CreateMonster(Scene scene, long playerId, string monsterCfgId, int level, float3 pos, float3 forward, TeamFlagType teamFlagType, int rewardGold, int waveIndex, int circleWaveIndex)
         {
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             Unit monsterUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, monsterCfg.UnitId, level, pos, forward, monsterCfg.AiCfgId);
+
+            MonsterComponent monsterComponent = monsterUnit.AddComponent<MonsterComponent>();
+            monsterComponent.monsterCfgId = monsterCfgId;
+            monsterComponent.rewardGold = rewardGold;
+            monsterComponent.waveIndex = waveIndex;
+            monsterComponent.circleWaveIndex = circleWaveIndex;
 
             GamePlayHelper.AddUnitPathfinding(monsterUnit);
             GamePlayHelper.AddUnitTeamFlag(monsterUnit, teamFlagType);
 
             UnitHelper_Create.ActorUnitLearnSkillWhenCreate(monsterUnit);
+
+            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds);
 
             return monsterUnit;
         }
@@ -61,7 +69,19 @@ namespace ET
             int count = towerCfg.UnitId.Count;
             for (int i = 0; i < count; i++)
             {
-                string unitCfgId = towerCfg.UnitId[i];
+                string unitCfgId = "";
+                string monsterCfgId = "";
+                if (isTower)
+                {
+                    unitCfgId = towerCfg.UnitId[i];
+                }
+                else if (isCallMonster)
+                {
+                    monsterCfgId = towerCfg.UnitId[i];
+                    TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
+                    unitCfgId = monsterCfg.UnitId;
+                }
+
                 int unitNum = 1;
                 if (towerCfg.Num.Count > i)
                 {
@@ -96,12 +116,14 @@ namespace ET
                         TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetPlayerCallMonsterTeamFlagTypeByPlayer(playerId, pos);
                         GamePlayHelper.AddUnitTeamFlag(towerUnit, teamFlagType);
 
-                        MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
                         int rewardGold = 0;
                         if (towerCfg.RewardGold.Count > i)
                         {
                             rewardGold = towerCfg.RewardGold[i];
-                            monsterWaveCallComponent.RecordUnit2Monster(towerUnit.Id, "", rewardGold);
+                            Unit monsterUnit = towerUnit;
+                            MonsterComponent monsterComponent = monsterUnit.AddComponent<MonsterComponent>();
+                            monsterComponent.monsterCfgId = monsterCfgId;
+                            monsterComponent.rewardGold = rewardGold;
                         }
                     }
                     else
@@ -111,6 +133,7 @@ namespace ET
                     }
 
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
+                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds);
 
                     unitList.Add(towerUnit);
                 }

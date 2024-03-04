@@ -10,7 +10,7 @@ namespace ET.Ability
         public long unitId;
         public bool isResetPos;
         public float3 resetPos;
-        public ActionCallAutoUnitArea actionCallAutoUnitArea;
+        public string selectObjectCfgId;
         public ListComponent<long> unitIds;
     }
 }

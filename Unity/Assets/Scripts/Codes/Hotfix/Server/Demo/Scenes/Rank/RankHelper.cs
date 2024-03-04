@@ -39,7 +39,7 @@ namespace ET.Server
 	        return rankShowComponent;
         }
 
-        public static async ETTask<int> GetRankedMoreThan(Scene scene, RankType rankType, long score)
+        public static async ETTask<(ulong, int)> GetRankedMoreThan(Scene scene, RankType rankType, long score)
         {
 	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
 
@@ -48,12 +48,11 @@ namespace ET.Server
 	        {
 		        await rankManagerComponent.LoadRank(rankType);
 	        }
-
-	        int rankedMoreThan = rankManagerComponent.GetRankedMoreThan(rankType, score);
-	        return rankedMoreThan;
+	        (ulong rank, int rankedMoreThan) = rankManagerComponent.GetRankedMoreThan(rankType, score);
+	        return (rank, rankedMoreThan);
         }
 
-        public static async ETTask ResetPlayerRank(Scene scene, long playerId, RankType rankType, long score)
+        public static async ETTask ResetPlayerRank(Scene scene, long playerId, RankType rankType, long score, int killNum)
         {
 	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
 
@@ -63,7 +62,7 @@ namespace ET.Server
 		        await rankManagerComponent.LoadRank(rankType);
 	        }
 
-	        await rankManagerComponent.ResetRankItem(rankType, playerId, score);
+	        await rankManagerComponent.ResetRankItem(rankType, playerId, score, killNum);
         }
 
     }

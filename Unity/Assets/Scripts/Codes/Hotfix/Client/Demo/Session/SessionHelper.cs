@@ -27,10 +27,15 @@ namespace ET.Client
 
         public static Session GetSession(Scene scene)
         {
+            if (scene == null)
+            {
+                EventSystem.Instance.Publish(scene, new EventType.NoticeNetDisconnected());
+                return null;
+            }
             SessionComponent sessionComponent = GetSessionCompent(scene);
             if (sessionComponent == null || sessionComponent.IsDisposed || sessionComponent.Session == null)
             {
-                EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                EventSystem.Instance.Publish(scene, new EventType.NoticeNetDisconnected());
                 return null;
             }
             return sessionComponent.Session;

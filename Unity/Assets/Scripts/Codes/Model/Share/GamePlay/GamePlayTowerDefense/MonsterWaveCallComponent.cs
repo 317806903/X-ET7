@@ -33,10 +33,5 @@ namespace ET
 		/// </summary>
 		[BsonIgnore]
 		public Dictionary<long, Dictionary<int, MonsterWaveCallOnceComponent>> waveMonsterCallList;
-		
-		[BsonIgnore]
-		public Dictionary<long, string> unitId2MonsterCfgId;
-		[BsonIgnore]
-		public Dictionary<long, int> unitId2RewardGold;
 	}
 }

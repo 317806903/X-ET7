@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 namespace ET
 {
@@ -90,6 +92,16 @@ namespace ET
         public static void RunMongoDBFromDocker()
         {
             ShellHelper.Run($"docker run -itd --restart=always --name mongo-db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=example -p 27017:27017 mongo",".");
+        }
+
+        public static void RunXCode2IPA(string xcodeWorkspace, string productName)
+        {
+            string shellPath = $"{Application.dataPath}/../../Tools/XCode2IPA";
+            FileHelper.CopyDirectory(shellPath, xcodeWorkspace);
+
+            File.WriteAllText($"{xcodeWorkspace}/productName.txt", productName);
+
+            ShellHelper.Run($"python3 RunXCode2IPA.py", xcodeWorkspace);
         }
     }
 }

@@ -62,9 +62,17 @@ namespace ET.Ability.Client
                     // 通过 effectObj.hangPointName 找到节点
                     Transform tran = gameObjectComponent.GetGo().transform;
                     go.transform.SetParent(tran);
-                    go.transform.localScale = Vector3.one;
                     go.transform.localPosition = effectObj.offSet;
                     go.transform.localEulerAngles = effectObj.rotation;
+                    if (effectObj.isScaleByUnit)
+                    {
+                        go.transform.localScale = Vector3.one;
+                    }
+                    else
+                    {
+                        float scaleX = tran.localScale.x;
+                        go.transform.localScale = Vector3.one / scaleX;
+                    }
                 }
             }
             ET.Client.GameObjectPoolHelper.TrigFromPool(go);

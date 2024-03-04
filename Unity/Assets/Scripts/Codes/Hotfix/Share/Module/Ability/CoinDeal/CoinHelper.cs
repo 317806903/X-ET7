@@ -38,6 +38,15 @@ namespace ET.Ability
                 CoinType coinType = coinAdd.Key;
                 int chgValue = coinAdd.Value;
                 GamePlayHelper.ChgPlayerCoin(unit.DomainScene(), playerId, coinType, chgValue);
+
+                EventType.SyncGetCoinShow _SyncGetCoinShow = new ()
+                {
+                    playerId = playerId,
+                    unit = unit,
+                    coinType = coinType,
+                    chgValue = chgValue,
+                };
+                EventSystem.Instance.Publish(unit.DomainScene(), _SyncGetCoinShow);
             }
         }
 

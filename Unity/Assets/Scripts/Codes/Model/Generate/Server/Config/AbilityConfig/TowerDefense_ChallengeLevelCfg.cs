@@ -18,7 +18,8 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
-        BattleLevel = _buf.ReadString();
+        Index = _buf.ReadInt();
+        IsAR = _buf.ReadBool();
         FirstClearDropItem = _buf.ReadString();
         RepeatClearDropItem = _buf.ReadString();
         PostInit();
@@ -30,33 +31,41 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
     }
 
     /// <summary>
-    /// 这是id
+    /// 关卡索引
     /// </summary>
     public string Id { get; private set; }
+    public GamePlayBattleLevelCfg Id_Ref { get; private set; }
     /// <summary>
     /// 名字
     /// </summary>
     public string Name { get; private set; }
     /// <summary>
-    /// 关卡索引
+    /// 关卡序号
     /// </summary>
-    public string BattleLevel { get; private set; }
-    public GamePlayBattleLevelCfg BattleLevel_Ref { get; private set; }
+    public int Index { get; private set; }
+    /// <summary>
+    /// 是否AR
+    /// </summary>
+    public bool IsAR { get; private set; }
     /// <summary>
     /// 首通掉落（预留）
     /// </summary>
     public string FirstClearDropItem { get; private set; }
+    public DropRuleCfg FirstClearDropItem_Ref { get; private set; }
     /// <summary>
     /// 重复掉落（预留）
     /// </summary>
     public string RepeatClearDropItem { get; private set; }
+    public DropRuleCfg RepeatClearDropItem_Ref { get; private set; }
 
     public const int __ID__ = 1113511035;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.BattleLevel_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(BattleLevel);
+        this.Id_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(Id);
+        this.FirstClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(FirstClearDropItem);
+        this.RepeatClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(RepeatClearDropItem);
         PostResolve();
     }
 
@@ -69,7 +78,8 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
-        + "BattleLevel:" + BattleLevel + ","
+        + "Index:" + Index + ","
+        + "IsAR:" + IsAR + ","
         + "FirstClearDropItem:" + FirstClearDropItem + ","
         + "RepeatClearDropItem:" + RepeatClearDropItem + ","
         + "}";

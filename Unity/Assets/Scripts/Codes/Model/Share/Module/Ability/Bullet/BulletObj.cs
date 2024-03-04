@@ -40,6 +40,8 @@ namespace ET.Ability
         ///</summary>
         public float timeElapsed = 0;
 
+        public HashSet<long> preHitUnitIds;
+
         ///<summary>
         ///子弹命中纪录
         ///</summary>
@@ -77,19 +79,33 @@ namespace ET.Ability
 
         public static BulletHitRecord Create()
         {
-            return ObjectPool.Instance.Fetch(typeof (SelectHandle)) as BulletHitRecord;
+            BulletHitRecord bulletHitRecord = ObjectPool.Instance.Fetch(typeof (SelectHandle)) as BulletHitRecord;
+            bulletHitRecord.Reuse();
+            return bulletHitRecord;
         }
 
-        private bool _disposed; //表示是否已经被回收
+        public override void Reuse()
+        {
+            this.isDisposed = false;
+            base.Reuse();
+        }
+
+        public bool isDisposed; //表示是否已经被回收
         protected override void Dispose(bool disposing)
         {
-            if(_disposed) return; //如果已经被回收，就中断执行
-            if(disposing) //如果需要回收一些托管资源
+            if(this.isDisposed) return; //如果已经被回收，就中断执行
+            try
             {
+                this.isDisposed = true;
+                if(disposing) //如果需要回收一些托管资源
+                {
+                    ObjectPool.Instance?.Recycle(this);
+                }
             }
-            ObjectPool.Instance.Recycle(this);
-
-            _disposed = true;
+            catch (Exception e)
+            {
+                Log.Error($"ET.Ability.BulletHitRecord.Dispose {e}");
+            }
 
             base.Dispose(disposing);//再调用父类的垃圾回收逻辑
         }

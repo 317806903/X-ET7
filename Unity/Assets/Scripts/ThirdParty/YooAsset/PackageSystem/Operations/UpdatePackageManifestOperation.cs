@@ -98,22 +98,27 @@ namespace YooAsset
 				return true;
 			}
 
-			YooLogger.Error($"比对版本 当前版本[{_impl.ActiveManifest.PackageVersion}] 远端版本[{this._packageVersion}]");
+			YooLogger.Log($"比对版本 当前版本[{_impl.ActiveManifest.PackageVersion}] 远端版本[{this._packageVersion}]");
 
-			string [] curVersion = _impl.ActiveManifest.PackageVersion.Split("_");
-			string [] newVersion = _packageVersion.Split("_");
-
-			if (curVersion[0].CompareTo(newVersion[0]) < 0)
+			if (_impl.ActiveManifest.PackageVersion.CompareTo(_packageVersion) < 0)
 			{
 				return true;
 			}
-			else if (curVersion[0].CompareTo(newVersion[0]) == 0)
-			{
-				if (int.Parse(curVersion[1]) < int.Parse(newVersion[1]))
-				{
-					return true;
-				}
-			}
+			//
+			// string [] curVersion = _impl.ActiveManifest.PackageVersion.Split("_");
+			// string [] newVersion = _packageVersion.Split("_");
+			//
+			// if (curVersion[0].CompareTo(newVersion[0]) < 0)
+			// {
+			// 	return true;
+			// }
+			// else if (curVersion[0].CompareTo(newVersion[0]) == 0)
+			// {
+			// 	if (int.Parse(curVersion[1]) < int.Parse(newVersion[1]))
+			// 	{
+			// 		return true;
+			// 	}
+			// }
 
 			return false;
 		}

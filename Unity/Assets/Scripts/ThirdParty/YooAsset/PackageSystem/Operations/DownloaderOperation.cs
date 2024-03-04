@@ -35,22 +35,22 @@ namespace YooAsset
 		private long _cachedDownloadBytes = 0;
 		private int _cachedDownloadCount = 0;
 		private ESteps _steps = ESteps.None;
-		
+
 
 		/// <summary>
 		/// 统计的下载文件总数量
 		/// </summary>
 		public int TotalDownloadCount { private set; get; }
-		
+
 		/// <summary>
 		/// 统计的下载文件的总大小
 		/// </summary>
 		public long TotalDownloadBytes { private set; get; }
-		
+
 		/// <summary>
 		/// 当前已经完成的下载总数量
 		/// </summary>
-		public int CurrentDownloadCount 
+		public int CurrentDownloadCount
 		{
 			get { return _lastDownloadCount; }
 		}
@@ -91,6 +91,7 @@ namespace YooAsset
 			_failedTryAgain = failedTryAgain;
 			_timeout = timeout;
 
+			TotalDownloadCount = 0;
 			if (downloadList != null)
 			{
 				TotalDownloadCount = downloadList.Count;

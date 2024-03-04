@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using YooAsset;
@@ -10,6 +11,7 @@ namespace ET
     {
         Local,
         InNet148,
+        InNet148Release,
         InNetZpb,
         OutNet_Benchmark,
         OutNet_CN,
@@ -40,373 +42,258 @@ namespace ET
         [MenuItem("Pack/BuildPack_Android_Local", false, 300)]
         public static async ETTask BuildPack_Android_Local()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_Local", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.Local);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_Local", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.Local).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_InNet148", false, 301)]
         public static async ETTask BuildPack_Android_InNet148()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNet148", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.InNet148);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNet148", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNet148).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_Android_InNet148Release", false, 301)]
+        public static async ETTask BuildPack_Android_InNet148Release()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNet148Release", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNet148Release", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNet148Release).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_InNetZpb", false, 302)]
         public static async ETTask BuildPack_Android_InNetZpb()
         {
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNetZpb", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.InNetZpb);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNetZpb", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNetZpb).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_OutNet_Benchmark", false, 303)]
         public static async ETTask BuildPack_Android_OutNet_Benchmark()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_Benchmark", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.OutNet_Benchmark);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_Benchmark", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_Benchmark).Coroutine();
+            });
         }
 
 
         [MenuItem("Pack/BuildPack_Android_OutNet_CN", false, 304)]
         public static async ETTask BuildPack_Android_OutNet_CN()
         {
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_CN", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.OutNet_CN);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_CN", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_CN).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_OutNet_EN", false, 305)]
         public static async ETTask BuildPack_Android_OutNet_EN()
         {
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_EN", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.OutNet_EN);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_EN", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_EN).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_OutNet_EN_AAB", false, 306)]
         public static async ETTask BuildPack_Android_OutNet_EN_AAB()
         {
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_EN_AAB", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.OutNet_EN_AAB);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_EN_AAB", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_EN_AAB).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_ExternalTest", false, 307)]
         public static async ETTask BuildPack_Android_ExternalTest()
         {
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_ExternalTest", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.ExternalTest);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_ExternalTest", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.ExternalTest).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_Android_ExternalTest_AAB", false, 308)]
         public static async ETTask BuildPack_Android_ExternalTest_AAB()
         {
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_ExternalTest_AAB", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            await BuildPackInternal(buildTarget, PackName.ExternalTest_AAB);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_ExternalTest_AAB", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.ExternalTest_AAB).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_InNet148", false, 321)]
         public static async ETTask BuildPack_IOS_InNet148()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNet148", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.InNet148);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNet148", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNet148).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_IOS_InNet148Release", false, 321)]
+        public static async ETTask BuildPack_IOS_InNet148Release()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNet148Release", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNet148Release", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNet148Release).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_InNetZpb", false, 322)]
         public static async ETTask BuildPack_IOS_InNetZpb()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNetZpb", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.InNetZpb);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNetZpb", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNetZpb).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_OutNet_Benchmark", false, 323)]
         public static async ETTask BuildPack_IOS_OutNet_Benchmark()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_OutNet_Benchmark", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.OutNet_Benchmark);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_OutNet_Benchmark", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_Benchmark).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_OutNet_CN", false, 324)]
         public static async ETTask BuildPack_IOS_OutNet_CN()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_OutNet_CN", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.OutNet_CN);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_OutNet_CN", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_CN).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_OutNet_EN", false, 325)]
         public static async ETTask BuildPack_IOS_OutNet_EN()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if(Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if(System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_OutNet_EN", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.OutNet_EN);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_OutNet_EN", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_EN).Coroutine();
+            });
         }
 
         [MenuItem("Pack/BuildPack_IOS_ExternalTest", false, 326)]
         public static async ETTask BuildPack_IOS_ExternalTest()
         {
-#if !UNITY_EDITOR_OSX
-            EditorUtility.DisplayDialog("警告", "只能mac下运行", "确定");
-            return;
-#endif
-            if (Application.isPlaying)
-            {
-                EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
-                return;
-            }
-            if (System.IO.Directory.Exists($"{HybridCLR.Editor.SettingsUtil.LocalIl2CppDir}/libil2cpp/hybridclr") == false)
-            {
-                EditorUtility.DisplayDialog("警告", "没有安装HybridCLR", "确定");
-                return;
-            }
-
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_ExternalTest", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            await BuildPackInternal(buildTarget, PackName.ExternalTest);
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_ExternalTest", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.ExternalTest).Coroutine();
+            });
         }
-
 
         public static void BuildPack_CommandLine()
         {
@@ -419,12 +306,15 @@ namespace ET
         {
             EditorApplication.isPlaying = false;
 
+            SetBuildVersionCode();
+            SetBuildPackageVersion();
+
             await InitInstance();
-            await BuildPack_Pre(packName);
+            await BuildPack_Pre(packName, buildTarget);
             try
             {
                 AssetDatabase.Refresh();
-                await BuildInternal(buildTarget);
+                await BuildInternal(packName, buildTarget);
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
@@ -441,7 +331,7 @@ namespace ET
             ResConfig.Instance = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
         }
 
-        private static async ETTask BuildPack_Pre(PackName packName)
+        private static async ETTask BuildPack_Pre(PackName packName, BuildTarget buildTarget)
         {
             EditorUserBuildSettings.buildAppBundle = false;
             lastCodeMode = GlobalConfig.Instance.CodeMode;
@@ -474,6 +364,8 @@ namespace ET
             lastRouterHttpHost = ResConfig.Instance.RouterHttpHost;
             lastRouterHttpPort = ResConfig.Instance.RouterHttpPort;
 
+            PlayerSettings.SplashScreen.showUnityLogo = false;
+
             //UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.DevelopmentOnly;
             UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             ResConfig.Instance.IsNeedSendEventLog = false;
@@ -482,12 +374,24 @@ namespace ET
 
             string MirrorARSessionAuthAppKey = "63f72bdc21c28002a4f4b218#mirrorsdk_dev";
             string MirrorARSessionAuthAppSecret = "79395951c7cf78bd7ec1fe5b5b1c97ce";
+
             // ============== Development environments (Office/Benchmark)=================================
             ResConfig.Instance.MirrorARSessionAuthAppKey = MirrorARSessionAuthAppKey;
             ResConfig.Instance.MirrorARSessionAuthAppSecret = MirrorARSessionAuthAppSecret;
+            ResConfig.Instance.Channel = "10000";
+            PlayerSettings.Android.useCustomKeystore = false;
+            PlayerSettings.iOS.appleDeveloperTeamID = "9882G66R3A";
+
+            EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Disabled;
+
             if (packName == PackName.Local)
             {
-                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                //ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                ResConfig.Instance.ResHostServerIP = "http://192.168.10.58";
+                ResConfig.Instance.ResGameVersion = "v1.0";
+                ResConfig.Instance.RouterHttpHost = "127.0.0.1";
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
@@ -497,15 +401,43 @@ namespace ET
             else if(packName == PackName.InNet148)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
+                //ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
+                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 5478;
                 ResConfig.Instance.areaType = AreaType.CN;
                 productName = $"148_RealityGuard";
                 packageName = $"com.dm.ARGameInNet148";
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+            }
+            else if(packName == PackName.InNet148Release)
+            {
+                ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                //ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
+                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release";
+                ResConfig.Instance.ResGameVersion = "v1.0";
+                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
+                ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.areaType = AreaType.CN;
+                productName = $"148Release_RealityGuard";
+                packageName = $"com.dm.ARGameInNet148Release";
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.InNetZpb)
@@ -514,19 +446,21 @@ namespace ET
                 ResConfig.Instance.ResHostServerIP = "http://192.168.10.58";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.58";
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"Zpb_RealityGuard";
                 packageName = $"com.dm.ARGameInNetZpb";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+                //EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Debugging;
+
             }
             else if (packName == PackName.OutNet_Benchmark)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.RouterHttpHost = "18.166.14.188";   // Linux machine in AWS HK.
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -540,11 +474,17 @@ namespace ET
                 ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "8.134.156.170";
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
-                productName = $"RealityGuard_CN";
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                productName = $"CN_RealityGuard";
                 packageName = $"com.dm.ARGameCN";
             }
             else if(packName == PackName.OutNet_EN || packName == PackName.OutNet_EN_AAB)
@@ -553,11 +493,17 @@ namespace ET
                 ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "34.225.211.137";
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.EN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
-                productName = $"RealityGuard_EN";
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                productName = $"EN_RealityGuard";
                 packageName = $"com.dm.ARGameEN";
 
                 if (packName == PackName.OutNet_EN_AAB)
@@ -572,11 +518,20 @@ namespace ET
             // ============== Production environments ===========================================
             else if (packName == PackName.ExternalTest || packName == PackName.ExternalTest_AAB)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "10001";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "10002";
+                }
+
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://prod-us-sv-aws-artd-deepmirror-s3.oss-us-west-1.aliyuncs.com/resources";
+                ResConfig.Instance.ResHostServerIP = "https://download-realityguard.deepmirror.com/resources";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "artd-gateway.deepmirror.com";
-                ResConfig.Instance.RouterHttpPort = 30300;
+                ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.areaType = AreaType.EN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -597,6 +552,9 @@ namespace ET
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguard";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+
+                // Apple Team ID "DeepMirror Inc"
+                PlayerSettings.iOS.appleDeveloperTeamID = "T5X59PQT4X";
             }
 
             lastProductName = PlayerSettings.productName;
@@ -605,8 +563,9 @@ namespace ET
             PlayerSettings.productName = productName;
             PlayerSettings.applicationIdentifier = packageName;
 
-            PlayerSettings.bundleVersion = "1.0";
             int buildVersionCode = GetBuildVersionCode();
+            PlayerSettings.bundleVersion = "1." + buildVersionCode;
+            ResConfig.Instance.Version = PlayerSettings.bundleVersion;
             PlayerSettings.Android.bundleVersionCode = buildVersionCode;
             PlayerSettings.iOS.buildNumber = buildVersionCode.ToString();
 
@@ -617,37 +576,47 @@ namespace ET
             AssetDatabase.SaveAssets();
         }
 
-        private static int GetBuildVersionCode()
-        {
-            var dt = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            int buildVersionCode = (int)((DateTime.UtcNow.Ticks - dt.Ticks) / 10000 / 1000);
-            return buildVersionCode;
-        }
-
         private static async ETTask BuildPack_After(PackName packName)
         {
-            GlobalConfig.Instance.CodeMode = lastCodeMode;
-            GlobalConfig.Instance.codeOptimization = lastCodeOptimization;
+            // GlobalConfig.Instance.CodeMode = lastCodeMode;
+            // GlobalConfig.Instance.codeOptimization = lastCodeOptimization;
+            //
+            // ResConfig.Instance.ResLoadMode = lastResLoadMode;
+            // ResConfig.Instance.ResHostServerIP = lastResHostServerIP;
+            // ResConfig.Instance.ResGameVersion = lastResGameVersion;
+            // ResConfig.Instance.RouterHttpHost = lastRouterHttpHost;
+            // ResConfig.Instance.RouterHttpPort = lastRouterHttpPort;
+            //
+            // PlayerSettings.productName = lastProductName;
+            // PlayerSettings.applicationIdentifier = lastPackageName;
+            //
+            // EditorUserBuildSettings.buildAppBundle = false;
+        }
 
-            ResConfig.Instance.ResLoadMode = lastResLoadMode;
-            ResConfig.Instance.ResHostServerIP = lastResHostServerIP;
-            ResConfig.Instance.ResGameVersion = lastResGameVersion;
-            ResConfig.Instance.RouterHttpHost = lastRouterHttpHost;
-            ResConfig.Instance.RouterHttpPort = lastRouterHttpPort;
+        private static int buildVersionCode;
+        private static void SetBuildVersionCode()
+        {
+            var dt = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            buildVersionCode = (int)((DateTime.UtcNow.Ticks - dt.Ticks) / 10000 / 1000);
+        }
 
-            PlayerSettings.productName = lastProductName;
-            PlayerSettings.applicationIdentifier = lastPackageName;
+        private static string buildPackageVersion;
+        private static void SetBuildPackageVersion()
+        {
+            buildPackageVersion = DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
+        }
 
-            EditorUserBuildSettings.buildAppBundle = false;
+        private static int GetBuildVersionCode()
+        {
+            return buildVersionCode;
         }
 
         private static string GetBuildPackageVersion()
         {
-            int totalMinutes = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
-            return DateTime.Now.ToString("yyyy-MM-dd") + "_" + totalMinutes;
+            return buildPackageVersion;
         }
 
-        private static async ETTask BuildInternal(BuildTarget buildTarget)
+        private static async ETTask BuildInternal(PackName packName, BuildTarget buildTarget)
         {
             Debug.Log($"开始构建 : {buildTarget}");
 
@@ -667,9 +636,115 @@ namespace ET
             // Use the last part of package name as file name.
             string appName = PlayerSettings.applicationIdentifier["com.dm.".Length..];
 
-            string packFileName = $"{appName}_{GetBuildPackageVersion()}";
-            BuildHelper.Build(buildTarget, buildOptions, packFileName);
+            string packFileName = $"{appName}_{GetBuildPackageVersion()}_{GetBuildVersionCode()}";
+            (bool bRet, string packFullPath) = BuildHelper.Build(buildTarget, buildOptions, packFileName);
+            if (bRet)
+            {
+                DealWhenAfterBuild(buildTarget, packFullPath, PlayerSettings.productName);
+                WriteVersionToCDN(buildTarget, packName);
+                WritePackFullPathToCDN(buildTarget, packName, packFullPath);
+            }
             //Debug.Log($"构建成功");
+        }
+
+        private static void DealWhenAfterBuild(BuildTarget buildTarget, string packFullPath, string productName)
+        {
+            if (buildTarget == BuildTarget.iOS)
+            {
+                ET.ToolsEditor.RunXCode2IPA(packFullPath, productName);
+            }
+        }
+
+        private static void WriteVersionToCDN(BuildTarget buildTarget, PackName packName)
+        {
+            if (Directory.Exists($"{Application.dataPath}/../Bundles/CDN") == false)
+            {
+                return;
+            }
+
+            string versionInfo = ResConfig.Instance.Version;
+            string versionFile = $"Version_{packName.ToString()}.txt";
+            string cdnVersionFilePath = "";
+            if (buildTarget == BuildTarget.Android)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/Android/{versionFile}";
+            }
+            else if (buildTarget == BuildTarget.iOS)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/IOS/{versionFile}";
+            }
+            else if (buildTarget == BuildTarget.WebGL)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/WebGL/{versionFile}";
+            }
+            else if (buildTarget == BuildTarget.StandaloneWindows)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/PC/{versionFile}";
+            }
+            FileHelper.CreateDirectory(cdnVersionFilePath);
+            File.WriteAllText(cdnVersionFilePath, versionInfo);
+            if (packName == PackName.InNetZpb)
+            {
+                File.WriteAllText(cdnVersionFilePath.Replace(versionFile, "Version.txt"), versionInfo);
+            }
+        }
+
+        private static void WritePackFullPathToCDN(BuildTarget buildTarget, PackName packName, string packFullPath)
+        {
+            if (Directory.Exists($"{Application.dataPath}/../Bundles/CDN") == false)
+            {
+                return;
+            }
+
+            string versionFile = $"PackFullPath_{packName.ToString()}.txt";
+            string cdnVersionFilePath = "";
+
+            string downLoadFile = $"DownLoadFile_{packName.ToString()}.txt";
+            string cdnDownLoadFilePath = "";
+            if (buildTarget == BuildTarget.Android)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/Android/{versionFile}";
+                cdnDownLoadFilePath =  $"{Application.dataPath}/../Bundles/CDN/Android/{downLoadFile}";
+            }
+            else if (buildTarget == BuildTarget.iOS)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/IOS/{versionFile}";
+                cdnDownLoadFilePath =  $"{Application.dataPath}/../Bundles/CDN/IOS/{downLoadFile}";
+            }
+            else if (buildTarget == BuildTarget.WebGL)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/WebGL/{versionFile}";
+                cdnDownLoadFilePath =  $"{Application.dataPath}/../Bundles/CDN/WebGL/{downLoadFile}";
+            }
+            else if (buildTarget == BuildTarget.StandaloneWindows)
+            {
+                cdnVersionFilePath =  $"{Application.dataPath}/../Bundles/CDN/PC/{versionFile}";
+                cdnDownLoadFilePath =  $"{Application.dataPath}/../Bundles/CDN/PC/{downLoadFile}";
+            }
+
+            FileHelper.CreateDirectory(cdnVersionFilePath);
+            if (buildTarget == BuildTarget.iOS)
+            {
+                string context = $"{packFullPath}.ipa\n{packFullPath}.plist";
+                File.WriteAllText(cdnVersionFilePath, context);
+            }
+            else
+            {
+                File.WriteAllText(cdnVersionFilePath, packFullPath);
+            }
+
+            FileHelper.CreateDirectory(cdnDownLoadFilePath);
+            if (buildTarget == BuildTarget.iOS)
+            {
+                string fileName = Path.GetFileName(packFullPath);
+                string context = $"{fileName}.plist";
+                File.WriteAllText(cdnDownLoadFilePath, context);
+            }
+            else
+            {
+                string fileName = Path.GetFileName(packFullPath);
+                File.WriteAllText(cdnDownLoadFilePath, fileName);
+            }
         }
     }
 }

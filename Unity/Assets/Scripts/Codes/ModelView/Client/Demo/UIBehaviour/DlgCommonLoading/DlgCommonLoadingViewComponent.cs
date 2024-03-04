@@ -41,7 +41,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_bgARRectTransform
+		public UnityEngine.RectTransform EG_ShowRootRectTransform
 		{
 			get
 			{
@@ -50,62 +50,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EG_bgARRectTransform == null )
+				if( this.m_EG_ShowRootRectTransform == null )
 				{
-					this.m_EG_bgARRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_BG_Click/EG_bgAR");
+					this.m_EG_ShowRootRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_ShowRoot");
 				}
-				return this.m_EG_bgARRectTransform;
-			}
-		}
-
-		public BlurBackground.TranslucentImage EG_bgARTranslucentImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgARTranslucentImage == null )
-				{
-					this.m_EG_bgARTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_BG_Click/EG_bgAR");
-				}
-				return this.m_EG_bgARTranslucentImage;
-			}
-		}
-
-		public UnityEngine.RectTransform EG_bgRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgRectTransform == null )
-				{
-					this.m_EG_bgRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_BG_Click/EG_bg");
-				}
-				return this.m_EG_bgRectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Image EG_bgImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgImage == null )
-				{
-					this.m_EG_bgImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_BG_Click/EG_bg");
-				}
-				return this.m_EG_bgImage;
+				return this.m_EG_ShowRootRectTransform;
 			}
 		}
 
@@ -113,19 +62,13 @@ namespace ET.Client
 		{
 			this.m_E_BG_ClickButton = null;
 			this.m_E_BG_ClickImage = null;
-			this.m_EG_bgARRectTransform = null;
-			this.m_EG_bgARTranslucentImage = null;
-			this.m_EG_bgRectTransform = null;
-			this.m_EG_bgImage = null;
+			this.m_EG_ShowRootRectTransform = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.UI.Button m_E_BG_ClickButton = null;
 		private UnityEngine.UI.Image m_E_BG_ClickImage = null;
-		private UnityEngine.RectTransform m_EG_bgARRectTransform = null;
-		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
-		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
-		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private UnityEngine.RectTransform m_EG_ShowRootRectTransform = null;
 		public Transform uiTransform = null;
 	}
 }

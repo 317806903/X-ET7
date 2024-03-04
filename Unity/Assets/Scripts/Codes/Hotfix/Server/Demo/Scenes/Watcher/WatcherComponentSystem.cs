@@ -13,7 +13,7 @@ namespace ET.Server
                 WatcherComponent.Instance = self;
             }
         }
-    
+
         public class WatcherComponentDestroySystem: DestroySystem<WatcherComponent>
         {
             protected override void Destroy(WatcherComponent self)
@@ -21,10 +21,11 @@ namespace ET.Server
                 WatcherComponent.Instance = null;
             }
         }
-        
+
         public static void Start(this WatcherComponent self, int createScenes = 0)
         {
             string[] localIP = NetworkHelper.GetAddressIPs();
+            Log.Debug($"localIP {localIP.ToString()}");
             var processConfigs = StartProcessConfigCategory.Instance.GetAll();
             foreach (StartProcessConfig startProcessConfig in processConfigs.Values)
             {

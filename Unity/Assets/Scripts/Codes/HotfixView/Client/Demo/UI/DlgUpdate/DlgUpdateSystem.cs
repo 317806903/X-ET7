@@ -5,6 +5,7 @@ using ET.EventType;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YooAsset;
 
 namespace ET.Client
 {
@@ -17,7 +18,7 @@ namespace ET.Client
 			self.rectTransBackground = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Background");
 			self.rectTransValueImage = (RectTransform)self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Background/Value");
 			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent/Processing/Percentage");
-			
+
 			self.transProgress = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/ProgressPrarent");
 			self.transCheckUpdate = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/CheckUpdate");
 		}
@@ -28,6 +29,8 @@ namespace ET.Client
 			self.transCheckUpdate.gameObject.SetActive(true);
 			self.transCheckUpdate.GetComponent<TMP_Text>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
 			self.ShowProcess(0);
+			ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
+			self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{package.GetPackageVersion()}";
 		}
 
 		public static void ShowProcess(this DlgUpdate self, float per)
@@ -39,16 +42,26 @@ namespace ET.Client
 
 		public static void UpdateUI(this DlgUpdate self, OnPatchDownloadProgress a)
 		{
+			self.HideCheckUpdateText();
+
 			self.transProgress.gameObject.SetActive(true);
 			self.View.ELabel_TotalDownloadCountText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalNum", a.TotalDownloadCount);
 			self.View.ELabel_CurrentDownloadCountText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_CurDownNum", a.CurrentDownloadCount);
 			self.View.ELabel_TotalDownloadSizeBytesText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalDownSize", a.TotalDownloadSizeBytes);
 			self.View.ELabel_CurrentDownloadSizeBytesText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_UpdateRes_TotalNum", a.CurrentDownloadSizeBytes);
 			long totalDownloadSizeMB = a.TotalDownloadSizeBytes / (1024 * 1024);
+			if (totalDownloadSizeMB == 0)
+			{
+				totalDownloadSizeMB = 1;
+			}
 			long currentDownloadSizeMB = a.CurrentDownloadSizeBytes / (1024 * 1024);
+			if (currentDownloadSizeMB == 0)
+			{
+				currentDownloadSizeMB = 1;
+			}
 			self.transPercentage.gameObject.GetComponent<TextMeshProUGUI>().text =
 					LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownloadProgress", currentDownloadSizeMB, totalDownloadSizeMB);
-			
+
 			float per = (float)a.CurrentDownloadCount/a.TotalDownloadCount;
 			self.ShowProcess(per);
 		}

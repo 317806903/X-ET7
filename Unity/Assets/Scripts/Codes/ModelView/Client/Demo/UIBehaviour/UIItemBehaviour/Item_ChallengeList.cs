@@ -187,7 +187,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image E_Unlocked_lineImage
+		public UnityEngine.RectTransform EG_Unlocked_lineRectTransform
 		{
 			get
 			{
@@ -198,15 +198,39 @@ namespace ET.Client
 				}
 				if (this.isCacheNode)
 				{
-					if( this.m_E_Unlocked_lineImage == null )
+					if( this.m_EG_Unlocked_lineRectTransform == null )
 					{
-						this.m_E_Unlocked_lineImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Unlocked_line");
+						this.m_EG_Unlocked_lineRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_Unlocked_line");
 					}
-					return this.m_E_Unlocked_lineImage;
+					return this.m_EG_Unlocked_lineRectTransform;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Unlocked_line");
+					return UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_Unlocked_line");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image E_iconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_E_iconImage == null )
+					{
+						this.m_E_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_icon");
+					}
+					return this.m_E_iconImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_icon");
 				}
 			}
 		}
@@ -220,7 +244,8 @@ namespace ET.Client
 			this.m_ELabel_UnlockedTextMeshProUGUI = null;
 			this.m_E_SelectedImage = null;
 			this.m_E_Normal_lineImage = null;
-			this.m_E_Unlocked_lineImage = null;
+			this.m_EG_Unlocked_lineRectTransform = null;
+			this.m_E_iconImage = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
@@ -232,7 +257,8 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_UnlockedTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_E_SelectedImage = null;
 		private UnityEngine.UI.Image m_E_Normal_lineImage = null;
-		private UnityEngine.UI.Image m_E_Unlocked_lineImage = null;
+		private UnityEngine.RectTransform m_EG_Unlocked_lineRectTransform = null;
+		private UnityEngine.UI.Image m_E_iconImage = null;
 		public Transform uiTransform = null;
 	}
 }

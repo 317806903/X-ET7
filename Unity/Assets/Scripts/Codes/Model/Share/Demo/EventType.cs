@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET
@@ -18,6 +19,7 @@ namespace ET
         public struct EnterHallSceneStart
         {
             public bool isFromLogin;
+            public bool isRelogin;
         }
 
         public struct BattleSceneEnterStart
@@ -41,6 +43,10 @@ namespace ET
         }
 
         public struct LoginFinish
+        {
+        }
+
+        public struct ReLoginFinish
         {
         }
 
@@ -85,6 +91,18 @@ namespace ET
             public Unit Unit;
         }
 
+        public struct SyncNoticeUnitAdds
+        {
+            public Unit beNoticeUnit;
+            public List<Unit> units;
+        }
+
+        public struct SyncNoticeUnitRemoves
+        {
+            public Unit beNoticeUnit;
+            public List<long> unitIds;
+        }
+
         public struct SyncPosUnits
         {
             public List<Unit> units;
@@ -106,6 +124,14 @@ namespace ET
             public Unit unit;
             public string playAudioActionId;
             public bool isOnlySelfShow;
+        }
+
+        public struct SyncGetCoinShow
+        {
+            public long playerId;
+            public Unit unit;
+            public CoinType coinType;
+            public int chgValue;
         }
 
         public struct SyncPlayAnimator
@@ -141,6 +167,12 @@ namespace ET
             public GamePlayPlayerListComponent gamePlayPlayerListComponent;
         }
 
+        public struct WaitNoticeGamePlayStatisticalToClient
+        {
+            public long playerId;
+            public GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent;
+        }
+
         public struct WaitNoticeGamePlayModeToClient
         {
             public long playerId;
@@ -162,6 +194,12 @@ namespace ET
             public bool needSendSuccess;
         }
 
+        public struct NoticeGamePlayStatisticalToClient
+        {
+            public long playerId;
+            public GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent;
+        }
+
         public struct NoticeGamePlayModeToClient
         {
             public HashSet<long> playerIds;
@@ -172,6 +210,8 @@ namespace ET
         public struct NoticeGameEndToRoom
         {
             public long roomId;
+            public bool isReady;
+            public Dictionary<long, bool> playerWinResult;
         }
 
         public struct StopMove
@@ -186,13 +226,37 @@ namespace ET
             public List<float3> pointList;
         }
 
+        public struct NoticeAdmobSDKStatus
+        {
+            public bool IsAdmobAvailable;
+        }
+
         public struct NoticeUITip
         {
             public string tipMsg;
         }
 
+        public struct NoticeNetDisconnected
+        {
+            public bool bReLogin;
+        }
+
+        public struct NoticeApplicationStatus
+        {
+            public bool isPause;
+        }
+
         public struct NoticeUIReconnect
         {
+        }
+
+        public struct NoticeUIShowCommonLoading
+        {
+        }
+
+        public struct NoticeUIHideCommonLoading
+        {
+            public bool bForceHide;
         }
 
         public struct NoticeEventLoggingLoginIn

@@ -33,6 +33,7 @@ namespace ET
         public RoomType roomType;
         public SubRoomType subRoomType;
         public string arSceneId;
+        public float arMapScale;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;
         public long ownerRoomMemberId;

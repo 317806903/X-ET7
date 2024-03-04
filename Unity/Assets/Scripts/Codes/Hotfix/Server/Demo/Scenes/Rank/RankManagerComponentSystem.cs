@@ -35,15 +35,15 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask ResetRankItem(this RankManagerComponent self, RankType rankType, long playerId, long scoreNew)
+        public static async ETTask ResetRankItem(this RankManagerComponent self, RankType rankType, long playerId, long scoreNew, int killNum)
         {
             switch (rankType)
             {
                 case RankType.PVE:
-                    await self.ResetRankItem<RankPVEComponent, RankPVEItemComponent>(playerId, scoreNew);
+                    await self.ResetRankItem<RankPVEComponent, RankPVEItemComponent>(playerId, scoreNew, killNum);
                     break;
                 case RankType.EndlessChallenge:
-                    await self.ResetRankItem<RankEndlessChallengeComponent, RankEndlessChallengeItemComponent>(playerId, scoreNew);
+                    await self.ResetRankItem<RankEndlessChallengeComponent, RankEndlessChallengeItemComponent>(playerId, scoreNew, killNum);
                     break;
                 default:
                     break;
@@ -69,10 +69,10 @@ namespace ET.Server
             return rankComponent;
         }
 
-        public static async ETTask ResetRankItem<T, TItem>(this RankManagerComponent self, long playerId, long scoreNew) where T : RankComponent where TItem : RankItemComponent, new()
+        public static async ETTask ResetRankItem<T, TItem>(this RankManagerComponent self, long playerId, long scoreNew, int killNum) where T : RankComponent where TItem : RankItemComponent, new()
         {
             T rankComponent = self.GetComponent<T>();
-            await rankComponent.ResetRankItem<TItem>(playerId, scoreNew);
+            await rankComponent.ResetRankItem<TItem>(playerId, scoreNew, killNum);
         }
 
     }

@@ -14,7 +14,7 @@ namespace ET.Client
         {
             Session session = self.GetParent<Session>();
             long instanceId = self.InstanceId;
-            
+
             while (true)
             {
                 if (self.InstanceId != instanceId)
@@ -25,7 +25,7 @@ namespace ET.Client
                 long time1 = TimeHelper.ClientNow();
                 try
                 {
-                    G2C_Ping response = await session.Call(new C2G_Ping()) as G2C_Ping;
+                    G2C_Ping response = await session.Call(new C2G_Ping(), false) as G2C_Ping;
 
                     if (self.InstanceId != instanceId)
                     {
@@ -34,10 +34,10 @@ namespace ET.Client
 
                     long time2 = TimeHelper.ClientNow();
                     self.Ping = time2 - time1;
-                    
+
                     TimeInfo.Instance.ServerMinusClientTime = response.Time + (time2 - time1) / 2 - time2;
 
-                    await TimerComponent.Instance.WaitAsync(2000);
+                    await TimerComponent.Instance.WaitAsync(ET.ConstValue.PingTime);
                 }
                 catch (RpcException e)
                 {

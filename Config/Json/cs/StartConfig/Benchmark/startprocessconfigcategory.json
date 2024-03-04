@@ -13,5 +13,10 @@
     "Id": 3,
     "MachineId": 1,
     "InnerPort": 20103
+  },
+  {
+    "Id": 4,
+    "MachineId": 1,
+    "InnerPort": 20104
   }
 ]

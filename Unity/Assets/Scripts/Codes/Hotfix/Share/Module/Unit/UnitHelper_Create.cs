@@ -388,7 +388,8 @@ namespace ET.Ability
             UnitPropertyCfg unitPropertyCfg = UnitPropertyCfgCategory.Instance.Get(propertyType, unitLevel);
             if (unitPropertyCfg == null)
             {
-                Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null [{propertyType}][{unitLevel}]");
+                Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null propertyType=[{propertyType}] unitLevel=[{unitLevel}] ForceSet unitLevel=1");
+                SetUnitNumeric(numericComponent, propertyType, 1);
                 return;
             }
             numericComponent.SetAsInt(NumericType.MaxHpBase, unitPropertyCfg.HpBase);

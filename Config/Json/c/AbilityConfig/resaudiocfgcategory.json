@@ -1,5 +1,11 @@
 [
   {
+    "id": "ResAudio_BossAppear",
+    "name": "",
+    "desc": "boss出场",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/BossAppear.wav"
+  },
+  {
     "id": "ResAudio_1",
     "name": "",
     "desc": "子弹发出声音1",
@@ -15,13 +21,13 @@
     "id": "ResAudio_solo",
     "name": "",
     "desc": "子弹发出声音1",
-    "res_name": "Assets/ResAB/Audio/AudioBattle/solo.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
   },
   {
     "id": "ResAudio_aoe",
     "name": "",
     "desc": "子弹发出声音1",
-    "res_name": "Assets/ResAB/Audio/AudioBattle/aoe.wav"
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
   },
   {
     "id": "ResAudio_line",
@@ -38,8 +44,8 @@
   {
     "id": "ResAudio_UI_ready_go",
     "name": "",
-    "desc": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/ready_go.mp3"
+    "desc": "游戏开始",
+    "res_name": "Assets/ResAB/Audio/AudioUI/begin.wav"
   },
   {
     "id": "ResAudio_UI_victory",
@@ -57,54 +63,1020 @@
     "id": "ResAudio_UI_Click",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/click.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/click.wav"
   },
   {
     "id": "ResAudio_UI_Back",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/back.ogg"
+    "res_name": "Assets/ResAB/Audio/AudioUI/back.wav"
   },
   {
     "id": "ResAudio_UI_Confirm",
     "name": "",
-    "desc": "",
-    "res_name": "Assets/ResAB/Audio/AudioUI/confirm.mp3"
+    "desc": "操作",
+    "res_name": "Assets/ResAB/Audio/AudioUI/click.wav"
   },
   {
     "id": "ResAudio_TowerPush",
     "name": "",
     "desc": "点击放置炮塔",
-    "res_name": "Assets/ResAB/Audio/AudioUI/set.mp3"
+    "res_name": "Assets/ResAB/Audio/AudioUI/place.wav"
+  },
+  {
+    "id": "ResAudio_UI_Pop-up",
+    "name": "",
+    "desc": "提示弹窗",
+    "res_name": "Assets/ResAB/Audio/AudioUI/Pop-up.wav"
+  },
+  {
+    "id": "ResAudio_UI_Join",
+    "name": "",
+    "desc": "成员加入房间",
+    "res_name": "Assets/ResAB/Audio/AudioUI/join.wav"
+  },
+  {
+    "id": "ResAudio_UI_Quit",
+    "name": "",
+    "desc": "成员退出房间",
+    "res_name": "Assets/ResAB/Audio/AudioUI/quit.wav"
+  },
+  {
+    "id": "ResAudio_UI_Reward",
+    "name": "",
+    "desc": "奖励获取",
+    "res_name": "Assets/ResAB/Audio/AudioUI/reward.wav"
+  },
+  {
+    "id": "ResAudio_UI_Scan",
+    "name": "",
+    "desc": "扫描界面",
+    "res_name": "Assets/ResAB/Audio/AudioUI/scan.wav"
+  },
+  {
+    "id": "ResAudio_UI_Upgradation",
+    "name": "",
+    "desc": "防御塔升级",
+    "res_name": "Assets/ResAB/Audio/AudioUI/upgradation.wav"
+  },
+  {
+    "id": "ResAudio_UI_Recovery",
+    "name": "",
+    "desc": "防御塔回收",
+    "res_name": "Assets/ResAB/Audio/AudioUI/recovery.wav"
+  },
+  {
+    "id": "ResAudio_UI_Buy",
+    "name": "",
+    "desc": "买塔",
+    "res_name": "Assets/ResAB/Audio/AudioUI/buy.wav"
+  },
+  {
+    "id": "ResAudio_UI_Sell",
+    "name": "",
+    "desc": "卖塔",
+    "res_name": "Assets/ResAB/Audio/AudioUI/sell.wav"
+  },
+  {
+    "id": "ResAudio_UI_Victory",
+    "name": "",
+    "desc": "波次胜利",
+    "res_name": "Assets/ResAB/Audio/AudioUI/victory_1.wav"
+  },
+  {
+    "id": "ResAudio_UI_Attacked",
+    "name": "",
+    "desc": "大本营被攻击",
+    "res_name": "Assets/ResAB/Audio/AudioUI/attacked.wav"
+  },
+  {
+    "id": "ResAudio_UI_Forbidden",
+    "name": "",
+    "desc": "无法操作",
+    "res_name": "Assets/ResAB/Audio/AudioUI/forbidden.wav"
+  },
+  {
+    "id": "ResAudio_UI_Battle_forbidden",
+    "name": "",
+    "desc": "关卡内无法操作",
+    "res_name": "Assets/ResAB/Audio/AudioUI/battle_forbidden.wav"
   },
   {
     "id": "ResAudio_Music_login",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/Music/login.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/login.wav"
   },
   {
     "id": "ResAudio_Music_main",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/Music/main.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/main.wav"
   },
   {
     "id": "ResAudio_Music_game1",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/Music/game1.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game1.wav"
   },
   {
     "id": "ResAudio_Music_game2",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/Music/game2.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game2.wav"
   },
   {
     "id": "ResAudio_Music_game3",
     "name": "",
     "desc": "",
-    "res_name": "Assets/ResAB/Audio/Music/game3.mp3"
+    "res_name": "Assets/ResAB/Audio/Music/game3.wav"
+  },
+  {
+    "id": "ResAudio_Music_ARStarted",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/Audio/Music/ar.wav"
+  },
+  {
+    "id": "ResAudio_Music_Finish",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/Audio/Music/finish.wav"
+  },
+  {
+    "id": "ResAudio_Music_Win",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/Audio/Music/win.wav"
+  },
+  {
+    "id": "ResAudio_Music_Fail",
+    "name": "",
+    "desc": "",
+    "res_name": "Assets/ResAB/Audio/Music/fail.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon1",
+    "name": "",
+    "desc": "龙击炮开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon2",
+    "name": "",
+    "desc": "龙击炮开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDragon3",
+    "name": "",
+    "desc": "龙击炮开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce1",
+    "name": "",
+    "desc": "冰魔塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce2",
+    "name": "",
+    "desc": "冰魔塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIce3",
+    "name": "",
+    "desc": "冰魔塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow1",
+    "name": "",
+    "desc": "弩箭塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow2",
+    "name": "",
+    "desc": "弩箭塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerArrow3",
+    "name": "",
+    "desc": "弩箭塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon1",
+    "name": "",
+    "desc": "加农炮开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon2",
+    "name": "",
+    "desc": "加农炮开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCannon3",
+    "name": "",
+    "desc": "加农炮开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame1",
+    "name": "",
+    "desc": "火焰塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame2",
+    "name": "",
+    "desc": "火焰塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerFlame3",
+    "name": "",
+    "desc": "火焰塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist1",
+    "name": "",
+    "desc": "毒雾塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist2",
+    "name": "",
+    "desc": "毒雾塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerToxMist3",
+    "name": "",
+    "desc": "毒雾塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder1",
+    "name": "",
+    "desc": "雷电塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder2",
+    "name": "",
+    "desc": "雷电塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThunder3",
+    "name": "",
+    "desc": "雷电塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift1",
+    "name": "",
+    "desc": "加速塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift2",
+    "name": "",
+    "desc": "加速塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerTimeSwift3",
+    "name": "",
+    "desc": "加速塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb1",
+    "name": "",
+    "desc": "奥术天球开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb2",
+    "name": "",
+    "desc": "奥术天球开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerMystOrb3",
+    "name": "",
+    "desc": "奥术天球开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy1",
+    "name": "",
+    "desc": "炼金塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy2",
+    "name": "",
+    "desc": "炼金塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAlchemy3",
+    "name": "",
+    "desc": "炼金塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio1",
+    "name": "",
+    "desc": "毒蝎塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio2",
+    "name": "",
+    "desc": "毒蝎塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerScorpio3",
+    "name": "",
+    "desc": "毒蝎塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker1",
+    "name": "",
+    "desc": "破甲诅咒开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker2",
+    "name": "",
+    "desc": "破甲诅咒开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerBreaker3",
+    "name": "",
+    "desc": "破甲诅咒开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter1",
+    "name": "",
+    "desc": "附魔塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter2",
+    "name": "",
+    "desc": "附魔塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerEnchanter3",
+    "name": "",
+    "desc": "附魔塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow1",
+    "name": "",
+    "desc": "冰刺箭开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow2",
+    "name": "",
+    "desc": "冰刺箭开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerIceArrow3",
+    "name": "",
+    "desc": "冰刺箭开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb1",
+    "name": "",
+    "desc": "水球塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb2",
+    "name": "",
+    "desc": "水球塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerDizzyOrb3",
+    "name": "",
+    "desc": "水球塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla1",
+    "name": "",
+    "desc": "电磁塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla2",
+    "name": "",
+    "desc": "电磁塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerTesla3",
+    "name": "",
+    "desc": "电磁塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem1",
+    "name": "",
+    "desc": "暴击图腾开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem2",
+    "name": "",
+    "desc": "暴击图腾开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerCritTotem3",
+    "name": "",
+    "desc": "暴击图腾开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire1",
+    "name": "",
+    "desc": "奥术精灵开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire2",
+    "name": "",
+    "desc": "奥术精灵开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerHellFire3",
+    "name": "",
+    "desc": "奥术精灵开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge1",
+    "name": "",
+    "desc": "连击斧开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge2",
+    "name": "",
+    "desc": "连击斧开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerOvercharge3",
+    "name": "",
+    "desc": "连击斧开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse1",
+    "name": "",
+    "desc": "灾厄塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse2",
+    "name": "",
+    "desc": "灾厄塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerAmplifyCurse3",
+    "name": "",
+    "desc": "灾厄塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief1",
+    "name": "",
+    "desc": "窃贼哥布林开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief2",
+    "name": "",
+    "desc": "窃贼哥布林开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerThief3",
+    "name": "",
+    "desc": "窃贼哥布林开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_FireTowerSting1",
+    "name": "",
+    "desc": "鱼刺塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerSting2",
+    "name": "",
+    "desc": "鱼刺塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerSting3",
+    "name": "",
+    "desc": "鱼刺塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket1",
+    "name": "",
+    "desc": "火箭塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket2",
+    "name": "",
+    "desc": "火箭塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerRocket3",
+    "name": "",
+    "desc": "火箭塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb1",
+    "name": "",
+    "desc": "火球塔开火音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb2",
+    "name": "",
+    "desc": "火球塔开火音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_FireTowerFireOrb3",
+    "name": "",
+    "desc": "火球塔开火音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/FireTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow1",
+    "name": "",
+    "desc": "弩箭塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow2",
+    "name": "",
+    "desc": "弩箭塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerArrow3",
+    "name": "",
+    "desc": "弩箭塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon1",
+    "name": "",
+    "desc": "加农炮命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon2",
+    "name": "",
+    "desc": "加农炮命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCannon3",
+    "name": "",
+    "desc": "加农炮命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerCannon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame1",
+    "name": "",
+    "desc": "火焰塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame2",
+    "name": "",
+    "desc": "火焰塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerFlame3",
+    "name": "",
+    "desc": "火焰塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist1",
+    "name": "",
+    "desc": "毒雾塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist2",
+    "name": "",
+    "desc": "毒雾塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerToxMist3",
+    "name": "",
+    "desc": "毒雾塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon1",
+    "name": "",
+    "desc": "龙击炮命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon2",
+    "name": "",
+    "desc": "龙击炮命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDragon3",
+    "name": "",
+    "desc": "龙击炮命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDragon.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder1",
+    "name": "",
+    "desc": "雷电塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder2",
+    "name": "",
+    "desc": "雷电塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThunder3",
+    "name": "",
+    "desc": "雷电塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThunder.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce1",
+    "name": "",
+    "desc": "冰魔塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce2",
+    "name": "",
+    "desc": "冰魔塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIce3",
+    "name": "",
+    "desc": "冰魔塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIce.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift1",
+    "name": "",
+    "desc": "加速塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift2",
+    "name": "",
+    "desc": "加速塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerTimeSwift3",
+    "name": "",
+    "desc": "加速塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb1",
+    "name": "",
+    "desc": "奥术天球命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb2",
+    "name": "",
+    "desc": "奥术天球命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerMystOrb3",
+    "name": "",
+    "desc": "奥术天球命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerMystOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy1",
+    "name": "",
+    "desc": "炼金塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy2",
+    "name": "",
+    "desc": "炼金塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAlchemy3",
+    "name": "",
+    "desc": "炼金塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio1",
+    "name": "",
+    "desc": "毒蝎塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio2",
+    "name": "",
+    "desc": "毒蝎塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerScorpio3",
+    "name": "",
+    "desc": "毒蝎塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerScorpio.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker1",
+    "name": "",
+    "desc": "破甲诅咒命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker2",
+    "name": "",
+    "desc": "破甲诅咒命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerBreaker3",
+    "name": "",
+    "desc": "破甲诅咒命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerBreaker.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter1",
+    "name": "",
+    "desc": "附魔塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter2",
+    "name": "",
+    "desc": "附魔塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerEnchanter3",
+    "name": "",
+    "desc": "附魔塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow1",
+    "name": "",
+    "desc": "冰刺箭命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow2",
+    "name": "",
+    "desc": "冰刺箭命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerIceArrow3",
+    "name": "",
+    "desc": "冰刺箭命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerIceArrow.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb1",
+    "name": "",
+    "desc": "水球塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb2",
+    "name": "",
+    "desc": "水球塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerDizzyOrb3",
+    "name": "",
+    "desc": "水球塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerDizzyOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla1",
+    "name": "",
+    "desc": "电磁塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla2",
+    "name": "",
+    "desc": "电磁塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerTesla3",
+    "name": "",
+    "desc": "电磁塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerTesla.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem1",
+    "name": "",
+    "desc": "暴击图腾命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem2",
+    "name": "",
+    "desc": "暴击图腾命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerCritTotem3",
+    "name": "",
+    "desc": "暴击图腾命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire1",
+    "name": "",
+    "desc": "奥术精灵命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire2",
+    "name": "",
+    "desc": "奥术精灵命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerHellFire3",
+    "name": "",
+    "desc": "奥术精灵命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerHellFire.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge1",
+    "name": "",
+    "desc": "连击斧命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge2",
+    "name": "",
+    "desc": "连击斧命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerOvercharge3",
+    "name": "",
+    "desc": "连击斧命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse1",
+    "name": "",
+    "desc": "灾厄塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse2",
+    "name": "",
+    "desc": "灾厄塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerAmplifyCurse3",
+    "name": "",
+    "desc": "灾厄塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/none.m4a"
+  },
+  {
+    "id": "ResAudio_HitTowerThief1",
+    "name": "",
+    "desc": "窃贼哥布林命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThief2",
+    "name": "",
+    "desc": "窃贼哥布林命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerThief3",
+    "name": "",
+    "desc": "窃贼哥布林命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerThief.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting1",
+    "name": "",
+    "desc": "鱼刺塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting2",
+    "name": "",
+    "desc": "鱼刺塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerSting3",
+    "name": "",
+    "desc": "鱼刺塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerSting.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket1",
+    "name": "",
+    "desc": "火箭塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket2",
+    "name": "",
+    "desc": "火箭塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerRocket3",
+    "name": "",
+    "desc": "火箭塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerRocket.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb1",
+    "name": "",
+    "desc": "火球塔命中音效1",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb2",
+    "name": "",
+    "desc": "火球塔命中音效2",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
+  },
+  {
+    "id": "ResAudio_HitTowerFireOrb3",
+    "name": "",
+    "desc": "火球塔命中音效3",
+    "res_name": "Assets/ResAB/Audio/AudioBattle/HitTowerFireOrb.wav"
   }
 ]

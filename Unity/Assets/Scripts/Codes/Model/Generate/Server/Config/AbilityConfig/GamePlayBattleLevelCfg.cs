@@ -23,7 +23,6 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
         GamePlayMode = GamePlayModeBase.DeserializeGamePlayModeBase(_buf);
         TeamMode = TeamModeBase.DeserializeTeamModeBase(_buf);
         SceneMap = _buf.ReadString();
-        MapScale = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);PlayerBirthPosList = new System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector3>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<System.Numerics.Vector3> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<System.Numerics.Vector3>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { System.Numerics.Vector3 _e1;  _e1 = _buf.ReadVector3(); _e0.Add(_e1);}} PlayerBirthPosList.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterCallPosList = new System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector3>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<System.Numerics.Vector3> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<System.Numerics.Vector3>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { System.Numerics.Vector3 _e1;  _e1 = _buf.ReadVector3(); _e0.Add(_e1);}} MonsterCallPosList.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MusicList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MusicList.Add(_e0);}}
@@ -57,10 +56,6 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
     /// 地图场景名称
     /// </summary>
     public string SceneMap { get; private set; }
-    /// <summary>
-    /// 对于AR，需要放大多少倍地形
-    /// </summary>
-    public float MapScale { get; private set; }
     /// <summary>
     /// 玩家出生点
     /// </summary>
@@ -102,7 +97,6 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
         + "GamePlayMode:" + GamePlayMode + ","
         + "TeamMode:" + TeamMode + ","
         + "SceneMap:" + SceneMap + ","
-        + "MapScale:" + MapScale + ","
         + "PlayerBirthPosList:" + Bright.Common.StringUtil.CollectionToString(PlayerBirthPosList) + ","
         + "MonsterCallPosList:" + Bright.Common.StringUtil.CollectionToString(MonsterCallPosList) + ","
         + "MusicList:" + Bright.Common.StringUtil.CollectionToString(MusicList) + ","

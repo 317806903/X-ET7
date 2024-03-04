@@ -7,10 +7,11 @@
     "ResGameVersion": "v1.0",
     "isChgServer": true,
     "RouterHttpHost": "192.168.10.58",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "ZpbOnlyRes",
@@ -23,7 +24,8 @@
     "RouterHttpPort": 0,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "ZpbOnlyServ",
@@ -33,10 +35,11 @@
     "ResGameVersion": "",
     "isChgServer": true,
     "RouterHttpHost": "192.168.10.58",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "148",
@@ -46,10 +49,11 @@
     "ResGameVersion": "v1.0",
     "isChgServer": true,
     "RouterHttpHost": "192.168.10.148",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "CN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "148OnlyRes",
@@ -62,7 +66,8 @@
     "RouterHttpPort": 0,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "148OnlyServ",
@@ -72,10 +77,11 @@
     "ResGameVersion": "",
     "isChgServer": true,
     "RouterHttpHost": "192.168.10.148",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "CN",
@@ -85,10 +91,11 @@
     "ResGameVersion": "v1.0",
     "isChgServer": true,
     "RouterHttpHost": "8.134.156.170",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "CN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "CNOnlyRes",
@@ -101,7 +108,8 @@
     "RouterHttpPort": 0,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "CNOnlyServ",
@@ -111,10 +119,11 @@
     "ResGameVersion": "",
     "isChgServer": true,
     "RouterHttpHost": "8.134.156.170",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "EN",
@@ -124,10 +133,11 @@
     "ResGameVersion": "v1.0",
     "isChgServer": true,
     "RouterHttpHost": "34.225.211.137",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "ENOnlyRes",
@@ -140,7 +150,8 @@
     "RouterHttpPort": 0,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   },
   {
     "id": "ENOnlyServ",
@@ -150,9 +161,10 @@
     "ResGameVersion": "",
     "isChgServer": true,
     "RouterHttpHost": "34.225.211.137",
-    "RouterHttpPort": 30300,
+    "RouterHttpPort": 3478,
     "areaType": "EN",
     "IsShowDebugMode": true,
-    "IsShowEditorLoginMode": true
+    "IsShowEditorLoginMode": true,
+    "IsNeedSendEventLog": false
   }
 ]

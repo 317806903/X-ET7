@@ -9,6 +9,9 @@ namespace ET.Server
 		{
 			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
 
+			long playerId = observerUnit.Id;
+			await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);
+
 			await ETTask.CompletedTask;
 		}
     }

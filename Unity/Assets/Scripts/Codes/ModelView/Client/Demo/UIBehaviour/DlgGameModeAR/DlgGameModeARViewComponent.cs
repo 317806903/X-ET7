@@ -568,6 +568,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_RedDotImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_RedDotImage == null )
+				{
+					this.m_E_RedDotImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_Avatar/E_RedDot");
+				}
+				return this.m_E_RedDotImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_TutorialButton
 		{
 			get
@@ -756,6 +773,7 @@ namespace ET.Client
 			this.m_E_AvatarImage = null;
 			this.m_E_PlayerIcoImage = null;
 			this.m_E_PlayerNameTextMeshProUGUI = null;
+			this.m_E_RedDotImage = null;
 			this.m_E_TutorialButton = null;
 			this.m_E_TutorialLockButton = null;
 			this.m_E_CardsButton = null;
@@ -801,6 +819,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_AvatarImage = null;
 		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
 		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_RedDotImage = null;
 		private UnityEngine.UI.Button m_E_TutorialButton = null;
 		private UnityEngine.UI.Button m_E_TutorialLockButton = null;
 		private UnityEngine.UI.Button m_E_CardsButton = null;

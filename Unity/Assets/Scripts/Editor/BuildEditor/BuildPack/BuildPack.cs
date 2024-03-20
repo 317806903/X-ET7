@@ -10,6 +10,7 @@ namespace ET
     public enum PackName
     {
         Local,
+        InNetGDC,
         InNet148,
         InNet148Release,
         InNetZpb,
@@ -51,6 +52,21 @@ namespace ET
             ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_Local", () =>
             {
                 BuildPackInternal(buildTarget, PackName.Local).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_Android_InNetGDC", false, 301)]
+        public static async ETTask BuildPack_Android_InNetGDC()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNetGDC", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNetGDC", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNetGDC).Coroutine();
             });
         }
 
@@ -187,6 +203,21 @@ namespace ET
             ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_ExternalTest_AAB", () =>
             {
                 BuildPackInternal(buildTarget, PackName.ExternalTest_AAB).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_IOS_InNetGDC", false, 321)]
+        public static async ETTask BuildPack_IOS_InNetGDC()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNetGDC", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNetGDC", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNetGDC).Coroutine();
             });
         }
 
@@ -397,6 +428,24 @@ namespace ET
                 ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"Local_RealityGuard";
                 packageName = $"com.dm.ARGameLocal";
+            }
+            else if(packName == PackName.InNetGDC)
+            {
+                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.RouterHttpHost = "192.168.31.238";
+                ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.areaType = AreaType.GDC;
+                productName = $"GDC_RealityGuard";
+                packageName = $"com.dm.ARGameInNetGDC";
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.InNet148)
             {

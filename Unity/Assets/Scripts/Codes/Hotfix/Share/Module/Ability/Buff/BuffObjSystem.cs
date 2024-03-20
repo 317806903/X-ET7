@@ -179,7 +179,8 @@ namespace ET.Ability
         {
             float timePassed = fixedDeltaTime;
             if (self.permanent == false) self.duration -= timePassed;
-            float lastTimeElapsed = self.timeElapsed;
+            float lastTimeElapsed = self.timeElapsedReal;
+            self.timeElapsedReal += timePassed;
             self.timeElapsed += timePassed;
 
             int tickCount = math.min(self.model.TickTime.Count, 3);
@@ -188,7 +189,7 @@ namespace ET.Ability
                 if (self.model.TickTime[i] > 0)
                 {
                     int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
-                    int newCount = (int)(self.timeElapsed / self.model.TickTime[i]);
+                    int newCount = (int)(self.timeElapsedReal / self.model.TickTime[i]);
                     while (newCount > lastCount)
                     {
                         lastCount++;
@@ -239,7 +240,7 @@ namespace ET.Ability
 
             (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), buffActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
 
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
         }
 
         public static bool ChkNeedRemove(this BuffObj self)

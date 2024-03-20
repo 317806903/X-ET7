@@ -43,7 +43,7 @@ namespace ET
                 return;
             }
 
-            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false, true);
+            List<Unit> hostileForces = Ability.UnitHelper.GetUnitListBySelectObjectType(unit, SelectObjectType.Hostiles, true);
             Unit unitPlayer = null;
             float nearPlayerDisSq = 0;
             foreach (Unit hostileForce in hostileForces)

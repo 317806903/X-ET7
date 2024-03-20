@@ -53,10 +53,10 @@ namespace ET
             return rankComponent.GetMyRankShow(playerId);
         }
 
-        public static (ulong, int) GetRankedMoreThan(this RankManagerComponent self, RankType rankType, long score)
+        public static (ulong, int) GetRankedMoreThan(this RankManagerComponent self, RankType rankType, long score, long playerId)
         {
             RankComponent rankComponent = self.GetRank(rankType);
-            return rankComponent.GetRankedMoreThan(score);
+            return rankComponent.GetRankedMoreThan(score, playerId);
         }
 
     }

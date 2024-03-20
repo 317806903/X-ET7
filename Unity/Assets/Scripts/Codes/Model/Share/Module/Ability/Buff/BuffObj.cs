@@ -56,9 +56,14 @@ namespace ET.Ability
         public long casterUnitId;
 
         ///<summary>
-        ///buff已经存在了多少时间了，单位：秒
+        ///buff已经存在了多少时间了 (在刷新时间时会被重置)，单位：秒
         ///</summary>
         public float timeElapsed = 0.00f;
+
+        ///<summary>
+        ///buff已经存在了多少时间了 (不会被重置)，单位：秒
+        ///</summary>
+        public float timeElapsedReal = 0.00f;
 
         ///<summary>
         ///buff执行了多少次onTick了，如果不会执行onTick，那将永远是0

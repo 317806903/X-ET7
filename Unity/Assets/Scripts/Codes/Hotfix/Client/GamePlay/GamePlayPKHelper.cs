@@ -4,12 +4,13 @@ namespace ET.Client
 {
     public static class GamePlayPKHelper
 	{
-		public static async ETTask SendCallTower(Scene scene, string towerUnitCfgId, float3 position)
+		public static async ETTask SendCallTower(Scene scene, string towerUnitCfgId, float3 position, string createActionIds)
 		{
 			C2M_CallTower _C2M_CallTower = new ()
 			{
 				TowerUnitCfgId = towerUnitCfgId,
 				Position = position,
+				CreateActionIds = createActionIds.Trim(),
 			};
 			M2C_CallTower _M2C_CallTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_CallTower) as M2C_CallTower;
 
@@ -22,13 +23,14 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask SendCallMonster(Scene scene, string monsterUnitCfgId, float3 position, int count)
+		public static async ETTask SendCallMonster(Scene scene, string monsterUnitCfgId, float3 position, int count, string createActionIds)
 		{
 			C2M_CallMonster _C2M_CallMonster = new ()
 			{
 				MonsterUnitCfgId = monsterUnitCfgId,
 				Position = position,
 				Count = count,
+				CreateActionIds = createActionIds.Trim(),
 			};
 			M2C_CallMonster _M2C_CallMonster = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_CallMonster) as M2C_CallMonster;
 

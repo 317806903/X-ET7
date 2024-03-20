@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using ET.Ability.Client;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -76,32 +77,33 @@ namespace ET.Client
             }
             UnitCfg unitCfg = myUnit.model;
             int count = unitCfg.SkillList.Count;
+            List<string> skillList = unitCfg.SkillList.Keys.ToList();
             if (count > 0)
             {
                 self.View.EButton_Skill1Button.AddListener(() =>
                 {
-                    SkillHelper.CastSkill(self.DomainScene(), unitCfg.SkillList[0]);
+                    SkillHelper.CastSkill(self.DomainScene(), skillList[0]).Coroutine();
                 });
             }
             if (count > 1)
             {
                 self.View.EButton_Skill2Button.AddListener(() =>
                 {
-                    SkillHelper.CastSkill(self.DomainScene(), unitCfg.SkillList[1]);
+                    SkillHelper.CastSkill(self.DomainScene(), skillList[1]).Coroutine();
                 });
             }
             if (count > 2)
             {
                 self.View.EButton_Skill3Button.AddListener(() =>
                 {
-                    SkillHelper.CastSkill(self.DomainScene(), unitCfg.SkillList[2]);
+                    SkillHelper.CastSkill(self.DomainScene(), skillList[2]).Coroutine();
                 });
             }
             if (count > 3)
             {
                 self.View.EButton_Skill4Button.AddListener(() =>
                 {
-                    SkillHelper.CastSkill(self.DomainScene(), unitCfg.SkillList[3]);
+                    SkillHelper.CastSkill(self.DomainScene(), skillList[3]).Coroutine();
                 });
             }
 
@@ -182,6 +184,7 @@ namespace ET.Client
                 {
                     battleDragItemType = BattleDragItemType.PKTower,
                     battleDragItemParam = itemCfgId,
+                    createActionIds = self.View.E_InputFieldCreateActionTowerTMP_InputField.text,
                     callBack = (scene) =>
                     {
                     },
@@ -218,6 +221,7 @@ namespace ET.Client
                     battleDragItemType = BattleDragItemType.PKMonster,
                     battleDragItemParam = monsterCfg.Id,
                     countOnce = int.Parse(self.View.E_InputFieldTMP_InputField.text),
+                    createActionIds = self.View.E_InputFieldCreateActionTMP_InputField.text,
                     callBack = (scene) =>
                     {
                     },

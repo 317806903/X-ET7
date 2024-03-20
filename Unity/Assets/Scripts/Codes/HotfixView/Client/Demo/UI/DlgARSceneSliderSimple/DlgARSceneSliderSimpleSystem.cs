@@ -70,10 +70,7 @@ namespace ET.Client
 
 			self.showPrefabCfgList = new()
 			{
-				(new float2(0, 0), "Unit_HeadQuarterPreview"),
-				(new float2(0, -3), "Unit_Dan1Preview"),
-				(new float2(0, -5), "Unit_Dan2Preview"),
-				(new float2(0, -8), "Unit_ZhiZhu3Preview"),
+				(new float2(0, 0), "Unit_HeadQuarterPreview")
 
 			};
 			self.showPrefabList = new();

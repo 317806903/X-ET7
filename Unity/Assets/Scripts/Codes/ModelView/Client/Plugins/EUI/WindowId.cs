@@ -42,5 +42,8 @@ namespace ET.Client
 		WindowID_ARSceneSliderSimple,
 		WindowID_CommonTipNode,
 		WindowID_ARRoomPVE,
+		WindowID_DescTips,
+		WindowID_GameJudgeChoose,
+		WindowID_VideoShowSmall,
 	}
 }

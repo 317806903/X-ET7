@@ -70,6 +70,31 @@ namespace ET
             }
         }
 
+        public static void SetAsFloatToBase(this NumericComponent self, int numericType, float valueNew)
+        {
+            if (numericType >= NumericType.Max)
+            {
+                return;
+            }
+
+            long value = (long)(valueNew * 10000);
+
+            long oldValue = self.GetByKey(numericType);
+            if (oldValue == value)
+            {
+                return;
+            }
+
+            self.UpdateBaseByFinal(numericType, value);
+
+            Unit unit = self.GetParent<Unit>();
+            if (unit != null)
+            {
+                EventSystem.Instance.Publish(self.DomainScene(),
+                    new EventType.NumbericChange() { Unit = unit, New = value, Old = oldValue, NumericType = numericType });
+            }
+        }
+
         public static long GetByKey(this NumericComponent self, int key)
         {
             long value = 0;
@@ -92,6 +117,56 @@ namespace ET
                     self.GetAsFloat(finalAdd)) *
                 math.max(0, 100 + self.GetAsFloat(finalPct)) * 0.01f + 0.0001f) * 10000);
             self.Insert(final, result, isPublicEvent);
+        }
+
+        public static void UpdateBaseByFinal(this NumericComponent self, int numericType, long value)
+        {
+            int final = numericType;
+            int bas = final * 10 + 1;
+            int add = final * 10 + 2;
+            int pct = final * 10 + 3;
+            int finalAdd = final * 10 + 4;
+            int finalPct = final * 10 + 5;
+
+            long finalLong = self.GetByKey(final);
+            long basLong = self.GetByKey(bas);
+            if (basLong.Equals(finalLong))
+            {
+                self.NumericDic[bas] = value;
+                self.NumericDic[final] = value;
+                return;
+            }
+            else
+            {
+                self.NumericDic[final] = value;
+                finalLong = self.GetByKey(final);
+            }
+            long addLong = self.GetByKey(add);
+            long pctLong = self.GetByKey(pct);
+            long finalAddLong = self.GetByKey(finalAdd);
+            long finalPctLong = self.GetByKey(finalPct);
+
+            float finalValue = self.GetAsFloat(final);
+            float basValue = self.GetAsFloat(bas);
+            float addValue = self.GetAsFloat(add);
+            float pctValue = self.GetAsFloat(pct);
+            float finalAddValue = self.GetAsFloat(finalAdd);
+            float finalPctValue = self.GetAsFloat(finalPct);
+
+            // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
+            // base = (final * 100 / (100 + finalPct) - finalAdd) * 100 / (100 + pct) - add
+            var tmp = (finalValue * 100 / (100 + finalPctValue) - finalAddValue) * 100 / (100 + pctValue) - addValue;
+            self.NumericDic[bas] = (long)(tmp * 10000);
+
+            // // base = (final * 100 / (100 + finalPct) - finalAdd) * 100 / (100 + pct) - add
+            // // base * 1w = (final * 1w * 100 / (100 + finalPct) - finalAdd * 1w) * 100 / (100 + pct) - add * 1w
+            // var tmpLong = (finalLong * 100 / (100 + finalPctLong) - finalAddLong) * 100 / (100 + pctLong) - addLong;
+            // self.NumericDic[bas] = tmpLong;
+
+            // long result = (long)((((self.GetAsFloat(bas) + self.GetAsFloat(add)) * math.max(0, 100 + self.GetAsFloat(pct)) * 0.01f +
+            //         self.GetAsFloat(finalAdd)) *
+            //     math.max(0, 100 + self.GetAsFloat(finalPct)) * 0.01f + 0.0001f) * 10000);
+
         }
     }
 

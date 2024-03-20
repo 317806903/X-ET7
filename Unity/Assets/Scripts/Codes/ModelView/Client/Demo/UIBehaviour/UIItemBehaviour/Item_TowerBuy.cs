@@ -331,30 +331,6 @@ namespace ET.Client
 			}
 		}
 
-		public UITextLocalizeMonoView EButton_nameUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EButton_nameUITextLocalizeMonoView == null )
-					{
-						this.m_EButton_nameUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EImage_TowerBuyShow/EButton_name");
-					}
-					return this.m_EButton_nameUITextLocalizeMonoView;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EImage_TowerBuyShow/EButton_name");
-				}
-			}
-		}
-
 		public UnityEngine.UI.Button EButton_SelectButton
 		{
 			get
@@ -787,6 +763,30 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_iconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_E_iconImage == null )
+					{
+						this.m_E_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_icon");
+					}
+					return this.m_E_iconImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_icon");
+				}
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_E_NoneImage = null;
@@ -802,7 +802,6 @@ namespace ET.Client
 			this.m_E_IconStar2Image = null;
 			this.m_E_IconStar3Image = null;
 			this.m_EButton_nameTextMeshProUGUI = null;
-			this.m_EButton_nameUITextLocalizeMonoView = null;
 			this.m_EButton_SelectButton = null;
 			this.m_EButton_SelectImage = null;
 			this.m_EImage_Label1Image = null;
@@ -821,6 +820,7 @@ namespace ET.Client
 			this.m_ELabel_ContentUITextLocalizeMonoView = null;
 			this.m_ELabel_Content12TextMeshProUGUI = null;
 			this.m_EImage_PurchasedImage = null;
+			this.m_E_iconImage = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
@@ -838,7 +838,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_IconStar2Image = null;
 		private UnityEngine.UI.Image m_E_IconStar3Image = null;
 		private TMPro.TextMeshProUGUI m_EButton_nameTextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_EButton_nameUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_EButton_SelectButton = null;
 		private UnityEngine.UI.Image m_EButton_SelectImage = null;
 		private UnityEngine.UI.Image m_EImage_Label1Image = null;
@@ -857,6 +856,7 @@ namespace ET.Client
 		private UITextLocalizeMonoView m_ELabel_ContentUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Content12TextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_PurchasedImage = null;
+		private UnityEngine.UI.Image m_E_iconImage = null;
 		public Transform uiTransform = null;
 	}
 }

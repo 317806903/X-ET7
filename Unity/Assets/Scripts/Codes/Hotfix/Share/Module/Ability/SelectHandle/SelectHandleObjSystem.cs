@@ -36,6 +36,16 @@ namespace ET.Ability
 
         public static void SaveSelectHandle(this SelectHandleObj self, SelectHandle selectHandle, bool isOnce)
         {
+            if (isOnce)
+            {
+                if (self.isOnce == false && self.selectHandle != null && self.selectHandle.isDisposed == false)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"SaveSelectHandle isOnce==true but self.isOnce == false");
+#endif
+                    return;
+                }
+            }
             if (self.selectHandle != null && self.selectHandle.isDisposed == false)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.UnitChgSaveSelectObj()

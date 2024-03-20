@@ -108,6 +108,19 @@ namespace ET.Ability
             await ETTask.CompletedTask;
         }
 
+        public static float3 GetMoveInput_Direction(this MoveOrIdleComponent self)
+        {
+            bool bRet = BuffHelper.ChkCanMoveInput(self.GetUnit());
+            if (bRet)
+            {
+                return self.directionInput;
+            }
+            else
+            {
+                return float3.zero;
+            }
+        }
+
         public static async ETTask _SetMoveInput_TargetPosition(this MoveOrIdleComponent self, float3 targetPositionInput)
         {
             self.moveInputType = MoveInputType.TargetPosition;
@@ -116,6 +129,28 @@ namespace ET.Ability
                 self.targetPositionInput = ET.RecastHelper.GetNearNavmeshPos(self.GetUnit(), targetPositionInput);
             }
             await ETTask.CompletedTask;
+        }
+
+        public static float3 GetMoveInput_TargetPosition(this MoveOrIdleComponent self)
+        {
+            Unit unit = self.GetUnit();
+#if UNITY_EDITOR
+            UnitComponent unitComponent = UnitHelper.GetUnitComponent(unit);
+            if (unitComponent.IsStopActorMove && UnitHelper.ChkIsActor(unit))
+            {
+                return unit.Position;
+            }
+#endif
+
+            bool bRet = BuffHelper.ChkCanMoveInput(unit);
+            if (bRet)
+            {
+                return self.targetPositionInput;
+            }
+            else
+            {
+                return unit.Position;
+            }
         }
 
         public static async ETTask DoIdle(this MoveOrIdleComponent self)

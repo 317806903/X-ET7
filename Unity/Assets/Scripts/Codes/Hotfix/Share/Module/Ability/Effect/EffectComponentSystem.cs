@@ -17,6 +17,7 @@ namespace ET.Ability
             {
                 self.removeList = new();
                 self.recordEffectList = new();
+                self.effectShowType2EffectObjId = new();
             }
         }
 
@@ -29,6 +30,8 @@ namespace ET.Ability
                 self.removeList = null;
                 self.recordEffectList.Clear();
                 self.recordEffectList = null;
+                self.effectShowType2EffectObjId.Clear();
+                self.effectShowType2EffectObjId = null;
             }
         }
 
@@ -64,17 +67,56 @@ namespace ET.Ability
             return true;
         }
 
-        public static EffectObj AddEffect(this EffectComponent self, long unitId, string key, int maxKeyNum, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo, bool isScaleByUnit)
+        public static EffectObj AddEffect(this EffectComponent self, long casterUnitId, ActionCfg_EffectCreate actionCfgCreateEffect, bool isScaleByUnit)
         {
-            EffectObj effectObj = self.AddChild<EffectObj>();
-            effectObj.Init(unitId, key, effectCfgId, playAudioActionId, duration, offSetInfo, isScaleByUnit);
-
-            if (string.IsNullOrEmpty(key) == false)
+            EffectShowType effectShowType = actionCfgCreateEffect.EffectShowType;
+            if (effectShowType == EffectShowType.Send2Receives || effectShowType == EffectShowType.Send2Receive2Receive)
             {
-                self.recordEffectList.Add(key, effectObj.Id);
-            }
+                EffectObj effectObj = null;
+                string effectKey = actionCfgCreateEffect.Key;
+                if (string.IsNullOrEmpty(effectKey))
+                {
+                    effectKey = actionCfgCreateEffect.Id;
+                }
 
-            return effectObj;
+                if (self.recordEffectList.TryGetValue(effectKey, out var effectObjIds))
+                {
+                    if (effectObjIds.Count > 0)
+                    {
+                        foreach (var effectObjId in effectObjIds)
+                        {
+                            effectObj = self.GetChild<EffectObj>(effectObjId);
+                            if (effectObj != null && effectObj.casterUnitId == casterUnitId && effectObj.CfgId == actionCfgCreateEffect.ResEffectId)
+                            {
+                                effectObj.ResetTime(actionCfgCreateEffect);
+                                return effectObj;
+                            }
+                        }
+                    }
+                }
+
+                effectObj = self.AddChild<EffectObj>();
+                effectObj.Init(casterUnitId, actionCfgCreateEffect, isScaleByUnit);
+
+                self.recordEffectList.Add(effectKey, effectObj.Id);
+
+                self.effectShowType2EffectObjId.Add(effectShowType, effectObj.Id);
+
+                return effectObj;
+            }
+            else
+            {
+                EffectObj effectObj = self.AddChild<EffectObj>();
+                effectObj.Init(casterUnitId, actionCfgCreateEffect, isScaleByUnit);
+
+                if (string.IsNullOrEmpty(actionCfgCreateEffect.Key) == false)
+                {
+                    self.recordEffectList.Add(actionCfgCreateEffect.Key, effectObj.Id);
+                }
+
+                self.effectShowType2EffectObjId.Add(effectShowType, effectObj.Id);
+                return effectObj;
+            }
         }
 
         public static void RemoveEffectByKey(this EffectComponent self, string key)
@@ -87,19 +129,47 @@ namespace ET.Ability
                     EffectObj effectObj = self.GetChild<EffectObj>(effectObjId);
                     // self.NoticeClientRemoveEffect(effectObj);
                     // effectObj.Dispose();
+
+                    self.effectShowType2EffectObjId.Remove(effectObj.effectShowType, effectObj.Id);
                     effectObj.WillDestroy();
                 }
                 self.recordEffectList.Remove(key);
             }
         }
 
+        public static List<long> GetEffectObjIdsByEffectShowType(this EffectComponent self, EffectShowType effectShowType)
+        {
+            self.effectShowType2EffectObjId.TryGetValue(effectShowType, out List<long> effectObjList);
+            return effectObjList;
+        }
+
         public static void NoticeClientRemoveEffect(this EffectComponent self, EffectObj effectObj)
         {
+            if (effectObj == null)
+            {
+                return;
+            }
             EventType.SyncUnitEffects _SyncUnitEffects = new()
             {
                 unit = effectObj.GetUnit(),
                 isAddEffect = false,
                 effectObjId = effectObj.Id,
+            };
+            EventSystem.Instance.Publish(self.DomainScene(), _SyncUnitEffects);
+        }
+
+        public static void NoticeClientRefreshEffectObj(this EffectComponent self, EffectObj effectObj)
+        {
+            if (effectObj == null)
+            {
+                return;
+            }
+            EventType.SyncUnitEffects _SyncUnitEffects = new()
+            {
+                unit = effectObj.GetUnit(),
+                isAddEffect = true,
+                effectObj = effectObj,
+                isOnlySelfShow = false,
             };
             EventSystem.Instance.Publish(self.DomainScene(), _SyncUnitEffects);
         }
@@ -138,6 +208,7 @@ namespace ET.Ability
                 {
                     self.recordEffectList.Remove(key, effectObj.Id);
                 }
+                self.effectShowType2EffectObjId.Remove(effectObj.effectShowType, effectObj.Id);
 
                 self.NoticeClientRemoveEffect(effectObj);
                 effectObj.Dispose();

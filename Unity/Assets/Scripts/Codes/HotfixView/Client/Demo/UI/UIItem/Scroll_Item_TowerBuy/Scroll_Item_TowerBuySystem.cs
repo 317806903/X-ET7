@@ -45,5 +45,10 @@ namespace ET.Client
 			self.E_IconStar2Image.gameObject.SetActive(starCount>=2);
 			self.E_IconStar3Image.gameObject.SetActive(starCount>=3);
 		}
+
+		public static void SetCheckMark(this Scroll_Item_TowerBuy self, bool bShow)
+		{
+			self.E_iconImage.SetVisible(bShow);
+		}
 	}
 }

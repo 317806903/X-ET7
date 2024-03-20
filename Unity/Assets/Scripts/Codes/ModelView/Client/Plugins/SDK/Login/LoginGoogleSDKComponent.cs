@@ -11,6 +11,7 @@ namespace ET.Client
     {
         public LoginType loginType;
         public Action finishCallBack;
+        public Action failCallBack;
         public string Token;
         public string Email;
 #if UNITY_ANDROID        

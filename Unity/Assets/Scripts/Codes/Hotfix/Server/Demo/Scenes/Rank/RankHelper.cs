@@ -39,7 +39,7 @@ namespace ET.Server
 	        return rankShowComponent;
         }
 
-        public static async ETTask<(ulong, int)> GetRankedMoreThan(Scene scene, RankType rankType, long score)
+        public static async ETTask<(ulong, int)> GetRankedMoreThan(Scene scene, RankType rankType, long score, long playerId)
         {
 	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
 
@@ -48,7 +48,7 @@ namespace ET.Server
 	        {
 		        await rankManagerComponent.LoadRank(rankType);
 	        }
-	        (ulong rank, int rankedMoreThan) = rankManagerComponent.GetRankedMoreThan(rankType, score);
+	        (ulong rank, int rankedMoreThan) = rankManagerComponent.GetRankedMoreThan(rankType, score, playerId);
 	        return (rank, rankedMoreThan);
         }
 

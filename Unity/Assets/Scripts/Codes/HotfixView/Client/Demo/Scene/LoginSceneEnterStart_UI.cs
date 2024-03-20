@@ -24,8 +24,25 @@ namespace ET.Client
             bool isFromInit = args.isFromInit;
 
             UIManagerHelper.GetUIComponent(clientScene).HideAllShownWindow();
-            await UIManagerHelper.GetUIComponent(clientScene).ShowWindowAsync<DlgLogin>();
 
+            if (isFromInit)
+            {
+                await UIManagerHelper.GetUIComponent(clientScene).ShowWindowAsync<DlgLogin>();
+            }
+            else
+            {
+                UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
+                // 热更流程
+                bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, false);
+                if (bRet == false)
+                {
+                }
+                else
+                {
+                    uiComponent.HideAllShownWindow();
+                    await uiComponent.ShowWindowAsync<DlgLogin>();
+                }
+            }
         }
     }
 }

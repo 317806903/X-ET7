@@ -99,11 +99,11 @@ namespace ET.Client
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
 
 	        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(myPlayerId);
-	        if (playerDataComponent == null)
-	        {
-		        return;
-	        }
+	        // PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(myPlayerId);
+	        // if (playerDataComponent == null)
+	        // {
+		       //  return;
+	        // }
 
 	        Entity entityModel = await _GetPlayerModel(scene, myPlayerId, playerModelType, false);
 	        entityModel.GetComponent<DataCacheClearComponent>().RefreshTime();

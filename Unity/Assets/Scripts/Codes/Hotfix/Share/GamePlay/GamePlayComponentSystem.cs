@@ -52,7 +52,7 @@ namespace ET
 
             await self.DownloadMapRecast();
 
-            self.CreateGamePlayMode();
+            await self.CreateGamePlayMode();
 
             //self.gamePlayStatus = GamePlayStatus.WaitForStart;
 
@@ -81,7 +81,7 @@ namespace ET
 
             await self.DownloadMapRecast();
 
-            self.CreateGamePlayMode();
+            await self.CreateGamePlayMode();
 
             //self.NoticeToClientAll();
             await ETTask.CompletedTask;
@@ -271,44 +271,44 @@ namespace ET
             gamePlayFriendTeamFlagCompent.RecoveryAllAI();
         }
 
-        public static void CreateGamePlayMode(this GamePlayComponent self)
+        public static async ETTask CreateGamePlayMode(this GamePlayComponent self)
         {
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
             if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseNormal gamePlayTowerDefenseNormal)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseNormal.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_Normal);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseNormal.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_Normal);
             }
             else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseTutorialFirst gamePlayTowerDefenseTutorialFirst)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseTutorialFirst.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_TutorialFirst);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseTutorialFirst.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_TutorialFirst);
             }
             else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVE gamePlayTowerDefensePVE)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVE.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVE);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVE.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVE);
             }
             else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVP gamePlayTowerDefensePVP)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVP.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVP);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVP.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVP);
             }
             else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallenge gamePlayTowerDefenseEndlessChallenge)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseEndlessChallenge.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseEndlessChallenge.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge);
             }
             else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPKNormal gamePlayPkNormal)
             {
                 self.gamePlayMode = GamePlayMode.PK;
                 GamePlayPKComponent gamePlayPKComponent = self.AddComponent<GamePlayPKComponent>();
-                gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPkNormal.GamePlayModeCfgId);
+                await gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPkNormal.GamePlayModeCfgId);
             }
         }
 

@@ -85,6 +85,7 @@ namespace ET
                 resConfig.IsNeedSendEventLog = false;
                 //if (resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                 {
+                    resConfig.ResGameVersion = "v1.0";
                     resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
                     EditorUtility.SetDirty(resConfig);
                     AssetDatabase.SaveAssets();

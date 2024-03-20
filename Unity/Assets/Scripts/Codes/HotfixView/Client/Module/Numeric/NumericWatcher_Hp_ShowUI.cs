@@ -10,6 +10,10 @@ namespace ET.Client
 		public void Run(Unit unit, EventType.NumbericChange args)
 		{
 			//Log.Debug($"==NumericWatcher_Hp_ShowUI {args.Unit.Id} {args.NumericType} {args.Old} {args.New}");
+			if (Ability.UnitHelper.ChkIsBullet(unit))
+			{
+				return;
+			}
 			unit.GetComponent<HealthBarComponent>()?.UpdateHealth(false);
 			ShootTextComponent.Instance.ShowShootDamage(unit, (int)((args.Old - args.New)/10000));
 		}

@@ -91,52 +91,95 @@ namespace ET.Client
         #region 热更相关
 
 
-        public static async ETTask<(bool, int)> UpdateVersionAsync(this ResComponent self)
+        public static async ETTask<(int, bool, bool, string, int)> UpdateVersionAsync(this ResComponent self)
         {
+            int errorCode = ErrorCode.ERR_Success;
+            bool bNeedUpdate = false;
+            bool bIsAuditing = false;
+            string auditingRouterHttpHost = "";
+            int auditingRouterHttpPort = 0;
+
             YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
             if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
             {
-                return (false, ErrorCode.ERR_Success);
             }
             else if (resLoadMode == YooAsset.EPlayMode.OfflinePlayMode)
             {
-                return (false, ErrorCode.ERR_Success);
             }
             else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
             {
-            }
-
-            string url = $"{MonoResComponent.GetHostServerVersionURL()}?v={RandomGenerator.RandUInt32()}";
-            Log.Debug($"UpdateVersionAsync url: {url}");
-            try
-            {
-                string versionInfo = await HttpClientHelper.Get(url);
-                versionInfo = versionInfo.Trim();
-                Log.Debug($"UpdateVersionAsync versionInfo: {versionInfo}");
-                // HttpGetRouterResponse httpGetRouterResponse = JsonHelper.FromJson<HttpGetRouterResponse>(routerInfo);
-
-                string [] curVersion = ResConfig.Instance.Version.Split(".");
-                string [] newVersion = versionInfo.Split(".");
-                Log.Debug($"UpdateVersionAsync curVersion[{ResConfig.Instance.Version}], newVersion[{versionInfo}]");
-
-                if (curVersion[0].CompareTo(newVersion[0]) < 0)
+                string url = $"{MonoResComponent.GetHostServerVersionURL()}?v={RandomGenerator.RandUInt32()}";
+                Log.Debug($"UpdateVersionAsync url: {url}");
+                try
                 {
-                    return (true, ErrorCode.ERR_Success);
-                }
-                else if (curVersion[0].CompareTo(newVersion[0]) == 0)
-                {
-                    if (int.Parse(curVersion[1]) < int.Parse(newVersion[1]))
+                    string versionText = await HttpClientHelper.Get(url);
+                    versionText = versionText.Trim();
+                    Log.Debug($"UpdateVersionAsync versionText: {versionText}");
+                    // HttpGetRouterResponse httpGetRouterResponse = JsonHelper.FromJson<HttpGetRouterResponse>(routerInfo);
+
+                    string [] versionInfoList = versionText.Split("|");
+                    string newVersion = versionInfoList[0];
+                    newVersion = newVersion.Trim();
                     {
-                        return (true, ErrorCode.ERR_Success);
+                        string [] curVersionTmp = ResConfig.Instance.Version.Split(".");
+                        string [] newVersionTmp = newVersion.Split(".");
+                        Log.Debug($"UpdateVersionAsync curVersion[{ResConfig.Instance.Version}], newVersion[{newVersion}]");
+
+                        if (curVersionTmp[0].CompareTo(newVersionTmp[0]) < 0)
+                        {
+                            bNeedUpdate = true;
+                        }
+                        else if (curVersionTmp[0].CompareTo(newVersionTmp[0]) == 0)
+                        {
+                            if (int.Parse(curVersionTmp[1]) < int.Parse(newVersionTmp[1]))
+                            {
+                                bNeedUpdate = true;
+                            }
+                        }
+                    }
+                    if (versionInfoList.Length >= 2)
+                    {
+                        string auditingVersions = versionInfoList[1];
+                        auditingVersions = auditingVersions.Trim();
+                        string [] versionInfoList2 = auditingVersions.Split(";");
+                        foreach (string auditingVersion in versionInfoList2)
+                        {
+                            if (string.IsNullOrEmpty(auditingVersion))
+                            {
+                                continue;
+                            }
+                            if (newVersion != auditingVersion && ResConfig.Instance.Version == auditingVersion)
+                            {
+                                bIsAuditing = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (bIsAuditing)
+                    {
+                        if (versionInfoList.Length >= 3)
+                        {
+                            auditingRouterHttpHost = versionInfoList[2];
+                            auditingRouterHttpHost = auditingRouterHttpHost.Trim();
+                        }
+                        if (versionInfoList.Length >= 4)
+                        {
+                            string auditingRouterHttpPortTmp = versionInfoList[3];
+                            auditingRouterHttpPortTmp = auditingRouterHttpPortTmp.Trim();
+                            auditingRouterHttpPort = int.Parse(auditingRouterHttpPortTmp);
+                        }
                     }
                 }
-                return (false, ErrorCode.ERR_Success);
+                catch (Exception e)
+                {
+                    Log.Error($"UpdateVersionAsync Exception[{e.Message}]");
+                    errorCode = ErrorCode.ERR_ResourceInitError;
+                    bNeedUpdate = false;
+                }
             }
-            catch (Exception e)
-            {
-                Log.Error($"UpdateVersionAsync Exception[{e.Message}]");
-                return (false, ErrorCode.ERR_ResourceInitError);
-            }
+
+            return (errorCode, bNeedUpdate, bIsAuditing, auditingRouterHttpHost, auditingRouterHttpPort);
         }
 
         public static async ETTask<int> UpdateMainifestVersionAsync(this ResComponent self, int timeout = 30)
@@ -311,7 +354,14 @@ namespace ET.Client
 
             if (progressCallback != null)
             {
-                self.HandleProgresses.Add(handle, progressCallback);
+                if (self.HandleProgresses.TryGetValue(handle, out var callbacks))
+                {
+                    callbacks += progressCallback;
+                }
+                else
+                {
+                    self.HandleProgresses.Add(handle, progressCallback);
+                }
             }
 
             if (handle.IsValid)

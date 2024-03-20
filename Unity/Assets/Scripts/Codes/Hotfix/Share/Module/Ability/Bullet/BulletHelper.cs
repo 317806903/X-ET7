@@ -10,7 +10,33 @@ namespace ET.Ability
     [FriendOf(typeof(NumericComponent))]
     public static class BulletHelper
     {
-        public static void CreateBullet(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ref ActionContext actionContext)
+        public static void CreateBulletAll(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ref ActionContext actionContext)
+        {
+            if (selectHandle.selectHandleType == SelectHandleType.SelectUnits)
+            {
+                int count = selectHandle.unitIds.Count;
+                if (count > 1)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
+                        SelectHandle selectHandleOne = SelectHandleHelper.CreateUnitSelectHandle(unit, targetUnit, null);
+
+                        CreateBulletOne(unit, actionCfgFireBullet, selectHandleOne, ref actionContext);
+                    }
+                }
+                else
+                {
+                    CreateBulletOne(unit, actionCfgFireBullet, selectHandle, ref actionContext);
+                }
+            }
+            else
+            {
+                CreateBulletOne(unit, actionCfgFireBullet, selectHandle, ref actionContext);
+            }
+        }
+
+        public static void CreateBulletOne(Unit unit, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             Unit bulletUnit = ET.GamePlayHelper.CreateBulletByUnit(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
 
@@ -19,7 +45,6 @@ namespace ET.Ability
                 unit = unit,
                 createUnit = bulletUnit,
             });
-
         }
 
         public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
@@ -39,7 +64,7 @@ namespace ET.Ability
             bool bHitMesh = false;
             float3 hitPos = float3.zero;
 
-            if (bulletObj.CanHitUnit(unit))
+            if (bulletObj.CanHitUnit(unit) && moveTweenObj.ChkCanTouchUnit(unit))
             {
                 (bool isHitUnit, float3 hitUnitPos) = _ChkBulletHitUnit(unitBullet, unit, posBeforeBullet, posAfterBullet);
                 if (isHitUnit)
@@ -61,67 +86,6 @@ namespace ET.Ability
                 }
             }
 
-            return (bHitUnit, bHitMesh, hitPos);
-        }
-
-        public static (bool, bool, float3) ChkBulletHit_Old(Unit unitBullet, Unit unit)
-        {
-            BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
-
-            MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
-            float3 posBeforeBullet = moveTweenObj.lastPosition;
-            float3 posAfterBullet = unitBullet.Position;
-
-            (bool isHitUnit_PreChk, float3 hitPos) = _ChkBulletHitUnit(unitBullet, unit, posBeforeBullet, posAfterBullet);
-
-            if (isHitUnit_PreChk)
-            {
-                posAfterBullet = hitPos;
-            }
-            List<float3> segmentPoints = ET.RecastHelper.GetSegmentPoints(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
-
-            bool bHitUnit = false;
-            bool bHitMesh = false;
-            float3 lastPos = posBeforeBullet;
-
-            float bulletRadius = ET.Ability.UnitHelper.GetBodyRadius(unitBullet);
-            for (int i = 0; i < segmentPoints.Count; i++)
-            {
-                float3 pos = segmentPoints[i];
-                if (bulletObj.CanHitUnit(unit))
-                {
-                    bool bHitUnitTmp = UnitHelper.ChkIsNear(unit, pos, bulletRadius, 0, true);
-                    if (bHitUnitTmp)
-                    {
-                        bHitUnit = true;
-                        hitPos = pos;
-                        break;
-                    }
-                    else
-                    {
-                        (bHitUnitTmp, hitPos) = _ChkBulletHitUnit(unitBullet, unit, lastPos, pos);
-                        if (bHitUnitTmp)
-                        {
-                            bHitUnit = true;
-                            hitPos = pos;
-                            break;
-                        }
-                    }
-                }
-
-                if (bulletObj.CanHitMesh())
-                {
-                    bool bHitMeshTmp = RecastHelper.ChkHitMeshOnPoint(unitBullet.DomainScene(), pos);
-                    if (bHitMeshTmp)
-                    {
-                        bHitMesh = true;
-                        hitPos = pos;
-                        break;
-                    }
-                }
-
-                lastPos = pos;
-            }
             return (bHitUnit, bHitMesh, hitPos);
         }
 
@@ -196,7 +160,23 @@ namespace ET.Ability
         public static void DoBulletHitUnit(Unit unitBullet, Unit unit)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
-            bulletObj.canHitTimes -= 1;
+
+            if (bulletObj.canHitTimes > 0)
+            {
+                if (bulletObj.hitRecords.ContainsKey(unit.Id))
+                {
+                    return;
+                }
+                BulletHitRecord bulletHitRecord = BulletHitRecord.Create();
+                bulletHitRecord.targetUnitId = unit.Id;
+                bulletHitRecord.timeToCanHit = bulletObj.model.SameTargetDelay;
+                bulletObj.hitRecords.Add(bulletHitRecord.targetUnitId, bulletHitRecord);
+                bulletObj.canHitTimes -= 1;
+            }
+            else
+            {
+                return;
+            }
 
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHit()
             {
@@ -204,20 +184,29 @@ namespace ET.Ability
                 defenderUnit = unit,
             });
 
-            if (bulletObj.canHitTimes > 0)
-            {
-                BulletHitRecord bulletHitRecord = BulletHitRecord.Create();
-                bulletHitRecord.targetUnitId = unit.Id;
-                bulletHitRecord.timeToCanHit = bulletObj.model.SameTargetDelay;
-                bulletObj.hitRecords.Add(bulletHitRecord);
-            }
         }
 
         public static void DoBulletHitMesh(Unit unitBullet, float3 hitPos)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
-            //bulletObj.canHitTimes -= 1;
-            bulletObj.canHitTimes = 0;
+
+            if (bulletObj.canHitTimes > 0)
+            {
+                if (bulletObj.hitRecords.ContainsKey(-1) == false)
+                {
+                    return;
+                }
+                BulletHitRecord bulletHitRecord = BulletHitRecord.Create();
+                bulletHitRecord.targetUnitId = -1;
+                bulletHitRecord.timeToCanHit = bulletObj.model.SameTargetDelay;
+                bulletObj.hitRecords.Add(bulletHitRecord.targetUnitId, bulletHitRecord);
+                //bulletObj.canHitTimes -= 1;
+                bulletObj.canHitTimes = 0;
+            }
+            else
+            {
+                return;
+            }
 
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHitMesh()
             {
@@ -225,13 +214,6 @@ namespace ET.Ability
                 hitPos = hitPos,
             });
 
-            if (bulletObj.canHitTimes > 0)
-            {
-                BulletHitRecord bulletHitRecord = BulletHitRecord.Create();
-                bulletHitRecord.targetUnitId = -1;
-                bulletHitRecord.timeToCanHit = bulletObj.model.SameTargetDelay;
-                bulletObj.hitRecords.Add(bulletHitRecord);
-            }
         }
 
     }

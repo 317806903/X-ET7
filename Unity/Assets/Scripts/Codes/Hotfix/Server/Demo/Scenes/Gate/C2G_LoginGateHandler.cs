@@ -35,6 +35,13 @@ namespace ET.Server
 
 			PlayerComponent playerComponent = scene.GetComponent<PlayerComponent>();
 
+			long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, scene.InstanceId);
+			if (locationActorId != 0)
+			{
+				G2OG_LoginInAtOtherWhere _G2OG_LoginInAtOtherWhere = new();
+				ActorLocationSenderOneType oneTypeLocationTypeTmp = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+				await oneTypeLocationTypeTmp.Call(playerId, _G2OG_LoginInAtOtherWhere, scene.InstanceId);
+			}
 			await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);
 			Player player = playerComponent.GetChild<Player>(playerId);
 			if (player != null)

@@ -30,9 +30,9 @@ namespace ET.Ability.Client
         }
 
         [ObjectSystem]
-        public class EffectShowComponentFixedUpdate: FixedUpdateSystem<EffectShowComponent>
+        public class EffectShowComponentUpdate: UpdateSystem<EffectShowComponent>
         {
-            protected override void FixedUpdate(EffectShowComponent self)
+            protected override void Update(EffectShowComponent self)
             {
 				float fixedDeltaTime = TimeHelper.FixedDetalTime;
 				self.FixedUpdate(fixedDeltaTime);
@@ -91,6 +91,7 @@ namespace ET.Ability.Client
                 if (self.curExistEffectList.ContainsKey(effectObj.Id))
                 {
                     self.waitRemoveEffectList.Remove(effectObj.Id);
+                    self.curExistEffectList[effectObj.Id].Refresh(effectObj);
                     continue;
                 }
                 else
@@ -106,6 +107,11 @@ namespace ET.Ability.Client
                     self.RemoveEffectShow(effectObjId);
                 }
                 self.waitRemoveEffectList.Clear();
+            }
+
+            foreach (var effectShowObjs in self.curExistEffectList)
+            {
+                effectShowObjs.Value.UpdateEffect(false, fixedDeltaTime);
             }
 
         }

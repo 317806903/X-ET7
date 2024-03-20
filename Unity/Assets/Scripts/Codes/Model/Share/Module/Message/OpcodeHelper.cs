@@ -22,7 +22,6 @@ namespace ET
             OuterMessage.M2C_PathfindingResult,
             OuterMessage.M2C_GamePlayCoinChgNotice,
             OuterMessage.C2M_SendARCameraPos,
-            OuterMessage.M2C_SendARCameraPos,
 
             ushort.MaxValue, // ActorResponse
         };

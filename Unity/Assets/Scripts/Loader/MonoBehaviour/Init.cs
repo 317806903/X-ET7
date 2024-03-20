@@ -8,8 +8,10 @@ namespace ET
 {
 	public class Init : MonoBehaviour
 	{
+		private bool isFirstInit;
 		private void Start()
 		{
+			this.isFirstInit = true;
 			this._Start().Coroutine();
 		}
 
@@ -71,6 +73,7 @@ namespace ET
 
 		public async ETTask Restart()
 		{
+			this.isFirstInit = false;
 			Log.Info("-------Restart!");
 
 			Game.Close();
@@ -95,6 +98,11 @@ namespace ET
 
 			Log.Debug($"Restart CodeLoader.Start Before]");
 			Game.AddSingleton<ET.CodeLoader>().Start();
+		}
+
+		public bool ChkIsFirstInit()
+		{
+			return this.isFirstInit;
 		}
 
 		private void Update()

@@ -25,15 +25,18 @@ namespace ET.Ability
 
             float chgValue = buffActionModifyAttributeByCircleWaveIndex.BaseValue * circleWaveIndex + buffActionModifyAttributeByCircleWaveIndex.StackValue * stackCount * circleWaveIndex;
             float maxChgValue = buffActionModifyAttributeByCircleWaveIndex.MaxChgValue;
-            if (chgValue > 0)
+            if (maxChgValue != -1)
             {
-                maxChgValue = Math.Abs(maxChgValue);
-                chgValue = Math.Min(chgValue, maxChgValue);
-            }
-            else
-            {
-                maxChgValue = -Math.Abs(maxChgValue);
-                chgValue = Math.Max(chgValue, maxChgValue);
+                if (chgValue > 0)
+                {
+                    maxChgValue = Math.Abs(maxChgValue);
+                    chgValue = Math.Min(chgValue, maxChgValue);
+                }
+                else
+                {
+                    maxChgValue = -Math.Abs(maxChgValue);
+                    chgValue = Math.Max(chgValue, maxChgValue);
+                }
             }
             return (buffActionModifyAttributeByCircleWaveIndex.NumericType, chgValue);
         }

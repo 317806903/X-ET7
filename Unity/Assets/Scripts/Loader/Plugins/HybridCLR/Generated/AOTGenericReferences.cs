@@ -261,7 +261,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.MultiMapSimple<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// ET.MultiMapSimple<ET.Ability.AbilityGameMonitorTriggerEvent,long>
 	// ET.MultiMapSimple<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// ET.MultiMapSimple<ET.Ability.SkillSlotType,long>
+	// ET.MultiMapSimple<ET.AbilityConfig.SkillSlotType,long>
 	// ET.MultiMapSimple<ET.AbilityConfig.BuffTagGroupType,object>
 	// ET.MultiMapSimple<ET.AbilityConfig.BuffTagType,object>
 	// ET.MultiMapSimple<ET.AbilityConfig.BuffType,object>
@@ -437,7 +437,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ComparisonComparer<ulong>
 	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary.Enumerator<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary.Enumerator<ET.Ability.TeamFlagType,long>
@@ -483,7 +483,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.Enumerator<ushort,object>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ET.Ability.TeamFlagType,long>
@@ -529,7 +529,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<ushort,object>
 	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary.KeyCollection<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary.KeyCollection<ET.Ability.TeamFlagType,long>
@@ -575,7 +575,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.KeyCollection<ushort,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ET.Ability.TeamFlagType,long>
@@ -621,7 +621,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<ushort,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary.ValueCollection<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary.ValueCollection<ET.Ability.TeamFlagType,long>
@@ -667,7 +667,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.ValueCollection<ushort,object>
 	// System.Collections.Generic.Dictionary<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.Dictionary<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.Dictionary<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.Dictionary<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.Dictionary<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.Dictionary<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.Dictionary<ET.Ability.TeamFlagType,long>
@@ -717,7 +717,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.EqualityComparer<ET.Ability.AbilityBuffMonitorTriggerEvent>
 	// System.Collections.Generic.EqualityComparer<ET.Ability.AbilityGameMonitorTriggerEvent>
 	// System.Collections.Generic.EqualityComparer<ET.Ability.GlobalBuffType>
-	// System.Collections.Generic.EqualityComparer<ET.Ability.SkillSlotType>
+	// System.Collections.Generic.EqualityComparer<ET.AbilityConfig.SkillSlotType>
 	// System.Collections.Generic.EqualityComparer<ET.Ability.TeamFlagType>
 	// System.Collections.Generic.EqualityComparer<ET.AbilityConfig.AnimatorMotionName>
 	// System.Collections.Generic.EqualityComparer<ET.AbilityConfig.BuffTagGroupType>
@@ -778,7 +778,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ICollection<ET.RpcInfo>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityBuffMonitorTriggerEvent,object>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityGameMonitorTriggerEvent,object>>
-	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.SkillSlotType,object>>
+	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.AbilityConfig.SkillSlotType,object>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,byte>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,int>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,long>>
@@ -869,7 +869,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerable<ET.RpcInfo>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityBuffMonitorTriggerEvent,object>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityGameMonitorTriggerEvent,object>>
-	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.SkillSlotType,object>>
+	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.AbilityConfig.SkillSlotType,object>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,byte>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,int>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,long>>
@@ -937,7 +937,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerator<MongoDB.Bson.BsonElement>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityBuffMonitorTriggerEvent,object>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.AbilityGameMonitorTriggerEvent,object>>
-	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.SkillSlotType,object>>
+	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.AbilityConfig.SkillSlotType,object>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,byte>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,int>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,long>>
@@ -995,7 +995,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerator<ushort>
 	// System.Collections.Generic.IEqualityComparer<ET.Ability.AbilityBuffMonitorTriggerEvent>
 	// System.Collections.Generic.IEqualityComparer<ET.Ability.AbilityGameMonitorTriggerEvent>
-	// System.Collections.Generic.IEqualityComparer<ET.Ability.SkillSlotType>
+	// System.Collections.Generic.IEqualityComparer<ET.AbilityConfig.SkillSlotType>
 	// System.Collections.Generic.IEqualityComparer<ET.Ability.TeamFlagType>
 	// System.Collections.Generic.IEqualityComparer<ET.AbilityConfig.BuffTagGroupType>
 	// System.Collections.Generic.IEqualityComparer<ET.AbilityConfig.BuffTagType>
@@ -1045,7 +1045,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IList<object>
 	// System.Collections.Generic.KeyValuePair<ET.Ability.AbilityBuffMonitorTriggerEvent,object>
 	// System.Collections.Generic.KeyValuePair<ET.Ability.AbilityGameMonitorTriggerEvent,object>
-	// System.Collections.Generic.KeyValuePair<ET.Ability.SkillSlotType,object>
+	// System.Collections.Generic.KeyValuePair<ET.AbilityConfig.SkillSlotType,object>
 	// System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,byte>
 	// System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,int>
 	// System.Collections.Generic.KeyValuePair<ET.Ability.TeamFlagType,long>
@@ -1177,7 +1177,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectEqualityComparer<ET.Ability.AbilityBuffMonitorTriggerEvent>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.Ability.AbilityGameMonitorTriggerEvent>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.Ability.GlobalBuffType>
-	// System.Collections.Generic.ObjectEqualityComparer<ET.Ability.SkillSlotType>
+	// System.Collections.Generic.ObjectEqualityComparer<ET.AbilityConfig.SkillSlotType>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.Ability.TeamFlagType>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.AbilityConfig.AnimatorMotionName>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.AbilityConfig.BuffTagGroupType>

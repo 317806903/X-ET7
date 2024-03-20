@@ -21,7 +21,6 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         Dis = _buf.ReadFloat();
         Cd = _buf.ReadFloat();
-        SkillSlotType = (SkillSlotType)_buf.ReadInt();
         SkillSelectAction = _buf.ReadString();
         TimelineId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);LearnActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); LearnActionId.Add(_e0);}}
@@ -53,10 +52,6 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 技能cd
     /// </summary>
     public float Cd { get; private set; }
-    /// <summary>
-    /// 技能类型<br/>NormalAttack普通攻击,InitiativeSkill主动技能,PassiveSkill被动技能
-    /// </summary>
-    public SkillSlotType SkillSlotType { get; private set; }
     /// <summary>
     /// 释放对象选择
     /// </summary>
@@ -94,7 +89,6 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "Dis:" + Dis + ","
         + "Cd:" + Cd + ","
-        + "SkillSlotType:" + SkillSlotType + ","
         + "SkillSelectAction:" + SkillSelectAction + ","
         + "TimelineId:" + TimelineId + ","
         + "LearnActionId:" + Bright.Common.StringUtil.CollectionToString(LearnActionId) + ","

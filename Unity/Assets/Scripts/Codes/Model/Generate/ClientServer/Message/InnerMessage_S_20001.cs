@@ -1615,6 +1615,31 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(OG2G_LoginInAtOtherWhere))]
+	[Message(InnerMessage.G2OG_LoginInAtOtherWhere)]
+	[ProtoContract]
+	public partial class G2OG_LoginInAtOtherWhere: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.OG2G_LoginInAtOtherWhere)]
+	[ProtoContract]
+	public partial class OG2G_LoginInAtOtherWhere: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -1714,5 +1739,7 @@ namespace ET
 		 public const ushort P2G_GetPlayerCache = 20096;
 		 public const ushort G2P_SetPlayerCache = 20097;
 		 public const ushort P2G_SetPlayerCache = 20098;
+		 public const ushort G2OG_LoginInAtOtherWhere = 20099;
+		 public const ushort OG2G_LoginInAtOtherWhere = 20100;
 	}
 }

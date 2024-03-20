@@ -75,6 +75,7 @@ namespace ET.Client
 				{
 					BagItem.SetLabels(itemCfgId);
 					BagItem.SetQuality(itemCfgId);
+					BagItem.SetCheckMark(false);
 				}
 
 				BagItem.EButton_SelectButton.AddListener(()=>

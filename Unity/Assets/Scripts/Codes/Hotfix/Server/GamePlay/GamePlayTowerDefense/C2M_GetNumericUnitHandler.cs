@@ -5,15 +5,15 @@ using Unity.Mathematics;
 namespace ET.Server
 {
 	[ActorMessageHandler(SceneType.Map)]
-	public class C2M_GetNumericUnitHandler : AMActorLocationRpcHandler<Unit, C2M_GetNumericUnit, M2C_GetNumericUnit>
+	public class C2M_GetNumericUnitHandler : AMActorLocationHandler<Unit, C2M_GetNumericUnit>
 	{
-		protected override async ETTask Run(Unit observerUnit, C2M_GetNumericUnit request, M2C_GetNumericUnit response)
+		protected override async ETTask Run(Unit observerUnit, C2M_GetNumericUnit message)
 		{
 			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
 
 			long playerId = observerUnit.Id;
-			List<long> UnitIdList = request.UnitIdList;
-			List<int> NumericKeyList = request.NumericKeyList;
+			List<long> UnitIdList = message.UnitIdList;
+			List<int> NumericKeyList = message.NumericKeyList;
 
 			for (int i = 0; i < UnitIdList.Count; i++)
 			{

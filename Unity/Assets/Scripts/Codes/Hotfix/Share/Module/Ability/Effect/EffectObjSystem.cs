@@ -21,17 +21,26 @@ namespace ET.Ability
         {
             protected override void Destroy(EffectObj self)
             {
+                self.pointLightningTrailList?.Clear();
             }
         }
 
-        public static void Init(this EffectObj self, long unitId, string key, string effectCfgId, string playAudioActionId, float duration, OffSetInfo offSetInfo, bool isScaleByUnit)
+        public static void Init(this EffectObj self, long casterUnitId, ActionCfg_EffectCreate actionCfgCreateEffect, bool isScaleByUnit)
         {
+            self.casterUnitId = casterUnitId;
+
+            string key = actionCfgCreateEffect.Key;
+            int maxKeyNum = actionCfgCreateEffect.MaxKeyNum;
+            string effectCfgId = actionCfgCreateEffect.ResEffectId;
+            string playAudioActionId = actionCfgCreateEffect.PlayAudioActionId;
+            float duration = actionCfgCreateEffect.Duration;
+            OffSetInfo offSetInfo = actionCfgCreateEffect.OffSetInfo;
+            EffectShowType effectShowType = actionCfgCreateEffect.EffectShowType;
+
             string nodeName = offSetInfo.NodeName;
             float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
             float3 relateForward = new float3(offSetInfo.RelateForward.X, offSetInfo.RelateForward.Y, offSetInfo.RelateForward.Z);
 
-            self.isSceneEffect = unitId == 0? true : false;
-            self.unitId = unitId;
             self.CfgId = effectCfgId;
             self.PlayAudioActionId = playAudioActionId;
             self.timeElapsed = 0;
@@ -42,6 +51,33 @@ namespace ET.Ability
             self.rotation = relateForward;
             self.key = key;
             self.isScaleByUnit = isScaleByUnit;
+            self.effectShowType = effectShowType;
+
+            self.createTime = TimeHelper.ServerNow();
+            self.createPos = self.GetUnit().Position + self.offSet;
+        }
+
+        public static void ResetTime(this EffectObj self, ActionCfg_EffectCreate actionCfgCreateEffect)
+        {
+            float duration = actionCfgCreateEffect.Duration;
+            self.timeElapsed = 0;
+            self.permanent = duration == -1? true : false;
+            self.duration = duration == -1? 1 : duration;
+        }
+
+        public static void AddPointLightningTrail(this EffectObj self, long unitId)
+        {
+            if (self.pointLightningTrailList == null)
+            {
+                self.pointLightningTrailList = new();
+            }
+            self.pointLightningTrailList.Add(unitId);
+        }
+
+        public static EffectComponent GetEffectComponent(this EffectObj self)
+        {
+            EffectComponent effectComponent = self.GetParent<EffectComponent>();
+            return effectComponent;
         }
 
         public static Unit GetUnit(this EffectObj self)

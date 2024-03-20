@@ -12,7 +12,10 @@ namespace ET.Ability
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
 			}
 			ActionCfg_DamageUnit actionCfg_DamageUnit = ActionCfg_DamageUnitCategory.Instance.Get(actionId);
-			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null);
+
+			bool isCriticalStrike = DamageHelper.ChkIsCriticalStrike(unit, null);
+			actionContext.isCriticalStrike = isCriticalStrike;
+			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null, isCriticalStrike);
 			await ETTask.CompletedTask;
 		}
 	}

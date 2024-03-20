@@ -1,4 +1,5 @@
 ﻿using ET.Ability;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -11,7 +12,7 @@ namespace ET.Server
 			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
 
 			string skillId = request.SkillId;
-			(bool ret, string msg) = SkillHelper.LearnSkill(playerUnit, skillId, 1, SkillSlotType.NormalAttack);
+			(bool ret, string msg) = SkillHelper.LearnSkill(playerUnit, skillId, 1, SkillSlotType.InitiativeSkill);
 			if (ret == false)
 			{
 				response.Error = ET.ErrorCode.ERR_LogicError;

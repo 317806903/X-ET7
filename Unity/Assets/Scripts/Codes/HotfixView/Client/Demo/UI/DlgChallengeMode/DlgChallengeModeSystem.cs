@@ -21,6 +21,16 @@ namespace ET.Client
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.poolSize = 7;
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.AddItemRefreshListener(((transform, i) =>
                     self.AddListItemRefreshListener(transform, i).Coroutine()));
+
+			self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.poolSize = 3;
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
+                    self.AddTowerBuyListener(transform, i));
+			
+			self.View.ELoopScrollList_propLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Monsters";
+            self.View.ELoopScrollList_propLoopHorizontalScrollRect.prefabSource.poolSize = 3;
+            self.View.ELoopScrollList_propLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
+                    self.AddMonsterListener(transform, i));
 		}
 
 		public static void ShowWindow(this DlgChallengeMode self, ShowWindowData contextData = null)
@@ -96,10 +106,19 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-			self.selectIndex = playerBaseInfoComponent.ChallengeClearLevel;
 			int count = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenges(true).Count;
+			self.selectIndex = playerBaseInfoComponent.ChallengeClearLevel;
+			if(self.selectIndex == count){
+				self.selectIndex = self.selectIndex - 1;
+				self.RefreshLevelUI(true);
+			}else{
+				self.RefreshLevelUI(false);
+			}
             self.AddUIScrollItems(ref self.ScrollItemChallengeList, count);
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.SetVisible(true, count);
+
+			self.View.E_SelectButton.gameObject.SetActive(true);
+			self.View.E_UnlockedButton.gameObject.SetActive(false);
         }
 
 		public static async ETTask ScrollToCurrentLevel(this DlgChallengeMode self)
@@ -115,16 +134,7 @@ namespace ET.Client
 			Scroll_Item_ChallengeList challengeList = self.ScrollItemChallengeList[index].BindTrans(transform);
 			challengeList.ELabel_NormalTextMeshProUGUI.text = (index + 1).ToString();
 			challengeList.ELabel_UnlockedTextMeshProUGUI.text = (index + 1).ToString();
-			// if(index % 2 == 1){
-			// 	challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, -84, 0);
-			// 	challengeList.E_Normal_lineImage.transform.localScale = new Vector3(-1, 1, 1);
-			// 	challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(1, 1, 1);
-			// }
-			// else{
-			// 	challengeList.EButton_dotButton.transform.localPosition = new Vector3(-43, 118, 0);
-			// 	challengeList.E_Normal_lineImage.transform.localScale = new Vector3(1, 1, 1);
-			// 	challengeList.E_Unlocked_lineImage.transform.localScale = new Vector3(-1, 1, 1);
-			// }
+
 			PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 			int clearLevel = playerBaseInfoComponent.ChallengeClearLevel;
@@ -140,6 +150,8 @@ namespace ET.Client
 				challengeList.EG_Unlocked_lineRectTransform.gameObject.SetActive(false);
 			}
 			challengeList.EButton_dotButton.AddListener(() => { self.SelectLevel(index).Coroutine(); });
+
+			challengeList.E_iconImage.SetVisible(self.CheckTowerReward(index + 1, clearLevel));
 		}
 
 		public static async ETTask SelectLevel(this DlgChallengeMode self, int level)
@@ -152,6 +164,136 @@ namespace ET.Client
 			int clearLevel = playerBaseInfoComponent.ChallengeClearLevel;
 			self.View.E_SelectButton.gameObject.SetActive(clearLevel >= level);
 			self.View.E_UnlockedButton.gameObject.SetActive(clearLevel < level);
+			self.RefreshLevelUI(clearLevel > level);
         }
+
+		public static bool CheckTowerReward(this DlgChallengeMode self, int selectLevel, int clearLevel){
+			TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, selectLevel);
+			List<string> rewardList;
+			if(clearLevel >= selectLevel){
+				rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+			}else{
+				rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+			}
+			
+			foreach(string itemId in rewardList){
+				if(ItemHelper.ChkIsTower(itemId)){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static void RefreshLevelUI(this DlgChallengeMode self, bool bClear){
+			self.View.ELabel_LvTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", self.selectIndex+1);
+			
+			TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, self.selectIndex+1);
+			List<string> rewardList;
+			// if(bClear){
+			// 	rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+			// }else{
+				rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+			// }
+			self.View.EG_RewardRectTransform.SetVisible(rewardList.Count != 0);
+			self.View.E_line02Image.SetVisible(rewardList.Count != 0);
+			self.AddUIScrollItems(ref self.ScrollItemReward, rewardList.Count);
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, rewardList.Count);
+
+			List<string> monsterList = challengeLevelCfg.MonsterList;
+			self.AddUIScrollItems(ref self.ScrollItemMonster, monsterList.Count);
+            self.View.ELoopScrollList_propLoopHorizontalScrollRect.SetVisible(true, monsterList.Count);
+		}
+
+		public static async void AddTowerBuyListener(this DlgChallengeMode self, Transform transform, int index)
+        {
+            transform.name = $"Item_TowerBuy_{index}";
+            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
+            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
+			PlayerBaseInfoComponent playerBaseInfoComponent =
+                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+			int clearLevel = playerBaseInfoComponent.ChallengeClearLevel;
+			TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, self.selectIndex+1);
+			List<string> list;
+			// if(clearLevel > challengeLevelCfg.Index){
+			// 	list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+			// }else{
+				list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+			// }
+
+            string towerCfgId = list[index];
+            string itemCfgId = list[index];
+            string towerName = ItemHelper.GetItemName(itemCfgId);
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+
+            string icon = ItemHelper.GetItemIcon(itemCfgId);
+            if (string.IsNullOrEmpty(icon) == false)
+            {
+                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+                itemTowerBuy.EButton_IconImage.sprite = sprite;
+            }
+
+			itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
+			itemTowerBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
+			itemTowerBuy.ELabel_ContentText.gameObject.SetActive(false);
+			itemTowerBuy.EImage_BuyBGImage.gameObject.SetActive(true);
+			itemTowerBuy.EButton_BuyButton.gameObject.SetActive(true);
+			itemTowerBuy.EButton_BuyButton.gameObject.transform.Find("CoinIcon").gameObject.SetActive(false);
+			itemTowerBuy.EButton_BuyButton.AddListener(()=>
+				{
+					self.ShowDetails(itemCfgId);
+				});
+
+            itemTowerBuy.EButton_nameTextMeshProUGUI.text = $"{towerName}";
+            itemTowerBuy.SetLevel(itemCfgId);
+            itemTowerBuy.SetLabels(itemCfgId);
+            itemTowerBuy.SetQuality(itemCfgId);
+			itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
+        }
+
+		public static void ShowDetails(this DlgChallengeMode self, string itemCfgId)
+		{
+			UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
+			_UIComponent.ShowWindow<DlgDetails>();
+			DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
+			if (_DlgDetails != null)
+			{
+				_DlgDetails.SetCurItemCfgId(itemCfgId);
+			}
+		}
+
+		public static void AddMonsterListener(this DlgChallengeMode self, Transform transform, int index)
+        {
+			transform.name = $"Item_Monster_{index}";
+            Scroll_Item_Monsters itemMonster = self.ScrollItemMonster[index].BindTrans(transform);
+			TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, self.selectIndex+1);
+			List<string> monsterList = challengeLevelCfg.MonsterList;
+
+			string monsterCfgId = monsterList[index];
+			string itemCfgId = monsterList[index];
+			string icon = ItemHelper.GetItemIcon(itemCfgId);
+            if (string.IsNullOrEmpty(icon) == false)
+            {
+                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
+                itemMonster.EImage_MonsterImage.sprite = sprite;
+            }
+			ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onPress.AddListener(async (go, eventData) =>
+            {
+				TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
+				DlgDescTips_ShowWindowData _DlgDescTips_ShowWindowData = new()
+				{
+					Pos = transform.position + Vector3.up,
+					Desc = LocalizeComponent.Instance.GetTextValue(monsterCfg.Desc),
+				};
+				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData);
+			});
+			ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onExit.AddListener(async (go, eventData) =>
+            {
+				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgDescTips>();
+			});
+		}
 	}
 }

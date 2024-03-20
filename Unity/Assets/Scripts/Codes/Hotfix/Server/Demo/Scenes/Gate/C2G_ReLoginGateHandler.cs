@@ -31,6 +31,14 @@ namespace ET.Server
 				return;
 			}
 
+			long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, scene.InstanceId);
+			if (locationActorId != 0)
+			{
+				G2OG_LoginInAtOtherWhere _G2OG_LoginInAtOtherWhere = new();
+				ActorLocationSenderOneType oneTypeLocationTypeTmp = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+				await oneTypeLocationTypeTmp.Call(playerId, _G2OG_LoginInAtOtherWhere, scene.InstanceId);
+			}
+
 			Session sessionOld = playerSessionComponent.Session;
 			playerSessionComponent.Session = session;
             session.RemoveComponent<SessionAcceptTimeoutComponent>();

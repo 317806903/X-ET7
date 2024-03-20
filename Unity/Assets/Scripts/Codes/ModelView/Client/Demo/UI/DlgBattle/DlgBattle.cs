@@ -97,6 +97,7 @@ namespace ET.Client
 		public List<string> monsterList = new List<string>()
 		{
 			"Monster_Infinite_4_1",
+			"Monster_Infinite_13_1",
 		};
 
 		public long Timer;

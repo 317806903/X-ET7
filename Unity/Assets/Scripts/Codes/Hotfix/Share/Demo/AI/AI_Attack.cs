@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
-using SkillSlotType = ET.Ability.SkillSlotType;
+using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET
 {
@@ -42,7 +42,8 @@ namespace ET
             {
                 return null;
             }
-            List<Unit> hostileForces = Ability.UnitHelper.GetHostileForces(unit, false, true);
+            List<Unit> hostileForces = Ability.UnitHelper.GetUnitListBySelectObjectType(unit, SelectObjectType.Hostiles, true);
+
             Unit unitHostileForce = null;
             foreach (Unit hostileForce in hostileForces)
             {

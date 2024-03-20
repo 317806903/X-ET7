@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ET.AbilityConfig;
 
 namespace ET.Ability
 {
@@ -7,5 +8,6 @@ namespace ET.Ability
     {
         public List<EffectObj> removeList;
         public MultiMapSimple<string, long> recordEffectList;
+        public MultiMapSimple<EffectShowType, long> effectShowType2EffectObjId;
     }
 }

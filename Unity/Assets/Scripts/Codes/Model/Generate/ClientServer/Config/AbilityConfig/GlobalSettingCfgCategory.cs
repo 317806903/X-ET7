@@ -140,6 +140,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 初始背包物体
     /// </summary>
      public System.Collections.Generic.List<string> InitialBackpackItem => _data.InitialBackpackItem;
+    /// <summary>
+    /// 需要重新评估游戏的时刻
+    /// </summary>
+     public long GameReJudgeTime => _data.GameReJudgeTime;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

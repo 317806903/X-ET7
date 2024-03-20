@@ -11,6 +11,8 @@
 		public bool IsDebugMode;
 		public bool IsEditorLoginMode;
 
+		public bool IsAutoLogining;
+
 		public long Timer;
 	}
 }

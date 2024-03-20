@@ -94,12 +94,14 @@ namespace ET
 		// 	EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
   //       }
 
-        public static void Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, GamePlayTowerDefenseMode gamePlayTowerDefenseMode)
+        public static async ETTask Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, GamePlayTowerDefenseMode gamePlayTowerDefenseMode)
         {
             self.gamePlayModeCfgId = gamePlayModeCfgId;
             self.gamePlayTowerDefenseMode = gamePlayTowerDefenseMode;
             self.ownerPlayerId = ownerPlayerId;
-            self.AddComponent<PlayerOwnerTowersComponent>();
+            PlayerOwnerTowersComponent playerOwnerTowersComponent = self.AddComponent<PlayerOwnerTowersComponent>();
+            await playerOwnerTowersComponent.Init();
+
             MonsterWaveCallComponent monsterWaveCallComponent = self.AddComponent<MonsterWaveCallComponent>();
             monsterWaveCallComponent.Init(self.model.MonsterWaveCallRuleCfgId, self.model.MonsterWaveCallStartWaveIndex);
 

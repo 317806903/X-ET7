@@ -15,7 +15,7 @@ namespace ET.Client
 			self.View.EButton_DetailBgButton.AddListener(self.OnDetailBgButton);
 			self.View.EButton_LeftButton.AddListener(self.SwitchToPreItem);
 			self.View.EButton_RightButton.AddListener(self.SwitchToNextItem);
-			
+
 			self.View.E_ScrollView_IconLoopListView2.InitListView(3, self.OnGetItemByIndex);
 			self.View.E_ScrollView_IconLoopListView2.mOnSnapNearestChanged = self.SwitchSpriteCallback;
 		}
@@ -29,10 +29,10 @@ namespace ET.Client
 		public static void SetCurItemCfgId(this DlgDetails self, string itemCfgId)
 		{
 			self.curItemCfgId = itemCfgId;
-			self.ShowDetails(self.curItemCfgId).Coroutine();
+			self.ShowDetails(self.curItemCfgId, false).Coroutine();
 		}
 
-		public static async ETTask ShowDetails(this DlgDetails self, string itemCfgId)
+		public static async ETTask ShowDetails(this DlgDetails self, string itemCfgId, bool onlyShow)
 		{
 			self.View.EImage_IconImage.SetVisible(false);
 			self.View.E_ScrollView_IconLoopListView2.gameObject.SetActive(false);
@@ -42,9 +42,12 @@ namespace ET.Client
 			if (ItemHelper.ChkIsTower(itemCfgId))
 			{
 				self.View.E_ScrollView_IconLoopListView2.gameObject.SetActive(true);
-				//self.View.E_ScrollView_IconLoopListView2.RefreshAllShownItem();
-				int index = int.Parse(self.curItemCfgId.Substring(self.curItemCfgId.Length - 1, 1));
-				self.View.E_ScrollView_IconLoopListView2.MovePanelToItemIndex(index - 1, 0);
+				if (onlyShow == false)
+				{
+					//self.View.E_ScrollView_IconLoopListView2.RefreshAllShownItem();
+					int index = int.Parse(self.curItemCfgId.Substring(self.curItemCfgId.Length - 1, 1));
+					self.View.E_ScrollView_IconLoopListView2.MovePanelToItemIndex(index - 1, 0);
+				}
 				List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
 				int labelCount = labels.Count;
 				self.View.EImage_Label1Image.gameObject.SetActive(labelCount >= 1);
@@ -78,7 +81,7 @@ namespace ET.Client
 				await self.View.EButton_TowerIcoImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId));
 			}
 		}
-		
+
 		public static LoopListViewItem2 OnGetItemByIndex(this DlgDetails self, LoopListView2 listView, int index)
 		{
 			if (index < 0 || index > 3)
@@ -96,7 +99,7 @@ namespace ET.Client
 		{
 			int level = self.View.E_ScrollView_IconLoopListView2.CurSnapNearestItemIndex + 1;
 			self.curItemCfgId = self.curItemCfgId.Substring(0, self.curItemCfgId.Length - 1) + level;
-			
+
 			self.View.EButton_LeftButton.SetVisible(false);
 			self.View.EButton_RightButton.SetVisible(false);
 			string preItemCfgId = ItemHelper.GetTowerItemPreTowerConfigId(self.curItemCfgId);
@@ -131,8 +134,11 @@ namespace ET.Client
 			}
 			Canvas.ForceUpdateCanvases();
 			LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.ENode_Attribute2Image.transform.parent.GetComponent<RectTransform>());
+
+			self.ShowDetails(self.curItemCfgId, true).Coroutine();
+
 		}
-		
+
 		public static void SwitchToPreItem(this DlgDetails self)
 		{
 			if (!ItemHelper.ChkIsTower(self.curItemCfgId))
@@ -146,7 +152,7 @@ namespace ET.Client
 				self.View.E_ScrollView_IconLoopListView2.MovePanelToItemIndex(index - 1, 0);
 			}
 		}
-		
+
 		public static void SwitchToNextItem(this DlgDetails self)
 		{
 			if (!ItemHelper.ChkIsTower(self.curItemCfgId))

@@ -7,17 +7,26 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.LoginOutFinish args)
         {
+            bool isNeedLoginOutAccount = args.isNeedLoginOutAccount;
             UIGuideComponent.Instance?.Dispose();
 
             Player player = PlayerHelper.GetMyPlayer(scene);
             Log.Debug($"--zpb player[{player}]");
             if (player.LoginType == LoginType.UnitySDK || player.LoginType == LoginType.GoogleSDK || player.LoginType == LoginType.AppleSDK)
             {
-                ET.Client.LoginSDKManagerComponent.Instance.SetClientRecordAccountLoginTimeNone();
-                ET.Client.LoginSDKManagerComponent.Instance.SDKLoginOut(false).Coroutine();
-            }else{
-                string key = $"GuestPlayerLoginTime_{LoginType.Editor.ToString()}";
-                PlayerPrefs.SetString(key, "0");
+                if (isNeedLoginOutAccount)
+                {
+                    ET.Client.LoginSDKManagerComponent.Instance.SetClientRecordAccountLoginTimeNone();
+                    ET.Client.LoginSDKManagerComponent.Instance.SDKLoginOut(false).Coroutine();
+                }
+            }
+            else
+            {
+                if (isNeedLoginOutAccount)
+                {
+                    string key = $"GuestPlayerLoginTime_{LoginType.Editor.ToString()}";
+                    PlayerPrefs.SetString(key, "0");
+                }
             }
         }
     }

@@ -10,5 +10,6 @@ namespace ET.Client
         public static LoginSDKManagerComponent Instance;
 
         public Action finishCallBack;
+        public Action failCallBack;
     }
 }

@@ -23,6 +23,7 @@ namespace ET.Ability.Client
         {
             protected override void Destroy(EffectShowObj self)
             {
+                self.RefEffectObj = null;
                 if (self.go != null)
                 {
                     //UnityEngine.Object.Destroy(self.go);
@@ -34,13 +35,19 @@ namespace ET.Ability.Client
                 {
                     self.RefAudioPlayObj.Dispose();
                 }
+
+                self.lineRenderers = null;
+                self.lightningBoltScripts = null;
+                self.lightningBoltScriptManagers = null;
             }
         }
 
         public static async ETTask Init(this EffectShowObj self, EffectObj effectObj)
         {
+            self.RefEffectObj = effectObj;
+
             string resName = effectObj.model.ResName;
-            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,false,1);
             if (go == null)
             {
                 Log.Error($"EffectShowObjSystem.Init go == null when resName={resName}");
@@ -75,9 +82,252 @@ namespace ET.Ability.Client
                     }
                 }
             }
+            self.go.SetActive(true);
             ET.Client.GameObjectPoolHelper.TrigFromPool(go);
 
+            self.UpdateEffect(true, 0);
         }
 
+        public static void Refresh(this EffectShowObj self, EffectObj effectObj)
+        {
+            if (self.RefEffectObj == effectObj)
+            {
+                return;
+            }
+            self.RefEffectObj = effectObj;
+
+            self.UpdateEffect(false, 0);
+        }
+
+        public static void UpdateEffect(this EffectShowObj self, bool isFirst, float fixedDeltaTime)
+        {
+            if (self.RefEffectObj == null)
+            {
+                return;
+            }
+            self.UpdateLineEffect(isFirst);
+            self.UpdatePointLightningTrailEffect();
+            self.UpdatePointClienShowMoveEffect(fixedDeltaTime);
+        }
+
+        public static void UpdateLineEffect(this EffectShowObj self, bool isFirst)
+        {
+            if (!(self.RefEffectObj.effectShowType == EffectShowType.Send2Receives || self.RefEffectObj.effectShowType == EffectShowType.Send2Receive2Receive))
+            {
+                return;
+            }
+
+            if (isFirst)
+            {
+                if (self.lightningBoltScripts == null)
+                {
+                    self._UpdateLightningBoltEffect();
+                }
+                if (self.lightningBoltScripts.Length == 0)
+                {
+                    if (self.lineRenderers == null)
+                    {
+                        self._UpdateSimpleLineEffect();
+                    }
+                    if (self.lineRenderers.Length == 0)
+                    {
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (self.lightningBoltScripts != null && self.lightningBoltScripts.Length > 0)
+                {
+                    self._UpdateLightningBoltEffect();
+                }
+                else if (self.lineRenderers != null && self.lineRenderers.Length > 0)
+                {
+                    self._UpdateSimpleLineEffect();
+                }
+            }
+        }
+
+        public static void _UpdateLightningBoltEffect(this EffectShowObj self)
+        {
+            if (self.lightningBoltScripts == null)
+            {
+                self.lightningBoltScripts = self.go.GetComponentsInChildren<DigitalRuby.LightningBolt.LightningBoltScript>();
+            }
+            if (self.lightningBoltScripts.Length == 0)
+            {
+                return;
+            }
+
+            foreach (DigitalRuby.LightningBolt.LightningBoltScript lightningBoltScript in self.lightningBoltScripts)
+            {
+                lightningBoltScript.StartObject = null;
+                lightningBoltScript.EndObject = null;
+                Unit casterUnit = UnitHelper.GetUnit(self.DomainScene(), self.RefEffectObj.casterUnitId);
+                float3 attackPos = new float3(casterUnit.Position.x, UnitHelper.GetAttackPointHeight(casterUnit), casterUnit.Position.z);
+                lightningBoltScript.StartPosition = attackPos;
+                float3 effectUnitPos = self.RefEffectObj.GetUnit().Position;
+                float3 endPos = new float3(effectUnitPos.x, UnitHelper.GetBodyHeight(self.RefEffectObj.GetUnit())*0.5f, effectUnitPos.z);
+                lightningBoltScript.EndPosition = endPos;
+            }
+        }
+
+        public static void _UpdateSimpleLineEffect(this EffectShowObj self)
+        {
+            if (self.lineRenderers == null)
+            {
+                self.lineRenderers = self.go.GetComponentsInChildren<LineRenderer>();
+            }
+            if (self.lineRenderers.Length == 0)
+            {
+                return;
+            }
+
+            foreach (LineRenderer lineRenderer in self.lineRenderers)
+            {
+                lineRenderer.useWorldSpace = true;
+                lineRenderer.positionCount = 2;
+                Unit casterUnit = UnitHelper.GetUnit(self.DomainScene(), self.RefEffectObj.casterUnitId);
+                float3 beginPos = casterUnit.Position;
+                lineRenderer.SetPosition(0, beginPos);
+                float3 endPos = self.RefEffectObj.GetUnit().Position;
+                lineRenderer.SetPosition(1, endPos);
+            }
+        }
+
+        public static void UpdatePointLightningTrailEffect(this EffectShowObj self)
+        {
+            if (self.RefEffectObj.effectShowType != EffectShowType.PointLightningTrail)
+            {
+                return;
+            }
+
+            if (self.lightningBoltScriptManagers == null)
+            {
+                self.lightningBoltScriptManagers = self.go.GetComponentsInChildren<DigitalRuby.LightningBolt.LightningBoltScriptManager>();
+            }
+            if (self.lightningBoltScriptManagers.Length == 0)
+            {
+                return;
+            }
+
+            List<long> list = self.RefEffectObj.pointLightningTrailList;
+            if (list == null || list.Count == 0)
+            {
+                return;
+            }
+            foreach (var lightningBoltScriptManager in self.lightningBoltScriptManagers)
+            {
+                int midIndex = lightningBoltScriptManager.GetMidIndex();
+
+                List<(long key, Vector3 pos)> dic = new();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    long key = list[i];
+                    Vector3 pos = Vector3.zero;
+                    if (midIndex <= i)
+                    {
+                        Unit unitTmp = UnitHelper.GetUnit(self.DomainScene(), key);
+                        if (unitTmp != null)
+                        {
+                            pos = unitTmp.Position;
+                        }
+                    }
+                    dic.Add((key, pos));
+                }
+                lightningBoltScriptManager.ResetDicKeyPos(dic);
+            }
+        }
+
+        public static void UpdatePointClienShowMoveEffect(this EffectShowObj self, float fixedDeltaTime)
+        {
+            if (self.RefEffectObj.effectShowType != EffectShowType.PointClienShowMove)
+            {
+                return;
+            }
+
+            Unit effectUnit = self.RefEffectObj.GetUnit();
+            if (UnitHelper.ChkIsBullet(effectUnit) == false)
+            {
+                return;
+            }
+
+            MoveTweenObj moveTweenObj = effectUnit.GetComponent<MoveTweenObj>();
+            if (moveTweenObj == null)
+            {
+                return;
+            }
+
+            float flyTime = 0;
+            Vector3 targetPos = Vector3.zero;
+
+            if (moveTweenObj.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            {
+                return;
+            }
+            else if (moveTweenObj.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
+            {
+                return;
+            }
+            else if (moveTweenObj.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
+            {
+                return;
+            }
+            else if (moveTweenObj.moveTweenType is TargetMoveTweenType targetMoveTweenType)
+            {
+                return;
+            }
+            else if (moveTweenObj.moveTweenType is TargetLimitTimeMoveTweenType targetLimitTimeMoveTweenType)
+            {
+                return;
+            }
+            else if (moveTweenObj.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
+            {
+                flyTime = targetQuickMoveTweenType.LimitTime;
+
+                if (moveTweenObj.selectHandle.selectHandleType == SelectHandleType.SelectPosition)
+                {
+                    targetPos = moveTweenObj.selectHandle.position;
+                }
+                else if (moveTweenObj.selectHandle.selectHandleType == SelectHandleType.SelectUnits)
+                {
+                    if (moveTweenObj.selectHandle.unitIds != null && moveTweenObj.selectHandle.unitIds.Count > 0)
+                    {
+                        Unit targetUnitFirst = UnitHelper.GetUnit(self.DomainScene(), moveTweenObj.selectHandle.unitIds[0]);
+                        if (targetUnitFirst == null)
+                        {
+                            return;
+                        }
+                        targetPos = targetUnitFirst.Position;
+                    }
+                }
+            }
+
+            if (targetPos.Equals(float3.zero))
+            {
+                return;
+            }
+
+            Vector3 startPos = self.RefEffectObj.createPos;
+            Vector3 endPos = Vector3.zero;
+            long passTime = TimeHelper.ServerNow() - self.RefEffectObj.createTime;
+            if (passTime >= flyTime * 1000)
+            {
+                endPos = targetPos;
+            }
+            else
+            {
+                endPos = startPos + passTime / (flyTime * 1000) * (targetPos - startPos);
+            }
+
+            self.go.transform.position = endPos;
+            self.go.transform.forward = (targetPos - startPos).normalized;
+
+            //
+            // Vector3 curEffectPos = self.go.transform.position;
+            // curEffectPos = Vector3.Lerp(curEffectPos, endPos, fixedDeltaTime);
+            // self.go.transform.position = curEffectPos;
+
+        }
     }
 }

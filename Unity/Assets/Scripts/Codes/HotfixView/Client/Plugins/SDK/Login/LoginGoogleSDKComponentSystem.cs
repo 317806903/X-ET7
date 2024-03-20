@@ -145,10 +145,11 @@ namespace ET.Client
             return self.Email;
         }
 
-        public static async ETTask SDKLoginIn(this LoginGoogleSDKComponent self, Action finishCallBack)
+        public static async ETTask SDKLoginIn(this LoginGoogleSDKComponent self, Action finishCallBack, Action failCallBack)
         {
             // await self.SDKLoginOut(true);
             self.finishCallBack = finishCallBack;
+            self.failCallBack = failCallBack;
 #if UNITY_ANDROID
             GoogleSignIn.Configuration = self.configuration;
             GoogleSignIn.Configuration.UseGameSignIn = false;
@@ -182,10 +183,12 @@ namespace ET.Client
                             Log.Info("Got Unexpected Exception?!?" + task.Exception);
                         }
                     }
+                    self.failCallBack?.Invoke();
                 }
                 else if (task.IsCanceled)
                 {
                     Log.Info("Canceled");
+                    self.failCallBack?.Invoke();
                 }
                 else
                 {

@@ -35,15 +35,13 @@ namespace ET.Client
 
 			Transform transEndlessChallenge = self.View.uiTransform.transform.Find("E_Effect_EndlessChallenge");
 			transEndlessChallenge.gameObject.SetActive(false);
-			Transform transPVE = self.View.uiTransform.transform.Find("E_Effect_PVE");
-			transPVE.gameObject.SetActive(false);
 			Transform transPVP = self.View.uiTransform.transform.Find("E_Effect_PVP");
 			transPVP.gameObject.SetActive(false);
 			Transform transNormal = self.View.uiTransform.transform.Find("E_Effect_Normal");
 			transNormal.gameObject.SetActive(false);
 			Transform transChallenge = self.View.uiTransform.transform.Find("E_Effect_EndChallengeMode");
 			transChallenge.gameObject.SetActive(false);
-			
+
 			self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
 
 			await TimerComponent.Instance.WaitAsync(500);
@@ -62,12 +60,21 @@ namespace ET.Client
 			if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE)
 			{
 				await self.ShowEffectPVE(success);
+				if (success)
+				{
+					await ET.Client.GameJudgeChooseHelper.ShowGameJudgeChoose(self.DomainScene());
+				}
 			}
 			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge)
 			{
 				MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-				await self.ShowEffectEndlessChallenge(monsterWaveCallComponent.curIndex);
+				int aliveNum = monsterWaveCallComponent.GetWaveIndex() - 1;
+				await self.ShowEffectEndlessChallenge(aliveNum);
 
+				if (aliveNum > 5)
+				{
+					await ET.Client.GameJudgeChooseHelper.ShowGameJudgeChoose(self.DomainScene());
+				}
 			}
 			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP)
 			{
@@ -151,7 +158,7 @@ namespace ET.Client
 			Transform victoryTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory");
 			Transform rewardCardTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward");
 			Transform rewardGoldTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_GoldCoins");
-			
+
 			loseTrans.gameObject.SetActive(false);
 			victoryTrans.gameObject.SetActive(false);
 			rewardCardTrans.gameObject.SetActive(false);
@@ -163,11 +170,16 @@ namespace ET.Client
 			self.View.ELabel_LvTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
             if (success)
             {
-	            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
+	            int count = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenges(true).Count;
+				if(level == count){
+					self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
+				}else{
+					self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
+				}
 				loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
-				
+
 				long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
 				Dictionary<string, int> dropItems = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerDropItemsInfo(myPlayerId);
 				foreach((string itemCfgId, int itemCnt) in dropItems)
@@ -195,6 +207,11 @@ namespace ET.Client
 						self.View.EImage_LowImage.SetVisible(towerQuality == 0);
 						self.View.EImage_MiddleImage.SetVisible(towerQuality == 1);
 						self.View.EImage_HighImage.SetVisible(towerQuality == 2);
+
+						self.View.EButton_BuyButton.AddListener(()=>
+						{
+							self.ShowDetails(itemCfgId);
+						});
 
 						await TimerComponent.Instance.WaitAsync(2000);
 						self.View.E_victoryImage.gameObject.SetActive(false);
@@ -265,7 +282,7 @@ namespace ET.Client
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-			return monsterWaveCallComponent.curIndex;
+			return monsterWaveCallComponent.GetWaveIndex();
 		}
 
 		public static int GetMyGold(this DlgBattleTowerEnd self)
@@ -282,6 +299,17 @@ namespace ET.Client
 			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
 			List<long> towerList = gamePlayTowerDefenseComponent.GetPutTowers(myPlayerId);
 			return towerList;
+		}
+
+		public static void ShowDetails(this DlgBattleTowerEnd self, string itemCfgId)
+		{
+			UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
+			_UIComponent.ShowWindow<DlgDetails>();
+			DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
+			if (_DlgDetails != null)
+			{
+				_DlgDetails.SetCurItemCfgId(itemCfgId);
+			}
 		}
 	}
 }

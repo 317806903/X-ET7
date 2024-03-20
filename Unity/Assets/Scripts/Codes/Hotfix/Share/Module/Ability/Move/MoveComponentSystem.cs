@@ -78,18 +78,19 @@ namespace ET.Ability
                     }
                     else if (moveOrIdleComponent.moveInputType == MoveInputType.Direction)
                     {
-                        pathfindingComponent.SetMoveVelocity(moveOrIdleComponent.directionInput * speed);
+                        float3 directionInput = moveOrIdleComponent.GetMoveInput_Direction();
+                        pathfindingComponent.SetMoveVelocity(directionInput * speed);
                     }
                     else if (moveOrIdleComponent.moveInputType == MoveInputType.TargetPosition)
                     {
-                        float3 targetPos = moveOrIdleComponent.targetPositionInput;
+                        float3 targetPositionInput = moveOrIdleComponent.GetMoveInput_TargetPosition();
                         float3 unitPos = unit.Position;
-                        if (math.abs(targetPos.x - unitPos.x) < 0.1f && math.abs(targetPos.z - unitPos.z) < 0.1f)
+                        if (math.abs(targetPositionInput.x - unitPos.x) < 0.1f && math.abs(targetPositionInput.z - unitPos.z) < 0.1f)
                         {
-                            ET.Ability.UnitHelper.ResetPos(unit, targetPos);
+                            ET.Ability.UnitHelper.ResetPos(unit, targetPositionInput);
                             return;
                         }
-                        unit.FindPathMoveToAsync(targetPos, null).Coroutine();
+                        unit.FindPathMoveToAsync(targetPositionInput, null).Coroutine();
                     }
                 }
                 return;
@@ -105,18 +106,19 @@ namespace ET.Ability
                     }
                     else if (moveOrIdleComponent.moveInputType == MoveInputType.Direction)
                     {
-                        speedVector += moveOrIdleComponent.directionInput * speed;
+                        float3 directionInput = moveOrIdleComponent.GetMoveInput_Direction();
+                        speedVector += directionInput * speed;
                     }
                     else if (moveOrIdleComponent.moveInputType == MoveInputType.TargetPosition)
                     {
-                        float3 targetPos = moveOrIdleComponent.targetPositionInput;
+                        float3 targetPositionInput = moveOrIdleComponent.GetMoveInput_TargetPosition();
                         float3 unitPos = unit.Position;
-                        if (math.abs(targetPos.x - unitPos.x) < 0.1f && math.abs(targetPos.z - unitPos.z) < 0.1f)
-                        {
-                            ET.Ability.UnitHelper.ResetPos(unit, targetPos);
-                            return;
-                        }
-                        speedVector += math.normalize(moveOrIdleComponent.targetPositionInput - unit.Position) * speed;
+                        // if (math.abs(targetPositionInput.x - unitPos.x) < 0.1f && math.abs(targetPositionInput.z - unitPos.z) < 0.1f)
+                        // {
+                        //     ET.Ability.UnitHelper.ResetPos(unit, targetPositionInput);
+                        //     return;
+                        // }
+                        speedVector += math.normalize(targetPositionInput - unitPos) * speed;
 
                         ET.Ability.MoveOrIdleHelper.StopMove(unit);
                     }

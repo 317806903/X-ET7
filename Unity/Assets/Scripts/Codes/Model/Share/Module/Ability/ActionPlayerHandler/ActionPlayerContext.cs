@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability

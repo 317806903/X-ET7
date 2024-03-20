@@ -32,27 +32,27 @@ namespace ET
             return pathfindingComponent.GetArrivePath(startPos, endPos);
         }
 
-        public static bool ChkArrive(Unit unit, float3 startPos, float3 endPos)
+        public static (bool, List<float3>) ChkArrive(Unit unit, float3 startPos, float3 endPos)
         {
             List<float3> points = ET.RecastHelper.GetArrivePath(unit, startPos, endPos);
             if (points == null)
             {
-                return false;
+                return (false, points);
             }
-            if (points.Count == 0)
+            if (points.Count < 2)
             {
-                return false;
+                return (false, points);
             }
             float3 lastPoint = points[points.Count - 1];
             if (math.abs(endPos.x - lastPoint.x) < 0.3f
                 && math.abs(endPos.y - lastPoint.y) < 0.3f
                 && math.abs(endPos.z - lastPoint.z) < 0.3f)
             {
-                return true;
+                return (true, points);
             }
             else
             {
-                return false;
+                return (false, points);
             }
         }
 

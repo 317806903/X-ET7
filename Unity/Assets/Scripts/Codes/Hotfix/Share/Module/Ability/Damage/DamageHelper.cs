@@ -55,6 +55,9 @@ namespace ET.Ability
 
             }
 
+            bool isCriticalStrike = ChkIsCriticalStrike(unit, actionCfg_AttackArea.DamageInfo_Ref);
+            actionContext.isCriticalStrike = isCriticalStrike;
+
             SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
             {
@@ -78,11 +81,11 @@ namespace ET.Ability
 
             if (string.IsNullOrEmpty(actionCfg_AttackArea.DamageInfo) == false)
             {
-                await DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot);
+                await DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot, isCriticalStrike);
             }
         }
 
-        public static async ETTask DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot)
+        public static async ETTask DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot, bool isCriticalStrike)
         {
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
@@ -129,7 +132,7 @@ namespace ET.Ability
                 {
                     continue;
                 }
-                Damage damage = GetDamage(unit, targetUnit, actionCfg_DamageUnit);
+                Damage damage = GetDamage(unit, targetUnit, actionCfg_DamageUnit, isCriticalStrike);
                 if (damageAllot is DamageAllotChg damageAllotChg)
                 {
                     damage *= damageScale;
@@ -164,7 +167,56 @@ namespace ET.Ability
             }
         }
 
-        public static Damage GetDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit)
+        public static bool ChkIsCriticalStrike(Unit attackerUnit, ActionCfg_DamageUnit actionCfg_DamageUnit)
+        {
+            if (actionCfg_DamageUnit == null)
+            {
+                NumericComponent attackNumeric = attackerUnit.GetComponent<NumericComponent>();
+                float attacker_CriticalStrikeRate = attackNumeric.GetAsFloat(NumericType.CriticalStrikeRate);
+                if (RandomGenerator.RandFloat01() < attacker_CriticalStrikeRate * 0.01f)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            ET.AbilityConfig.DamageInfo damageInfo = actionCfg_DamageUnit.DamageInfo;
+            switch (damageInfo.DamageType)
+            {
+                case DamageType.FixedBlood:
+                    return false;
+                case DamageType.PercentTotalBloodAttacker:
+                    return false;
+                case DamageType.PercentTotalBloodBeHurter:
+                    return false;
+                case DamageType.PercentCurBloodAttacker:
+                    return false;
+                case DamageType.PercentCurBloodBeHurter:
+                    return false;
+                case DamageType.PropertyBlood:
+                    NumericComponent attackNumeric = attackerUnit.GetComponent<NumericComponent>();
+                    float attacker_CriticalStrikeRate = attackNumeric.GetAsFloat(NumericType.CriticalStrikeRate);
+                    if (RandomGenerator.RandFloat01() < attacker_CriticalStrikeRate * 0.01f)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case DamageType.LastSelectBlood:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return false;
+        }
+
+        public static Damage GetDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit, bool isCriticalStrike)
         {
             float damageValue = 0;
             ET.AbilityConfig.DamageInfo damageInfo = actionCfg_DamageUnit.DamageInfo;
@@ -186,7 +238,7 @@ namespace ET.Ability
                     damageValue = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PropertyBlood:
-                    damageValue = GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value);
+                    damageValue = GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value, isCriticalStrike);
                     break;
                 case DamageType.LastSelectBlood:
                     break;
@@ -234,24 +286,23 @@ namespace ET.Ability
             }
         }
 
-        public static float GetDamageByProperty(Unit attackerUnit, Unit targetUnit, float attackScale)
+        public static float GetDamageByProperty(Unit attackerUnit, Unit targetUnit, float attackScale, bool isCriticalStrike)
         {
             NumericComponent attackNumeric = attackerUnit.GetComponent<NumericComponent>();
             NumericComponent targetNumeric = targetUnit.GetComponent<NumericComponent>();
             float attacker_Attack = attackNumeric.GetAsFloat(NumericType.PhysicalAttack);
             attacker_Attack *= attackScale;
             //attacker_Attack = math.max(0, attacker_Attack);
-            float attacker_CriticalHitDamage = attackNumeric.GetAsFloat(NumericType.CriticalHitDamage);
-            attacker_CriticalHitDamage = math.max(0, attacker_CriticalHitDamage);
-            float attacker_CriticalStrikeRate = attackNumeric.GetAsFloat(NumericType.CriticalStrikeRate);
             float attacker_DamageDeepening = attackNumeric.GetAsFloat(NumericType.DamageDeepening);
             //attacker_DamageDeepening = math.max(0, attacker_DamageDeepening);
             float target_DamageRelief = targetNumeric.GetAsFloat(NumericType.DamageRelief);
             //target_DamageRelief = math.clamp(target_DamageRelief, 0, 100);
 
             float damageValue = attacker_Attack;
-            if (RandomGenerator.RandFloat01() < attacker_CriticalStrikeRate * 0.01f)
+            if (isCriticalStrike)
             {
+                float attacker_CriticalHitDamage = attackNumeric.GetAsFloat(NumericType.CriticalHitDamage);
+                attacker_CriticalHitDamage = math.max(0, attacker_CriticalHitDamage);
                 damageValue *= ((100 + attacker_CriticalHitDamage) * 0.01f);
             }
             damageValue *= ((100 + attacker_DamageDeepening) * 0.01f);

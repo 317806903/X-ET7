@@ -106,10 +106,10 @@ namespace ET.Ability
             int damageValue = self.DamageValue();
 
             NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
-            int curHp = numericComponent.GetAsInt(NumericType.Hp);
-            int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
-            int newHp = math.min(math.max(0, curHp - damageValue), maxHp);
-            numericComponent.SetAsInt(NumericType.HpBase, newHp);
+            float curHp = numericComponent.GetAsFloat(NumericType.Hp);
+            float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
+            float newHp = math.min(math.max(0, curHp - damageValue), maxHp);
+            numericComponent.SetAsFloatToBase(NumericType.Hp, newHp);
 
             //if (isHeal == true)
             {

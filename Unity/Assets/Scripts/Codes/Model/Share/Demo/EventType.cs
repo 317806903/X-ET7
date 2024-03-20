@@ -52,6 +52,7 @@ namespace ET
 
         public struct LoginOutFinish
         {
+            public bool isNeedLoginOutAccount;
         }
 
         public struct EnterMapFinish
@@ -247,6 +248,10 @@ namespace ET
         }
 
         public struct NoticeUIReconnect
+        {
+        }
+
+        public struct NoticeUILoginInAtOtherWhere
         {
         }
 

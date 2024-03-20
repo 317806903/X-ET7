@@ -42,12 +42,15 @@ namespace ET.Client
             self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
             self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
             self.View.E_RankButton.AddListenerAsync(self.ClickRank);
+            self.View.E_DiscordButton.AddListener(self.ClickDiscord);
             self.View.EButton_PhysicalStrengthButton.AddListenerAsync(self.ClickPhysicalStrength);
             self.View.E_CardsButton.AddListenerAsync(self.ClickCards);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
         {
+            UIManagerHelper.GetUIComponent(self.DomainScene()).CloseWindowType(UIWindowType.NoticeRoot);
+
             self.ShowBg().Coroutine();
             self._ShowWindow().Coroutine();
         }
@@ -195,12 +198,14 @@ namespace ET.Client
 
         public static async ETTask ClickAvatar(this DlgGameModeAR self)
         {
+            self.TrackFunctionClicked("personalInfo");
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersonalInformation>();
         }
 
         public static async ETTask ClickTutorial(this DlgGameModeAR self)
         {
+            self.TrackFunctionClicked("tutorial");
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
@@ -217,12 +222,13 @@ namespace ET.Client
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Confirm");
             string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Cancel");
             string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Title");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { LoginHelper.LoginOut(self.ClientScene()).Coroutine(); }, null,
+            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { LoginHelper.LoginOut(self.ClientScene(), true).Coroutine(); }, null,
                 sureTxt, cancelTxt, titleTxt);
         }
 
         public static async ETTask ClickRank(this DlgGameModeAR self)
         {
+            self.TrackFunctionClicked("rank");
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRankEndlessChallenge>();
         }
@@ -234,8 +240,15 @@ namespace ET.Client
 
         public static async ETTask ClickCards(this DlgGameModeAR self)
         {
+            self.TrackFunctionClicked("bag");
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBag>();
+        }
+
+        public static void ClickDiscord(this DlgGameModeAR self)
+        {
+            self.TrackFunctionClicked("discord");
+            Application.OpenURL("https://discord.gg/jnf2qabe9C");
         }
 
         public static async ETTask ChkUpdatePhysicalStrength(this DlgGameModeAR self)
@@ -267,6 +280,17 @@ namespace ET.Client
         public static void HideWindow(this DlgGameModeAR self)
         {
             TimerComponent.Instance?.Remove(ref self.Timer);
+        }
+
+        public static void TrackFunctionClicked(this DlgGameModeAR self, string name){
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "FunctionClicked",
+                properties = new()
+                {
+                    {"function_name", name},
+                }
+            });
         }
     }
 }

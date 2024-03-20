@@ -71,12 +71,13 @@ namespace ET.Ability
             }
 
             SkillObj skillObj = self.AddChild<SkillObj>();
+            skillObj.Init(skillCfgId, skillLevel, skillSlotType);
 
             self.skillSlotType2SkillObjs.Add(skillSlotType, skillObj.Id);
             self.skillCfgId2SkillObjs.Add(skillCfgId, skillObj.Id);
             self.ReSortPrioritySkillObjs();
 
-            skillObj.Init(skillCfgId, skillLevel, skillSlotType);
+            skillObj.DealLearnActionIds();
 
             return (true, "");
         }
@@ -170,11 +171,36 @@ namespace ET.Ability
             self.sortPrioritySkillObjs.Clear();
             if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.InitiativeSkill, out List<long> skillObjs))
             {
-                self.sortPrioritySkillObjs.AddRange(skillObjs);
+                foreach (long skillId in skillObjs)
+                {
+                    SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
+                    {
+                        self.sortPrioritySkillObjs.Add(skillId);
+                    }
+                }
             }
             if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.NormalAttack, out skillObjs))
             {
-                self.sortPrioritySkillObjs.AddRange(skillObjs);
+                foreach (long skillId in skillObjs)
+                {
+                    SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
+                    {
+                        self.sortPrioritySkillObjs.Add(skillId);
+                    }
+                }
+            }
+            if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.PassiveSkill, out skillObjs))
+            {
+                foreach (long skillId in skillObjs)
+                {
+                    SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
+                    {
+                        self.sortPrioritySkillObjs.Add(skillId);
+                    }
+                }
             }
         }
 
@@ -208,7 +234,7 @@ namespace ET.Ability
             return (dis, null);
         }
 
-        public static float GetMaxSkillDis(this SkillComponent self, ET.Ability.SkillSlotType skillSlotType)
+        public static float GetMaxSkillDis(this SkillComponent self, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             List<long> list = self.GetSkillListBySkillSlotType(skillSlotType);
             float dis = 0;
@@ -227,7 +253,7 @@ namespace ET.Ability
             return dis;
         }
 
-        public static List<SkillObj> GetSkillList(this SkillComponent self, string skillCfgId, ET.Ability.SkillSlotType skillSlotType)
+        public static List<SkillObj> GetSkillList(this SkillComponent self, string skillCfgId, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             ListComponent<SkillObj> skillList = ListComponent<SkillObj>.Create();
             if (string.IsNullOrEmpty(skillCfgId) == false)

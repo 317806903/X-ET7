@@ -177,7 +177,7 @@ namespace ET.Client
 
             Log.Debug($"NetWork.GetIP[{NetWork.GetIP()}]");
             // 更新版本号
-            (bool bNeedUpdate, int errorCode) = await ResComponent.Instance.UpdateVersionAsync();
+            (int errorCode, bool bNeedUpdate, bool bIsAuditing, string auditingRouterHttpHost, int auditingRouterHttpPort) = await ResComponent.Instance.UpdateVersionAsync();
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
@@ -189,7 +189,7 @@ namespace ET.Client
                 });
                 return false;
             }
-            if (bNeedUpdate)
+            else if (bNeedUpdate)
             {
                 Log.Debug("bNeedUpdate == true");
 
@@ -212,6 +212,15 @@ namespace ET.Client
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
                 return false;
+            }
+            else if (bIsAuditing)
+            {
+                Log.Debug("bIsAuditing == true");
+
+                ResConfig.Instance.RouterHttpHost = auditingRouterHttpHost;
+                ResConfig.Instance.RouterHttpPort = auditingRouterHttpPort;
+                ResConfig.Instance.ResGameVersion = "vAuditing";
+                await MonoResComponent.Instance.ReLoadWhenDebugConnect();
             }
 
             // 更新资源版本号

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using ET.AbilityConfig;
 using Unity.Mathematics;
-using SkillSlotType = ET.Ability.SkillSlotType;
+using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET
 {
@@ -78,10 +78,11 @@ namespace ET
 			GamePlayHelper.AddPlayerUnitTeamFlag(playerId, playerUnit);
 
 			UnitCfg unitCfg = playerUnit.model;
-			int count = unitCfg.SkillList.Count;
-			for (int i = 0; i < count; i++)
+			foreach (var item in unitCfg.SkillList)
 			{
-				SkillHelper.LearnSkill(playerUnit, unitCfg.SkillList[i], 1, SkillSlotType.NormalAttack);
+				string skillCfgId = item.Key;
+				ET.AbilityConfig.SkillSlotType skillSlotType = item.Value;
+				SkillHelper.LearnSkill(playerUnit, skillCfgId, 1, skillSlotType);
 			}
 
 			return playerUnit;

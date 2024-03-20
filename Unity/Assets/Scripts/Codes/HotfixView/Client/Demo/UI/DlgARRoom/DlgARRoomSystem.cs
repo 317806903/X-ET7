@@ -25,13 +25,21 @@ namespace ET.Client
                 self.AddMemberItemRefreshListener(transform, i));
         }
 
-        public static void ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
+        public static async void ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
+            int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
+            string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
+            self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
+            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.text =
+                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength.ToString();
 
-            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
+            // MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
             self.GetRoomInfo().Coroutine();
         }
 
@@ -150,8 +158,8 @@ namespace ET.Client
             await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
             RoomComponent roomComponent = self.GetRoomComponent();
-            self.View.E_RoomMemberList_titleImage.SetVisible(roomComponent.subRoomType != SubRoomType.ARPVE);
-            self.View.E_RoomMemberList_title_ChallengeImage.SetVisible(roomComponent.subRoomType == SubRoomType.ARPVE);
+            self.View.E_RoomMemberList_titleImage.SetVisible(false);
+            self.View.E_RoomMemberList_title_ChallengeImage.SetVisible(false);
 
             int count = roomComponent.roomMemberSeat.Count;
             self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);

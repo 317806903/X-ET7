@@ -29,7 +29,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         DeathShow = _buf.ReadString();
         IdleTimelineId = _buf.ReadString();
         MoveTimelineId = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SkillList.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     SkillList.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -97,8 +97,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// <summary>
     /// 拥有技能列表
     /// </summary>
-    public System.Collections.Generic.List<string> SkillList { get; private set; }
-    public System.Collections.Generic.List<SkillCfg> SkillList_Ref { get; private set; }
+    public System.Collections.Generic.Dictionary<string, SkillSlotType> SkillList { get; private set; }
 
     public const int __ID__ = 1378101280;
     public override int GetTypeId() => __ID__;
@@ -109,7 +108,6 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
         this.IdleTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(IdleTimelineId);
         this.MoveTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(MoveTimelineId);
-        { SkillCfgCategory __table = (SkillCfgCategory)_tables["SkillCfgCategory"]; this.SkillList_Ref = new System.Collections.Generic.List<SkillCfg>(); foreach(var __e in SkillList) { this.SkillList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 

@@ -47,6 +47,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         AREndlessChallengeRecoverHp = _buf.ReadInt();
         AREndlessChallengeRecoverGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
+        GameReJudgeTime = _buf.ReadLong();
         PostInit();
     }
 
@@ -172,6 +173,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public System.Collections.Generic.List<string> InitialBackpackItem { get; private set; }
     public System.Collections.Generic.List<ItemCfg> InitialBackpackItem_Ref { get; private set; }
+    /// <summary>
+    /// 需要重新评估游戏的时刻
+    /// </summary>
+    public long GameReJudgeTime { get; private set; }
+    public long GameReJudgeTime_Millis => GameReJudgeTime * 1000L;
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -221,6 +227,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "AREndlessChallengeRecoverHp:" + AREndlessChallengeRecoverHp + ","
         + "AREndlessChallengeRecoverGold:" + AREndlessChallengeRecoverGold + ","
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
+        + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "}";
     }
     

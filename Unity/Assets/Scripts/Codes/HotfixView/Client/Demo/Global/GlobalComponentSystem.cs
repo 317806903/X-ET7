@@ -95,8 +95,12 @@ namespace ET.Client
             MainQualitySettingComponent mainQualitySettingComponent = self.AddComponent<MainQualitySettingComponent>();
 
             self.AddComponent<DebugConnectComponent>();
+
             DebugShowComponent debugShowComponent = self.AddComponent<DebugShowComponent>();
             await debugShowComponent.Init(self.DebugRoot);
+
+            DebugWhenEditorComponent debugWhenEditorComponent = self.AddComponent<DebugWhenEditorComponent>();
+            await debugWhenEditorComponent.Init(self.DebugRoot);
         }
 
         public static void ShowDebugRoot(this GlobalComponent self)
@@ -113,6 +117,11 @@ namespace ET.Client
                 self.DebugRoot.gameObject.SetActive(false);
                 self.ErrerLogManagerRoot.gameObject.SetActive(true);
             };
+        }
+
+        public static bool ChkIsShowDebugRoot(this GlobalComponent self)
+        {
+            return self.DebugRoot.gameObject.activeInHierarchy;
         }
 
         public static void AddIngameDebugConsoleCommand(this GlobalComponent self)

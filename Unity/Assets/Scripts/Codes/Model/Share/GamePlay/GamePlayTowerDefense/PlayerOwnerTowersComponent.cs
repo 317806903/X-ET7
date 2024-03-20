@@ -10,7 +10,13 @@ namespace ET
 	public class PlayerOwnerTowersComponent : Entity, IAwake, IDestroy, ITransferClient
 	{
 		/// <summary>
-		/// 玩家拥有的卡池
+		/// 玩家拥有的卡池(卡片)(playerId, towerCfgId, towerLevel)
+		/// </summary>
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public MultiDictionary<long, string, int> playerOwnerTowerCardIds;
+
+		/// <summary>
+		/// 玩家拥有的卡池(当场中购买过的)(playerId, towerCfgId, towerNum)
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiDictionary<long, string, int> playerOwnerTowerId;

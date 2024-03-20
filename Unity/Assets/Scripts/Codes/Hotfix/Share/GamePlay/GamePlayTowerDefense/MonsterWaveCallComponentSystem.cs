@@ -81,6 +81,11 @@ namespace ET
             return self.GetGamePlayTowerDefense().GetCallMonsterPosition(playerId);
         }
 
+        public static int GetWaveIndex(this MonsterWaveCallComponent self)
+        {
+            return self.curIndex + 1;
+        }
+
         public static int GetWaveRewardGold(this MonsterWaveCallComponent self)
         {
             bool bRet = self.GetRealWaveInfo(out int waveIndex, out float monsterWaveNumScalePercent,

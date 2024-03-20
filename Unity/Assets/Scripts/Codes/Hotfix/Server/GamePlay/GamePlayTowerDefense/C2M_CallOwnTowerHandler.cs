@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -38,7 +39,7 @@ namespace ET.Server
 
 					if (homeUnit != null)
 					{
-						bool canArrive = ET.RecastHelper.ChkArrive(observerUnit, position, homeUnit.Position);
+						(bool canArrive, List<float3> pointList) = ET.RecastHelper.ChkArrive(observerUnit, position, homeUnit.Position);
 						if (canArrive == false)
 						{
 							response.Error = ErrorCode.ERR_LogicError;

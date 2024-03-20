@@ -22,7 +22,7 @@ public sealed partial class SelectObjectConfig: Bright.Config.BeanBase
         IsSaveTargetOnce = _buf.ReadBool();
         IsChgToSelectPos = _buf.ReadBool();
         SelectNum = _buf.ReadInt();
-        SelectObjectType = _buf.ReadInt();
+        SelectObjectType = (SelectObjectType)_buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectOrder = new System.Collections.Generic.List<SelectObjectOrder>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SelectObjectOrder _e0;  _e0 = SelectObjectOrder.DeserializeSelectObjectOrder(_buf); SelectOrder.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectPreCondition = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); SelectPreCondition.Add(_e0);}}
         ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
@@ -59,9 +59,9 @@ public sealed partial class SelectObjectConfig: Bright.Config.BeanBase
     /// </summary>
     public int SelectNum { get; private set; }
     /// <summary>
-    /// 选取对象的类型(-1表示不限制;1表示友军;11表示友军player;2表示敌军;21表示敌军player)
+    /// 选取对象的类型
     /// </summary>
-    public int SelectObjectType { get; private set; }
+    public SelectObjectType SelectObjectType { get; private set; }
     /// <summary>
     /// 对象选择排序规则
     /// </summary>

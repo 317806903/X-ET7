@@ -42,7 +42,7 @@ namespace ET.Client
 
         public static async ETTask Init(this ShootTextComponent self)
         {
-#if false//UNITY_EDITOR
+#if UNITY_EDITOR
 #else
             if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
             {
@@ -91,6 +91,16 @@ namespace ET.Client
             {
                 return;
             }
+
+#if UNITY_EDITOR
+            if (ET.Client.DebugWhenEditorComponent.Instance.IsShowShootDamageNum == false)
+            {
+                if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
+                {
+                    return;
+                }
+            }
+#endif
 
             string showValue = "";
             if (value > 0)

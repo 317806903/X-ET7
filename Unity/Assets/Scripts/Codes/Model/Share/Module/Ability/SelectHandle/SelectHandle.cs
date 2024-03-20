@@ -122,10 +122,7 @@ namespace ET.Ability
             if (selectHandle.unitIds != null)
             {
                 selectHandleNew.unitIds = ListComponent<long>.Create();
-                for (int i = 0; i < selectHandle.unitIds.Count; i++)
-                {
-                    selectHandleNew.unitIds.Add(selectHandle.unitIds[i]);
-                }
+                selectHandleNew.unitIds.AddRange(selectHandle.unitIds);
             }
             return selectHandleNew;
         }

@@ -54,7 +54,7 @@ namespace ET.Ability
         ///现在aoe范围内的所有unitId
         ///</summary>
         public HashSet<long> unitIds = new ();
-        public List<long> chgUnitList = new ();
+        public HashSet<long> chgUnitList = new ();
 
         [BsonIgnore]
         public AoeTargetCondition aoeTargetCondition;

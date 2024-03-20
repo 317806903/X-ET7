@@ -43,37 +43,41 @@ namespace ET.AbilityConfig
         /// </summary>
         BreakStrongBati = 7,
         /// <summary>
-        /// 禁止主动移动操作
+        /// 禁止主动移动(界面操作或AI操作)
         /// </summary>
         NoMoveInput = 8,
         /// <summary>
-        /// 禁止主动技能操作
+        /// 禁止释放主动技能(界面操作或AI操作)
         /// </summary>
         NoSkillCastInput = 9,
         /// <summary>
-        /// 禁止主动修改面向操作
+        /// 禁止主动修改面向(界面操作或AI操作)
         /// </summary>
         NoFaceChgInput = 10,
         /// <summary>
-        /// 隐身：不可被其他人看见(不被主动搜索到)
+        /// 禁止普通攻击(界面操作或AI操作)
         /// </summary>
-        Invisible = 11,
+        NoNormalAttack = 11,
+        /// <summary>
+        /// 隐身:不可被其他人看见(不被主动搜索到)
+        /// </summary>
+        Invisible = 12,
         /// <summary>
         /// 被显形
         /// </summary>
-        BeBreakInvisible = 12,
+        BeBreakInvisible = 13,
         /// <summary>
         /// 动作停止(被冰冻)
         /// </summary>
-        StopAnimator = 13,
+        StopAnimator = 14,
         /// <summary>
-        /// 不可被移动
+        /// 不可被移动(击退，击飞等)
         /// </summary>
-        NoMotion = 14,
-        BuffTagType1 = 15,
-        BuffTagType2 = 16,
-        BuffTagType3 = 17,
-        BuffTagType4 = 18,
+        NoMotion = 15,
+        BuffTagType1 = 16,
+        BuffTagType2 = 17,
+        BuffTagType3 = 18,
+        BuffTagType4 = 19,
     }
 
 } 

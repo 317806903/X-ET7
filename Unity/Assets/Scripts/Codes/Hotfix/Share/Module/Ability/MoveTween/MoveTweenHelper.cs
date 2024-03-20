@@ -13,6 +13,19 @@ namespace ET.Ability
             MoveTweenObj moveTweenObj = unit.AddComponent<MoveTweenObj>();
             moveTweenObj.Init(unit.Id, moveTweenType, selectHandle);
         }
-        
+
+        public static void MoveTweenChgTarget(Unit unit, ActionCfg_MoveTweenChgTarget actionCfgMoveTweenChgTarget, ref ActionContext actionContext)
+        {
+            MoveTweenObj moveTweenObj = unit.GetComponent<MoveTweenObj>();
+            if (moveTweenObj == null)
+            {
+                return;
+            }
+
+            SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(unit, null, actionCfgMoveTweenChgTarget.ActionCallAutoUnitArea_Ref, ref actionContext, false);
+
+            moveTweenObj.ChgSelectHandle(selectHandle);
+        }
+
     }
 }

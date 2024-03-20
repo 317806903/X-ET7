@@ -13,6 +13,11 @@ namespace ET
             }
         }
 
+        public static bool ChkIsInDeath(this Unit self)
+        {
+            return ET.Ability.DeathShowHelper.ChkIsInDeath(self);
+        }
+
         public static void DestroyWithDeathShow(this Unit self)
         {
             ET.Ability.DeathShowHelper.DeathShow(self);

@@ -5,7 +5,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class MoveTweenObj: Entity, IAwake, IDestroy, IFixedUpdate
+    public class MoveTweenObj: Entity, IAwake, IDestroy, IFixedUpdate, ITransferClient
     {
         ///<summary>
         ///</summary>
@@ -30,6 +30,7 @@ namespace ET.Ability
         ///已经存在了多久了，单位：秒
         ///</summary>
         public float timeElapsed = 0;
+        public float holdTime = 0;
 
         public MoveTweenType moveTweenType;
 

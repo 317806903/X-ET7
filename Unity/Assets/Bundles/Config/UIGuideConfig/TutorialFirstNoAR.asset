@@ -355,3 +355,22 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
+  - name: "\u5237\u65B0\u8D2D\u4E70\u5217\u8868"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_Refresh
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

@@ -227,20 +227,21 @@ namespace ET.Client
             return "";
         }
 
-        public static async ETTask SDKLoginIn(this LoginSDKManagerComponent self, Action finishCallBack)
+        public static async ETTask SDKLoginIn(this LoginSDKManagerComponent self, Action finishCallBack, Action failCallBack = null)
         {
             self.finishCallBack = finishCallBack;
+            self.failCallBack = failCallBack;
             if (self.GetLoginType() == LoginType.UnitySDK)
             {
                 await self.GetComponent<LoginUnitySDKComponent>().SDKLoginIn(self.finishCallBack);
             }
             else if (self.GetLoginType() == LoginType.GoogleSDK)
             {
-                await self.GetComponent<LoginGoogleSDKComponent>().SDKLoginIn(self.finishCallBack);
+                await self.GetComponent<LoginGoogleSDKComponent>().SDKLoginIn(self.finishCallBack, self.failCallBack);
             }
             else if (self.GetLoginType() == LoginType.AppleSDK)
             {
-                await self.GetComponent<LoginAppleSDKComponent>().SDKLoginIn(self.finishCallBack);
+                await self.GetComponent<LoginAppleSDKComponent>().SDKLoginIn(self.finishCallBack, self.failCallBack);
             }else{
             }
         }

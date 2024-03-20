@@ -45,6 +45,10 @@ namespace ET.Server
                         playerBaseInfoComponent.EndlessChallengeScore, playerBaseInfoComponent.EndlessChallengeKillNum);
                 }
 
+                playerBaseInfoComponent.AREndlessChallengeBattleCount++;
+                await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo,
+                    new() { "AREndlessChallengeBattleCount"});
+
                 await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), playerId,
                     GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength, PlayerModelChgType.PlayerBaseInfo_111);
             }
@@ -54,6 +58,16 @@ namespace ET.Server
 
         public static async ETTask GameEndWhenServer_IsPVEMode(this GamePlayTowerDefenseComponent self)
         {
+            string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
+            bool isChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.Contain(cfgId);
+            if (isChallengeLevelCfg == false)
+            {
+                Log.Error($"TowerDefense_ChallengeLevelCfgCategory.Instance.Contain({cfgId}) == false");
+                return;
+            }
+            TowerDefense_ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.Get(cfgId);
+            int level = challengeLevelCfg.Index;
+
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
@@ -63,10 +77,9 @@ namespace ET.Server
                                 PlayerBaseInfoComponent;
                 bool bHomeWin = self.ChkHomeWin(playerId);
 
-                string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
-                TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-                    TowerDefense_ChallengeLevelCfgCategory.Instance.Get(cfgId);
-                int level = challengeLevelCfg.Index;
+                playerBaseInfoComponent.ARPVEBattleCount++;
+                await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo,
+                    new() { "ARPVEBattleCount"});
 
                 if (bHomeWin == false)
                 {

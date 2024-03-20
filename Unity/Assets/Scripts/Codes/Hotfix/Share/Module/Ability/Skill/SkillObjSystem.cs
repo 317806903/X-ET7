@@ -62,6 +62,11 @@ namespace ET.Ability
             NumericComponent numericComponent = self.AddComponent<NumericComponent>();
             numericComponent.SetAsFloat(NumericType.SkillCDBase, skillCfg.Cd);
             numericComponent.SetAsFloat(NumericType.SkillDisBase, skillCfg.Dis);
+        }
+
+        public static void DealLearnActionIds(this SkillObj self)
+        {
+            SkillCfg skillCfg = self.model;
 
             if (skillCfg.LearnActionId.Count > 0)
             {
@@ -69,10 +74,10 @@ namespace ET.Ability
                 ActionContext actionContext = new ActionContext()
                 {
                     unitId = self.GetUnit().Id,
-                    skillCfgId = skillCfgId,
+                    skillCfgId = self.skillCfgId,
                     skillDis = self.GetSkillDis(),
-                    skillSlotType = skillSlotType,
-                    skillLevel = skillLevel,
+                    skillSlotType = self.skillSlotType,
+                    skillLevel = self.skillLevel,
                 };
                 foreach (var actionId in skillCfg.LearnActionId)
                 {
@@ -119,6 +124,25 @@ namespace ET.Ability
             {
                 string msg = result.msg;
                 return (false, msg);
+            }
+
+            if (self.skillSlotType == SkillSlotType.InitiativeSkill)
+            {
+                bool bRet = BuffHelper.ChkCanSkillCastInput(self.GetUnit());
+                if (bRet == false)
+                {
+                    string msg = "cannot Cast InitiativeSkill";
+                    return (false, msg);
+                }
+            }
+            else if (self.skillSlotType == SkillSlotType.NormalAttack)
+            {
+                bool bRet = BuffHelper.ChkCanNormalAttack(self.GetUnit());
+                if (bRet == false)
+                {
+                    string msg = "cannot NormalAttack";
+                    return (false, msg);
+                }
             }
 
             return (true, "");

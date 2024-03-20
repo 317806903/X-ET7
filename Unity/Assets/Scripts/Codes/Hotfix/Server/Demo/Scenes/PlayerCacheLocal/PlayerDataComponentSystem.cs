@@ -26,7 +26,7 @@ namespace ET.Server
 
         public static async ETTask<T> InitByDBOne<T>(this PlayerDataComponent self, long playerId) where T :Entity, IAwake, new()
         {
-            return await ET.Server.DBHelper.LoadDBWithParent2Component<T>(self, playerId);
+            return await ET.Server.DBHelper.LoadDBWithParent2Component<T>(self, playerId, true);
         }
 
     }

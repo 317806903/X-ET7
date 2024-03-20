@@ -15,13 +15,12 @@ namespace ET
 		{
 			protected override void Awake(PlayerOwnerTowersComponent self)
 			{
+				//self.playerOwnerTowerCardIds = new();
 				self.playerOwnerTowerId = new();
 				self.playerTowerBuyPools = new();
 				self.playerTowerBuyPoolBoughts = new();
 				self.playerRefreshTowerCost = new();
 				self.playerId2unitTowerId = new();
-
-				self.Init();
 			}
 		}
 
@@ -30,6 +29,7 @@ namespace ET
 		{
 			protected override void Destroy(PlayerOwnerTowersComponent self)
 			{
+				//self.playerOwnerTowerCardIds.Clear();
 				self.playerOwnerTowerId.Clear();
 				self.playerTowerBuyPools.Clear();
 				self.playerTowerBuyPoolBoughts.Clear();
@@ -39,13 +39,18 @@ namespace ET
 			}
 		}
 
-		public static void Init(this PlayerOwnerTowersComponent self)
+		public static async ETTask Init(this PlayerOwnerTowersComponent self)
 		{
+			while (self.playerOwnerTowerCardIds == null)
+			{
+				await TimerComponent.Instance.WaitFrameAsync();
+			}
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
 			for (int i = 0; i < playerList.Count; i++)
 			{
 				long playerId = playerList[i];
+				//await self.InitOwnerTowersPool(playerId);
 				self.RefreshPlayerTowerPool(playerId);
 				self.playerRefreshTowerCost[playerId] = gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost;
 				self.playerOwnerTowerId[playerId] = new();
@@ -56,6 +61,15 @@ namespace ET
 
 		public static void InitTowerUpgradeConfig(this PlayerOwnerTowersComponent self)
 		{
+		}
+
+		public static int GetOwnerTowerLevel(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId)
+		{
+			if (self.playerOwnerTowerCardIds.TryGetValue(playerId, towerCfgId, out var level))
+			{
+				return level;
+			}
+			return 1;
 		}
 
 		public static (bool, string) ChkRefreshTowerPool(this PlayerOwnerTowersComponent self, long playerId)
@@ -113,9 +127,54 @@ namespace ET
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			int count = gamePlayTowerDefenseComponent.model.BuyTowerPoolCount;
 			TowerDefense_BuyTowerRefreshRuleCfg towerDefense_BuyTowerRefreshRuleCfg = TowerDefense_BuyTowerRefreshRuleCfgCategory.Instance.Get(gamePlayTowerDefenseComponent.model.BuyTowerRefreshRuleCfgId);
+
+			Dictionary<string, int> towerPools = DictionaryComponent<string, int>.Create();
+
+			if (towerDefense_BuyTowerRefreshRuleCfg.TowerWeight != null && towerDefense_BuyTowerRefreshRuleCfg.TowerWeight.Count > 0)
+			{
+				MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
+				int curMonsterWaveIndex = 1;
+				if (monsterWaveCallComponent != null)
+				{
+					curMonsterWaveIndex = monsterWaveCallComponent.GetWaveIndex() + 1;
+				}
+				foreach (var item in towerDefense_BuyTowerRefreshRuleCfg.TowerWeight)
+				{
+					if (item.StartWaveIndex <= curMonsterWaveIndex && item.EndWaveIndex >= curMonsterWaveIndex)
+					{
+						if (towerPools.TryGetValue(item.TowerCfgId, out int weight))
+						{
+							weight += item.Weight;
+						}
+						else
+						{
+							weight = item.Weight;
+						}
+						towerPools.Add(item.TowerCfgId, weight);
+					}
+				}
+			}
+
+			if (self.playerOwnerTowerCardIds.TryGetValue(playerId, out var ownerTowerCardIds))
+			{
+				int myTowersWeight = towerDefense_BuyTowerRefreshRuleCfg.MyTowersWeight;
+				foreach (var item in ownerTowerCardIds)
+				{
+					if (towerPools.TryGetValue(item.Key, out int weight))
+					{
+						weight += myTowersWeight;
+					}
+					else
+					{
+						weight = myTowersWeight;
+					}
+					towerPools.Add(item.Key, weight);
+				}
+			}
+
 			for (int i = 0; i < count; i++)
 			{
-				string towerCfgId = ET.RandomGenerator.GetRandomIndexLinear(towerDefense_BuyTowerRefreshRuleCfg.TowerWeight);
+				string towerCfgId = ET.RandomGenerator.GetRandomIndexLinear(towerPools);
 				self.playerTowerBuyPools.Add(playerId, towerCfgId);
 				self.playerTowerBuyPoolBoughts.Add(playerId, false);
 			}

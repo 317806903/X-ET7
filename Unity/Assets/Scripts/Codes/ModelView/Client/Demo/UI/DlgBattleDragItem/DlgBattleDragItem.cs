@@ -27,6 +27,7 @@ namespace ET.Client
 		public string battleDragItemParam;
 		public long moveTowerUnitId;
 		public int countOnce;
+		public string createActionIds;
 		public Action<Scene> callBack;
 		public Scene sceneIn;
 
@@ -60,6 +61,7 @@ namespace ET.Client
 		public string battleDragItemParam;
 		public long moveTowerUnitId;
 		public int countOnce;
+		public string createActionIds;
 		public Action<Scene> callBack;
 		public Scene sceneIn;
 	}

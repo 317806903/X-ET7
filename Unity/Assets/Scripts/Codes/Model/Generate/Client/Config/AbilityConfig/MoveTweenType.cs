@@ -33,6 +33,8 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
             case TrackingMoveTweenType.__ID__: return new TrackingMoveTweenType(_buf);
             case AroundMoveTweenType.__ID__: return new AroundMoveTweenType(_buf);
             case TargetMoveTweenType.__ID__: return new TargetMoveTweenType(_buf);
+            case TargetLimitTimeMoveTweenType.__ID__: return new TargetLimitTimeMoveTweenType(_buf);
+            case TargetQuickMoveTweenType.__ID__: return new TargetQuickMoveTweenType(_buf);
             case ParabolaMoveTweenType.__ID__: return new ParabolaMoveTweenType(_buf);
             default: throw new SerializationException();
         }

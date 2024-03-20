@@ -188,21 +188,25 @@ namespace ET.Ability
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
-            if (isChgSelect2)
+
+            if (bRet1)
             {
-                curSelectHandle = newSelectHandle2;
-            }
-            if (bRet1 && bRet2)
-            {
-                self.ChkChgList(curSelectHandle.unitIds);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
+                if (isChgSelect2)
+                {
+                    curSelectHandle = newSelectHandle2;
+                }
+                if (bRet1 && bRet2)
+                {
+                    self.ChkChgList(curSelectHandle.unitIds);
+                }
             }
         }
 
         public static void ChkChgList(this AoeObj self, List<long> newInList)
         {
-            ListComponent<long> newEnterList = ListComponent<long>.Create();
-            ListComponent<long> newExistList = ListComponent<long>.Create();
+            HashSetComponent<long> newEnterList = HashSetComponent<long>.Create();
+            HashSetComponent<long> newExistList = HashSetComponent<long>.Create();
             for (int i = 0; i < newInList.Count; i++)
             {
                 long unitId = newInList[i];

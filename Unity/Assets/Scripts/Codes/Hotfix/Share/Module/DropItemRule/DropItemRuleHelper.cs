@@ -116,5 +116,29 @@ namespace ET
             }
             return totalItems;
         }
+
+        public static List<string> GetPreviewDropItems(string dropRule){
+            List<string> dropItems = new List<string>();
+            if (DropRuleCfgCategory.Instance.Contain(dropRule) == false)
+            {
+                return dropItems;
+            }
+
+            DropRuleCfg cfg = DropRuleCfgCategory.Instance.Get(dropRule);
+            List<DropItemBase> dropItemsCfg = cfg.DropItems;
+            foreach (DropItemBase itemCfg in dropItemsCfg)
+            {
+                if (itemCfg is DropItemOne dropItemOne)
+                {
+                    dropItems.Add(dropItemOne.ItemId);
+                }
+                else if (itemCfg is DropRuleOne dropRuleOne)
+                {
+                    dropItems = GetPreviewDropItems(dropRuleOne.DropRuleId);
+                }
+            }
+
+            return dropItems; 
+        }
     }
 }

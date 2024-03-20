@@ -3,7 +3,7 @@
 namespace ET.Ability.Client
 {
     [ComponentOf]
-	public class EffectShowComponent: Entity, IAwake, IDestroy, IFixedUpdate
+	public class EffectShowComponent: Entity, IAwake, IDestroy, IUpdate
     {
         /// <summary>
         /// 当前存在的列表

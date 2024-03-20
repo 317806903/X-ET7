@@ -2305,14 +2305,14 @@ RectTransform:
   m_GameObject: {fileID: 2641609699233143205}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
+  m_LocalScale: {x: 1.056278, y: 1.056278, z: 1.056278}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5338202210413655080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.619, y: -330}
+  m_AnchoredPosition: {x: 39.619, y: -382}
   m_SizeDelta: {x: 1008, y: 264}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1307947507953177312
@@ -5081,14 +5081,14 @@ RectTransform:
   m_GameObject: {fileID: 7898399319639050926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.95768905, y: 0.95768905, z: 0.95768905}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3309482453864079323}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.619, y: -329}
+  m_AnchoredPosition: {x: 39.619, y: -381}
   m_SizeDelta: {x: 1182, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3989480930758543163
@@ -7393,7 +7393,7 @@ PrefabInstance:
     - target: {fileID: 4327422787001213161, guid: a31c2220b8c2d24468f20369a5b9cdb3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4717300462180854249, guid: a31c2220b8c2d24468f20369a5b9cdb3,
         type: 3}
@@ -7406,6 +7406,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7339003804175458703, guid: a31c2220b8c2d24468f20369a5b9cdb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628882885527308563, guid: a31c2220b8c2d24468f20369a5b9cdb3,
         type: 3}
       propertyPath: m_IsActive
       value: 0

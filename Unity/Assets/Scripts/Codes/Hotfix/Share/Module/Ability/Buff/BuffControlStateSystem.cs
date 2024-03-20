@@ -84,6 +84,16 @@ namespace ET.Ability
         }
 
         /// <summary>
+        /// 是否可以普通攻击
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool ChkCanNormalAttack(this BuffComponent self)
+        {
+            return self.ChkBuffByTagType(BuffTagType.NoNormalAttack) == false;
+        }
+
+        /// <summary>
         /// 是否可以播放动画(被冰住则动画停止)
         /// </summary>
         /// <param name="self"></param>

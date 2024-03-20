@@ -17,9 +17,9 @@ namespace ET
         PlayerBackPack_111 = 200,
         PlayerBattleCard_111 = 300,
     }
-    
+
     [ChildOf(typeof(PlayerCacheManagerComponent))]
-    public class PlayerDataComponent : Entity, IAwake, IDestroy, ISerializeToEntity
+    public class PlayerDataComponent : Entity, IAwake, IDestroy
     {
         public long playerId;
     }

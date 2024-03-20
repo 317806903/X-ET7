@@ -42,6 +42,7 @@ namespace ET.Client
             self.battleDragItemParam = showWindowData.battleDragItemParam;
             self.moveTowerUnitId = showWindowData.moveTowerUnitId;
             self.countOnce = showWindowData.countOnce;
+            self.createActionIds = showWindowData.createActionIds;
             self.callBack = showWindowData.callBack;
             self.sceneIn = showWindowData.sceneIn;
 
@@ -304,7 +305,7 @@ namespace ET.Client
                             child.gameObject.SetActive(false);
                         }
                     }
-                    float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, ET.Ability.SkillSlotType.NormalAttack);
+                    float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, ET.AbilityConfig.SkillSlotType.NormalAttack);
                     attackAreaTran.localScale = Vector3.one * skillDis*2 / resScale;
 
                     long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
@@ -601,6 +602,7 @@ namespace ET.Client
             self.View.E_TipNodeImage.SetVisible(true);
             self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
         }
+
         public static void HidePutTipMsg(this DlgBattleDragItem self)
         {
             self.View.E_TipNodeImage.SetVisible(false);
@@ -608,7 +610,7 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutHome(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             self.isConfirming = true;
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
@@ -623,6 +625,8 @@ namespace ET.Client
                 self.CheckIfPlaceSuccess();
             });*/
             self.isConfirming = false;
+
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
             ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
@@ -633,7 +637,7 @@ namespace ET.Client
             {
                 return false;
             }
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             if (self.canPutMonsterCall == false)
             {
@@ -656,6 +660,8 @@ namespace ET.Client
                 self.CheckIfPlaceSuccess();
             });*/
             self.isConfirming = false;
+
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
             ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
@@ -663,7 +669,7 @@ namespace ET.Client
         public static async ETTask<bool> DoPutPKTower(this DlgBattleDragItem self, float3 position)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
-            ET.Client.GamePlayPKHelper.SendCallTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
+            ET.Client.GamePlayPKHelper.SendCallTower(self.ClientScene(), self.battleDragItemParam, position, self.createActionIds).Coroutine();
             return true;
         }
 
@@ -679,13 +685,13 @@ namespace ET.Client
                 });
                 return false;
             }
-            ET.Client.GamePlayPKHelper.SendCallMonster(self.ClientScene(), self.battleDragItemParam, position, count).Coroutine();
+            ET.Client.GamePlayPKHelper.SendCallMonster(self.ClientScene(), self.battleDragItemParam, position, count, self.createActionIds).Coroutine();
             return true;
         }
 
         public static async ETTask<bool> DoPutOwnTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -742,13 +748,16 @@ namespace ET.Client
                     return false;
                 }
             }
+
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+
             ET.Client.GamePlayTowerDefenseHelper.SendCallOwnTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
         }
 
         public static async ETTask<bool> DoPutMoveTower(this DlgBattleDragItem self, float3 position)
         {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -794,6 +803,8 @@ namespace ET.Client
                     return false;
                 }
             }
+
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
             ET.Client.GamePlayTowerDefenseHelper.SendMovePlayerTower(self.ClientScene(), self.moveTowerUnitId, position).Coroutine();
             return true;

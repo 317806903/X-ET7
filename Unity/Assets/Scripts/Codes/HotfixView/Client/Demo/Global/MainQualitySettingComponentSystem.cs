@@ -42,10 +42,12 @@ namespace ET.Client
 
         public static async ETTask Awake(this MainQualitySettingComponent self)
         {
+	        bool isFirstInit = GameObject.Find("/Init").GetComponent<Init>().ChkIsFirstInit();
+
 	        int screenHeight = 0;
             int screenWidth = 0;
 
-            if (PlayerPrefs.HasKey("OrgScreenHeight"))
+            if (isFirstInit == false && PlayerPrefs.HasKey("OrgScreenHeight"))
             {
 	            self.orgScreenHeight = PlayerPrefs.GetInt("OrgScreenHeight");
 	            self.orgScreenWidth = PlayerPrefs.GetInt("OrgScreenWidth");

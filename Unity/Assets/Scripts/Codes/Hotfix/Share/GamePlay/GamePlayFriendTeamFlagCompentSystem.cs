@@ -120,7 +120,14 @@ namespace ET
 
 		public static TeamFlagType GetTeamFlagByUnit(this GamePlayFriendTeamFlagCompent self, Unit unit)
 		{
-			return self.unitId2TeamFlag[unit.Id];
+			if (self.unitId2TeamFlag.TryGetValue(unit.Id, out var teamFlagType) == false)
+			{
+#if UNITY_EDITOR
+				Log.Error($"GetTeamFlagByUnit self.unitId2TeamFlag[{unit.Id}] == null");
+#endif
+				return TeamFlagType.TeamGlobal1;
+			}
+			return teamFlagType;
 		}
 
 		public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayFriendTeamFlagCompent self, long playerId)

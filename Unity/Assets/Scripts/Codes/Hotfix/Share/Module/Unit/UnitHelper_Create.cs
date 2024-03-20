@@ -196,10 +196,11 @@ namespace ET.Ability
         public static void ActorUnitLearnSkillWhenCreate(Unit unit)
         {
             UnitCfg unitCfg = unit.model;
-            int count = unitCfg.SkillList.Count;
-            for (int i = 0; i < count; i++)
+            foreach (var item in unitCfg.SkillList)
             {
-                SkillHelper.LearnSkill(unit, unitCfg.SkillList[i], 1, SkillSlotType.NormalAttack);
+                string skillCfgId = item.Key;
+                ET.AbilityConfig.SkillSlotType skillSlotType = item.Value;
+                SkillHelper.LearnSkill(unit, skillCfgId, 1, skillSlotType);
             }
 
             float maxSkillDis = ET.Ability.SkillHelper.GetMaxSkillDis(unit, SkillSlotType.NormalAttack);

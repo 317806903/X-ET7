@@ -10,7 +10,20 @@ namespace ET.Ability.Client
     public class EffectShowObj: Entity, IAwake, IDestroy
     {
         public GameObject go;
-        
+
+        private EntityRef<EffectObj> effectObj;
+        public EffectObj RefEffectObj
+        {
+            get
+            {
+                return this.effectObj;
+            }
+            set
+            {
+                this.effectObj = value;
+            }
+        }
+
         private EntityRef<AudioPlayObj> audioPlayObj;
         public AudioPlayObj RefAudioPlayObj
         {
@@ -23,5 +36,9 @@ namespace ET.Ability.Client
                 this.audioPlayObj = value;
             }
         }
+
+        public LineRenderer[] lineRenderers;
+        public DigitalRuby.LightningBolt.LightningBoltScript[] lightningBoltScripts;
+        public DigitalRuby.LightningBolt.LightningBoltScriptManager[] lightningBoltScriptManagers;
     }
 }

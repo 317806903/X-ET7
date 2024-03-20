@@ -30,7 +30,7 @@ namespace ET.Ability
             if (curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0)
             {
 #if UNITY_EDITOR
-                Log.Error($"curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0");
+                //Log.Error($"curSelectHandle.selectHandleType == SelectHandleType.SelectUnits && curSelectHandle.unitIds.Count == 0");
 #endif
                 return false;
             }
@@ -39,15 +39,23 @@ namespace ET.Ability
             {
                 curSelectHandle = newSelectHandle1;
             }
-            (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition2, ref actionContext);
-            if (isChgSelect2)
+
+            if (bRet1)
             {
-                curSelectHandle = newSelectHandle2;
-            }
-            if (bRet1 && bRet2)
-            {
-                ActionHandlerHelper.CreateAction(actionUnit, resetPosByUnit, actionId, delayTime, curSelectHandle, ref actionContext);
-                return true;
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition2, ref actionContext);
+                if (isChgSelect2)
+                {
+                    curSelectHandle = newSelectHandle2;
+                }
+                if (bRet1 && bRet2)
+                {
+                    ActionHandlerHelper.CreateAction(actionUnit, resetPosByUnit, actionId, delayTime, curSelectHandle, ref actionContext);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {

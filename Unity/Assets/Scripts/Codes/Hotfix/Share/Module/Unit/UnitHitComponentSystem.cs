@@ -33,15 +33,24 @@ namespace ET
 						BulletHelper.DoBulletHitUnit(unitBullet, preHitUnit);
 					}
 					bulletObj.ResetPreHitUnit();
-					if (bulletObj.ChkCanTrigHit() == false)
-					{
-						continue;
-					}
+				}
+				if (bulletObj.ChkCanTrigHit() == false)
+				{
+					continue;
+				}
+				MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
+				if (moveTweenObj != null && moveTweenObj.IsNeedChkTouch() == false)
+				{
+					continue;
 				}
 
 				var seeUnits = unitBullet.GetComponent<AOIEntity>().GetSeeUnits();
 				foreach (var seeUnit in seeUnits)
 				{
+					if (bulletObj.ChkCanTrigHit() == false)
+					{
+						break;
+					}
 					AOIEntity aoiEntityTmp = seeUnit.Value;
 					Unit unit = aoiEntityTmp.Unit;
 					bool isChkHit = false;

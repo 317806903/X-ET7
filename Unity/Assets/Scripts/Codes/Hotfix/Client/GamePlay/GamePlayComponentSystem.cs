@@ -26,7 +26,7 @@ namespace ET.Client
 			{
 				self.curFrameSyncPos = 0;
 
-				self.SendGetNumericUnit().Coroutine();
+				self.SendGetNumericUnit();
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace ET.Client
 			self.RecordSendGetNumericUnit.Add(unit.Id);
 		}
 
-		public static async ETTask SendGetNumericUnit(this GamePlayComponent self)
+		public static void SendGetNumericUnit(this GamePlayComponent self)
 		{
 			if (self.RecordSendGetNumericUnit == null || self.RecordSendGetNumericUnit.Count == 0)
 			{
@@ -56,10 +56,7 @@ namespace ET.Client
 				NumericKeyList = new List<int>(){NumericType.Speed},
 			};
 			self.RecordSendGetNumericUnit.Clear();
-			M2C_GetNumericUnit _M2C_GetNumericUnit = await ET.Client.SessionHelper.GetSession(self.DomainScene()).Call(_C2M_GetNumericUnit) as M2C_GetNumericUnit;
-			if (_M2C_GetNumericUnit.Error != ET.ErrorCode.ERR_Success)
-			{
-			}
+			ET.Client.SessionHelper.GetSession(self.DomainScene()).Send(_C2M_GetNumericUnit);
 		}
 
 	}

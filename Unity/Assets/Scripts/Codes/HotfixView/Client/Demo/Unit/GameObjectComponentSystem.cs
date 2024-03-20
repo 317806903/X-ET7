@@ -19,17 +19,19 @@ namespace ET.Client
                 float resScale = 1f;
                 if (Ability.UnitHelper.ChkIsBullet(unit))
                 {
-                    resName = ResUnitCfgCategory.Instance.Get(unit.GetComponent<BulletObj>().model.ResId).ResName;
-                    resScale = unit.GetComponent<BulletObj>().model.ResScale;
+                    BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                    resName = bulletObj.model.ResId_Ref.ResName;
+                    resScale = bulletObj.model.ResScale;
                 }
                 else if (Ability.UnitHelper.ChkIsAoe(unit))
                 {
-                    resName = ResUnitCfgCategory.Instance.Get(unit.GetComponent<AoeObj>().model.ResId).ResName;
-                    resScale = unit.GetComponent<AoeObj>().model.ResScale;
+                    AoeObj aoeObj = unit.GetComponent<AoeObj>();
+                    resName = aoeObj.model.ResId_Ref.ResName;
+                    resScale = aoeObj.model.ResScale;
                 }
                 else
                 {
-                    resName = ResUnitCfgCategory.Instance.Get(unit.model.ResId).ResName;
+                    resName = unit.model.ResId_Ref.ResName;
                     resScale = unit.model.ResScale;
                 }
 
@@ -152,6 +154,15 @@ namespace ET.Client
             long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
             int gameObjectShowType = ET.Ability.BuffHelper.GetGameObjectShowType(self.GetUnit(), myPlayerId);
 
+#if ENABLE_VIEW && UNITY_EDITOR
+            ReferenceCollector referenceCollector = self.gameObject.GetComponent<ReferenceCollector>();
+            if (referenceCollector == null)
+            {
+                referenceCollector = self.gameObject.AddComponent<ReferenceCollector>();
+            }
+            referenceCollector.Clear();
+            referenceCollector.Add("EntityViewGO", self.GetUnit().viewGO);
+#endif
         }
 
         public static GameObject GetGo(this GameObjectComponent self)

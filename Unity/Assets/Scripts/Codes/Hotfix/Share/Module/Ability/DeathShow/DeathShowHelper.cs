@@ -9,6 +9,15 @@ namespace ET.Ability
     [FriendOf(typeof(DeathShowComponent))]
     public static class DeathShowHelper
     {
+        public static bool ChkIsInDeath(Unit unit)
+        {
+            if (unit.GetComponent<DeathShowComponent>() != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void DeathShow(Unit unit)
         {
             if (unit.GetComponent<DeathShowComponent>() != null)

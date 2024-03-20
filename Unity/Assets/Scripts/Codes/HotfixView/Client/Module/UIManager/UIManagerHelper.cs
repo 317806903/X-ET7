@@ -216,6 +216,10 @@ namespace ET.Client
             {
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
             }
+            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVE)
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+            }
             else
             {
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();

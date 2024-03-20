@@ -36,6 +36,11 @@ namespace ET
             return self.GetComponent<ItemManagerComponent>().GetItemList(itemType);
         }
 
+        public static ItemComponent GetItem(this PlayerBackPackComponent self, long itemId)
+        {
+            return self.GetComponent<ItemManagerComponent>().GetItem(itemId);
+        }
+
         public static ItemComponent GetItemWhenStack(this PlayerBackPackComponent self, string itemCfgId)
         {
             return self.GetComponent<ItemManagerComponent>().GetItemWhenStack(itemCfgId);

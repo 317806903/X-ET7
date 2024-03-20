@@ -61,7 +61,7 @@ namespace ET.Server
 
         public static async ETTask<T> InitByDBOne<T>(this RankComponent self, long playerId) where T :Entity, IAwake, new()
         {
-            return await ET.Server.DBHelper.LoadDBWithParent2Child<T>(self, playerId);
+            return await ET.Server.DBHelper.LoadDBWithParent2Child<T>(self, playerId, true);
         }
 
         public static async ETTask<long> GetDBCount<T>(this RankComponent self) where T :Entity, IAwake, new()

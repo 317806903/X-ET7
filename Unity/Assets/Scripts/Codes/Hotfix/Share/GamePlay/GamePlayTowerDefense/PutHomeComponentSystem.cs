@@ -478,7 +478,27 @@ namespace ET
             float3 homePos = homeUnit.Position;
             float3 startPos = chkPos;
 
-            return ET.RecastHelper.ChkArrive(observerUnit, startPos, homePos);
+            (bool canArrive, List<float3> pointList) = ET.RecastHelper.ChkArrive(observerUnit, startPos, homePos);
+            return canArrive;
+        }
+
+        public static (bool, float3) ChkHomeUnitPositionAndForward(this PutHomeComponent self, Unit homeUnit, float3 chkPos)
+        {
+            Unit observerUnit = self.GetOneObserverUnit();
+            float3 homePos = homeUnit.Position;
+            float3 startPos = chkPos;
+
+            (bool canArrive, List<float3> pointList) = ET.RecastHelper.ChkArrive(observerUnit, startPos, homePos);
+            float3 forward = float3.zero;
+            if (canArrive)
+            {
+                forward = pointList[0] - chkPos;
+                if (forward.Equals(float3.zero))
+                {
+                    forward = pointList[1] - chkPos;
+                }
+            }
+            return (canArrive, forward);
         }
 
         public static float2 GetCircleCenter(float2 p1, float2 p2, float2 p3)

@@ -12,15 +12,18 @@ namespace ET.Ability
         {
             float chgValue = buffActionModifyAttribute.BaseValue + buffActionModifyAttribute.StackValue * stackCount;
             float maxChgValue = buffActionModifyAttribute.MaxChgValue;
-            if (chgValue > 0)
+            if (maxChgValue != -1)
             {
-                maxChgValue = Math.Abs(maxChgValue);
-                chgValue = Math.Min(chgValue, maxChgValue);
-            }
-            else
-            {
-                maxChgValue = -Math.Abs(maxChgValue);
-                chgValue = Math.Max(chgValue, maxChgValue);
+                if (chgValue > 0)
+                {
+                    maxChgValue = Math.Abs(maxChgValue);
+                    chgValue = Math.Min(chgValue, maxChgValue);
+                }
+                else
+                {
+                    maxChgValue = -Math.Abs(maxChgValue);
+                    chgValue = Math.Max(chgValue, maxChgValue);
+                }
             }
             return (buffActionModifyAttribute.NumericType, chgValue);
         }

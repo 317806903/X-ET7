@@ -25,6 +25,20 @@ namespace ET.Client
             return sessionComponent;
         }
 
+        public static bool ChkSessionExist(Scene scene)
+        {
+            if (scene == null)
+            {
+                return false;
+            }
+            SessionComponent sessionComponent = GetSessionCompent(scene);
+            if (sessionComponent == null || sessionComponent.IsDisposed || sessionComponent.Session == null)
+            {
+                return false;
+            }
+            return sessionComponent.Session != null;
+        }
+
         public static Session GetSession(Scene scene)
         {
             if (scene == null)

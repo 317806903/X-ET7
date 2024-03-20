@@ -18,7 +18,7 @@ namespace ET.Client
 			self.View.E_BG3Button.AddListenerAsync(self.DoNext);
 			self.View.E_BG4Button.AddListenerAsync(self.DoNext);
 			self.View.E_BG5Button.AddListenerAsync(self.DoNext);
-			self.View.E_SKIPTUTORIALButton.AddListenerAsync(self.DoNext);
+			self.View.E_SKIPTUTORIALButton.AddListener(self.DoSkip);
 			self.View.E_VideoImgButton.AddListenerAsync(self.ClickVideo);
 		}
 
@@ -49,6 +49,14 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			await self.ShowStory(self.index++);
+		}
+
+		public static void DoSkip(this DlgBeginnersGuideStory self){
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "MovieSkipped",
+			});
+			self.DoNext().Coroutine();
 		}
 
 		public static async ETTask ShowStory(this DlgBeginnersGuideStory self, int index)

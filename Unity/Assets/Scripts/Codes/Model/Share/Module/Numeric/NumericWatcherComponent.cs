@@ -16,7 +16,7 @@ namespace ET
             }
         }
 
-	
+
         public class NumericWatcherComponentLoadSystem : LoadSystem<NumericWatcherComponent>
         {
             protected override void Load(NumericWatcherComponent self)
@@ -51,20 +51,32 @@ namespace ET
         public static void Run(this NumericWatcherComponent self, Unit unit, EventType.NumbericChange args)
         {
             List<NumericWatcherInfo> list;
-            if (!self.allWatchers.TryGetValue(args.NumericType, out list))
+            if (self.allWatchers.TryGetValue(args.NumericType, out list))
             {
-                return;
+                SceneType unitDomainSceneType = unit.Domain.SceneType;
+                foreach (NumericWatcherInfo numericWatcher in list)
+                {
+                    if (!numericWatcher.SceneType.HasSameFlag(unitDomainSceneType))
+                    {
+                        continue;
+                    }
+                    numericWatcher.INumericWatcher.Run(unit, args);
+                }
             }
 
-            SceneType unitDomainSceneType = unit.Domain.SceneType;
-            foreach (NumericWatcherInfo numericWatcher in list)
+            if (self.allWatchers.TryGetValue(-1, out list))
             {
-                if (!numericWatcher.SceneType.HasSameFlag(unitDomainSceneType))
+                SceneType unitDomainSceneType = unit.Domain.SceneType;
+                foreach (NumericWatcherInfo numericWatcher in list)
                 {
-                    continue;
+                    if (!numericWatcher.SceneType.HasSameFlag(unitDomainSceneType))
+                    {
+                        continue;
+                    }
+                    numericWatcher.INumericWatcher.Run(unit, args);
                 }
-                numericWatcher.INumericWatcher.Run(unit, args);
             }
+
         }
     }
 
@@ -79,8 +91,8 @@ namespace ET
             this.INumericWatcher = numericWatcher;
         }
     }
-    
-    
+
+
     /// <summary>
     /// 监视数值变化组件,分发监听
     /// </summary>
@@ -88,7 +100,7 @@ namespace ET
     public class NumericWatcherComponent : Entity, IAwake, ILoad
     {
         public static NumericWatcherComponent Instance { get; set; }
-		
+
         public Dictionary<int, List<NumericWatcherInfo>> allWatchers;
     }
 }

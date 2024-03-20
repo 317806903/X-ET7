@@ -6,12 +6,16 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace ET
 {
     [ComponentOf(typeof(PlayerDataComponent))]
-    public class PlayerBaseInfoComponent : Entity, IAwake, IDestroy, ISerializeToEntity
+    public class PlayerBaseInfoComponent : Entity, IAwake, IDestroy
     {
         public string PlayerName;
         public int IconIndex;
         public int EndlessChallengeScore;
         public int EndlessChallengeKillNum;
+
+        public int ARPVEBattleCount;
+        public int ARPVPBattleCount;
+        public int AREndlessChallengeBattleCount;
 
         public bool isFinishTutorialFirst;
 

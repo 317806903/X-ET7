@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ET
 {
-    [FriendOf(typeof(RankManagerComponent))]
+    [FriendOf(typeof(RankShowManagerComponent))]
     public static class RankShowManagerComponentSystem
     {
         [ObjectSystem]

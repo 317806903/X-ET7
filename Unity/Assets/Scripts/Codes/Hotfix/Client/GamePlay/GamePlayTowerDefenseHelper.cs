@@ -111,13 +111,24 @@ namespace ET.Client
 		public static async ETTask SendRefreshBuyPlayerTower(Scene scene)
 		{
 			M2C_RefreshBuyPlayerTower _M2C_RefreshBuyPlayerTower = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_RefreshBuyPlayerTower()) as M2C_RefreshBuyPlayerTower;
+			bool bSuccess = true;
 			if (_M2C_RefreshBuyPlayerTower.Error != ET.ErrorCode.ERR_Success)
 			{
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_RefreshBuyPlayerTower.Message,
 				});
+				bSuccess = false;
 			}
+
+			EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+			{
+				eventName = "RefreshClicked",
+				properties = new()
+				{
+					{"success", bSuccess},
+				}
+			});
 		}
 
 		public static async ETTask SendCallOwnTower(Scene scene, string towerUnitCfgId, float3 position)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ET.AbilityConfig;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -26,5 +27,6 @@ namespace ET.Ability
         public float3 motionDirection;
         public float3 motionPosition;
         public float3 hitPosition;
+        public bool isCriticalStrike;
     }
 }

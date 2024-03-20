@@ -246,5 +246,14 @@ namespace ET.Client
 			ARSessionComponent arSessionComponent = ET.Client.ARSessionHelper.GetARSession(scene);
 			arSessionComponent.ShowQuit(isShow);
 		}
+
+		public static async ETTask ShowScanVideo(Scene scene, bool isShow){
+			if(isShow){
+				await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgVideoShowSmall>();
+			}else{
+				UIManagerHelper.GetUIComponent(scene).CloseWindow<DlgVideoShowSmall>();
+			}
+			await ETTask.CompletedTask;
+		}
 	}
 }

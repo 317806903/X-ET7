@@ -44,5 +44,18 @@ namespace ET.Client
 			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_NeedReNoticeUnitIds);
 			await ETTask.CompletedTask;
 		}
+
+		public static async ETTask SendSetStopActorMove(Scene scene, bool isStopActorMove)
+		{
+			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)
+			{
+				return;
+			}
+
+			C2M_SetStopActorMove _C2M_SetStopActorMove = new ();
+			_C2M_SetStopActorMove.IsStopActorMove = isStopActorMove?1:0;
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_SetStopActorMove);
+			await ETTask.CompletedTask;
+		}
 	}
 }

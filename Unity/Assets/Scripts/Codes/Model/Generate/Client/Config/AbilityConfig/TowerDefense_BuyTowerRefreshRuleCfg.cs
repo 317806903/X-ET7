@@ -19,7 +19,9 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TowerWeight = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     TowerWeight.Add(_k0, _v0);}}
+        IsUseMyTowers = _buf.ReadBool();
+        MyTowersWeight = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TowerWeight = new System.Collections.Generic.List<TowerRefreshRuleOne>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { TowerRefreshRuleOne _e0;  _e0 = TowerRefreshRuleOne.DeserializeTowerRefreshRuleOne(_buf); TowerWeight.Add(_e0);}}
         PostInit();
     }
 
@@ -41,20 +43,27 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// towerId
+    /// 是否使用自身拥有卡
     /// </summary>
-    public System.Collections.Generic.Dictionary<string, int> TowerWeight { get; private set; }
+    public bool IsUseMyTowers { get; private set; }
+    /// <summary>
+    /// 自身拥有卡的单卡权重
+    /// </summary>
+    public int MyTowersWeight { get; private set; }
+    public System.Collections.Generic.List<TowerRefreshRuleOne> TowerWeight { get; private set; }
 
     public const int __ID__ = -621375048;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        foreach(var _e in TowerWeight) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        foreach(var _e in TowerWeight) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
@@ -63,6 +72,8 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "IsUseMyTowers:" + IsUseMyTowers + ","
+        + "MyTowersWeight:" + MyTowersWeight + ","
         + "TowerWeight:" + Bright.Common.StringUtil.CollectionToString(TowerWeight) + ","
         + "}";
     }

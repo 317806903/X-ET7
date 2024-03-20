@@ -194,6 +194,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_line02Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_line02Image == null )
+				{
+					this.m_E_line02Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/E_line02");
+				}
+				return this.m_E_line02Image;
+			}
+		}
+
+		public UnityEngine.RectTransform EG_RewardRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_RewardRectTransform == null )
+				{
+					this.m_EG_RewardRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_HomePage/E_play/info/EG_Reward");
+				}
+				return this.m_EG_RewardRectTransform;
+			}
+		}
+
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_RewardLoopHorizontalScrollRect
 		{
 			get
@@ -205,128 +239,9 @@ namespace ET.Client
 				}
 				if( this.m_ELoopScrollList_RewardLoopHorizontalScrollRect == null )
 				{
-					this.m_ELoopScrollList_RewardLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward");
+					this.m_ELoopScrollList_RewardLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_HomePage/E_play/info/EG_Reward/list/ELoopScrollList_Reward");
 				}
 				return this.m_ELoopScrollList_RewardLoopHorizontalScrollRect;
-			}
-		}
-
-		public UnityEngine.UI.Image E_NoneImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_NoneImage == null )
-				{
-					this.m_E_NoneImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/E_None");
-				}
-				return this.m_E_NoneImage;
-			}
-		}
-
-		public UnityEngine.UI.Image EImage_TowerBuyShowImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EImage_TowerBuyShowImage == null )
-				{
-					this.m_EImage_TowerBuyShowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow");
-				}
-				return this.m_EImage_TowerBuyShowImage;
-			}
-		}
-
-		public UnityEngine.UI.Image E_BoxImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_BoxImage == null )
-				{
-					this.m_E_BoxImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow/E_Box");
-				}
-				return this.m_E_BoxImage;
-			}
-		}
-
-		public UnityEngine.UI.Image EImage_LowImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EImage_LowImage == null )
-				{
-					this.m_EImage_LowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow/E_Box/EImage_Low");
-				}
-				return this.m_EImage_LowImage;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_IconButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_IconButton == null )
-				{
-					this.m_EButton_IconButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow/EButton_Icon");
-				}
-				return this.m_EButton_IconButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_IconImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_IconImage == null )
-				{
-					this.m_EButton_IconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow/EButton_Icon");
-				}
-				return this.m_EButton_IconImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI EButton_numberTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_numberTextMeshProUGUI == null )
-				{
-					this.m_EButton_numberTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/info/Reward/list/ELoopScrollList_Reward/Content/Item_GoldCoin/EImage_TowerBuyShow/EButton_number");
-				}
-				return this.m_EButton_numberTextMeshProUGUI;
 			}
 		}
 
@@ -347,7 +262,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_Label1Image
+		public TMPro.TextMeshProUGUI ELabel_LvTextMeshProUGUI
 		{
 			get
 			{
@@ -356,28 +271,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EImage_Label1Image == null )
+				if( this.m_ELabel_LvTextMeshProUGUI == null )
 				{
-					this.m_EImage_Label1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/info/monster/tips/EImage_Label1");
+					this.m_ELabel_LvTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/info/ELabel_Lv");
 				}
-				return this.m_EImage_Label1Image;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_Label1TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_Label1TextMeshProUGUI == null )
-				{
-					this.m_ELabel_Label1TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/info/monster/tips/EImage_Label1/ELabel_Label1");
-				}
-				return this.m_ELabel_Label1TextMeshProUGUI;
+				return this.m_ELabel_LvTextMeshProUGUI;
 			}
 		}
 
@@ -428,17 +326,11 @@ namespace ET.Client
 			this.m_E_SelectImage = null;
 			this.m_E_UnlockedButton = null;
 			this.m_E_UnlockedImage = null;
+			this.m_E_line02Image = null;
+			this.m_EG_RewardRectTransform = null;
 			this.m_ELoopScrollList_RewardLoopHorizontalScrollRect = null;
-			this.m_E_NoneImage = null;
-			this.m_EImage_TowerBuyShowImage = null;
-			this.m_E_BoxImage = null;
-			this.m_EImage_LowImage = null;
-			this.m_EButton_IconButton = null;
-			this.m_EButton_IconImage = null;
-			this.m_EButton_numberTextMeshProUGUI = null;
 			this.m_ELoopScrollList_propLoopHorizontalScrollRect = null;
-			this.m_EImage_Label1Image = null;
-			this.m_ELabel_Label1TextMeshProUGUI = null;
+			this.m_ELabel_LvTextMeshProUGUI = null;
 			this.m_E_QuitBattleButton = null;
 			this.m_E_QuitBattleImage = null;
 			this.uiTransform = null;
@@ -455,17 +347,11 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_SelectImage = null;
 		private UnityEngine.UI.Button m_E_UnlockedButton = null;
 		private UnityEngine.UI.Image m_E_UnlockedImage = null;
+		private UnityEngine.UI.Image m_E_line02Image = null;
+		private UnityEngine.RectTransform m_EG_RewardRectTransform = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RewardLoopHorizontalScrollRect = null;
-		private UnityEngine.UI.Image m_E_NoneImage = null;
-		private UnityEngine.UI.Image m_EImage_TowerBuyShowImage = null;
-		private UnityEngine.UI.Image m_E_BoxImage = null;
-		private UnityEngine.UI.Image m_EImage_LowImage = null;
-		private UnityEngine.UI.Button m_EButton_IconButton = null;
-		private UnityEngine.UI.Image m_EButton_IconImage = null;
-		private TMPro.TextMeshProUGUI m_EButton_numberTextMeshProUGUI = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_propLoopHorizontalScrollRect = null;
-		private UnityEngine.UI.Image m_EImage_Label1Image = null;
-		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_ELabel_LvTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
 		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
 		public Transform uiTransform = null;

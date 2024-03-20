@@ -101,6 +101,7 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
+			//await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameJudgeChoose>();
 			await self.GetRoomList();
 		}
 

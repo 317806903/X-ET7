@@ -46,6 +46,8 @@ public abstract partial class Condition: Bright.Config.BeanBase
             case RecordIntRecordCondition.__ID__: return new RecordIntRecordCondition(_buf);
             case RecordStringRecordCondition.__ID__: return new RecordStringRecordCondition(_buf);
             case OnHitChkCanBeControlCondition.__ID__: return new OnHitChkCanBeControlCondition(_buf);
+            case OnHitChkIsCriticalStrikeCondition.__ID__: return new OnHitChkIsCriticalStrikeCondition(_buf);
+            case OnChkCanHitByBulletCondition.__ID__: return new OnChkCanHitByBulletCondition(_buf);
             case ChkSelectUnitNumCondition.__ID__: return new ChkSelectUnitNumCondition(_buf);
             case ChkSelectUnitNumRecordCondition.__ID__: return new ChkSelectUnitNumRecordCondition(_buf);
             case SkillIdCondition.__ID__: return new SkillIdCondition(_buf);

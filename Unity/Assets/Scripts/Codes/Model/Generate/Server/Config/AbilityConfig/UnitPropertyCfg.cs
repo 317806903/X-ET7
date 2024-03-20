@@ -46,7 +46,7 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
     /// </summary>
     public int PhysicalAttackBase { get; private set; }
     /// <summary>
-    /// 暴击伤害(N%)
+    /// 暴击伤害(N%)（最终伤害=1+N%）
     /// </summary>
     public int CriticalHitDamageBase { get; private set; }
     /// <summary>

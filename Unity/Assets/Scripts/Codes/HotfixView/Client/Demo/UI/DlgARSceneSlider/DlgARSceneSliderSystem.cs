@@ -70,7 +70,6 @@ namespace ET.Client
 			self.showPrefabCfgList = new()
 			{
 				(new float2(0, 0), "Unit_HeadQuarterPreview")
-
 			};
 			self.showPrefabList = new();
 		}

@@ -7,7 +7,7 @@ using ET.AbilityConfig;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-using SkillSlotType = ET.Ability.SkillSlotType;
+using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET.Client
 {
@@ -87,7 +87,14 @@ namespace ET.Client
 
             if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
             {
-                self.View.E_ReScanButton.SetVisible(true);
+                if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
+                {
+                    self.View.E_ReScanButton.SetVisible(true);
+                }
+                else
+                {
+                    self.View.E_ReScanButton.SetVisible(false);
+                }
             }
             else
             {
@@ -351,7 +358,7 @@ namespace ET.Client
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
             MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-            return monsterWaveCallComponent.curIndex + 1;
+            return monsterWaveCallComponent.GetWaveIndex();
         }
 
         public static List<long> GetMyTowerList(this DlgBattleTower self)
@@ -394,6 +401,10 @@ namespace ET.Client
         public static void ChkRefreshBuyTowerPannel(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            if (gamePlayTowerDefenseComponent == null)
+            {
+                return;
+            }
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
             if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
             {
@@ -458,11 +469,11 @@ namespace ET.Client
 
             if (gamePlayTowerDefenseComponent.IsEndlessChallengeMonster())
             {
-                self.View.ELabel_LeftMonsterWaveTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",monsterWaveCallComponent.curIndex + 1, monsterWaveCallComponent.totalCount);
+                self.View.ELabel_LeftMonsterWaveTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex_EndlessChallenge",monsterWaveCallComponent.GetWaveIndex(), monsterWaveCallComponent.totalCount);
             }
             else
             {
-                self.View.ELabel_LeftMonsterWaveTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex",monsterWaveCallComponent.curIndex + 1, monsterWaveCallComponent.totalCount);
+                self.View.ELabel_LeftMonsterWaveTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurMonsterWaveIndex",monsterWaveCallComponent.GetWaveIndex(), monsterWaveCallComponent.totalCount);
             }
         }
 
@@ -745,7 +756,7 @@ namespace ET.Client
             self.View.E_Sprite_BGImage.SetVisible(false);
             itemTower.EButton_SelectButton.AddListener(() =>
             {
-                if (self.View.E_QuitBattleButton.IsActive())
+                if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
                 {
                     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
                     self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.RefreshCells();
@@ -797,16 +808,16 @@ namespace ET.Client
             else
             {
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
-                itemTowerBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
-                itemTowerBuy.EButton_BuyButton.gameObject.SetActive(true);
-                if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
-                {
-                    itemTowerBuy.ELabel_ContentText.color = Color.white;
-                }
-                else
-                {
-                    itemTowerBuy.ELabel_ContentText.color = Color.red;
-                }
+            }
+            itemTowerBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
+            itemTowerBuy.EButton_BuyButton.gameObject.SetActive(true);
+            if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
+            {
+                itemTowerBuy.ELabel_ContentText.color = Color.white;
+            }
+            else
+            {
+                itemTowerBuy.ELabel_ContentText.color = Color.red;
             }
             itemTowerBuy.EButton_BuyButton.AddListener(() =>
             {
@@ -836,6 +847,7 @@ namespace ET.Client
 
             itemTowerBuy.SetLabels(itemCfgId);
             itemTowerBuy.SetQuality(itemCfgId);
+            itemTowerBuy.SetCheckMark(false);
         }
 
         public static async ETTask BuyTower(this DlgBattleTower self, int index, string towerCfgId)

@@ -2,12 +2,6 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto
-Unity/Assets/Scripts/Codes/Model/Generate/**.cs text eol=lf
-Unity/Assets/Scripts/Codes/Model/Generate/**.meta text eol=lf
-Unity/Assets/Bundles/Config/AbilityConfig/*.bytes text eol=lf
-Unity/Assets/Bundles/Config/AbilityConfig/*.meta text eol=lf
-Config/Excel/**.bytes text eol=lf
-Config/Json/**.json text eol=lf
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
@@ -66,3 +60,5 @@ Config/Json/**.json text eol=lf
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+*.bytes       binary

@@ -154,6 +154,7 @@ namespace ET.Client
 				{
 					bool isShow = bool.Parse(executeParam);
 					UIGuideHelper_StaticMethod.ShowScanQuit(scene, isShow);
+					await UIGuideHelper_StaticMethod.ShowScanVideo(scene, !isShow);
 					break;
 				}
 				default:

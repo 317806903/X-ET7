@@ -13,25 +13,6 @@ MonoBehaviour:
   m_Name: TutorialFirst
   m_EditorClassIdentifier: 
   list:
-  - name: "\u4E16\u754C\u89C2"
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: 
-    hierarchyGuidePath: 
-    guideTextType: 0
-    guideTextImgPath: 
-    text: 
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 2
-    audioPath: 
-    guideExecuteStaticMethod: ShowStory
-    guideExecuteParam: 
-    trigExitCondition: 2
-    trigExitConditionStaticMethod: ChkIsNotShowStory
-    trigExitConditionParam: 
   - name: "\u8FDB\u5165\u65B0\u624B\u5173\u5361"
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
@@ -57,9 +38,9 @@ MonoBehaviour:
     trigEnterConditionParam: 
     hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas
     hierarchyGuidePath: Panel/ScanButton
-    guideTextType: 2
+    guideTextType: 1
     guideTextImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_photoguide.png
-    text: 
+    text: TextCode_Key_TutorialText_ScanBegin
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_photo.png
     curInNextType: 0
@@ -404,6 +385,25 @@ MonoBehaviour:
     text: TextCode_Key_TutorialText_WaveStart
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_imreadybtn.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u5237\u65B0\u8D2D\u4E70\u5217\u8868"
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_Refresh
+    specImgMatchType: 0
+    specImgPath: 
     curInNextType: 0
     waitToNextUIGuideStep: 0
     audioPath: 

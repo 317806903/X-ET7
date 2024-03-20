@@ -15,7 +15,7 @@ namespace ET.Ability
             return skillComponent;
         }
 
-        public static (bool ret, string msg) LearnSkill(Unit unit, string skillCfgId, int skillLevel, SkillSlotType skillSlotType)
+        public static (bool ret, string msg) LearnSkill(Unit unit, string skillCfgId, int skillLevel, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             SkillComponent skillComponent = GetSkillComponent(unit);
             return skillComponent.LearnSkill(skillCfgId, skillLevel, skillSlotType);
@@ -45,13 +45,13 @@ namespace ET.Ability
             return skillComponent.GetSkillAttackDis();
         }
 
-        public static List<SkillObj> GetSkillList(Unit unit, string skillCfgId, ET.Ability.SkillSlotType skillSlotType)
+        public static List<SkillObj> GetSkillList(Unit unit, string skillCfgId, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             SkillComponent skillComponent = GetSkillComponent(unit);
             return skillComponent.GetSkillList(skillCfgId, skillSlotType);
         }
 
-        public static float GetMaxSkillDis(Unit unit, ET.Ability.SkillSlotType skillSlotType)
+        public static float GetMaxSkillDis(Unit unit, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             SkillComponent skillComponent = GetSkillComponent(unit);
             return skillComponent.GetMaxSkillDis(skillSlotType);

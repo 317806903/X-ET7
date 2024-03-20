@@ -23,12 +23,18 @@ namespace ET.Ability
             {
                 if (self.hitRecords != null)
                 {
-                    foreach (BulletHitRecord bulletHitRecord in self.hitRecords)
+                    foreach (BulletHitRecord bulletHitRecord in self.hitRecords.Values)
                     {
                         bulletHitRecord.Dispose();
                     }
                     self.hitRecords.Dispose();
                     self.hitRecords = null;
+                }
+
+                if (self.removeList != null)
+                {
+                    self.removeList.Dispose();
+                    self.removeList = null;
                 }
 
                 self.preHitUnitIds = null;
@@ -58,7 +64,8 @@ namespace ET.Ability
             self.timeElapsed = 0;
             self.canHitAfterCreated = self.model.CanHitAfterCreated;
             self.canHitTimes = self.model.HitTimes;
-            self.hitRecords = ListComponent<BulletHitRecord>.Create();
+            self.hitRecords = DictionaryComponent<long, BulletHitRecord>.Create();
+            self.removeList = ListComponent<long>.Create();
         }
 
         public static void InitActionContext(this BulletObj self, ref ActionContext actionContext)
@@ -136,17 +143,6 @@ namespace ET.Ability
             float timePassed = fixedDeltaTime;
             self.duration -= timePassed;
             self.timeElapsed += timePassed;
-            if (self.hitRecords != null)
-            {
-                for (int i = self.hitRecords.Count - 1; i >= 0; i--)
-                {
-                    self.hitRecords[i].timeToCanHit -= timePassed;
-                    if (self.hitRecords[i].timeToCanHit <= 0)
-                    {
-                        self.hitRecords.RemoveAt(i);
-                    }
-                }
-            }
 
             if (self.canHitAfterCreated > 0)
             {
@@ -156,7 +152,30 @@ namespace ET.Ability
             if (self.duration <= 0 || self.canHitTimes <= 0)
             {
                 self.GetUnit().DestroyWithDeathShow();
+                return;
             }
+
+            if (self.hitRecords != null && self.hitRecords.Count > 0)
+            {
+                self.removeList.Clear();
+                foreach (var item in self.hitRecords)
+                {
+                    BulletHitRecord bulletHitRecord = item.Value;
+
+                    bulletHitRecord.timeToCanHit -= timePassed;
+                    if (bulletHitRecord.timeToCanHit <= 0)
+                    {
+                        self.removeList.Add(item.Key);
+                    }
+                }
+
+                foreach (long unitId in self.removeList)
+                {
+                    self.hitRecords.Remove(unitId);
+                }
+                self.removeList.Clear();
+            }
+
         }
 
         public static bool ChkCanTrigHit(this BulletObj self)
@@ -165,6 +184,10 @@ namespace ET.Ability
                 return false;
             if (self.canHitAfterCreated > 0)
                 return false;
+            if (self.GetUnit().ChkIsInDeath())
+            {
+                return false;
+            }
 
             MoveTweenObj moveTweenObj = self.GetUnit().GetComponent<MoveTweenObj>();
             if (moveTweenObj != null && moveTweenObj.isNeedChkHoldTime)
@@ -182,12 +205,9 @@ namespace ET.Ability
 
             if (self.hitRecords != null)
             {
-                for (int i = 0; i < self.hitRecords.Count; i++)
+                if (self.hitRecords.ContainsKey(unit.Id))
                 {
-                    if (self.hitRecords[i].targetUnitId == unit.Id)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -206,12 +226,9 @@ namespace ET.Ability
 
             if (self.hitRecords != null)
             {
-                for (int i = 0; i < self.hitRecords.Count; i++)
+                if (self.hitRecords.ContainsKey(-1))
                 {
-                    if (self.hitRecords[i].targetUnitId == -1)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -230,7 +247,7 @@ namespace ET.Ability
 
         public static void ResetPreHitUnit(this BulletObj self)
         {
-            self.preHitUnitIds = null;
+            self.preHitUnitIds?.Clear();
         }
 
         public static HashSet<long> GetPreHitUnit(this BulletObj self)

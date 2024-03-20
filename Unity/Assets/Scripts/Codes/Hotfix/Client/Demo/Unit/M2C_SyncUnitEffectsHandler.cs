@@ -48,7 +48,9 @@ namespace ET.Client
 				Entity entity = MongoHelper.Deserialize<Entity>(message.EffectComponent);
 				if (entity != null && effectComponent.GetChild<Entity>(entity.Id) != null)
 				{
-					entity.Dispose();
+					//entity.Dispose();
+					effectComponent.RemoveChild(entity.Id);
+					effectComponent.AddChild(entity);
 				}
 				else
 				{

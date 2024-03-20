@@ -58,7 +58,7 @@ namespace ET.Client
             self.curSelectedIconIndex = self.oldIconIndex;
             self.View.ELabel_IDTextMeshProUGUI.text = $"ID:{playerBaseInfoComponent.GetPlayerId()}";
             self.View.E_SaveButton.SetVisible(false);
-            
+
             self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
             self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
             self.View.E_AccountButton.SetVisible(playerBaseInfoComponent.BindLoginType != LoginType.Editor);
@@ -92,7 +92,7 @@ namespace ET.Client
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Confirm");
             string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Cancel");
             string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Title");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { LoginHelper.LoginOut(self.ClientScene()).Coroutine(); }, null,
+            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { LoginHelper.LoginOut(self.ClientScene(), true).Coroutine(); }, null,
                 sureTxt, cancelTxt, titleTxt);
         }
 
@@ -114,7 +114,7 @@ namespace ET.Client
             self.oldName = self.curName;
             self.oldIconIndex = self.curSelectedIconIndex;
             self.View.E_SaveButton.SetVisible(false);
-            
+
             string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PersonalInfo_Update");
             ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
             //self.HidePersonalInfo().Coroutine();

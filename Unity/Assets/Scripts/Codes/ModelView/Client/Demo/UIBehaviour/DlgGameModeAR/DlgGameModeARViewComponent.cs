@@ -75,6 +75,499 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_AvatarButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_AvatarButton == null )
+				{
+					this.m_E_AvatarButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Avatar");
+				}
+				return this.m_E_AvatarButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_AvatarImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_AvatarImage == null )
+				{
+					this.m_E_AvatarImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Avatar");
+				}
+				return this.m_E_AvatarImage;
+			}
+		}
+
+		public UnityEngine.UI.Image E_PlayerIcoImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PlayerIcoImage == null )
+				{
+					this.m_E_PlayerIcoImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Avatar/Avatar/E_PlayerIco");
+				}
+				return this.m_E_PlayerIcoImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_PlayerNameTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PlayerNameTextMeshProUGUI == null )
+				{
+					this.m_E_PlayerNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Avatar/E_PlayerName");
+				}
+				return this.m_E_PlayerNameTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image E_RedDotImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_RedDotImage == null )
+				{
+					this.m_E_RedDotImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Avatar/E_RedDot");
+				}
+				return this.m_E_RedDotImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_TutorialButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TutorialButton == null )
+				{
+					this.m_E_TutorialButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Function/E_Tutorial");
+				}
+				return this.m_E_TutorialButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_TutorialLockButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TutorialLockButton == null )
+				{
+					this.m_E_TutorialLockButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Function/E_TutorialLock");
+				}
+				return this.m_E_TutorialLockButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_CardsButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CardsButton == null )
+				{
+					this.m_E_CardsButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Function/E_Cards");
+				}
+				return this.m_E_CardsButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_CardsLockButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CardsLockButton == null )
+				{
+					this.m_E_CardsLockButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Function/E_CardsLock");
+				}
+				return this.m_E_CardsLockButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_RankButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_RankButton == null )
+				{
+					this.m_E_RankButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_function/E_Function/E_Rank");
+				}
+				return this.m_E_RankButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_ScanCodeButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ScanCodeButton == null )
+				{
+					this.m_E_ScanCodeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/title/E_ScanCode");
+				}
+				return this.m_E_ScanCodeButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ScanCodeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ScanCodeImage == null )
+				{
+					this.m_E_ScanCodeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/title/E_ScanCode");
+				}
+				return this.m_E_ScanCodeImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_PVEButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVEButton == null )
+				{
+					this.m_E_PVEButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE");
+				}
+				return this.m_E_PVEButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_PVEImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVEImage == null )
+				{
+					this.m_E_PVEImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE");
+				}
+				return this.m_E_PVEImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_PVEPhysicalStrengthTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI == null )
+				{
+					this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE/PhysicalStrength/ELabel_PVEPhysicalStrength");
+				}
+				return this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_PVPNameTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVPNameTextMeshProUGUI == null )
+				{
+					this.m_E_PVPNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE/E_PVPName");
+				}
+				return this.m_E_PVPNameTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView E_PVPNameUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVPNameUITextLocalizeMonoView == null )
+				{
+					this.m_E_PVPNameUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE/E_PVPName");
+				}
+				return this.m_E_PVPNameUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Image E_PVELockImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVELockImage == null )
+				{
+					this.m_E_PVELockImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVE/E_PVELock");
+				}
+				return this.m_E_PVELockImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_EndlessChallengeButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_EndlessChallengeButton == null )
+				{
+					this.m_E_EndlessChallengeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge");
+				}
+				return this.m_E_EndlessChallengeButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_EndlessChallengeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_EndlessChallengeImage == null )
+				{
+					this.m_E_EndlessChallengeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge");
+				}
+				return this.m_E_EndlessChallengeImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_WavesTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_WavesTextMeshProUGUI == null )
+				{
+					this.m_ELabel_WavesTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves");
+				}
+				return this.m_ELabel_WavesTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_WavesUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_WavesUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_WavesUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves");
+				}
+				return this.m_ELabel_WavesUITextLocalizeMonoView;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_RankTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_RankTextMeshProUGUI == null )
+				{
+					this.m_ELabel_RankTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank");
+				}
+				return this.m_ELabel_RankTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_RankUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_RankUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_RankUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank");
+				}
+				return this.m_ELabel_RankUITextLocalizeMonoView;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_EndlessPhysicalStrengthTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI == null )
+				{
+					this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_EndlessChallenge/PhysicalStrength/ELabel_EndlessPhysicalStrength");
+				}
+				return this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_PVPButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_PVPButton == null )
+				{
+					this.m_EButton_PVPButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVP/EButton_PVP");
+				}
+				return this.m_EButton_PVPButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_PVPImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_PVPImage == null )
+				{
+					this.m_EButton_PVPImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVP/EButton_PVP");
+				}
+				return this.m_EButton_PVPImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_PVPPhysicalStrengthTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI == null )
+				{
+					this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVP/EButton_PVP/PhysicalStrength/ELabel_PVPPhysicalStrength");
+				}
+				return this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image E_PVPLockImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_PVPLockImage == null )
+				{
+					this.m_E_PVPLockImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel  /E_play/E_GameMode/E_PVP/E_PVPLock");
+				}
+				return this.m_E_PVPLockImage;
+			}
+		}
+
 		public UnityEngine.UI.Button EButton_GoldCoinButton
 		{
 			get
@@ -177,7 +670,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_ScanCodeButton
+		public UnityEngine.UI.Button E_DiscordButton
 		{
 			get
 			{
@@ -186,487 +679,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ScanCodeButton == null )
+				if( this.m_E_DiscordButton == null )
 				{
-					this.m_E_ScanCodeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/title/E_ScanCode");
+					this.m_E_DiscordButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Discord");
 				}
-				return this.m_E_ScanCodeButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_ScanCodeImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_ScanCodeImage == null )
-				{
-					this.m_E_ScanCodeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/title/E_ScanCode");
-				}
-				return this.m_E_ScanCodeImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_PVEButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVEButton == null )
-				{
-					this.m_E_PVEButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE");
-				}
-				return this.m_E_PVEButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PVEImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVEImage == null )
-				{
-					this.m_E_PVEImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE");
-				}
-				return this.m_E_PVEImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PVEPhysicalStrengthTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE/PhysicalStrength/ELabel_PVEPhysicalStrength");
-				}
-				return this.m_ELabel_PVEPhysicalStrengthTextMeshProUGUI;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_PVPNameTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVPNameTextMeshProUGUI == null )
-				{
-					this.m_E_PVPNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE/E_PVPName");
-				}
-				return this.m_E_PVPNameTextMeshProUGUI;
-			}
-		}
-
-		public UITextLocalizeMonoView E_PVPNameUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVPNameUITextLocalizeMonoView == null )
-				{
-					this.m_E_PVPNameUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE/E_PVPName");
-				}
-				return this.m_E_PVPNameUITextLocalizeMonoView;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PVELockImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVELockImage == null )
-				{
-					this.m_E_PVELockImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVE/E_PVELock");
-				}
-				return this.m_E_PVELockImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_EndlessChallengeButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EndlessChallengeButton == null )
-				{
-					this.m_E_EndlessChallengeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge");
-				}
-				return this.m_E_EndlessChallengeButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_EndlessChallengeImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EndlessChallengeImage == null )
-				{
-					this.m_E_EndlessChallengeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge");
-				}
-				return this.m_E_EndlessChallengeImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_WavesTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_WavesTextMeshProUGUI == null )
-				{
-					this.m_ELabel_WavesTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves");
-				}
-				return this.m_ELabel_WavesTextMeshProUGUI;
-			}
-		}
-
-		public UITextLocalizeMonoView ELabel_WavesUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_WavesUITextLocalizeMonoView == null )
-				{
-					this.m_ELabel_WavesUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Waves");
-				}
-				return this.m_ELabel_WavesUITextLocalizeMonoView;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_RankTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RankTextMeshProUGUI == null )
-				{
-					this.m_ELabel_RankTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank");
-				}
-				return this.m_ELabel_RankTextMeshProUGUI;
-			}
-		}
-
-		public UITextLocalizeMonoView ELabel_RankUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RankUITextLocalizeMonoView == null )
-				{
-					this.m_ELabel_RankUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge/ELabel_Rank");
-				}
-				return this.m_ELabel_RankUITextLocalizeMonoView;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_EndlessPhysicalStrengthTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI == null )
-				{
-					this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_EndlessChallenge/PhysicalStrength/ELabel_EndlessPhysicalStrength");
-				}
-				return this.m_ELabel_EndlessPhysicalStrengthTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_PVPButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PVPButton == null )
-				{
-					this.m_EButton_PVPButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVP/EButton_PVP");
-				}
-				return this.m_EButton_PVPButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_PVPImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PVPImage == null )
-				{
-					this.m_EButton_PVPImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVP/EButton_PVP");
-				}
-				return this.m_EButton_PVPImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PVPPhysicalStrengthTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVP/EButton_PVP/PhysicalStrength/ELabel_PVPPhysicalStrength");
-				}
-				return this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PVPLockImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PVPLockImage == null )
-				{
-					this.m_E_PVPLockImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/E_PVP/E_PVPLock");
-				}
-				return this.m_E_PVPLockImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_AvatarButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_AvatarButton == null )
-				{
-					this.m_E_AvatarButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Avatar");
-				}
-				return this.m_E_AvatarButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_AvatarImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_AvatarImage == null )
-				{
-					this.m_E_AvatarImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_Avatar");
-				}
-				return this.m_E_AvatarImage;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PlayerIcoImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PlayerIcoImage == null )
-				{
-					this.m_E_PlayerIcoImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_Avatar/Avatar/E_PlayerIco");
-				}
-				return this.m_E_PlayerIcoImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_PlayerNameTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PlayerNameTextMeshProUGUI == null )
-				{
-					this.m_E_PlayerNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_Avatar/E_PlayerName");
-				}
-				return this.m_E_PlayerNameTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Image E_RedDotImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_RedDotImage == null )
-				{
-					this.m_E_RedDotImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_Avatar/E_RedDot");
-				}
-				return this.m_E_RedDotImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_TutorialButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_TutorialButton == null )
-				{
-					this.m_E_TutorialButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Function/E_Tutorial");
-				}
-				return this.m_E_TutorialButton;
-			}
-		}
-
-		public UnityEngine.UI.Button E_TutorialLockButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_TutorialLockButton == null )
-				{
-					this.m_E_TutorialLockButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Function/E_TutorialLock");
-				}
-				return this.m_E_TutorialLockButton;
-			}
-		}
-
-		public UnityEngine.UI.Button E_CardsButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_CardsButton == null )
-				{
-					this.m_E_CardsButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Function/E_Cards");
-				}
-				return this.m_E_CardsButton;
-			}
-		}
-
-		public UnityEngine.UI.Button E_CardsLockButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_CardsLockButton == null )
-				{
-					this.m_E_CardsLockButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Function/E_CardsLock");
-				}
-				return this.m_E_CardsLockButton;
-			}
-		}
-
-		public UnityEngine.UI.Button E_RankButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_RankButton == null )
-				{
-					this.m_E_RankButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Function/E_Rank");
-				}
-				return this.m_E_RankButton;
+				return this.m_E_DiscordButton;
 			}
 		}
 
@@ -744,12 +761,16 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
-			this.m_EButton_GoldCoinButton = null;
-			this.m_EButton_GoldCoinImage = null;
-			this.m_ELabel_GoldCoinNumTextMeshProUGUI = null;
-			this.m_EButton_PhysicalStrengthButton = null;
-			this.m_EButton_PhysicalStrengthImage = null;
-			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
+			this.m_E_AvatarButton = null;
+			this.m_E_AvatarImage = null;
+			this.m_E_PlayerIcoImage = null;
+			this.m_E_PlayerNameTextMeshProUGUI = null;
+			this.m_E_RedDotImage = null;
+			this.m_E_TutorialButton = null;
+			this.m_E_TutorialLockButton = null;
+			this.m_E_CardsButton = null;
+			this.m_E_CardsLockButton = null;
+			this.m_E_RankButton = null;
 			this.m_E_ScanCodeButton = null;
 			this.m_E_ScanCodeImage = null;
 			this.m_E_PVEButton = null;
@@ -769,16 +790,13 @@ namespace ET.Client
 			this.m_EButton_PVPImage = null;
 			this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
 			this.m_E_PVPLockImage = null;
-			this.m_E_AvatarButton = null;
-			this.m_E_AvatarImage = null;
-			this.m_E_PlayerIcoImage = null;
-			this.m_E_PlayerNameTextMeshProUGUI = null;
-			this.m_E_RedDotImage = null;
-			this.m_E_TutorialButton = null;
-			this.m_E_TutorialLockButton = null;
-			this.m_E_CardsButton = null;
-			this.m_E_CardsLockButton = null;
-			this.m_E_RankButton = null;
+			this.m_EButton_GoldCoinButton = null;
+			this.m_EButton_GoldCoinImage = null;
+			this.m_ELabel_GoldCoinNumTextMeshProUGUI = null;
+			this.m_EButton_PhysicalStrengthButton = null;
+			this.m_EButton_PhysicalStrengthImage = null;
+			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
+			this.m_E_DiscordButton = null;
 			this.m_E_ReturnLoginButton = null;
 			this.m_E_ReturnLoginImage = null;
 			this.m_E_ReturnTextText = null;
@@ -790,12 +808,16 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
-		private UnityEngine.UI.Button m_EButton_GoldCoinButton = null;
-		private UnityEngine.UI.Image m_EButton_GoldCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_GoldCoinNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_EButton_PhysicalStrengthButton = null;
-		private UnityEngine.UI.Image m_EButton_PhysicalStrengthImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_AvatarButton = null;
+		private UnityEngine.UI.Image m_E_AvatarImage = null;
+		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
+		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_RedDotImage = null;
+		private UnityEngine.UI.Button m_E_TutorialButton = null;
+		private UnityEngine.UI.Button m_E_TutorialLockButton = null;
+		private UnityEngine.UI.Button m_E_CardsButton = null;
+		private UnityEngine.UI.Button m_E_CardsLockButton = null;
+		private UnityEngine.UI.Button m_E_RankButton = null;
 		private UnityEngine.UI.Button m_E_ScanCodeButton = null;
 		private UnityEngine.UI.Image m_E_ScanCodeImage = null;
 		private UnityEngine.UI.Button m_E_PVEButton = null;
@@ -815,16 +837,13 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EButton_PVPImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_E_PVPLockImage = null;
-		private UnityEngine.UI.Button m_E_AvatarButton = null;
-		private UnityEngine.UI.Image m_E_AvatarImage = null;
-		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
-		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_E_RedDotImage = null;
-		private UnityEngine.UI.Button m_E_TutorialButton = null;
-		private UnityEngine.UI.Button m_E_TutorialLockButton = null;
-		private UnityEngine.UI.Button m_E_CardsButton = null;
-		private UnityEngine.UI.Button m_E_CardsLockButton = null;
-		private UnityEngine.UI.Button m_E_RankButton = null;
+		private UnityEngine.UI.Button m_EButton_GoldCoinButton = null;
+		private UnityEngine.UI.Image m_EButton_GoldCoinImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_GoldCoinNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButton_PhysicalStrengthButton = null;
+		private UnityEngine.UI.Image m_EButton_PhysicalStrengthImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_DiscordButton = null;
 		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
 		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
 		private UnityEngine.UI.Text m_E_ReturnTextText = null;

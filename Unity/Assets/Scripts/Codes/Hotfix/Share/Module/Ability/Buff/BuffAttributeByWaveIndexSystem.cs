@@ -21,15 +21,18 @@ namespace ET.Ability
 
             float chgValue = buffActionModifyAttributeByWaveIndex.BaseValue * waveIndex + buffActionModifyAttributeByWaveIndex.StackValue * stackCount * waveIndex;
             float maxChgValue = buffActionModifyAttributeByWaveIndex.MaxChgValue;
-            if (chgValue > 0)
+            if (maxChgValue != -1)
             {
-                maxChgValue = Math.Abs(maxChgValue);
-                chgValue = Math.Min(chgValue, maxChgValue);
-            }
-            else
-            {
-                maxChgValue = -Math.Abs(maxChgValue);
-                chgValue = Math.Max(chgValue, maxChgValue);
+                if (chgValue > 0)
+                {
+                    maxChgValue = Math.Abs(maxChgValue);
+                    chgValue = Math.Min(chgValue, maxChgValue);
+                }
+                else
+                {
+                    maxChgValue = -Math.Abs(maxChgValue);
+                    chgValue = Math.Max(chgValue, maxChgValue);
+                }
             }
             return (buffActionModifyAttributeByWaveIndex.NumericType, chgValue);
         }

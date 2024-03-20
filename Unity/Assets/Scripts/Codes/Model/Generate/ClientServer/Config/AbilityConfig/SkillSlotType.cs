@@ -26,6 +26,10 @@ namespace ET.AbilityConfig
         /// 被动技能
         /// </summary>
         PassiveSkill = 3,
+        /// <summary>
+        /// 需手动释放的技能(AI不会触发)
+        /// </summary>
+        ManualSkill = 4,
     }
 
 } 

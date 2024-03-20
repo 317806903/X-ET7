@@ -47,6 +47,24 @@ namespace ET.Server
 	        }
         }
 
+        public static async ETTask<PlayerBaseInfoComponent> GetPlayerBaseInfoByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, forceReGet);
+	        return entity as PlayerBaseInfoComponent;
+        }
+
+        public static async ETTask<PlayerBackPackComponent> GetPlayerBackPackByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, forceReGet);
+	        return entity as PlayerBackPackComponent;
+        }
+
+        public static async ETTask<PlayerBattleCardComponent> GetPlayerBattleCardByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BattleCard, forceReGet);
+	        return entity as PlayerBattleCardComponent;
+        }
+
         public static async ETTask SetPlayerModelByClient(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
@@ -54,7 +72,7 @@ namespace ET.Server
 	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
 	        if (playerDataComponent == null)
 	        {
-		        return;
+		        playerDataComponent = playerCacheManagerComponent.AddChildWithId<PlayerDataComponent>(playerId);
 	        }
 
 	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
@@ -67,13 +85,13 @@ namespace ET.Server
 
         public static async ETTask SavePlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, List<string> setPlayerKeys)
         {
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        return;
-	        }
+	        // PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+	        //
+	        // PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+	        // if (playerDataComponent == null)
+	        // {
+		       //  return;
+	        // }
 
 	        Entity entityModel = await GetPlayerModel(scene, playerId, playerModelType, false);
 	        entityModel.GetComponent<DataCacheClearComponent>().RefreshTime();
@@ -175,13 +193,13 @@ namespace ET.Server
 		        Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
 		        return;
 	        }
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        return;
-	        }
+	        // PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+	        //
+	        // PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+	        // if (playerDataComponent == null)
+	        // {
+		       //  return;
+	        // }
 
 	        PlayerBaseInfoComponent playerBaseInfoComponent =
 				await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
@@ -200,13 +218,13 @@ namespace ET.Server
 				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
 				return;
 			}
-			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			if (playerDataComponent == null)
-			{
-				return;
-			}
+			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+			//
+			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			// if (playerDataComponent == null)
+			// {
+			// 	return;
+			// }
 
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
@@ -225,13 +243,13 @@ namespace ET.Server
 				Log.Error($"Quantity must be positive, count:{count}");
 				return;
 			}
-			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			if (playerDataComponent == null)
-			{
-				return;
-			}
+			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+			//
+			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			// if (playerDataComponent == null)
+			// {
+			// 	return;
+			// }
 
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
@@ -249,13 +267,13 @@ namespace ET.Server
 				Log.Error($"Quantity must be positive, count:{count}");
 				return;
 			}
-			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			if (playerDataComponent == null)
-			{
-				return;
-			}
+			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+			//
+			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			// if (playerDataComponent == null)
+			// {
+			// 	return;
+			// }
 
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
@@ -268,18 +286,18 @@ namespace ET.Server
 
 		public static async ETTask AddItems(Scene scene, long playerId, Dictionary<string, int> items)
 		{
-			PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-			PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			if (playerDataComponent == null)
-			{
-				return;
-			}
+			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+			//
+			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+			// if (playerDataComponent == null)
+			// {
+			// 	return;
+			// }
 
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
 							PlayerBackPackComponent;
-							
+
 			foreach((string itemCfgId, int count) in items)
             {
 				if (count <= 0)

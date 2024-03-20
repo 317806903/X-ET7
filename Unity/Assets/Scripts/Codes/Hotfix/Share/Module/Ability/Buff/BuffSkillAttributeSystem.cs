@@ -30,7 +30,7 @@ namespace ET.Ability
             string skillCfgId = buffActionModifySkillAttribute.SkillId;
             ET.AbilityConfig.SkillSlotType skillSlotType = buffActionModifySkillAttribute.SkillSlotType;
             Unit unit = self.GetUnit();
-            return ET.Ability.SkillHelper.GetSkillList(unit, skillCfgId, (ET.Ability.SkillSlotType)skillSlotType);
+            return ET.Ability.SkillHelper.GetSkillList(unit, skillCfgId, skillSlotType);
         }
 
         public static void AddBuffWhenModifySkillAttribute(this BuffObj self, BuffActionModifySkillAttribute buffActionModifySkillAttribute)

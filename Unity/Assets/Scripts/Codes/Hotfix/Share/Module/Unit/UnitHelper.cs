@@ -232,21 +232,81 @@ namespace ET.Ability
             return false;
         }
 
-        public static List<Unit> GetFriends(Unit curUnit, bool isOnlyPlayer)
+        public static List<Unit> GetUnitListBySelectObjectType(Unit curUnit, SelectObjectType selectObjectType, bool isNeedChkCanBeFind)
+        {
+            List<Unit> list = null;
+            if (selectObjectType == SelectObjectType.FriendPlayers
+                || selectObjectType == SelectObjectType.FriendButNotPlayers
+                || selectObjectType == SelectObjectType.Friends)
+            {
+                list = UnitHelper.GetFriends(curUnit, selectObjectType);
+            }
+            else if (selectObjectType == SelectObjectType.HostilePlayers
+                     || selectObjectType == SelectObjectType.HostileButNotPlayers
+                     || selectObjectType == SelectObjectType.Hostiles)
+            {
+                list = UnitHelper.GetHostileForces(curUnit, selectObjectType, isNeedChkCanBeFind);
+            }
+            else if (selectObjectType == SelectObjectType.AllPlayers)
+            {
+                list = UnitHelper.GetFriends(curUnit, SelectObjectType.FriendPlayers);
+                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.HostilePlayers, isNeedChkCanBeFind);
+                list.AddRange(listHostileForces);
+            }
+            else if (selectObjectType == SelectObjectType.AllButNotPlayers)
+            {
+                list = UnitHelper.GetFriends(curUnit, SelectObjectType.FriendButNotPlayers);
+                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.HostileButNotPlayers, isNeedChkCanBeFind);
+                list.AddRange(listHostileForces);
+            }
+            else if (selectObjectType == SelectObjectType.All)
+            {
+                list = UnitHelper.GetFriends(curUnit, SelectObjectType.Friends);
+                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.Hostiles, isNeedChkCanBeFind);
+                list.AddRange(listHostileForces);
+            }
+            else
+            {
+            }
+            return list;
+        }
+
+        public static List<Unit> GetFriends(Unit curUnit, SelectObjectType selectObjectType)
         {
             List<Unit> friends = ListComponent<Unit>.Create();
-            foreach (Unit unit in GetUnitComponent(curUnit).playerList)
+            bool isContainPlayer = false;
+            bool isContainActor = false;
+            if (selectObjectType == SelectObjectType.Friends)
             {
-                if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
+                isContainPlayer = true;
+                isContainActor = true;
+            }
+            else if (selectObjectType == SelectObjectType.FriendPlayers)
+            {
+                isContainPlayer = true;
+                isContainActor = false;
+            }
+            else if (selectObjectType == SelectObjectType.FriendButNotPlayers)
+            {
+                isContainPlayer = false;
+                isContainActor = true;
+            }
+
+            if (isContainPlayer)
+            {
+                foreach (Unit unit in GetUnitComponent(curUnit).playerList)
                 {
-                    if (UnitHelper.ChkUnitAlive(unit))
+                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
                     {
-                        friends.Add(unit);
+                        if (UnitHelper.ChkUnitAlive(unit))
+                        {
+                            friends.Add(unit);
+                        }
                     }
                 }
             }
 
-            if (isOnlyPlayer == false)
+            if (isContainActor)
             {
                 foreach (Unit unit in GetUnitComponent(curUnit).actorList)
                 {
@@ -269,9 +329,27 @@ namespace ET.Ability
         /// <param name="curUnit"></param>
         /// <param name="isOnlyPlayer"></param>
         /// <returns></returns>
-        public static List<Unit> GetHostileForces(Unit curUnit, bool isOnlyPlayer, bool isNeedChkCanBeFind)
+        public static List<Unit> GetHostileForces(Unit curUnit, SelectObjectType selectObjectType, bool isNeedChkCanBeFind)
         {
             List<Unit> hostileForces = ListComponent<Unit>.Create();
+
+            bool isContainPlayer = false;
+            bool isContainActor = false;
+            if (selectObjectType == SelectObjectType.Hostiles)
+            {
+                isContainPlayer = true;
+                isContainActor = true;
+            }
+            else if (selectObjectType == SelectObjectType.HostilePlayers)
+            {
+                isContainPlayer = true;
+                isContainActor = false;
+            }
+            else if (selectObjectType == SelectObjectType.HostileButNotPlayers)
+            {
+                isContainPlayer = false;
+                isContainActor = true;
+            }
 
             var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
             foreach (var seeUnit in seeUnits)
@@ -279,7 +357,11 @@ namespace ET.Ability
                 AOIEntity aoiEntityTmp = seeUnit.Value;
                 Unit unit = aoiEntityTmp.Unit;
                 bool isContinue = false;
-                if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsActor(unit))
+                if (UnitHelper.ChkIsPlayer(unit) && isContainPlayer)
+                {
+                    isContinue = true;
+                }
+                else if (UnitHelper.ChkIsActor(unit) && isContainActor)
                 {
                     isContinue = true;
                 }
@@ -293,6 +375,10 @@ namespace ET.Ability
                     continue;
                 }
 
+                if (UnitHelper.ChkUnitAlive(unit) == false)
+                {
+                    continue;
+                }
                 bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
                 if (isFriend)
                 {
@@ -308,17 +394,7 @@ namespace ET.Ability
                     }
                 }
 
-                if (UnitHelper.ChkUnitAlive(unit))
-                {
-                    if (UnitHelper.ChkIsPlayer(unit))
-                    {
-                        hostileForces.Add(unit);
-                    }
-                    else if (UnitHelper.ChkIsActor(unit) && isOnlyPlayer == false)
-                    {
-                        hostileForces.Add(unit);
-                    }
-                }
+                hostileForces.Add(unit);
             }
 
             return hostileForces;
@@ -1020,6 +1096,11 @@ namespace ET.Ability
             return moveTimelineId;
         }
 
+        /// <summary>
+        /// 发送的Actor，例如 B发射的子弹，则 子弹通过这个接口可以找到B (A 召唤了 B， B发射的子弹，则 子弹通过这个接口可以找到B)
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static Unit GetCasterUnit(Unit unit)
         {
             Unit casterPlayerUnit = null;
@@ -1059,6 +1140,12 @@ namespace ET.Ability
             return casterPlayerUnit;
         }
 
+        /// <summary>
+        /// 最开始的Actor，例如 A 召唤了 B， B发射的子弹，则 子弹通过这个接口可以找到A
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="casterUnitId"></param>
+        /// <returns></returns>
         public static Unit GetCasterActorUnit(Scene scene, long casterUnitId)
         {
             Unit unit = UnitHelper.GetUnit(scene, casterUnitId);
@@ -1121,18 +1208,22 @@ namespace ET.Ability
             return actionCfg_DeathShow;
         }
 
-        public static float GetMaxSkillDis(Unit unit, ET.Ability.SkillSlotType skillSlotType)
+        public static float GetMaxSkillDis(Unit unit, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             return SkillHelper.GetMaxSkillDis(unit, skillSlotType);
         }
 
-        public static float GetMaxSkillDis(UnitCfg unitCfg, ET.Ability.SkillSlotType skillSlotType)
+        public static float GetMaxSkillDis(UnitCfg unitCfg, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
             float dis = 0;
-            int count = unitCfg.SkillList.Count;
-            for (int i = 0; i < count; i++)
+            foreach (var item in unitCfg.SkillList)
             {
-                string skillCfgId = unitCfg.SkillList[i];
+                string skillCfgId = item.Key;
+                SkillSlotType skillSlotTypeTmp = item.Value;
+                if (skillSlotType != skillSlotTypeTmp)
+                {
+                    continue;
+                }
                 SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
                 if (dis < skillCfg.Dis)
                 {

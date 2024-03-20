@@ -77,8 +77,9 @@ namespace ET
 		// 	EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
 		// }
 
-		public static void Init(this GamePlayPKComponent self, long ownerPlayerId, string gamePlayModeCfgId)
+		public static async ETTask Init(this GamePlayPKComponent self, long ownerPlayerId, string gamePlayModeCfgId)
 		{
+			await ETTask.CompletedTask;
 			self.gamePlayModeCfgId = gamePlayModeCfgId;
 			self.ownerPlayerId = ownerPlayerId;
 

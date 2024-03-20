@@ -157,9 +157,10 @@ namespace ET.Client
             return self.Email;
         }
 
-        public static async ETTask SDKLoginIn(this LoginAppleSDKComponent self, Action finishCallBack)
+        public static async ETTask SDKLoginIn(this LoginAppleSDKComponent self, Action finishCallBack, Action failCallBack)
         {
             self.finishCallBack = finishCallBack;
+            self.failCallBack = failCallBack;
 #if UNITY_IOS
             // Initialize the Apple Auth Manager
             if (self.m_AppleAuthManager == null)
@@ -198,12 +199,14 @@ namespace ET.Client
                     {
                         Log.Info("Sign-in with Apple error. Message: appleIDCredential is null");
                         self.Error = "Retrieving Apple Id Token failed.";
+                        self.failCallBack?.Invoke();
                     }
                 },
                 error =>
                 {
                     Log.Info("Sign-in with Apple error. Message: " + error);
                     self.Error = "Retrieving Apple Id Token failed.";
+                    self.failCallBack?.Invoke();
                 }
             );
 #endif

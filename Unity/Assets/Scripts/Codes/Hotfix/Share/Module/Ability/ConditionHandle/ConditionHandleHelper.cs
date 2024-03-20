@@ -25,10 +25,13 @@ namespace ET.Ability
                 bool bRet = false;
                 int count = selectHandle.unitIds.Count;
                 bool isChgSelect = false;
-                SelectHandle newSelectHandle = null;
+                SelectHandle newSelectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
+                newSelectHandle.position = selectHandle.position;
+                newSelectHandle.direction = selectHandle.direction;
                 for (int i = count - 1; i >= 0; i--)
                 {
-                    Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
+                    long unitId = selectHandle.unitIds[i];
+                    Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
                     if (UnitHelper.ChkUnitAlive(unitSelect, true) == false)
                     {
                         continue;
@@ -38,18 +41,20 @@ namespace ET.Ability
                     if (bRetOne == false)
                     {
                         isChgSelect = true;
-                        if (newSelectHandle == null)
-                        {
-                            newSelectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
-                            newSelectHandle.position = selectHandle.position;
-                            newSelectHandle.direction = selectHandle.direction;
-                        }
-                        newSelectHandle.unitIds.Add(i);
                     }
                     else
                     {
-                        bRet = true;
+                        newSelectHandle.unitIds.Add(unitId);
                     }
+                }
+
+                if (newSelectHandle.unitIds.Count > 0)
+                {
+                    bRet = true;
+                }
+                else
+                {
+                    newSelectHandle.Dispose();
                 }
                 if (bRet)
                 {
@@ -472,6 +477,22 @@ namespace ET.Ability
             {
                 bool beControl = BuffHelper.ChkCanBeControl(unit.DomainScene(), ref actionContext);
                 return onHitChkCanBeControlCondition.BeControl == beControl;
+            }
+            else if (condition is OnHitChkIsCriticalStrikeCondition onHitChkIsCriticalStrikeCondition)
+            {
+                return onHitChkIsCriticalStrikeCondition.IsCriticalStrike == actionContext.isCriticalStrike;
+            }
+            else if (condition is OnChkCanHitByBulletCondition onChkCanHitByBulletCondition)
+            {
+                Unit unitAction = UnitHelper.GetUnit(unit.DomainScene(), actionContext.attackerUnitId);
+                if (UnitHelper.ChkIsBullet(unitAction) == false)
+                {
+                    return false;
+                }
+
+                BulletObj bulletObj = unitAction.GetComponent<BulletObj>();
+                bool canHit = bulletObj.CanHitUnit(unit);
+                return onChkCanHitByBulletCondition.CanHit == canHit;
             }
             else if (condition is ChkSelectUnitNumCondition chkSelectUnitNumCondition)
             {

@@ -174,21 +174,25 @@ namespace ET.Client
 
 		private static void SetArSessionServiceEndpoint()
 		{
-			// If not CN, set the backend to AWS North America.
-			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-			var coreValue = GetCoreImplInternalObject();
-			var setArSessionServiceEndpointMethod = coreValue.GetType().GetMethod("SetArSessionServiceEndpoint", InstanceBindFlags);
-			Log.Debug($"SetArSessionServiceEndpoint {setArSessionServiceEndpointMethod}");
-
+			// Set endpoint by area type.
 			string endpoint = ResConfig.Instance.areaType switch
 			{
 				AreaType.CN => "CN",
 				AreaType.EN => "US",
+				AreaType.GDC => "GDC",
 				_ => "US"
 			};
 
-			Log.Debug($"SetArSessionServiceEndpoint is set to: [{endpoint}]");
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
+
+			var setArSessionServiceEndpointMethod = coreValue.GetType().GetMethod("SetArSessionServiceEndpoint", InstanceBindFlags);
+			Log.Debug($"SetArSessionServiceEndpoint {setArSessionServiceEndpointMethod}, is set to: [{endpoint}]");
 			setArSessionServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
+
+			var SetAuthServiceEndpointMethod = coreValue.GetType().GetMethod("SetAuthServiceEndpoint", InstanceBindFlags);
+			Log.Debug($"SetAuthServiceEndpoint {SetAuthServiceEndpointMethod}, is set to: [{endpoint}]");
+			SetAuthServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
 		}
 
 		private static void SetArSessionAppAuth()
@@ -697,16 +701,6 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, true);
 			self.EntranceType = "scan";
 			self.meshFaceCount = 0;
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-			{
-				// 扫图开始事件
-				eventName = "ScanStarted",
-			});
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
-			{
-				// 扫图结束事件开始计时
-				eventName = "ScanEnded",
-			});
 		}
 
 		public static void OnMenuLoadRecentScene(this ARSessionComponent self)
@@ -766,6 +760,25 @@ namespace ET.Client
 			if (sceneInfo.HasValue)
 			{
 				self.CurrentARSceneId = sceneInfo.Value.sceneId;
+			}
+
+			if (self.EntranceType == "scan")
+			{
+				// Scen just created and standby for scan start.
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					// 扫图开始事件
+					eventName = "ScanStarted",
+					properties = new()
+								{
+									{"session_id", self.GetARSceneId()},
+								}
+				});
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+				{
+					// 扫图结束事件开始计时
+					eventName = "ScanEnded",
+				});
 			}
 		}
 
@@ -906,7 +919,7 @@ namespace ET.Client
 							}
 						});
 					}
-                    
+
                 }
             }
 		}

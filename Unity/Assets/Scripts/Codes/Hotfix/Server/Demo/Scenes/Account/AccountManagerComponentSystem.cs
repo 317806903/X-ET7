@@ -37,6 +37,10 @@ namespace ET.Server
                     await dbComponent.Query<AccountComponent>((accountComponent1) => (accountComponent1.accountId == accountId || accountComponent1.bindAccountId == accountId));
                 if (accountComponents.Count > 0)
                 {
+                    if (accountComponents.Count > 1)
+                    {
+                        Log.Error($"dbComponent.Query<AccountComponent> accountComponents.Count[{accountComponents.Count}] > 1 when accountId == {accountId} || bindAccountId == {accountId}");
+                    }
                     accountComponent = accountComponents[0];
                     self.AddChild(accountComponent);
                 }

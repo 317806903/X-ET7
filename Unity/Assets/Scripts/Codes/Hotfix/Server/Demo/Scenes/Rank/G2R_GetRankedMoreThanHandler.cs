@@ -11,7 +11,7 @@ namespace ET.Server
 			long playerId = request.PlayerId;
 			RankType rankType = (RankType)request.RankType;
 			long score = request.Score;
-			(ulong rank, int rankedMoreThan) = await ET.Server.RankHelper.GetRankedMoreThan(scene, rankType, score);
+			(ulong rank, int rankedMoreThan) = await ET.Server.RankHelper.GetRankedMoreThan(scene, rankType, score, playerId);
 			response.Rank = (long)rank;
 			response.RankedMoreThan = rankedMoreThan;
 

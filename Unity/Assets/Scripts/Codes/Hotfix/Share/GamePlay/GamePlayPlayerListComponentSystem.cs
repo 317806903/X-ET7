@@ -1,6 +1,7 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -199,6 +200,11 @@ namespace ET
         {
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
             List<List<System.Numerics.Vector3>> allPlayerBirthPosList = gamePlayBattleLevelCfg.PlayerBirthPosList;
+            if (gamePlayBattleLevelCfg.SceneMap == "ARMap")
+            {
+                allPlayerBirthPosList = new();
+                allPlayerBirthPosList.Add(new List<Vector3>(){Vector3.Zero});
+            }
             if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
             {
                 List<System.Numerics.Vector3> playerBirthList = RandomGenerator.RandomArray(allPlayerBirthPosList);
@@ -282,6 +288,11 @@ namespace ET
         {
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
             List<List<System.Numerics.Vector3>> allPlayerBirthPosList = gamePlayBattleLevelCfg.PlayerBirthPosList;
+            if (gamePlayBattleLevelCfg.SceneMap == "ARMap")
+            {
+                allPlayerBirthPosList = new();
+                allPlayerBirthPosList.Add(new List<Vector3>(){Vector3.Zero});
+            }
             if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
             {
                 List<System.Numerics.Vector3> playerBirthList = RandomGenerator.RandomArray(allPlayerBirthPosList);

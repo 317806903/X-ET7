@@ -186,6 +186,7 @@ namespace ET.Client
             await ETTask.CompletedTask;
             if (Application.isEditor)
             {
+                self.IsAutoLogining = false;
                 if (DebugConnectComponent.Instance.IsFirstShow)
                 {
                     DebugConnectComponent.Instance.IsFirstShow = false;
@@ -211,6 +212,15 @@ namespace ET.Client
 
                 self.IsDebugMode = DebugConnectComponent.Instance.IsDebugMode;
                 self.IsEditorLoginMode = DebugConnectComponent.Instance.IsEditorLoginMode;
+
+                if (self.IsShowDebugMode || self.IsShowEditorLoginMode)
+                {
+                    self.IsAutoLogining = false;
+                }
+                else
+                {
+                    self.IsAutoLogining = true;
+                }
             }
         }
 
@@ -227,16 +237,16 @@ namespace ET.Client
                 bool bSDKLoginDone = await ET.Client.LoginSDKManagerComponent.Instance.ChkSDKLoginDone();
                 bool bGuestLoginDone = self.ChkGuestLoginDone();
                 self.View.EG_LoginAccountRootRectTransform.SetVisible(true);
-                
-                if (bSDKLoginDone)
+
+                if (bSDKLoginDone && self.IsAutoLogining)
                 {
                     self.LoginWhenSDK().Coroutine();
                 }
-                else if(bGuestLoginDone)
+                else if(bGuestLoginDone && self.IsAutoLogining)
                 {
                     self.LoginWhenGuest().Coroutine();
                 }
-                else 
+                else
                 {
                     self.View.EG_LoginWhenSDKRectTransform.SetVisible(true);
                 }
@@ -299,6 +309,7 @@ namespace ET.Client
 
         public static async ETTask LoginWhenEditor(this DlgLogin self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             string accountId = self.View.E_AccountInputField.text;
@@ -332,6 +343,7 @@ namespace ET.Client
 
         public static async ETTask LoginWhenGuest(this DlgLogin self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
@@ -389,7 +401,7 @@ namespace ET.Client
             string AccountKey = "AccountId_Guest";
             string accountId = "";
             if (PlayerPrefs.HasKey(AccountKey))
-            { 
+            {
                 accountId = PlayerPrefs.GetString(AccountKey);
             }
             if (string.IsNullOrEmpty(accountId))
@@ -399,7 +411,7 @@ namespace ET.Client
 
             string key = $"GuestPlayerLoginTime_{LoginType.Editor.ToString()}";
             if (!PlayerPrefs.HasKey(key))
-            { 
+            {
                 return false;
             }
             string value = PlayerPrefs.GetString(key);
@@ -415,6 +427,7 @@ namespace ET.Client
 
         public static async ETTask LoginWhenSDK(this DlgLogin self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
@@ -434,6 +447,8 @@ namespace ET.Client
                 await TimerComponent.Instance.WaitAsync(500);
                 self.ShowLoginTips(true);
                 self.LoginWhenSDK_LoginDone().Coroutine();
+            },()=>{
+                self.ShowLoginTips(false);
             });
         }
 

@@ -40,12 +40,17 @@ namespace ET.Ability
         ///</summary>
         public float timeElapsed = 0;
 
+        [BsonIgnore]
         public HashSet<long> preHitUnitIds;
 
         ///<summary>
         ///子弹命中纪录
         ///</summary>
-        public ListComponent<BulletHitRecord> hitRecords;
+        [BsonIgnore]
+        public DictionaryComponent<long, BulletHitRecord> hitRecords;
+
+        [BsonIgnore]
+        public ListComponent<long> removeList;
 
         ///<summary>
         ///子弹创建后多久是没有碰撞的，这样比如子母弹之类的，不会在创建后立即命中目标，但绝大多子弹还应该是0的
@@ -79,7 +84,7 @@ namespace ET.Ability
 
         public static BulletHitRecord Create()
         {
-            BulletHitRecord bulletHitRecord = ObjectPool.Instance.Fetch(typeof (SelectHandle)) as BulletHitRecord;
+            BulletHitRecord bulletHitRecord = ObjectPool.Instance.Fetch(typeof (BulletHitRecord)) as BulletHitRecord;
             bulletHitRecord.Reuse();
             return bulletHitRecord;
         }

@@ -40,5 +40,7 @@ namespace ET
 		public HashSetComponent<Unit> bulletList;
 		public HashSetComponent<Unit> aoeList;
 		public HashSetComponent<Unit> sceneEffectList;
+
+		public bool IsStopActorMove { get; set; }
 	}
 }

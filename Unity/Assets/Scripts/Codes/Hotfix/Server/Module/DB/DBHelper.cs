@@ -7,33 +7,39 @@ namespace ET.Server
 {
     public static class DBHelper
     {
-        public static async ETTask<T> LoadDBWithParent2Child<T>(Entity parent, long playerId) where T :Entity, IAwake
+        public static async ETTask<T> LoadDBWithParent2Child<T>(Entity parent, long playerId, bool createWhenNull) where T :Entity, IAwake
         {
             T entityDB = await ET.Server.DBHelper._LoadDB<T>(parent.DomainScene(), playerId);
             if (entityDB == null)
             {
-                entityDB = parent.AddChildWithId<T>(playerId) as T;
+                if (createWhenNull)
+                {
+                    entityDB = parent.AddChildWithId<T>(playerId) as T;
+                }
             }
             else
             {
                 parent.AddChild(entityDB);
             }
-            entityDB.AddComponent<DataCacheWriteComponent>();
+            entityDB?.AddComponent<DataCacheWriteComponent>();
             return entityDB;
         }
 
-        public static async ETTask<T> LoadDBWithParent2Component<T>(Entity parent, long playerId) where T :Entity, IAwake, new()
+        public static async ETTask<T> LoadDBWithParent2Component<T>(Entity parent, long playerId, bool createWhenNull) where T :Entity, IAwake, new()
         {
             T entityDB = await ET.Server.DBHelper._LoadDB<T>(parent.DomainScene(), playerId);
             if (entityDB == null)
             {
-                entityDB = parent.AddComponentWithId<T>(playerId);
+                if (createWhenNull)
+                {
+                    entityDB = parent.AddComponentWithId<T>(playerId);
+                }
             }
             else
             {
                 parent.AddComponent(entityDB);
             }
-            entityDB.AddComponent<DataCacheWriteComponent>();
+            entityDB?.AddComponent<DataCacheWriteComponent>();
             return entityDB;
         }
 

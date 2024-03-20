@@ -186,11 +186,14 @@ namespace UnityEngine.Rendering.Universal.Internal
                 cullingParameters.cullingMask &= ~(1u << terrain);
                 CullingResults cullingResults = context.Cull(ref cullingParameters);
                 context.Submit();
-                CullingResults oriResult  = renderingData.cullResults;
-                renderingData.cullResults = cullingResults;
-                // RenderMainLightCascadeShadowmap(ref context, ref cullingResults, ref renderingData.lightData, ref renderingData.shadowData);
-                RenderMainLightCascadeShadowmap(ref context, ref renderingData);
-                renderingData.cullResults = oriResult;
+                if(cullingResults.GetShadowCasterBounds(0, out var box))
+                {
+                    CullingResults oriResult  = renderingData.cullResults;
+                    renderingData.cullResults = cullingResults;
+                    // RenderMainLightCascadeShadowmap(ref context, ref cullingResults, ref renderingData.lightData, ref renderingData.shadowData);
+                    RenderMainLightCascadeShadowmap(ref context, ref renderingData);
+                    renderingData.cullResults = oriResult;
+                }
             }
             // RenderMainLightCascadeShadowmap(ref context, ref renderingData);
             renderingData.commandBuffer.SetGlobalTexture(m_MainLightShadowmapID, m_MainLightShadowmapTexture.nameID);

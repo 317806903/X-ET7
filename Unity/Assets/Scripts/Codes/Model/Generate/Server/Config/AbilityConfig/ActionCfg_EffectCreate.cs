@@ -24,6 +24,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         Key = _buf.ReadString();
         MaxKeyNum = _buf.ReadInt();
         Duration = _buf.ReadFloat();
+        EffectShowType = (EffectShowType)_buf.ReadInt();
         IsSceneEffect = _buf.ReadBool();
         IsScaleByUnit = _buf.ReadBool();
         OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
@@ -70,6 +71,10 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     /// </summary>
     public float Duration { get; private set; }
     /// <summary>
+    /// 特效类型
+    /// </summary>
+    public EffectShowType EffectShowType { get; private set; }
+    /// <summary>
     /// 是否场景特效
     /// </summary>
     public bool IsSceneEffect { get; private set; }
@@ -106,6 +111,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         + "Key:" + Key + ","
         + "MaxKeyNum:" + MaxKeyNum + ","
         + "Duration:" + Duration + ","
+        + "EffectShowType:" + EffectShowType + ","
         + "IsSceneEffect:" + IsSceneEffect + ","
         + "IsScaleByUnit:" + IsScaleByUnit + ","
         + "OffSetInfo:" + OffSetInfo + ","

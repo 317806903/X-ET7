@@ -8,6 +8,7 @@ namespace ET
 		CN,
 		TW,
 		EN,
+		GDC,
 	}
 
     [CreateAssetMenu(menuName = "ET/CreateResConfig", fileName = "ResConfig", order = 0)]

@@ -19,7 +19,7 @@ namespace ET.Server
 
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
-			bool canPut = ChkPosition(gamePlayTowerDefenseComponent, observerUnit, pos);
+			(bool canPut, float3 forward) = ChkPosition(gamePlayTowerDefenseComponent, observerUnit, pos);
 			if (canPut == false)
 			{
 				response.Error = ErrorCode.ERR_LogicError;
@@ -33,9 +33,6 @@ namespace ET.Server
 					putMonsterCallComponent = gamePlayTowerDefenseComponent.AddComponent<PutMonsterCallComponent>();
 				}
 
-				PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-				Unit homeUnit = putHomeComponent.GetHomeUnit(observerUnit);
-				float3 forward = homeUnit.Position - pos;
 				forward.y = 0;
 				putMonsterCallComponent.Init(playerId, unitCfgId, pos, forward);
 			}
@@ -43,11 +40,11 @@ namespace ET.Server
 			await ETTask.CompletedTask;
 		}
 
-		public bool ChkPosition(GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent, Unit unit, float3 putMonsterCallPos)
+		public (bool, float3) ChkPosition(GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent, Unit unit, float3 putMonsterCallPos)
 		{
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
 			Unit homeUnit = putHomeComponent.GetHomeUnit(unit);
-			return putHomeComponent.ChkHomeUnitPosition(homeUnit, putMonsterCallPos);
+			return putHomeComponent.ChkHomeUnitPositionAndForward(homeUnit, putMonsterCallPos);
 		}
 	}
 }

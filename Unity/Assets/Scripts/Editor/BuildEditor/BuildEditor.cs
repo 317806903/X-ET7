@@ -208,6 +208,12 @@ namespace ET
                         EditorUtility.SetDirty(this.resConfig);
                         AssetDatabase.SaveAssets();
                     }
+                    if (this.resConfig.ResGameVersion != "v1.0")
+                    {
+                        this.resConfig.ResGameVersion = "v1.0";
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
                     if (this.resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                     {
                         this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;

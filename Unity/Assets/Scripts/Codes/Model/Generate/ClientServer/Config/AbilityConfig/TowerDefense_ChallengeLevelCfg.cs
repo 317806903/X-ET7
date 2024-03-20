@@ -23,6 +23,7 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
         IsAR = _buf.ReadBool();
         FirstClearDropItem = _buf.ReadString();
         RepeatClearDropItem = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterList.Add(_e0);}}
         PostInit();
     }
 
@@ -53,15 +54,20 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
     /// </summary>
     public bool IsAR { get; private set; }
     /// <summary>
-    /// 首通掉落（预留）
+    /// 首通掉落
     /// </summary>
     public string FirstClearDropItem { get; private set; }
     public DropRuleCfg FirstClearDropItem_Ref { get; private set; }
     /// <summary>
-    /// 重复掉落（预留）
+    /// 重复掉落
     /// </summary>
     public string RepeatClearDropItem { get; private set; }
     public DropRuleCfg RepeatClearDropItem_Ref { get; private set; }
+    /// <summary>
+    /// 关卡怪物
+    /// </summary>
+    public System.Collections.Generic.List<string> MonsterList { get; private set; }
+    public System.Collections.Generic.List<TowerDefense_MonsterCfg> MonsterList_Ref { get; private set; }
 
     public const int __ID__ = 1113511035;
     public override int GetTypeId() => __ID__;
@@ -71,6 +77,7 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
         this.Id_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(Id);
         this.FirstClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(FirstClearDropItem);
         this.RepeatClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(RepeatClearDropItem);
+        { TowerDefense_MonsterCfgCategory __table = (TowerDefense_MonsterCfgCategory)_tables["TowerDefense_MonsterCfgCategory"]; this.MonsterList_Ref = new System.Collections.Generic.List<TowerDefense_MonsterCfg>(); foreach(var __e in MonsterList) { this.MonsterList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -88,6 +95,7 @@ public sealed partial class TowerDefense_ChallengeLevelCfg: Bright.Config.BeanBa
         + "IsAR:" + IsAR + ","
         + "FirstClearDropItem:" + FirstClearDropItem + ","
         + "RepeatClearDropItem:" + RepeatClearDropItem + ","
+        + "MonsterList:" + Bright.Common.StringUtil.CollectionToString(MonsterList) + ","
         + "}";
     }
     

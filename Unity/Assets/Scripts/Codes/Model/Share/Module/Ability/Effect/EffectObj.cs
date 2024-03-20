@@ -9,9 +9,6 @@ namespace ET.Ability
     [FriendOf(typeof(Unit))]
     public class EffectObj: Entity, IAwake, IDestroy
     {
-        public bool isSceneEffect;
-        public long unitId;
-
         public string CfgId { get; set; }
 
         public string PlayAudioActionId { get; set; }
@@ -63,6 +60,21 @@ namespace ET.Ability
         ///</summary>
         public float timeElapsed = 0.00f;
 
+        public long createTime;
+        public float3 createPos;
+
         public bool isScaleByUnit;
+
+        public EffectShowType effectShowType;
+
+        ///<summary>
+        ///施加者是谁
+        ///</summary>
+        public long casterUnitId;
+
+        /// <summary>
+        /// 记录闪电拖尾特效的必经点(unitId)
+        /// </summary>
+        public List<long> pointLightningTrailList;
     }
 }

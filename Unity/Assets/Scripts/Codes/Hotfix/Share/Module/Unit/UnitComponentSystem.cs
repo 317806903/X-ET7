@@ -240,7 +240,7 @@ namespace ET
 
 		public static void AddSyncNumericUnitByKey(this UnitComponent self, Unit unit, int numericKey)
 		{
-			if (self.NeedSyncNumericUnitsKey.ContainsKey(unit.Id))
+			if (self.NeedSyncNumericUnitsKey.Contains(unit.Id, numericKey))
 			{
 				return;
 			}

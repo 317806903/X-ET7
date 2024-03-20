@@ -66,7 +66,7 @@ namespace ET.Client
                 return;
             }
 
-            if (self.showFPS.gameObject.activeInHierarchy)
+            if (self.Root.gameObject.activeSelf && self.showFPS.gameObject.activeInHierarchy)
             {
                 self.showFPS.ExShow = $"{self.pingComponent.Ping}ms";
             }

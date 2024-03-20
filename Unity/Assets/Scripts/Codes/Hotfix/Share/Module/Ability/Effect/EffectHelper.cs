@@ -27,14 +27,18 @@ namespace ET.Ability
             }
         }
 
-        public static async ETTask AddEffectWhenSelectUnits(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle,
-        ActionContext actionContext)
+        public static async ETTask AddEffectWhenSelectUnits(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
         {
             EffectComponent effectComponent;
             bool isSceneEffect = actionCfgCreateEffect.IsSceneEffect;
             bool IsScaleByUnit = actionCfgCreateEffect.IsScaleByUnit;
             if (isSceneEffect == false)
             {
+                long effectCasterUnitId = unit.Id;
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+                }
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitEffect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
@@ -55,11 +59,14 @@ namespace ET.Ability
                         effectComponent = unitEffect.AddComponent<EffectComponent>();
                     }
 
-                    EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
-                        actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                        actionCfgCreateEffect.OffSetInfo, actionCfgCreateEffect.IsScaleByUnit);
+                    EffectObj effectObj = effectComponent.AddEffect(effectCasterUnitId, actionCfgCreateEffect, actionCfgCreateEffect.IsScaleByUnit);
                     if (effectObj != null)
                     {
+                        if (actionCfgCreateEffect.EffectShowType == EffectShowType.Send2Receive2Receive)
+                        {
+                            effectCasterUnitId = unitEffect.Id;
+                        }
+
                         EventType.SyncUnitEffects _SyncUnitEffects = new()
                         {
                             unit = unitEffect,
@@ -78,6 +85,11 @@ namespace ET.Ability
             }
             else
             {
+                long effectCasterUnitId = unit.Id;
+                if (UnitHelper.ChkIsBullet(unit))
+                {
+                    effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+                }
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitEffect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
@@ -96,12 +108,18 @@ namespace ET.Ability
                     float3 forward = unitEffect.Forward;
                     Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
                     effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
+                    if (effectComponent == null)
+                    {
+                        effectComponent = unitSceneEffect.AddComponent<EffectComponent>();
+                    }
 
-                    EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
-                        actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                        actionCfgCreateEffect.OffSetInfo, false);
+                    EffectObj effectObj = effectComponent.AddEffect(effectCasterUnitId, actionCfgCreateEffect, false);
                     if (effectObj != null)
                     {
+                        if (actionCfgCreateEffect.EffectShowType == EffectShowType.Send2Receive2Receive)
+                        {
+                            effectCasterUnitId = unitEffect.Id;
+                        }
                         SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
                         sceneEffectComponent.RecordEffect(unitEffect, actionCfgCreateEffect.Key, effectObj);
 
@@ -123,8 +141,7 @@ namespace ET.Ability
             }
         }
 
-        public static async ETTask AddEffectWhenSelectPosition(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle,
-        ActionContext actionContext)
+        public static async ETTask AddEffectWhenSelectPosition(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
         {
             bool canAddEffect = ChkCanAddEffect(true, unit, actionCfgCreateEffect);
             if (canAddEffect == false)
@@ -132,15 +149,21 @@ namespace ET.Ability
                 return;
             }
 
-            EffectComponent effectComponent;
+            long effectCasterUnitId = unit.Id;
+            if (UnitHelper.ChkIsBullet(unit))
+            {
+                effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+            }
             float3 position = selectHandle.position;
             float3 forward = new float3(0, 0, 1);
             Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
-            effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
+            EffectComponent effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
+            if (effectComponent == null)
+            {
+                effectComponent = unitSceneEffect.AddComponent<EffectComponent>();
+            }
 
-            EffectObj effectObj = effectComponent.AddEffect(unitSceneEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
-                actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                actionCfgCreateEffect.OffSetInfo, false);
+            EffectObj effectObj = effectComponent.AddEffect(effectCasterUnitId, actionCfgCreateEffect, false);
             if (effectObj != null)
             {
                 SceneEffectComponent sceneEffectComponent = unit.DomainScene().GetComponent<SceneEffectComponent>();
@@ -208,8 +231,7 @@ namespace ET.Ability
         {
             if (actionCfgCreateEffect.Duration <= 0 && actionCfgCreateEffect.Duration != -1)
             {
-                Log.Error(
-                    $"ET.Ability.EffectHelper.AddEffect [{actionCfgCreateEffect.Id}] Duration[{actionCfgCreateEffect.Duration}] <= 0 && Duration != -1");
+                Log.Error($"ET.Ability.EffectHelper.AddEffect [{actionCfgCreateEffect.Id}] Duration[{actionCfgCreateEffect.Duration}] <= 0 && Duration != -1");
                 return null;
             }
 
@@ -226,9 +248,7 @@ namespace ET.Ability
                 effectComponent = unitEffect.AddComponent<EffectComponent>();
             }
 
-            EffectObj effectObj = effectComponent.AddEffect(unitEffect.Id, actionCfgCreateEffect.Key, actionCfgCreateEffect.MaxKeyNum,
-                actionCfgCreateEffect.ResEffectId, actionCfgCreateEffect.PlayAudioActionId, actionCfgCreateEffect.Duration,
-                actionCfgCreateEffect.OffSetInfo, actionCfgCreateEffect.IsScaleByUnit);
+            EffectObj effectObj = effectComponent.AddEffect(unit.Id, actionCfgCreateEffect, actionCfgCreateEffect.IsScaleByUnit);
             if (effectObj != null)
             {
                 EventType.SyncUnitEffects _SyncUnitEffects = new()
@@ -242,6 +262,29 @@ namespace ET.Ability
             }
 
             return effectObj;
+        }
+
+        public static List<EffectObj> GetEffectsByEffectShowType(Unit unit, EffectShowType effectShowType)
+        {
+            EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
+            if (effectComponent == null)
+            {
+                return null;
+            }
+
+            List<long> effectObjList = effectComponent.GetEffectObjIdsByEffectShowType(effectShowType);
+            if (effectObjList == null || effectObjList.Count == 0)
+            {
+                return null;
+            }
+
+            List<EffectObj> effectList = ListComponent<EffectObj>.Create();
+            foreach (long effectObjId in effectObjList)
+            {
+                EffectObj effectObj = effectComponent.GetChild<EffectObj>(effectObjId);
+                effectList.Add(effectObj);
+            }
+            return effectList;
         }
     }
 }

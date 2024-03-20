@@ -43,7 +43,7 @@ namespace ET.Client
 				{
 					self.onlyChkPool = true;
 					//self.ShowMyOwnerTower();
-					self.ShowOtherTower();
+					//self.ShowOtherTower();
 				}
 				else
 				{
@@ -53,7 +53,7 @@ namespace ET.Client
 			}
 			else
 			{
-				self.ShowOtherTower();
+				//self.ShowOtherTower();
 			}
 		}
 

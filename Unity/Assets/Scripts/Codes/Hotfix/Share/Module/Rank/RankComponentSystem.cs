@@ -25,9 +25,18 @@ namespace ET
             return (myRank, myRankItemComponent);
         }
 
-        public static ulong GetRankByScore(this RankComponent self, long score)
+        public static ulong GetRankByScore(this RankComponent self, long score, long playerId)
         {
             ulong rank = self.SkipList.GetRank(score, null);
+
+            if (self.playerId2Score.TryGetValue(playerId, out long scoreRecord))
+            {
+                if (scoreRecord == score)
+                {
+                    (int myRank, _) = self.GetMyRankShow(playerId);
+                    rank = (ulong)myRank;
+                }
+            }
 
             if ((ulong)rank > self.topRankPlayerCount)
             {
@@ -36,9 +45,9 @@ namespace ET
             return rank;
         }
 
-        public static (ulong, int) GetRankedMoreThan(this RankComponent self, long score)
+        public static (ulong, int) GetRankedMoreThan(this RankComponent self, long score, long playerId)
         {
-            ulong rank = self.GetRankByScore(score);
+            ulong rank = self.GetRankByScore(score, playerId);
             int rankedMoreThan = 0;
             if (self.rankTotalNum == 0)
             {

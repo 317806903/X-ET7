@@ -401,6 +401,16 @@ namespace ET.Ability
             return buffComponent.ChkCanSkillCastInput();
         }
 
+        public static bool ChkCanNormalAttack(Unit unit)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return true;
+            }
+            return buffComponent.ChkCanNormalAttack();
+        }
+
         public static bool ChkCanBeFind(Unit beFindUnit, Unit seeUnit)
         {
             BuffComponent buffComponent = _GetBuffComponent(beFindUnit);

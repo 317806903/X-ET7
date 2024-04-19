@@ -12,7 +12,7 @@ namespace ET.Client
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(clientScene);
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 
 			EventSystem.Instance.Publish(clientScene, new EventType.NoticeUIShowCommonLoading());

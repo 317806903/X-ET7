@@ -83,12 +83,7 @@ namespace ET.Ability
 
         public static void NoticeClient(this AnimatorComponent self)
         {
-            EventType.SyncPlayAnimator _SyncPlayAnimator = new()
-            {
-                unit = self.GetUnit(),
-                isOnlySelfShow = self.isOnlySelfShow,
-            };
-            EventSystem.Instance.Publish(self.DomainScene(), _SyncPlayAnimator);
+            Ability.UnitHelper.AddSyncData_UnitComponent(self.GetUnit(), self.GetType());
         }
 
         public static void FixedUpdate(this AnimatorComponent self, float fixedDeltaTime)

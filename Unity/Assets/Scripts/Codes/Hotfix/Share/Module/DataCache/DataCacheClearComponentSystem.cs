@@ -65,8 +65,13 @@ namespace ET
         {
             if (self.lastChkTime <= TimeHelper.ServerNow())
             {
-                self.Parent.Dispose();
+                self.ClearDataCache();
             }
+        }
+
+        public static void ClearDataCache(this DataCacheClearComponent self)
+        {
+            self.Parent.Dispose();
         }
 
     }

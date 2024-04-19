@@ -30,14 +30,15 @@ namespace ET
 			return monsterUnit;
 		}
 
-		public static List<Unit> CreateTower(Scene scene, long playerId, string towerId, float3 pos)
+		public static List<Unit> CreateTower(Scene scene, long playerId, string towerCfgId, float3 pos)
         {
             float3 forward = new float3(0, 0, 1);
 
             List<Unit> unitList = new();
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerId);
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+            bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+            bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
             int count = towerCfg.UnitId.Count;
             for (int i = 0; i < count; i++)
             {
@@ -62,10 +63,10 @@ namespace ET
                 {
                     Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-                    if (isTower)
+                    if (isAttackTower || isTrap)
                     {
                         TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
-                        towerComponent.towerCfgId = towerId;
+                        towerComponent.towerCfgId = towerCfgId;
                         towerComponent.playerId = playerId;
                     }
 

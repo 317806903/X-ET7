@@ -29,7 +29,7 @@ namespace ET.Ability
             }
         }
 
-        public static (bool, ListComponent<long>) Check(this SelectHandleRecord self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectConfig selectObjectConfig)
+        public static (bool, ListComponent<long>) Check(this SelectHandleRecord self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
         {
             if (self.unitId != unit.Id)
             {
@@ -43,7 +43,7 @@ namespace ET.Ability
             {
                 return (false, null);
             }
-            if (self.selectObjectCfgId != selectObjectConfig.Id)
+            if (self.selectObjectCfgId != selectObjectCfg.Id)
             {
                 return (false, null);
             }

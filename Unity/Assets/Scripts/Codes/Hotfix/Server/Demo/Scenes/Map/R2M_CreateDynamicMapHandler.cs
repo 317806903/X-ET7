@@ -25,9 +25,19 @@ namespace ET.Server
 	            }
             }
 
+            ARMeshType _ARMeshType = (ARMeshType)request.ARMeshType;
             string _ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
-			Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList, _ARMeshDownLoadUrl);
-			response.DynamicMapInstanceId = dynamicMap.InstanceId;
+            byte[] _ARMeshBytes = request.ARMeshBytes;
+            try
+            {
+	            Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList, _ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
+	            response.DynamicMapInstanceId = dynamicMap.InstanceId;
+            }
+            catch (Exception e)
+            {
+	            response.Error = ET.ErrorCode.ERR_LogicError;
+	            response.Message = $"dynamicMapManagerComponent.CreateDynamicMap Error {e.Message}";
+            }
 
 			await ETTask.CompletedTask;
 		}

@@ -63,6 +63,66 @@ namespace ET.Server
 	        }
 
 	        await rankManagerComponent.ResetRankItem(rankType, playerId, score, killNum);
+
+	        RankShowManagerComponent rankShowManagerComponent = GetRankShowManager(scene);
+	        rankShowManagerComponent.RemoveRankShow(playerId, rankType);
+        }
+
+        public static async ETTask<HashSet<long>> ClearRankWhenDebug(Scene scene, RankType rankType)
+        {
+	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
+
+	        bool bRet = rankManagerComponent.ChkRankExist(rankType);
+	        if (bRet == false)
+	        {
+		        await rankManagerComponent.LoadRank(rankType);
+	        }
+
+	        RankComponent rankComponent = rankManagerComponent.GetRank(rankType);
+
+	        HashSetComponent<long> allPlayer = HashSetComponent<long>.Create();
+	        foreach (long playerId in rankComponent.topRankPlayerList)
+	        {
+		        allPlayer.Add(playerId);
+	        }
+	        foreach (long playerId in rankComponent.playerId2Score.Keys)
+	        {
+		        allPlayer.Add(playerId);
+	        }
+
+	        var list = rankComponent.SkipList.GetListShow();
+	        foreach (var skipListNode in list[list.Count-1])
+	        {
+		        long playerId = ((RankItemComponent)skipListNode.obj).playerId;
+		        allPlayer.Add(playerId);
+	        }
+
+	        rankComponent.topRankPlayerList.Clear();
+	        rankComponent.playerId2Score.Clear();
+	        rankComponent.SkipList = SkipList.CreateList(true);
+
+	        ListComponent<long> removeChild = ListComponent<long>.Create();
+	        foreach (var item in rankComponent.Children)
+	        {
+		        removeChild.Add(item.Key);
+	        }
+	        foreach (long id in removeChild)
+	        {
+		        rankComponent.RemoveChild(id);
+	        }
+	        rankComponent.SetDataCacheAutoWrite();
+
+	        RankShowManagerComponent rankShowManagerComponent = GetRankShowManager(scene);
+	        foreach (var item in rankShowManagerComponent.Children)
+	        {
+		        removeChild.Add(item.Key);
+	        }
+	        foreach (long id in removeChild)
+	        {
+		        rankShowManagerComponent.RemoveChild(id);
+	        }
+
+	        return allPlayer;
         }
 
     }

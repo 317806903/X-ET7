@@ -20,7 +20,6 @@ namespace ET.Client
                     return;
                 }
 
-                self.ChkUpdatePhysicalStrength().Coroutine();
             }
             catch (Exception e)
             {
@@ -36,23 +35,31 @@ namespace ET.Client
         {
             self.View.E_EndlessChallengeButton.AddListenerAsync(self.EnterAREndlessChallenge);
             self.View.E_PVEButton.AddListenerAsync(self.EnterARPVE);
-            self.View.EButton_PVPButton.AddListenerAsync(self.EnterARPVP);
+            self.View.E_PVPButton.AddListenerAsync(self.EnterARPVP);
             self.View.E_ScanCodeButton.AddListenerAsync(self.EnterScanCode);
+
             self.View.E_AvatarButton.AddListenerAsync(self.ClickAvatar);
-            self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
-            self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
+
+            self.View.E_BagsButton.AddListenerAsync(self.ClickBags);
+            self.View.E_BattleDeckButton.AddListenerAsync(self.ClickBattleDeck);
             self.View.E_RankButton.AddListenerAsync(self.ClickRank);
+            self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
+
             self.View.E_DiscordButton.AddListener(self.ClickDiscord);
-            self.View.EButton_PhysicalStrengthButton.AddListenerAsync(self.ClickPhysicalStrength);
-            self.View.E_CardsButton.AddListenerAsync(self.ClickCards);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
         {
-            UIManagerHelper.GetUIComponent(self.DomainScene()).CloseWindowType(UIWindowType.NoticeRoot);
+#if UNITY_EDITOR
+            self.isAR = false;
+#else
+			self.isAR = true;
+#endif
 
             self.ShowBg().Coroutine();
+            self.ShowFunctionMenuLock().Coroutine();
             self._ShowWindow().Coroutine();
+            self.ChkNeedShowGuide().Coroutine();
         }
 
         public static async ETTask ShowBg(this DlgGameModeAR self)
@@ -71,6 +78,49 @@ namespace ET.Client
             }
         }
 
+        public static async ETTask ChkNeedShowGuide(this DlgGameModeAR self)
+        {
+            PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
+            List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
+            if (openningList.Count > 0)
+            {
+                string functionMenuCfgId = openningList[0];
+                FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
+
+                Action doGuile = async () =>
+                {
+                    if (string.IsNullOrEmpty(functionMenuCfg.UIGuideConfigFileName))
+                    {
+                        playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
+                        await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.FunctionMenu, null);
+                    }
+                    else
+                    {
+                        await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), functionMenuCfg.UIGuideConfigFileName, async () =>
+                        {
+                            playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
+                            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.FunctionMenu, null);
+                        });
+                    }
+                };
+
+                if (string.IsNullOrEmpty(functionMenuCfg.Icon))
+                {
+                    doGuile();
+                }
+                else
+                {
+                    DlgFunctionMenuOpenShow_ShowWindowData _DlgFunctionMenuOpenShow_ShowWindowData = new()
+                    {
+                        functionMenuCfgId = functionMenuCfgId,
+                        finished = doGuile,
+                    };
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgFunctionMenuOpenShow>(_DlgFunctionMenuOpenShow_ShowWindowData).Coroutine();
+                }
+
+            }
+        }
+
         public static async ETTask _ShowWindow(this DlgGameModeAR self)
         {
             self.View.E_RedDotImage.SetVisible(false);
@@ -78,9 +128,7 @@ namespace ET.Client
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
             await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
-            self.UpdatePhysicalStrength().Coroutine();
 
-            self.isTimerRunning = false;
             self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.GameModeARTimer, self);
 
             self.View.ELabel_WavesUITextLocalizeMonoView.DynamicSet(playerBaseInfoComponent.EndlessChallengeScore);
@@ -95,42 +143,79 @@ namespace ET.Client
                 self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet(myRank);
             }
 
-            self.View.E_PVELockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVELock);
-            self.View.E_PVPLockImage.SetVisible(GlobalSettingCfgCategory.Instance.PVPLock);
-            self.View.E_CardsLockButton.SetVisible(GlobalSettingCfgCategory.Instance.CardsLock);
-            self.View.E_CardsButton.SetVisible(!GlobalSettingCfgCategory.Instance.CardsLock);
-            self.View.E_TutorialLockButton.SetVisible(GlobalSettingCfgCategory.Instance.TutorialLock);
-            self.View.E_TutorialButton.SetVisible(!GlobalSettingCfgCategory.Instance.TutorialLock);
+            await self.UpdatePhysical();
+        }
 
-            self.View.EButton_PhysicalStrengthImage.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
-            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
-            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
-            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
-            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength.ToString();
-            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.text =
-                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength.ToString();
-            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength.ToString();
+        public static async ETTask ShowFunctionMenuLock(this DlgGameModeAR self)
+        {
+            Transform transformLock = self.View.E_AvatarButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_PersonInfo", transformLock);
+
+            transformLock = self.View.E_BagsButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_BackPack", transformLock);
+
+            transformLock = self.View.E_BattleDeckButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_BattleDeck", transformLock);
+
+            transformLock = self.View.E_RankButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Rank", transformLock);
+
+            transformLock = self.View.E_TutorialButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Tutorial", transformLock);
+
+            transformLock = self.View.E_DiscordButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Discord", transformLock);
+
+            transformLock = self.View.E_PVEButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_ARPVE", transformLock);
+
+            transformLock = self.View.E_EndlessChallengeButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_AREndlessChallenge", transformLock);
+
+            transformLock = self.View.E_PVPButton.transform.Find("icon_Lock");
+            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_ARPVP", transformLock);
+        }
+
+        public static async ETTask<FunctionMenuStatus> GetMyFunctionMenuOne(this DlgGameModeAR self, string functionMenuCfgId)
+        {
+            PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
+            FunctionMenuStatus functionMenuStatus = playerFunctionMenuComponent.GetStatus(functionMenuCfgId);
+            return functionMenuStatus;
         }
 
         public static async ETTask EnterAREndlessChallenge(this DlgGameModeAR self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            if (await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength) == false)
+            if (await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength) == false)
             {
                 return;
             }
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
-            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+            if (self.isAR)
             {
-                playerStatus = PlayerStatus.Hall,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.AREndlessChallenge,
-                arRoomId = 0,
-            };
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                {
+                    playerStatus = PlayerStatus.Hall,
+                    RoomType = RoomType.AR,
+                    SubRoomType = SubRoomType.AREndlessChallenge,
+                    arRoomId = 0,
+                };
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+            }
+            else
+            {
+                RoomType roomType = RoomType.Normal;
+                SubRoomType subRoomType = SubRoomType.NormalEndlessChallenge;
+                string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
+                bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                if (result)
+                {
+                    await ET.Client.UIManagerHelper.EnterRoom(self.DomainScene());
+                }
+            }
         }
 
         public static async ETTask EnterARPVE(this DlgGameModeAR self)
@@ -146,7 +231,7 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            bool bRet = await ET.Client.UIManagerHelper.ChkAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+            bool bRet = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
             if (bRet == false)
             {
                 return;
@@ -154,14 +239,28 @@ namespace ET.Client
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
-            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+            if (self.isAR)
             {
-                playerStatus = PlayerStatus.Hall,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.ARPVP,
-                arRoomId = 0,
-            };
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+                DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                {
+                    playerStatus = PlayerStatus.Hall,
+                    RoomType = RoomType.AR,
+                    SubRoomType = SubRoomType.ARPVP,
+                    arRoomId = 0,
+                };
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+            }
+            else
+            {
+                RoomType roomType = RoomType.Normal;
+                SubRoomType subRoomType = SubRoomType.NormalPVP;
+                string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
+                bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                if (result)
+                {
+                    await ET.Client.UIManagerHelper.EnterRoom(self.DomainScene());
+                }
+            }
         }
 
         public static async ETTask EnterScanCode(this DlgGameModeAR self)
@@ -209,21 +308,6 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
-            //Application.OpenURL("http://artd.corp.deepmirror.com/");
-        }
-
-        public static async ETTask ReturnLogin(this DlgGameModeAR self)
-        {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
-
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-
-            string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Des", playerBaseInfoComponent.PlayerName);
-            string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Confirm");
-            string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Cancel");
-            string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_AreYouLeaving_Title");
-            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { LoginHelper.LoginOut(self.ClientScene(), true).Coroutine(); }, null,
-                sureTxt, cancelTxt, titleTxt);
         }
 
         public static async ETTask ClickRank(this DlgGameModeAR self)
@@ -233,16 +317,18 @@ namespace ET.Client
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRankEndlessChallenge>();
         }
 
-        public static async ETTask ClickPhysicalStrength(this DlgGameModeAR self)
-        {
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPhysicalStrength>();
-        }
-
-        public static async ETTask ClickCards(this DlgGameModeAR self)
+        public static async ETTask ClickBags(this DlgGameModeAR self)
         {
             self.TrackFunctionClicked("bag");
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBag>();
+        }
+
+        public static async ETTask ClickBattleDeck(this DlgGameModeAR self)
+        {
+            self.TrackFunctionClicked("battleDeck");
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
         }
 
         public static void ClickDiscord(this DlgGameModeAR self)
@@ -251,30 +337,27 @@ namespace ET.Client
             Application.OpenURL("https://discord.gg/jnf2qabe9C");
         }
 
-        public static async ETTask ChkUpdatePhysicalStrength(this DlgGameModeAR self)
+        public static async ETTask RefreshWhenBaseInfoChg(this DlgGameModeAR self)
         {
-            if (self.isTimerRunning)
-            {
-                return;
-            }
-
-            self.isTimerRunning = true;
-            await self.UpdatePhysicalStrength();
-            self.isTimerRunning = false;
+            await self.UpdatePhysical();
         }
 
-        public static async ETTask UpdatePhysicalStrength(this DlgGameModeAR self)
+        public static async ETTask UpdatePhysical(this DlgGameModeAR self)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            if (playerBaseInfoComponent == null)
-            {
-                return;
-            }
-            int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
-            int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
-            string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
-            self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
+
+            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
+
+            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength).Coroutine();
+            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength).Coroutine();
+        }
+
+        public static async ETTask RefreshWhenFunctionMenuChg(this DlgGameModeAR self)
+        {
+            await self.ShowFunctionMenuLock();
+            await self.ChkNeedShowGuide();
         }
 
         public static void HideWindow(this DlgGameModeAR self)

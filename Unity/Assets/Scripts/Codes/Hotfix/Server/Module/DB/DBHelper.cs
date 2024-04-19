@@ -15,13 +15,13 @@ namespace ET.Server
                 if (createWhenNull)
                 {
                     entityDB = parent.AddChildWithId<T>(playerId) as T;
+                    entityDB?.SetDataCacheAutoWrite();
                 }
             }
             else
             {
                 parent.AddChild(entityDB);
             }
-            entityDB?.AddComponent<DataCacheWriteComponent>();
             return entityDB;
         }
 
@@ -33,13 +33,13 @@ namespace ET.Server
                 if (createWhenNull)
                 {
                     entityDB = parent.AddComponentWithId<T>(playerId);
+                    entityDB?.SetDataCacheAutoWrite();
                 }
             }
             else
             {
                 parent.AddComponent(entityDB);
             }
-            entityDB?.AddComponent<DataCacheWriteComponent>();
             return entityDB;
         }
 
@@ -55,7 +55,6 @@ namespace ET.Server
             {
                 T entityDB = entityDBList[i];
                 parent.AddChild(entityDB);
-                entityDB.AddComponent<DataCacheWriteComponent>();
             }
 
             return entityDBList;
@@ -73,7 +72,6 @@ namespace ET.Server
             {
                 T entityDB = entityDBList[i];
                 parent.AddComponent(entityDB);
-                entityDB.AddComponent<DataCacheWriteComponent>();
             }
 
             return entityDBList;

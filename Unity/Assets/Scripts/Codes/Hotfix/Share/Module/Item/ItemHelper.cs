@@ -9,6 +9,10 @@ namespace ET
     {
         public static bool ChkIsTower(string itemCfgId)
         {
+            if (string.IsNullOrEmpty(itemCfgId))
+            {
+                return false;
+            }
             if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
             {
                 return false;
@@ -28,20 +32,47 @@ namespace ET
             return true;
         }
 
-        public static bool ChkIsCallMonster(string itemCfgId)
+        public static bool ChkIsAttackTower(string itemCfgId)
         {
-            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
-            {
-                return false;
-            }
-
-            if (TowerDefense_MonsterCfgCategory.Instance.Contain(itemCfgId) == false)
+            if (ChkIsTower(itemCfgId) == false)
             {
                 return false;
             }
 
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
-            if (itemCfg.ItemType != ItemType.CallMonster)
+            if (itemCfg.ItemSubType != ItemSubType.AttackTower)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsTrap(string itemCfgId)
+        {
+            if (ChkIsTower(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemSubType != ItemSubType.Trap)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsCallMonster(string itemCfgId)
+        {
+            if (ChkIsTower(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemSubType != ItemSubType.CallMonster)
             {
                 return false;
             }
@@ -51,6 +82,10 @@ namespace ET
 
         public static bool ChkIsMonster(string itemCfgId)
         {
+            if (string.IsNullOrEmpty(itemCfgId))
+            {
+                return false;
+            }
             if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
             {
                 return false;
@@ -139,7 +174,7 @@ namespace ET
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
             UnitPropertyCfg unitPropertyCfg =
                     UnitPropertyCfgCategory.Instance.Get(UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]).PropertyType, level);
-            
+
             UIAttribute attribute = unitPropertyCfg.UIAttribute1;
             AddAttribute(attribute, ref attributesList);
             attribute = unitPropertyCfg.UIAttribute2;

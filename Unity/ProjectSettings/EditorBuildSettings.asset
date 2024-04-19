@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/ResAB/Scene/Init.unity
     guid: e0d691ac8c1d0454ba07089ea820e18a
   m_configObjects:
-    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 85738eab95430db4db2c8e65ba364777,
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 87ad0539f82ede641a7ef1618cf3458e,
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 972927d5c613fd24e9eef61867f04a68,
       type: 2}

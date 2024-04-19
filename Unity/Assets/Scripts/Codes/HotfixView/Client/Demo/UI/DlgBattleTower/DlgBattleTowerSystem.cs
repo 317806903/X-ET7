@@ -83,7 +83,7 @@ namespace ET.Client
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
             if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
             {
@@ -117,7 +117,7 @@ namespace ET.Client
                     {
                         ET.EventTriggerListener.Get(self.View.EButton_PutHomeButton.gameObject).onDown.AddListener((go, xx) =>
                         {
-                            self.OnSelectHeadQuarter();
+                            self.OnSelectHeadQuarter().Coroutine();
                         });
                         string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutHomeText1");
                         self.ShowPutTipMsg(txt);
@@ -140,7 +140,7 @@ namespace ET.Client
                 }
 
 
-                self.ShowMesh().Coroutine();
+                ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
             {
@@ -163,7 +163,7 @@ namespace ET.Client
                 {
                     ET.EventTriggerListener.Get(self.View.EButton_PutMonsterPointButton.gameObject).onDown.AddListener((go, xx) =>
                     {
-                        self.OnSelectMonsterCall();
+                        self.OnSelectMonsterCall().Coroutine();
                     });
                     string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutMonsterPoint2");
                     self.ShowPutTipMsg(txt);
@@ -364,7 +364,7 @@ namespace ET.Client
         public static List<long> GetMyTowerList(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             List<long> towerList = gamePlayTowerDefenseComponent.GetPutTowers(myPlayerId);
             return towerList;
         }
@@ -372,7 +372,7 @@ namespace ET.Client
         public static int GetMyTowerCardCount(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             Dictionary<string, int> towerCardList = gamePlayTowerDefenseComponent.GetPlayerOwnerTowers(myPlayerId);
             int count = 0;
             foreach (var item in towerCardList)
@@ -385,7 +385,7 @@ namespace ET.Client
         public static int GetMyGold(this DlgBattleTower self)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
             return curGoldValue;
         }
@@ -503,11 +503,11 @@ namespace ET.Client
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.RefreshCells();
 
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 
             int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
-            int curTowerCount = gamePlayTowerDefenseComponent.GetPutTowers(myPlayerId).Count;
+            int curTowerCount = gamePlayTowerDefenseComponent.GetPutAttackTowerCount(myPlayerId);
 
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurPutTowerCount", curTowerCount, limitTowerCount);
             /*if (leftCount == 0)
@@ -590,7 +590,7 @@ namespace ET.Client
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             PlayerOwnerTowersComponent playerOwnerTowersComponent = gamePlayTowerDefenseComponent.GetComponent<PlayerOwnerTowersComponent>();
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             return playerOwnerTowersComponent.playerTowerBuyPools[playerId];
         }
 
@@ -598,7 +598,7 @@ namespace ET.Client
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             PlayerOwnerTowersComponent playerOwnerTowersComponent = gamePlayTowerDefenseComponent.GetComponent<PlayerOwnerTowersComponent>();
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             return playerOwnerTowersComponent.playerTowerBuyPoolBoughts[playerId];
         }
 
@@ -610,7 +610,7 @@ namespace ET.Client
             }
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             PlayerOwnerTowersComponent playerOwnerTowersComponent = gamePlayTowerDefenseComponent.GetComponent<PlayerOwnerTowersComponent>();
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             self.myOwnTowerDic.Clear();
             foreach (var list in playerOwnerTowersComponent.playerOwnerTowerId[playerId])
             {
@@ -649,14 +649,15 @@ namespace ET.Client
             self.View.E_TowerBuyShowImage.gameObject.SetActive(true);
             self.View.EButton_BuyButton.gameObject.SetActive(false);
 
-            int countTank = self.GetTowerBuyList().Count;
-            self.AddUIScrollItems(ref self.ScrollItemTowerBuy, countTank);
-            self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.SetVisible(true, countTank);
+            int countBuy = self.GetTowerBuyList().Count;
+            if (self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.totalCount != countBuy)
+            {
+                self.AddUIScrollItems(ref self.ScrollItemTowerBuy, countBuy);
+                self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.SetVisible(true, countBuy);
+            }
 
             self.View.EButton_RefreshButton.AddListenerAsync(self.RefreshBuyTower);
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
 
-            self.View.ELabel_RefreshTextMeshProUGUI.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost);
             self.RefreshBtnShow();
         }
 
@@ -716,17 +717,10 @@ namespace ET.Client
             List<string> list = self.GetOwnerTowerList();
 
             string itemCfgId = list[index];
-            string towerName = ItemHelper.GetItemName(itemCfgId);
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
 
-            string icon = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(icon) == false)
-            {
-                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-                itemTower.EButton_TowerIcoImage.sprite = sprite;
-            }
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
+            itemTower.ShowBagItem(itemCfgId, false);
             itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.myOwnTowerDic[itemCfgId]}";
-            itemTower.ELabel_NameTextMeshProUGUI.text = $"{towerName}";
             itemTower.ELabel_SellTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Confirm");
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
@@ -735,26 +729,7 @@ namespace ET.Client
                 self.OnSelectTower(itemCfgId);
             });
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-
-            //TODO 暂时取消
-            /*itemTower.EButton_SelectButton.AddListener(() =>
-            {
-                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerHUD>(new DlgBattleTowerHUD_ShowWindowData()
-                {
-                    playerId = myPlayerId,
-                    towerCfgId = towerCfg.Id,
-                }).Coroutine();
-            });
-            */
-            itemTower.EButton_SaleButton.AddListener(() =>
-            {
-                self.OnSaleTower(itemCfgId);
-            });
-
-            itemTower.EImage_SellImage.SetVisible(false);
-            self.View.E_Sprite_BGImage.SetVisible(false);
-            itemTower.EButton_SelectButton.AddListener(() =>
+            ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {
                 if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
                 {
@@ -773,9 +748,26 @@ namespace ET.Client
                 }
             });
 
-            itemTower.SetLevel(itemCfgId);
-            itemTower.SetLabels(itemCfgId);
-            itemTower.SetQuality(itemCfgId);
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            //TODO 暂时取消
+            /*itemTower.EButton_SelectButton.AddListener(() =>
+            {
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerHUD>(new DlgBattleTowerHUD_ShowWindowData()
+                {
+                    playerId = myPlayerId,
+                    towerCfgId = towerCfg.Id,
+                }).Coroutine();
+            });
+            */
+            itemTower.EButton_SaleButton.AddListener(() =>
+            {
+                self.OnSaleTower(itemCfgId);
+            });
+
+            itemTower.EImage_SellImage.SetVisible(false);
+            self.View.E_Sprite_BGImage.SetVisible(false);
+
         }
 
         public static void AddTowerBuyListener(this DlgBattleTower self, Transform transform, int index)
@@ -789,15 +781,11 @@ namespace ET.Client
 
             string towerCfgId = list[index];
             string itemCfgId = list[index];
-            string towerName = ItemHelper.GetItemName(itemCfgId);
+
+            itemTowerBuy.ShowBagItem(itemCfgId, false);
+
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
-            string icon = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(icon) == false)
-            {
-                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-                itemTowerBuy.EButton_IconImage.sprite = sprite;
-            }
             if (listBought[index])
             {
                 /*itemTowerBuy.ELabel_ContentText.color = Color.white;
@@ -809,22 +797,18 @@ namespace ET.Client
             {
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
             }
-            itemTowerBuy.ELabel_ContentText.text = $"{towerCfg.BuyTowerCostGold}";
-            itemTowerBuy.EButton_BuyButton.gameObject.SetActive(true);
-            if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
-            {
-                itemTowerBuy.ELabel_ContentText.color = Color.white;
-            }
-            else
-            {
-                itemTowerBuy.ELabel_ContentText.color = Color.red;
-            }
-            itemTowerBuy.EButton_BuyButton.AddListener(() =>
+
+            itemTowerBuy.EImage_BuyBGImage.SetVisible(true);
+            itemTowerBuy.EButton_BuyButton.SetVisible(true);
+            //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
+
+            itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), towerCfg.BuyTowerCostGold).Coroutine();
+
+            ET.EventTriggerListener.Get(itemTowerBuy.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {
                 self.BuyTower(index, towerCfgId).Coroutine();
             });
 
-            itemTowerBuy.EButton_nameTextMeshProUGUI.text = $"{towerName}";
             if (towerCfg.BuyTowerCostGold <= self.GetMyGold())
             {
                 itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuyButton");
@@ -834,8 +818,6 @@ namespace ET.Client
                 itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
             }
 
-           itemTowerBuy.SetLevel(itemCfgId);
-
             // TODO 暂时取消
             /*itemTowerBuy.EButton_SelectButton.AddListener(() =>
             {
@@ -844,10 +826,6 @@ namespace ET.Client
                     towerCfgId = towerCfgId,
                 }).Coroutine();
             });*/
-
-            itemTowerBuy.SetLabels(itemCfgId);
-            itemTowerBuy.SetQuality(itemCfgId);
-            itemTowerBuy.SetCheckMark(false);
         }
 
         public static async ETTask BuyTower(this DlgBattleTower self, int index, string towerCfgId)
@@ -855,7 +833,7 @@ namespace ET.Client
             //UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkBuyPlayerTower(playerId, index);
             if (bRet == false)
             {
@@ -874,7 +852,7 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkRefreshBuyPlayerTower(playerId);
             if (bRet == false)
             {
@@ -946,6 +924,10 @@ namespace ET.Client
             //self.CloseTowerBuyShow().Coroutine();
 
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            if (gamePlayTowerDefenseComponent == null)
+            {
+                return;
+            }
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
             if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
             {
@@ -961,8 +943,10 @@ namespace ET.Client
             }
         }
 
-        public static void OnSelectHeadQuarter(this DlgBattleTower self)
+        public static async ETTask OnSelectHeadQuarter(this DlgBattleTower self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
+            await TimerComponent.Instance.WaitFrameAsync();
             self.View.EButton_PutHomeButton.gameObject.SetActive(false);
             DlgBattleDragItem_ShowWindowData showWindowData = new()
             {
@@ -977,8 +961,10 @@ namespace ET.Client
 
         }
 
-        public static void OnSelectMonsterCall(this DlgBattleTower self)
+        public static async ETTask OnSelectMonsterCall(this DlgBattleTower self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
+            await TimerComponent.Instance.WaitFrameAsync();
             self.View.EButton_PutMonsterPointButton.gameObject.SetActive(false);
             DlgBattleDragItem_ShowWindowData showWindowData = new()
             {
@@ -992,130 +978,11 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
         }
 
-        public static async ETTask ShowMesh(this DlgBattleTower self)
-        {
-            if (Application.isEditor == false)
-            {
-                return;
-            }
-
-            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
-            if (gamePlayComponent == null)
-            {
-                return;
-            }
-
-            if (gamePlayComponent.isTestARMesh)
-            {
-                gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARMeshUrl;
-
-                // Draco bytes
-                byte[] bytes = await gamePlayComponent.DownloadFileBytesAsync(gamePlayComponent._ARMeshDownLoadUrl);
-                MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
-                CreateMeshFromData(meshData, gamePlayComponent.GetARScale());
-            }
-            else if (gamePlayComponent.isTestARObj)
-            {
-                gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARObjUrl;
-
-                string content = await gamePlayComponent.DownloadFileTextAsync(gamePlayComponent._ARMeshDownLoadUrl);
-                ET.LoadMesh.ObjMesh objInstace = new ET.LoadMesh.ObjMesh();
-                objInstace = objInstace.LoadFromObj(content);
-
-                CreateMesh(objInstace.VertexArray, objInstace.TriangleArray, objInstace.NormalArray, objInstace.UVArray, gamePlayComponent.GetARScale());
-            }
-            else if(gamePlayComponent.ChkIsAR() == false)
-            {
-                return;
-            }
-
-        }
-
-        public static Mesh CreateMeshFromData(MeshHelper.MeshData meshData, float3 scale)
-        {
-            var vertices = new Vector3[meshData.vertices.Length];
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = meshData.vertices[i];
-            }
-            var normals = new Vector3[meshData.normals.Length];
-            for (int i = 0; i < meshData.normals.Length; i++)
-            {
-                normals[i] = meshData.normals[i];
-            }
-            var uv = new Vector2[meshData.uv.Length];
-            for (int i = 0; i < meshData.uv.Length; i++)
-            {
-                uv[i] = meshData.uv[i];
-            }
-
-            return CreateMesh(vertices, meshData.triangles, normals, uv, scale);
-        }
-
-        public static Mesh CreateMesh(Vector3[] verticesIn, int[] trianglesIn, Vector3[] normalsIn, Vector2[] uvIn, float3 scale)
-        {
-            Mesh mesh = new Mesh();
-            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-            if (verticesIn != null)
-            {
-                var vertices = new Vector3[verticesIn.Length];
-                for (int i = 0; i < vertices.Length; i++)
-                {
-                    vertices[i] = verticesIn[i] * scale;
-                }
-                mesh.vertices = vertices;
-            }
-            if (trianglesIn != null)
-            {
-                mesh.triangles = trianglesIn;
-            }
-            if (normalsIn != null)
-            {
-                var normals = new Vector3[normalsIn.Length];
-                for (int i = 0; i < normalsIn.Length; i++)
-                {
-                    normals[i] = normalsIn[i];
-                }
-
-                mesh.normals = normals;
-            }
-            if (uvIn != null)
-            {
-                var uv = new Vector2[uvIn.Length];
-                for (int i = 0; i < uvIn.Length; i++)
-                {
-                    uv[i] = uvIn[i];
-                }
-                mesh.uv = uv;
-            }
-
-            mesh.RecalculateNormals();
-            mesh.RecalculateUVDistributionMetric(0);
-            mesh.RecalculateBounds();
-            mesh.Optimize();
-            mesh.UploadMeshData(false);
-
-            GameObject zpbTestObj = GameObject.Find("zpbTestObj");
-            if (zpbTestObj != null)
-            {
-                GameObject.Destroy(zpbTestObj);
-            }
-            zpbTestObj = new GameObject("zpbTestObj");
-            GameObject.DontDestroyOnLoad(zpbTestObj);
-            zpbTestObj.transform.localScale = new Vector3(1, 1, 1);
-            zpbTestObj.layer = LayerMask.NameToLayer("Map");
-            zpbTestObj.AddComponent<MeshCollider>().sharedMesh = mesh;
-            zpbTestObj.AddComponent<MeshRenderer>();
-            zpbTestObj.AddComponent<MeshFilter>().sharedMesh = mesh;
-            // Mesh without wireframe data.
-            return mesh;
-        }
-
         public static async ETTask ShowAvatar(this DlgBattleTower self)
         {
             await self.View.ES_AvatarShow.E_AvatarIconImage.SetMyIcon(self.DomainScene());
 
-            long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
             float3 colorValue = gamePlayComponent.GetPlayerColor(playerId);
             Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
@@ -1125,14 +992,8 @@ namespace ET.Client
         public static void RefreshBtnShow(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost > self.GetMyGold())
-            {
-                self.View.ELabel_RefreshTextMeshProUGUI.color = Color.red;
-            }
-            else
-            {
-                self.View.ELabel_RefreshTextMeshProUGUI.color = Color.white;
-            }
+
+            self.View.ELabel_RefreshTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost).Coroutine();
         }
     }
 }

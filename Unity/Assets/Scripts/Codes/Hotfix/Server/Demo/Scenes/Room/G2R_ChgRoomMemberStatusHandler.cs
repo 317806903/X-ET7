@@ -66,13 +66,27 @@ namespace ET.Server
 					}
 				}
 
+				(ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes) = roomManagerComponent.GetARMeshInfo(roomId);
 				R2M_CreateDynamicMap _R2M_CreateDynamicMap = new ()
 				{
 					RoomInfo = roomInfo,
 					RoomMemberInfos = roomMemberInfos,
-					ARMeshDownLoadUrl = roomManagerComponent.GetARMeshDownLoadUrl(roomId),
+					ARMeshType = (int)_ARMeshType,
+					ARMeshDownLoadUrl = _ARMeshDownLoadUrl,
+					ARMeshBytes = _ARMeshBytes,
 				};
 				M2R_CreateDynamicMap _M2R_CreateDynamicMap = (M2R_CreateDynamicMap) await ActorMessageSenderComponent.Instance.Call(dynamicMapConfig.InstanceId, _R2M_CreateDynamicMap);
+				if (_M2R_CreateDynamicMap.Error != ET.ErrorCode.ERR_Success)
+				{
+					roomComponent.dynamicMapInstanceId = 0;
+					roomManagerComponent.ChgRoomStatus(roomId, RoomStatus.Idle);
+					foreach (RoomMember roomMember in roomMemberList)
+					{
+						roomComponent.ChgRoomMemberStatus(roomMember.Id, false);
+					}
+
+					return;
+				}
 				long dynamicMapInstanceId = _M2R_CreateDynamicMap.DynamicMapInstanceId;
 
 				roomComponent.dynamicMapInstanceId = dynamicMapInstanceId;

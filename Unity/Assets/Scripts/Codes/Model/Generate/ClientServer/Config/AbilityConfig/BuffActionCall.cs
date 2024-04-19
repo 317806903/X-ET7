@@ -46,7 +46,7 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
     /// 对象选择器
     /// </summary>
     public string ActionCallParam { get; private set; }
-    public SelectObjectConfig ActionCallParam_Ref { get; private set; }
+    public SelectObjectCfg ActionCallParam_Ref { get; private set; }
     /// <summary>
     /// 条件1
     /// </summary>
@@ -61,7 +61,7 @@ public sealed partial class BuffActionCall: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.ActionCallParam_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(ActionCallParam);
+        this.ActionCallParam_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(ActionCallParam);
         foreach(var _e in ActionCondition1) { _e?.Resolve(_tables); }
         foreach(var _e in ActionCondition2) { _e?.Resolve(_tables); }
         PostResolve();

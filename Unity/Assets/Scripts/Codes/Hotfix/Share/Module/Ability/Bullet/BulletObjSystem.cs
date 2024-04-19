@@ -254,5 +254,15 @@ namespace ET.Ability
         {
             return self.preHitUnitIds;
         }
+
+        public static void SetPreHitPos(this BulletObj self)
+        {
+            self.preHitPos = true;
+        }
+
+        public static bool ChkPreHitPos(this BulletObj self)
+        {
+            return self.preHitPos;
+        }
     }
 }

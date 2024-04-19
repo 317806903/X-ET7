@@ -10,9 +10,6 @@ namespace ET.Server
     [FriendOf(typeof(Unit))]
     public static class UnitHelper
     {
-        static Dictionary<Unit, UnitPosInfo> tmpPosInfoDic = new();
-        static Dictionary<Unit, UnitNumericInfo> tmpNumericDic = new();
-
         [Event(SceneType.Map)]
         public class SyncNoticeUnitAdds2C: AEvent<Scene, EventType.SyncNoticeUnitAdds>
         {
@@ -61,105 +58,14 @@ namespace ET.Server
         }
 
         [Event(SceneType.Map)]
-        public class SyncPosUnitInfo2C: AEvent<Scene, EventType.SyncPosUnits>
+        public class SyncDataList2C: AEvent<Scene, EventType.SyncDataList>
         {
-            protected override async ETTask Run(Scene scene, EventType.SyncPosUnits args)
+            protected override async ETTask Run(Scene scene, EventType.SyncDataList args)
             {
-                List<Unit> list = args.units;
-                tmpPosInfoDic.Clear();
-                Dictionary<Unit, UnitPosInfo> unitPosInfos = tmpPosInfoDic;
-                foreach (Unit unit in list)
-                {
-                    if (unit != null)
-                    {
-                        unitPosInfos.Add(unit, ET.Ability.UnitHelper.SyncPosUnitInfo(unit));
-                    }
-                }
-
-                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
-                foreach (var playerSeeUnit in playerSeeUnits)
-                {
-                    long playerId = playerSeeUnit.Key;
-                    M2C_SyncPosUnits syncPosUnits = new ()
-                    {
-                        Units = new(),
-                    };
-                    foreach (Unit unitChg in playerSeeUnit.Value)
-                    {
-                        syncPosUnits.Units.Add(unitPosInfos[unitChg]);
-                    }
-                    MessageHelper.SendToClient(playerId, syncPosUnits, scene.InstanceId, true);
-                }
-
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
-        public class SyncNumericUnitInfo2C: AEvent<Scene, EventType.SyncNumericUnits>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncNumericUnits args)
-            {
-                List<Unit> list = args.units;
-                tmpNumericDic.Clear();
-                Dictionary<Unit, UnitNumericInfo> unitNumericInfos = tmpNumericDic;
-                foreach (Unit unit in list)
-                {
-                    unitNumericInfos.Add(unit, ET.Ability.UnitHelper.SyncNumericUnitInfo(unit));
-                }
-
-                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
-                foreach (var playerSeeUnit in playerSeeUnits)
-                {
-                    long playerId = playerSeeUnit.Key;
-                    M2C_SyncNumericUnits syncNumericUnits = new ()
-                    {
-                        Units = new(),
-                    };
-                    foreach (Unit unitChg in playerSeeUnit.Value)
-                    {
-                        syncNumericUnits.Units.Add(unitNumericInfos[unitChg]);
-                    }
-                    MessageHelper.SendToClient(playerId, syncNumericUnits, scene.InstanceId, true);
-                }
-
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
-        public class SyncNumericUnitKeyInfo2C: AEvent<Scene, EventType.SyncNumericUnitsKey>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncNumericUnitsKey args)
-            {
-                List<Unit> list = args.units;
-                tmpNumericDic.Clear();
-                Dictionary<Unit, UnitNumericInfo> unitNumericInfos = tmpNumericDic;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Unit unit = list[i];
-                    List<int> keys = args.keys[i];
-                    unitNumericInfos.Add(unit, ET.Ability.UnitHelper.SyncNumericUnitInfoKey(unit, keys));
-                }
-                foreach (Unit unit in list)
-                {
-                }
-
-                MultiMapSimple<long, Unit> playerSeeUnits = MessageHelper.GetUnitBeSeePlayers(list);
-                foreach (var playerSeeUnit in playerSeeUnits)
-                {
-                    long playerId = playerSeeUnit.Key;
-                    M2C_SyncNumericUnits syncNumericUnitsKey = new ()
-                    {
-                        Units = new(),
-                    };
-                    foreach (Unit unitChg in playerSeeUnit.Value)
-                    {
-                        syncNumericUnitsKey.Units.Add(unitNumericInfos[unitChg]);
-                    }
-                    MessageHelper.SendToClient(playerId, syncNumericUnitsKey, scene.InstanceId, true);
-                }
-
+                long playerId = args.playerId;
+                M2C_SyncDataList _M2C_SyncDataList = new ();
+                _M2C_SyncDataList.SyncDataList = args.syncDataList;
+                MessageHelper.SendToClient(playerId, _M2C_SyncDataList, scene.InstanceId, true);
                 await ETTask.CompletedTask;
             }
         }
@@ -273,73 +179,6 @@ namespace ET.Server
         }
 
         [Event(SceneType.Map)]
-        public class SyncPlayAudio2C: AEvent<Scene, EventType.SyncPlayAudio>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncPlayAudio args)
-            {
-                Unit unit = args.unit;
-                string playAudioActionId = args.playAudioActionId;
-                bool isOnlySelfShow = args.isOnlySelfShow;
-
-                if (isOnlySelfShow)
-                {
-                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
-                    if (playerId != -1)
-                    {
-                        M2C_SyncPlayAudio _M2C_SyncPlayAudio = new ();
-                        _M2C_SyncPlayAudio.UnitId = unit.Id;
-                        _M2C_SyncPlayAudio.PlayAudioActionId = playAudioActionId;
-
-                        MessageHelper.SendToClient(playerId, _M2C_SyncPlayAudio, scene.InstanceId);
-                    }
-                }
-                else
-                {
-                    M2C_SyncPlayAudio _M2C_SyncPlayAudio = new ();
-                    _M2C_SyncPlayAudio.UnitId = unit.Id;
-                    _M2C_SyncPlayAudio.PlayAudioActionId = playAudioActionId;
-
-                    MessageHelper.Broadcast(unit, _M2C_SyncPlayAudio);
-                }
-
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
-        public class SyncPlayAnimator2C: AEvent<Scene, EventType.SyncPlayAnimator>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncPlayAnimator args)
-            {
-                Unit unit = args.unit;
-                bool isOnlySelfShow = args.isOnlySelfShow;
-
-                if (isOnlySelfShow)
-                {
-                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
-                    if (playerId != -1)
-                    {
-                        M2C_SyncPlayAnimator _M2C_SyncPlayAnimator = new ();
-                        _M2C_SyncPlayAnimator.UnitId = unit.Id;
-                        _M2C_SyncPlayAnimator.PlayAnimatorComponent = unit.GetComponent<AnimatorComponent>().ToBson();
-
-                        MessageHelper.SendToClient(playerId, _M2C_SyncPlayAnimator, scene.InstanceId);
-                    }
-                }
-                else
-                {
-                    M2C_SyncPlayAnimator _M2C_SyncPlayAnimator = new ();
-                    _M2C_SyncPlayAnimator.UnitId = unit.Id;
-                    _M2C_SyncPlayAnimator.PlayAnimatorComponent = unit.GetComponent<AnimatorComponent>().ToBson();
-
-                    MessageHelper.Broadcast(unit, _M2C_SyncPlayAnimator);
-                }
-
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
         public class NoticeGameEndToRoom2R: AEvent<Scene, EventType.NoticeGameEndToRoom>
         {
             protected override async ETTask Run(Scene scene, EventType.NoticeGameEndToRoom args)
@@ -415,6 +254,17 @@ namespace ET.Server
 
                 GamePlayComponent gamePlayComponent = args.gamePlayComponent;
                 gamePlayComponent.AddWaitNoticeGamePlayModeToClientList(playerId);
+                await ETTask.CompletedTask;
+            }
+        }
+
+        [Event(SceneType.Map)]
+        public class NoticeGameBegin2Server: AEvent<Scene, EventType.NoticeGameBegin2Server>
+        {
+            protected override async ETTask Run(Scene scene, EventType.NoticeGameBegin2Server args)
+            {
+                GamePlayComponent gamePlayComponent = args.gamePlayComponent;
+                await gamePlayComponent.GameBeginWhenServer();
                 await ETTask.CompletedTask;
             }
         }
@@ -529,15 +379,5 @@ namespace ET.Server
             }
         }
 
-        // 获取看见unit的玩家，主要用于广播
-        public static Dictionary<long, EntityRef<AOIEntity>> GetBeSeePlayers(this Unit self)
-        {
-            AOIEntity aoiEntity = self.GetComponent<AOIEntity>();
-            if (aoiEntity == null)
-            {
-                return null;
-            }
-            return aoiEntity.GetBeSeePlayers();
-        }
     }
 }

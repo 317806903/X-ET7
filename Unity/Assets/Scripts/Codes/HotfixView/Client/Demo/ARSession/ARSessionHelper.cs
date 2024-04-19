@@ -98,6 +98,13 @@ namespace ET.Client
 			return _ARMeshDownLoadUrl;
 		}
 
+		public static byte[] GetARMeshClientObj(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			byte[] _ARMeshClientObj = arSessionComponent.GetARMeshClientObj();
+			return _ARMeshClientObj;
+		}
+
 		public static string GetAREntranceType(Scene scene)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene);
@@ -149,6 +156,16 @@ namespace ET.Client
 				return arSessionComponent.translucentImageSource;
 			}
 			return null;
+		}
+
+		public static bool ChkARMirrorSceneUIShow(Scene scene)
+		{
+			ARSessionComponent arSessionComponent = GetARSession(scene);
+			if (arSessionComponent.ChkARCameraEnable())
+			{
+				return arSessionComponent.ChkARMirrorSceneUIShow();
+			}
+			return false;
 		}
 	}
 }

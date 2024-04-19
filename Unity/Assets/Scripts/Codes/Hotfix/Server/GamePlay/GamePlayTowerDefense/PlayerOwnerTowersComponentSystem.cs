@@ -32,28 +32,28 @@ namespace ET.Server
 		public static async ETTask Init(this PlayerOwnerTowersComponent self)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			TowerDefense_BuyTowerRefreshRuleCfg towerDefense_BuyTowerRefreshRuleCfg = gamePlayTowerDefenseComponent.model.BuyTowerRefreshRuleCfgId_Ref;
+			if (towerDefense_BuyTowerRefreshRuleCfg.IsUseMyTowers == false)
+			{
+				self.initPlayerOwnerTowerCard = true;
+				return;
+			}
+
 			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
 			for (int i = 0; i < playerList.Count; i++)
 			{
 				long playerId = playerList[i];
 				await self.InitOwnerTowersPool(playerId);
 			}
+
+			self.initPlayerOwnerTowerCard = true;
 		}
 
 		public static async ETTask InitOwnerTowersPool(this PlayerOwnerTowersComponent self, long playerId)
 		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-			TowerDefense_BuyTowerRefreshRuleCfg towerDefense_BuyTowerRefreshRuleCfg = TowerDefense_BuyTowerRefreshRuleCfgCategory.Instance.Get(gamePlayTowerDefenseComponent.model.BuyTowerRefreshRuleCfgId);
-			if (towerDefense_BuyTowerRefreshRuleCfg.IsUseMyTowers == false)
+			List<ItemComponent> itemList = await ET.Server.PlayerCacheHelper.GetBattleCardItemListByPlayerId(self.DomainScene(), playerId, true);
+			foreach (var itemComponent in itemList)
 			{
-				return;
-			}
-
-			PlayerBattleCardComponent playerBattleCardComponent = await ET.Server.PlayerCacheHelper.GetPlayerBattleCardByPlayerId(self.DomainScene(), playerId, true);
-			PlayerBackPackComponent playerBackPackComponent = await ET.Server.PlayerCacheHelper.GetPlayerBackPackByPlayerId(self.DomainScene(), playerId, true);
-			foreach (var itemId in playerBattleCardComponent.itemList)
-			{
-				ItemComponent itemComponent = playerBackPackComponent.GetItem(itemId);
 				ItemTowerComponent itemTowerComponent = itemComponent.GetComponent<ItemTowerComponent>();
 				self.playerOwnerTowerCardIds.Add(playerId, itemComponent.CfgId, itemTowerComponent.level);
 			}

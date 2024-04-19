@@ -12,7 +12,7 @@ namespace ET.Client
 		public static void RegisterUIEvent(this DlgPhysicalStrengthTip self)
 		{
 			self.View.EButton_CloseButton.AddListener(self.OnCloseBtnClick);
-			self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+			//self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
 			self.View.EButton_CancelButton.AddListener(self.OnCancelClick);
 		}
 
@@ -24,19 +24,25 @@ namespace ET.Client
 		{
 			self.View.ELabel_TakephysicalStrengthTextMeshProUGUI.text = takePhysicalStrength;
 		}
-		
+
 		public static void OnCloseBtnClick(this DlgPhysicalStrengthTip self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrengthTip>();
 		}
-		
+
 		public static void OnBGClick(this DlgPhysicalStrengthTip self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrengthTip>();
 		}
-		
+
 		public static void OnCancelClick(this DlgPhysicalStrengthTip self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrengthTip>();
 		}
 

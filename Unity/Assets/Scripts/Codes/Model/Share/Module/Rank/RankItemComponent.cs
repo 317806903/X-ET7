@@ -15,6 +15,10 @@ namespace ET
         public virtual int CompareTo(object obj)
         {
             RankItemComponent rankItemComponent = (RankItemComponent)obj;
+            if (this.playerId == rankItemComponent.playerId)
+            {
+                return 0;
+            }
             if (this.score != rankItemComponent.score)
             {
                 return this.score.CompareTo(rankItemComponent.score);

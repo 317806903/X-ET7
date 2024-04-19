@@ -29,10 +29,11 @@ namespace ET.Client
             }
 
             bool isAR = false;
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             if (playerStatusComponent.RoomType == RoomType.Normal)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
+                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate
+                    || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
                 {
                     isAR = true;
                 }

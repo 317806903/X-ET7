@@ -23,17 +23,13 @@ namespace ET.AbilityConfig
         /// </summary>
         PointLightningTrail = 2,
         /// <summary>
-        /// 点特效(仅客户端表现移动到Unit)
-        /// </summary>
-        PointClienShowMove = 3,
-        /// <summary>
         /// 线特效(发起者-接收者1;发起者-接收者2)
         /// </summary>
-        Send2Receives = 4,
+        Send2Receives = 3,
         /// <summary>
         /// 线特效(发起者-接收者1-接收者2...)
         /// </summary>
-        Send2Receive2Receive = 5,
+        Send2Receive2Receive = 4,
     }
 
 } 

@@ -13,6 +13,7 @@ namespace ET.Ability
             scene.AddComponent<SceneEffectComponent>();
             scene.AddComponent<SelectHandleRecordManager>();
             scene.AddComponent<RecycleSelectHandleComponent>();
+            scene.AddComponent<SyncDataManager>();
         }
 
         public static void InitWhenClient(Scene scene)

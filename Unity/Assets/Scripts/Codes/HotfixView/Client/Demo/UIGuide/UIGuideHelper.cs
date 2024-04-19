@@ -8,7 +8,7 @@ namespace ET.Client
 	[FriendOf(typeof(UIGuideComponent))]
 	public static class UIGuideHelper
 	{
-		public static async ETTask DoUIGuide(Scene scene, string fileName, Action finished = null, Action firstFindCallBack = null)
+		public static async ETTask DoUIGuide(Scene scene, string fileName, Action finished, Action firstFindCallBack = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -30,7 +30,7 @@ namespace ET.Client
 			await UIGuideComponent.Instance.DoUIGuideByName(fileName, finished, firstFindCallBack);
 		}
 
-		public static async ETTask DoUIGuide(Scene scene, UIGuidePathList _UIGuidePathList, Action finished = null, Action firstFindCallBack = null)
+		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, Action finished, Action firstFindCallBack = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -49,7 +49,7 @@ namespace ET.Client
 
 				clientScene.AddComponent<UIGuideComponent>();
 			}
-			await UIGuideComponent.Instance.DoUIGuide(_UIGuidePathList, finished, firstFindCallBack);
+			await UIGuideComponent.Instance.DoUIGuide(guideFileName, _UIGuidePathList, finished, firstFindCallBack);
 		}
 
 		public static async ETTask StopUIGuide(Scene scene)
@@ -154,7 +154,17 @@ namespace ET.Client
 				{
 					bool isShow = bool.Parse(executeParam);
 					UIGuideHelper_StaticMethod.ShowScanQuit(scene, isShow);
-					await UIGuideHelper_StaticMethod.ShowScanVideo(scene, !isShow);
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowScanVideo:
+				{
+					bool isShow = bool.Parse(executeParam);
+					await UIGuideHelper_StaticMethod.ShowScanVideo(scene, isShow);
+					break;
+				}
+				case GuideExecuteStaticMethodType.BackToGameModeAR:
+				{
+					await UIGuideHelper_StaticMethod.BackToGameModeAR(scene);
 					break;
 				}
 				default:
@@ -162,6 +172,94 @@ namespace ET.Client
 			}
 
 			return;
+		}
+
+		public static bool ChkStaticMethodParam(GuideConditionStaticMethodType staticMethod, string param)
+		{
+			switch (staticMethod)
+			{
+				case GuideConditionStaticMethodType.None:
+					break;
+				case GuideConditionStaticMethodType.ChkTowerPut:
+					break;
+				case GuideConditionStaticMethodType.ChkIsNotShowStory:
+					break;
+				case GuideConditionStaticMethodType.ChkIsNotShowVideo:
+					break;
+				case GuideConditionStaticMethodType.ChkWaitTime:
+					if (float.TryParse(param, out float waitTime) == false)
+					{
+						return false;
+					}
+					break;
+				case GuideConditionStaticMethodType.ChkARMeshShow:
+					break;
+				default:
+					break;
+			}
+
+			return true;
+		}
+
+		public static bool ChkStaticMethodExecuteParam(GuideExecuteStaticMethodType staticMethod, string executeParam)
+		{
+			switch (staticMethod)
+			{
+				case GuideExecuteStaticMethodType.None:
+					break;
+				case GuideExecuteStaticMethodType.ShowStory:
+					break;
+				case GuideExecuteStaticMethodType.ShowVideo:
+					break;
+				case GuideExecuteStaticMethodType.EnterGuideBattle:
+					break;
+				case GuideExecuteStaticMethodType.ShowPointTower:
+					break;
+				case GuideExecuteStaticMethodType.HidePointTower:
+					break;
+				case GuideExecuteStaticMethodType.HideTowerInfo:
+					break;
+				case GuideExecuteStaticMethodType.ShowBattleTowerReady:
+				{
+					if (bool.TryParse(executeParam, out var vaule) == false)
+					{
+						return false;
+					}
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowBattleTowerQuit:
+				{
+					if (bool.TryParse(executeParam, out var vaule) == false)
+					{
+						return false;
+					}
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowScanQuit:
+				{
+					if (bool.TryParse(executeParam, out var vaule) == false)
+					{
+						return false;
+					}
+					break;
+				}
+				case GuideExecuteStaticMethodType.ShowScanVideo:
+				{
+					if (bool.TryParse(executeParam, out var vaule) == false)
+					{
+						return false;
+					}
+					break;
+				}
+				case GuideExecuteStaticMethodType.BackToGameModeAR:
+				{
+					break;
+				}
+				default:
+					break;
+			}
+
+			return true;
 		}
 	}
 }

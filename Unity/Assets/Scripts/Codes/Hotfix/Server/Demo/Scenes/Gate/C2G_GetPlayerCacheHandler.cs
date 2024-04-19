@@ -8,7 +8,22 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Session session, C2G_GetPlayerCache request, G2C_GetPlayerCache response)
 		{
-			Player player = session.GetComponent<SessionPlayerComponent>().Player;
+			SessionPlayerComponent sessionPlayerComponent = session.GetComponent<SessionPlayerComponent>();
+			if (sessionPlayerComponent == null)
+			{
+				Log.Error($"---zpb C2G_GetPlayerCache sessionPlayerComponent == null");
+				response.Error = ErrorCode.ERR_LogicError;
+				response.Message = "C2G_GetPlayerCache sessionPlayerComponent == null";
+				return;
+			}
+			Player player = sessionPlayerComponent.Player;
+			if (player == null)
+			{
+				Log.Error($"---zpb C2G_GetPlayerCache player == null");
+				response.Error = ErrorCode.ERR_LogicError;
+				response.Message = "C2G_GetPlayerCache player == null";
+				return;
+			}
 			long playerId = request.PlayerId;
 			PlayerModelType playerModelType = (PlayerModelType)request.PlayerModelType;
 

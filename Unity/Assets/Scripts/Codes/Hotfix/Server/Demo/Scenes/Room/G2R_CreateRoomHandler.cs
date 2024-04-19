@@ -18,6 +18,7 @@ namespace ET.Server
 			if (roomComponentOld != null)
 			{
 				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
+				await ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponentOld, false);
 			}
 
 			RoomTeamMode roomTeamMode = RoomTeamMode.Single;

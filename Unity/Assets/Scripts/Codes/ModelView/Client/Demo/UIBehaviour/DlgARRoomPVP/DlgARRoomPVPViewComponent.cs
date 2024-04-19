@@ -432,108 +432,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_EnergyButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyButton == null )
-				{
-					this.m_E_EnergyButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy");
-				}
-				return this.m_E_EnergyButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_EnergyImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyImage == null )
-				{
-					this.m_E_EnergyImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy");
-				}
-				return this.m_E_EnergyImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PhysicalStrengthNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy/ELabel_PhysicalStrengthNum");
-				}
-				return this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button E_GoldCoinButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_GoldCoinButton == null )
-				{
-					this.m_E_GoldCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin");
-				}
-				return this.m_E_GoldCoinButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_GoldCoinImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_GoldCoinImage == null )
-				{
-					this.m_E_GoldCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin");
-				}
-				return this.m_E_GoldCoinImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_CoinNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_CoinNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_CoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin/ELabel_CoinNum");
-				}
-				return this.m_ELabel_CoinNumTextMeshProUGUI;
-			}
-		}
-
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_Member_LeftLoopHorizontalScrollRect
 		{
 			get
@@ -612,12 +510,6 @@ namespace ET.Client
 			this.m_E_ShowQrCode2Image = null;
 			this.m_E_ReScanButton = null;
 			this.m_E_ReScanImage = null;
-			this.m_E_EnergyButton = null;
-			this.m_E_EnergyImage = null;
-			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
-			this.m_E_GoldCoinButton = null;
-			this.m_E_GoldCoinImage = null;
-			this.m_ELabel_CoinNumTextMeshProUGUI = null;
 			this.m_ELoopScrollList_Member_LeftLoopHorizontalScrollRect = null;
 			this.m_ELoopScrollList_Member_RightLoopHorizontalScrollRect = null;
 			this.m_E_PlayerCountVsTextMeshProUGUI = null;
@@ -649,12 +541,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_ShowQrCode2Image = null;
 		private UnityEngine.UI.Button m_E_ReScanButton = null;
 		private UnityEngine.UI.Image m_E_ReScanImage = null;
-		private UnityEngine.UI.Button m_E_EnergyButton = null;
-		private UnityEngine.UI.Image m_E_EnergyImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_GoldCoinButton = null;
-		private UnityEngine.UI.Image m_E_GoldCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_CoinNumTextMeshProUGUI = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_Member_LeftLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_Member_RightLoopHorizontalScrollRect = null;
 		private TMPro.TextMeshProUGUI m_E_PlayerCountVsTextMeshProUGUI = null;

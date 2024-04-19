@@ -62,7 +62,6 @@ public class WorldCameraController : MonoBehaviour
     /// </summary>
     protected Vector2 targetAngles;
 
-
     /// <summary>
     /// Target distance from camera to target.
     /// </summary>
@@ -137,8 +136,18 @@ public class WorldCameraController : MonoBehaviour
     {
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         results.Clear(); // Just in case
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
+        UnityEngine.EventSystems.EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        if (results.Count > 0)
+        {
+            for (int i = 0; i < results.Count; i++)
+            {
+                if (results[i].gameObject.layer.Equals(LayerMask.NameToLayer("UI")))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public bool IsClickUGUI()
@@ -169,12 +178,6 @@ public class WorldCameraController : MonoBehaviour
             {
                 if (Input.touchCount > 0)
                 {
-                    bool t1 = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
-                    if (t1)
-                    {
-                        //Debug.LogError("zpb ==========true=============== ");
-                    }
-                    //this.bClickUGUI = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
                     this.bClickUGUI = IsPointerOverUIObject();
                 }
             }

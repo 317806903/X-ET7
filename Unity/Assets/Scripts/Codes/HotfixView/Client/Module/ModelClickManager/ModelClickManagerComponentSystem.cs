@@ -60,45 +60,27 @@ namespace ET.Client
         {
             if (null != self.ModelClick || null != self.ModelPress)
             {
-                if (Application.isMobilePlatform)
+                bool bRet = false;
+                Vector3 pos = Vector3.zero;
+                (bRet, pos) = ET.UGUIHelper.GetUserInputDown();
+                if (bRet)
                 {
-                    if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
-                    {
-                        self.PointDown(Input.GetTouch(0).position);
-                    }
-                    else if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
-                    {
-                        self.PointUp(Input.GetTouch(0).position);
-                    }
-
-                    if (null != self.ModelPress)
-                    {
-                        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Stationary)
-                        {
-                            self.ChkPressTrig(Input.GetTouch(0).position);
-                        }
-                    }
+                    self.PointDown(pos);
                 }
-                else
+                (bRet, pos) = ET.UGUIHelper.GetUserInputUp();
+                if (bRet)
                 {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        self.PointDown(Input.mousePosition);
-                    }
-                    else if (Input.GetMouseButtonUp(0))
-                    {
-                        self.PointUp(Input.mousePosition);
-                    }
-
-                    if (null != self.ModelPress)
-                    {
-                        if (Input.GetMouseButton(0))
-                        {
-                            self.ChkPressTrig(Input.mousePosition);
-                        }
-                    }
+                    self.PointUp(pos);
                 }
 
+                if (null != self.ModelPress)
+                {
+                    (bRet, pos) = ET.UGUIHelper.GetUserInputPress();
+                    if (bRet)
+                    {
+                        self.ChkPressTrig(pos);
+                    }
+                }
             }
         }
 

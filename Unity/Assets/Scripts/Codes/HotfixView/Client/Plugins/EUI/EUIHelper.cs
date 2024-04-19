@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -71,6 +72,29 @@ namespace ET.Client
             loopScrollRect.gameObject.SetActive(isVisible);
             loopScrollRect.totalCount = count;
             loopScrollRect.RefillCells();
+        }
+
+        public static void SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect, int index)
+        {
+            int poolSize = loopHorizontalScrollRect.prefabSource.poolSize;
+            int count = loopHorizontalScrollRect.totalCount;
+            if (count >= poolSize)
+            {
+                return;
+            }
+
+            if (index < count - 1)
+            {
+                return;
+            }
+
+            float widthScroll = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
+            RectTransform contentRectTrans = loopHorizontalScrollRect.content;
+            float cellWidth = contentRectTrans.GetChild(0).GetComponent<RectTransform>().rect.width;
+            float widthContent = cellWidth * count + contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing * (count - 1);
+            float offset = widthScroll * 0.5f / contentRectTrans.localScale.x - widthContent * 0.5f;
+
+            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)offset;
         }
 
         public static void SetVisibleWithScale(this Transform transform, bool isVisible)
@@ -376,5 +400,71 @@ namespace ET.Client
         }
 
         #endregion
+
+
+        public static void ChgTMPColor(this Transform trans, bool isEnough)
+        {
+            if (trans == null)
+            {
+                return;
+            }
+            TextMeshProUGUI textMeshProUGUI = trans.gameObject.GetComponent<TextMeshProUGUI>();
+            if (textMeshProUGUI == null)
+            {
+                return;
+            }
+
+            textMeshProUGUI.ChgTMPColor(isEnough);
+        }
+
+        public static void ChgTMPColor(this TextMeshProUGUI textMeshProUGUI, bool isEnough)
+        {
+            if (isEnough)
+            {
+                textMeshProUGUI.color = Color.white;
+            }
+            else
+            {
+                textMeshProUGUI.color = Color.red;
+            }
+        }
+
+        public static void ChgTMPText(this Transform trans, string txt)
+        {
+            if (trans == null)
+            {
+                return;
+            }
+            TextMeshProUGUI textMeshProUGUI = trans.gameObject.GetComponent<TextMeshProUGUI>();
+            if (textMeshProUGUI == null)
+            {
+                return;
+            }
+
+            textMeshProUGUI.ChgTMPText(txt);
+        }
+
+        public static void ChgTMPText(this TextMeshProUGUI textMeshProUGUI, string txt)
+        {
+            textMeshProUGUI.text = txt;
+        }
+
+        public static void SetRtAnchorSafe(this RectTransform rt, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            if (anchorMin.x < 0 || anchorMin.x > 1 || anchorMin.y < 0 || anchorMin.y > 1 || anchorMax.x < 0 || anchorMax.x > 1 || anchorMax.y < 0 || anchorMax.y > 1)
+                return;
+
+            var lp = rt.localPosition;
+            //注意不要直接用sizeDelta因为该值会随着anchor改变而改变
+            var ls = new Vector2(rt.rect.width, rt.rect.height);
+
+            rt.anchorMin = anchorMin;
+            rt.anchorMax = anchorMax;
+
+            //动态改变anchor后size和localPostion可能会发生变化需要重新设置
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ls.x);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ls.y);
+            rt.localPosition = lp;
+        }
     }
 }

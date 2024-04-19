@@ -11,9 +11,9 @@ namespace ET
 		public HashSet<long> IdleRoomList;
 		public HashSet<long> EnterBattleRoomList;
 		public HashSet<long> InTheBattleRoomList;
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		[BsonIgnore]
 		public Dictionary<long, long> player2Room;
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, string> _ARMeshDownLoadUrlDic;
+		[BsonIgnore]
+		public Dictionary<long, (ARMeshType, string, byte[])> _ARMeshInfoDic;
 	}
 }

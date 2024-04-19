@@ -113,7 +113,7 @@ namespace ET
 			await self.GameEnd();
 
 			GamePlayComponent gamePlayComponent = self.GetGamePlay();
-			gamePlayComponent.GameEnd();
+			await gamePlayComponent.GameEnd();
 
 			self.NoticeToClientAll();
 		}

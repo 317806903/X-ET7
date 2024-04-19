@@ -22,9 +22,13 @@ namespace ET.Client
         public Action skipCallBack;
         public CurInNextType curInNextType;
 
-        public Vector2 lastPos2D = Vector2.zero;
+        public bool islastInit = false;
+        public Vector3 lastGuideRectPos = Vector3.zero;
+        public Vector3 lastGuideRectlossyScale = Vector3.zero;
+        public Vector2 lastGuideRectSize = Vector2.zero;
+
         public Vector3 lastPos3D;
-        public Vector3 lastCanvasSize;
+        public Vector2 lastCanvasSize;
 
         public bool isGuiding = false;
 

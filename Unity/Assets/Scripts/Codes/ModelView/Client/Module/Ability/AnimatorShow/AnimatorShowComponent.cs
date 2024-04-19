@@ -19,7 +19,8 @@ namespace ET.Ability.Client
 
         public bool isStop;
         public float stopSpeed;
-        public Animator Animator;
+        public Animator mainAnimator;
+        public List<Animator> animatorOtherList;
 
         private EntityRef<AnimatorComponent> _animatorComponent;
         public AnimatorComponent animatorComponent

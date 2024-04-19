@@ -25,7 +25,5 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<string, int> playerAllMonsterType2Num;
 
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<string, int> dropItemId2Num;
 	}
 }

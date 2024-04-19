@@ -122,6 +122,13 @@ namespace ET.Client
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
 				await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRoom>();
 			}
+			else
+			{
+				string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_JoinRoomError");
+				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), txt, () =>
+				{
+				});
+			}
 		}
 
 	}

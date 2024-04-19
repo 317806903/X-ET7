@@ -75,40 +75,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_EnergyButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyButton == null )
-				{
-					this.m_E_EnergyButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/title/E_Energy");
-				}
-				return this.m_E_EnergyButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_EnergyImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyImage == null )
-				{
-					this.m_E_EnergyImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/title/E_Energy");
-				}
-				return this.m_E_EnergyImage;
-			}
-		}
-
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_ChallengeLoopHorizontalScrollRect
 		{
 			get
@@ -319,8 +285,6 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
-			this.m_E_EnergyButton = null;
-			this.m_E_EnergyImage = null;
 			this.m_ELoopScrollList_ChallengeLoopHorizontalScrollRect = null;
 			this.m_E_SelectButton = null;
 			this.m_E_SelectImage = null;
@@ -340,8 +304,6 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
-		private UnityEngine.UI.Button m_E_EnergyButton = null;
-		private UnityEngine.UI.Image m_E_EnergyImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_ChallengeLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_E_SelectButton = null;
 		private UnityEngine.UI.Image m_E_SelectImage = null;

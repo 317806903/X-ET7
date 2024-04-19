@@ -447,9 +447,11 @@ message G2R_SetARRoomInfo // IActorRequest
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
 	int64 RoomId = 3;
-	string ARSceneId = 4;
-	string ARMeshDownLoadUrl = 5;
-	int32 ARMapScale = 6;
+	int32 ARMapScale = 4;
+	int32 ARMeshType = 5;
+	string ARSceneId = 6;
+	string ARMeshDownLoadUrl = 7;
+	bytes ARMeshBytes = 8;
 }
 
 message R2G_SetARRoomInfo // IActorResponse
@@ -495,7 +497,9 @@ message R2M_CreateDynamicMap // IActorRequest
 	int32 RpcId = 1;
 	bytes RoomInfo = 2;
 	repeated bytes RoomMemberInfos = 3;
-	string ARMeshDownLoadUrl = 4;
+	int32 ARMeshType = 4;
+	string ARMeshDownLoadUrl = 5;
+	bytes ARMeshBytes = 6;
 }
 
 message M2R_CreateDynamicMap // IActorResponse
@@ -728,6 +732,20 @@ message R2G_SetPlayerRank // IActorResponse
 	string Message = 3;
 }
 
+//ResponseType R2G_ClearRankWhenDebug
+message G2R_ClearRankWhenDebug // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+}
+
+message R2G_ClearRankWhenDebug // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType P2G_GetPlayerCache
 message G2P_GetPlayerCache // IActorRequest
 {
@@ -752,9 +770,37 @@ message G2P_SetPlayerCache // IActorRequest
 	int32 PlayerModelType = 3;
 	bytes PlayerModelComponentBytes = 4;
 	repeated string SetPlayerKeys = 5;
+	int32 PlayerModelChgType = 6;
 }
 
 message P2G_SetPlayerCache // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType OG2G_LoginInAtOtherWhere
+message G2OG_LoginInAtOtherWhere // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message OG2G_LoginInAtOtherWhere // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2O_PlayerCacheChgNoticeClient
+message O2G_PlayerCacheChgNoticeClient // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 PlayerModelType = 2;
+}
+
+message G2O_PlayerCacheChgNoticeClient // IActorResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: FunctionMenu_AREndlessChallenge
+  m_EditorClassIdentifier: 
+  list:
+  - name: "\u70B9\u51FB\u65E0\u9650\u6A21\u5F0F"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_EndlessChallenge
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Infinite
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u6392\u884C\u699C"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Rank
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Rank
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

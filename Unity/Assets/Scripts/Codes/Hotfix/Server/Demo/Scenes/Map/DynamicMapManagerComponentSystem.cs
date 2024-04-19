@@ -56,7 +56,7 @@ namespace ET.Server
             return -1;
         }
 
-        public static async ETTask<Scene> CreateDynamicMap(this DynamicMapManagerComponent self, RoomComponent roomComponent, List<RoomMember> roomMemberList, string _ARMeshDownLoadUrl)
+        public static async ETTask<Scene> CreateDynamicMap(this DynamicMapManagerComponent self, RoomComponent roomComponent, List<RoomMember> roomMemberList, ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
         {
             Scene dynamicMapBase = self.GetParent<Scene>();
             var processScenes = StartSceneConfigCategory.Instance.GetByProcess(Options.Instance.Process);
@@ -72,7 +72,7 @@ namespace ET.Server
                 gamePlayBattleLevelCfg.SceneMap, dynamicMapBaseConfig.Type);
 
             GamePlayComponent gamePlayComponent = dynamicMapNew.AddComponent<GamePlayComponent>();
-            await gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList, _ARMeshDownLoadUrl);
+            await gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList, _ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
 
             self.dynamicMapList.Add(dynamicMapNew.InstanceId, dynamicMapNew.Id);
             self.dynamicUsedIndexList.Add(dynamicMapBaseId);

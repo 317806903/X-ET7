@@ -240,6 +240,11 @@ namespace ET.Client
             self.curClickOutsideCount = 0;
             self.isGuiding = false;
 
+            self.islastInit = false;
+            self.lastGuideRectPos = Vector3.zero;
+            self.lastGuideRectlossyScale = Vector3.zero;
+            self.lastGuideRectSize = Vector2.zero;
+
             string canvasPath = self.curUIGuidePath.hierarchyCanvasPath;
             string guidePath = self.curUIGuidePath.hierarchyGuidePath;
 
@@ -287,42 +292,74 @@ namespace ET.Client
                 }
             }
 
-            self.guidePathGo = self.Find(self.canvasPathGo, guidePath);
-            while (self.guidePathGo == null)
+            do
             {
-                await TimerComponent.Instance.WaitFrameAsync();
-                if (self.IsDisposed)
-                {
-                    return;
-                }
+                bool isNeedRefind = false;
                 self.guidePathGo = self.Find(self.canvasPathGo, guidePath);
-                if (self.guidePathGo != null)
+                if (self.guidePathGo == null)
                 {
-
+                    isNeedRefind = true;
+                }
+                else
+                {
                     await self.SetParentUIGuide(self.canvasPathGo.transform, null);
 
-                    //如果在屏幕外面
+                    Vector2 size = self.guidePathGo.GetComponent<RectTransform>().rect.size;
 
-                    Vector2 uiPos = new Vector2();
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(self.canvasPathGo.GetComponent<RectTransform>(), self.guidePathGo.transform.position, self.canvasPathGo.GetComponent<Camera>(), out uiPos);
-
-                    float x = self.canvasPathGo.GetComponent<RectTransform>().rect.size.x / 2;
-                    float y = self.canvasPathGo.GetComponent<RectTransform>().rect.size.y / 2;
-
-                    if (Math.Abs(uiPos.x) > Math.Abs(x) || Math.Abs(uiPos.y) > Math.Abs(y))
+                    if (self.islastInit == false)
                     {
-                        self.guidePathGo = null;
+                        self.lastGuideRectSize = size;
+                        isNeedRefind = true;
                     }
-                    else
+                    else if (self.lastGuideRectSize.Equals(size) == false)
                     {
-                        if (self.lastPos2D != uiPos)
-                        {
-                            self.guidePathGo = null;
-                            self.lastPos2D = uiPos;
-                        }
+                        self.lastGuideRectSize = size;
+                        isNeedRefind = true;
+                    }
+
+                    Vector3 localPosition = self.guidePathGo.GetComponent<RectTransform>().localPosition;
+                    if (self.islastInit == false)
+                    {
+                        self.lastGuideRectPos = localPosition;
+                        isNeedRefind = true;
+                    }
+                    else if (self.lastGuideRectPos.Equals(localPosition) == false)
+                    {
+                        self.lastGuideRectPos = localPosition;
+                        isNeedRefind = true;
+                    }
+
+                    Vector3 lossyScale = self.guidePathGo.GetComponent<RectTransform>().lossyScale;
+                    if (self.islastInit == false)
+                    {
+                        self.lastGuideRectlossyScale = lossyScale;
+                        isNeedRefind = true;
+                    }
+                    else if (self.lastGuideRectlossyScale.Equals(lossyScale) == false)
+                    {
+                        self.lastGuideRectlossyScale = lossyScale;
+                        isNeedRefind = true;
+                    }
+
+                    if (self.islastInit == false)
+                    {
+                        self.islastInit = true;
                     }
                 }
+
+                if (isNeedRefind)
+                {
+                    self.guidePathGo = null;
+                    await TimerComponent.Instance.WaitFrameAsync();
+                    if (self.IsDisposed)
+                    {
+                        return;
+                    }
+                }
+
             }
+            while (self.guidePathGo == null);
+
 
             await self.SetParentUIGuide(self.canvasPathGo.transform, self.guidePathGo.transform);
 
@@ -507,7 +544,14 @@ namespace ET.Client
             float sizeY = 100;
 
             Transform guideMaskTrans = self.RootTrans.Find("GuideMask");
-            guideMaskTrans.gameObject.SetActive(false);
+            if (self.curUIGuidePath.isFreeClickBeforeEnter)
+            {
+                guideMaskTrans.gameObject.SetActive(false);
+            }
+            else
+            {
+                guideMaskTrans.gameObject.SetActive(true);
+            }
 
             Transform rectMaskTrans = self.RootTrans.Find("GuideMask/E_RectMask");
             Transform circleMaskTrans = self.RootTrans.Find("GuideMask/E_CircleMask");
@@ -598,7 +642,7 @@ namespace ET.Client
             tipNodeTrans.Find("E_TipDirectImageNode").gameObject.SetActive(false);
         }
 
-        public static async ETTask SetTextShow(this UIGuideStepComponent self, Vector2 center, float sizeX, float sizeY, float delayTime)
+        public static async ETTask SetTextShow(this UIGuideStepComponent self, Vector2 center, float halfSizeX, float halfSizeY, float delayTime)
         {
             Transform tipNodeTrans = self.RootTrans.Find("EG_GuideInfo/E_TipNode");
 
@@ -637,17 +681,17 @@ namespace ET.Client
 
             if (self.curUIGuidePath.guideTextType == GuideTextType.Text)
             {
-                await self.SetTextShowWhenText(tipNodeTrans, center, sizeX, sizeY);
+                await self.SetTextShowWhenText(tipNodeTrans, center, halfSizeX, halfSizeY);
             }
             else if (self.curUIGuidePath.guideTextType == GuideTextType.Image)
             {
-                await self.SetTextShowWhenImage(tipNodeTrans, center, sizeX, sizeY);
+                await self.SetTextShowWhenImage(tipNodeTrans, center, halfSizeX, halfSizeY);
             }
 
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask SetTextShowWhenText(this UIGuideStepComponent self, Transform tipNodeTrans, Vector2 center, float sizeX, float sizeY)
+        public static async ETTask SetTextShowWhenText(this UIGuideStepComponent self, Transform tipNodeTrans, Vector2 center, float halfSizeX, float halfSizeY)
         {
             tipNodeTrans.gameObject.SetActive(true);
             Transform tipTextNode = tipNodeTrans.Find("E_TipTextNode");
@@ -662,7 +706,13 @@ namespace ET.Client
             Vector2 directPos = Vector2.zero;
             Vector2 directRotation = Vector2.zero;
             RectTransform tipTextNodeRectTransform = (RectTransform)tipTextNode;
-            self.GetTextPos(tipTextNodeRectTransform, center, sizeX, sizeY, out textPivot, out textPos, out directPos, out directRotation);
+            tipTextNodeRectTransform.anchoredPosition = new Vector2(-5000, -5000);
+            tipTextNodeRectTransform.sizeDelta = new Vector2(((RectTransform)self.RootTrans).sizeDelta.x, tipTextNodeRectTransform.sizeDelta.y);
+
+            await TimerComponent.Instance.WaitFrameAsync();
+            tipTextNodeRectTransform.sizeDelta = new Vector2(((RectTransform)tipTextTrans).sizeDelta.x + 100, tipTextNodeRectTransform.sizeDelta.y);
+
+            self.GetTextPos(tipTextNodeRectTransform, center, halfSizeX, halfSizeY, out textPivot, out textPos, out directPos, out directRotation);
 
             tipTextNodeRectTransform.pivot = textPivot;
             tipTextNodeRectTransform.anchoredPosition = textPos;
@@ -786,10 +836,9 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
 
-        public static void GetTextPos(this UIGuideStepComponent self, RectTransform tipNodeTrans, Vector2 center, float sizeX, float sizeY, out Vector2 textPivot, out Vector2 textPos, out Vector2 directPos, out Vector2 directRotation)
+        public static void GetTextPos(this UIGuideStepComponent self, RectTransform tipNodeTrans, Vector2 center, float halfSizeX, float halfSizeY,
+        out Vector2 textPivot, out Vector2 textPos, out Vector2 directPos, out Vector2 directRotation)
         {
-            RectTransform rectGuide = self.RootTrans as RectTransform;
-            Vector2 sizeGuide = rectGuide.sizeDelta;
             if (self.guidePathGo == null)
             {
                 textPivot = new Vector2(0.5f, 0.5f);
@@ -798,228 +847,137 @@ namespace ET.Client
                 directRotation = Vector2.zero;
                 return;
             }
+            RectTransform rectGuide = self.RootTrans as RectTransform;
+            Vector2 sizeGuide = rectGuide.sizeDelta;
 
-            textPivot = Vector2.zero;
-            textPos = Vector2.zero;
-            directPos = Vector2.zero;
-            directRotation = Vector2.zero;
+            float directDis = 70;
+            float textDis = 50;
+            float screenDis = 100;
 
-            float offsetX = 180;
-            float offsetY = 120;
-            Vector2 centerOff;
+            float screenWidth = sizeGuide.x;
+            float screenHeight = sizeGuide.y;
 
+            float distToLeft = center.x - halfSizeX + screenWidth * 0.5f;
+            float distToRight = screenWidth * 0.5f - center.x - halfSizeX ;
 
-            if (sizeGuide.x > sizeGuide.y)
+            float distToBottom = center.y - halfSizeY + screenHeight * 0.5f;
+            float distToTop = screenHeight * 0.5f - center.y - halfSizeY ;
+
+            float horDistance = Mathf.Max(distToLeft, distToRight);
+            float vertDistance = Mathf.Max(distToBottom, distToTop);
+
+            float textWidth = 0;
+            if (horDistance > vertDistance)
             {
-                if (center.x >= 0)
+                if (distToLeft < distToRight)
                 {
-                    if (center.y >= 0)
+                    textPivot = new Vector2(0, 0.5f);
+                    tipNodeTrans.pivot = textPivot;
+                    directRotation = new Vector2(-1, 0);
+                    directPos = center + new Vector2(halfSizeX + directDis, 0);
+                    textWidth = horDistance - directDis - textDis - screenDis;
+                    if (tipNodeTrans.sizeDelta.x > textWidth)
                     {
-                        if (math.abs(center.x) > math.abs(center.y))
-                        {
-                            if (math.abs(center.y) < 200)
-                            {
-                                textPivot = new Vector2(1f, 0.5f);
-                                centerOff = center + new Vector2(-sizeX, 0);
-                                textPos = centerOff + new Vector2(-offsetX, 0);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 1);
-                                centerOff = center + new Vector2(-sizeX, sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, -offsetY);
-                            }
-                        }
-                        else
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 1);
-                                centerOff = center + new Vector2(0, -sizeY);
-                                textPos = centerOff + new Vector2(0, -offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 1);
-                                centerOff = center + new Vector2(sizeX, -sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, -offsetY);
-                            }
-                        }
-                        // textPivot = new Vector2(1, 1);
-                        // textPos = center + new Vector2(-sizeX, -sizeY) + new Vector2(-offsetX, -offsetY);
+                        tipNodeTrans.sizeDelta = new Vector2(textWidth, tipNodeTrans.sizeDelta.y);
+                    }
+                    if (center.y + tipNodeTrans.sizeDelta.y * 0.5f + screenDis > screenHeight * 0.5f)
+                    {
+                        textPos = center + new Vector2(halfSizeX + directDis + textDis, 0);
+                        textPos.y = screenHeight * 0.5f - screenDis - tipNodeTrans.sizeDelta.y * 0.5f;
+                    }
+                    else if (center.y - tipNodeTrans.sizeDelta.y * 0.5f - screenDis < -screenHeight * 0.5f)
+                    {
+                        textPos = center + new Vector2(halfSizeX + directDis + textDis, 0);
+                        textPos.y = -screenHeight * 0.5f + screenDis + tipNodeTrans.sizeDelta.y * 0.5f;
                     }
                     else
                     {
-                        if (math.abs(center.x) > math.abs(center.y))
-                        {
-                            if (math.abs(center.y) < 200)
-                            {
-                                textPivot = new Vector2(1f, 0.5f);
-                                centerOff = center + new Vector2(-sizeX, 0);
-                                textPos = centerOff + new Vector2(-offsetX, 0);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 0);
-                                centerOff = center + new Vector2(-sizeX, -sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, offsetY);
-                            }
-                        }
-                        else
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 0);
-                                centerOff = center + new Vector2(0, sizeY);
-                                textPos = centerOff + new Vector2(0, offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 0);
-                                centerOff = center + new Vector2(sizeX, sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, offsetY);
-                            }
-                        }
-                        // textPivot = new Vector2(1, 0);
-                        // textPos = center + new Vector2(-sizeX, sizeY) + new Vector2(-offsetX, offsetY);
+                        textPos = center + new Vector2(halfSizeX + directDis + textDis, 0);
                     }
                 }
                 else
                 {
-                    if (center.y >= 0)
+                    textPivot = new Vector2(1, 0.5f);
+                    tipNodeTrans.pivot = textPivot;
+                    directRotation = new Vector2(1, 0);
+                    directPos = center - new Vector2(halfSizeX + directDis, 0);
+                    textWidth = horDistance - directDis - textDis - screenDis;
+                    if (tipNodeTrans.sizeDelta.x > textWidth)
                     {
-                        if (math.abs(center.x) > math.abs(center.y))
-                        {
-                            textPivot = new Vector2(0, 1);
-                            centerOff = center + new Vector2(sizeX, sizeY);
-                            textPos = centerOff + new Vector2(offsetX, -offsetY);
-                        }
-                        else
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 1);
-                                centerOff = center + new Vector2(0, -sizeY);
-                                textPos = centerOff + new Vector2(0, -offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(0, 1);
-                                centerOff = center + new Vector2(-sizeX, -sizeY);
-                                textPos = centerOff + new Vector2(offsetX, -offsetY);
-                            }
-                        }
-                        // textPivot = new Vector2(0, 1);
-                        // textPos = center + new Vector2(sizeX, -sizeY) + new Vector2(offsetX, -offsetY);
+                        tipNodeTrans.sizeDelta = new Vector2(textWidth, tipNodeTrans.sizeDelta.y);
+                    }
+                    if (center.y + tipNodeTrans.sizeDelta.y * 0.5f + screenDis > screenHeight * 0.5f)
+                    {
+                        textPos = center - new Vector2(halfSizeX + directDis + textDis, 0);
+                        textPos.y = screenHeight * 0.5f - screenDis - tipNodeTrans.sizeDelta.y * 0.5f;
+                    }
+                    else if (center.y - tipNodeTrans.sizeDelta.y * 0.5f - screenDis < -screenHeight * 0.5f)
+                    {
+                        textPos = center - new Vector2(halfSizeX + directDis + textDis, 0);
+                        textPos.y = -screenHeight * 0.5f + screenDis + tipNodeTrans.sizeDelta.y * 0.5f;
                     }
                     else
                     {
-                        if (math.abs(center.x) > math.abs(center.y))
-                        {
-                            textPivot = new Vector2(0, 0);
-                            centerOff = center + new Vector2(sizeX, -sizeY);
-                            textPos = centerOff + new Vector2(offsetX, offsetY);
-                        }
-                        else
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 0);
-                                centerOff = center + new Vector2(0, sizeY);
-                                textPos = centerOff + new Vector2(0, offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(0, 0);
-                                centerOff = center + new Vector2(-sizeX, sizeY);
-                                textPos = centerOff + new Vector2(offsetX, offsetY);
-                            }
-                        }
-                        // textPivot = new Vector2(0, 0);
-                        // textPos = center + new Vector2(sizeX, sizeY) + new Vector2(offsetX, offsetY);
+                        textPos = center - new Vector2(halfSizeX + directDis + textDis, 0);
                     }
                 }
             }
             else
             {
-                if (center.x >= 0)
+                if (distToBottom < distToTop)
                 {
-                    if (center.y >= 0)
+                    textPivot = new Vector2(0.5f, 0);
+                    tipNodeTrans.pivot = textPivot;
+                    directRotation = new Vector2(0, -1);
+                    directPos = center + new Vector2(0, halfSizeY + directDis);
+                    textWidth = screenWidth * 2/3f;
+                    if (tipNodeTrans.sizeDelta.x > textWidth)
                     {
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 1);
-                                centerOff = center + new Vector2(0, -sizeY);
-                                textPos = centerOff + new Vector2(0, -offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 1);
-                                centerOff = center + new Vector2(sizeX, -sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, -offsetY);
-                            }
-                        }
+                        tipNodeTrans.sizeDelta = new Vector2(textWidth, tipNodeTrans.sizeDelta.y);
+                    }
+
+                    if (center.x + tipNodeTrans.sizeDelta.x * 0.5f + screenDis > screenWidth * 0.5f)
+                    {
+                        textPos = center + new Vector2(0, halfSizeY + directDis + textDis);
+                        textPos.x = screenWidth * 0.5f - screenDis - tipNodeTrans.sizeDelta.x * 0.5f;
+                    }
+                    else if (center.x - tipNodeTrans.sizeDelta.x * 0.5f - screenDis < -screenWidth * 0.5f)
+                    {
+                        textPos = center + new Vector2(0, halfSizeY + directDis + textDis);
+                        textPos.x = -screenWidth * 0.5f + screenDis + tipNodeTrans.sizeDelta.x * 0.5f;
                     }
                     else
                     {
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 0);
-                                centerOff = center + new Vector2(0, sizeY);
-                                textPos = centerOff + new Vector2(0, offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(1, 0);
-                                centerOff = center + new Vector2(sizeX, sizeY);
-                                textPos = centerOff + new Vector2(-offsetX, offsetY);
-                            }
-                        }
+                        textPos = center + new Vector2(0, halfSizeY + directDis + textDis);
                     }
                 }
                 else
                 {
-                    if (center.y >= 0)
+                    textPivot = new Vector2(0.5f, 1);
+                    tipNodeTrans.pivot = textPivot;
+                    directRotation = new Vector2(0, 1);
+                    directPos = center - new Vector2(0, halfSizeY + directDis);
+                    textWidth = screenWidth * 2/3f;
+                    if (tipNodeTrans.sizeDelta.x > textWidth)
                     {
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 1);
-                                centerOff = center + new Vector2(0, -sizeY);
-                                textPos = centerOff + new Vector2(0, -offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(0, 1);
-                                centerOff = center + new Vector2(-sizeX, -sizeY);
-                                textPos = centerOff + new Vector2(offsetX, -offsetY);
-                            }
-                        }
+                        tipNodeTrans.sizeDelta = new Vector2(textWidth, tipNodeTrans.sizeDelta.y);
+                    }
+                    if (center.x + tipNodeTrans.sizeDelta.x * 0.5f + screenDis > screenWidth * 0.5f)
+                    {
+                        textPos = center - new Vector2(0, halfSizeY + directDis + textDis);
+                        textPos.x = screenWidth * 0.5f - screenDis - tipNodeTrans.sizeDelta.x * 0.5f;
+                    }
+                    else if (center.x - tipNodeTrans.sizeDelta.x * 0.5f - screenDis < -screenWidth * 0.5f)
+                    {
+                        textPos = center - new Vector2(0, halfSizeY + directDis + textDis);
+                        textPos.x = -screenWidth * 0.5f + screenDis + tipNodeTrans.sizeDelta.x * 0.5f;
                     }
                     else
                     {
-                        {
-                            if (math.abs(center.x) < 200)
-                            {
-                                textPivot = new Vector2(0.5f, 0);
-                                centerOff = center + new Vector2(0, sizeY);
-                                textPos = centerOff + new Vector2(0, offsetY);
-                            }
-                            else
-                            {
-                                textPivot = new Vector2(0, 0);
-                                centerOff = center + new Vector2(-sizeX, sizeY);
-                                textPos = centerOff + new Vector2(offsetX, offsetY);
-                            }
-                        }
+                        textPos = center - new Vector2(0, halfSizeY + directDis + textDis);
                     }
                 }
             }
-
-            directPos = (textPos + centerOff)/2;
-            directRotation = centerOff - textPos;
 
         }
 

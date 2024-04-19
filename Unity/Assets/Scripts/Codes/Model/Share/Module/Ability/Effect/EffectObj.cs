@@ -28,7 +28,7 @@ namespace ET.Ability
         ///<summary>
         ///挂载点,用于查找出这个transform后添加为子节点
         ///</summary>
-        public string hangPointName;
+        public EffectNodeName hangPointName;
 
         ///<summary>
         ///相对挂载点的偏移位置

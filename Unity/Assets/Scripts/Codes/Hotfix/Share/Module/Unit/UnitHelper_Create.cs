@@ -307,8 +307,8 @@ namespace ET.Ability
             bulletUnit.Position = newPosition;
             bulletUnit.Forward = newForward;
 
-            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveType, selectHandle);
-            numericComponentBullet.SetAsFloat(NumericType.SpeedBase, actionCfgFireBullet.MoveType.Speed);
+            MoveTweenHelper.CreateMoveTween(bulletUnit, actionCfgFireBullet.MoveTweenId, selectHandle);
+            numericComponentBullet.SetAsFloat(NumericType.SpeedBase, actionCfgFireBullet.MoveTweenId_Ref.MoveType.Speed);
 
             CreateWhenServer_Common_After(unitComponent, bulletUnit);
             // 加入aoi
@@ -339,8 +339,8 @@ namespace ET.Ability
             aoeUnit.Position = newPosition;
             aoeUnit.Forward = newForward;
 
-            MoveTweenHelper.CreateMoveTween(aoeUnit, actionCfgCallAoe.MoveType, selectHandle);
-            numericComponentAoe.SetAsFloat(NumericType.SpeedBase, actionCfgCallAoe.MoveType.Speed);
+            MoveTweenHelper.CreateMoveTween(aoeUnit, actionCfgCallAoe.MoveTweenId, selectHandle);
+            numericComponentAoe.SetAsFloat(NumericType.SpeedBase, actionCfgCallAoe.MoveTweenId_Ref.MoveType.Speed);
 
             CreateWhenServer_Common_After(unitComponent, aoeUnit);
             // 加入aoi

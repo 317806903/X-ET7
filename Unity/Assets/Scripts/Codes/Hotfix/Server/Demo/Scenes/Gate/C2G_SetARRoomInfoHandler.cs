@@ -12,9 +12,12 @@ namespace ET.Server
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			long playerId = player.Id;
 			long roomId = playerStatusComponent.RoomId;
+			int ARMapScale = request.ARMapScale;
+
+			ARMeshType ARMeshType = (ARMeshType)request.ARMeshType;
 			string ARSceneId = request.ARSceneId;
 			string ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
-			int ARMapScale = request.ARMapScale;
+			byte[] ARMeshBytes = request.ARMeshBytes;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -22,9 +25,11 @@ namespace ET.Server
 			{
 				PlayerId = playerId,
 				RoomId = roomId,
+				ARMapScale = ARMapScale,
+				ARMeshType = (int)ARMeshType,
 				ARSceneId = ARSceneId,
 				ARMeshDownLoadUrl = ARMeshDownLoadUrl,
-				ARMapScale = ARMapScale,
+				ARMeshBytes = ARMeshBytes,
 			});
 
 			response.Error = _R2G_SetARRoomInfo.Error;

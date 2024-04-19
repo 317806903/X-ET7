@@ -21,7 +21,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         BulletId = _buf.ReadString();
         Duration = _buf.ReadFloat();
         OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
-        MoveType = MoveTweenType.DeserializeMoveTweenType(_buf);
+        MoveTweenId = _buf.ReadString();
         PostInit();
     }
 
@@ -48,7 +48,11 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// </summary>
     public float Duration { get; private set; }
     public OffSetInfo OffSetInfo { get; private set; }
-    public MoveTweenType MoveType { get; private set; }
+    /// <summary>
+    /// 飞行轨迹
+    /// </summary>
+    public string MoveTweenId { get; private set; }
+    public MoveTweenCfg MoveTweenId_Ref { get; private set; }
 
     public const int __ID__ = -1637484119;
     public override int GetTypeId() => __ID__;
@@ -57,14 +61,13 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     {
         this.BulletId_Ref = (_tables["BulletCfgCategory"] as BulletCfgCategory).GetOrDefault(BulletId);
         OffSetInfo?.Resolve(_tables);
-        MoveType?.Resolve(_tables);
+        this.MoveTweenId_Ref = (_tables["MoveTweenCfgCategory"] as MoveTweenCfgCategory).GetOrDefault(MoveTweenId);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
         OffSetInfo?.TranslateText(translator);
-        MoveType?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -75,7 +78,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         + "BulletId:" + BulletId + ","
         + "Duration:" + Duration + ","
         + "OffSetInfo:" + OffSetInfo + ","
-        + "MoveType:" + MoveType + ","
+        + "MoveTweenId:" + MoveTweenId + ","
         + "}";
     }
     

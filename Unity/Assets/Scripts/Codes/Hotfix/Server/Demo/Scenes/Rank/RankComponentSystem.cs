@@ -34,6 +34,13 @@ namespace ET.Server
                 rankItemComponent = await self.InitByDBOne<T>(playerId) as RankItemComponent;
                 rankItemComponent.playerId = playerId;
             }
+
+            if (self.playerId2Score.TryGetValue(playerId, out long score))
+            {
+                self.SkipList.DeleteNode(score, rankItemComponent);
+                self.rankTotalNum--;
+            }
+
             rankItemComponent.score = scoreNew;
             if (rankItemComponent is RankEndlessChallengeItemComponent)
             {
@@ -41,21 +48,16 @@ namespace ET.Server
                 rankEndlessChallengeItemComponent.killNum = killNum;
             }
             rankItemComponent.recordTime = TimeHelper.ServerNow();
-            rankItemComponent.GetComponent<DataCacheWriteComponent>().SetNeedSave();
+            rankItemComponent.SetDataCacheAutoWrite();
 
-            if (self.playerId2Score.TryGetValue(playerId, out long score))
-            {
-                self.SkipList.DeleteNode(score, rankItemComponent);
-                self.rankTotalNum--;
-            }
-            self.SkipList.Insert(scoreNew, rankItemComponent);
             self.playerId2Score[playerId] = scoreNew;
+            self.SkipList.Insert(scoreNew, rankItemComponent);
             self.rankTotalNum++;
 
             if (self.SkipList.GetRank(scoreNew, rankItemComponent) < self.topRankPlayerCount)
             {
                 self.topRankPlayerList.Add(playerId);
-                self.GetComponent<DataCacheWriteComponent>().SetNeedSave();
+                self.SetDataCacheAutoWrite();
             }
         }
 
@@ -67,11 +69,6 @@ namespace ET.Server
         public static async ETTask<long> GetDBCount<T>(this RankComponent self) where T :Entity, IAwake, new()
         {
             return await ET.Server.DBHelper.GetDBCount<T>(self.DomainScene());
-        }
-
-        public static async ETTask SaveDB<T>(this RankComponent self) where T :Entity
-        {
-            await ET.Server.DBHelper.SaveDB(self);
         }
     }
 }

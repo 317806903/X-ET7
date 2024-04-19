@@ -25,6 +25,8 @@ namespace ET
 #if ENABLE_VIEW && UNITY_EDITOR
         [BsonIgnore]
         public UnityEngine.GameObject viewGO;
+        [BsonIgnore]
+        public UnityEngine.GameObject viewPrefabGO;
 #endif
 
         [BsonIgnore]

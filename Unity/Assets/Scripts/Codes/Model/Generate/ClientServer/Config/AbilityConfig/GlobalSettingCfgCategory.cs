@@ -40,10 +40,6 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public string ARTutorialFirstCfgId => _data.ARTutorialFirstCfgId;
     /// <summary>
-    /// AR模式PVE的cfgId
-    /// </summary>
-     public string ARPVECfgId => _data.ARPVECfgId;
-    /// <summary>
     /// AR模式PVP的cfgId
     /// </summary>
      public string ARPVPCfgId => _data.ARPVPCfgId;
@@ -51,6 +47,14 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// AR模式PVE无尽模式的cfgId
     /// </summary>
      public string AREndlessChallengeCfgId => _data.AREndlessChallengeCfgId;
+    /// <summary>
+    /// 非AR模式PVP的cfgId
+    /// </summary>
+     public string NoARPVPCfgId => _data.NoARPVPCfgId;
+    /// <summary>
+    /// 非AR模式PVE无尽模式的cfgId
+    /// </summary>
+     public string NoAREndlessChallengeCfgId => _data.NoAREndlessChallengeCfgId;
     /// <summary>
     /// 是否显示伤害数字展示
     /// </summary>
@@ -73,7 +77,7 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public int UpperLimitOfPhysicalStrength => _data.UpperLimitOfPhysicalStrength;
     /// <summary>
-    /// 体力值恢复时长
+    /// 体力值恢复时长(秒)
     /// </summary>
      public int RecoverTimeOfPhysicalStrength => _data.RecoverTimeOfPhysicalStrength;
     /// <summary>
@@ -96,26 +100,6 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// AR模式PVE无尽模式所需体力
     /// </summary>
      public int AREndlessChallengeTakePhsicalStrength => _data.AREndlessChallengeTakePhsicalStrength;
-    /// <summary>
-    /// 挑战模式是否加锁
-    /// </summary>
-     public bool PVELock => _data.PVELock;
-    /// <summary>
-    /// PVP模式是否加锁
-    /// </summary>
-     public bool PVPLock => _data.PVPLock;
-    /// <summary>
-    /// 排行榜是否加锁
-    /// </summary>
-     public bool RankLock => _data.RankLock;
-    /// <summary>
-    /// 教程是否加锁
-    /// </summary>
-     public bool TutorialLock => _data.TutorialLock;
-    /// <summary>
-    /// 卡牌是否加锁
-    /// </summary>
-     public bool CardsLock => _data.CardsLock;
     /// <summary>
     /// 体力系统是否显示
     /// </summary>
@@ -144,6 +128,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 需要重新评估游戏的时刻
     /// </summary>
      public long GameReJudgeTime => _data.GameReJudgeTime;
+    /// <summary>
+    /// 最多出战卡数
+    /// </summary>
+     public int MaxBattleCardNum => _data.MaxBattleCardNum;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

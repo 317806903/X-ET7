@@ -24,6 +24,8 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgBattleTowerHUD self, ShowWindowData contextData = null)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			self.playerId = ((DlgBattleTowerHUD_ShowWindowData)contextData).playerId;
 			self.towerUnitId = ((DlgBattleTowerHUD_ShowWindowData)contextData).towerUnitId;
 			self.towerCfgId = ((DlgBattleTowerHUD_ShowWindowData)contextData).towerCfgId;
@@ -36,7 +38,7 @@ namespace ET.Client
 			self.View.EButton_SaleButton.gameObject.SetActive(true);
 			self.View.EButton_ConfirmButton.gameObject.SetActive(false);
 
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			if (myPlayerId == self.playerId)
 			{
 				if (self.towerUnitId == 0)
@@ -235,7 +237,7 @@ namespace ET.Client
 
 		public static void OnClickBG(this DlgBattleTowerHUD self)
 		{
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+			//UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 			self.OnClose();
 		}
 

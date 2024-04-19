@@ -160,74 +160,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_KnapsackModeButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_KnapsackModeButton == null )
-				{
-					this.m_E_KnapsackModeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_KnapsackMode");
-				}
-				return this.m_E_KnapsackModeButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_KnapsackModeImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_KnapsackModeImage == null )
-				{
-					this.m_E_KnapsackModeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_KnapsackMode");
-				}
-				return this.m_E_KnapsackModeImage;
-			}
-		}
-
-		public UnityEngine.UI.Text E_KnapsackTextText
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_KnapsackTextText == null )
-				{
-					this.m_E_KnapsackTextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "EGBackGround/E_KnapsackMode/E_KnapsackText");
-				}
-				return this.m_E_KnapsackTextText;
-			}
-		}
-
-		public UITextLocalizeMonoView E_KnapsackTextUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_KnapsackTextUITextLocalizeMonoView == null )
-				{
-					this.m_E_KnapsackTextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/E_KnapsackMode/E_KnapsackText");
-				}
-				return this.m_E_KnapsackTextUITextLocalizeMonoView;
-			}
-		}
-
 		public UnityEngine.UI.Button E_RoomModeButton
 		{
 			get
@@ -443,10 +375,6 @@ namespace ET.Client
 			this.m_E_SingleMapModeImage = null;
 			this.m_E_SingleMapTextText = null;
 			this.m_E_SingleMapTextUITextLocalizeMonoView = null;
-			this.m_E_KnapsackModeButton = null;
-			this.m_E_KnapsackModeImage = null;
-			this.m_E_KnapsackTextText = null;
-			this.m_E_KnapsackTextUITextLocalizeMonoView = null;
 			this.m_E_RoomModeButton = null;
 			this.m_E_RoomModeImage = null;
 			this.m_E_RoomModeTextText = null;
@@ -471,10 +399,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_SingleMapModeImage = null;
 		private UnityEngine.UI.Text m_E_SingleMapTextText = null;
 		private UITextLocalizeMonoView m_E_SingleMapTextUITextLocalizeMonoView = null;
-		private UnityEngine.UI.Button m_E_KnapsackModeButton = null;
-		private UnityEngine.UI.Image m_E_KnapsackModeImage = null;
-		private UnityEngine.UI.Text m_E_KnapsackTextText = null;
-		private UITextLocalizeMonoView m_E_KnapsackTextUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_E_RoomModeButton = null;
 		private UnityEngine.UI.Image m_E_RoomModeImage = null;
 		private UnityEngine.UI.Text m_E_RoomModeTextText = null;

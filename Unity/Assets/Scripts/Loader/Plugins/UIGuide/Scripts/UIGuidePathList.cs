@@ -60,6 +60,8 @@ namespace UIGuide
         public int index;
         public string name;
 
+        public bool isFreeClickBeforeEnter;
+
         public TrigCondition trigEnterCondition;
         [NonSerialized]
         [BsonIgnore]

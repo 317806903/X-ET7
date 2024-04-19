@@ -24,7 +24,7 @@ public sealed partial class ActionCfg_CallAoe: Bright.Config.BeanBase
         Duration = _buf.ReadFloat();
         AoeTargetCondition = AoeTargetCondition.DeserializeAoeTargetCondition(_buf);
         OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
-        MoveType = MoveTweenType.DeserializeMoveTweenType(_buf);
+        MoveTweenId = _buf.ReadString();
         PostInit();
     }
 
@@ -60,7 +60,11 @@ public sealed partial class ActionCfg_CallAoe: Bright.Config.BeanBase
     public float Duration { get; private set; }
     public AoeTargetCondition AoeTargetCondition { get; private set; }
     public OffSetInfo OffSetInfo { get; private set; }
-    public MoveTweenType MoveType { get; private set; }
+    /// <summary>
+    /// 飞行轨迹
+    /// </summary>
+    public string MoveTweenId { get; private set; }
+    public MoveTweenCfg MoveTweenId_Ref { get; private set; }
 
     public const int __ID__ = -801855096;
     public override int GetTypeId() => __ID__;
@@ -70,7 +74,7 @@ public sealed partial class ActionCfg_CallAoe: Bright.Config.BeanBase
         this.AoeId_Ref = (_tables["AoeCfgCategory"] as AoeCfgCategory).GetOrDefault(AoeId);
         AoeTargetCondition?.Resolve(_tables);
         OffSetInfo?.Resolve(_tables);
-        MoveType?.Resolve(_tables);
+        this.MoveTweenId_Ref = (_tables["MoveTweenCfgCategory"] as MoveTweenCfgCategory).GetOrDefault(MoveTweenId);
         PostResolve();
     }
 
@@ -78,7 +82,6 @@ public sealed partial class ActionCfg_CallAoe: Bright.Config.BeanBase
     {
         AoeTargetCondition?.TranslateText(translator);
         OffSetInfo?.TranslateText(translator);
-        MoveType?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -92,7 +95,7 @@ public sealed partial class ActionCfg_CallAoe: Bright.Config.BeanBase
         + "Duration:" + Duration + ","
         + "AoeTargetCondition:" + AoeTargetCondition + ","
         + "OffSetInfo:" + OffSetInfo + ","
-        + "MoveType:" + MoveType + ","
+        + "MoveTweenId:" + MoveTweenId + ","
         + "}";
     }
     

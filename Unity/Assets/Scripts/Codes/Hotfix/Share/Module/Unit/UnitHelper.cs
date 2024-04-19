@@ -33,6 +33,11 @@ namespace ET.Ability
             return scene.GetComponent<UnitDelayRemoveComponent>();
         }
 
+        public static SyncDataManager GetSyncDataManagerComponent(Scene scene)
+        {
+            return scene.GetComponent<SyncDataManager>();
+        }
+
         public static void AddUnitDelayRemove(Scene scene, Unit unit)
         {
             GetUnitDelayRemoveComponent(scene).AddRemoveUnit(unit);
@@ -509,10 +514,10 @@ namespace ET.Ability
             float targetDisSq = math.pow(radius + curUnitRadius + targetUnitRadius, 2);
             if (ignoreY)
             {
-                if (math.pow(dis.y, 2) > math.max(targetDisSq, math.pow(curUnitHeight*0.8f, 2)))
-                {
-                    return false;
-                }
+                // if (math.pow(dis.y, 2) > math.max(targetDisSq, math.pow(curUnitHeight*0.8f, 2)))
+                // {
+                //     return false;
+                // }
                 if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= targetDisSq)
                 {
                     return true;
@@ -556,7 +561,7 @@ namespace ET.Ability
 
         public static (float3, float3) GetNewNodePosition(Unit unit, OffSetInfo offSetInfo)
         {
-            string nodeName = "";
+            EffectNodeName nodeName = EffectNodeName.Self;
             Vector3 offSetPosition = Vector3.Zero;
             Vector3 relateForward = Vector3.Zero;
             if (offSetInfo != null)
@@ -576,7 +581,7 @@ namespace ET.Ability
 
         public static float3 GetNewNodePosition(Unit unit, float3 resetPos, OffSetInfo offSetInfo)
         {
-            string nodeName = "";
+            EffectNodeName nodeName = EffectNodeName.Self;
             Vector3 offSetPosition = Vector3.Zero;
             Vector3 relateForward = Vector3.Zero;
             if (offSetInfo != null)
@@ -603,19 +608,51 @@ namespace ET.Ability
             GetUnitComponent(beNoticeUnit).AddSyncNoticeUnitRemove(beNoticeUnit, unitId);
         }
 
+        private static MultiMapSimple<long, Unit> playerSeeUnits = new();
+        public static MultiMapSimple<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
+        {
+            playerSeeUnits.Clear();
+            for (int i = 0; i < units.Count; i++)
+            {
+                Unit unit = units[i];
+                var dict = unit.GetBeSeePlayers();
+                if (dict == null)
+                {
+                    continue;
+                }
+                foreach (AOIEntity u in dict.Values)
+                {
+                    long playerId = u.Unit.Id;
+                    playerSeeUnits.Add(playerId, unit);
+                }
+            }
+
+            return playerSeeUnits;
+        }
+
         public static void AddSyncPosUnit(Unit unit)
         {
-            GetUnitComponent(unit).AddSyncPosUnit(unit);
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitPosInfo(unit);
         }
 
         public static void AddSyncNumericUnit(Unit unit)
         {
-            GetUnitComponent(unit).AddSyncNumericUnit(unit);
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitNumericInfo(unit);
         }
 
         public static void AddSyncNumericUnitByKey(Unit unit, int numericKey)
         {
-            GetUnitComponent(unit).AddSyncNumericUnitByKey(unit, numericKey);
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitNumericInfo(unit, numericKey);
+        }
+
+        public static void AddSyncData_UnitPlayAudio(Unit unit, string playAudioActionId, bool isOnlySelfShow)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitPlayAudio(unit, playAudioActionId, isOnlySelfShow);
+        }
+
+        public static void AddSyncData_UnitComponent(Unit unit, System.Type type)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitComponent(unit, type);
         }
 
         public static void AddRecycleSelectHandles(Scene scene, SelectHandle selectHandle)
@@ -678,53 +715,6 @@ namespace ET.Ability
                 foreach (Entity entity in effectComponent.Children.Values)
                 {
                     unitInfo.EffectComponents.Add(entity.ToBson());
-                }
-            }
-
-            return unitInfo;
-        }
-
-        public static UnitPosInfo SyncPosUnitInfo(Unit unit)
-        {
-            UnitPosInfo unitInfo = new UnitPosInfo();
-            unitInfo.UnitId = unit.Id;
-            unitInfo.PositionX = (int)(unit.Position.x * 100);
-            unitInfo.PositionY = (int)(unit.Position.y * 100);
-            unitInfo.PositionZ = (int)(unit.Position.z * 100);
-            unitInfo.ForwardX = (int)(unit.Forward.x * 100);
-            unitInfo.ForwardY = (int)(unit.Forward.y * 100);
-            unitInfo.ForwardZ = (int)(unit.Forward.z * 100);
-
-            return unitInfo;
-        }
-
-        public static UnitNumericInfo SyncNumericUnitInfo(Unit unit)
-        {
-            UnitNumericInfo unitInfo = new ();
-            unitInfo.UnitId = unit.Id;
-            unitInfo.KV = new Dictionary<int, long>();
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            foreach ((int key, long value) in numericComponent.NumericDic)
-            {
-                unitInfo.KV.Add(key, value);
-            }
-
-            return unitInfo;
-        }
-
-        public static UnitNumericInfo SyncNumericUnitInfoKey(Unit unit, List<int> keys)
-        {
-            UnitNumericInfo unitInfo = new ();
-            unitInfo.UnitId = unit.Id;
-            unitInfo.KV = new Dictionary<int, long>();
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-
-            for (int i = 0; i < keys.Count; i++)
-            {
-                int numericKey = keys[i];
-                if (numericComponent.NumericDic.TryGetValue(numericKey, out long numericValue))
-                {
-                    unitInfo.KV.Add(numericKey, numericValue);
                 }
             }
 

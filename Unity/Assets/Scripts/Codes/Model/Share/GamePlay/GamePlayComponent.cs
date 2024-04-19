@@ -17,6 +17,12 @@ namespace ET
 		GameEnd,
 	}
 
+	public enum ARMeshType
+	{
+		FromRemoteURL,
+		FromClientObj,
+	}
+
 	[ComponentOf(typeof(Scene))]
 	public class GamePlayComponent : Entity, IAwake, IDestroy, IFixedUpdate
 	{
@@ -30,8 +36,12 @@ namespace ET
 		public GamePlayStatus gamePlayStatus;
 		public bool isAR;
 		public float arMapScale;
+
+		public ARMeshType _ARMeshType;
 		[BsonIgnore]
 		public string _ARMeshDownLoadUrl;
+		[BsonIgnore]
+		public byte[] _ARMeshBytes;
 
 		[BsonIgnore]
 		public long gamePlayWaitDestroyTime;
@@ -57,7 +67,7 @@ namespace ET
 		public HashSet<long> waitNoticeGamePlayModeToClientList;
 
 		[BsonIgnore]
-		public int waitFrameSyncPos = 5;
+		public int waitFrameSyncPos = 10;
 		[BsonIgnore]
 		public int curFrameSyncPos = 0;
 		[BsonIgnore]

@@ -32,7 +32,6 @@ public class UIGuidePathListEditorWindow: EditorWindow
     Vector2 vScroll = new Vector2(0, 0);
 
     private bool showFoldout;
-    private int index = 0;
     private int indexRun = 0;
     private bool[] showFoldoutList;
 
@@ -66,8 +65,6 @@ public class UIGuidePathListEditorWindow: EditorWindow
             makeGuide.list = new();
         }
         int count = makeGuide.list.Count;
-        EditorGUILayout.LabelField("步骤总数量：" + count);
-        EditorGUILayout.LabelField("=============================================");
         if (showFoldoutList == null)
         {
             showFoldoutList = new bool[count];
@@ -80,7 +77,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
         {
             EditorGUILayout.BeginHorizontal();
 
-            showFoldout = EditorGUILayout.Foldout(showFoldout, "指引步骤:");
+            showFoldout = EditorGUILayout.Foldout(showFoldout, $"指引步骤({count}):");
             if (GUILayout.Button("展开所有步骤"))
             {
                 GUI.FocusControl(null);
@@ -93,17 +90,35 @@ public class UIGuidePathListEditorWindow: EditorWindow
             if (GUILayout.Button("收起所有步骤"))
             {
                 GUI.FocusControl(null);
+                showFoldout = true;
                 for (int i = 0; i < showFoldoutList.Length; i++)
                 {
                     showFoldoutList[i] = false;
                 }
             }
+
+            if (GUILayout.Button("在最后插入步骤", GUILayout.Width(100)))
+            {
+                makeGuide.list.Add(new UIGuidePath());
+
+                var showFoldoutListTmp = new bool[makeGuide.list.Count];
+                for (int i = 0; i < showFoldoutList.Length; i++)
+                {
+                    showFoldoutListTmp[i] = showFoldoutList[i];
+                }
+                showFoldoutListTmp[showFoldoutListTmp.Length-1] = false;
+                showFoldoutList = showFoldoutListTmp;
+                this.showFoldout = true;
+                vScroll = vScroll + new Vector2(0, 5000);
+            }
+
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space(10);
             if (showFoldout)
             {
                 vScroll = GUILayout.BeginScrollView(vScroll, false, true);
+                EditorGUILayout.Space(5);
                 EditorGUI.indentLevel++;
 
                 for (int i = 0; i < count; i++)
@@ -114,7 +129,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
                     showFoldoutList[i] = EditorGUILayout.Foldout(showFoldoutList[i], $"----------步骤{i}:{makeGuide.list[i].name}");
                     if (showFoldoutList[i])
                     {
-                        if (GUILayout.Button("收起"))
+                        if (GUILayout.Button($"收起({i})", GUILayout.Width(70)))
                         {
                             showFoldoutList[i] = false;
                             GUI.FocusControl(null);
@@ -122,13 +137,106 @@ public class UIGuidePathListEditorWindow: EditorWindow
                     }
                     else
                     {
-                        if (GUILayout.Button("展开"))
+                        if (GUILayout.Button($"展开({i})", GUILayout.Width(70)))
                         {
                             showFoldoutList[i] = true;
                             GUI.FocusControl(null);
                         }
                     }
-                    if (GUILayout.Button("删除"))
+                    if (GUILayout.Button("插入New", GUILayout.Width(70)))
+                    {
+                        this.makeGuide.list.Insert(i, new UIGuidePath());
+
+                        var showFoldoutListTmp = new bool[makeGuide.list.Count];
+                        for (int j = 0; j < i; j++)
+                        {
+                            showFoldoutListTmp[j] = showFoldoutList[j];
+                        }
+                        for (int j = i; j < showFoldoutList.Length; j++)
+                        {
+                            showFoldoutListTmp[j+1] = showFoldoutList[j];
+                        }
+                        showFoldoutListTmp[i] = false;
+                        showFoldoutList = showFoldoutListTmp;
+
+                        GUI.FocusControl(null);
+
+                        EditorGUILayout.EndHorizontal();
+
+                        GUILayout.EndScrollView();
+                        return;
+                    }
+                    if (GUILayout.Button("复制", GUILayout.Width(50)))
+                    {
+                        string json = ET.JsonHelper.ToJson(this.makeGuide.list[i]);
+                        this.makeGuide.list.Insert(i, ET.JsonHelper.FromJson<UIGuidePath>(json));
+
+                        var showFoldoutListTmp = new bool[makeGuide.list.Count];
+                        for (int j = 0; j < i; j++)
+                        {
+                            showFoldoutListTmp[j] = showFoldoutList[j];
+                        }
+                        for (int j = i; j < showFoldoutList.Length; j++)
+                        {
+                            showFoldoutListTmp[j+1] = showFoldoutList[j];
+                        }
+                        showFoldoutListTmp[i] = false;
+                        showFoldoutList = showFoldoutListTmp;
+
+                        GUI.FocusControl(null);
+
+                        EditorGUILayout.EndHorizontal();
+
+                        GUILayout.EndScrollView();
+                        return;
+                    }
+                    if (GUILayout.Button("上移", GUILayout.Width(50)))
+                    {
+                        if (i > 0)
+                        {
+                            var UIGuidePath = this.makeGuide.list[i - 1];
+                            var UIGuidePath2 = this.makeGuide.list[i];
+                            this.makeGuide.list[i - 1] = UIGuidePath2;
+                            this.makeGuide.list[i] = UIGuidePath;
+
+                            var showFoldoutTmp = showFoldoutList[i - 1];
+                            var showFoldoutTmp2 = showFoldoutList[i];
+                            showFoldoutList[i - 1] = showFoldoutTmp2;
+                            showFoldoutList[i] = showFoldoutTmp;
+
+                            GUI.FocusControl(null);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            GUILayout.EndScrollView();
+                            return;
+                        }
+
+                    }
+                    if (GUILayout.Button("下移", GUILayout.Width(50)))
+                    {
+                        if (i < this.makeGuide.list.Count - 1)
+                        {
+                            var UIGuidePath = this.makeGuide.list[i + 1];
+                            var UIGuidePath2 = this.makeGuide.list[i];
+                            this.makeGuide.list[i + 1] = UIGuidePath2;
+                            this.makeGuide.list[i] = UIGuidePath;
+
+                            var showFoldoutTmp = showFoldoutList[i + 1];
+                            var showFoldoutTmp2 = showFoldoutList[i];
+                            showFoldoutList[i + 1] = showFoldoutTmp2;
+                            showFoldoutList[i] = showFoldoutTmp;
+
+                            GUI.FocusControl(null);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            GUILayout.EndScrollView();
+                            return;
+                        }
+
+                    }
+                    if (GUILayout.Button("删除", GUILayout.Width(50)))
                     {
                         makeGuide.list.RemoveAt(i);
                         GUI.FocusControl(null);
@@ -156,6 +264,9 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                         makeGuide.list[i].name = EditorGUILayout.TextField("名称(仅显示用): ", makeGuide.list[i].name);
 
+                        EditorGUILayout.Space(5);
+                        makeGuide.list[i].isFreeClickBeforeEnter = EditorGUILayout.Toggle("★进入前是否自由点击", makeGuide.list[i].isFreeClickBeforeEnter);
+                        EditorGUILayout.Space(5);
                         makeGuide.list[i].trigEnterCondition = (TrigCondition) EditorGUILayout.EnumPopup("★进入条件", makeGuide.list[i].trigEnterCondition);
 
                         EditorGUI.indentLevel++;
@@ -224,13 +335,12 @@ public class UIGuidePathListEditorWindow: EditorWindow
                             trigEnterConditionStaticMethod = (ET.Client.GuideConditionStaticMethodType) EditorGUILayout.EnumPopup("检查逻辑", trigEnterConditionStaticMethod);
 
                             makeGuide.list[i].trigEnterConditionStaticMethod = trigEnterConditionStaticMethod.ToString();
-
-                            if (string.IsNullOrEmpty(makeGuide.list[i].trigEnterConditionParam))
+                            if (trigEnterConditionStaticMethod != GuideConditionStaticMethodType.None)
                             {
-                                makeGuide.list[i].trigEnterConditionParam = "";
-                            }
-                            else
-                            {
+                                if (string.IsNullOrEmpty(makeGuide.list[i].trigEnterConditionParam))
+                                {
+                                    makeGuide.list[i].trigEnterConditionParam = "";
+                                }
                                 makeGuide.list[i].trigEnterConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigEnterConditionParam);
                                 makeGuide.list[i].trigEnterConditionParam = makeGuide.list[i].trigEnterConditionParam.Trim();
                             }
@@ -560,12 +670,12 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                             makeGuide.list[i].trigExitConditionStaticMethod = trigExitConditionStaticMethod.ToString();
 
-                            if (string.IsNullOrEmpty(makeGuide.list[i].trigExitConditionParam))
+                            if (trigExitConditionStaticMethod != GuideConditionStaticMethodType.None)
                             {
-                                makeGuide.list[i].trigExitConditionParam = "";
-                            }
-                            else
-                            {
+                                if (string.IsNullOrEmpty(makeGuide.list[i].trigExitConditionParam))
+                                {
+                                    makeGuide.list[i].trigExitConditionParam = "";
+                                }
                                 makeGuide.list[i].trigExitConditionParam = EditorGUILayout.TextField("参数: ", makeGuide.list[i].trigExitConditionParam);
                                 makeGuide.list[i].trigExitConditionParam = makeGuide.list[i].trigExitConditionParam.Trim();
                             }
@@ -581,67 +691,27 @@ public class UIGuidePathListEditorWindow: EditorWindow
                 }
                 EditorGUI.indentLevel--;
 
+                EditorGUILayout.Space(5);
                 GUILayout.EndScrollView();
 
             }
         }
-
-        EditorGUILayout.Space(10);
-        EditorGUILayout.BeginHorizontal();
-        this.index = EditorGUILayout.IntSlider(this.index, 0, count-1);
-        if (GUILayout.Button($"在步骤{this.index}插入空白纪录(原来的往后挪)"))
+        else
         {
-            this.makeGuide.list.Insert(this.index, new UIGuidePath());
-
-            var showFoldoutListTmp = new bool[makeGuide.list.Count];
-            for (int i = 0; i < this.index; i++)
+            EditorGUILayout.LabelField("步骤总数量：" + count);
+            EditorGUILayout.LabelField("=============================================");
+            if (GUILayout.Button("插入New", GUILayout.Width(100)))
             {
-                showFoldoutListTmp[i] = showFoldoutList[i];
+                makeGuide.list.Clear();
+                makeGuide.list.Add(new UIGuidePath());
+                showFoldoutList = new bool[makeGuide.list.Count];
+                showFoldoutList[showFoldoutList.Length-1] = false;
+                this.showFoldout = true;
+                vScroll = vScroll + new Vector2(0, 5000);
             }
-            for (int i = this.index; i < showFoldoutList.Length; i++)
-            {
-                showFoldoutListTmp[i+1] = showFoldoutList[i];
-            }
-            showFoldoutListTmp[this.index] = true;
-            showFoldoutList = showFoldoutListTmp;
-            this.showFoldout = true;
-            GUI.FocusControl(null);
-        }
-        // if (GUILayout.Button("删除序号i的记录"))
-        // {
-        //     makeGuide.list.RemoveAt(this.index);
-        //
-        //     var showFoldoutListTmp = new bool[makeGuide.list.Count];
-        //     for (int i = 0; i < this.index; i++)
-        //     {
-        //         showFoldoutListTmp[i] = showFoldoutList[i];
-        //     }
-        //     for (int i = this.index+1; i < showFoldoutList.Length; i++)
-        //     {
-        //         showFoldoutListTmp[i-1] = showFoldoutList[i];
-        //     }
-        //     showFoldoutList = showFoldoutListTmp;
-        //     this.showFoldout = true;
-        // }
-        if (GUILayout.Button("在最后插入记录"))
-        {
-            makeGuide.list.Add(new UIGuidePath());
-
-            var showFoldoutListTmp = new bool[makeGuide.list.Count];
-            for (int i = 0; i < showFoldoutList.Length; i++)
-            {
-                showFoldoutListTmp[i] = showFoldoutList[i];
-            }
-            showFoldoutListTmp[showFoldoutListTmp.Length-1] = true;
-            showFoldoutList = showFoldoutListTmp;
-            this.showFoldout = true;
-            vScroll = vScroll + new Vector2(0, 5000);
         }
 
-        EditorGUILayout.EndHorizontal();
-
         EditorGUILayout.Space(10);
-
         EditorGUILayout.LabelField("=============================================");
         EditorGUILayout.LabelField("文件路径：");
         EditorGUI.indentLevel++;
@@ -671,7 +741,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
         this.indexRun = EditorGUILayout.IntSlider(this.indexRun, 0, count-1);
         if (GUILayout.Button($"从步骤{this.indexRun}开始执行当前指引"))
         {
-            DoGuideFile(this.indexRun);
+            this.DoGuideCurFile(this.indexRun);
         }
         if (Application.isPlaying)
         {
@@ -680,6 +750,14 @@ public class UIGuidePathListEditorWindow: EditorWindow
             {
                 EditorGUILayout.LabelField($"当前运行的指引步骤:{curUIGuidePath.index}");
             }
+            else
+            {
+                EditorGUILayout.LabelField($"当前没有指引");
+            }
+        }
+        else
+        {
+            EditorGUILayout.LabelField($"非运行状态");
         }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(10);
@@ -782,12 +860,95 @@ public class UIGuidePathListEditorWindow: EditorWindow
             showFoldoutList[i] = false;
         }
 
-        this.index = 0;
         this.indexRun = 0;
+    }
+
+    bool ChkStaticMethod()
+    {
+        for (int i = 0; i < this.makeGuide.list.Count; i++)
+        {
+            UIGuidePath _UIGuidePath = this.makeGuide.list[i];
+            if (_UIGuidePath.trigEnterCondition == TrigCondition.StaticMethod)
+            {
+                if (Enum.TryParse<ET.Client.GuideConditionStaticMethodType>(_UIGuidePath.trigEnterConditionStaticMethod, out var trigEnterConditionStaticMethod))
+                {
+                    bool bRet = ET.Client.UIGuideHelper.ChkStaticMethodParam(trigEnterConditionStaticMethod, _UIGuidePath.trigEnterConditionParam);
+                    if (bRet == false)
+                    {
+                        string message = $"[{i} {_UIGuidePath.name}] trigEnterConditionStaticMethod[{_UIGuidePath.trigEnterConditionStaticMethod}] param[{_UIGuidePath.trigEnterConditionParam}] err";
+                        if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                        {
+                        }
+                        return false;
+                    }
+                }
+                else
+                {
+                    string message = $"[{i} {_UIGuidePath.name}] trigEnterConditionStaticMethod[{_UIGuidePath.trigEnterConditionStaticMethod}] param[{_UIGuidePath.trigEnterConditionParam}] err";
+                    if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                    {
+                    }
+                    return false;
+                }
+            }
+            if (_UIGuidePath.trigExitCondition == TrigCondition.StaticMethod)
+            {
+                if (Enum.TryParse<ET.Client.GuideConditionStaticMethodType>(_UIGuidePath.trigExitConditionStaticMethod, out var trigExitConditionStaticMethod))
+                {
+                    bool bRet = ET.Client.UIGuideHelper.ChkStaticMethodParam(trigExitConditionStaticMethod, _UIGuidePath.trigExitConditionParam);
+                    if (bRet == false)
+                    {
+                        string message = $"[{i} {_UIGuidePath.name}] trigExitConditionStaticMethod[{_UIGuidePath.trigExitConditionStaticMethod}] param[{_UIGuidePath.trigExitConditionParam}] err";
+                        if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                        {
+                        }
+                        return false;
+                    }
+                }
+                else
+                {
+                    string message = $"[{i} {_UIGuidePath.name}] trigExitConditionStaticMethod[{_UIGuidePath.trigExitConditionStaticMethod}] param[{_UIGuidePath.trigExitConditionParam}] err";
+                    if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                    {
+                    }
+                    return false;
+                }
+            }
+
+            if (string.IsNullOrEmpty(_UIGuidePath.guideExecuteStaticMethod) == false)
+            {
+                if (Enum.TryParse<ET.Client.GuideExecuteStaticMethodType>(_UIGuidePath.guideExecuteStaticMethod, out var guideExecuteStaticMethod))
+                {
+                    bool bRet = ET.Client.UIGuideHelper.ChkStaticMethodExecuteParam(guideExecuteStaticMethod, _UIGuidePath.guideExecuteParam);
+                    if (bRet == false)
+                    {
+                        string message = $"[{i} {_UIGuidePath.name}] guideExecuteStaticMethod[{_UIGuidePath.guideExecuteStaticMethod}] param[{_UIGuidePath.guideExecuteParam}] err";
+                        if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                        {
+                        }
+                        return false;
+                    }
+                }
+                else
+                {
+                    string message = $"[{i} {_UIGuidePath.name}] guideExecuteStaticMethod[{_UIGuidePath.guideExecuteStaticMethod}] param[{_UIGuidePath.guideExecuteParam}] err";
+                    if (EditorUtility.DisplayDialog("检查错误", message, "确定"))
+                    {
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     void Save()
     {
+        if (this.ChkStaticMethod() == false)
+        {
+            return;
+        }
+
         string curFileName = "";
         if (string.IsNullOrEmpty(filePath) == false)
         {
@@ -816,7 +977,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
         Debug.Log("保存成功");
     }
 
-    public void DoGuideFile(int indexRun = 0)
+    public void DoGuideCurFile(int indexRun = 0)
     {
         if (Application.isPlaying == false)
         {
@@ -846,7 +1007,9 @@ public class UIGuidePathListEditorWindow: EditorWindow
                 _UIGuidePath.index = i;
                 _UIGuidePathList.list.Add(_UIGuidePath);
             }
-            ET.Client.UIGuideHelper.DoUIGuide(clientScene, _UIGuidePathList, null).Coroutine();
+
+            string guideFileName = Path.GetFileNameWithoutExtension(this.filePath);
+            ET.Client.UIGuideHelper.DoUIGuide(clientScene, guideFileName, _UIGuidePathList, null).Coroutine();
         }
     }
 

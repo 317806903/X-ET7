@@ -12,7 +12,8 @@ namespace ET.Server
 			PlayerModelType playerModelType = (PlayerModelType)request.PlayerModelType;
 			byte[] playerModelComponentBytes = request.PlayerModelComponentBytes;
 			List<string> setPlayerKeys = request.SetPlayerKeys;
-			await ET.Server.PlayerCacheLocalHelper.SetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes, setPlayerKeys);
+			PlayerModelChgType playerModelChgType = (PlayerModelChgType)request.PlayerModelChgType;
+			await ET.Server.PlayerCacheLocalHelper.SetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes, setPlayerKeys, playerModelChgType);
 
 			await ETTask.CompletedTask;
 		}

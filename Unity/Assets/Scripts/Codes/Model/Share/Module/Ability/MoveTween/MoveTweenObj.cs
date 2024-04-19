@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -23,6 +24,8 @@ namespace ET.Ability
         ///</summary>
         public float3 forward;
 
+        public long startTime;
+        public float3 startPosition;
         public float3 lastPosition;
         public float3 lastTargetPosition;
 
@@ -30,9 +33,16 @@ namespace ET.Ability
         ///已经存在了多久了，单位：秒
         ///</summary>
         public float timeElapsed = 0;
-        public float holdTime = 0;
 
-        public MoveTweenType moveTweenType;
+        public string moveTweenCfgId;
+        [BsonIgnore]
+        public MoveTweenType moveTweenType
+        {
+            get
+            {
+                return MoveTweenCfgCategory.Instance.Get(this.moveTweenCfgId).MoveType;
+            }
+        }
 
         public SelectHandle selectHandle;
     }

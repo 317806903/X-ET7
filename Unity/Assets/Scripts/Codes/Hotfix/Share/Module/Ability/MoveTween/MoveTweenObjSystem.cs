@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Xml.Schema;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -22,7 +23,7 @@ namespace ET.Ability
         {
             protected override void Destroy(MoveTweenObj self)
             {
-                self.moveTweenType = null;
+                self.moveTweenCfgId = null;
                 //self.selectHandle?.Dispose();
                 self.selectHandle = null;
             }
@@ -33,25 +34,35 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(MoveTweenObj self)
             {
-                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                // if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                // {
+                //     return;
+                // }
+                if (self.IsDisposed)
                 {
                     return;
                 }
 
-                float fixedDeltaTime = TimeHelper.FixedDetalTime;
-                self.FixedUpdate(fixedDeltaTime);
+                if (self.DomainScene().SceneType != SceneType.Map && self.DomainScene().SceneType != SceneType.Current)
+                {
+                    return;
+                }
+
+                self.FixedUpdate();
             }
         }
 
-        public static void Init(this MoveTweenObj self, long unitId, MoveTweenType moveTweenType, SelectHandle selectHandle)
+        public static void Init(this MoveTweenObj self, long unitId, string moveTweenCfgId, SelectHandle selectHandle)
         {
+            self.moveTweenCfgId = moveTweenCfgId;
+
+            self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, self.moveTweenType.HoldTime) * 1000);
             self.unitId = unitId;
-            self.moveTweenType = moveTweenType;
-            self.speed = moveTweenType.Speed;
+            self.speed = self.moveTweenType.Speed;
             self.forward = selectHandle.direction;
             self.isNeedChkHoldTime = true;
+            self.startPosition = self.GetUnit().Position;
             self.lastPosition = self.GetUnit().Position;
-            self.holdTime = moveTweenType.HoldTime;
 
             if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
@@ -73,6 +84,10 @@ namespace ET.Ability
                 self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
             }
             else if (self.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+            }
+            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
             {
                 self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
             }
@@ -81,6 +96,16 @@ namespace ET.Ability
         public static void ChgSelectHandle(this MoveTweenObj self, SelectHandle selectHandle)
         {
             self.timeElapsed = 0;
+            if (self.isNeedChkHoldTime)
+            {
+                self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, self.moveTweenType.HoldTime) * 1000);
+            }
+            else
+            {
+                self.startTime = TimeHelper.ServerNow();
+            }
+            self.startPosition = self.GetUnit().Position;
+            self.lastPosition = self.GetUnit().Position;
             if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
             }
@@ -104,6 +129,23 @@ namespace ET.Ability
             {
                 self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
             }
+            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+            }
+        }
+
+        public static bool IsNeedDealHit(this MoveTweenObj self)
+        {
+            if (self.DomainScene().SceneType == SceneType.Map)
+            {
+                return true;
+            }
+            if (self.DomainScene().SceneType == SceneType.Current)
+            {
+                return false;
+            }
+            return false;
         }
 
         public static bool IsNeedChkTouch(this MoveTweenObj self)
@@ -134,6 +176,10 @@ namespace ET.Ability
                 return false;
             }
             else if (self.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
+            {
+                return false;
+            }
+            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
             {
                 return false;
             }
@@ -172,6 +218,10 @@ namespace ET.Ability
             {
                 return false;
             }
+            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -181,30 +231,23 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void FixedUpdate(this MoveTweenObj self, float fixedDeltaTime)
+        public static void FixedUpdate(this MoveTweenObj self)
         {
-            float timePassed = fixedDeltaTime;
             if (self.isNeedChkHoldTime)
             {
-                if (self.ChkIsHoldTime(fixedDeltaTime))
+                if (TimeHelper.ServerNow() <= self.startTime)
                 {
                     return;
                 }
+                self.isNeedChkHoldTime = false;
             }
-            self.timeElapsed += timePassed;
+
+            float newTimeElapsed = (TimeHelper.ServerNow() - self.startTime) * 0.001f;
+            float fixedDeltaTime = newTimeElapsed - self.timeElapsed;
+            self.timeElapsed = newTimeElapsed;
+
             self.lastPosition = self.GetUnit().Position;
             self.DoMoveTween(fixedDeltaTime);
-        }
-
-        public static bool ChkIsHoldTime(this MoveTweenObj self, float fixedDeltaTime)
-        {
-            if (self.holdTime > 0)
-            {
-                self.holdTime -= fixedDeltaTime;
-                return true;
-            }
-            self.isNeedChkHoldTime = false;
-            return false;
         }
 
         public static void DoMoveTween(this MoveTweenObj self, float fixedDeltaTime)
@@ -253,6 +296,10 @@ namespace ET.Ability
                 {
                     self.DoMoveTween_TargetQuick(targetQuickMoveTweenType, fixedDeltaTime);
                 }
+            }
+            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
+            {
+                self.DoMoveTween_Parabola(parabolaMoveTweenType, fixedDeltaTime);
             }
             //Log.Debug($" DoMoveTween {self.GetUnit().Position} {self.GetUnit().Forward}");
         }
@@ -316,20 +363,24 @@ namespace ET.Ability
 
             if (dirLengthSq == 0)
             {
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
@@ -338,20 +389,24 @@ namespace ET.Ability
                 unit.Forward = self.forward;
                 unit.Position = targetUnit.Position;
 
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
 
@@ -368,6 +423,7 @@ namespace ET.Ability
                 self.forward = math.normalize(self.forward);
                 unit.Forward = self.forward;
             }
+
             unit.Position += unit.Forward * self.speed * fixedDeltaTime;
         }
 
@@ -388,6 +444,7 @@ namespace ET.Ability
                     self.GetUnit().DestroyWithDeathShow();
                     return;
                 }
+
                 long targetUnitId = self.selectHandle.unitIds[0];
                 Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                 if (targetUnit == null)
@@ -395,6 +452,7 @@ namespace ET.Ability
                     self.GetUnit().DestroyWithDeathShow();
                     return;
                 }
+
                 targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
@@ -405,6 +463,7 @@ namespace ET.Ability
             {
                 return;
             }
+
             Unit unit = self.GetUnit();
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
@@ -417,7 +476,7 @@ namespace ET.Ability
 
             float curAngle = initAngle + self.speed / orgRadius * self.timeElapsed;
             float3 curPosDir = math.mul(quaternion.RotateY(curAngle), math.forward());
-            self.forward = math.mul(quaternion.RotateY(math.PI*0.5f), curPosDir);
+            self.forward = math.mul(quaternion.RotateY(math.PI * 0.5f), curPosDir);
             self.forward = math.normalize(self.forward);
             unit.Forward = self.forward;
             unit.Position = targetPosition + curPosDir * radius;
@@ -448,7 +507,7 @@ namespace ET.Ability
                     }
 
                     Unit unitTmp = self.GetUnit();
-                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                 }
                 else if (self.selectHandle.unitIds.Count > 0)
                 {
@@ -482,13 +541,13 @@ namespace ET.Ability
                         // targetPosition = self.lastTargetPosition;
 
                         Unit unitTmp = self.GetUnit();
-                        targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                        targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                     }
                 }
                 else
                 {
                     Unit unitTmp = self.GetUnit();
-                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                 }
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
@@ -499,6 +558,7 @@ namespace ET.Ability
             {
                 return;
             }
+
             Unit unit = self.GetUnit();
             float speed = moveTweenType.Speed;
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
@@ -508,20 +568,24 @@ namespace ET.Ability
             float dirLengthSq = math.lengthsq(dir);
             if (dirLengthSq == 0)
             {
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
@@ -530,20 +594,24 @@ namespace ET.Ability
                 unit.Forward = self.forward;
                 unit.Position = targetPosition;
 
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else
@@ -573,7 +641,7 @@ namespace ET.Ability
                     }
 
                     Unit unitTmp = self.GetUnit();
-                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                 }
                 else if (self.selectHandle.unitIds.Count > 0)
                 {
@@ -607,13 +675,13 @@ namespace ET.Ability
                         // targetPosition = self.lastTargetPosition;
 
                         Unit unitTmp = self.GetUnit();
-                        targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                        targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                     }
                 }
                 else
                 {
                     Unit unitTmp = self.GetUnit();
-                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0)+ self.forward * 100;
+                    targetPosition = unitTmp.Position + new float3(0, UnitHelper.GetBodyHeight(unitTmp) * 0.5f, 0) + self.forward * 100;
                 }
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
@@ -624,6 +692,7 @@ namespace ET.Ability
             {
                 return;
             }
+
             Unit unit = self.GetUnit();
             float3 dir = targetPosition - unit.Position;
 
@@ -633,25 +702,29 @@ namespace ET.Ability
 
             if (moveTweenType.LimitTime <= self.timeElapsed)
             {
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else
             {
-                var speedLimit = math.length(dir) / (moveTweenType.LimitTime-self.timeElapsed);
+                var speedLimit = math.length(dir) / (moveTweenType.LimitTime - self.timeElapsed);
                 if (self.speed < speedLimit)
                 {
                     self.speed = speedLimit;
@@ -661,20 +734,24 @@ namespace ET.Ability
             float dirLengthSq = math.lengthsq(dir);
             if (dirLengthSq == 0)
             {
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
@@ -683,20 +760,24 @@ namespace ET.Ability
                 unit.Forward = self.forward;
                 unit.Position = targetPosition;
 
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
             }
             else
@@ -762,6 +843,7 @@ namespace ET.Ability
             {
                 return;
             }
+
             if (moveTweenType.LimitTime <= self.timeElapsed)
             {
                 Unit unit = self.GetUnit();
@@ -777,21 +859,182 @@ namespace ET.Ability
                     unit.Position = targetPosition;
                 }
 
-                if (targetUnit != null)
+                if (self.IsNeedDealHit() && targetUnit != null)
                 {
                     if (UnitHelper.ChkIsBullet(unit))
                     {
 #if UNITY_EDITOR
-                        if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                        if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
                         }
 #endif
                         BulletObj bulletObj = unit.GetComponent<BulletObj>();
                         bulletObj.AddPreHitUnit(targetUnit.Id);
                     }
                 }
+
                 return;
+            }
+        }
+
+        public static void DoMoveTween_Parabola(this MoveTweenObj self, ParabolaMoveTweenType moveTweenType, float fixedDeltaTime)
+        {
+            Unit targetUnit = null;
+            float3 targetPosition;
+            SelectHandleType selectHandleType = self.selectHandle.selectHandleType;
+            if (selectHandleType == SelectHandleType.SelectUnits)
+            {
+                if (self.selectHandle == null || self.selectHandle.unitIds == null)
+                {
+                    if (self.selectHandle == null)
+                    {
+                        Log.Error($"DoMoveTween_Target self.selectHandle == null");
+                    }
+                    else if (self.selectHandle.unitIds == null)
+                    {
+                        Log.Error($"DoMoveTween_Target self.selectHandle.unitIds == null");
+                    }
+
+                    self.GetUnit().DestroyWithDeathShow();
+                    return;
+                }
+                else if (self.selectHandle.unitIds.Count > 0)
+                {
+                    long targetUnitId = self.selectHandle.unitIds[0];
+                    targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                    if (UnitHelper.ChkUnitAlive(targetUnit, false))
+                    {
+                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        self.lastTargetPosition = targetPosition;
+                    }
+                    else if (UnitHelper.ChkUnitAlive(targetUnit, true))
+                    {
+                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        self.lastTargetPosition = targetPosition;
+                    }
+                    else
+                    {
+                        self.GetUnit().DestroyWithDeathShow();
+                        return;
+                    }
+                }
+                else
+                {
+                    self.GetUnit().DestroyWithDeathShow();
+                    return;
+                }
+            }
+            else if (selectHandleType == SelectHandleType.SelectPosition)
+            {
+                targetPosition = self.selectHandle.position;
+            }
+            else
+            {
+                return;
+            }
+
+            float speed = moveTweenType.Speed;
+            float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
+            float parabolaHeight = moveTweenType.ParabolaHeight;
+
+            float3 disTmp = targetPosition - self.startPosition;
+            //float disY = math.abs(disTmp.y);
+            float disY = disTmp.y;
+            disTmp.y = 0;
+            float disX = math.length(disTmp);
+
+            float totalTime = 0;
+            if (acceleratedSpeed == 0)
+            {
+                totalTime = disX / speed;
+            }
+            else
+            {
+                float a1 = 0.5f * acceleratedSpeed;
+                float b1 = speed;
+                float c1 = -disX;
+                totalTime = (-b1 + math.sqrt(b1 * b1 - 4 * a1 * c1)) / (2 * a1);
+            }
+
+            if (totalTime < 0.5f)
+            {
+                totalTime = 0.5f;
+                if (acceleratedSpeed == 0)
+                {
+                    speed = disX / totalTime;
+                }
+                else
+                {
+                    speed = (disX - 0.5f * acceleratedSpeed * totalTime * totalTime) / totalTime;
+                }
+            }
+
+            Unit unit = self.GetUnit();
+            if (totalTime <= self.timeElapsed)
+            {
+                unit.Forward = self.forward;
+                unit.Position = targetPosition;
+
+                if (self.IsNeedDealHit() && UnitHelper.ChkIsBullet(unit))
+                {
+                    BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                    if (targetUnit != null)
+                    {
+#if UNITY_EDITOR
+                        if (self.DomainScene().SceneType == SceneType.Map)
+                        {
+                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            {
+                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                            }
+                        }
+#endif
+                        bulletObj.AddPreHitUnit(targetUnit.Id);
+                    }
+                    else
+                    {
+                        bulletObj.SetPreHitPos();
+                    }
+                }
+            }
+            else
+            {
+                //float speedYStart = disY/totalTime + 0.5f * gravity * totalTime;
+                //parabolaHeight = 0.5f * speedYStart * speedYStart / gravity;
+                //float speedYStart = (disY/totalTime)/(1 + (totalTime / (4 * parabolaHeight)));
+
+                float dis2Top;
+                if (disY < 0)
+                {
+                    dis2Top = parabolaHeight;
+                }
+                else
+                {
+                    dis2Top = math.abs(disY) + parabolaHeight;
+                }
+
+                float a = totalTime / (4 * dis2Top);
+                float b = -1;
+                float c = disY / totalTime;
+                float speedYStart = (-b + math.sqrt(b * b - 4 * a * c)) / (2 * a);
+                float gravity = 0.5f * speedYStart * speedYStart / dis2Top;
+
+                float curSpeedY = speedYStart - gravity * self.timeElapsed;
+                float curSpeedX = speed + acceleratedSpeed * self.timeElapsed;
+                float3 curSpeed = math.normalize(disTmp) * curSpeedX + new float3(0, curSpeedY, 0);
+                self.forward = math.normalize(curSpeed);
+                self.speed = math.length(curSpeed);
+
+                unit.Forward = self.forward;
+                //unit.Position += self.forward * self.speed * fixedDeltaTime;
+                float3 newPos = self.startPosition +
+                    (math.normalize(disTmp) * speed * self.timeElapsed + 0.5f * acceleratedSpeed * self.timeElapsed * self.timeElapsed) +
+                    new float3(0, speedYStart * self.timeElapsed - 0.5f * gravity * self.timeElapsed * self.timeElapsed, 0);
+                unit.Position = newPos;
             }
         }
     }

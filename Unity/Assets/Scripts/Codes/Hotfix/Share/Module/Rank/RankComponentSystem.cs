@@ -84,6 +84,10 @@ namespace ET
             {
                 RankItemComponent tmp = (RankItemComponent)topList[i].obj;
                 RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
+                if (rankItemComponent.score <= 0)
+                {
+                    break;
+                }
                 rankIndex2PlayerId[i+1] = rankItemComponent;
             }
 
@@ -100,6 +104,10 @@ namespace ET
             {
                 RankItemComponent tmp = (RankItemComponent)nearMyList[i].obj;
                 RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
+                if (rankItemComponent.score <= 0)
+                {
+                    break;
+                }
                 rankIndex2PlayerId[playerIndexBegin + i] = rankItemComponent;
             }
             return rankIndex2PlayerId;

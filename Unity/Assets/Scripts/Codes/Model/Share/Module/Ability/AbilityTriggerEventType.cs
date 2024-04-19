@@ -100,6 +100,24 @@ namespace ET.Ability
         }
 
         /// <summary>
+        /// 子弹碰到特定位置
+        /// </summary>
+        public struct BulletOnHitPos
+        {
+            public Unit attackerUnit;
+            public float3 hitPos;
+        }
+
+        /// <summary>
+        /// unit攻击到特定位置
+        /// </summary>
+        public struct UnitOnHitPos
+        {
+            public Unit attackerUnit;
+            public float3 hitPos;
+        }
+
+        /// <summary>
         /// 攻击触发的事件(这里只是判断碰撞到，并没有进入伤害流程)
         /// </summary>
         public struct UnitOnHit
@@ -202,6 +220,14 @@ namespace ET.Ability
             public string oldTowerCfgId;
             public Unit newTowerUnit;
             public string newTowerCfgId;
+        }
+
+        public struct GamePlayTowerDefense_TowerBeKill
+        {
+            public long playerId;
+            public Unit towerUnit;
+            public string towerCfgId;
+            public Unit killer;
         }
 
         public struct GamePlayTowerDefense_TowerKillMonster

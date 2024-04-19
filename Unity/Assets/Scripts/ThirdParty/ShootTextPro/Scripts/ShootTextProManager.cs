@@ -199,6 +199,9 @@ public class ShootTextProManager : MonoBehaviour
             }
         }
         handleShootTextGroup.Clear();
+
+        waitShootTextGroup.Clear();
+        waitDestoryGroup.Clear();
     }
 
     void Update()

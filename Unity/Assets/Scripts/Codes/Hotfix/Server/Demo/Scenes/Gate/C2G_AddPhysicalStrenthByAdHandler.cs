@@ -20,7 +20,7 @@ namespace ET.Server
 				return;
 			}
 
-			await ET.Server.PlayerCacheHelper.AddPhysicalStrenth(session.DomainScene(), playerId, GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd, PlayerModelChgType.PlayerBaseInfo_111);
+			await ET.Server.PlayerCacheHelper.AddPhysicalStrenth(session.DomainScene(), playerId, GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd);
 
 			await ETTask.CompletedTask;
 		}

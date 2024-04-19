@@ -24,6 +24,7 @@ namespace ET.AbilityConfig
         BuffTagGroupTowerwitch = 8,
         BuffTagGroupTowerZaiE = 9,
         BuffTagGroupTowerCurse = 10,
+        BuffTagGroupTowerScorpio = 11,
     }
 
 } 

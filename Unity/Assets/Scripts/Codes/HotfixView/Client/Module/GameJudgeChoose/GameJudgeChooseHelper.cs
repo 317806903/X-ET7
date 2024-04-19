@@ -46,6 +46,7 @@ namespace ET.Client
 	        }
 	        else
 	        {
+		        UIManagerHelper.ShowTip(clientScene, "Success");
 	        }
         }
 

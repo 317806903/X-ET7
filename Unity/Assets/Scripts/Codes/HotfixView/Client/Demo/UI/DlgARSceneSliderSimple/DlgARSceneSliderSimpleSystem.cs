@@ -54,7 +54,7 @@ namespace ET.Client
 		public static void SetSceneScaleInfo(this DlgARSceneSliderSimple self)
 		{
 			self.scaleSettingList = new List<float>() { 75, 35, 10, };
-			self.defaultScaleIndex = 1;
+			self.defaultScaleIndex = 0;
 			self.curScaleIndex = self.defaultScaleIndex;
 
 			float curScale = ET.Client.ARSessionHelper.GetScaleAR(self.DomainScene());

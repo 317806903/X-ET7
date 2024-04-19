@@ -10,42 +10,145 @@ namespace ET
         private static List<RaycastResult> results = new ();
         private static  PointerEventData eventDataCurrentPosition = new PointerEventData(UnityEngine.EventSystems.EventSystem.current);
 
-        public static bool ChkMouseInput()
+        public static bool CheckUserInput()
         {
-            return Input.GetMouseButton(0) || Input.GetMouseButtonUp(0);
-        }
-
-        public static bool ChkMouseClick(Scene scene, float maxDis, int layerMask, out RaycastHit hit)
-        {
-            if (Input.GetMouseButtonUp(0))
+            if (Application.isMobilePlatform)
             {
-                Ray ray = ET.Client.CameraHelper.GetMainCamera(scene).ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, maxDis, layerMask))
+                if (Input.touchCount > 0)
                 {
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
-
-            hit = new RaycastHit();
-            return false;
+            else
+            {
+                return Input.GetMouseButton(0);
+            }
         }
 
-        public static bool ChkMouseClick(Scene scene, float maxDis, out RaycastHit hit)
+        public static (bool bRet, Vector2 screenPos) GetUserInputDown()
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Application.isMobilePlatform)
             {
-                try
+                if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    Ray ray = ET.Client.CameraHelper.GetMainCamera(scene).ScreenPointToRay(Input.mousePosition);
+                    Vector2 screenPos = Input.GetTouch(0).position;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector2 screenPos = Input.mousePosition;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+        }
+
+        public static (bool bRet, Vector2 screenPos) GetUserInputDownOrPress()
+        {
+            bool bRet = false;
+            Vector2 screenPos = Vector2.zero;
+            (bRet, screenPos) = GetUserInputDown();
+            if (bRet)
+            {
+                return (bRet, screenPos);
+            }
+            (bRet, screenPos) = GetUserInputPress();
+            if (bRet)
+            {
+                return (bRet, screenPos);
+            }
+            return (false, Vector2.zero);
+        }
+
+        public static (bool bRet, Vector2 screenPos) GetUserInputUp()
+        {
+            if (Application.isMobilePlatform)
+            {
+                if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+                {
+                    Vector2 screenPos = Input.GetTouch(0).position;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    Vector2 screenPos = Input.mousePosition;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+        }
+
+        public static (bool bRet, Vector2 screenPos) GetUserInputPress()
+        {
+            if (Application.isMobilePlatform)
+            {
+                if (Input.touchCount == 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary))
+                {
+                    Vector2 screenPos = Input.GetTouch(0).position;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Vector2 screenPos = Input.mousePosition;
+                    return (true, screenPos);
+                }
+                else
+                {
+                    return (false, Vector2.zero);
+                }
+            }
+        }
+
+        public static bool ChkClickRayCollion(Scene scene, float maxDis, int layerMask, out RaycastHit hit)
+        {
+            (bool bRet, Vector3 pos) = GetUserInputUp();
+            if (bRet)
+            {
+                Ray ray = ET.Client.CameraHelper.GetMainCamera(scene).ScreenPointToRay(pos);
+                if (layerMask == -1)
+                {
                     if (Physics.Raycast(ray, out hit, maxDis))
                     {
                         return true;
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine(e);
-                    throw;
+                    if (Physics.Raycast(ray, out hit, maxDis, layerMask))
+                    {
+                        return true;
+                    }
                 }
             }
 

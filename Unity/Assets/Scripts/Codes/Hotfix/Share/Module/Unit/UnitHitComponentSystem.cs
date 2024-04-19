@@ -24,6 +24,15 @@ namespace ET
 					continue;
 				}
 
+				bool preHitPos = bulletObj.ChkPreHitPos();
+				if (preHitPos)
+				{
+					BulletHelper.DoBulletHitPos(unitBullet);
+					if (bulletObj.ChkCanTrigHit() == false)
+					{
+						continue;
+					}
+				}
 				HashSet<long> preHitUnitIds = bulletObj.GetPreHitUnit();
 				if (preHitUnitIds != null)
 				{
@@ -33,10 +42,10 @@ namespace ET
 						BulletHelper.DoBulletHitUnit(unitBullet, preHitUnit);
 					}
 					bulletObj.ResetPreHitUnit();
-				}
-				if (bulletObj.ChkCanTrigHit() == false)
-				{
-					continue;
+					if (bulletObj.ChkCanTrigHit() == false)
+					{
+						continue;
+					}
 				}
 				MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
 				if (moveTweenObj != null && moveTweenObj.IsNeedChkTouch() == false)

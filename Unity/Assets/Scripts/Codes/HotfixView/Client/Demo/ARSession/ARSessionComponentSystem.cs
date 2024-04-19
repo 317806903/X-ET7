@@ -32,6 +32,8 @@ namespace ET.Client
 					GameObject.Destroy(self.ARSessoinGo);
 					self.ARSessoinGo = null;
 				}
+
+				self.MirrorSceneClassyUI = null;
 			}
 		}
 
@@ -40,16 +42,16 @@ namespace ET.Client
 		}
 
 		public static async ETTask Init(this ARSessionComponent self,
-		Action OnMenuCancelCallBack,
-		Action OnMenuFinishedCallBack,
-		Action OnMenuCreateSceneCallBack,
-		Action OnMenuExitSceneCallBack,
-		Action OnMenuLoadRecentSceneCallBack,
-		Action<string> OnMenuJoinSceneCallBack,
-		Func<(bool, string)> OnRequestQRCodeExtraData,
-		string arSceneId,
-		bool bForceIntoCreate,
-		bool bForceIntoScan)
+			Action OnMenuCancelCallBack,
+			Action OnMenuFinishedCallBack,
+			Action<bool> OnMenuCreateSceneCallBack,
+			Action OnMenuExitSceneCallBack,
+			Action<bool> OnMenuLoadRecentSceneCallBack,
+			Action<string> OnMenuJoinSceneCallBack,
+			Func<(bool, string)> OnRequestQRCodeExtraData,
+			string arSceneId,
+			bool bForceIntoCreate,
+			bool bForceIntoScan)
 		{
 			self.OnMenuCancelCallBack = OnMenuCancelCallBack;
 			self.OnMenuFinishedCallBack = OnMenuFinishedCallBack;
@@ -86,13 +88,13 @@ namespace ET.Client
 				{
 					eventName = "CameraStarted",
 					properties = new()
-							{
-								{"camera_success", bCameraAuthorization},
-							}
+					{
+						{"camera_success", bCameraAuthorization},
+					}
 				});
 				if (bCameraAuthorization == false)
 				{
-					self.LoadARSessionErr().Coroutine();
+					self.LoadARSessionErr(next).Coroutine();
 				}
 				else
 				{
@@ -101,11 +103,8 @@ namespace ET.Client
 			});
 		}
 
-		public static async ETTask LoadARSessionErr(this ARSessionComponent self)
+		public static async ETTask LoadARSessionErr(this ARSessionComponent self, Action next)
 		{
-			self.OnMenuCancel();
-			self.OnMenuCancelCallBack();
-
 			await TimerComponent.Instance.WaitFrameAsync();
 			while (true)
 			{
@@ -119,13 +118,31 @@ namespace ET.Client
 				}
 				await TimerComponent.Instance.WaitFrameAsync();
 			}
-
-			string message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission");
+			string titleText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Title");
+			string message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Des");
+			string sureText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Confirm");
 			UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), message, () =>
 			{
-			});
+				self.LoadARSession(() =>
+				{
+					next();
+				}).Coroutine();
+			}, sureText, titleText);
 		}
 
+		public static bool ChkARMirrorSceneUIShow(this ARSessionComponent self)
+		{
+			if (self.MirrorSceneClassyUI == null)
+			{
+				return false;
+			}
+			if (self.MirrorSceneClassyUI.gameObject.activeSelf == false)
+			{
+				return false;
+			}
+
+			return true;
+		}
 		public static async ETTask LoadARSessionNext(this ARSessionComponent self, Action next)
 		{
 			MainQualitySettingComponent.Instance.ForceResetResoutionOrg();
@@ -159,6 +176,7 @@ namespace ET.Client
 
 			self.translucentImageSource = ARCameraTrans.gameObject.GetComponent<TranslucentImageSource>();
 
+			self.MirrorSceneClassyUI = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneClassyUI");
 			self.QrCodeImageTran = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneRenderer/CanvasRoot/MarkerCanvas/Canvas/Panel/QrCodeImage");
 
 			// Set backend by Area.
@@ -205,27 +223,91 @@ namespace ET.Client
 			Log.Debug($"SetAppAuthOptions succeeded. {ResConfig.Instance.MirrorARSessionAuthAppKey} {ResConfig.Instance.MirrorARSessionAuthAppSecret}");
 		}
 
+		private static string GetXrPlatformInfo()
+		{
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
+			var getXrPlatformInfo = coreValue.GetType().GetMethod("GetXrPlatformInfo", InstanceBindFlags);
+			Log.Debug($"GetXrPlatformInfo {getXrPlatformInfo}");
+			string info = (string)(getXrPlatformInfo.Invoke(coreValue, new object[] { }));
+			Log.Debug($"GetXrPlatformInfo succeeded {info}");
+			return info;
+		}
+
+		private static string GetObjBytesFromCurrentMesh()
+		{
+			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			var coreValue = GetCoreImplInternalObject();
+			var getObjBytesFromCurrentMesh = coreValue.GetType().GetMethod("GetObjBytesFromCurrentMesh", InstanceBindFlags);
+			Log.Debug($"GetObjBytesFromCurrentMesh {getObjBytesFromCurrentMesh}");
+			string objContent = (string)(getObjBytesFromCurrentMesh.Invoke(coreValue, new object[] { }));
+			Log.Debug($"GetObjBytesFromCurrentMesh succeeded {objContent.Length}");
+			return objContent;
+		}
+
 		public static void RegisterCallBack(this ARSessionComponent self)
 		{
 			ClassyUI.Instance.onMenuFinish += () =>
 			{
+				self.IsReScanMeshing = false;
+
 				self.OnMenuFinished();
 				self.OnMenuFinishedCallBack();
 			};
 			ClassyUI.Instance.onMenuCancel += () =>
 			{
+				if (self.IsReScanMeshing)
+				{
+					if (string.IsNullOrEmpty(self.CurrentARSceneId) == false)
+					{
+						if (self.ChkARSceneStatusCompleted())
+						{
+							self.IsReScanMeshing = false;
+							self.OnMenuFinished();
+							self.OnMenuFinishedCallBack();
+							return;
+						}
+						else
+						{
+							self.ShowMenu();
+							ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
+							ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
+							ClassyUI.Instance.TriggerJoinScene(self.CurrentARSceneId, false);
+							return;
+						}
+					}
+					else
+					{
+						self.IsReScanMeshing = false;
+						self.OnMenuFinished();
+						self.OnMenuFinishedCallBack();
+						return;
+					}
+				}
+				self.IsReScanMeshing = false;
+
 				self.OnMenuCancel();
 				self.OnMenuCancelCallBack();
 			};
 			ClassyUI.Instance.onMenuCreateScene += () =>
 			{
 				self.OnMenuCreateScene();
-				self.OnMenuCreateSceneCallBack();
+				bool isNeedReCreateRoom = true;
+				if (self.IsReScanMeshing)
+				{
+					isNeedReCreateRoom = false;
+				}
+				self.OnMenuCreateSceneCallBack(isNeedReCreateRoom);
 			};
 			ClassyUI.Instance.onMenuLoadRecentScene += () =>
 			{
 				self.OnMenuLoadRecentScene();
-				self.OnMenuLoadRecentSceneCallBack();
+				bool isNeedReCreateRoom = true;
+				if (self.IsReScanMeshing)
+				{
+					isNeedReCreateRoom = false;
+				}
+				self.OnMenuLoadRecentSceneCallBack(isNeedReCreateRoom);
 			};
 			ClassyUI.Instance.onMenuJoinScene += (sQRCodeInfo) =>
 			{
@@ -239,6 +321,7 @@ namespace ET.Client
 			ClassyUI.Instance.onMenuExitScene += () =>
 			{
 				self.OnMenuExitScene();
+
 				self.OnMenuExitSceneCallBack();
 			};
 			MirrorScene.Get().onMarkerDetected += (StatusOr<MarkerInfo> marker, StatusOr<Pose> markerPose, StatusOr<Pose> localizedPose) =>
@@ -247,6 +330,7 @@ namespace ET.Client
 			};
 			MirrorScene.Get().onSceneStreamUpdate += (StatusOr<FrameSelectionResult> frameSelectionResult, StatusOr<SceneStreamRenderable> streamRenderable) =>
 			{
+				self.OnSceneStreamFrameSelection(frameSelectionResult);
 				self.OnSceneStreamUpdate(streamRenderable);
 			};
 			MirrorScene.Get().onSceneStreamFinish += (status) =>
@@ -344,6 +428,15 @@ namespace ET.Client
 		{
 			if (MirrorScene.IsAvailable())
 			{
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "MirrorSceneInit",
+					properties = new()
+					{
+						{"xr_platform_info", GetXrPlatformInfo() }
+					}
+				});
+
 				self.ResetMainCamera(true);
 				//self.SetMeshShow();
 
@@ -356,10 +449,16 @@ namespace ET.Client
 				Log.Debug($"arSceneId [{arSceneId}]");
 				if (string.IsNullOrEmpty(arSceneId) == false)
 				{
-					self.CurrentARSceneId = arSceneId;
+					if (self.ChkARSceneStatusCompleted() && arSceneId == self.CurrentARSceneId)
+					{
+						return;
+					}
+
+					self.ShowMenu();
 					ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
 					ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
 					ClassyUI.Instance.TriggerJoinScene(arSceneId, false);
+					self.CurrentARSceneId = arSceneId;
 					// 重连加载地图计时开始
 					self.EntranceType = "reconnect";
 					LogLoadSceneStartEvent(self);
@@ -395,7 +494,18 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask HideMenu(this ARSessionComponent self)
+		public static void ShowMenu(this ARSessionComponent self)
+		{
+			if (MirrorScene.IsAvailable())
+			{
+				ClassyUI.Instance.ShowMenu();
+			}
+			else
+			{
+			}
+		}
+
+		public static void HideMenu(this ARSessionComponent self)
 		{
 			if (MirrorScene.IsAvailable())
 			{
@@ -461,6 +571,15 @@ namespace ET.Client
 			return meshUrlValue.ToString();
 		}
 
+		public static byte[] GetARMeshClientObj(this ARSessionComponent self)
+		{
+			// Retrieve obj bytes content and compress.
+			string objContent = GetObjBytesFromCurrentMesh();
+			byte[] zipped = ZipHelper.Compress(objContent.ToByteArray());
+			Log.Debug($"Obj content size = {objContent.Length}, zipped size = {zipped.Length}");
+			return zipped;
+		}
+
 		public static void ResetQrCodeImageSize(this ARSessionComponent self)
 		{
 			self.QrCodeImageTran.localScale = Vector3.one / MainQualitySettingComponent.Instance.GetHeightScale();
@@ -474,6 +593,7 @@ namespace ET.Client
 
 		public static void TriggerReScan(this ARSessionComponent self)
 		{
+			self.IsReScanMeshing = true;
 			ClassyUI.Instance.TriggerReviewScene();
 		}
 
@@ -701,6 +821,8 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, true);
 			self.EntranceType = "scan";
 			self.meshFaceCount = 0;
+			self.frameCaptured = 0;
+			self.lastScanWarning = 0;
 		}
 
 		public static void OnMenuLoadRecentScene(this ARSessionComponent self)
@@ -902,13 +1024,57 @@ namespace ET.Client
 			return false;
 		}
 
-		public static void OnSceneStreamUpdate(this ARSessionComponent self, StatusOr<SceneStreamRenderable> streamRenderable){
+		public static void OnSceneStreamFrameSelection(this ARSessionComponent self, StatusOr<FrameSelectionResult> frameSelectionResult)
+		{
+			if (frameSelectionResult.HasValue)
+			{
+				if (frameSelectionResult.Value.selectedFrameCount > 0)
+				{
+					if (self.frameCaptured == 0)
+					{
+						// first time captured.
+						EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+						{
+							eventName = "ScanCaptured",
+						});
+					}
+					self.frameCaptured = frameSelectionResult.Value.selectedFrameCount;
+				}
+
+				if (frameSelectionResult.Value.warningType != FrameSelectionResult.WarningType.None &&
+					frameSelectionResult.Value.warningType != FrameSelectionResult.WarningType.LowSelectionRate)
+				// Do not log LowSelectionRate, because it could be very frequent.
+				{
+					if ((int)frameSelectionResult.Value.warningType == self.lastScanWarning)
+					{
+						// Same warning since last frame. Skip.
+					}
+					else
+					{
+						// Otherwise log the warning type.
+						EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+						{
+							eventName = "ScanWarning",
+							properties = new()
+							{
+								{"warning_type", frameSelectionResult.Value.warningType},
+							}
+						});
+					}
+				}
+				self.lastScanWarning = (int)frameSelectionResult.Value.warningType;
+			}
+		}
+
+		public static void OnSceneStreamUpdate(this ARSessionComponent self, StatusOr<SceneStreamRenderable> streamRenderable)
+		{
 			if (streamRenderable.HasValue)
-            {
-                if (streamRenderable.Value.immediateMesh != null)
-                {
-                    // Debug.Log($"Immediate meshes face count {meshFaceCount}");
-					if(streamRenderable.Value.immediateMesh.triangles.Length / 3 != self.meshFaceCount){
+			{
+				if (streamRenderable.Value.immediateMesh != null)
+				{
+					// Debug.Log($"Immediate meshes face count {meshFaceCount}");
+					if (streamRenderable.Value.immediateMesh.triangles.Length / 3 != self.meshFaceCount)
+					{
 						self.meshFaceCount = streamRenderable.Value.immediateMesh.triangles.Length / 3;
 						EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 						{
@@ -920,8 +1086,8 @@ namespace ET.Client
 						});
 					}
 
-                }
-            }
+				}
+			}
 		}
 
 		public static void OnSceneStreamFinish(this ARSessionComponent self)
@@ -955,12 +1121,12 @@ namespace ET.Client
 
 		public static async ETTask<bool> ChkCanShowARSceneSlider(this ARSessionComponent self)
 		{
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
 			if (playerStatusComponent.PlayerStatus != PlayerStatus.Room)
 			{
 				return false;
 			}
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			long roomId = playerStatusComponent.RoomId;
 			await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());

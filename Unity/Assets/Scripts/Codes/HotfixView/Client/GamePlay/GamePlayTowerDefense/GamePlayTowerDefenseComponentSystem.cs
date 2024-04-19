@@ -148,7 +148,7 @@ namespace ET.Client
 			}
 			GameObject hitGo = hit.collider.gameObject;
 
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			foreach (List<long> unitIds in playerOwnerTowersComponent.playerId2unitTowerId.Values)
 			{
 				foreach (long unitId in unitIds)
@@ -180,7 +180,7 @@ namespace ET.Client
 			}
 			GameObject hitGo = hit.collider.gameObject;
 
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			foreach (List<long> unitIds in playerOwnerTowersComponent.playerId2unitTowerId.Values)
 			{
 				foreach (long unitId in unitIds)
@@ -245,7 +245,7 @@ namespace ET.Client
 			{
 				return;
 			}
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			if (playerOwnerTowersComponent.playerId2unitTowerId.TryGetValue(myPlayerId, out List<long> unitIds) == false)
 			{
 				return;
@@ -268,14 +268,14 @@ namespace ET.Client
 
 		public static async ETTask<bool> DoDrawMyMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self, float3 pos)
 		{
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
 			return await self.DoDrawMonsterCall2HeadQuarterByPos(homeTeamFlagType, myPlayerId, pos);
 		}
 
 		public static async ETTask DoHideMyMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self)
 		{
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
 			await PathLineRendererComponent.Instance.ShowPath(homeTeamFlagType, myPlayerId, false, null);
 		}

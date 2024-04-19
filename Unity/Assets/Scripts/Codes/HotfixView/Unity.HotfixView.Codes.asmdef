@@ -22,7 +22,8 @@
         "IngameDebugConsole.Runtime",
         "EventLoggingAPIModule",
         "DOTwee.Pro.Runtime",
-        "DOTween.Runtime"
+        "DOTween.Runtime",
+        "Unity.Advertisement.IosSupport"
     ],
     "includePlatforms": [
         "Editor"

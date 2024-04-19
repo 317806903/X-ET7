@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
   - name: "\u8FDB\u5165\u65B0\u624B\u5173\u5361"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -33,6 +34,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u5F00\u59CB\u626B\u63CF"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -51,7 +53,28 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
+  - name: "\u663E\u793A\u5C0F\u7A97\u89C6\u9891"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowScanVideo
+    guideExecuteParam: true
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
   - name: "\u9690\u85CF\u626B\u56FE\u9000\u51FA\u6309\u94AE"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -71,6 +94,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u7ED3\u675F\u626B\u63CF"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -84,12 +108,33 @@ MonoBehaviour:
     curInNextType: 0
     waitToNextUIGuideStep: 0
     audioPath: 
-    guideExecuteStaticMethod: ShowScanQuit
+    guideExecuteStaticMethod: None
     guideExecuteParam: true
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
+  - name: "\u9690\u85CF\u5C0F\u7A97\u89C6\u9891"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowScanVideo
+    guideExecuteParam: false
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
   - name: "\u786E\u8BA4\u626B\u63CF\u7ED3\u679C"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -103,12 +148,13 @@ MonoBehaviour:
     curInNextType: 0
     waitToNextUIGuideStep: 0
     audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
+    guideExecuteStaticMethod: ShowScanQuit
+    guideExecuteParam: true
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u623F\u95F4\u51C6\u5907"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -128,6 +174,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u653E\u7F6E\u5927\u672C\u8425"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -143,10 +190,31 @@ MonoBehaviour:
     audioPath: 
     guideExecuteStaticMethod: ShowBattleTowerQuit
     guideExecuteParam: false
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+  - name: "\u653E\u7F6E\u5927\u672C\u8425(\u786E\u8BA4)"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: false
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u653E\u7F6E\u51FA\u602A\u53E3"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -162,15 +230,36 @@ MonoBehaviour:
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+  - name: "\u653E\u7F6E\u51FA\u602A\u53E3(\u786E\u8BA4)"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: false
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u8D2D\u4E70\u58541"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -185,11 +274,12 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u8D2D\u4E70\u58542"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_1/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_1/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -204,11 +294,12 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u8D2D\u4E70\u58543"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_2/EImage_TowerBuyShow/EImage_BuyBG/EButton_Buy
+    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_2/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -223,6 +314,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u6536\u8D77\u8D2D\u4E70\u5217\u8868"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -242,6 +334,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u9690\u85CFready\u6309\u94AE"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -261,6 +354,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u653E\u7F6E\u5854"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -280,6 +374,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: ChkTowerPut
     trigExitConditionParam: 
   - name: "\u70B9\u51FB\u653E\u7F6E\u7684\u5854"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -299,6 +394,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
   - name: "\u5347\u7EA7\u5854"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -318,6 +414,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u79FB\u9664\u5854\u4FE1\u606F\u9762\u677F"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -336,26 +433,8 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u663E\u793A\u9000\u51FA\u6309\u94AE"
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: 
-    hierarchyGuidePath: 
-    guideTextType: 0
-    guideTextImgPath: 
-    text: 
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 2
-    audioPath: 
-    guideExecuteStaticMethod: ShowBattleTowerQuit
-    guideExecuteParam: true
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
   - name: "\u663E\u793Aready\u6309\u94AE"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -375,6 +454,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u51C6\u5907\u597D"
+    isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -394,6 +474,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u5237\u65B0\u8D2D\u4E70\u5217\u8868"
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -402,6 +483,106 @@ MonoBehaviour:
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_Refresh
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u663E\u793A\u9000\u51FA\u6309\u94AE"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 2
+    audioPath: 
+    guideExecuteStaticMethod: ShowBattleTowerQuit
+    guideExecuteParam: true
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u6311\u6218\u6A21\u5F0F"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 1
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Challenge
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u5F00\u59CB"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/info/E_Select
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Select
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u6307\u5F15reload"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas
+    hierarchyGuidePath: ReloadRecentButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Reload
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FBload"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ConfirmLoadMenu/Canvas
+    hierarchyGuidePath: Panel/LoadButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Load
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0

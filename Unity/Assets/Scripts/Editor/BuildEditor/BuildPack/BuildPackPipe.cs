@@ -48,7 +48,7 @@ namespace ET
             BuildResult buildResult = await ET.BuildAssetBundle.BuildAB_Android(false);
             if (buildResult.Success)
             {
-                await ET.BuildPack.BuildPack_Android_InNet148();
+                await ET.BuildPack.BuildPack_Android_InNet148Master();
             }
         }
 

@@ -25,28 +25,6 @@ namespace ET.Server
             ET.Ability.UnitHelper.AddSyncNoticeUnitRemove(unit, sendUnit.Id);
         }
 
-        private static MultiMapSimple<long, Unit> playerSeeUnits = new();
-        public static MultiMapSimple<long, Unit> GetUnitBeSeePlayers(List<Unit> units)
-        {
-            playerSeeUnits.Clear();
-            for (int i = 0; i < units.Count; i++)
-            {
-                Unit unit = units[i];
-                var dict = unit.GetBeSeePlayers();
-                if (dict == null)
-                {
-                    continue;
-                }
-                foreach (AOIEntity u in dict.Values)
-                {
-                    long playerId = u.Unit.Id;
-                    playerSeeUnits.Add(playerId, unit);
-                }
-            }
-
-            return playerSeeUnits;
-        }
-
         public static void Broadcast(Unit unit, IActorMessage message)
         {
             var dict = unit.GetBeSeePlayers();

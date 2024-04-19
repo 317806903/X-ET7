@@ -99,17 +99,25 @@ namespace ET.AbilityConfig
         /// </summary>
         UnitOnHitMesh = 21,
         /// <summary>
+        /// 监听 子弹碰到特定位置的事件
+        /// </summary>
+        BulletOnHitPos = 22,
+        /// <summary>
+        /// 监听 unit攻击到特定位置
+        /// </summary>
+        UnitOnHitPos = 23,
+        /// <summary>
         /// 监听 unit产生攻击的事件
         /// </summary>
-        UnitOnHit = 22,
+        UnitOnHit = 24,
         /// <summary>
         /// 监听 unit被攻击的事件
         /// </summary>
-        UnitOnBeHurt = 23,
+        UnitOnBeHurt = 25,
         /// <summary>
         /// 监听 unit销毁的事件
         /// </summary>
-        UnitOnRemoved = 24,
+        UnitOnRemoved = 26,
     }
 
 } 

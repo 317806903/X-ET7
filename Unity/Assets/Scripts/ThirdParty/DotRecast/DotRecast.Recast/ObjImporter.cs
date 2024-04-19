@@ -25,14 +25,17 @@ namespace DotRecast.Recast
 {
     public static class ObjImporter
     {
+        private static float ForceScale { get; set; }
+
         public static IInputGeomProvider Load(byte[] chunck)
         {
-            var context = LoadContext(chunck);
+            var context = LoadContext(chunck, 1);
             return new SimpleInputGeomProvider(context.vertexPositions, context.meshFaces);
         }
 
-        public static ObjImporterContext LoadContext(byte[] chunck)
+        public static ObjImporterContext LoadContext(byte[] chunck, float scale)
         {
+            ForceScale = scale;
             ObjImporterContext context = new ObjImporterContext();
             try
             {
@@ -85,7 +88,7 @@ namespace DotRecast.Recast
                 throw new Exception("Invalid vector, expected 3 coordinates, found " + (v.Length - 1));
             }
 
-            return new float[] { float.Parse(v[1]), float.Parse(v[2]), float.Parse(v[3]) };
+            return new float[] { float.Parse(v[1]) * ForceScale, float.Parse(v[2]) * ForceScale, float.Parse(v[3]) * ForceScale };
         }
 
         private static void ReadFace(string line, ObjImporterContext context)

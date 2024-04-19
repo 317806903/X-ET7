@@ -27,7 +27,7 @@ namespace ET.Client
 		{
 			self.transProgress.gameObject.SetActive(false);
 			self.transCheckUpdate.gameObject.SetActive(true);
-			self.transCheckUpdate.GetComponent<TMP_Text>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
+			self.transCheckUpdate.GetComponent<TextMeshProUGUI>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
 			self.ShowProcess(0);
 			ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
 			self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{package.GetPackageVersion()}";

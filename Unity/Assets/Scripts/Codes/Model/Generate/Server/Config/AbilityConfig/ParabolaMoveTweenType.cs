@@ -19,7 +19,7 @@ public sealed partial class ParabolaMoveTweenType:  MoveTweenType
 {
     public ParabolaMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {
-        ParabolaTime = _buf.ReadFloat();
+        ParabolaHeight = _buf.ReadFloat();
         PostInit();
     }
 
@@ -29,9 +29,9 @@ public sealed partial class ParabolaMoveTweenType:  MoveTweenType
     }
 
     /// <summary>
-    /// 抛物线时长
+    /// 抛物线高度
     /// </summary>
-    public float ParabolaTime { get; private set; }
+    public float ParabolaHeight { get; private set; }
 
     public const int __ID__ = -1988199406;
     public override int GetTypeId() => __ID__;
@@ -53,7 +53,7 @@ public sealed partial class ParabolaMoveTweenType:  MoveTweenType
         + "HoldTime:" + HoldTime + ","
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
-        + "ParabolaTime:" + ParabolaTime + ","
+        + "ParabolaHeight:" + ParabolaHeight + ","
         + "}";
     }
     

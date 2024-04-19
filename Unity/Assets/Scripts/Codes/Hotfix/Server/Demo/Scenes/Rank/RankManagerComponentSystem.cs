@@ -59,7 +59,7 @@ namespace ET.Server
             if (list == null || list.Count == 0)
             {
                 rankComponent = self.AddComponent<T>();
-                rankComponent.AddComponent<DataCacheWriteComponent>();
+                rankComponent.SetDataCacheAutoWrite();
             }
             else
             {

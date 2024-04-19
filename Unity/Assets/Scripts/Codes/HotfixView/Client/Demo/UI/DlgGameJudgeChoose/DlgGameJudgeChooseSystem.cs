@@ -107,11 +107,11 @@ namespace ET.Client
 
 			if (ResConfig.Instance.Channel == "10001")
 			{
-				Application.OpenURL("https://play.google.com/store/apps/details?id=com.dm.realityguard&hl=en-US&gl=US");
+				Application.OpenURL("https://play.google.com/store/apps/details?id=com.dm.realityguard");
 			}
 			else if (ResConfig.Instance.Channel == "10002")
 			{
-				Application.OpenURL("https://testflight.apple.com/join/WUOiuC2s");
+				Application.OpenURL("https://apps.apple.com/us/app/realityguard/id6474414179");
 			}
 			else
 			{

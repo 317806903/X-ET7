@@ -23,6 +23,7 @@ namespace ET.Client
         public Transform FixedRoot{ get; set; }
         public Transform NoticeRoot{ get; set; }
         public Transform LoadingRoot{ get; set; }
+        public Transform HighestFixedRoot{ get; set; }
         public Transform HighestNoticeRoot{ get; set; }
 
         public HashSet<Transform> UIRootRotationTranList = new();

@@ -30,7 +30,7 @@ namespace ET.Client
 		public static void RegisterUIEvent(this DlgPhysicalStrength self)
 		{
 			self.View.EButton_CloseButton.AddListener(self.OnCloseBtnClick);
-			self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+			//self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
 
 			self.View.EButton_WatchADButton.AddListenerAsync(self.GetPhysicalStrenthByADAsync);
 			self.View.EButton_CoinButton.AddListener(self.GetPhysicalStrengthByCoin);
@@ -51,23 +51,16 @@ namespace ET.Client
 
 		public static void ShowBg(this DlgPhysicalStrength self)
 		{
-			bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
-			isARCameraEnable = false;
-			if (isARCameraEnable)
-			{
-				self.View.EG_bgARRectTransform.SetVisible(true);
-				self.View.EG_bgRectTransform.SetVisible(false);
-			}
-			else
-			{
-				self.View.EG_bgARRectTransform.SetVisible(false);
-				self.View.EG_bgRectTransform.SetVisible(true);
-			}
 		}
 
 		public static void HideWindow(this DlgPhysicalStrength self)
 		{
 			TimerComponent.Instance?.Remove(ref self.Timer);
+		}
+
+		public static async ETTask RefreshWhenBaseInfoChg(this DlgPhysicalStrength self)
+		{
+			await self.Update();
 		}
 
 		public static async ETTask Update(this DlgPhysicalStrength self)
@@ -86,16 +79,22 @@ namespace ET.Client
 
 		public static void OnCloseBtnClick(this DlgPhysicalStrength self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
 		}
 
 		public static void OnBGClick(this DlgPhysicalStrength self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
 		}
 
 		public static async ETTask GetPhysicalStrenthByADAsync(this DlgPhysicalStrength self)
 		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 					await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 			int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;

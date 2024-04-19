@@ -18,8 +18,6 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = (MonsterType)_buf.ReadInt();
-        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
-        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         UnitId = _buf.ReadString();
         AiCfgId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
@@ -40,10 +38,6 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// 类型
     /// </summary>
     public MonsterType Type { get; private set; }
-    public string Name { get; private set; }
-    public string Name_l10n_key { get; }
-    public string Desc { get; private set; }
-    public string Desc_l10n_key { get; }
     /// <summary>
     /// unitId
     /// </summary>
@@ -70,8 +64,6 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        Name = translator(Name_l10n_key, Name);
-        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -79,8 +71,6 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Type:" + Type + ","
-        + "Name:" + Name + ","
-        + "Desc:" + Desc + ","
         + "UnitId:" + UnitId + ","
         + "AiCfgId:" + AiCfgId + ","
         + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","

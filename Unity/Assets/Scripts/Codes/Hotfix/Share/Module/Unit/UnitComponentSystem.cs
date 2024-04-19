@@ -13,11 +13,8 @@ namespace ET
 		{
 			protected override void Awake(UnitComponent self)
 			{
-				self.NeedSyncNumericUnits = new();
-				self.NeedSyncNumericUnitsKey = new();
 				self.NeedSyncNoticeUnitAdds = new();
 				self.NeedSyncNoticeUnitRemoves = new();
-				self.NeedSyncPosUnits = new();
 				self.waitRemoveList = new();
 				self.observerList = HashSetComponent<Unit>.Create();
 				self.playerList = HashSetComponent<Unit>.Create();
@@ -35,14 +32,8 @@ namespace ET
 		{
 			protected override void Destroy(UnitComponent self)
 			{
-				self.NeedSyncNumericUnits.Dispose();
-				self.NeedSyncNumericUnits = null;
-				self.NeedSyncNumericUnitsKey.Clear();
-				self.NeedSyncNumericUnitsKey = null;
 				self.NeedSyncNoticeUnitAdds.Clear();
 				self.NeedSyncNoticeUnitRemoves.Clear();
-				self.NeedSyncPosUnits.Dispose();
-				self.NeedSyncPosUnits = null;
 				self.waitRemoveList.Clear();
 				self.waitRemoveList = null;
 				self.observerList.Dispose();
@@ -87,25 +78,6 @@ namespace ET
 
 			self.SyncNoticeUnitAdd().Coroutine();
 			self.SyncNoticeUnitRemove().Coroutine();
-
-			if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
-			{
-				self.curFrameSyncPos = 0;
-
-				self.SyncPosUnit().Coroutine();
-			}
-			if (++self.curFrameSyncNumeric >= self.waitFrameSyncNumeric)
-			{
-				self.curFrameSyncNumeric = 0;
-
-				self.SyncNumericUnit().Coroutine();
-			}
-			if (++self.curFrameSyncNumericKey >= self.waitFrameSyncNumericKey)
-			{
-				self.curFrameSyncNumericKey = 0;
-
-				self.SyncNumericUnitKey().Coroutine();
-			}
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -209,46 +181,6 @@ namespace ET
 			}
 
 			self.NeedSyncNoticeUnitRemoves.Add(beNoticeUnit, unitId);
-		}
-
-		public static void AddSyncPosUnit(this UnitComponent self, Unit unit)
-		{
-			if (self.NeedSyncPosUnits.Contains(unit))
-			{
-				return;
-			}
-
-			if (unit.GetComponent<AOIEntity>() == null)
-			{
-				return;
-			}
-			self.NeedSyncPosUnits.Add(unit);
-		}
-
-		public static void AddSyncNumericUnit(this UnitComponent self, Unit unit)
-		{
-			if (self.NeedSyncNumericUnits.Contains(unit))
-			{
-				return;
-			}
-			if (unit.GetComponent<AOIEntity>() == null)
-			{
-				return;
-			}
-			self.NeedSyncNumericUnits.Add(unit);
-		}
-
-		public static void AddSyncNumericUnitByKey(this UnitComponent self, Unit unit, int numericKey)
-		{
-			if (self.NeedSyncNumericUnitsKey.Contains(unit.Id, numericKey))
-			{
-				return;
-			}
-			if (unit.GetComponent<AOIEntity>() == null)
-			{
-				return;
-			}
-			self.NeedSyncNumericUnitsKey.Add(unit.Id, numericKey);
 		}
 
 		public static async ETTask SyncNoticeUnitAdd(this UnitComponent self)
@@ -368,176 +300,6 @@ namespace ET
 				}
 				self.NeedSyncNoticeUnitRemovesTmp.Clear();
 			}
-		}
-
-		public static async ETTask SyncPosUnit(this UnitComponent self)
-		{
-            if (self.NeedSyncPosUnits.Count == 0)
-                return;
-
-            await ETTask.CompletedTask;
-            while (self.NeedSyncPosUnits.Count > 0)
-            {
-	            EventType.SyncPosUnits _SyncPosUnits = new ()
-	            {
-		            units = new(),
-	            };
-
-	            self.NeedSyncPosUnitsTmp.Clear();
-	            int maxCount = 500;
-	            //同步单位状态（位置、方向、）
-	            foreach (Unit unit in self.NeedSyncPosUnits)
-	            {
-		            if (unit.IsDisposed)
-		            {
-			            self.NeedSyncPosUnitsTmp.Add(unit);
-			            continue;
-		            }
-		            MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
-		            if (moveByPathComponent != null)
-		            {
-			            if (moveByPathComponent.IsArrived() == false)
-			            {
-				            self.NeedSyncPosUnitsTmp.Add(unit);
-				            continue;
-			            }
-		            }
-
-		            _SyncPosUnits.units.Add(unit);
-		            self.NeedSyncPosUnitsTmp.Add(unit);
-		            if (maxCount-- <= 0)
-		            {
-			            break;
-		            }
-	            }
-
-	            if (_SyncPosUnits.units.Count > 0)
-	            {
-		            try
-		            {
-			            EventSystem.Instance.Publish(self.DomainScene(), _SyncPosUnits);
-		            }
-		            catch (Exception e)
-		            {
-			            Log.Error(e);
-		            }
-	            }
-
-	            foreach (Unit unit in self.NeedSyncPosUnitsTmp)
-	            {
-		            self.NeedSyncPosUnits.Remove(unit);
-	            }
-	            self.NeedSyncPosUnitsTmp.Clear();
-            }
-		}
-
-		public static async ETTask SyncNumericUnit(this UnitComponent self)
-		{
-            if (self.NeedSyncNumericUnits.Count == 0)
-                return;
-
-            await ETTask.CompletedTask;
-            while (self.NeedSyncNumericUnits.Count > 0)
-            {
-	            EventType.SyncNumericUnits _SyncNumericUnits = new ()
-	            {
-		            units = new(),
-	            };
-
-	            self.NeedSyncNumericUnitsTmp.Clear();
-	            int maxCount = 500;
-	            foreach (Unit unit in self.NeedSyncNumericUnits)
-	            {
-		            if (unit.IsDisposed)
-		            {
-			            self.NeedSyncNumericUnitsTmp.Add(unit);
-			            continue;
-		            }
-
-		            _SyncNumericUnits.units.Add(unit);
-		            self.NeedSyncNumericUnitsTmp.Add(unit);
-		            if (maxCount-- <= 0)
-		            {
-			            break;
-		            }
-	            }
-	            if (_SyncNumericUnits.units.Count > 0)
-	            {
-		            try
-		            {
-			            EventSystem.Instance.Publish(self.DomainScene(), _SyncNumericUnits);
-		            }
-		            catch (Exception e)
-		            {
-			            Log.Error(e);
-		            }
-	            }
-
-	            foreach (Unit unit in self.NeedSyncNumericUnitsTmp)
-	            {
-		            self.NeedSyncNumericUnits.Remove(unit);
-	            }
-	            self.NeedSyncNumericUnitsTmp.Clear();
-            }
-		}
-
-		public static async ETTask SyncNumericUnitKey(this UnitComponent self)
-		{
-            if (self.NeedSyncNumericUnitsKey.Count == 0)
-                return;
-
-            await ETTask.CompletedTask;
-            while (self.NeedSyncNumericUnitsKey.Count > 0)
-            {
-	            EventType.SyncNumericUnitsKey syncNumericUnitsKey = new ()
-	            {
-		            units = new(),
-		            keys = new(),
-	            };
-
-	            self.NeedSyncNumericUnitsKeyTmp.Clear();
-	            int maxCount = 500;
-	            foreach (var item in self.NeedSyncNumericUnitsKey)
-	            {
-		            long unitId = item.Key;
-		            Unit unit = self.Get(unitId);
-		            if (unit == null || unit.IsDisposed)
-		            {
-			            self.NeedSyncNumericUnitsKeyTmp.Add(unitId);
-			            continue;
-		            }
-
-		            syncNumericUnitsKey.units.Add(unit);
-		            var keys = new List<int>();
-		            syncNumericUnitsKey.keys.Add(keys);
-		            foreach (int key in item.Value)
-		            {
-			            keys.Add(key);
-		            }
-		            self.NeedSyncNumericUnitsKeyTmp.Add(unitId);
-		            if (maxCount-- <= 0)
-		            {
-			            break;
-		            }
-	            }
-	            if (syncNumericUnitsKey.units.Count > 0)
-	            {
-		            try
-		            {
-			            EventSystem.Instance.Publish(self.DomainScene(), syncNumericUnitsKey);
-		            }
-		            catch (Exception e)
-		            {
-			            Log.Error(e);
-		            }
-	            }
-
-	            foreach (long unitId in self.NeedSyncNumericUnitsKeyTmp)
-	            {
-		            self.NeedSyncNumericUnitsKey.Remove(unitId);
-	            }
-	            self.NeedSyncNumericUnitsKeyTmp.Clear();
-            }
 		}
 
 	}

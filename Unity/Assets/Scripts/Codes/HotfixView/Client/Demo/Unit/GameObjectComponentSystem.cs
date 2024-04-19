@@ -82,8 +82,8 @@ namespace ET.Client
                 // transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, Time.deltaTime);
                 //transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, 1);
                 //if (false && ((Vector3)unit.Position - transform.position).sqrMagnitude < 0.01f)
-                if (math.abs(unit.Position.x - transform.position.x) < 0.0005f
-                    && math.abs(unit.Position.z - transform.position.z) < 0.0005f
+                if (math.abs(unit.Position.x - transform.position.x) < 0.05f
+                    && math.abs(unit.Position.z - transform.position.z) < 0.05f
                     )
                 {
                     transform.position = unit.Position;
@@ -101,30 +101,55 @@ namespace ET.Client
                     }
                     else
                     {
-                        Vector3 dis = transform.position - (Vector3)unit.Position;
+                        bool isNeedPreMove = false;
+                        // if (Ability.UnitHelper.ChkIsBullet(unit))
+                        // {
+                        //     MoveTweenObj moveTweenObj = unit.GetComponent<MoveTweenObj>();
+                        //     if (moveTweenObj != null)
+                        //     {
+                        //         if (moveTweenObj.moveTweenType is ParabolaMoveTweenType)
+                        //         {
+                        //             isNeedPreMove = false;
+                        //         }
+                        //         else
+                        //         {
+                        //             isNeedPreMove = true;
+                        //         }
+                        //     }
+                        // }
+                        float3 targetPos = unit.Position;
+                        if (isNeedPreMove)
+                        {
+                            targetPos = unit.Position + unit.Forward * moveSpeed * Time.deltaTime * 5;
+                        }
+                        else
+                        {
+                            targetPos = unit.Position;
+                        }
+                        Vector3 dis = transform.position - (Vector3)targetPos;
                         if (dis.sqrMagnitude > moveSpeed * moveSpeed)
                         {
                             if (dis.sqrMagnitude > moveSpeed * moveSpeed * 2 * 2)
                             {
-                                transform.position = unit.Position;
+                                transform.position = targetPos;
                                 ET.Client.UnitHelper.SendGetNumericUnit(unit);
                             }
                             else
                             {
                                 float timeToCompleteMove = dis.magnitude / moveSpeed;
                                 float donePercentageMove = Mathf.Min(1f, 2 * Time.deltaTime / timeToCompleteMove);
-                                transform.position = Vector3.Lerp(transform.position, unit.Position, donePercentageMove);
+                                transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
                             }
                         }
                         else if (dis.sqrMagnitude > moveSpeed * moveSpeed * Time.deltaTime * Time.deltaTime)
                         {
                             float timeToCompleteMove = dis.magnitude / moveSpeed;
                             float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
-                            transform.position = Vector3.Lerp(transform.position, unit.Position, donePercentageMove);
+                            transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
                         }
                         else
                         {
-                            transform.position = unit.Position;
+                            transform.position = targetPos;
                         }
                     }
                 }
@@ -151,7 +176,7 @@ namespace ET.Client
         {
             self.gameObject = go;
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             int gameObjectShowType = ET.Ability.BuffHelper.GetGameObjectShowType(self.GetUnit(), myPlayerId);
 
 #if ENABLE_VIEW && UNITY_EDITOR
@@ -162,6 +187,8 @@ namespace ET.Client
             }
             referenceCollector.Clear();
             referenceCollector.Add("EntityViewGO", self.GetUnit().viewGO);
+
+            self.GetUnit().viewPrefabGO = self.GetGo();
 #endif
         }
 

@@ -53,16 +53,6 @@ namespace ET
             return gamePlayStatisticalDataComponent.GetPlayerKillNum();
         }
 
-        public static void AddPlayerDropItemsInfo(this GamePlayStatisticalDataManagerComponent self, long playerId, Dictionary<string, int> items){
-            GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent = self.GetGamePlayStatisticalData(playerId);
-            gamePlayStatisticalDataComponent.AddDropItemsInfo(items);
-        }
-
-        public static Dictionary<string, int> GetPlayerDropItemsInfo(this GamePlayStatisticalDataManagerComponent self, long playerId){
-            GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent = self.GetGamePlayStatisticalData(playerId);
-            return gamePlayStatisticalDataComponent.GetDropItemsInfo();
-        }
-
         public static void NoticeToClient(this GamePlayStatisticalDataManagerComponent self, long playerId)
         {
             GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent = self.GetGamePlayStatisticalData(playerId);

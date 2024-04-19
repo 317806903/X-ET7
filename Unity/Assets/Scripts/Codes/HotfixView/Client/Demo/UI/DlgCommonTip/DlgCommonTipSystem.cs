@@ -21,6 +21,8 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgCommonTip self, ShowWindowData contextData = null)
 		{
+			self.isDoing = false;
+			self.tips.Clear();
 		}
 
 		public static void ShowTip(this DlgCommonTip self, string tipMsg)
@@ -46,6 +48,7 @@ namespace ET.Client
 			string tipMsg = self.tips.Pop();
 			self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
 			GameObject tipNode = GameObject.Instantiate(self.transTipNode.gameObject);
+			self.tipShowGoList.Add(tipNode);
 			tipNode.SetActive(true);
 			Transform parent = self.View.EGBackGroundRectTransform.transform;
 			tipNode.transform.SetParent(parent);
@@ -68,10 +71,20 @@ namespace ET.Client
 			Tweener twe = uiRect.transform.DOLocalMoveY(300, 2); //3秒时间在世界坐标中,让X轴移动到5的位置
 			twe.OnComplete(() =>
 			{
-				GameObject.Destroy(uiRect.gameObject);
+				self.ChkNeedClose(uiRect.gameObject);
 			});
 			twe.SetEase(Ease.OutCubic);
 			await Task.CompletedTask;
+		}
+
+		public static void ChkNeedClose(this DlgCommonTip self, GameObject go)
+		{
+			self.tipShowGoList.Remove(go);
+			GameObject.Destroy(go);
+			if (self.tipShowGoList.Count == 0 && self.tips.Count == 0)
+			{
+				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTip>();
+			}
 		}
 	}
 }

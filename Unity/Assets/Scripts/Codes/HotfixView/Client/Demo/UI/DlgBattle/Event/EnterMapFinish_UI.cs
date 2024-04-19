@@ -12,11 +12,12 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, EventType.EnterMapFinish args)
         {
             Log.Debug("EnterMapFinish begins.");
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             bool isAR = false;
             if (playerStatusComponent.RoomType == RoomType.Normal)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
+                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate
+                    || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
                 {
                     isAR = true;
                 }
@@ -43,6 +44,10 @@ namespace ET.Client
                 await TimerComponent.Instance.WaitFrameAsync();
                 gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
             }
+
+
+            //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenu>();
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenuHighest>();
 
             EventSystem.Instance.Publish(scene, new EventType.NoticeUIHideCommonLoading());
 
@@ -116,7 +121,7 @@ namespace ET.Client
 
         public async ETTask EnterMap_WhenNoAR(Scene scene)
         {
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             if (playerStatusComponent.SubRoomType == SubRoomType.NormalSingleMap)
             {
                 Scene currentScene = scene.CurrentScene();
@@ -130,7 +135,11 @@ namespace ET.Client
                 Log.Debug($"EnterMapFinish nonAR NormalSingleMap ready.");
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
             }
-            else if (playerStatusComponent.SubRoomType == SubRoomType.NormalRoom)
+            else if (playerStatusComponent.SubRoomType == SubRoomType.NormalRoom
+                     || playerStatusComponent.SubRoomType == SubRoomType.NormalPVE
+                     || playerStatusComponent.SubRoomType == SubRoomType.NormalPVP
+                     || playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge
+                     )
             {
                 Scene currentScene = scene.CurrentScene();
                 GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);

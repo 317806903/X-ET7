@@ -37,7 +37,7 @@ namespace ET.Ability
             OffSetInfo offSetInfo = actionCfgCreateEffect.OffSetInfo;
             EffectShowType effectShowType = actionCfgCreateEffect.EffectShowType;
 
-            string nodeName = offSetInfo.NodeName;
+            EffectNodeName nodeName = offSetInfo.NodeName;
             float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
             float3 relateForward = new float3(offSetInfo.RelateForward.X, offSetInfo.RelateForward.Y, offSetInfo.RelateForward.Z);
 
@@ -46,15 +46,26 @@ namespace ET.Ability
             self.timeElapsed = 0;
             self.permanent = duration == -1? true : false;
             self.duration = duration == -1? 1 : duration;
-            self.hangPointName = nodeName;
-            self.offSet = offSetPosition;
-            self.rotation = relateForward;
             self.key = key;
             self.isScaleByUnit = isScaleByUnit;
             self.effectShowType = effectShowType;
 
             self.createTime = TimeHelper.ServerNow();
-            self.createPos = self.GetUnit().Position + self.offSet;
+            self.hangPointName = nodeName;
+            if (self.hangPointName == EffectNodeName.Self)
+            {
+                self.offSet = offSetPosition;
+                self.rotation = relateForward;
+                self.createPos = self.GetUnit().Position + self.offSet;
+            }
+            else
+            {
+                Unit casterUnit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+
+                self.offSet = casterUnit.Position - self.GetUnit().Position + offSetPosition;
+                self.rotation = relateForward;
+                self.createPos = self.GetUnit().Position + self.offSet;
+            }
         }
 
         public static void ResetTime(this EffectObj self, ActionCfg_EffectCreate actionCfgCreateEffect)

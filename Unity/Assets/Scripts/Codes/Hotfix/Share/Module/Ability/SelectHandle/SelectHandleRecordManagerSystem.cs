@@ -71,13 +71,13 @@ namespace ET.Ability
             self.removeList.Clear();
         }
 
-        public static void DoRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectConfig selectObjectConfig, ListComponent<long> unitIds)
+        public static void DoRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ListComponent<long> unitIds)
         {
             SelectHandleRecord selectHandleRecord = self.AddChild<SelectHandleRecord>();
             selectHandleRecord.unitId = unit.Id;
             selectHandleRecord.isResetPos = isResetPos;
             selectHandleRecord.resetPos = resetPos;
-            selectHandleRecord.selectObjectCfgId = selectObjectConfig.Id;
+            selectHandleRecord.selectObjectCfgId = selectObjectCfg.Id;
             selectHandleRecord.unitIds = ListComponent<long>.Create();
             selectHandleRecord.unitIds.AddRange(unitIds);
 
@@ -86,7 +86,7 @@ namespace ET.Ability
             self.unitId2ChildId.Add(unit.Id, selectHandleRecord.Id);
         }
 
-        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectConfig selectObjectConfig)
+        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
         {
             if (self.unitId2ChildId.ContainsKey(unit.Id) == false)
             {
@@ -98,7 +98,7 @@ namespace ET.Ability
             {
                 return (false, null);
             }
-            return selectHandleRecord.Check(unit, isResetPos, resetPos, selectObjectConfig);
+            return selectHandleRecord.Check(unit, isResetPos, resetPos, selectObjectCfg);
         }
     }
 }

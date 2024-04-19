@@ -35,24 +35,30 @@ namespace ET.Ability.Client
 			{
 				self.animationClips = null;
 				self.Parameter = null;
-				self.Animator = null;
+				self.mainAnimator = null;
 				self.curRecordAnimatorName = null;
 			}
 		}
 
 		public static void Awake(this AnimatorShowComponent self)
 		{
-			Animator animator = null;
+			RecordAnimatorName recordAnimatorName = null;
 			GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
 			if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
 			{
-				animator = gameObjectComponent.GetGo().GetComponent<Animator>();
-				if (animator == null)
+				recordAnimatorName = gameObjectComponent.GetGo().GetComponent<RecordAnimatorName>();
+				if (recordAnimatorName == null)
 				{
-					animator = gameObjectComponent.GetGo().GetComponentInChildren<Animator>();
+					recordAnimatorName = gameObjectComponent.GetGo().GetComponentInChildren<RecordAnimatorName>();
 				}
 			}
 
+			if (recordAnimatorName == null)
+			{
+				return;
+			}
+
+			Animator animator = recordAnimatorName.gameObject.GetComponent<Animator>();
 			if (animator == null)
 			{
 				return;
@@ -68,13 +74,30 @@ namespace ET.Ability.Client
 				return;
 			}
 
-			self.curRecordAnimatorName = animator.gameObject.GetComponent<RecordAnimatorName>();
-			if (self.curRecordAnimatorName == null)
-			{
-				return;
-			}
+			self.curRecordAnimatorName = recordAnimatorName;
 
-			self.Animator = animator;
+			self.mainAnimator = animator;
+			var list = gameObjectComponent.GetGo().GetComponentsInChildren<RecordAnimatorName>();
+			if (list.Length > 0)
+			{
+				for (int i = 0; i < list.Length; i++)
+				{
+					if (list[i] == self.curRecordAnimatorName)
+					{
+						continue;
+					}
+					if (list[i].gameObject.GetComponent<Animator>() == null)
+					{
+						continue;
+					}
+
+					if (self.animatorOtherList == null)
+					{
+						self.animatorOtherList = new();
+					}
+					self.animatorOtherList.Add(list[i].gameObject.GetComponent<Animator>());
+				}
+			}
 
 			self.CurMotionType = AnimatorMotionName.None;
 			self.NextMotionType = AnimatorMotionName.None;
@@ -106,7 +129,7 @@ namespace ET.Ability.Client
 
 		public static void ChkAnimator(this AnimatorShowComponent self)
 		{
-			if (self.Animator == null)
+			if (self.mainAnimator == null)
 			{
 				return;
 			}
@@ -125,6 +148,24 @@ namespace ET.Ability.Client
 				animatorComponent = self.animatorComponent;
 			}
 
+			if (animatorComponent == null)
+			{
+				return;
+			}
+
+			if (animatorComponent.isOnlySelfShow)
+			{
+				long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(self.GetUnit());
+				if (playerId != -1)
+				{
+					long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+					if (myPlayerId != playerId)
+					{
+						return;
+					}
+				}
+			}
+
 			if (self.CurMotionType != AnimatorMotionName.None)
 			{
 				if (ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.CurMotionType))
@@ -132,7 +173,7 @@ namespace ET.Ability.Client
 				}
 				else
 				{
-					AnimatorStateInfo stateInfo = self.Animator.GetCurrentAnimatorStateInfo(0);
+					AnimatorStateInfo stateInfo = self.mainAnimator.GetCurrentAnimatorStateInfo(0);
 					if (stateInfo.IsName(self.CurMotionType.ToString()) == false)
 					{
 						self.CurMotionType = AnimatorMotionName.None;
@@ -184,7 +225,7 @@ namespace ET.Ability.Client
 					dis = 0.01f;
 				}
 				float3 unitPos = self.GetUnit().Position;
-				float3 goPos = self.Animator.transform.position;
+				float3 goPos = self.GetUnit().GetComponent<GameObjectComponent>().GetGo().transform.position;
 				if (math.abs(unitPos.x - goPos.x) <= dis
 				    && math.abs(unitPos.z - goPos.z) <= dis
 				   )
@@ -193,7 +234,14 @@ namespace ET.Ability.Client
 					nextAnimatorMotionName = AnimatorMotionName.None;
 					if (self.chgToIdleTime == -1)
 					{
-						self.chgToIdleTime = TimeHelper.ServerNow() + 1000;
+						if (UnitHelper.ChkIsPlayer(self.GetUnit()))
+						{
+							self.chgToIdleTime = TimeHelper.ServerNow();
+						}
+						else
+						{
+							self.chgToIdleTime = TimeHelper.ServerNow() + 1000;
+						}
 					}
 				}
 				else
@@ -221,9 +269,9 @@ namespace ET.Ability.Client
 				{
 					self.Play(nextAnimatorMotionName, motionSpeed, motionTickTime);
 				}
-				else if(Math.Abs(self.Animator.speed - motionSpeed) > 0.01f)
+				else if(Math.Abs(self.mainAnimator.speed - motionSpeed) > 0.01f)
 				{
-					motionSpeed = (self.Animator.speed + motionSpeed) * 0.5f;
+					motionSpeed = (self.mainAnimator.speed + motionSpeed) * 0.5f;
 					self.SetAnimatorSpeed(motionSpeed);
 				}
 			}
@@ -231,7 +279,7 @@ namespace ET.Ability.Client
 
 		public static void Update(this AnimatorShowComponent self)
 		{
-			if (self.Animator == null)
+			if (self.mainAnimator == null)
 			{
 				return;
 			}
@@ -290,7 +338,15 @@ namespace ET.Ability.Client
 					}
 				}
 				//self.Animator.Play(self.CurMotionType.ToString(), 0, normalizedTime);
-				self.Animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+				self.mainAnimator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+
+				if (self.animatorOtherList != null)
+				{
+					foreach (Animator animator in self.animatorOtherList)
+					{
+						animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+					}
+				}
 			}
 			catch (Exception ex)
 			{
@@ -324,7 +380,7 @@ namespace ET.Ability.Client
 			float motionSpeed = 1;
 			if (self.curRecordAnimatorName == null)
 			{
-				throw new Exception($"self.curRecordAnimatorName == null: {self.Animator.name}");
+				throw new Exception($"self.curRecordAnimatorName == null: {self.mainAnimator.name}");
 			}
 			else
 			{
@@ -333,12 +389,12 @@ namespace ET.Ability.Client
 				string clipName = self.curRecordAnimatorName.GetRecordValue(motionType.ToString());
 				if (string.IsNullOrEmpty(clipName))
 				{
-					throw new Exception($"找不到该动作: {self.Animator.name} {motionType}");
+					throw new Exception($"找不到该动作: {self.mainAnimator.name} {motionType}");
 				}
 
 				if (!self.animationClips.TryGetValue(clipName, out animationClip))
 				{
-					throw new Exception($"找不到该动作: {self.Animator.name} {clipName}");
+					throw new Exception($"找不到该动作: {self.mainAnimator.name} {clipName}");
 				}
 
 				motionSpeed = animationClip.length / time;
@@ -372,20 +428,20 @@ namespace ET.Ability.Client
 
 			if (self.curRecordAnimatorName == null)
 			{
-				throw new Exception($"self.curRecordAnimatorName == null: {self.Animator.name}");
+				throw new Exception($"self.curRecordAnimatorName == null: {self.mainAnimator.name}");
 			}
 			else
 			{
 				string clipName = self.curRecordAnimatorName.GetRecordValue(animatorMotionName.ToString());
 				if (string.IsNullOrEmpty(clipName))
 				{
-					Log.Error($"找不到该动作: {self.Animator.name} {animatorMotionName.ToString()}");
+					Log.Error($"找不到该动作: {self.mainAnimator.name} {animatorMotionName.ToString()}");
 					return 0;
 				}
 
 				if (!self.animationClips.TryGetValue(clipName, out animationClip))
 				{
-					Log.Error($"找不到该动作: {self.Animator.name} {clipName}");
+					Log.Error($"找不到该动作: {self.mainAnimator.name} {clipName}");
 					return 0;
 				}
 				return animationClip.length;
@@ -404,7 +460,7 @@ namespace ET.Ability.Client
 			}
 			self.isStop = true;
 
-			if (self.Animator == null)
+			if (self.mainAnimator == null)
 			{
 				return;
 			}
@@ -424,7 +480,7 @@ namespace ET.Ability.Client
 
 			self.isStop = false;
 
-			if (self.Animator == null)
+			if (self.mainAnimator == null)
 			{
 				return;
 			}
@@ -438,7 +494,14 @@ namespace ET.Ability.Client
 				return;
 			}
 
-			self.Animator.SetBool(name, state);
+			self.mainAnimator.SetBool(name, state);
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.SetBool(name, state);
+				}
+			}
 		}
 
 		public static void SetFloatValue(this AnimatorShowComponent self, string name, float state)
@@ -448,7 +511,14 @@ namespace ET.Ability.Client
 				return;
 			}
 
-			self.Animator.SetFloat(name, state);
+			self.mainAnimator.SetFloat(name, state);
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.SetFloat(name, state);
+				}
+			}
 		}
 
 		public static void SetIntValue(this AnimatorShowComponent self, string name, int value)
@@ -458,7 +528,14 @@ namespace ET.Ability.Client
 				return;
 			}
 
-			self.Animator.SetInteger(name, value);
+			self.mainAnimator.SetInteger(name, value);
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.SetInteger(name, value);
+				}
+			}
 		}
 
 		public static void SetTrigger(this AnimatorShowComponent self, string name)
@@ -468,7 +545,14 @@ namespace ET.Ability.Client
 				return;
 			}
 
-			self.Animator.SetTrigger(name);
+			self.mainAnimator.SetTrigger(name);
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.SetTrigger(name);
+				}
+			}
 		}
 
 		/// <summary>
@@ -478,8 +562,15 @@ namespace ET.Ability.Client
 		/// <param name="speed"></param>
 		public static void SetAnimatorSpeed(this AnimatorShowComponent self, float speed)
 		{
-			self.stopSpeed = self.Animator.speed;
-			self.Animator.speed = speed;
+			self.stopSpeed = self.mainAnimator.speed;
+			self.mainAnimator.speed = speed;
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.speed = speed;
+				}
+			}
 		}
 
 		/// <summary>
@@ -488,7 +579,14 @@ namespace ET.Ability.Client
 		/// <param name="self"></param>
 		public static void ResetAnimatorSpeed(this AnimatorShowComponent self)
 		{
-			self.Animator.speed = self.stopSpeed;
+			self.mainAnimator.speed = self.stopSpeed;
+			if (self.animatorOtherList != null)
+			{
+				foreach (Animator animator in self.animatorOtherList)
+				{
+					animator.speed = self.stopSpeed;
+				}
+			}
 		}
 	}
 }

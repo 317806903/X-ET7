@@ -14,7 +14,6 @@ namespace ET.Client
 		{
 			self.View.E_SingleMapModeButton.AddListenerAsync(self.EnterSingleMapMode);
 			self.View.E_RoomModeButton.AddListenerAsync(self.EnterRoomMode);
-			self.View.E_KnapsackModeButton.AddListenerAsync(self.EnterKnapsackMode);
 			self.View.E_ARRoomModeCreateButton.AddListenerAsync(self.EnterARRoomCreateMode);
 			self.View.E_ARRoomModeJoinButton.AddListenerAsync(self.EnterARRoomJoinMode);
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnLogin);
@@ -38,14 +37,6 @@ namespace ET.Client
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgHall>();
-		}
-
-		public static async ETTask EnterKnapsackMode(this DlgGameMode self)
-		{
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-
-			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgKnapsack>();
 		}
 
 		public static async ETTask EnterARRoomCreateMode(this DlgGameMode self)

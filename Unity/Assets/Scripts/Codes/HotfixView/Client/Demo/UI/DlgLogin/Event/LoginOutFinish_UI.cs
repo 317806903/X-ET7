@@ -10,7 +10,7 @@ namespace ET.Client
             bool isNeedLoginOutAccount = args.isNeedLoginOutAccount;
             UIGuideComponent.Instance?.Dispose();
 
-            Player player = PlayerHelper.GetMyPlayer(scene);
+            Player player = PlayerStatusHelper.GetMyPlayer(scene);
             Log.Debug($"--zpb player[{player}]");
             if (player.LoginType == LoginType.UnitySDK || player.LoginType == LoginType.GoogleSDK || player.LoginType == LoginType.AppleSDK)
             {

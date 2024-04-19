@@ -215,6 +215,30 @@
 		}
 
 		[Event(SceneType.Map)]
+		public class EventHandler_UnitOnHitPos: AEvent<Scene, AbilityTriggerEventType.UnitOnHitPos>
+		{
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHitPos args)
+			{
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit))
+				{
+					Unit unit = args.attackerUnit;
+					EventHandlerHelper.Run_Buff(unit, AbilityBuffMonitorTriggerEvent.UnitOnHitPos, unit, null);
+
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						BulletObj bulletObj = unit.GetComponent<BulletObj>();
+						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						if (unitActor != null)
+						{
+							EventHandlerHelper.Run_Buff(unitActor, AbilityBuffMonitorTriggerEvent.UnitOnHitPos, unit, null);
+						}
+					}
+				}
+				await ETTask.CompletedTask;
+			}
+		}
+
+		[Event(SceneType.Map)]
 		public class EventHandler_UnitOnHit: AEvent<Scene, AbilityTriggerEventType.UnitOnHit>
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)

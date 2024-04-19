@@ -157,7 +157,7 @@ namespace ET.Client
 
 		public static void DoPressHitTower(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
 			if (myPlayerId != curTowerShowComponent.towerComponent.playerId)
 			{
@@ -197,7 +197,7 @@ namespace ET.Client
 
 		public static void DoPressPlayerUnit(this GamePlayPKComponent self, RaycastHit hit)
 		{
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetPlayerUnitInfoFromClickInfo(self.DomainScene(), hit);
 			if (myPlayerId != curPlayerUnitShowComponent.playerUnitComponent.playerId)
 			{

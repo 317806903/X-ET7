@@ -58,7 +58,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
     /// 对象选择器
     /// </summary>
     public string ActionCallAutoUnitArea { get; private set; }
-    public SelectObjectConfig ActionCallAutoUnitArea_Ref { get; private set; }
+    public SelectObjectCfg ActionCallAutoUnitArea_Ref { get; private set; }
     /// <summary>
     /// 伤害类型
     /// </summary>
@@ -76,7 +76,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.ActionCallAutoUnitArea_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(ActionCallAutoUnitArea);
+        this.ActionCallAutoUnitArea_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(ActionCallAutoUnitArea);
         this.DamageInfo_Ref = (_tables["ActionCfg_DamageUnitCategory"] as ActionCfg_DamageUnitCategory).GetOrDefault(DamageInfo);
         DamageAllot?.Resolve(_tables);
         foreach(var _e in SelfAttackActionCall) { _e?.Resolve(_tables); }

@@ -10,10 +10,6 @@ namespace ET
     [ComponentOf(typeof (Scene))]
     public class SyncDataManager: Entity, IAwake, IDestroy, IFixedUpdate
     {
-        public int waitFrameSyncPos = 1;
-        public int curFrameSyncPos = 0;
-
-        public int waitFrameSyncNumeric = 4;
-        public int curFrameSyncNumeric = 0;
+        public MultiMapSimple<long, byte[]> player2SyncDataList;
     }
 }

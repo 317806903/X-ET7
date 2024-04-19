@@ -13,6 +13,7 @@ namespace ET.Ability
             protected override void Awake(ActionHandlerComponent self)
             {
                 self.dic = new();
+                self.actionId2ActionHandle = new();
                 self.Load();
             }
         }
@@ -23,12 +24,14 @@ namespace ET.Ability
             protected override void Destroy(ActionHandlerComponent self)
             {
                 self.dic.Clear();
+                self.actionId2ActionHandle.Clear();
             }
         }
 
         public static void Load(this ActionHandlerComponent self)
         {
             self.dic.Clear();
+            self.actionId2ActionHandle.Clear();
             var types = EventSystem.Instance.GetTypes(typeof (ActionHandlerAttribute));
             foreach (Type type in types)
             {
@@ -47,25 +50,46 @@ namespace ET.Ability
             }
         }
 
+        public static IActionHandler GetActionHandle(this ActionHandlerComponent self, string actionId)
+        {
+            if (self.actionId2ActionHandle.TryGetValue(actionId, out IActionHandler actionHandler) == false)
+            {
+                int index = actionId.IndexOf("_", 0);
+                if (index == -1)
+                {
+                    actionHandler = null;
+#if UNITY_EDITOR
+                    Log.Error($"actionId[{actionId}] not contain _");
+#endif
+                }
+                else
+                {
+                    string key = actionId.Substring(0, index);
+                    if (self.dic.TryGetValue(key, out actionHandler) == false)
+                    {
+                        actionHandler = null;
+#if UNITY_EDITOR
+                        Log.Error($"actionId[{actionId}] key[{key}] not define");
+#endif
+                    }
+                }
+
+                self.actionId2ActionHandle[actionId] = actionHandler;
+            }
+
+            return actionHandler;
+        }
+
         public static async ETTask Run(this ActionHandlerComponent self, Unit unit, Unit resetPosByUnit, string actionId, float delayTime, SelectHandle selectHandle, ActionContext actionContext)
         {
-            int index = actionId.IndexOf("_", 0);
-            if (index == -1)
+            IActionHandler actionHandler = self.GetActionHandle(actionId);
+            if (actionHandler == null)
             {
                 return;
             }
 
-            string key = actionId.Substring(0, index);
-            if (self.dic.ContainsKey(key) == false)
-            {
-                Log.Error($"not found IActionHandler: {actionId}");
-                return;
-            }
-#if UNITY_EDITOR
-            //Log.Debug($"---ActionHandlerComponent {key}:{actionId}");
-#endif
             selectHandle.SetHolding(true);
-            await self.dic[key].Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext);
+            await actionHandler.Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext);
             selectHandle.SetHolding(false);
 
             ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), selectHandle);

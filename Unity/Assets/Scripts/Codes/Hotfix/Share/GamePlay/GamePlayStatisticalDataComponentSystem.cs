@@ -18,7 +18,6 @@ namespace ET
                 self.towerCfgId2MonsterType2Num = new();
                 self.towerType2MonsterType2Num = new();
                 self.playerAllMonsterType2Num = new();
-                self.dropItemId2Num = new();
             }
         }
 
@@ -31,7 +30,6 @@ namespace ET
                 self.towerCfgId2MonsterType2Num?.Clear();
                 self.towerType2MonsterType2Num?.Clear();
                 self.playerAllMonsterType2Num?.Clear();
-                self.dropItemId2Num?.Clear();
             }
         }
 
@@ -118,25 +116,6 @@ namespace ET
                 totalKillNum += item.Value;
             }
             return totalKillNum;
-        }
-
-        public static void AddDropItemsInfo(this GamePlayStatisticalDataComponent self, Dictionary<string, int> items){
-            foreach((string itemID, int itemCnt) in items)
-            {
-                if (self.dropItemId2Num.TryGetValue(itemID, out int count) == false)
-                {
-                    self.dropItemId2Num[itemID] = itemCnt;
-                }
-                else
-                {
-                    self.dropItemId2Num[itemID] += itemCnt;
-                }
-            }
-            self.NoticeToClient(false);
-        }
-
-        public static Dictionary<string, int> GetDropItemsInfo(this GamePlayStatisticalDataComponent self){
-            return self.dropItemId2Num;
         }
 
         public static GamePlayComponent GetGamePlay(this GamePlayStatisticalDataComponent self)

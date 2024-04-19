@@ -24,7 +24,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_BG_ClickButton
+		public UnityEngine.UI.Button E_BGButton
 		{
 			get
 			{
@@ -33,15 +33,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_BG_ClickButton == null )
+				if( this.m_E_BGButton == null )
 				{
-					this.m_E_BG_ClickButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click");
+					this.m_E_BGButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_BG");
 				}
-				return this.m_E_BG_ClickButton;
+				return this.m_E_BGButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_BG_ClickImage
+		public UnityEngine.UI.Image E_BGImage
 		{
 			get
 			{
@@ -50,79 +50,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_BG_ClickImage == null )
+				if( this.m_E_BGImage == null )
 				{
-					this.m_E_BG_ClickImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click");
+					this.m_E_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_BG");
 				}
-				return this.m_E_BG_ClickImage;
-			}
-		}
-
-		public UnityEngine.RectTransform EG_bgARRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgARRectTransform == null )
-				{
-					this.m_EG_bgARRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click/EG_bgAR");
-				}
-				return this.m_EG_bgARRectTransform;
-			}
-		}
-
-		public BlurBackground.TranslucentImage EG_bgARTranslucentImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgARTranslucentImage == null )
-				{
-					this.m_EG_bgARTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click/EG_bgAR");
-				}
-				return this.m_EG_bgARTranslucentImage;
-			}
-		}
-
-		public UnityEngine.RectTransform EG_bgRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgRectTransform == null )
-				{
-					this.m_EG_bgRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click/EG_bg");
-				}
-				return this.m_EG_bgRectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Image EG_bgImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_bgImage == null )
-				{
-					this.m_EG_bgImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_BG_Click/EG_bg");
-				}
-				return this.m_EG_bgImage;
+				return this.m_E_BGImage;
 			}
 		}
 
@@ -466,185 +398,11 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Slider E_PhysicalStrength2Slider
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PhysicalStrength2Slider == null )
-				{
-					this.m_E_PhysicalStrength2Slider = UIFindHelper.FindDeepChild<UnityEngine.UI.Slider>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/Processing/E_PhysicalStrength2");
-				}
-				return this.m_E_PhysicalStrength2Slider;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PhysicalStrength2Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PhysicalStrength2Image == null )
-				{
-					this.m_E_PhysicalStrength2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/Processing/E_PhysicalStrength2");
-				}
-				return this.m_E_PhysicalStrength2Image;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_Percentage2TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_Percentage2TextMeshProUGUI == null )
-				{
-					this.m_ELabel_Percentage2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/Processing/ELabel_Percentage2");
-				}
-				return this.m_ELabel_Percentage2TextMeshProUGUI;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_RcoverNum2TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RcoverNum2TextMeshProUGUI == null )
-				{
-					this.m_ELabel_RcoverNum2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/E_info012/ELabel_RcoverNum2");
-				}
-				return this.m_ELabel_RcoverNum2TextMeshProUGUI;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_RecoverLeftTIme2TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RecoverLeftTIme2TextMeshProUGUI == null )
-				{
-					this.m_ELabel_RecoverLeftTIme2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/E_info012/ELabel_RecoverLeftTIme2");
-				}
-				return this.m_ELabel_RecoverLeftTIme2TextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.RectTransform EG_title2RectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_title2RectTransform == null )
-				{
-					this.m_EG_title2RectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/EG_title2");
-				}
-				return this.m_EG_title2RectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Image EG_title2Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_title2Image == null )
-				{
-					this.m_EG_title2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/EG_title2");
-				}
-				return this.m_EG_title2Image;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_Close2Button
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_Close2Button == null )
-				{
-					this.m_EButton_Close2Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/EG_title2/EButton_Close2");
-				}
-				return this.m_EButton_Close2Button;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_Close2Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_Close2Image == null )
-				{
-					this.m_EButton_Close2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/EG_title2/EButton_Close2");
-				}
-				return this.m_EButton_Close2Image;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_TitleText2TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_TitleText2TextMeshProUGUI == null )
-				{
-					this.m_E_TitleText2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength02/EG_title2/E_TitleText2");
-				}
-				return this.m_E_TitleText2TextMeshProUGUI;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
-			this.m_E_BG_ClickButton = null;
-			this.m_E_BG_ClickImage = null;
-			this.m_EG_bgARRectTransform = null;
-			this.m_EG_bgARTranslucentImage = null;
-			this.m_EG_bgRectTransform = null;
-			this.m_EG_bgImage = null;
+			this.m_E_BGButton = null;
+			this.m_E_BGImage = null;
 			this.m_E_PhysicalStrengthSlider = null;
 			this.m_E_PhysicalStrengthImage = null;
 			this.m_ELabel_PercentageTextMeshProUGUI = null;
@@ -665,26 +423,12 @@ namespace ET.Client
 			this.m_EButton_CloseImage = null;
 			this.m_E_TitleTextTextMeshProUGUI = null;
 			this.m_E_TitleTextUITextLocalizeMonoView = null;
-			this.m_E_PhysicalStrength2Slider = null;
-			this.m_E_PhysicalStrength2Image = null;
-			this.m_ELabel_Percentage2TextMeshProUGUI = null;
-			this.m_ELabel_RcoverNum2TextMeshProUGUI = null;
-			this.m_ELabel_RecoverLeftTIme2TextMeshProUGUI = null;
-			this.m_EG_title2RectTransform = null;
-			this.m_EG_title2Image = null;
-			this.m_EButton_Close2Button = null;
-			this.m_EButton_Close2Image = null;
-			this.m_E_TitleText2TextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.RectTransform m_EGBackGroundRectTransform = null;
-		private UnityEngine.UI.Button m_E_BG_ClickButton = null;
-		private UnityEngine.UI.Image m_E_BG_ClickImage = null;
-		private UnityEngine.RectTransform m_EG_bgARRectTransform = null;
-		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
-		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
-		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private UnityEngine.UI.Button m_E_BGButton = null;
+		private UnityEngine.UI.Image m_E_BGImage = null;
 		private UnityEngine.UI.Slider m_E_PhysicalStrengthSlider = null;
 		private UnityEngine.UI.Image m_E_PhysicalStrengthImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PercentageTextMeshProUGUI = null;
@@ -705,16 +449,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EButton_CloseImage = null;
 		private TMPro.TextMeshProUGUI m_E_TitleTextTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_E_TitleTextUITextLocalizeMonoView = null;
-		private UnityEngine.UI.Slider m_E_PhysicalStrength2Slider = null;
-		private UnityEngine.UI.Image m_E_PhysicalStrength2Image = null;
-		private TMPro.TextMeshProUGUI m_ELabel_Percentage2TextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_ELabel_RcoverNum2TextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_ELabel_RecoverLeftTIme2TextMeshProUGUI = null;
-		private UnityEngine.RectTransform m_EG_title2RectTransform = null;
-		private UnityEngine.UI.Image m_EG_title2Image = null;
-		private UnityEngine.UI.Button m_EButton_Close2Button = null;
-		private UnityEngine.UI.Image m_EButton_Close2Image = null;
-		private TMPro.TextMeshProUGUI m_E_TitleText2TextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

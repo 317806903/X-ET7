@@ -337,7 +337,7 @@ namespace ET.Client
                 UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msgTxt, () =>
                 {
                     self.LoginWhenEditor().Coroutine();
-                }, sureTxt, null, titleTxt);
+                }, sureTxt, titleTxt);
             }
         }
 
@@ -393,7 +393,7 @@ namespace ET.Client
                 UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msgTxt, () =>
                 {
                     self.LoginWhenGuest().Coroutine();
-                }, sureTxt, null, titleTxt);
+                }, sureTxt, titleTxt);
             }
         }
 
@@ -473,7 +473,7 @@ namespace ET.Client
                 UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msgTxt, () =>
                 {
                     self.LoginWhenSDK_LoginDone().Coroutine();
-                }, sureTxt, null, titleTxt);
+                }, sureTxt, titleTxt);
             }
         }
 

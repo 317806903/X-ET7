@@ -51,6 +51,22 @@
 			}
 		}
 
+		[Event(SceneType.Map)]
+		public class EventHandler_BulletOnHitPos: AEvent<Scene, AbilityTriggerEventType.BulletOnHitPos>
+		{
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BulletOnHitPos args)
+			{
+				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
+				{
+					Unit unit = args.attackerUnit;
+					BulletObj bulletObj = unit.GetComponent<BulletObj>();
+					bulletObj.actionContext.hitPosition = args.hitPos;
+					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnHitPos, args.attackerUnit, null);
+				}
+				await ETTask.CompletedTask;
+			}
+		}
+
 		// [Event(SceneType.Map)]
 		// public class EventHandler_UnitOnHit: AEvent<Scene, AbilityTriggerEventType.UnitOnHit>
 		// {

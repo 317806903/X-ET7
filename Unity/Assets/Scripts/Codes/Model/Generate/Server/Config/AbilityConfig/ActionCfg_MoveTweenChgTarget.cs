@@ -39,14 +39,14 @@ public sealed partial class ActionCfg_MoveTweenChgTarget: Bright.Config.BeanBase
     /// 对象选择器
     /// </summary>
     public string ActionCallAutoUnitArea { get; private set; }
-    public SelectObjectConfig ActionCallAutoUnitArea_Ref { get; private set; }
+    public SelectObjectCfg ActionCallAutoUnitArea_Ref { get; private set; }
 
     public const int __ID__ = 1640437418;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.ActionCallAutoUnitArea_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(ActionCallAutoUnitArea);
+        this.ActionCallAutoUnitArea_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(ActionCallAutoUnitArea);
         PostResolve();
     }
 

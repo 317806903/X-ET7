@@ -19,9 +19,15 @@ namespace ET.Server
         {
             self.playerId = playerId;
 
-            await self.InitByDBOne<PlayerBaseInfoComponent>(playerId);
-            await self.InitByDBOne<PlayerBackPackComponent>(playerId);
-            await self.InitByDBOne<PlayerBattleCardComponent>(playerId);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await self.InitByDBOne<PlayerBaseInfoComponent>(playerId);
+
+            PlayerBackPackComponent playerBackPackComponent = await self.InitByDBOne<PlayerBackPackComponent>(playerId);
+            playerBackPackComponent.Init();
+
+            PlayerBattleCardComponent playerBattleCardComponent = await self.InitByDBOne<PlayerBattleCardComponent>(playerId);
+
+            PlayerFunctionMenuComponent playerFunctionMenuComponent = await self.InitByDBOne<PlayerFunctionMenuComponent>(playerId);
+            playerFunctionMenuComponent.Init();
         }
 
         public static async ETTask<T> InitByDBOne<T>(this PlayerDataComponent self, long playerId) where T :Entity, IAwake, new()

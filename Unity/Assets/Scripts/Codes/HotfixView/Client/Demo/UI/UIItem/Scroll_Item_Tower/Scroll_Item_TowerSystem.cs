@@ -12,7 +12,50 @@ namespace ET.Client
 		public static void Init(this Scroll_Item_Tower self)
 		{
 		}
-		
+
+		public static void ShowBagItem(this Scroll_Item_Tower self, string itemCfgId, bool needClickShowDetail)
+		{
+			ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
+			if (needClickShowDetail)
+			{
+				ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
+				{
+					self.ShowDetails(itemCfgId);
+				});
+			}
+
+			self.ELabel_NameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
+			self.EButton_TowerIcoImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId)).Coroutine();
+
+			self.EG_IconStarRectTransform.SetVisible(false);
+			self.EImage_Label1Image.gameObject.SetActive(false);
+			self.EImage_Label2Image.gameObject.SetActive(false);
+			if (ItemHelper.ChkIsTower(itemCfgId))
+			{
+				self.SetLevel(itemCfgId);
+				self.SetLabels(itemCfgId);
+			}
+			self.SetQuality(itemCfgId);
+		}
+
+		public static void ShowDetails(this Scroll_Item_Tower self, string itemCfgId)
+		{
+			if (string.IsNullOrEmpty(itemCfgId))
+			{
+				return;
+			}
+
+			if (ItemHelper.ChkIsTower(itemCfgId))
+			{
+				ET.Client.UIManagerHelper.SetTowerItemClick(self.DomainScene(), itemCfgId);
+			}
+
+			if (ItemHelper.ChkIsMonster(itemCfgId))
+			{
+				ET.Client.UIManagerHelper.SetMonsterItemClick(self.DomainScene(), itemCfgId, self.uiTransform.position);
+			}
+		}
+
 		public static void SetQuality(this Scroll_Item_Tower self, string itemCfgId)
 		{
 			int towerQuality = (int)ItemHelper.GetItemQualityType(itemCfgId);
@@ -20,7 +63,7 @@ namespace ET.Client
 			self.EImage_MiddleImage.SetVisible(towerQuality == 1);
 			self.EImage_HighImage.SetVisible(towerQuality == 2);
 		}
-		
+
 		public static void SetLabels(this Scroll_Item_Tower self, string itemCfgId)
 		{
 			List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);

@@ -12,7 +12,7 @@ namespace ET.Client
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(clientScene);
 			long roomId = playerStatusComponent.RoomId;
 			await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
 

@@ -107,7 +107,7 @@ namespace ET.Client
             self.transSelectShow.gameObject.SetActive(false);
             self.transCanUpgradeShow.gameObject.SetActive(false);
             self.transAttackArea.gameObject.SetActive(false);
-            long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             self.transMyTowerShow.gameObject.SetActive(myPlayerId == self.towerComponent.playerId);
 
             self.ChgColor(self.transDefaultShow);

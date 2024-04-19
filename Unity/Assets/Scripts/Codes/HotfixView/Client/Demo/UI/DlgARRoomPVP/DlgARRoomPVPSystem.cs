@@ -34,8 +34,76 @@ namespace ET.Client
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
 
-            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
+            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance?.HideMenu();
             self.GetRoomInfo().Coroutine();
+        }
+
+        public static async ETTask<bool> ChkRoomInfoChg(this DlgARRoomPVP self)
+        {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
+            RoomType roomType = playerStatusComponent.RoomType;
+            SubRoomType subRoomType = playerStatusComponent.SubRoomType;
+
+            if (playerStatus != PlayerStatus.Room)
+            {
+                return true;
+            }
+            if (roomType != roomComponent.roomType)
+            {
+                return true;
+            }
+            if (subRoomType != roomComponent.subRoomType)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static async ETTask<bool> ChkARSceneIdChg(this DlgARRoomPVP self)
+        {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
+            if (roomComponent.arSceneId != arSceneId)
+            {
+                if (string.IsNullOrEmpty(roomComponent.arSceneId) == false)
+                {
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
+
+                    DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                    {
+                        playerStatus = PlayerStatus.Room,
+                        RoomType = roomComponent.roomType,
+                        SubRoomType = roomComponent.subRoomType,
+                        arRoomId = roomComponent.Id,
+                        battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
+                    };
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static async ETTask RefreshWhenRoomInfoChg(this DlgARRoomPVP self)
+        {
+            if (await self.ChkRoomInfoChg())
+            {
+                await RoomHelper.QuitRoomAsync(self.ClientScene());
+                ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
+                await UIManagerHelper.ExitRoom(self.DomainScene());
+                return;
+            }
+
+            if (await self.ChkARSceneIdChg())
+            {
+                return;
+            }
+
+            await self.RefreshUI();
         }
 
         public static async ETTask RefreshUI(this DlgARRoomPVP self)
@@ -48,6 +116,35 @@ namespace ET.Client
             self.SetRoomMemberStatusText();
         }
 
+        public static async ETTask RefreshWhenBaseInfoChg(this DlgARRoomPVP self)
+        {
+            await self.UpdatePhysical();
+        }
+
+        public static async ETTask UpdatePhysical(this DlgARRoomPVP self)
+        {
+            RoomComponent roomComponent = self.GetRoomComponent();
+
+            if (roomComponent == null)
+            {
+                return;
+            }
+
+            int costValue = 0;
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            {
+                costValue = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength;
+            }
+            else
+            {
+                costValue = 0;
+            }
+
+            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), costValue).Coroutine();
+        }
+
         public static async ETTask ShowBattleCfgChoose(this DlgARRoomPVP self)
         {
             RoomComponent roomComponent = self.GetRoomComponent();
@@ -56,22 +153,13 @@ namespace ET.Client
                 if (roomComponent.IsARRoom())
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(true);
-                    long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-                    if (myPlayerId == roomComponent.ownerRoomMemberId)
-                    {
-                        self.View.E_ReScanButton.SetVisible(true);
-                    }
-                    else
-                    {
-                        self.View.E_ReScanButton.SetVisible(false);
-                    }
+
                     self.View.E_BGImage.SetVisible(false);
                     self.View.E_BGARTranslucentImage.SetVisible(true);
                 }
                 else
                 {
                     self.View.E_ShowQrCodeButton.SetVisible(false);
-                    self.View.E_ReScanButton.SetVisible(false);
                     self.View.E_BGImage.SetVisible(true);
                     self.View.E_BGARTranslucentImage.SetVisible(false);
                 }
@@ -94,7 +182,16 @@ namespace ET.Client
                 return;
             }
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            {
+                self.View.E_ReScanButton.SetVisible(true);
+            }
+            else
+            {
+                self.View.E_ReScanButton.SetVisible(false);
+            }
 
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
@@ -139,7 +236,7 @@ namespace ET.Client
 
         public static async ETTask GetRoomInfo(this DlgARRoomPVP self)
         {
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
@@ -162,7 +259,7 @@ namespace ET.Client
 
         public static RoomComponent GetRoomComponent(this DlgARRoomPVP self)
         {
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
             RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
@@ -173,7 +270,7 @@ namespace ET.Client
         {
             self.roomMembersLeft.Clear();
             self.roomMembersRight.Clear();
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
             RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
@@ -250,7 +347,7 @@ namespace ET.Client
             }
             else
             {
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
                 RoomMember roomMember = roomComponent.GetRoomMember(roomMemberId);
                 itemRoom.EButton_IconImage.gameObject.SetActive(true);
                 itemRoom.EG_ReadyRectTransform.gameObject.SetActive(roomMember.isReady);
@@ -353,10 +450,19 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-            ARSessionHelper.TriggerReScan(self.DomainScene());
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
+            RoomComponent roomComponent = self.GetRoomComponent();
+            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+            {
+                playerStatus = PlayerStatus.Room,
+                RoomType = roomComponent.roomType,
+                SubRoomType = roomComponent.subRoomType,
+                arRoomId = roomComponent.Id,
+                battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
+            };
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
 
-            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-            _UIComponent.HideWindow<DlgARRoomPVP>();
+            ARSessionHelper.TriggerReScan(self.DomainScene());
 
             await ETTask.CompletedTask;
         }
@@ -366,13 +472,19 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             RoomComponent roomComponent = self.GetRoomComponent();
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
                 (bool bRet, string msg) = roomComponent.ChkOwnerStartGame();
                 if (bRet == false)
                 {
                     UIManagerHelper.ShowTip(self.DomainScene(), msg);
+                    return;
+                }
+
+                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+                if (bRet1 == false)
+                {
                     return;
                 }
             }
@@ -410,7 +522,7 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             RoomComponent roomComponent = self.GetRoomComponent();
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             RoomMember roomMember = roomComponent.GetRoomMember(myPlayerId);
             RoomTeamId roomTeamId = roomMember.roomTeamId;
 

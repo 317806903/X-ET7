@@ -37,7 +37,7 @@ namespace ET.Client
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddTowerItemRefreshListener(transform, i));
             self.View.ELoopScrollList_TankLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddTankItemRefreshListener(transform, i));
+                self.AddMonsterItemRefreshListener(transform, i));
             self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
 
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 22");
@@ -118,12 +118,12 @@ namespace ET.Client
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);
 
             int countTank = self.monsterList.Count;
-            self.AddUIScrollItems(ref self.ScrollItemTanks, countTank);
+            self.AddUIScrollItems(ref self.ScrollItemMonsters, countTank);
             self.View.ELoopScrollList_TankLoopHorizontalScrollRect.SetVisible(true, countTank);
 
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleFrameTimer, self);
 
-            self.ShowMesh().Coroutine();
+            ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
             self.ShowPutTipMsg("");
 
             //self.PlayMusic();
@@ -166,17 +166,9 @@ namespace ET.Client
             Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
             string itemCfgId = self.towerList[index];
-            string towerName = ItemHelper.GetItemName(itemCfgId);
+            itemTower.ShowBagItem(itemCfgId, true);
 
-            string icon = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(icon) == false)
-            {
-                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-                itemTower.EButton_TowerIcoImage.sprite = sprite;
-            }
             itemTower.ELabel_NumTextMeshProUGUI.text = "1";
-
-            itemTower.ELabel_NameTextMeshProUGUI.text = $"{towerName}";
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
             {
@@ -191,30 +183,19 @@ namespace ET.Client
                 };
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
             });
-
-            itemTower.SetLevel(itemCfgId);
-            itemTower.SetLabels(itemCfgId);
-            itemTower.SetQuality(itemCfgId);
         }
 
-        public static void AddTankItemRefreshListener(this DlgBattle self, Transform transform, int index)
+        public static void AddMonsterItemRefreshListener(this DlgBattle self, Transform transform, int index)
         {
-            Scroll_Item_Tower itemTank = self.ScrollItemTanks[index].BindTrans(transform);
+            Scroll_Item_Tower itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
 
             string itemCfgId = self.monsterList[index];
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(itemCfgId);
-            string monsterName = ItemHelper.GetItemName(itemCfgId);
 
-            string icon = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(icon) == false)
-            {
-                Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
-                itemTank.EButton_TowerIcoImage.sprite = sprite;
-            }
-            itemTank.ELabel_NumTextMeshProUGUI.text = $"1";
-            itemTank.ELabel_NameTextMeshProUGUI.text = $"{monsterName}";
+            itemMonster.ShowBagItem(itemCfgId, true);
+            itemMonster.ELabel_NumTextMeshProUGUI.text = $"1";
 
-            ET.EventTriggerListener.Get(itemTank.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
             {
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
@@ -228,8 +209,6 @@ namespace ET.Client
                 };
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
             });
-
-            itemTank.EG_IconStarRectTransform.SetVisible(false);
         }
 
         public static void ChgScrollRectMoveStatus(this DlgBattle self, bool status)
@@ -256,125 +235,6 @@ namespace ET.Client
         public static void HidePutTipMsg(this DlgBattle self)
         {
             self.View.E_TipNodeImage.SetVisible(false);
-        }
-
-        public static async ETTask ShowMesh(this DlgBattle self)
-        {
-            if (Application.isEditor == false)
-            {
-                return;
-            }
-
-            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
-            if (gamePlayComponent == null)
-            {
-                return;
-            }
-
-            if (gamePlayComponent.isTestARMesh)
-            {
-                gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARMeshUrl;
-
-                // Draco bytes
-                byte[] bytes = await gamePlayComponent.DownloadFileBytesAsync(gamePlayComponent._ARMeshDownLoadUrl);
-                MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
-                CreateMeshFromData(meshData, gamePlayComponent.GetARScale());
-            }
-            else if (gamePlayComponent.isTestARObj)
-            {
-                gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARObjUrl;
-
-                string content = await gamePlayComponent.DownloadFileTextAsync(gamePlayComponent._ARMeshDownLoadUrl);
-                ET.LoadMesh.ObjMesh objInstace = new ET.LoadMesh.ObjMesh();
-                objInstace = objInstace.LoadFromObj(content);
-
-                CreateMesh(objInstace.VertexArray, objInstace.TriangleArray, objInstace.NormalArray, objInstace.UVArray, gamePlayComponent.GetARScale());
-            }
-            else if(gamePlayComponent.ChkIsAR() == false)
-            {
-                return;
-            }
-
-        }
-
-        public static Mesh CreateMeshFromData(MeshHelper.MeshData meshData, float3 scale)
-        {
-            var vertices = new Vector3[meshData.vertices.Length];
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = meshData.vertices[i];
-            }
-            var normals = new Vector3[meshData.normals.Length];
-            for (int i = 0; i < meshData.normals.Length; i++)
-            {
-                normals[i] = meshData.normals[i];
-            }
-            var uv = new Vector2[meshData.uv.Length];
-            for (int i = 0; i < meshData.uv.Length; i++)
-            {
-                uv[i] = meshData.uv[i];
-            }
-
-            return CreateMesh(vertices, meshData.triangles, normals, uv, scale);
-        }
-
-        public static Mesh CreateMesh(Vector3[] verticesIn, int[] trianglesIn, Vector3[] normalsIn, Vector2[] uvIn, float3 scale)
-        {
-            Mesh mesh = new Mesh();
-            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-            if (verticesIn != null)
-            {
-                var vertices = new Vector3[verticesIn.Length];
-                for (int i = 0; i < vertices.Length; i++)
-                {
-                    vertices[i] = verticesIn[i] * scale;
-                }
-                mesh.vertices = vertices;
-            }
-            if (trianglesIn != null)
-            {
-                mesh.triangles = trianglesIn;
-            }
-            if (normalsIn != null)
-            {
-                var normals = new Vector3[normalsIn.Length];
-                for (int i = 0; i < normalsIn.Length; i++)
-                {
-                    normals[i] = normalsIn[i];
-                }
-
-                mesh.normals = normals;
-            }
-            if (uvIn != null)
-            {
-                var uv = new Vector2[uvIn.Length];
-                for (int i = 0; i < uvIn.Length; i++)
-                {
-                    uv[i] = uvIn[i];
-                }
-                mesh.uv = uv;
-            }
-
-            mesh.RecalculateNormals();
-            mesh.RecalculateUVDistributionMetric(0);
-            mesh.RecalculateBounds();
-            mesh.Optimize();
-            mesh.UploadMeshData(false);
-
-            GameObject zpbTestObj = GameObject.Find("zpbTestObj");
-            if (zpbTestObj != null)
-            {
-                GameObject.Destroy(zpbTestObj);
-            }
-            zpbTestObj = new GameObject("zpbTestObj");
-            GameObject.DontDestroyOnLoad(zpbTestObj);
-            zpbTestObj.transform.localScale = new Vector3(1, 1, 1);
-            zpbTestObj.layer = LayerMask.NameToLayer("Map");
-            zpbTestObj.AddComponent<MeshCollider>().sharedMesh = mesh;
-            zpbTestObj.AddComponent<MeshRenderer>();
-            zpbTestObj.AddComponent<MeshFilter>().sharedMesh = mesh;
-            // Mesh without wireframe data.
-            return mesh;
         }
 
     }

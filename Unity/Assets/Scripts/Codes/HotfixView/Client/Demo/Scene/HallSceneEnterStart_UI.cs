@@ -23,8 +23,9 @@ namespace ET.Client
             DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);
             await ResComponent.Instance.LoadSceneAsync("Hall", _DlgLoading.UpdateProcess);
 
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             RoomType roomType = playerStatusComponent.RoomType;
+            SubRoomType subRoomType = playerStatusComponent.SubRoomType;
 
             bool isFromLogin = args.isFromLogin;
             bool isRelogin = args.isRelogin;
@@ -36,10 +37,36 @@ namespace ET.Client
             }
             else
             {
-                isDebugMode = roomType == RoomType.Normal;
+                if (roomType == RoomType.AR)
+                {
+                    isDebugMode = false;
+                }
+                else if (roomType == RoomType.Normal && subRoomType == SubRoomType.NormalPVE)
+                {
+                    isDebugMode = false;
+                }
+                else if (roomType == RoomType.Normal && subRoomType == SubRoomType.NormalPVP)
+                {
+                    isDebugMode = false;
+                }
+                else if (roomType == RoomType.Normal && subRoomType == SubRoomType.NormalEndlessChallenge)
+                {
+                    isDebugMode = false;
+                }
+                else if (DebugConnectComponent.Instance.IsDebugMode == false && roomType == RoomType.Normal && subRoomType == SubRoomType.None)
+                {
+                    isDebugMode = false;
+                }
+                else
+                {
+                    isDebugMode = true;
+                }
             }
 
-            Log.Debug($"--ET.Client.HallSceneEnterStart_UI.Run isFromLogin[{isFromLogin}] isRelogin[{isRelogin}]");
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenu>();
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenuHighest>();
+
+            Log.Debug($"--ET.Client.HallSceneEnterStart_UI.Run isFromLogin[{isFromLogin}] isRelogin[{isRelogin}] isDebugMode[{isDebugMode}]");
             if (isDebugMode)
             {
                 await DealWhenIsDebugMode(clientScene, playerStatusComponent, isFromLogin, isRelogin);
@@ -82,7 +109,11 @@ namespace ET.Client
                 //进入全局场景，所有人都进同个Map
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLobby>();
             }
-            else if (subRoomType == SubRoomType.NormalRoom)
+            else if (subRoomType == SubRoomType.NormalRoom
+                     || subRoomType == SubRoomType.NormalPVE
+                     || subRoomType == SubRoomType.NormalPVP
+                     || subRoomType == SubRoomType.NormalEndlessChallenge
+                     )
             {
                 //进入动态场景，按房间都进同个Map
                 if (playerStatus == PlayerStatus.Hall)
@@ -237,7 +268,46 @@ namespace ET.Client
             {
                 if (playerStatus == PlayerStatus.Room)
                 {
-                    await RoomHelper.QuitRoomAsync(scene);
+                    if (subRoomType == SubRoomType.NormalPVE)
+                    {
+                        if (playerStatusComponent.LastBattleResult == 1)
+                        {
+                            string gamePlayBattleLevelCfgId = playerStatusComponent.LastBattleCfgId;
+                            TowerDefense_ChallengeLevelCfg nextChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(gamePlayBattleLevelCfgId);
+                            if(nextChallengeLevelCfg != null)
+                            {
+                                string nextBattleCfgId = nextChallengeLevelCfg.Id;
+                                await RoomHelper.ChgRoomBattleLevelCfgAsync(scene, nextBattleCfgId);
+                                await ET.Client.UIManagerHelper.EnterRoom(scene);
+                                return;
+                            }
+                            else
+                            {
+                                await RoomHelper.QuitRoomAsync(scene);
+                                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgChallengeMode>();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await ET.Client.UIManagerHelper.EnterRoom(scene);
+                            return;
+                        }
+                    }
+                    else if (subRoomType == SubRoomType.NormalPVP)
+                    {
+                        await ET.Client.UIManagerHelper.EnterRoom(scene);
+                        return;
+                    }
+                    else if (subRoomType == SubRoomType.NormalEndlessChallenge)
+                    {
+                        await ET.Client.UIManagerHelper.EnterRoom(scene);
+                        return;
+                    }
+                    else
+                    {
+                        await RoomHelper.QuitRoomAsync(scene);
+                    }
                 }
                 else if (playerStatus == PlayerStatus.Battle)
                 {

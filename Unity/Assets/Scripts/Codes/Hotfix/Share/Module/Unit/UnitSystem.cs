@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ET.Ability;
 
 namespace ET
@@ -11,6 +12,17 @@ namespace ET
             {
                 self.CfgId = unitCfgId;
             }
+        }
+
+        // 获取看见unit的玩家，主要用于广播
+        public static Dictionary<long, EntityRef<AOIEntity>> GetBeSeePlayers(this Unit self)
+        {
+            AOIEntity aoiEntity = self.GetComponent<AOIEntity>();
+            if (aoiEntity == null)
+            {
+                return null;
+            }
+            return aoiEntity.GetBeSeePlayers();
         }
 
         public static bool ChkIsInDeath(this Unit self)

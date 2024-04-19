@@ -27,13 +27,17 @@ namespace ET.AbilityConfig
         /// </summary>
         BulletOnHitMesh = 3,
         /// <summary>
+        /// 监听 子弹到达指定地点的事件
+        /// </summary>
+        BulletOnHitPos = 4,
+        /// <summary>
         /// 监听 子弹被攻击的事件
         /// </summary>
-        BulletOnBeHurt = 4,
+        BulletOnBeHurt = 5,
         /// <summary>
         /// 监听 子弹被销毁的事件
         /// </summary>
-        BulletOnRemoved = 5,
+        BulletOnRemoved = 6,
     }
 
 } 

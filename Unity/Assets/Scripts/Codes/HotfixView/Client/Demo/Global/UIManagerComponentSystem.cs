@@ -49,6 +49,7 @@ namespace ET.Client
             self.FixedRoot = UIRoot.Find("FixedRoot").transform;
             self.NoticeRoot = UIRoot.Find("NoticeRoot").transform;
             self.LoadingRoot = UIRoot.Find("LoadingRoot").transform;
+            self.HighestFixedRoot = UIRoot.Find("HighestFixedRoot").transform;
             self.HighestNoticeRoot = UIRoot.Find("HighestNoticeRoot").transform;
 
             self.AddUIRootRotationAll();
@@ -97,6 +98,7 @@ namespace ET.Client
             self._AddUIRootRotation(self.FixedRoot);
             self._AddUIRootRotation(self.NoticeRoot);
             self._AddUIRootRotation(self.LoadingRoot);
+            self._AddUIRootRotation(self.HighestFixedRoot);
             self._AddUIRootRotation(self.HighestNoticeRoot);
         }
 

@@ -11,7 +11,8 @@ namespace ET.Client
 	{
 		public static void RegisterUIEvent(this DlgDescTips self)
 		{
-			self.View.EButton_CloseButton.AddListener(self.OnCloseButton);
+			self.View.EButton_CloseButton.AddListenerAsync(self.OnCloseButton);
+			self.View.E_BGButton.AddListenerAsync(self.OnCloseButton);
 		}
 
 		public static void ShowWindow(this DlgDescTips self, ShowWindowData contextData = null)
@@ -33,8 +34,9 @@ namespace ET.Client
 		{
 		}
 
-		public static void OnCloseButton(this DlgDescTips self)
+		public static async ETTask OnCloseButton(this DlgDescTips self)
 		{
+			await TimerComponent.Instance.WaitFrameAsync();
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgDescTips>();
 		}
 	}

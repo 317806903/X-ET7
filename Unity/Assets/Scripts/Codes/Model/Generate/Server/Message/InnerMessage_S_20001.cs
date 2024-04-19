@@ -964,13 +964,19 @@ namespace ET
 		public long RoomId { get; set; }
 
 		[ProtoMember(4)]
-		public string ARSceneId { get; set; }
+		public int ARMapScale { get; set; }
 
 		[ProtoMember(5)]
-		public string ARMeshDownLoadUrl { get; set; }
+		public int ARMeshType { get; set; }
 
 		[ProtoMember(6)]
-		public int ARMapScale { get; set; }
+		public string ARSceneId { get; set; }
+
+		[ProtoMember(7)]
+		public string ARMeshDownLoadUrl { get; set; }
+
+		[ProtoMember(8)]
+		public byte[] ARMeshBytes { get; set; }
 
 	}
 
@@ -1066,7 +1072,13 @@ namespace ET
 		public List<byte[]> RoomMemberInfos { get; set; }
 
 		[ProtoMember(4)]
+		public int ARMeshType { get; set; }
+
+		[ProtoMember(5)]
 		public string ARMeshDownLoadUrl { get; set; }
+
+		[ProtoMember(6)]
+		public byte[] ARMeshBytes { get; set; }
 
 	}
 
@@ -1544,6 +1556,34 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(R2G_ClearRankWhenDebug))]
+	[Message(InnerMessage.G2R_ClearRankWhenDebug)]
+	[ProtoContract]
+	public partial class G2R_ClearRankWhenDebug: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int RankType { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2G_ClearRankWhenDebug)]
+	[ProtoContract]
+	public partial class R2G_ClearRankWhenDebug: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	[ResponseType(nameof(P2G_GetPlayerCache))]
 	[Message(InnerMessage.G2P_GetPlayerCache)]
 	[ProtoContract]
@@ -1598,6 +1638,9 @@ namespace ET
 		[ProtoMember(5)]
 		public List<string> SetPlayerKeys { get; set; }
 
+		[ProtoMember(6)]
+		public int PlayerModelChgType { get; set; }
+
 	}
 
 	[Message(InnerMessage.P2G_SetPlayerCache)]
@@ -1628,6 +1671,34 @@ namespace ET
 	[Message(InnerMessage.OG2G_LoginInAtOtherWhere)]
 	[ProtoContract]
 	public partial class OG2G_LoginInAtOtherWhere: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2O_PlayerCacheChgNoticeClient))]
+	[Message(InnerMessage.O2G_PlayerCacheChgNoticeClient)]
+	[ProtoContract]
+	public partial class O2G_PlayerCacheChgNoticeClient: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int PlayerModelType { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2O_PlayerCacheChgNoticeClient)]
+	[ProtoContract]
+	public partial class G2O_PlayerCacheChgNoticeClient: ProtoObject, IActorResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -1735,11 +1806,15 @@ namespace ET
 		 public const ushort R2G_GetRankedMoreThan = 20092;
 		 public const ushort G2R_SetPlayerRank = 20093;
 		 public const ushort R2G_SetPlayerRank = 20094;
-		 public const ushort G2P_GetPlayerCache = 20095;
-		 public const ushort P2G_GetPlayerCache = 20096;
-		 public const ushort G2P_SetPlayerCache = 20097;
-		 public const ushort P2G_SetPlayerCache = 20098;
-		 public const ushort G2OG_LoginInAtOtherWhere = 20099;
-		 public const ushort OG2G_LoginInAtOtherWhere = 20100;
+		 public const ushort G2R_ClearRankWhenDebug = 20095;
+		 public const ushort R2G_ClearRankWhenDebug = 20096;
+		 public const ushort G2P_GetPlayerCache = 20097;
+		 public const ushort P2G_GetPlayerCache = 20098;
+		 public const ushort G2P_SetPlayerCache = 20099;
+		 public const ushort P2G_SetPlayerCache = 20100;
+		 public const ushort G2OG_LoginInAtOtherWhere = 20101;
+		 public const ushort OG2G_LoginInAtOtherWhere = 20102;
+		 public const ushort O2G_PlayerCacheChgNoticeClient = 20103;
+		 public const ushort G2O_PlayerCacheChgNoticeClient = 20104;
 	}
 }

@@ -25,6 +25,7 @@ namespace ET.Client
 
         public Transform RootTrans;
 
+        public string guideFileName;
         public UIGuidePathList _UIGuidePathList;
         public int nowIndex;
 
@@ -56,5 +57,7 @@ namespace ET.Client
         ShowBattleTowerReady,
         ShowBattleTowerQuit,
         ShowScanQuit,
+        ShowScanVideo,
+        BackToGameModeAR,
     }
 }

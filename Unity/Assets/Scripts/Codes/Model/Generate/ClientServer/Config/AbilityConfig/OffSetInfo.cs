@@ -19,7 +19,7 @@ public sealed partial class OffSetInfo: Bright.Config.BeanBase
 {
     public OffSetInfo(ByteBuf _buf) 
     {
-        NodeName = _buf.ReadString();
+        NodeName = (EffectNodeName)_buf.ReadInt();
         OffSetPosition = _buf.ReadVector3();
         RelateForward = _buf.ReadVector3();
         PostInit();
@@ -31,9 +31,9 @@ public sealed partial class OffSetInfo: Bright.Config.BeanBase
     }
 
     /// <summary>
-    /// 节点名
+    /// 特效表现节点类型
     /// </summary>
-    public string NodeName { get; private set; }
+    public EffectNodeName NodeName { get; private set; }
     /// <summary>
     /// 相对偏移
     /// </summary>

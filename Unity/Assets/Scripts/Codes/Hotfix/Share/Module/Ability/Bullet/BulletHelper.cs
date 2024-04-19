@@ -216,5 +216,27 @@ namespace ET.Ability
 
         }
 
+        public static void DoBulletHitPos(Unit unitBullet)
+        {
+            BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
+
+            if (bulletObj.canHitTimes > 0)
+            {
+                bulletObj.canHitTimes = 0;
+            }
+            else
+            {
+                return;
+            }
+
+            float3 hitPos = unitBullet.Position;
+            EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHitPos()
+            {
+                attackerUnit = unitBullet,
+                hitPos = hitPos,
+            });
+
+        }
+
     }
 }

@@ -40,6 +40,9 @@ namespace ET.Client
 		public bool isCliffy = false;
 		public bool isRaycast = false;
 
+		public int tryNum = 50;
+		public float tryDis = 0.1f;
+
 		public bool isChkPutMonsterCall = false;
 		public bool canPutMonsterCall = true;
 

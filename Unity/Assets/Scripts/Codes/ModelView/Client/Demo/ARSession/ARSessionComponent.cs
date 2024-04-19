@@ -10,13 +10,16 @@ namespace ET.Client
 		public GameObject ARSessoinGo;
 		public Transform StaticMeshTran;
 		public Transform QrCodeImageTran;
+		public Transform MirrorSceneClassyUI;
 		public Camera ARCamera;
 		public GameObject ScaleARCameraGo;
 		public Camera ScaleARCamera;
 		public Camera CurARCamera { get; set; }
 		public TranslucentImageSource translucentImageSource;
 		public float arScale;
+		public int frameCaptured;
 		public int meshFaceCount;
+		public int lastScanWarning;
 
 		public string EntranceType;  // Could be "scan", "load" (recent) or "join" (from QR code) or "reconnect" (after recover)
 		public string CurrentARSceneId;
@@ -24,10 +27,12 @@ namespace ET.Client
 
 		public Action OnMenuCancelCallBack;
 		public Action OnMenuFinishedCallBack;
-		public Action OnMenuCreateSceneCallBack;
+		public Action<bool> OnMenuCreateSceneCallBack;
 		public Action OnMenuExitSceneCallBack;
-		public Action OnMenuLoadRecentSceneCallBack;
+		public Action<bool> OnMenuLoadRecentSceneCallBack;
 		public Action<string> OnMenuJoinSceneCallBack;
 		public Func<(bool, string)> OnRequestQRCodeExtraData;
+
+		public bool IsReScanMeshing;
 	}
 }

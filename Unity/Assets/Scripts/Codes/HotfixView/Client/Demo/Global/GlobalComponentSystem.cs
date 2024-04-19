@@ -64,7 +64,6 @@ namespace ET.Client
 
             await self.AddComponents();
 
-            self.AddIngameDebugConsoleCommand();
         }
 
         public static async ETTask CreateGlobalRoot(this GlobalComponent self)
@@ -122,29 +121,6 @@ namespace ET.Client
         public static bool ChkIsShowDebugRoot(this GlobalComponent self)
         {
             return self.DebugRoot.gameObject.activeInHierarchy;
-        }
-
-        public static void AddIngameDebugConsoleCommand(this GlobalComponent self)
-        {
-            IngameDebugConsole.DebugLogConsole.AddCommand("SeeDebugConnectList", "SeeDebugConnectList desc", () => ET.Client.DebugConnectHelper.SeeDebugConnectList());
-            IngameDebugConsole.DebugLogConsole.AddCommand("SeeCurDebugConnect", "SeeCurDebugConnect desc", () => ET.Client.DebugConnectHelper.SeeCurDebugConnect());
-            IngameDebugConsole.DebugLogConsole.AddCommand("SetDebugConnectNull", "SetDebugConnectNull desc", () => ET.Client.DebugConnectHelper.SetDebugConnectNull());
-            IngameDebugConsole.DebugLogConsole.AddCommand<string>( "SetDebugConnect", "SetDebugConnect desc", (str) => ET.Client.DebugConnectHelper.SetDebugConnect(str) );
-            IngameDebugConsole.DebugLogConsole.AddCommand( "zz", "zz desc", () =>
-            {
-                Scene clientScene = null;
-                var childs = ClientSceneManagerComponent.Instance.Children;
-                foreach (var child in childs.Values)
-                {
-                    Scene scene = (Scene)child;
-                    if (scene.SceneType == SceneType.Client)
-                    {
-                        clientScene = scene;
-                        break;
-                    }
-                }
-                LoginHelper.LoginOut(clientScene).Coroutine();
-            });
         }
 
         public static void Update(this GlobalComponent self)

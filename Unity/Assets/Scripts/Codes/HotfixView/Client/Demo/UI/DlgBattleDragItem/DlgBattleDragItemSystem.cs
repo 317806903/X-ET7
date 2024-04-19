@@ -53,11 +53,16 @@ namespace ET.Client
             self.isRaycast = false;
             self.isChkPutMonsterCall = true;
             self.canPutMonsterCall = true;
+            self.tryNum = 50;
+            self.tryDis = 0.1f;
 
             self._groundLayerMask = LayerMask.GetMask("Map");
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleDragItemFrameTimer, self);
 
             self.View.E_TipNodeImage.SetVisible(false);
+            self.View.EG_ConfirmRootRectTransform.SetVisible(false);
+
+            //UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 		}
 
         public static void InitPrefab(this DlgBattleDragItem self)
@@ -91,7 +96,7 @@ namespace ET.Client
                     self.OnSelectTower(self.battleDragItemParam);
                     break;
                 default:
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     break;
             }
         }
@@ -132,7 +137,7 @@ namespace ET.Client
                 self.isDragging = true;
                 self.MoveCurrentPlaceObj();
 
-                bool canPut = self.ChkCanPut(self.currentPlaceObj.transform.position);
+                (bool canPut, bool isLimitRule) = self.ChkCanPut(self.currentPlaceObj.transform.position);
                 if (canPut)
                 {
                     self.View.E_TipNodeImage.SetVisible(false);
@@ -142,28 +147,35 @@ namespace ET.Client
                 {
                     //self.currentPlaceObj.gameObject.SetActive(false);
                     self.ChgCurrentPlaceObj(false);
+
+                    if (isLimitRule == false && self.IsNeedChkCanPutRepeat())
+                    {
+                        self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                    }
                 }
             }
             else if (self.isDragging)
             {
-                if (!self.ChkCanPut(self.currentPlaceObj.transform.position))
-                {
-                    UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
-                }
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
                 if (self.isClickUGUI == false)
                 {
+                    (bool canPut, bool isLimitRule) = self.ChkCanPut(self.currentPlaceObj.transform.position);
+                    if (canPut == false && isLimitRule == false && self.IsNeedChkCanPutRepeat())
+                    {
+                        self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                    }
                     if (self.isRaycast == false)
                     {
                         //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
                         //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                        self.CheckIfPlaceSuccess();
+                        self.Close();
                         return;
                     }
                     if (self.isCliffy)
                     {
                         //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
                         //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                        self.CheckIfPlaceSuccess();
+                        self.Close();
                         return;
                     }
 
@@ -201,12 +213,11 @@ namespace ET.Client
                         self.DoPutMoveTower(position).Coroutine();
                     }
                 }
-
-                self.CheckIfPlaceSuccess();
+                self.Close();
             }
             else if (self.currentPlaceObj != null)
             {
-                self.CheckIfPlaceSuccess();
+                self.Close();
             }
 		}
 
@@ -259,7 +270,9 @@ namespace ET.Client
             self.currentPlaceObj = new GameObject("currentPlaceObj");
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
+
+            bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+            bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
             for (int i = 0; i < towerCfg.UnitId.Count; i++)
             {
                 string unitCfgId = towerCfg.UnitId[i];
@@ -281,7 +294,7 @@ namespace ET.Client
                 goTmp.transform.localScale = Vector3.one * resScale;
                 goTmp.transform.forward = forward;
 
-                if (isTower)
+                if (isAttackTower || isTrap)
                 {
                     ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
                     GameObject resEffectGo = ResComponent.Instance.LoadAsset<GameObject>(resEffectCfg.ResName);
@@ -308,7 +321,7 @@ namespace ET.Client
                     float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, ET.AbilityConfig.SkillSlotType.NormalAttack);
                     attackAreaTran.localScale = Vector3.one * skillDis*2 / resScale;
 
-                    long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                    long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
                     GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
                     float3 colorValue = gamePlayComponent.GetPlayerColor(playerId);
                     Color color = new Color(colorValue.x, colorValue.y, colorValue.z);
@@ -412,27 +425,188 @@ namespace ET.Client
             }
         }
 
-        public static bool ChkCanPut(this DlgBattleDragItem self, Vector3 position)
+        public static bool IsNeedChkCanPutRepeat(this DlgBattleDragItem self)
+        {
+            return true;
+            // if (self.battleDragItemType == BattleDragItemType.Tower)
+            // {
+            //     return true;
+            // }
+            // else if (self.battleDragItemType == BattleDragItemType.MoveTower)
+            // {
+            //     return true;
+            // }
+            //
+            // return false;
+        }
+
+        public static bool ChkCanPutWhenRepeat(this DlgBattleDragItem self, Vector3 position)
+        {
+            int tryNum = self.tryNum;
+            float tryDis = self.tryDis;
+            bool bRet = false;
+            for (int i = 0; i < tryNum; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    Vector3 newPos;
+                    Vector3 positionNew1_x = position + new Vector3(i * tryDis, 0, j * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew1_x);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+
+                    Vector3 positionNew1_z = position + new Vector3(j * tryDis, 0, i * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew1_z);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+
+                    Vector3 positionNew2_x = position + new Vector3(-i * tryDis, 0, j * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew2_x);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+                    Vector3 positionNew2_z = position + new Vector3(-j * tryDis, 0, i * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew2_z);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+
+                    Vector3 positionNew3_x = position + new Vector3(-i * tryDis, 0, -j * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew3_x);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+                    Vector3 positionNew3_z = position + new Vector3(-j * tryDis, 0, -i * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew3_z);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+
+                    Vector3 positionNew4_x = position + new Vector3(i * tryDis, 0, -j * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew4_x);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+                    Vector3 positionNew4_z = position + new Vector3(j * tryDis, 0, -i * tryDis);
+                    (bRet, newPos) = self.ChkCanPutWhenRepeatOnce(positionNew4_z);
+                    if (bRet)
+                    {
+                        self.currentPlaceObj.transform.position = newPos;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static (bool, Vector3) ChkCanPutWhenRepeatOnce(this DlgBattleDragItem self, Vector3 position)
+        {
+            Vector3 point = Vector3.zero;
+            self.isRaycast = false;
+            self.isCliffy = false;
+
+            bool bRet = false;
+            RaycastHit raycastHit;
+            (bRet, raycastHit) = self.GetHitPointInfo(position);
+            if (bRet)
+            {
+                self.isRaycast = true;
+                point = raycastHit.point;
+
+                Vector3 normal = raycastHit.normal;
+                //大概是66.6度
+                if (Vector3.Dot(normal, Vector3.up) < 0.5f)
+                {
+                    float hitPointHeight = 0;
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0.5f, 0, 0));
+                    if (hitPointHeight != 0)
+                    {
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
+                    }
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(-0.5f, 0, 0));
+                    if (hitPointHeight != 0)
+                    {
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
+                    }
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, 0.5f));
+                    if (hitPointHeight != 0)
+                    {
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
+                    }
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, -0.5f));
+                    if (hitPointHeight != 0)
+                    {
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
+                    }
+                }
+
+            }
+
+
+            if (self.isRaycast)
+            {
+                Vector3 tryPos = point + new Vector3(0, self._YOffset, 0);
+                bool isLimitRule;
+                (bRet, isLimitRule) = self.ChkCanPut(tryPos);
+                return (bRet, tryPos);
+            }
+            else
+            {
+            }
+
+            return (false, Vector3.zero);
+        }
+
+        public static (bool bRet, bool isLimitRule) ChkCanPut(this DlgBattleDragItem self, Vector3 position)
         {
             if (self.isClickUGUI)
             {
                 string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnUI");
                 self.ShowPutTipMsg(tipMsg);
-                return false;
+                return (false, true);
             }
 
             if (self.isRaycast == false)
             {
                 string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsRaycast");
                 self.ShowPutTipMsg(tipMsg);
-                return false;
+                return (false, false);
             }
 
             if (self.isCliffy)
             {
                 string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsCliffy");
                 self.ShowPutTipMsg(tipMsg);
-                return false;
+                return (false, false);
             }
 
             if (self.battleDragItemType == BattleDragItemType.MonsterCall)
@@ -441,12 +615,13 @@ namespace ET.Client
                 {
                     string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
                     self.ShowPutTipMsg(tipMsg);
-                    return false;
+                    return (false, false);
                 }
             }
             else if (self.battleDragItemType == BattleDragItemType.Tower)
             {
-                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.battleDragItemParam);
+                string towerCfgId = self.battleDragItemParam;
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
                 float radius = 0;
                 if (towerCfg.Radius <= 0)
                 {
@@ -458,10 +633,11 @@ namespace ET.Client
                     radius = towerCfg.Radius;
                 }
 
-                bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-                bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+                bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+                bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+                bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
 
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
                 if (gamePlayTowerDefenseComponent != null)
                 {
@@ -470,24 +646,24 @@ namespace ET.Client
                     {
                         string tipMsg = msg;
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, true);
                     }
                 }
 
-                if (isTower)
+                if (isAttackTower || isTrap)
                 {
                     if (self.ChkIsNearTower(self.battleDragItemParam, position))
                     {
                         string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, false);
                     }
 
                     if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
                     {
                         string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, false);
                     }
                 }
                 if (isCallMonster)
@@ -496,13 +672,14 @@ namespace ET.Client
                     {
                         string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, false);
                     }
                 }
             }
             else if (self.battleDragItemType == BattleDragItemType.MoveTower)
             {
-                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.battleDragItemParam);
+                string towerCfgId = self.battleDragItemParam;
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
                 float radius = 0;
                 if (towerCfg.Radius <= 0)
                 {
@@ -514,30 +691,28 @@ namespace ET.Client
                     radius = towerCfg.Radius;
                 }
 
-                bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-                bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+                bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+                bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+                bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
 
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-
-                if (isTower)
+                if (isAttackTower || isTrap)
                 {
                     if (self.ChkIsNearTower(self.battleDragItemParam, position))
                     {
                         string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, false);
                     }
 
                     if (ET.Client.PathLineRendererComponent.Instance.ChkIsHitPath(position, radius))
                     {
                         string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
                         self.ShowPutTipMsg(tipMsg);
-                        return false;
+                        return (false, false);
                     }
                 }
             }
-            return true;
+            return (true, false);
         }
 
         public static bool ChkIsNearTower(this DlgBattleDragItem self, string towerCfgId, float3 pos)
@@ -555,15 +730,16 @@ namespace ET.Client
                 radius = towerCfg.Radius;
             }
 
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+            bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+            bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             if (gamePlayTowerDefenseComponent == null)
             {
                 return true;
             }
 
-            if (isTower)
+            if (isAttackTower || isTrap)
             {
                 if (self.battleDragItemType == BattleDragItemType.MoveTower)
                 {
@@ -576,7 +752,7 @@ namespace ET.Client
             }
             if (isCallMonster)
             {
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
                 return gamePlayTowerDefenseComponent.ChkIsNearTower(targetPos, radius + 0.3f, myPlayerId);
             }
             return false;
@@ -594,7 +770,7 @@ namespace ET.Client
         /// <returns></returns>
         public static bool CheckUserInput(this DlgBattleDragItem self)
         {
-            return Input.GetMouseButton(0);
+            return ET.UGUIHelper.CheckUserInput();
         }
 
         public static void ShowPutTipMsg(this DlgBattleDragItem self, string tipMsg)
@@ -613,21 +789,24 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             self.isConfirming = true;
-            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
-            /*ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
-            {
-                self.isConfirming = false;
-                ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
-                self.CheckIfPlaceSuccess();
-            }, () =>
-            {
-                self.isConfirming = false;
-                self.CheckIfPlaceSuccess();
-            });*/
-            self.isConfirming = false;
 
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
-            ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
+            self.View.EG_ConfirmRootRectTransform.SetVisible(true);
+            self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
+            {
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+                await ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position);
+
+                self.isConfirming = false;
+                self.Close();
+            });
+            self.View.E_CancelButtonButton.AddListener(() =>
+            {
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+                self.isConfirming = false;
+                self.Close();
+            });
+
             return true;
         }
 
@@ -643,26 +822,45 @@ namespace ET.Client
             {
                 //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
                 //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                self.CheckIfPlaceSuccess();
+                self.Close();
                 return false;
             }
 
             self.isConfirming = true;
-            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattlePut_IsOK");
-            /*ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, () =>
-            {
-                self.isConfirming = false;
-                ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
-                self.CheckIfPlaceSuccess();
-            }, () =>
-            {
-                self.isConfirming = false;
-                self.CheckIfPlaceSuccess();
-            });*/
-            self.isConfirming = false;
 
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
-            ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
+            self.DrawMonsterCall2HeadQuarter(true).Coroutine();
+            while (self.lineRendererReqing)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+            }
+            if (self.canPutMonsterCall == false)
+            {
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+
+                self.isConfirming = false;
+                self.Close();
+                return false;
+            }
+
+
+            self.View.EG_ConfirmRootRectTransform.SetVisible(true);
+            self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
+            {
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+                await ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position);
+
+                self.isConfirming = false;
+                self.Close();
+            });
+            self.View.E_CancelButtonButton.AddListener(() =>
+            {
+                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+                self.isConfirming = false;
+                self.Close();
+            });
+
             return true;
         }
 
@@ -693,20 +891,23 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            string towerCfgId = self.battleDragItemParam;
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-            (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(myPlayerId, self.battleDragItemParam);
+            (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(myPlayerId, towerCfgId);
             if (bRet == false)
             {
                 //string tipMsg = msg;
                 //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                self.CheckIfPlaceSuccess();
+                self.Close();
                 return false;
             }
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.battleDragItemParam);
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+
+            bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+            bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
 
             float radius = 0;
             if (towerCfg.Radius <= 0)
@@ -719,13 +920,13 @@ namespace ET.Client
                 radius = towerCfg.Radius;
             }
 
-            if (isTower)
+            if (isAttackTower || isTrap)
             {
                 if (self.ChkIsNearTower(self.battleDragItemParam, position))
                 {
                     //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
                     //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     return false;
                 }
 
@@ -733,7 +934,7 @@ namespace ET.Client
                 {
                     //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
                     //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     return false;
                 }
             }
@@ -744,7 +945,7 @@ namespace ET.Client
                 {
                     //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNotNearTower");
                     //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     return false;
                 }
             }
@@ -759,20 +960,22 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
             (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkMovePlayerTower(myPlayerId, self.moveTowerUnitId, position);
             if (bRet == false)
             {
                 string tipMsg = msg;
                 ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                self.CheckIfPlaceSuccess();
+                self.Close();
                 return false;
             }
 
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.battleDragItemParam);
-            bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-            bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
+            string towerCfgId = self.battleDragItemParam;
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+            bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+            bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
 
             float radius = 0;
             if (towerCfg.Radius <= 0)
@@ -785,13 +988,13 @@ namespace ET.Client
                 radius = towerCfg.Radius;
             }
 
-            if (isTower)
+            if (isAttackTower || isTrap)
             {
                 if (self.ChkIsNearTower(self.battleDragItemParam, position))
                 {
                     //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsNearTower");
                     //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     return false;
                 }
 
@@ -799,7 +1002,7 @@ namespace ET.Client
                 {
                     //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsOnRoad");
                     //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                    self.CheckIfPlaceSuccess();
+                    self.Close();
                     return false;
                 }
             }
@@ -835,7 +1038,11 @@ namespace ET.Client
             {
                 return;
             }
-            Vector3 screenPosition = Input.mousePosition;
+            (bool bRet, Vector3 screenPosition) = ET.UGUIHelper.GetUserInputPress();
+            if (bRet == false)
+            {
+                return;
+            }
             screenPosition += new Vector3(-100, 20, 0);
 
             Ray ray = ET.Client.CameraHelper.GetMainCamera(self.DomainScene()).ScreenPointToRay(screenPosition);
@@ -852,33 +1059,38 @@ namespace ET.Client
                 //大概是66.6度
                 if (Vector3.Dot(normal, Vector3.up) < 0.5f)
                 {
-                    float totalHeight = 0;
-                    int hitCount = 0;
                     float hitPointHeight = 0;
-                    hitPointHeight = self.GetHitPointHeight(ray.origin + new Vector3(0.5f, 0, 0));
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0.5f, 0, 0));
                     if (hitPointHeight != 0)
                     {
-                        hitCount++;
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
                     }
-                    hitPointHeight = self.GetHitPointHeight(ray.origin + new Vector3(-0.5f, 0, 0));
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(-0.5f, 0, 0));
                     if (hitPointHeight != 0)
                     {
-                        hitCount++;
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
                     }
-                    hitPointHeight = self.GetHitPointHeight(ray.origin + new Vector3(0, 0, 0.5f));
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, 0.5f));
                     if (hitPointHeight != 0)
                     {
-                        hitCount++;
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
                     }
-                    hitPointHeight = self.GetHitPointHeight(ray.origin + new Vector3(0, 0, -0.5f));
+                    hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, -0.5f));
                     if (hitPointHeight != 0)
                     {
-                        hitCount++;
-                    }
-
-                    if (math.abs(totalHeight / hitCount - point.y) > 0.5f)
-                    {
-                        self.isCliffy = true;
+                        if (math.abs(hitPointHeight - point.y) > 0.5f)
+                        {
+                            self.isCliffy = true;
+                        }
                     }
                 }
             }
@@ -895,26 +1107,60 @@ namespace ET.Client
             }
             else
             {
-                if (self.currentPlaceObj.gameObject.activeSelf)
+                bool isHit = false;
+                for (int i = 1; i < self.tryNum; i++)
                 {
-                    self.currentPlaceObj.gameObject.SetActive(false);
+                    float radius = self.tryDis * i;
+                    if (Physics.SphereCast(ray, radius, out hitInfo, 10000, self._groundLayerMask))
+                    {
+                        point = hitInfo.point;
+                        self.currentPlaceObj.transform.position = point + new Vector3(0, self._YOffset, 0);
+                        isHit = true;
+                        break;
+                    }
                 }
+
+                if (self.currentPlaceObj.gameObject.activeSelf == false)
+                {
+                    self.currentPlaceObj.gameObject.SetActive(true);
+                }
+                // if (isHit)
+                // {
+                //     if (self.currentPlaceObj.gameObject.activeSelf == false)
+                //     {
+                //         self.currentPlaceObj.gameObject.SetActive(true);
+                //     }
+                // }
+                // else
+                // {
+                //     if (self.currentPlaceObj.gameObject.activeSelf)
+                //     {
+                //         self.currentPlaceObj.gameObject.SetActive(false);
+                //     }
+                // }
             }
 
-            self.DrawMonsterCall2HeadQuarter().Coroutine();
+            self.DrawMonsterCall2HeadQuarter(false).Coroutine();
         }
 
         public static float GetHitPointHeight(this DlgBattleDragItem self, Vector3 startPos)
         {
             RaycastHit hitInfo;
-            if (Physics.Raycast(startPos, Vector3.down, out hitInfo, 10000, self._groundLayerMask))
+            if (Physics.Raycast(startPos + new Vector3(0, 3, 0), Vector3.down, out hitInfo, 6, self._groundLayerMask))
             {
                 return hitInfo.point.y;
             }
             return 0;
         }
 
-        public static async ETTask DrawMonsterCall2HeadQuarter(this DlgBattleDragItem self)
+        public static (bool, RaycastHit) GetHitPointInfo(this DlgBattleDragItem self, Vector3 startPos)
+        {
+            RaycastHit hitInfo;
+            bool bRet = Physics.Raycast(startPos + new Vector3(0, 3, 0), Vector3.down, out hitInfo, 6, self._groundLayerMask);
+            return (bRet, hitInfo);
+        }
+
+        public static async ETTask DrawMonsterCall2HeadQuarter(this DlgBattleDragItem self, bool forceShow)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             if (gamePlayTowerDefenseComponent == null)
@@ -927,7 +1173,7 @@ namespace ET.Client
                 return;
             }
 
-            if (self.newShowLineRendererTime > TimeHelper.ClientNow())
+            if (forceShow == false && self.newShowLineRendererTime > TimeHelper.ClientNow())
             {
                 return;
             }
@@ -940,24 +1186,31 @@ namespace ET.Client
                 return;
             }
 
-            float disX = math.abs(self.lineRendererPos.x - self.currentPlaceObj.transform.position.x);
-            float disZ = math.abs(self.lineRendererPos.z - self.currentPlaceObj.transform.position.z);
-            if (disX > 0.3f || disZ > 0.3f)
+            if (forceShow == false)
+            {
+                float disX = math.abs(self.lineRendererPos.x - self.currentPlaceObj.transform.position.x);
+                float disZ = math.abs(self.lineRendererPos.z - self.currentPlaceObj.transform.position.z);
+                if (disX > 0.3f || disZ > 0.3f)
+                {
+                    self.lineRendererPos = self.currentPlaceObj.transform.position;
+                    self.canShowLineRendererNear = true;
+                    return;
+                }
+                if (disX < 0.1f && disZ < 0.1f && self.canShowLineRendererNear == false)
+                {
+                    return;
+                }
+                self.lineRendererPos = self.currentPlaceObj.transform.position;
+                self.canShowLineRendererNear = false;
+
+                if (self.lineRendererReqing)
+                {
+                    return;
+                }
+            }
+            else
             {
                 self.lineRendererPos = self.currentPlaceObj.transform.position;
-                self.canShowLineRendererNear = true;
-                return;
-            }
-            if (disX < 0.1f && disZ < 0.1f && self.canShowLineRendererNear == false)
-            {
-                return;
-            }
-            self.lineRendererPos = self.currentPlaceObj.transform.position;
-            self.canShowLineRendererNear = false;
-
-            if (self.lineRendererReqing)
-            {
-                return;
             }
 
             self.lineRendererReqing = true;
@@ -986,17 +1239,9 @@ namespace ET.Client
             await gamePlayTowerDefenseComponent.DoHideMyMonsterCall2HeadQuarter();
         }
 
-        /// <summary>
-        ///检测是否放置成功
-        /// </summary>
-        public static void CheckIfPlaceSuccess(this DlgBattleDragItem self)
+        public static void Clear(this DlgBattleDragItem self)
         {
             if (self.IsDisposed)
-            {
-                return;
-            }
-
-            if (self.isConfirming)
             {
                 return;
             }
@@ -1021,11 +1266,21 @@ namespace ET.Client
             }
             self.sceneIn = null;
 
+        }
+
+        public static void Close(this DlgBattleDragItem self)
+        {
+            if (self.isConfirming)
+            {
+                return;
+            }
+
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
         }
 
         public static void HideWindow(this DlgBattleDragItem self)
         {
+            self.Clear();
             TimerComponent.Instance?.Remove(ref self.Timer);
         }
 

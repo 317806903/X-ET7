@@ -11,38 +11,32 @@ namespace ET.Server
 		    return playerCacheManagerComponent;
 	    }
 
+	    public static async ETTask<PlayerDataComponent> GetPlayerCache(Scene scene, long playerId)
+	    {
+		    PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+		    PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+		    if (playerDataComponent == null)
+		    {
+			    playerDataComponent = await playerCacheManagerComponent.AddPlayerData(playerId);
+		    }
+		    return playerDataComponent;
+	    }
+
         public static async ETTask<Entity> GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType)
         {
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        playerDataComponent = await playerCacheManagerComponent.AddPlayerData(playerId);
-	        }
+	        PlayerDataComponent playerDataComponent = await GetPlayerCache(scene, playerId);
 
 	        Entity entityModel = playerDataComponent.GetPlayerModel(playerModelType);
 
 	        return entityModel;
         }
 
-        public static async ETTask SetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
+        public static async ETTask SetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys, PlayerModelChgType playerModelChgType)
         {
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        return;
-	        }
+	        PlayerDataComponent playerDataComponent = await GetPlayerCache(scene, playerId);
 
 	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
-	        DataCacheWriteComponent dataCacheWriteComponent = entityModel.GetComponent<DataCacheWriteComponent>();
-	        if (dataCacheWriteComponent == null)
-	        {
-		        dataCacheWriteComponent = entityModel.AddComponent<DataCacheWriteComponent>();
-	        }
-	        dataCacheWriteComponent.SetNeedSave();
+	        entityModel.SetDataCacheAutoWrite();
 	        await ETTask.CompletedTask;
         }
 

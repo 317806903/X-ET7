@@ -27,6 +27,18 @@ namespace ET
             }
         }
 
+        public static void RemoveRankShow(this RankShowManagerComponent self, long playerId, RankType rankType)
+        {
+            RankShowPlayerComponent rankShowPlayerComponent = self.GetChild<RankShowPlayerComponent>(playerId);
+            if (rankShowPlayerComponent != null)
+            {
+                rankShowPlayerComponent.RemoveRankShow(rankType);
+            }
+            else
+            {
+            }
+        }
+
         public static RankShowComponent SetRankShow(this RankShowManagerComponent self, long playerId, RankType rankType, int myRank, RankItemComponent myRankItemComponent, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
         {
             RankShowPlayerComponent rankShowPlayerComponent = self.GetChild<RankShowPlayerComponent>(playerId);

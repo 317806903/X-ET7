@@ -21,6 +21,7 @@ namespace ET
 				self.playerTowerBuyPoolBoughts = new();
 				self.playerRefreshTowerCost = new();
 				self.playerId2unitTowerId = new();
+				self.playerId2unitAttackTowerId = new();
 			}
 		}
 
@@ -35,13 +36,14 @@ namespace ET
 				self.playerTowerBuyPoolBoughts.Clear();
 				self.playerRefreshTowerCost.Clear();
 				self.playerId2unitTowerId.Clear();
+				self.playerId2unitAttackTowerId.Clear();
 				self.existTowerDic?.Clear();
 			}
 		}
 
 		public static async ETTask Init(this PlayerOwnerTowersComponent self)
 		{
-			while (self.playerOwnerTowerCardIds == null)
+			while (self.initPlayerOwnerTowerCard == false)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
 			}
@@ -145,12 +147,13 @@ namespace ET
 						if (towerPools.TryGetValue(item.TowerCfgId, out int weight))
 						{
 							weight += item.Weight;
+							towerPools[item.TowerCfgId] = weight;
 						}
 						else
 						{
 							weight = item.Weight;
+							towerPools.Add(item.TowerCfgId, weight);
 						}
-						towerPools.Add(item.TowerCfgId, weight);
 					}
 				}
 			}
@@ -163,12 +166,13 @@ namespace ET
 					if (towerPools.TryGetValue(item.Key, out int weight))
 					{
 						weight += myTowersWeight;
+						towerPools[item.Key] = weight;
 					}
 					else
 					{
 						weight = myTowersWeight;
+						towerPools.Add(item.Key, weight);
 					}
-					towerPools.Add(item.Key, weight);
 				}
 			}
 
@@ -250,7 +254,7 @@ namespace ET
 			if (isBought)
 			{
 				Log.Debug($" BuyPlayerTower isBought==true 已不可购买");
-				msg = "已不可购买";
+				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_AlreadyBuy");
 				return (false, msg);
 			}
 
@@ -347,14 +351,14 @@ namespace ET
 
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
-			bool isTower = towerCfg.Type is PlayerTowerType.Tower;
-			bool isCallMonster = towerCfg.Type is PlayerTowerType.CallMonster;
-			if (isTower)
+			bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
+			bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
+			if (isAttackTower)
 			{
 				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 				int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
-				List<long> towerUnitIdList = self.playerId2unitTowerId[playerId];
-				if (towerUnitIdList.Count >= limitTowerCount)
+				int attackTowerCount = self.GetPutAttackTowerCount(playerId);
+				if (attackTowerCount >= limitTowerCount)
 				{
 					msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxPutTowerCount", limitTowerCount);
 					return (false, msg);
@@ -363,12 +367,18 @@ namespace ET
 			return (true, msg);;
 		}
 
+		public static int GetPutAttackTowerCount(this PlayerOwnerTowersComponent self, long playerId)
+		{
+			List<long> towerUnitIdList = self.playerId2unitAttackTowerId[playerId];
+			int attackTowerCount = towerUnitIdList.Count;
+			return attackTowerCount;
+		}
+
 		public static int GetLeftCallPlayerTowerCount(this PlayerOwnerTowersComponent self, long playerId)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
-			List<long> towerUnitIdList = self.playerId2unitTowerId[playerId];
-			return limitTowerCount - towerUnitIdList.Count;
+			return limitTowerCount - self.GetPutAttackTowerCount(playerId);
 		}
 
 		public static bool CallPlayerTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId, float3 position)
@@ -397,6 +407,10 @@ namespace ET
 			foreach (var towerUnit in towerUnitList)
 			{
 				self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
+				if (ItemHelper.ChkIsAttackTower(towerCfgId))
+				{
+					self.playerId2unitAttackTowerId.Add(playerId, towerUnit.Id);
+				}
 
 				EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_PutTower()
 				{
@@ -754,6 +768,7 @@ namespace ET
 				foreach (long existTowerUnitId in existTowerUnitIds)
 				{
 					self.playerId2unitTowerId.Remove(playerId, existTowerUnitId);
+					self.playerId2unitAttackTowerId.Remove(playerId, existTowerUnitId);
 					Unit existTowerUnit = UnitHelper.GetUnit(self.DomainScene(), existTowerUnitId);
 					existTowerUnit.DestroyNotDeathShow();
 				}
@@ -761,6 +776,7 @@ namespace ET
 
 			float3 position = curTownUnit.Position;
 			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
+			self.playerId2unitAttackTowerId.Remove(playerId, towerUnitId);
 			curTownUnit.DestroyNotDeathShow();
 
 			List<Unit> towerUnitList = self.CreateTower(playerId, nextTowerId, position);
@@ -768,6 +784,10 @@ namespace ET
 			{
 				self.playerId2unitTowerId.Add(playerId, towerUnit.Id);
 
+				if (ItemHelper.ChkIsAttackTower(nextTowerId))
+				{
+					self.playerId2unitAttackTowerId.Add(playerId, towerUnit.Id);
+				}
 
 				EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_UpgradeTower()
 				{
@@ -807,6 +827,7 @@ namespace ET
 			});
 
 			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
+			self.playerId2unitAttackTowerId.Remove(playerId, towerUnitId);
 			curTownUnit.DestroyNotDeathShow();
 
 			self.NoticeToClient(playerId);
@@ -910,6 +931,7 @@ namespace ET
 			});
 
 			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
+			self.playerId2unitAttackTowerId.Remove(playerId, towerUnitId);
 			curTownUnit.DestroyNotDeathShow();
 
 			self.NoticeToClient(playerId);
@@ -1085,6 +1107,32 @@ namespace ET
 			}
 
 			return false;
+		}
+
+		public static bool DestroyPlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId)
+		{
+			if (self.playerId2unitTowerId.Contains(playerId, towerUnitId) == false)
+			{
+				Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] not exist in self.playerId2unitTowerId");
+				return false;
+			}
+
+			Unit curTownUnit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+			string curTowerId = curTownUnit.GetComponent<TowerComponent>().towerCfgId;
+
+			EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_TowerBeKill()
+			{
+				playerId = playerId,
+				towerUnit = curTownUnit,
+				towerCfgId = curTowerId,
+			});
+
+			self.playerId2unitTowerId.Remove(playerId, towerUnitId);
+			self.playerId2unitAttackTowerId.Remove(playerId, towerUnitId);
+
+			self.NoticeToClient(playerId);
+
+			return true;
 		}
 
 	}

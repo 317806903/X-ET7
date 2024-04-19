@@ -35,6 +35,16 @@ namespace ET.AbilityConfig
 			return null;
 		}
 
+		public bool ChkIsAR(string battleLevelCfgId)
+		{
+			if (this.Contain(battleLevelCfgId) == false)
+			{
+				return false;
+			}
+			TowerDefense_ChallengeLevelCfg challengeLevelCfg = this.Get(battleLevelCfgId);
+			return challengeLevelCfg.IsAR;
+		}
+
 		public int GetChallengeIndex(string battleLevelCfgId)
 		{
 			if (this.Contain(battleLevelCfgId) == false)

@@ -11,11 +11,14 @@ namespace ET
     {
         Local,
         InNetGDC,
-        InNet148,
+        MetaQuest3,
+        AppleVisionPro,
+        InNet148Master,
         InNet148Release,
         InNetZpb,
         OutNet_Benchmark,
         OutNet_CN,
+        OutNet_CN_Demo,
         OutNet_EN,
         OutNet_EN_AAB,
 
@@ -70,18 +73,18 @@ namespace ET
             });
         }
 
-        [MenuItem("Pack/BuildPack_Android_InNet148", false, 301)]
-        public static async ETTask BuildPack_Android_InNet148()
+        [MenuItem("Pack/BuildPack_Android_InNet148Master", false, 301)]
+        public static async ETTask BuildPack_Android_InNet148Master()
         {
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNet148", null))
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNet148Master", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.Android;
-            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNet148", () =>
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNet148Master", () =>
             {
-                BuildPackInternal(buildTarget, PackName.InNet148).Coroutine();
+                BuildPackInternal(buildTarget, PackName.InNet148Master).Coroutine();
             });
         }
 
@@ -146,6 +149,21 @@ namespace ET
             });
         }
 
+        [MenuItem("Pack/BuildPack_Android_OutNet_CN_Demo", false, 304)]
+        public static async ETTask BuildPack_Android_OutNet_CN_Demo()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_CN_Demo", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_CN_Demo", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_CN_Demo).Coroutine();
+            });
+        }
+
         [MenuItem("Pack/BuildPack_Android_OutNet_EN", false, 305)]
         public static async ETTask BuildPack_Android_OutNet_EN()
         {
@@ -206,6 +224,21 @@ namespace ET
             });
         }
 
+        [MenuItem("Pack/BuildPack_Android_MetaQuest3", false, 309)]
+        public static async ETTask BuildPack_Android_MetaQuest3()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_MetaQuest3", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_MetaQuest3", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.MetaQuest3).Coroutine();
+            });
+        }
+
         [MenuItem("Pack/BuildPack_IOS_InNetGDC", false, 321)]
         public static async ETTask BuildPack_IOS_InNetGDC()
         {
@@ -221,18 +254,18 @@ namespace ET
             });
         }
 
-        [MenuItem("Pack/BuildPack_IOS_InNet148", false, 321)]
-        public static async ETTask BuildPack_IOS_InNet148()
+        [MenuItem("Pack/BuildPack_IOS_InNet148Master", false, 321)]
+        public static async ETTask BuildPack_IOS_InNet148Master()
         {
-            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNet148", null))
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_InNet148Master", null))
             {
                 return;
             }
 
             BuildTarget buildTarget = BuildTarget.iOS;
-            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNet148", () =>
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_InNet148Master", () =>
             {
-                BuildPackInternal(buildTarget, PackName.InNet148).Coroutine();
+                BuildPackInternal(buildTarget, PackName.InNet148Master).Coroutine();
             });
         }
 
@@ -296,6 +329,21 @@ namespace ET
             });
         }
 
+        [MenuItem("Pack/BuildPack_IOS_OutNet_CN_Demo", false, 324)]
+        public static async ETTask BuildPack_IOS_OutNet_CN_Demo()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_OutNet_CN_Demo", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_OutNet_CN_Demo", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_CN_Demo).Coroutine();
+            });
+        }
+
         [MenuItem("Pack/BuildPack_IOS_OutNet_EN", false, 325)]
         public static async ETTask BuildPack_IOS_OutNet_EN()
         {
@@ -323,6 +371,21 @@ namespace ET
             ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_ExternalTest", () =>
             {
                 BuildPackInternal(buildTarget, PackName.ExternalTest).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_IOS_AppleVisionPro", false, 327)]
+        public static async ETTask BuildPack_IOS_AppleVisionPro()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_AppleVisionPro", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_AppleVisionPro", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.AppleVisionPro).Coroutine();
             });
         }
 
@@ -447,17 +510,57 @@ namespace ET
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
                 UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
-            else if(packName == PackName.InNet148)
+            else if(packName == PackName.AppleVisionPro)
+            {
+                ResConfig.Instance.Channel = "20001";
+
+                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
+                ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.areaType = AreaType.OnDevice;
+                productName = $"AVP_RealityGuard";
+                packageName = $"com.dm.ARGameAVP";
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+            }
+            else if (packName == PackName.MetaQuest3)
+            {
+                ResConfig.Instance.Channel = "20001";
+
+                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
+                ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.areaType = AreaType.OnDevice;
+                productName = $"Quest3_RealityGuard";
+                packageName = $"com.dm.ARGameQuest3";
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+            }
+            else if(packName == PackName.InNet148Master)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
                 //ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148";
+                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 5478;
                 ResConfig.Instance.areaType = AreaType.CN;
-                productName = $"148_RealityGuard";
-                packageName = $"com.dm.ARGameInNet148";
+                productName = $"148Master_RealityGuard";
+                packageName = $"com.dm.ARGameInNet148Master";
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
                 // 设置签名
@@ -535,6 +638,25 @@ namespace ET
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
                 productName = $"CN_RealityGuard";
                 packageName = $"com.dm.ARGameCN";
+            }
+            else if (packName == PackName.OutNet_CN_Demo)
+            {
+                ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo";
+                ResConfig.Instance.ResGameVersion = "v1.0";
+                ResConfig.Instance.RouterHttpHost = "8.134.156.170";
+                ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                productName = $"CNDemo_RealityGuard";
+                packageName = $"com.dm.ARGameCNDemo";
             }
             else if(packName == PackName.OutNet_EN || packName == PackName.OutNet_EN_AAB)
             {

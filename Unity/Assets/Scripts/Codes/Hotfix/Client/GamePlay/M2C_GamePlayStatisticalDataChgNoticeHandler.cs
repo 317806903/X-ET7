@@ -31,7 +31,7 @@ namespace ET.Client
 				gamePlayStatisticalDataManagerComponent = gamePlayComponent.AddComponent<GamePlayStatisticalDataManagerComponent>();
 			}
 
-			long myPlayerId = PlayerHelper.GetMyPlayerId(currentScene);
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(currentScene);
 
 			Entity component = MongoHelper.Deserialize<Entity>(message.GamePlayStatisticalDataComponent);
 			gamePlayStatisticalDataManagerComponent.RemoveChild(myPlayerId);

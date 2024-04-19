@@ -79,9 +79,9 @@ namespace ET.Client
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(self.RootTrans.gameObject);
         }
 
-        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string fileName, Action finished = null, Action firstFindCallBack = null)
+        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, Action finished = null, Action firstFindCallBack = null)
         {
-            string filePath = $"UIGuideConfig_{fileName}";
+            string filePath = $"UIGuideConfig_{guideFileName}";
             UIGuidePathList _UIGuidePathList = await ResComponent.Instance.LoadAssetAsync<UIGuidePathList>(filePath);
             if (_UIGuidePathList == null)
             {
@@ -95,11 +95,11 @@ namespace ET.Client
                 _UIGuidePath.index = i;
             }
 
-            await self.DoUIGuide(_UIGuidePathList, finished, firstFindCallBack);
+            await self.DoUIGuide(guideFileName, _UIGuidePathList, finished, firstFindCallBack);
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask DoUIGuide(this UIGuideComponent self, UIGuidePathList _UIGuidePathList, Action finished = null, Action firstFindCallBack = null)
+        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, Action finished = null, Action firstFindCallBack = null)
         {
             if (_UIGuidePathList == null || _UIGuidePathList.list.Count == 0)
             {
@@ -119,6 +119,7 @@ namespace ET.Client
 
             self.finished = finished;
 
+            self.guideFileName = guideFileName;
             self.nowIndex = 0;
             self._UIGuidePathList = _UIGuidePathList;
             await self.DoGuideStep();
@@ -148,7 +149,7 @@ namespace ET.Client
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
             {
-                eventName = "TutorialStepEnded",
+                eventName = $"TutorialStepEnded_{self.guideFileName}",
                 timerKey = self.nowIndex.ToString(),
             });
             if (self.CurUIGuideComponent != null)
@@ -174,7 +175,7 @@ namespace ET.Client
         {
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
-                eventName = "TutorialStepEnded",
+                eventName = $"TutorialStepEnded_{self.guideFileName}",
                 properties = new()
                 {
                     {"step_id_code", self.nowIndex},

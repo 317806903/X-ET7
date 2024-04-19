@@ -12,6 +12,6 @@ namespace ET
         public long unitId;
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, long> KV = new();
+        public Dictionary<int, long> KV;
     }
 }

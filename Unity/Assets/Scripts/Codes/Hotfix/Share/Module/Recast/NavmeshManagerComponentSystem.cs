@@ -37,7 +37,7 @@ namespace ET
             self.recordMeshHitDic.Clear();
         }
 
-        public static void InitByFile(this NavmeshManagerComponent self, string filePath)
+        public static void InitByFile(this NavmeshManagerComponent self, string filePath, float scale)
         {
             byte[] bytes = EventSystem.Instance.Invoke<NavmeshManagerComponent.RecastFileLoader, byte[]>(new NavmeshManagerComponent.RecastFileLoader() {Name = filePath});
             if (bytes.Length == 0)
@@ -47,7 +47,7 @@ namespace ET
 
             self.objBytes = bytes;
 
-            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes);
+            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
 
             self._sample = new Sample(geom, null, null);
             self.ResetSampleSettings(self._sample, 1);
@@ -55,11 +55,11 @@ namespace ET
             self._InitNavMeshBuilder();
         }
 
-        public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes)
+        public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes, float scale)
         {
             self.objBytes = bytes;
 
-            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes);
+            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
 
             self._sample = new Sample(geom, null, null);
             self.ResetSampleSettings(self._sample, 1);

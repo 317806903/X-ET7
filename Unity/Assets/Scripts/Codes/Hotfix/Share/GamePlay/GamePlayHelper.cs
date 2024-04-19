@@ -435,6 +435,20 @@ namespace ET
 				{
 					battleCfgId = "GamePlayBattleLevel_ARRoom";
 				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVE)
+				{
+					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
+						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(false, pveIndex);
+					battleCfgId = challengeLevelCfg.Id;
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVP)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.NoARPVPCfgId;
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalEndlessChallenge)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.NoAREndlessChallengeCfgId;
+				}
 			}
 			else if (RoomTypeIn == RoomType.AR)
 			{

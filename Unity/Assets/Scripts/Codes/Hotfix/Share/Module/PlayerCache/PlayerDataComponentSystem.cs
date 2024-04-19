@@ -27,6 +27,8 @@ namespace ET
                     return self.GetComponent<PlayerBackPackComponent>();
                 case PlayerModelType.BattleCard:
                     return self.GetComponent<PlayerBattleCardComponent>();
+                case PlayerModelType.FunctionMenu:
+                    return self.GetComponent<PlayerFunctionMenuComponent>();
                 default:
                     break;
             }
@@ -49,6 +51,9 @@ namespace ET
                         break;
                     case PlayerModelType.BattleCard:
                         self.RemoveComponent<PlayerBattleCardComponent>();
+                        break;
+                    case PlayerModelType.FunctionMenu:
+                        self.RemoveComponent<PlayerFunctionMenuComponent>();
                         break;
                     default:
                         break;
@@ -74,7 +79,13 @@ namespace ET
                         self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys);
                         entity.Dispose();
                         return battleCardComponent;
+                    case PlayerModelType.FunctionMenu:
+                        PlayerFunctionMenuComponent playerFunctionMenuComponent = self.GetComponent<PlayerFunctionMenuComponent>();
+                        self.ChgFieldValue<PlayerFunctionMenuComponent>(playerFunctionMenuComponent, (PlayerFunctionMenuComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerFunctionMenuComponent;
                     default:
+                        entity.Dispose();
                         break;
                 }
 

@@ -48,10 +48,13 @@ namespace ET.LoadMesh
         /// </summary>
         public int[] TriangleArray;
 
+        private bool isLeft;
+
         /// <summary>
         /// 构造函数	/// </summary>
-        public ObjMesh()
+        public ObjMesh(bool isLeft = true)
         {
+            this.isLeft = isLeft;
             //初始化列表
             this.uvArrayList = new List<Vector3>();
             this.normalArrayList = new List<Vector3>();
@@ -82,9 +85,18 @@ namespace ET.LoadMesh
                 {
                     case "v":
                         //处理顶点
-                        this.vertexArrayList.Add(new Vector3(ConvertToFloat(chars[1]),
-                            ConvertToFloat(chars[2]),
-                            ConvertToFloat(chars[3])));
+                        if (this.isLeft)
+                        {
+                            this.vertexArrayList.Add(new Vector3(-ConvertToFloat(chars[1]),
+                                ConvertToFloat(chars[2]),
+                                ConvertToFloat(chars[3])));
+                        }
+                        else
+                        {
+                            this.vertexArrayList.Add(new Vector3(ConvertToFloat(chars[1]),
+                                ConvertToFloat(chars[2]),
+                                ConvertToFloat(chars[3])));
+                        }
                         break;
                     case "vn":
                         //处理法线
@@ -335,10 +347,20 @@ namespace ET.LoadMesh
             //这里需要研究研究
             for (int j = 1; j < indexVectorList.Count - 1; ++j)
             {
-                //按照0,1,2这样的方式来组成面
-                triangleList.Add(indexVectorList[0]);
-                triangleList.Add(indexVectorList[j]);
-                triangleList.Add(indexVectorList[j + 1]);
+                if (this.isLeft)
+                {
+                    //按照0,1,2这样的方式来组成面
+                    triangleList.Add(indexVectorList[j + 1]);
+                    triangleList.Add(indexVectorList[j]);
+                    triangleList.Add(indexVectorList[0]);
+                }
+                else
+                {
+                    //按照0,1,2这样的方式来组成面
+                    triangleList.Add(indexVectorList[0]);
+                    triangleList.Add(indexVectorList[j]);
+                    triangleList.Add(indexVectorList[j + 1]);
+                }
             }
 
             //添加到索引列表

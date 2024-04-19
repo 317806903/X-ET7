@@ -65,7 +65,7 @@ namespace ET.Server
             accountComponent.loginType = loginType;
             accountComponent.loginIP = loginIP;
             accountComponent.UpdateLoginTime();
-            await dbComponent.SaveNotWait(accountComponent);
+            accountComponent.SetDataCacheAutoWrite();
 
             return (accountComponent.GetPlayerId(), isFirstLogin);
         }
@@ -135,7 +135,7 @@ namespace ET.Server
 
             accountComponent.loginType = loginType;
             accountComponent.UpdateLoginTime();
-            await dbComponent.SaveNotWait(accountComponent);
+            accountComponent.SetDataCacheAutoWrite();
 
             return true;
         }

@@ -45,16 +45,28 @@ namespace ET.Client
 			await ETTask.CompletedTask;
 		}
 
-		public static async ETTask SendSetStopActorMove(Scene scene, bool isStopActorMove)
+		public static async ETTask SendSetStopActorMoveWhenDebug(Scene scene, bool isStopActorMove)
 		{
 			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)
 			{
 				return;
 			}
 
-			C2M_SetStopActorMove _C2M_SetStopActorMove = new ();
-			_C2M_SetStopActorMove.IsStopActorMove = isStopActorMove?1:0;
-			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_SetStopActorMove);
+			C2M_SetStopActorMoveWhenDebug _C2M_SetStopActorMoveWhenDebug = new ();
+			_C2M_SetStopActorMoveWhenDebug.IsStopActorMove = isStopActorMove?1:0;
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_SetStopActorMoveWhenDebug);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask SendForceGameEndWhenDebug(Scene scene)
+		{
+			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)
+			{
+				return;
+			}
+
+			C2M_ForceGameEndWhenDebug _C2M_ForceGameEndWhenDebug = new ();
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_ForceGameEndWhenDebug);
 			await ETTask.CompletedTask;
 		}
 	}

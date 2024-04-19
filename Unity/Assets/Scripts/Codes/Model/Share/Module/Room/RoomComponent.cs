@@ -42,6 +42,8 @@ namespace ET
         public List<long> roomMemberSeat;
 
         [BsonIgnore]
+        public int MaxMemberCount = 10;
+        [BsonIgnore]
         public int waitFrameChk = 900;
         [BsonIgnore]
         public int curFrameChk = 0;

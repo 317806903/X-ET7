@@ -41,7 +41,7 @@ namespace ET
 
         public static void _InitComponent(this ItemComponent self)
         {
-            if (self.model.ItemType == ItemType.Tower)
+            if (ItemHelper.ChkIsTower(self.model.Id))
             {
                 self.AddComponent<ItemTowerComponent>();
             }

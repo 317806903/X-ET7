@@ -76,7 +76,7 @@ public static class PListProcessor
         {
             plist.root.SetString("GADUUnityVersion", unityVersion);
         }
-
+        plist.root.SetBoolean("AppsFlyerShouldSwizzle", true);
         File.WriteAllText(plistPath, plist.WriteToString());
     }
 

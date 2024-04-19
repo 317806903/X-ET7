@@ -79,7 +79,7 @@ namespace ET.Client
             {
                 if (!self.IsWindowVisible(windowsId))
                 {
-                    Log.Warning($"{windowsId} is need show state!");
+                    //Log.Warning($"{windowsId} is need show state!");
                     return null;
                 }
             }
@@ -526,7 +526,7 @@ namespace ET.Client
             self.UIBaseWindowlistCached.Clear();
             foreach (KeyValuePair<int, UIBaseWindow> window in self.VisibleWindowsDic)
             {
-                if (window.Value.windowType == UIWindowType.Fixed && !includeFixed)
+                if ((window.Value.windowType == UIWindowType.Fixed || window.Value.windowType == UIWindowType.HighestFixedRoot) && !includeFixed)
                     continue;
                 if (window.Value.IsDisposed)
                 {

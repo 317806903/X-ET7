@@ -153,9 +153,9 @@ namespace ET.Client
         {
 
             Scene clientScene = self.DomainScene();
-            await ET.Client.PlayerHelper.SendGetPlayerStatus(clientScene);
+            await ET.Client.PlayerStatusHelper.SendGetPlayerStatus(clientScene);
 
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(clientScene);
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(clientScene);
             Log.Debug($"--ReLoginComponentSystem.ApplicationStatusChg playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}]");
             if (playerStatusComponent.PlayerStatus == PlayerStatus.Hall)
             {

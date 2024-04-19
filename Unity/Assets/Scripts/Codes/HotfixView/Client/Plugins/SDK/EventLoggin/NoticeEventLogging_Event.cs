@@ -14,7 +14,7 @@ namespace ET.Client
             Dictionary<string, object> properties = args.properties;
             if (properties != null)
             {
-                PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(scene);
+                PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
                 if (playerStatusComponent != null)
                 {
                     properties["PlayerStatus"] = playerStatusComponent.PlayerStatus.ToString();

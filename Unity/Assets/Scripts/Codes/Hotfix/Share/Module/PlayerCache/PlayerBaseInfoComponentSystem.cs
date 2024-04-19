@@ -70,18 +70,18 @@ namespace ET
         {
             self.ChallengeClearLevel = level;
         }
-        
+
         public static void UpdatePhysicalStrength(this PlayerBaseInfoComponent self)
         {
             if (TimeHelper.ServerNow() < self.nextRecoverTime)
             {
                 return;
             }
-            
+
             long recoverTime = GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000;
             int recoverPhysiacalStrength = GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength;
             int maxPysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
-            
+
             // if (self.physicalStrength >= maxPysicalStrength)
             // {
             //     self.physicalStrength = maxPysicalStrength;
@@ -90,7 +90,7 @@ namespace ET
             // }
 
             long elapsedTime = TimeHelper.ServerNow() - self.nextRecoverTime;
-            var create = (elapsedTime / recoverTime + 1) * recoverPhysiacalStrength;
+            var create = ((float)elapsedTime / recoverTime + 1) * recoverPhysiacalStrength;
             if (create > maxPysicalStrength)
             {
                 self.physicalStrength = maxPysicalStrength;
@@ -123,9 +123,9 @@ namespace ET
             return self.physicalStrength;
         }
 
-        public static bool ChkPhysicalStrength(this PlayerBaseInfoComponent self, int chgValue)
+        public static bool _ChkPhysicalStrength(this PlayerBaseInfoComponent self, int chgValue)
         {
-            if (self.physicalStrength + chgValue < 0)
+            if (self.GetPhysicalStrength() + chgValue < 0)
             {
                 Log.Error($"Lack of physical strength, needPhysicalStrength:{chgValue}, curPhysicalStrength:{self.physicalStrength}");
                 return false;
@@ -147,7 +147,7 @@ namespace ET
                 self.physicalStrength = maxPysicalStrength;
             }
         }
-        
+
         public static LoginType GetBindLoginType(this PlayerBaseInfoComponent self)
         {
             return self.BindLoginType;

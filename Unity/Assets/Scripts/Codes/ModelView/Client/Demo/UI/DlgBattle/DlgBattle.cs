@@ -11,11 +11,13 @@ namespace ET.Client
 		public DlgBattleViewComponent View { get => this.GetComponent<DlgBattleViewComponent>(); }
 
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
-		public Dictionary<int, Scroll_Item_Tower> ScrollItemTanks;
+		public Dictionary<int, Scroll_Item_Tower> ScrollItemMonsters;
 
 		public List<string> towerList = new List<string>()
 		{
-			"Tow11_1",
+			"Tow25_1",
+			"Tow25_2",
+			"Tow25_3",
 			"Tow1_1",
 			"Tow1_2",
 			"Tow1_3",
@@ -98,6 +100,7 @@ namespace ET.Client
 		{
 			"Monster_Infinite_4_1",
 			"Monster_Infinite_13_1",
+			"Monster_Challenge3_5_1",
 		};
 
 		public long Timer;

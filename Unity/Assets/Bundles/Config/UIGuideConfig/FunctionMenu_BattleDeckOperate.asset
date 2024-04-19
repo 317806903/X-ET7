@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: FunctionMenu_BattleDeckOperate
+  m_EditorClassIdentifier: 
+  list:
+  - name: "\u70B9towers"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_BattleDeck
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_BattleDeckOperate_TapTowers
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u63D0\u793A\u62D6\u62FD"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 1
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDeck/E_Bag/E_CardCollection/info/list/ELoopScrollList_TowerCardItem/Content/Item_TowerBuy/EButton_Select
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgBattleDeck/E_Bag/E_CardCollection/info/list/ELoopScrollList_TowerCardItem/Content/Item_TowerBuy/EButton_Select
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_BattleDeckOperate_Drag
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 1
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

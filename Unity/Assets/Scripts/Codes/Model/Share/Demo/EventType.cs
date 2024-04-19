@@ -104,20 +104,10 @@ namespace ET
             public List<long> unitIds;
         }
 
-        public struct SyncPosUnits
+        public struct SyncDataList
         {
-            public List<Unit> units;
-        }
-
-        public struct SyncNumericUnits
-        {
-            public List<Unit> units;
-        }
-
-        public struct SyncNumericUnitsKey
-        {
-            public List<Unit> units;
-            public List<List<int>> keys;
+            public long playerId;
+            public List<byte[]> syncDataList;
         }
 
         public struct SyncPlayAudio
@@ -135,12 +125,6 @@ namespace ET
             public int chgValue;
         }
 
-        public struct SyncPlayAnimator
-        {
-            public Unit unit;
-            public bool isOnlySelfShow;
-        }
-
         public struct SyncUnitEffects
         {
             public Unit unit;
@@ -148,6 +132,11 @@ namespace ET
             public long effectObjId;
             public ET.Ability.EffectObj effectObj;
             public bool isOnlySelfShow;
+        }
+
+        public struct NoticeGameBegin2Server
+        {
+            public GamePlayComponent gamePlayComponent;
         }
 
         public struct NoticeGameEnd2Server
@@ -290,6 +279,15 @@ namespace ET
         public struct NoticeEventLoggingSetUserProperties
         {
             public Dictionary<string, object> properties;
+        }
+
+        public struct NoticePlayerStatusChg
+        {
+        }
+
+        public struct NoticePlayerCacheChg
+        {
+            public PlayerModelType playerModelType;
         }
     }
 }

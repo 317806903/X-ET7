@@ -29,11 +29,13 @@ namespace ET
     public enum ServerEnum
     {
         Localhost,
-        Release_148,
+        Release_148Master,
         Release_148Release,
         Release_Zpb,
         Release_OutNet_CN,
+        Release_OutNet_CN_Demo,
         Release_OutNet_EN,
+        Release_OutNet_EN_Auditing,
         Release_ExternalTest,
     }
 
@@ -42,32 +44,38 @@ namespace ET
         private Dictionary<ServerEnum, string> serverAddressList = new()
         {
             { ServerEnum.Localhost, "127.0.0.1"},
-            { ServerEnum.Release_148, "192.168.10.148"},
+            { ServerEnum.Release_148Master, "192.168.10.148"},
             { ServerEnum.Release_148Release, "192.168.10.148"},
             { ServerEnum.Release_Zpb, "192.168.10.58"},
             { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
+            { ServerEnum.Release_OutNet_CN_Demo, "8.134.156.170"},
             { ServerEnum.Release_OutNet_EN, "34.225.211.137"},
+            { ServerEnum.Release_OutNet_EN_Auditing, "34.225.211.137"},
             { ServerEnum.Release_ExternalTest, "artd-gateway.deepmirror.com"},
         };
         private Dictionary<ServerEnum, int> serverAddressPortList = new()
         {
             { ServerEnum.Localhost, 3478},
-            { ServerEnum.Release_148, 5478},
+            { ServerEnum.Release_148Master, 5478},
             { ServerEnum.Release_148Release, 3478},
             { ServerEnum.Release_Zpb, 3478},
             { ServerEnum.Release_OutNet_CN, 3478},
+            { ServerEnum.Release_OutNet_CN_Demo, 5478},
             { ServerEnum.Release_OutNet_EN, 3478},
+            { ServerEnum.Release_OutNet_EN_Auditing, 5478},
             { ServerEnum.Release_ExternalTest, 3478},
         };
         private Dictionary<ServerEnum, string> hotfixAddressList = new()
         {
             { ServerEnum.Localhost, "http://127.0.0.1"},
             //{ ServerEnum.Release_148, "http://192.168.10.148"},
-            { ServerEnum.Release_148, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148"},
+            { ServerEnum.Release_148Master, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master"},
             { ServerEnum.Release_148Release, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release"},
             { ServerEnum.Release_Zpb, "http://192.168.10.58"},
             { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
+            { ServerEnum.Release_OutNet_CN_Demo, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo"},
             { ServerEnum.Release_OutNet_EN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN"},
+            { ServerEnum.Release_OutNet_EN_Auditing, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN_Auditing"},
             { ServerEnum.Release_ExternalTest, "https://prod-us-sv-aws-artd-deepmirror-s3.oss-us-west-1.aliyuncs.com/resources"},
         };
 

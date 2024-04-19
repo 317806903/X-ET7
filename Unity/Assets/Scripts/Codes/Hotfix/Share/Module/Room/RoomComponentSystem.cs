@@ -12,7 +12,7 @@ namespace ET
             protected override void Awake(RoomComponent self)
             {
                 self.roomMemberSeat = new();
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < self.MaxMemberCount; i++)
                 {
                     self.roomMemberSeat.Add(-1);
                 }
@@ -86,6 +86,19 @@ namespace ET
             return self.GetChild<RoomMember>(playerId);
         }
 
+        public static bool ChkRoomMemberIsFull(this RoomComponent self)
+        {
+            int count = self.roomMemberSeat.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (self.roomMemberSeat[i] == -1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static RoomMember AddRoomMember(this RoomComponent self, long playerId, bool isOwner, RoomTeamId roomTeamId, int seatIndex)
         {
             if (seatIndex == -1)
@@ -98,6 +111,11 @@ namespace ET
                         seatIndex = i;
                         break;
                     }
+                }
+
+                if (seatIndex == -1)
+                {
+                    return null;
                 }
             }
 

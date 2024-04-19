@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: FunctionMenu_ARPVE
+  m_EditorClassIdentifier: 
+  list:
+  - name: "\u70B9\u51FB\u6311\u6218\u6A21\u5F0F"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Challenge
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u5F00\u59CB"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/info/E_Select
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Select
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u6307\u5F15reload"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas
+    hierarchyGuidePath: ReloadRecentButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Reload
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

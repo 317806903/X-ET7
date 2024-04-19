@@ -43,6 +43,9 @@ namespace ET.Ability
         [BsonIgnore]
         public HashSet<long> preHitUnitIds;
 
+        [BsonIgnore]
+        public bool preHitPos;
+
         ///<summary>
         ///子弹命中纪录
         ///</summary>

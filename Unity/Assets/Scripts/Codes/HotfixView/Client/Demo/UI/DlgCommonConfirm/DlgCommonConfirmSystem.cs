@@ -29,6 +29,10 @@ namespace ET.Client
             }
         }
 
+        public static void HideWindow(this DlgCommonConfirm self)
+        {
+        }
+
         public static void Close(this DlgCommonConfirm self)
         {
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonConfirm>();
@@ -46,7 +50,7 @@ namespace ET.Client
             self.View.E_CancelTextTextMeshProUGUI.text = msg;
         }
 
-        public static void ShowConfirmNoClose(this DlgCommonConfirm self, string confirmMsg, string sureText = null, string cancelText = null, string titleText = null)
+        public static void ShowConfirmNoClose(this DlgCommonConfirm self, string confirmMsg, string sureText = null, string titleText = null)
         {
             self.SetDefaultText();
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
@@ -57,10 +61,6 @@ namespace ET.Client
             {
                 self.View.E_SureTextTextMeshProUGUI.text = sureText;
                 self.View.E_OnlySureTextTextMeshProUGUI.text = sureText;
-            }
-            if (string.IsNullOrEmpty(cancelText) == false)
-            {
-                self.View.E_CancelTextTextMeshProUGUI.text = cancelText;
             }
             if (string.IsNullOrEmpty(titleText) == false)
             {
@@ -71,7 +71,7 @@ namespace ET.Client
             self.View.E_SureButton.AddListener(null);
         }
 
-        public static void ShowOnlyConfirm(this DlgCommonConfirm self, string confirmMsg, Action confirmCallBack, string sureText = null, string cancelText = null, string titleText = null)
+        public static void ShowOnlyConfirm(this DlgCommonConfirm self, string confirmMsg, Action confirmCallBack, string sureText = null, string titleText = null)
         {
             self.SetDefaultText();
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
@@ -83,10 +83,7 @@ namespace ET.Client
                 self.View.E_SureTextTextMeshProUGUI.text = sureText;
                 self.View.E_OnlySureTextTextMeshProUGUI.text = sureText;
             }
-            if (string.IsNullOrEmpty(cancelText) == false)
-            {
-                self.View.E_CancelTextTextMeshProUGUI.text = cancelText;
-            }
+
             if (string.IsNullOrEmpty(titleText) == false)
             {
                 self.View.E_TitleTextTextMeshProUGUI.text = titleText;

@@ -22,6 +22,10 @@ namespace ET
                 throw;
             }
             RankEndlessChallengeItemComponent rankEndlessChallengeItemComponent = (RankEndlessChallengeItemComponent)obj;
+            if (this.playerId == rankEndlessChallengeItemComponent.playerId)
+            {
+                return 0;
+            }
             if (this.score != rankEndlessChallengeItemComponent.score)
             {
                 return this.score.CompareTo(rankEndlessChallengeItemComponent.score);

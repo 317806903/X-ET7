@@ -43,13 +43,25 @@ namespace ET.Client
 				        {
 					        rankShowComponent.Dispose();
 				        }
-				        long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
+				        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
 				        rankShowComponent = rankShowPlayerComponent.SetRankShow(myPlayerId, rankType, (RankShowComponent)entityModel);
 			        }
 		        }
 
 		        return rankShowComponent;
 	        }
+        }
+
+        public static void ClearRankShow(Scene scene, RankType rankType)
+        {
+	        RankShowPlayerComponent rankShowPlayerComponent = GetRankShowPlayerManager(scene);
+	        RankShowComponent rankShowComponent = rankShowPlayerComponent.GetRankShow(rankType);
+	        if (rankShowComponent == null)
+	        {
+		        return;
+	        }
+
+	        rankShowComponent.ClearDataCache();
         }
 
         public static async ETTask<(ulong, int)> GetRankedMoreThan(Scene scene, RankType rankType, long score)

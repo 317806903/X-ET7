@@ -21,9 +21,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         TestGlobalSetting3 = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TestGlobalSetting4 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TestGlobalSetting4.Add(_e0);}}
         ARTutorialFirstCfgId = _buf.ReadString();
-        ARPVECfgId = _buf.ReadString();
         ARPVPCfgId = _buf.ReadString();
         AREndlessChallengeCfgId = _buf.ReadString();
+        NoARPVPCfgId = _buf.ReadString();
+        NoAREndlessChallengeCfgId = _buf.ReadString();
         ShowDamage = _buf.ReadBool();
         ShowGetGold = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AvatarIcons = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AvatarIcons.Add(_e0);}}
@@ -36,11 +37,6 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         ARPVECfgTakePhsicalStrength = _buf.ReadInt();
         ARPVPCfgTakePhsicalStrength = _buf.ReadInt();
         AREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
-        PVELock = _buf.ReadBool();
-        PVPLock = _buf.ReadBool();
-        RankLock = _buf.ReadBool();
-        TutorialLock = _buf.ReadBool();
-        CardsLock = _buf.ReadBool();
         PhysicalStrengthShow = _buf.ReadBool();
         TowerDefenseNearTowerDis = _buf.ReadFloat();
         AdmobAvailable = _buf.ReadBool();
@@ -48,6 +44,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         AREndlessChallengeRecoverGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
         GameReJudgeTime = _buf.ReadLong();
+        MaxBattleCardNum = _buf.ReadInt();
         PostInit();
     }
 
@@ -71,10 +68,6 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public string ARTutorialFirstCfgId { get; private set; }
     /// <summary>
-    /// AR模式PVE的cfgId
-    /// </summary>
-    public string ARPVECfgId { get; private set; }
-    /// <summary>
     /// AR模式PVP的cfgId
     /// </summary>
     public string ARPVPCfgId { get; private set; }
@@ -82,6 +75,14 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// AR模式PVE无尽模式的cfgId
     /// </summary>
     public string AREndlessChallengeCfgId { get; private set; }
+    /// <summary>
+    /// 非AR模式PVP的cfgId
+    /// </summary>
+    public string NoARPVPCfgId { get; private set; }
+    /// <summary>
+    /// 非AR模式PVE无尽模式的cfgId
+    /// </summary>
+    public string NoAREndlessChallengeCfgId { get; private set; }
     /// <summary>
     /// 是否显示伤害数字展示
     /// </summary>
@@ -105,7 +106,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public int UpperLimitOfPhysicalStrength { get; private set; }
     /// <summary>
-    /// 体力值恢复时长
+    /// 体力值恢复时长(秒)
     /// </summary>
     public int RecoverTimeOfPhysicalStrength { get; private set; }
     /// <summary>
@@ -128,26 +129,6 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// AR模式PVE无尽模式所需体力
     /// </summary>
     public int AREndlessChallengeTakePhsicalStrength { get; private set; }
-    /// <summary>
-    /// 挑战模式是否加锁
-    /// </summary>
-    public bool PVELock { get; private set; }
-    /// <summary>
-    /// PVP模式是否加锁
-    /// </summary>
-    public bool PVPLock { get; private set; }
-    /// <summary>
-    /// 排行榜是否加锁
-    /// </summary>
-    public bool RankLock { get; private set; }
-    /// <summary>
-    /// 教程是否加锁
-    /// </summary>
-    public bool TutorialLock { get; private set; }
-    /// <summary>
-    /// 卡牌是否加锁
-    /// </summary>
-    public bool CardsLock { get; private set; }
     /// <summary>
     /// 体力系统是否显示
     /// </summary>
@@ -178,6 +159,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public long GameReJudgeTime { get; private set; }
     public long GameReJudgeTime_Millis => GameReJudgeTime * 1000L;
+    /// <summary>
+    /// 最多出战卡数
+    /// </summary>
+    public int MaxBattleCardNum { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -201,9 +186,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "TestGlobalSetting3:" + TestGlobalSetting3 + ","
         + "TestGlobalSetting4:" + Bright.Common.StringUtil.CollectionToString(TestGlobalSetting4) + ","
         + "ARTutorialFirstCfgId:" + ARTutorialFirstCfgId + ","
-        + "ARPVECfgId:" + ARPVECfgId + ","
         + "ARPVPCfgId:" + ARPVPCfgId + ","
         + "AREndlessChallengeCfgId:" + AREndlessChallengeCfgId + ","
+        + "NoARPVPCfgId:" + NoARPVPCfgId + ","
+        + "NoAREndlessChallengeCfgId:" + NoAREndlessChallengeCfgId + ","
         + "ShowDamage:" + ShowDamage + ","
         + "ShowGetGold:" + ShowGetGold + ","
         + "AvatarIcons:" + Bright.Common.StringUtil.CollectionToString(AvatarIcons) + ","
@@ -216,11 +202,6 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "ARPVECfgTakePhsicalStrength:" + ARPVECfgTakePhsicalStrength + ","
         + "ARPVPCfgTakePhsicalStrength:" + ARPVPCfgTakePhsicalStrength + ","
         + "AREndlessChallengeTakePhsicalStrength:" + AREndlessChallengeTakePhsicalStrength + ","
-        + "PVELock:" + PVELock + ","
-        + "PVPLock:" + PVPLock + ","
-        + "RankLock:" + RankLock + ","
-        + "TutorialLock:" + TutorialLock + ","
-        + "CardsLock:" + CardsLock + ","
         + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
         + "TowerDefenseNearTowerDis:" + TowerDefenseNearTowerDis + ","
         + "AdmobAvailable:" + AdmobAvailable + ","
@@ -228,6 +209,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "AREndlessChallengeRecoverGold:" + AREndlessChallengeRecoverGold + ","
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
         + "GameReJudgeTime:" + GameReJudgeTime + ","
+        + "MaxBattleCardNum:" + MaxBattleCardNum + ","
         + "}";
     }
     

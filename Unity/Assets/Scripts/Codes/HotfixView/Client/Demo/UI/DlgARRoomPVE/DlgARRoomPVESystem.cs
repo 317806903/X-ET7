@@ -17,7 +17,7 @@ namespace ET.Client
             self.View.E_ShowQrCodeButton.AddListenerAsync(self.ShowQrCode);
             self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
-            
+
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
@@ -27,52 +27,147 @@ namespace ET.Client
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddRewardItemRefreshListener(transform, i));
-            
+
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Monsters";
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.poolSize = 3;
-            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) => 
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                  self.AddMonsterItemRefreshListener(transform, i));
         }
 
         public static void ShowWindow(this DlgARRoomPVE self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
-            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance.HideMenu();
-            
+
+            MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance?.HideMenu();
+
             self._ShowWindow().Coroutine();
         }
 
         public static async ETTask _ShowWindow(this DlgARRoomPVE self)
         {
             await self.GetRoomInfo();
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
-            int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
-            string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
-            self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
+
             self.View.ELabel_LevelUITextLocalizeMonoView.DynamicSet(self.level);
             self.ShowTipNodes().Coroutine();
         }
-        
+
         public static async ETTask ShowTipNodes(this DlgARRoomPVE self)
         {
             PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
             if (playerBaseInfoComponent.ChallengeClearLevel + 1 < self.level)
             {
-                string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_Tip_NoReward"); 
-                UIManagerHelper.ShowTipNode(self.DomainScene(), txt);
+                string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_Tip_NoReward");
+                UIManagerHelper.ShowTipTopShow(self.DomainScene(), txt);
             }
+        }
+
+        public static async ETTask<bool> ChkRoomInfoChg(this DlgARRoomPVE self)
+        {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
+            RoomType roomType = playerStatusComponent.RoomType;
+            SubRoomType subRoomType = playerStatusComponent.SubRoomType;
+
+            if (playerStatus != PlayerStatus.Room)
+            {
+                return true;
+            }
+            if (roomType != roomComponent.roomType)
+            {
+                return true;
+            }
+            if (subRoomType != roomComponent.subRoomType)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static async ETTask<bool> ChkARSceneIdChg(this DlgARRoomPVE self)
+        {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            string arSceneId = ARSessionHelper.GetARSceneId(self.DomainScene());
+            if (roomComponent.arSceneId != arSceneId)
+            {
+                if (string.IsNullOrEmpty(roomComponent.arSceneId) == false)
+                {
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
+
+                    DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+                    {
+                        playerStatus = PlayerStatus.Room,
+                        RoomType = roomComponent.roomType,
+                        SubRoomType = roomComponent.subRoomType,
+                        arRoomId = roomComponent.Id,
+                        battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
+                    };
+                    UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static async ETTask RefreshWhenRoomInfoChg(this DlgARRoomPVE self)
+        {
+            if (await self.ChkRoomInfoChg())
+            {
+                await RoomHelper.QuitRoomAsync(self.ClientScene());
+                ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
+                await UIManagerHelper.ExitRoom(self.DomainScene());
+                return;
+            }
+
+            if (await self.ChkARSceneIdChg())
+            {
+                return;
+            }
+
+            await self.RefreshUI();
         }
 
         public static async ETTask RefreshUI(this DlgARRoomPVE self)
         {
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.RefreshCells();
-        
+
             self.SetRoomMemberStatusText();
+
         }
-        
+
+        public static async ETTask RefreshWhenBaseInfoChg(this DlgARRoomPVE self)
+        {
+            await self.UpdatePhysical();
+        }
+
+        public static async ETTask UpdatePhysical(this DlgARRoomPVE self)
+        {
+
+            RoomComponent roomComponent = self.GetRoomComponent();
+
+            if (roomComponent == null)
+            {
+                return;
+            }
+
+            int costValue = 0;
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            {
+                costValue = GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength;
+            }
+            else
+            {
+                costValue = 0;
+            }
+
+            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), costValue).Coroutine();
+        }
+
         public static void SetRoomMemberStatusText(this DlgARRoomPVE self)
         {
             RoomComponent roomComponent = self.GetRoomComponent();
@@ -82,14 +177,22 @@ namespace ET.Client
                 return;
             }
 
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            {
+                self.View.E_ReScanButton.SetVisible(true);
+            }
+            else
+            {
+                self.View.E_ReScanButton.SetVisible(false);
+            }
 
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
                 self.View.ELable_RoomMemberStatusTextMeshProUGUI.text =
                         LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_StartGame");
-                self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.text =
-                        GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength.ToString();
+                self.UpdatePhysical().Coroutine();
                 if (roomComponent.ChkIsAllReady())
                 {
                     self.View.E_RoomMemberStatusImage.SetImageGray(false);
@@ -103,7 +206,7 @@ namespace ET.Client
             }
             else
             {
-                self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.text = "0";
+                self.UpdatePhysical().Coroutine();
                 RoomMember roomMember = roomComponent.GetRoomMember(myPlayerId);
                 bool isReady = roomMember.isReady;
 
@@ -133,7 +236,7 @@ namespace ET.Client
 
         public static async ETTask GetRoomInfo(this DlgARRoomPVE self)
         {
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
@@ -145,12 +248,16 @@ namespace ET.Client
             TowerDefense_ChallengeLevelCfg challengeLevelCfg =
                     TowerDefense_ChallengeLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);
             self.level = challengeLevelCfg.Index;
+            self.isAR = challengeLevelCfg.IsAR;
             List<string> list;
             PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
-            if (playerBaseInfoComponent.ChallengeClearLevel + 1 > self.level){
+            if (playerBaseInfoComponent.ChallengeClearLevel + 1 > self.level)
+            {
                 list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
-            }else{
+            }
+            else
+            {
                 list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
             }
             self.AddUIScrollItems(ref self.ScrollItemReward, list.Count);
@@ -164,7 +271,7 @@ namespace ET.Client
 
         public static RoomComponent GetRoomComponent(this DlgARRoomPVE self)
         {
-            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+            PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
             RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
@@ -174,15 +281,29 @@ namespace ET.Client
         public static async ETTask ChgRoomMemberStatus(this DlgARRoomPVE self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-            
+
             RoomComponent roomComponent = self.GetRoomComponent();
             if (roomComponent == null)
             {
                 return;
             }
-            long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
+                PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+                if (playerBaseInfoComponent.ChallengeClearLevel + 1 < self.level)
+                {
+                    string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ChallengeMode_Unlocked");
+                    UIManagerHelper.ShowTip(self.DomainScene(), txt);
+                    return;
+                }
+
+                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+                if (bRet1 == false)
+                {
+                    return;
+                }
+
                 (bool bRet, string msg) = roomComponent.ChkOwnerStartGame();
                 if (bRet == false)
                 {
@@ -190,19 +311,19 @@ namespace ET.Client
                     return;
                 }
             }
-            
+
             RoomMember myRoomMember = roomComponent.GetRoomMember(myPlayerId);
             bool isReady = myRoomMember.isReady;
-            
+
             isReady = !isReady;
             await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
-            
+
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
                 eventName = "ReadyClicked",
             });
         }
-        
+
         public static async ETTask AddMemberItemRefreshListener(this DlgARRoomPVE self, Transform transform, int index)
         {
             self.SetSrcollOffset();
@@ -228,7 +349,7 @@ namespace ET.Client
             else
             {
                 itemRoom.uiTransform.SetVisible(true);
-                long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
                 RoomMember roomMember = roomComponent.GetRoomMember(roomMemberId);
 
                 itemRoom.EG_ReadyRectTransform.gameObject.SetActive(roomMember.isReady);
@@ -285,98 +406,39 @@ namespace ET.Client
                 await itemRoom.EButton_IconImage.SetPlayerIcon(self.DomainScene(), roomMemberId);
             }
         }
-        
+
         public static async ETTask AddRewardItemRefreshListener(this DlgARRoomPVE self, Transform transform, int index)
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
 
             TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-                    TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, self.level);
+                    TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.isAR, self.level);
             List<string> list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
 
-            string towerCfgId = list[index];
             string itemCfgId = list[index];
-            string towerName = ItemHelper.GetItemName(itemCfgId);
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-
-            string iconPath = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(iconPath) == false)
-            {
-                await itemTowerBuy.EButton_IconImage.SetImageByPath(iconPath);
-            }
-
-            itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
-            itemTowerBuy.ELabel_ContentText.gameObject.SetActive(false);
-            itemTowerBuy.EImage_BuyBGImage.gameObject.SetActive(false);
-            itemTowerBuy.EButton_SelectButton.AddListener(()=>
-            {
-                self.ShowDetails(itemCfgId);
-            });
-
-            itemTowerBuy.EButton_nameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(towerName);
-            itemTowerBuy.SetLevel(itemCfgId);
-            itemTowerBuy.SetLabels(itemCfgId);
-            itemTowerBuy.SetQuality(itemCfgId);
-            itemTowerBuy.SetCheckMark(false);
+            itemTowerBuy.ShowBagItem(itemCfgId, true);
         }
-        
+
         public static async ETTask AddMonsterItemRefreshListener(this DlgARRoomPVE self, Transform transform, int index)
         {
             transform.name = $"Item_Monster_{index}";
             Scroll_Item_Monsters itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
             TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-                    TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, self.level);
+                    TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.isAR, self.level);
             List<string> monsterList = challengeLevelCfg.MonsterList;
 
-            string monsterCfgId = monsterList[index];
             string itemCfgId = monsterList[index];
-            string iconPath = ItemHelper.GetItemIcon(itemCfgId);
-            if (string.IsNullOrEmpty(iconPath) == false)
-            {
-                await itemMonster.EImage_MonsterImage.SetImageByPath(iconPath);
-            }
-            itemMonster.EButton_SelectButton.AddListener(() => { 
-                TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
-                self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(monsterCfg.Desc);			
-                // self.View.E_TipsButton.gameObject.transform.Find("tips").position = transform.position + Vector3.up;
-                // self.View.E_TipsButton.SetVisible(true);
-            });
-            ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onPress.AddListener(async (go, eventData) =>
-            {
-                TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
-                DlgDescTips_ShowWindowData _DlgDescTips_ShowWindowData = new()
-                {
-                    Pos = transform.position + Vector3.up,
-                    Desc = LocalizeComponent.Instance.GetTextValue(monsterCfg.Desc),
-                };
-                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData);
-            });
-            ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onExit.AddListener(async (go, eventData) =>
-            {
-                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgDescTips>();
-            });
+            itemMonster.ShowMonsterItem(itemCfgId, true);
         }
 
-        public static void ShowDetails(this DlgARRoomPVE self, string itemCfgId)
-        {
-            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-            _UIComponent.ShowWindow<DlgDetails>();
-            DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
-            if (_DlgDetails != null)
-            {
-                _DlgDetails.SetCurItemCfgId(itemCfgId);
-            }
-        }
-        
         public static async ETTask ChgRoomSeat(this DlgARRoomPVE self, int newSeat)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await RoomHelper.ChgRoomMemberSeatAsync(self.ClientScene(), newSeat);
         }
-        
+
         public static async ETTask KickOutRoom(this DlgARRoomPVE self, long beKickedPlayerId)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
@@ -429,14 +491,23 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-            ARSessionHelper.TriggerReScan(self.DomainScene());
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
+            RoomComponent roomComponent = self.GetRoomComponent();
+            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+            {
+                playerStatus = PlayerStatus.Room,
+                RoomType = roomComponent.roomType,
+                SubRoomType = roomComponent.subRoomType,
+                arRoomId = roomComponent.Id,
+                battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
+            };
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
 
-            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-            _UIComponent.HideWindow<DlgARRoomPVE>();
+            ARSessionHelper.TriggerReScan(self.DomainScene());
 
             await ETTask.CompletedTask;
         }
-        
+
         public static void SetSrcollOffset(this DlgARRoomPVE self)
         {
             int width = (int)self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2;

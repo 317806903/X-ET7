@@ -25,13 +25,22 @@ namespace ET.Server
 			{
 				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
 			}
-			roomManagerComponent.JoinRoom(playerId, roomId);
-			response.RoomType = (int)roomComponent.roomType;
-			response.SubRoomType = (int)roomComponent.subRoomType;
 
+			bool isFull = roomManagerComponent.ChkRoomMemberIsFull(roomId);
+			if (isFull)
+			{
+				response.Error = ET.ErrorCode.ERR_LogicError;
+				response.Message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomMemberFull");
+			}
+			else
+			{
+				roomManagerComponent.JoinRoom(playerId, roomId);
+				response.RoomType = (int)roomComponent.roomType;
+				response.SubRoomType = (int)roomComponent.subRoomType;
 
-			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
+				ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 
+			}
 			await ETTask.CompletedTask;
 		}
 	}

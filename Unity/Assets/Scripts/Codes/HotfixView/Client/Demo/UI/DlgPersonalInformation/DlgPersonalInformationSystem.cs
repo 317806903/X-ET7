@@ -173,7 +173,7 @@ namespace ET.Client
 
         public static async ETTask CreateAvatarScrollItem(this DlgPersonalInformation self)
         {
-            int count = ET.Client.PlayerHelper.GetAvatarIconList().Count;
+            int count = ET.Client.PlayerStatusHelper.GetAvatarIconList().Count;
             self.AddUIScrollItems(ref self.ScrollItemAvatarIcons, count);
             self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.SetVisible(true, count);
         }
@@ -181,7 +181,7 @@ namespace ET.Client
         public static async ETTask AddAvatarItemRefreshListener(this DlgPersonalInformation self, Transform transform, int index)
         {
             Scroll_Item_AvatarIcon itemAvatar = self.ScrollItemAvatarIcons[index].BindTrans(transform);
-            List<string> avatarIconList = ET.Client.PlayerHelper.GetAvatarIconList();
+            List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
             await itemAvatar.EButton_IconImage.SetImageByPath(avatarIconList[index]);
             if (self.curSelectedIconIndex == index)
             {
@@ -239,7 +239,7 @@ namespace ET.Client
                     {
                         ET.Client.LoginSDKManagerComponent.Instance.SetClientRecordAccountLoginTimeNone();
                         ET.Client.LoginSDKManagerComponent.Instance.SDKLoginOut(false).Coroutine();
-                    }, sureTxt, null, titleTxt);
+                    }, sureTxt, titleTxt);
                 }else{
                     self.View.E_InputFieldTMP_InputField.text = accountName;
                     self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && loginType == LoginType.Editor);

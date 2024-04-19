@@ -551,108 +551,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_EnergyButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyButton == null )
-				{
-					this.m_E_EnergyButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy");
-				}
-				return this.m_E_EnergyButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_EnergyImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_EnergyImage == null )
-				{
-					this.m_E_EnergyImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy");
-				}
-				return this.m_E_EnergyImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PhysicalStrengthNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/value/E_Energy/ELabel_PhysicalStrengthNum");
-				}
-				return this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button E_GoldCoinButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_GoldCoinButton == null )
-				{
-					this.m_E_GoldCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin");
-				}
-				return this.m_E_GoldCoinButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_GoldCoinImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_GoldCoinImage == null )
-				{
-					this.m_E_GoldCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin");
-				}
-				return this.m_E_GoldCoinImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_CoinNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_CoinNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_CoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/value/E_GoldCoin/ELabel_CoinNum");
-				}
-				return this.m_ELabel_CoinNumTextMeshProUGUI;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -687,12 +585,6 @@ namespace ET.Client
 			this.m_EButton_ChooseBattleCfgButton = null;
 			this.m_EButton_ChooseBattleCfgImage = null;
 			this.m_ELabel_BattleCfgIdTextMeshProUGUI = null;
-			this.m_E_EnergyButton = null;
-			this.m_E_EnergyImage = null;
-			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
-			this.m_E_GoldCoinButton = null;
-			this.m_E_GoldCoinImage = null;
-			this.m_ELabel_CoinNumTextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
@@ -728,12 +620,6 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_ChooseBattleCfgButton = null;
 		private UnityEngine.UI.Image m_EButton_ChooseBattleCfgImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_BattleCfgIdTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_EnergyButton = null;
-		private UnityEngine.UI.Image m_E_EnergyImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_GoldCoinButton = null;
-		private UnityEngine.UI.Image m_E_GoldCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_CoinNumTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

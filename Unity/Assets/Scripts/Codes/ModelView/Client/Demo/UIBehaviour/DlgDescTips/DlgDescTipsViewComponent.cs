@@ -7,6 +7,40 @@ namespace ET.Client
 	[EnableMethod]
 	public class DlgDescTipsViewComponent : Entity, IAwake, IDestroy
 	{
+		public UnityEngine.UI.Button E_BGButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BGButton == null )
+				{
+					this.m_E_BGButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_BG");
+				}
+				return this.m_E_BGButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BGImage == null )
+				{
+					this.m_E_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_BG");
+				}
+				return this.m_E_BGImage;
+			}
+		}
+
 		public UnityEngine.RectTransform EG_TipsRectTransform
 		{
 			get
@@ -94,6 +128,8 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
+			this.m_E_BGButton = null;
+			this.m_E_BGImage = null;
 			this.m_EG_TipsRectTransform = null;
 			this.m_EImage_Label1Image = null;
 			this.m_ELabel_Label1TextMeshProUGUI = null;
@@ -102,6 +138,8 @@ namespace ET.Client
 			this.uiTransform = null;
 		}
 
+		private UnityEngine.UI.Button m_E_BGButton = null;
+		private UnityEngine.UI.Image m_E_BGImage = null;
 		private UnityEngine.RectTransform m_EG_TipsRectTransform = null;
 		private UnityEngine.UI.Image m_EImage_Label1Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;

@@ -236,16 +236,18 @@ namespace ET.Client
         /// </summary>
         /// <param name="clientScene"></param>
         /// <param name="newBattleCfgId"></param>
-        public static async ETTask<bool> SetARRoomInfoAsync(Scene clientScene, string arSceneId, string arMeshDownLoadUrl, float arMapScale)
+        public static async ETTask<bool> SetARRoomInfoAsync(Scene clientScene, float arMapScale, ARMeshType arMeshType, string arSceneId, string arMeshDownLoadUrl, byte[] arMeshBytes)
         {
             try
             {
                 G2C_SetARRoomInfo _G2C_SetARRoomInfo = await ET.Client.SessionHelper.GetSession(clientScene).Call(new
                         C2G_SetARRoomInfo()
                 {
+                    ARMapScale = (int)(arMapScale * 100),
+                    ARMeshType = (int)arMeshType,
                     ARSceneId = arSceneId,
                     ARMeshDownLoadUrl = arMeshDownLoadUrl,
-                    ARMapScale = (int)(arMapScale * 100),
+                    ARMeshBytes = arMeshBytes,
                 }) as G2C_SetARRoomInfo;
                 if (_G2C_SetARRoomInfo.Error != ET.ErrorCode.ERR_Success)
                 {

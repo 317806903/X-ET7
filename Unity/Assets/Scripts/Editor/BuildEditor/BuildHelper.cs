@@ -260,10 +260,10 @@ namespace ET
                 break;
             }
 
-            PackName packName = PackName.InNet148;
+            PackName packName = PackName.InNet148Master;
             if (string.IsNullOrEmpty(buildPackNameParam))
             {
-                packName = PackName.InNet148;
+                packName = PackName.InNet148Master;
             }
             else if (buildPackNameParam == "Local")
             {
@@ -271,7 +271,7 @@ namespace ET
             }
             else if (buildPackNameParam == "InNet148")
             {
-                packName = PackName.InNet148;
+                packName = PackName.InNet148Master;
             }
             else if (buildPackNameParam == "OutNet_Benchmark")
             {

@@ -9,6 +9,7 @@ namespace ET
 		TW,
 		EN,
 		GDC,
+		OnDevice,
 	}
 
     [CreateAssetMenu(menuName = "ET/CreateResConfig", fileName = "ResConfig", order = 0)]

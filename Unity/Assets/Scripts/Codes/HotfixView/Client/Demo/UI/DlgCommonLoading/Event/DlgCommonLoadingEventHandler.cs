@@ -6,7 +6,7 @@
 	{
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.windowType = UIWindowType.PopUp;
+			uiBaseWindow.windowType = UIWindowType.LoadingRoot;
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)

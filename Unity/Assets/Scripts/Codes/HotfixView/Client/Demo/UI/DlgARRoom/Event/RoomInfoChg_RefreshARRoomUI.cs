@@ -14,7 +14,7 @@ namespace ET.Client
             DlgARRoom _DlgARRoom = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgARRoom>(true);
             if (_DlgARRoom != null)
             {
-                _DlgARRoom.RefreshUI().Coroutine();
+                _DlgARRoom.RefreshWhenRoomInfoChg().Coroutine();
             }
             await ETTask.CompletedTask;
         }

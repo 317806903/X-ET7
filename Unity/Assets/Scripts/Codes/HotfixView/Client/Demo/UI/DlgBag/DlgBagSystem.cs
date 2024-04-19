@@ -14,11 +14,11 @@ namespace ET.Client
 		{
 			self.View.E_QuitBattleButton.AddListenerAsync(self.OnQuitButton);
 			self.View.E_BG_ClickButton.AddListenerAsync(self.OnBgClick);
-			
+
 			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
 			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.prefabSource.poolSize = 24;
 			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.AddItemRefreshListener((transform, i) =>
-					self.AddBagItemRefreshListener(transform, i));
+					self.AddBagItemRefreshListener(transform, i).Coroutine());
 		}
 
 		public static void ShowWindow(this DlgBag self, ShowWindowData contextData = null)
@@ -26,7 +26,11 @@ namespace ET.Client
 			self.ShowBg();
 			self.CreateCardScrollItem();
 		}
-		
+
+		public static void HideWindow(this DlgBag self)
+		{
+		}
+
 		public static void ShowBg(this DlgBag self)
 		{
 			bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
@@ -42,7 +46,14 @@ namespace ET.Client
 				self.View.EG_bgRectTransform.SetVisible(true);
 			}
 		}
-		
+
+		public static async ETTask Refresh(this DlgBag self)
+		{
+			self.CreateCardScrollItem();
+
+			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.RefreshCells();
+		}
+
 		public static void CreateCardScrollItem(this DlgBag self)
 		{
 			int count = 24;
@@ -62,44 +73,15 @@ namespace ET.Client
 			Scroll_Item_TowerBuy BagItem = self.ScrollBagItem[index].BindTrans(transform);
 			PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
 			List<ItemComponent> itemList = playerBackPackComponent.GetItemList();
-
+			itemList.Sort((x, y) => x.model.ShowPriority.CompareTo(y.model.ShowPriority));
+			string itemCfgId = "";
 			if (index < itemList.Count)
 			{
-				string itemCfgId = itemList[index].CfgId;
-				BagItem.EButton_nameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-				await BagItem.EButton_IconImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId));
-				BagItem.EImage_TowerBuyShowImage.SetVisible(true);
-				BagItem.EButton_BuyButton.SetVisible(false);
-				
-				if (ItemHelper.ChkIsTower(itemCfgId)) 
-				{
-					BagItem.SetLabels(itemCfgId);
-					BagItem.SetQuality(itemCfgId);
-					BagItem.SetCheckMark(false);
-				}
-
-				BagItem.EButton_SelectButton.AddListener(()=>
-				{
-					self.ShowDetails(itemCfgId);
-				});
+				itemCfgId = itemList[index].CfgId;
 			}
-			else
-			{
-				BagItem.EImage_TowerBuyShowImage.SetVisible(false);
-			}
+			BagItem.ShowBagItem(itemCfgId, true);
 		}
 
-		public static void ShowDetails(this DlgBag self, string itemCfgId)
-		{
-			UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-			_UIComponent.ShowWindow<DlgDetails>();
-			DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
-			if (_DlgDetails != null)
-			{
-				_DlgDetails.SetCurItemCfgId(itemCfgId);
-			}
-		}
-		
 		public static async ETTask OnBgClick(this DlgBag self)
 		{
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBag>();

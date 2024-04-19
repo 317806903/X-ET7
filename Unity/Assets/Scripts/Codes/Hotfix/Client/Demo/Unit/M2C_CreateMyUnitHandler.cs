@@ -7,7 +7,7 @@
 		{
 			Scene clientScene = session.ClientScene();
 
-			Player player = ET.Client.PlayerHelper.GetMyPlayer(clientScene);
+			Player player = ET.Client.PlayerStatusHelper.GetMyPlayer(clientScene);
 			player.UnitId = message.Unit.UnitId;
 			// 通知场景切换协程继续往下走
 			session.DomainScene().GetComponent<ObjectWait>().Notify(new Wait_CreateMyUnit() {Message = message});

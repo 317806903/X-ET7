@@ -21,6 +21,7 @@ namespace ET.AbilityConfig
         Skill1 = 5,
         Skill2 = 6,
         Die = 7,
+        Show = 8,
     }
 
 } 

@@ -9,6 +9,7 @@ namespace ET
 	[ComponentOf(typeof(GamePlayTowerDefenseComponent))]
 	public class PlayerOwnerTowersComponent : Entity, IAwake, IDestroy, ITransferClient
 	{
+		public bool initPlayerOwnerTowerCard = false;
 		/// <summary>
 		/// 玩家拥有的卡池(卡片)(playerId, towerCfgId, towerLevel)
 		/// </summary>
@@ -44,6 +45,12 @@ namespace ET
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiMapSimple<long, long> playerId2unitTowerId;
+
+		/// <summary>
+		/// 玩家对应塔列表(仅AttackTower)
+		/// </summary>
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public MultiMapSimple<long, long> playerId2unitAttackTowerId;
 
 		[BsonIgnore]
 		public MultiMap<string, long> existTowerDic;

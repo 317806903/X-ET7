@@ -11,9 +11,13 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
+			int ARMapScale = request.ARMapScale;
+
+			ARMeshType ARMeshType = (ARMeshType)request.ARMeshType;
 			string ARSceneId = request.ARSceneId;
 			string ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
-			int ARMapScale = request.ARMapScale;
+			byte[] ARMeshBytes = request.ARMeshBytes;
+
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 
 			if (roomComponent.ownerRoomMemberId != playerId)
@@ -25,9 +29,26 @@ namespace ET.Server
 				return;
 			}
 
+			bool isNeedResetReady = false;
+			if (roomComponent.arSceneId != ARSceneId)
+			{
+				isNeedResetReady = true;
+			}
 			roomManagerComponent.SetARSceneId(roomId, ARSceneId);
-			roomManagerComponent.SetARMeshDownLoadUrl(roomId, ARMeshDownLoadUrl);
+			roomManagerComponent.SetARMeshInfo(roomId, ARMeshType, ARMeshDownLoadUrl, ARMeshBytes);
 			roomManagerComponent.SetARMapScale(roomId, ARMapScale);
+
+			if (isNeedResetReady)
+			{
+				List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+				for (int i = 0; i < roomMemberList.Count; i++)
+				{
+					RoomMember roomMember = roomMemberList[i];
+					roomMember.isReady = false;
+				}
+			}
+
+			ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, false).Coroutine();
 
 			await ETTask.CompletedTask;
 		}

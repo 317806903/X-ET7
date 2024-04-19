@@ -37,6 +37,10 @@ namespace ET.Client
             {
                 return UIManagerComponent.Instance.LoadingRoot;
             }
+            else if (type == UIWindowType.HighestFixedRoot)
+            {
+                return UIManagerComponent.Instance.HighestFixedRoot;
+            }
             else if (type == UIWindowType.HighestNoticeRoot)
             {
                 return UIManagerComponent.Instance.HighestNoticeRoot;

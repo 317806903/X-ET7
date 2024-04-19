@@ -979,6 +979,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 6108054056348659019, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6108054056531927500, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1065,6 +1070,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9181298929710741668, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8786975889878703225, guid: 8451b30dbbf7a5048a029960a33aaf25, type: 3}

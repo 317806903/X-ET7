@@ -6,6 +6,7 @@ using UnityEngine;
 namespace ET
 {
     [ExecuteInEditMode]
+    [RequireComponent(typeof(Animator))]
     public class RecordAnimatorName : MonoBehaviour
     {
         public SerializableDictionary<string, string> recordDic = new();

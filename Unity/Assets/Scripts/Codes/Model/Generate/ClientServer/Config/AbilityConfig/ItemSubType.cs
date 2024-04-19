@@ -15,13 +15,21 @@ namespace ET.AbilityConfig
     public enum ItemSubType
     {
         /// <summary>
+        /// 任意
+        /// </summary>
+        None = -1,
+        /// <summary>
         /// 塔
         /// </summary>
-        Tower = 0,
+        AttackTower = 0,
+        /// <summary>
+        /// 陷阱
+        /// </summary>
+        Trap = 1,
         /// <summary>
         /// 召唤怪物
         /// </summary>
-        CallMonster = 1,
+        CallMonster = 2,
         /// <summary>
         /// 怪物1
         /// </summary>

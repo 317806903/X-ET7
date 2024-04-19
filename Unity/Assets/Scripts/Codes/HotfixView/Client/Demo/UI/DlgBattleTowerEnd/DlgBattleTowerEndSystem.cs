@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ namespace ET.Client
 		public static void ShowWindow(this DlgBattleTowerEnd self, ShowWindowData contextData = null)
 		{
 			self.Show().Coroutine();
+			self.ChkNeedShowGuide().Coroutine();
 		}
 
 		public static async ETTask Show(this DlgBattleTowerEnd self)
@@ -28,9 +30,23 @@ namespace ET.Client
             self.View.E_RootImage.gameObject.SetActive(true);
 		}
 
+		public static async ETTask ChkNeedShowGuide(this DlgBattleTowerEnd self)
+		{
+			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
+			List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
+			if (openningList.Count > 0)
+			{
+				string functionMenuCfgId = openningList[0];
+				await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), "BattleTowerEndGuide", () =>
+				{
+
+				});
+			}
+		}
+
 		public static async ETTask ShowEffect(this DlgBattleTowerEnd self)
 		{
-			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerHelper.GetMyPlayerStatusComponent(self.DomainScene());
+			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
 			Log.Debug($"--ShowEffect playerStatusComponent[{playerStatusComponent}]");
 
 			Transform transEndlessChallenge = self.View.uiTransform.transform.Find("E_Effect_EndlessChallenge");
@@ -46,12 +62,18 @@ namespace ET.Client
 
 			await TimerComponent.Instance.WaitAsync(500);
 
+
+			self.View.EG_ItemListRectTransform.SetVisible(false);
+			self.View.EG_GoldCoinsRectTransform.SetVisible(false);
+			await self.ShowDropItemList();
+			self.ShowDropGold();
+
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
 			bool success = false;
 			if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
 			{
-				long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+				long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 				if (gamePlayTowerDefenseComponent.ChkHomeWin(myPlayerId))
 				{
 					success = true;
@@ -156,70 +178,36 @@ namespace ET.Client
 			self.View.E_victoryImage.gameObject.SetActive(true);
 			Transform loseTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_lose");
 			Transform victoryTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory");
-			Transform rewardCardTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_victory/E_Reward");
-			Transform rewardGoldTrans = transPVE.Find("Effect_GameEnd_ChallengeModeEnds/E_GoldCoins");
 
 			loseTrans.gameObject.SetActive(false);
 			victoryTrans.gameObject.SetActive(false);
-			rewardCardTrans.gameObject.SetActive(false);
-			rewardGoldTrans.gameObject.SetActive(false);
-			self.View.E_NewcardImage.gameObject.SetActive(false);
 
 			string cfgId = GamePlayHelper.GetGamePlay(self.DomainScene()).GetGamePlayBattleConfig().Id;
 			int level = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeIndex(cfgId);
 			self.View.ELabel_LvTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
             if (success)
             {
-	            int count = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenges(true).Count;
-				if(level == count){
-					self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
-				}else{
-					self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
-				}
+	            if (TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(cfgId) == null)
+	            {
+		            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
+	            }
+	            else
+	            {
+		            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Next");
+	            }
+
 				loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
 
-				long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
-				Dictionary<string, int> dropItems = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerDropItemsInfo(myPlayerId);
-				foreach((string itemCfgId, int itemCnt) in dropItems)
-				{
-					if (ItemHelper.ChkIsTower(itemCfgId))
-					{
-						self.View.EButton_nameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-						await self.View.EButton_IconImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId));
-
-						List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
-						int labelCount = labels.Count;
-						self.View.EImage_Label1Image.gameObject.SetActive(labelCount >= 1);
-						self.View.EImage_Label2Image.gameObject.SetActive(labelCount >= 2);
-						if (labelCount >= 1)
-						{
-							self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
-						}
-
-						if (labelCount >= 2)
-						{
-							self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
-						}
-
-						int towerQuality = (int)ItemHelper.GetItemQualityType(itemCfgId);
-						self.View.EImage_LowImage.SetVisible(towerQuality == 0);
-						self.View.EImage_MiddleImage.SetVisible(towerQuality == 1);
-						self.View.EImage_HighImage.SetVisible(towerQuality == 2);
-
-						self.View.EButton_BuyButton.AddListener(()=>
-						{
-							self.ShowDetails(itemCfgId);
-						});
-
-						await TimerComponent.Instance.WaitAsync(2000);
-						self.View.E_victoryImage.gameObject.SetActive(false);
-						rewardCardTrans.gameObject.SetActive(true);
-						self.View.E_NewcardImage.gameObject.SetActive(true);
-						break;
-					}
-				}
+	            int count = self.GetMyDropItemList().Count;
+	            if (count > 0)
+	            {
+		            await TimerComponent.Instance.WaitAsync(2000);
+		            self.View.E_victoryImage.gameObject.SetActive(false);
+		            self.View.EG_ItemListRectTransform.SetVisible(true);
+		            return;
+	            }
             }
             else
             {
@@ -240,7 +228,7 @@ namespace ET.Client
 			//string text1 = $"存活<color=#ffffff><size=150>{waveIndex}</size></color>波";
 			//string text1 = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
 			self.View.ELabel_ChanllengeNumText.text = waveIndex.ToString();
-			LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.E_ChanllengeLevel_TextTextMeshProUGUI.GetComponent<RectTransform>());
+			// LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.E_ChanllengeLevel_TextTextMeshProUGUI.GetComponent<RectTransform>());
 
 			//string text2 = $"战胜N%的玩家";
 			// int rankedMoreThan = await ET.Client.RankHelper.GetRankedMoreThan(self.DomainScene(), RankType.EndlessChallenge, waveIndex);
@@ -259,7 +247,7 @@ namespace ET.Client
 				self.View.ELabel_RankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_Rank", rankIndex);
 			}
 
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
 			int killNum = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerKillNum(myPlayerId);
 			self.View.ELabel_KillNumTextMeshProUGUI.text =
@@ -288,7 +276,7 @@ namespace ET.Client
 		public static int GetMyGold(this DlgBattleTowerEnd self)
 		{
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-			long playerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
 			return curGoldValue;
 		}
@@ -296,20 +284,69 @@ namespace ET.Client
 		public static List<long> GetMyTowerList(this DlgBattleTowerEnd self)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-			long myPlayerId = PlayerHelper.GetMyPlayerId(self.DomainScene());
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			List<long> towerList = gamePlayTowerDefenseComponent.GetPutTowers(myPlayerId);
 			return towerList;
 		}
 
-		public static void ShowDetails(this DlgBattleTowerEnd self, string itemCfgId)
+		public static List<(string itemCfgId, int num)> GetMyDropItemList(this DlgBattleTowerEnd self)
 		{
-			UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-			_UIComponent.ShowWindow<DlgDetails>();
-			DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
-			if (_DlgDetails != null)
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+			Dictionary<string, int> dropItemDic = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayDropItemComponent>().GetPlayerDropItemList(myPlayerId);
+			if (dropItemDic == null || dropItemDic.Count == 0)
 			{
-				_DlgDetails.SetCurItemCfgId(itemCfgId);
+				return new();
+			}
+			List<(string, int)> dropItemList = dropItemDic.Select(dropItem=>(dropItem.Key, dropItem.Value)).ToList();
+			return dropItemList;
+		}
+
+		public static int GetMyDropGold(this DlgBattleTowerEnd self)
+		{
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+			int dropGold = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayDropItemComponent>().GetPlayerDropGold(myPlayerId);
+			return dropGold;
+		}
+
+		public static void ShowDropGold(this DlgBattleTowerEnd self)
+		{
+			int gold = self.GetMyDropGold();
+			self.View.E_GoldTextMeshProUGUI.SetText($"+{gold}");
+		}
+
+		public static async ETTask<bool> ShowDropItemList(this DlgBattleTowerEnd self)
+		{
+			int count = self.GetMyDropItemList().Count;
+
+			if (count > 0)
+			{
+				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.poolSize = 7;
+				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
+					self.AddItemRefreshListener(transform, i));
+
+				self.AddUIScrollItems(ref self.ScrollItemReward, count);
+				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetVisible(true, count);
+
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
+
+        public static async ETTask AddItemRefreshListener(this DlgBattleTowerEnd self, Transform transform, int index)
+        {
+	        self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle(index);
+
+            Scroll_Item_TowerBuy itemTower = self.ScrollItemReward[index].BindTrans(transform);
+
+            var dropItems = self.GetMyDropItemList();
+            string itemCfgId = dropItems[index].itemCfgId;
+            itemTower.ShowBagItem(itemCfgId, true);
+        }
 	}
 }

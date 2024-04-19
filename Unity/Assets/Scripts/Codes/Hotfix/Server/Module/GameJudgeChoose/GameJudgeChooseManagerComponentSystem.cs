@@ -31,8 +31,7 @@ namespace ET.Server
             GameJudgeChooseComponent gameJudgeChooseComponent = await self.GetGameJudgeChooseComponent(playerId);
             gameJudgeChooseComponent.Record(gameJudgeChooseType, complainMsg);
 
-            DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(self.DomainZone());
-            await dbComponent.SaveNotWait(gameJudgeChooseComponent);
+            gameJudgeChooseComponent.SetDataCacheAutoWrite();
         }
 
         public static async ETTask RecordGameJudgeChooseNoDB(this GameJudgeChooseManagerComponent self, long playerId, GameJudgeChooseType gameJudgeChooseType, string complainMsg)

@@ -13,7 +13,7 @@ namespace ET.Client
 
 			byte[] byts = message.PlayerStatusComponentBytes;
 			Entity entity = MongoHelper.Deserialize<Entity>(byts);
-			PlayerHelper.RefreshMyPlayerStatus(clientScene, entity);
+			PlayerStatusHelper.RefreshMyPlayerStatus(clientScene, entity);
 
 			await ETTask.CompletedTask;
 		}

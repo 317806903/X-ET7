@@ -96,12 +96,15 @@ namespace ET
         {
             if (m_IsPointDown)
             {
-                if (Time.unscaledTime - m_CurrDonwTime >= PRESS_TIME)
+                if (onPress.IsNull() == false)
                 {
-                    m_IsPress = true;
-                    m_IsPointDown = false;
-                    m_CurrDonwTime = 0f;
-                    onPress.Invoke(gameObject, null);
+                    if (Time.unscaledTime - m_CurrDonwTime >= PRESS_TIME)
+                    {
+                        m_IsPress = true;
+                        m_IsPointDown = false;
+                        m_CurrDonwTime = 0f;
+                        onPress.Invoke(gameObject, null);
+                    }
                 }
             }
 
@@ -122,6 +125,10 @@ namespace ET
                 if (m_ClickCount >= 2)
                 {
                     onDoubleClick.Invoke(gameObject, m_OnUpEventData);
+                    if (onDoubleClick.IsNull() && this.onClick.IsNull() == false)
+                    {
+                        onClick.Invoke(gameObject, m_OnUpEventData);
+                    }
                     m_OnUpEventData = null;
                     m_ClickCount = 0;
                 }
@@ -135,15 +142,21 @@ namespace ET
 
         public void RemoveAllListeners()
         {
+            m_OnUpEventData = null;
+            m_ClickCount = 0;
+            m_ClickCountDone = false;
+
             onClick.RemoveAllListeners();
             onDoubleClick.RemoveAllListeners();
+            onPress.RemoveAllListeners();
+            onUp.RemoveAllListeners();
             onDown.RemoveAllListeners();
             onEnter.RemoveAllListeners();
             onExit.RemoveAllListeners();
-            onUp.RemoveAllListeners();
             onSelect.RemoveAllListeners();
             onUpdateSelect.RemoveAllListeners();
             onDeselect.RemoveAllListeners();
+            onBeginDrag.RemoveAllListeners();
             onDrag.RemoveAllListeners();
             onEndDrag.RemoveAllListeners();
             onDrop.RemoveAllListeners();
@@ -153,7 +166,11 @@ namespace ET
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            m_OnUpEventData = null;
+            m_ClickCountDone = false;
+
             m_IsPointDown = true;
+            m_IsPointExit = false;
             m_IsPress = false;
             m_CurrDonwTime = Time.unscaledTime;
             onDown?.Invoke(gameObject, eventData);
@@ -167,9 +184,21 @@ namespace ET
         {
             m_IsPointDown = false;
             m_OnUpEventData = eventData;
+
             if (!m_IsPress)
             {
-                m_ClickCount++;
+                if (this.m_IsPointExit == false)
+                {
+                    if (m_ClickCountDone == false)
+                    {
+                        m_ClickCount++;
+                        m_ClickCountDone = true;
+                    }
+                }
+            }
+            if (this.onUp.IsNull())
+            {
+                PassEvent(eventData, ExecuteEvents.pointerUpHandler);
             }
         }
 
@@ -193,6 +222,7 @@ namespace ET
         public void OnPointerExit(PointerEventData eventData)
         {
             //m_IsPointDown = false;
+            m_IsPointExit = true;
             onExit.Invoke(gameObject, eventData);
             if (this.onExit.IsNull())
             {
@@ -313,11 +343,14 @@ namespace ET
         public bool m_IsHorizontalDrag = true;
         private Vector2 beginDragPos;
         private bool m_IsPointDown = false;
+        private bool m_IsPointExit = false;
         private bool m_IsPress = false;
         private int m_ClickCount = 0;
+        private bool m_ClickCountDone = false;
         private PointerEventData m_OnUpEventData = null;
 
         List<RaycastResult> result = new ();
+        List<GameObject> resultGo = new ();
         HashSet<GameObject> record = new ();
 
         GameObject PassEvent<T>(BaseEventData data, ExecuteEvents.EventFunction<T> function) where T : IEventSystemHandler
@@ -333,9 +366,29 @@ namespace ET
             UnityEngine.EventSystems.EventSystem.current.RaycastAll(eventData, result);
             try
             {
-                foreach (var item in result)
+                resultGo.Clear();
+                foreach (RaycastResult raycastResult in this.result)
                 {
-                    var go = item.gameObject;
+                    resultGo.Add(raycastResult.gameObject);
+                }
+                if (typeof(T) == typeof(UnityEngine.EventSystems.IEndDragHandler))
+                {
+                    Transform parentTrans = this.gameObject.transform.parent;
+                    while (parentTrans != null)
+                    {
+                        if (ExecuteEvents.GetEventHandler<IDragHandler>(parentTrans.gameObject))
+                        {
+                            resultGo.Insert(0, parentTrans.gameObject);
+                            break;
+                        }
+                        else
+                        {
+                            parentTrans = parentTrans.parent;
+                        }
+                    }
+                }
+                foreach (var go in resultGo)
+                {
                     if (go != null && go != pointerGo && record.Contains(go) == false)
                     {
                         record.Add(go);
@@ -351,7 +404,8 @@ namespace ET
                         {
                             if (go.TryGetComponent<UnityEngine.UI.Graphic>(out var com))
                             {
-                                if (com.raycastTarget) return null;
+                                if (com.raycastTarget)
+                                    return null;
                             }
                         }
                     }
@@ -359,6 +413,8 @@ namespace ET
             }
             finally
             {
+                result.Clear();
+                resultGo.Clear();
                 record.Clear();
             }
 

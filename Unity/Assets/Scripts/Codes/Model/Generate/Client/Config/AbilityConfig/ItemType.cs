@@ -19,13 +19,9 @@ namespace ET.AbilityConfig
         /// </summary>
         Tower = 0,
         /// <summary>
-        /// 召唤怪物
-        /// </summary>
-        CallMonster = 1,
-        /// <summary>
         /// 怪物
         /// </summary>
-        Monster = 2,
+        Monster = 1,
     }
 
 } 

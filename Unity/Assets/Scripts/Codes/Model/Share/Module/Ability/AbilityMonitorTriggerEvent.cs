@@ -95,6 +95,16 @@
         UnitOnHitMesh,
 
         /// <summary>
+        /// 监听 bullet攻击到特定位置
+        /// </summary>
+        BulletOnHitPos,
+
+        /// <summary>
+        /// 监听 unit攻击到特定位置
+        /// </summary>
+        UnitOnHitPos,
+
+        /// <summary>
         /// 监听 unit被创建的事件
         /// </summary>
         UnitOnCreate,
@@ -144,6 +154,11 @@
         /// 监听 子弹达到Mesh的事件
         /// </summary>
         BulletOnHitMesh,
+
+        /// <summary>
+        /// 监听 子弹达到特定位置的事件
+        /// </summary>
+        BulletOnHitPos,
 
         /// <summary>
         /// 监听 子弹被攻击的事件

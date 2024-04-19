@@ -23,7 +23,21 @@ namespace ET.Server
 			List<string> setPlayerKeys = request.SetPlayerKeys;
 
 			await ET.Server.PlayerCacheHelper.SetPlayerModelByClient(session.DomainScene(), playerId, playerModelType, PlayerModelComponentBytes, setPlayerKeys);
-			await ET.Server.PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, playerModelType, setPlayerKeys);
+
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.None;
+			if (playerModelType == PlayerModelType.BaseInfo)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerBaseInfo_Client;
+			}
+			else if (playerModelType == PlayerModelType.BackPack)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerBackPack_Client;
+			}
+			else if (playerModelType == PlayerModelType.BattleCard)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerBattleCard_Client;
+			}
+			await ET.Server.PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, playerModelType, setPlayerKeys, playerModelChgType);
 
 			await ETTask.CompletedTask;
 		}

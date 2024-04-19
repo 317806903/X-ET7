@@ -51,7 +51,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 释放对象选择
     /// </summary>
     public string SkillSelectAction { get; private set; }
-    public SelectObjectConfig SkillSelectAction_Ref { get; private set; }
+    public SelectObjectCfg SkillSelectAction_Ref { get; private set; }
     /// <summary>
     /// timeline_id（对应TimelineCfg表id）
     /// </summary>
@@ -67,7 +67,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.SkillSelectAction_Ref = (_tables["SelectObjectConfigCategory"] as SelectObjectConfigCategory).GetOrDefault(SkillSelectAction);
+        this.SkillSelectAction_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(SkillSelectAction);
         this.TimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(TimelineId);
         PostResolve();
     }

@@ -25,13 +25,7 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                EventType.SyncPlayAudio _SyncPlayAudio = new ()
-                {
-                    unit = targetUnit,
-                    playAudioActionId = playAudioActionId,
-                    isOnlySelfShow = actionCfg_PlayAudio.IsOnlySelfShow,
-                };
-                EventSystem.Instance.Publish(unit.DomainScene(), _SyncPlayAudio);
+                Ability.UnitHelper.AddSyncData_UnitPlayAudio(targetUnit, playAudioActionId, actionCfg_PlayAudio.IsOnlySelfShow);
             }
             list.Dispose();
         }

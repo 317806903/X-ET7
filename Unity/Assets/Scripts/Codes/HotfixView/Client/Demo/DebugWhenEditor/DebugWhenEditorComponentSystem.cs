@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,8 @@ namespace ET.Client
             self.IsShowShootDamageNum = false;
             self.IsStopActorMove = false;
 
+            self.AddIngameDebugConsoleCommand();
+
             await ETTask.CompletedTask;
         }
 
@@ -49,7 +52,7 @@ namespace ET.Client
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 self.IsStopActorMove = !self.IsStopActorMove;
-                self.SetStopActorMove();
+                self.SetStopActorMoveWhenDebug();
             }
 
             if (Input.GetKeyDown(KeyCode.S))
@@ -59,7 +62,7 @@ namespace ET.Client
 #endif
         }
 
-        public static void SetStopActorMove(this DebugWhenEditorComponent self)
+        public static Scene GetClientScene(this DebugWhenEditorComponent self)
         {
             Scene clientScene = null;
             var childs = ClientSceneManagerComponent.Instance.Children;
@@ -75,9 +78,183 @@ namespace ET.Client
 
             if (clientScene == null)
             {
+                return null;
+            }
+            return clientScene;
+        }
+
+        public static void AddIngameDebugConsoleCommand(this DebugWhenEditorComponent self)
+        {
+            IngameDebugConsole.DebugLogConsole.AddCommand("SeeDebugConnectList", "SeeDebugConnectList desc",
+                () => ET.Client.DebugConnectHelper.SeeDebugConnectList());
+            IngameDebugConsole.DebugLogConsole.AddCommand("SeeCurDebugConnect", "SeeCurDebugConnect desc",
+                () => ET.Client.DebugConnectHelper.SeeCurDebugConnect());
+            IngameDebugConsole.DebugLogConsole.AddCommand("SetDebugConnectNull", "SetDebugConnectNull desc",
+                () => ET.Client.DebugConnectHelper.SetDebugConnectNull());
+            IngameDebugConsole.DebugLogConsole.AddCommand<string>("SetDebugConnect", "SetDebugConnect desc",
+                (str) => ET.Client.DebugConnectHelper.SetDebugConnect(str));
+
+            IngameDebugConsole.DebugLogConsole.AddCommand("SetStopActorMoveWhenDebug", "SetStopActorMoveWhenDebug", () =>
+            {
+                self.SetStopActorMoveWhenDebug();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand("ForceGameEndWhenDebug", "ForceGameEndWhenDebug", () =>
+            {
+                self.SendForceGameEndWhenDebug();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<string, int, int>("SetMyRankScoreWhenDebug", "SetMyRankScoreWhenDebug", (rankType, score, killNum) =>
+            {
+                RankType rankType2 = (RankType)Enum.Parse(typeof(RankType), rankType);
+                self.SetMyRankScoreWhenDebug(rankType2, score, killNum).Coroutine();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<string>("ClearRankWhenDebug", "ClearRankWhenDebug", (rankType) =>
+            {
+                RankType rankType2 = (RankType)Enum.Parse(typeof(RankType), rankType);
+                self.ClearRankWhenDebug(rankType2).Coroutine();
+            });
+            IngameDebugConsole.DebugLogConsole.AddCommand<string, int>("ClearPlayerRankWhenDebug", "ClearPlayerRankWhenDebug", (rankType, playerId) =>
+            {
+                RankType rankType2 = (RankType)Enum.Parse(typeof(RankType), rankType);
+                self.ClearPlayerRankWhenDebug(rankType2, playerId).Coroutine();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<int, string>("ResetMyFunctionMenuStatusWhenDebug", "ResetMyFunctionMenuStatusWhenDebug", (operateType, functionMenuCfgIds) =>
+            {
+                self.ResetMyFunctionMenuStatusWhenDebug(operateType, functionMenuCfgIds).Coroutine();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<int, int, string>("ResetPlayerFunctionMenuStatusWhenDebug", "ResetPlayerFunctionMenuStatusWhenDebug", (playerId, operateType, functionMenuCfgIds) =>
+            {
+                self.ResetPlayerFunctionMenuStatusWhenDebug(playerId, operateType, functionMenuCfgIds).Coroutine();
+            });
+        }
+
+        public static void SetStopActorMoveWhenDebug(this DebugWhenEditorComponent self)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
                 return;
             }
-            ET.Client.GamePlayHelper.SendSetStopActorMove(clientScene, self.IsStopActorMove).Coroutine();
+            ET.Client.GamePlayHelper.SendSetStopActorMoveWhenDebug(clientScene, self.IsStopActorMove).Coroutine();
+        }
+
+        public static void SendForceGameEndWhenDebug(this DebugWhenEditorComponent self)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+            ET.Client.GamePlayHelper.SendForceGameEndWhenDebug(clientScene).Coroutine();
+        }
+
+        public static async ETTask SetMyRankScoreWhenDebug(this DebugWhenEditorComponent self, RankType rankType, int score, int killNum)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (ET.Client.SessionHelper.ChkSessionExist(clientScene) == false)
+            {
+                return;
+            }
+
+            C2G_SetMyRankScoreWhenDebug _C2G_SetMyRankScoreWhenDebug = new ();
+            _C2G_SetMyRankScoreWhenDebug.RankType = (int)rankType;
+            _C2G_SetMyRankScoreWhenDebug.Score = score;
+            _C2G_SetMyRankScoreWhenDebug.KillNum = killNum;
+            ET.Client.SessionHelper.GetSession(clientScene).Send(_C2G_SetMyRankScoreWhenDebug);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ClearRankWhenDebug(this DebugWhenEditorComponent self, RankType rankType)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (ET.Client.SessionHelper.ChkSessionExist(clientScene) == false)
+            {
+                return;
+            }
+
+            C2G_ClearRankWhenDebug _C2G_ClearRankWhenDebug = new ();
+            _C2G_ClearRankWhenDebug.RankType = (int)rankType;
+            ET.Client.SessionHelper.GetSession(clientScene).Send(_C2G_ClearRankWhenDebug);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ClearPlayerRankWhenDebug(this DebugWhenEditorComponent self, RankType rankType, long playerId)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (ET.Client.SessionHelper.ChkSessionExist(clientScene) == false)
+            {
+                return;
+            }
+
+            C2G_ClearPlayerRankWhenDebug _C2G_ClearPlayerRankWhenDebug = new ();
+            _C2G_ClearPlayerRankWhenDebug.RankType = (int)rankType;
+            _C2G_ClearPlayerRankWhenDebug.PlayerId = playerId;
+            ET.Client.SessionHelper.GetSession(clientScene).Send(_C2G_ClearPlayerRankWhenDebug);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ResetMyFunctionMenuStatusWhenDebug(this DebugWhenEditorComponent self, int operateType, string functionMenuCfgIds)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (ET.Client.SessionHelper.ChkSessionExist(clientScene) == false)
+            {
+                return;
+            }
+
+            await self.ResetPlayerFunctionMenuStatusWhenDebug(-1, operateType, functionMenuCfgIds);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ResetPlayerFunctionMenuStatusWhenDebug(this DebugWhenEditorComponent self, long playerId, int operateType, string functionMenuCfgIds)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (ET.Client.SessionHelper.ChkSessionExist(clientScene) == false)
+            {
+                return;
+            }
+
+            C2G_ResetPlayerFunctionMenuStatusWhenDebug _C2G_ResetPlayerFunctionMenuStatusWhenDebug = new ();
+            _C2G_ResetPlayerFunctionMenuStatusWhenDebug.PlayerId = playerId;
+            // 1 强制打开
+            // 2 强制关闭
+            // 3 按照条件调整
+            _C2G_ResetPlayerFunctionMenuStatusWhenDebug.OperateType = operateType;
+            // All 全部
+            // AllLock 全部被锁的
+            // AllOpenned 全部已打开的
+            // 具体 menu1;menu2;...
+            _C2G_ResetPlayerFunctionMenuStatusWhenDebug.FunctionMenuCfgIds = functionMenuCfgIds;
+            ET.Client.SessionHelper.GetSession(clientScene).Send(_C2G_ResetPlayerFunctionMenuStatusWhenDebug);
+            await ETTask.CompletedTask;
         }
 
     }

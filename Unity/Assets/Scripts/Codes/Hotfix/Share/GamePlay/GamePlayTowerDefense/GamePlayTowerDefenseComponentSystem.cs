@@ -166,7 +166,10 @@ namespace ET
 
         public static async ETTask DoNextStep(this GamePlayTowerDefenseComponent self)
         {
-            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd
+                || self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recover
+                || self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering
+                || self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitRescan)
             {
                 return;
             }
@@ -179,6 +182,11 @@ namespace ET
                 { GamePlayTowerDefenseStatus.RestTime, GamePlayTowerDefenseStatus.InTheBattle },
                 { GamePlayTowerDefenseStatus.InTheBattleEnd, GamePlayTowerDefenseStatus.RestTime },
             };
+            if (nextStep.ContainsKey(self.gamePlayTowerDefenseStatus) == false)
+            {
+                Log.Error($"ET.GamePlayTowerDefenseComponentSystem.DoNextStep nextStep.ContainsKey({self.gamePlayTowerDefenseStatus}) == false");
+                return;
+            }
             var nextStatus = nextStep[self.gamePlayTowerDefenseStatus];
             switch (nextStatus)
             {
@@ -204,6 +212,9 @@ namespace ET
         {
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.ShowStartEffect;
             self.NoticeToClientAll();
+
+            GamePlayComponent gamePlayComponent = self.GetGamePlay();
+            gamePlayComponent.NoticeGameBegin2Server();
 
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_ShowStartEffectBegin());
 
@@ -456,7 +467,7 @@ namespace ET
             await self.GameEnd(isTimeOut);
 
             GamePlayComponent gamePlayComponent = self.GetGamePlay();
-            gamePlayComponent.GameEnd();
+            await gamePlayComponent.GameEnd();
 
             self.NoticeToClientAll();
 
@@ -476,6 +487,16 @@ namespace ET
         public static bool ChkIsGameEnd(this GamePlayTowerDefenseComponent self)
         {
             if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool ChkIsGameWaitRescan(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitRescan)
             {
                 return true;
             }
@@ -723,6 +744,13 @@ namespace ET
             long beKillUnitPlayerId = GamePlayHelper.GetPlayerIdByUnitId(beKillUnit);
             if (beKillUnitPlayerId != -1)
             {
+
+                TowerComponent towerComponent = beKillUnit.GetComponent<TowerComponent>();
+                if (towerComponent != null)
+                {
+                    self.GetComponent<PlayerOwnerTowersComponent>().DestroyPlayerTower(beKillUnitPlayerId, beKillUnit.Id);
+                }
+
                 return;
             }
 
@@ -745,12 +773,19 @@ namespace ET
 
                 }
             }
+
         }
 
         public static List<long> GetPutTowers(this GamePlayTowerDefenseComponent self, long playerId)
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
             return playerOwnerTowersComponent.GetPutTowers(playerId);
+        }
+
+        public static int GetPutAttackTowerCount(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
+            return playerOwnerTowersComponent.GetPutAttackTowerCount(playerId);
         }
 
         public static Dictionary<string, int> GetPlayerOwnerTowers(this GamePlayTowerDefenseComponent self, long playerId)

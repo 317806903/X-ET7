@@ -81,6 +81,11 @@ message G2C_PlayerStatusChgNotice // IActorMessage
 	bytes PlayerStatusComponentBytes = 2;
 }
 
+message G2C_LoginInAtOtherWhere // IActorMessage
+{
+	int32 RpcId = 1;
+}
+
 message MoveInfo
 {
 	repeated Unity.Mathematics.float3 Points = 1;
@@ -107,36 +112,14 @@ message M2C_CreateUnits // IActorMessage
 	repeated UnitInfo Units = 1;
 }
 
+message M2C_RemoveUnits // IActorMessage
+{
+	repeated int64 Units = 1;
+}
+
 message M2C_SyncDataList // IActorMessage
 {
 	repeated bytes SyncDataList = 1;
-}
-
-message UnitPosInfo
-{
-	int64 UnitId = 1;
-	int32 PositionX = 2;
-	int32 PositionY = 3;
-	int32 PositionZ = 4;
-	int32 ForwardX = 5;
-	int32 ForwardY = 6;
-	int32 ForwardZ = 7;
-}
-
-message M2C_SyncPosUnits // IActorMessage
-{
-	repeated UnitPosInfo Units = 1;
-}
-
-message UnitNumericInfo
-{
-	int64 UnitId = 1;
-	map<int32, int64> KV = 6;
-}
-
-message M2C_SyncNumericUnits // IActorMessage
-{
-	repeated UnitNumericInfo Units = 1;
 }
 
 message M2C_SyncUnitEffects // IActorMessage
@@ -154,18 +137,6 @@ message M2C_SyncGetCoinShow // IActorMessage
 	int32 ChgValue = 3;
 }
 
-message M2C_SyncPlayAudio // IActorMessage
-{
-	int64 UnitId = 1;
-	string PlayAudioActionId = 2;
-}
-
-message M2C_SyncPlayAnimator // IActorMessage
-{
-	int64 UnitId = 1;
-	bytes PlayAnimatorComponent = 2;
-}
-
 message M2C_CreateMyUnit // IActorMessage
 {
 	UnitInfo Unit = 1;
@@ -181,11 +152,6 @@ message M2C_StartSceneChange // IActorMessage
 {
 	int64 SceneInstanceId = 1;
 	string SceneName = 2;	
-}
-
-message M2C_RemoveUnits // IActorMessage
-{
-	repeated int64 Units = 1;
 }
 
 message C2M_PathfindingResult // IActorLocationMessage
@@ -446,6 +412,7 @@ message C2M_CallTower // IActorLocationRequest
 	int32 RpcId = 1;
 	string TowerUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	string CreateActionIds = 4;
 }
 
 message M2C_CallTower // IActorLocationResponse
@@ -462,6 +429,7 @@ message C2M_CallMonster // IActorLocationRequest
 	string MonsterUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
 	int32 Count = 4;
+	string CreateActionIds = 5;
 }
 
 message M2C_CallMonster // IActorLocationResponse
@@ -674,9 +642,11 @@ message G2C_ChgRoomMemberTeam // IResponse
 message C2G_SetARRoomInfo // IRequest
 {
 	int32 RpcId = 1;
-	string ARSceneId = 2;
-	string ARMeshDownLoadUrl = 3;
-	int32 ARMapScale = 4;
+	int32 ARMapScale = 2;
+	int32 ARMeshType = 3;
+	string ARSceneId = 4;
+	string ARMeshDownLoadUrl = 5;
+	bytes ARMeshBytes = 6;
 }
 
 message G2C_SetARRoomInfo // IResponse
@@ -971,34 +941,18 @@ message M2C_ChkRay // IActorLocationResponse
 	Unity.Mathematics.float3 HitPosition = 5;
 }
 
-//ResponseType M2C_SendARCameraPos
-message C2M_SendARCameraPos // IActorLocationRequest
+message C2M_SendARCameraPos // IActorLocationMessage
 {
 	int32 RpcId = 1;
 	Unity.Mathematics.float3 ARCameraPosition = 2;
 	Unity.Mathematics.float3 ARCameraHitPosition = 3;
 }
 
-message M2C_SendARCameraPos // IActorLocationResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-}
-
-//ResponseType M2C_GetNumericUnit
-message C2M_GetNumericUnit // IActorLocationRequest
+message C2M_GetNumericUnit // IActorLocationMessage
 {
 	int32 RpcId = 1;
 	repeated int64 UnitIdList = 2;
 	repeated int32 NumericKeyList = 3;
-}
-
-message M2C_GetNumericUnit // IActorLocationResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
 }
 
 //ResponseType G2C_GetRank
@@ -1047,6 +1001,12 @@ message G2C_GetPlayerCache // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	bytes PlayerModelComponentBytes = 4;
+}
+
+message G2C_PlayerCacheChgNotice // IActorMessage
+{
+	int32 RpcId = 1;
+	int32 PlayerModelType = 2;
 }
 
 //ResponseType G2C_SetPlayerCache
@@ -1106,4 +1066,73 @@ message M2C_BattleRecoverConfirm // IActorLocationResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+//ResponseType G2C_ChkGameJudgeChoose
+message C2G_ChkGameJudgeChoose // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_ChkGameJudgeChoose // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsNeed = 4;
+}
+
+//ResponseType G2C_RecordGameJudgeChoose
+message C2G_RecordGameJudgeChoose // IRequest
+{
+	int32 RpcId = 1;
+	int32 GameJudgeChooseType = 2;
+	string ComplainMsg = 3;
+}
+
+message G2C_RecordGameJudgeChoose // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+message C2M_SetStopActorMoveWhenDebug // IActorLocationMessage
+{
+	int32 RpcId = 1;
+	int32 IsStopActorMove = 2;
+}
+
+message C2M_ForceGameEndWhenDebug // IActorLocationMessage
+{
+	int32 RpcId = 1;
+}
+
+message C2G_SetMyRankScoreWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+	int32 Score = 3;
+	int32 KillNum = 4;
+}
+
+message C2G_ClearRankWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+}
+
+message C2G_ClearPlayerRankWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+	int32 RankType = 2;
+	int64 PlayerId = 3;
+}
+
+message C2G_ResetPlayerFunctionMenuStatusWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 OperateType = 3;
+	string FunctionMenuCfgIds = 4;
 }

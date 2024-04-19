@@ -1,3 +1,4 @@
+Text_Key_Desc_FunctionMenu_11|
 Text_Key_Desc_Monster1_1|
 Text_Key_Desc_Monster10_1|
 Text_Key_Desc_Monster2_1|
@@ -37,6 +38,7 @@ Text_Key_Desc_TowCallMonster_2|
 Text_Key_Desc_TowCallMonster_3|
 Text_Key_Desc_TowCallMonster_4|
 Text_Key_Desc_TowCallMonster_999|
+Text_Key_Name_FunctionMenu_11|
 Text_Key_Name_Monster1_1|
 Text_Key_Name_Monster10_1|
 Text_Key_Name_Monster2_1|

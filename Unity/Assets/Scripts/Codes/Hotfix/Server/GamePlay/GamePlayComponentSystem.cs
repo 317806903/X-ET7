@@ -425,6 +425,24 @@ namespace ET.Server
             }
         }
 
+        public static async ETTask GameBeginWhenServer(this GamePlayComponent self)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayMode() as GamePlayTowerDefenseComponent;
+
+                await gamePlayTowerDefenseComponent.GameBeginWhenServer();
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetGamePlayMode() as GamePlayPKComponent;
+
+                await gamePlayPKComponent.GameBeginWhenServer();
+            }
+
+            await ETTask.CompletedTask;
+        }
+
         public static async ETTask GameEndWhenServer(this GamePlayComponent self)
         {
             if (self.gamePlayMode == GamePlayMode.TowerDefense)

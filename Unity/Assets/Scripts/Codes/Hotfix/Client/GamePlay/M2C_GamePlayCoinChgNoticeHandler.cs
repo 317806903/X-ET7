@@ -31,7 +31,7 @@ namespace ET.Client
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 			if (gamePlayPlayerListComponent != null)
 			{
-				long myPlayerId = PlayerHelper.GetMyPlayerId(clientScene);
+				long myPlayerId = PlayerStatusHelper.GetMyPlayerId(clientScene);
 				gamePlayPlayerListComponent.playerId2CoinList.TryGetDic(myPlayerId, out myCoinListOld);
 				gamePlayComponent.RemoveComponent<GamePlayPlayerListComponent>();
 			}
@@ -51,7 +51,7 @@ namespace ET.Client
 			{
 				GamePlayPlayerListComponent gamePlayPlayerListComponentNew = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 
-				long myPlayerId = PlayerHelper.GetMyPlayerId(clientScene);
+				long myPlayerId = PlayerStatusHelper.GetMyPlayerId(clientScene);
 				gamePlayPlayerListComponentNew.playerId2CoinList.TryGetDic(myPlayerId, out Dictionary<string, float> myCoinListNew);
 
 				Dictionary<string, float> myCoinListChg = new();

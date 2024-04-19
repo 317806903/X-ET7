@@ -31,6 +31,18 @@ namespace ET
             }
         }
 
+        public static void RemoveRankShow(this RankShowPlayerComponent self, RankType rankType)
+        {
+            if (self.RankList.TryGetValue(rankType, out long rankShowComponentId))
+            {
+                self.RankList.Remove(rankType);
+                self.RemoveChild(rankShowComponentId);
+            }
+            else
+            {
+            }
+        }
+
         public static RankShowComponent SetRankShow(this RankShowPlayerComponent self, long playerId, RankType rankType, int myRank, RankItemComponent myRankItemComponent, SortedDictionary<int, RankItemComponent> rankIndex2PlayerId)
         {
             RankShowComponent rankShowComponent = self.GetRankShow(rankType);
@@ -43,8 +55,7 @@ namespace ET
             rankShowComponent.Init(rankType);
 
             rankShowComponent.SetRankShow(playerId, myRank, myRankItemComponent, rankIndex2PlayerId);
-            DataCacheClearComponent dataCacheClearComponent = rankShowComponent.AddComponent<DataCacheClearComponent>();
-            dataCacheClearComponent.ResetChkTimeInterval(10);
+            rankShowComponent.SetDataCacheAutoClear(10);
             long rankShowComponentId = rankShowComponent.Id;
             self.RankList.Add(rankType, rankShowComponentId);
             return rankShowComponent;
@@ -54,8 +65,8 @@ namespace ET
         {
             rankShowComponent = (RankShowComponent)self.AddChild(rankShowComponent);
 
-            DataCacheClearComponent dataCacheClearComponent = rankShowComponent.AddComponent<DataCacheClearComponent>();
-            dataCacheClearComponent.ResetChkTimeInterval(10);
+            rankShowComponent.SetDataCacheAutoClear(10);
+
             long rankShowComponentId = rankShowComponent.Id;
             self.RankList.Add(rankType, rankShowComponentId);
             return rankShowComponent;

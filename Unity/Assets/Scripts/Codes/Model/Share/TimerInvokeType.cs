@@ -33,5 +33,8 @@
         public const int DlgARSceneSliderFrameTimer = 221;
         public const int DlgARSceneSliderSimpleFrameTimer = 222;
         public const int DlgVideoShowFrameTimer = 223;
+        public const int DlgBattleDeckFrameTimer = 224;
+        public const int DlgFixedMenuFrameTimer = 225;
+        public const int DlgFixedMenuHighestFrameTimer = 226;
     }
 }

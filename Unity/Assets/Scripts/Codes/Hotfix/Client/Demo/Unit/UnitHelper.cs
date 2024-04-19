@@ -34,7 +34,7 @@ namespace ET.Client
         public static Unit GetMyObserverUnit(Scene scene)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
-            long myPlayerId = ET.Client.PlayerHelper.GetMyPlayerId(scene);
+            long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
             Unit observerUnit = unitComponent.Get(myPlayerId);
             return observerUnit;
         }

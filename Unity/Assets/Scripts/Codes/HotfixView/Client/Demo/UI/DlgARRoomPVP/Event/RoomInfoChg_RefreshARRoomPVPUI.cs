@@ -14,7 +14,7 @@ namespace ET.Client
             DlgARRoomPVP _DlgARRoomPVP = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgARRoomPVP>(true);
             if (_DlgARRoomPVP != null)
             {
-                _DlgARRoomPVP.RefreshUI().Coroutine();
+                _DlgARRoomPVP.RefreshWhenRoomInfoChg().Coroutine();
             }
             await ETTask.CompletedTask;
         }

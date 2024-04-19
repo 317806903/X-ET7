@@ -16,30 +16,31 @@ namespace ET.Server
 		    return playerCacheManagerComponent;
 	    }
 
+	    public static PlayerDataComponent GetPlayerCache(Scene scene, long playerId)
+	    {
+		    PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+		    PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+		    if (playerDataComponent == null)
+		    {
+			    playerDataComponent = playerCacheManagerComponent.AddChildWithId<PlayerDataComponent>(playerId);
+		    }
+		    return playerDataComponent;
+	    }
+
         public static async ETTask<Entity> GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, bool forceReGet)
         {
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        playerDataComponent = playerCacheManagerComponent.AddChildWithId<PlayerDataComponent>(playerId);
-	        }
+	        PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
 	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId))
 	        {
 		        Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
 		        if (entity == null || forceReGet)
 		        {
-			        (bool bRet, Entity entityModel) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
+			        (bool bRet, byte[] playerModelComponentBytes) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
 			        if (bRet)
 			        {
-				        if (entity != null)
-				        {
-					        playerDataComponent.RemoveComponent(entity);
-				        }
-				        playerDataComponent.AddComponent(entityModel);
-				        entityModel.AddComponent<DataCacheClearComponent>();
+				        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, playerModelComponentBytes, null);
+				        entityModel.SetDataCacheAutoClear();
 				        entity = entityModel;
 			        }
 		        }
@@ -65,42 +66,53 @@ namespace ET.Server
 	        return entity as PlayerBattleCardComponent;
         }
 
+        public static async ETTask<PlayerFunctionMenuComponent> GetPlayerFunctionMenuByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.FunctionMenu, forceReGet);
+	        return entity as PlayerFunctionMenuComponent;
+        }
+
+        public static async ETTask<List<ItemComponent>> GetBattleCardItemListByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId, forceReGet);
+	        PlayerBattleCardComponent playerBattleCardComponent = await GetPlayerBattleCardByPlayerId(scene, playerId, forceReGet);
+
+	        bool isNeedChg = playerBattleCardComponent.SetBattleCardItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Tower, ItemSubType.None));
+	        if (isNeedChg)
+	        {
+		        await SavePlayerModel(scene, playerId, PlayerModelType.BattleCard, null, PlayerModelChgType.PlayerBattleCard_AutoSetByBackPack);
+	        }
+
+	        List<ItemComponent> list = ListComponent<ItemComponent>.Create();
+	        foreach (var itemCfgId in playerBattleCardComponent.GetBattleCardItemCfgIdList())
+	        {
+		        ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
+		        list.Add(itemComponent);
+	        }
+	        return list;
+        }
+
         public static async ETTask SetPlayerModelByClient(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
         {
-	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-
-	        PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        if (playerDataComponent == null)
-	        {
-		        playerDataComponent = playerCacheManagerComponent.AddChildWithId<PlayerDataComponent>(playerId);
-	        }
+	        PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
 	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
-	        if (entityModel.GetComponent<DataCacheClearComponent>() == null)
-	        {
-		        entityModel.AddComponent<DataCacheClearComponent>();
-	        }
+	        entityModel.SetDataCacheAutoClear();
 	        await ETTask.CompletedTask;
         }
 
-        public static async ETTask SavePlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, List<string> setPlayerKeys)
+        public static async ETTask SavePlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, List<string> setPlayerKeys, PlayerModelChgType playerModelChgType)
         {
-	        // PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-	        //
-	        // PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        // if (playerDataComponent == null)
-	        // {
-		       //  return;
-	        // }
-
 	        Entity entityModel = await GetPlayerModel(scene, playerId, playerModelType, false);
-	        entityModel.GetComponent<DataCacheClearComponent>().RefreshTime();
+	        entityModel.SetDataCacheAutoClear();
 	        byte[] bytes = entityModel.ToBson();
 
 	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId))
 	        {
-		        await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes, setPlayerKeys);
+		        await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes, setPlayerKeys, playerModelChgType);
 	        }
+
+	        await NoticeClientPlayerCacheChg(scene, playerId, playerModelType);
 	        await ETTask.CompletedTask;
         }
 
@@ -110,10 +122,19 @@ namespace ET.Server
 	        {
 		        await SendSavePlayerRankAsync(scene, playerId, rankType, score, killNum);
 	        }
+
+	        if (rankType == RankType.PVE)
+	        {
+		        await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.RankPVE);
+	        }
+	        else if (rankType == RankType.EndlessChallenge)
+	        {
+		        await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.RankEndlessChallenge);
+	        }
 	        await ETTask.CompletedTask;
         }
 
-        public static async ETTask<(bool, Entity)> SendGetPlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType)
+        public static async ETTask<(bool, byte[])> SendGetPlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType)
         {
 	        int PlayerModelType = (int)playerModelType;
 
@@ -133,12 +154,11 @@ namespace ET.Server
 	        else
 	        {
 		        byte[] playerModelComponentBytes = _P2G_GetPlayerCache.PlayerModelComponentBytes;
-		        Entity entity = MongoHelper.Deserialize<Entity>(playerModelComponentBytes);
-		        return (true, entity);
+		        return (true, playerModelComponentBytes);
 	        }
         }
 
-        public static async ETTask<bool> SendSavePlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes, List<string> setPlayerKeys)
+        public static async ETTask<bool> SendSavePlayerModelAsync(Scene scene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes, List<string> setPlayerKeys, PlayerModelChgType playerModelChgType)
         {
 	        int PlayerModelType = (int)playerModelType;
 
@@ -150,6 +170,7 @@ namespace ET.Server
 		        PlayerModelType = PlayerModelType,
 		        PlayerModelComponentBytes = playerModelComponentBytes,
 		        SetPlayerKeys = setPlayerKeys,
+		        PlayerModelChgType = (int)playerModelChgType,
 	        });
 
 	        if (_P2G_SetPlayerCache.Error != ET.ErrorCode.ERR_Success)
@@ -186,53 +207,40 @@ namespace ET.Server
 	        }
         }
 
-		public static async ETTask AddPhysicalStrenth(Scene scene, long playerId, int chgValue, PlayerModelChgType playerModelChgType)
+		public static async ETTask AddPhysicalStrenth(Scene scene, long playerId, int chgValue)
         {
 	        if (chgValue < 0)
 	        {
 		        Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
 		        return;
 	        }
-	        // PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-	        //
-	        // PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-	        // if (playerDataComponent == null)
-	        // {
-		       //  return;
-	        // }
 
 	        PlayerBaseInfoComponent playerBaseInfoComponent =
 				await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
 					PlayerBaseInfoComponent;
 			playerBaseInfoComponent.ChgPhysicalStrength(chgValue);
-
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_AddPhysical;
 			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
-                        new() { "physicalStrength", "nextRecoverTime"});
+                        new() { "physicalStrength", "nextRecoverTime"}, playerModelChgType);
 	        await ETTask.CompletedTask;
         }
 
-		public static async ETTask ReducePhysicalStrenth(Scene scene, long playerId, int chgValue, PlayerModelChgType playerModelChgType)
+		public static async ETTask ReducePhysicalStrenth(Scene scene, long playerId, int chgValue)
 		{
 			if (chgValue < 0)
 			{
 				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
 				return;
 			}
-			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-			//
-			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			// if (playerDataComponent == null)
-			// {
-			// 	return;
-			// }
 
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
 							PlayerBaseInfoComponent;
 			playerBaseInfoComponent.ChgPhysicalStrength(-chgValue);
 
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_ReducePhysical;
 			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
-				new() { "physicalStrength", "nextRecoverTime"});
+				new() { "physicalStrength", "nextRecoverTime"}, playerModelChgType);
 			await ETTask.CompletedTask;
 		}
 
@@ -243,20 +251,14 @@ namespace ET.Server
 				Log.Error($"Quantity must be positive, count:{count}");
 				return;
 			}
-			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-			//
-			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			// if (playerDataComponent == null)
-			// {
-			// 	return;
-			// }
 
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
 							PlayerBackPackComponent;
 			playerBackPackComponent.AddItem(itemCfgId, count);
 
-			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBackPack_AddItem;
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null, playerModelChgType);
 			await ETTask.CompletedTask;
 		}
 
@@ -267,33 +269,19 @@ namespace ET.Server
 				Log.Error($"Quantity must be positive, count:{count}");
 				return;
 			}
-			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-			//
-			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			// if (playerDataComponent == null)
-			// {
-			// 	return;
-			// }
 
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
 							PlayerBackPackComponent;
 			playerBackPackComponent.AddItem(itemCfgId, -count);
 
-			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBackPack_DeleteItem;
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null, playerModelChgType);
 			await ETTask.CompletedTask;
 		}
 
 		public static async ETTask AddItems(Scene scene, long playerId, Dictionary<string, int> items)
 		{
-			// PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-			//
-			// PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
-			// if (playerDataComponent == null)
-			// {
-			// 	return;
-			// }
-
 			PlayerBackPackComponent playerBackPackComponent =
 					await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
 							PlayerBackPackComponent;
@@ -307,8 +295,160 @@ namespace ET.Server
 				}
 				playerBackPackComponent.AddItem(itemCfgId, count);
 			}
-			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null);
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBackPack_AddItem;
+			await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null, playerModelChgType);
 			await ETTask.CompletedTask;
 		}
+
+		public static async ETTask NoticeClientPlayerCacheChg(Scene scene, long playerId, PlayerModelType playerModelType)
+		{
+			long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, scene.InstanceId);
+			if (locationActorId != 0)
+			{
+				O2G_PlayerCacheChgNoticeClient _O2G_PlayerCacheChgNoticeClient = new()
+				{
+					PlayerModelType = (int)playerModelType,
+				};
+				ActorLocationSenderOneType oneTypeLocationTypeTmp = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+				await oneTypeLocationTypeTmp.Call(playerId, _O2G_PlayerCacheChgNoticeClient, scene.InstanceId);
+			}
+
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask DealPlayerFunctionMenuWaitChk(Scene scene, long playerId)
+		{
+			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Server.PlayerCacheHelper.GetPlayerFunctionMenuByPlayerId(scene, playerId, true);
+
+			bool isNeedSave = false;
+			List<string> lockList = playerFunctionMenuComponent.GetLockFunctionMenuList();
+			for (int i = 0; i < lockList.Count; i++)
+			{
+				string functionMenuCfgId = lockList[i];
+				FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
+				if (functionMenuCfg.OpenCondition is FunctionMenuConditionDefault)
+				{
+					playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
+					isNeedSave = true;
+				}
+			}
+
+			List<string> waitChkList = playerFunctionMenuComponent.GetWaitChkFunctionMenuList();
+			for (int i = 0; i < waitChkList.Count; i++)
+			{
+				string functionMenuCfgId = waitChkList[i];
+				FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
+				bool bRet = await ET.Server.PlayerCacheHelper.DealPlayerFunctionMenuOne(scene, playerId, functionMenuCfg, null);
+				if (bRet)
+				{
+					playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openning);
+				}
+				else
+				{
+					playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Lock);
+				}
+				isNeedSave = true;
+			}
+			if (isNeedSave)
+			{
+				await ET.Server.PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.FunctionMenu, null, PlayerModelChgType.PlayerFunctionMenu_DealWaitChg);
+			}
+		}
+
+		public static async ETTask DealPlayerFunctionMenu(Scene scene, long playerId, Dictionary<string, int> paramDic)
+		{
+			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Server.PlayerCacheHelper.GetPlayerFunctionMenuByPlayerId(scene, playerId, true);
+
+			bool isChgFunctionMenu = false;
+			List<string> lockList = playerFunctionMenuComponent.GetLockFunctionMenuList();
+
+			for (int i = 0; i < lockList.Count; i++)
+			{
+				string functionMenuCfgId = lockList[i];
+				FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
+				bool bRet = await ET.Server.PlayerCacheHelper.DealPlayerFunctionMenuOne(scene, playerId, functionMenuCfg, paramDic);
+				if (bRet)
+				{
+					isChgFunctionMenu = true;
+					playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openning);
+				}
+			}
+			if (isChgFunctionMenu)
+			{
+				await ET.Server.PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.FunctionMenu, null, PlayerModelChgType.PlayerFunctionMenu_BattleEnd);
+			}
+		}
+
+		public static async ETTask<bool> DealPlayerFunctionMenuOne(Scene scene, long playerId, FunctionMenuCfg functionMenuCfg, Dictionary<string, int> paramDic)
+		{
+			PlayerBaseInfoComponent playerBaseInfoComponent = await PlayerCacheHelper.GetPlayerBaseInfoByPlayerId(scene, playerId, true);
+			if (functionMenuCfg.OpenCondition is FunctionMenuConditionDefault)
+			{
+				return true;
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionBattleNumARAny functionMenuConditionBattleNumARAny)
+			{
+				int num = functionMenuConditionBattleNumARAny.BattleNum;
+				if (playerBaseInfoComponent.ARPVEBattleCount >= num
+				    || playerBaseInfoComponent.ARPVPBattleCount >= num
+				    || playerBaseInfoComponent.AREndlessChallengeBattleCount >= num)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionBattleNumARPVE functionMenuConditionBattleNumARPVE)
+			{
+				int num = functionMenuConditionBattleNumARPVE.BattleNum;
+				if (playerBaseInfoComponent.ARPVEBattleCount >= num)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionBattleNumARPVP functionMenuConditionBattleNumARPVP)
+			{
+				int num = functionMenuConditionBattleNumARPVP.BattleNum;
+				if (playerBaseInfoComponent.ARPVPBattleCount >= num)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionBattleNumAREndlessChallenge functionMenuConditionBattleNumAREndlessChallenge)
+			{
+				int num = functionMenuConditionBattleNumAREndlessChallenge.BattleNum;
+				if (playerBaseInfoComponent.AREndlessChallengeBattleCount >= num)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionTutorialFirstFinished functionMenuConditionTutorialFirstFinished)
+			{
+				if (playerBaseInfoComponent.isFinishTutorialFirst)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionIndexWhenARPVE functionMenuConditionIndexWhenARPVE)
+			{
+				int index = functionMenuConditionIndexWhenARPVE.Index;
+				if (playerBaseInfoComponent.ChallengeClearLevel >= index)
+				{
+					return true;
+				}
+			}
+			else if (functionMenuCfg.OpenCondition is FunctionMenuConditionIndexWhenAREndlessChallenge functionMenuConditionIndexWhenAREndlessChallenge)
+			{
+				int index = functionMenuConditionIndexWhenAREndlessChallenge.Index;
+				if (paramDic != null && paramDic.TryGetValue("EndlessChallengeWaveIndex", out int value))
+				{
+					if (value >= index)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
     }
 }

@@ -107,7 +107,6 @@ namespace ET.Ability.Client
             }
             self.UpdateLineEffect(isFirst);
             self.UpdatePointLightningTrailEffect();
-            self.UpdatePointClienShowMoveEffect(fixedDeltaTime);
         }
 
         public static void UpdateLineEffect(this EffectShowObj self, bool isFirst)
@@ -237,97 +236,6 @@ namespace ET.Ability.Client
                 }
                 lightningBoltScriptManager.ResetDicKeyPos(dic);
             }
-        }
-
-        public static void UpdatePointClienShowMoveEffect(this EffectShowObj self, float fixedDeltaTime)
-        {
-            if (self.RefEffectObj.effectShowType != EffectShowType.PointClienShowMove)
-            {
-                return;
-            }
-
-            Unit effectUnit = self.RefEffectObj.GetUnit();
-            if (UnitHelper.ChkIsBullet(effectUnit) == false)
-            {
-                return;
-            }
-
-            MoveTweenObj moveTweenObj = effectUnit.GetComponent<MoveTweenObj>();
-            if (moveTweenObj == null)
-            {
-                return;
-            }
-
-            float flyTime = 0;
-            Vector3 targetPos = Vector3.zero;
-
-            if (moveTweenObj.moveTweenType is StraightMoveTweenType straightMoveTweenType)
-            {
-                return;
-            }
-            else if (moveTweenObj.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
-            {
-                return;
-            }
-            else if (moveTweenObj.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
-            {
-                return;
-            }
-            else if (moveTweenObj.moveTweenType is TargetMoveTweenType targetMoveTweenType)
-            {
-                return;
-            }
-            else if (moveTweenObj.moveTweenType is TargetLimitTimeMoveTweenType targetLimitTimeMoveTweenType)
-            {
-                return;
-            }
-            else if (moveTweenObj.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
-            {
-                flyTime = targetQuickMoveTweenType.LimitTime;
-
-                if (moveTweenObj.selectHandle.selectHandleType == SelectHandleType.SelectPosition)
-                {
-                    targetPos = moveTweenObj.selectHandle.position;
-                }
-                else if (moveTweenObj.selectHandle.selectHandleType == SelectHandleType.SelectUnits)
-                {
-                    if (moveTweenObj.selectHandle.unitIds != null && moveTweenObj.selectHandle.unitIds.Count > 0)
-                    {
-                        Unit targetUnitFirst = UnitHelper.GetUnit(self.DomainScene(), moveTweenObj.selectHandle.unitIds[0]);
-                        if (targetUnitFirst == null)
-                        {
-                            return;
-                        }
-                        targetPos = targetUnitFirst.Position;
-                    }
-                }
-            }
-
-            if (targetPos.Equals(float3.zero))
-            {
-                return;
-            }
-
-            Vector3 startPos = self.RefEffectObj.createPos;
-            Vector3 endPos = Vector3.zero;
-            long passTime = TimeHelper.ServerNow() - self.RefEffectObj.createTime;
-            if (passTime >= flyTime * 1000)
-            {
-                endPos = targetPos;
-            }
-            else
-            {
-                endPos = startPos + passTime / (flyTime * 1000) * (targetPos - startPos);
-            }
-
-            self.go.transform.position = endPos;
-            self.go.transform.forward = (targetPos - startPos).normalized;
-
-            //
-            // Vector3 curEffectPos = self.go.transform.position;
-            // curEffectPos = Vector3.Lerp(curEffectPos, endPos, fixedDeltaTime);
-            // self.go.transform.position = curEffectPos;
-
         }
     }
 }

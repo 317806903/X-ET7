@@ -43,14 +43,15 @@ namespace ET
             return itemList;
         }
 
-        public static List<ItemComponent> GetItemList(this ItemManagerComponent self, ItemType itemType)
+        public static List<ItemComponent> GetItemList(this ItemManagerComponent self, ItemType itemType, ItemSubType itemSubType)
         {
             List<ItemComponent> itemList = ListComponent<ItemComponent>.Create();
             foreach (var child in self.Children)
             {
                 long itemId = child.Key;
                 ItemComponent itemComponent = self.GetChild<ItemComponent>(itemId);
-                if (itemComponent.model.ItemType == itemType)
+                if (itemComponent.model.ItemType == itemType
+                    && (itemSubType == ItemSubType.None || itemSubType == itemComponent.model.ItemSubType))
                 {
                     itemList.Add(itemComponent);
                 }
@@ -94,6 +95,12 @@ namespace ET
         {
             if (count == 0)
             {
+                return null;
+            }
+
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                Log.Error($"ET.ItemManagerComponentSystem.AddItem ItemCfgCategory.Instance.Contain({itemCfgId}) == false");
                 return null;
             }
             ItemComponent itemComponent = null;

@@ -106,6 +106,8 @@ namespace ET.Server
 			response.PlayerComponentBytes = player.ToBson();
 			response.PlayerStatusComponentBytes = playerStatusComponent.ToBson();
 
+			await PlayerCacheHelper.DealPlayerFunctionMenuWaitChk(scene, playerId);
+
 			await ETTask.CompletedTask;
 		}
 	}

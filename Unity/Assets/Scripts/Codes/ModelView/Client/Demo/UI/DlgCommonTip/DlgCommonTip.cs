@@ -11,6 +11,7 @@ namespace ET.Client
 
 		public Transform transTipNode;
 		public Stack<string> tips = new();
+		public HashSet<GameObject> tipShowGoList = new();
 		public bool isDoing;
 	}
 }

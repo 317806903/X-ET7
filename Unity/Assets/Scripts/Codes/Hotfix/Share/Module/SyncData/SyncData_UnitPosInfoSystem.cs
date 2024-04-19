@@ -35,16 +35,10 @@ namespace ET
             self.forwardZ = (int)(unit.Forward.z * 1000);
         }
 
-        public static void xxx(this SyncData_UnitPosInfo self)
+        public static void DealByBytes(this SyncData_UnitPosInfo self, Unit unit)
         {
-            // UnitComponent
-            // Unit unit = unitComponent.Get(unitPosInfo.unitId);
-            // if (unit == null)
-            // {
-            //     continue;
-            // }
-            // unit.Position = unitPosInfo.GetPos();
-            // unit.Forward = unitPosInfo.GetForward();
+            unit.Position = self.GetPos();
+            unit.Forward = self.GetForward();
         }
 
         public static float3 GetPos(this SyncData_UnitPosInfo self)

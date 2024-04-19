@@ -22,7 +22,7 @@ namespace ET.Server
 				createActionList.AddRange(tmp1);
 			}
 
-			List<Unit> unitList = ET.GamePlayPKHelper.CreateTower(observerUnit.DomainScene(), observerUnit.Id, towerUnitCfgId, position);
+			List<Unit> unitList = ET.GamePlayPKHelper.CreateTower(observerUnit.DomainScene(), observerUnit.Id, towerUnitCfgId, position, false);
 			foreach (Unit unit in unitList)
 			{
 				ET.GamePlayHelper.DoCreateActions(unit, createActionList);

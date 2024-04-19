@@ -232,6 +232,15 @@ namespace ET
 
 	}
 
+	[Message(OuterMessage.M2C_RemoveUnits)]
+	[ProtoContract]
+	public partial class M2C_RemoveUnits: ProtoObject, IActorMessage
+	{
+		[ProtoMember(1)]
+		public List<long> Units { get; set; }
+
+	}
+
 	[Message(OuterMessage.M2C_SyncDataList)]
 	[ProtoContract]
 	public partial class M2C_SyncDataList: ProtoObject, IActorMessage
@@ -304,15 +313,6 @@ namespace ET
 
 		[ProtoMember(2)]
 		public string SceneName { get; set; }
-
-	}
-
-	[Message(OuterMessage.M2C_RemoveUnits)]
-	[ProtoContract]
-	public partial class M2C_RemoveUnits: ProtoObject, IActorMessage
-	{
-		[ProtoMember(1)]
-		public List<long> Units { get; set; }
 
 	}
 
@@ -979,6 +979,9 @@ namespace ET
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long TowerUnitId { get; set; }
 
 	}
 
@@ -2358,13 +2361,13 @@ namespace ET
 		 public const ushort MoveInfo = 10015;
 		 public const ushort UnitInfo = 10016;
 		 public const ushort M2C_CreateUnits = 10017;
-		 public const ushort M2C_SyncDataList = 10018;
-		 public const ushort M2C_SyncUnitEffects = 10019;
-		 public const ushort M2C_SyncGetCoinShow = 10020;
-		 public const ushort M2C_CreateMyUnit = 10021;
-		 public const ushort C2M_NeedReNoticeUnitIds = 10022;
-		 public const ushort M2C_StartSceneChange = 10023;
-		 public const ushort M2C_RemoveUnits = 10024;
+		 public const ushort M2C_RemoveUnits = 10018;
+		 public const ushort M2C_SyncDataList = 10019;
+		 public const ushort M2C_SyncUnitEffects = 10020;
+		 public const ushort M2C_SyncGetCoinShow = 10021;
+		 public const ushort M2C_CreateMyUnit = 10022;
+		 public const ushort C2M_NeedReNoticeUnitIds = 10023;
+		 public const ushort M2C_StartSceneChange = 10024;
 		 public const ushort C2M_PathfindingResult = 10025;
 		 public const ushort C2M_Stop = 10026;
 		 public const ushort M2C_PathfindingResult = 10027;

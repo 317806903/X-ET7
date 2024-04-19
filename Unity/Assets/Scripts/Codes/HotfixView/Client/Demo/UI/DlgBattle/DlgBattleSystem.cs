@@ -58,7 +58,7 @@ namespace ET.Client
 
             self.View.EButton_ClearMyTowerButton.AddListener(() =>
             {
-                ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene()).Coroutine();
+                ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene(), -1).Coroutine();
             });
 
             self.View.EButton_ClearAllMonsterButton.AddListener(() =>
@@ -190,7 +190,6 @@ namespace ET.Client
             Scroll_Item_Tower itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
 
             string itemCfgId = self.monsterList[index];
-            TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(itemCfgId);
 
             itemMonster.ShowBagItem(itemCfgId, true);
             itemMonster.ELabel_NumTextMeshProUGUI.text = $"1";
@@ -200,7 +199,7 @@ namespace ET.Client
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
                     battleDragItemType = BattleDragItemType.PKMonster,
-                    battleDragItemParam = monsterCfg.Id,
+                    battleDragItemParam = itemCfgId,
                     countOnce = int.Parse(self.View.E_InputFieldTMP_InputField.text),
                     createActionIds = self.View.E_InputFieldCreateActionTMP_InputField.text,
                     callBack = (scene) =>

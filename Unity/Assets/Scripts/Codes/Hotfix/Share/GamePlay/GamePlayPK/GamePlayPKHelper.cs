@@ -30,7 +30,7 @@ namespace ET
 			return monsterUnit;
 		}
 
-		public static List<Unit> CreateTower(Scene scene, long playerId, string towerCfgId, float3 pos)
+		public static List<Unit> CreateTower(Scene scene, long playerId, string towerCfgId, float3 pos, bool isCreateByMonster)
         {
             float3 forward = new float3(0, 0, 1);
 
@@ -71,27 +71,16 @@ namespace ET
                     }
 
                     GamePlayHelper.AddUnitPathfinding(towerUnit);
-                    // if (isCallMonster)
-                    // {
-                    //     GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
-                    //     TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetPlayerCallMonsterTeamFlagTypeByPlayer(playerId, pos);
-                    //     GamePlayHelper.AddUnitTeamFlag(towerUnit, teamFlagType);
-                    //
-                    //     MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
-                    //     int rewardGold = 0;
-                    //     if (towerCfg.RewardGold.Count > i)
-                    //     {
-                    //         rewardGold = towerCfg.RewardGold[i];
-                    //         monsterWaveCallComponent.RecordUnit2Monster(towerUnit.Id, "", rewardGold);
-                    //     }
-                    // }
-                    // else
-                    // {
-                    //     GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
-                    //     GamePlayHelper.AddUnitInfo(playerId, towerUnit);
-                    // }
-                    GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
-                    GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+
+                    if (isCreateByMonster)
+                    {
+                        GamePlayHelper.AddUnitTeamFlag(towerUnit, TeamFlagType.Monster1);
+                    }
+                    else
+                    {
+                        GamePlayHelper.AddPlayerUnitTeamFlag(playerId, towerUnit);
+                        GamePlayHelper.AddUnitInfo(playerId, towerUnit);
+                    }
 
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
                     ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds);

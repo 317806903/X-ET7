@@ -12,7 +12,11 @@ namespace ET.Server
 		{
 			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
 
-			string monsterUnitCfgId = request.MonsterUnitCfgId;
+			string itemCfgId = request.MonsterUnitCfgId;
+
+			bool isMonster = ItemHelper.ChkIsMonster(itemCfgId);
+			bool isTower = ItemHelper.ChkIsTower(itemCfgId);
+
 			float3 position = request.Position;
 			int count = request.Count;
 			string createActionIds = request.CreateActionIds;
@@ -25,8 +29,20 @@ namespace ET.Server
 			for (int i = 0; i < count; i++)
 			{
 				float3 forward = new float3(0, 0, 1);
-				Unit monsterUnit = ET.GamePlayPKHelper.CreateMonster(observerUnit.DomainScene(), monsterUnitCfgId, 1, position, forward);
-				ET.GamePlayHelper.DoCreateActions(monsterUnit, createActionList);
+				if (isMonster)
+				{
+					Unit monsterUnit = ET.GamePlayPKHelper.CreateMonster(observerUnit.DomainScene(), itemCfgId, 1, position, forward);
+					ET.GamePlayHelper.DoCreateActions(monsterUnit, createActionList);
+				}
+
+				if (isTower)
+				{
+					List<Unit> unitList = ET.GamePlayPKHelper.CreateTower(observerUnit.DomainScene(), observerUnit.Id, itemCfgId, position, true);
+					foreach (Unit unit in unitList)
+					{
+						ET.GamePlayHelper.DoCreateActions(unit, createActionList);
+					}
+				}
 			}
 
 			await ETTask.CompletedTask;

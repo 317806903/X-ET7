@@ -350,6 +350,12 @@ namespace ET.Client
 
         public static void OnSelectMonster(this DlgBattleDragItem self, string monsterCfgId)
         {
+            if (ItemHelper.ChkIsTower(monsterCfgId))
+            {
+                self.OnSelectTower(monsterCfgId);
+                return;
+            }
+
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
             float resScale = unitCfg.ResScale;

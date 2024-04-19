@@ -43,10 +43,11 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask SendClearMyTower(Scene scene)
+		public static async ETTask SendClearMyTower(Scene scene, long towerUnitId)
 		{
 			C2M_ClearMyTower _C2M_ClearMyTower = new ()
 			{
+				TowerUnitId = towerUnitId,
 			};
 			M2C_ClearMyTower _M2C_ClearMyTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_ClearMyTower) as M2C_ClearMyTower;
 

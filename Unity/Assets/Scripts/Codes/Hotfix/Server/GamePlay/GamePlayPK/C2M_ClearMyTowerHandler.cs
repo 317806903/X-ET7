@@ -11,6 +11,7 @@ namespace ET.Server
 		{
 			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
 			long playerId = observerUnit.Id;
+			long towerUnitId = request.TowerUnitId;
 
 			UnitComponent unitComponent = Ability.UnitHelper.GetUnitComponent(observerUnit);
 			foreach (Unit unit in unitComponent.actorList)
@@ -20,7 +21,10 @@ namespace ET.Server
 				{
 					if (towerComponent.playerId == playerId)
 					{
-						unit.DestroyNotDeathShow();
+						if (towerUnitId == -1 || towerUnitId == unit.Id)
+						{
+							unit.DestroyNotDeathShow();
+						}
 					}
 				}
 			}

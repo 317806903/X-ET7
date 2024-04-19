@@ -473,6 +473,7 @@ message M2C_PKMoveTower // IActorLocationResponse
 message C2M_ClearMyTower // IActorLocationRequest
 {
 	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
 }
 
 message M2C_ClearMyTower // IActorLocationResponse

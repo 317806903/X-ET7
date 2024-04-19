@@ -268,7 +268,16 @@ namespace ET.Client
 		public static void OnConfirmSale(this DlgBattleTowerHUD self)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Sell);
-			ET.Client.GamePlayTowerDefenseHelper.SendScalePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+			if (GamePlayHelper.GetGamePlayPK(self.DomainScene()) != null)
+			{
+				ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene(), self.towerUnitId).Coroutine();
+				self.OnClose();
+				return;
+			}
+			if (GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()) != null)
+			{
+				ET.Client.GamePlayTowerDefenseHelper.SendScalePlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+			}
 			self.OnClose();
 		}
 
@@ -276,21 +285,39 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Reclaim);
 
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
-			(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkReclaimPlayerTower(self.playerId, self.towerUnitId);
-			if (bRet == false)
+			if (GamePlayHelper.GetGamePlayPK(self.DomainScene()) != null)
 			{
-				string tipMsg = msg;
-				ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+				ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene(), self.towerUnitId).Coroutine();
+				self.OnClose();
 				return;
 			}
+			if (GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()) != null)
+			{
+				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+				(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkReclaimPlayerTower(self.playerId, self.towerUnitId);
+				if (bRet == false)
+				{
+					string tipMsg = msg;
+					ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+					return;
+				}
 
-			ET.Client.GamePlayTowerDefenseHelper.SendReclaimPlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+				ET.Client.GamePlayTowerDefenseHelper.SendReclaimPlayerTower(self.ClientScene(), self.towerUnitId).Coroutine();
+			}
+
 			self.OnClose();
 		}
 
 		public static void OnUpgrade(this DlgBattleTowerHUD self)
 		{
+			if (GamePlayHelper.GetGamePlayPK(self.DomainScene()) != null)
+			{
+				return;
+			}
+			if (GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()) != null)
+			{
+			}
+
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			(bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId, self.onlyChkPool);
 			if (bRet == false)

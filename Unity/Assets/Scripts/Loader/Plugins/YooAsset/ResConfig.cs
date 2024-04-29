@@ -24,10 +24,12 @@ namespace ET
 		public string RouterHttpHost = "127.0.0.1";
 		public int RouterHttpPort = 30300;
 		public AreaType areaType;
+		public string languageType;
 		public bool IsShowDebugMode = false;
 		public bool IsShowEditorLoginMode = false;
 		public bool IsNeedSendEventLog;
 		public string MirrorARSessionAuthAppKey = "";
 		public string MirrorARSessionAuthAppSecret = "";
+		public bool IsGameModeArcade;
     }
 }

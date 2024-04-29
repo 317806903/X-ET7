@@ -150,7 +150,20 @@ namespace ET.Client
 
                     if (isLimitRule == false && self.IsNeedChkCanPutRepeat())
                     {
-                        self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                        canPut = self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                        if (canPut)
+                        {
+                            self.View.E_TipNodeImage.SetVisible(false);
+                            self.ChgCurrentPlaceObj(true);
+                        }
+                        else
+                        {
+                            self.ChgCurrentPlaceObj(false);
+                        }
+                    }
+                    else
+                    {
+                        self.ChgCurrentPlaceObj(false);
                     }
                 }
             }

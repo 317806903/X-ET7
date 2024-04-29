@@ -91,6 +91,23 @@ namespace ET.Client
 			return arSceneId;
 		}
 
+		public static string GetArcadeARSceneId()
+		{
+			string key = "ArcadeARSceneId";
+			if (PlayerPrefs.HasKey(key) == false)
+			{
+				return "";
+			}
+			string arcadeARSceneId = PlayerPrefs.GetString(key);
+			return arcadeARSceneId;
+		}
+
+		public static void SetArcadeARSceneId(string arcadeARSceneId)
+		{
+			string key = "ArcadeARSceneId";
+			PlayerPrefs.SetString(key, arcadeARSceneId);
+		}
+
 		public static string GetARMeshDownLoadUrl(Scene scene)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene);
@@ -166,6 +183,40 @@ namespace ET.Client
 				return arSessionComponent.ChkARMirrorSceneUIShow();
 			}
 			return false;
+		}
+
+		public static async ETTask SetARRoomInfoAsync(Scene scene)
+		{
+			float arMapScale = ARSessionHelper.GetScaleAR(scene);
+			if (arMapScale == 0)
+			{
+				arMapScale = 30;
+			}
+
+			ARMeshType arMeshType = ARMeshType.FromRemoteURL;
+			if (ResConfig.Instance.Channel == "20001")
+			{
+				arMeshType = ARMeshType.FromClientObj;
+			}
+
+			string arSceneId = ARSessionHelper.GetARSceneId(scene);
+			string arMeshDownLoadUrl = "";
+			byte[] arMeshBytes = null;
+
+			arSceneId = ARSessionHelper.GetARSceneId(scene);
+			if (arMeshType == ARMeshType.FromRemoteURL)
+			{
+				arMeshDownLoadUrl = ARSessionHelper.GetARMeshDownLoadUrl(scene);
+			}
+			else if (arMeshType == ARMeshType.FromClientObj)
+			{
+				arMeshBytes = ARSessionHelper.GetARMeshClientObj(scene);
+			}
+
+			bool result = await RoomHelper.SetARRoomInfoAsync(scene, arMapScale, arMeshType, arSceneId, arMeshDownLoadUrl, arMeshBytes);
+			if (result)
+			{
+			}
 		}
 	}
 }

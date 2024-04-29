@@ -49,6 +49,7 @@ namespace ET.Client
 		public static async ETTask RefreshWhenBaseInfoChg(this DlgFixedMenu self)
 		{
 			await self.UpdatePhysicalStrength();
+			await self.UpdateArcadeCoin();
 		}
 
 		public static void ShowCoinList(this DlgFixedMenu self, bool status)
@@ -61,13 +62,28 @@ namespace ET.Client
 
 		public static void ShowCoinBar(this DlgFixedMenu self, bool status)
 		{
+			if (ET.SceneHelper.ChkIsGameModeArcade() && status)
+			{
+				self.View.EButton_ArcadeCoinButton.SetVisible(true);
+				self.View.EButton_ArcadeCoinButton.AddListenerAsync(self.ClickArcadeCoin);
+				self.UpdateArcadeCoin().Coroutine();
+			}
+			else
+			{
+				self.View.EButton_ArcadeCoinButton.SetVisible(false);
+			}
 		}
 
 		public static void ShowPhysicalBar(this DlgFixedMenu self, bool status)
 		{
-			if (GlobalSettingCfgCategory.Instance.PhysicalStrengthShow)
+			if (ET.SceneHelper.ChkIsGameModeArcade())
 			{
-				self.View.EButton_PhysicalStrengthButton.SetVisible(status);
+				self.View.EButton_PhysicalStrengthButton.SetVisible(false);
+				return;
+			}
+			if (GlobalSettingCfgCategory.Instance.PhysicalStrengthShow && status)
+			{
+				self.View.EButton_PhysicalStrengthButton.SetVisible(true);
 				self.View.EButton_PhysicalStrengthButton.AddListenerAsync(self.ClickPhysicalStrength);
 				self.UpdatePhysicalStrength().Coroutine();
 			}
@@ -89,6 +105,19 @@ namespace ET.Client
 			int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
 			string msg = curPhysicalStrength + "/" + maxPhysicalStrength;
 			self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
+		}
+
+		public static async ETTask UpdateArcadeCoin(this DlgFixedMenu self)
+		{
+			PlayerBaseInfoComponent playerBaseInfoComponent =
+				await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+			if (playerBaseInfoComponent == null)
+			{
+				return;
+			}
+			int arcadeCoinNum = playerBaseInfoComponent.arcadeCoinNum;
+			string msg = $"{arcadeCoinNum}";
+			self.View.ELabel_ArcadeCoinNumTextMeshProUGUI.text = msg;
 		}
 
 		public static void HideWindow(this DlgFixedMenu self)
@@ -142,6 +171,13 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPhysicalStrength>();
+		}
+
+		public static async ETTask ClickArcadeCoin(this DlgFixedMenu self)
+		{
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+			UIManagerHelper.ShowDlgArcade(self.DomainScene(), 8, null);
 		}
 
 	}

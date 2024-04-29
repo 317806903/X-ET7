@@ -65,7 +65,7 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBag>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 
 		public static async ETTask AddBagItemRefreshListener(this DlgBag self, Transform transform, int index)
@@ -85,7 +85,7 @@ namespace ET.Client
 		public static async ETTask OnBgClick(this DlgBag self)
 		{
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBag>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 	}
 }

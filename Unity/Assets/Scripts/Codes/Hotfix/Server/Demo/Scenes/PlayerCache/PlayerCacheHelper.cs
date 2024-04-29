@@ -215,13 +215,10 @@ namespace ET.Server
 		        return;
 	        }
 
-	        PlayerBaseInfoComponent playerBaseInfoComponent =
-				await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
-					PlayerBaseInfoComponent;
+	        PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
 			playerBaseInfoComponent.ChgPhysicalStrength(chgValue);
 			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_AddPhysical;
-			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
-                        new() { "physicalStrength", "nextRecoverTime"}, playerModelChgType);
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "physicalStrength", "nextRecoverPhysicalTime"}, playerModelChgType);
 	        await ETTask.CompletedTask;
         }
 
@@ -233,14 +230,53 @@ namespace ET.Server
 				return;
 			}
 
-			PlayerBaseInfoComponent playerBaseInfoComponent =
-					await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as
-							PlayerBaseInfoComponent;
+			PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
 			playerBaseInfoComponent.ChgPhysicalStrength(-chgValue);
 
 			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_ReducePhysical;
-			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo,
-				new() { "physicalStrength", "nextRecoverTime"}, playerModelChgType);
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "physicalStrength", "nextRecoverPhysicalTime"}, playerModelChgType);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask AddArcadeCoin(Scene scene, long playerId, int chgValue)
+        {
+	        if (chgValue < 0)
+	        {
+		        Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+		        return;
+	        }
+
+	        PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
+			playerBaseInfoComponent.arcadeCoinNum += chgValue;
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_AddArcadeCoinNum;
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "arcadeCoinNum"}, playerModelChgType);
+
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.ArcadeCoinAdd);
+
+	        await ETTask.CompletedTask;
+        }
+
+		public static async ETTask ReduceArcadeCoin(Scene scene, long playerId, int chgValue)
+		{
+			if (chgValue < 0)
+			{
+				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+				return;
+			}
+
+			PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
+			playerBaseInfoComponent.arcadeCoinNum -= chgValue;
+			if (playerBaseInfoComponent.arcadeCoinNum < 0)
+			{
+				Log.Error($"playerBaseInfoComponent.arcadeCoinNum[{playerBaseInfoComponent.arcadeCoinNum}] < 0, chgValue:{chgValue}");
+				playerBaseInfoComponent.arcadeCoinNum = 0;
+			}
+
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_ReduceArcadeCoinNum;
+			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "arcadeCoinNum"}, playerModelChgType);
+
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.ArcadeCoinReduce);
+
 			await ETTask.CompletedTask;
 		}
 

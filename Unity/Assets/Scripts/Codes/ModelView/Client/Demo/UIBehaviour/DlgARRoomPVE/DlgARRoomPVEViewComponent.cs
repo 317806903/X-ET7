@@ -347,6 +347,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_CointIconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CointIconImage == null )
+				{
+					this.m_E_CointIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/E_CointIcon");
+				}
+				return this.m_E_CointIconImage;
+			}
+		}
+
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_RoomMemberLoopHorizontalScrollRect
 		{
 			get
@@ -386,6 +403,7 @@ namespace ET.Client
 			this.m_E_RoomMemberStatusImage = null;
 			this.m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 			this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
+			this.m_E_CointIconImage = null;
 			this.m_ELoopScrollList_RoomMemberLoopHorizontalScrollRect = null;
 			this.uiTransform = null;
 		}
@@ -410,6 +428,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_RoomMemberStatusImage = null;
 		private TMPro.TextMeshProUGUI m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_CointIconImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RoomMemberLoopHorizontalScrollRect = null;
 		public Transform uiTransform = null;
 	}

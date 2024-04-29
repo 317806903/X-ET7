@@ -183,6 +183,16 @@ namespace ET
             return self.playerList;
         }
 
+        public static bool ChkPlayerIsQuit(this GamePlayPlayerListComponent self, long playerId)
+        {
+            if (self.playerId2IsQuit.TryGetValue(playerId, out var isQuit))
+            {
+                return isQuit;
+            }
+
+            return true;
+        }
+
         public static GamePlayComponent GetGamePlay(this GamePlayPlayerListComponent self)
         {
             GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
@@ -421,13 +431,13 @@ namespace ET
             }
         }
 
-        public static void RecoverPlayerGold(this GamePlayPlayerListComponent self)
+        public static void RecoverPlayerGold(this GamePlayPlayerListComponent self, int recoverAddGold)
         {
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
-                int recoverGold = GlobalSettingCfgCategory.Instance.AREndlessChallengeRecoverGold + (int)self.lastPlayerGold[playerId];
+                int recoverGold = recoverAddGold + (int)self.lastPlayerGold[playerId];
                 ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, recoverGold);
             }
         }

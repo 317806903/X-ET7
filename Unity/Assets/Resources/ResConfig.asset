@@ -20,8 +20,10 @@ MonoBehaviour:
   RouterHttpHost: 127.0.0.1
   RouterHttpPort: 3478
   areaType: 0
-  IsShowDebugMode: 0
-  IsShowEditorLoginMode: 0
+  languageType: CN
+  IsShowDebugMode: 1
+  IsShowEditorLoginMode: 1
   IsNeedSendEventLog: 0
   MirrorARSessionAuthAppKey: 63f72bdc21c28002a4f4b218#mirrorsdk_dev
   MirrorARSessionAuthAppSecret: 79395951c7cf78bd7ec1fe5b5b1c97ce
+  IsGameModeArcade: 1

@@ -139,6 +139,7 @@ namespace ET.Client
                      || playerStatusComponent.SubRoomType == SubRoomType.NormalPVE
                      || playerStatusComponent.SubRoomType == SubRoomType.NormalPVP
                      || playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge
+                     || playerStatusComponent.SubRoomType == SubRoomType.NormalScanMesh
                      )
             {
                 Scene currentScene = scene.CurrentScene();

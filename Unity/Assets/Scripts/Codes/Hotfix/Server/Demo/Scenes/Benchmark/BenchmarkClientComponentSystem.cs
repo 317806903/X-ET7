@@ -21,7 +21,7 @@ namespace ET.Server
         {
             await TimerComponent.Instance.WaitAsync(1000);
 
-            Scene scene = await SceneFactory.CreateServerScene(self, IdGenerater.Instance.GenerateId(), IdGenerater.Instance.GenerateInstanceId(),
+            Scene scene = await SceneHelper.CreateServerScene(self, IdGenerater.Instance.GenerateId(), IdGenerater.Instance.GenerateInstanceId(),
                 self.DomainZone(), "bechmark", SceneType.Benchmark);
             
             Client.NetClientComponent netClientComponent = scene.AddComponent<Client.NetClientComponent, AddressFamily>(AddressFamily.InterNetwork);

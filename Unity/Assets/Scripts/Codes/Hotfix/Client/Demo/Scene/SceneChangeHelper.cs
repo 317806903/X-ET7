@@ -11,7 +11,7 @@
             CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
             currentScenesComponent.Scene?.Dispose(); // 删除之前的CurrentScene，创建新的
             Scene currentScene = SceneFactory.CreateCurrentScene(sceneInstanceId, clientScene.Zone, sceneName, currentScenesComponent);
-            ET.Ability.SceneHelper.InitWhenClient(currentScene);
+            ET.SceneHelper.InitWhenClient(currentScene);
             UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
 
             Log.Debug("ET.Client.SceneChangeHelper.SceneChangeTo 22");

@@ -20,8 +20,11 @@ namespace ET
         public bool isFinishTutorialFirst;
 
         public int ChallengeClearLevel;
+
         public int physicalStrength;
-        public long nextRecoverTime;
+        public long nextRecoverPhysicalTime;
+
+        public int arcadeCoinNum;
 
         public LoginType BindLoginType;
         public string BindEmail;

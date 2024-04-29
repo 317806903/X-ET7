@@ -32,10 +32,25 @@ namespace ET
                 }
                 else
                 {
-                    initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
+                    if (ET.SceneHelper.ChkIsGameModeArcade())
+                    {
+                        initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
+                    }
+                    else
+                    {
+                        initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
+                    }
                 }
 #else
-                List<string> initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
+                List<string> initialItemList;
+                if (ET.SceneHelper.ChkIsGameModeArcade())
+                {
+                    initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
+                }
+                else
+                {
+                    initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
+                }
 #endif
                 foreach (var itemCfgId in initialItemList)
                 {

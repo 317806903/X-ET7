@@ -53,7 +53,7 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgRankEndlessChallenge>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+            await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
 
         public static async ETTask ShowRankScrollItem(this DlgRankEndlessChallenge self)
@@ -161,7 +161,7 @@ namespace ET.Client
         public static async ETTask OnBgClick(this DlgRankEndlessChallenge self)
         {
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgRankEndlessChallenge>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+            await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
     }
 }

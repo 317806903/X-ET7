@@ -76,7 +76,7 @@ namespace ET.Server
 			playerStatusComponent.SubRoomType = (SubRoomType)_R2G_GetRoomIdByPlayer.SubRoomType;
 			playerStatusComponent.RoomId = _R2G_GetRoomIdByPlayer.RoomId;
 			playerStatusComponent.LastBattleCfgId = "";
-			playerStatusComponent.LastBattleResult = 0;
+			playerStatusComponent.LastBattleResult = BattleResult.Default;
 			if (playerStatusComponent.RoomId == 0)
 			{
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;

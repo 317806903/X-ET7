@@ -89,6 +89,13 @@ namespace ET
 
             EventTriggerListener eventTrigger = go.GetComponent<EventTriggerListener>();
             if (eventTrigger == null) eventTrigger = go.AddComponent<EventTriggerListener>();
+
+            var graphic = go.GetComponent<UnityEngine.UI.Graphic>();
+            if (graphic == null)
+            {
+                go.AddComponent<NonDrawingGraphic>();
+            }
+
             return eventTrigger;
         }
 

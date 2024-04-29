@@ -51,6 +51,12 @@ namespace ET.Client
 
 		public static async ETTask ShowReportButton(this DlgFixedMenuHighest self)
 		{
+			if (ET.SceneHelper.ChkIsGameModeArcade())
+			{
+				self.View.EG_ReportRectTransform.SetVisible(false);
+				return;
+			}
+
 			self.View.EG_ReportRectTransform.SetVisible(true);
 
 			EventTriggerListener.Get(self.View.EG_ReportRectTransform.gameObject).onPress.AddListener((go, data) =>

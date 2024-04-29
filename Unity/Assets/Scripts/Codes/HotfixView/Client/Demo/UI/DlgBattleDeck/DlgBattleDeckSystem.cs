@@ -64,9 +64,6 @@ namespace ET.Client
 		public static async ETTask Refresh(this DlgBattleDeck self)
 		{
 			await self.CreateCardScrollItem();
-
-			self.View.ELoopScrollList_BattleDeckItemLoopHorizontalScrollRect.RefreshCells();
-			self.View.ELoopScrollList_TowerCardItemLoopHorizontalScrollRect.RefreshCells();
 		}
 
 		public static void ShowBg(this DlgBattleDeck self)
@@ -93,6 +90,7 @@ namespace ET.Client
 				self.AddUIScrollItems(ref self.ScrollBattleDeckItem, count);
 				self.View.ELoopScrollList_BattleDeckItemLoopHorizontalScrollRect.SetVisible(true, count);
 			}
+			self.View.ELoopScrollList_BattleDeckItemLoopHorizontalScrollRect.RefreshCells();
 
 			List<ItemComponent> itemList = await self.GetTowerItemListWhenNotBattleDeck();
 			int itemCount = itemList.Count;
@@ -101,13 +99,14 @@ namespace ET.Client
 				self.AddUIScrollItems(ref self.ScrollBagItem, itemCount);
 				self.View.ELoopScrollList_TowerCardItemLoopHorizontalScrollRect.SetVisible(true, itemCount);
 			}
+			self.View.ELoopScrollList_TowerCardItemLoopHorizontalScrollRect.RefreshCells();
 		}
 
 		public static async ETTask OnQuitButton(this DlgBattleDeck self)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDeck>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 
 		public static void BindMoveBagItem(this DlgBattleDeck self)
@@ -255,7 +254,7 @@ namespace ET.Client
 		public static async ETTask OnBgClick(this DlgBattleDeck self)
 		{
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDeck>();
-			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 
 		public static void Update(this DlgBattleDeck self)

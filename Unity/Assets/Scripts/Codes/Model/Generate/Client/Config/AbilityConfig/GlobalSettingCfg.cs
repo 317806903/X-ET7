@@ -40,11 +40,33 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         PhysicalStrengthShow = _buf.ReadBool();
         TowerDefenseNearTowerDis = _buf.ReadFloat();
         AdmobAvailable = _buf.ReadBool();
-        AREndlessChallengeRecoverHp = _buf.ReadInt();
-        AREndlessChallengeRecoverGold = _buf.ReadInt();
+        RecoverTimeoutTime = _buf.ReadInt();
+        RecoverAddHp = _buf.ReadInt();
+        RecoverAddGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
         GameReJudgeTime = _buf.ReadLong();
         MaxBattleCardNum = _buf.ReadInt();
+        GameModeArcadeMasterPassword = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GameModeArcadeInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GameModeArcadeInitialBackpackItem.Add(_e0);}}
+        GameModeArcadeSessionTimeOut = _buf.ReadInt();
+        GameModeArcadeCoin2Money = _buf.ReadFloat();
+        GameModeArcadeARPVPCfgId = _buf.ReadString();
+        GameModeArcadeAREndlessChallengeCfgId = _buf.ReadString();
+        GameModeArcadeNoARPVPCfgId = _buf.ReadString();
+        GameModeArcadeNoAREndlessChallengeCfgId = _buf.ReadString();
+        GameModeArcadeARScanMeshCfgId = _buf.ReadString();
+        GameModeArcadeNoARScanMeshCfgId = _buf.ReadString();
+        GameModeArcadeRecoverTimeoutTime = _buf.ReadInt();
+        GameModeArcadeRecoverAddHp = _buf.ReadInt();
+        GameModeArcadeRecoverAddGold = _buf.ReadInt();
+        GameModeArcadePVPReviveTimeWhenFree = _buf.ReadInt();
+        GameModeArcadePVPReviveTimeWhenPay = _buf.ReadInt();
+        GameModeArcadePVPCostWhenRevive = _buf.ReadInt();
+        GameModeArcadePVPCostWhenStart = _buf.ReadInt();
+        GameModeArcadeEndlessChallengeReviveTimeWhenFree = _buf.ReadInt();
+        GameModeArcadeEndlessChallengeReviveTimeWhenPay = _buf.ReadInt();
+        GameModeArcadeEndlessChallengeCostWhenRevive = _buf.ReadInt();
+        GameModeArcadeEndlessChallengeCostWhenStart = _buf.ReadInt();
         PostInit();
     }
 
@@ -142,13 +164,17 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public bool AdmobAvailable { get; private set; }
     /// <summary>
-    /// AR无尽模式复活增加生命
+    /// 复活时超时时间(秒)
     /// </summary>
-    public int AREndlessChallengeRecoverHp { get; private set; }
+    public int RecoverTimeoutTime { get; private set; }
     /// <summary>
-    /// AR无尽模式复活增加金币
+    /// 复活时增加生命
     /// </summary>
-    public int AREndlessChallengeRecoverGold { get; private set; }
+    public int RecoverAddHp { get; private set; }
+    /// <summary>
+    /// 复活时增加金币
+    /// </summary>
+    public int RecoverAddGold { get; private set; }
     /// <summary>
     /// 初始背包物体
     /// </summary>
@@ -163,6 +189,91 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 最多出战卡数
     /// </summary>
     public int MaxBattleCardNum { get; private set; }
+    /// <summary>
+    /// (街机模式)管理员密码
+    /// </summary>
+    public string GameModeArcadeMasterPassword { get; private set; }
+    /// <summary>
+    /// (街机模式)初始背包物体
+    /// </summary>
+    public System.Collections.Generic.List<string> GameModeArcadeInitialBackpackItem { get; private set; }
+    public System.Collections.Generic.List<ItemCfg> GameModeArcadeInitialBackpackItem_Ref { get; private set; }
+    /// <summary>
+    /// (街机模式)超时时间(秒)
+    /// </summary>
+    public int GameModeArcadeSessionTimeOut { get; private set; }
+    /// <summary>
+    /// (街机模式)代币换算成money的系数
+    /// </summary>
+    public float GameModeArcadeCoin2Money { get; private set; }
+    /// <summary>
+    /// (街机模式)PVP的cfgId
+    /// </summary>
+    public string GameModeArcadeARPVPCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)PVE无尽模式的cfgId
+    /// </summary>
+    public string GameModeArcadeAREndlessChallengeCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)非AR模式PVP的cfgId
+    /// </summary>
+    public string GameModeArcadeNoARPVPCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)非AR模式PVE无尽模式的cfgId
+    /// </summary>
+    public string GameModeArcadeNoAREndlessChallengeCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)管理员扫描地形的cfgId
+    /// </summary>
+    public string GameModeArcadeARScanMeshCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)非AR管理员扫描地形的cfgId
+    /// </summary>
+    public string GameModeArcadeNoARScanMeshCfgId { get; private set; }
+    /// <summary>
+    /// (街机模式)复活时超时时间(秒)
+    /// </summary>
+    public int GameModeArcadeRecoverTimeoutTime { get; private set; }
+    /// <summary>
+    /// (街机模式)复活时增加生命
+    /// </summary>
+    public int GameModeArcadeRecoverAddHp { get; private set; }
+    /// <summary>
+    /// (街机模式)复活时增加金币
+    /// </summary>
+    public int GameModeArcadeRecoverAddGold { get; private set; }
+    /// <summary>
+    /// (街机模式)PVP免费的复活次数
+    /// </summary>
+    public int GameModeArcadePVPReviveTimeWhenFree { get; private set; }
+    /// <summary>
+    /// (街机模式)PVP付费的复活次数
+    /// </summary>
+    public int GameModeArcadePVPReviveTimeWhenPay { get; private set; }
+    /// <summary>
+    /// (街机模式)PVP复活需消耗代币
+    /// </summary>
+    public int GameModeArcadePVPCostWhenRevive { get; private set; }
+    /// <summary>
+    /// (街机模式)PVP开始战斗需消耗代币
+    /// </summary>
+    public int GameModeArcadePVPCostWhenStart { get; private set; }
+    /// <summary>
+    /// (街机模式)无尽模式免费的复活次数
+    /// </summary>
+    public int GameModeArcadeEndlessChallengeReviveTimeWhenFree { get; private set; }
+    /// <summary>
+    /// (街机模式)无尽模式付费的复活次数
+    /// </summary>
+    public int GameModeArcadeEndlessChallengeReviveTimeWhenPay { get; private set; }
+    /// <summary>
+    /// (街机模式)无尽模式复活需消耗代币
+    /// </summary>
+    public int GameModeArcadeEndlessChallengeCostWhenRevive { get; private set; }
+    /// <summary>
+    /// (街机模式)无尽模式开始战斗需消耗代币
+    /// </summary>
+    public int GameModeArcadeEndlessChallengeCostWhenStart { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -171,6 +282,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     {
         { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.InitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in InitialBackpackItem) { this.InitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
+        { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.GameModeArcadeInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in GameModeArcadeInitialBackpackItem) { this.GameModeArcadeInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -205,11 +317,33 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
         + "TowerDefenseNearTowerDis:" + TowerDefenseNearTowerDis + ","
         + "AdmobAvailable:" + AdmobAvailable + ","
-        + "AREndlessChallengeRecoverHp:" + AREndlessChallengeRecoverHp + ","
-        + "AREndlessChallengeRecoverGold:" + AREndlessChallengeRecoverGold + ","
+        + "RecoverTimeoutTime:" + RecoverTimeoutTime + ","
+        + "RecoverAddHp:" + RecoverAddHp + ","
+        + "RecoverAddGold:" + RecoverAddGold + ","
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
         + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "MaxBattleCardNum:" + MaxBattleCardNum + ","
+        + "GameModeArcadeMasterPassword:" + GameModeArcadeMasterPassword + ","
+        + "GameModeArcadeInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(GameModeArcadeInitialBackpackItem) + ","
+        + "GameModeArcadeSessionTimeOut:" + GameModeArcadeSessionTimeOut + ","
+        + "GameModeArcadeCoin2Money:" + GameModeArcadeCoin2Money + ","
+        + "GameModeArcadeARPVPCfgId:" + GameModeArcadeARPVPCfgId + ","
+        + "GameModeArcadeAREndlessChallengeCfgId:" + GameModeArcadeAREndlessChallengeCfgId + ","
+        + "GameModeArcadeNoARPVPCfgId:" + GameModeArcadeNoARPVPCfgId + ","
+        + "GameModeArcadeNoAREndlessChallengeCfgId:" + GameModeArcadeNoAREndlessChallengeCfgId + ","
+        + "GameModeArcadeARScanMeshCfgId:" + GameModeArcadeARScanMeshCfgId + ","
+        + "GameModeArcadeNoARScanMeshCfgId:" + GameModeArcadeNoARScanMeshCfgId + ","
+        + "GameModeArcadeRecoverTimeoutTime:" + GameModeArcadeRecoverTimeoutTime + ","
+        + "GameModeArcadeRecoverAddHp:" + GameModeArcadeRecoverAddHp + ","
+        + "GameModeArcadeRecoverAddGold:" + GameModeArcadeRecoverAddGold + ","
+        + "GameModeArcadePVPReviveTimeWhenFree:" + GameModeArcadePVPReviveTimeWhenFree + ","
+        + "GameModeArcadePVPReviveTimeWhenPay:" + GameModeArcadePVPReviveTimeWhenPay + ","
+        + "GameModeArcadePVPCostWhenRevive:" + GameModeArcadePVPCostWhenRevive + ","
+        + "GameModeArcadePVPCostWhenStart:" + GameModeArcadePVPCostWhenStart + ","
+        + "GameModeArcadeEndlessChallengeReviveTimeWhenFree:" + GameModeArcadeEndlessChallengeReviveTimeWhenFree + ","
+        + "GameModeArcadeEndlessChallengeReviveTimeWhenPay:" + GameModeArcadeEndlessChallengeReviveTimeWhenPay + ","
+        + "GameModeArcadeEndlessChallengeCostWhenRevive:" + GameModeArcadeEndlessChallengeCostWhenRevive + ","
+        + "GameModeArcadeEndlessChallengeCostWhenStart:" + GameModeArcadeEndlessChallengeCostWhenStart + ","
         + "}";
     }
     

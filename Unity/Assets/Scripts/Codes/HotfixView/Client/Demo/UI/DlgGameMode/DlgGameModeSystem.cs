@@ -50,10 +50,10 @@ namespace ET.Client
 
 			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
 			{
-				playerStatus = PlayerStatus.Room,
+				ARHallType = ARHallType.CreateRoomWithOutARSceneId,
 				RoomType = RoomType.Normal,
 				SubRoomType = SubRoomType.NormalARCreate,
-				arRoomId = 0,
+				roomId = 0,
 			};
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
@@ -70,10 +70,10 @@ namespace ET.Client
 
 			DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
 			{
-				playerStatus = PlayerStatus.Room,
+				ARHallType = ARHallType.ScanQRCode,
 				RoomType = RoomType.Normal,
 				SubRoomType = SubRoomType.NormalARScanCode,
-				arRoomId = 0,
+				roomId = 0,
 			};
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameMode>();
 			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);

@@ -31,8 +31,6 @@ namespace ET.Client
             self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
 
-            await self.UpdatePhysical();
-
             MirrorVerse.UI.MirrorSceneClassyUI.ClassyUI.Instance?.HideMenu();
             self.GetRoomInfo().Coroutine();
         }
@@ -45,10 +43,19 @@ namespace ET.Client
             RoomType roomType = playerStatusComponent.RoomType;
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
 
-            if (playerStatus != PlayerStatus.Room)
+            if (playerStatus == PlayerStatus.Room)
+            {
+                return false;
+            }
+            else if (playerStatus == PlayerStatus.Battle)
+            {
+                return false;
+            }
+            else if (playerStatus == PlayerStatus.Hall)
             {
                 return true;
             }
+
             if (roomType != roomComponent.roomType)
             {
                 return true;
@@ -73,10 +80,10 @@ namespace ET.Client
 
                     DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                     {
-                        playerStatus = PlayerStatus.Room,
+                        ARHallType = ARHallType.JoinTheRoom,
                         RoomType = roomComponent.roomType,
                         SubRoomType = roomComponent.subRoomType,
-                        arRoomId = roomComponent.Id,
+                        roomId = roomComponent.Id,
                         battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
                     };
                     UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
@@ -93,7 +100,7 @@ namespace ET.Client
             {
                 await RoomHelper.QuitRoomAsync(self.ClientScene());
                 ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
-                await UIManagerHelper.ExitRoom(self.DomainScene());
+                await UIManagerHelper.ExitRoomUI(self.DomainScene());
                 return;
             }
 
@@ -126,19 +133,27 @@ namespace ET.Client
                 return;
             }
 
-            int costValue = 0;
-            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-
-            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            if (ET.SceneHelper.ChkIsGameModeArcade())
             {
-                costValue = GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength;
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(roomComponent.roomType, roomComponent.subRoomType, false);
+                self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), costValue).Coroutine();
             }
             else
             {
-                costValue = 0;
-            }
+                int costValue = 0;
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
-            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), costValue).Coroutine();
+                if (myPlayerId == roomComponent.ownerRoomMemberId)
+                {
+                    costValue = GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength;
+                }
+                else
+                {
+                    costValue = 0;
+                }
+
+                self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), costValue).Coroutine();
+            }
         }
 
         public static async ETTask ShowBattleCfgChoose(this DlgARRoom self)
@@ -189,14 +204,23 @@ namespace ET.Client
 
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
-            if (myPlayerId == roomComponent.ownerRoomMemberId)
-            {
-                self.View.E_ReScanButton.SetVisible(true);
-            }
-            else
+            if (ET.SceneHelper.ChkIsGameModeArcade())
             {
                 self.View.E_ReScanButton.SetVisible(false);
             }
+            else
+            {
+                if (myPlayerId == roomComponent.ownerRoomMemberId)
+                {
+                    self.View.E_ReScanButton.SetVisible(true);
+                }
+                else
+                {
+                    self.View.E_ReScanButton.SetVisible(false);
+                }
+            }
+
+            self.UpdatePhysical().Coroutine();
 
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
@@ -256,6 +280,7 @@ namespace ET.Client
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetVisible(true, count);
 
             self.View.ELabel_RoomIdText.text = $"{roomId.ToString()} {roomComponent.roomStatus.ToString()}";
+
             self.SetRoomMemberStatusText();
             await self.ShowBattleCfgChoose();
         }
@@ -377,7 +402,7 @@ namespace ET.Client
 
             ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
 
-            await UIManagerHelper.ExitRoom(self.DomainScene());
+            await UIManagerHelper.ExitRoomUI(self.DomainScene());
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
@@ -389,6 +414,16 @@ namespace ET.Client
         public static async ETTask ShowQrCode(this DlgARRoom self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            bool isFull = self.GetRoomComponent().ChkRoomMemberIsFull();
+            if (isFull)
+            {
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Hall_RoomMemberFull");
+                ET.Client.UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, () =>
+                {
+                });
+                return;
+            }
 
             ARSessionHelper.TriggerShowQrCode(self.DomainScene());
 
@@ -408,10 +443,10 @@ namespace ET.Client
             RoomComponent roomComponent = self.GetRoomComponent();
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
-                playerStatus = PlayerStatus.Room,
+                ARHallType = ARHallType.KeepRoomAndRescan,
                 RoomType = roomComponent.roomType,
                 SubRoomType = roomComponent.subRoomType,
-                arRoomId = roomComponent.Id,
+                roomId = roomComponent.Id,
                 battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
             };
             UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
@@ -422,6 +457,55 @@ namespace ET.Client
         }
 
         public static async ETTask ChgRoomMemberStatus(this DlgARRoom self)
+        {
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                await self.ChgRoomMemberStatus_Arcade();
+            }
+            else
+            {
+                await self.ChgRoomMemberStatus_Normal();
+            }
+        }
+
+        public static async ETTask ChgRoomMemberStatus_Arcade(this DlgARRoom self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+
+            RoomComponent roomComponent = self.GetRoomComponent();
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+
+            int costValue = ET.GamePlayHelper.GetArcadeCoinCost(roomComponent.roomType, roomComponent.subRoomType, false);
+            bool bRet1 = await ET.Client.UIManagerHelper.ChkCoinEnoughOrShowtip(self.DomainScene(), costValue);
+            if (bRet1 == false)
+            {
+                return;
+            }
+
+            if (myPlayerId == roomComponent.ownerRoomMemberId)
+            {
+                (bool bRet, string msg) = roomComponent.ChkOwnerStartGame();
+                if (bRet == false)
+                {
+                    UIManagerHelper.ShowTip(self.DomainScene(), msg);
+                    return;
+                }
+            }
+
+            RoomMember myRoomMember = roomComponent.GetRoomMember(myPlayerId);
+            bool isReady = myRoomMember.isReady;
+
+            isReady = !isReady;
+            await RoomHelper.ChgRoomMemberStatusAsync(self.ClientScene(), isReady);
+
+            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+            {
+                eventName = "ReadyClicked",
+            });
+
+        }
+
+        public static async ETTask ChgRoomMemberStatus_Normal(this DlgARRoom self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 

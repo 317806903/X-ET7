@@ -69,15 +69,15 @@ namespace ET.Client
 
         public static async ETTask SetPlayerEnergy(this DlgChallengeMode self)
         {
-            self.View.E_SelectButton.transform.Find("number").ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
-            self.View.E_UnlockedButton.transform.Find("number").ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.E_SelectButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.E_UnlockedButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
         }
 
         public static async ETTask Back(this DlgChallengeMode self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Back);
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgChallengeMode>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+            await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
 
         public static async ETTask Select(this DlgChallengeMode self)
@@ -103,10 +103,10 @@ namespace ET.Client
 
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
-                    playerStatus = PlayerStatus.Hall,
+                    ARHallType = ARHallType.CreateRoomWithOutARSceneId,
                     RoomType = roomType,
                     SubRoomType = subRoomType,
-                    arRoomId = 0,
+                    roomId = 0,
                     battleCfgId = battleCfgId,
                 };
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
@@ -116,11 +116,11 @@ namespace ET.Client
                 roomType = RoomType.Normal;
                 subRoomType = SubRoomType.NormalPVE;
                 battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, self.selectIndex + 1);
-                bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
                 if (result)
                 {
                     //UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgChallengeMode>();
-                    await ET.Client.UIManagerHelper.EnterRoom(self.DomainScene());
+                    await ET.Client.UIManagerHelper.EnterRoomUI(self.DomainScene());
                 }
             }
         }

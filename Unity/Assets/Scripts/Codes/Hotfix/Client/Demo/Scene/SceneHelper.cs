@@ -33,5 +33,6 @@
 		{
 			await EventSystem.Instance.PublishAsync(scene, new EventType.BattleSceneEnterStart());
 		}
+
 	}
 }

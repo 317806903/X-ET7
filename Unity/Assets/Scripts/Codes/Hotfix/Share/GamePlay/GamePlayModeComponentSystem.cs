@@ -64,6 +64,12 @@ namespace ET
             return gamePlayComponent.GetPlayerList();
         }
 
+        public static bool ChkPlayerIsQuit(this GamePlayModeComponent self, long playerId)
+        {
+            GamePlayComponent gamePlayComponent = self.GetGamePlay();
+            return gamePlayComponent.ChkPlayerIsQuit(playerId);
+        }
+
         public static void NoticeToClientAll(this GamePlayModeComponent self)
         {
             List<long> playerList = self.GetPlayerList();

@@ -20,6 +20,21 @@ namespace ET.Client
                 if (Ability.UnitHelper.ChkIsBullet(unit))
                 {
                     BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                    if (bulletObj == null)
+                    {
+                        Log.Error($"bulletObj == null");
+                        return;
+                    }
+                    if (bulletObj.model == null)
+                    {
+                        Log.Error($"bulletObj.model[{bulletObj.CfgId}] == null");
+                        return;
+                    }
+                    if (bulletObj.model.ResId_Ref == null)
+                    {
+                        Log.Error($"bulletObj.model.ResId_Ref[{bulletObj.model.ResId}] == null");
+                        return;
+                    }
                     resName = bulletObj.model.ResId_Ref.ResName;
                     resScale = bulletObj.model.ResScale;
                 }

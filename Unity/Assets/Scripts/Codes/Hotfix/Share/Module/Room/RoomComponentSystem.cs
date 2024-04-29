@@ -12,10 +12,6 @@ namespace ET
             protected override void Awake(RoomComponent self)
             {
                 self.roomMemberSeat = new();
-                for (int i = 0; i < self.MaxMemberCount; i++)
-                {
-                    self.roomMemberSeat.Add(-1);
-                }
             }
         }
 
@@ -28,6 +24,14 @@ namespace ET
             self.ownerRoomMemberId = playerId;
             self.roomTeamMode = roomTeamMode;
             self.gamePlayBattleLevelCfgId = battleCfgId;
+
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            self.MaxMemberCount = gamePlayBattleLevelCfg.MaxPlayerCount;
+            for (int i = 0; i < self.MaxMemberCount; i++)
+            {
+                self.roomMemberSeat.Add(-1);
+            }
+
             self.AddRoomMember(playerId, true, RoomTeamId.Green, 0);
         }
 
@@ -199,6 +203,25 @@ namespace ET
         public static void ChgRoomBattleLevelCfg(this RoomComponent self, string newBattleCfgId)
         {
             self.gamePlayBattleLevelCfgId = newBattleCfgId;
+
+            int lastMaxMemberCount = self.MaxMemberCount;
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            self.MaxMemberCount = gamePlayBattleLevelCfg.MaxPlayerCount;
+            if (lastMaxMemberCount < self.MaxMemberCount)
+            {
+                for (int i = lastMaxMemberCount; i < self.MaxMemberCount; i++)
+                {
+                    self.roomMemberSeat.Add(-1);
+                }
+            }
+            else if (lastMaxMemberCount > self.MaxMemberCount)
+            {
+                for (int i = lastMaxMemberCount - 1; i >= self.MaxMemberCount; i--)
+                {
+                    self.roomMemberSeat.RemoveAt(i);
+                }
+            }
+
         }
 
         public static bool IsARRoom(this RoomComponent self)

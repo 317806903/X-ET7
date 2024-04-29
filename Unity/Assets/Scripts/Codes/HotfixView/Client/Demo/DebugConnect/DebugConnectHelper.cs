@@ -131,6 +131,12 @@ namespace ET.Client
 				}
 			}
 
+			if (ResConfig.Instance.languageType != debugConnetCfg.LanguageType)
+			{
+				isChging = true;
+				ResConfig.Instance.languageType = debugConnetCfg.LanguageType;
+			}
+
 			if (ResConfig.Instance.IsShowDebugMode != debugConnetCfg.IsShowDebugMode)
 			{
 				isChging = true;
@@ -147,6 +153,12 @@ namespace ET.Client
 			{
 				isChging = true;
 				ResConfig.Instance.IsNeedSendEventLog = debugConnetCfg.IsNeedSendEventLog;
+			}
+
+			if (ResConfig.Instance.IsGameModeArcade != debugConnetCfg.IsGameModeArcade)
+			{
+				isChging = true;
+				ResConfig.Instance.IsGameModeArcade = debugConnetCfg.IsGameModeArcade;
 			}
 			return isChging;
 		}

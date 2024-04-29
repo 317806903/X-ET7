@@ -14,6 +14,8 @@ namespace ET.Ability
         {
             protected override void Awake(AnimatorComponent self)
             {
+                self.isInit = false;
+                self.isNeedNoticeClient = false;
                 self.name = AnimatorMotionName.None;
                 self.isStoppingAnimator = false;
                 self.controlStateName = AnimatorMotionName.None;
@@ -51,18 +53,26 @@ namespace ET.Ability
         public static void SetAnimatorMotion(this AnimatorComponent self, AnimatorMotionName animatorMotionName, bool isOnlySelfShow)
         {
             self.isOnlySelfShow = isOnlySelfShow;
-            if (self.name != animatorMotionName)
+            if (self.isInit == false)
             {
                 self.isNeedNoticeClient = true;
+                self.isInit = true;
             }
             else
             {
-                if (self.name == AnimatorMotionName.None || ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.name))
+                if (self.name != animatorMotionName)
                 {
+                    self.isNeedNoticeClient = true;
                 }
                 else
                 {
-                    self.isNeedNoticeClient = true;
+                    if (self.name == AnimatorMotionName.None || ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.name))
+                    {
+                    }
+                    else
+                    {
+                        self.isNeedNoticeClient = true;
+                    }
                 }
             }
             self.name = animatorMotionName;

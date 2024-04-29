@@ -273,7 +273,7 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask SendGameRecoverCancel(Scene scene, bool isFinished)
+		public static async ETTask SendGameRecoverCancelWatchAd(Scene scene, bool isFinished)
 		{
 			try
 			{
@@ -296,17 +296,17 @@ namespace ET.Client
 					await TimerComponent.Instance.WaitFrameAsync();
 				}
 
-				C2M_BattleRecoverCancel _C2M_BattleRecoverCancel = new ()
+				C2M_BattleRecoverCancelWatchAd _C2M_BattleRecoverCancelWatchAd = new ()
 				{
 					IsFinished = isFinished?1:0,
 				};
-				M2C_BattleRecoverCancel _M2C_BattleRecoverCancel = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverCancel) as M2C_BattleRecoverCancel;
+				M2C_BattleRecoverCancelWatchAd _M2C_BattleRecoverCancelWatchAd = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverCancelWatchAd) as M2C_BattleRecoverCancelWatchAd;
 
-				if (_M2C_BattleRecoverCancel.Error != ET.ErrorCode.ERR_Success)
+				if (_M2C_BattleRecoverCancelWatchAd.Error != ET.ErrorCode.ERR_Success)
 				{
 					EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 					{
-						tipMsg = _M2C_BattleRecoverCancel.Message,
+						tipMsg = _M2C_BattleRecoverCancelWatchAd.Message,
 					});
 				}
 			}
@@ -324,7 +324,7 @@ namespace ET.Client
 
 		}
 
-		public static async ETTask SendGameRecoverConfirm(Scene scene, bool isFinished)
+		public static async ETTask SendGameRecoverConfirmWatchAd(Scene scene, bool isFinished)
 		{
 			try
 			{
@@ -345,17 +345,17 @@ namespace ET.Client
 					}
 					await TimerComponent.Instance.WaitFrameAsync();
 				}
-				C2M_BattleRecoverConfirm _C2M_BattleRecoverConfirm = new ()
+				C2M_BattleRecoverConfirmWatchAd _C2M_BattleRecoverConfirmWatchAd = new ()
 				{
 					IsFinished = isFinished?1:0,
 				};
-				M2C_BattleRecoverConfirm _M2C_BattleRecoverConfirm = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverConfirm) as M2C_BattleRecoverConfirm;
+				M2C_BattleRecoverConfirmWatchAd _M2C_BattleRecoverConfirmWatchAd = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverConfirmWatchAd) as M2C_BattleRecoverConfirmWatchAd;
 
-				if (_M2C_BattleRecoverConfirm.Error != ET.ErrorCode.ERR_Success)
+				if (_M2C_BattleRecoverConfirmWatchAd.Error != ET.ErrorCode.ERR_Success)
 				{
 					EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 					{
-						tipMsg = _M2C_BattleRecoverConfirm.Message,
+						tipMsg = _M2C_BattleRecoverConfirmWatchAd.Message,
 					});
 				}
 			}
@@ -369,6 +369,35 @@ namespace ET.Client
 				{
 					IsAdmobAvailable = true,
 				});
+			}
+
+		}
+
+		public static async ETTask SendGameRecoverResult(Scene scene, bool isConfirm)
+		{
+			try
+			{
+				scene = scene.ClientScene();
+				C2M_BattleRecoverResult _C2M_BattleRecoverResult = new ()
+				{
+					IsConfirm = isConfirm?1:0,
+				};
+				M2C_BattleRecoverResult _M2C_BattleRecoverResult = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_BattleRecoverResult) as M2C_BattleRecoverResult;
+
+				if (_M2C_BattleRecoverResult.Error != ET.ErrorCode.ERR_Success)
+				{
+					EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+					{
+						tipMsg = _M2C_BattleRecoverResult.Message,
+					});
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+			}
+			finally
+			{
 			}
 
 		}

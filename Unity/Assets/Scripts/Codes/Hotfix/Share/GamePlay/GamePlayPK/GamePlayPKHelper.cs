@@ -67,7 +67,14 @@ namespace ET
                     {
                         TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
                         towerComponent.towerCfgId = towerCfgId;
-                        towerComponent.playerId = playerId;
+                        if (isCreateByMonster)
+                        {
+                            towerComponent.playerId = -1;
+                        }
+                        else
+                        {
+                            towerComponent.playerId = playerId;
+                        }
                     }
 
                     GamePlayHelper.AddUnitPathfinding(towerUnit);

@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using ET.AbilityConfig;
+
+namespace ET.Client
 {
     [Event(SceneType.Client)]
     public class LoginFinish_UI: AEvent<Scene, EventType.LoginFinish>
@@ -15,6 +17,10 @@
 
             if (DebugConnectComponent.Instance.IsDebugMode == false)
             {
+                if (ET.SceneHelper.ChkIsGameModeArcade())
+                {
+                    return;
+                }
                 PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
                 //Log.Debug($"--LoginFinish_UI playerBaseInfoComponent[{playerBaseInfoComponent}]");

@@ -8,6 +8,8 @@ namespace ET.Ability
 	public class AnimatorComponent: Entity, IAwake, IDestroy, IFixedUpdate, ITransferClient
     {
         [BsonIgnore]
+        public bool isInit;
+        [BsonIgnore]
         public bool isNeedNoticeClient;
         public bool isOnlySelfShow;
         public AnimatorMotionName name;

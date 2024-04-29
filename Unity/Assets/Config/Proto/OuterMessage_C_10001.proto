@@ -1041,28 +1041,42 @@ message G2C_AddPhysicalStrenthByAd // IResponse
 	string Message = 3;
 }
 
-//ResponseType M2C_BattleRecoverCancel
-message C2M_BattleRecoverCancel // IActorLocationRequest
+//ResponseType M2C_BattleRecoverCancelWatchAd
+message C2M_BattleRecoverCancelWatchAd // IActorLocationRequest
 {
 	int32 RpcId = 1;
 	int32 IsFinished = 2;
 }
 
-message M2C_BattleRecoverCancel // IActorLocationResponse
+message M2C_BattleRecoverCancelWatchAd // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
 }
 
-//ResponseType M2C_BattleRecoverConfirm
-message C2M_BattleRecoverConfirm // IActorLocationRequest
+//ResponseType M2C_BattleRecoverConfirmWatchAd
+message C2M_BattleRecoverConfirmWatchAd // IActorLocationRequest
 {
 	int32 RpcId = 1;
 	int32 IsFinished = 2;
 }
 
-message M2C_BattleRecoverConfirm // IActorLocationResponse
+message M2C_BattleRecoverConfirmWatchAd // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_BattleRecoverResult
+message C2M_BattleRecoverResult // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int32 IsConfirm = 2;
+}
+
+message M2C_BattleRecoverResult // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -1136,4 +1150,19 @@ message C2G_ResetPlayerFunctionMenuStatusWhenDebug // IMessage
 	int64 PlayerId = 2;
 	int32 OperateType = 3;
 	string FunctionMenuCfgIds = 4;
+}
+
+//ResponseType G2C_GetArcadeCoinQrCode
+message C2G_GetArcadeCoinQrCode // IRequest
+{
+	int32 RpcId = 1;
+	int32 ArcadeCoinNum = 2;
+}
+
+message G2C_GetArcadeCoinQrCode // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes PayComponentBytes = 4;
 }

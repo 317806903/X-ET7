@@ -4,6 +4,7 @@ namespace ET
 {
     public enum LanguageType
     {
+        Auto,
         CN,
         TW,
         EN,

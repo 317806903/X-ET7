@@ -19,7 +19,7 @@ namespace ET
                 self.ChallengeClearLevel = 0;
 
                 self.physicalStrength = GlobalSettingCfgCategory.Instance.InitialPhysicalStrength;
-                self.nextRecoverTime = TimeHelper.ServerNow() + (GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000);
+                self.nextRecoverPhysicalTime = TimeHelper.ServerNow() + (GlobalSettingCfgCategory.Instance.RecoverTimeOfPhysicalStrength * 1000);
 
                 self.BindLoginType = LoginType.Editor;
                 self.BindEmail = "";
@@ -73,7 +73,7 @@ namespace ET
 
         public static void UpdatePhysicalStrength(this PlayerBaseInfoComponent self)
         {
-            if (TimeHelper.ServerNow() < self.nextRecoverTime)
+            if (TimeHelper.ServerNow() < self.nextRecoverPhysicalTime)
             {
                 return;
             }
@@ -89,23 +89,23 @@ namespace ET
             //     return;
             // }
 
-            long elapsedTime = TimeHelper.ServerNow() - self.nextRecoverTime;
+            long elapsedTime = TimeHelper.ServerNow() - self.nextRecoverPhysicalTime;
             var create = ((float)elapsedTime / recoverTime + 1) * recoverPhysiacalStrength;
             if (create > maxPysicalStrength)
             {
                 self.physicalStrength = maxPysicalStrength;
-                self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime;
+                self.nextRecoverPhysicalTime = TimeHelper.ServerNow() + recoverTime;
                 return;
             }
             self.physicalStrength += (int)create;
             if (self.physicalStrength > maxPysicalStrength)
             {
                 self.physicalStrength = maxPysicalStrength;
-                self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime;
+                self.nextRecoverPhysicalTime = TimeHelper.ServerNow() + recoverTime;
             }
             else
             {
-                self.nextRecoverTime = TimeHelper.ServerNow() + recoverTime - elapsedTime % recoverTime;
+                self.nextRecoverPhysicalTime = TimeHelper.ServerNow() + recoverTime - elapsedTime % recoverTime;
             }
         }
 
@@ -114,7 +114,7 @@ namespace ET
             //self.UpdatePhysicalStrength();
             if (self.physicalStrength == GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength)
                 return 0;
-            return (int)((self.nextRecoverTime - TimeHelper.ServerNow()) / 1000);
+            return (int)((self.nextRecoverPhysicalTime - TimeHelper.ServerNow()) / 1000);
         }
 
         public static int GetPhysicalStrength(this PlayerBaseInfoComponent self)

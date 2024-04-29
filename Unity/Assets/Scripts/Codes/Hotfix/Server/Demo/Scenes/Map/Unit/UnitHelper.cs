@@ -189,6 +189,7 @@ namespace ET.Server
                 M2R_NoticeRoomBattleEnd _M2R_NoticeRoomBattleEnd = new M2R_NoticeRoomBattleEnd()
                 {
                     RoomId = args.roomId,
+                    PlayerId = args.playerId,
                     IsReady = args.isReady?1:0,
                 };
                 if (playerWinResult != null)

@@ -70,8 +70,11 @@ namespace ET
                     throw new Exception("not found enum");
             }
 
-            string assemblyName = $"Model_{++globalConfig.ModelVersion}";
+            Debug.Log($"zpb globalConfig.ModelVersion before {globalConfig.ModelVersion}");
+            globalConfig.ModelVersion = int.Parse(DateTime.Now.ToString("HHmmss"));
+            string assemblyName = $"Model_{globalConfig.ModelVersion}";
             EditorUtility.SetDirty(globalConfig);
+            Debug.Log($"zpb globalConfig.ModelVersion after {globalConfig.ModelVersion}");
 
             // 修改 HybridCLR 设置里的热更程序集名
             for (int index = 0; index < SettingsUtil.HybridCLRSettings.hotUpdateAssemblies.Length; index++)
@@ -148,8 +151,11 @@ namespace ET
                     throw new Exception("not found enum");
             }
 
-            string assemblyName = $"Hotfix_{++globalConfig.HotFixVersion}";
+            Debug.Log($"zpb globalConfig.HotFixVersion before {globalConfig.HotFixVersion}");
+            globalConfig.HotFixVersion = int.Parse(DateTime.Now.ToString("HHmmss"));
+            string assemblyName = $"Hotfix_{globalConfig.HotFixVersion}";
             EditorUtility.SetDirty(globalConfig);
+            Debug.Log($"zpb globalConfig.HotFixVersion after {globalConfig.HotFixVersion}");
 
             // 修改 HybridCLR 设置里的热更程序集名
             for (int index = 0; index < SettingsUtil.HybridCLRSettings.hotUpdateAssemblies.Length; index++)

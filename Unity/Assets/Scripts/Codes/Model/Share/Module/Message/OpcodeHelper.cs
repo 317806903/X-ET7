@@ -13,12 +13,21 @@ namespace ET
             OuterMessage.G2C_Benchmark,
             OuterMessage.M2C_SyncDataList,
             OuterMessage.M2C_SyncUnitEffects,
+            OuterMessage.M2C_SyncGetCoinShow,
             OuterMessage.M2C_Stop,
             OuterMessage.M2C_CreateUnits,
             OuterMessage.M2C_RemoveUnits,
             OuterMessage.M2C_PathfindingResult,
             OuterMessage.M2C_GamePlayCoinChgNotice,
             OuterMessage.C2M_SendARCameraPos,
+            OuterMessage.C2G_GetPlayerCache,
+            OuterMessage.G2C_GetPlayerCache,
+            OuterMessage.G2C_GetRoomInfo,
+            OuterMessage.C2G_GetRoomInfo,
+            OuterMessage.R2C_RoomInfoChgNotice,
+            OuterMessage.M2C_GamePlayChgNotice,
+            OuterMessage.M2C_GamePlayModeChgNotice,
+            OuterMessage.M2C_GamePlayStatisticalDataChgNotice,
 
             ushort.MaxValue, // ActorResponse
         };

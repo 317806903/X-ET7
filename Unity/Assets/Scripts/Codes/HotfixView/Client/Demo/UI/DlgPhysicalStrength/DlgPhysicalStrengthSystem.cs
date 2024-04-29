@@ -42,10 +42,6 @@ namespace ET.Client
 			self.ShowBg();
 			self.Update().Coroutine();
 
-			self.View.ELabel_GetPhysicalStrengthNumTextMeshProUGUI.text =
-					GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd.ToString();
-			self.View.ELabel_RcoverNumTextMeshProUGUI.text = GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength.ToString();
-
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.PhysicalStrengthTimer, self);
 		}
 
@@ -74,7 +70,11 @@ namespace ET.Client
 			self.View.E_PhysicalStrengthSlider.value = (float)curPhysicalStrength / maxPhysicalStrength;
 
 			TimeSpan timeSpan = TimeSpan.FromSeconds(playerBaseInfoComponent.GetRevoerLeftTime());
-			self.View.ELabel_RecoverLeftTImeTextMeshProUGUI.text = timeSpan.ToString();
+
+			self.View.ELabel_RcoverNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_Regain", GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength, timeSpan.ToString());
+
+			self.View.ELabel_GetPhysicalStrengthNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_WatchAd", GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrengthByAd);
+
 		}
 
 		public static void OnCloseBtnClick(this DlgPhysicalStrength self)

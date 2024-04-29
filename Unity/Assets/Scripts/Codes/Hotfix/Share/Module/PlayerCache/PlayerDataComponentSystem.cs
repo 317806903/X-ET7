@@ -98,8 +98,15 @@ namespace ET
             Type type = typeof(T);
             for (int i = 0; i < setPlayerKeys.Count; i++)
             {
-                FieldInfo field = type.GetField(setPlayerKeys[i]);
-                field.SetValue(entity, field.GetValue(entityNew));
+                try
+                {
+                    FieldInfo field = type.GetField(setPlayerKeys[i]);
+                    field.SetValue(entity, field.GetValue(entityNew));
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"{e}");
+                }
             }
         }
 

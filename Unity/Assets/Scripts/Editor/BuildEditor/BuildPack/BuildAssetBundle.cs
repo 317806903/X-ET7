@@ -234,7 +234,7 @@ namespace ET
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                Debug.LogError(e);
             }
             await BuildAB_After(packName, OnlyRes);
             return buildResult;
@@ -277,7 +277,7 @@ namespace ET
             EditorPrefs.SetBool(Key_LastEnableCodes, Define.EnableCodes);
 
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-            Log.Debug($"---defines[{defines}] Define.EnableView[{Define.EnableView}] Define.EnableCodes[{Define.EnableCodes}]");
+            Debug.Log($"---defines[{defines}] Define.EnableView[{Define.EnableView}] Define.EnableCodes[{Define.EnableCodes}]");
             await BuildHelper.BuildModelAndHotfix();
             return true;
         }
@@ -291,7 +291,7 @@ namespace ET
 
             // bool lastEnableView = EditorPrefs.GetBool(Key_LastEnableView);
             // bool lastEnableCodes = EditorPrefs.GetBool(Key_LastEnableCodes);
-            // Log.Debug($"lastEnableView[{lastEnableView}] lastEnableCodes[{lastEnableCodes}]");
+            // Debug.Log($"lastEnableView[{lastEnableView}] lastEnableCodes[{lastEnableCodes}]");
             // if (lastEnableView || lastEnableCodes)
             // {
             //     ET.BuildHelper.EnableDefineSymbols("ENABLE_VIEW;ENABLE_CODES", true);

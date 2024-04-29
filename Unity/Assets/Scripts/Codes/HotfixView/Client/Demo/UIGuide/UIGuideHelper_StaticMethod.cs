@@ -109,7 +109,10 @@ namespace ET.Client
 
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
-                playerStatus = PlayerStatus.Hall, RoomType = RoomType.AR, SubRoomType = SubRoomType.ARTutorialFirst, arRoomId = 0,
+                ARHallType = ARHallType.CreateRoomWithOutARSceneId,
+                RoomType = RoomType.AR,
+                SubRoomType = SubRoomType.ARTutorialFirst,
+                roomId = 0,
             };
             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
         }
@@ -266,6 +269,7 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(scene, SoundEffectType.Click);
 
+            await RoomHelper.MemberReturnRoomFromBattleAsync(scene);
             await RoomHelper.QuitRoomAsync(scene);
             await SceneHelper.EnterHall(scene, false, false);
 

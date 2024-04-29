@@ -18,6 +18,8 @@ namespace ET.Client
 				case PlayerModelType.BackPack:
 				case PlayerModelType.BattleCard:
 				case PlayerModelType.FunctionMenu:
+				case PlayerModelType.ArcadeCoinAdd:
+				case PlayerModelType.ArcadeCoinReduce:
 					Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
 					if (player == null)
 					{

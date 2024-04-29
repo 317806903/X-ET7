@@ -7,6 +7,10 @@ namespace ET.Client
     {
 	    public static async ETTask ShowGameJudgeChoose(Scene scene)
 	    {
+		    if (ET.SceneHelper.ChkIsGameModeArcade())
+		    {
+			    return;
+		    }
 		    bool isNeed = await SendChkGameJudgeChooseAsync(scene);
 		    if (isNeed)
 		    {

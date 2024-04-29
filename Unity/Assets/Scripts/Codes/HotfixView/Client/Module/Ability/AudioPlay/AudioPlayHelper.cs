@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ET.Ability.AbilityEventType;
 using ET.AbilityConfig;
+using ET.Client;
 using Unity.Mathematics;
 
 namespace ET.Ability.Client
@@ -20,6 +21,11 @@ namespace ET.Ability.Client
 
         public static AudioPlayObj PlayAudio(Unit unit, ActionCfg_PlayAudio actionCfg_PlayAudio)
         {
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.Audio) == false)
+            {
+                return null;
+            }
+
             AudioPlayComponent audioPlayComponent = unit.GetComponent<AudioPlayComponent>();
             return audioPlayComponent.AddPlayAudioObj(actionCfg_PlayAudio);
         }

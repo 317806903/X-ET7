@@ -12,6 +12,7 @@ namespace ET.Client
 
         public Transform Root;
         public ShowFPS showFPS;
+
         public EntityRef<PingComponent> _pingComponent;
         public PingComponent pingComponent
         {
@@ -24,5 +25,8 @@ namespace ET.Client
                 this._pingComponent = value;
             }
         }
+
+        public Vector3 arCameraPosition;
+        public Vector3 arCameraEulerAngles;
     }
 }

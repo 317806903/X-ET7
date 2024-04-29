@@ -49,7 +49,15 @@ namespace ET
 
         public static int GetPlayerKillNum(this GamePlayStatisticalDataManagerComponent self, long playerId)
         {
+            if (self == null)
+            {
+                return 0;
+            }
             GamePlayStatisticalDataComponent gamePlayStatisticalDataComponent = self.GetGamePlayStatisticalData(playerId);
+            if (gamePlayStatisticalDataComponent == null)
+            {
+                return 0;
+            }
             return gamePlayStatisticalDataComponent.GetPlayerKillNum();
         }
 

@@ -2923,6 +2923,7 @@ GameObject:
   - component: {fileID: 139877274433712888}
   - component: {fileID: 3713487865217627731}
   - component: {fileID: 6520853377928217244}
+  - component: {fileID: 639692283174483561}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3046,6 +3047,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &639692283174483561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458054564246116252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: Item_TowerBuy/EImage_TowerBuyShow/EImage_Purchased/Text (TMP)
+  localizeType: 0
 --- !u!1 &7628882885527308563
 GameObject:
   m_ObjectHideFlags: 0

@@ -709,7 +709,8 @@ namespace ET.Client
             tipTextNodeRectTransform.anchoredPosition = new Vector2(-5000, -5000);
             tipTextNodeRectTransform.sizeDelta = new Vector2(((RectTransform)self.RootTrans).sizeDelta.x, tipTextNodeRectTransform.sizeDelta.y);
 
-            await TimerComponent.Instance.WaitFrameAsync();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(tipTextNodeRectTransform);
+
             tipTextNodeRectTransform.sizeDelta = new Vector2(((RectTransform)tipTextTrans).sizeDelta.x + 100, tipTextNodeRectTransform.sizeDelta.y);
 
             self.GetTextPos(tipTextNodeRectTransform, center, halfSizeX, halfSizeY, out textPivot, out textPos, out directPos, out directRotation);

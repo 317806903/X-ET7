@@ -17,7 +17,7 @@ namespace ET.Server
 
 			observerUnit.RemoveLocation(LocationType.Unit).Coroutine();
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(observerUnit.DomainScene());
-			gamePlayComponent.PlayerQuitBattle(playerId, true);
+			gamePlayComponent?.PlayerQuitBattle(playerId, true);
 
 			await ETTask.CompletedTask;
 		}

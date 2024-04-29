@@ -54,7 +54,7 @@ namespace ET.Client
         /// <param name="isNeedShowState"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetDlgLogic<T>(this UIComponent self, bool isNeedShowState = false) where T : Entity, IUILogic
+        public static T GetDlgLogic<T>(this UIComponent self, bool isNeedShowState = false, bool isNeedShowFront = false) where T : Entity, IUILogic
         {
             if (UIPathComponent.Instance == null || UIPathComponent.Instance.WindowTypeIdDict == null)
             {
@@ -84,6 +84,10 @@ namespace ET.Client
                 }
             }
 
+            if (isNeedShowFront)
+            {
+                baseWindow.uiTransform.SetAsLastSibling();
+            }
             return baseWindow.GetComponent<T>();
         }
 

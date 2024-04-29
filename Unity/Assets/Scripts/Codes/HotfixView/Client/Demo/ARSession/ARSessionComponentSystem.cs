@@ -50,8 +50,7 @@ namespace ET.Client
 			Action<string> OnMenuJoinSceneCallBack,
 			Func<(bool, string)> OnRequestQRCodeExtraData,
 			string arSceneId,
-			bool bForceIntoCreate,
-			bool bForceIntoScan)
+			ARHallType _ARHallType)
 		{
 			self.OnMenuCancelCallBack = OnMenuCancelCallBack;
 			self.OnMenuFinishedCallBack = OnMenuFinishedCallBack;
@@ -61,7 +60,7 @@ namespace ET.Client
 			self.OnMenuJoinSceneCallBack = OnMenuJoinSceneCallBack;
 			self.OnRequestQRCodeExtraData = OnRequestQRCodeExtraData;
 
-			await self.InitCallBack(arSceneId, bForceIntoCreate, bForceIntoScan);
+			await self.InitCallBack(arSceneId, _ARHallType);
 		}
 
 		public static async ETTask ChkCameraAuthorization(this ARSessionComponent self, Action<bool> callBack)
@@ -251,6 +250,8 @@ namespace ET.Client
 			{
 				self.IsReScanMeshing = false;
 
+				ARSessionHelper.SetArcadeARSceneId(self.CurrentARSceneId);
+
 				self.OnMenuFinished();
 				self.OnMenuFinishedCallBack();
 			};
@@ -345,6 +346,10 @@ namespace ET.Client
 			{
 				self.OnSceneReady(status);
 			};
+			MirrorScene.Get().onLocalizationUpdate += (status) =>
+			{
+				self.OnLocalizationUpdate(status);
+			};
 			ClassyUI.Instance.onMenuReviewSceneOpen += () =>
 			{
 				self.OnMenuReviewSceneOpen();
@@ -410,7 +415,7 @@ namespace ET.Client
 			});
 		}
 
-		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId, bool bForceIntoCreate, bool bForceIntoScan)
+		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId, ARHallType _ARHallType)
 		{
 #if UNITY_EDITOR
 			self.OnMenuCancel();
@@ -419,12 +424,24 @@ namespace ET.Client
 #endif
 			await self.LoadARSession(() =>
 			{
-				self.InitCallBackNext(arSceneId, bForceIntoCreate, bForceIntoScan).Coroutine();
+				self.InitCallBackNext(arSceneId, _ARHallType).Coroutine();
 			});
 
 		}
 
-		public static async ETTask InitCallBackNext(this ARSessionComponent self, string arSceneId, bool bForceIntoCreate, bool bForceIntoScan)
+		public static bool ChkARSceneIdReady(this ARSessionComponent self, string arSceneId)
+		{
+			if (string.IsNullOrEmpty(arSceneId) == false)
+			{
+				if (self.ChkARSceneStatusCompleted() && arSceneId == self.CurrentARSceneId)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static async ETTask InitCallBackNext(this ARSessionComponent self, string arSceneId, ARHallType _ARHallType)
 		{
 			if (MirrorScene.IsAvailable())
 			{
@@ -447,31 +464,79 @@ namespace ET.Client
 				self.ARScenePrepared = false;
 
 				Log.Debug($"arSceneId [{arSceneId}]");
-				if (string.IsNullOrEmpty(arSceneId) == false)
-				{
-					if (self.ChkARSceneStatusCompleted() && arSceneId == self.CurrentARSceneId)
-					{
-						return;
-					}
-
-					self.ShowMenu();
-					ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
-					ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
-					ClassyUI.Instance.TriggerJoinScene(arSceneId, false);
-					self.CurrentARSceneId = arSceneId;
-					// 重连加载地图计时开始
-					self.EntranceType = "reconnect";
-					LogLoadSceneStartEvent(self);
-				}
-				else if (bForceIntoCreate)
-				{
-					ClassyUI.Instance.RestartToCreate();
-				}
-				else if (bForceIntoScan)
-				{
-					ClassyUI.Instance.RestartToJoin();
-					self.OnMenuStartDetection();
-				}
+				bool isARSceneIdReady = self.ChkARSceneIdReady(arSceneId);
+				if (_ARHallType == ARHallType.JoinTheRoom)
+                {
+	                if (string.IsNullOrEmpty(arSceneId))
+	                {
+		                self.ShowMenu();
+		                ClassyUI.Instance.RestartToCreate();
+	                }
+	                else if (isARSceneIdReady)
+	                {
+		                self.OnMenuFinished();
+		                self.OnMenuFinishedCallBack();
+	                }
+	                else
+	                {
+		                self.ShowMenu();
+		                ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
+		                ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
+		                ClassyUI.Instance.TriggerJoinScene(arSceneId, false);
+		                self.CurrentARSceneId = arSceneId;
+		                // 重连加载地图计时开始
+		                self.EntranceType = "reconnect";
+		                LogLoadSceneStartEvent(self);
+	                }
+                }
+                else if (_ARHallType == ARHallType.KeepRoomAndRescan)
+                {
+	                if (isARSceneIdReady)
+	                {
+		                self.TriggerReScan();
+	                }
+	                else
+	                {
+		                self.ShowMenu();
+		                ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
+		                ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
+		                ClassyUI.Instance.TriggerJoinScene(arSceneId, true);
+		                self.CurrentARSceneId = arSceneId;
+		                // 重连加载地图计时开始
+		                self.EntranceType = "reconnect";
+		                LogLoadSceneStartEvent(self);
+	                }
+                }
+                else if (_ARHallType == ARHallType.CreateRoomWithARSceneId)
+                {
+	                self.OnMenuLoadRecentSceneCallBack(true);
+	                if (isARSceneIdReady)
+	                {
+		                self.OnMenuFinished();
+		                self.OnMenuFinishedCallBack();
+	                }
+	                else
+	                {
+		                self.ShowMenu();
+		                ProcessingMenu.Instance.UpdateProcessingText(ProcessingState.Downloading);
+		                ClassyUI.Instance.SwitchMenu(SystemMenuType.ProcessingMenu);
+		                ClassyUI.Instance.TriggerJoinScene(arSceneId, false);
+		                self.CurrentARSceneId = arSceneId;
+		                // 重连加载地图计时开始
+		                self.EntranceType = "reconnect";
+		                LogLoadSceneStartEvent(self);
+	                }
+                }
+                else if (_ARHallType == ARHallType.CreateRoomWithOutARSceneId)
+                {
+	                self.ShowMenu();
+	                ClassyUI.Instance.RestartToCreate();
+                }
+                else if (_ARHallType == ARHallType.ScanQRCode)
+                {
+	                ClassyUI.Instance.RestartToJoin();
+	                self.OnMenuStartDetection();
+                }
 
 			}
 			else
@@ -956,6 +1021,22 @@ namespace ET.Client
 		}
 
 
+		private static void OnLocalizationUpdate(this ARSessionComponent self, StatusOr<Pose> status)
+		{
+			DebugShowComponent debugShowComponent = DebugShowComponent.Instance;
+			if (debugShowComponent != null)
+			{
+				if (status.HasValue)
+				{
+					debugShowComponent.SetDebugPose(status.Value);
+				}
+				else
+				{
+					debugShowComponent.SetDebugPose(null);
+				}
+			}
+        }
+
 		private static void LogLoadSceneStartEvent(this ARSessionComponent self)
 		{
 			// 加载地图计时开始。 trigger method: load/join/reconnect
@@ -1114,8 +1195,14 @@ namespace ET.Client
 			if (bRet)
 			{
 				UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
-				//_UIComponent.ShowWindow<DlgARSceneSlider>();
-				_UIComponent.ShowWindow<DlgARSceneSliderSimple>();
+				if (ET.SceneHelper.ChkIsGameModeArcade())
+				{
+					_UIComponent.ShowWindow<DlgARSceneSlider>();
+				}
+				else
+				{
+					_UIComponent.ShowWindow<DlgARSceneSliderSimple>();
+				}
 			}
 		}
 

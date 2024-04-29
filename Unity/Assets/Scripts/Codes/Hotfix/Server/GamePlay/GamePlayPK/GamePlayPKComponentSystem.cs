@@ -19,5 +19,11 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask GameRecoverWhenServer(this GamePlayPKComponent self, long playerId)
+        {
+
+            await ETTask.CompletedTask;
+        }
+
     }
 }

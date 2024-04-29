@@ -204,6 +204,14 @@ namespace ET.Client
                     self.IsDebugMode = DebugConnectComponent.Instance.IsDebugMode;
                     self.IsEditorLoginMode = DebugConnectComponent.Instance.IsEditorLoginMode;
                 }
+
+                if (ET.SceneHelper.ChkIsGameModeArcade())
+                {
+                    self.IsShowDebugMode = false;
+                    self.IsShowEditorLoginMode = false;
+                    self.IsDebugMode = false;
+                    self.IsEditorLoginMode = false;
+                }
             }
             else
             {
@@ -225,6 +233,45 @@ namespace ET.Client
         }
 
         public static async ETTask InitAccount(this DlgLogin self)
+        {
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                await self.InitAccount_Arcade();
+            }
+            else
+            {
+                await self.InitAccount_Normal();
+            }
+        }
+
+        public static async ETTask InitAccount_Arcade(this DlgLogin self)
+        {
+            self.View.E_Login_SDKButton.SetVisible(false);
+            self.View.E_Login_AppleButton.SetVisible(false);
+            self.View.EG_LoginAccountRootRectTransform.SetVisible(false);
+            self.View.EG_LoginWhenSDKRectTransform.SetVisible(false);
+            self.View.EG_LoginWhenEditorRectTransform.SetVisible(false);
+            self.View.E_LoggingTextTextMeshProUGUI.SetVisible(false);
+
+            bool bSDKLoginDone = await ET.Client.LoginSDKManagerComponent.Instance.ChkSDKLoginDone();
+            bool bGuestLoginDone = self.ChkGuestLoginDone();
+            self.View.EG_LoginAccountRootRectTransform.SetVisible(true);
+
+            if (bSDKLoginDone && self.IsAutoLogining)
+            {
+                self.LoginWhenSDK().Coroutine();
+            }
+            else if(bGuestLoginDone && self.IsAutoLogining)
+            {
+                self.LoginWhenGuest().Coroutine();
+            }
+            else
+            {
+                self.View.EG_LoginWhenSDKRectTransform.SetVisible(true);
+            }
+        }
+
+        public static async ETTask InitAccount_Normal(this DlgLogin self)
         {
             self.View.E_Login_SDKButton.SetVisible(Application.platform == RuntimePlatform.Android);
             self.View.E_Login_AppleButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);

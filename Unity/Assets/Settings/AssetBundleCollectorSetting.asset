@@ -166,6 +166,27 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: Res_Font
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/Font
+        CollectorGUID: 4170f3ce3565b034da1ca584ec046f1b
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/TextMesh Pro/Fonts
+        CollectorGUID: 6ab70aee4d56447429c680537fbf93ed
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: ARSession
       GroupDesc: 
       AssetTags: 

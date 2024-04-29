@@ -1,4 +1,5 @@
 using System.Net;
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -23,7 +24,7 @@ namespace ET.Server
                 LanguageType languageType;
                 if (Options.Instance.LanguageType == "CN")
                 {
-                    languageType = LanguageType.EN;
+                    languageType = LanguageType.CN;
                 }
                 else if (Options.Instance.LanguageType == "EN")
                 {
@@ -31,7 +32,7 @@ namespace ET.Server
                 }
                 else if (Options.Instance.LanguageType == "TW")
                 {
-                    languageType = LanguageType.EN;
+                    languageType = LanguageType.TW;
                 }
                 else
                 {
@@ -56,6 +57,9 @@ namespace ET.Server
             dbManagerComponent.NeedDB = Options.Instance.NeedDB == 1;
             Log.Error($"--zpb-- Options.Instance.NeedDB {Options.Instance.NeedDB}");
 
+            ServerSceneManagerComponent.Instance.IsGameModeArcade = Options.Instance.IsGameModeArcade == 1;
+            Log.Error($"--zpb-- Options.Instance.IsGameModeArcade {Options.Instance.IsGameModeArcade}");
+
             while (true)
             {
                 ConfigComponent configComponent = Game.GetExistSingleton<ConfigComponent>();
@@ -68,6 +72,12 @@ namespace ET.Server
                     break;
                 }
             }
+
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                ET.ConstValue.SessionTimeoutTime = GlobalSettingCfgCategory.Instance.GameModeArcadeSessionTimeOut * 1000;
+            }
+
             //Options.Instance.Process = 2;
             StartProcessConfig processConfig = StartProcessConfigCategory.Instance.Get(Options.Instance.Process);
             switch (Options.Instance.AppType)
@@ -79,7 +89,7 @@ namespace ET.Server
                     var processScenes = StartSceneConfigCategory.Instance.GetByProcess(Options.Instance.Process);
                     foreach (StartSceneConfig startConfig in processScenes.Values)
                     {
-                        await SceneFactory.CreateServerScene(ServerSceneManagerComponent.Instance, startConfig.Id, startConfig.InstanceId, startConfig.Zone, startConfig.Name,
+                        await SceneHelper.CreateServerScene(ServerSceneManagerComponent.Instance, startConfig.Id, startConfig.InstanceId, startConfig.Zone, startConfig.Name,
                             startConfig.Type, startConfig);
                     }
 

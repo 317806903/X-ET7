@@ -55,11 +55,11 @@ namespace ET.Client
             {
                 self.curFrameUpdate = 0;
 
-                self.UpdatePing();
+                self.UpdateShow();
             }
         }
 
-        public static void UpdatePing(this DebugShowComponent self)
+        public static void UpdateShow(this DebugShowComponent self)
         {
             if (self.showFPS == null || self.pingComponent == null)
             {
@@ -69,6 +69,28 @@ namespace ET.Client
             if (self.Root.gameObject.activeSelf && self.showFPS.gameObject.activeInHierarchy)
             {
                 self.showFPS.ExShow = $"{self.pingComponent.Ping}ms";
+                if (self.arCameraPosition.Equals(Vector3.zero) && self.arCameraEulerAngles.Equals(Vector3.zero) )
+                {
+                    self.showFPS.ExShow2 = "";
+                }
+                else
+                {
+                    self.showFPS.ExShow2 = $"{self.arCameraPosition} {self.arCameraEulerAngles}";
+                }
+            }
+        }
+
+        public static void SetDebugPose(this DebugShowComponent self, Pose? pose)
+        {
+            if (pose.HasValue)
+            {
+                self.arCameraPosition = pose.Value.position;
+                self.arCameraEulerAngles = pose.Value.rotation.eulerAngles;
+            }
+            else
+            {
+                self.arCameraPosition = Vector3.zero;
+                self.arCameraEulerAngles = Vector3.zero;
             }
         }
     }

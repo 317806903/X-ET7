@@ -53,6 +53,7 @@ namespace ET
 
 #if UNITY_EDITOR
 			Options.Instance.NeedDB = GlobalConfig.Instance.NeedDB?1:0;
+			Options.Instance.IsGameModeArcade = ResConfig.Instance.IsGameModeArcade?1:0;
 #endif
 
 			Game.AddSingleton<ET.CodeLoader>().Start();

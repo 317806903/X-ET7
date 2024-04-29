@@ -2144,10 +2144,10 @@ namespace ET
 
 	}
 
-	[ResponseType(nameof(M2C_BattleRecoverCancel))]
-	[Message(OuterMessage.C2M_BattleRecoverCancel)]
+	[ResponseType(nameof(M2C_BattleRecoverCancelWatchAd))]
+	[Message(OuterMessage.C2M_BattleRecoverCancelWatchAd)]
 	[ProtoContract]
-	public partial class C2M_BattleRecoverCancel: ProtoObject, IActorLocationRequest
+	public partial class C2M_BattleRecoverCancelWatchAd: ProtoObject, IActorLocationRequest
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -2157,9 +2157,9 @@ namespace ET
 
 	}
 
-	[Message(OuterMessage.M2C_BattleRecoverCancel)]
+	[Message(OuterMessage.M2C_BattleRecoverCancelWatchAd)]
 	[ProtoContract]
-	public partial class M2C_BattleRecoverCancel: ProtoObject, IActorLocationResponse
+	public partial class M2C_BattleRecoverCancelWatchAd: ProtoObject, IActorLocationResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -2172,10 +2172,10 @@ namespace ET
 
 	}
 
-	[ResponseType(nameof(M2C_BattleRecoverConfirm))]
-	[Message(OuterMessage.C2M_BattleRecoverConfirm)]
+	[ResponseType(nameof(M2C_BattleRecoverConfirmWatchAd))]
+	[Message(OuterMessage.C2M_BattleRecoverConfirmWatchAd)]
 	[ProtoContract]
-	public partial class C2M_BattleRecoverConfirm: ProtoObject, IActorLocationRequest
+	public partial class C2M_BattleRecoverConfirmWatchAd: ProtoObject, IActorLocationRequest
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -2185,9 +2185,37 @@ namespace ET
 
 	}
 
-	[Message(OuterMessage.M2C_BattleRecoverConfirm)]
+	[Message(OuterMessage.M2C_BattleRecoverConfirmWatchAd)]
 	[ProtoContract]
-	public partial class M2C_BattleRecoverConfirm: ProtoObject, IActorLocationResponse
+	public partial class M2C_BattleRecoverConfirmWatchAd: ProtoObject, IActorLocationResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2C_BattleRecoverResult))]
+	[Message(OuterMessage.C2M_BattleRecoverResult)]
+	[ProtoContract]
+	public partial class C2M_BattleRecoverResult: ProtoObject, IActorLocationRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int IsConfirm { get; set; }
+
+	}
+
+	[Message(OuterMessage.M2C_BattleRecoverResult)]
+	[ProtoContract]
+	public partial class M2C_BattleRecoverResult: ProtoObject, IActorLocationResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -2343,6 +2371,37 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2C_GetArcadeCoinQrCode))]
+	[Message(OuterMessage.C2G_GetArcadeCoinQrCode)]
+	[ProtoContract]
+	public partial class C2G_GetArcadeCoinQrCode: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int ArcadeCoinNum { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_GetArcadeCoinQrCode)]
+	[ProtoContract]
+	public partial class G2C_GetArcadeCoinQrCode: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] PayComponentBytes { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -2489,19 +2548,23 @@ namespace ET
 		 public const ushort G2C_SetPlayerCache = 10143;
 		 public const ushort C2G_AddPhysicalStrenthByAd = 10144;
 		 public const ushort G2C_AddPhysicalStrenthByAd = 10145;
-		 public const ushort C2M_BattleRecoverCancel = 10146;
-		 public const ushort M2C_BattleRecoverCancel = 10147;
-		 public const ushort C2M_BattleRecoverConfirm = 10148;
-		 public const ushort M2C_BattleRecoverConfirm = 10149;
-		 public const ushort C2G_ChkGameJudgeChoose = 10150;
-		 public const ushort G2C_ChkGameJudgeChoose = 10151;
-		 public const ushort C2G_RecordGameJudgeChoose = 10152;
-		 public const ushort G2C_RecordGameJudgeChoose = 10153;
-		 public const ushort C2M_SetStopActorMoveWhenDebug = 10154;
-		 public const ushort C2M_ForceGameEndWhenDebug = 10155;
-		 public const ushort C2G_SetMyRankScoreWhenDebug = 10156;
-		 public const ushort C2G_ClearRankWhenDebug = 10157;
-		 public const ushort C2G_ClearPlayerRankWhenDebug = 10158;
-		 public const ushort C2G_ResetPlayerFunctionMenuStatusWhenDebug = 10159;
+		 public const ushort C2M_BattleRecoverCancelWatchAd = 10146;
+		 public const ushort M2C_BattleRecoverCancelWatchAd = 10147;
+		 public const ushort C2M_BattleRecoverConfirmWatchAd = 10148;
+		 public const ushort M2C_BattleRecoverConfirmWatchAd = 10149;
+		 public const ushort C2M_BattleRecoverResult = 10150;
+		 public const ushort M2C_BattleRecoverResult = 10151;
+		 public const ushort C2G_ChkGameJudgeChoose = 10152;
+		 public const ushort G2C_ChkGameJudgeChoose = 10153;
+		 public const ushort C2G_RecordGameJudgeChoose = 10154;
+		 public const ushort G2C_RecordGameJudgeChoose = 10155;
+		 public const ushort C2M_SetStopActorMoveWhenDebug = 10156;
+		 public const ushort C2M_ForceGameEndWhenDebug = 10157;
+		 public const ushort C2G_SetMyRankScoreWhenDebug = 10158;
+		 public const ushort C2G_ClearRankWhenDebug = 10159;
+		 public const ushort C2G_ClearPlayerRankWhenDebug = 10160;
+		 public const ushort C2G_ResetPlayerFunctionMenuStatusWhenDebug = 10161;
+		 public const ushort C2G_GetArcadeCoinQrCode = 10162;
+		 public const ushort G2C_GetArcadeCoinQrCode = 10163;
 	}
 }

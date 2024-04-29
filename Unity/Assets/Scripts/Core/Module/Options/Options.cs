@@ -44,6 +44,10 @@ namespace ET
         [Option("NeedDB", Required = false, Default = 0)]
         public int NeedDB { get; set; }
 
+        //
+        [Option("IsGameModeArcade", Required = false, Default = 0)]
+        public int IsGameModeArcade { get; set; }
+
         [Option("LanguageType", Required = false, Default = "EN")]
         public string LanguageType { get; set; }
     }

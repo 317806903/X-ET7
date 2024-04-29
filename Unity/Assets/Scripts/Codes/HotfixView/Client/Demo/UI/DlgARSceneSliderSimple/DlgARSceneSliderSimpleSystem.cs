@@ -53,6 +53,14 @@ namespace ET.Client
 
 		public static void SetSceneScaleInfo(this DlgARSceneSliderSimple self)
 		{
+			self.showPrefabCfgList = new()
+			{
+				(new float2(0, 0), "Unit_HeadQuarterPreview")
+
+			};
+			self.orgPrefabLocalScaleDic = new();
+			self.showPrefabList = new();
+
 			self.scaleSettingList = new List<float>() { 75, 35, 10, };
 			self.defaultScaleIndex = 0;
 			self.curScaleIndex = self.defaultScaleIndex;
@@ -66,14 +74,9 @@ namespace ET.Client
 					break;
 				}
 			}
-			self.SetCurChooseIndex(self.curScaleIndex);
 
-			self.showPrefabCfgList = new()
-			{
-				(new float2(0, 0), "Unit_HeadQuarterPreview")
+			self.ChgScale(self.curScaleIndex);
 
-			};
-			self.showPrefabList = new();
 		}
 
 		public static void Update(this DlgARSceneSliderSimple self)
@@ -160,6 +163,7 @@ namespace ET.Client
 					go.SetActive(false);
 				}
 			}
+			self.ChgScale(self.curScaleIndex);
 		}
 
 		public static GameObject CreateOnePrefab(this DlgARSceneSliderSimple self, string unitCfgId)
@@ -170,7 +174,7 @@ namespace ET.Client
 			string pathName = resUnitCfg.ResName;
 			GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 			GameObject goInstance = GameObject.Instantiate(go);
-			goInstance.transform.localScale = Vector3.one * resScale / self.GetSceneScale();
+			self.orgPrefabLocalScaleDic.Add(goInstance, resScale);
 			goInstance.SetActive(false);
 			return goInstance;
 		}
@@ -196,14 +200,9 @@ namespace ET.Client
 			self.curScaleIndex = curScaleIndex;
 			float newScale = self.scaleSettingList[self.curScaleIndex];
 
-			if (lastScale == newScale)
-			{
-				return;
-			}
 			foreach (GameObject go in self.showPrefabList)
 			{
-				var goScale = go.transform.localScale;
-				go.transform.localScale = goScale * lastScale / newScale;
+				go.transform.localScale = Vector3.one / (self.orgPrefabLocalScaleDic[go] * newScale);
 			}
 
 			self.SetCurChooseIndex(curScaleIndex);

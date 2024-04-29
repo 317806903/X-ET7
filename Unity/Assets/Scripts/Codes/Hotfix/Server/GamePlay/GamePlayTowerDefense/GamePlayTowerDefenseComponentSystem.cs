@@ -45,10 +45,35 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask GameRecoverWhenServer(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            int costValue = self.GetComponent<GameRecoverOnceComponent>().recoverCostArcadeCoinNum;
+            if (costValue <= 0)
+            {
+                return;
+            }
+            await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+
+            await ETTask.CompletedTask;
+        }
+
         public static async ETTask GameBeginWhenServer_IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
         {
-            await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
+                List<long> playerList = self.GetPlayerList();
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    long playerId = playerList[i];
+                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                }
+            }
+            else
+            {
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
+                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+            }
 
             await ETTask.CompletedTask;
         }
@@ -63,18 +88,43 @@ namespace ET.Server
                 return;
             }
 
-            //扣玩家体力
-            await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
+                List<long> playerList = self.GetPlayerList();
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    long playerId = playerList[i];
+                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                }
+            }
+            else
+            {
+                //扣玩家体力
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+            }
 
             await ETTask.CompletedTask;
         }
 
         public static async ETTask GameBeginWhenServer_IsPVPMode(this GamePlayTowerDefenseComponent self)
         {
-            //扣玩家体力
-            await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
+                List<long> playerList = self.GetPlayerList();
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    long playerId = playerList[i];
+                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                }
+            }
+            else
+            {
+                //扣玩家体力
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
+                    GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+            }
 
             await ETTask.CompletedTask;
         }
@@ -194,5 +244,37 @@ namespace ET.Server
             }
             await ETTask.CompletedTask;
         }
+
+        public static async ETTask DealPlayerCancelRecover(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            self.GetGamePlay().NoticeGameEndToRoom(false, playerId);
+
+            Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), playerId);
+            if (unit != null)
+            {
+                await unit.RemoveLocation(LocationType.Unit);
+            }
+
+            self.GetGamePlay().PlayerQuitBattle(playerId, true);
+
+            self.NoticeToClient(playerId);
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask<bool> ChkPlayerConfirmRecover(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            int costValue = self.GetComponent<GameRecoverOnceComponent>().recoverCostArcadeCoinNum;
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
+            return playerBaseInfoComponent.arcadeCoinNum >= costValue;
+        }
+
+        public static async ETTask DealPlayerConfirmRecover(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            await self.GameRecoverWhenServer(playerId);
+
+            await ETTask.CompletedTask;
+        }
+
     }
 }

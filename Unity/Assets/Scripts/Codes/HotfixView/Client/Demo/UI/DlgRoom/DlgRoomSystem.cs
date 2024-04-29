@@ -41,10 +41,19 @@ namespace ET.Client
             RoomType roomType = playerStatusComponent.RoomType;
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
 
-            if (playerStatus != PlayerStatus.Room)
+            if (playerStatus == PlayerStatus.Room)
+            {
+                return false;
+            }
+            else if (playerStatus == PlayerStatus.Battle)
+            {
+                return false;
+            }
+            else if (playerStatus == PlayerStatus.Hall)
             {
                 return true;
             }
+
             if (roomType != roomComponent.roomType)
             {
                 return true;
@@ -69,10 +78,10 @@ namespace ET.Client
 
                     DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                     {
-                        playerStatus = PlayerStatus.Room,
+                        ARHallType = ARHallType.JoinTheRoom,
                         RoomType = roomComponent.roomType,
                         SubRoomType = roomComponent.subRoomType,
-                        arRoomId = roomComponent.Id,
+                        roomId = roomComponent.Id,
                         battleCfgId = roomComponent.gamePlayBattleLevelCfgId,
                     };
                     UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
@@ -89,7 +98,7 @@ namespace ET.Client
             {
                 await RoomHelper.QuitRoomAsync(self.ClientScene());
                 ET.Client.ARSessionHelper.ResetMainCamera(self.DomainScene(), false);
-                await UIManagerHelper.ExitRoom(self.DomainScene());
+                await UIManagerHelper.ExitRoomUI(self.DomainScene());
                 return;
             }
 
@@ -134,7 +143,7 @@ namespace ET.Client
                 costValue = 0;
             }
 
-            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), costValue).Coroutine();
+            self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), costValue).Coroutine();
         }
 
         public static async ETTask ShowBattleCfgChoose(this DlgRoom self)

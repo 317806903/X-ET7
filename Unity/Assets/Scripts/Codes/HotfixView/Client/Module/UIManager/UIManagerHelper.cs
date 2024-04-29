@@ -36,7 +36,7 @@ namespace ET.Client
         public static void ShowCommonLoading(Scene scene)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true, true);
             if (_DlgCommonLoading == null)
             {
                 _UIComponent.ShowWindow<DlgCommonLoading>();
@@ -51,7 +51,7 @@ namespace ET.Client
         public static void HideCommonLoading(Scene scene, bool bForceHide)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true);
+            DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true, true);
             if (_DlgCommonLoading == null)
             {
                 _UIComponent.ShowWindow<DlgCommonLoading>();
@@ -66,7 +66,7 @@ namespace ET.Client
         public static void ShowTip(Scene scene, string tipMsg)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonTip _DlgCommonTip = _UIComponent.GetDlgLogic<DlgCommonTip>(true);
+            DlgCommonTip _DlgCommonTip = _UIComponent.GetDlgLogic<DlgCommonTip>(true, true);
             if (_DlgCommonTip == null)
             {
                 _UIComponent.ShowWindow<DlgCommonTip>();
@@ -81,7 +81,7 @@ namespace ET.Client
         public static void ShowTipTopShow(Scene scene, string tipMsg)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonTipTopShow _DlgCommonTipTopShow = _UIComponent.GetDlgLogic<DlgCommonTipTopShow>(true);
+            DlgCommonTipTopShow _DlgCommonTipTopShow = _UIComponent.GetDlgLogic<DlgCommonTipTopShow>(true, true);
             if (_DlgCommonTipTopShow == null)
             {
                 _UIComponent.ShowWindow<DlgCommonTipTopShow>();
@@ -97,6 +97,12 @@ namespace ET.Client
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
             _UIComponent.HideWindow<DlgCommonConfirm>();
+        }
+
+        public static void HideChoose(Scene scene)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            _UIComponent.HideWindow<DlgCommonChoose>();
         }
 
         public static void PreLoadConfirm(Scene scene)
@@ -116,7 +122,7 @@ namespace ET.Client
         public static void ShowConfirmNoClose(Scene scene, string confirmMsg, string sureText = null, string titleText = null)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true);
+            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true, true);
             if (_DlgCommonConfirm == null)
             {
                 _UIComponent.ShowWindow<DlgCommonConfirm>();
@@ -131,7 +137,7 @@ namespace ET.Client
         public static void ShowConfirmNoCloseHighest(Scene scene, string confirmMsg, string sureText = null, string titleText = null)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true);
+            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true, true);
             if (_DlgCommonConfirmHighest == null)
             {
                 _UIComponent.ShowWindow<DlgCommonConfirmHighest>();
@@ -145,23 +151,32 @@ namespace ET.Client
 
         public static void ShowOnlyConfirm(Scene scene, string confirmMsg, Action confirmCallBack, string sureText = null, string titleText = null)
         {
+
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true);
+
+            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true, true);
+
+            // 如果找不到通用确认对话框的逻辑对象
             if (_DlgCommonConfirm == null)
             {
+
                 _UIComponent.ShowWindow<DlgCommonConfirm>();
                 _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true);
             }
+
+            // 如果成功获取到通用确认对话框的逻辑对象
             if (_DlgCommonConfirm != null)
             {
+
                 _DlgCommonConfirm.ShowOnlyConfirm(confirmMsg, confirmCallBack, sureText, titleText);
             }
         }
 
+
         public static void ShowOnlyConfirmHighest(Scene scene, string confirmMsg, Action confirmCallBack, string sureText = null, string titleText = null)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true);
+            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true, true);
             if (_DlgCommonConfirmHighest == null)
             {
                 _UIComponent.ShowWindow<DlgCommonConfirmHighest>();
@@ -176,7 +191,7 @@ namespace ET.Client
         public static void ShowConfirm(Scene scene, string confirmMsg, Action confirmCallBack, Action cancelCallBack, string sureText = null, string cancelText = null, string titleText = null)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true);
+            DlgCommonConfirm _DlgCommonConfirm = _UIComponent.GetDlgLogic<DlgCommonConfirm>(true, true);
             if (_DlgCommonConfirm == null)
             {
                 _UIComponent.ShowWindow<DlgCommonConfirm>();
@@ -191,7 +206,7 @@ namespace ET.Client
         public static void ShowConfirmHighest(Scene scene, string confirmMsg, Action confirmCallBack, Action cancelCallBack, string sureText = null, string cancelText = null, string titleText = null)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true);
+            DlgCommonConfirmHighest _DlgCommonConfirmHighest = _UIComponent.GetDlgLogic<DlgCommonConfirmHighest>(true, true);
             if (_DlgCommonConfirmHighest == null)
             {
                 _UIComponent.ShowWindow<DlgCommonConfirmHighest>();
@@ -200,6 +215,51 @@ namespace ET.Client
             if (_DlgCommonConfirmHighest != null)
             {
                 _DlgCommonConfirmHighest.ShowConfirm(confirmMsg, confirmCallBack, cancelCallBack, sureText, cancelText, titleText);
+            }
+        }
+
+        public static void ShowWhenNoChoose(Scene scene, string showMsg, string timeoutMsg, float timeoutTime, Action confirmCallBack, string titleText = null, bool isCloseAfterChoose = true)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonChoose _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true, true);
+            if (_DlgCommonChoose == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonChoose>();
+                _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true);
+            }
+            if (_DlgCommonChoose != null)
+            {
+                _DlgCommonChoose.ShowWhenNoChoose(showMsg, timeoutMsg, timeoutTime, confirmCallBack, titleText, isCloseAfterChoose);
+            }
+        }
+
+        public static void ShowWhenOneChoose(Scene scene, string showMsg, string timeoutMsg, float timeoutTime, Action confirmCallBack, string confirmText = null, string titleText = null, bool isCloseAfterChoose = true)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonChoose _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true, true);
+            if (_DlgCommonChoose == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonChoose>();
+                _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true);
+            }
+            if (_DlgCommonChoose != null)
+            {
+                _DlgCommonChoose.ShowWhenOneChoose(showMsg, timeoutMsg, timeoutTime, confirmCallBack,confirmText, titleText, isCloseAfterChoose);
+            }
+        }
+
+        public static void ShowWhenTwoChoose(Scene scene, string showMsg, string timeoutMsg, float timeoutTime, Action confirmCallBack, Action cancelCallBack, string confirmText = null, string cancelText = null, string titleText = null, bool isTimeOutConfirm = true, bool isCloseAfterChoose = true)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonChoose _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true, true);
+            if (_DlgCommonChoose == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonChoose>();
+                _DlgCommonChoose = _UIComponent.GetDlgLogic<DlgCommonChoose>(true);
+            }
+            if (_DlgCommonChoose != null)
+            {
+                _DlgCommonChoose.ShowWhenTwoChoose(showMsg, timeoutMsg, timeoutTime, confirmCallBack,cancelCallBack, confirmText, cancelText, titleText, isTimeOutConfirm, isCloseAfterChoose);
             }
         }
 
@@ -297,92 +357,33 @@ namespace ET.Client
             _UIComponent.ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData).Coroutine();
         }
 
-        public static async ETTask EnterRoom(Scene scene)
-        {
-            UIAudioManagerHelper.PlayUIAudio(scene, SoundEffectType.JoinRoom);
-            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
-            PlayerStatusComponent playerStatusComponent = PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
-            if (playerStatusComponent.PlayerStatus != PlayerStatus.Room || playerStatusComponent.RoomId == 0)
-            {
-                if (playerStatusComponent.RoomType == RoomType.Normal)
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
-                }
-                else if (playerStatusComponent.RoomType == RoomType.AR)
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
-                }
-                return;
-            }
-
-            if (playerStatusComponent.RoomType == RoomType.Normal)
-            {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVE)
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
-                }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVP)
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
-                }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge)
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
-                }
-                else
-                {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
-                }
-            }
-            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVP)
-            {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
-            }
-            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVE)
-            {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
-            }
-            else
-            {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
-            }
-        }
-
-        public static async ETTask ExitRoom(Scene scene)
-        {
-            ET.Client.ARSessionHelper.ResetMainCamera(scene, false);
-
-            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
-
-            if (DebugConnectComponent.Instance.IsDebugMode)
-            {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
-            }
-            else
-            {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
-            }
-            // PlayerStatusComponent playerStatusComponent = PlayerHelper.GetMyPlayerStatusComponent(scene);
-            // if (playerStatusComponent.RoomType == RoomType.Normal)
-            // {
-            //     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
-            // }
-            // else if (playerStatusComponent.RoomType == RoomType.AR)
-            // {
-            //     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
-            // }
-        }
-
         public static async ETTask<bool> ChkPhsicalAndShowtip(Scene scene, int takePhsicalStrength)
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             if(playerBaseInfoComponent._ChkPhysicalStrength(-takePhsicalStrength) == false)
             {
-                UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-                _UIComponent.ShowWindow<DlgPhysicalStrengthTip>();
-                DlgPhysicalStrengthTip _DlgPhysicalStrengthTip = _UIComponent.GetDlgLogic<DlgPhysicalStrengthTip>(true);
-                _DlgPhysicalStrengthTip.SetText(takePhsicalStrength.ToString());
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_GetMore", takePhsicalStrength);
+                UIManagerHelper.ShowConfirm(scene, msg, () =>
+                {
+                    UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgPhysicalStrength>().Coroutine();
+                }, null);
+                return false;
+            }
+            return true;
+        }
+
+        public static async ETTask<bool> ChkCoinEnoughOrShowtip(Scene scene, int arcadeCoinNum, Action finishCallBack = null)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                    await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            if(playerBaseInfoComponent.arcadeCoinNum < arcadeCoinNum)
+            {
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_GetMore", arcadeCoinNum);
+                UIManagerHelper.ShowConfirm(scene, msg, () =>
+                {
+                    UIManagerHelper.ShowDlgArcade(scene, arcadeCoinNum - playerBaseInfoComponent.arcadeCoinNum, finishCallBack);
+                }, null);
                 return false;
             }
             return true;
@@ -408,6 +409,12 @@ namespace ET.Client
             }
             PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(scene);
             FunctionMenuStatus functionMenuStatus = playerFunctionMenuComponent.GetStatus(functionMenuCfgId);
+
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                functionMenuStatus = FunctionMenuStatus.Openned;
+            }
+
             if (functionMenuCfg.IsOpenSoon)
             {
                 transformLock.gameObject.SetActive(true);
@@ -520,7 +527,7 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
-            bool isEnough = playerBaseInfoComponent.physicalStrength >= costValue;
+            bool isEnough = playerBaseInfoComponent.arcadeCoinNum >= costValue;
             textTrans.ChgTMPColor(isEnough);
             textTrans.ChgTMPText($"{costValue}");
         }
@@ -549,7 +556,7 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
-            bool isEnough = playerBaseInfoComponent.physicalStrength >= costValue;
+            bool isEnough = playerBaseInfoComponent.arcadeCoinNum >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
             textMeshProUGUI.ChgTMPText($"{costValue}");
         }
@@ -695,6 +702,136 @@ namespace ET.Client
             zpbTestObj.AddComponent<MeshFilter>().sharedMesh = mesh;
             // Mesh without wireframe data.
             return mesh;
+        }
+
+
+        // 定义一个公共静态方法，用于显示密码框
+        public static void ShowPassword(Scene scene, string msgStr, string passwordStr, Action SureBtnCallBak, string titleStr = null)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+
+            DlgPassword _dlgPassword = _UIComponent.GetDlgLogic<DlgPassword>(true, true);
+
+            //没有获取到对话框
+            if (_dlgPassword == null)
+            {
+                _UIComponent.ShowWindow<DlgPassword>();
+                _dlgPassword = _UIComponent.GetDlgLogic<DlgPassword>(true);
+            }
+
+            // 如果成功获取到通用密码对话框
+            if (_dlgPassword != null)
+            {
+                _dlgPassword.ShowPassword(msgStr, passwordStr, SureBtnCallBak, titleStr);
+            }
+        }
+
+        // 定义一个公共静态方法，用于显示DlgArcadeCoin
+        public static void ShowDlgArcade(Scene scene, int defaultNum, Action SureBtnCallBak)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+
+            DlgArcadeCoin _dlgArcadeCoin = _UIComponent.GetDlgLogic<DlgArcadeCoin>(true, true);
+
+            //没有获取到
+            if (_dlgArcadeCoin == null)
+            {
+                _UIComponent.ShowWindow<DlgArcadeCoin>();
+                _dlgArcadeCoin = _UIComponent.GetDlgLogic<DlgArcadeCoin>(true);
+            }
+
+            // 如果成功获取到通用密码对话框
+            if (_dlgArcadeCoin != null)
+            {
+                _dlgArcadeCoin.ShowDlgArcade(defaultNum, SureBtnCallBak);
+            }
+        }
+
+        #endregion
+
+        #region Room相关
+
+        public static async ETTask EnterRoomUI(Scene scene)
+        {
+            UIAudioManagerHelper.PlayUIAudio(scene, SoundEffectType.JoinRoom);
+            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+            PlayerStatusComponent playerStatusComponent = PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
+            if (playerStatusComponent.PlayerStatus != PlayerStatus.Room || playerStatusComponent.RoomId == 0)
+            {
+                if (playerStatusComponent.RoomType == RoomType.Normal)
+                {
+                    await UIManagerHelper.EnterGameModeUI(scene);
+                }
+                else if (playerStatusComponent.RoomType == RoomType.AR)
+                {
+                    await UIManagerHelper.EnterGameModeUI(scene);
+                }
+                return;
+            }
+
+            if (playerStatusComponent.RoomType == RoomType.Normal)
+            {
+                if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVE)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+                }
+                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVP)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
+                }
+                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
+                }
+                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalScanMesh)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
+                }
+                else
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
+                }
+            }
+            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVP)
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
+            }
+            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVE)
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+            }
+            else
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
+            }
+        }
+
+        public static async ETTask ExitRoomUI(Scene scene)
+        {
+            await EnterGameModeUI(scene);
+        }
+
+        public static async ETTask EnterGameModeUI(Scene scene)
+        {
+            ET.Client.ARSessionHelper.ResetMainCamera(scene, false);
+
+            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+
+            if (DebugConnectComponent.Instance.IsDebugMode)
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>();
+            }
+            else
+            {
+                if (ET.SceneHelper.ChkIsGameModeArcade())
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeArcade>();
+                }
+                else
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                }
+            }
         }
 
         #endregion

@@ -51,27 +51,57 @@ namespace ET.Client
 			self.showPrefabList.Clear();
 		}
 
+		public static float GetARSceneMeshScale(this DlgARSceneSlider self)
+		{
+			string key = "ARSceneMeshScale";
+			if (PlayerPrefs.HasKey(key) == false)
+			{
+				return 0;
+			}
+			float arSceneMeshScale = PlayerPrefs.GetFloat(key);
+			return arSceneMeshScale;
+		}
+
+		public static void SetARSceneMeshScale(this DlgARSceneSlider self, float arSceneMeshScale)
+		{
+			string key = "ARSceneMeshScale";
+			PlayerPrefs.SetFloat(key, arSceneMeshScale);
+		}
+
 		public static void SetSceneScaleInfo(this DlgARSceneSlider self)
 		{
-			self.minScale = 10;
-			self.maxScale = 75;
-
-			self.defaultScale = 35;
-			self.curScale = ET.Client.ARSessionHelper.GetScaleAR(self.DomainScene());
-			Log.Debug($"SetSceneScaleInfo self.curScale[{self.curScale}]");
-			if (self.curScale == 0)
-			{
-				self.curScale = self.defaultScale;
-			}
-			self.curScale = math.clamp(self.curScale, self.minScale, self.maxScale);
-
-			self.View.E_SliderSceneScaleSlider.SetValueWithoutNotify((self.maxScale - self.curScale) / (self.maxScale - self.minScale));
-
 			self.showPrefabCfgList = new()
 			{
 				(new float2(0, 0), "Unit_HeadQuarterPreview")
 			};
+			self.orgPrefabLocalScaleDic = new();
 			self.showPrefabList = new();
+
+			self.minScale = 10;
+			self.maxScale = 75;
+
+
+			float recordScale = self.GetARSceneMeshScale();
+			if (recordScale == 0)
+			{
+				self.defaultScale = 35;
+				self.curScale = ET.Client.ARSessionHelper.GetScaleAR(self.DomainScene());
+				Log.Debug($"SetSceneScaleInfo self.curScale[{self.curScale}]");
+				if (self.curScale == 0)
+				{
+					self.curScale = self.defaultScale;
+				}
+			}
+			else
+			{
+				self.curScale = recordScale;
+			}
+			self.curScale = math.clamp(self.curScale, self.minScale, self.maxScale);
+
+			self.ChgScale(self.curScale);
+
+			self.View.E_SliderSceneScaleSlider.SetValueWithoutNotify((self.maxScale - self.curScale) / (self.maxScale - self.minScale));
+
 		}
 
 		public static void Update(this DlgARSceneSlider self)
@@ -143,6 +173,7 @@ namespace ET.Client
 					go.SetActive(false);
 				}
 			}
+			self.ChgScale(self.curScale);
 		}
 
 		public static GameObject CreateOnePrefab(this DlgARSceneSlider self, string unitCfgId)
@@ -153,7 +184,7 @@ namespace ET.Client
 			string pathName = resUnitCfg.ResName;
 			GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
 			GameObject goInstance = GameObject.Instantiate(go);
-			goInstance.transform.localScale = Vector3.one * resScale / self.curScale;
+			self.orgPrefabLocalScaleDic.Add(goInstance, resScale);
 			goInstance.SetActive(false);
 			return goInstance;
 		}
@@ -188,15 +219,11 @@ namespace ET.Client
 		{
 			float lastScale = self.curScale;
 			self.curScale = newScale;
+			self.SetARSceneMeshScale(self.curScale);
 
-			if (lastScale == newScale)
-			{
-				return;
-			}
 			foreach (GameObject go in self.showPrefabList)
 			{
-				var goScale = go.transform.localScale;
-				go.transform.localScale = goScale * lastScale / newScale;
+				go.transform.localScale = Vector3.one / (self.orgPrefabLocalScaleDic[go] * newScale);
 			}
 
 			self.View.E_SliderSceneScaleSlider.SetValueWithoutNotify((self.maxScale - self.curScale) / (self.maxScale - self.minScale));

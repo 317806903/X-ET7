@@ -12,14 +12,17 @@ namespace UnityEngine.UI
 
         void ReturnObject(Transform trans,bool isDestroy = false);
     }
-    
-    
-    
+
+
+
     [System.Serializable]
     public class LoopScrollPrefabSourceInstance : LoopScrollPrefabSource
     {
         public string prefabName;
         public int poolSize = 5;
+
+        public static Action<GameObject> AddCellItemAction;
+        public static Action<GameObject> RemoveCellItemAction;
 
         private bool inited = false;
         public virtual GameObject GetObject(int index)
@@ -31,7 +34,12 @@ namespace UnityEngine.UI
                     GameObjectPoolHelper.InitPool(prefabName, poolSize);
                     inited = true;
                 }
-                return GameObjectPoolHelper.GetObjectFromPool(prefabName);
+                GameObject go =  GameObjectPoolHelper.GetObjectFromPool(prefabName);
+                if (go != null)
+                {
+                    AddCellItemAction?.Invoke(go);
+                }
+                return go;
             }
             catch (Exception e)
             {
@@ -39,11 +47,12 @@ namespace UnityEngine.UI
                 return null;
             }
         }
-        
+
         public virtual void ReturnObject(Transform go , bool isDestroy = false)
         {
             try
             {
+                RemoveCellItemAction?.Invoke(go.gameObject);
                 if (isDestroy)
                 {
                     UnityEngine.GameObject.Destroy(go.gameObject);
@@ -59,5 +68,5 @@ namespace UnityEngine.UI
             }
         }
     }
-    
+
 }

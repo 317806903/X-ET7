@@ -1,0 +1,12 @@
+Font: FZHanZhenGuangBiaoS-GB  Style: Regular
+Point Size: 57   SP/PD Ratio: 8.8%
+
+Characters included: 3956/3956
+Missing characters: 0
+Excluded characters: 0
+
+Characters missing from font file:
+----------------------------------------
+
+Characters excluded from packing:
+----------------------------------------

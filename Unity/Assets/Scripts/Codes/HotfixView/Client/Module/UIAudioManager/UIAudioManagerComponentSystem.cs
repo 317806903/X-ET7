@@ -82,6 +82,11 @@ namespace ET.Client
 
         public static async ETTask PlayUIAudioByPath(this UIAudioManagerComponent self, string audioPath)
         {
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.Audio) == false)
+            {
+                return;
+            }
+
             AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(audioPath);
             self.audioSource.PlayOneShot(audioClip);
             await ETTask.CompletedTask;
@@ -92,6 +97,11 @@ namespace ET.Client
             self.resAudioCfgIds = resAudioCfgIds;
             self.musicSource.Stop();
             self.isMute = false;
+
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.Music) == false)
+            {
+                return;
+            }
 
             self._PlayNextMusicOne().Coroutine();
         }
@@ -150,6 +160,12 @@ namespace ET.Client
 
         public static void FixedUpdate(this UIAudioManagerComponent self, float fixedDeltaTime)
         {
+
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.Music) == false)
+            {
+                return;
+            }
+
             if (self.needLoopPlay && self.lastPlayTime + self.intervalTime * 1000 <= TimeHelper.ServerNow())
             {
                 self.lastPlayTime = TimeHelper.ServerNow();

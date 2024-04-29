@@ -98,7 +98,9 @@ namespace ET
 				needTransToBattle = true;
 				foreach (var isPlayerReady in self.isPlayerReadyForBattle)
 				{
-					if (isPlayerReady.Value == false)
+					long playerId = isPlayerReady.Key;
+					bool isQuit = self.GetGamePlay().ChkPlayerIsQuit(playerId);
+					if (isQuit == false && isPlayerReady.Value == false)
 					{
 						needTransToBattle = false;
 						break;
@@ -111,6 +113,7 @@ namespace ET
 				EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_RestTimeEnd());
 
 				self.GetGamePlayTowerDefense().DoNextStep().Coroutine();
+				self.Dispose();
 				return;
 			}
 		}

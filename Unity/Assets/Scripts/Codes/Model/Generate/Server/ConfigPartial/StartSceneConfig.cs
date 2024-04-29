@@ -59,6 +59,11 @@ namespace ET
             return GetBySceneName(zone, SceneType.Mail.ToString());
         }
 
+        public StartSceneConfig GetPayManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.Pay.ToString());
+        }
+
         public StartSceneConfig GetRandomDynamicMap(int zone)
         {
             var dynamicMapList = this.DynamicMaps[zone];

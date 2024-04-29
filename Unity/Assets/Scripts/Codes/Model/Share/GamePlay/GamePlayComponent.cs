@@ -10,6 +10,18 @@ namespace ET
 		PK,
 	}
 
+	public enum GamePlaySubMode
+	{
+		None,
+		SingleMap,
+		TowerDefense_Normal,
+		TowerDefense_PVE,
+		TowerDefense_PVP,
+		TowerDefense_EndlessChallenge,
+		TowerDefense_TutorialFirst,
+		TowerDefense_ArcadeScanMesh,
+	}
+
 	public enum GamePlayStatus
 	{
 		WaitForStart,

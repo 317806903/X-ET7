@@ -443,11 +443,29 @@ namespace ET
 				}
 				else if (SubRoomTypeIn == SubRoomType.NormalPVP)
 				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.NoARPVPCfgId;
+					if (ET.SceneHelper.ChkIsGameModeArcade())
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeNoARPVPCfgId;
+					}
+					else
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.NoARPVPCfgId;
+					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.NormalEndlessChallenge)
 				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.NoAREndlessChallengeCfgId;
+					if (ET.SceneHelper.ChkIsGameModeArcade())
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeNoAREndlessChallengeCfgId;
+					}
+					else
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.NoAREndlessChallengeCfgId;
+					}
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalScanMesh)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeNoARScanMeshCfgId;
 				}
 			}
 			else if (RoomTypeIn == RoomType.AR)
@@ -460,15 +478,33 @@ namespace ET
 				}
 				else if (SubRoomTypeIn == SubRoomType.ARPVP)
 				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.ARPVPCfgId;
+					if (ET.SceneHelper.ChkIsGameModeArcade())
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeARPVPCfgId;
+					}
+					else
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.ARPVPCfgId;
+					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.AREndlessChallenge)
 				{
-					battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+					if (ET.SceneHelper.ChkIsGameModeArcade())
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeAREndlessChallengeCfgId;
+					}
+					else
+					{
+						battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.ARTutorialFirst)
 				{
 					battleCfgId = GlobalSettingCfgCategory.Instance.ARTutorialFirstCfgId;
+				}
+				else if (SubRoomTypeIn == SubRoomType.ArcadeScanMesh)
+				{
+					battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeARScanMeshCfgId;
 				}
 			}
 
@@ -479,6 +515,122 @@ namespace ET
 			}
 
 			return battleCfgId;
+		}
+
+		public static int GetArcadeCoinCost(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, bool isRecover)
+		{
+			if (ET.SceneHelper.ChkIsGameModeArcade() == false)
+			{
+				return 0;
+			}
+			int arcadeCoinCost = 0;
+			if (RoomTypeIn == RoomType.Normal)
+			{
+				if (SubRoomTypeIn == SubRoomType.NormalRoom)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalARCreate)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVE)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVP)
+				{
+					if (isRecover)
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenRevive;
+					}
+					else
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenStart;
+					}
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalEndlessChallenge)
+				{
+					if (isRecover)
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenRevive;
+					}
+					else
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenStart;
+					}
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalScanMesh)
+				{
+					arcadeCoinCost = 0;
+				}
+			}
+			else if (RoomTypeIn == RoomType.AR)
+			{
+				if (SubRoomTypeIn == SubRoomType.ARPVE)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARPVP)
+				{
+					if (isRecover)
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenRevive;
+					}
+					else
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenStart;
+					}
+				}
+				else if (SubRoomTypeIn == SubRoomType.AREndlessChallenge)
+				{
+					if (isRecover)
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenRevive;
+					}
+					else
+					{
+						arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenStart;
+					}
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARTutorialFirst)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.ArcadeScanMesh)
+				{
+					arcadeCoinCost = 0;
+				}
+			}
+
+			return arcadeCoinCost;
+		}
+
+		public static int GetArcadeCoinCost(GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent, bool isRecover)
+		{
+			if (ET.SceneHelper.ChkIsGameModeArcade() == false)
+			{
+				return 0;
+			}
+			int arcadeCoinCost = 0;
+			if (gamePlayTowerDefenseComponent.IsPVPMode())
+			{
+				if (isRecover)
+				{
+					arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenRevive;
+				}
+				else
+				{
+					arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenStart;
+				}
+			}
+			else if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+			{
+				if (isRecover)
+				{
+					arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenRevive;
+				}
+				else
+				{
+					arcadeCoinCost = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenStart;
+				}
+			}
+			return arcadeCoinCost;
 		}
 
 		public static void DoCreateActions(Unit unit, List<string> createActionIds)

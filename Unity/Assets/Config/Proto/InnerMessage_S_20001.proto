@@ -670,8 +670,9 @@ message M2R_NoticeRoomBattleEnd // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 RoomId = 2;
-	int32 IsReady = 3;
-	repeated int64 WinPlayers = 4;
+	int64 PlayerId = 3;
+	int32 IsReady = 4;
+	repeated int64 WinPlayers = 5;
 }
 
 message R2M_NoticeRoomBattleEnd // IActorResponse
@@ -805,4 +806,20 @@ message G2O_PlayerCacheChgNoticeClient // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+//ResponseType P2G_GetArcadeCoinQrCode
+message G2P_GetArcadeCoinQrCode // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int32 ArcadeCoinNum = 3;
+}
+
+message P2G_GetArcadeCoinQrCode // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes PayComponentBytes = 4;
 }

@@ -38,19 +38,25 @@ namespace ET.Client
 		        }
 	        }
 
-	        unit.AddComponent<MoveByPathComponent>();
-	        if (unitInfo.MoveInfo != null)
+	        if (unit.Type == UnitType.Bullet)
 	        {
-		        if (unitInfo.MoveInfo.Points.Count > 0)
-				{
-					unitInfo.MoveInfo.Points[0] = unit.Position;
-					unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
-				}
 	        }
+	        else
+	        {
+		        unit.AddComponent<MoveByPathComponent>();
+		        if (unitInfo.MoveInfo != null)
+		        {
+			        if (unitInfo.MoveInfo.Points.Count > 0)
+			        {
+				        unitInfo.MoveInfo.Points[0] = unit.Position;
+				        unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
+			        }
+		        }
 
-	        unit.AddComponent<ObjectWait>();
+		        unit.AddComponent<ObjectWait>();
 
-	        //unit.AddComponent<XunLuoPathComponent>();
+		        //unit.AddComponent<XunLuoPathComponent>();
+	        }
 
 	        EventSystem.Instance.Publish(unit.DomainScene(), new EventType.AfterUnitCreate() {Unit = unit});
             return unit;
@@ -91,28 +97,33 @@ namespace ET.Client
 		        }
 	        }
 
-	        MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
-	        if (moveByPathComponent != null)
+	        if (unit.Type == UnitType.Bullet)
 	        {
-		        unit.RemoveComponent<MoveByPathComponent>();
 	        }
-	        moveByPathComponent = unit.AddComponent<MoveByPathComponent>();
-	        if (unitInfo.MoveInfo != null)
+	        else
 	        {
-		        if (unitInfo.MoveInfo.Points.Count > 0)
-				{
-					unitInfo.MoveInfo.Points[0] = unit.Position;
-					unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
-				}
-	        }
+		        MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
+		        if (moveByPathComponent != null)
+		        {
+			        unit.RemoveComponent<MoveByPathComponent>();
+		        }
+		        moveByPathComponent = unit.AddComponent<MoveByPathComponent>();
+		        if (unitInfo.MoveInfo != null)
+		        {
+			        if (unitInfo.MoveInfo.Points.Count > 0)
+			        {
+				        unitInfo.MoveInfo.Points[0] = unit.Position;
+				        unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
+			        }
+		        }
 
-	        ObjectWait objectWait = unit.GetComponent<ObjectWait>();
-	        if (objectWait != null)
-	        {
-		        unit.RemoveComponent<ObjectWait>();
+		        ObjectWait objectWait = unit.GetComponent<ObjectWait>();
+		        if (objectWait != null)
+		        {
+			        unit.RemoveComponent<ObjectWait>();
+		        }
+		        unit.AddComponent<ObjectWait>();
 	        }
-	        unit.AddComponent<ObjectWait>();
-
 	        EventSystem.Instance.Publish(unit.DomainScene(), new EventType.AfterUnitCreate() {Unit = unit});
         }
     }

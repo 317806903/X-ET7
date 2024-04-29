@@ -105,7 +105,47 @@ namespace ET
             MonsterWaveCallComponent monsterWaveCallComponent = self.AddComponent<MonsterWaveCallComponent>();
             monsterWaveCallComponent.Init(self.model.MonsterWaveCallRuleCfgId, self.model.MonsterWaveCallStartWaveIndex);
 
-            self.canRecover = GlobalSettingCfgCategory.Instance.AdmobAvailable;
+            int recoverTimeoutTime = 0;
+            int recoverFreeTimes = 0;
+            int recoverByWatchAdTimes = 0;
+            int recoverCostArcadeCoinTimes = 0;
+            int recoverCostArcadeCoinNum = 0;
+            int recoverAddHp = 0;
+            int recoverAddGold = 0;
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                recoverTimeoutTime = GlobalSettingCfgCategory.Instance.GameModeArcadeRecoverTimeoutTime;
+                recoverByWatchAdTimes = 0;
+                if (self.IsEndlessChallengeMode())
+                {
+                    recoverFreeTimes = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeReviveTimeWhenFree;
+                    recoverCostArcadeCoinTimes = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeReviveTimeWhenPay;
+                    recoverCostArcadeCoinNum = GlobalSettingCfgCategory.Instance.GameModeArcadeEndlessChallengeCostWhenRevive;
+                }
+                else if (self.IsPVPMode())
+                {
+                    recoverFreeTimes = GlobalSettingCfgCategory.Instance.GameModeArcadePVPReviveTimeWhenFree;
+                    recoverCostArcadeCoinTimes = GlobalSettingCfgCategory.Instance.GameModeArcadePVPReviveTimeWhenPay;
+                    recoverCostArcadeCoinNum = GlobalSettingCfgCategory.Instance.GameModeArcadePVPCostWhenRevive;
+                }
+                recoverAddHp = GlobalSettingCfgCategory.Instance.GameModeArcadeRecoverAddHp;
+                recoverAddGold = GlobalSettingCfgCategory.Instance.GameModeArcadeRecoverAddGold;
+            }
+            else if (GlobalSettingCfgCategory.Instance.AdmobAvailable)
+            {
+                recoverTimeoutTime = GlobalSettingCfgCategory.Instance.RecoverTimeoutTime;
+                if (self.IsEndlessChallengeMode())
+                {
+                    recoverFreeTimes = 0;
+                    recoverByWatchAdTimes = 1;
+                    recoverCostArcadeCoinTimes = 0;
+                }
+                recoverAddHp = GlobalSettingCfgCategory.Instance.RecoverAddHp;
+                recoverAddGold = GlobalSettingCfgCategory.Instance.RecoverAddGold;
+            }
+
+            GameRecoverComponent gameRecoverComponent = self.AddComponent<GameRecoverComponent>();
+            gameRecoverComponent.Init(recoverTimeoutTime, recoverFreeTimes, recoverByWatchAdTimes, recoverCostArcadeCoinTimes, recoverCostArcadeCoinNum, recoverAddHp, recoverAddGold);
 
             self.InitPlayerCoin();
 
@@ -418,6 +458,9 @@ namespace ET
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.WaitRescan;
 
             self.NoticeToClientAll();
+
+            gamePlayComponent.AllPlayerQuit().Coroutine();
+
             await ETTask.CompletedTask;
         }
 
@@ -431,12 +474,8 @@ namespace ET
 
         public static bool ChkNeedToRecover(this GamePlayTowerDefenseComponent self)
         {
-            if (self.IsEndlessChallengeMode() && self.canRecover)
-            {
-                return true;
-            }
-
-            return false;
+            GameRecoverComponent gameRecoverComponent = self.GetComponent<GameRecoverComponent>();
+            return gameRecoverComponent.ChkNeedToRecover();
         }
 
         public static async ETTask TransToGameResult(this GamePlayTowerDefenseComponent self, bool bSuccess, bool isTimeOut = false)
@@ -449,7 +488,6 @@ namespace ET
             {
                 if (self.ChkNeedToRecover())
                 {
-                    self.canRecover = false;
                     await self.TransToRecover();
                 }
                 else
@@ -712,11 +750,15 @@ namespace ET
             MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
             monsterWaveCallComponent.RecoverWaveIndex();
 
+            GameRecoverComponent gameRecoverComponent = self.GetComponent<GameRecoverComponent>();
+
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
-            gamePlayPlayerListComponent.RecoverPlayerGold();
+            int recoverAddGold = gameRecoverComponent.recoverAddGold;
+            gamePlayPlayerListComponent.RecoverPlayerGold(recoverAddGold);
 
             PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
-            putHomeComponent.RecoverHomeHp();
+            int recoverAddHp = gameRecoverComponent.recoverAddHp;
+            putHomeComponent.RecoverHomeHp(recoverAddHp);
 
             self.GetGamePlay().RecoveryAllAI();
 

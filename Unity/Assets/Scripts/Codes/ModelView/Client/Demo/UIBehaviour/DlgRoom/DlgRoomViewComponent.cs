@@ -398,6 +398,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_CointIconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CointIconImage == null )
+				{
+					this.m_E_CointIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus/E_CointIcon");
+				}
+				return this.m_E_CointIconImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_ShowQrCodeButton
 		{
 			get
@@ -576,6 +593,7 @@ namespace ET.Client
 			this.m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 			this.m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 			this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
+			this.m_E_CointIconImage = null;
 			this.m_E_ShowQrCodeButton = null;
 			this.m_E_ShowQrCodeImage = null;
 			this.m_E_ShowQrCode2Image = null;
@@ -611,6 +629,7 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_E_CointIconImage = null;
 		private UnityEngine.UI.Button m_E_ShowQrCodeButton = null;
 		private UnityEngine.UI.Image m_E_ShowQrCodeImage = null;
 		private UnityEngine.UI.Image m_E_ShowQrCode2Image = null;

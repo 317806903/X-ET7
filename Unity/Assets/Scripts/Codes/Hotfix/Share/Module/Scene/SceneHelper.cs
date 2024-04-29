@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using ET.Ability;
 
-namespace ET.Ability
+namespace ET
 {
     public static class SceneHelper
     {
@@ -19,6 +20,27 @@ namespace ET.Ability
         public static void InitWhenClient(Scene scene)
         {
             scene.AddComponent<UnitComponent>();
+        }
+
+        // public static bool ChkIsGameModeArcade()
+        // {
+        //     return ClientSceneManagerComponent.Instance.IsGameModeArcade;
+        // }
+        // public static bool ChkIsGameModeArcade()
+        // {
+        //     return ServerSceneManagerComponent.Instance.IsGameModeArcade;
+        // }
+        public static bool ChkIsGameModeArcade()
+        {
+            if (ServerSceneManagerComponent.Instance != null)
+            {
+                return ServerSceneManagerComponent.Instance.IsGameModeArcade;
+            }
+            if (ClientSceneManagerComponent.Instance != null)
+            {
+                return ClientSceneManagerComponent.Instance.IsGameModeArcade;
+            }
+            return false;
         }
     }
 }

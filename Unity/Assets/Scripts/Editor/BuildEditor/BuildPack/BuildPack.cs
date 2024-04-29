@@ -413,7 +413,7 @@ namespace ET
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                Debug.LogError(e);
             }
 
             await BuildPack_After(packName);
@@ -473,6 +473,7 @@ namespace ET
             ResConfig.Instance.MirrorARSessionAuthAppKey = MirrorARSessionAuthAppKey;
             ResConfig.Instance.MirrorARSessionAuthAppSecret = MirrorARSessionAuthAppSecret;
             ResConfig.Instance.Channel = "10000";
+            ResConfig.Instance.IsGameModeArcade = false;
             PlayerSettings.Android.useCustomKeystore = false;
             PlayerSettings.iOS.appleDeveloperTeamID = "9882G66R3A";
 
@@ -486,6 +487,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "127.0.0.1";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
@@ -497,6 +499,7 @@ namespace ET
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.RouterHttpHost = "192.168.31.238";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.GDC;
                 productName = $"GDC_RealityGuard";
                 packageName = $"com.dm.ARGameInNetGDC";
@@ -517,6 +520,7 @@ namespace ET
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.OnDevice;
                 productName = $"AVP_RealityGuard";
                 packageName = $"com.dm.ARGameAVP";
@@ -537,6 +541,7 @@ namespace ET
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.OnDevice;
                 productName = $"Quest3_RealityGuard";
                 packageName = $"com.dm.ARGameQuest3";
@@ -558,6 +563,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 productName = $"148Master_RealityGuard";
                 packageName = $"com.dm.ARGameInNet148Master";
@@ -579,6 +585,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.148";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 productName = $"148Release_RealityGuard";
                 packageName = $"com.dm.ARGameInNet148Release";
@@ -599,6 +606,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "192.168.10.58";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
@@ -613,6 +621,7 @@ namespace ET
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.RouterHttpHost = "18.166.14.188";   // Linux machine in AWS HK.
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -627,6 +636,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "8.134.156.170";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -641,11 +651,13 @@ namespace ET
             }
             else if (packName == PackName.OutNet_CN_Demo)
             {
+                ResConfig.Instance.IsGameModeArcade = true;
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
                 ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "8.134.156.170";
                 ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.CN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -665,6 +677,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "34.225.211.137";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.EN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
@@ -703,6 +716,7 @@ namespace ET
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "artd-gateway.deepmirror.com";
                 ResConfig.Instance.RouterHttpPort = 3478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.EN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;

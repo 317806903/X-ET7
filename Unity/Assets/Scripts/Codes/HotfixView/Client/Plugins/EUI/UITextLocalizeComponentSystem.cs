@@ -66,6 +66,10 @@ namespace ET.Client
             self.getTextKeyValueActionBack = getTextKeyValueActionBack;
             foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in self._UITextLocalizeMonoViewList)
             {
+                if (uiTextLocalizeMonoView == null)
+                {
+                    continue;
+                }
                 uiTextLocalizeMonoView.SetGetTextKeyValueActionBack(getTextKeyValueActionBack);
             }
         }
@@ -75,6 +79,10 @@ namespace ET.Client
             self.getTextKeyValue = getTextKeyValue;
             foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in self._UITextLocalizeMonoViewList)
             {
+                if (uiTextLocalizeMonoView == null)
+                {
+                    continue;
+                }
                 uiTextLocalizeMonoView.SetTextLocalizeAction(getTextKeyValue);
             }
         }
@@ -83,6 +91,10 @@ namespace ET.Client
         {
             foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in self._UITextLocalizeMonoViewList)
             {
+                if (uiTextLocalizeMonoView == null)
+                {
+                    continue;
+                }
                 uiTextLocalizeMonoView.DoRefreshTextValue();
             }
         }

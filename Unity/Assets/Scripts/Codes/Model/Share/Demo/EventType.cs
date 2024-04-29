@@ -200,6 +200,7 @@ namespace ET
         public struct NoticeGameEndToRoom
         {
             public long roomId;
+            public long playerId;
             public bool isReady;
             public Dictionary<long, bool> playerWinResult;
         }

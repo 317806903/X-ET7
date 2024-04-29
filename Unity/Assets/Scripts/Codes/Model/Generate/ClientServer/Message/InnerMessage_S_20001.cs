@@ -1423,9 +1423,12 @@ namespace ET
 		public long RoomId { get; set; }
 
 		[ProtoMember(3)]
-		public int IsReady { get; set; }
+		public long PlayerId { get; set; }
 
 		[ProtoMember(4)]
+		public int IsReady { get; set; }
+
+		[ProtoMember(5)]
 		public List<long> WinPlayers { get; set; }
 
 	}
@@ -1711,6 +1714,40 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(P2G_GetArcadeCoinQrCode))]
+	[Message(InnerMessage.G2P_GetArcadeCoinQrCode)]
+	[ProtoContract]
+	public partial class G2P_GetArcadeCoinQrCode: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+		[ProtoMember(3)]
+		public int ArcadeCoinNum { get; set; }
+
+	}
+
+	[Message(InnerMessage.P2G_GetArcadeCoinQrCode)]
+	[ProtoContract]
+	public partial class P2G_GetArcadeCoinQrCode: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] PayComponentBytes { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -1816,5 +1853,7 @@ namespace ET
 		 public const ushort OG2G_LoginInAtOtherWhere = 20102;
 		 public const ushort O2G_PlayerCacheChgNoticeClient = 20103;
 		 public const ushort G2O_PlayerCacheChgNoticeClient = 20104;
+		 public const ushort G2P_GetArcadeCoinQrCode = 20105;
+		 public const ushort P2G_GetArcadeCoinQrCode = 20106;
 	}
 }

@@ -35,7 +35,7 @@ namespace ET.Client
         ARStart,
         Game
     }
-    
+
     [FriendOf(typeof (Unit))]
     public static class UIAudioManagerHelper
     {
@@ -175,7 +175,7 @@ namespace ET.Client
             List<string> resAudioCfgIds = null;
             switch (musicType)
             {
-                case MusicType.Login: 
+                case MusicType.Login:
                     resAudioCfgIds = new List<string>(){"ResAudio_Music_main"};
                     break;
                 case MusicType.Main:
@@ -191,9 +191,22 @@ namespace ET.Client
                 default:
                     break;
             }
-           
+
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             _UIAudioManagerComponent.PlayMusic(resAudioCfgIds);
+        }
+
+        public static void ResetMusicStatus(Scene scene)
+        {
+            bool isOn = GameSettingComponent.Instance.GetIsOn(GameSettingType.Music);
+            if (isOn)
+            {
+                ResumeMusic(scene);
+            }
+            else
+            {
+                StopMusic(scene);
+            }
         }
 
         public static void StopMusic(Scene scene)

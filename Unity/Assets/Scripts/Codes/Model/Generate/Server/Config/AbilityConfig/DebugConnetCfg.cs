@@ -25,9 +25,11 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
         RouterHttpHost = _buf.ReadString();
         RouterHttpPort = _buf.ReadInt();
         AreaType = _buf.ReadString();
+        LanguageType = _buf.ReadString();
         IsShowDebugMode = _buf.ReadBool();
         IsShowEditorLoginMode = _buf.ReadBool();
         IsNeedSendEventLog = _buf.ReadBool();
+        IsGameModeArcade = _buf.ReadBool();
         PostInit();
     }
 
@@ -73,6 +75,10 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
     /// </summary>
     public string AreaType { get; private set; }
     /// <summary>
+    /// 语言(CN,EN,TW)
+    /// </summary>
+    public string LanguageType { get; private set; }
+    /// <summary>
     /// 是否显示调试关卡模式
     /// </summary>
     public bool IsShowDebugMode { get; private set; }
@@ -84,6 +90,10 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
     /// 是否发送eventlog
     /// </summary>
     public bool IsNeedSendEventLog { get; private set; }
+    /// <summary>
+    /// 是否街机模式
+    /// </summary>
+    public bool IsGameModeArcade { get; private set; }
 
     public const int __ID__ = -1247692650;
     public override int GetTypeId() => __ID__;
@@ -109,9 +119,11 @@ public sealed partial class DebugConnetCfg: Bright.Config.BeanBase
         + "RouterHttpHost:" + RouterHttpHost + ","
         + "RouterHttpPort:" + RouterHttpPort + ","
         + "AreaType:" + AreaType + ","
+        + "LanguageType:" + LanguageType + ","
         + "IsShowDebugMode:" + IsShowDebugMode + ","
         + "IsShowEditorLoginMode:" + IsShowEditorLoginMode + ","
         + "IsNeedSendEventLog:" + IsNeedSendEventLog + ","
+        + "IsGameModeArcade:" + IsGameModeArcade + ","
         + "}";
     }
     

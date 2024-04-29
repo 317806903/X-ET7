@@ -62,7 +62,7 @@ namespace ET
 #endif
         public static void EnableDefineSymbols(string symbolsIn, bool enable)
         {
-            Log.Debug($"EnableDefineSymbols {symbolsIn} {enable}");
+            Debug.Log($"EnableDefineSymbols {symbolsIn} {enable}");
             var symbolsList = symbolsIn.Split(';').ToList();
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
             var ss = defines.Split(';').ToList();
@@ -173,7 +173,7 @@ namespace ET
         {
             if (Define.EnableCodes)
             {
-                Log.Error("now in ENABLE_CODES mode, do not need Build!");
+                Debug.LogError("now in ENABLE_CODES mode, do not need Build!");
                 return;
             }
 
@@ -186,7 +186,7 @@ namespace ET
         {
             if (Define.EnableCodes)
             {
-                Log.Error("now in ENABLE_CODES mode, do not need Build!");
+                Debug.LogError("now in ENABLE_CODES mode, do not need Build!");
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace ET
             if (Define.EnableCodes)
             {
                 string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                Log.Error($"now in ENABLE_CODES mode, do not need Build! [{defines}]");
+                Debug.LogError($"now in ENABLE_CODES mode, do not need Build! [{defines}]");
                 return;
             }
 

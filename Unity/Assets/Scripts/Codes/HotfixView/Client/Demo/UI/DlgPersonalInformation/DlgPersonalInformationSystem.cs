@@ -137,7 +137,7 @@ namespace ET.Client
         public static async ETTask HidePersonalInfo(this DlgPersonalInformation self)
         {
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeAR>();
+            await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
 
         public static bool DetermineNameLength(this DlgPersonalInformation self, string name)

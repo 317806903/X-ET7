@@ -1,6 +1,6 @@
 namespace ET
 {
-    public static class SceneHelper
+    public static class SceneEntityHelper
     {
         public static int DomainZone(this Entity entity)
         {

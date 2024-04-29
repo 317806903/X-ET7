@@ -34,21 +34,47 @@ namespace ET.Client
                 await MonoResComponent.Instance.ReLoadWhenDebugConnect();
             }
 
-            LanguageType languageType;
-            switch (ResConfig.Instance.areaType)
+            ClientSceneManagerComponent.Instance.IsGameModeArcade = ResConfig.Instance.IsGameModeArcade;
+
+            LanguageType languageType = LanguageType.EN;
+            if (ResConfig.Instance.languageType == LanguageType.CN.ToString())
             {
-                case AreaType.CN:
-                    languageType = LanguageType.EN;
-                    break;
-                case AreaType.EN:
-                    languageType = LanguageType.EN;
-                    break;
-                case AreaType.TW:
-                    languageType = LanguageType.TW;
-                    break;
-                default:
-                    languageType = LanguageType.EN;
-                    break;
+                languageType = LanguageType.CN;
+            }
+            else if (ResConfig.Instance.languageType == LanguageType.EN.ToString())
+            {
+                languageType = LanguageType.EN;
+            }
+            else if (ResConfig.Instance.languageType == LanguageType.TW.ToString())
+            {
+                languageType = LanguageType.TW;
+            }
+            else if (ResConfig.Instance.languageType == LanguageType.Auto.ToString())
+            {
+                switch(Application.systemLanguage)
+                {
+                    case SystemLanguage.Chinese://中文
+                    case SystemLanguage.ChineseSimplified://中文简体
+                        //这两个要一起判断，有的机型返回Chinese,有的返回ChineseSimplified
+                        languageType = LanguageType.CN;
+                        break;
+                    case SystemLanguage.ChineseTraditional://中文繁体
+                        languageType = LanguageType.TW;
+                        break;
+                    case SystemLanguage.English://
+                        languageType = LanguageType.EN;
+                        break;
+                    case SystemLanguage.Unknown://
+                        break;
+                    default:
+                        languageType = LanguageType.EN;
+                        break;
+                    //...
+                }
+            }
+            else
+            {
+                languageType = LanguageType.EN;
             }
             LocalizeComponent.Instance.SwitchLanguage(languageType, true);
 
@@ -130,6 +156,10 @@ namespace ET.Client
                 clientScene.AddComponent<AdmobSDKComponent>();
             }
 
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                ET.ConstValue.SessionTimeoutTime = GlobalSettingCfgCategory.Instance.GameModeArcadeSessionTimeOut * 1000;
+            }
             await EnterLogin(clientScene);
         }
 

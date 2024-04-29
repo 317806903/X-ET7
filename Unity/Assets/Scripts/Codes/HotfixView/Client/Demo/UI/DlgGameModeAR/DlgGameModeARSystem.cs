@@ -46,6 +46,7 @@ namespace ET.Client
             self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
 
             self.View.E_DiscordButton.AddListener(self.ClickDiscord);
+            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -198,10 +199,10 @@ namespace ET.Client
             {
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
-                    playerStatus = PlayerStatus.Hall,
+                    ARHallType = ARHallType.CreateRoomWithOutARSceneId,
                     RoomType = RoomType.AR,
                     SubRoomType = SubRoomType.AREndlessChallenge,
-                    arRoomId = 0,
+                    roomId = 0,
                 };
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
             }
@@ -210,10 +211,10 @@ namespace ET.Client
                 RoomType roomType = RoomType.Normal;
                 SubRoomType subRoomType = SubRoomType.NormalEndlessChallenge;
                 string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
-                bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
                 if (result)
                 {
-                    await ET.Client.UIManagerHelper.EnterRoom(self.DomainScene());
+                    await ET.Client.UIManagerHelper.EnterRoomUI(self.DomainScene());
                 }
             }
         }
@@ -243,10 +244,10 @@ namespace ET.Client
             {
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
-                    playerStatus = PlayerStatus.Hall,
+                    ARHallType = ARHallType.CreateRoomWithOutARSceneId,
                     RoomType = RoomType.AR,
                     SubRoomType = SubRoomType.ARPVP,
-                    arRoomId = 0,
+                    roomId = 0,
                 };
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
             }
@@ -255,10 +256,10 @@ namespace ET.Client
                 RoomType roomType = RoomType.Normal;
                 SubRoomType subRoomType = SubRoomType.NormalPVP;
                 string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
-                bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
                 if (result)
                 {
-                    await ET.Client.UIManagerHelper.EnterRoom(self.DomainScene());
+                    await ET.Client.UIManagerHelper.EnterRoomUI(self.DomainScene());
                 }
             }
         }
@@ -271,10 +272,10 @@ namespace ET.Client
 
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
-                playerStatus = PlayerStatus.Hall,
+                ARHallType = ARHallType.ScanQRCode,
                 RoomType = RoomType.AR,
                 SubRoomType = SubRoomType.ARScanCode,
-                arRoomId = 0,
+                roomId = 0,
             };
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
         }
@@ -287,10 +288,10 @@ namespace ET.Client
 
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
-                playerStatus = PlayerStatus.Hall,
+                ARHallType = ARHallType.CreateRoomWithOutARSceneId,
                 RoomType = RoomType.AR,
                 SubRoomType = SubRoomType.ARTutorialFirst,
-                arRoomId = 0,
+                roomId = 0,
             };
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
         }
@@ -337,6 +338,13 @@ namespace ET.Client
             Application.OpenURL("https://discord.gg/jnf2qabe9C");
         }
 
+        public static async ETTask GameSetting(this DlgGameModeAR self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
+
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeSetting>().Coroutine();
+        }
+
         public static async ETTask RefreshWhenBaseInfoChg(this DlgGameModeAR self)
         {
             await self.UpdatePhysical();
@@ -349,9 +357,9 @@ namespace ET.Client
             self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
             self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.transform.parent.SetVisible(GlobalSettingCfgCategory.Instance.PhysicalStrengthShow);
 
-            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
-            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength).Coroutine();
-            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.ShowCoinCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength).Coroutine();
+            self.View.ELabel_PVEPhysicalStrengthTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.ELabel_PVPPhysicalStrengthTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength).Coroutine();
+            self.View.ELabel_EndlessPhysicalStrengthTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength).Coroutine();
         }
 
         public static async ETTask RefreshWhenFunctionMenuChg(this DlgGameModeAR self)

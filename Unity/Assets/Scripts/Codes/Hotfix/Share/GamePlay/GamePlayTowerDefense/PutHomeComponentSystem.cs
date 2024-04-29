@@ -588,7 +588,7 @@ namespace ET
             }
         }
 
-        public static void RecoverHomeHp(this PutHomeComponent self)
+        public static void RecoverHomeHp(this PutHomeComponent self, int recoverAddHp)
         {
             Dictionary<TeamFlagType, long> tmpHomeUnitIdList = self.HomeUnitIdList;
             self.HomeUnitIdList = new();
@@ -596,7 +596,7 @@ namespace ET
             {
                 (string homeCfgId, float3 homePos, int maxHp, int curHp) = self.RecordHomeInfo[homeUnitId.Value];
                 TeamFlagType teamFlagType = homeUnitId.Key;
-                curHp = math.min(GlobalSettingCfgCategory.Instance.AREndlessChallengeRecoverHp + curHp, maxHp);
+                curHp = math.min(recoverAddHp + curHp, maxHp);
                 Unit newHomeUnit = self.CreateHome(homeCfgId, homePos, maxHp, curHp, teamFlagType);
                 self.HomeUnitIdList[homeUnitId.Key] = newHomeUnit.Id;
             }

@@ -53,7 +53,5 @@ namespace ET
 		public GamePlayModeBase gamePlayModeBase { get; set; }
 		public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus { get; set; }
 		public long ownerPlayerId { get; set; }
-
-		public bool canRecover;
 	}
 }

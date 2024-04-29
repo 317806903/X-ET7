@@ -32,7 +32,6 @@ namespace ET.Client
 		WindowID_BattleDragItem,
 		WindowID_VideoShow,
 		WindowID_PhysicalStrength,
-		WindowID_PhysicalStrengthTip,
 		WindowID_ChallengeMode,
 		WindowID_CommonLoading,
 		WindowID_Bag,
@@ -50,5 +49,10 @@ namespace ET.Client
 		WindowID_FixedMenu,
 		WindowID_GameReport,
 		WindowID_FixedMenuHighest,
+		WindowID_GameModeArcade,
+		WindowID_Password,
+		WindowID_ArcadeCoin,
+		WindowID_CommonChoose,
+		WindowID_GameModeSetting,
 	}
 }

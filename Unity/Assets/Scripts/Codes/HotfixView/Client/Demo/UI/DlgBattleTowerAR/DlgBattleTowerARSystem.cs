@@ -46,6 +46,7 @@ namespace ET.Client
             self.View.EButton_BuyCloseButton.AddListenerAsync(self.CloseTowerBuyShow);
             self.View.EButton_ReadyWhenRestTimeButton.AddListenerAsync(self.ReadyWhenRestTime);
             self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
+            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
 
         }
 
@@ -85,21 +86,31 @@ namespace ET.Client
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
-            if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
+            if (ET.SceneHelper.ChkIsGameModeArcade())
             {
-                if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
+                self.View.E_ReScanButton.SetVisible(false);
+            }
+            else
+            {
+                if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
                 {
-                    self.View.E_ReScanButton.SetVisible(true);
+                    if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
+                    {
+                        self.View.E_ReScanButton.SetVisible(true);
+                    }
+                    else
+                    {
+                        self.View.E_ReScanButton.SetVisible(false);
+                    }
                 }
                 else
                 {
                     self.View.E_ReScanButton.SetVisible(false);
                 }
             }
-            else
-            {
-                self.View.E_ReScanButton.SetVisible(false);
-            }
+
+            ET.Client.UIManagerHelper.HideConfirm(self.DomainScene());
+            ET.Client.UIManagerHelper.HideChoose(self.DomainScene());
 
             if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
             {
@@ -142,6 +153,7 @@ namespace ET.Client
                     }
                 }
 
+
                 ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
@@ -164,9 +176,8 @@ namespace ET.Client
                 {
                     ET.EventTriggerListener.Get(self.View.EButton_PutMonsterPointButton.gameObject).onDown.AddListener((go, xx) =>
                     {
-                        self.OnSelectMonsterCall();
+                        self.OnSelectMonsterCall().Coroutine();
                     });
-
                     string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_PutMonsterPoint2");
                     self.ShowPutTipMsg(txt);
                 }
@@ -327,25 +338,124 @@ namespace ET.Client
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recover)
             {
                 self.SetCurLeftTimeInfo();
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_Recover");
-                ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, ()=>{
-                    ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirm(self.DomainScene(), false).Coroutine();
-                }, () =>
+
+                GameRecoverComponent gameRecoverComponent = gamePlayTowerDefenseComponent.GetComponent<GameRecoverComponent>();
+                GameRecoverOnceComponent gameRecoverOnceComponent = gamePlayTowerDefenseComponent.GetComponent<GameRecoverOnceComponent>();
+                if (gameRecoverOnceComponent.gameRecoverType == GameRecoverType.Free)
                 {
-                    ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverCancel(self.DomainScene(), false).Coroutine();
-                });
+                    if (gameRecoverOnceComponent.ChkPlayerRecoverStatusIsDefault(myPlayerId))
+                    {
+                        string showMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_Msg", gameRecoverComponent.recoverFreeTimes+1);
+                        string timeoutMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_TimeOutMsg");
+                        float timeoutTime = (gameRecoverOnceComponent.timeOutTime - TimeHelper.ServerNow()) * 0.001f;
+                        string confirmText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_Confirm");
+                        string cancelText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_Cancel");
+                        string titleText = null;
+                        bool isTimeOutConfirm = false;
+                        ET.Client.UIManagerHelper.ShowWhenTwoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+                            ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
+                        }, async () =>
+                        {
+                            await ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), false);
+
+                            gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
+                            await self.RefreshUI();
+                        }, confirmText, cancelText, titleText, isTimeOutConfirm, false);
+                    }
+                    else
+                    {
+                        string showMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_Confirm_Msg");
+                        string timeoutMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverFree_Confirm_TimeOutMsg");
+                        float timeoutTime = (gameRecoverOnceComponent.timeOutTime - TimeHelper.ServerNow()) * 0.001f;
+                        string titleText = null;
+                        ET.Client.UIManagerHelper.ShowWhenNoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+
+                        }, titleText);
+                    }
+                }
+                else if (gameRecoverOnceComponent.gameRecoverType == GameRecoverType.ByWatchAd)
+                {
+                    // string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_Recover");
+                    // ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msg, ()=>{
+                    //     ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), false).Coroutine();
+                    // }, () =>
+                    // {
+                    //     ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverCancelWatchAd(self.DomainScene(), false).Coroutine();
+                    // });
+
+
+                    string showMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverWatchAd_Msg", gameRecoverComponent.recoverByWatchAdTimes+1);
+                    string timeoutMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverWatchAd_TimeOutMsg");
+                    float timeoutTime = (gameRecoverOnceComponent.timeOutTime - TimeHelper.ServerNow()) * 0.001f;
+                    string confirmText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverWatchAd_Confirm");
+                    string cancelText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverWatchAd_Cancel");
+                    string titleText = null;
+                    bool isTimeOutConfirm = false;
+                    ET.Client.UIManagerHelper.ShowWhenTwoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+                        ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), false).Coroutine();
+                    }, async () =>
+                    {
+                        ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverCancelWatchAd(self.DomainScene(), false).Coroutine();
+                    }, confirmText, cancelText, titleText, isTimeOutConfirm);
+                }
+                else if (gameRecoverOnceComponent.gameRecoverType == GameRecoverType.CostArcadeCoin)
+                {
+                    if (gameRecoverOnceComponent.ChkPlayerRecoverStatusIsDefault(myPlayerId))
+                    {
+                        string showMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_Msg", gameRecoverOnceComponent.recoverCostArcadeCoinNum, gameRecoverComponent.recoverCostArcadeCoinTimes + 1);
+                        string timeoutMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_TimeOutMsg");
+                        float timeoutTime = (gameRecoverOnceComponent.timeOutTime - TimeHelper.ServerNow()) * 0.001f;
+                        string confirmText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_Confirm", gameRecoverOnceComponent.recoverCostArcadeCoinNum);
+                        string cancelText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_Cancel");
+                        string titleText = null;
+                        bool isTimeOutConfirm = false;
+                        ET.Client.UIManagerHelper.ShowWhenTwoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+                            int costValue = gameRecoverOnceComponent.recoverCostArcadeCoinNum;
+                            bool bRet1 = await ET.Client.UIManagerHelper.ChkCoinEnoughOrShowtip(self.DomainScene(), costValue, async () =>
+                            {
+                                bool bRet1 = await ET.Client.UIManagerHelper.ChkCoinEnoughOrShowtip(self.DomainScene(), costValue);
+                                if (bRet1 == false)
+                                {
+                                    return;
+                                }
+                                ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
+                            });
+                            if (bRet1 == false)
+                            {
+                                return;
+                            }
+                            ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
+                        }, async () =>
+                        {
+                            await ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), false);
+
+                            gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
+                            await self.RefreshUI();
+                        }, confirmText, cancelText, titleText, isTimeOutConfirm, false);
+                    }
+                    else
+                    {
+                        string showMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_Confirm_Msg");
+                        string timeoutMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_CommonChoose_RecoverArcadeCoin_Confirm_TimeOutMsg");
+                        float timeoutTime = (gameRecoverOnceComponent.timeOutTime - TimeHelper.ServerNow()) * 0.001f;
+                        string titleText = null;
+                        ET.Client.UIManagerHelper.ShowWhenNoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+
+                        }, titleText);
+                    }
+
+                }
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering)
             {
-                ET.Client.UIManagerHelper.HideConfirm(self.DomainScene());
                 ET.Client.AdmobSDKComponent.Instance.ShowRewardedAd(() =>
                 {
-                    ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirm(self.DomainScene(), true).Coroutine();
+                    ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), true).Coroutine();
                 },() =>
                 {
                     string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Reward_Without_RewardAd");
             		ET.Client.UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, () => {
-                        ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirm(self.DomainScene(), true).Coroutine();
+                        ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), true).Coroutine();
                     });
                 }).Coroutine();
             }
@@ -418,7 +528,6 @@ namespace ET.Client
                 else
                 {
                     self.View.ELabel_RefreshTextMeshProUGUI.color = Color.white;
-
                 }
             }
         }
@@ -556,6 +665,7 @@ namespace ET.Client
                     }
                 });
             }
+
             await RoomHelper.MemberQuitBattleAsync(self.ClientScene());
             await SceneHelper.EnterHall(self.ClientScene());
         }
@@ -657,6 +767,8 @@ namespace ET.Client
                 self.AddUIScrollItems(ref self.ScrollItemTowerBuy, countBuy);
                 self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.SetVisible(true, countBuy);
             }
+            self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.RefreshCells();
+
 
             self.View.EButton_RefreshButton.AddListenerAsync(self.RefreshBuyTower);
 
@@ -719,8 +831,8 @@ namespace ET.Client
             List<string> list = self.GetOwnerTowerList();
 
             string itemCfgId = list[index];
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
 
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
             itemTower.ShowBagItem(itemCfgId, false);
             itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.myOwnTowerDic[itemCfgId]}";
             itemTower.ELabel_SellTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_SaleTower_Confirm");
@@ -775,15 +887,18 @@ namespace ET.Client
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
+            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
 
             List<string> list = self.GetTowerBuyList();
             List<bool> listBought = self.GetTowerBoughtsList();
 
             string towerCfgId = list[index];
             string itemCfgId = list[index];
-            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
             itemTowerBuy.ShowBagItem(itemCfgId, false);
+
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+
             if (listBought[index])
             {
                 /*itemTowerBuy.ELabel_ContentText.color = Color.white;
@@ -795,11 +910,12 @@ namespace ET.Client
             {
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
             }
+
             itemTowerBuy.EImage_BuyBGImage.SetVisible(true);
             itemTowerBuy.EButton_BuyButton.SetVisible(true);
-            //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.gameObject.SetActive(true);
-            itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), towerCfg.BuyTowerCostGold).Coroutine();
+            //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
 
+            itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), towerCfg.BuyTowerCostGold).Coroutine();
 
             ET.EventTriggerListener.Get(itemTowerBuy.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {
@@ -841,6 +957,7 @@ namespace ET.Client
             }
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Buy);
             await ET.Client.GamePlayTowerDefenseHelper.SendBuyPlayerTower(self.ClientScene(), index, towerCfgId);
+
         }
 
         public static async ETTask RefreshBuyTower(this DlgBattleTowerAR self)
@@ -882,6 +999,13 @@ namespace ET.Client
             }, null, sureTxt, cancelTxt, titleTxt);
         }
 
+        public static async ETTask GameSetting(this DlgBattleTowerAR self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
+
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeSetting>().Coroutine();
+        }
+
         public static void Update(this DlgBattleTowerAR self)
         {
             self.ShowCurLeftTimeInfo();
@@ -910,6 +1034,7 @@ namespace ET.Client
             {
                 return;
             }
+
             self.View.E_TipNodeImage.SetVisible(false);
             self.View.EG_BuyNodeRectTransform.SetVisible(true);
             //self.View.E_QuitBattleButton.SetVisible(true);
@@ -938,8 +1063,10 @@ namespace ET.Client
             }
         }
 
-        public static void OnSelectHeadQuarter(this DlgBattleTowerAR self)
+        public static async ETTask OnSelectHeadQuarter(this DlgBattleTowerAR self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
+            await TimerComponent.Instance.WaitFrameAsync();
             self.View.EButton_PutHomeButton.gameObject.SetActive(false);
             DlgBattleDragItem_ShowWindowData showWindowData = new()
             {
@@ -953,8 +1080,11 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
 
         }
-        public static void OnSelectMonsterCall(this DlgBattleTowerAR self)
+
+        public static async ETTask OnSelectMonsterCall(this DlgBattleTowerAR self)
         {
+            await TimerComponent.Instance.WaitFrameAsync();
+            await TimerComponent.Instance.WaitFrameAsync();
             self.View.EButton_PutMonsterPointButton.gameObject.SetActive(false);
             DlgBattleDragItem_ShowWindowData showWindowData = new()
             {
@@ -982,6 +1112,7 @@ namespace ET.Client
         public static void RefreshBtnShow(this DlgBattleTowerAR self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+
             self.View.ELabel_RefreshTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost).Coroutine();
         }
     }

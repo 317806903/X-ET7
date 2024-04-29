@@ -57,7 +57,7 @@ namespace ET
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                Debug.LogError(e);
             }
             await BuildConfig_After();
         }

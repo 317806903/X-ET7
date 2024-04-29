@@ -84,7 +84,7 @@ namespace ET.Client
         /// <param name="battleCfgId"></param>
         /// <param name="isARRoom"></param>
         /// <returns></returns>
-        public static async ETTask<bool> CreateRoomAsync(Scene clientScene, string battleCfgId, RoomType roomType, SubRoomType subRoomType)
+        public static async ETTask<(bool bRet, long roomId)> CreateRoomAsync(Scene clientScene, string battleCfgId, RoomType roomType, SubRoomType subRoomType)
         {
             try
             {
@@ -97,15 +97,15 @@ namespace ET.Client
                 if (_G2C_CreateRoom.Error != ET.ErrorCode.ERR_Success)
                 {
                     Log.Error($"ET.Client.RoomHelper.CreateRoomAsync Error==1 msg={_G2C_CreateRoom.Message}");
-                    return false;
+                    return (false, 0);
                 }
 
-                return true;
+                return (true, _G2C_CreateRoom.RoomId);
             }
             catch (Exception e)
             {
                 Log.Error(e);
-                return false;
+                return (false, 0);
             }
         }
 

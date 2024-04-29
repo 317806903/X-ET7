@@ -126,40 +126,6 @@ namespace ET.Client
 			}
 		}
 
-		public TMPro.TextMeshProUGUI ELabel_RecoverLeftTImeTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RecoverLeftTImeTextMeshProUGUI == null )
-				{
-					this.m_ELabel_RecoverLeftTImeTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength/E_info01/ELabel_RecoverLeftTIme");
-				}
-				return this.m_ELabel_RecoverLeftTImeTextMeshProUGUI;
-			}
-		}
-
-		public UITextLocalizeMonoView ELabel_RecoverLeftTImeUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_RecoverLeftTImeUITextLocalizeMonoView == null )
-				{
-					this.m_ELabel_RecoverLeftTImeUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/PhysicalStrength/E_info01/ELabel_RecoverLeftTIme");
-				}
-				return this.m_ELabel_RecoverLeftTImeUITextLocalizeMonoView;
-			}
-		}
-
 		public TMPro.TextMeshProUGUI ELabel_GetPhysicalStrengthNumTextMeshProUGUI
 		{
 			get
@@ -407,8 +373,6 @@ namespace ET.Client
 			this.m_E_PhysicalStrengthImage = null;
 			this.m_ELabel_PercentageTextMeshProUGUI = null;
 			this.m_ELabel_RcoverNumTextMeshProUGUI = null;
-			this.m_ELabel_RecoverLeftTImeTextMeshProUGUI = null;
-			this.m_ELabel_RecoverLeftTImeUITextLocalizeMonoView = null;
 			this.m_ELabel_GetPhysicalStrengthNumTextMeshProUGUI = null;
 			this.m_EButton_WatchADButton = null;
 			this.m_EButton_WatchADImage = null;
@@ -433,8 +397,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_PhysicalStrengthImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PercentageTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_RcoverNumTextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_ELabel_RecoverLeftTImeTextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_ELabel_RecoverLeftTImeUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_ELabel_GetPhysicalStrengthNumTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_EButton_WatchADButton = null;
 		private UnityEngine.UI.Image m_EButton_WatchADImage = null;

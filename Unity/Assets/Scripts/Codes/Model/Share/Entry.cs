@@ -67,6 +67,7 @@
         NormalPVE,
         NormalPVP,
         NormalEndlessChallenge,
+        NormalScanMesh,
         NormalARCreate,
         NormalARScanCode,
         ARPVE,
@@ -74,6 +75,7 @@
         AREndlessChallenge,
         ARScanCode,
         ARTutorialFirst,
+        ArcadeScanMesh,
     }
 
     /// <summary>

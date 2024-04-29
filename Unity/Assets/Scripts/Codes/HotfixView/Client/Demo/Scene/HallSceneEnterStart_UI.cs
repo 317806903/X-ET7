@@ -53,6 +53,10 @@ namespace ET.Client
                 {
                     isDebugMode = false;
                 }
+                else if (roomType == RoomType.Normal && subRoomType == SubRoomType.NormalScanMesh)
+                {
+                    isDebugMode = false;
+                }
                 else if (DebugConnectComponent.Instance.IsDebugMode == false && roomType == RoomType.Normal && subRoomType == SubRoomType.None)
                 {
                     isDebugMode = false;
@@ -84,7 +88,7 @@ namespace ET.Client
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
 
-            Log.Debug($"--DealWhenIsDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult}]");
+            Log.Debug($"--DealWhenIsDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult.ToString()}]");
 
             if (roomType == RoomType.AR)
             {
@@ -113,6 +117,7 @@ namespace ET.Client
                      || subRoomType == SubRoomType.NormalPVE
                      || subRoomType == SubRoomType.NormalPVP
                      || subRoomType == SubRoomType.NormalEndlessChallenge
+                     || subRoomType == SubRoomType.NormalScanMesh
                      )
             {
                 //进入动态场景，按房间都进同个Map
@@ -180,53 +185,43 @@ namespace ET.Client
                 }
                 else if (playerStatus == PlayerStatus.Room)
                 {
-                    bool _ARSceneStatusCompleted = ET.Client.ARSessionHelper.ChkARSceneStatusCompleted(scene);
-                    Log.Debug($"_ARSceneStatusCompleted[{_ARSceneStatusCompleted}]");
-                    if (_ARSceneStatusCompleted)
+                    DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                     {
-                        //AR战斗后返回 会进到这里
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
+                        ARHallType = ARHallType.JoinTheRoom,
+                        RoomType = roomType,
+                        SubRoomType = subRoomType,
+                        roomId = playerStatusComponent.RoomId,
+                    };
+                    //在AR房间的时候杀掉进程后重进 会进到这里
+                    if (isFromLogin)
+                    {
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Login_IsReturnRoom");
+                        ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                        {
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                        }, () =>
+                        {
+                            RoomHelper.QuitRoomAsync(scene).Coroutine();
+                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
+                        });
+                    }
+                    else if (isRelogin)
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
                     }
                     else
                     {
-                        DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
-                        {
-                            playerStatus = PlayerStatus.Room,
-                            RoomType = roomType,
-                            SubRoomType = subRoomType,
-                            arRoomId = playerStatusComponent.RoomId,
-                        };
-                        //在AR房间的时候杀掉进程后重进 会进到这里
-                        if (isFromLogin)
-                        {
-                            string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Login_IsReturnRoom");
-                            ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
-                            {
-                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
-                            }, () =>
-                            {
-                                RoomHelper.QuitRoomAsync(scene).Coroutine();
-                                UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameMode>().Coroutine();
-                            });
-                        }
-                        else if (isRelogin)
-                        {
-                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
-                        }
-                        else
-                        {
-                            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
-                        }
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
                     }
                 }
                 else if (playerStatus == PlayerStatus.Battle)
                 {
                     DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                     {
-                        playerStatus = PlayerStatus.Battle,
+                        ARHallType = ARHallType.JoinTheRoom,
                         RoomType = roomType,
                         SubRoomType = subRoomType,
-                        arRoomId = playerStatusComponent.RoomId,
+                        roomId = playerStatusComponent.RoomId,
                     };
                     //在AR战斗的时候杀掉进程后重进 会进到这里
                     if (isFromLogin)
@@ -262,7 +257,7 @@ namespace ET.Client
             SubRoomType subRoomType = playerStatusComponent.SubRoomType;
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
 
-            Log.Debug($"--DealWhenNotDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult}]");
+            Log.Debug($"--DealWhenNotDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult.ToString()}]");
 
             if (roomType == RoomType.Normal)
             {
@@ -270,7 +265,7 @@ namespace ET.Client
                 {
                     if (subRoomType == SubRoomType.NormalPVE)
                     {
-                        if (playerStatusComponent.LastBattleResult == 1)
+                        if (playerStatusComponent.LastBattleResult == BattleResult.Successed)
                         {
                             string gamePlayBattleLevelCfgId = playerStatusComponent.LastBattleCfgId;
                             TowerDefense_ChallengeLevelCfg nextChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(gamePlayBattleLevelCfgId);
@@ -278,7 +273,7 @@ namespace ET.Client
                             {
                                 string nextBattleCfgId = nextChallengeLevelCfg.Id;
                                 await RoomHelper.ChgRoomBattleLevelCfgAsync(scene, nextBattleCfgId);
-                                await ET.Client.UIManagerHelper.EnterRoom(scene);
+                                await ET.Client.UIManagerHelper.EnterRoomUI(scene);
                                 return;
                             }
                             else
@@ -290,19 +285,23 @@ namespace ET.Client
                         }
                         else
                         {
-                            await ET.Client.UIManagerHelper.EnterRoom(scene);
+                            await ET.Client.UIManagerHelper.EnterRoomUI(scene);
                             return;
                         }
                     }
                     else if (subRoomType == SubRoomType.NormalPVP)
                     {
-                        await ET.Client.UIManagerHelper.EnterRoom(scene);
+                        await ET.Client.UIManagerHelper.EnterRoomUI(scene);
                         return;
                     }
                     else if (subRoomType == SubRoomType.NormalEndlessChallenge)
                     {
-                        await ET.Client.UIManagerHelper.EnterRoom(scene);
+                        await ET.Client.UIManagerHelper.EnterRoomUI(scene);
                         return;
+                    }
+                    else if (subRoomType == SubRoomType.NormalScanMesh)
+                    {
+                        await RoomHelper.QuitRoomAsync(scene);
                     }
                     else
                     {
@@ -313,13 +312,26 @@ namespace ET.Client
                 {
                     await RoomHelper.MemberQuitBattleAsync(scene);
                 }
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                await UIManagerHelper.EnterGameModeUI(scene);
                 return;
             }
 
             if (subRoomType == SubRoomType.None)
             {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                await UIManagerHelper.EnterGameModeUI(scene);
+                return;
+            }
+            else if (subRoomType == SubRoomType.ArcadeScanMesh)
+            {
+                if (playerStatus == PlayerStatus.Room)
+                {
+                    await RoomHelper.QuitRoomAsync(scene);
+                }
+                else if (playerStatus == PlayerStatus.Battle)
+                {
+                    await RoomHelper.MemberQuitBattleAsync(scene);
+                }
+                await UIManagerHelper.EnterGameModeUI(scene);
                 return;
             }
             else if (subRoomType == SubRoomType.ARTutorialFirst)
@@ -334,9 +346,12 @@ namespace ET.Client
                     {
                         await RoomHelper.MemberQuitBattleAsync(scene);
                     }
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                    await UIManagerHelper.EnterGameModeUI(scene);
                     DlgGameModeAR _DlgGameModeAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgGameModeAR>(true);
-                    _DlgGameModeAR.View.E_RedDotImage.SetVisible(true);
+                    if (_DlgGameModeAR != null)
+                    {
+                        _DlgGameModeAR.View.E_RedDotImage.SetVisible(true);
+                    }
                     return;
                 }
             }
@@ -344,13 +359,13 @@ namespace ET.Client
             if (playerStatus == PlayerStatus.Hall)
             {
                 //AR战斗自行退出 会进到这里
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
+                await UIManagerHelper.EnterGameModeUI(scene);
             }
             else if (playerStatus == PlayerStatus.Room)
             {
                 if (subRoomType == SubRoomType.ARPVE)
                 {
-                    if (playerStatusComponent.LastBattleResult == 1)
+                    if (playerStatusComponent.LastBattleResult == BattleResult.Successed)
                     {
                         string gamePlayBattleLevelCfgId = playerStatusComponent.LastBattleCfgId;
                         TowerDefense_ChallengeLevelCfg nextChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(gamePlayBattleLevelCfgId);
@@ -365,56 +380,39 @@ namespace ET.Client
                     // return;
                 }
 
-                bool _ARSceneStatusCompleted = ET.Client.ARSessionHelper.ChkARSceneStatusCompleted(scene);
-                Log.Debug($"_ARSceneStatusCompleted[{_ARSceneStatusCompleted}]");
-                if (_ARSceneStatusCompleted)
+                DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
-                    //AR战斗后返回 会进到这里
-                    ET.Client.ARSessionHelper.ResetMainCamera(scene, true);
-                    //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
-                    await UIManagerHelper.EnterRoom(scene);
-
+                    ARHallType = ARHallType.JoinTheRoom,
+                    roomId = playerStatusComponent.RoomId,
+                };
+                //在AR房间的时候杀掉进程后重进 会进到这里
+                if (isFromLogin)
+                {
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Login_IsReturnRoom");
+                    ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
+                    {
+                        UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
+                    }, () =>
+                    {
+                        RoomHelper.QuitRoomAsync(scene).Coroutine();
+                        UIManagerHelper.EnterGameModeUI(scene).Coroutine();
+                    });
+                }
+                else if (isRelogin)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
                 }
                 else
                 {
-                    DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
-                    {
-                        playerStatus = PlayerStatus.Room,
-                        RoomType = roomType,
-                        SubRoomType = subRoomType,
-                        arRoomId = playerStatusComponent.RoomId,
-                    };
-                    //在AR房间的时候杀掉进程后重进 会进到这里
-                    if (isFromLogin)
-                    {
-                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Login_IsReturnRoom");
-                        ET.Client.UIManagerHelper.ShowConfirm(scene, msg, () =>
-                        {
-                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData).Coroutine();
-                        }, () =>
-                        {
-                            RoomHelper.QuitRoomAsync(scene).Coroutine();
-                            UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>().Coroutine();
-                        });
-                    }
-                    else if (isRelogin)
-                    {
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
-                    }
-                    else
-                    {
-                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
-                    }
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
                 }
             }
             else if (playerStatus == PlayerStatus.Battle)
             {
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
-                    playerStatus = PlayerStatus.Battle,
-                    RoomType = roomType,
-                    SubRoomType = subRoomType,
-                    arRoomId = playerStatusComponent.RoomId,
+                    ARHallType = ARHallType.JoinTheRoom,
+                    roomId = playerStatusComponent.RoomId,
                 };
                 //在AR战斗的时候杀掉进程后重进 会进到这里
                 if (isFromLogin)
@@ -426,7 +424,7 @@ namespace ET.Client
                     }, () =>
                     {
                         RoomHelper.MemberQuitBattleAsync(scene).Coroutine();
-                        UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>().Coroutine();
+                        UIManagerHelper.EnterGameModeUI(scene).Coroutine();
                     });
                 }
                 else if (isRelogin)

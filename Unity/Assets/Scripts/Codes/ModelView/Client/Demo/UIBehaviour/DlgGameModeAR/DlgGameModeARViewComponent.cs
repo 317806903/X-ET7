@@ -517,6 +517,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_GameSettingButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GameSettingButton == null )
+				{
+					this.m_E_GameSettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_play/E_GameMode/E_GameSetting");
+				}
+				return this.m_E_GameSettingButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_GameSettingImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GameSettingImage == null )
+				{
+					this.m_E_GameSettingImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_play/E_GameMode/E_GameSetting");
+				}
+				return this.m_E_GameSettingImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_DiscordButton
 		{
 			get
@@ -566,6 +600,8 @@ namespace ET.Client
 			this.m_E_PVPButton = null;
 			this.m_E_PVPImage = null;
 			this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
+			this.m_E_GameSettingButton = null;
+			this.m_E_GameSettingImage = null;
 			this.m_E_DiscordButton = null;
 			this.uiTransform = null;
 		}
@@ -600,6 +636,8 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_PVPButton = null;
 		private UnityEngine.UI.Image m_E_PVPImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_GameSettingButton = null;
+		private UnityEngine.UI.Image m_E_GameSettingImage = null;
 		private UnityEngine.UI.Button m_E_DiscordButton = null;
 		public Transform uiTransform = null;
 	}

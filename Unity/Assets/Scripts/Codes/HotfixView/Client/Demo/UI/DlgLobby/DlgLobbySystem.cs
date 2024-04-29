@@ -61,7 +61,7 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
-			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
+			await ET.Client.UIManagerHelper.ExitRoomUI(self.DomainScene());
 		}
 
 		public static async ETTask OnChooseBattleCfg(this DlgLobby self)

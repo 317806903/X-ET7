@@ -113,13 +113,17 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public bool AdmobAvailable => _data.AdmobAvailable;
     /// <summary>
-    /// AR无尽模式复活增加生命
+    /// 复活时超时时间(秒)
     /// </summary>
-     public int AREndlessChallengeRecoverHp => _data.AREndlessChallengeRecoverHp;
+     public int RecoverTimeoutTime => _data.RecoverTimeoutTime;
     /// <summary>
-    /// AR无尽模式复活增加金币
+    /// 复活时增加生命
     /// </summary>
-     public int AREndlessChallengeRecoverGold => _data.AREndlessChallengeRecoverGold;
+     public int RecoverAddHp => _data.RecoverAddHp;
+    /// <summary>
+    /// 复活时增加金币
+    /// </summary>
+     public int RecoverAddGold => _data.RecoverAddGold;
     /// <summary>
     /// 初始背包物体
     /// </summary>
@@ -132,6 +136,94 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 最多出战卡数
     /// </summary>
      public int MaxBattleCardNum => _data.MaxBattleCardNum;
+    /// <summary>
+    /// (街机模式)管理员密码
+    /// </summary>
+     public string GameModeArcadeMasterPassword => _data.GameModeArcadeMasterPassword;
+    /// <summary>
+    /// (街机模式)初始背包物体
+    /// </summary>
+     public System.Collections.Generic.List<string> GameModeArcadeInitialBackpackItem => _data.GameModeArcadeInitialBackpackItem;
+    /// <summary>
+    /// (街机模式)超时时间(秒)
+    /// </summary>
+     public int GameModeArcadeSessionTimeOut => _data.GameModeArcadeSessionTimeOut;
+    /// <summary>
+    /// (街机模式)代币换算成money的系数
+    /// </summary>
+     public float GameModeArcadeCoin2Money => _data.GameModeArcadeCoin2Money;
+    /// <summary>
+    /// (街机模式)微信支付URL请求
+    /// </summary>
+     public string GameModeArcadeCoin2WXUrl => _data.GameModeArcadeCoin2WXUrl;
+    /// <summary>
+    /// (街机模式)PVP的cfgId
+    /// </summary>
+     public string GameModeArcadeARPVPCfgId => _data.GameModeArcadeARPVPCfgId;
+    /// <summary>
+    /// (街机模式)PVE无尽模式的cfgId
+    /// </summary>
+     public string GameModeArcadeAREndlessChallengeCfgId => _data.GameModeArcadeAREndlessChallengeCfgId;
+    /// <summary>
+    /// (街机模式)非AR模式PVP的cfgId
+    /// </summary>
+     public string GameModeArcadeNoARPVPCfgId => _data.GameModeArcadeNoARPVPCfgId;
+    /// <summary>
+    /// (街机模式)非AR模式PVE无尽模式的cfgId
+    /// </summary>
+     public string GameModeArcadeNoAREndlessChallengeCfgId => _data.GameModeArcadeNoAREndlessChallengeCfgId;
+    /// <summary>
+    /// (街机模式)管理员扫描地形的cfgId
+    /// </summary>
+     public string GameModeArcadeARScanMeshCfgId => _data.GameModeArcadeARScanMeshCfgId;
+    /// <summary>
+    /// (街机模式)非AR管理员扫描地形的cfgId
+    /// </summary>
+     public string GameModeArcadeNoARScanMeshCfgId => _data.GameModeArcadeNoARScanMeshCfgId;
+    /// <summary>
+    /// (街机模式)复活时超时时间(秒)
+    /// </summary>
+     public int GameModeArcadeRecoverTimeoutTime => _data.GameModeArcadeRecoverTimeoutTime;
+    /// <summary>
+    /// (街机模式)复活时增加生命
+    /// </summary>
+     public int GameModeArcadeRecoverAddHp => _data.GameModeArcadeRecoverAddHp;
+    /// <summary>
+    /// (街机模式)复活时增加金币
+    /// </summary>
+     public int GameModeArcadeRecoverAddGold => _data.GameModeArcadeRecoverAddGold;
+    /// <summary>
+    /// (街机模式)PVP免费的复活次数
+    /// </summary>
+     public int GameModeArcadePVPReviveTimeWhenFree => _data.GameModeArcadePVPReviveTimeWhenFree;
+    /// <summary>
+    /// (街机模式)PVP付费的复活次数
+    /// </summary>
+     public int GameModeArcadePVPReviveTimeWhenPay => _data.GameModeArcadePVPReviveTimeWhenPay;
+    /// <summary>
+    /// (街机模式)PVP复活需消耗代币
+    /// </summary>
+     public int GameModeArcadePVPCostWhenRevive => _data.GameModeArcadePVPCostWhenRevive;
+    /// <summary>
+    /// (街机模式)PVP开始战斗需消耗代币
+    /// </summary>
+     public int GameModeArcadePVPCostWhenStart => _data.GameModeArcadePVPCostWhenStart;
+    /// <summary>
+    /// (街机模式)无尽模式免费的复活次数
+    /// </summary>
+     public int GameModeArcadeEndlessChallengeReviveTimeWhenFree => _data.GameModeArcadeEndlessChallengeReviveTimeWhenFree;
+    /// <summary>
+    /// (街机模式)无尽模式付费的复活次数
+    /// </summary>
+     public int GameModeArcadeEndlessChallengeReviveTimeWhenPay => _data.GameModeArcadeEndlessChallengeReviveTimeWhenPay;
+    /// <summary>
+    /// (街机模式)无尽模式复活需消耗代币
+    /// </summary>
+     public int GameModeArcadeEndlessChallengeCostWhenRevive => _data.GameModeArcadeEndlessChallengeCostWhenRevive;
+    /// <summary>
+    /// (街机模式)无尽模式开始战斗需消耗代币
+    /// </summary>
+     public int GameModeArcadeEndlessChallengeCostWhenStart => _data.GameModeArcadeEndlessChallengeCostWhenStart;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

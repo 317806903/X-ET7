@@ -11,20 +11,21 @@ namespace ET.Client
             clientScene.AddComponent<ObjectWait>();
             clientScene.AddComponent<PlayerComponent>();
             clientScene.AddComponent<RoomManagerComponent>();
-            
+            clientScene.AddComponent<GameSettingComponent>();
+
             await EventSystem.Instance.PublishAsync(clientScene, new EventType.AfterCreateClientScene());
             return clientScene;
         }
-        
+
         public static Scene CreateCurrentScene(long id, int zone, string name, CurrentScenesComponent currentScenesComponent)
         {
             Scene currentScene = EntitySceneFactory.CreateScene(id, IdGenerater.Instance.GenerateInstanceId(), zone, SceneType.Current, name, currentScenesComponent);
             currentScenesComponent.Scene = currentScene;
-            
+
             EventSystem.Instance.Publish(currentScene, new EventType.AfterCreateCurrentScene());
             return currentScene;
         }
-        
-        
+
+
     }
 }

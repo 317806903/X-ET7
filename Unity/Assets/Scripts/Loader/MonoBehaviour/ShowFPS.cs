@@ -23,10 +23,11 @@ namespace ET
         /// </summary>
         private float m_frameDeltaTime = 0;
         private float m_FPS = 0;
-        private Rect m_fps, m_dtime;
+        private Rect m_fps, m_dtime, m_pose;
         private GUIStyle m_styleRed = new GUIStyle();
         private GUIStyle m_styleGreen = new GUIStyle();
         private string m_exShow;
+        private string m_exShow2;
         public string ExShow
         {
             get
@@ -38,6 +39,17 @@ namespace ET
                 this.m_exShow = value;
             }
         }
+        public string ExShow2
+        {
+            get
+            {
+                return this.m_exShow2;
+            }
+            set
+            {
+                this.m_exShow2 = value;
+            }
+        }
 
         void Awake()
         {
@@ -46,8 +58,9 @@ namespace ET
         void Start()
         {
             m_lastUpdateShowTime = Time.realtimeSinceStartup;
-            m_fps = new Rect(50, 100, 100, 100);
-            m_dtime = new Rect(50, 150, 100, 100);
+            m_fps = new Rect(50, 100, 100, 100);    // first line
+            m_dtime = new Rect(300, 100, 100, 100); // first line 
+            m_pose = new Rect(50, 150, 300, 100);   // second line
             this.m_styleGreen.fontSize = 50;
             this.m_styleGreen.normal.textColor = Color.green;
             this.m_styleRed.fontSize = 50;
@@ -81,6 +94,10 @@ namespace ET
             if (string.IsNullOrEmpty(m_exShow) == false)
             {
                 GUI.Label(m_dtime, m_exShow, this.m_styleGreen);
+            }
+            if (string.IsNullOrEmpty(m_exShow2) == false)
+            {
+                GUI.Label(m_pose, m_exShow2, this.m_styleGreen);
             }
         }
     }

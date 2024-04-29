@@ -29,6 +29,10 @@ namespace ET.Ability
                     {
                         continue;
                     }
+                    if (unitSelect.IsDisposed)
+                    {
+                        continue;
+                    }
                     if (unitSelect.Id == actionContext.motionUnitId)
                     {
                         actionContext.motionDirection = unitSelect.Forward;
@@ -67,6 +71,14 @@ namespace ET.Ability
                 foreach (var unitId in selectHandle.unitIds)
                 {
                     Unit unitSelect = UnitHelper.GetUnit(casterUnit.DomainScene(), unitId);
+                    if (unitSelect == null)
+                    {
+                        continue;
+                    }
+                    if (unitSelect.IsDisposed)
+                    {
+                        continue;
+                    }
                     BuffComponent buffComponent = _GetBuffComponent(unitSelect);
                     if (buffComponent == null)
                     {

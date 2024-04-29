@@ -111,22 +111,15 @@ namespace ET
 
         public static void RecoverWaveIndex(this MonsterWaveCallComponent self)
         {
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
-            foreach (long playerId in playerList)
+            foreach (var item in self.waveMonsterCallList.Values)
             {
-                if (self.waveMonsterCallList.ContainsKey(playerId) == false)
+                foreach (MonsterWaveCallOnceComponent monsterWaveCallOnceComponent in item.Values)
                 {
-                    continue;
+                    monsterWaveCallOnceComponent.Dispose();
                 }
-                if (self.waveMonsterCallList[playerId].ContainsKey(self.curIndex) == false)
-                {
-                    continue;
-                }
-                MonsterWaveCallOnceComponent monsterWaveCallOnceComponent = self.waveMonsterCallList[playerId][self.curIndex];
-                monsterWaveCallOnceComponent.Dispose();
-                self.waveMonsterCallList[playerId].Remove(self.curIndex);
             }
+
+            self.waveMonsterCallList.Clear();
 
             TimerComponent.Instance.Remove(ref self.Timer);
 

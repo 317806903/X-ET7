@@ -10,6 +10,8 @@ namespace ET
         BackPack,
         BattleCard,
         FunctionMenu,
+        ArcadeCoinAdd,
+        ArcadeCoinReduce,
         RankPVE,
         RankEndlessChallenge,
     }
@@ -29,6 +31,8 @@ namespace ET
         PlayerBaseInfo_ARPVEBattleCount = 104,
         PlayerBaseInfo_ARPVPBattleCount = 105,
         PlayerBaseInfo_ChallengeClearLevel = 106,
+        PlayerBaseInfo_AddArcadeCoinNum = 107,
+        PlayerBaseInfo_ReduceArcadeCoinNum = 108,
 
         PlayerBackPack_AddItem = 200,
         PlayerBackPack_DeleteItem = 201,

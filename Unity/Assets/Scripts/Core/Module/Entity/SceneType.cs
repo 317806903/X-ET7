@@ -25,6 +25,7 @@ namespace ET
 		Rank = 1 << 17,
 		PlayerCache = 1 << 18,
 		Mail = 1 << 19,
+		Pay = 1 << 20,
 
 		// 客户端Model层
 		Client = 1 << 30,

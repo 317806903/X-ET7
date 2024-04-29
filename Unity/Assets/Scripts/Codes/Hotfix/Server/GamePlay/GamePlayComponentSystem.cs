@@ -460,5 +460,23 @@ namespace ET.Server
 
             await ETTask.CompletedTask;
         }
+
+        public static async ETTask GameRecoverWhenServer(this GamePlayComponent self, long playerId)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayMode() as GamePlayTowerDefenseComponent;
+
+                await gamePlayTowerDefenseComponent.GameRecoverWhenServer(playerId);
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPKComponent gamePlayPKComponent = self.GetGamePlayMode() as GamePlayPKComponent;
+
+                await gamePlayPKComponent.GameRecoverWhenServer(playerId);
+            }
+
+            await ETTask.CompletedTask;
+        }
     }
 }

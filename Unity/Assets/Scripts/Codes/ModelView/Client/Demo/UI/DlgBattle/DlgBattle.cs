@@ -101,6 +101,7 @@ namespace ET.Client
 			"Monster_Infinite_4_1",
 			"Monster_Infinite_13_1",
 			"Monster_Challenge3_5_1",
+			"Monster_Infinite_8_2",
 			"Tow1_1",
 			"TowCallMonster_1",
 			"TowCallMonster_2",

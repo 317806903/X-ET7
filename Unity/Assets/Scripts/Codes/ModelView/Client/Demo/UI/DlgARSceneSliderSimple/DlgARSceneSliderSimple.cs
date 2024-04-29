@@ -13,6 +13,7 @@ namespace ET.Client
 		public List<float> scaleSettingList;
 
 		public List<(float2 disPos, string unitCfgId)> showPrefabCfgList;
+		public Dictionary<GameObject, float> orgPrefabLocalScaleDic;
 		public List<GameObject> showPrefabList;
 
 		public long Timer;

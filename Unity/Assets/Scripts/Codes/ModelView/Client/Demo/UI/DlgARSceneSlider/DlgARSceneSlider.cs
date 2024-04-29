@@ -13,6 +13,7 @@ namespace ET.Client
 		public float minScale;
 		public float maxScale;
 		public List<(float2 disPos, string unitCfgId)> showPrefabCfgList;
+		public Dictionary<GameObject, float> orgPrefabLocalScaleDic;
 		public List<GameObject> showPrefabList;
 
 		public long Timer;

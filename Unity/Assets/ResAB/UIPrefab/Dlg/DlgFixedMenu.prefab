@@ -36,9 +36,9 @@ RectTransform:
   - {fileID: 7244404299487583547}
   m_Father: {fileID: 5367216099206638848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 838, y: -53.98575}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 312, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5696564044717061375
@@ -261,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &946743293912786067
 RectTransform:
   m_ObjectHideFlags: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767756232475669856}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -375,12 +375,12 @@ GameObject:
   - component: {fileID: 3139637327474453191}
   - component: {fileID: 8229848881358362992}
   m_Layer: 5
-  m_Name: ELabel_GoldCoinNum
+  m_Name: ELabel_ArcadeCoinNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3117138391581024928
 RectTransform:
   m_ObjectHideFlags: 0
@@ -767,7 +767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6246630840690436828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -777,15 +777,15 @@ RectTransform:
   m_GameObject: {fileID: 5946436059396874652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.42010185, y: 0.42010185, z: 0.42010185}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6995079924034653987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110.3, y: -1.3}
-  m_SizeDelta: {x: 126, y: 126}
+  m_AnchoredPosition: {x: -108.7, y: -1.3}
+  m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3693587506133001713
 CanvasRenderer:
@@ -815,9 +815,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 74c1a6ea879973c4dae9d131a69934de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: adcd738713d838a4db02edc0febcda33, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -838,12 +838,12 @@ GameObject:
   - component: {fileID: 486784843573676944}
   - component: {fileID: 5927983076931600194}
   m_Layer: 5
-  m_Name: EButton_GoldCoin
+  m_Name: EButton_ArcadeCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6995079924034653987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -861,9 +861,9 @@ RectTransform:
   - {fileID: 3117138391581024928}
   m_Father: {fileID: 5367216099206638848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 404.39136, y: -53.98575}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 312, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6687772082086795744
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8587085079071252039}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
@@ -1088,7 +1088,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: adcd738713d838a4db02edc0febcda33, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

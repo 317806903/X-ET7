@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7571227908603180341}
   - component: {fileID: 8621075281539086341}
   - component: {fileID: 4246932529092711485}
-  - component: {fileID: 1293587319942131922}
+  - component: {fileID: 5863332868615638716}
   m_Layer: 5
   m_Name: EImage_Label1
   m_TagString: Untagged
@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.9000244}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 517.6}
+  m_SizeDelta: {x: 524.1, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7571227908603180341
 CanvasRenderer:
@@ -90,9 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &1293587319942131922
+--- !u!114 &5863332868615638716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,22 +101,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 128162232811271456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 45
     m_Right: 45
-    m_Top: 0
-    m_Bottom: 15
+    m_Top: 10
+    m_Bottom: 20
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 1
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &836576147897869702
 GameObject:
@@ -305,14 +305,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7721340355665998078}
   - {fileID: 8532015557196911798}
+  - {fileID: 7721340355665998078}
   m_Father: {fileID: 2887650541395005997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 923, y: 76}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &321219641099559222
 CanvasGroup:
@@ -494,7 +494,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 672.01, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8812984590078845593
 CanvasRenderer:
@@ -524,7 +524,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tiny spiders, crawling terror in packs!
+  m_text: Tiny spiders, crawling terror in packs!Tiny spiders, crawling terror in
+    packs!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b79cb45322f07b64fbb35f7786d40625, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 317130559ec497d41ba5b42a15c83ad6, type: 2}
@@ -627,7 +628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1, y: -4}
+  m_AnchoredPosition: {x: 0, y: 507.5}
   m_SizeDelta: {x: 67, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4240493136520008469

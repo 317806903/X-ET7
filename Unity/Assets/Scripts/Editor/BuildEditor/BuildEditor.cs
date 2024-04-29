@@ -39,6 +39,14 @@ namespace ET
         Release_ExternalTest,
     }
 
+    public enum LanguageTypeEditor
+    {
+        Auto,
+        CN,
+        TW,
+        EN,
+    }
+
     public class BuildEditor: EditorWindow
     {
         private Dictionary<ServerEnum, string> serverAddressList = new()
@@ -208,6 +216,12 @@ namespace ET
                     {
                         this.globalConfig.NeedDB = false;
                         EditorUtility.SetDirty(this.globalConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.resConfig.IsGameModeArcade != false)
+                    {
+                        this.resConfig.IsGameModeArcade = false;
+                        EditorUtility.SetDirty(this.resConfig);
                         AssetDatabase.SaveAssets();
                     }
                     if (this.resConfig.IsNeedSendEventLog != false)
@@ -428,6 +442,26 @@ namespace ET
                     NeedDB = this.globalConfig.NeedDB;
                 }
             }
+            GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
+            var IsGameModeArcade = EditorGUILayout.Toggle("IsGameModeArcade: ", this.resConfig.IsGameModeArcade);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (IsGameModeArcade != this.resConfig.IsGameModeArcade)
+                {
+                    this.resConfig.IsGameModeArcade = IsGameModeArcade;
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (IsGameModeArcade != this.resConfig.IsGameModeArcade)
+                {
+                    IsGameModeArcade = this.resConfig.IsGameModeArcade;
+                }
+            }
+            GUILayout.Space(5);
             EditorGUI.BeginChangeCheck();
             var IsNeedSendEventLog = EditorGUILayout.Toggle("IsNeedSendEventLog: ", this.resConfig.IsNeedSendEventLog);
             if (EditorGUI.EndChangeCheck())
@@ -450,6 +484,26 @@ namespace ET
             {
                 ToolsEditor.RunMongoDBFromDocker();
             }
+            GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
+            LanguageTypeEditor languageType = (LanguageTypeEditor)EditorGUILayout.EnumPopup("LanguageType: ", (LanguageTypeEditor) Enum.Parse(typeof(LanguageTypeEditor), this.resConfig.languageType, true));
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (languageType.ToString() != this.resConfig.languageType)
+                {
+                    this.resConfig.languageType = languageType.ToString();
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (languageType.ToString() != this.resConfig.languageType)
+                {
+                    languageType = (LanguageTypeEditor) Enum.Parse(typeof(LanguageTypeEditor), this.resConfig.languageType, true);
+                }
+            }
+
             GUILayout.Space(5);
             EditorGUI.BeginChangeCheck();
             var areaType = (AreaType) EditorGUILayout.EnumPopup("AreaType: ", this.resConfig.areaType);

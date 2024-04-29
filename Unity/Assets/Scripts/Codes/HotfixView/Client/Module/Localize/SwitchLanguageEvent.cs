@@ -29,6 +29,16 @@ namespace ET.Client
             UITextLocalizeComponent.Instance?.SetTextLocalizeAction(translateUI);
             UITextLocalizeComponent.Instance?.DoRefreshTextValue();
 
+            UnityEngine.UI.LoopScrollPrefabSourceInstance.AddCellItemAction = (go) =>
+            {
+                UITextLocalizeComponent.Instance.AddUITextLocalizeView(go);
+            };
+
+            UnityEngine.UI.LoopScrollPrefabSourceInstance.RemoveCellItemAction = (go) =>
+            {
+                UITextLocalizeComponent.Instance.RemoveUITextLocalizeView(go);
+            };
+
             await ETTask.CompletedTask;
         }
     }

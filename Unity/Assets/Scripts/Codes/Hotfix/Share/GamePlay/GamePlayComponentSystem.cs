@@ -166,7 +166,7 @@ namespace ET
             byte[] bytes = ZipHelper.Decompress(self._ARMeshBytes);
 
             Log.Info($"Received obj content from client. Zipped size = {self._ARMeshBytes.Length}, Obj size = {bytes.Length}");
-            
+
             string pathfindingMapName = self.GetPathfindingMapName();
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
             Task task = new Task(
@@ -289,6 +289,7 @@ namespace ET
             self.NoticeToClientAll();
             self.NoticeGamePlayStatisticalData2Client();
             self.NoticeGameEndToRoom(false);
+            self.AllPlayerQuit().Coroutine();
         }
 
         public static void StopAllAI(this GamePlayComponent self)
@@ -382,6 +383,16 @@ namespace ET
             return gamePlayPlayerListComponent.GetPlayerList();
         }
 
+        public static bool ChkPlayerIsQuit(this GamePlayComponent self, long playerId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            if (gamePlayPlayerListComponent == null)
+            {
+                return true;
+            }
+            return gamePlayPlayerListComponent.ChkPlayerIsQuit(playerId);
+        }
+
         /// <summary>
         /// 通过这个判断 unitId 是否归属 player, 返回-1则不是玩家的
         /// </summary>
@@ -463,11 +474,12 @@ namespace ET
             EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayChgToClient);
         }
 
-        public static void NoticeGameEndToRoom(this GamePlayComponent self, bool isReady)
+        public static void NoticeGameEndToRoom(this GamePlayComponent self, bool isReady, long playerId = -1)
         {
             EventType.NoticeGameEndToRoom _NoticeGameEndToRoom = new()
             {
                 roomId = self.roomId,
+                playerId = playerId,
                 isReady = isReady,
             };
             if (self.gamePlayMode == GamePlayMode.TowerDefense)
@@ -481,6 +493,20 @@ namespace ET
                 // gamePlayPKComponent.NoticeToClient(playerId);
             }
             EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
+
+        }
+
+        public static async ETTask AllPlayerQuit(this GamePlayComponent self)
+        {
+            await TimerComponent.Instance.WaitAsync(60 * 1000);
+            if (self.IsDisposed)
+            {
+                return;
+            }
+            foreach (long playerId in self.GetPlayerList())
+            {
+                self.PlayerQuitBattle(playerId, false);
+            }
         }
 
         public static void NoticeGamePlayStatisticalData2Client(this GamePlayComponent self)

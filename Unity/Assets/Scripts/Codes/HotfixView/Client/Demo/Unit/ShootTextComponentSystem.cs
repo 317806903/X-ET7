@@ -42,13 +42,13 @@ namespace ET.Client
 
         public static async ETTask Init(this ShootTextComponent self)
         {
-#if UNITY_EDITOR
-#else
-            if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
-            {
-                return;
-            }
-#endif
+// #if UNITY_EDITOR
+// #else
+//             if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
+//             {
+//                 return;
+//             }
+// #endif
 
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_ShootDamageTextPrefab");
             GameObject shootTextRootGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
@@ -87,20 +87,26 @@ namespace ET.Client
 
         public static void ShowShootDamage(this ShootTextComponent self, Unit unit, int value)
         {
+
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.DamageShow) == false)
+            {
+                return;
+            }
+
             if (self.shootTextRoot == null || self.shootTextRoot.gameObject.activeSelf == false)
             {
                 return;
             }
 
-#if UNITY_EDITOR
-            if (ET.Client.DebugWhenEditorComponent.Instance.IsShowShootDamageNum == false)
-            {
-                if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
-                {
-                    return;
-                }
-            }
-#endif
+// #if UNITY_EDITOR
+//             if (ET.Client.DebugWhenEditorComponent.Instance.IsShowShootDamageNum == false)
+//             {
+//                 if (GlobalSettingCfgCategory.Instance.ShowDamage == false)
+//                 {
+//                     return;
+//                 }
+//             }
+// #endif
 
             string showValue = "";
             if (value > 0)

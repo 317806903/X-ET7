@@ -13,5 +13,14 @@ namespace ET.Server
             context.Response.ContentLength64 = bytes.Length;
             context.Response.OutputStream.Write(bytes, 0, bytes.Length);
         }
+
+        public static void Response(HttpListenerContext context, string responseContext)
+        {
+            byte[] bytes = responseContext.ToUtf8();
+            context.Response.StatusCode = 200;
+            context.Response.ContentEncoding = Encoding.UTF8;
+            context.Response.ContentLength64 = bytes.Length;
+            context.Response.OutputStream.Write(bytes, 0, bytes.Length);
+        }
     }
 }

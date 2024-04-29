@@ -100,6 +100,10 @@ namespace ET.Ability
                 if (self.isForeaching)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
+                    if (self.IsDisposed)
+                    {
+                        return null;
+                    }
                 }
                 buffObj = self.AddChild<BuffObj>();
                 buffObj.isEnabled = IsEnabled;

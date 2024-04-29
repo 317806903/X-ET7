@@ -15,7 +15,7 @@ namespace ET.Server
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 			playerStatusComponent.LastBattleCfgId = request.GamePlayBattleLevelCfgId;
-			playerStatusComponent.LastBattleResult = 0;
+			playerStatusComponent.LastBattleResult = BattleResult.Default;
 			await playerStatusComponent.NoticeClient();
 
 			if (player.GetComponent<PlayerSessionComponent>() == null)

@@ -32,6 +32,10 @@ namespace ET.Client
 
 		public static async ETTask ChkNeedShowGuide(this DlgBattleTowerEnd self)
 		{
+			if (ET.SceneHelper.ChkIsGameModeArcade())
+			{
+				return;
+			}
 			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
 			List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
 			if (openningList.Count > 0)
@@ -79,7 +83,7 @@ namespace ET.Client
 					success = true;
 				}
 			}
-			if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE)
+			if (gamePlayTowerDefenseComponent.IsPVEMode())
 			{
 				await self.ShowEffectPVE(success);
 				if (success)
@@ -87,7 +91,7 @@ namespace ET.Client
 					await ET.Client.GameJudgeChooseHelper.ShowGameJudgeChoose(self.DomainScene());
 				}
 			}
-			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge)
+			else if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
 			{
 				MonsterWaveCallComponent monsterWaveCallComponent = gamePlayTowerDefenseComponent.GetComponent<MonsterWaveCallComponent>();
 				int aliveNum = monsterWaveCallComponent.GetWaveIndex() - 1;
@@ -98,7 +102,7 @@ namespace ET.Client
 					await ET.Client.GameJudgeChooseHelper.ShowGameJudgeChoose(self.DomainScene());
 				}
 			}
-			else if (gamePlayTowerDefenseComponent.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP)
+			else if (gamePlayTowerDefenseComponent.IsPVPMode())
 			{
 				await self.ShowEffectPVP(success);
 			}

@@ -36,5 +36,7 @@
         public const int DlgBattleDeckFrameTimer = 224;
         public const int DlgFixedMenuFrameTimer = 225;
         public const int DlgFixedMenuHighestFrameTimer = 226;
+        public const int GameModeArcadeTimer = 227;
+        public const int DlgCommonChooseTimer = 228;
     }
 }

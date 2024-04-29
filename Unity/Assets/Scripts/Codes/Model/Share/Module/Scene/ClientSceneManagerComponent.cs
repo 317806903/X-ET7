@@ -5,5 +5,7 @@ namespace ET
     {
         [StaticField]
         public static ClientSceneManagerComponent Instance;
+
+        public bool IsGameModeArcade;
     }
 }

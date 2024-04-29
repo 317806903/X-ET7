@@ -28,7 +28,6 @@ namespace ET.Client
             string url = $"http://{self.RouterManagerHost}:{self.RouterManagerPort}/get_router?v={RandomGenerator.RandUInt32()}";
             Log.Debug($"start get router info: {url}");
             string routerInfo = await HttpClientHelper.Get(url);
-            Log.Debug($"recv router info: {routerInfo}");
             HttpGetRouterResponse httpGetRouterResponse = JsonHelper.FromJson<HttpGetRouterResponse>(routerInfo);
             self.Info = httpGetRouterResponse;
             Log.Debug($"start get router info finish: {JsonHelper.ToJson(httpGetRouterResponse)}");

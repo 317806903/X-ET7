@@ -88,7 +88,7 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
 			string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(RoomType.Normal, SubRoomType.NormalRoom, 0);
-			bool result = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, RoomType.Normal, SubRoomType.NormalRoom);
+			(bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, RoomType.Normal, SubRoomType.NormalRoom);
 			if (result)
 			{
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgHall>();
@@ -108,7 +108,7 @@ namespace ET.Client
 		public static async ETTask ReturnBack(this DlgHall self)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
-			await ET.Client.UIManagerHelper.ExitRoom(self.DomainScene());
+			await ET.Client.UIManagerHelper.ExitRoomUI(self.DomainScene());
 		}
 
 		public static async ETTask JoinRoom(this DlgHall self, long roomId)

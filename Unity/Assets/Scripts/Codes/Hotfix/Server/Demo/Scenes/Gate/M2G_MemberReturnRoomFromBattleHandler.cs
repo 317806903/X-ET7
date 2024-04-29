@@ -9,7 +9,7 @@ namespace ET.Server
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			playerStatusComponent.PlayerStatus = PlayerStatus.Room;
-			playerStatusComponent.LastBattleResult = request.BattleResult;
+			playerStatusComponent.LastBattleResult = (BattleResult)request.BattleResult;
 
 			await playerStatusComponent.NoticeClient();
 

@@ -68,7 +68,7 @@ namespace ET.Server
 
             string gamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId;
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);
-            Scene dynamicMapNew = await SceneFactory.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone,
+            Scene dynamicMapNew = await SceneHelper.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone,
                 gamePlayBattleLevelCfg.SceneMap, dynamicMapBaseConfig.Type);
 
             GamePlayComponent gamePlayComponent = dynamicMapNew.AddComponent<GamePlayComponent>();

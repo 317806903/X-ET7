@@ -54,7 +54,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u663E\u793A\u5C0F\u7A97\u89C6\u9891"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -74,7 +74,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u9690\u85CF\u626B\u56FE\u9000\u51FA\u6309\u94AE"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -94,7 +94,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u7ED3\u675F\u626B\u63CF"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -114,7 +114,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u9690\u85CF\u5C0F\u7A97\u89C6\u9891"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -134,7 +134,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u786E\u8BA4\u626B\u63CF\u7ED3\u679C"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -154,7 +154,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u623F\u95F4\u51C6\u5907"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 

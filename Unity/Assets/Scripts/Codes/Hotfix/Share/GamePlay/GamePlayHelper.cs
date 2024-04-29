@@ -517,6 +517,64 @@ namespace ET
 			return battleCfgId;
 		}
 
+		public static int GetPhysicalCost(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn)
+		{
+			if (ET.SceneHelper.ChkIsGameModeArcade())
+			{
+				return 0;
+			}
+			int physicalCost = 0;
+			if (RoomTypeIn == RoomType.Normal)
+			{
+				if (SubRoomTypeIn == SubRoomType.NormalRoom)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalARCreate)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVE)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalPVP)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalEndlessChallenge)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.NormalScanMesh)
+				{
+					physicalCost = 0;
+				}
+			}
+			else if (RoomTypeIn == RoomType.AR)
+			{
+				if (SubRoomTypeIn == SubRoomType.ARPVE)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARPVP)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.AREndlessChallenge)
+				{
+					physicalCost = GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength;
+				}
+				else if (SubRoomTypeIn == SubRoomType.ARTutorialFirst)
+				{
+				}
+				else if (SubRoomTypeIn == SubRoomType.ArcadeScanMesh)
+				{
+					physicalCost = 0;
+				}
+			}
+
+			return physicalCost;
+		}
+
 		public static int GetArcadeCoinCost(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, bool isRecover)
 		{
 			if (ET.SceneHelper.ChkIsGameModeArcade() == false)

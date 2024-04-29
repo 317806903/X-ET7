@@ -145,7 +145,7 @@ namespace ET.Client
 
                 if (myPlayerId == roomComponent.ownerRoomMemberId)
                 {
-                    costValue = GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength;
+                    costValue = ET.GamePlayHelper.GetPhysicalCost(roomComponent.roomType, roomComponent.subRoomType);
                 }
                 else
                 {
@@ -513,7 +513,8 @@ namespace ET.Client
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
-                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+                int costValue = ET.GamePlayHelper.GetPhysicalCost(roomComponent.roomType, roomComponent.subRoomType);
+                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), costValue);
                 if (bRet1 == false)
                 {
                     return;

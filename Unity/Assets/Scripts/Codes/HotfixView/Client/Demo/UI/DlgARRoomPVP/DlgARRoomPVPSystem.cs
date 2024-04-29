@@ -151,7 +151,7 @@ namespace ET.Client
 
                 if (myPlayerId == roomComponent.ownerRoomMemberId)
                 {
-                    costValue = GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength;
+                    costValue = ET.GamePlayHelper.GetPhysicalCost(roomComponent.roomType, roomComponent.subRoomType);
                 }
                 else
                 {
@@ -567,7 +567,8 @@ namespace ET.Client
                     return;
                 }
 
-                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+                int costValue = ET.GamePlayHelper.GetPhysicalCost(roomComponent.roomType, roomComponent.subRoomType);
+                bool bRet1 = await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(), costValue);
                 if (bRet1 == false)
                 {
                     return;

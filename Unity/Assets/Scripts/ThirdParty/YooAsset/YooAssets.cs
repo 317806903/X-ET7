@@ -66,6 +66,18 @@ namespace YooAsset
 			}
 		}
 
+		public static void Clear()
+		{
+			if (_isInitialize)
+			{
+				OperationSystem.DestroyAll();
+				DownloadSystem.DestroyAll();
+
+				OperationSystem.Initialize();
+				DownloadSystem.Initialize();
+			}
+		}
+
 		/// <summary>
 		/// 更新资源系统
 		/// </summary>

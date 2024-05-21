@@ -36,6 +36,10 @@ namespace ET
                     {
                         initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
                     }
+                    else if (ET.SceneHelper.ChkIsDemoShow())
+                    {
+                        initialItemList = GlobalSettingCfgCategory.Instance.DemoShowInitialBackpackItem;
+                    }
                     else
                     {
                         initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
@@ -46,6 +50,10 @@ namespace ET
                 if (ET.SceneHelper.ChkIsGameModeArcade())
                 {
                     initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
+                }
+                else if (ET.SceneHelper.ChkIsDemoShow())
+                {
+                    initialItemList = GlobalSettingCfgCategory.Instance.DemoShowInitialBackpackItem;
                 }
                 else
                 {

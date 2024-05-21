@@ -25,7 +25,12 @@ namespace ET.Client
                 long time1 = TimeHelper.ClientNow();
                 try
                 {
-                    G2C_Ping response = await session.Call(new C2G_Ping(), false) as G2C_Ping;
+                    int fps = EventSystem.Instance.Invoke<ET.Client.GetFPS, int>(new ET.Client.GetFPS());
+                    G2C_Ping response = await session.Call(new C2G_Ping()
+                    {
+                        Fps = fps,
+                        PingTime = self.Ping,
+                    }, false) as G2C_Ping;
 
                     if (self.InstanceId != instanceId)
                     {

@@ -5,4 +5,8 @@ namespace ET.Client
     {
         public long Ping; //延迟值
     }
+
+    public struct GetFPS
+    {
+    }
 }

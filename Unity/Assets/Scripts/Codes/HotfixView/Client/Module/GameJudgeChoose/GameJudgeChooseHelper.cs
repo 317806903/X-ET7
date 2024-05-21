@@ -7,7 +7,7 @@ namespace ET.Client
     {
 	    public static async ETTask ShowGameJudgeChoose(Scene scene)
 	    {
-		    if (ET.SceneHelper.ChkIsGameModeArcade())
+		    if (ET.SceneHelper.ChkIsGameModeArcade() || ET.SceneHelper.ChkIsDemoShow())
 		    {
 			    return;
 		    }

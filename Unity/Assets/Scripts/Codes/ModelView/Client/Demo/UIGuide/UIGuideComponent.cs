@@ -36,7 +36,11 @@ namespace ET.Client
     {
         None,
         //判断塔 是否被放置
-        ChkTowerPut,
+        ChkTowerPutSuccess,
+        ChkTowerScaleSuccess,
+        ChkTowerReclaimSuccess,
+        ChkTowerUpgradeSuccess,
+        ChkTowerMoveSuccess,
         ChkIsNotShowStory,
         ChkIsNotShowVideo,
         ChkWaitTime,

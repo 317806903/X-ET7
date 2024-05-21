@@ -84,6 +84,7 @@ namespace ET
                 ResConfig resConfig = AssetDatabase.LoadAssetAtPath<ResConfig>("Assets/Resources/ResConfig.asset");
                 resConfig.IsNeedSendEventLog = false;
                 resConfig.IsGameModeArcade = false;
+                resConfig.IsDemoShow = false;
                 //if (resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                 {
                     resConfig.ResGameVersion = "v1.0";

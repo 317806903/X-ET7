@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &874470334414858593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3348370752587945390}
+  - component: {fileID: 6977277130895393450}
+  - component: {fileID: 4688572997627131044}
+  m_Layer: 0
+  m_Name: ShootDamageText_Normal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3348370752587945390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874470334414858593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6977277130895393450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874470334414858593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c472d29c0d74c548208cd68b07a02ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalNumber:
+  - {fileID: 1529224277455468, guid: 0de0165bb5f8b474bb83fde8908bbce9, type: 3}
+  - {fileID: 1912157624153022, guid: 66cc2ff825d769a4eb7c831b9681203a, type: 3}
+  - {fileID: 1333467406746538, guid: 982a542551b947d488a39dc6cdea7be7, type: 3}
+  - {fileID: 1434278620221516, guid: 662aea8df4d6aee40b8d7879168d742f, type: 3}
+  - {fileID: 1258025394125812, guid: f288c5e409d86714f9fcc1c17223251f, type: 3}
+  - {fileID: 1605926158848524, guid: 81b98b107a312944994e92d5247f6dcd, type: 3}
+  - {fileID: 1859558663752498, guid: 14cd6b7e7ac8f6346a3bfc7fedb2207a, type: 3}
+  - {fileID: 1698898347669390, guid: 7379cc215e901024e9bbc13f29556f3d, type: 3}
+  - {fileID: 1246610785805036, guid: ec1a5b19e3a6a244a8810d3ecbf58d95, type: 3}
+  - {fileID: 1991675750397230, guid: 966b19706a55e95458f8a02c9427533d, type: 3}
+  operatorPlusGo: {fileID: 1587907333839376, guid: 67dc17df89a0fc446b3c2a2465eabedf,
+    type: 3}
+  operatorMinusGo: {fileID: 1319966559714986, guid: 9e285a2ff0d80454bb169da9c40a18db,
+    type: 3}
+  shootTextCure:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00415954
+      value: 0.9929209
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5041763
+      value: -0.0023498535
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shootTextScaleCure:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 18.711699
+      outSlope: 18.711699
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.053857043
+      value: 2.0077567
+      inSlope: 1.9925634
+      outSlope: 1.9925634
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9469371
+    - serializedVersion: 3
+      time: 0.09818587
+      value: 1.5075415
+      inSlope: -11.284197
+      outSlope: -11.284197
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shootParabolaCure:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00039672852
+      value: -0.00012207031
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MaxWaitCount: 100
+  accelerateThresholdValue: 10
+  createCountOnce: 10
+  accelerateFactor: 0
+  updateCreatDefualtTime: 0
+  moveLifeTime: 0.5
+  shootTextMinHeight: 50
+  shootTextMaxHeight: 100
+  shootTextScaleFactor: 0.5
+  delayMoveTime: 0.25
+  initializedVerticalPositionOffset: 1.125
+  initializedHorizontalPositionOffset: 0
+  verticalMoveSpeed: 1
+  horizontalMoveSpeed: 2
+  textMoveType: 1
+  shootTextPrefab: {fileID: 1438036569218166, guid: e0795a6521c462443bc20ab4d8ae3c88,
+    type: 3}
+--- !u!225 &4688572997627131044
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874470334414858593}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

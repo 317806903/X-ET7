@@ -213,7 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1010c53afb7ba4ba6f712a88356e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfCircleToShow: 2
+  numOfTriangleToShow: 1
+  numOfRoundToShow: 2
+  numOfRoundToHide: 1
 --- !u!1 &1515395792735875438
 GameObject:
   m_ObjectHideFlags: 0

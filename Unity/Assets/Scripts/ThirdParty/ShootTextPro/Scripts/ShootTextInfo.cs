@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootTextInfo
+public struct ShootTextInfo
 {
-    public string content;
-    public TextAnimationType animationType;
+    public bool isNeedShowPreOperator;
+    public int showValue;
     public TextMoveType moveType;
     public float delayMoveTime;
+    public float moveLifeTime;
     public int size;
     public Func<Vector3> getShootTextTopPoint;
     public Func<Vector3> getShootTextButtomPoint;

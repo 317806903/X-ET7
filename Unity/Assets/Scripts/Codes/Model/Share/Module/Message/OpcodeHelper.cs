@@ -12,8 +12,6 @@ namespace ET
             OuterMessage.C2G_Benchmark,
             OuterMessage.G2C_Benchmark,
             OuterMessage.M2C_SyncDataList,
-            OuterMessage.M2C_SyncUnitEffects,
-            OuterMessage.M2C_SyncGetCoinShow,
             OuterMessage.M2C_Stop,
             OuterMessage.M2C_CreateUnits,
             OuterMessage.M2C_RemoveUnits,

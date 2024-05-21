@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UIGuide;
 
@@ -12,6 +13,8 @@ namespace ET.Client
         public float diaphaneityTransparent = 0.05f;
 
         public Transform RootTrans;
+        public Transform guideMaskTrans;
+        public Transform maskWhenDown;
 
         public GameObject canvasPathGo;
         public GameObject guidePathGo;
@@ -34,5 +37,7 @@ namespace ET.Client
 
         public int curClickOutsideCount = 0;
         public int ClickOutsideMaxCount = 8;
+
+        public Dictionary<GuideConditionStaticMethodType, bool> guideConditionStatus;
     }
 }

@@ -9,11 +9,12 @@ namespace ET.Client
     public static class GameSettingComponentSystem
     {
         [ObjectSystem]
-        public class GameSettingComponentAwakeSystem: AwakeSystem<GameSettingComponent>
+        public class GameSettingComponentAwakeSystem : AwakeSystem<GameSettingComponent>
         {
             protected override void Awake(GameSettingComponent self)
             {
                 GameSettingComponent.Instance = self;
+                self.recordSettingValue = new();
                 self.Init();
             }
         }
@@ -23,53 +24,68 @@ namespace ET.Client
             self.InitSwitchOnOff();
         }
 
+        // 初始化开关状态
         public static void InitSwitchOnOff(this GameSettingComponent self)
         {
             bool isRecord = false;
             bool value = false;
+            // 音乐
             (isRecord, value) = self.ReadIsOn(GameSettingType.Music);
             if (isRecord == false)
             {
-                self.RecordIsOn(GameSettingType.Music, true);
+                self.WriteIsOn(GameSettingType.Music, true);
             }
+            // 音效
             (isRecord, value) = self.ReadIsOn(GameSettingType.Audio);
             if (isRecord == false)
             {
-                self.RecordIsOn(GameSettingType.Audio, true);
+                self.WriteIsOn(GameSettingType.Audio, true);
             }
+            // 伤害数字
             (isRecord, value) = self.ReadIsOn(GameSettingType.DamageShow);
             if (isRecord == false)
             {
-                self.RecordIsOn(GameSettingType.DamageShow, true);
+                self.WriteIsOn(GameSettingType.DamageShow, true);
             }
         }
 
+        // 得到开关状态(外部)
         public static bool GetIsOn(this GameSettingComponent self, GameSettingType gameSettingType)
         {
             (bool isRecord, bool value) = self.ReadIsOn(gameSettingType);
             return value;
         }
 
+        // 设置开关状态(外部)
         public static void SetIsOn(this GameSettingComponent self, GameSettingType gameSettingType, bool isOn)
         {
-            self.RecordIsOn(gameSettingType, isOn);
+            self.WriteIsOn(gameSettingType, isOn);
         }
 
+        // 读取开关状态（内部）
         public static (bool isRecord, bool value) ReadIsOn(this GameSettingComponent self, GameSettingType gameSettingType)
         {
+            if (self.recordSettingValue.TryGetValue(gameSettingType, out bool tmp))
+            {
+                return (true, tmp);
+            }
+
             string key = $"GameSetting_{gameSettingType.ToString()}";
             if (PlayerPrefs.HasKey(key) == false)
             {
                 return (false, false);
             }
             int value = PlayerPrefs.GetInt(key);
+            self.recordSettingValue[gameSettingType] = value == 1;
             return (true, value == 1);
         }
 
-        public static void RecordIsOn(this GameSettingComponent self, GameSettingType gameSettingType, bool isOn)
+        // 写入开关状态(内部)
+        public static void WriteIsOn(this GameSettingComponent self, GameSettingType gameSettingType, bool isOn)
         {
             string key = $"GameSetting_{gameSettingType.ToString()}";
-            int value = isOn? 1 : 0;
+            int value = isOn ? 1 : 0;
+            self.recordSettingValue[gameSettingType] = value == 1;
             PlayerPrefs.SetInt(key, value);
         }
     }

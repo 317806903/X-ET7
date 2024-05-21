@@ -771,7 +771,7 @@ namespace ET
 
             long attackValue = numericComponent.GetAsInt(NumericType.PhysicalAttack);
             Damage damage = new(NumericType.PhysicalAttack, attackValue);
-            ET.Ability.DamageHelper.CreateDamageInfo(unit, self.GetHomeUnit(unit), damage, 0, 0, null);
+            ET.Ability.DamageHelper.CreateDamageInfo(unit, self.GetHomeUnit(unit), damage, false);
             unit.DestroyWithDeathShow();
         }
 

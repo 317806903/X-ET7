@@ -7,5 +7,6 @@ namespace ET
         public static ClientSceneManagerComponent Instance;
 
         public bool IsGameModeArcade;
+        public bool IsDemoShow;
     }
 }

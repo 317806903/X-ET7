@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System.Collections.Generic;
+
+namespace ET
 {
 	public enum GameSettingType
 	{
@@ -13,5 +15,6 @@
 		[StaticField]
 		public static GameSettingComponent Instance;
 
+		public Dictionary<GameSettingType, bool> recordSettingValue;
 	}
 }

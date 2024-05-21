@@ -422,6 +422,12 @@ namespace ET
         {
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
             gamePlayPlayerListComponent?.PlayerQuitBattle(playerId, isNeedRemoveAllPlayerUnits);
+
+            EventType.NoticeGameBattleRemovePlayer _NoticeGameBattleRemovePlayer = new()
+            {
+                playerId = playerId,
+            };
+            EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameBattleRemovePlayer);
         }
 
         /// <summary>
@@ -498,15 +504,17 @@ namespace ET
 
         public static async ETTask AllPlayerQuit(this GamePlayComponent self)
         {
-            await TimerComponent.Instance.WaitAsync(60 * 1000);
+            await TimerComponent.Instance.WaitAsync(1000);
             if (self.IsDisposed)
             {
                 return;
             }
             foreach (long playerId in self.GetPlayerList())
             {
-                self.PlayerQuitBattle(playerId, false);
+                self.PlayerQuitBattle(playerId, true);
             }
+
+            await ETTask.CompletedTask;
         }
 
         public static void NoticeGamePlayStatisticalData2Client(this GamePlayComponent self)

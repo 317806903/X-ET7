@@ -70,14 +70,14 @@ namespace ET.Client
 			return arScale;
 		}
 
-		public static void ResetMainCamera(Scene scene, bool isARCamera)
+		public static void ResetMainCamera(Scene scene, bool isARCamera, bool isQuickSet = true)
 		{
 			ARSessionComponent arSessionComponent = GetARSession(scene, false);
 			if (arSessionComponent == null)
 			{
 				return;
 			}
-			arSessionComponent.ResetMainCamera(isARCamera);
+			arSessionComponent.ResetMainCamera(isARCamera, isQuickSet);
 		}
 
 		public static string GetARSceneId(Scene scene)

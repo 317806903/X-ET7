@@ -10,10 +10,10 @@ namespace ET
     [ComponentOf(typeof (SyncDataManager))]
     public class SyncDataManager_UnitPlayAudio : Entity, IAwake, IDestroy
     {
+        public MultiMapSetSimple<long, (Unit, string, bool)> player2SyncUnit;
         public List<(Unit, string, bool)> NeedSyncPlayAudioList;
 
-        public int waitFrameSyncPlayAudio = 1;
-        public int curFrameSyncPlayAudio = 0;
-
+        public Dictionary<long, int> waitFrameSync = new();
+        public Dictionary<long, int> curFrameSync = new();
     }
 }

@@ -249,12 +249,6 @@ namespace ET.Server
         {
             self.GetGamePlay().NoticeGameEndToRoom(false, playerId);
 
-            Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), playerId);
-            if (unit != null)
-            {
-                await unit.RemoveLocation(LocationType.Unit);
-            }
-
             self.GetGamePlay().PlayerQuitBattle(playerId, true);
 
             self.NoticeToClient(playerId);

@@ -9,7 +9,7 @@ namespace ET.Ability
 		{
 			if (delayTime > 0)
 			{
-				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
+				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ServerFrameTime() + (long)(1000 * delayTime));
 			}
 
 			ET.Ability.AudioPlayHelper.DoAudioPlay(unit, actionId, selectHandle, ref actionContext);

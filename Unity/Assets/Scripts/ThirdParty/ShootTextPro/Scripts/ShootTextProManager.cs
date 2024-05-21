@@ -5,15 +5,6 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-[Serializable]
-public enum TextAnimationType
-{
-    None = 0,
-    Normal = 1,
-    Burst = 2,
-    Gold = 3,
-}
-
 public enum TextMoveType
 {
     None,
@@ -31,18 +22,16 @@ public enum TextMoveType
 
 public class ShootTextProManager : MonoBehaviour
 {
-    private readonly string operatorPlusKeyPostfix = "_operator_plus";
-    private readonly string operatorMinusKeyPostfix = "_operator_minus";
-    private readonly string numberPrefix = "_NumberImage_";
-
     public List<GameObject> normalNumber = new();
-    public List<GameObject> burstNumber = new();
-    public List<GameObject> goldNumber = new();
-    public Dictionary<string, GameObject> numberDic = new Dictionary<string, GameObject>();
+    public GameObject operatorPlusGo;
+    public GameObject operatorMinusGo;
 
     private List<ShootTextComponent> handleShootTextGroup = new List<ShootTextComponent>();
     private Queue<ShootTextInfo> waitShootTextGroup = new Queue<ShootTextInfo>();
     private List<ShootTextComponent> waitDestoryGroup = new List<ShootTextComponent>();
+
+    private Dictionary<string, Stack<GameObject>> pool = new();
+    private Dictionary<int, Stack<GameObject>> poolDamage = new();
 
     private Transform shootTextCanvas = null;
     public Transform ShootTextCanvas
@@ -69,6 +58,9 @@ public class ShootTextProManager : MonoBehaviour
     [Header("渐隐曲线")]
     [SerializeField]
     private AnimationCurve shootTextCure = null;
+    [Header("大小缩放曲线")]
+    [SerializeField]
+    private AnimationCurve shootTextScaleCure = null;
     [Header("抛物线曲线")]
     [SerializeField]
     private AnimationCurve shootParabolaCure = null;
@@ -79,6 +71,9 @@ public class ShootTextProManager : MonoBehaviour
     [Header("超过此数量弹射加速")]
     [SerializeField]
     private int accelerateThresholdValue = 10;
+    [Header("一次创建数量")]
+    [SerializeField]
+    private int createCountOnce = 10;
     [Header("加速弹射速率因子")]
     [SerializeField]
     private float accelerateFactor = 2;
@@ -125,8 +120,7 @@ public class ShootTextProManager : MonoBehaviour
     [Range(0, 20)]
     [SerializeField]
     private float horizontalMoveSpeed = 10;
-    [Header("字体动画类型")]
-    public TextAnimationType textAnimationType;
+
     [Header("字体移动类型")]
     public TextMoveType textMoveType;
 
@@ -141,7 +135,7 @@ public class ShootTextProManager : MonoBehaviour
 
     private void Initialized()
     {
-        shootTextCure = new AnimationCurve(new Keyframe[] { new Keyframe(0, 1f), new Keyframe(moveLifeTime, 0f) });
+        //shootTextCure = new AnimationCurve(new Keyframe[] { new Keyframe(0, 1f), new Keyframe(moveLifeTime, 0f) });
         //shootTextPrefab = Resources.Load<GameObject>("Prefabs/ShootText_Pure");
         updateCreatTempTime = updateCreatTime;
 
@@ -150,46 +144,16 @@ public class ShootTextProManager : MonoBehaviour
             GameObject go = this.normalNumber[i];
             if (go != null)
             {
-                numberDic.Add(go.name, go);
+                this.InitPool($"{i}", go);
             }
         }
-        for (int i = 0; i < this.burstNumber.Count; i++)
-        {
-            GameObject go = this.burstNumber[i];
-            if (go != null)
-            {
-                numberDic.Add(go.name, go);
-            }
-        }
-        for (int i = 0; i < this.goldNumber.Count; i++)
-        {
-            GameObject go = this.goldNumber[i];
-            if (go != null)
-            {
-                numberDic.Add(go.name, go);
-            }
-        }
-        //
-        // //加法图片
-        // numberDic.Add(TextAnimationType.Normal.ToString() + operatorPlusKeyPostfix, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Normal.ToString() + operatorPlusKeyPostfix));
-        // numberDic.Add(TextAnimationType.Burst.ToString() + operatorPlusKeyPostfix, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Burst.ToString() + operatorPlusKeyPostfix));
-        // //减法图片
-        // numberDic.Add(TextAnimationType.Normal.ToString() + operatorMinusKeyPostfix, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Normal.ToString() + operatorMinusKeyPostfix));
-        // numberDic.Add(TextAnimationType.Burst.ToString() + operatorMinusKeyPostfix, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Burst.ToString() + operatorMinusKeyPostfix));
-        //
-        // for (int i = 0; i < 10; i++)
-        // {
-        //     numberDic.Add(TextAnimationType.Normal.ToString() + numberPrefix + i, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Normal.ToString() + numberPrefix + i));
-        // }
-        // for (int i = 0; i < 10; i++)
-        // {
-        //     numberDic.Add(TextAnimationType.Burst.ToString() + numberPrefix + i, Resources.Load<GameObject>("Prefabs/" + TextAnimationType.Burst.ToString() + numberPrefix + i));
-        // }
+        this.InitPool("shootTextPrefab", this.shootTextPrefab);
+        this.InitPool("+", this.operatorPlusGo);
+        this.InitPool("-", this.operatorMinusGo);
     }
 
     public void Clear()
     {
-
         for (int i = 0; i < handleShootTextGroup.Count; i++)
         {
             ShootTextComponent shootTextComponent = handleShootTextGroup[i];
@@ -217,7 +181,7 @@ public class ShootTextProManager : MonoBehaviour
         for (int i = 0; i < handleShootTextGroup.Count; i++)
         {
             ShootTextComponent shootTextComponent = handleShootTextGroup[i];
-            if (shootTextComponent.gameObject.activeInHierarchy == false)
+            if (shootTextComponent.gameObject.activeSelf == false)
             {
                 continue;
             }
@@ -244,6 +208,15 @@ public class ShootTextProManager : MonoBehaviour
             {
                 shootTextComponent.isMove = true;
             }
+            if (shootTextComponent.moveLifeTime <= Time.time)
+            {
+                shootTextComponent.isMoveDone = true;
+            }
+
+            //处理缩放
+            shootTextComponent.scaleCurveTime += deltaTime;
+            float scaleCurve = shootTextScaleCure.Evaluate((float)(shootTextComponent.scaleCurveTime));
+            shootTextComponent.ChangeScaleCurve(scaleCurve);
 
             //处理近大远小
             double objectHigh = Math.Min(shootTextMaxHeight, Math.Max(shootTextMinHeight, ModelInScreenHigh(shootTextComponent)));
@@ -336,7 +309,7 @@ public class ShootTextProManager : MonoBehaviour
             }
 
             //处理删除对应的飘字
-            if (shootTextComponent.isMove == true && shootTextComponent.canvasGroup.alpha <= 0)
+            if (shootTextComponent.isMoveDone)
             {
                 waitDestoryGroup.Add(shootTextComponent);
             }
@@ -346,7 +319,10 @@ public class ShootTextProManager : MonoBehaviour
         isAccelerate = waitShootTextGroup.Count >= accelerateThresholdValue ? true : false;
         if (isAccelerate)
         {
-            updateCreatTime = updateCreatTime / accelerateFactor;
+            if (updateCreatTime > 0 && accelerateFactor > 0)
+            {
+                updateCreatTime = updateCreatTime / accelerateFactor;
+            }
         }
         else
         {
@@ -357,10 +333,12 @@ public class ShootTextProManager : MonoBehaviour
         if ((updateCreatTempTime -= deltaTime) <= 0)
         {
             updateCreatTempTime = updateCreatTime;
-            if (waitShootTextGroup.Count > 0)
+            int count = this.createCountOnce;
+            while (waitShootTextGroup.Count > 0 && count-- > 0)
             {
                 GameObject tempObj = InstanceShootText(waitShootTextGroup.Dequeue());
                 tempObj.transform.SetParent(ShootTextCanvas, false);
+                tempObj.transform.localScale = Vector3.one;
             }
         }
 
@@ -368,32 +346,40 @@ public class ShootTextProManager : MonoBehaviour
         for (int i = 0; i < waitDestoryGroup.Count; i++)
         {
             handleShootTextGroup.Remove(waitDestoryGroup[i]);
-            Destroy(waitDestoryGroup[i].gameObject);
+
+            ShootTextComponent shootTextComponent = waitDestoryGroup[i];
+            // for (int j = 0; j < shootTextComponent.childTransformGroup.Count; j++)
+            // {
+            //     RectTransform rect = shootTextComponent.childTransformGroup[j];
+            //     Vector2 orgSize = shootTextComponent.sizeDeltaGroup[j];
+            //     rect.sizeDelta = orgSize;
+            //     this.ReturnToPool(rect.gameObject);
+            // }
+            shootTextComponent.Clear();
+
+            this.ReturnToPoolDamage(shootTextComponent.valueShow, shootTextComponent.gameObject);
         }
 
         waitDestoryGroup.Clear();
     }
 
-    public void CreatShootText(string content, TextAnimationType textAnimationType, TextMoveType textMoveType, Func<Vector3> getShootTextTopPoint, Func<Vector3> getShootTextButtomPoint)
+    public void CreatShootText(bool isNeedShowPreOperator, TextMoveType textMoveType, int showValue, Func<Vector3> getShootTextTopPoint, Func<Vector3> getShootTextButtomPoint)
     {
-        if (textAnimationType == TextAnimationType.None)
-        {
-            textAnimationType = this.textAnimationType;
-        }
         if (textMoveType == TextMoveType.None)
         {
             textMoveType = this.textMoveType;
         }
-        CreatShootText(content, textAnimationType, textMoveType, this.delayMoveTime, this.initializedVerticalPositionOffset, this.initializedHorizontalPositionOffset, getShootTextTopPoint, getShootTextButtomPoint);
+        CreatShootText(isNeedShowPreOperator, showValue, textMoveType, this.delayMoveTime, this.initializedVerticalPositionOffset, this.initializedHorizontalPositionOffset, getShootTextTopPoint, getShootTextButtomPoint);
     }
 
-    public void CreatShootText(string content, TextAnimationType textAnimationType, TextMoveType textMoveType, float delayMoveTime, float initializedVerticalPositionOffset, float initializedHorizontalPositionOffset, Func<Vector3> getShootTextTopPoint, Func<Vector3> getShootTextButtomPoint)
+    public void CreatShootText(bool isNeedShowPreOperator, int showValue, TextMoveType textMoveType, float delayMoveTime, float initializedVerticalPositionOffset, float initializedHorizontalPositionOffset, Func<Vector3> getShootTextTopPoint, Func<Vector3> getShootTextButtomPoint)
     {
-        ShootTextInfo shootTextInfo = new ShootTextInfo();
-        shootTextInfo.content = content;
-        shootTextInfo.animationType = textAnimationType;
+        ShootTextInfo shootTextInfo = new();
+        shootTextInfo.isNeedShowPreOperator = isNeedShowPreOperator;
+        shootTextInfo.showValue = showValue;
         shootTextInfo.moveType = textMoveType;
         shootTextInfo.delayMoveTime = delayMoveTime;
+        shootTextInfo.moveLifeTime = this.moveLifeTime;
         shootTextInfo.initializedVerticalPositionOffset = initializedVerticalPositionOffset;
         shootTextInfo.initializedHorizontalPositionOffset = initializedHorizontalPositionOffset;
         shootTextInfo.getShootTextTopPoint = getShootTextTopPoint;
@@ -404,69 +390,110 @@ public class ShootTextProManager : MonoBehaviour
 
     public void CreatShootText(ShootTextInfo shootTextInfo)
     {
-        if (CheckNumber(shootTextInfo.content))
+        if (IsAllowAddShootText())
         {
-            if (IsAllowAddShootText())
-            {
-                waitShootTextGroup.Enqueue(shootTextInfo);
-            }
-            else
-            {
-                //Debug.LogWarning("数量过多不能添加!!!");
-            }
+            waitShootTextGroup.Enqueue(shootTextInfo);
         }
         else
         {
-            Debug.LogError($"飘字数据不合法 {shootTextInfo.content}");
+            //Debug.LogWarning("数量过多不能添加!!!");
         }
     }
 
     private GameObject InstanceShootText(ShootTextInfo shootTextInfo)
     {
-        GameObject shootText = Instantiate(shootTextPrefab);
-        //先拼装字体，顺序颠倒会造成组件无法找到对应物体
-        BuildNumber(shootTextInfo, shootText.transform);
+        GameObject shootText = this.GetFromPoolDamage(shootTextInfo.showValue);
+        if (shootText == null)
+        {
+            shootText = this.GetFromPool("shootTextPrefab");
+            //先拼装字体，顺序颠倒会造成组件无法找到对应物体
+            BuildNumber(shootTextInfo, shootText.transform);
+            ShootTextComponent tempShootTextComponent = shootText.GetComponent<ShootTextComponent>();
+            tempShootTextComponent.SetInfo(shootTextInfo.showValue, shootTextInfo, false);
+            handleShootTextGroup.Add(tempShootTextComponent);
+        }
+        else
+        {
+            ShootTextComponent tempShootTextComponent = shootText.GetComponent<ShootTextComponent>();
+            tempShootTextComponent.SetInfo(shootTextInfo.showValue, shootTextInfo, true);
+            handleShootTextGroup.Add(tempShootTextComponent);
+        }
 
-        ShootTextComponent tempShootTextComponent = shootText.GetComponent<ShootTextComponent>();
-        tempShootTextComponent.SetInfo(shootTextInfo);
-        handleShootTextGroup.Add(tempShootTextComponent);
         return shootText;
     }
 
     private void BuildNumber(ShootTextInfo shootTextInfo, Transform parent)
     {
-        string tempNumber = shootTextInfo.content;
-        char numberOperator = tempNumber[0];
-        string animationType = "";
-        string plusOrMinus = "";
-
-        //出现字体时对应的动画类型
-        animationType = shootTextInfo.animationType == TextAnimationType.None ? TextAnimationType.Normal.ToString() : shootTextInfo.animationType.ToString();
-        if (shootTextInfo.animationType == TextAnimationType.None)
+        bool isNeedShowPreOperator = shootTextInfo.isNeedShowPreOperator;
+        int showValue = shootTextInfo.showValue;
+        if (isNeedShowPreOperator)
         {
-            animationType = TextAnimationType.Normal.ToString();
+            GameObject operatorObj = null;
+            if (showValue > 0)
+            {
+                operatorObj = this.GetFromPool("+");
+            }
+            else
+            {
+                operatorObj = this.GetFromPool("-");
+            }
+            operatorObj.transform.SetParent(parent, false);
+            operatorObj.transform.localScale = Vector3.one;
         }
-        else
-        {
-            animationType = shootTextInfo.animationType.ToString();
-        }
-
-        #region 运算符
-        GameObject operatorObj = null;
-        plusOrMinus = numberOperator == '+' ? operatorPlusKeyPostfix : operatorMinusKeyPostfix;
-
-        operatorObj = Instantiate(numberDic[animationType + plusOrMinus]);
-        operatorObj.transform.SetParent(parent, false);
-        #endregion
 
         #region 数字
-        GameObject numberObj = null;
-        for (int i = 1; i < tempNumber.Length; i++)
-        {
-            numberObj = Instantiate(numberDic[animationType + numberPrefix + tempNumber[i]]);
-            numberObj.transform.SetParent(parent, false);
-        }
+        DealOneByOne(parent, Math.Abs(showValue));
+
         #endregion
+    }
+
+    private List<int> tmp = new();
+    private void DealOneByOne(Transform parent, int showValue)
+    {
+        this.tmp.Clear();
+        while (showValue > 9)
+        {
+            this.tmp.Add(showValue % 10);
+            showValue = showValue / 10;
+        }
+        this.tmp.Add(showValue);
+        for (int i = this.tmp.Count - 1; i >= 0; i--)
+        {
+            int num = this.tmp[i];
+            GameObject numberObj = this.GetFromPool(GetStrByInt(num));
+            numberObj.transform.SetParent(parent, false);
+            numberObj.transform.localScale = Vector3.one;
+        }
+        this.tmp.Clear();
+    }
+
+    private string GetStrByInt(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                return "0";
+            case 1:
+                return "1";
+            case 2:
+                return "2";
+            case 3:
+                return "3";
+            case 4:
+                return "4";
+            case 5:
+                return "5";
+            case 6:
+                return "6";
+            case 7:
+                return "7";
+            case 8:
+                return "8";
+            case 9:
+                return "9";
+            default:
+                return "0";
+        }
     }
 
     private double ModelInScreenHigh(ShootTextComponent shootTextComponent)
@@ -480,16 +507,77 @@ public class ShootTextProManager : MonoBehaviour
     {
         return waitShootTextGroup.Count < MaxWaitCount;
     }
-    /// <summary>
-    /// 正则检查字符是否合法
-    /// </summary>
-    /// <param name="content">飘字内容</param>
-    /// <returns></returns>
-    private bool CheckNumber(string content)
+
+    private void InitPool(string name, GameObject go)
     {
-        string pattern = @"^(\+|\-)\d*$";
-        bool IsLegal = Regex.IsMatch(content, pattern);
-        return IsLegal;
+        if (this.pool.TryGetValue(name, out var stack) == false)
+        {
+            stack = new();
+            this.pool[name] = stack;
+        }
+        stack.Push(go);
+    }
+
+    private GameObject GetFromPool(string goName)
+    {
+        if (this.pool.TryGetValue(goName, out var stack))
+        {
+            if (stack.Count > 1)
+            {
+                return stack.Pop();
+            }
+            if (stack.Count == 1)
+            {
+                GameObject go = stack.Peek();
+                go = Instantiate(go);
+                go.name = goName;
+                return go;
+            }
+        }
+
+        return null;
+    }
+
+    private void ReturnToPool(GameObject go)
+    {
+        if (this.pool.TryGetValue(go.name, out var stack) == false)
+        {
+            stack = new();
+            this.pool[go.name] = stack;
+        }
+        go.transform.SetParent(this.transform);
+        this.transform.localScale = Vector3.zero;
+        stack.Push(go);
+    }
+
+    private GameObject GetFromPoolDamage(int valueShow)
+    {
+        if (this.poolDamage.TryGetValue(valueShow, out var stack))
+        {
+            if (stack.Count > 1)
+            {
+                return stack.Pop();
+            }
+            if (stack.Count == 1)
+            {
+                GameObject go = stack.Peek();
+                go = Instantiate(go);
+                return go;
+            }
+        }
+
+        return null;
+    }
+
+    private void ReturnToPoolDamage(int valueShow, GameObject go)
+    {
+        if (this.poolDamage.TryGetValue(valueShow, out var stack) == false)
+        {
+            stack = new();
+            this.poolDamage[valueShow] = stack;
+        }
+        go.transform.SetParent(this.transform);
+        this.transform.localScale = Vector3.zero;
+        stack.Push(go);
     }
 }
-

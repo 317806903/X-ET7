@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ET.Ability.Client;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +10,15 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.SyncPlayAudio args)
         {
-            Unit unit = args.unit;
-            string playAudioActionId = args.playAudioActionId;
-            AudioPlayHelper.PlayAudio(unit, playAudioActionId);
+            List<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list = args.list;
+            if (list == null)
+            {
+                return;
+            }
+            foreach ((Unit unit, string playAudioActionId, bool isOnlySelfShow) in list)
+            {
+                AudioPlayHelper.PlayAudio(unit, playAudioActionId);
+            }
         }
     }
 }

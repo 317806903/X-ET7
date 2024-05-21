@@ -31,5 +31,6 @@ namespace ET
 		public string MirrorARSessionAuthAppKey = "";
 		public string MirrorARSessionAuthAppSecret = "";
 		public bool IsGameModeArcade;
+		public bool IsDemoShow;
     }
 }

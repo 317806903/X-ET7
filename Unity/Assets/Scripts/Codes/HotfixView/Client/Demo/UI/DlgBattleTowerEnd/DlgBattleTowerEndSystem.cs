@@ -36,6 +36,10 @@ namespace ET.Client
 			{
 				return;
 			}
+			if (ET.SceneHelper.ChkIsDemoShow())
+			{
+				return;
+			}
 			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
 			List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
 			if (openningList.Count > 0)

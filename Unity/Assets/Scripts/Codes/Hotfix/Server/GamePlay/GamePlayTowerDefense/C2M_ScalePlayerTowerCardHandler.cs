@@ -20,6 +20,8 @@ namespace ET.Server
 			{
 				response.Error = ErrorCode.ERR_LogicError;
 				response.Message = "ScalePlayerTowerCard Err";
+
+				gamePlayTowerDefenseComponent.NoticeToClient(playerId);
 			}
 			await ETTask.CompletedTask;
 		}

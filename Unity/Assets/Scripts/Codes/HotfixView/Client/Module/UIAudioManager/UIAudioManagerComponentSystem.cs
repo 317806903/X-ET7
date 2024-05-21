@@ -52,19 +52,6 @@ namespace ET.Client
             go.transform.localScale = UnityEngine.Vector3.one;
             self.audioSource = go.AddComponent<AudioSource>();
             self.musicSource = go.AddComponent<AudioSource>();
-            self.needLoopPlay = false;
-            self.intervalTime = 5;
-        }
-
-        public static void PlayScanAudio(this UIAudioManagerComponent self, string resAudioCfgId, bool needLoopPlay)
-        {
-            self.needLoopPlay = needLoopPlay;
-            if (self.needLoopPlay)
-            {
-                self.lastPlayTime = TimeHelper.ServerNow();
-                self.needLoopAudioCfgId = resAudioCfgId;
-                self.PlayUIAudio(resAudioCfgId).Coroutine();
-            }
         }
 
         public static async ETTask PlayUIAudio(this UIAudioManagerComponent self, string resAudioCfgId)
@@ -88,6 +75,10 @@ namespace ET.Client
             }
 
             AudioClip audioClip = ResComponent.Instance.LoadAsset<AudioClip>(audioPath);
+            if (audioClip == null)
+            {
+                return;
+            }
             self.audioSource.PlayOneShot(audioClip);
             await ETTask.CompletedTask;
         }
@@ -95,6 +86,22 @@ namespace ET.Client
         public static void PlayMusic(this UIAudioManagerComponent self, List<string> resAudioCfgIds)
         {
             self.resAudioCfgIds = resAudioCfgIds;
+            self.index = -1;
+            self.musicSource.Stop();
+            self.isMute = false;
+
+            if (GameSettingComponent.Instance.GetIsOn(GameSettingType.Music) == false)
+            {
+                return;
+            }
+
+            self._PlayNextMusicOne().Coroutine();
+        }
+
+        public static void PlayHighestMusic(this UIAudioManagerComponent self, List<string> resAudioCfgIds)
+        {
+            self.resAudioCfgIds_heighest = resAudioCfgIds;
+            self.index_heighest = -1;
             self.musicSource.Stop();
             self.isMute = false;
 
@@ -118,30 +125,96 @@ namespace ET.Client
             self.musicSource.mute = false;
         }
 
-        public static async ETTask _PlayNextMusicOne(this UIAudioManagerComponent self)
+        public static ResAudioCfg _GetNextMusic(this UIAudioManagerComponent self)
         {
-            int index = RandomGenerator.RandomNumber(0, self.resAudioCfgIds.Count);
-            while (self.resAudioCfgIds.Count > 1 && index == self.resAudioCfgIds.Count)
+            List<string> resAudioCfgIds = self.resAudioCfgIds;
+            if (resAudioCfgIds == null || resAudioCfgIds.Count == 0)
             {
-                index = RandomGenerator.RandomNumber(0, self.resAudioCfgIds.Count);
+                return null;
+            }
+
+            int index = RandomGenerator.RandomNumber(0, resAudioCfgIds.Count);
+            while (resAudioCfgIds.Count > 1 && index == self.index)
+            {
+                index = RandomGenerator.RandomNumber(0, resAudioCfgIds.Count);
             }
             self.index = index;
 
-            for (int i = self.index; i < self.resAudioCfgIds.Count; i++)
+            for (int i = self.index; i < resAudioCfgIds.Count; i++)
             {
-                ResAudioCfg resAudioCfg = ResAudioCfgCategory.Instance.Get(self.resAudioCfgIds[self.index]);
+                ResAudioCfg resAudioCfg = ResAudioCfgCategory.Instance.Get(resAudioCfgIds[self.index]);
                 if (resAudioCfg == null)
                 {
-                    Log.Error($"PlayNextMusicOne resAudioCfg == null[{self.resAudioCfgIds[self.index]}]");
+                    Log.Error($"PlayNextMusicOne resAudioCfg == null[{resAudioCfgIds[self.index]}]");
                     continue;
                 }
 
                 self.index = i + 1;
-                await self._PlayMusicOne(resAudioCfg);
-                return;
+                return resAudioCfg;
             }
 
             self.index = 0;
+            return null;
+        }
+
+        public static ResAudioCfg _GetNextMusicHeighest(this UIAudioManagerComponent self)
+        {
+            List<string> resAudioCfgIds = self.resAudioCfgIds_heighest;
+            if (resAudioCfgIds == null || resAudioCfgIds.Count == 0)
+            {
+                return null;
+            }
+
+            int index = RandomGenerator.RandomNumber(0, resAudioCfgIds.Count);
+            while (resAudioCfgIds.Count > 1 && index == self.index_heighest)
+            {
+                index = RandomGenerator.RandomNumber(0, resAudioCfgIds.Count);
+            }
+            self.index_heighest = index;
+
+            for (int i = self.index_heighest; i < resAudioCfgIds.Count; i++)
+            {
+                ResAudioCfg resAudioCfg = ResAudioCfgCategory.Instance.Get(resAudioCfgIds[self.index_heighest]);
+                if (resAudioCfg == null)
+                {
+                    Log.Error($"PlayNextMusicOne resAudioCfg == null[{resAudioCfgIds[self.index]}]");
+                    continue;
+                }
+
+                self.index_heighest = i + 1;
+                return resAudioCfg;
+            }
+
+            self.index_heighest = -1;
+            return null;
+        }
+
+        public static bool _ChkNextMusic(this UIAudioManagerComponent self)
+        {
+            ResAudioCfg resAudioCfg = self._GetNextMusicHeighest();
+            if (resAudioCfg == null)
+            {
+                resAudioCfg = self._GetNextMusic();
+            }
+            if (resAudioCfg == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async ETTask _PlayNextMusicOne(this UIAudioManagerComponent self)
+        {
+            ResAudioCfg resAudioCfg = self._GetNextMusicHeighest();
+            if (resAudioCfg == null)
+            {
+                resAudioCfg = self._GetNextMusic();
+            }
+            if (resAudioCfg == null)
+            {
+                return;
+            }
+            await self._PlayMusicOne(resAudioCfg);
         }
 
         public static async ETTask _PlayMusicOne(this UIAudioManagerComponent self, ResAudioCfg resAudioCfg)
@@ -166,20 +239,15 @@ namespace ET.Client
                 return;
             }
 
-            if (self.needLoopPlay && self.lastPlayTime + self.intervalTime * 1000 <= TimeHelper.ServerNow())
-            {
-                self.lastPlayTime = TimeHelper.ServerNow();
-                self.PlayUIAudio(self.needLoopAudioCfgId).Coroutine();
-            }
-            if (self.resAudioCfgIds == null || self.resAudioCfgIds.Count == 0)
-            {
-                return;
-            }
             if (self.musicSource.isPlaying)
             {
                 return;
             }
 
+            if (self._ChkNextMusic() == false)
+            {
+                return;
+            }
             self._PlayNextMusicOne().Coroutine();
         }
     }

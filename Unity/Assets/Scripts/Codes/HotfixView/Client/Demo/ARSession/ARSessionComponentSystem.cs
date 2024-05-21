@@ -9,6 +9,27 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
+	[Invoke(TimerInvokeType.ARSessionComponentTimer)]
+	public class ARSessionComponentTimer: ATimer<ARSessionComponent>
+	{
+		protected override void Run(ARSessionComponent self)
+		{
+			try
+			{
+				TimerComponent.Instance?.Remove(ref self.Timer);
+				if (self.IsDisposed)
+				{
+					return;
+				}
+				self._ResetMainCamera(self.targetIsARCamera);
+			}
+			catch (Exception e)
+			{
+				Log.Error($"ARSessionComponent timer error: {self.Id}\n{e}");
+			}
+		}
+	}
+
 	[FriendOf(typeof(ARSessionComponent))]
 	public static class ARSessionComponentSystem
 	{
@@ -26,7 +47,8 @@ namespace ET.Client
 		{
 			protected override void Destroy(ARSessionComponent self)
 			{
-				self.ResetMainCamera(false);
+				TimerComponent.Instance?.Remove(ref self.Timer);
+				self._ResetMainCamera(false);
 				if (self.ARSessoinGo != null)
 				{
 					GameObject.Destroy(self.ARSessoinGo);
@@ -60,6 +82,7 @@ namespace ET.Client
 			self.OnMenuJoinSceneCallBack = OnMenuJoinSceneCallBack;
 			self.OnRequestQRCodeExtraData = OnRequestQRCodeExtraData;
 
+			TimerComponent.Instance?.Remove(ref self.Timer);
 			await self.InitCallBack(arSceneId, _ARHallType);
 		}
 
@@ -454,7 +477,7 @@ namespace ET.Client
 					}
 				});
 
-				self.ResetMainCamera(true);
+				self._ResetMainCamera(true);
 				//self.SetMeshShow();
 
 				// Skip one frame here in order to have ClassyUI Start() is called first
@@ -550,7 +573,7 @@ namespace ET.Client
 		{
 			if (MirrorScene.IsAvailable())
 			{
-				self.ResetMainCamera(true);
+				self._ResetMainCamera(true);
 				ClassyUI.Instance.Restart();
 			}
 			else
@@ -613,14 +636,14 @@ namespace ET.Client
 
 		private static object GetCoreImplInternalObject()
 		{
-			Log.Debug($"====zpb xxxxxxxxxxxxxx 0==========");
+			//Log.Debug($"====zpb xxxxxxxxxxxxxx 0==========");
 			IMirrorScene iMirrorScene = MirrorScene.Get();
 			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-			Log.Debug($"==== 000 = iMirrorScene={iMirrorScene}");
+			//Log.Debug($"==== 000 = iMirrorScene={iMirrorScene}");
 			var coreField = iMirrorScene.GetType().GetField("_core", InstanceBindFlags);
-			Log.Debug($"==== 111 = coreField={coreField}");
+			//Log.Debug($"==== 111 = coreField={coreField}");
 			var coreValue = coreField.GetValue(iMirrorScene);
-			Log.Debug($"coreValue {coreValue}");
+			//Log.Debug($"coreValue {coreValue}");
 			return coreValue;
 		}
 
@@ -629,10 +652,10 @@ namespace ET.Client
 			const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 			var coreValue = GetCoreImplInternalObject();
 			var getSceneMeshUrlMethod = coreValue.GetType().GetMethod("GetSceneMeshUrl", InstanceBindFlags);
-			Log.Debug($"getSceneMeshUrlMethod {getSceneMeshUrlMethod}");
+			//Log.Debug($"getSceneMeshUrlMethod {getSceneMeshUrlMethod}");
 			var meshUrlValue = getSceneMeshUrlMethod.Invoke(coreValue, null);
 
-			Log.Debug($"meshUrlValue {meshUrlValue}");
+			//Log.Debug($"meshUrlValue {meshUrlValue}");
 			return meshUrlValue.ToString();
 		}
 
@@ -641,7 +664,7 @@ namespace ET.Client
 			// Retrieve obj bytes content and compress.
 			string objContent = GetObjBytesFromCurrentMesh();
 			byte[] zipped = ZipHelper.Compress(objContent.ToByteArray());
-			Log.Debug($"Obj content size = {objContent.Length}, zipped size = {zipped.Length}");
+			//Log.Debug($"Obj content size = {objContent.Length}, zipped size = {zipped.Length}");
 			return zipped;
 		}
 
@@ -671,7 +694,21 @@ namespace ET.Client
 			return MirrorScene.Get().GetSceneStatus() == SceneStatus.Completed;
 		}
 
-		public static void ResetMainCamera(this ARSessionComponent self, bool isARCamera)
+		public static void ResetMainCamera(this ARSessionComponent self, bool isARCamera, bool isQuickSet)
+		{
+			TimerComponent.Instance?.Remove(ref self.Timer);
+			if (isQuickSet)
+			{
+				self._ResetMainCamera(isARCamera);
+			}
+			else
+			{
+				self.targetIsARCamera = isARCamera;
+				self.Timer = TimerComponent.Instance.NewRepeatedTimer(500, TimerInvokeType.ARSessionComponentTimer, self);
+			}
+		}
+
+		public static void _ResetMainCamera(this ARSessionComponent self, bool isARCamera)
 		{
 			if (self.ARSessoinGo == null)
 			{
@@ -824,13 +861,15 @@ namespace ET.Client
 		public static void OnMenuCancel(this ARSessionComponent self)
 		{
 			// 用户最终退出AR界面，回到外面主菜单
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, false);
+
+			UIAudioManagerHelper.PlayHighestMusic(self.DomainScene(), MusicType.None);
+
 			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 			{
 				eventName = "AbandonClicked",
 			});
 			Log.Debug($"ARSessionComponent OnMenuCancel");
-			self.ResetMainCamera(false);
+			self._ResetMainCamera(false);
 		}
 
 		public static void OnMenuExitScene(this ARSessionComponent self)
@@ -883,7 +922,8 @@ namespace ET.Client
 		{
 			Log.Debug($"ARSessionComponent OnMenuCreateScene");
 
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, true);
+			UIAudioManagerHelper.PlayHighestMusic(self.DomainScene(), MusicType.ARScan);
+
 			self.EntranceType = "scan";
 			self.meshFaceCount = 0;
 			self.frameCaptured = 0;
@@ -1181,7 +1221,8 @@ namespace ET.Client
 			{
 				eventName = "ProcessingEnded",
 			});
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Scan, false);
+
+			UIAudioManagerHelper.PlayHighestMusic(self.DomainScene(), MusicType.None);
 		}
 
 		public static void OnShowARSceneSlider(this ARSessionComponent self)

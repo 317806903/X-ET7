@@ -127,7 +127,7 @@ namespace ET.Server
             {
                 if (actorLocationSender.InstanceId != instanceId)
                 {
-                    throw new RpcException(ErrorCore.ERR_ActorTimeout, $"{message}");
+                    throw new RpcException(ErrorCore.ERR_ActorTimeout, $"{message.GetType()}");
                 }
 
                 if (actorLocationSender.ActorId == 0)
@@ -140,7 +140,7 @@ namespace ET.Server
                     }
                     if (actorLocationSender.InstanceId != instanceId)
                     {
-                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{message}");
+                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{message.GetType()}");
                     }
                 }
 
@@ -168,7 +168,7 @@ namespace ET.Server
             {
                 if (actorLocationSender.InstanceId != instanceId)
                 {
-                    throw new RpcException(ErrorCore.ERR_ActorTimeout, $"{request}");
+                    throw new RpcException(ErrorCore.ERR_ActorTimeout, $"{request.GetType()}");
                 }
 
                 if (actorLocationSender.ActorId == 0)
@@ -181,7 +181,7 @@ namespace ET.Server
                     }
                     if (actorLocationSender.InstanceId != instanceId)
                     {
-                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{request}");
+                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{request.GetType()}");
                     }
                 }
             }
@@ -209,7 +209,7 @@ namespace ET.Server
             {
                 if (actorLocationSender.InstanceId != actorLocationSenderInstanceId)
                 {
-                    throw new RpcException(ErrorCore.ERR_NotFoundActor, $"{iActorRequest}");
+                    throw new RpcException(ErrorCore.ERR_NotFoundActor, $"{iActorRequest.GetType()}");
                 }
 
                 try
@@ -242,7 +242,7 @@ namespace ET.Server
                     actorLocationSender.ActorId = await LocationProxyComponent.Instance.Get(self.LocationType, actorLocationSender.Id, sceneInstanceId);
                     if (actorLocationSender.InstanceId != instanceId)
                     {
-                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{iActorRequest}");
+                        throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout2, $"{iActorRequest.GetType()}");
                     }
                 }
 
@@ -253,7 +253,7 @@ namespace ET.Server
                 IActorResponse response = await ActorMessageSenderComponent.Instance.Call(actorLocationSender.ActorId, rpcId, iActorRequest, false);
                 if (actorLocationSender.InstanceId != instanceId)
                 {
-                    throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout3, $"{iActorRequest}");
+                    throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout3, $"{iActorRequest.GetType()}");
                 }
 
                 switch (response.Error)
@@ -274,7 +274,7 @@ namespace ET.Server
                         await TimerComponent.Instance.WaitAsync(500);
                         if (actorLocationSender.InstanceId != instanceId)
                         {
-                            throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout4, $"{iActorRequest}");
+                            throw new RpcException(ErrorCore.ERR_ActorLocationSenderTimeout4, $"{iActorRequest.GetType()}");
                         }
 
                         actorLocationSender.ActorId = 0;
@@ -282,13 +282,13 @@ namespace ET.Server
                     }
                     case ErrorCore.ERR_ActorTimeout:
                     {
-                        throw new RpcException(response.Error, $"{iActorRequest}");
+                        throw new RpcException(response.Error, $"{iActorRequest.GetType()}");
                     }
                 }
 
                 if (ErrorCore.IsRpcNeedThrowException(response.Error))
                 {
-                    throw new RpcException(response.Error, $"Message: {response.Message} Request: {iActorRequest}");
+                    throw new RpcException(response.Error, $"Message: {response.Message} Request: {iActorRequest.GetType()}");
                 }
 
                 return response;

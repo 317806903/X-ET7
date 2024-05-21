@@ -13,5 +13,11 @@ namespace ET.Ability.Client
         /// 准备移除的列表
         /// </summary>
         public HashSet<long> waitRemoveEffectList;
+
+        public int curFrame = 0;
+        public int waitFrame = 30;
+
+        public int curFrameOnly = 0;
+        public int waitFrameOnly = 1;
     }
 }

@@ -27,8 +27,12 @@ namespace ET
                     return self.GetComponent<PlayerBackPackComponent>();
                 case PlayerModelType.BattleCard:
                     return self.GetComponent<PlayerBattleCardComponent>();
+                case PlayerModelType.OtherInfo:
+                    return self.GetComponent<PlayerOtherInfoComponent>();
                 case PlayerModelType.FunctionMenu:
                     return self.GetComponent<PlayerFunctionMenuComponent>();
+                case PlayerModelType.Mails:
+                    return self.GetComponent<PlayerMailComponent>();
                 default:
                     break;
             }
@@ -52,8 +56,14 @@ namespace ET
                     case PlayerModelType.BattleCard:
                         self.RemoveComponent<PlayerBattleCardComponent>();
                         break;
+                    case PlayerModelType.OtherInfo:
+                        self.RemoveComponent<PlayerOtherInfoComponent>();
+                        break;
                     case PlayerModelType.FunctionMenu:
                         self.RemoveComponent<PlayerFunctionMenuComponent>();
+                        break;
+                    case PlayerModelType.Mails:
+                        self.RemoveComponent<PlayerMailComponent>();
                         break;
                     default:
                         break;
@@ -79,11 +89,21 @@ namespace ET
                         self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys);
                         entity.Dispose();
                         return battleCardComponent;
+                    case PlayerModelType.OtherInfo:
+                        PlayerOtherInfoComponent playerOtherInfoComponent = self.GetComponent<PlayerOtherInfoComponent>();
+                        self.ChgFieldValue<PlayerOtherInfoComponent>(playerOtherInfoComponent, (PlayerOtherInfoComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerOtherInfoComponent;
                     case PlayerModelType.FunctionMenu:
                         PlayerFunctionMenuComponent playerFunctionMenuComponent = self.GetComponent<PlayerFunctionMenuComponent>();
                         self.ChgFieldValue<PlayerFunctionMenuComponent>(playerFunctionMenuComponent, (PlayerFunctionMenuComponent)entity, setPlayerKeys);
                         entity.Dispose();
                         return playerFunctionMenuComponent;
+                    case PlayerModelType.Mails:
+                        PlayerMailComponent playerMailComponent = self.GetComponent<PlayerMailComponent>();
+                        self.ChgFieldValue<PlayerMailComponent>(playerMailComponent, (PlayerMailComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerMailComponent;
                     default:
                         entity.Dispose();
                         break;

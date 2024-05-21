@@ -1,0 +1,12 @@
+﻿using System.Collections.Generic;
+using ET.AbilityConfig;
+
+namespace ET
+{
+    public class SyncData_UnitGetCoinShow : Entity, IAwake, IDestroy
+    {
+        public List<long> unitId { get; set; }
+        public List<CoinType> coinType;
+        public List<int> chgValue;
+    }
+}

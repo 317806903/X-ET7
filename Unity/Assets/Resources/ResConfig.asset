@@ -15,15 +15,16 @@ MonoBehaviour:
   ResLoadMode: 0
   ResHostServerIP: http://127.0.0.1
   ResGameVersion: v1.0
-  Version: 1.39613237
+  Version: 1.42642964
   Channel: 10000
   RouterHttpHost: 127.0.0.1
   RouterHttpPort: 3478
   areaType: 0
-  languageType: CN
+  languageType: EN
   IsShowDebugMode: 1
   IsShowEditorLoginMode: 1
   IsNeedSendEventLog: 0
   MirrorARSessionAuthAppKey: 63f72bdc21c28002a4f4b218#mirrorsdk_dev
   MirrorARSessionAuthAppSecret: 79395951c7cf78bd7ec1fe5b5b1c97ce
-  IsGameModeArcade: 1
+  IsGameModeArcade: 0
+  IsDemoShow: 0

@@ -75,7 +75,7 @@ namespace ET.Client
 			return null;
 		}
 
-		public static async ETTask<bool> DoStaticMethodChk(Scene scene, GuideConditionStaticMethodType staticMethod, string param)
+		public static async ETTask<bool> DoStaticMethodChk(Scene scene, GuideConditionStaticMethodType staticMethod, string param, UIGuideStepComponent guideStepComponent)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -87,8 +87,20 @@ namespace ET.Client
 				case GuideConditionStaticMethodType.None:
 					return true;
 					break;
-				case GuideConditionStaticMethodType.ChkTowerPut:
-					return await UIGuideHelper_StaticMethod.ChkTowerPut(scene);
+				case GuideConditionStaticMethodType.ChkTowerPutSuccess:
+					return await UIGuideHelper_StaticMethod.ChkTowerPutSuccess(guideStepComponent);
+					break;
+				case GuideConditionStaticMethodType.ChkTowerScaleSuccess:
+					return await UIGuideHelper_StaticMethod.ChkTowerScaleSuccess(guideStepComponent);
+					break;
+				case GuideConditionStaticMethodType.ChkTowerReclaimSuccess:
+					return await UIGuideHelper_StaticMethod.ChkTowerReclaimSuccess(guideStepComponent);
+					break;
+				case GuideConditionStaticMethodType.ChkTowerUpgradeSuccess:
+					return await UIGuideHelper_StaticMethod.ChkTowerUpgradeSuccess(guideStepComponent);
+					break;
+				case GuideConditionStaticMethodType.ChkTowerMoveSuccess:
+					return await UIGuideHelper_StaticMethod.ChkTowerMoveSuccess(guideStepComponent);
 					break;
 				case GuideConditionStaticMethodType.ChkIsNotShowStory:
 					return await UIGuideHelper_StaticMethod.ChkIsNotShowStory(scene);
@@ -109,7 +121,7 @@ namespace ET.Client
 			return false;
 		}
 
-		public static async ETTask DoStaticMethodExecute(Scene scene, GuideExecuteStaticMethodType staticMethod, string executeParam)
+		public static async ETTask DoStaticMethodExecute(Scene scene, GuideExecuteStaticMethodType staticMethod, string executeParam, UIGuideStepComponent guideStepComponent)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -180,7 +192,15 @@ namespace ET.Client
 			{
 				case GuideConditionStaticMethodType.None:
 					break;
-				case GuideConditionStaticMethodType.ChkTowerPut:
+				case GuideConditionStaticMethodType.ChkTowerPutSuccess:
+					break;
+				case GuideConditionStaticMethodType.ChkTowerScaleSuccess:
+					break;
+				case GuideConditionStaticMethodType.ChkTowerReclaimSuccess:
+					break;
+				case GuideConditionStaticMethodType.ChkTowerUpgradeSuccess:
+					break;
+				case GuideConditionStaticMethodType.ChkTowerMoveSuccess:
 					break;
 				case GuideConditionStaticMethodType.ChkIsNotShowStory:
 					break;

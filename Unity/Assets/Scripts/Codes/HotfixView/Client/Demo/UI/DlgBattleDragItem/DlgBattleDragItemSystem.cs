@@ -46,6 +46,10 @@ namespace ET.Client
             self.callBack = showWindowData.callBack;
             self.sceneIn = showWindowData.sceneIn;
 
+            self.isUpdating = false;
+            self.lastRayPos = float3.zero;
+            self.lastDragRectifyPos = float3.zero;
+
             self.isConfirming = false;
             self.isClickUGUI = false;
             self.isDragging = false;
@@ -53,8 +57,8 @@ namespace ET.Client
             self.isRaycast = false;
             self.isChkPutMonsterCall = true;
             self.canPutMonsterCall = true;
-            self.tryNum = 50;
-            self.tryDis = 0.1f;
+            self.tryNum = 30;
+            self.tryDis = 0.2f;
 
             self._groundLayerMask = LayerMask.GetMask("Map");
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleDragItemFrameTimer, self);
@@ -101,7 +105,34 @@ namespace ET.Client
             }
         }
 
-		public static void Update(this DlgBattleDragItem self)
+        public static void Update(this DlgBattleDragItem self)
+        {
+            if (self.isUpdating)
+            {
+                return;
+            }
+
+            self.isUpdating = true;
+            self._Update().Coroutine();
+        }
+
+        public static async ETTask _Update(this DlgBattleDragItem self)
+        {
+            try
+            {
+                await self._Update2();
+            }
+            catch (Exception e)
+            {
+                self.isUpdating = false;
+            }
+            finally
+            {
+                self.isUpdating = false;
+            }
+        }
+
+		public static async ETTask _Update2(this DlgBattleDragItem self)
 		{
             if (self.currentPlaceObj == null)
             {
@@ -137,7 +168,7 @@ namespace ET.Client
                 self.isDragging = true;
                 self.MoveCurrentPlaceObj();
 
-                (bool canPut, bool isLimitRule) = self.ChkCanPut(self.currentPlaceObj.transform.position);
+                (bool canPut, bool isLimitRule) = self.ChkCanPut(self.rayHitPos);
                 if (canPut)
                 {
                     self.View.E_TipNodeImage.SetVisible(false);
@@ -148,9 +179,9 @@ namespace ET.Client
                     //self.currentPlaceObj.gameObject.SetActive(false);
                     self.ChgCurrentPlaceObj(false);
 
-                    if (isLimitRule == false && self.IsNeedChkCanPutRepeat())
+                    if (isLimitRule == false && self.IsNeedChkCanPutRepeat(self.rayHitPos))
                     {
-                        canPut = self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                        canPut = self.ChkCanPutWhenRepeat(self.rayHitPos, false);
                         if (canPut)
                         {
                             self.View.E_TipNodeImage.SetVisible(false);
@@ -172,10 +203,10 @@ namespace ET.Client
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
                 if (self.isClickUGUI == false)
                 {
-                    (bool canPut, bool isLimitRule) = self.ChkCanPut(self.currentPlaceObj.transform.position);
-                    if (canPut == false && isLimitRule == false && self.IsNeedChkCanPutRepeat())
+                    (bool canPut, bool isLimitRule) = self.ChkCanPut(self.rayHitPos);
+                    if (canPut == false && isLimitRule == false)
                     {
-                        self.ChkCanPutWhenRepeat(self.currentPlaceObj.transform.position);
+                        self.ChkCanPutWhenRepeat(self.rayHitPos, true);
                     }
                     if (self.isRaycast == false)
                     {
@@ -444,23 +475,61 @@ namespace ET.Client
             }
         }
 
-        public static bool IsNeedChkCanPutRepeat(this DlgBattleDragItem self)
+        public static bool IsNeedChkCanPutRepeat(this DlgBattleDragItem self, float3 rayHitPos)
         {
-            return true;
-            // if (self.battleDragItemType == BattleDragItemType.Tower)
-            // {
-            //     return true;
-            // }
-            // else if (self.battleDragItemType == BattleDragItemType.MoveTower)
-            // {
-            //     return true;
-            // }
-            //
-            // return false;
+            if (self.recordLastRayPos.Equals(float3.zero))
+            {
+                self.recordLastRayPos = rayHitPos;
+                self.recordLastChkPutRepeatTime = 0;
+                return false;
+            }
+
+            if (math.abs(self.recordLastRayPos.x - rayHitPos.x) < 0.1f
+                && math.abs(self.recordLastRayPos.y - rayHitPos.y) < 0.1f
+                && math.abs(self.recordLastRayPos.z - rayHitPos.z) < 0.1f)
+            {
+                self.recordLastRayPos = rayHitPos;
+                if (self.recordLastChkPutRepeatTime == 0)
+                {
+                    self.recordLastChkPutRepeatTime = TimeHelper.ClientNow() + 200;
+                    return false;
+                }
+                if (self.recordLastChkPutRepeatTime < TimeHelper.ClientNow())
+                {
+                    return true;
+                }
+                return false;
+            }
+            self.recordLastRayPos = rayHitPos;
+            self.recordLastChkPutRepeatTime = 0;
+            return false;
         }
 
-        public static bool ChkCanPutWhenRepeat(this DlgBattleDragItem self, Vector3 position)
+        public static bool ChkCanPutWhenRepeat(this DlgBattleDragItem self, Vector3 position, bool isForce)
         {
+            if (isForce)
+            {
+
+            }
+            else
+            {
+                if (self.lastRayPos.Equals(float3.zero) == false)
+                {
+                    if (math.abs(self.lastRayPos.x - position.x) < 0.1f
+                        && math.abs(self.lastRayPos.y - position.y) < 0.1f
+                        && math.abs(self.lastRayPos.z - position.z) < 0.1f)
+                    {
+                        if (self.lastDragRectifyPos.Equals(float3.zero))
+                        {
+                            return false;
+                        }
+                        self.currentPlaceObj.transform.position = self.lastDragRectifyPos;
+                        return true;
+                    }
+                }
+            }
+
+            self.lastRayPos = position;
             int tryNum = self.tryNum;
             float tryDis = self.tryDis;
             bool bRet = false;
@@ -474,6 +543,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
 
@@ -482,6 +552,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
 
@@ -490,6 +561,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
                     Vector3 positionNew2_z = position + new Vector3(-j * tryDis, 0, i * tryDis);
@@ -497,6 +569,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
 
@@ -505,6 +578,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
                     Vector3 positionNew3_z = position + new Vector3(-j * tryDis, 0, -i * tryDis);
@@ -512,6 +586,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
 
@@ -520,6 +595,7 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
                     Vector3 positionNew4_z = position + new Vector3(j * tryDis, 0, -i * tryDis);
@@ -527,11 +603,13 @@ namespace ET.Client
                     if (bRet)
                     {
                         self.currentPlaceObj.transform.position = newPos;
+                        self.lastDragRectifyPos = newPos;
                         return true;
                     }
                 }
             }
 
+            self.lastDragRectifyPos = float3.zero;
             return false;
         }
 
@@ -589,7 +667,6 @@ namespace ET.Client
                 }
 
             }
-
 
             if (self.isRaycast)
             {
@@ -1121,6 +1198,7 @@ namespace ET.Client
                     self.currentPlaceObj.gameObject.SetActive(true);
                 }
                 self.currentPlaceObj.transform.position = point + new Vector3(0, self._YOffset, 0);
+                self.rayHitPos = self.currentPlaceObj.transform.position;
                 self.currentPlaceObj.transform.localEulerAngles = new Vector3(0, 0, 0);
 
             }
@@ -1134,6 +1212,7 @@ namespace ET.Client
                     {
                         point = hitInfo.point;
                         self.currentPlaceObj.transform.position = point + new Vector3(0, self._YOffset, 0);
+                        self.rayHitPos = self.currentPlaceObj.transform.position;
                         isHit = true;
                         break;
                     }

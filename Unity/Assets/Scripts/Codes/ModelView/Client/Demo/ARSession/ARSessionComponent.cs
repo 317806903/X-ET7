@@ -34,5 +34,8 @@ namespace ET.Client
 		public Func<(bool, string)> OnRequestQRCodeExtraData;
 
 		public bool IsReScanMeshing;
+
+		public long Timer;
+		public bool targetIsARCamera;
 	}
 }

@@ -41,6 +41,10 @@ namespace ET
 		[BsonIgnore]
 		public long lastChkUnitExistTime;
 		[BsonIgnore]
+		public long lastSendTimeTowerDefense;
+		[BsonIgnore]
+		public bool isNeedReNoticeTowerDefense;
+		[BsonIgnore]
 		public GamePlayTowerDefenseCfg model
 		{
 			get

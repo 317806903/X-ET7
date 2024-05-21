@@ -270,7 +270,7 @@ namespace UnityEngine.Rendering.Universal.Internal
 
         internal void SetupLights(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            Profiler.BeginSample(k_SetupLights);
+            //Profiler.BeginSample(k_SetupLights);
 
             Camera camera = renderingData.cameraData.camera;
             // Support for dynamic resolution.
@@ -322,7 +322,7 @@ namespace UnityEngine.Rendering.Universal.Internal
                 cmd.Clear();
             }
 
-            Profiler.EndSample();
+            //Profiler.EndSample();
         }
 
         internal void ResolveMixedLightingMode(ref RenderingData renderingData)
@@ -743,7 +743,7 @@ namespace UnityEngine.Rendering.Universal.Internal
                 return;
             }
 
-            Profiler.BeginSample(k_DeferredStencilPass);
+            //Profiler.BeginSample(k_DeferredStencilPass);
 
             using (new ProfilingScope(cmd, m_ProfilingSamplerDeferredStencilPass))
             {
@@ -757,7 +757,7 @@ namespace UnityEngine.Rendering.Universal.Internal
                     RenderStencilSpotLights(cmd, ref renderingData, visibleLights);
             }
 
-            Profiler.EndSample();
+            //Profiler.EndSample();
         }
 
         void SetAdditionalLightsShadowsKeyword(ref CommandBuffer cmd, ref RenderingData renderingData, bool hasDeferredShadows)

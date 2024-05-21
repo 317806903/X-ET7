@@ -20,6 +20,8 @@ namespace ET.Server
 			{
 				response.Error = ErrorCode.ERR_LogicError;
 				response.Message = msg;
+
+				gamePlayTowerDefenseComponent.NoticeToClient(playerId);
 			}
 			else
 			{
@@ -28,6 +30,8 @@ namespace ET.Server
 				{
 					response.Error = ErrorCode.ERR_LogicError;
 					response.Message = "ReclaimPlayerTower Err";
+
+					gamePlayTowerDefenseComponent.NoticeToClient(playerId);
 				}
 			}
 			await ETTask.CompletedTask;

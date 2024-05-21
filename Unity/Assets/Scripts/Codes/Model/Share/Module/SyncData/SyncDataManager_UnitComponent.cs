@@ -11,10 +11,11 @@ namespace ET
     [ComponentOf(typeof (SyncDataManager))]
     public class SyncDataManager_UnitComponent : Entity, IAwake, IDestroy
     {
+        public MultiMapSimple<long, (Unit, HashSet<Type>)> player2SyncUnit;
+
         public MultiMapSetSimple<long, Type> NeedSyncList;
 
-        public int waitFrameSync = 2;
-        public int curFrameSync = 0;
-
+        public Dictionary<long, int> waitFrameSync = new();
+        public Dictionary<long, int> curFrameSync = new();
     }
 }

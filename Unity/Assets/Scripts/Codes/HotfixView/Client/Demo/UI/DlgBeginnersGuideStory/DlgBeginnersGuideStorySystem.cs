@@ -41,7 +41,7 @@ namespace ET.Client
 
 		public static void HideWindow(this DlgBeginnersGuideStory self)
 		{
-			ET.Client.UIAudioManagerHelper.ResumeMusic(self.DomainScene());
+			ET.Client.UIAudioManagerHelper.ResetMusicStatus(self.DomainScene());
 		}
 
 		public static async ETTask DoNext(this DlgBeginnersGuideStory self)

@@ -25,17 +25,61 @@ namespace ET.Client
 
 		public static async ETTask _ShowWindow(this DlgVideoShowSmall self)
 		{
+			await TimerComponent.Instance.WaitFrameAsync();
+			GL.Clear(false, true, Color.black);
 			// ET.Client.UIAudioManagerHelper.StopMusic(self.DomainScene());
-			VideoPlayer videoPlayer = self.View.uiTransform.transform.Find("VideoPlay").gameObject.GetComponent<VideoPlayer>();
+			self.videoPlayer = self.View.uiTransform.transform.Find("VideoPlay").gameObject.GetComponent<VideoPlayer>();
+
+
+			self.videoPath = "Assets/ResAB/Video/RealityGuard_Scan_Tutorial.mp4";
+
+			VideoClip videoToPlay = await ResComponent.Instance.LoadAssetAsync<VideoClip>(self.videoPath);
+
+			self.videoPlayer.Stop();
+			self.videoPlayer.clip = videoToPlay;
+			self.videoPlayer.isLooping = false;
 			RawImage image = self.View.E_VideoShowRawImage.gameObject.GetComponent<RawImage>();
-			videoPlayer.Prepare();
-			while (videoPlayer.isPrepared == false)
+			self.videoPlayer.Prepare();
+			while (self.videoPlayer.isPrepared == false)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (self.IsDisposed)
+				{
+					return;
+				}
 			}
 
-			image.texture = videoPlayer.texture;
-			videoPlayer.Play();
+			image.texture = self.videoPlayer.texture;
+			self.videoPlayer.Play();
+
+			while (true)
+			{
+				if (self.videoPlayer == null)
+				{
+					return;
+				}
+				if (self.videoPlayer.isPlaying == false)
+				{
+					self.videoPlayer.time = 0;
+					self.videoPlayer.Play();
+				}
+				await TimerComponent.Instance.WaitFrameAsync();
+				if (self.IsDisposed)
+				{
+					return;
+				}
+			}
+
+		}
+
+		public static async ETTask Stop(this DlgVideoShowSmall self)
+		{
+			self.videoPlayer.Stop();
+			self.videoPlayer = null;
+			ResComponent.Instance.UnloadAsset(self.videoPath);
+
+			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgVideoShowSmall>();
+			GL.Clear(false, true, Color.black);
 		}
 	}
 }

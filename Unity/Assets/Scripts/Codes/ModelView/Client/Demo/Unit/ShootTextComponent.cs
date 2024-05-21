@@ -9,7 +9,20 @@ namespace ET.Client
         [StaticField]
         public static ShootTextComponent Instance;
 
-        public Transform shootTextRoot;
-        public ShootTextProManager shootTextProManager;
+        public Transform shootTextRoot_Normal;
+        public Transform shootTextRoot_High;
+        public Transform shootTextRoot_Crt;
+        public Transform shootTextRoot_CrtAndHigh;
+        public Transform shootTextRoot_Cure;
+        public ShootTextProManager shootTextProManager_Normal;
+        public ShootTextProManager shootTextProManager_High;
+        public ShootTextProManager shootTextProManager_Crt;
+        public ShootTextProManager shootTextProManager_CrtAndHigh;
+        public ShootTextProManager shootTextProManager_Cure;
+
+        public Dictionary<Unit, Queue<(int value, bool isCrt)>> unit2DamageShowList;
+
+        public int waitFrame = 300;
+        public int curFrame = 0;
     }
 }

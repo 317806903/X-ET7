@@ -67,17 +67,10 @@ namespace ET.Ability
                             effectCasterUnitId = unitEffect.Id;
                         }
 
-                        EventType.SyncUnitEffects _SyncUnitEffects = new()
-                        {
-                            unit = unitEffect,
-                            isAddEffect = true,
-                            effectObj = effectObj,
-                            isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
-                        };
-                        EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                        ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
                     }
 
-                    if (IdGenerater.Instance.ChkGenerateIdFull())
+                    while (IdGenerater.Instance.ChkGenerateIdFull())
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
                     }
@@ -123,17 +116,10 @@ namespace ET.Ability
                         SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
                         sceneEffectComponent.RecordEffect(unitEffect, actionCfgCreateEffect.Key, effectObj);
 
-                        EventType.SyncUnitEffects _SyncUnitEffects = new()
-                        {
-                            unit = unitSceneEffect,
-                            isAddEffect = true,
-                            effectObj = effectObj,
-                            isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
-                        };
-                        EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                        ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitSceneEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
                     }
 
-                    if (IdGenerater.Instance.ChkGenerateIdFull())
+                    while (IdGenerater.Instance.ChkGenerateIdFull())
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
                     }
@@ -169,14 +155,7 @@ namespace ET.Ability
                 SceneEffectComponent sceneEffectComponent = unit.DomainScene().GetComponent<SceneEffectComponent>();
                 sceneEffectComponent.RecordEffect(unit, actionCfgCreateEffect.Key, effectObj);
 
-                EventType.SyncUnitEffects _SyncUnitEffects = new()
-                {
-                    unit = unitSceneEffect,
-                    isAddEffect = true,
-                    effectObj = effectObj,
-                    isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
-                };
-                EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitSceneEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
             }
 
             await ETTask.CompletedTask;
@@ -251,14 +230,7 @@ namespace ET.Ability
             EffectObj effectObj = effectComponent.AddEffect(unit.Id, actionCfgCreateEffect, actionCfgCreateEffect.IsScaleByUnit);
             if (effectObj != null)
             {
-                EventType.SyncUnitEffects _SyncUnitEffects = new()
-                {
-                    unit = unitEffect,
-                    isAddEffect = true,
-                    effectObj = effectObj,
-                    isOnlySelfShow = actionCfgCreateEffect.IsOnlySelfShow,
-                };
-                EventSystem.Instance.Publish(unit.DomainScene(), _SyncUnitEffects);
+                ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
             }
 
             return effectObj;
@@ -285,6 +257,21 @@ namespace ET.Ability
                 effectList.Add(effectObj);
             }
             return effectList;
+        }
+
+        public static EffectObj GetEffectObj(Unit unit, long effectObjId)
+        {
+            if (unit == null)
+            {
+                return null;
+            }
+            EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
+            if (effectComponent == null)
+            {
+                return null;
+            }
+
+            return effectComponent.GetEffectObj(effectObjId);
         }
     }
 }

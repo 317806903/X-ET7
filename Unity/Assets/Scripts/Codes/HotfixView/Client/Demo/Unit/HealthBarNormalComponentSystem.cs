@@ -16,13 +16,17 @@ namespace ET.Client
                 string resName = "ResEffect_HealthBar_1";
 
                 GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+                if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+                {
+                    return;
+                }
                 ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
                 GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
                 HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
-                float height = self.GetUnit().model.BodyHeight + 1f;
-                HealthBarGo.transform.localPosition = new float3(0, height, 0);
                 float scaleX = gameObjectComponent.gameObject.transform.localScale.x;
                 HealthBarGo.transform.localScale = Vector3.one / scaleX;
+                float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
+                HealthBarGo.transform.position = gameObjectComponent.gameObject.transform.position + new Vector3(0, height, 0);
 
                 self.go = HealthBarGo;
                 self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
@@ -63,6 +67,11 @@ namespace ET.Client
 
         public static void UpdateHealth(this HealthBarNormalComponent self, bool isInit)
         {
+            if (self.go == null)
+            {
+                return;
+            }
+
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             int curHp = math.max(numericComponent.GetAsInt(NumericType.Hp), 0);
             int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
@@ -103,12 +112,28 @@ namespace ET.Client
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {
-                self.go.SetActive(true);
+                if (self.go.activeSelf == false)
+                {
+                    self.go.SetActive(true);
+                }
             }
             else
             {
-                self.go.SetActive(false);
+                if (self.go.activeSelf == true)
+                {
+                    self.go.SetActive(false);
+                }
             }
+        }
+
+        public static Camera GetMainCamera(this HealthBarNormalComponent self)
+        {
+            if (self.mainCamera == null)
+            {
+                Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
+                self.mainCamera = mainCamera;
+            }
+            return self.mainCamera;
         }
 
         public static void Update(this HealthBarNormalComponent self)
@@ -129,7 +154,7 @@ namespace ET.Client
                 return;
             }
             Transform transform = self.go.transform;
-            Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
+            Camera mainCamera = self.GetMainCamera();
             if (mainCamera == null)
             {
                 return;

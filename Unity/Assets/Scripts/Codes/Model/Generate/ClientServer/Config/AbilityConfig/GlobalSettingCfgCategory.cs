@@ -129,6 +129,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public System.Collections.Generic.List<string> InitialBackpackItem => _data.InitialBackpackItem;
     /// <summary>
+    /// (DemoShow模式)初始背包物体
+    /// </summary>
+     public System.Collections.Generic.List<string> DemoShowInitialBackpackItem => _data.DemoShowInitialBackpackItem;
+    /// <summary>
     /// 需要重新评估游戏的时刻
     /// </summary>
      public long GameReJudgeTime => _data.GameReJudgeTime;

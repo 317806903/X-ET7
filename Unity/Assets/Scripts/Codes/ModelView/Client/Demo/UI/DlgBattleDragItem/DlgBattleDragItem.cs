@@ -22,6 +22,7 @@ namespace ET.Client
 		public DlgBattleDragItemViewComponent View { get => this.GetComponent<DlgBattleDragItemViewComponent>(); }
 
 		public long Timer;
+		public bool isUpdating;
 
 		public BattleDragItemType battleDragItemType;
 		public string battleDragItemParam;
@@ -39,9 +40,10 @@ namespace ET.Client
 		public bool isDragging = false;
 		public bool isCliffy = false;
 		public bool isRaycast = false;
+		public float3 rayHitPos;
 
-		public int tryNum = 50;
-		public float tryDis = 0.1f;
+		public int tryNum = 0;
+		public float tryDis = 0f;
 
 		public bool isChkPutMonsterCall = false;
 		public bool canPutMonsterCall = true;
@@ -56,6 +58,11 @@ namespace ET.Client
 		public bool canShowLineRendererNear;
 		public bool lineRendererReqing = false;
 
+		public float3 recordLastRayPos;
+		public long recordLastChkPutRepeatTime;
+
+		public float3 lastRayPos;
+		public float3 lastDragRectifyPos;
 	}
 
 	public class DlgBattleDragItem_ShowWindowData : ShowWindowData

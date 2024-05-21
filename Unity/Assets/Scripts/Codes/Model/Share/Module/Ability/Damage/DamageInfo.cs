@@ -35,6 +35,7 @@ namespace ET.Ability
         ///尽管起名叫Damage，但实际上治疗也是这个，只是负数叫做治疗量，这个起名看似不严谨，对于游戏（这个特殊的业务）而言却又是严谨的
         ///</summary>
         public Damage damage;
+        public bool isCrit;
 
         ///<summary>
         ///是否暴击，这是游戏设计了有暴击的可能性存在。

@@ -13,6 +13,14 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitPosInfo self)
             {
+                self.unitId = new();
+                self.posX = new();
+                self.posY = new();
+                self.posZ = new();
+                self.rotationX = new();
+                self.rotationY = new();
+                self.rotationZ = new();
+                self.rotationW = new();
             }
         }
 
@@ -21,34 +29,87 @@ namespace ET
         {
             protected override void Destroy(SyncData_UnitPosInfo self)
             {
+                self.unitId.Clear();
+                self.posX.Clear();
+                self.posY.Clear();
+                self.posZ.Clear();
+                self.rotationX.Clear();
+                self.rotationY.Clear();
+                self.rotationZ.Clear();
+                self.rotationW.Clear();
             }
         }
 
-        public static void Init(this SyncData_UnitPosInfo self, Unit unit)
+        public static void Init(this SyncData_UnitPosInfo self, HashSet<Unit> list)
         {
-            self.unitId = unit.Id;
-            self.posX = (int)(unit.Position.x * 1000);
-            self.posY = (int)(unit.Position.y * 1000);
-            self.posZ = (int)(unit.Position.z * 1000);
-            self.forwardX = (int)(unit.Forward.x * 1000);
-            self.forwardY = (int)(unit.Forward.y * 1000);
-            self.forwardZ = (int)(unit.Forward.z * 1000);
+            self.unitId.Clear();
+            self.posX.Clear();
+            self.posY.Clear();
+            self.posZ.Clear();
+            self.rotationX.Clear();
+            self.rotationY.Clear();
+            self.rotationZ.Clear();
+            self.rotationW.Clear();
+            if (list == null)
+            {
+                return;
+            }
+            self.serverTime = TimeHelper.ServerNow();
+            foreach (var unit in list)
+            {
+                self.unitId.Add(unit.Id);
+                self.posX.Add((int)(unit.Position.x * 1000));
+                self.posY.Add((int)(unit.Position.y * 1000));
+                self.posZ.Add((int)(unit.Position.z * 1000));
+                self.rotationX.Add((int)(unit.Rotation.value.x * 1000));
+                self.rotationY.Add((int)(unit.Rotation.value.y * 1000));
+                self.rotationZ.Add((int)(unit.Rotation.value.z * 1000));
+                self.rotationW.Add((int)(unit.Rotation.value.w * 1000));
+            }
         }
 
-        public static void DealByBytes(this SyncData_UnitPosInfo self, Unit unit)
+        public static async ETTask DealByBytes(this SyncData_UnitPosInfo self, UnitComponent unitComponent)
         {
-            unit.Position = self.GetPos();
-            unit.Forward = self.GetForward();
+            int count = self.unitId.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Unit unit = unitComponent.Get(self.unitId[i]);
+                if (unit == null)
+                {
+                    continue;
+                }
+                UnitClientPosComponent unitClientPosComponent = unit.GetComponent<UnitClientPosComponent>();
+                if (unitClientPosComponent == null)
+                {
+                    unitClientPosComponent = unit.AddComponent<UnitClientPosComponent>();
+                    unitClientPosComponent.lastClientPosition = float3.zero;
+                    unitClientPosComponent.targetPosClientNeedTime = 0.2f;
+                    unitClientPosComponent.targetPosClientTime = TimeHelper.ClientNow() + (long)(unitClientPosComponent.targetPosClientNeedTime * 1000);
+                    unitClientPosComponent.serverTime = self.serverTime;
+                }
+                else
+                {
+                    unitClientPosComponent.lastClientPosition = unitClientPosComponent.clientPosition;
+                    unitClientPosComponent.targetPosClientNeedTime = (self.serverTime - unitClientPosComponent.serverTime) * 0.001f;
+                    unitClientPosComponent.targetPosClientTime = TimeHelper.ClientNow() + (long)(unitClientPosComponent.targetPosClientNeedTime * 1000);
+                    unitClientPosComponent.serverTime = self.serverTime;
+                }
+
+
+                unit.SetPositionWhenClient(self.GetPos(i));
+                unit.SetRotationWhenClient(self.GetRotation(i));
+            }
+            await ETTask.CompletedTask;
         }
 
-        public static float3 GetPos(this SyncData_UnitPosInfo self)
+        public static float3 GetPos(this SyncData_UnitPosInfo self, int i)
         {
-            return new float3(self.posX * 0.001f, self.posY * 0.001f, self.posZ * 0.001f);
+            return new float3(self.posX[i] * 0.001f, self.posY[i] * 0.001f, self.posZ[i] * 0.001f);
         }
 
-        public static float3 GetForward(this SyncData_UnitPosInfo self)
+        public static quaternion GetRotation(this SyncData_UnitPosInfo self, int i)
         {
-            return new float3(self.forwardX * 0.001f, self.forwardY * 0.001f, self.forwardZ * 0.001f);
+            return new quaternion(self.rotationX[i] * 0.001f, self.rotationY[i] * 0.001f, self.rotationZ[i] * 0.001f, self.rotationW[i] * 0.001f);
         }
     }
 }

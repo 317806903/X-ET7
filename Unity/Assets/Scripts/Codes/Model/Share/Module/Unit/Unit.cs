@@ -46,6 +46,12 @@ namespace ET
             }
         }
 
+        public void SetPositionWhenClient(float3 position)
+        {
+            this.position = position;
+        }
+
+
         [BsonIgnore]
         public float3 Forward
         {
@@ -69,6 +75,11 @@ namespace ET
                 this.rotation = value;
                 EventSystem.Instance.Publish(this.DomainScene(), new EventType.ChangeRotation() { Unit = this });
             }
+        }
+
+        public void SetRotationWhenClient(quaternion rotation)
+        {
+            this.rotation = rotation;
         }
 
         protected override string ViewName

@@ -304,6 +304,7 @@ namespace ET.Client
             itemRoom.ELabel_Content_LvTextMeshProUGUI.gameObject.SetActive(false);
             //itemRoom.EButton_OperatorButton.SetVisible(true);
             itemRoom.EImage_TeamImage.SetVisible(false);
+            itemRoom.EButton_boxImage.color = new Color(1, 1, 1, 1);
             long roomMemberId = roomComponent.roomMemberSeat[index];
             if (roomMemberId == -1)
             {
@@ -349,6 +350,7 @@ namespace ET.Client
                 {
                     itemRoom.EButton_OperatorButton.SetVisible(false);
                     //itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
+                    itemRoom.EButton_boxImage.color = new Color(1, 1, 0, 1);
                 }
 
                 GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);

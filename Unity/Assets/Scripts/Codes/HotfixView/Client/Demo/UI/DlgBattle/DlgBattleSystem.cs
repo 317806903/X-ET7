@@ -40,6 +40,9 @@ namespace ET.Client
                 self.AddMonsterItemRefreshListener(transform, i));
             self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
 
+            self.View.E_GameSettingButton.SetVisible(true);
+            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 22");
             self.RegisterClear().Coroutine();
             self.RegisterSkill().Coroutine();
@@ -159,6 +162,13 @@ namespace ET.Client
         {
             await RoomHelper.MemberQuitBattleAsync(self.ClientScene());
             await SceneHelper.EnterHall(self.ClientScene());
+        }
+
+        public static async ETTask GameSetting(this DlgBattle self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
+
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleSetting>().Coroutine();
         }
 
         public static void AddTowerItemRefreshListener(this DlgBattle self, Transform transform, int index)

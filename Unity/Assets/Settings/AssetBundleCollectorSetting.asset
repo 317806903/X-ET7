@@ -142,7 +142,15 @@ MonoBehaviour:
         CollectorType: 0
         AddressRuleName: AddressByFilePath
         PackRuleName: PackSeparately
-        FilterRuleName: CollectAll
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/ResAB/EffectPrefab/BattleNum
+        CollectorGUID: 80670c3646692be41aad10fb7a71eabe
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackTopDirectory
+        FilterRuleName: CollectSprite
         AssetTags: 
         UserData: 
     - GroupName: Res_UI

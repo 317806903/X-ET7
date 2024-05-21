@@ -146,6 +146,9 @@ namespace ET.Client
                 return;
             }
 
+            self.guideMaskTrans = self.RootTrans.Find("GuideMask");
+            self.maskWhenDown = self.RootTrans.Find("MaskWhenDown");
+
             self.curUIGuidePath = _UIGuidePath;
             self.curInNextType = _UIGuidePath.curInNextType;
             self.finishedCallBack = finishedCallBack;
@@ -208,7 +211,7 @@ namespace ET.Client
                     }
                 }
 
-                return await ET.Client.UIGuideHelper.DoStaticMethodChk(self.DomainScene(), conditionStaticMethod, trigConditionParam);
+                return await ET.Client.UIGuideHelper.DoStaticMethodChk(self.DomainScene(), conditionStaticMethod, trigConditionParam, self);
             }
 
             return false;
@@ -232,7 +235,7 @@ namespace ET.Client
 
             string executeParam = self.curUIGuidePath.guideExecuteParam;
 
-            await ET.Client.UIGuideHelper.DoStaticMethodExecute(self.DomainScene(), executeStaticMethod, executeParam);
+            await ET.Client.UIGuideHelper.DoStaticMethodExecute(self.DomainScene(), executeStaticMethod, executeParam, self);
         }
 
         public static async ETTask _DoGuideStep(this UIGuideStepComponent self, bool isNeedChkCondition = true)
@@ -244,6 +247,8 @@ namespace ET.Client
             self.lastGuideRectPos = Vector3.zero;
             self.lastGuideRectlossyScale = Vector3.zero;
             self.lastGuideRectSize = Vector2.zero;
+
+            self.guideConditionStatus = new();
 
             string canvasPath = self.curUIGuidePath.hierarchyCanvasPath;
             string guidePath = self.curUIGuidePath.hierarchyGuidePath;
@@ -413,9 +418,8 @@ namespace ET.Client
             float sizeX;
             float sizeY;
 
-            Transform guideMaskTrans = self.RootTrans.Find("GuideMask");
-            guideMaskTrans.gameObject.SetActive(true);
-            Image imgBG = guideMaskTrans.gameObject.GetComponent<Image>();
+            self.guideMaskTrans.gameObject.SetActive(true);
+            Image imgBG = self.guideMaskTrans.gameObject.GetComponent<Image>();
             var newColor = new Color(imgBG.color.r, imgBG.color.g, imgBG.color.b, 0);
             imgBG.color = newColor;
             Transform rectMaskTrans = self.RootTrans.Find("GuideMask/E_RectMask");
@@ -508,9 +512,8 @@ namespace ET.Client
             float sizeX = 100;
             float sizeY = 100;
 
-            Transform guideMaskTrans = self.RootTrans.Find("GuideMask");
-            guideMaskTrans.gameObject.SetActive(true);
-            Image imgBG = guideMaskTrans.gameObject.GetComponent<Image>();
+            self.guideMaskTrans.gameObject.SetActive(true);
+            Image imgBG = self.guideMaskTrans.gameObject.GetComponent<Image>();
             var newColor = new Color(imgBG.color.r, imgBG.color.g, imgBG.color.b, diaphaneity);
             imgBG.color = newColor;
 
@@ -543,15 +546,15 @@ namespace ET.Client
             float sizeX = 100;
             float sizeY = 100;
 
-            Transform guideMaskTrans = self.RootTrans.Find("GuideMask");
             if (self.curUIGuidePath.isFreeClickBeforeEnter)
             {
-                guideMaskTrans.gameObject.SetActive(false);
+                self.guideMaskTrans.gameObject.SetActive(false);
             }
             else
             {
-                guideMaskTrans.gameObject.SetActive(true);
+                self.guideMaskTrans.gameObject.SetActive(true);
             }
+            self.maskWhenDown.gameObject.SetActive(false);
 
             Transform rectMaskTrans = self.RootTrans.Find("GuideMask/E_RectMask");
             Transform circleMaskTrans = self.RootTrans.Find("GuideMask/E_CircleMask");
@@ -1178,6 +1181,20 @@ namespace ET.Client
             self.FinishClick().Coroutine();
         }
 
+        public static void _HideMaskWhenDown(this UIGuideStepComponent self)
+        {
+            self.guideMaskTrans.gameObject.SetActive(false);
+            Transform hightImageNodeTrans = self.RootTrans.Find("EG_GuideInfo/E_HightNode/E_HightImageNode");
+            hightImageNodeTrans.gameObject.SetActive(false);
+        }
+
+        public static void _ShowMaskWhenUp(this UIGuideStepComponent self)
+        {
+            self.guideMaskTrans.gameObject.SetActive(true);
+            Transform hightImageNodeTrans = self.RootTrans.Find("EG_GuideInfo/E_HightNode/E_HightImageNode");
+            hightImageNodeTrans.gameObject.SetActive(true);
+        }
+
         public static void AddGuideClickInfo(this UIGuideStepComponent self, GameObject go)
         {
             //设置监听
@@ -1190,6 +1207,17 @@ namespace ET.Client
             {
                 UIGuide.EventTriggerListener.GetListener(go).onDown -= self.OnPointerDown;
                 UIGuide.EventTriggerListener.GetListener(go).onDown += self.OnPointerDown;
+
+                self.maskWhenDown.gameObject.SetActive(true);
+                EventTriggerListener.Get(self.maskWhenDown.gameObject).RemoveAllListeners();
+                EventTriggerListener.Get(self.maskWhenDown.gameObject).onDown.AddListener((go, xx) =>
+                {
+                    self._HideMaskWhenDown();
+                });
+                EventTriggerListener.Get(self.maskWhenDown.gameObject).onUp.AddListener((go, xx) =>
+                {
+                    self._ShowMaskWhenUp();
+                });
             }
 
         }

@@ -44,6 +44,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         RecoverAddHp = _buf.ReadInt();
         RecoverAddGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DemoShowInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DemoShowInitialBackpackItem.Add(_e0);}}
         GameReJudgeTime = _buf.ReadLong();
         MaxBattleCardNum = _buf.ReadInt();
         GameModeArcadeMasterPassword = _buf.ReadString();
@@ -181,6 +182,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public System.Collections.Generic.List<string> InitialBackpackItem { get; private set; }
     public System.Collections.Generic.List<ItemCfg> InitialBackpackItem_Ref { get; private set; }
     /// <summary>
+    /// (DemoShow模式)初始背包物体
+    /// </summary>
+    public System.Collections.Generic.List<string> DemoShowInitialBackpackItem { get; private set; }
+    public System.Collections.Generic.List<ItemCfg> DemoShowInitialBackpackItem_Ref { get; private set; }
+    /// <summary>
     /// 需要重新评估游戏的时刻
     /// </summary>
     public long GameReJudgeTime { get; private set; }
@@ -282,6 +288,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     {
         { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.InitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in InitialBackpackItem) { this.InitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
+        { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.DemoShowInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in DemoShowInitialBackpackItem) { this.DemoShowInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.GameModeArcadeInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in GameModeArcadeInitialBackpackItem) { this.GameModeArcadeInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
@@ -321,6 +328,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "RecoverAddHp:" + RecoverAddHp + ","
         + "RecoverAddGold:" + RecoverAddGold + ","
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
+        + "DemoShowInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(DemoShowInitialBackpackItem) + ","
         + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "MaxBattleCardNum:" + MaxBattleCardNum + ","
         + "GameModeArcadeMasterPassword:" + GameModeArcadeMasterPassword + ","

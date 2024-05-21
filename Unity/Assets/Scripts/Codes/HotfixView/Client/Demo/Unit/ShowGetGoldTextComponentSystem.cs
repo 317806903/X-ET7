@@ -92,16 +92,8 @@ namespace ET.Client
                 return;
             }
 
-            string showValue = "";
-            if (value > 0)
-            {
-                showValue = $"+{math.abs(value)}";
-            }
-            else
-            {
-                showValue = $"-{math.abs(value)}";
-            }
-            self.shootTextProManager.CreatShootText(showValue, TextAnimationType.Gold, TextMoveType.LeftParabola, () =>
+            int showValue = value;
+            self.shootTextProManager.CreatShootText(true, TextMoveType.None, showValue, () =>
             {
                 return self.GetShootTextTopPoint(unit);
             }, () =>
@@ -112,27 +104,12 @@ namespace ET.Client
 
         public static Vector3 GetShootTextTopPoint(this ShowGetGoldTextComponent self, Unit unit)
         {
-            GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
-            {
-                return (Vector3)unit.Position + Vector3.up * ET.Ability.UnitHelper.GetBodyHeight(unit);
-            }
-            Vector3 curPos = gameObjectComponent.gameObject.transform.position;
-            curPos += Vector3.up * ET.Ability.UnitHelper.GetBodyHeight(unit);
-            return curPos;
+            return (Vector3)unit.GetUnitClientPos() + Vector3.up * ET.Ability.UnitHelper.GetBodyHeight(unit);
         }
 
         public static Vector3 GetShootTextButtomPoint(this ShowGetGoldTextComponent self, Unit unit)
         {
-            GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
-            {
-                return (Vector3)unit.Position + Vector3.up * (ET.Ability.UnitHelper.GetBodyHeight(unit) - 3);
-            }
-            Vector3 curPos = gameObjectComponent.gameObject.transform.position;
-            curPos += Vector3.up * (ET.Ability.UnitHelper.GetBodyHeight(unit) - 3);
-            return curPos;
+            return (Vector3)unit.GetUnitClientPos() + Vector3.up * (ET.Ability.UnitHelper.GetBodyHeight(unit) - 3);
         }
-
     }
 }

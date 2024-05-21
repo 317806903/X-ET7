@@ -207,11 +207,11 @@ namespace ET
 					//同步单位状态（位置、方向、）
 					foreach (Unit unit in needSyncNoticeUnitAdd.Value)
 					{
-						// if (unit.IsDisposed)
-						// {
-						// 	self.NeedSyncNoticeUnitAddsTmp.Add(unit);
-						// 	continue;
-						// }
+						if (unit == null || unit.IsDisposed)
+						{
+							self.NeedSyncNoticeUnitAddsTmp.Add(unit);
+							continue;
+						}
 
 						_SyncNoticeUnitAdds.units.Add(unit);
 						self.NeedSyncNoticeUnitAddsTmp.Add(unit);

@@ -360,6 +360,7 @@ namespace ET.Client
                 }
             }
             itemRoom.EButton_OperatorButton.SetVisible(true);
+            itemRoom.EButton_boxImage.color = new Color(1, 1, 1, 1);
             if (roomMemberId == -1)
             {
                 itemRoom.EButton_OperatorButton.SetVisible(false);
@@ -402,7 +403,8 @@ namespace ET.Client
                 if (myPlayerId == roomMemberId)
                 {
                     itemRoom.EButton_OperatorButton.SetVisible(false);
-                    itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
+                    // itemRoom.ELabel_Content_NameTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_RoomMemberStatus_Self");
+                    itemRoom.EButton_boxImage.color = new Color(1, 1, 0, 1);
                 }
 
                 GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(roomComponent.gamePlayBattleLevelCfgId);

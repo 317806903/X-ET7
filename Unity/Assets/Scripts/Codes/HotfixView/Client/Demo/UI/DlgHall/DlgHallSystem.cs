@@ -38,7 +38,6 @@ namespace ET.Client
 
 		public static void ShowWindow(this DlgHall self, ShowWindowData contextData = null)
 		{
-			UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.ARStart);
 			self.GetRoomList().Coroutine();
 
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(5000, TimerInvokeType.HallTimer, self);

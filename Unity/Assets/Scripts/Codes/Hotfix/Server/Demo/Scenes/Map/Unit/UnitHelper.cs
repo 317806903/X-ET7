@@ -71,114 +71,6 @@ namespace ET.Server
         }
 
         [Event(SceneType.Map)]
-        public class SyncUnitEffects2C: AEvent<Scene, EventType.SyncUnitEffects>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncUnitEffects args)
-            {
-                Unit unit = args.unit;
-                AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
-                while (aoiEntity == null)
-                {
-                    await TimerComponent.Instance.WaitFrameAsync();
-                    if (unit == null || unit.IsDisposed)
-                    {
-                        return;
-                    }
-                    aoiEntity = unit.GetComponent<AOIEntity>();
-                }
-                if (aoiEntity.IsDisposed)
-                {
-                    return;
-                }
-                while (aoiEntity.bInit == false)
-                {
-                    await TimerComponent.Instance.WaitFrameAsync();
-                    if (unit.IsDisposed || aoiEntity.IsDisposed)
-                    {
-                        return;
-                    }
-                }
-
-                bool isAddEffect = args.isAddEffect;
-                long effectObjId = args.effectObjId;
-                ET.Ability.EffectObj effectObj = args.effectObj;
-                bool isOnlySelfShow = args.isOnlySelfShow;
-                if (isAddEffect == false)
-                {
-                    isOnlySelfShow = false;
-                }
-                if (isOnlySelfShow)
-                {
-                    long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
-                    if (playerId != -1)
-                    {
-                        M2C_SyncUnitEffects SyncUnitEffects = new ();
-                        SyncUnitEffects.UnitId = unit.Id;
-                        SyncUnitEffects.AddOrRemove = isAddEffect?0:1;
-                        if (isAddEffect)
-                        {
-                            SyncUnitEffects.EffectComponent = effectObj.ToBson();
-                        }
-                        else
-                        {
-                            SyncUnitEffects.EffectObjId = effectObjId;
-                        }
-
-                        if (ET.Ability.UnitHelper.ChkIsSceneEffect(unit) && isAddEffect)
-                        {
-                            await TimerComponent.Instance.WaitFrameAsync();
-                        }
-                        MessageHelper.SendToClient(playerId, SyncUnitEffects, scene.InstanceId);
-                    }
-                }
-                else
-                {
-                    M2C_SyncUnitEffects SyncUnitEffects = new ();
-                    SyncUnitEffects.UnitId = unit.Id;
-                    SyncUnitEffects.AddOrRemove = isAddEffect?0:1;
-                    if (isAddEffect)
-                    {
-                        SyncUnitEffects.EffectComponent = effectObj.ToBson();
-                    }
-                    else
-                    {
-                        SyncUnitEffects.EffectObjId = effectObjId;
-                    }
-
-                    if (ET.Ability.UnitHelper.ChkIsSceneEffect(unit) && isAddEffect)
-                    {
-                        await TimerComponent.Instance.WaitFrameAsync();
-                    }
-                    MessageHelper.Broadcast(unit, SyncUnitEffects);
-                }
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
-        public class SyncGetCoinShow2C: AEvent<Scene, EventType.SyncGetCoinShow>
-        {
-            protected override async ETTask Run(Scene scene, EventType.SyncGetCoinShow args)
-            {
-                long playerId = args.playerId;
-                Unit unit = args.unit;
-                CoinType coinType = args.coinType;
-                int chgValue = args.chgValue;
-                if (playerId != -1)
-                {
-                    M2C_SyncGetCoinShow _M2C_SyncGetCoinShow = new ();
-                    _M2C_SyncGetCoinShow.UnitId = unit.Id;
-                    _M2C_SyncGetCoinShow.CoinType = (int)coinType;
-                    _M2C_SyncGetCoinShow.ChgValue = chgValue;
-
-                    MessageHelper.SendToClient(playerId, _M2C_SyncGetCoinShow, scene.InstanceId);
-                }
-
-                await ETTask.CompletedTask;
-            }
-        }
-
-        [Event(SceneType.Map)]
         public class NoticeGameEndToRoom2R: AEvent<Scene, EventType.NoticeGameEndToRoom>
         {
             protected override async ETTask Run(Scene scene, EventType.NoticeGameEndToRoom args)
@@ -205,6 +97,23 @@ namespace ET.Server
                 }
 
                 R2M_NoticeRoomBattleEnd _R2M_NoticeRoomBattleEnd = (R2M_NoticeRoomBattleEnd) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, _M2R_NoticeRoomBattleEnd);
+
+                await ETTask.CompletedTask;
+            }
+        }
+
+        [Event(SceneType.Map)]
+        public class NoticeGameBattleRemovePlayer: AEvent<Scene, EventType.NoticeGameBattleRemovePlayer>
+        {
+            protected override async ETTask Run(Scene scene, EventType.NoticeGameBattleRemovePlayer args)
+            {
+                long playerId = args.playerId;
+                await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Unit);
+                // Unit unit = ET.Ability.UnitHelper.GetUnit(scene, playerId);
+                // if (unit != null)
+                // {
+                //     await unit.RemoveLocation(LocationType.Unit);
+                // }
 
                 await ETTask.CompletedTask;
             }

@@ -26,8 +26,14 @@ namespace ET.Server
 
             PlayerBattleCardComponent playerBattleCardComponent = await self.InitByDBOne<PlayerBattleCardComponent>(playerId);
 
+            PlayerOtherInfoComponent playerOtherInfoComponent = await self.InitByDBOne<PlayerOtherInfoComponent>(playerId);
+            playerOtherInfoComponent.Init();
+
             PlayerFunctionMenuComponent playerFunctionMenuComponent = await self.InitByDBOne<PlayerFunctionMenuComponent>(playerId);
             playerFunctionMenuComponent.Init();
+
+            PlayerMailComponent playerMailComponent = await self.InitByDBOne<PlayerMailComponent>(playerId);
+            playerMailComponent.Init();
         }
 
         public static async ETTask<T> InitByDBOne<T>(this PlayerDataComponent self, long playerId) where T :Entity, IAwake, new()

@@ -57,6 +57,7 @@ namespace ET.Client
 			//self.ChkMouseRightClick();
 			self.SendARCameraPos();
 			self.SendNeedReNoticeUnitIds();
+			self.SendNeedReNoticeTowerDefense();
 		}
 
 		public static bool ChkIsHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
@@ -490,6 +491,29 @@ namespace ET.Client
 			}
 
 			ET.Client.GamePlayHelper.SendNeedReNoticeUnitIds(self.DomainScene(), needReNoticeUnitIds).Coroutine();
+		}
+
+		public static void SendNeedReNoticeTowerDefense(this GamePlayTowerDefenseComponent self)
+		{
+			if (self.isNeedReNoticeTowerDefense == false)
+			{
+				return;
+			}
+			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
+
+			if (gamePlayComponent.gamePlayStatus != GamePlayStatus.Gaming)
+			{
+				return;
+			}
+
+			long leftTime = self.lastSendTimeTowerDefense - TimeHelper.ClientNow();
+			if (leftTime > 0)
+			{
+				return;
+			}
+			self.lastSendTimeTowerDefense = TimeHelper.ClientNow() + 1000;
+
+			ET.Client.GamePlayHelper.SendNeedReNoticeTowerDefense(self.DomainScene()).Coroutine();
 		}
 	}
 }

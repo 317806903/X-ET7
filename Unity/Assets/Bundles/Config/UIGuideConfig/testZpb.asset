@@ -334,7 +334,7 @@ MonoBehaviour:
     guideExecuteStaticMethod: None
     guideExecuteParam: 
     trigExitCondition: 2
-    trigExitConditionStaticMethod: ChkTowerPut
+    trigExitConditionStaticMethod: ChkTowerPutSuccess
     trigExitConditionParam: 
   - name: "\u70B9\u51FB\u653E\u7F6E\u7684\u5854"
     trigEnterCondition: 0

@@ -160,9 +160,9 @@ namespace ET
         {
             if (UnityEngine.EventSystems.EventSystem.current)
             {
-#if UNITY_EDITOR
+#if false && UNITY_EDITOR
                 return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-#elif UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS
+#elif UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS
                 if (Input.touchCount > 0 || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
                 {
                     return IsPointerOverUIObject();
@@ -192,7 +192,10 @@ namespace ET
                 {
                     if (results[i].gameObject.layer.Equals(LayerMask.NameToLayer("UI")))
                     {
-                        return true;
+                        if (results[i].gameObject.GetComponent<UITouchPass>() == null)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

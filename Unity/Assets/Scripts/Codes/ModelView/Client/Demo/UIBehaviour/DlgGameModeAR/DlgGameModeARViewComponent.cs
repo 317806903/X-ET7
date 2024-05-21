@@ -211,7 +211,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_TutorialButton
+		public UnityEngine.UI.Button E_SettingButton
 		{
 			get
 			{
@@ -220,11 +220,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_TutorialButton == null )
+				if( this.m_E_SettingButton == null )
 				{
-					this.m_E_TutorialButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Tutorial");
+					this.m_E_SettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Setting");
 				}
-				return this.m_E_TutorialButton;
+				return this.m_E_SettingButton;
 			}
 		}
 
@@ -551,23 +551,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_DiscordButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_DiscordButton == null )
-				{
-					this.m_E_DiscordButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Discord");
-				}
-				return this.m_E_DiscordButton;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_EG_bgARRectTransform = null;
@@ -582,7 +565,7 @@ namespace ET.Client
 			this.m_E_BagsButton = null;
 			this.m_E_BattleDeckButton = null;
 			this.m_E_RankButton = null;
-			this.m_E_TutorialButton = null;
+			this.m_E_SettingButton = null;
 			this.m_E_ScanCodeButton = null;
 			this.m_E_ScanCodeImage = null;
 			this.m_E_PVEButton = null;
@@ -602,7 +585,6 @@ namespace ET.Client
 			this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
 			this.m_E_GameSettingButton = null;
 			this.m_E_GameSettingImage = null;
-			this.m_E_DiscordButton = null;
 			this.uiTransform = null;
 		}
 
@@ -618,7 +600,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_BagsButton = null;
 		private UnityEngine.UI.Button m_E_BattleDeckButton = null;
 		private UnityEngine.UI.Button m_E_RankButton = null;
-		private UnityEngine.UI.Button m_E_TutorialButton = null;
+		private UnityEngine.UI.Button m_E_SettingButton = null;
 		private UnityEngine.UI.Button m_E_ScanCodeButton = null;
 		private UnityEngine.UI.Image m_E_ScanCodeImage = null;
 		private UnityEngine.UI.Button m_E_PVEButton = null;
@@ -638,7 +620,6 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_GameSettingButton = null;
 		private UnityEngine.UI.Image m_E_GameSettingImage = null;
-		private UnityEngine.UI.Button m_E_DiscordButton = null;
 		public Transform uiTransform = null;
 	}
 }

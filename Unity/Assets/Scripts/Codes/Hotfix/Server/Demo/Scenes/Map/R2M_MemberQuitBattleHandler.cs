@@ -11,8 +11,6 @@ namespace ET.Server
 			GamePlayComponent gamePlayComponent = scene.GetComponent<GamePlayComponent>();
 			long playerId = request.PlayerId;
 
-			Unit unit = Ability.UnitHelper.GetUnit(scene, playerId);
-			unit?.RemoveLocation(LocationType.Unit).Coroutine();
 			gamePlayComponent?.PlayerQuitBattle(playerId, true);
 
 			await ETTask.CompletedTask;

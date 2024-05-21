@@ -8,8 +8,11 @@ using Unity.Mathematics;
 namespace ET
 {
     [ComponentOf(typeof (Scene))]
-    public class SyncDataManager: Entity, IAwake, IDestroy, IFixedUpdate
+    public class SyncDataManager: Entity, IAwake, IDestroy, ILateUpdate
     {
         public MultiMapSimple<long, byte[]> player2SyncDataList;
+        public int waitFrameSync = 60;
+        public int curFrameSync = 0;
+        public Dictionary<long, int> playerSessionInfoList;
     }
 }

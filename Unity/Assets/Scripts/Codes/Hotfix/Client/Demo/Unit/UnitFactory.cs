@@ -28,12 +28,19 @@ namespace ET.Client
 	        EffectComponent effectComponent = unit.AddComponent<EffectComponent>();
 	        if (unitInfo.EffectComponents != null)
 	        {
+		        EffectShowChgComponent effectShowChgComponent = unit.GetComponent<EffectShowChgComponent>();
+		        if (effectShowChgComponent == null)
+		        {
+			        effectShowChgComponent = unit.AddComponent<EffectShowChgComponent>();
+		        }
+
 		        foreach (byte[] bytes in unitInfo.EffectComponents)
 		        {
 			        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
 			        if (entity != null)
 			        {
 				        effectComponent.AddChild(entity);
+				        effectShowChgComponent.chgEffectList.Add(entity.Id);
 			        }
 		        }
 	        }
@@ -90,10 +97,17 @@ namespace ET.Client
 	        effectComponent = unit.AddComponent<EffectComponent>();
 	        if (unitInfo.EffectComponents != null)
 	        {
+		        EffectShowChgComponent effectShowChgComponent = unit.GetComponent<EffectShowChgComponent>();
+		        if (effectShowChgComponent == null)
+		        {
+			        effectShowChgComponent = unit.AddComponent<EffectShowChgComponent>();
+		        }
+
 		        foreach (byte[] bytes in unitInfo.EffectComponents)
 		        {
 			        Entity entity = MongoHelper.Deserialize<Entity>(bytes);
 			        effectComponent.AddChild(entity);
+			        effectShowChgComponent.chgEffectList.Add(entity.Id);
 		        }
 	        }
 

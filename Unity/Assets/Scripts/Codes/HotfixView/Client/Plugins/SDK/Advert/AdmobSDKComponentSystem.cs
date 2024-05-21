@@ -55,13 +55,13 @@ namespace ET.Client
 #if UNITY_ANDROID
             self.rewardedAdUnitId = "ca-app-pub-6514784270434577/2970547189";
 #elif UNITY_IPHONE
-            self.rewardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
+            self.rewardedAdUnitId = "ca-app-pub-6514784270434577/1606817448";
 #else
             self.rewardedAdUnitId = "unused";
 #endif
             UnityAds.SetConsentMetaData("privacy.consent", true);
             self.retryCount = 3;
-            MobileAds.Initialize(initStatus => {self.LoadRewardedAd(); });
+            MobileAds.Initialize(initStatus => {});
             await ETTask.CompletedTask;
         }
 
@@ -114,11 +114,11 @@ namespace ET.Client
 
                 // The operation completed successfully.
                 Log.Info("Rewarded ad loaded with response : " + ad.GetResponseInfo());
-                self.retryCount = 0;
                 self.rewardedAd = ad;
-
                 // Register to ad events to extend functionality.
                 self.RegisterEventHandlers(ad);
+                self.retryCount = 0;
+
             });
         }
 
@@ -156,14 +156,16 @@ namespace ET.Client
             }
             else
             {
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+                {
+                    eventName = "AdLoaded",
+                });
                 self.LoadRewardedAd();
 
-                int waitNum = 90;
                 while (true)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
-                    waitNum--;
-                    if (waitNum <= 0)
+                    if (self.retryCount <= 0)
                     {
                         break;
                     }
@@ -172,8 +174,18 @@ namespace ET.Client
                         break;
                     }
                 }
+                bool isLoadSuccess = (self.rewardedAd != null && self.rewardedAd.CanShowAd());
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "AdLoaded",
+                    properties = new()
+                    {
+                        {"result", isLoadSuccess},
+                    }
+                });
             }
 
+            self.isAdReward = false;
             if (self.rewardedAd != null && self.rewardedAd.CanShowAd())
             {
                 Log.Info("Showing rewarded ad.");
@@ -182,6 +194,7 @@ namespace ET.Client
 
                 self.rewardedAd.Show((Reward reward) =>
                 {
+                    self.isAdReward = true;
                     self.FinishRewardedAd(rewardCallback).Coroutine();
                 });
             }
@@ -270,6 +283,25 @@ namespace ET.Client
             ad.OnAdFullScreenContentClosed += () =>
             {
                 Log.Info("Rewarded ad full screen content closed.");
+                if(self.isAdReward == true){
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                    {
+                        eventName = "AdFinished",
+                        properties = new()
+                            {
+                                {"result", "看完广告"},
+                            }
+                    });
+                }else{
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                    {
+                        eventName = "AdFinished",
+                        properties = new()
+                            {
+                                {"result", "中断"},
+                            }
+                    });
+                }
                 self.retryCount = 3;
                 self.LoadRewardedAd();
             };

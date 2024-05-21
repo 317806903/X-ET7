@@ -142,14 +142,17 @@ namespace ET.Ability
                 {
                     damage *= damageScale;
                 }
-                CreateDamageInfo(unit, targetUnit, damage, 0, 0, null);
+                CreateDamageInfo(unit, targetUnit, damage, isCriticalStrike);
                 if (i >= stopNum && i % stopNum == 0)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                 }
-                else if(IdGenerater.Instance.ChkGenerateIdFull())
+                else
                 {
-                    await TimerComponent.Instance.WaitFrameAsync();
+                    while (IdGenerater.Instance.ChkGenerateIdFull())
+                    {
+                        await TimerComponent.Instance.WaitFrameAsync();
+                    }
                 }
             }
         }
@@ -311,10 +314,10 @@ namespace ET.Ability
             return damageValue;
         }
 
-        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, float damageDegree, float criticalRate, DamageSourceTag[] tags)
+        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, bool isCrit)
         {
             Scene scene = unit.DomainScene();
-            return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, damageDegree, criticalRate, tags);
+            return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, isCrit);
         }
     }
 }

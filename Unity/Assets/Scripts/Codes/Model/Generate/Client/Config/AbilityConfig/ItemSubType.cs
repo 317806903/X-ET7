@@ -34,6 +34,10 @@ namespace ET.AbilityConfig
         /// 怪物1
         /// </summary>
         Monster1 = 0,
+        /// <summary>
+        /// 头像框系列1
+        /// </summary>
+        AvatarFrameType1 = 0,
     }
 
 } 

@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using ET.AbilityConfig;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
-using Unity.Mathematics;
 
 namespace ET
 {
     public class SyncData_UnitPosInfo : Entity, IAwake, IDestroy
     {
-        public long unitId { get; set; }
-        public int posX;
-        public int posY;
-        public int posZ;
-        public int forwardX;
-        public int forwardY;
-        public int forwardZ;
+        public long serverTime;
+        public List<long> unitId { get; set; }
+        public List<int> posX;
+        public List<int> posY;
+        public List<int> posZ;
+        public List<int> rotationX;
+        public List<int> rotationY;
+        public List<int> rotationZ;
+        public List<int> rotationW;
     }
 }

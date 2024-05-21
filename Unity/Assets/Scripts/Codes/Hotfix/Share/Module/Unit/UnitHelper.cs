@@ -650,9 +650,24 @@ namespace ET.Ability
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitPlayAudio(unit, playAudioActionId, isOnlySelfShow);
         }
 
+        public static void AddSyncData_UnitGetCoinShow(long playerId, Unit unit, CoinType coinType, int chgValue)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitGetCoinShow(playerId, unit, coinType, chgValue);
+        }
+
+        public static void AddSyncData_DamageShow(Unit unit, int damageValue, bool isCrt)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_DamageShow(unit, damageValue, isCrt);
+        }
+
         public static void AddSyncData_UnitComponent(Unit unit, System.Type type)
         {
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitComponent(unit, type);
+        }
+
+        public static void AddSyncData_UnitEffects(Unit unit, long effectObjId, bool isOnlySelfShow = false)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitEffects(unit, effectObjId, isOnlySelfShow);
         }
 
         public static void AddRecycleSelectHandles(Scene scene, SelectHandle selectHandle)
@@ -688,18 +703,21 @@ namespace ET.Ability
             //     }
             // }
 
-            unitInfo.KV = new Dictionary<int, long>();
+            // var numericDic = DictionaryComponent<int, long>.Create();
+            // NumericComponent nc = unit.GetComponent<NumericComponent>();
+            // if (nc != null && nc.NumericDic != null)
+            // {
+            //     foreach ((int key, long value) in nc.NumericDic)
+            //     {
+            //         numericDic.Add(key, value);
+            //     }
+            // }
+            // if (numericDic.Count > 0)
+            // {
+            //     unitInfo.KV = new(numericDic);
+            // }
 
-            NumericComponent nc = unit.GetComponent<NumericComponent>();
-            if (nc != null && nc.NumericDic != null)
-            {
-                foreach ((int key, long value) in nc.NumericDic)
-                {
-                    unitInfo.KV.Add(key, value);
-                }
-            }
-
-            unitInfo.Components = new();
+            unitInfo.Components = ListComponent<byte[]>.Create();
             foreach (Entity entity in unit.Components.Values)
             {
                 if (entity is ITransferClient)

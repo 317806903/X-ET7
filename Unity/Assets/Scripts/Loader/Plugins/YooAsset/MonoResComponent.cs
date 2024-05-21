@@ -152,6 +152,8 @@ namespace ET
                 string packageName = "DefaultPackage";
                 defaultPackage = YooAssets.TryGetPackage(packageName);
                 defaultPackage.ResetHostServer(GetHostServerURL());
+
+                YooAssets.Clear();
             }
 
             await ETTask.CompletedTask;

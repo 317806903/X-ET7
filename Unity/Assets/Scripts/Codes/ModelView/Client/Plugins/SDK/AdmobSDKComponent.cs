@@ -18,5 +18,6 @@ namespace ET.Client
         public string rewardedAdUnitId;
         public RewardedAd rewardedAd;
         public bool isShowRewardedAding;
+        public bool isAdReward;
     }
 }

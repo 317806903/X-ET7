@@ -51,7 +51,7 @@ namespace ET.Client
 
 		public static async ETTask ShowReportButton(this DlgFixedMenuHighest self)
 		{
-			if (ET.SceneHelper.ChkIsGameModeArcade())
+			if (ET.SceneHelper.ChkIsGameModeArcade() || ET.SceneHelper.ChkIsDemoShow())
 			{
 				self.View.EG_ReportRectTransform.SetVisible(false);
 				return;

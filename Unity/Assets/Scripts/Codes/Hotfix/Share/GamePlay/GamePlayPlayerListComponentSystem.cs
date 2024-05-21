@@ -15,7 +15,6 @@ namespace ET
         {
             protected override void Awake(GamePlayPlayerListComponent self)
             {
-                self.playerList = new();
                 self.playerId2UnitIds = new();
                 self.playerId2PlayerUnitId = new();
                 self.unitId2PlayerId = new();
@@ -31,7 +30,6 @@ namespace ET
         {
             protected override void Destroy(GamePlayPlayerListComponent self)
             {
-                self.playerList?.Clear();
                 self.playerId2UnitIds?.Clear();
                 self.playerId2PlayerUnitId?.Clear();
                 self.unitId2PlayerId?.Clear();
@@ -169,18 +167,18 @@ namespace ET
         /// <returns></returns>
         public static List<long> GetPlayerList(this GamePlayPlayerListComponent self)
         {
-            self.playerList.Clear();
+            ListComponent<long> playerList = ListComponent<long>.Create();
             foreach (var playerId2IsQuit in self.playerId2IsQuit)
             {
                 long playerId = playerId2IsQuit.Key;
                 bool isQuit = playerId2IsQuit.Value;
                 if (isQuit == false)
                 {
-                    self.playerList.Add(playerId);
+                    playerList.Add(playerId);
                 }
             }
 
-            return self.playerList;
+            return playerList;
         }
 
         public static bool ChkPlayerIsQuit(this GamePlayPlayerListComponent self, long playerId)

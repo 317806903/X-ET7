@@ -173,7 +173,8 @@ namespace ET.Server
             long costTime = endTime - beginTime;
             if (costTime > 200)
             {
-                Log.Warning($"actor rpc time > 200: {costTime} {iActorRequest}");
+                Log.Warning($"actor rpc time > 200: {costTime} {iActorRequest.GetType()}");
+                //Log.Warning($"actor rpc time > 200: {costTime} {iActorRequest}");
             }
 
             return response;

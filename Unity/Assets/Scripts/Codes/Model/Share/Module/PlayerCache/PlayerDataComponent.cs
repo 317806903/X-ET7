@@ -9,7 +9,9 @@ namespace ET
         BaseInfo,
         BackPack,
         BattleCard,
+        OtherInfo,
         FunctionMenu,
+        Mails,
         ArcadeCoinAdd,
         ArcadeCoinReduce,
         RankPVE,
@@ -23,6 +25,7 @@ namespace ET
         PlayerBackPack_Client = 2,
         PlayerBattleCard_Client = 3,
         PlayerFunctionMenu_Client = 4,
+        PlayerOtherInfo_Client = 5,
 
         PlayerBaseInfo_AddPhysical = 100,
         PlayerBaseInfo_ReducePhysical = 101,

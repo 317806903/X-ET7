@@ -316,6 +316,15 @@ namespace ET.Client
             image.material = isGray ? material : null;
         }
 
+        public static void SetImageGray(this Transform trans, bool isGray)
+        {
+            Image[] imgs = trans.gameObject.GetComponentsInChildren<Image>();
+            foreach (Image img in imgs)
+            {
+                img.SetImageGray(isGray);
+            }
+        }
+
         public static void SetTowerItemClick(Scene scene, string itemCfgId)
         {
             if (string.IsNullOrEmpty(itemCfgId))
@@ -411,6 +420,10 @@ namespace ET.Client
             FunctionMenuStatus functionMenuStatus = playerFunctionMenuComponent.GetStatus(functionMenuCfgId);
 
             if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                functionMenuStatus = FunctionMenuStatus.Openned;
+            }
+            else if (ET.SceneHelper.ChkIsDemoShow())
             {
                 functionMenuStatus = FunctionMenuStatus.Openned;
             }

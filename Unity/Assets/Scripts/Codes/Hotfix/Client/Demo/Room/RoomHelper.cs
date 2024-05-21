@@ -341,19 +341,23 @@ namespace ET.Client
         /// <param name="clientScene"></param>
         public static async ETTask MemberReturnRoomFromBattleAsync(Scene clientScene)
         {
-            try
             {
-                M2C_MemberReturnRoomFromBattle _M2C_MemberReturnRoomFromBattle = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2M_MemberReturnRoomFromBattle()) as
-                        M2C_MemberReturnRoomFromBattle;
-                if (_M2C_MemberReturnRoomFromBattle.Error != ET.ErrorCode.ERR_Success)
-                {
-                    Log.Error($"ET.Client.RoomHelper.MemberReturnRoomFromBattleAsync Error==1 msg={_M2C_MemberReturnRoomFromBattle.Message}");
-                }
+                await ETTask.CompletedTask;
+                return;
             }
-            catch (Exception e)
-            {
-                Log.Error(e);
-            }
+            // try
+            // {
+            //     M2C_MemberReturnRoomFromBattle _M2C_MemberReturnRoomFromBattle = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2M_MemberReturnRoomFromBattle()) as
+            //             M2C_MemberReturnRoomFromBattle;
+            //     if (_M2C_MemberReturnRoomFromBattle.Error != ET.ErrorCode.ERR_Success)
+            //     {
+            //         Log.Error($"ET.Client.RoomHelper.MemberReturnRoomFromBattleAsync Error==1 msg={_M2C_MemberReturnRoomFromBattle.Message}");
+            //     }
+            // }
+            // catch (Exception e)
+            // {
+            //     Log.Error(e);
+            // }
         }
 
         /// <summary>

@@ -35,6 +35,7 @@ namespace ET.Client
             }
 
             ClientSceneManagerComponent.Instance.IsGameModeArcade = ResConfig.Instance.IsGameModeArcade;
+            ClientSceneManagerComponent.Instance.IsDemoShow = ResConfig.Instance.IsDemoShow;
 
             LanguageType languageType = LanguageType.EN;
             if (ResConfig.Instance.languageType == LanguageType.CN.ToString())

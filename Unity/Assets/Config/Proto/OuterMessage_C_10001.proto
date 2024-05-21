@@ -122,21 +122,6 @@ message M2C_SyncDataList // IActorMessage
 	repeated bytes SyncDataList = 1;
 }
 
-message M2C_SyncUnitEffects // IActorMessage
-{
-	int64 UnitId = 1;
-	int32 AddOrRemove = 2;
-	int64 EffectObjId = 3;
-	bytes EffectComponent = 4;
-}
-
-message M2C_SyncGetCoinShow // IActorMessage
-{
-	int64 UnitId = 1;
-	int32 CoinType = 2;
-	int32 ChgValue = 3;
-}
-
 message M2C_CreateMyUnit // IActorMessage
 {
 	UnitInfo Unit = 1;
@@ -146,6 +131,11 @@ message C2M_NeedReNoticeUnitIds // IActorLocationMessage
 {
 	int32 RpcId = 1;
 	repeated int64 UnitIds = 2;
+}
+
+message C2M_NeedReNoticeTowerDefense // IActorLocationMessage
+{
+	int32 RpcId = 1;
 }
 
 message M2C_StartSceneChange // IActorMessage
@@ -184,6 +174,8 @@ message M2C_Stop // IActorMessage
 message C2G_Ping // IRequest
 {
 	int32 RpcId = 1;
+	int32 Fps = 2;
+	int64 PingTime = 3;
 }
 
 message G2C_Ping // IResponse

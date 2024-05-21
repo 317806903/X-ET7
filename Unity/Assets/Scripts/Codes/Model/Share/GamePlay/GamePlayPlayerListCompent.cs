@@ -55,8 +55,6 @@ namespace ET
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, bool> playerId2IsQuit;
 
-		public List<long> playerList;
-
 		/// <summary>
 		/// playerId对应的出生点
 		/// </summary>

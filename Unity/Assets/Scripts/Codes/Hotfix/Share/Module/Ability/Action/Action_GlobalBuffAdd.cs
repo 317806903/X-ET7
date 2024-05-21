@@ -9,7 +9,7 @@ namespace ET.Ability
         {
             if (delayTime > 0)
             {
-                await TimerComponent.Instance.WaitTillAsync(TimeHelper.ClientFrameTime() + (long)(1000 * delayTime));
+                await TimerComponent.Instance.WaitTillAsync(TimeHelper.ServerFrameTime() + (long)(1000 * delayTime));
             }
 
             ActionCfg_GlobalBuffAdd actionCfgGlobalBuffAdd = ActionCfg_GlobalBuffAddCategory.Instance.Get(actionId);

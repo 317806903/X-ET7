@@ -32,6 +32,7 @@ namespace ET
         Release_148Master,
         Release_148Release,
         Release_Zpb,
+        Release_OutNet_Arcade,
         Release_OutNet_CN,
         Release_OutNet_CN_Demo,
         Release_OutNet_EN,
@@ -55,6 +56,7 @@ namespace ET
             { ServerEnum.Release_148Master, "192.168.10.148"},
             { ServerEnum.Release_148Release, "192.168.10.148"},
             { ServerEnum.Release_Zpb, "192.168.10.58"},
+            { ServerEnum.Release_OutNet_Arcade, "8.134.89.37"},
             { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
             { ServerEnum.Release_OutNet_CN_Demo, "8.134.156.170"},
             { ServerEnum.Release_OutNet_EN, "34.225.211.137"},
@@ -67,6 +69,7 @@ namespace ET
             { ServerEnum.Release_148Master, 5478},
             { ServerEnum.Release_148Release, 3478},
             { ServerEnum.Release_Zpb, 3478},
+            { ServerEnum.Release_OutNet_Arcade, 5478},
             { ServerEnum.Release_OutNet_CN, 3478},
             { ServerEnum.Release_OutNet_CN_Demo, 5478},
             { ServerEnum.Release_OutNet_EN, 3478},
@@ -80,6 +83,7 @@ namespace ET
             { ServerEnum.Release_148Master, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master"},
             { ServerEnum.Release_148Release, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release"},
             { ServerEnum.Release_Zpb, "http://192.168.10.58"},
+            { ServerEnum.Release_OutNet_Arcade, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_Arcade"},
             { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
             { ServerEnum.Release_OutNet_CN_Demo, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo"},
             { ServerEnum.Release_OutNet_EN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN"},
@@ -221,6 +225,12 @@ namespace ET
                     if (this.resConfig.IsGameModeArcade != false)
                     {
                         this.resConfig.IsGameModeArcade = false;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.resConfig.IsDemoShow != false)
+                    {
+                        this.resConfig.IsDemoShow = false;
                         EditorUtility.SetDirty(this.resConfig);
                         AssetDatabase.SaveAssets();
                     }
@@ -459,6 +469,25 @@ namespace ET
                 if (IsGameModeArcade != this.resConfig.IsGameModeArcade)
                 {
                     IsGameModeArcade = this.resConfig.IsGameModeArcade;
+                }
+            }
+            GUILayout.Space(5);
+            EditorGUI.BeginChangeCheck();
+            var IsDemoShow = EditorGUILayout.Toggle("IsDemoShow: ", this.resConfig.IsDemoShow);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (IsDemoShow != this.resConfig.IsDemoShow)
+                {
+                    this.resConfig.IsDemoShow = IsDemoShow;
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (IsDemoShow != this.resConfig.IsDemoShow)
+                {
+                    IsDemoShow = this.resConfig.IsDemoShow;
                 }
             }
             GUILayout.Space(5);

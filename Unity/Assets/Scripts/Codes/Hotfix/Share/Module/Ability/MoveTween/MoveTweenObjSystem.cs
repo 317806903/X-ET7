@@ -93,6 +93,38 @@ namespace ET.Ability
             }
         }
 
+        public static float3 GetTargetUnitPos(this MoveTweenObj self, Unit targetUnit)
+        {
+            return targetUnit.GetUnitClientPos();
+        }
+
+        public static void SetUnitPos(this MoveTweenObj self, float3 pos)
+        {
+            Unit unit = self.GetUnit();
+            if (self.DomainScene().SceneType != SceneType.Map)
+            {
+                unit.SetPositionWhenClient(pos);
+            }
+            else
+            {
+                unit.Position = pos;
+            }
+        }
+
+        public static void SetUnitForward(this MoveTweenObj self, float3 forward)
+        {
+            Unit unit = self.GetUnit();
+            quaternion rotation = quaternion.LookRotation(forward, math.up());
+            if (self.DomainScene().SceneType != SceneType.Map)
+            {
+                unit.SetRotationWhenClient(rotation);
+            }
+            else
+            {
+                unit.Rotation = rotation;
+            }
+        }
+
         public static void ChgSelectHandle(this MoveTweenObj self, SelectHandle selectHandle)
         {
             self.timeElapsed = 0;
@@ -316,11 +348,11 @@ namespace ET.Ability
             float acceleratedSpeed = moveTweenType.AcceleratedSpeed;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
 
-            self.GetUnit().Forward = self.forward;
+            Unit unit = self.GetUnit();
 
-            float3 pos = self.GetUnit().Position;
-            pos += math.normalize(self.forward) * self.speed * fixedDeltaTime;
-            self.GetUnit().Position = pos;
+            float3 pos = unit.Position + math.normalize(self.forward) * self.speed * fixedDeltaTime;
+            self.SetUnitForward(self.forward);
+            self.SetUnitPos(pos);
         }
 
         /// <summary>
@@ -346,7 +378,8 @@ namespace ET.Ability
 
             if (self.selectHandle.unitIds.Count == 0)
             {
-                unit.Position += unit.Forward * self.speed * fixedDeltaTime;
+                float3 pos2 = unit.Position + unit.Forward * self.speed * fixedDeltaTime;
+                self.SetUnitPos(pos2);
                 return;
             }
 
@@ -354,11 +387,12 @@ namespace ET.Ability
             targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
             if (UnitHelper.ChkUnitAlive(targetUnit, true) == false)
             {
-                unit.Position += unit.Forward * self.speed * fixedDeltaTime;
+                float3 pos2 = unit.Position + unit.Forward * self.speed * fixedDeltaTime;
+                self.SetUnitPos(pos2);
                 return;
             }
 
-            float3 dir = targetUnit.Position - unit.Position;
+            float3 dir = self.GetTargetUnitPos(targetUnit) - unit.Position;
             float dirLengthSq = math.lengthsq(dir);
 
             if (dirLengthSq == 0)
@@ -386,8 +420,9 @@ namespace ET.Ability
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
             {
                 self.forward = math.normalize(dir);
-                unit.Forward = self.forward;
-                unit.Position = targetUnit.Position;
+                float3 pos2 = self.GetTargetUnitPos(targetUnit);
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(pos2);
 
                 if (self.IsNeedDealHit() && targetUnit != null)
                 {
@@ -421,10 +456,11 @@ namespace ET.Ability
 
                 self.forward = math.lerp(unit.Forward, dir, rotateAngle * fixedDeltaTime / angleTmp);
                 self.forward = math.normalize(self.forward);
-                unit.Forward = self.forward;
+                self.SetUnitForward(self.forward);
             }
 
-            unit.Position += unit.Forward * self.speed * fixedDeltaTime;
+            float3 pos = unit.Position + unit.Forward * self.speed * fixedDeltaTime;
+            self.SetUnitPos(pos);
         }
 
         /// <summary>
@@ -453,7 +489,7 @@ namespace ET.Ability
                     return;
                 }
 
-                targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
             }
             else if (selectHandleType == SelectHandleType.SelectPosition)
             {
@@ -478,8 +514,10 @@ namespace ET.Ability
             float3 curPosDir = math.mul(quaternion.RotateY(curAngle), math.forward());
             self.forward = math.mul(quaternion.RotateY(math.PI * 0.5f), curPosDir);
             self.forward = math.normalize(self.forward);
-            unit.Forward = self.forward;
-            unit.Position = targetPosition + curPosDir * radius;
+
+            float3 pos = targetPosition + curPosDir * radius;
+            self.SetUnitForward(self.forward);
+            self.SetUnitPos(pos);
         }
 
         /// <summary>
@@ -515,12 +553,12 @@ namespace ET.Ability
                     targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                     if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else if (UnitHelper.ChkUnitAlive(targetUnit, true))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
 
                         // Unit bulletUnit = self.GetUnit();
@@ -591,8 +629,8 @@ namespace ET.Ability
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
             {
                 self.forward = math.normalize(dir);
-                unit.Forward = self.forward;
-                unit.Position = targetPosition;
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(targetPosition);
 
                 if (self.IsNeedDealHit() && targetUnit != null)
                 {
@@ -617,8 +655,9 @@ namespace ET.Ability
             else
             {
                 self.forward = math.normalize(dir);
-                unit.Forward = self.forward;
-                unit.Position += self.forward * self.speed * fixedDeltaTime;
+                float3 pos = unit.Position + self.forward * self.speed * fixedDeltaTime;
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(pos);
             }
         }
 
@@ -649,12 +688,12 @@ namespace ET.Ability
                     targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                     if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else if (UnitHelper.ChkUnitAlive(targetUnit, true))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
 
                         // Unit bulletUnit = self.GetUnit();
@@ -757,8 +796,8 @@ namespace ET.Ability
             else if (dirLengthSq <= self.speed * fixedDeltaTime * self.speed * fixedDeltaTime)
             {
                 self.forward = math.normalize(dir);
-                unit.Forward = self.forward;
-                unit.Position = targetPosition;
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(targetPosition);
 
                 if (self.IsNeedDealHit() && targetUnit != null)
                 {
@@ -783,8 +822,9 @@ namespace ET.Ability
             else
             {
                 self.forward = math.normalize(dir);
-                unit.Forward = self.forward;
-                unit.Position += self.forward * self.speed * fixedDeltaTime;
+                float3 pos = unit.Position + self.forward * self.speed * fixedDeltaTime;
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(pos);
             }
         }
 
@@ -815,12 +855,12 @@ namespace ET.Ability
                     targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                     if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else if (UnitHelper.ChkUnitAlive(targetUnit, true))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else
@@ -855,8 +895,8 @@ namespace ET.Ability
                 else
                 {
                     self.forward = math.normalize(dir);
-                    unit.Forward = self.forward;
-                    unit.Position = targetPosition;
+                    self.SetUnitForward(self.forward);
+                    self.SetUnitPos(targetPosition);
                 }
 
                 if (self.IsNeedDealHit() && targetUnit != null)
@@ -908,12 +948,12 @@ namespace ET.Ability
                     targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
                     if (UnitHelper.ChkUnitAlive(targetUnit, false))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else if (UnitHelper.ChkUnitAlive(targetUnit, true))
                     {
-                        targetPosition = targetUnit.Position + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
+                        targetPosition = self.GetTargetUnitPos(targetUnit) + new float3(0, UnitHelper.GetBodyHeight(targetUnit) * 0.5f, 0);
                         self.lastTargetPosition = targetPosition;
                     }
                     else
@@ -976,8 +1016,8 @@ namespace ET.Ability
             Unit unit = self.GetUnit();
             if (totalTime <= self.timeElapsed)
             {
-                unit.Forward = self.forward;
-                unit.Position = targetPosition;
+                self.SetUnitForward(self.forward);
+                self.SetUnitPos(targetPosition);
 
                 if (self.IsNeedDealHit() && UnitHelper.ChkIsBullet(unit))
                 {
@@ -1029,12 +1069,12 @@ namespace ET.Ability
                 self.forward = math.normalize(curSpeed);
                 self.speed = math.length(curSpeed);
 
-                unit.Forward = self.forward;
+                self.SetUnitForward(self.forward);
                 //unit.Position += self.forward * self.speed * fixedDeltaTime;
                 float3 newPos = self.startPosition +
                     (math.normalize(disTmp) * speed * self.timeElapsed + 0.5f * acceleratedSpeed * self.timeElapsed * self.timeElapsed) +
                     new float3(0, speedYStart * self.timeElapsed - 0.5f * gravity * self.timeElapsed * self.timeElapsed, 0);
-                unit.Position = newPos;
+                self.SetUnitPos(newPos);
             }
         }
     }

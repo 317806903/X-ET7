@@ -38,5 +38,6 @@
         public const int DlgFixedMenuHighestFrameTimer = 226;
         public const int GameModeArcadeTimer = 227;
         public const int DlgCommonChooseTimer = 228;
+        public const int ARSessionComponentTimer = 229;
     }
 }

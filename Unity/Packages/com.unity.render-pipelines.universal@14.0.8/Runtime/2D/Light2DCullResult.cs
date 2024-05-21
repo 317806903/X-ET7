@@ -76,7 +76,7 @@ namespace UnityEngine.Rendering.Universal
             m_IsGameView = UniversalRenderPipeline.IsGameCamera(camera);
 #endif
 
-            Profiler.BeginSample("Cull 2D Lights and Shadow Casters");
+            //Profiler.BeginSample("Cull 2D Lights and Shadow Casters");
             m_VisibleLights.Clear();
             foreach (var light in Light2DManager.lights)
             {
@@ -94,7 +94,7 @@ namespace UnityEngine.Rendering.Universal
                     continue;
                 }
 
-                Profiler.BeginSample("Test Planes");
+                //Profiler.BeginSample("Test Planes");
                 var position = light.boundingSphere.position;
                 var culled = false;
                 for (var i = 0; i < cullingParameters.cullingPlaneCount; ++i)
@@ -108,7 +108,7 @@ namespace UnityEngine.Rendering.Universal
                         break;
                     }
                 }
-                Profiler.EndSample();
+                //Profiler.EndSample();
                 if (culled)
                     continue;
 
@@ -145,7 +145,7 @@ namespace UnityEngine.Rendering.Universal
                 }
             }
 
-            Profiler.EndSample();
+            //Profiler.EndSample();
         }
     }
 }

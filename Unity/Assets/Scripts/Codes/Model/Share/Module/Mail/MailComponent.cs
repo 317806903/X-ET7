@@ -8,7 +8,7 @@ namespace ET
     {
     }
 
-    [ChildOf(typeof(PlayerMailComponent))]
+    [ChildOf]
     public class MailComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {
         public MailType mailType;

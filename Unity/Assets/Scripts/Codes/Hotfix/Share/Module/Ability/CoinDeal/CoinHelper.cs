@@ -39,14 +39,7 @@ namespace ET.Ability
                 int chgValue = coinAdd.Value;
                 GamePlayHelper.ChgPlayerCoin(unit.DomainScene(), playerId, coinType, chgValue);
 
-                EventType.SyncGetCoinShow _SyncGetCoinShow = new ()
-                {
-                    playerId = playerId,
-                    unit = unit,
-                    coinType = coinType,
-                    chgValue = chgValue,
-                };
-                EventSystem.Instance.Publish(unit.DomainScene(), _SyncGetCoinShow);
+                ET.Ability.UnitHelper.AddSyncData_UnitGetCoinShow(playerId, unit, coinType, chgValue);
             }
         }
 

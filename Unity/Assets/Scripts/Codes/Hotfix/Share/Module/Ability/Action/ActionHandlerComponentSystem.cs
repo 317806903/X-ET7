@@ -88,11 +88,11 @@ namespace ET.Ability
                 return;
             }
 
-            selectHandle.SetHolding(true);
+            //selectHandle.SetHolding(true);
             await actionHandler.Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext);
-            selectHandle.SetHolding(false);
+            //selectHandle.SetHolding(false);
 
-            ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), selectHandle);
+            //ET.Ability.UnitHelper.AddRecycleSelectHandles(self.DomainScene(), selectHandle);
         }
     }
 }

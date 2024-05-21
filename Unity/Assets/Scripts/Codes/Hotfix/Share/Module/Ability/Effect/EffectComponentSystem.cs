@@ -137,6 +137,12 @@ namespace ET.Ability
             }
         }
 
+        public static EffectObj GetEffectObj(this EffectComponent self, long effectObjId)
+        {
+            EffectObj effectObj = self.GetChild<EffectObj>(effectObjId);
+            return effectObj;
+        }
+
         public static List<long> GetEffectObjIdsByEffectShowType(this EffectComponent self, EffectShowType effectShowType)
         {
             self.effectShowType2EffectObjId.TryGetValue(effectShowType, out List<long> effectObjList);
@@ -149,13 +155,8 @@ namespace ET.Ability
             {
                 return;
             }
-            EventType.SyncUnitEffects _SyncUnitEffects = new()
-            {
-                unit = effectObj.GetUnit(),
-                isAddEffect = false,
-                effectObjId = effectObj.Id,
-            };
-            EventSystem.Instance.Publish(self.DomainScene(), _SyncUnitEffects);
+
+            ET.Ability.UnitHelper.AddSyncData_UnitEffects(effectObj.GetUnit(), effectObj.Id);
         }
 
         public static void NoticeClientRefreshEffectObj(this EffectComponent self, EffectObj effectObj)
@@ -164,14 +165,7 @@ namespace ET.Ability
             {
                 return;
             }
-            EventType.SyncUnitEffects _SyncUnitEffects = new()
-            {
-                unit = effectObj.GetUnit(),
-                isAddEffect = true,
-                effectObj = effectObj,
-                isOnlySelfShow = false,
-            };
-            EventSystem.Instance.Publish(self.DomainScene(), _SyncUnitEffects);
+            ET.Ability.UnitHelper.AddSyncData_UnitEffects(effectObj.GetUnit(), effectObj.Id);
         }
 
         public static void FixedUpdate(this EffectComponent self, float fixedDeltaTime)

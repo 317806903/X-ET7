@@ -18,59 +18,57 @@ namespace ET.Client
 			{
 				return;
 			}
+
+			int i = 0;
 			foreach (byte[] syncData in message.SyncDataList)
 			{
 				try
 				{
-
+					i++;
 					Entity entity = MongoHelper.Deserialize<Entity>(syncData);
 					System.Type type = entity.GetType();
 					if (type == typeof (ET.SyncData_UnitPosInfo))
 					{
 						ET.SyncData_UnitPosInfo _SyncData_UnitPosInfo = (ET.SyncData_UnitPosInfo)entity;
-						Unit unit = unitComponent.Get(_SyncData_UnitPosInfo.unitId);
-						if (unit == null)
-						{
-							continue;
-						}
-
-						_SyncData_UnitPosInfo.DealByBytes(unit);
+						await _SyncData_UnitPosInfo.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitNumericInfo))
 					{
 						ET.SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = (ET.SyncData_UnitNumericInfo)entity;
-						Unit unit = unitComponent.Get(_SyncData_UnitNumericInfo.unitId);
-						if (unit == null)
-						{
-							continue;
-						}
 
-						_SyncData_UnitNumericInfo.DealByBytes(unit);
+						await _SyncData_UnitNumericInfo.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitPlayAudio))
 					{
 						ET.SyncData_UnitPlayAudio _SyncData_UnitPlayAudio = (ET.SyncData_UnitPlayAudio)entity;
-						Unit unit = unitComponent.Get(_SyncData_UnitPlayAudio.unitId);
-						if (unit == null)
-						{
-							continue;
-						}
-
-						_SyncData_UnitPlayAudio.DealByBytes(unit);
+						await _SyncData_UnitPlayAudio.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitComponent))
 					{
 						ET.SyncData_UnitComponent _SyncData_UnitComponent = (ET.SyncData_UnitComponent)entity;
-						Unit unit = unitComponent.Get(_SyncData_UnitComponent.unitId);
-						if (unit == null)
-						{
-							continue;
-						}
-
-						_SyncData_UnitComponent.DealByBytes(unit);
+						await _SyncData_UnitComponent.DealByBytes(unitComponent);
+					}
+					else if (type == typeof (ET.SyncData_UnitGetCoinShow))
+					{
+						ET.SyncData_UnitGetCoinShow _SyncData_UnitGetCoinShow = (ET.SyncData_UnitGetCoinShow)entity;
+						await _SyncData_UnitGetCoinShow.DealByBytes(unitComponent);
+					}
+					else if (type == typeof (ET.SyncData_DamageShow))
+					{
+						ET.SyncData_DamageShow _SyncData_DamageShow = (ET.SyncData_DamageShow)entity;
+						await _SyncData_DamageShow.DealByBytes(unitComponent);
+					}
+					else if (type == typeof (ET.SyncData_UnitEffects))
+					{
+						ET.SyncData_UnitEffects _SyncData_UnitEffects = (ET.SyncData_UnitEffects)entity;
+						await _SyncData_UnitEffects.DealByBytes(unitComponent);
 					}
 
 					entity.Dispose();
+					if (i > 100)
+					{
+						await TimerComponent.Instance.WaitFrameAsync();
+					}
 				}
 				catch (Exception e)
 				{

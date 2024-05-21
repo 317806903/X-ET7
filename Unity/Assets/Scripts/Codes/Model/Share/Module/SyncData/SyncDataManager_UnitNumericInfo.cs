@@ -10,14 +10,17 @@ namespace ET
     [ComponentOf(typeof (SyncDataManager))]
     public class SyncDataManager_UnitNumericInfo : Entity, IAwake, IDestroy
     {
-        public MultiMapSetSimple<long, int> NeedSyncNumericUnitsKey;
-        public HashSet<Unit> NeedSyncNumericUnits;
+        public MultiDictionary<long, Unit, HashSet<int>> player2SyncUnit;
+        public MultiMapSetSimple<long, Unit> player2SyncUnit_AllKey;
 
-        public int waitFrameSyncNumericKey = 4;
-        public int curFrameSyncNumericKey = 0;
+        public MultiMapSetSimple<long, int> NeedSyncNumericUnit;
+        public HashSet<Unit> NeedSyncNumericUnit_AllKey;
 
-        public int waitFrameSyncNumeric = 4;
-        public int curFrameSyncNumeric = 0;
+        public Dictionary<long, int> waitFrameSyncNumericKey = new();
+        public Dictionary<long, int> curFrameSyncNumericKey = new();
+
+        public Dictionary<long, int> waitFrameSyncNumeric = new();
+        public Dictionary<long, int> curFrameSyncNumeric = new();
 
     }
 }

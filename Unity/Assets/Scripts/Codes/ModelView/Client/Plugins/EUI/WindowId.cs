@@ -54,5 +54,6 @@ namespace ET.Client
 		WindowID_ArcadeCoin,
 		WindowID_CommonChoose,
 		WindowID_GameModeSetting,
+		WindowID_BattleSetting,
 	}
 }

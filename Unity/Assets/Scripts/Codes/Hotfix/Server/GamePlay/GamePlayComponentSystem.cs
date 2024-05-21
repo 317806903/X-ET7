@@ -282,12 +282,6 @@ namespace ET.Server
                 Log.Error($"ET.Server.GamePlayComponentSystem.TrigDestroyPlayer {e}");
             }
 
-            Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), playerId);
-            if (unit != null)
-            {
-                await unit.RemoveLocation(LocationType.Unit);
-            }
-
             self.PlayerQuitBattle(playerId, true);
             await ETTask.CompletedTask;
         }

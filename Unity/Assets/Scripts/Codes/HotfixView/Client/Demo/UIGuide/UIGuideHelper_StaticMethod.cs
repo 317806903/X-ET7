@@ -10,32 +10,34 @@ namespace ET.Client
     {
         public static long recordTime;
 
-        public static async ETTask<bool> ChkTowerPut(Scene scene)
+        public static async ETTask<bool> ChkTowerPutSuccess(UIGuideStepComponent guideStepComponent)
         {
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(scene);
-            if (gamePlayTowerDefenseComponent == null)
-            {
-                return false;
-            }
+            guideStepComponent.guideConditionStatus.TryGetValue(GuideConditionStaticMethodType.ChkTowerPutSuccess, out bool status);
+            return status;
+        }
 
-            PlayerOwnerTowersComponent playerOwnerTowersComponent = gamePlayTowerDefenseComponent.GetComponent<PlayerOwnerTowersComponent>();
-            if (playerOwnerTowersComponent == null)
-            {
-                return false;
-            }
+        public static async ETTask<bool> ChkTowerScaleSuccess(UIGuideStepComponent guideStepComponent)
+        {
+            guideStepComponent.guideConditionStatus.TryGetValue(GuideConditionStaticMethodType.ChkTowerScaleSuccess, out bool status);
+            return status;
+        }
 
-            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(scene);
-            if (playerOwnerTowersComponent.playerId2unitTowerId.ContainsKey(myPlayerId) == false)
-            {
-                return false;
-            }
+        public static async ETTask<bool> ChkTowerReclaimSuccess(UIGuideStepComponent guideStepComponent)
+        {
+            guideStepComponent.guideConditionStatus.TryGetValue(GuideConditionStaticMethodType.ChkTowerReclaimSuccess, out bool status);
+            return status;
+        }
 
-            foreach (var unitIds in playerOwnerTowersComponent.playerId2unitTowerId[myPlayerId])
-            {
-                return true;
-            }
+        public static async ETTask<bool> ChkTowerUpgradeSuccess(UIGuideStepComponent guideStepComponent)
+        {
+            guideStepComponent.guideConditionStatus.TryGetValue(GuideConditionStaticMethodType.ChkTowerUpgradeSuccess, out bool status);
+            return status;
+        }
 
-            return false;
+        public static async ETTask<bool> ChkTowerMoveSuccess(UIGuideStepComponent guideStepComponent)
+        {
+            guideStepComponent.guideConditionStatus.TryGetValue(GuideConditionStaticMethodType.ChkTowerMoveSuccess, out bool status);
+            return status;
         }
 
         public static async ETTask<bool> ChkWaitTime(Scene scene, string param)
@@ -231,15 +233,13 @@ namespace ET.Client
             DlgBattleTowerAR dlgBattleTowerAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTowerAR>();
             if (dlgBattleTowerAR != null)
             {
-                dlgBattleTowerAR.View.E_QuitBattleButton.SetVisible(isShow);
-                dlgBattleTowerAR.View.E_ReScanButton.SetVisible(isShow);
+                dlgBattleTowerAR.View.E_GameSettingButton.SetVisible(isShow);
             }
 
             DlgBattleTower dlgBattleTower = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleTower>();
             if (dlgBattleTower != null)
             {
-                dlgBattleTower.View.E_QuitBattleButton.SetVisible(isShow);
-                dlgBattleTower.View.E_ReScanButton.SetVisible(isShow);
+                dlgBattleTower.View.E_GameSettingButton.SetVisible(isShow);
             }
 
             await ETTask.CompletedTask;
@@ -259,7 +259,8 @@ namespace ET.Client
             }
             else
             {
-                UIManagerHelper.GetUIComponent(scene).CloseWindow<DlgVideoShowSmall>();
+                DlgVideoShowSmall _DlgVideoShowSmall = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgVideoShowSmall>(true);
+                _DlgVideoShowSmall?.Stop();
             }
 
             await ETTask.CompletedTask;

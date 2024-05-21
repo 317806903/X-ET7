@@ -35,7 +35,7 @@ namespace ET.Ability.Client
             protected override void Update(EffectShowComponent self)
             {
 				float fixedDeltaTime = TimeHelper.FixedDetalTime;
-				self.FixedUpdate(fixedDeltaTime);
+				self.Update(fixedDeltaTime);
             }
         }
 
@@ -72,13 +72,34 @@ namespace ET.Ability.Client
             }
         }
 
-        public static void FixedUpdate(this EffectShowComponent self, float fixedDeltaTime)
+        public static void Update(this EffectShowComponent self, float fixedDeltaTime)
         {
             EffectComponent effectComponent = self.GetUnit().GetComponent<EffectComponent>();
             if (effectComponent == null)
             {
                 return;
             }
+
+            foreach (var effectShowObjs in self.curExistEffectList)
+            {
+                effectShowObjs.Value.UpdateEffect(false, fixedDeltaTime);
+            }
+
+            //self.CreateOrRemove(effectComponent, fixedDeltaTime);
+            self.ChkOnly(effectComponent, fixedDeltaTime);
+        }
+
+        public static void CreateOrRemove(this EffectShowComponent self, EffectComponent effectComponent, float fixedDeltaTime)
+        {
+            if (self.curFrame++ < self.waitFrame)
+            {
+                return;
+            }
+            else
+            {
+                self.curFrame = 0;
+            }
+
             self.waitRemoveEffectList.Clear();
             foreach (var effectShowObjs in self.curExistEffectList)
             {
@@ -108,12 +129,56 @@ namespace ET.Ability.Client
                 }
                 self.waitRemoveEffectList.Clear();
             }
+        }
 
-            foreach (var effectShowObjs in self.curExistEffectList)
+        public static void ChkOnly(this EffectShowComponent self, EffectComponent effectComponent, float fixedDeltaTime)
+        {
+            if (self.curFrameOnly++ < self.waitFrameOnly)
             {
-                effectShowObjs.Value.UpdateEffect(false, fixedDeltaTime);
+                return;
+            }
+            else
+            {
+                self.curFrameOnly = 0;
             }
 
+            EffectShowChgComponent effectShowChgComponent = self.GetUnit().GetComponent<EffectShowChgComponent>();
+            if (effectShowChgComponent == null)
+            {
+                return;
+            }
+
+            self.waitRemoveEffectList.Clear();
+
+            foreach (long effectObjId in effectShowChgComponent.chgEffectList)
+            {
+                EffectObj effectObj = effectComponent.GetChild<EffectObj>(effectObjId);
+                if (effectObj != null)
+                {
+                    if (self.curExistEffectList.ContainsKey(effectObj.Id))
+                    {
+                        self.curExistEffectList[effectObj.Id].Refresh(effectObj);
+                        continue;
+                    }
+                    else
+                    {
+                        self.AddEffectShow(effectObj);
+                    }
+                }
+                else
+                {
+                    self.waitRemoveEffectList.Add(effectObjId);
+                }
+            }
+            effectShowChgComponent.chgEffectList.Clear();
+            if (self.waitRemoveEffectList.Count > 0)
+            {
+                foreach (var effectObjId in self.waitRemoveEffectList)
+                {
+                    self.RemoveEffectShow(effectObjId);
+                }
+                self.waitRemoveEffectList.Clear();
+            }
         }
     }
 }

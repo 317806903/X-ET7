@@ -14,6 +14,10 @@ namespace ET.Client
 		{
 			try
 			{
+				if (self.IsDisposed)
+				{
+					return;
+				}
 				self.Update();
 			}
 			catch (Exception e)
@@ -42,12 +46,15 @@ namespace ET.Client
 
 		public static void HideWindow(this DlgVideoShow self)
 		{
-			ET.Client.UIAudioManagerHelper.ResumeMusic(self.DomainScene());
+			ET.Client.UIAudioManagerHelper.ResetMusicStatus(self.DomainScene());
 			TimerComponent.Instance?.Remove(ref self.Timer);
 		}
 
 		public static async ETTask _ShowWindow(this DlgVideoShow self)
 		{
+			await TimerComponent.Instance.WaitFrameAsync();
+			GL.Clear(false, true, Color.black);
+
 			self.View.E_ReturnLoginButton.SetVisible(false);
 			self.View.E_SliderSlider.SetVisible(false);
 
@@ -82,6 +89,10 @@ namespace ET.Client
 			while (videoPlayer.isPrepared == false)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (self.IsDisposed)
+				{
+					return;
+				}
 			}
 
 			image.texture = videoPlayer.texture;
@@ -89,8 +100,16 @@ namespace ET.Client
 			while (videoPlayer.isPlaying)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (self.IsDisposed)
+				{
+					return;
+				}
 			}
 			await TimerComponent.Instance.WaitAsync(1000);
+			if (self.IsDisposed)
+			{
+				return;
+			}
 			//self.DoNext().Coroutine();
 		}
 
@@ -101,6 +120,7 @@ namespace ET.Client
 			ResComponent.Instance.UnloadAsset(self.videoPath);
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).CloseWindow<DlgVideoShow>();
+			GL.Clear(false, true, Color.black);
 		}
 
 		public static async ETTask ClickVideo(this DlgVideoShow self)
@@ -112,12 +132,21 @@ namespace ET.Client
 
 		public static void Update(this DlgVideoShow self)
 		{
+			if (self == null || self.IsDisposed || self.View == null || self.videoPlayer == null)
+			{
+				return;
+			}
+			if (self.videoPlayer.clip == null)
+			{
+				return;
+			}
 			self.View.E_SliderSlider.SetValueWithoutNotify((float)self.videoPlayer.time / (float)self.videoPlayer.clip.length);
 		}
 
 		public static void OnSider(this DlgVideoShow self, float scale)
 		{
 			self.videoPlayer.time = (long)(scale * self.videoPlayer.clip.length);
+			self.videoPlayer.Play();
 		}
 
 		public static void OnPlay(this DlgVideoShow self)

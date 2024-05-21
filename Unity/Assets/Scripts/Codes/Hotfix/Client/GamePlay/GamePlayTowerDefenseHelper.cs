@@ -146,6 +146,13 @@ namespace ET.Client
 					tipMsg = _M2C_CallOwnTower.Message,
 				});
 			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerPutSuccess",
+				});
+			}
 		}
 
 		public static async ETTask SendUpgradePlayerTower(Scene scene, long towerUnitId, string towerCfgId, bool onlyChkPool)
@@ -173,6 +180,10 @@ namespace ET.Client
 						{"towerCfgId", towerCfgId},
 					}
 				});
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerUpgradeSuccess",
+				});
 			}
 		}
 
@@ -189,6 +200,13 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_ScalePlayerTower.Message,
+				});
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerScaleSuccess",
 				});
 			}
 		}
@@ -208,6 +226,13 @@ namespace ET.Client
 					tipMsg = _M2C_ScalePlayerTowerCard.Message,
 				});
 			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerScaleSuccess",
+				});
+			}
 		}
 
 		public static async ETTask SendReclaimPlayerTower(Scene scene, long towerUnitId)
@@ -222,6 +247,13 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_ReclaimPlayerTower.Message,
+				});
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerReclaimSuccess",
 				});
 			}
 		}
@@ -239,6 +271,13 @@ namespace ET.Client
 				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
 				{
 					tipMsg = _M2C_MovePlayerTower.Message,
+				});
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeGuideConditionStatus()
+				{
+					guideConditionStaticMethodType = "ChkTowerMoveSuccess",
 				});
 			}
 		}

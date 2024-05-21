@@ -8,14 +8,21 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Session session, C2G_Ping request, G2C_Ping response)
 		{
+			int fps = request.Fps;
+			long pingTime = request.PingTime;
+
 			response.Time = TimeHelper.ServerNow();
+			//Log.Debug($"zpb fps[{fps}] pingTime[{pingTime}]");
             SessionPlayerComponent sessionPlayerComponent = session.GetComponent<SessionPlayerComponent>();
 			if (sessionPlayerComponent != null)
-            {
+			{
+				sessionPlayerComponent.fps = fps;
+				sessionPlayerComponent.pingTime = pingTime;
                 Player player = sessionPlayerComponent.Player;
 				if (player != null)
-                {
-                    ActorLocationSenderComponent.Instance?.Get(LocationType.Player).ResetTime(player.Id);
+				{
+					long playerId = player.Id;
+                    ActorLocationSenderComponent.Instance?.Get(LocationType.Player).ResetTime(playerId);
                 }
             }
             await ETTask.CompletedTask;

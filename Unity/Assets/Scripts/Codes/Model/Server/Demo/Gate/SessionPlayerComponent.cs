@@ -16,5 +16,8 @@
 				this.player = value;
 			}
 		}
+
+		public int fps;
+		public long pingTime;
 	}
 }

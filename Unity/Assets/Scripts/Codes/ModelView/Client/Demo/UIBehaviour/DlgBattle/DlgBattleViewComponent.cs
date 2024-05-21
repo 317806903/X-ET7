@@ -551,6 +551,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_GameSettingButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GameSettingButton == null )
+				{
+					this.m_E_GameSettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "GameObject/E_GameSetting");
+				}
+				return this.m_E_GameSettingButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_GameSettingImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_GameSettingImage == null )
+				{
+					this.m_E_GameSettingImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/E_GameSetting");
+				}
+				return this.m_E_GameSettingImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
@@ -585,6 +619,8 @@ namespace ET.Client
 			this.m_EButton_ClearAllMonsterImage = null;
 			this.m_E_TipNodeImage = null;
 			this.m_E_TipTextTextMeshProUGUI = null;
+			this.m_E_GameSettingButton = null;
+			this.m_E_GameSettingImage = null;
 			this.uiTransform = null;
 		}
 
@@ -620,6 +656,8 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EButton_ClearAllMonsterImage = null;
 		private UnityEngine.UI.Image m_E_TipNodeImage = null;
 		private TMPro.TextMeshProUGUI m_E_TipTextTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_GameSettingButton = null;
+		private UnityEngine.UI.Image m_E_GameSettingImage = null;
 		public Transform uiTransform = null;
 	}
 }

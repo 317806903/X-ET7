@@ -94,14 +94,6 @@ namespace ET.Client
 			self.View.E_select1Image.SetVisible(0 == curScaleIndex);
 			self.View.E_select2Image.SetVisible(1 == curScaleIndex);
 			self.View.E_select3Image.SetVisible(2 == curScaleIndex);
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-			{
-				eventName = "ScalSelected",
-				properties = new()
-				{
-					{"battlefield_scal_num", self.GetSceneScale()},
-				}
-			});
 		}
 
 		public static (bool, Vector3) GetScreenRayPos(this DlgARSceneSliderSimple self)
@@ -196,7 +188,7 @@ namespace ET.Client
 
 		public static void ChgScale(this DlgARSceneSliderSimple self, int curScaleIndex)
 		{
-			float lastScale = self.GetSceneScale();
+			float lastScale = self.curScaleIndex;
 			self.curScaleIndex = curScaleIndex;
 			float newScale = self.scaleSettingList[self.curScaleIndex];
 
@@ -206,6 +198,18 @@ namespace ET.Client
 			}
 
 			self.SetCurChooseIndex(curScaleIndex);
+
+			if (lastScale != self.curScaleIndex)
+			{
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "ScalSelected",
+					properties = new()
+					{
+						{"battlefield_scal_num", self.GetSceneScale()},
+					}
+				});
+			}
 		}
 
 	}

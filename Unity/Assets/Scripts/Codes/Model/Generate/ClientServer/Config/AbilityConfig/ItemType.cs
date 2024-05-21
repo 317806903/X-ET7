@@ -22,6 +22,10 @@ namespace ET.AbilityConfig
         /// 怪物
         /// </summary>
         Monster = 1,
+        /// <summary>
+        /// 头像框
+        /// </summary>
+        AvatarFrame = 2,
     }
 
 } 

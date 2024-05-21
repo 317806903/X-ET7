@@ -17,8 +17,6 @@ namespace ET.Client
 
             UIAudioManagerHelper.PlayMusic(scene, MusicType.Main);
 
-            ET.Client.ARSessionHelper.ResetMainCamera(scene, false);
-
             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLoading>();
             DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);
             await ResComponent.Instance.LoadSceneAsync("Hall", _DlgLoading.UpdateProcess);
@@ -89,6 +87,8 @@ namespace ET.Client
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
 
             Log.Debug($"--DealWhenIsDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult.ToString()}]");
+
+            ET.Client.ARSessionHelper.ResetMainCamera(scene, false, false);
 
             if (roomType == RoomType.AR)
             {
@@ -258,6 +258,8 @@ namespace ET.Client
             PlayerStatus playerStatus = playerStatusComponent.PlayerStatus;
 
             Log.Debug($"--DealWhenNotDebugMode playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}] playerStatusComponent.LastBattleCfgId[{playerStatusComponent.LastBattleCfgId}] playerStatusComponent.LastBattleResult[{playerStatusComponent.LastBattleResult.ToString()}]");
+
+            ET.Client.ARSessionHelper.ResetMainCamera(scene, false, false);
 
             if (roomType == RoomType.Normal)
             {

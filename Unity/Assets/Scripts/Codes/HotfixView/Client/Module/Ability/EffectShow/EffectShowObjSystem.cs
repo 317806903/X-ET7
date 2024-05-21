@@ -44,6 +44,18 @@ namespace ET.Ability.Client
 
         public static async ETTask Init(this EffectShowObj self, EffectObj effectObj)
         {
+            Unit unit = effectObj.GetUnit();
+            if (unit == null)
+            {
+                return;
+            }
+
+            GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
+            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+            {
+                return;
+            }
+
             self.RefEffectObj = effectObj;
 
             string resName = effectObj.model.ResName;
@@ -53,34 +65,20 @@ namespace ET.Ability.Client
                 Log.Error($"EffectShowObjSystem.Init go == null when resName={resName}");
             }
             self.go = go;
-            Unit unit = effectObj.GetUnit();
 
-            if (unit == null)
+            // 通过 effectObj.hangPointName 找到节点
+            Transform tran = gameObjectComponent.GetGo().transform;
+            go.transform.SetParent(tran);
+            go.transform.localPosition = effectObj.offSet;
+            go.transform.localEulerAngles = effectObj.rotation;
+            if (effectObj.isScaleByUnit)
             {
                 go.transform.localScale = Vector3.one;
-                go.transform.localPosition = effectObj.offSet;
-                go.transform.localEulerAngles = effectObj.rotation;
             }
             else
             {
-                GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-                if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
-                {
-                    // 通过 effectObj.hangPointName 找到节点
-                    Transform tran = gameObjectComponent.GetGo().transform;
-                    go.transform.SetParent(tran);
-                    go.transform.localPosition = effectObj.offSet;
-                    go.transform.localEulerAngles = effectObj.rotation;
-                    if (effectObj.isScaleByUnit)
-                    {
-                        go.transform.localScale = Vector3.one;
-                    }
-                    else
-                    {
-                        float scaleX = tran.localScale.x;
-                        go.transform.localScale = Vector3.one / scaleX;
-                    }
-                }
+                float scaleX = tran.localScale.x;
+                go.transform.localScale = Vector3.one / scaleX;
             }
             self.go.SetActive(true);
             ET.Client.GameObjectPoolHelper.TrigFromPool(go);
@@ -101,7 +99,7 @@ namespace ET.Ability.Client
 
         public static void UpdateEffect(this EffectShowObj self, bool isFirst, float fixedDeltaTime)
         {
-            if (self.RefEffectObj == null)
+            if (self.go == null)
             {
                 return;
             }
@@ -111,7 +109,12 @@ namespace ET.Ability.Client
 
         public static void UpdateLineEffect(this EffectShowObj self, bool isFirst)
         {
-            if (!(self.RefEffectObj.effectShowType == EffectShowType.Send2Receives || self.RefEffectObj.effectShowType == EffectShowType.Send2Receive2Receive))
+            if (self.RefEffectObj.effectShowType == EffectShowType.Send2Receives ||
+                self.RefEffectObj.effectShowType == EffectShowType.Send2Receive2Receive)
+            {
+
+            }
+            else
             {
                 return;
             }
@@ -215,11 +218,12 @@ namespace ET.Ability.Client
             {
                 return;
             }
+            using ListComponent<(long key, Vector3 pos)> dic = ListComponent<(long key, Vector3 pos)>.Create();
             foreach (var lightningBoltScriptManager in self.lightningBoltScriptManagers)
             {
                 int midIndex = lightningBoltScriptManager.GetMidIndex();
 
-                List<(long key, Vector3 pos)> dic = new();
+                dic.Clear();
                 for (int i = 0; i < list.Count; i++)
                 {
                     long key = list[i];

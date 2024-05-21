@@ -256,7 +256,7 @@ namespace ET
             }
             else
             {
-                if (this.value > ushort.MaxValue - 1000)
+                if (this.value > ushort.MaxValue - 5000)
                 {
                     return true;
                 }

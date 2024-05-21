@@ -44,12 +44,18 @@ namespace ET.Client
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {
-                self.go.SetActive(true);
+                if (self.go.activeSelf == false)
+                {
+                    self.go.SetActive(true);
+                }
             }
             else
             {
                 // self.go.SetActive(false);
-                self.go.SetActive(true);
+                if (self.go.activeSelf == false)
+                {
+                    self.go.SetActive(true);
+                }
             }
 
             self.go.transform.GetComponent<Slider>().value = normalizedHealth;
@@ -57,18 +63,18 @@ namespace ET.Client
 
         public static void OnBeforeRenderUpdate(this HomeHealthBarComponent self)
         {
-            if (self.IsDisposed || self.go == null || self.go.activeSelf == false || self.camera == null)
+            if (self.IsDisposed || self.go == null || self.go.activeSelf == false || self.mainCamera == null)
             {
                 return;
             }
 
-            float3 gameObjectPosition = self.GetUnit().Position + new float3(0,self.GetUnit().model.BodyHeight,0);
-            Vector3 dir = ((Vector3)gameObjectPosition - self.camera.transform.position).normalized;
-            float dot = Vector3.Dot(self.camera.transform.forward, dir);
+            float3 gameObjectPosition = self.GetUnit().Position + new float3(0,ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()),0);
+            Vector3 dir = ((Vector3)gameObjectPosition - self.mainCamera.transform.position).normalized;
+            float dot = Vector3.Dot(self.mainCamera.transform.forward, dir);
 
             if (dot > 0)
             {
-                Vector2 screenPosition = self.camera.WorldToScreenPoint(gameObjectPosition);
+                Vector2 screenPosition = self.mainCamera.WorldToScreenPoint(gameObjectPosition);
 
                 // 将屏幕坐标转换为UI坐标
                 Vector2 canvasPosition;
@@ -84,12 +90,12 @@ namespace ET.Client
                 self.go.transform.localScale = Vector3.zero;
             }
 
-            float distance = Vector3.SqrMagnitude((Vector3)gameObjectPosition - self.camera.transform.position);
+            float distance = Vector3.SqrMagnitude((Vector3)gameObjectPosition - self.mainCamera.transform.position);
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
             DlgBattleTowerHUDShow _DlgBattleTowerHUDShow = _UIComponent.GetDlgLogic<DlgBattleTowerHUDShow>(true);
             if (_DlgBattleTowerHUDShow != null)
             {
-                _DlgBattleTowerHUDShow.UpdateDistance(self.rectTrans,distance);
+                _DlgBattleTowerHUDShow.UpdateDistance(self.rectTrans, distance);
             }
         }
 
@@ -127,7 +133,7 @@ namespace ET.Client
             self.backgroundBar = self.go.transform.Find("Backdroud");
             self.hpValueShowTrans = self.go.transform.Find("HpValueShow");
 
-            self.camera = null;
+            self.mainCamera = null;
             self.canvas = null;
 
             Camera camera = CameraHelper.GetMainCamera(self.DomainScene());
@@ -149,7 +155,7 @@ namespace ET.Client
                     camera = CameraHelper.GetMainCamera(self.DomainScene());
                 }
             }
-            self.camera = camera;
+            self.mainCamera = camera;
 
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
             _UIComponent.ShowWindow<DlgBattleTowerHUDShow>();

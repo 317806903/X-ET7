@@ -10,10 +10,10 @@ namespace ET
     [ComponentOf(typeof (SyncDataManager))]
     public class SyncDataManager_UnitPosInfo : Entity, IAwake, IDestroy
     {
+        public MultiMapSetSimple<long, Unit> player2SyncUnit;
         public HashSet<Unit> NeedSyncPosUnits;
 
-        public int waitFrameSyncPos = 2;
-        public int curFrameSyncPos = 0;
-
+        public Dictionary<long, int> waitFrameSync = new();
+        public Dictionary<long, int> curFrameSync = new();
     }
 }

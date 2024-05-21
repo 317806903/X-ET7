@@ -105,6 +105,14 @@ namespace ET.Client
 			}
 			else
 			{
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "AdClicked",
+                    properties = new()
+                        {
+                            {"resource", "体力"},
+                        }
+                });
 				await ET.Client.AdmobSDKComponent.Instance.ShowRewardedAd(() =>
 				{
 					ET.Client.PlayerCacheHelper.AddPlayerPhysicalStrenthByAdAsync(self.DomainScene()).Coroutine();

@@ -43,10 +43,7 @@ namespace ET.Client
             self.View.E_BagsButton.AddListenerAsync(self.ClickBags);
             self.View.E_BattleDeckButton.AddListenerAsync(self.ClickBattleDeck);
             self.View.E_RankButton.AddListenerAsync(self.ClickRank);
-            self.View.E_TutorialButton.AddListenerAsync(self.ClickTutorial);
-
-            self.View.E_DiscordButton.AddListener(self.ClickDiscord);
-            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+            self.View.E_SettingButton.AddListenerAsync(self.GameSetting);
         }
 
         public static void ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -81,6 +78,10 @@ namespace ET.Client
 
         public static async ETTask ChkNeedShowGuide(this DlgGameModeAR self)
         {
+            if (ET.SceneHelper.ChkIsDemoShow())
+            {
+                return;
+            }
             PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
             List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
             if (openningList.Count > 0)
@@ -161,11 +162,6 @@ namespace ET.Client
             transformLock = self.View.E_RankButton.transform.Find("icon_Lock");
             await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Rank", transformLock);
 
-            transformLock = self.View.E_TutorialButton.transform.Find("icon_Lock");
-            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Tutorial", transformLock);
-
-            transformLock = self.View.E_DiscordButton.transform.Find("icon_Lock");
-            await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_Discord", transformLock);
 
             transformLock = self.View.E_PVEButton.transform.Find("icon_Lock");
             await UIManagerHelper.ShowFunctionMenuLockOne(self.DomainScene(), "FunctionMenu_ARPVE", transformLock);
@@ -280,21 +276,6 @@ namespace ET.Client
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
         }
 
-        public static async ETTask EnterTutorialFirst(this DlgGameModeAR self)
-        {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-
-            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
-
-            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
-            {
-                ARHallType = ARHallType.CreateRoomWithOutARSceneId,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.ARTutorialFirst,
-                roomId = 0,
-            };
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
-        }
 
         public static async ETTask ClickAvatar(this DlgGameModeAR self)
         {
@@ -303,13 +284,7 @@ namespace ET.Client
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersonalInformation>();
         }
 
-        public static async ETTask ClickTutorial(this DlgGameModeAR self)
-        {
-            self.TrackFunctionClicked("tutorial");
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
-        }
 
         public static async ETTask ClickRank(this DlgGameModeAR self)
         {
@@ -332,11 +307,6 @@ namespace ET.Client
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
         }
 
-        public static void ClickDiscord(this DlgGameModeAR self)
-        {
-            self.TrackFunctionClicked("discord");
-            Application.OpenURL("https://discord.gg/jnf2qabe9C");
-        }
 
         public static async ETTask GameSetting(this DlgGameModeAR self)
         {

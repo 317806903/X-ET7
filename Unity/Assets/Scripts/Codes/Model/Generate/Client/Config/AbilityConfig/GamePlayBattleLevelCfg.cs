@@ -20,6 +20,7 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         IsGlobalMode = _buf.ReadBool();
+        BattleGuideConfigFileName = _buf.ReadString();
         MaxPlayerCount = _buf.ReadInt();
         GamePlayMode = GamePlayModeBase.DeserializeGamePlayModeBase(_buf);
         TeamMode = TeamModeBase.DeserializeTeamModeBase(_buf);
@@ -51,6 +52,10 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
     /// 是全局模式还是房间模式
     /// </summary>
     public bool IsGlobalMode { get; private set; }
+    /// <summary>
+    /// 战斗指引文件名称
+    /// </summary>
+    public string BattleGuideConfigFileName { get; private set; }
     /// <summary>
     /// 玩家上限
     /// </summary>
@@ -99,6 +104,7 @@ public sealed partial class GamePlayBattleLevelCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "IsGlobalMode:" + IsGlobalMode + ","
+        + "BattleGuideConfigFileName:" + BattleGuideConfigFileName + ","
         + "MaxPlayerCount:" + MaxPlayerCount + ","
         + "GamePlayMode:" + GamePlayMode + ","
         + "TeamMode:" + TeamMode + ","

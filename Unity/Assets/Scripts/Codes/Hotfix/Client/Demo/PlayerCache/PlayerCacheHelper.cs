@@ -109,11 +109,25 @@ namespace ET.Client
 	        return entity as PlayerBattleCardComponent;
         }
 
+        public static async ETTask<PlayerOtherInfoComponent> GetMyPlayerOtherInfo(Scene scene, bool forceReGet = false)
+        {
+	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.OtherInfo, forceReGet);
+	        return entity as PlayerOtherInfoComponent;
+        }
+
         public static async ETTask<PlayerFunctionMenuComponent> GetMyPlayerFunctionMenu(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
 	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.FunctionMenu, forceReGet);
 	        return entity as PlayerFunctionMenuComponent;
+        }
+
+        public static async ETTask<PlayerMailComponent> GetMyPlayerMail(Scene scene, bool forceReGet = false)
+        {
+	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.Mails, forceReGet);
+	        return entity as PlayerMailComponent;
         }
 
         public static async ETTask<List<ItemComponent>> GetMyBattleCardItemList(Scene scene, bool forceReGet = false)

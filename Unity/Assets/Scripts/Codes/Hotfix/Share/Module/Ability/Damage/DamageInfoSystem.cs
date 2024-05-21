@@ -23,11 +23,12 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this DamageInfo self, long attackerUnitId, long targetUnitId, Damage damage, float damageDegree, float criticalRate, DamageSourceTag[] tags)
+        public static void Init(this DamageInfo self, long attackerUnitId, long targetUnitId, Damage damage, bool isCrit)
         {
             self.attackerUnitId = attackerUnitId;
             self.defenderUnitId = targetUnitId;
             self.damage = damage;
+            self.isCrit = isCrit;
         }
 
         ///<summary>
@@ -110,6 +111,9 @@ namespace ET.Ability
             float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
             float newHp = math.min(math.max(0, curHp - damageValue), maxHp);
             numericComponent.SetAsFloatToBase(NumericType.Hp, newHp);
+
+
+            ET.Ability.UnitHelper.AddSyncData_DamageShow(defenderUnit, -damageValue, self.isCrit);
 
             //if (isHeal == true)
             {

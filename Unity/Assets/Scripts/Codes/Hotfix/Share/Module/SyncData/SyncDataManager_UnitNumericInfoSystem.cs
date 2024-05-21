@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using ET.Ability;
-using ET.AbilityConfig;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
-using Unity.Mathematics;
 
 namespace ET
 {
@@ -15,8 +11,10 @@ namespace ET
         {
             protected override void Awake(SyncDataManager_UnitNumericInfo self)
             {
-	            self.NeedSyncNumericUnitsKey = new();
-	            self.NeedSyncNumericUnits = new();
+	            self.player2SyncUnit = new();
+	            self.player2SyncUnit_AllKey = new();
+	            self.NeedSyncNumericUnit = new();
+	            self.NeedSyncNumericUnit_AllKey = new();
             }
         }
 
@@ -25,30 +23,22 @@ namespace ET
         {
             protected override void Destroy(SyncDataManager_UnitNumericInfo self)
             {
-	            self.NeedSyncNumericUnitsKey.Clear();
-	            self.NeedSyncNumericUnits.Clear();
+	            self.player2SyncUnit.Clear();
+	            self.player2SyncUnit_AllKey.Clear();
+	            self.NeedSyncNumericUnit.Clear();
+	            self.NeedSyncNumericUnit_AllKey.Clear();
             }
         }
 
         public static void FixedUpdate(this SyncDataManager_UnitNumericInfo self, float fixedDeltaTime)
         {
-	        if (++self.curFrameSyncNumeric >= self.waitFrameSyncNumeric)
-	        {
-		        self.curFrameSyncNumeric = 0;
-
-		        self.SyncNumericUnit().Coroutine();
-	        }
-	        if (++self.curFrameSyncNumericKey >= self.waitFrameSyncNumericKey)
-	        {
-		        self.curFrameSyncNumericKey = 0;
-
-		        self.SyncNumericUnitKey().Coroutine();
-	        }
+	        self.SyncData2Client_AllKey().Coroutine();
+	        self.SyncData2Client().Coroutine();
         }
 
         public static void AddSyncNumericUnit(this SyncDataManager_UnitNumericInfo self, Unit unit)
         {
-            if (self.NeedSyncNumericUnits.Contains(unit))
+            if (self.NeedSyncNumericUnit_AllKey.Contains(unit))
             {
                 return;
             }
@@ -60,12 +50,12 @@ namespace ET
             {
 	            return;
             }
-            self.NeedSyncNumericUnits.Add(unit);
+            self.NeedSyncNumericUnit_AllKey.Add(unit);
         }
 
         public static void AddSyncNumericUnitByKey(this SyncDataManager_UnitNumericInfo self, Unit unit, int numericKey)
         {
-            if (self.NeedSyncNumericUnitsKey.Contains(unit.Id, numericKey))
+            if (self.NeedSyncNumericUnit.Contains(unit.Id, numericKey))
             {
                 return;
             }
@@ -77,70 +67,211 @@ namespace ET
             {
                 return;
             }
-            self.NeedSyncNumericUnitsKey.Add(unit.Id, numericKey);
+            self.NeedSyncNumericUnit.Add(unit.Id, numericKey);
         }
 
-		public static async ETTask SyncNumericUnit(this SyncDataManager_UnitNumericInfo self)
-		{
-            if (self.NeedSyncNumericUnits.Count == 0)
-                return;
+        public static async ETTask SyncData2Client(this SyncDataManager_UnitNumericInfo self)
+        {
+	        self.DealSyncData2PlayerId();
+	        await self.SyncData2Client_Wait();
+        }
 
-            foreach (Unit unit in self.NeedSyncNumericUnits)
-            {
-	            if (unit.IsDisposed)
-	            {
-		            continue;
-	            }
-	            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-	            if (numericComponent == null)
-	            {
-		            continue;
-	            }
+        public static void DealSyncData2PlayerId(this SyncDataManager_UnitNumericInfo self)
+        {
+	        if (self.NeedSyncNumericUnit.Count == 0)
+		        return;
 
-	            SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = self.AddChild<SyncData_UnitNumericInfo>(true);
-	            _SyncData_UnitNumericInfo.Init(unit);
-	            byte[] syncData = _SyncData_UnitNumericInfo.ToBson();
+	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
+	        foreach (var item in self.NeedSyncNumericUnit)
+	        {
+		        long unitId = item.Key;
+		        HashSet<int> numericTypes = item.Value;
+		        Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+		        if (unit == null || unit.IsDisposed)
+		        {
+			        continue;
+		        }
 
-	            SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(unit.DomainScene());
-	            syncDataManager.SyncData2Players(unit, syncData);
-	            _SyncData_UnitNumericInfo.Dispose();
-            }
+		        List<long> syncData2Players = syncDataManager.GetSyncData2Players(unit);
+		        if (syncData2Players != null)
+		        {
+			        foreach (long playerId in syncData2Players)
+			        {
+				        if (self.player2SyncUnit.TryGetValue(playerId, unit, out var curNumericTypes))
+				        {
+					        foreach (int numericType in numericTypes)
+					        {
+						        curNumericTypes.Add(numericType);
+					        }
+				        }
+				        else
+				        {
+					        self.player2SyncUnit.Add(playerId, unit, numericTypes);
+				        }
+			        }
+		        }
+	        }
+	        self.NeedSyncNumericUnit.Clear();
+        }
 
-            self.NeedSyncNumericUnits.Clear();
-            await ETTask.CompletedTask;
-		}
+        public static async ETTask SyncData2Client_Wait(this SyncDataManager_UnitNumericInfo self)
+        {
+	        if (self.player2SyncUnit.Count == 0)
+		        return;
 
-		public static async ETTask SyncNumericUnitKey(this SyncDataManager_UnitNumericInfo self)
-		{
-            if (self.NeedSyncNumericUnitsKey.Count == 0)
-                return;
+	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
+	        using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+	        foreach (var item in self.player2SyncUnit)
+	        {
+		        long playerId = item.Key;
+		        Dictionary<Unit, HashSet<int>> list = item.Value;
 
-            foreach (var item in self.NeedSyncNumericUnitsKey)
-            {
-	            long unitId = item.Key;
-	            Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
-	            if (unit == null || unit.IsDisposed)
-	            {
-		            continue;
-	            }
-	            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-	            if (numericComponent == null)
-	            {
-		            continue;
-	            }
+		        if (syncDataManager.playerSessionInfoList.TryGetValue(playerId, out int synFrame) == false)
+		        {
+			        synFrame = 3;
+		        }
+		        self.waitFrameSyncNumericKey[playerId] = synFrame;
+		        if (self.curFrameSyncNumericKey.ContainsKey(playerId) == false)
+		        {
+			        self.curFrameSyncNumericKey[playerId] = 0;
+		        }
+		        if (++self.curFrameSyncNumericKey[playerId] >= self.waitFrameSyncNumericKey[playerId])
+		        {
+			        self.curFrameSyncNumericKey[playerId] = 0;
+		        }
+		        else
+		        {
+			        continue;
+		        }
 
-	            SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = self.AddChild<SyncData_UnitNumericInfo>(true);
-	            _SyncData_UnitNumericInfo.Init(unit, item.Value);
-	            byte[] syncData = _SyncData_UnitNumericInfo.ToBson();
+		        if (list.Count == 0)
+		        {
+			        removePlayerIds.Add(playerId);
+			        continue;
+		        }
 
-	            SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(unit.DomainScene());
-	            syncDataManager.SyncData2Players(unit, syncData);
-	            _SyncData_UnitNumericInfo.Dispose();
-            }
+		        SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = self.AddChild<SyncData_UnitNumericInfo>(true);
+		        _SyncData_UnitNumericInfo.Init(list);
 
-            self.NeedSyncNumericUnitsKey.Clear();
-            await ETTask.CompletedTask;
-		}
+		        if (_SyncData_UnitNumericInfo.unitId.Count == 0)
+		        {
+			        _SyncData_UnitNumericInfo.Dispose();
+			        removePlayerIds.Add(playerId);
+			        continue;
+		        }
 
+		        byte[] syncData = _SyncData_UnitNumericInfo.ToBson();
+		        _SyncData_UnitNumericInfo.Dispose();
+
+		        //Log.Debug($"zpb ET.SyncDataManager_UnitNumericInfoSystem.SyncData2Client_Wait {playerId} {list.Count}");
+
+		        syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
+		        removePlayerIds.Add(playerId);
+	        }
+
+	        foreach (long playerId in removePlayerIds)
+	        {
+		        self.player2SyncUnit.Remove(playerId);
+	        }
+	        removePlayerIds.Clear();
+
+
+	        await ETTask.CompletedTask;
+        }
+
+        public static async ETTask SyncData2Client_AllKey(this SyncDataManager_UnitNumericInfo self)
+        {
+	        self.DealSyncData2PlayerId_AllKey();
+	        await self.SyncData2Client_AllKey_Wait();
+        }
+
+        public static void DealSyncData2PlayerId_AllKey(this SyncDataManager_UnitNumericInfo self)
+        {
+	        if (self.NeedSyncNumericUnit_AllKey.Count == 0)
+		        return;
+
+	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
+	        foreach (Unit unit in self.NeedSyncNumericUnit_AllKey)
+	        {
+		        if (unit == null || unit.IsDisposed)
+		        {
+			        continue;
+		        }
+
+		        List<long> syncData2Players = syncDataManager.GetSyncData2Players(unit);
+		        if (syncData2Players != null)
+		        {
+			        foreach (long playerId in syncData2Players)
+			        {
+				        self.player2SyncUnit_AllKey.Add(playerId, unit);
+			        }
+		        }
+	        }
+	        self.NeedSyncNumericUnit_AllKey.Clear();
+        }
+
+        public static async ETTask SyncData2Client_AllKey_Wait(this SyncDataManager_UnitNumericInfo self)
+        {
+	        if (self.player2SyncUnit_AllKey.Count == 0)
+		        return;
+
+	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
+	        using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+	        foreach (var item in self.player2SyncUnit_AllKey)
+	        {
+		        long playerId = item.Key;
+		        HashSet<Unit> list = item.Value;
+
+		        if (syncDataManager.playerSessionInfoList.TryGetValue(playerId, out int synFrame) == false)
+		        {
+			        synFrame = 3;
+		        }
+		        self.waitFrameSyncNumeric[playerId] = synFrame;
+		        if (self.curFrameSyncNumeric.ContainsKey(playerId) == false)
+		        {
+			        self.curFrameSyncNumeric[playerId] = 0;
+		        }
+		        if (++self.curFrameSyncNumeric[playerId] >= self.waitFrameSyncNumeric[playerId])
+		        {
+			        self.curFrameSyncNumeric[playerId] = 0;
+		        }
+		        else
+		        {
+			        continue;
+		        }
+
+		        if (list.Count == 0)
+		        {
+			        removePlayerIds.Add(playerId);
+			        continue;
+		        }
+
+		        SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = self.AddChild<SyncData_UnitNumericInfo>(true);
+		        _SyncData_UnitNumericInfo.Init(list);
+
+		        if (_SyncData_UnitNumericInfo.unitId.Count == 0)
+		        {
+			        _SyncData_UnitNumericInfo.Dispose();
+			        removePlayerIds.Add(playerId);
+			        continue;
+		        }
+
+		        byte[] syncData = _SyncData_UnitNumericInfo.ToBson();
+		        _SyncData_UnitNumericInfo.Dispose();
+
+		        //Log.Debug($"zpb ET.SyncDataManager_UnitNumericInfoSystem.SyncData2Client_AllKey_Wait {playerId} {list.Count}");
+
+		        syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
+		        removePlayerIds.Add(playerId);
+	        }
+
+	        foreach (long playerId in removePlayerIds)
+	        {
+		        self.player2SyncUnit_AllKey.Remove(playerId);
+	        }
+	        removePlayerIds.Clear();
+
+	        await ETTask.CompletedTask;
+        }
     }
 }

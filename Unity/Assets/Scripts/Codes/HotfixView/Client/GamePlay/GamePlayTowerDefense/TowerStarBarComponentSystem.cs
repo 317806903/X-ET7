@@ -15,6 +15,10 @@ namespace ET.Client
             protected override void Awake(TowerStarBarComponent self)
             {
                 GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+                if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+                {
+                    return;
+                }
                 ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerStarBar_1");
                 GameObject towerStarBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,5);
                 towerStarBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
@@ -67,6 +71,10 @@ namespace ET.Client
 
         public static void ShowStar(this TowerStarBarComponent self, int starCount)
         {
+            if (self.transRoot == null)
+            {
+                return;
+            }
             self.transRoot.gameObject.SetActive(true);
             self.transStar1.gameObject.SetActive(starCount >= 1);
             self.transStar2.gameObject.SetActive(starCount >= 2);

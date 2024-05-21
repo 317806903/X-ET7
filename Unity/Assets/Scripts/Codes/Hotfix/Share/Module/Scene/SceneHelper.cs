@@ -22,14 +22,6 @@ namespace ET
             scene.AddComponent<UnitComponent>();
         }
 
-        // public static bool ChkIsGameModeArcade()
-        // {
-        //     return ClientSceneManagerComponent.Instance.IsGameModeArcade;
-        // }
-        // public static bool ChkIsGameModeArcade()
-        // {
-        //     return ServerSceneManagerComponent.Instance.IsGameModeArcade;
-        // }
         public static bool ChkIsGameModeArcade()
         {
             if (ServerSceneManagerComponent.Instance != null)
@@ -39,6 +31,15 @@ namespace ET
             if (ClientSceneManagerComponent.Instance != null)
             {
                 return ClientSceneManagerComponent.Instance.IsGameModeArcade;
+            }
+            return false;
+        }
+
+        public static bool ChkIsDemoShow()
+        {
+            if (ClientSceneManagerComponent.Instance != null)
+            {
+                return ClientSceneManagerComponent.Instance.IsDemoShow;
             }
             return false;
         }

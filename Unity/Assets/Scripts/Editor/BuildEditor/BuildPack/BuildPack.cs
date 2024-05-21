@@ -17,6 +17,7 @@ namespace ET
         InNet148Release,
         InNetZpb,
         OutNet_Benchmark,
+        OutNet_Arcade,
         OutNet_CN,
         OutNet_CN_Demo,
         OutNet_EN,
@@ -130,6 +131,21 @@ namespace ET
             ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_Benchmark", () =>
             {
                 BuildPackInternal(buildTarget, PackName.OutNet_Benchmark).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_Android_OutNet_Arcade", false, 303)]
+        public static async ETTask BuildPack_Android_OutNet_Arcade()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_OutNet_Arcade", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_OutNet_Arcade", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_Arcade).Coroutine();
             });
         }
 
@@ -314,6 +330,21 @@ namespace ET
             });
         }
 
+        [MenuItem("Pack/BuildPack_IOS_OutNet_Arcade", false, 323)]
+        public static async ETTask BuildPack_IOS_OutNet_Arcade()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_OutNet_Arcade", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_OutNet_Arcade", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.OutNet_Arcade).Coroutine();
+            });
+        }
+
         [MenuItem("Pack/BuildPack_IOS_OutNet_CN", false, 324)]
         public static async ETTask BuildPack_IOS_OutNet_CN()
         {
@@ -474,6 +505,7 @@ namespace ET
             ResConfig.Instance.MirrorARSessionAuthAppSecret = MirrorARSessionAuthAppSecret;
             ResConfig.Instance.Channel = "10000";
             ResConfig.Instance.IsGameModeArcade = false;
+            ResConfig.Instance.IsDemoShow = false;
             PlayerSettings.Android.useCustomKeystore = false;
             PlayerSettings.iOS.appleDeveloperTeamID = "9882G66R3A";
 
@@ -629,6 +661,28 @@ namespace ET
                 packageName = $"com.dm.ARGameBenchmark";
             }
             // ============== Staging environments (Aliyun/AWS) =================================
+            else if (packName == PackName.OutNet_Arcade)
+            {
+                ResConfig.Instance.IsGameModeArcade = true;
+                ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_Arcade";
+                ResConfig.Instance.ResGameVersion = "v1.0";
+                ResConfig.Instance.RouterHttpHost = "8.134.89.37";
+                ResConfig.Instance.RouterHttpPort = 5478;
+                ResConfig.Instance.languageType = LanguageTypeEditor.CN.ToString();
+                ResConfig.Instance.areaType = AreaType.CN;
+                ResConfig.Instance.IsShowDebugMode = false;
+                ResConfig.Instance.IsShowEditorLoginMode = false;
+                ResConfig.Instance.IsNeedSendEventLog = true;  // Log events from real users.
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
+                productName = $"Arcade_RealityGuard";
+                packageName = $"com.dm.RealityGuardArcade";
+            }
             else if (packName == PackName.OutNet_CN)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
@@ -651,16 +705,17 @@ namespace ET
             }
             else if (packName == PackName.OutNet_CN_Demo)
             {
-                ResConfig.Instance.IsGameModeArcade = true;
+                ResConfig.Instance.IsDemoShow = true;
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
                 ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo";
                 ResConfig.Instance.ResGameVersion = "v1.0";
                 ResConfig.Instance.RouterHttpHost = "8.134.156.170";
                 ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.CN.ToString();
+                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = false;
                 ResConfig.Instance.IsShowEditorLoginMode = false;
+                ResConfig.Instance.IsNeedSendEventLog = true;  // Log events from real users.
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path

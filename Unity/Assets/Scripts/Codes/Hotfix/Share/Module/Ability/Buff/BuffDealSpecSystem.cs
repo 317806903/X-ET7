@@ -133,7 +133,7 @@ namespace ET.Ability
                     self.selfEffectList.Add(effectObj);
                 }
 
-                if (IdGenerater.Instance.ChkGenerateIdFull())
+                while (IdGenerater.Instance.ChkGenerateIdFull())
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                 }

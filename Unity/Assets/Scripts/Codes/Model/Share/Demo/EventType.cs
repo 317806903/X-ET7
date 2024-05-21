@@ -110,28 +110,29 @@ namespace ET
             public List<byte[]> syncDataList;
         }
 
+        public struct SyncHealthBar
+        {
+            public List<Unit> list;
+        }
+
         public struct SyncPlayAudio
         {
-            public Unit unit;
-            public string playAudioActionId;
-            public bool isOnlySelfShow;
+            public List<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list;
         }
 
         public struct SyncGetCoinShow
         {
-            public long playerId;
-            public Unit unit;
-            public CoinType coinType;
-            public int chgValue;
+            public List<(Unit unit, CoinType coinType, int chgValue)> list;
         }
 
-        public struct SyncUnitEffects
+        public struct SyncDamageShow
         {
-            public Unit unit;
-            public bool isAddEffect;
-            public long effectObjId;
-            public ET.Ability.EffectObj effectObj;
-            public bool isOnlySelfShow;
+            public List<(Unit unit, int damageValue, bool isCrt)> list;
+        }
+
+        public struct NoticeGuideConditionStatus
+        {
+            public string guideConditionStaticMethodType;
         }
 
         public struct NoticeGameBegin2Server
@@ -197,12 +198,21 @@ namespace ET
             public bool needSendSuccess;
         }
 
+        public struct NeedReNoticeTowerDefense
+        {
+        }
+
         public struct NoticeGameEndToRoom
         {
             public long roomId;
             public long playerId;
             public bool isReady;
             public Dictionary<long, bool> playerWinResult;
+        }
+
+        public struct NoticeGameBattleRemovePlayer
+        {
+            public long playerId;
         }
 
         public struct StopMove

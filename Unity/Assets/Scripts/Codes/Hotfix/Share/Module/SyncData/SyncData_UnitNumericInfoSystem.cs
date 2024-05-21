@@ -14,7 +14,10 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitNumericInfo self)
             {
-                self.KV = new();
+                self.unitId = new();
+                self.KVCount = new();
+                self.KVKey = new();
+                self.KVValue = new();
             }
         }
 
@@ -23,48 +26,124 @@ namespace ET
         {
             protected override void Destroy(SyncData_UnitNumericInfo self)
             {
-                self.KV.Clear();
+                self.unitId.Clear();
+                self.KVCount.Clear();
+                self.KVKey.Clear();
+                self.KVValue.Clear();
             }
         }
 
-        public static void Init(this SyncData_UnitNumericInfo self, Unit unit)
+        public static void Init(this SyncData_UnitNumericInfo self, HashSet<Unit> list)
         {
-            self.unitId = unit.Id;
-            self.KV.Clear();
-
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            foreach ((int key, long value) in numericComponent.NumericDic)
+            self.unitId.Clear();
+            self.KVCount.Clear();
+            self.KVKey.Clear();
+            self.KVValue.Clear();
+            if (list == null)
             {
-                self.KV.Add(key, value);
+                return;
             }
-        }
 
-        public static void Init(this SyncData_UnitNumericInfo self, Unit unit, HashSet<int> keys)
-        {
-            self.unitId = unit.Id;
-            self.KV.Clear();
-
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            foreach (int numericKey in keys)
+            foreach (Unit unit in list)
             {
-                if (numericComponent.NumericDic.TryGetValue(numericKey, out long numericValue))
+                if (unit == null)
                 {
-                    self.KV.Add(numericKey, numericValue);
+                    continue;
+                }
+                long unitId = unit.Id;
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                if (numericComponent == null)
+                {
+                    continue;
+                }
+                self.unitId.Add(unitId);
+                foreach ((int key, long value) in numericComponent.NumericDic)
+                {
+                    self.KVKey.Add(key);
+                    self.KVValue.Add(value);
+                }
+                self.KVCount.Add(self.KVKey.Count);
+            }
+        }
+
+        public static void Init(this SyncData_UnitNumericInfo self, Dictionary<Unit, HashSet<int>> list)
+        {
+            self.unitId.Clear();
+            self.KVCount.Clear();
+            self.KVKey.Clear();
+            self.KVValue.Clear();
+            if (list == null)
+            {
+                return;
+            }
+            foreach ((Unit unit, HashSet<int> keys) in list)
+            {
+                if (unit == null)
+                {
+                    continue;
+                }
+                long unitId = unit.Id;
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                if (numericComponent == null)
+                {
+                    continue;
+                }
+                self.unitId.Add(unitId);
+                int count = 0;
+                foreach (int numericKey in keys)
+                {
+                    if (numericComponent.NumericDic.TryGetValue(numericKey, out long numericValue))
+                    {
+                        count++;
+                        self.KVKey.Add(numericKey);
+                        self.KVValue.Add(numericValue);
+                    }
+                }
+                self.KVCount.Add(count);
+            }
+        }
+
+        public static async ETTask DealByBytes(this SyncData_UnitNumericInfo self, UnitComponent unitComponent)
+        {
+            ListComponent<Unit> list = ListComponent<Unit>.Create();
+            int index = 0;
+            int count = self.unitId.Count;
+            for (int i = 0; i < count; i++)
+            {
+                long unitId = self.unitId[i];
+                Unit unit = unitComponent.Get(unitId);
+                if (unit == null)
+                {
+                    continue;
+                }
+
+                int KVCount = self.KVCount[i];
+                int indexBegin = index;
+                index += KVCount;
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                if (numericComponent == null)
+                {
+                    numericComponent = unit.AddComponent<NumericComponent>();
+                }
+                for (int j = indexBegin; j < index; j++)
+                {
+                    int key = self.KVKey[j];
+                    long value = self.KVValue[j];
+                    numericComponent.SetNoEvent(key, value);
+                    if (key == ET.NumericType.Hp)
+                    {
+                        list.Add(unit);
+                    }
                 }
             }
-        }
 
-        public static void DealByBytes(this SyncData_UnitNumericInfo self, Unit unit)
-        {
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            if (numericComponent == null)
+            EventType.SyncHealthBar _SyncHealthBar = new ()
             {
-                numericComponent = unit.AddComponent<NumericComponent>();
-            }
-            foreach (var kv in self.KV)
-            {
-                numericComponent.SetAsLong(kv.Key, kv.Value);
-            }
+                list = list,
+            };
+            EventSystem.Instance.Publish(unitComponent.DomainScene(), _SyncHealthBar);
+
+            await ETTask.CompletedTask;
         }
 
     }

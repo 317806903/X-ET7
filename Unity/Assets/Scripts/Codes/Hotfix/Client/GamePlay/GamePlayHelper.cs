@@ -45,6 +45,13 @@ namespace ET.Client
 			await ETTask.CompletedTask;
 		}
 
+		public static async ETTask SendNeedReNoticeTowerDefense(Scene scene)
+		{
+			C2M_NeedReNoticeTowerDefense _C2M_NeedReNoticeTowerDefense = new ();
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_NeedReNoticeTowerDefense);
+			await ETTask.CompletedTask;
+		}
+
 		public static async ETTask SendSetStopActorMoveWhenDebug(Scene scene, bool isStopActorMove)
 		{
 			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)

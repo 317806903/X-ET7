@@ -13,16 +13,36 @@ MonoBehaviour:
   m_Name: FunctionMenu_DiscordOperate
   m_EditorClassIdentifier: 
   list:
-  - name: "\u6307\u5F15discord"
+  - name: "\u70B9\u51FB\u8BBE\u7F6E"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_Discord
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Setting
+    guideTextType: 0
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_DiscordOperate_Discord1
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u793E\u533A"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgGameModeSetting/EGBackGround/Root/E_Other/E_Discord
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_DiscordOperate_Discord
+    text: TextCode_Key_TutorialText_DiscordOperate_Discord2
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0

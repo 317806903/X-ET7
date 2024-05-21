@@ -20,6 +20,7 @@ namespace ET.Client
 			{
 				ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
 				{
+					UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 					self.ShowDetails(itemCfgId);
 				});
 			}

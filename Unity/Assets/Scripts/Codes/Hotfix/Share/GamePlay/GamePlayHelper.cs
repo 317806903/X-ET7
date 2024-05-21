@@ -364,14 +364,7 @@ namespace ET
 				{
 					ET.GamePlayHelper.ChgPlayerCoin(scene, playerIdTmp, coinType, goldOne);
 
-					EventType.SyncGetCoinShow _SyncGetCoinShow = new ()
-					{
-						playerId = playerIdTmp,
-						unit = showGetCoinUnit,
-						coinType = coinType,
-						chgValue = chgValue,
-					};
-					EventSystem.Instance.Publish(scene, _SyncGetCoinShow);
+					ET.Ability.UnitHelper.AddSyncData_UnitGetCoinShow(playerIdTmp, showGetCoinUnit, coinType, chgValue);
 				}
 			}
 		}

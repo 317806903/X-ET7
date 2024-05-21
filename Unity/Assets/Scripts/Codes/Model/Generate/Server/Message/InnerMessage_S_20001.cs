@@ -1748,6 +1748,37 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2M_GetPlayerSessionInfo))]
+	[Message(InnerMessage.M2G_GetPlayerSessionInfo)]
+	[ProtoContract]
+	public partial class M2G_GetPlayerSessionInfo: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2M_GetPlayerSessionInfo)]
+	[ProtoContract]
+	public partial class G2M_GetPlayerSessionInfo: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public int Fps { get; set; }
+
+		[ProtoMember(5)]
+		public long PingTime { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -1855,5 +1886,7 @@ namespace ET
 		 public const ushort G2O_PlayerCacheChgNoticeClient = 20104;
 		 public const ushort G2P_GetArcadeCoinQrCode = 20105;
 		 public const ushort P2G_GetArcadeCoinQrCode = 20106;
+		 public const ushort M2G_GetPlayerSessionInfo = 20107;
+		 public const ushort G2M_GetPlayerSessionInfo = 20108;
 	}
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ET.Ability;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -45,6 +46,20 @@ namespace ET
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.UnitOnRemoved() { unit = self });
             //self.Dispose();
             UnitHelper.AddWaitRemove(self);
+        }
+
+        public static float3 GetUnitClientPos(this Unit self)
+        {
+            UnitClientPosComponent unitClientPosComponent = self.GetComponent<UnitClientPosComponent>();
+            if (unitClientPosComponent != null)
+            {
+                if (unitClientPosComponent.clientPosition.Equals(float3.zero))
+                {
+                    return self.Position;
+                }
+                return unitClientPosComponent.clientPosition;
+            }
+            return self.Position;
         }
 
     }

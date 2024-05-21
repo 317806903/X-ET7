@@ -505,7 +505,15 @@ namespace ET.Ability
 
         public static (bool, ListComponent<long>) ChkRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
         {
+            if (unit == null || unit.DomainScene() == null)
+            {
+                return (false, null);
+            }
             SelectHandleRecordManager selectHandleRecordManager = unit.DomainScene().GetComponent<SelectHandleRecordManager>();
+            if (selectHandleRecordManager == null)
+            {
+                return (false, null);
+            }
             return selectHandleRecordManager.ChkRecordUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg);
         }
 

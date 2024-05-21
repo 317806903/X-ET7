@@ -823,3 +823,18 @@ message P2G_GetArcadeCoinQrCode // IActorResponse
 	string Message = 3;
 	bytes PayComponentBytes = 4;
 }
+
+//ResponseType G2M_GetPlayerSessionInfo
+message M2G_GetPlayerSessionInfo // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2M_GetPlayerSessionInfo // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 Fps = 4;
+	int64 PingTime = 5;
+}

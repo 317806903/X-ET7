@@ -32,8 +32,10 @@ namespace ET.Client
     {
         Login,
         Main,
+        Game,
+        None,
         ARStart,
-        Game
+        ARScan,
     }
 
     [FriendOf(typeof (Unit))]
@@ -88,11 +90,6 @@ namespace ET.Client
                     break;
                 case SoundEffectType.Reward:
                     resAudioCfgId = "ResAudio_UI_Reward";
-                    break;
-                case SoundEffectType.Scan:
-                    resAudioCfgId = "ResAudio_UI_Scan";
-                    _UIAudioManagerComponent.PlayScanAudio(resAudioCfgId, needLoopPlay);
-                    return;
                     break;
                 case SoundEffectType.ReadyGo:
                     resAudioCfgId = "ResAudio_UI_ready_go";
@@ -176,13 +173,17 @@ namespace ET.Client
             switch (musicType)
             {
                 case MusicType.Login:
-                    resAudioCfgIds = new List<string>(){"ResAudio_Music_main"};
+                    resAudioCfgIds = new List<string>(){"ResAudio_Music_login"};
                     break;
                 case MusicType.Main:
                     resAudioCfgIds = new List<string>(){"ResAudio_Music_main"};
                     break;
                 case MusicType.ARStart:
                     resAudioCfgIds = new List<string>(){"ResAudio_Music_ARStarted"};
+                    break;
+                case MusicType.ARScan:
+                    Log.Error($"PlayMusic cannot MusicType.ARScan ");
+                    return;
                     break;
                 case MusicType.Game:
                     GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
@@ -194,6 +195,26 @@ namespace ET.Client
 
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             _UIAudioManagerComponent.PlayMusic(resAudioCfgIds);
+        }
+
+        public static void PlayHighestMusic(Scene scene, MusicType musicType)
+        {
+            List<string> resAudioCfgIds = null;
+            switch (musicType)
+            {
+                case MusicType.None:
+                    resAudioCfgIds = null;
+                    break;
+                case MusicType.ARScan:
+                    resAudioCfgIds = new List<string>(){"ResAudio_UI_Scan"};
+                    break;
+                default:
+                    Log.Error($"PlayHighestMusic cannot other ");
+                    return;
+            }
+
+            UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
+            _UIAudioManagerComponent.PlayHighestMusic(resAudioCfgIds);
         }
 
         public static void ResetMusicStatus(Scene scene)
@@ -220,5 +241,6 @@ namespace ET.Client
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             _UIAudioManagerComponent.ResumeMusic();
         }
+
     }
 }

@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Linq;
-using ET.Ability.Client;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UI;
-using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET.Client
 {
@@ -41,13 +37,27 @@ namespace ET.Client
             self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                     self.AddTowerBuyListener(transform, i));
-            self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
             self.View.EButton_BuyButton.AddListenerAsync(self.TowerBuyShow);
             self.View.EButton_BuyCloseButton.AddListenerAsync(self.CloseTowerBuyShow);
             self.View.EButton_ReadyWhenRestTimeButton.AddListenerAsync(self.ReadyWhenRestTime);
-            self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
-            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
 
+            self.View.E_ReScanButton.SetVisible(false);
+            self.View.E_QuitBattleButton.SetVisible(false);
+            self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
+            self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
+
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                self.View.E_GameSettingButton.SetVisible(true);
+                self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+            }
+            else
+            {
+                //WeiJie Test:这里先不管是不是街机模式都让设置按钮激活
+                self.View.E_GameSettingButton.SetVisible(true);
+                self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+
+            }
         }
 
         public static void ShowWindow(this DlgBattleTower self, ShowWindowData contextData = null)
@@ -65,7 +75,23 @@ namespace ET.Client
 
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleTowerFrameTimer, self);
 
+            self.ChkNeedBattleGuide().Coroutine();
             //self.PlayMusic();
+        }
+
+        public static async ETTask ChkNeedBattleGuide(this DlgBattleTower self)
+        {
+            PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
+            string battleCfgId = self.GetGamePlayTowerDefense().GetGamePlay().GetGamePlayBattleConfig().Id;
+            (bool bNeedBattleGuide, string battleGuideConfigFileName) = playerOtherInfoComponent.ChkNeedBattleGuide(battleCfgId);
+            if (bNeedBattleGuide)
+            {
+                await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), battleGuideConfigFileName, async () =>
+                {
+                    playerOtherInfoComponent.SetBattleGuideFinished(battleCfgId);
+                    await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.OtherInfo, new(){"battleGuideStatus"});
+                });
+            }
         }
 
         public static void ShowMyTowers(this DlgBattleTower self)
@@ -85,29 +111,6 @@ namespace ET.Client
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-
-            if (ET.SceneHelper.ChkIsGameModeArcade())
-            {
-                self.View.E_ReScanButton.SetVisible(false);
-            }
-            else
-            {
-                if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
-                {
-                    if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
-                    {
-                        self.View.E_ReScanButton.SetVisible(true);
-                    }
-                    else
-                    {
-                        self.View.E_ReScanButton.SetVisible(false);
-                    }
-                }
-                else
-                {
-                    self.View.E_ReScanButton.SetVisible(false);
-                }
-            }
 
             ET.Client.UIManagerHelper.HideConfirm(self.DomainScene());
             ET.Client.UIManagerHelper.HideChoose(self.DomainScene());
@@ -351,9 +354,27 @@ namespace ET.Client
                         string titleText = null;
                         bool isTimeOutConfirm = false;
                         ET.Client.UIManagerHelper.ShowWhenTwoChoose(self.DomainScene(), showMsg, timeoutMsg, timeoutTime, async()=>{
+                            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                            {
+                                eventName = "Revived",
+                                properties = new()
+                                {
+                                    {"type", "免费"},
+                                    {"result", "复活"},
+                                }
+                            });
                             ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
                         }, async () =>
                         {
+                            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                            {
+                                eventName = "Revived",
+                                properties = new()
+                                {
+                                    {"type", "免费"},
+                                    {"result", "拒绝复活"},
+                                }
+                            });
                             await ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), false);
 
                             gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
@@ -393,6 +414,15 @@ namespace ET.Client
                         ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), false).Coroutine();
                     }, async () =>
                     {
+                        EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                        {
+                            eventName = "Revived",
+                            properties = new()
+                            {
+                                {"type", "广告"},
+                                {"result", "拒绝复活"},
+                            }
+                        });
                         ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverCancelWatchAd(self.DomainScene(), false).Coroutine();
                     }, confirmText, cancelText, titleText, isTimeOutConfirm);
                 }
@@ -416,15 +446,42 @@ namespace ET.Client
                                 {
                                     return;
                                 }
+                                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                                {
+                                    eventName = "Revived",
+                                    properties = new()
+                                    {
+                                        {"type", "街机付费"},
+                                        {"result", "复活"},
+                                    }
+                                });
                                 ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
                             });
                             if (bRet1 == false)
                             {
                                 return;
                             }
+                            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                            {
+                                eventName = "Revived",
+                                properties = new()
+                                {
+                                    {"type", "街机付费"},
+                                    {"result", "复活"},
+                                }
+                            });
                             ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), true).Coroutine();
                         }, async () =>
                         {
+                            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                            {
+                                eventName = "Revived",
+                                properties = new()
+                                {
+                                    {"type", "街机付费"},
+                                    {"result", "拒绝复活"},
+                                }
+                            });
                             await ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverResult(self.DomainScene(), false);
 
                             gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.GameEnd;
@@ -446,13 +503,39 @@ namespace ET.Client
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering)
             {
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "AdClicked",
+                    properties = new()
+                        {
+                            {"resource", "复活"},
+                        }
+                });
                 ET.Client.AdmobSDKComponent.Instance.ShowRewardedAd(() =>
                 {
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                    {
+                        eventName = "Revived",
+                        properties = new()
+                        {
+                            {"type", "广告"},
+                            {"result", "复活"},
+                        }
+                    });
                     ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), true).Coroutine();
                 },() =>
                 {
                     string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Reward_Without_RewardAd");
             		ET.Client.UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, () => {
+                        EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                        {
+                            eventName = "Revived",
+                            properties = new()
+                            {
+                                {"type", "广告"},
+                                {"result", "复活"},
+                            }
+                        });
                         ET.Client.GamePlayTowerDefenseHelper.SendGameRecoverConfirmWatchAd(self.DomainScene(), true).Coroutine();
                     });
                 }).Coroutine();
@@ -843,7 +926,7 @@ namespace ET.Client
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {
-                if (self.View.E_QuitBattleButton.gameObject.activeInHierarchy)
+                if (self.View.E_GameSettingButton.gameObject.activeInHierarchy)
                 {
                     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
                     self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.RefreshCells();
@@ -1000,9 +1083,8 @@ namespace ET.Client
 
         public static async ETTask GameSetting(this DlgBattleTower self)
         {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
-
-            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameModeSetting>().Coroutine();
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Confirm);
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleSetting>().Coroutine();
         }
 
         public static void Update(this DlgBattleTower self)

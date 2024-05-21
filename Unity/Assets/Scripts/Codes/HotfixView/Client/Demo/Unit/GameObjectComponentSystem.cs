@@ -50,6 +50,10 @@ namespace ET.Client
                     resScale = unit.model.ResScale;
                 }
 
+                // if (Ability.UnitHelper.ChkIsPlayer(unit) == false && Ability.UnitHelper.ChkIsObserver(unit) == false)
+                // {
+                //     resName = "";
+                // }
                 // Unit View层
                 if (string.IsNullOrEmpty(resName) == false)
                 {
@@ -93,6 +97,8 @@ namespace ET.Client
                 }
                 Transform transform = self.gameObject.transform;
                 Unit unit = self.GetUnit();
+
+                UnitClientPosComponent unitClientPosComponent = unit.GetComponent<UnitClientPosComponent>();
 
                 // transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, Time.deltaTime);
                 //transform.position = Vector3.Lerp(transform.position, self.GetUnit().Position, 1);
@@ -142,31 +148,93 @@ namespace ET.Client
                             targetPos = unit.Position;
                         }
                         Vector3 dis = transform.position - (Vector3)targetPos;
-                        if (dis.sqrMagnitude > moveSpeed * moveSpeed)
-                        {
-                            if (dis.sqrMagnitude > moveSpeed * moveSpeed * 2 * 2)
-                            {
-                                transform.position = targetPos;
-                                ET.Client.UnitHelper.SendGetNumericUnit(unit);
-                            }
-                            else
-                            {
-                                float timeToCompleteMove = dis.magnitude / moveSpeed;
-                                float donePercentageMove = Mathf.Min(1f, 2 * Time.deltaTime / timeToCompleteMove);
-                                transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
-                            }
-                        }
-                        else if (dis.sqrMagnitude > moveSpeed * moveSpeed * Time.deltaTime * Time.deltaTime)
-                        {
-                            float timeToCompleteMove = dis.magnitude / moveSpeed;
-                            float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
-                            transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
-                        }
-                        else
+                        float tmp1 = dis.sqrMagnitude / (moveSpeed * moveSpeed);
+                        if (tmp1 <= Time.deltaTime * Time.deltaTime)
                         {
                             transform.position = targetPos;
                         }
+                        else
+                        {
+                            if (unitClientPosComponent != null)
+                            {
+                                // float timeToCompleteMove = (unitClientPosComponent.targetPosClientTime - TimeHelper.ClientNow()) * 0.001f;
+                                // if (tmp1 > 0.5f)
+                                // {
+                                //     timeToCompleteMove += 0.2f;
+                                // }
+                                // float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
+                                // transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
+
+                                float3 lastClientPosition = unitClientPosComponent.lastClientPosition;
+                                if (lastClientPosition.Equals(float3.zero))
+                                {
+                                    lastClientPosition = transform.position;
+                                }
+                                float timeToCompleteMove = unitClientPosComponent.targetPosClientNeedTime;
+                                float tmp22 = timeToCompleteMove - (unitClientPosComponent.targetPosClientTime - TimeHelper.ClientNow()) * 0.001f;
+                                // if (tmp1 > 0.5f)
+                                // {
+                                //     timeToCompleteMove += 0.2f;
+                                // }
+                                float donePercentageMove = Mathf.Min(1f, tmp22/timeToCompleteMove);
+
+                                targetPos = Vector3.Lerp(lastClientPosition, targetPos, donePercentageMove);
+                                transform.position = Vector3.Lerp(transform.position, targetPos, 0.8f);
+                            }
+                            else
+                            {
+                                int speedScale = 1;
+                                if (tmp1 >= 1)
+                                {
+                                    speedScale = 3;
+                                }
+                                else if (tmp1 >= 0.5f)
+                                {
+                                    speedScale = 2;
+                                }
+                                if (speedScale >= 1)
+                                {
+                                    float timeToCompleteMove = dis.magnitude / moveSpeed;
+                                    float donePercentageMove = Mathf.Min(1f, speedScale * Time.deltaTime / timeToCompleteMove);
+                                    transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
+                                }
+                                else
+                                {
+                                    transform.position = targetPos;
+                                }
+                            }
+                        }
+
+                        // if (dis.sqrMagnitude > moveSpeed * moveSpeed)
+                        // {
+                        //     if (false && dis.sqrMagnitude > moveSpeed * moveSpeed * 2 * 2)
+                        //     {
+                        //         transform.position = targetPos;
+                        //         ET.Client.UnitHelper.SendGetNumericUnit(unit);
+                        //     }
+                        //     else
+                        //     {
+                        //         float timeToCompleteMove = dis.magnitude / moveSpeed;
+                        //         float donePercentageMove = Mathf.Min(1f, 2 * Time.deltaTime / timeToCompleteMove);
+                        //         transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
+                        //     }
+                        // }
+                        // else if (dis.sqrMagnitude > moveSpeed * moveSpeed * Time.deltaTime * Time.deltaTime)
+                        // {
+                        //     float timeToCompleteMove = dis.magnitude / moveSpeed;
+                        //     float donePercentageMove = Mathf.Min(1f, Time.deltaTime / timeToCompleteMove);
+                        //     transform.position = Vector3.Lerp(transform.position, targetPos, donePercentageMove);
+                        // }
+                        // else
+                        // {
+                        //     transform.position = targetPos;
+                        // }
                     }
+                }
+
+                if (unitClientPosComponent != null)
+                {
+                    unitClientPosComponent.clientPosition = transform.position;
                 }
 
                 Quaternion targetRotation = unit.Rotation;
@@ -178,11 +246,17 @@ namespace ET.Client
                 else
                 {
                     float angle = Quaternion.Angle(transform.rotation, targetRotation);
-                    float timeToComplete = angle / rotationSpeed;
-                    float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
+                    if (angle <= rotationSpeed * Time.deltaTime)
+                    {
+                        transform.rotation = targetRotation;
+                    }
+                    else
+                    {
+                        float timeToComplete = angle / rotationSpeed;
+                        float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
 
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, donePercentage);
-                    //transform.rotation = targetRotation;
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, donePercentage);
+                    }
                 }
             }
         }

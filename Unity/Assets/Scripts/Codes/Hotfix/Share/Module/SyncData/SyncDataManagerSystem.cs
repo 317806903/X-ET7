@@ -16,6 +16,7 @@ namespace ET
             protected override void Awake(SyncDataManager self)
             {
                 self.player2SyncDataList = new();
+                self.playerSessionInfoList = new();
                 self.Init();
             }
         }
@@ -26,13 +27,14 @@ namespace ET
             protected override void Destroy(SyncDataManager self)
             {
                 self.player2SyncDataList.Clear();
+                self.playerSessionInfoList.Clear();
             }
         }
 
         [ObjectSystem]
-        public class SyncDataManagerFixedUpdateSystem: FixedUpdateSystem<SyncDataManager>
+        public class SyncDataManagerFixedUpdateSystem: LateUpdateSystem<SyncDataManager>
         {
-            protected override void FixedUpdate(SyncDataManager self)
+            protected override void LateUpdate(SyncDataManager self)
             {
                 if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
                 {
@@ -50,6 +52,9 @@ namespace ET
             self.AddComponent<SyncDataManager_UnitNumericInfo>();
             self.AddComponent<SyncDataManager_UnitPlayAudio>();
             self.AddComponent<SyncDataManager_UnitComponent>();
+            self.AddComponent<SyncDataManager_UnitGetCoinShow>();
+            self.AddComponent<SyncDataManager_DamageShow>();
+            self.AddComponent<SyncDataManager_UnitEffects>();
         }
 
         public static void FixedUpdate(this SyncDataManager self, float fixedDeltaTime)
@@ -58,6 +63,9 @@ namespace ET
             self.GetComponent<SyncDataManager_UnitNumericInfo>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitPlayAudio>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitComponent>().FixedUpdate(fixedDeltaTime);
+            self.GetComponent<SyncDataManager_UnitGetCoinShow>().FixedUpdate(fixedDeltaTime);
+            self.GetComponent<SyncDataManager_DamageShow>().FixedUpdate(fixedDeltaTime);
+            self.GetComponent<SyncDataManager_UnitEffects>().FixedUpdate(fixedDeltaTime);
 
             self.SendSync2Client();
         }
@@ -92,6 +100,23 @@ namespace ET
             }
         }
 
+        public static List<long> GetSyncData2Players(this SyncDataManager self, Unit unitSync)
+        {
+            var dict = unitSync.GetBeSeePlayers();
+            if (dict == null)
+            {
+                return null;
+            }
+            List<long> syncData2Players = ListComponent<long>.Create();
+            foreach (AOIEntity u in dict.Values)
+            {
+                long playerId = u.Unit.Id;
+                syncData2Players.Add(playerId);
+            }
+
+            return syncData2Players;
+        }
+
         public static void SyncData2OnlyPlayer(this SyncDataManager self, long playerId, byte[] syncData)
         {
             self.player2SyncDataList.Add(playerId, syncData);
@@ -118,9 +143,24 @@ namespace ET
             self.GetComponent<SyncDataManager_UnitPlayAudio>().AddSyncPlayAudio(unit, playAudioActionId, isOnlySelfShow);
         }
 
+        public static void AddSyncData_UnitGetCoinShow(this SyncDataManager self, long playerId, Unit unit, CoinType coinType, int chgValue)
+        {
+            self.GetComponent<SyncDataManager_UnitGetCoinShow>().AddSyncGetCoinShow(playerId, unit, coinType, chgValue);
+        }
+
+        public static void AddSyncData_DamageShow(this SyncDataManager self, Unit unit, int damageValue, bool isCrt)
+        {
+            self.GetComponent<SyncDataManager_DamageShow>().AddSyncDamageShow(unit, damageValue, isCrt);
+        }
+
         public static void AddSyncData_UnitComponent(this SyncDataManager self, Unit unit, System.Type type)
         {
             self.GetComponent<SyncDataManager_UnitComponent>().AddSyncUnit(unit, type);
+        }
+
+        public static void AddSyncData_UnitEffects(this SyncDataManager self, Unit unit, long effectObjId, bool isOnlySelfShow)
+        {
+            self.GetComponent<SyncDataManager_UnitEffects>().AddSyncUnit(unit, effectObjId, isOnlySelfShow);
         }
         #endregion
     }

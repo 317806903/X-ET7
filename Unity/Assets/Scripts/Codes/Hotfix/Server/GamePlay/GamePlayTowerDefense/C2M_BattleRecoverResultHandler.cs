@@ -26,6 +26,8 @@ namespace ET.Server
 				{
 					response.Error = ErrorCode.ERR_LogicError;
 					response.Message = $"ChkPlayerConfirmRecover[{playerId}] == false";
+
+					gamePlayTowerDefenseComponent.NoticeToClient(playerId);
 					return;
 				}
 			}

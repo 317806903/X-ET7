@@ -10,6 +10,7 @@ namespace ET
     {
         public string PlayerName;
         public int IconIndex;
+        public string AvatarFrameItemCfgId;
         public int EndlessChallengeScore;
         public int EndlessChallengeKillNum;
 

@@ -51,7 +51,7 @@ namespace ET.Server
             Root.Instance.Scene.AddComponent<ServerSceneManagerComponent>();
             Root.Instance.Scene.AddComponent<RobotCaseComponent>();
 
-            Root.Instance.Scene.AddComponent<NavmeshManagerComponent>();
+            //Root.Instance.Scene.AddComponent<NavmeshManagerComponent>();
 
             DBManagerComponent dbManagerComponent = Root.Instance.Scene.AddComponent<DBManagerComponent>();
             dbManagerComponent.NeedDB = Options.Instance.NeedDB == 1;

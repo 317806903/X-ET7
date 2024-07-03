@@ -15,6 +15,8 @@ namespace ET
         public const int PlayerCacheClient = 10;
         public const int Rank = 11;
         public const int Mail = 12;
+        public const int Season = 13;
+        public const int SeasonClient = 14;
 
         public const int Max = 100; // 这个必须最大
     }

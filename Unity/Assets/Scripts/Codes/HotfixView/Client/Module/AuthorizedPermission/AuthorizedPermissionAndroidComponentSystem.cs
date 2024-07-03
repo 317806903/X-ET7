@@ -56,9 +56,23 @@ namespace ET.Client
         {
         }
 
-		public static async ETTask ChkCameraAuthorization(this AuthorizedPermissionAndroidComponent self, Action<bool> callBack)
+		public static async ETTask<bool> ChkCameraAuthorization(this AuthorizedPermissionAndroidComponent self)
 		{
 			Log.Debug($"000 00 {UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera)}");
+
+			if (UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera) == false)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionAndroidComponent self, Action<bool> callBack)
+		{
+			Log.Debug($"000 11 {UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera)}");
 
 			if (UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera) == false)
 			{

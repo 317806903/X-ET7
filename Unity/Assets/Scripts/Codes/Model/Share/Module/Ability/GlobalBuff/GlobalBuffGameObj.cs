@@ -5,7 +5,7 @@ using Unity.Mathematics;
 
 namespace ET.Ability
 {
-    [ChildOf(typeof (GlobalBuffComponent))]
+    [ChildOf(typeof (GlobalBuffGameComponent))]
     public class GlobalBuffGameObj: Entity, IAwake, IDestroy
     {
         public string CfgId { get; set; }
@@ -22,7 +22,15 @@ namespace ET.Ability
             }
         }
 
-        public List<GlobalBuffActionCall> buffActions;
+        /// <summary>
+        /// 记录配置有触发事件对应的GlobalBuffObj
+        /// </summary>
+        public HashSet<ET.AbilityConfig.GlobalBuffTriggerEvent> monitorTriggerList;
+
+        /// <summary>
+        /// 当同组tagGroup有优先级更高的，则会处理
+        /// </summary>
+        public bool isEnabled;
 
         ///<summary>
         ///总时长，单位：秒
@@ -39,6 +47,13 @@ namespace ET.Ability
         ///</summary>
         public bool permanent;
 
+        public TeamFlagType teamFlagType;
+
+        ///<summary>
+        ///施加者
+        ///</summary>
+        public long casterPlayerId;
+
         ///<summary>
         ///buff已经存在了多少时间了，单位：秒
         ///</summary>
@@ -49,8 +64,6 @@ namespace ET.Ability
         ///</summary>
         public int ticked = 0;
 
-        public MultiMapSimple<AbilityGameMonitorTriggerEvent, GlobalBuffActionCall> monitorTriggerList;
-
-        public ActionGameContext actionGameContext;
+        public List<EntityRef<AoeObj>> selfAoeList;
     }
 }

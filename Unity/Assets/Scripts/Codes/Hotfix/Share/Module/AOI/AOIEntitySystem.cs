@@ -65,7 +65,7 @@ namespace ET
             }
             self.DomainScene().GetComponent<AOIManagerComponent>().Add(self, posX, posZ);
             self.bInit = true;
-            await Task.CompletedTask;
+            await ETTask.CompletedTask;
         }
 
         // 获取在自己视野中的对象

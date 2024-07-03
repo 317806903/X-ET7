@@ -42,29 +42,45 @@ namespace ET
             byte[] bytes = EventSystem.Instance.Invoke<NavmeshManagerComponent.RecastFileLoader, byte[]>(new NavmeshManagerComponent.RecastFileLoader() {Name = filePath});
             if (bytes.Length == 0)
             {
-                throw new Exception($"no nav data: {filePath}");
+                Log.Error($"no nav data: {filePath}");
+                return;
             }
 
             self.objBytes = bytes;
+            try
+            {
+                DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
 
-            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
+                self._sample = new Sample(geom, null, null);
+                self.ResetSampleSettings(self._sample, 1);
 
-            self._sample = new Sample(geom, null, null);
-            self.ResetSampleSettings(self._sample, 1);
-
-            self._InitNavMeshBuilder();
+                self._InitNavMeshBuilder();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"InitByFile {e.Message}");
+                return;
+            }
         }
 
         public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes, float scale)
         {
             self.objBytes = bytes;
 
-            DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
+            try
+            {
+                DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
 
-            self._sample = new Sample(geom, null, null);
-            self.ResetSampleSettings(self._sample, 1);
+                self._sample = new Sample(geom, null, null);
+                self.ResetSampleSettings(self._sample, 1);
 
-            self._InitNavMeshBuilder();
+                self._InitNavMeshBuilder();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"InitByFileBytes {e.Message}");
+                return;
+            }
         }
 
         public static void InitByMeshData(this NavmeshManagerComponent self, MeshHelper.MeshData meshData, float scale)

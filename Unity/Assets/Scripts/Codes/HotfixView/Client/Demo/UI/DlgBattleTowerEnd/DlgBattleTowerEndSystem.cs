@@ -45,7 +45,7 @@ namespace ET.Client
 			if (openningList.Count > 0)
 			{
 				string functionMenuCfgId = openningList[0];
-				await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), "BattleTowerEndGuide", () =>
+				await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), "BattleTowerEndGuide", 0, () =>
 				{
 
 				});
@@ -190,12 +190,21 @@ namespace ET.Client
 			loseTrans.gameObject.SetActive(false);
 			victoryTrans.gameObject.SetActive(false);
 
-			string cfgId = GamePlayHelper.GetGamePlay(self.DomainScene()).GetGamePlayBattleConfig().Id;
-			int level = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeIndex(cfgId);
+			RoomTypeInfo roomTypeInfo = GamePlayHelper.GetGamePlay(self.DomainScene()).roomTypeInfo;
+			int level = roomTypeInfo.pveIndex;
 			self.View.ELabel_LvTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", level);
             if (success)
             {
-	            if (TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(cfgId) == null)
+	            bool haveNext = false;
+	            if (roomTypeInfo.seasonId > 0)
+	            {
+		            haveNext = SeasonChallengeLevelCfgCategory.Instance.GetNextChallenge(roomTypeInfo) != null;
+	            }
+	            else
+	            {
+		            haveNext = TowerDefense_ChallengeLevelCfgCategory.Instance.GetNextChallenge(roomTypeInfo) != null;
+	            }
+	            if (haveNext == false)
 	            {
 		            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
 	            }
@@ -285,7 +294,7 @@ namespace ET.Client
 		{
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
 			long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-			int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
+			int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinTypeInGame.Gold);
 			return curGoldValue;
 		}
 
@@ -348,7 +357,7 @@ namespace ET.Client
 
         public static async ETTask AddItemRefreshListener(this DlgBattleTowerEnd self, Transform transform, int index)
         {
-	        self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle(index);
+	        self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle();
 
             Scroll_Item_TowerBuy itemTower = self.ScrollItemReward[index].BindTrans(transform);
 

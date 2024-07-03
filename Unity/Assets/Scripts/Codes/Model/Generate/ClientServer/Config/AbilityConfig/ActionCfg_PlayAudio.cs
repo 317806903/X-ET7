@@ -44,7 +44,7 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 是否进自己可见
+    /// 是否仅自己可见
     /// </summary>
     public bool IsOnlySelfShow { get; private set; }
     /// <summary>

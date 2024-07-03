@@ -20,5 +20,10 @@ namespace ET.Server
             await playerDataComponent.InitByDB(playerId);
             return playerDataComponent;
         }
+
+        public static async ETTask RenameCollection(this PlayerCacheManagerComponent self, int seasonId)
+        {
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), typeof(PlayerSessionComponent), seasonId);
+        }
     }
 }

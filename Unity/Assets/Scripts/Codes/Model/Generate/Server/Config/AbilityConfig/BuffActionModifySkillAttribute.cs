@@ -19,11 +19,13 @@ public sealed partial class BuffActionModifySkillAttribute:  BuffAction
 {
     public BuffActionModifySkillAttribute(ByteBuf _buf)  : base(_buf) 
     {
-        NumericType = (NumericType)_buf.ReadInt();
+        NumericType = (SkillNumericType)_buf.ReadInt();
         BaseValue = _buf.ReadFloat();
         StackValue = _buf.ReadFloat();
         SkillId = _buf.ReadString();
         SkillSlotType = (SkillSlotType)_buf.ReadInt();
+        SkillSlotIndex = _buf.ReadInt();
+        SkillGroupType = (SkillGroupType)_buf.ReadInt();
         MaxChgValue = _buf.ReadFloat();
         PostInit();
     }
@@ -36,7 +38,7 @@ public sealed partial class BuffActionModifySkillAttribute:  BuffAction
     /// <summary>
     /// 技能的CD属性或Dis属性
     /// </summary>
-    public NumericType NumericType { get; private set; }
+    public SkillNumericType NumericType { get; private set; }
     /// <summary>
     /// 初始附加
     /// </summary>
@@ -54,6 +56,14 @@ public sealed partial class BuffActionModifySkillAttribute:  BuffAction
     /// 技能类型
     /// </summary>
     public SkillSlotType SkillSlotType { get; private set; }
+    /// <summary>
+    /// 技能类型序号(-1表示所有,0表示第一个)
+    /// </summary>
+    public int SkillSlotIndex { get; private set; }
+    /// <summary>
+    /// 技能组类型
+    /// </summary>
+    public SkillGroupType SkillGroupType { get; private set; }
     /// <summary>
     /// 最大允许修改值(-1表示不限制)
     /// </summary>
@@ -82,6 +92,8 @@ public sealed partial class BuffActionModifySkillAttribute:  BuffAction
         + "StackValue:" + StackValue + ","
         + "SkillId:" + SkillId + ","
         + "SkillSlotType:" + SkillSlotType + ","
+        + "SkillSlotIndex:" + SkillSlotIndex + ","
+        + "SkillGroupType:" + SkillGroupType + ","
         + "MaxChgValue:" + MaxChgValue + ","
         + "}";
     }

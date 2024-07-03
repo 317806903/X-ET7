@@ -7,6 +7,14 @@ namespace ET
     public class MonsterComponent: Entity, IAwake, IDestroy, ITransferClient
     {
         public string monsterCfgId;
+        [BsonIgnore]
+        public MonsterType monsterType
+        {
+            get
+            {
+                return this.model.Type;
+            }
+        }
         public int rewardGold;
         public int waveIndex;
         public int circleWaveIndex;

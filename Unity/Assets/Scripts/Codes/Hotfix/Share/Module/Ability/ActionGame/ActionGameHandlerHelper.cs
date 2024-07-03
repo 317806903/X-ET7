@@ -4,9 +4,9 @@ namespace ET.Ability
 {
     public static class ActionGameHandlerHelper
     {
-        public static void CreateAction(Scene scene, string actionId, ref ActionGameContext actionGameContext)
+        public static void CreateAction(Scene scene, string actionId, float delayTime, ref ActionGameContext actionGameContext)
         {
-            scene.GetComponent<ActionGameHandlerComponent>().Run(actionId, actionGameContext).Coroutine();
+            scene.GetComponent<ActionGameHandlerComponent>().Run(actionId, delayTime, actionGameContext).Coroutine();
         }
     }
 }

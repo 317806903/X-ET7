@@ -15,6 +15,6 @@ namespace ET
 		[StaticField]
 		public static GameSettingComponent Instance;
 
-		public Dictionary<GameSettingType, bool> recordSettingValue;
+		public MultiDictionary<long, GameSettingType, bool> recordSettingValue;
 	}
 }

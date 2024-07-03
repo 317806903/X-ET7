@@ -123,21 +123,6 @@ namespace ET.Client
                     else
                     {
                         bool isNeedPreMove = false;
-                        // if (Ability.UnitHelper.ChkIsBullet(unit))
-                        // {
-                        //     MoveTweenObj moveTweenObj = unit.GetComponent<MoveTweenObj>();
-                        //     if (moveTweenObj != null)
-                        //     {
-                        //         if (moveTweenObj.moveTweenType is ParabolaMoveTweenType)
-                        //         {
-                        //             isNeedPreMove = false;
-                        //         }
-                        //         else
-                        //         {
-                        //             isNeedPreMove = true;
-                        //         }
-                        //     }
-                        // }
                         float3 targetPos = unit.Position;
                         if (isNeedPreMove)
                         {

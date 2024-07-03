@@ -55,5 +55,12 @@ namespace ET.Client
 		WindowID_CommonChoose,
 		WindowID_GameModeSetting,
 		WindowID_BattleSetting,
+		WindowID_PersionalName,
+		WindowID_PersionalAvatar,
+		WindowID_ARRoomPVESeason,
+		WindowID_RankPowerupSeason,
+		WindowID_Mail,
+		WindowID_MailSettlement,
+		WindowID_MailInfo,
 	}
 }

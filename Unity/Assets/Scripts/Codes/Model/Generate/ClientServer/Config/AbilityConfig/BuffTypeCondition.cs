@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断是否拥有BuffType
 /// </summary>
-public sealed partial class BuffTypeCondition:  Condition 
+public sealed partial class BuffTypeCondition:  UnitConditionBase 
 {
     public BuffTypeCondition(ByteBuf _buf)  : base(_buf) 
     {

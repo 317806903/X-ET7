@@ -10,8 +10,8 @@ namespace ET
     [ComponentOf(typeof (SyncDataManager))]
     public class SyncDataManager_UnitGetCoinShow : Entity, IAwake, IDestroy
     {
-        public MultiMapSimple<long, (Unit unit, CoinType coinType, int chgValue)> player2SyncUnit;
-        public List<(long playerId, Unit unit, CoinType coinType, int chgValue)> NeedSyncGetCoinShowList;
+        public MultiMapSimple<long, (Unit unit, CoinTypeInGame coinType, int chgValue)> player2SyncUnit;
+        public List<(long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)> NeedSyncGetCoinShowList;
 
         public Dictionary<long, int> waitFrameSync = new();
         public Dictionary<long, int> curFrameSync = new();

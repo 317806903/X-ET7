@@ -15,6 +15,9 @@ namespace ET.Client
 
 		public List<string> towerList = new List<string>()
 		{
+			"Tow26_1",
+			"Tow26_2",
+			"Tow26_3",
 			"Tow25_1",
 			"Tow25_2",
 			"Tow25_3",
@@ -98,6 +101,21 @@ namespace ET.Client
 
 		public List<string> monsterList = new List<string>()
 		{
+			"Monster_Season3_Challenge5_8_4",
+			"Monster_Season4_Challenge5_8_4",
+			"Monster_Niao1",
+			"Monster_Niao2",
+			"Monster_Niao3",
+			"Monster_Rou1",
+			"Monster_Rou2",
+			"Monster_Rou3",
+			"Monster_XueRen1",
+			"Monster_XueRen2",
+			"Monster_XueRen3",
+			"Monster_WuGui1",
+			"Monster_WuGui2",
+			"Monster_WuGui3",
+			"Monster_Season2_Challenge1_1_2",
 			"Monster_Infinite_4_1",
 			"Monster_Infinite_13_1",
 			"Monster_Challenge3_5_1",

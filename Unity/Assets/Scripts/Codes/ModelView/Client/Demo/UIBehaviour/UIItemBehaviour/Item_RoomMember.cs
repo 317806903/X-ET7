@@ -16,7 +16,30 @@ namespace ET.Client
 		public Scroll_Item_RoomMember BindTrans(Transform trans)
 		{
 			this.uiTransform = trans;
+			if(this.m_es_avatarshow != null)
+			{
+				this.m_es_avatarshow?.Dispose();
+				this.m_es_avatarshow = null;
+			}
 			return this;
+		}
+
+		public ES_AvatarShow ES_AvatarShow
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_es_avatarshow == null )
+				{
+					Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, "ES_AvatarShow");
+					this.m_es_avatarshow = this.AddChild<ES_AvatarShow, Transform>(subTrans);
+				}
+				return this.m_es_avatarshow;
+			}
 		}
 
 		public UnityEngine.UI.Image EButton_boxImage
@@ -87,78 +110,6 @@ namespace ET.Client
 				else
 				{
 					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Team");
-				}
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_IconButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EButton_IconButton == null )
-					{
-						this.m_EButton_IconButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Icon");
-					}
-					return this.m_EButton_IconButton;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Icon");
-				}
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_IconImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EButton_IconImage == null )
-					{
-						this.m_EButton_IconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Icon");
-					}
-					return this.m_EButton_IconImage;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Icon");
-				}
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_Content_NameTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_ELabel_Content_NameTextMeshProUGUI == null )
-					{
-						this.m_ELabel_Content_NameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "ELabel_Content_Name");
-					}
-					return this.m_ELabel_Content_NameTextMeshProUGUI;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "ELabel_Content_Name");
 				}
 			}
 		}
@@ -405,12 +356,11 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
+			this.m_es_avatarshow?.Dispose();
+			this.m_es_avatarshow = null;
 			this.m_EButton_boxImage = null;
 			this.m_EButton_shadowImage = null;
 			this.m_EImage_TeamImage = null;
-			this.m_EButton_IconButton = null;
-			this.m_EButton_IconImage = null;
-			this.m_ELabel_Content_NameTextMeshProUGUI = null;
 			this.m_ELabel_Content_LvTextMeshProUGUI = null;
 			this.m_ELabel_Content_LeaderImage = null;
 			this.m_EG_ReadyRectTransform = null;
@@ -425,12 +375,10 @@ namespace ET.Client
 			this.DataId = 0;
 		}
 
+		private ES_AvatarShow m_es_avatarshow = null;
 		private UnityEngine.UI.Image m_EButton_boxImage = null;
 		private UnityEngine.UI.Image m_EButton_shadowImage = null;
 		private UnityEngine.UI.Image m_EImage_TeamImage = null;
-		private UnityEngine.UI.Button m_EButton_IconButton = null;
-		private UnityEngine.UI.Image m_EButton_IconImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_Content_NameTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Content_LvTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_ELabel_Content_LeaderImage = null;
 		private UnityEngine.RectTransform m_EG_ReadyRectTransform = null;

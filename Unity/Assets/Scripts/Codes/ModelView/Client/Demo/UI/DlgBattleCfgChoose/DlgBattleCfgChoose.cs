@@ -19,10 +19,7 @@ namespace ET.Client
 		{
 			new string[]{"-1", "TextCode_Key_GameMode_All"},
 			new string[]{"GamePlayTowerDefenseNormal", "TextCode_Key_GameMode_GamePlayTowerDefenseNormal"},
-			new string[]{"GamePlayTowerDefenseTutorialFirst", "TextCode_Key_GamePlayTowerDefenseTutorialFirst"},
-			new string[]{"GamePlayTowerDefensePVE", "TextCode_Key_GamePlayTowerDefensePVE"},
-			new string[]{"GamePlayTowerDefenseEndlessChallenge", "TextCode_Key_GamePlayTowerDefenseEndlessChallenge"},
-			new string[]{"GamePlayTowerDefensePVP", "TextCode_Key_GamePlayTowerDefensePVP"},
+			new string[]{"GamePlayTowerDefenseEndlessChallengeMonster", "TextCode_Key_GamePlayTowerDefenseEndlessChallenge"},
 			new string[]{"GamePlayPKNormal", "TextCode_Key_GameMode_GamePlayPKNormal"},
 		};
 		public List<string[]> teamModeList = new ()
@@ -32,6 +29,8 @@ namespace ET.Client
 			new string[]{"PlayerAlone", "TextCode_Key_TeamMode_PlayerAlone"},
 			new string[]{"PlayerTeam", "TextCode_Key_TeamMode_PlayerTeam"},
 		};
+
+		public string matchKey;
 	}
 
 	public class DlgBattleCfgChoose_ShowWindowData : ShowWindowData

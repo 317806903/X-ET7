@@ -20,11 +20,13 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         IsSaveTarget = _buf.ReadBool();
         IsSaveTargetOnce = _buf.ReadBool();
+        IsSaveExcludeTarget = _buf.ReadBool();
+        IsNeedChkExcludeTarget = _buf.ReadBool();
         IsChgToSelectPos = _buf.ReadBool();
         SelectNum = _buf.ReadInt();
         SelectObjectType = (SelectObjectType)_buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectOrder = new System.Collections.Generic.List<SelectObjectOrder>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SelectObjectOrder _e0;  _e0 = SelectObjectOrder.DeserializeSelectObjectOrder(_buf); SelectOrder.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectPreCondition = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); SelectPreCondition.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectPreCondition = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); SelectPreCondition.Add(_e0);}}
         ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
         PostInit();
     }
@@ -51,6 +53,14 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
     /// </summary>
     public bool IsSaveTargetOnce { get; private set; }
     /// <summary>
+    /// 是否作为排除结果进行存储(每次timeline攻击清空)
+    /// </summary>
+    public bool IsSaveExcludeTarget { get; private set; }
+    /// <summary>
+    /// 是否检测排除结果
+    /// </summary>
+    public bool IsNeedChkExcludeTarget { get; private set; }
+    /// <summary>
     /// 是否转为记录成Pos位置信息(需要在特定位置施法有效,因为unit可能已走开)
     /// </summary>
     public bool IsChgToSelectPos { get; private set; }
@@ -69,7 +79,7 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
     /// <summary>
     /// 前置条件(cond11&amp;cond12|cond21&amp;cond22)
     /// </summary>
-    public System.Collections.Generic.List<SubCondition> SelectPreCondition { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> SelectPreCondition { get; private set; }
     public ActionCallParam ActionCallParam { get; private set; }
 
     public const int __ID__ = 1264690921;
@@ -97,6 +107,8 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "IsSaveTarget:" + IsSaveTarget + ","
         + "IsSaveTargetOnce:" + IsSaveTargetOnce + ","
+        + "IsSaveExcludeTarget:" + IsSaveExcludeTarget + ","
+        + "IsNeedChkExcludeTarget:" + IsNeedChkExcludeTarget + ","
         + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "SelectNum:" + SelectNum + ","
         + "SelectObjectType:" + SelectObjectType + ","

@@ -40,7 +40,7 @@ namespace ET
             }
             else if (self.gameJudgeChooseType == GameJudgeChooseType.ClickComplain)
             {
-                if (GlobalSettingCfgCategory.Instance.GameReJudgeTime >= TimeHelper.ServerNow())
+                if (ET.TimeHelper.ChkIsAfter(GlobalSettingCfgCategory.Instance.GameReJudgeTime, TimeHelper.ServerNow()))
                 {
                     return true;
                 }
@@ -48,7 +48,7 @@ namespace ET
             }
             else if (self.gameJudgeChooseType == GameJudgeChooseType.ClickClose)
             {
-                if (GlobalSettingCfgCategory.Instance.GameReJudgeTime >= TimeHelper.ServerNow())
+                if (ET.TimeHelper.ChkIsAfter(GlobalSettingCfgCategory.Instance.GameReJudgeTime, TimeHelper.ServerNow()))
                 {
                     return true;
                 }

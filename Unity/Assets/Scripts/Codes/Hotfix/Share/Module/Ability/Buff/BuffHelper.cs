@@ -111,7 +111,7 @@ namespace ET.Ability
                     return null;
                 }
 
-                List<BuffObj> buffObjs = new();
+                List<BuffObj> buffObjs = ListComponent<BuffObj>.Create();
                 buffObjs.Add(buffObj);
                 return buffObjs;
             }
@@ -377,7 +377,7 @@ namespace ET.Ability
             return buffComponent.GetBuffListByTagGroupType(buffTagGroupType);
         }
 
-        public static void EventHandler(Unit unit, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
             BuffComponent buffComponent = _GetBuffComponent(unit);
             buffComponent?.EventHandler(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit);

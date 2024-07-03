@@ -86,21 +86,43 @@ namespace ET.Client
 			await self.InitCallBack(arSceneId, _ARHallType);
 		}
 
-		public static async ETTask ChkCameraAuthorization(this ARSessionComponent self, Action<bool> callBack)
+		public static async ETTask<bool> ChkCameraAuthorization(this ARSessionComponent self)
 		{
-			await AuthorizedPermissionManagerComponent.Instance.ChkCameraAuthorization(callBack);
-			// callBack(true);
-			// await ETTask.CompletedTask;
+			return await AuthorizedPermissionManagerComponent.Instance.ChkCameraAuthorization();
 		}
 
-		public static async ETTask LoadARSession(this ARSessionComponent self, Action next)
+		public static async ETTask ChkCameraAuthorizationAndRequest(this ARSessionComponent self, Action<bool> callBack)
+		{
+			await AuthorizedPermissionManagerComponent.Instance.ChkCameraAuthorizationAndRequest(callBack);
+		}
+
+		public static async ETTask LoadARSession(this ARSessionComponent self, Action next, bool needShowTipBefore)
 		{
 			if (self.ARSessoinGo != null)
 			{
 				next();
 				return;
 			}
-			await self.ChkCameraAuthorization((bCameraAuthorization) =>
+
+			bool isCameraAuthorization = await self.ChkCameraAuthorization();
+
+			if (isCameraAuthorization || needShowTipBefore == false)
+			{
+				await self._LoadARSession(next);
+			}
+			else
+			{
+				string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_First_Des");
+				ET.Client.UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), tipMsg, async () =>
+				{
+					await self._LoadARSession(next);
+				});
+			}
+		}
+
+		public static async ETTask _LoadARSession(this ARSessionComponent self, Action next)
+		{
+			await self.ChkCameraAuthorizationAndRequest((bCameraAuthorization) =>
 			{
 				if (self.IsDisposed)
 				{
@@ -143,12 +165,22 @@ namespace ET.Client
 			string titleText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Title");
 			string message = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Des");
 			string sureText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Confirm");
-			UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), message, () =>
+			UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), message, async () =>
 			{
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIShowCommonLoading()
+				{
+					bForce = true,
+				});
+				await TimerComponent.Instance.WaitAsync(3000);
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIHideCommonLoading()
+				{
+					bForce = true,
+				});
+
 				self.LoadARSession(() =>
 				{
 					next();
-				}).Coroutine();
+				}, false).Coroutine();
 			}, sureText, titleText);
 		}
 
@@ -394,6 +426,18 @@ namespace ET.Client
 			{
 				self.OnMenuBackClick();
 			};
+			ClassyUI.Instance.onMenuScanSceneTimeout += () =>
+			{
+				self.OnMenuScanSceneTimeout();
+			};
+			ClassyUI.Instance.onMenuScanSceneTimeoutRetry += () =>
+			{
+				self.OnMenuScanSceneTimeoutRetry();
+			};
+			ClassyUI.Instance.onMenuScanSceneTimeoutReport += () =>
+			{
+				self.OnMenuScanSceneTimeoutReport();
+			};
 		}
 
 		public static void OnMenuReviewSceneOpen(this ARSessionComponent self)
@@ -438,6 +482,34 @@ namespace ET.Client
 			});
 		}
 
+		public static void OnMenuScanSceneTimeout(this ARSessionComponent self)
+		{
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "OnMenuScanSceneTimeout",
+			});
+		}
+
+		public static void OnMenuScanSceneTimeoutRetry(this ARSessionComponent self)
+		{
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "OnMenuScanSceneTimeoutRetry",
+			});
+		}
+
+		public static void OnMenuScanSceneTimeoutReport(this ARSessionComponent self)
+		{
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				eventName = "OnMenuScanSceneTimeoutReport",
+			});
+
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgGameReport>().Coroutine();
+		}
+
 		public static async ETTask InitCallBack(this ARSessionComponent self, string arSceneId, ARHallType _ARHallType)
 		{
 #if UNITY_EDITOR
@@ -448,7 +520,7 @@ namespace ET.Client
 			await self.LoadARSession(() =>
 			{
 				self.InitCallBackNext(arSceneId, _ARHallType).Coroutine();
-			});
+			}, true);
 
 		}
 

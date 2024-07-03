@@ -169,6 +169,17 @@ namespace ET.Server
         }
 
         [Event(SceneType.Map)]
+        public class NoticeGameWaitForStart2Server: AEvent<Scene, EventType.NoticeGameWaitForStart2Server>
+        {
+            protected override async ETTask Run(Scene scene, EventType.NoticeGameWaitForStart2Server args)
+            {
+                GamePlayComponent gamePlayComponent = args.gamePlayComponent;
+                await gamePlayComponent.GameWaitForStartWhenServer();
+                await ETTask.CompletedTask;
+            }
+        }
+
+        [Event(SceneType.Map)]
         public class NoticeGameBegin2Server: AEvent<Scene, EventType.NoticeGameBegin2Server>
         {
             protected override async ETTask Run(Scene scene, EventType.NoticeGameBegin2Server args)
@@ -266,13 +277,13 @@ namespace ET.Server
             {
                 HashSet<long> playerIds = args.playerIds;
 
-                GamePlayModeComponent gamePlayModeComponent = args.gamePlayModeComponent;
+                GamePlayModeComponentBase gamePlayModeComponentBase = args.GamePlayModeComponentBase;
                 M2C_GamePlayModeChgNotice _M2C_GamePlayModeChgNotice = new ()
                 {
-                    GamePlayModeInfo = gamePlayModeComponent.ToBson(),
+                    GamePlayModeInfo = gamePlayModeComponentBase.ToBson(),
                     Components = new(),
                 };
-                foreach (Entity entity in gamePlayModeComponent.Components.Values)
+                foreach (Entity entity in gamePlayModeComponentBase.Components.Values)
                 {
                     if (entity is ITransferClient)
                     {

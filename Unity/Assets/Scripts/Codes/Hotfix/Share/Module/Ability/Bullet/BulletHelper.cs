@@ -40,6 +40,8 @@ namespace ET.Ability
         {
             Unit bulletUnit = ET.GamePlayHelper.CreateBulletByUnit(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
 
+            ET.Ability.OwnCallerHelper.AddOwnCaller(unit, bulletUnit);
+
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
                 unit = unit,
@@ -47,7 +49,7 @@ namespace ET.Ability
             });
         }
 
-        public static void EventHandler(Unit unit, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
             unit.GetComponent<BulletObj>()?.TrigEvent(abilityBulletMonitorTriggerEvent, onAttackUnit, beHurtUnit);
         }
@@ -110,15 +112,19 @@ namespace ET.Ability
 
             float3 dis = unitBullet.Position - unit.Position;
             MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
-            if (moveTweenObj.speed > 10 && math.lengthsq(dis) <= 16)
+            if (moveTweenObj.speed > 5 && math.lengthsq(dis) <= 25)
             {
                 float targetRadius = ET.Ability.UnitHelper.GetBodyRadius(unit);
                 float3 targetPos = unit.Position;
 
                 float3 p1toT = targetPos - posBeforeBullet;
+                p1toT.y = 0;
                 float3 p1toP2 = posAfterBullet - posBeforeBullet;
+                p1toP2.y = 0;
                 float3 p2toT = targetPos - posAfterBullet;
+                p2toT.y = 0;
                 float3 p2toP1 = posBeforeBullet - posAfterBullet;
+                p2toP1.y = 0;
                 float3 normalize_p1toT = math.normalize(p1toT);
                 float3 normalize_p2toT = math.normalize(p2toT);
                 float3 normalize_p1toP2 = math.normalize(p1toP2);

@@ -262,6 +262,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image ENode_AttributeLine2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ENode_AttributeLine2Image == null )
+				{
+					this.m_ENode_AttributeLine2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Details/info/Value/ENode_AttributeLine2");
+				}
+				return this.m_ENode_AttributeLine2Image;
+			}
+		}
+
 		public UnityEngine.UI.Image ENode_Attribute2Image
 		{
 			get
@@ -313,6 +330,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image ENode_AttributeLine3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ENode_AttributeLine3Image == null )
+				{
+					this.m_ENode_AttributeLine3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Details/info/Value/ENode_AttributeLine3");
+				}
+				return this.m_ENode_AttributeLine3Image;
+			}
+		}
+
 		public UnityEngine.UI.Image ENode_Attribute3Image
 		{
 			get
@@ -361,23 +395,6 @@ namespace ET.Client
 					this.m_Elabel_AttributeValue3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Details/info/Value/ENode_Attribute3/Elabel_Attribute3/Elabel_AttributeValue3");
 				}
 				return this.m_Elabel_AttributeValue3TextMeshProUGUI;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_DescriptionTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_DescriptionTextMeshProUGUI == null )
-				{
-					this.m_ELabel_DescriptionTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Details/info/ELabel_Description");
-				}
-				return this.m_ELabel_DescriptionTextMeshProUGUI;
 			}
 		}
 
@@ -602,6 +619,23 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI ELabel_DescriptionTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_DescriptionTextMeshProUGUI == null )
+				{
+					this.m_ELabel_DescriptionTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Details/info/Scroll View/Viewport/Content/ELabel_Description");
+				}
+				return this.m_ELabel_DescriptionTextMeshProUGUI;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_E_DetailsImage = null;
@@ -619,13 +653,14 @@ namespace ET.Client
 			this.m_ENode_Attribute1Image = null;
 			this.m_Elabel_Attribute1TextMeshProUGUI = null;
 			this.m_Elabel_AttributeValue1TextMeshProUGUI = null;
+			this.m_ENode_AttributeLine2Image = null;
 			this.m_ENode_Attribute2Image = null;
 			this.m_Elabel_Attribute2TextMeshProUGUI = null;
 			this.m_Elabel_AttributeValue2TextMeshProUGUI = null;
+			this.m_ENode_AttributeLine3Image = null;
 			this.m_ENode_Attribute3Image = null;
 			this.m_Elabel_Attribute3TextMeshProUGUI = null;
 			this.m_Elabel_AttributeValue3TextMeshProUGUI = null;
-			this.m_ELabel_DescriptionTextMeshProUGUI = null;
 			this.m_E_ScrollView_IconScrollRect = null;
 			this.m_E_ScrollView_IconImage = null;
 			this.m_E_ScrollView_IconLoopListView2 = null;
@@ -639,6 +674,7 @@ namespace ET.Client
 			this.m_E_IconStar1Image = null;
 			this.m_E_IconStar2Image = null;
 			this.m_E_IconStar3Image = null;
+			this.m_ELabel_DescriptionTextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
@@ -657,13 +693,14 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_ENode_Attribute1Image = null;
 		private TMPro.TextMeshProUGUI m_Elabel_Attribute1TextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue1TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ENode_AttributeLine2Image = null;
 		private UnityEngine.UI.Image m_ENode_Attribute2Image = null;
 		private TMPro.TextMeshProUGUI m_Elabel_Attribute2TextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue2TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ENode_AttributeLine3Image = null;
 		private UnityEngine.UI.Image m_ENode_Attribute3Image = null;
 		private TMPro.TextMeshProUGUI m_Elabel_Attribute3TextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue3TextMeshProUGUI = null;
-		private TMPro.TextMeshProUGUI m_ELabel_DescriptionTextMeshProUGUI = null;
 		private UnityEngine.UI.ScrollRect m_E_ScrollView_IconScrollRect = null;
 		private UnityEngine.UI.Image m_E_ScrollView_IconImage = null;
 		private SuperScrollView.LoopListView2 m_E_ScrollView_IconLoopListView2 = null;
@@ -677,6 +714,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_IconStar1Image = null;
 		private UnityEngine.UI.Image m_E_IconStar2Image = null;
 		private UnityEngine.UI.Image m_E_IconStar3Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_DescriptionTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

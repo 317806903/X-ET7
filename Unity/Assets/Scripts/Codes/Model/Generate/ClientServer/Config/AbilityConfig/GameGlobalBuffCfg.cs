@@ -19,8 +19,10 @@ public sealed partial class GameGlobalBuffCfg: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        if(_buf.ReadBool()){ TagGroup = (BuffTagGroupType)_buf.ReadInt(); } else { TagGroup = null; }
+        Priority = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TickTime = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); TickTime.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonitorTriggers = new System.Collections.Generic.List<GlobalBuffActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { GlobalBuffActionCall _e0;  _e0 = GlobalBuffActionCall.DeserializeGlobalBuffActionCall(_buf); MonitorTriggers.Add(_e0);}}
+        MonitorTriggers = GlobalBuffActionCall.DeserializeGlobalBuffActionCall(_buf);
         PostInit();
     }
 
@@ -42,23 +44,31 @@ public sealed partial class GameGlobalBuffCfg: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
+    /// tagGroup标志(同组只会有一个生效)
+    /// </summary>
+    public BuffTagGroupType? TagGroup { get; private set; }
+    /// <summary>
+    /// buff优先级(越小越低)
+    /// </summary>
+    public int Priority { get; private set; }
+    /// <summary>
     /// 工作周期(秒)
     /// </summary>
     public System.Collections.Generic.List<float> TickTime { get; private set; }
-    public System.Collections.Generic.List<GlobalBuffActionCall> MonitorTriggers { get; private set; }
+    public GlobalBuffActionCall MonitorTriggers { get; private set; }
 
     public const int __ID__ = 546952956;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        foreach(var _e in MonitorTriggers) { _e?.Resolve(_tables); }
+        MonitorTriggers?.Resolve(_tables);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        foreach(var _e in MonitorTriggers) { _e?.TranslateText(translator); }
+        MonitorTriggers?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -67,8 +77,10 @@ public sealed partial class GameGlobalBuffCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "TagGroup:" + TagGroup + ","
+        + "Priority:" + Priority + ","
         + "TickTime:" + Bright.Common.StringUtil.CollectionToString(TickTime) + ","
-        + "MonitorTriggers:" + Bright.Common.StringUtil.CollectionToString(MonitorTriggers) + ","
+        + "MonitorTriggers:" + MonitorTriggers + ","
         + "}";
     }
     

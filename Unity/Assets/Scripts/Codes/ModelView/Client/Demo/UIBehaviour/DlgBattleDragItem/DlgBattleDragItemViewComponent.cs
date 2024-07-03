@@ -137,7 +137,7 @@ namespace ET.Client
 				}
 				if( this.m_E_ConfirmButtonButton == null )
 				{
-					this.m_E_ConfirmButtonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_ConfirmButton");
+					this.m_E_ConfirmButtonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton");
 				}
 				return this.m_E_ConfirmButtonButton;
 			}
@@ -154,7 +154,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_ConfirmTextMeshProUGUI == null )
 				{
-					this.m_ELabel_ConfirmTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_ConfirmButton/ELabel_Confirm");
+					this.m_ELabel_ConfirmTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton/ELabel_Confirm");
 				}
 				return this.m_ELabel_ConfirmTextMeshProUGUI;
 			}
@@ -171,7 +171,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_ConfirmUITextLocalizeMonoView == null )
 				{
-					this.m_ELabel_ConfirmUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_ConfirmButton/ELabel_Confirm");
+					this.m_ELabel_ConfirmUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton/ELabel_Confirm");
 				}
 				return this.m_ELabel_ConfirmUITextLocalizeMonoView;
 			}
@@ -188,7 +188,7 @@ namespace ET.Client
 				}
 				if( this.m_E_CancelButtonButton == null )
 				{
-					this.m_E_CancelButtonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_CancelButton");
+					this.m_E_CancelButtonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/cancel/E_CancelButton");
 				}
 				return this.m_E_CancelButtonButton;
 			}
@@ -205,7 +205,7 @@ namespace ET.Client
 				}
 				if( this.m_E_CancelButtonImage == null )
 				{
-					this.m_E_CancelButtonImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_CancelButton");
+					this.m_E_CancelButtonImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/cancel/E_CancelButton");
 				}
 				return this.m_E_CancelButtonImage;
 			}
@@ -222,7 +222,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_CancelTextMeshProUGUI == null )
 				{
-					this.m_ELabel_CancelTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_CancelButton/ELabel_Cancel");
+					this.m_ELabel_CancelTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/cancel/E_CancelButton/ELabel_Cancel");
 				}
 				return this.m_ELabel_CancelTextMeshProUGUI;
 			}
@@ -239,7 +239,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_CancelUITextLocalizeMonoView == null )
 				{
-					this.m_ELabel_CancelUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/E_CancelButton/ELabel_Cancel");
+					this.m_ELabel_CancelUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/EG_ConfirmRoot/cancel/E_CancelButton/ELabel_Cancel");
 				}
 				return this.m_ELabel_CancelUITextLocalizeMonoView;
 			}

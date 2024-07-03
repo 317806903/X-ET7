@@ -311,7 +311,6 @@ namespace ET
         private bool ChkIsNear(Vector3 a, Vector3 b)
         {
             float xxx = (a - b).sqrMagnitude;
-            Debug.Log($"----ChkIsNear xxx[{xxx}]");
             if ((a-b).sqrMagnitude < 10000)
             {
                 return true;

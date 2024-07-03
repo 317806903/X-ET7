@@ -101,7 +101,7 @@ namespace ET.Ability
             else
             {
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                float curHp = numericComponent.GetAsFloat(NumericType.Hp);
                 if (curHp > 0)
                 {
                     return true;
@@ -242,7 +242,9 @@ namespace ET.Ability
             List<Unit> list = null;
             if (selectObjectType == SelectObjectType.FriendPlayers
                 || selectObjectType == SelectObjectType.FriendButNotPlayers
-                || selectObjectType == SelectObjectType.Friends)
+                || selectObjectType == SelectObjectType.Friends
+                || selectObjectType == SelectObjectType.Self
+                || selectObjectType == SelectObjectType.SelfPlayer)
             {
                 list = UnitHelper.GetFriends(curUnit, selectObjectType);
             }
@@ -281,6 +283,7 @@ namespace ET.Ability
             List<Unit> friends = ListComponent<Unit>.Create();
             bool isContainPlayer = false;
             bool isContainActor = false;
+            bool needSamePlayer = false;
             if (selectObjectType == SelectObjectType.Friends)
             {
                 isContainPlayer = true;
@@ -296,12 +299,24 @@ namespace ET.Ability
                 isContainPlayer = false;
                 isContainActor = true;
             }
+            else if (selectObjectType == SelectObjectType.Self)
+            {
+                isContainPlayer = true;
+                isContainActor = true;
+                needSamePlayer = true;
+            }
+            else if (selectObjectType == SelectObjectType.SelfPlayer)
+            {
+                isContainPlayer = false;
+                isContainActor = true;
+                needSamePlayer = true;
+            }
 
             if (isContainPlayer)
             {
                 foreach (Unit unit in GetUnitComponent(curUnit).playerList)
                 {
-                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
+                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit, needSamePlayer))
                     {
                         if (UnitHelper.ChkUnitAlive(unit))
                         {
@@ -315,7 +330,7 @@ namespace ET.Ability
             {
                 foreach (Unit unit in GetUnitComponent(curUnit).actorList)
                 {
-                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit))
+                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit, needSamePlayer))
                     {
                         if (UnitHelper.ChkUnitAlive(unit))
                         {
@@ -464,12 +479,22 @@ namespace ET.Ability
                 }
                 return bulletObj.model.IsNeedChkMesh;
             }
+            else if (ChkIsAoe(curUnit))
+            {
+                AoeObj aoeObj = curUnit.GetComponent<AoeObj>();
+                Unit casterPlayerUnit = aoeObj?.GetCasterActorUnit();
+                if (casterPlayerUnit != null && casterPlayerUnit.model.IsNeedChkMesh == false)
+                {
+                    return false;
+                }
+                return aoeObj.model.IsNeedChkMesh;
+            }
             return curUnit.model.IsNeedChkMesh;
         }
 
         public static bool ChkCanMove(Unit unit)
         {
-            if (UnitHelper.ChkIsBullet(unit))
+            if (UnitHelper.ChkIsBullet(unit) || ChkIsAoe(unit))
             {
                 return true;
             }
@@ -650,7 +675,7 @@ namespace ET.Ability
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitPlayAudio(unit, playAudioActionId, isOnlySelfShow);
         }
 
-        public static void AddSyncData_UnitGetCoinShow(long playerId, Unit unit, CoinType coinType, int chgValue)
+        public static void AddSyncData_UnitGetCoinShow(long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)
         {
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitGetCoinShow(playerId, unit, coinType, chgValue);
         }
@@ -751,6 +776,13 @@ namespace ET.Ability
             return GetTargetDirRadian(curUnit, targetDir);
         }
 
+        public static float GetTargetUnitDisSqr(Unit curUnit, Unit targetUnit)
+        {
+            float3 curPos = curUnit.Position;
+            float3 targetPos = targetUnit.Position;
+            return math.lengthsq(targetPos - curPos);
+        }
+
         /// <summary>
         /// 返回 夹角(弧度角)
         /// </summary>
@@ -799,7 +831,42 @@ namespace ET.Ability
         public static SelectHandle GetSaveSelectHandle(Unit curUnit)
         {
             SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
-            return selectHandleObj?.GetSaveSelectHandle();
+            if (selectHandleObj == null)
+            {
+                return null;
+            }
+            return selectHandleObj.GetSaveSelectHandle();
+        }
+
+        public static void SaveExcludeSelectHandle(Unit curUnit, SelectHandle selectHandle)
+        {
+            ExcludeSelectHandleObj excludeSelectHandleObj = curUnit.GetComponent<ExcludeSelectHandleObj>();
+            if (excludeSelectHandleObj == null)
+            {
+                excludeSelectHandleObj = curUnit.AddComponent<ExcludeSelectHandleObj>();
+            }
+
+            excludeSelectHandleObj.SaveExcludeSelectHandle(selectHandle);
+        }
+
+        public static void ClearExcludeSelectHandle(Unit curUnit)
+        {
+            ExcludeSelectHandleObj excludeSelectHandleObj = curUnit.GetComponent<ExcludeSelectHandleObj>();
+            if (excludeSelectHandleObj == null)
+            {
+                return;
+            }
+            excludeSelectHandleObj.ClearExcludeSelectHandle();
+        }
+
+        public static HashSet<long> GetSaveExcludeSelectHandle(Unit curUnit)
+        {
+            ExcludeSelectHandleObj excludeSelectHandleObj = curUnit.GetComponent<ExcludeSelectHandleObj>();
+            if (excludeSelectHandleObj == null)
+            {
+                return null;
+            }
+            return excludeSelectHandleObj.GetSaveExcludeSelectHandle();
         }
 
         public static void ResetPos(Unit unit, float3 resetPos)
@@ -1017,7 +1084,7 @@ namespace ET.Ability
             else
             {
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                float curHp = numericComponent.GetAsFloat(NumericType.Hp);
                 if (curHp <= 0)
                 {
                     return 0;
@@ -1055,7 +1122,7 @@ namespace ET.Ability
             else
             {
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-                int curHp = numericComponent.GetAsInt(NumericType.Hp);
+                float curHp = numericComponent.GetAsFloat(NumericType.Hp);
                 if (curHp <= 0)
                 {
                     return 0;

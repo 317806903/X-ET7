@@ -10,6 +10,8 @@ namespace ET.Ability
         public long unitId;
         public string skillCfgId;
         public SkillSlotType skillSlotType;
+        public int skillSlotIndex;
+        public SkillGroupType skillGroupType;
         public int skillLevel;
         public float skillDis;
         public string timelineCfgId;

@@ -38,6 +38,14 @@ namespace ET.AbilityConfig
         /// 头像框系列1
         /// </summary>
         AvatarFrameType1 = 0,
+        /// <summary>
+        /// 钻石
+        /// </summary>
+        Diamond = 0,
+        /// <summary>
+        /// 街机代币
+        /// </summary>
+        ArcadeCoin = 1,
     }
 
 } 

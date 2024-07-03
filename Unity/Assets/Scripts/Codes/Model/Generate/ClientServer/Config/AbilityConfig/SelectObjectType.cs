@@ -19,37 +19,45 @@ namespace ET.AbilityConfig
         /// </summary>
         All = 1,
         /// <summary>
+        /// 自己所有对象
+        /// </summary>
+        Self = 2,
+        /// <summary>
+        /// 自己玩家
+        /// </summary>
+        SelfPlayer = 3,
+        /// <summary>
         /// 友军
         /// </summary>
-        Friends = 2,
+        Friends = 4,
         /// <summary>
         /// 友军玩家
         /// </summary>
-        FriendPlayers = 3,
+        FriendPlayers = 5,
         /// <summary>
         /// 友军非玩家
         /// </summary>
-        FriendButNotPlayers = 4,
+        FriendButNotPlayers = 6,
         /// <summary>
         /// 敌军
         /// </summary>
-        Hostiles = 5,
+        Hostiles = 7,
         /// <summary>
         /// 敌军玩家
         /// </summary>
-        HostilePlayers = 6,
+        HostilePlayers = 8,
         /// <summary>
         /// 敌军非玩家
         /// </summary>
-        HostileButNotPlayers = 7,
+        HostileButNotPlayers = 9,
         /// <summary>
         /// 所有玩家
         /// </summary>
-        AllPlayers = 8,
+        AllPlayers = 10,
         /// <summary>
         /// 所有非玩家
         /// </summary>
-        AllButNotPlayers = 9,
+        AllButNotPlayers = 11,
     }
 
 } 

@@ -11,7 +11,8 @@ namespace ET.Server
         {
             try
             {
-                self.Update();
+                TimerComponent.Instance?.Remove(ref self.Timer);
+                self.Update().Coroutine();
             }
             catch (Exception e)
             {
@@ -28,9 +29,6 @@ namespace ET.Server
         {
             protected override void Awake(DataCacheWriteComponent self)
             {
-                self.ChkTimeInterval = 2;
-
-                self.StartTimer();
             }
         }
 
@@ -43,35 +41,14 @@ namespace ET.Server
             }
         }
 
-        public static void StartTimer(this DataCacheWriteComponent self)
+        public static async ETTask Update(this DataCacheWriteComponent self)
         {
-            self._RefreshTime();
-            TimerComponent.Instance?.Remove(ref self.Timer);
-            self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.DataCacheWriteChkTimer, self);
-        }
-
-        public static void ResetChkTimeInterval(this DataCacheWriteComponent self, float chkTimeInterval)
-        {
-            self.ChkTimeInterval = chkTimeInterval;
-            self.StartTimer();
-        }
-
-        public static void _RefreshTime(this DataCacheWriteComponent self)
-        {
-            self.lastChkTime = TimeHelper.ServerNow() + (long)(self.ChkTimeInterval * 1000);
-        }
-
-        public static void Update(this DataCacheWriteComponent self)
-        {
-            if (self.lastChkTime <= TimeHelper.ServerNow())
+            if (self.waitingForWrite == false)
             {
-                self._RefreshTime();
-                if (self.IsNeedWrite)
-                {
-                    ET.Server.DBHelper.SaveDB(self.Parent).Coroutine();
-                    self.IsNeedWrite = false;
-                }
+                return;
             }
+            await ET.Server.DBHelper.SaveDB(self.Parent);
+            self.waitingForWrite = false;
         }
     }
 }

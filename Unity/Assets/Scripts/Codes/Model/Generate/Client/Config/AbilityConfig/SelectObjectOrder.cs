@@ -33,6 +33,7 @@ public abstract partial class SelectObjectOrder: Bright.Config.BeanBase
             case BuffStackOrder.__ID__: return new BuffStackOrder(_buf);
             case BuffExistOrder.__ID__: return new BuffExistOrder(_buf);
             case DisHomeOrder.__ID__: return new DisHomeOrder(_buf);
+            case TargetExcludeOrder.__ID__: return new TargetExcludeOrder(_buf);
             case RandomOrder.__ID__: return new RandomOrder(_buf);
             default: throw new SerializationException();
         }

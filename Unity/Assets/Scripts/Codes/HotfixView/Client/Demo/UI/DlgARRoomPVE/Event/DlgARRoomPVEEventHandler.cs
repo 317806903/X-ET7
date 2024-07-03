@@ -26,7 +26,7 @@
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)
 		{
-			//uiBaseWindow.GetComponent<DlgARRoomPVE>().HideWindow();
+			uiBaseWindow.GetComponent<DlgARRoomPVE>().HideWindow();
 		}
 
 		public void BeforeUnload(UIBaseWindow uiBaseWindow)

@@ -9,7 +9,7 @@ namespace ET
         public static async ETTask FindPathMoveToAsync(this Unit unit, float3 target, ETCancellationToken cancellationToken)
         {
             float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
-            if (speed < 0.01)
+            if (speed < 0.01f)
             {
                 cancellationToken?.Cancel();
                 unit.SendStop(WaitTypeError.Cancel);

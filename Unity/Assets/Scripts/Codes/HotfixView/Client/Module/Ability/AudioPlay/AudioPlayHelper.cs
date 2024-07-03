@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ET.Ability.AbilityEventType;
 using ET.AbilityConfig;
 using ET.Client;
 using Unity.Mathematics;

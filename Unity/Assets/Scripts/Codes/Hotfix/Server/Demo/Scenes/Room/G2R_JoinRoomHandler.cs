@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace ET.Server
 {
@@ -35,8 +36,7 @@ namespace ET.Server
 			else
 			{
 				roomManagerComponent.JoinRoom(playerId, roomId);
-				response.RoomType = (int)roomComponent.roomType;
-				response.SubRoomType = (int)roomComponent.subRoomType;
+				response.RoomTypeInfo = ET.RoomTypeInfo.ToBytes(roomComponent.roomTypeInfo);
 
 				ET.Server.RoomHelper.SendRoomInfoChgNotice(roomComponent, true).Coroutine();
 

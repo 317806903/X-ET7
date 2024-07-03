@@ -14,7 +14,7 @@ namespace ET.Server
 			{
 				isKickWhenBattle = 1;
 			}
-			playerStatusComponent.SubRoomType = SubRoomType.None;
+			//playerStatusComponent.RoomTypeInfo = null;
 			playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 			playerStatusComponent.RoomId = 0;
 

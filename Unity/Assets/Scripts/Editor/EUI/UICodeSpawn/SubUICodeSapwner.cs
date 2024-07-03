@@ -14,8 +14,9 @@ public partial class UICodeSpawner
         Path2WidgetCachedDict = new Dictionary<string, List<Component>>();
         FindAllWidgets(gameObject.transform, "");
         SpawnCodeForSubUISystem(gameObject);
+        SpawnCodeForSubUIModel(gameObject);
         SpawnCodeForSubUI(gameObject);
-        SpawnCodeForSubUIBehaviour(gameObject);
+        SpawnCodeForSubUIViewBehaviour(gameObject);
         AssetDatabase.Refresh();
     }
 
@@ -52,11 +53,59 @@ public partial class UICodeSpawner
         strBuilder.AppendFormat("\tpublic static class {0}\r\n", strDlgName + "System");
         strBuilder.AppendLine("\t{");
 
-        strBuilder.AppendFormat("\t\tpublic static void Init(this {0} self)\n", strDlgName)
+        strBuilder.AppendFormat("\t\tpublic static void RegisterUIEvent(this {0} self)\n", strDlgName)
             .AppendLine("\t\t{")
             .AppendLine("\t\t}")
             .AppendLine();
 
+        strBuilder.AppendFormat("\t\tpublic static void ShowCommonUI(this {0} self, ShowWindowData contextData = null)\n", strDlgName);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t\tself.View.uiTransform.SetVisible(true);");
+        strBuilder.AppendLine("\t\t\t");
+        strBuilder.AppendLine("\t\t}")
+            .AppendLine();
+
+        strBuilder.AppendFormat("\t\tpublic static void HideCommonUI(this {0} self)\n", strDlgName);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t\tself.View.uiTransform.SetVisible(false);");
+        strBuilder.AppendLine("\t\t\t");
+        strBuilder.AppendLine("\t\t}")
+            .AppendLine();
+
+        strBuilder.AppendLine("\t}");
+        strBuilder.AppendLine("}");
+
+        sw.Write(strBuilder);
+        sw.Flush();
+        sw.Close();
+    }
+
+    static void SpawnCodeForSubUIModel(GameObject gameObject)
+    {
+        string strDlgName = gameObject.name;
+        string strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UI/UISubUI/" + strDlgName;
+
+        if (!System.IO.Directory.Exists(strFilePath))
+        {
+            System.IO.Directory.CreateDirectory(strFilePath);
+        }
+
+        strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UI/UISubUI/" + strDlgName + "/" + strDlgName + ".cs";
+        if (System.IO.File.Exists(strFilePath))
+        {
+            Debug.LogError("已存在 " + strDlgName + ".cs,将不会再次生成。");
+            return;
+        }
+
+        StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
+        StringBuilder strBuilder = new StringBuilder();
+
+        strBuilder.AppendLine("namespace ET.Client");
+        strBuilder.AppendLine("{");
+
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgName);
+        strBuilder.AppendLine("\t{");
+        strBuilder.AppendLine("\t\tpublic " + strDlgName + "ViewComponent View { get => this.GetComponent<" + strDlgName + "ViewComponent>(); }\r\n");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
 
@@ -72,6 +121,7 @@ public partial class UICodeSpawner
             return;
         }
         string strDlgName = objPanel.name;
+        string strDlgComponentName = objPanel.name + "ViewComponent";
 
         string strFilePath = Application.dataPath + "/Scripts/Codes/HotfixView/Client/Demo/UIBehaviour/CommonUI" +
                              "";
@@ -91,23 +141,43 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[ObjectSystem]");
-        strBuilder.AppendFormat("\tpublic class {0}AwakeSystem : AwakeSystem<{1},Transform> \r\n", strDlgName, strDlgName);
+        strBuilder.AppendFormat("\tpublic class {0}AwakeSystem : AwakeSystem<{1},Transform> \r\n", strDlgComponentName, strDlgComponentName);
         strBuilder.AppendLine("\t{");
-        strBuilder.AppendFormat("\t\tprotected override void Awake({0} self,Transform transform)\n",strDlgName);
+        strBuilder.AppendFormat("\t\tprotected override void Awake({0} self,Transform transform)\n",strDlgComponentName);
         strBuilder.AppendLine("\t\t{");
         strBuilder.AppendLine("\t\t\tself.uiTransform = transform;");
         strBuilder.AppendLine("\t\t}");
         strBuilder.AppendLine("\t}");
-        strBuilder.AppendLine("\n");
+        strBuilder.AppendLine("");
 
+        strBuilder.AppendLine("\t[ObjectSystem]");
+        strBuilder.AppendFormat("\tpublic class {0}DestroySystem : DestroySystem<{1}> \r\n", strDlgComponentName, strDlgComponentName);
+        strBuilder.AppendLine("\t{");
+        strBuilder.AppendFormat("\t\tprotected override void Destroy({0} self)",strDlgComponentName);
+        strBuilder.AppendLine("\n\t\t{");
+
+        strBuilder.AppendFormat("\t\t\tself.DestroyWidget();\r\n");
+
+        strBuilder.AppendLine("\t\t}");
+        strBuilder.AppendLine("\t}");
+        strBuilder.AppendLine("");
+
+        strBuilder.AppendLine("\t[ObjectSystem]");
+        strBuilder.AppendFormat("\tpublic class {0}AwakeSystem : AwakeSystem<{1},Transform> \r\n", strDlgName, strDlgName);
+        strBuilder.AppendLine("\t{");
+        strBuilder.AppendFormat("\t\tprotected override void Awake({0} self,Transform transform)\n",strDlgName);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendFormat("\t\t\tself.AddComponent<{0},Transform>(transform);\r\n", strDlgComponentName);
+        strBuilder.AppendLine("\t\t\tself.RegisterUIEvent();");
+        strBuilder.AppendLine("\t\t}");
+        strBuilder.AppendLine("\t}");
+        strBuilder.AppendLine("\n");
 
         strBuilder.AppendLine("\t[ObjectSystem]");
         strBuilder.AppendFormat("\tpublic class {0}DestroySystem : DestroySystem<{1}> \r\n", strDlgName, strDlgName);
         strBuilder.AppendLine("\t{");
         strBuilder.AppendFormat("\t\tprotected override void Destroy({0} self)",strDlgName);
         strBuilder.AppendLine("\n\t\t{");
-
-        strBuilder.AppendFormat("\t\t\tself.DestroyWidget();\r\n");
 
         strBuilder.AppendLine("\t\t}");
         strBuilder.AppendLine("\t}");
@@ -118,13 +188,14 @@ public partial class UICodeSpawner
         sw.Close();
     }
 
-    static void SpawnCodeForSubUIBehaviour(GameObject objPanel)
+    static void SpawnCodeForSubUIViewBehaviour(GameObject objPanel)
     {
         if (null == objPanel)
         {
             return;
         }
         string strDlgName = objPanel.name;
+        string strDlgComponentName = objPanel.name + "ViewComponent";
 
         string strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/CommonUI";
 
@@ -132,7 +203,7 @@ public partial class UICodeSpawner
         {
             System.IO.Directory.CreateDirectory(strFilePath);
         }
-        strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/CommonUI/" + strDlgName + ".cs";
+        strFilePath = Application.dataPath + "/Scripts/Codes/ModelView/Client/Demo/UIBehaviour/CommonUI/" + strDlgComponentName + ".cs";
 
         StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
 
@@ -143,7 +214,7 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[EnableMethod]");
-        strBuilder.AppendFormat("\tpublic class {0} : Entity, ET.IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgName)
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, ET.IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgComponentName)
             .AppendLine("\t{");
 
 

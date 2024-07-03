@@ -15,12 +15,12 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断recordInt值
 /// </summary>
-public sealed partial class RecordIntCondition:  Condition 
+public sealed partial class RecordIntCondition:  UnitConditionBase 
 {
     public RecordIntCondition(ByteBuf _buf)  : base(_buf) 
     {
         RecordKey = (RecordKeyInt)_buf.ReadInt();
-        Value = _buf.ReadInt();
+        Value = _buf.ReadFloat();
         PostInit();
     }
 
@@ -33,7 +33,7 @@ public sealed partial class RecordIntCondition:  Condition
     /// <summary>
     /// 数值
     /// </summary>
-    public int Value { get; private set; }
+    public float Value { get; private set; }
 
     public const int __ID__ = -594739971;
     public override int GetTypeId() => __ID__;

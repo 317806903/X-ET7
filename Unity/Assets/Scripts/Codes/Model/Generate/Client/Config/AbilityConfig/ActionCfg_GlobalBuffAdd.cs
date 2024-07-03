@@ -19,7 +19,10 @@ public sealed partial class ActionCfg_GlobalBuffAdd: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        GlobalBuffId = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffGameCfgId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffGameCfgId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffPlayerSelfCfgId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffPlayerSelfCfgId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffPlayerAllCfgId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffPlayerAllCfgId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffUnitCfgId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffUnitCfgId.Add(_e0);}}
         PostInit();
     }
 
@@ -41,17 +44,35 @@ public sealed partial class ActionCfg_GlobalBuffAdd: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// globalBuffId
+    /// globalBuffGameCfgId
     /// </summary>
-    public string GlobalBuffId { get; private set; }
-    public UnitGlobalBuffCfg GlobalBuffId_Ref { get; private set; }
+    public System.Collections.Generic.List<string> GlobalBuffGameCfgId { get; private set; }
+    public System.Collections.Generic.List<GameGlobalBuffCfg> GlobalBuffGameCfgId_Ref { get; private set; }
+    /// <summary>
+    /// globalBuffPlayerSelfCfgId
+    /// </summary>
+    public System.Collections.Generic.List<string> GlobalBuffPlayerSelfCfgId { get; private set; }
+    public System.Collections.Generic.List<PlayerGlobalBuffCfg> GlobalBuffPlayerSelfCfgId_Ref { get; private set; }
+    /// <summary>
+    /// globalBuffPlayerAllCfgId
+    /// </summary>
+    public System.Collections.Generic.List<string> GlobalBuffPlayerAllCfgId { get; private set; }
+    public System.Collections.Generic.List<PlayerGlobalBuffCfg> GlobalBuffPlayerAllCfgId_Ref { get; private set; }
+    /// <summary>
+    /// globalBuffUnitCfgId
+    /// </summary>
+    public System.Collections.Generic.List<string> GlobalBuffUnitCfgId { get; private set; }
+    public System.Collections.Generic.List<UnitGlobalBuffCfg> GlobalBuffUnitCfgId_Ref { get; private set; }
 
     public const int __ID__ = 369312186;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.GlobalBuffId_Ref = (_tables["UnitGlobalBuffCfgCategory"] as UnitGlobalBuffCfgCategory).GetOrDefault(GlobalBuffId);
+        { GameGlobalBuffCfgCategory __table = (GameGlobalBuffCfgCategory)_tables["GameGlobalBuffCfgCategory"]; this.GlobalBuffGameCfgId_Ref = new System.Collections.Generic.List<GameGlobalBuffCfg>(); foreach(var __e in GlobalBuffGameCfgId) { this.GlobalBuffGameCfgId_Ref.Add(__table.GetOrDefault(__e)); } }
+        { PlayerGlobalBuffCfgCategory __table = (PlayerGlobalBuffCfgCategory)_tables["PlayerGlobalBuffCfgCategory"]; this.GlobalBuffPlayerSelfCfgId_Ref = new System.Collections.Generic.List<PlayerGlobalBuffCfg>(); foreach(var __e in GlobalBuffPlayerSelfCfgId) { this.GlobalBuffPlayerSelfCfgId_Ref.Add(__table.GetOrDefault(__e)); } }
+        { PlayerGlobalBuffCfgCategory __table = (PlayerGlobalBuffCfgCategory)_tables["PlayerGlobalBuffCfgCategory"]; this.GlobalBuffPlayerAllCfgId_Ref = new System.Collections.Generic.List<PlayerGlobalBuffCfg>(); foreach(var __e in GlobalBuffPlayerAllCfgId) { this.GlobalBuffPlayerAllCfgId_Ref.Add(__table.GetOrDefault(__e)); } }
+        { UnitGlobalBuffCfgCategory __table = (UnitGlobalBuffCfgCategory)_tables["UnitGlobalBuffCfgCategory"]; this.GlobalBuffUnitCfgId_Ref = new System.Collections.Generic.List<UnitGlobalBuffCfg>(); foreach(var __e in GlobalBuffUnitCfgId) { this.GlobalBuffUnitCfgId_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -65,7 +86,10 @@ public sealed partial class ActionCfg_GlobalBuffAdd: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "GlobalBuffId:" + GlobalBuffId + ","
+        + "GlobalBuffGameCfgId:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffGameCfgId) + ","
+        + "GlobalBuffPlayerSelfCfgId:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffPlayerSelfCfgId) + ","
+        + "GlobalBuffPlayerAllCfgId:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffPlayerAllCfgId) + ","
+        + "GlobalBuffUnitCfgId:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffUnitCfgId) + ","
         + "}";
     }
     

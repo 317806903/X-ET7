@@ -59,49 +59,61 @@ namespace ET.AbilityConfig
         /// </summary>
         GamePlayTowerDefense_TowerKillMonster = 11,
         /// <summary>
-        /// 监听 Game游戏状态PutHome
+        /// 监听 刷新塔池
         /// </summary>
-        GamePlayTowerDefense_Status_PutHomeBegin = 12,
+        GamePlayTowerDefense_RefreshTowerBuyPool = 12,
+        /// <summary>
+        /// 监听 Game游戏状态WaitForStart
+        /// </summary>
+        GamePlay_Status_GameWaitForStart = 13,
+        /// <summary>
+        /// 监听 Game游戏状态Start
+        /// </summary>
+        GamePlay_Status_GameStart = 14,
         /// <summary>
         /// 监听 Game游戏状态PutHome
         /// </summary>
-        GamePlayTowerDefense_Status_PutHomeEnd = 13,
+        GamePlayTowerDefense_Status_PutHomeBegin = 15,
+        /// <summary>
+        /// 监听 Game游戏状态PutHome
+        /// </summary>
+        GamePlayTowerDefense_Status_PutHomeEnd = 16,
         /// <summary>
         /// 监听 Game游戏状态PutMonsterPoint
         /// </summary>
-        GamePlayTowerDefense_Status_PutMonsterPointBegin = 14,
+        GamePlayTowerDefense_Status_PutMonsterPointBegin = 17,
         /// <summary>
         /// 监听 Game游戏状态PutMonsterPoint
         /// </summary>
-        GamePlayTowerDefense_Status_PutMonsterPointEnd = 15,
+        GamePlayTowerDefense_Status_PutMonsterPointEnd = 18,
         /// <summary>
         /// 监听 Game游戏状态ShowStartEffect
         /// </summary>
-        GamePlayTowerDefense_Status_ShowStartEffectBegin = 16,
+        GamePlayTowerDefense_Status_ShowStartEffectBegin = 19,
         /// <summary>
         /// 监听 Game游戏状态ShowStartEffect
         /// </summary>
-        GamePlayTowerDefense_Status_ShowStartEffectEnd = 17,
+        GamePlayTowerDefense_Status_ShowStartEffectEnd = 20,
         /// <summary>
         /// 监听 Game游戏状态RestTime
         /// </summary>
-        GamePlayTowerDefense_Status_RestTimeBegin = 18,
+        GamePlayTowerDefense_Status_RestTimeBegin = 21,
         /// <summary>
         /// 监听 Game游戏状态RestTime
         /// </summary>
-        GamePlayTowerDefense_Status_RestTimeEnd = 19,
+        GamePlayTowerDefense_Status_RestTimeEnd = 22,
         /// <summary>
         /// 监听 Game游戏状态InTheBattle
         /// </summary>
-        GamePlayTowerDefense_Status_InTheBattleBegin = 20,
+        GamePlayTowerDefense_Status_InTheBattleBegin = 23,
         /// <summary>
         /// 监听 Game游戏状态InTheBattleEnd
         /// </summary>
-        GamePlayTowerDefense_Status_InTheBattleEnd = 21,
+        GamePlayTowerDefense_Status_InTheBattleEnd = 24,
         /// <summary>
         /// 监听 Game游戏状态GameEnd
         /// </summary>
-        GamePlayTowerDefense_Status_GameEnd = 22,
+        GamePlay_Status_GameEnd = 25,
     }
 
 } 

@@ -22,8 +22,7 @@ namespace ET.Server
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), gamePlayBattleLevelCfg.SceneMap);
 
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-			playerStatusComponent.RoomType = RoomType.Normal;
-			playerStatusComponent.SubRoomType = SubRoomType.NormalSingleMap;
+			playerStatusComponent.RoomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(RoomType.Normal, SubRoomType.NormalSingleMap, -1, -1, gamePlayBattleLevelCfgId);
 			playerStatusComponent.PlayerStatus = PlayerStatus.Battle;
 
 			await playerStatusComponent.NoticeClient();

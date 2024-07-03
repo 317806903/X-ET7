@@ -10,6 +10,8 @@ namespace ET.Ability
         {
             Unit aoeUnit = ET.GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), unit, actionCfg_CallAoe, selectHandle, ref actionContext);
 
+            ET.Ability.OwnCallerHelper.AddOwnCaller(unit, aoeUnit);
+
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
                 unit = unit,
@@ -19,7 +21,7 @@ namespace ET.Ability
         }
 
 
-        public static void EventHandler(Unit unit, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
+        public static void EventHandler(Unit unit, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
         {
             unit.GetComponent<AoeObj>()?.TrigEvent(abilityAoeMonitorTriggerEvent);
         }

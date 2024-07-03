@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前Buff层数
 /// </summary>
-public sealed partial class BuffStackCountRecordCondition:  Condition 
+public sealed partial class BuffStackCountRecordCondition:  UnitConditionBase 
 {
     public BuffStackCountRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

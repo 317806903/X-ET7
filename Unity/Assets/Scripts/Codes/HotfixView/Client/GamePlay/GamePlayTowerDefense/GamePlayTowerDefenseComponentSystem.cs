@@ -169,7 +169,10 @@ namespace ET.Client
 			}
 
 			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
-			curTowerShowComponent.DoSelect();
+			if (curTowerShowComponent != null)
+			{
+				curTowerShowComponent.DoSelect().Coroutine();
+			}
 		}
 
 		public static void DoPressHitTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
@@ -239,7 +242,7 @@ namespace ET.Client
 			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
 		}
 
-		public static void ChkAllMyTowerUpgrade(this GamePlayTowerDefenseComponent self)
+		public static async ETTask ChkAllMyTowerUpgrade(this GamePlayTowerDefenseComponent self)
 		{
 			PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
 			if (playerOwnerTowersComponent == null)
@@ -254,7 +257,31 @@ namespace ET.Client
 			foreach (long unitId in unitIds)
 			{
 				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
-				if (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
+				int retryNum = 100;
+				while (unit == null)
+				{
+					await TimerComponent.Instance.WaitFrameAsync();
+					if (self.IsDisposed)
+					{
+						return;
+					}
+					if (playerOwnerTowersComponent.IsDisposed)
+					{
+						return;
+					}
+					retryNum--;
+					if (retryNum <= 0)
+					{
+						continue;
+					}
+					unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+				}
+			}
+
+			foreach (long unitId in unitIds)
+			{
+				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+				if (unit == null)
 				{
 					continue;
 				}
@@ -310,6 +337,11 @@ namespace ET.Client
 
 		public static void DoDrawAllMonsterCall2HeadQuarter(this GamePlayTowerDefenseComponent self)
 		{
+			if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
+			{
+				ET.Client.PathLineRendererComponent.Instance.Clear();
+				return;
+			}
 			if (self.ChkIsGameEnd()
 			    || self.ChkIsGameRecover()
 			    || self.ChkIsGameRecovering())
@@ -341,6 +373,17 @@ namespace ET.Client
 			}
 		}
 
+
+		public static float GetPathLength(this GamePlayTowerDefenseComponent self)
+		{
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+			float length = ET.Client.PathLineRendererComponent.Instance.GetPathLength(homeTeamFlagType, myPlayerId);
+
+			GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
+			length /= gamePlayComponent.GetARScale();
+			return length;
+		}
 
 		public static void ChkMouseRightClick(this GamePlayTowerDefenseComponent self)
 		{

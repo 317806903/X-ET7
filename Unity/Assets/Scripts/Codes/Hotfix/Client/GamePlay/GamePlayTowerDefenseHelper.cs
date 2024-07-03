@@ -34,6 +34,30 @@ namespace ET.Client
 			}
 		}
 
+		public static async ETTask<(bool, string)> SendResetHome(Scene scene)
+		{
+			M2C_ResetHome _M2C_ResetHome = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_ResetHome()
+			{
+			}) as M2C_ResetHome;
+			if (_M2C_ResetHome.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_ResetHome.Message,
+				});
+				return (false, _M2C_ResetHome.Message);
+			}
+			else
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+				{
+					eventName = "ResetHome",
+				});
+			}
+
+			return (true, "");
+		}
+
 		public static async ETTask<(float3, List<float3>)> SendGetMonsterCall2HeadQuarterPath(Scene scene, TeamFlagType homeTeamFlagType, float3 pos)
 		{
 			M2C_GetMonsterCall2HeadQuarterPath _M2C_GetMonsterCall2HeadQuarterPath = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_GetMonsterCall2HeadQuarterPath()
@@ -73,10 +97,6 @@ namespace ET.Client
 			}
 			else
 			{
-				EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
-				{
-					eventName = "PortalPlaced",
-				});
 			}
 
 			return (true, "");
@@ -160,6 +180,7 @@ namespace ET.Client
 			C2M_UpgradePlayerTower _C2M_UpgradePlayerTower = new ()
 			{
 				TowerUnitId = towerUnitId,
+				TowerCfgId = towerCfgId,
 				OnlyChkPool = onlyChkPool?1:0,
 			};
 			M2C_UpgradePlayerTower _M2C_UpgradePlayerTower = await ET.Client.SessionHelper.GetSession(scene).Call(_C2M_UpgradePlayerTower) as M2C_UpgradePlayerTower;
@@ -440,5 +461,6 @@ namespace ET.Client
 			}
 
 		}
+
 	}
 }

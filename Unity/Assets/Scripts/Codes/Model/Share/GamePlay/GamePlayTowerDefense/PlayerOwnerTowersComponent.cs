@@ -35,6 +35,12 @@ namespace ET
 		public MultiMapSimple<long, bool> playerTowerBuyPoolBoughts;
 
 		/// <summary>
+		/// 玩家可购买的卡池的价钱
+		/// </summary>
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public MultiMapSimple<long, int> playerTowerBuyPoolCosts;
+
+		/// <summary>
 		/// 玩家刷新卡池消耗金币
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
@@ -45,6 +51,12 @@ namespace ET
 		/// </summary>
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiMapSimple<long, long> playerId2unitTowerId;
+
+		/// <summary>
+		/// 玩家对应塔数量上限(仅AttackTower)
+		/// </summary>
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<long, int> playerId2unitAttackTowerLimitCount;
 
 		/// <summary>
 		/// 玩家对应塔列表(仅AttackTower)

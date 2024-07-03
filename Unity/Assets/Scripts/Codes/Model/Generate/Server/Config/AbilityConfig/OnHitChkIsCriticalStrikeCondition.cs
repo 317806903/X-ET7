@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 攻击时,是否暴击
 /// </summary>
-public sealed partial class OnHitChkIsCriticalStrikeCondition:  Condition 
+public sealed partial class OnHitChkIsCriticalStrikeCondition:  UnitConditionBase 
 {
     public OnHitChkIsCriticalStrikeCondition(ByteBuf _buf)  : base(_buf) 
     {

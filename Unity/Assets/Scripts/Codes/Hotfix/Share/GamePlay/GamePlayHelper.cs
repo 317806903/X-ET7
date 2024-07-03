@@ -40,7 +40,7 @@ namespace ET
 		public static Unit CreateObserverUnit(GamePlayMode gamePlayMode, Scene scene, long playerId)
 		{
 			float3 position = float3.zero;
-			float3 forward = float3.zero;
+			float3 forward = new float3(0, 0, 1);
 
 			Unit unit = UnitHelper_Create.CreateWhenServer_ObserverUnit(scene, playerId, position, forward);
 
@@ -224,11 +224,26 @@ namespace ET
 			return playerId;
 		}
 
-		public static bool ChkIsFriend(Unit curUnit, Unit targetUnit)
+		public static bool ChkIsFriend(Unit curUnit, Unit targetUnit, bool needSamePlayer = false)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(curUnit);
 			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = gamePlayComponent.GetComponent<GamePlayFriendTeamFlagCompent>();
-			return gamePlayFriendTeamFlagCompent.ChkIsFriend(curUnit, targetUnit);
+			return gamePlayFriendTeamFlagCompent.ChkIsFriend(curUnit, targetUnit, needSamePlayer);
+		}
+
+		public static bool ChkIsFriend(Scene scene, long curPlayerId, long targetPlayerId)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = gamePlayComponent.GetComponent<GamePlayFriendTeamFlagCompent>();
+			TeamFlagType curTeamFlagType = gamePlayFriendTeamFlagCompent.GetTeamFlagByPlayerId(curPlayerId);
+			TeamFlagType targetTeamFlagType = gamePlayFriendTeamFlagCompent.GetTeamFlagByPlayerId(targetPlayerId);
+			return ChkIsFriend(scene, curTeamFlagType, targetTeamFlagType);
+		}
+
+		public static bool ChkIsFriend(Scene scene, TeamFlagType curTeamFlagType, TeamFlagType targetTeamFlagType)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			return gamePlayComponent.ChkIsFriend(curTeamFlagType, targetTeamFlagType);
 		}
 
 		/// <summary>
@@ -294,7 +309,7 @@ namespace ET
 			gamePlayComponent.AddUnitPathfinding(unit);
 		}
 
-		public static void SetPlayerCoin(Scene scene, long playerId, CoinType coinType, int setValue)
+		public static void SetPlayerCoin(Scene scene, long playerId, CoinTypeInGame coinType, int setValue)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
@@ -331,14 +346,14 @@ namespace ET
 		/// <param name="playerId"></param>
 		/// <param name="coinType"></param>
 		/// <param name="chgValue"></param>
-		public static void ChgPlayerCoin(Scene scene, long playerId, CoinType coinType, int chgValue)
+		public static void ChgPlayerCoin(Scene scene, long playerId, CoinTypeInGame coinType, int chgValue)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
 			gamePlayPlayerListComponent.ChgPlayerCoin(playerId, coinType, chgValue, GetCoinType.Normal);
 		}
 
-		public static void ChgPlayerCoinShare(Scene scene, long playerId, CoinType coinType, int chgValue, Unit showGetCoinUnit)
+		public static void ChgPlayerCoinShare(Scene scene, long playerId, CoinTypeInGame coinType, int chgValue, Unit showGetCoinUnit)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			TeamFlagType curTeamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
@@ -369,7 +384,7 @@ namespace ET
 			}
 		}
 
-		public static float GetPlayerCoin(Scene scene, long playerId, CoinType coinType)
+		public static float GetPlayerCoin(Scene scene, long playerId, CoinTypeInGame coinType)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
@@ -383,7 +398,7 @@ namespace ET
 		/// <param name="playerId"></param>
 		/// <param name="coinType"></param>
 		/// <param name="chgValue"></param>
-		public static void ChgTeamCoin(Scene scene, long playerId, CoinType coinType, int chgValue)
+		public static void ChgTeamCoin(Scene scene, long playerId, CoinTypeInGame coinType, int chgValue)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
 			TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByPlayerId(playerId);
@@ -415,8 +430,13 @@ namespace ET
 			}
 		}
 
-		public static string GetBattleCfgId(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, int pveIndex)
+		public static string GetBattleCfgId(RoomTypeInfo roomTypeInfo)
 		{
+			RoomType RoomTypeIn = roomTypeInfo.roomType;
+			SubRoomType SubRoomTypeIn = roomTypeInfo.subRoomType;
+			int seasonId = roomTypeInfo.seasonId;
+			int pveIndex = roomTypeInfo.pveIndex;
+
 			string battleCfgId = "";
 			if (RoomTypeIn == RoomType.Normal)
 			{
@@ -430,9 +450,14 @@ namespace ET
 				}
 				else if (SubRoomTypeIn == SubRoomType.NormalPVE)
 				{
-					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(false, pveIndex);
-					battleCfgId = challengeLevelCfg.Id;
+					if (seasonId > 0)
+					{
+						battleCfgId = SeasonChallengeLevelCfgCategory.Instance.GetCurChallengeGamePlayBattleLevelCfgId(seasonId, pveIndex, false);
+					}
+					else
+					{
+						battleCfgId = TowerDefense_ChallengeLevelCfgCategory.Instance.GetCurChallengeGamePlayBattleLevelCfgId(pveIndex, false);
+					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.NormalPVP)
 				{
@@ -453,21 +478,41 @@ namespace ET
 					}
 					else
 					{
-						battleCfgId = GlobalSettingCfgCategory.Instance.NoAREndlessChallengeCfgId;
+						if (seasonId > 0)
+						{
+							SeasonInfoCfg seasonInfoCfg = SeasonInfoCfgCategory.Instance.Get(seasonId);
+							if (seasonInfoCfg != null)
+							{
+								battleCfgId = seasonInfoCfg.NoAREndlessChallengeCfgId;
+							}
+						}
+						else
+						{
+							battleCfgId = GlobalSettingCfgCategory.Instance.NoAREndlessChallengeCfgId;
+						}
 					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.NormalScanMesh)
 				{
 					battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeNoARScanMeshCfgId;
 				}
+				else if (SubRoomTypeIn == SubRoomType.NormalARScanCode)
+				{
+					return "";
+				}
 			}
 			else if (RoomTypeIn == RoomType.AR)
 			{
 				if (SubRoomTypeIn == SubRoomType.ARPVE)
 				{
-					TowerDefense_ChallengeLevelCfg challengeLevelCfg =
-						TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(true, pveIndex);
-					battleCfgId = challengeLevelCfg.Id;
+					if (seasonId > 0)
+					{
+						battleCfgId = SeasonChallengeLevelCfgCategory.Instance.GetCurChallengeGamePlayBattleLevelCfgId(seasonId, pveIndex, true);
+					}
+					else
+					{
+						battleCfgId = TowerDefense_ChallengeLevelCfgCategory.Instance.GetCurChallengeGamePlayBattleLevelCfgId(pveIndex, true);
+					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.ARPVP)
 				{
@@ -488,7 +533,18 @@ namespace ET
 					}
 					else
 					{
-						battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+						if (seasonId > 0)
+						{
+							SeasonInfoCfg seasonInfoCfg = SeasonInfoCfgCategory.Instance.Get(seasonId);
+							if (seasonInfoCfg != null)
+							{
+								battleCfgId = seasonInfoCfg.AREndlessChallengeCfgId;
+							}
+						}
+						else
+						{
+							battleCfgId = GlobalSettingCfgCategory.Instance.AREndlessChallengeCfgId;
+						}
 					}
 				}
 				else if (SubRoomTypeIn == SubRoomType.ARTutorialFirst)
@@ -499,8 +555,17 @@ namespace ET
 				{
 					battleCfgId = GlobalSettingCfgCategory.Instance.GameModeArcadeARScanMeshCfgId;
 				}
+				else if (SubRoomTypeIn == SubRoomType.ARScanCode)
+				{
+					return "";
+				}
 			}
 
+			if (string.IsNullOrEmpty(battleCfgId))
+			{
+				Log.Error($"string.IsNullOrEmpty({battleCfgId}) when roomTypeInfo=[{roomTypeInfo}]");
+				return "";
+			}
 			if (GamePlayBattleLevelCfgCategory.Instance.Contain(battleCfgId) == false)
 			{
 				Log.Error($"GamePlayBattleLevelCfgCategory.Instance.Contain({battleCfgId}) == false");
@@ -510,12 +575,56 @@ namespace ET
 			return battleCfgId;
 		}
 
-		public static int GetPhysicalCost(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn)
+		public static RoomTypeInfo GetRoomTypeInfo(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, int seasonId = -1, int pveIndex = -1, string gamePlayBattleLevelCfgId = "")
+		{
+			RoomTypeInfo roomTypeInfo = new();
+			roomTypeInfo.roomType = RoomTypeIn;
+			roomTypeInfo.subRoomType = SubRoomTypeIn;
+			roomTypeInfo.seasonId = seasonId;
+			roomTypeInfo.pveIndex = pveIndex;
+			if (RoomTypeIn == RoomType.AR && SubRoomTypeIn == SubRoomType.ARScanCode)
+			{
+				return roomTypeInfo;
+			}
+			else if (RoomTypeIn == RoomType.Normal && SubRoomTypeIn == SubRoomType.NormalARScanCode)
+			{
+				return roomTypeInfo;
+			}
+
+			if (string.IsNullOrEmpty(gamePlayBattleLevelCfgId))
+			{
+				roomTypeInfo.gamePlayBattleLevelCfgId = ET.GamePlayHelper.GetBattleCfgId(roomTypeInfo);
+			}
+			else
+			{
+				roomTypeInfo.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
+			}
+
+			if (RoomTypeIn == RoomType.Normal)
+			{
+				switch (SubRoomTypeIn)
+				{
+					case SubRoomType.None:
+						Log.Error($"RoomTypeIn == RoomType.Normal SubRoomTypeIn==SubRoomType.None");
+						return roomTypeInfo;
+				}
+			}
+			else if(RoomTypeIn == RoomType.AR)
+			{
+
+			}
+
+			return roomTypeInfo;
+		}
+
+		public static int GetPhysicalCost(RoomTypeInfo roomTypeInfo)
 		{
 			if (ET.SceneHelper.ChkIsGameModeArcade())
 			{
 				return 0;
 			}
+			RoomType RoomTypeIn = roomTypeInfo.roomType;
+			SubRoomType SubRoomTypeIn = roomTypeInfo.subRoomType;
 			int physicalCost = 0;
 			if (RoomTypeIn == RoomType.Normal)
 			{
@@ -568,12 +677,14 @@ namespace ET
 			return physicalCost;
 		}
 
-		public static int GetArcadeCoinCost(RoomType RoomTypeIn, SubRoomType SubRoomTypeIn, bool isRecover)
+		public static int GetArcadeCoinCost(RoomTypeInfo roomTypeInfo, bool isRecover)
 		{
 			if (ET.SceneHelper.ChkIsGameModeArcade() == false)
 			{
 				return 0;
 			}
+			RoomType RoomTypeIn = roomTypeInfo.roomType;
+			SubRoomType SubRoomTypeIn = roomTypeInfo.subRoomType;
 			int arcadeCoinCost = 0;
 			if (RoomTypeIn == RoomType.Normal)
 			{
@@ -701,6 +812,124 @@ namespace ET
 				ActionHandlerHelper.CreateAction(unit, null, actionId, 0.1f, selectHandleSelf, ref actionContext);
 			}
 		}
+
+		public static float GetGamePlayNumericValueByPlayerId(Scene scene, long playerId, GameNumericType gameNumericType)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			GamePlayNumericComponent gamePlayNumericComponent = gamePlayComponent.GetComponent<GamePlayNumericComponent>();
+			return gamePlayNumericComponent.GetPlayerNumeric(playerId, gameNumericType);
+		}
+
+		public static float GetGamePlayNumericValueByHomeTeamFlagType(Scene scene, TeamFlagType homeTeamFlagType, GameNumericType gameNumericType)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			GamePlayNumericComponent gamePlayNumericComponent = gamePlayComponent.GetComponent<GamePlayNumericComponent>();
+			return gamePlayNumericComponent.GetHomeTeamFlagTypeNumeric(homeTeamFlagType, gameNumericType);
+		}
+
+		public static void ChgGamePlayNumericValueByPlayerId(Scene scene, long playerId, GameNumericType gameNumericType, float chgValue, bool isReset)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			GamePlayNumericComponent gamePlayNumericComponent = gamePlayComponent.GetComponent<GamePlayNumericComponent>();
+			gamePlayNumericComponent.ChgPlayerNumeric(playerId, gameNumericType, chgValue, isReset);
+		}
+
+		public static void ChgGamePlayNumericValueByHomeTeamFlagType(Scene scene, TeamFlagType homeTeamFlagType, GameNumericType gameNumericType, float chgValue, bool isReset)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(scene);
+			GamePlayNumericComponent gamePlayNumericComponent = gamePlayComponent.GetComponent<GamePlayNumericComponent>();
+			gamePlayNumericComponent.ChgHomeTeamFlagTypeNumeric(homeTeamFlagType, gameNumericType, chgValue, isReset);
+		}
+
+        public static TeamFlagType GetHomeTeamFlagType(TeamFlagType teamFlagType)
+        {
+            if (teamFlagType == TeamFlagType.Monster1
+                || teamFlagType == TeamFlagType.TeamPlayer1
+                || teamFlagType == TeamFlagType.TeamGlobal1)
+            {
+                return TeamFlagType.TeamGlobal1;
+            }
+            else if (teamFlagType == TeamFlagType.Monster2
+                     || teamFlagType == TeamFlagType.TeamPlayer2
+                     || teamFlagType == TeamFlagType.TeamGlobal2)
+            {
+                return TeamFlagType.TeamGlobal2;
+            }
+            else if (teamFlagType == TeamFlagType.Monster3
+                     || teamFlagType == TeamFlagType.TeamPlayer3
+                     || teamFlagType == TeamFlagType.TeamGlobal3)
+            {
+                return TeamFlagType.TeamGlobal3;
+            }
+            else if (teamFlagType == TeamFlagType.Monster4
+                     || teamFlagType == TeamFlagType.TeamPlayer4
+                     || teamFlagType == TeamFlagType.TeamGlobal4)
+            {
+                return TeamFlagType.TeamGlobal4;
+            }
+            else if (teamFlagType == TeamFlagType.Monster5
+                     || teamFlagType == TeamFlagType.TeamPlayer5
+                     || teamFlagType == TeamFlagType.TeamGlobal5)
+            {
+                return TeamFlagType.TeamGlobal5;
+            }
+            else
+            {
+                return TeamFlagType.TeamGlobal1;
+            }
+        }
+
+        public static TeamFlagType GetMonsterTeamFlagType(TeamFlagType teamFlagType)
+        {
+            if (teamFlagType == TeamFlagType.Monster1
+                || teamFlagType == TeamFlagType.TeamPlayer1
+                || teamFlagType == TeamFlagType.TeamGlobal1)
+            {
+                return TeamFlagType.Monster1;
+            }
+            else if (teamFlagType == TeamFlagType.Monster2
+                     || teamFlagType == TeamFlagType.TeamPlayer2
+                     || teamFlagType == TeamFlagType.TeamGlobal2)
+            {
+                return TeamFlagType.Monster2;
+            }
+            else if (teamFlagType == TeamFlagType.Monster3
+                     || teamFlagType == TeamFlagType.TeamPlayer3
+                     || teamFlagType == TeamFlagType.TeamGlobal3)
+            {
+                return TeamFlagType.Monster3;
+            }
+            else if (teamFlagType == TeamFlagType.Monster4
+                     || teamFlagType == TeamFlagType.TeamPlayer4
+                     || teamFlagType == TeamFlagType.TeamGlobal4)
+            {
+                return TeamFlagType.Monster4;
+            }
+            else if (teamFlagType == TeamFlagType.Monster5
+                     || teamFlagType == TeamFlagType.TeamPlayer5
+                     || teamFlagType == TeamFlagType.TeamGlobal5)
+            {
+                return TeamFlagType.Monster5;
+            }
+            else
+            {
+                return TeamFlagType.Monster1;
+            }
+        }
+
+        public static TeamFlagType GetHomeTeamFlagTypeByPlayer(Scene scene, long playerId)
+        {
+	        TeamFlagType teamFlagType = GetGamePlay(scene).GetTeamFlagByPlayerId(playerId);
+
+	        return GetHomeTeamFlagType(teamFlagType);
+        }
+
+        public static TeamFlagType GetMonsterTeamFlagTypeByPlayer(Scene scene, long playerId)
+        {
+	        TeamFlagType teamFlagType = GetGamePlay(scene).GetTeamFlagByPlayerId(playerId);
+
+	        return GetMonsterTeamFlagType(teamFlagType);
+        }
 
 	}
 }

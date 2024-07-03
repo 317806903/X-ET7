@@ -21,7 +21,12 @@ namespace ET.Client
                 clientScene = currentScene.Parent.GetParent<Scene>();
             }
 
-            PlayerComponent playerComponent = clientScene.GetComponent<PlayerComponent>();
+            CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+            PlayerComponent playerComponent = currentScenesComponent.GetComponent<PlayerComponent>();
+            if (playerComponent == null)
+            {
+                playerComponent = currentScenesComponent.AddComponent<PlayerComponent>();
+            }
             return playerComponent;
         }
 
@@ -74,6 +79,10 @@ namespace ET.Client
         public static long GetMyPlayerId(Scene scene)
         {
             Player player = GetMyPlayer(scene);
+            if (player == null)
+            {
+                return -1;
+            }
             return player.Id;
         }
 

@@ -19,10 +19,10 @@ namespace ET
             }
         }
 
-        public static RoomComponent CreateRoom(this RoomManagerComponent self, RoomType roomType, SubRoomType subRoomType, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
+        public static RoomComponent CreateRoom(this RoomManagerComponent self, RoomTypeInfo roomTypeInfo, long playerId, RoomTeamMode roomTeamMode)
         {
             RoomComponent roomComponent = self.AddChild<RoomComponent>();
-            roomComponent.Init(roomType, subRoomType, playerId, roomTeamMode, battleCfgId);
+            roomComponent.Init(roomTypeInfo, playerId, roomTeamMode);
 
             self.IdleRoomList.Add(roomComponent.Id);
             self.player2Room.Add(playerId, roomComponent.Id);

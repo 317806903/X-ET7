@@ -72,6 +72,12 @@ namespace ET.Server
 	        return entity as PlayerOtherInfoComponent;
         }
 
+        public static async ETTask<PlayerSeasonInfoComponent> GetPlayerSeasonInfoByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.SeasonInfo, forceReGet);
+	        return entity as PlayerSeasonInfoComponent;
+        }
+
         public static async ETTask<PlayerFunctionMenuComponent> GetPlayerFunctionMenuByPlayerId(Scene scene, long playerId, bool forceReGet = false)
         {
 	        Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.FunctionMenu, forceReGet);
@@ -102,6 +108,28 @@ namespace ET.Server
 		        list.Add(itemComponent);
 	        }
 	        return list;
+        }
+
+        public static async ETTask<int> GetTokenValueByPlayerId(Scene scene, long playerId, ItemSubType itemSubType, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId, forceReGet);
+	        var itemList = playerBackPackComponent.GetItemListByItemType(ItemType.Token, itemSubType);
+	        if (itemList == null || itemList.Count == 0)
+	        {
+		        return 0;
+	        }
+
+	        return itemList[0].GetCount();
+        }
+
+        public static async ETTask<int> GetTokenDiamondByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+			 return await GetTokenValueByPlayerId(scene, playerId, ItemSubType.Diamond, forceReGet);
+        }
+
+        public static async ETTask<int> GetTokenArcadeCoinByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        return await GetTokenValueByPlayerId(scene, playerId, ItemSubType.ArcadeCoin, forceReGet);
         }
 
         public static async ETTask SetPlayerModelByClient(Scene scene, long playerId, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
@@ -250,7 +278,109 @@ namespace ET.Server
 			await ETTask.CompletedTask;
 		}
 
-		public static async ETTask AddArcadeCoin(Scene scene, long playerId, int chgValue)
+		/// <summary>
+		/// 重置玩家的所有养成等级
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <param name="playerId"></param>
+		/// <returns>需要返还的钻石</returns>
+		public static async ETTask<int> ResetAllPowerup(Scene scene, long playerId)
+		{
+
+			PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
+			int reward = await playerSeasonInfoComponent.GetSeasonBringupReward();
+			await playerSeasonInfoComponent.ResetSeasonBringUpDic();
+
+            PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerSeasonInfo_PowerUP;
+            await SavePlayerModel(scene, playerId, PlayerModelType.SeasonInfo, new() { "seasonBringUpDic" }, playerModelChgType);
+			return reward;
+        }
+
+        /// <summary>
+        ///  升级养成
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="playerId">玩家id</param>
+        /// <param name="cfg">养成的配置id</param>
+        /// <param name="playerlevel">升级到的等级</param>
+        /// <returns>是否升级成功</returns>
+        public static async ETTask<bool> UpdatePowerup(Scene scene, long playerId,string cfg)
+        {
+            PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
+			int playerBringUpLevel = playerSeasonInfoComponent.GetSeasonBringUpLevel(cfg);
+            SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfg, playerBringUpLevel);
+			bool IsPlayerCanUpdate = await PlayerCacheHelper.IsPlayerCanUpdate(scene, playerId, cfg);
+            if (IsPlayerCanUpdate)
+			{
+                bool isChg = playerSeasonInfoComponent.ChgSeasonBringUpDic(cfg, playerBringUpLevel + 1);
+                if (isChg)
+				{
+					await ReduceTokenDiamond(scene, playerId, seasonBringUpCfg.Cost);
+                    PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerSeasonInfo_PowerUP;
+                    await SavePlayerModel(scene, playerId, PlayerModelType.SeasonInfo, new() { "seasonBringUpDic" }, playerModelChgType);
+					return true;
+                }
+				else
+				{
+                    return false;
+                }
+            }
+			else
+			{
+				return false;
+			}
+        }
+
+        /// <summary>
+        /// 玩家是否能升级
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="playerId"></param>
+        /// <param name="cfg"></param>
+        /// <returns></returns>
+        public static async ETTask<bool> IsPlayerCanUpdate(Scene scene, long playerId, string cfg)
+        {
+            PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
+            int playerDiamond = await GetTokenDiamondByPlayerId(scene, playerId);
+            int playerBringUpLevel = playerSeasonInfoComponent.GetSeasonBringUpLevel(cfg);
+            int maxLevel = SeasonBringUpCfgCategory.Instance.GetMaxLevel(cfg);
+
+            SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfg, playerBringUpLevel);
+
+            bool isDiamondEnough = (seasonBringUpCfg.Cost <= playerDiamond);
+			bool isMax = playerBringUpLevel >= maxLevel;
+            return !isMax && isDiamondEnough;
+        }
+
+        /// <summary>
+        /// 玩家是否能重置
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="playerId"></param>
+        /// <param name="cfg"></param>
+        /// <returns></returns>
+        public static async ETTask<bool> IsPlayerCanReset(Scene scene, long playerId)
+        {
+            PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
+            Dictionary<string, int> seasonBringUpDic = playerSeasonInfoComponent.GetSeasonBringUpDic();
+            bool isPlayerBringupIsNone = true;
+            foreach (KeyValuePair<string, int> kvp in seasonBringUpDic)
+            {
+                if (kvp.Value != 0)
+                {
+                    isPlayerBringupIsNone = false;
+                }
+            }
+            int playerDiamond = await GetTokenDiamondByPlayerId(scene, playerId);
+            SeasonComponent seasonComponent = await SeasonHelper.GetSeasonComponent(scene, false);
+            int resetCost = seasonComponent.cfg.BringUpResetCost;
+            bool IsCanReset = (resetCost <= playerDiamond) && !isPlayerBringupIsNone;
+            
+            return IsCanReset;
+        }
+
+        public static async ETTask AddTokenArcadeCoin(Scene scene, long playerId, int chgValue)
+
         {
 	        if (chgValue < 0)
 	        {
@@ -258,17 +388,15 @@ namespace ET.Server
 		        return;
 	        }
 
-	        PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
-			playerBaseInfoComponent.arcadeCoinNum += chgValue;
-			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_AddArcadeCoinNum;
-			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "arcadeCoinNum"}, playerModelChgType);
+	        string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+	        await AddItem(scene, playerId, itemCfgId, chgValue);
 
-			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.ArcadeCoinAdd);
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenArcadeCoinAdd);
 
 	        await ETTask.CompletedTask;
         }
 
-		public static async ETTask ReduceArcadeCoin(Scene scene, long playerId, int chgValue)
+		public static async ETTask ReduceTokenArcadeCoin(Scene scene, long playerId, int chgValue)
 		{
 			if (chgValue < 0)
 			{
@@ -276,18 +404,42 @@ namespace ET.Server
 				return;
 			}
 
-			PlayerBaseInfoComponent playerBaseInfoComponent = await GetPlayerModel(scene, playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
-			playerBaseInfoComponent.arcadeCoinNum -= chgValue;
-			if (playerBaseInfoComponent.arcadeCoinNum < 0)
+			string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+			await DeleteItem(scene, playerId, itemCfgId, chgValue);
+
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenArcadeCoinReduce);
+
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask AddTokenDiamond(Scene scene, long playerId, int chgValue)
+		{
+			if (chgValue < 0)
 			{
-				Log.Error($"playerBaseInfoComponent.arcadeCoinNum[{playerBaseInfoComponent.arcadeCoinNum}] < 0, chgValue:{chgValue}");
-				playerBaseInfoComponent.arcadeCoinNum = 0;
+				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+				return;
 			}
 
-			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBaseInfo_ReduceArcadeCoinNum;
-			await SavePlayerModel(scene, playerId, PlayerModelType.BaseInfo, new() { "arcadeCoinNum"}, playerModelChgType);
+			string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+			await AddItem(scene, playerId, itemCfgId, chgValue);
 
-			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.ArcadeCoinReduce);
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenDiamondAdd);
+
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask ReduceTokenDiamond(Scene scene, long playerId, int chgValue)
+		{
+			if (chgValue < 0)
+			{
+				Log.Error($"The chgValue cannot be negative, chgValue:{chgValue}");
+				return;
+			}
+
+			string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+			await DeleteItem(scene, playerId, itemCfgId, chgValue);
+
+			await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenDiamondReduce);
 
 			await ETTask.CompletedTask;
 		}

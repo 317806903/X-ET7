@@ -99,7 +99,7 @@ namespace ET.Ability.Client
 
         public static void UpdateEffect(this EffectShowObj self, bool isFirst, float fixedDeltaTime)
         {
-            if (self.go == null)
+            if (self.go == null || self.RefEffectObj == null)
             {
                 return;
             }

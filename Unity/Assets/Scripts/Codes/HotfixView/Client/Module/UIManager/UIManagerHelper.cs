@@ -33,7 +33,7 @@ namespace ET.Client
             return _UIComponent;
         }
 
-        public static void ShowCommonLoading(Scene scene)
+        public static void ShowCommonLoading(Scene scene, bool bForceShow)
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
             DlgCommonLoading _DlgCommonLoading = _UIComponent.GetDlgLogic<DlgCommonLoading>(true, true);
@@ -44,7 +44,7 @@ namespace ET.Client
             }
             if (_DlgCommonLoading != null)
             {
-                _DlgCommonLoading.Show();
+                _DlgCommonLoading.Show(bForceShow);
             }
         }
 
@@ -276,20 +276,72 @@ namespace ET.Client
             return sprite;
         }
 
-        public static async ETTask SetMyIcon(this Image image, Scene scene)
+        /// <summary>
+        /// 设置自身的头像
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="scene"></param>
+        /// <returns></returns>
+        public static async ETTask SetMyselfIcon(this Image image, Scene scene)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            PlayerBaseInfoComponent playerBaseInfoComponent =await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
             await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+
+
         }
 
-        public static async ETTask SetPlayerIcon(this Image image, Scene scene, long playerId)
+        /// <summary>
+        /// 设置自己的头像框
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="scene"></param>
+        /// <returns></returns>
+        public static async ETTask SetMyselfFrame(this Image image, Scene scene)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            //WJ 设置玩家的头像框
+            if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
+            {
+                ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
+                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
+                await image.SetImageByPath(resIconCfg.ResName);
+            }
+
+        }
+
+        /// <summary>
+        /// 设置其他玩家的头像
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="scene"></param>
+        /// <param name="playerId">玩家的ID</param>
+        /// <returns></returns>
+        public static async ETTask SetOtherPlayerIcon(this Image image, Scene scene, long playerId)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
             List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
             await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+
+        }
+
+        /// <summary>
+        /// 设置其他玩家的头像框
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="scene"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public static async ETTask SetOtherPlayerFrame(this Image image, Scene scene, long playerId)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
+            if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
+            {
+                ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
+                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
+                await image.SetImageByPath(resIconCfg.ResName);
+            }
+
         }
 
         public static async ETTask SetImageByPath(this Image image, string imgPath, bool needSetNativeSize = false)
@@ -325,7 +377,23 @@ namespace ET.Client
             }
         }
 
-        public static void SetTowerItemClick(Scene scene, string itemCfgId)
+        public static void ShowItemInfoWnd(Scene scene, string itemCfgId, Vector3 pos)
+        {
+            if (string.IsNullOrEmpty(itemCfgId))
+            {
+                return;
+            }
+            if (ItemHelper.ChkIsTower(itemCfgId))
+            {
+                _ShowTowerItemWnd(scene, itemCfgId);
+            }
+            else
+            {
+                _ShowSimpleItemWnd(scene, itemCfgId, pos);
+            }
+        }
+
+        public static void _ShowTowerItemWnd(Scene scene, string itemCfgId)
         {
             if (string.IsNullOrEmpty(itemCfgId))
             {
@@ -345,13 +413,13 @@ namespace ET.Client
             }
         }
 
-        public static void SetMonsterItemClick(Scene scene, string itemCfgId, Vector3 pos)
+        public static void _ShowSimpleItemWnd(Scene scene, string itemCfgId, Vector3 pos)
         {
             if (string.IsNullOrEmpty(itemCfgId))
             {
                 return;
             }
-            if (ItemHelper.ChkIsMonster(itemCfgId) == false)
+            if (ItemHelper.ChkIsTower(itemCfgId))
             {
                 return;
             }
@@ -384,14 +452,15 @@ namespace ET.Client
 
         public static async ETTask<bool> ChkCoinEnoughOrShowtip(Scene scene, int arcadeCoinNum, Action finishCallBack = null)
         {
+            int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(scene);
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
-            if(playerBaseInfoComponent.arcadeCoinNum < arcadeCoinNum)
+            if(curArcadeCoin < arcadeCoinNum)
             {
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_GetMore", arcadeCoinNum);
                 UIManagerHelper.ShowConfirm(scene, msg, () =>
                 {
-                    UIManagerHelper.ShowDlgArcade(scene, arcadeCoinNum - playerBaseInfoComponent.arcadeCoinNum, finishCallBack);
+                    UIManagerHelper.ShowDlgArcade(scene, arcadeCoinNum - curArcadeCoin, finishCallBack);
                 }, null);
                 return false;
             }
@@ -502,6 +571,7 @@ namespace ET.Client
                     break;
                 case FunctionMenuConditionTutorialFirstFinished functionMenuConditionTutorialFirstFinished:
                     descKey = "Text_Key_FunctionMenu_OpenCondition_TutorialFirstFinished";
+                    return LocalizeComponent.Instance.GetTextValue(descKey);
                     break;
                 case FunctionMenuConditionBattleNumARAny functionMenuConditionBattleNumARAny:
                     descKey = "Text_Key_FunctionMenu_OpenCondition_BattleNumARAny";
@@ -536,11 +606,18 @@ namespace ET.Client
         }
 
         #region 金币、体力 显示
-        public static async ETTask ShowCoinCostText(this Transform textTrans, Scene scene, int costValue)
+        public static async ETTask ShowTokenArcadeCoinCostText(this Transform textTrans, Scene scene, int costValue)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
-            bool isEnough = playerBaseInfoComponent.arcadeCoinNum >= costValue;
+            int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(scene);
+            bool isEnough = curArcadeCoin >= costValue;
+            textTrans.ChgTMPColor(isEnough);
+            textTrans.ChgTMPText($"{costValue}");
+        }
+
+        public static async ETTask ShowTokenDiamondCostText(this Transform textTrans, Scene scene, int costValue)
+        {
+            int curDiamond = await PlayerCacheHelper.GetTokenDiamond(scene);
+            bool isEnough = curDiamond >= costValue;
             textTrans.ChgTMPColor(isEnough);
             textTrans.ChgTMPText($"{costValue}");
         }
@@ -549,7 +626,7 @@ namespace ET.Client
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
             long playerId = PlayerStatusHelper.GetMyPlayerId(scene);
-            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
+            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinTypeInGame.Gold);
 
             bool isEnough = curGoldValue >= costValue;
             textTrans.ChgTMPColor(isEnough);
@@ -565,11 +642,18 @@ namespace ET.Client
             textTrans.ChgTMPText($"{costValue}");
         }
 
-        public static async ETTask ShowCoinCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
+        public static async ETTask ShowTokenArcadeCoinCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
-            bool isEnough = playerBaseInfoComponent.arcadeCoinNum >= costValue;
+            int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(scene);
+            bool isEnough = curArcadeCoin >= costValue;
+            textMeshProUGUI.ChgTMPColor(isEnough);
+            textMeshProUGUI.ChgTMPText($"{costValue}");
+        }
+
+        public static async ETTask ShowTokenDiamondCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
+        {
+            int curDiamond = await PlayerCacheHelper.GetTokenDiamond(scene);
+            bool isEnough = curDiamond >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
             textMeshProUGUI.ChgTMPText($"{costValue}");
         }
@@ -578,7 +662,7 @@ namespace ET.Client
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
             long playerId = PlayerStatusHelper.GetMyPlayerId(scene);
-            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
+            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinTypeInGame.Gold);
 
             bool isEnough = curGoldValue >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
@@ -769,34 +853,45 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(scene, SoundEffectType.JoinRoom);
             UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
             PlayerStatusComponent playerStatusComponent = PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
+            RoomTypeInfo roomTypeInfo = playerStatusComponent.RoomTypeInfo;
+            RoomType roomType = roomTypeInfo.roomType;
+            SubRoomType subRoomType = roomTypeInfo.subRoomType;
+            int seasonId = roomTypeInfo.seasonId;
             if (playerStatusComponent.PlayerStatus != PlayerStatus.Room || playerStatusComponent.RoomId == 0)
             {
-                if (playerStatusComponent.RoomType == RoomType.Normal)
+                if (roomType == RoomType.Normal)
                 {
                     await UIManagerHelper.EnterGameModeUI(scene);
                 }
-                else if (playerStatusComponent.RoomType == RoomType.AR)
+                else if (roomType == RoomType.AR)
                 {
                     await UIManagerHelper.EnterGameModeUI(scene);
                 }
                 return;
             }
 
-            if (playerStatusComponent.RoomType == RoomType.Normal)
+            if (roomType == RoomType.Normal)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVE)
+                if (subRoomType == SubRoomType.NormalPVE)
                 {
-                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+                    if (seasonId > 0)
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVESeason>();
+                    }
+                    else
+                    {
+                        await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+                    }
                 }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalPVP)
+                else if (subRoomType == SubRoomType.NormalPVP)
                 {
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
                 }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge)
+                else if (subRoomType == SubRoomType.NormalEndlessChallenge)
                 {
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
                 }
-                else if (playerStatusComponent.SubRoomType == SubRoomType.NormalScanMesh)
+                else if (subRoomType == SubRoomType.NormalScanMesh)
                 {
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoom>();
                 }
@@ -805,13 +900,20 @@ namespace ET.Client
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgRoom>();
                 }
             }
-            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVP)
+            else if (roomType == RoomType.AR && subRoomType == SubRoomType.ARPVP)
             {
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVP>();
             }
-            else if (playerStatusComponent.RoomType == RoomType.AR && playerStatusComponent.SubRoomType == SubRoomType.ARPVE)
+            else if (roomType == RoomType.AR && subRoomType == SubRoomType.ARPVE)
             {
-                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+                if (seasonId > 0)
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVESeason>();
+                }
+                else
+                {
+                    await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVE>();
+                }
             }
             else
             {

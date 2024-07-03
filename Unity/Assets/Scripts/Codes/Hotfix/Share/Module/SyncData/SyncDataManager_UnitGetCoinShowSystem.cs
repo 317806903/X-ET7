@@ -32,7 +32,7 @@ namespace ET
 	        self.SyncData2Client().Coroutine();
         }
 
-        public static void AddSyncGetCoinShow(this SyncDataManager_UnitGetCoinShow self, long playerId, Unit unit, CoinType coinType, int chgValue)
+        public static void AddSyncGetCoinShow(this SyncDataManager_UnitGetCoinShow self, long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)
         {
             if (unit.GetComponent<AOIEntity>() == null)
             {
@@ -52,7 +52,7 @@ namespace ET
 			if (self.NeedSyncGetCoinShowList.Count == 0)
 				return;
 
-			foreach ((long playerId, Unit unit, CoinType coinType, int chgValue) in self.NeedSyncGetCoinShowList)
+			foreach ((long playerId, Unit unit, CoinTypeInGame coinType, int chgValue) in self.NeedSyncGetCoinShowList)
 			{
 				if (unit == null)
 				{
@@ -74,7 +74,7 @@ namespace ET
             foreach (var item in self.player2SyncUnit)
             {
 	            long playerId = item.Key;
-	            List<(Unit unit, CoinType coinType, int chgValue)> list = item.Value;
+	            List<(Unit unit, CoinTypeInGame coinType, int chgValue)> list = item.Value;
 
 	            if (syncDataManager.playerSessionInfoList.TryGetValue(playerId, out int synFrame) == false)
 	            {

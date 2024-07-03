@@ -18,7 +18,7 @@ public sealed partial class ActionCfg_CoinAdd: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CoinAdd = new System.Collections.Generic.Dictionary<CoinType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { CoinType _k0;  _k0 = (CoinType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     CoinAdd.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CoinAdd = new System.Collections.Generic.Dictionary<CoinTypeInGame, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { CoinTypeInGame _k0;  _k0 = (CoinTypeInGame)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     CoinAdd.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -38,7 +38,7 @@ public sealed partial class ActionCfg_CoinAdd: Bright.Config.BeanBase
     /// <summary>
     /// 货币类型
     /// </summary>
-    public System.Collections.Generic.Dictionary<CoinType, int> CoinAdd { get; private set; }
+    public System.Collections.Generic.Dictionary<CoinTypeInGame, int> CoinAdd { get; private set; }
 
     public const int __ID__ = -403758305;
     public override int GetTypeId() => __ID__;

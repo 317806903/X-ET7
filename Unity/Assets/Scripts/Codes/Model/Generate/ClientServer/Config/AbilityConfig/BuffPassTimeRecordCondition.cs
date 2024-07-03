@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前Buff过去时间
 /// </summary>
-public sealed partial class BuffPassTimeRecordCondition:  Condition 
+public sealed partial class BuffPassTimeRecordCondition:  UnitConditionBase 
 {
     public BuffPassTimeRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

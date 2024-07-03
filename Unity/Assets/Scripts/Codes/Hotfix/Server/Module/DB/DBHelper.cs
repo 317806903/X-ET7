@@ -132,5 +132,33 @@ namespace ET.Server
             }
         }
 
+        public static async ETTask RenameCollection(Scene scene, string oldName, string newName)
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                await dbComponent.RenameCollection(oldName, newName);
+            }
+        }
+
+        public static async ETTask RenameCollection(Scene scene, Type entityType, int seasonId)
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                string oldName = entityType.FullName;
+                string newName = $"Season{seasonId}_{oldName}";
+                await dbComponent.RenameCollection(oldName, newName);
+            }
+        }
+
     }
 }

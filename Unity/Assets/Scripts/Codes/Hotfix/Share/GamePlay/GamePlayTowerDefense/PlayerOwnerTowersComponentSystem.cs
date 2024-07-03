@@ -19,8 +19,10 @@ namespace ET
 				self.playerOwnerTowerId = new();
 				self.playerTowerBuyPools = new();
 				self.playerTowerBuyPoolBoughts = new();
+				self.playerTowerBuyPoolCosts = new();
 				self.playerRefreshTowerCost = new();
 				self.playerId2unitTowerId = new();
+				self.playerId2unitAttackTowerLimitCount = new();
 				self.playerId2unitAttackTowerId = new();
 			}
 		}
@@ -34,8 +36,10 @@ namespace ET
 				self.playerOwnerTowerId.Clear();
 				self.playerTowerBuyPools.Clear();
 				self.playerTowerBuyPoolBoughts.Clear();
+				self.playerTowerBuyPoolCosts.Clear();
 				self.playerRefreshTowerCost.Clear();
 				self.playerId2unitTowerId.Clear();
+				self.playerId2unitAttackTowerLimitCount.Clear();
 				self.playerId2unitAttackTowerId.Clear();
 				self.existTowerDic?.Clear();
 			}
@@ -47,22 +51,39 @@ namespace ET
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
 			}
+			await self.InitPlayerTowerPool();
+			await self.InitPlayerTowerLimitCount();
+		}
+
+		public static async ETTask InitPlayerTowerPool(this PlayerOwnerTowersComponent self)
+		{
+			await ETTask.CompletedTask;
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
 			for (int i = 0; i < playerList.Count; i++)
 			{
 				long playerId = playerList[i];
-				//await self.InitOwnerTowersPool(playerId);
 				self.RefreshPlayerTowerPool(playerId);
 				self.playerRefreshTowerCost[playerId] = gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost;
 				self.playerOwnerTowerId[playerId] = new();
 			}
 
-			self.InitTowerUpgradeConfig();
 		}
 
-		public static void InitTowerUpgradeConfig(this PlayerOwnerTowersComponent self)
+		public static async ETTask InitPlayerTowerLimitCount(this PlayerOwnerTowersComponent self)
 		{
+			await ETTask.CompletedTask;
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
+			for (int i = 0; i < playerList.Count; i++)
+			{
+				long playerId = playerList[i];
+
+				GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerLimitTowerCountBase, gamePlayTowerDefenseComponent.model.LimitTowerCount, true);
+				float newLimitTowerCount = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerLimitTowerCount);
+
+				self.playerId2unitAttackTowerLimitCount[playerId] = (int)newLimitTowerCount;
+			}
 		}
 
 		public static int GetOwnerTowerLevel(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId)
@@ -112,6 +133,7 @@ namespace ET
 			{
 				long playerId = playerList[i];
 				self.RefreshPlayerTowerPool(playerId);
+				self.NoticeToClient(playerId);
 			}
 		}
 
@@ -124,6 +146,10 @@ namespace ET
 			if (self.playerTowerBuyPoolBoughts.ContainsKey(playerId))
 			{
 				self.playerTowerBuyPoolBoughts[playerId].Clear();
+			}
+			if (self.playerTowerBuyPoolCosts.ContainsKey(playerId))
+			{
+				self.playerTowerBuyPoolCosts[playerId].Clear();
 			}
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
@@ -181,14 +207,28 @@ namespace ET
 				string towerCfgId = ET.RandomGenerator.GetRandomIndexLinear(towerPools);
 				self.playerTowerBuyPools.Add(playerId, towerCfgId);
 				self.playerTowerBuyPoolBoughts.Add(playerId, false);
+
+				TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+				int costGold = towerCfg.BuyTowerCostGold;
+
+				GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerTowerPriceBase, costGold, true);
+				float newCostGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerTowerPrice);
+
+				self.playerTowerBuyPoolCosts.Add(playerId, (int)newCostGold);
 			}
+
+			EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_RefreshTowerBuyPool()
+			{
+				playerId = playerId,
+			});
+
 		}
 
 		public static bool _ChkCostWhenRefresh(this PlayerOwnerTowersComponent self, long playerId)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			int chgValue = gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost;
-			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
+			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
 			if (curGold < chgValue)
 			{
 				return false;
@@ -200,37 +240,33 @@ namespace ET
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			int chgValue = gamePlayTowerDefenseComponent.model.RefreshBuyTowerCost;
-			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
+			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
 			if (curGold < chgValue)
 			{
 				return false;
 			}
-			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, -chgValue);
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, -chgValue);
 			return true;
 		}
 
-		public static bool _ChkCostWhenBuyTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId)
+		public static bool _ChkCostWhenBuyTower(this PlayerOwnerTowersComponent self, long playerId, int costGold)
 		{
-			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-			int chgValue = towerCfg.BuyTowerCostGold;
-			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
-			if (curGold < chgValue)
+			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
+			if (curGold < costGold)
 			{
 				return false;
 			}
 			return true;
 		}
 
-		public static bool CostWhenBuyTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId)
+		public static bool CostWhenBuyTower(this PlayerOwnerTowersComponent self, long playerId, int costGold)
 		{
-			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-			int chgValue = towerCfg.BuyTowerCostGold;
-			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
-			if (curGold < chgValue)
+			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
+			if (curGold < costGold)
 			{
 				return false;
 			}
-			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, -chgValue);
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, -costGold);
 			return true;
 		}
 
@@ -258,9 +294,8 @@ namespace ET
 				return (false, msg);
 			}
 
-			string towerCfgId = self.playerTowerBuyPools[playerId][index];
-
-			bool success = self._ChkCostWhenBuyTower(playerId, towerCfgId);
+			int costGold = self.playerTowerBuyPoolCosts[playerId][index];
+			bool success = self._ChkCostWhenBuyTower(playerId, costGold);
 			if (success == false)
 			{
 				msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
@@ -280,7 +315,8 @@ namespace ET
 
 			string towerCfgId = self.playerTowerBuyPools[playerId][index];
 
-			bool success = self.CostWhenBuyTower(playerId, towerCfgId);
+			int costGold = self.playerTowerBuyPoolCosts[playerId][index];
+			bool success = self.CostWhenBuyTower(playerId, costGold);
 			if (success == false)
 			{
 				return false;
@@ -308,6 +344,17 @@ namespace ET
 		public static void NoticeToClient(this PlayerOwnerTowersComponent self, long playerId)
 		{
 			self.GetParent<GamePlayTowerDefenseComponent>().NoticeToClient(playerId);
+		}
+
+		public static void NoticeToClientAll(this PlayerOwnerTowersComponent self)
+		{
+			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
+			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
+			for (int i = 0; i < playerList.Count; i++)
+			{
+				long playerId = playerList[i];
+				self.NoticeToClient(playerId);
+			}
 		}
 
 		/// <summary>
@@ -349,14 +396,11 @@ namespace ET
 				return (false, msg);
 			}
 
-			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
-
 			bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
 			bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
 			if (isAttackTower)
 			{
-				GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-				int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
+				int limitTowerCount = self.GetPutAttackTowerLimitCount(playerId);
 				int attackTowerCount = self.GetPutAttackTowerCount(playerId);
 				if (attackTowerCount >= limitTowerCount)
 				{
@@ -365,6 +409,35 @@ namespace ET
 				}
 			}
 			return (true, msg);;
+		}
+
+		public static List<int> GetPlayerTowerPrice(this PlayerOwnerTowersComponent self, long playerId)
+		{
+			return self.playerTowerBuyPoolCosts[playerId];
+		}
+
+		public static void SetPutAttackTowerLimitCount(this PlayerOwnerTowersComponent self, long playerId, GameNumericType gameNumericType, float chgValue)
+		{
+			if (gameNumericType == GameNumericType.TowerDefense_PlayerLimitTowerCountAdd ||
+			    gameNumericType == GameNumericType.TowerDefense_PlayerLimitTowerCountPct ||
+			    gameNumericType == GameNumericType.TowerDefense_PlayerLimitTowerCountFinalAdd ||
+			    gameNumericType == GameNumericType.TowerDefense_PlayerLimitTowerCountFinalPct)
+			{
+			}
+			else
+			{
+				return;
+			}
+			GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, gameNumericType, chgValue, true);
+			float newLimitTowerCount = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerLimitTowerCount);
+
+			self.playerId2unitAttackTowerLimitCount[playerId] = (int)newLimitTowerCount;
+		}
+
+		public static int GetPutAttackTowerLimitCount(this PlayerOwnerTowersComponent self, long playerId)
+		{
+			int attackTowerLimitCount = self.playerId2unitAttackTowerLimitCount[playerId];
+			return attackTowerLimitCount;
 		}
 
 		public static int GetPutAttackTowerCount(this PlayerOwnerTowersComponent self, long playerId)
@@ -376,9 +449,7 @@ namespace ET
 
 		public static int GetLeftCallPlayerTowerCount(this PlayerOwnerTowersComponent self, long playerId)
 		{
-			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
-			int limitTowerCount = gamePlayTowerDefenseComponent.model.LimitTowerCount;
-			return limitTowerCount - self.GetPutAttackTowerCount(playerId);
+			return self.GetPutAttackTowerLimitCount(playerId) - self.GetPutAttackTowerCount(playerId);
 		}
 
 		public static bool CallPlayerTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId, float3 position)
@@ -439,8 +510,8 @@ namespace ET
 			return (false, "");
 		}
 
-		public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this PlayerOwnerTowersComponent self, long playerId,
-		long towerUnitId, bool onlyChkPool)
+
+		public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId, bool onlyChkPool)
 		{
 			string msg = "";
 			if (self.playerId2unitTowerId.Contains(playerId, towerUnitId) == false)
@@ -452,6 +523,14 @@ namespace ET
 
 			Unit curTownUnit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
 			string curTowerCfgId = curTownUnit.GetComponent<TowerComponent>().towerCfgId;
+			return self.ChkUpgradePlayerTower(playerId, towerUnitId, curTowerCfgId, onlyChkPool);
+		}
+
+		public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId, string towerCfgId, bool onlyChkPool)
+		{
+			string msg = "";
+
+			string curTowerCfgId = towerCfgId;
 
 			bool bRet = false;
 			(bRet, msg) = self.ChkIsUpgradeMaxPlayerTower(curTowerCfgId);
@@ -804,6 +883,57 @@ namespace ET
 			return true;
 		}
 
+		public static bool UpgradePlayerTower(this PlayerOwnerTowersComponent self, long playerId, string towerCfgId, bool onlyChkPool)
+		{
+			(bool bRet, string msg, Dictionary<string, int> costPoolTowers, List<long> existTowerUnitIds) = self.ChkUpgradePlayerTower(playerId, 0, towerCfgId, onlyChkPool);
+			if (bRet == false)
+			{
+				return false;
+			}
+
+			string curTowerId = towerCfgId;
+
+			TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(curTowerId);
+			if (nextTowerCfg == null)
+			{
+				return false;
+			}
+
+			string nextTowerId = nextTowerCfg.Id;
+
+			if (costPoolTowers != null)
+			{
+				foreach (var costTower in costPoolTowers)
+				{
+					string costTowerId = costTower.Key;
+					int costTowerCount = costTower.Value;
+					if (costTowerCount > 0)
+					{
+						if (self.playerOwnerTowerId.TryGetValue(playerId, costTowerId, out int count))
+						{
+							self.playerOwnerTowerId[playerId][costTowerId] = count - costTowerCount;
+						}
+					}
+				}
+			}
+
+			if (existTowerUnitIds != null)
+			{
+			}
+
+			if (self.playerOwnerTowerId.TryGetValue(playerId, nextTowerId, out int ownCount) == false)
+			{
+				self.playerOwnerTowerId.Add(playerId, nextTowerId, 1);
+			}
+			else
+			{
+				self.playerOwnerTowerId[playerId][nextTowerId] += 1;
+			}
+
+			self.NoticeToClient(playerId);
+			return true;
+		}
+
 		public static bool ScalePlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId)
 		{
 			if (self.playerId2unitTowerId.Contains(playerId, towerUnitId) == false)
@@ -817,7 +947,7 @@ namespace ET
 
 			TowerDefense_TowerCfg curTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(curTowerId);
 			int scaleTowerCostGold = curTowerCfg.ScaleTowerCostGold;
-			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, scaleTowerCostGold);
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, scaleTowerCostGold);
 
 			EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_ScaleTower()
 			{
@@ -851,7 +981,7 @@ namespace ET
 
 			TowerDefense_TowerCfg curTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 			int scaleTowerCostGold = curTowerCfg.ScaleTowerCostGold;
-			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, scaleTowerCostGold);
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, scaleTowerCostGold);
 
 			// EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_ScaleTower()
 			// {
@@ -882,7 +1012,7 @@ namespace ET
 
 			TowerDefense_TowerCfg curTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(curTowerId);
 			int reclaimTowerCostGold = curTowerCfg.ReclaimTowerCostGold;
-			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
+			float curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
 			if (curGold < reclaimTowerCostGold)
 			{
 				Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] curGold[{curGold}] < reclaimTowerCostGold[{reclaimTowerCostGold}]");
@@ -906,13 +1036,13 @@ namespace ET
 
 			TowerDefense_TowerCfg curTowerCfg = TowerDefense_TowerCfgCategory.Instance.Get(curTowerId);
 			int reclaimTowerCostGold = curTowerCfg.ReclaimTowerCostGold;
-			// int curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold);
+			// int curGold = GamePlayHelper.GetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold);
 			// if (curGold < reclaimTowerCostGold)
 			// {
 			// 	Log.Debug($"playerId[{playerId}], towerUnitId[{towerUnitId}] curGold[{curGold}] < reclaimTowerCostGold[{reclaimTowerCostGold}]");
 			// 	return false;
 			// }
-			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, -reclaimTowerCostGold);
+			GamePlayHelper.ChgPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, -reclaimTowerCostGold);
 
 			if (self.playerOwnerTowerId.TryGetValue(playerId, curTowerId, out int ownCount) == false)
 			{

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace ET.Client
 {
-    [Event(SceneType.Client)]
+    [Event(SceneType.Current|SceneType.Client)]
     public class NoticeAdmobSDKStatus_Event: AEvent<Scene, EventType.NoticeAdmobSDKStatus>
     {
         protected override async ETTask Run(Scene scene, EventType.NoticeAdmobSDKStatus args)

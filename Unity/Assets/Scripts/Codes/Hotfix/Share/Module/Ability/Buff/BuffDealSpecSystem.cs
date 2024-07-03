@@ -13,18 +13,22 @@ namespace ET.Ability
             {
                 return;
             }
+            bool isAttributeChg = false;
             foreach (BuffAction buffAction in self.buffActions)
             {
                 if (buffAction is BuffActionModifyAttribute buffActionModifyAttribute)
                 {
+                    isAttributeChg = true;
                     self.AddBuffWhenModifyAttribute(buffActionModifyAttribute);
                 }
                 else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.AddBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
                 }
                 else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.AddBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
@@ -37,6 +41,10 @@ namespace ET.Ability
                 }
             }
 
+            if (isAttributeChg)
+            {
+                self.KeepHpLessMaxHp();
+            }
         }
 
         public static void DealSpecWhenRemoveBuff(this BuffObj self, bool forceDeal)
@@ -46,18 +54,22 @@ namespace ET.Ability
                 return;
             }
 
+            bool isAttributeChg = false;
             foreach (BuffAction buffAction in self.buffActions)
             {
                 if (buffAction is BuffActionModifyAttribute buffActionModifyAttribute)
                 {
+                    isAttributeChg = true;
                     self.RemoveBuffWhenModifyAttribute(buffActionModifyAttribute);
                 }
                 else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.RemoveBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
                 }
                 else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.RemoveBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
@@ -68,6 +80,10 @@ namespace ET.Ability
                 {
                     self.RemoveBuffWhenModifyMotion(buffActionModifyMotion);
                 }
+            }
+            if (isAttributeChg)
+            {
+                self.KeepHpLessMaxHp();
             }
         }
 
@@ -90,18 +106,22 @@ namespace ET.Ability
                 return;
             }
 
+            bool isAttributeChg = false;
             foreach (BuffAction buffAction in self.buffActions)
             {
                 if (buffAction is BuffActionModifyAttribute buffActionModifyAttribute)
                 {
+                    isAttributeChg = true;
                     self.ChgBuffStackCountWhenModifyAttribute(buffActionModifyAttribute, oldStackCount, newStackCount);
                 }
                 else if (buffAction is BuffActionModifyAttributeByWaveIndex buffActionModifyAttributeByWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.ChgBuffStackCountWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex, oldStackCount, newStackCount);
                 }
                 else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
                 {
+                    isAttributeChg = true;
                     self.ChgBuffStackCountWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex, oldStackCount, newStackCount);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
@@ -112,6 +132,11 @@ namespace ET.Ability
                 {
                     self.ChgBuffStackCountWhenModifyMotion(buffActionModifyMotion, oldStackCount, newStackCount);
                 }
+            }
+
+            if (isAttributeChg)
+            {
+                self.KeepHpLessMaxHp();
             }
         }
 
@@ -166,6 +191,12 @@ namespace ET.Ability
             {
                 self.DealSelfEffectWhenRemoveBuff();
             }
+        }
+
+        public static void KeepHpLessMaxHp(this BuffObj self)
+        {
+            NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
+            numericComponent.KeepHpLessMaxHp();
         }
 
     }

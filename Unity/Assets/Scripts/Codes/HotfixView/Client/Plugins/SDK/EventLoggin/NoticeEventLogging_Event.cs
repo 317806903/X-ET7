@@ -18,13 +18,17 @@ namespace ET.Client
                 if (playerStatusComponent != null)
                 {
                     properties["PlayerStatus"] = playerStatusComponent.PlayerStatus.ToString();
-                    properties["RoomType"] = playerStatusComponent.RoomType.ToString();
-                    properties["SubRoomType"] = playerStatusComponent.SubRoomType.ToString();
                     properties["RoomId"] = playerStatusComponent.RoomId.ToString();
-                    properties["LastBattleCfgId"] = playerStatusComponent.LastBattleCfgId.ToString();
+                    properties["LastBattleCfgId"] = playerStatusComponent.LastBattleCfgId;
                     properties["LastBattleResult"] = playerStatusComponent.LastBattleResult.ToString();
-                    int challengeIndex = ET.AbilityConfig.TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeIndex(playerStatusComponent.LastBattleCfgId);
-                    properties["LastBattleChallengeIndex"] = challengeIndex.ToString();
+                    if (playerStatusComponent.RoomTypeInfo != null)
+                    {
+                        properties["RoomType"] = playerStatusComponent.RoomTypeInfo.roomType.ToString();
+                        properties["SubRoomType"] = playerStatusComponent.RoomTypeInfo.subRoomType.ToString();
+                        properties["seasonId"] = playerStatusComponent.RoomTypeInfo.seasonId.ToString();
+                        properties["pveIndex"] = playerStatusComponent.RoomTypeInfo.pveIndex.ToString();
+                        properties["gamePlayBattleLevelCfgId"] = playerStatusComponent.RoomTypeInfo.gamePlayBattleLevelCfgId;
+                    }
                 }
             }
             string timerKey = args.timerKey;

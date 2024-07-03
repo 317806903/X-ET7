@@ -8,7 +8,7 @@ namespace ET.Client
 	[FriendOf(typeof(UIGuideComponent))]
 	public static class UIGuideHelper
 	{
-		public static async ETTask DoUIGuide(Scene scene, string fileName, Action finished, Action firstFindCallBack = null)
+		public static async ETTask DoUIGuide(Scene scene, string fileName, int startIndex, Action finished, Action<int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -25,12 +25,13 @@ namespace ET.Client
 					clientScene = scene.ClientScene();
 				}
 
-				clientScene.AddComponent<UIGuideComponent>();
+				CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+				currentScenesComponent.AddComponent<UIGuideComponent>();
 			}
-			await UIGuideComponent.Instance.DoUIGuideByName(fileName, finished, firstFindCallBack);
+			await UIGuideComponent.Instance.DoUIGuideByName(fileName, startIndex, finished, stepFinished);
 		}
 
-		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, Action finished, Action firstFindCallBack = null)
+		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action finished, Action<int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -47,9 +48,10 @@ namespace ET.Client
 					clientScene = scene.ClientScene();
 				}
 
-				clientScene.AddComponent<UIGuideComponent>();
+				CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+				currentScenesComponent.AddComponent<UIGuideComponent>();
 			}
-			await UIGuideComponent.Instance.DoUIGuide(guideFileName, _UIGuidePathList, finished, firstFindCallBack);
+			await UIGuideComponent.Instance.DoUIGuide(guideFileName, _UIGuidePathList, startIndex, finished, stepFinished);
 		}
 
 		public static async ETTask StopUIGuide(Scene scene)
@@ -59,6 +61,36 @@ namespace ET.Client
 				return;
 			}
 			await UIGuideComponent.Instance.StopUIGuide();
+		}
+
+		public static bool ChkIsUIGuideing(Scene scene, string guideFileName)
+		{
+			if (UIGuideComponent.Instance == null)
+			{
+				return false;
+			}
+			UIGuideStepComponent uiGuideStepComponent = UIGuideComponent.Instance.CurUIGuideComponent;
+			if (uiGuideStepComponent == null)
+			{
+				return false;
+			}
+
+			return UIGuideComponent.Instance.guideFileName == guideFileName;
+		}
+
+		public static bool ChkIsUIGuideing(Scene scene)
+		{
+			if (UIGuideComponent.Instance == null)
+			{
+				return false;
+			}
+			UIGuideStepComponent uiGuideStepComponent = UIGuideComponent.Instance.CurUIGuideComponent;
+			if (uiGuideStepComponent == null)
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		public static UIGuidePath GetCurUIGuide(Scene scene)

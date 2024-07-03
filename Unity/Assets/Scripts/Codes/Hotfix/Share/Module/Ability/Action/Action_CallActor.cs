@@ -10,6 +10,10 @@ namespace ET.Ability
             if (delayTime > 0)
             {
                 await TimerComponent.Instance.WaitTillAsync(TimeHelper.ServerFrameTime() + (long)(1000 * delayTime));
+                if (unit == null || unit.DomainScene() == null || unit.DomainScene().IsDisposed)
+                {
+                    return;
+                }
             }
 
             ActionCfg_CallActor actionCfgCallActor = ActionCfg_CallActorCategory.Instance.Get(actionId);
@@ -22,7 +26,8 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
+                Unit actorUnit = GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
+                ET.Ability.OwnCallerHelper.AddOwnCaller(unit, actorUnit);
             }
             list.Dispose();
 

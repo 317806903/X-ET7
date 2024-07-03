@@ -30,6 +30,7 @@ namespace ET.Client
         public int nowIndex;
 
         public Action finished;
+        public Action<int> stepFinished;
     }
 
     public enum GuideConditionStaticMethodType

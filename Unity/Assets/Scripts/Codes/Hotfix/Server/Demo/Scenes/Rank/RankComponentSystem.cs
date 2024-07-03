@@ -61,6 +61,37 @@ namespace ET.Server
             }
         }
 
+        public static async ETTask RecordWhenSeasonFinished(this RankComponent self, Type rankItemType, int seasonId)
+        {
+            self.playerId2Score.Clear();
+            ulong totalCount = self.topRankPlayerCount > self.SkipList.Length? self.SkipList.Length : self.topRankPlayerCount;
+            List<SkipListNode> topList = self.SkipList.GetNodeListByRank(0, (uint)totalCount);
+            self.recordWhenFinished = new();
+            for (int i = 0; i < topList.Count; i++)
+            {
+                SkipListNode skipListNode = topList[i];
+                RankItemComponent rankItemComponentTmp = skipListNode.obj as RankItemComponent;
+                long playerId = rankItemComponentTmp.playerId;
+                RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(playerId);
+                if (rankItemComponent != null)
+                {
+                    self.recordWhenFinished.Add(rankItemComponent);
+                }
+            }
+            self.topRankPlayerList.Clear();
+            self.SkipList = null;
+
+            self.SetDataCacheAutoWrite(true);
+            bool bFinished = await self.ChkDataCacheAutoWriteFinished();
+            if (bFinished == false)
+            {
+                return;
+            }
+
+            await self.RenameCollection(rankItemType, seasonId);
+            self.Dispose();
+        }
+
         public static async ETTask<T> InitByDBOne<T>(this RankComponent self, long playerId) where T :Entity, IAwake, new()
         {
             return await ET.Server.DBHelper.LoadDBWithParent2Child<T>(self, playerId, true);
@@ -69,6 +100,12 @@ namespace ET.Server
         public static async ETTask<long> GetDBCount<T>(this RankComponent self) where T :Entity, IAwake, new()
         {
             return await ET.Server.DBHelper.GetDBCount<T>(self.DomainScene());
+        }
+
+        public static async ETTask RenameCollection(this RankComponent self, Type rankItemType, int seasonId)
+        {
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), self.GetType(), seasonId);
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), rankItemType, seasonId);
         }
     }
 }

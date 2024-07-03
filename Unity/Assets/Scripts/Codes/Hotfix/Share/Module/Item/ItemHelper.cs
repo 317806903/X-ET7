@@ -7,6 +7,36 @@ namespace ET
 {
     public static class ItemHelper
     {
+        public static string GetTokenDiamondCfgId()
+        {
+            return "Token_Diamond";
+        }
+
+        public static string GetTokenArcadeCoinCfgId()
+        {
+            return "Token_ArcadeCoin";
+        }
+
+        public static bool ChkIsToken(string itemCfgId)
+        {
+            if (string.IsNullOrEmpty(itemCfgId))
+            {
+                return false;
+            }
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemType != ItemType.Token)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool ChkIsTower(string itemCfgId)
         {
             if (string.IsNullOrEmpty(itemCfgId))

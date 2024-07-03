@@ -129,7 +129,7 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public System.Collections.Generic.List<string> InitialBackpackItem => _data.InitialBackpackItem;
     /// <summary>
-    /// (DemoShow模式)初始背包物体
+    /// (展示模式)初始背包物体
     /// </summary>
      public System.Collections.Generic.List<string> DemoShowInitialBackpackItem => _data.DemoShowInitialBackpackItem;
     /// <summary>

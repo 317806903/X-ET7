@@ -7,7 +7,7 @@
 		// {
 		// 	protected override async ETTask Run(Scene scene, AbilityTriggerEventType.NearUnitOnCreate args)
 		// 	{
-		// 		EventHandlerHelper.Run_Game(scene, AbilityGameMonitorTriggerEvent.NearUnitOnCreate, args.unit, null);
+		// 		EventHandlerHelper.Run_Game(scene, ET.AbilityConfig.GlobalBuffTriggerEvent.NearUnitOnCreate, args.unit, null);
 		//
 		// 		await ETTask.CompletedTask;
 		// 	}

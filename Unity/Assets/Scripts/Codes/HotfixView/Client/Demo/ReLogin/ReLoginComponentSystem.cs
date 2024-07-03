@@ -156,7 +156,7 @@ namespace ET.Client
             await ET.Client.PlayerStatusHelper.SendGetPlayerStatus(clientScene);
 
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(clientScene);
-            Log.Debug($"--ReLoginComponentSystem.ApplicationStatusChg playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomType[{playerStatusComponent.RoomType.ToString()}] playerStatusComponent.SubRoomType[{playerStatusComponent.SubRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}]");
+            Log.Debug($"--ReLoginComponentSystem.ApplicationStatusChg playerStatusComponent.PlayerStatus[{playerStatusComponent.PlayerStatus.ToString()}] playerStatusComponent.RoomTypeInfo.roomType[{playerStatusComponent.RoomTypeInfo.roomType.ToString()}] playerStatusComponent.RoomTypeInfo.subRoomType[{playerStatusComponent.RoomTypeInfo.subRoomType.ToString()}] playerStatusComponent.RoomId[{playerStatusComponent.RoomId}]");
             if (playerStatusComponent.PlayerStatus == PlayerStatus.Hall)
             {
                 if (self.IsInRoomUI())

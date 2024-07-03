@@ -64,6 +64,11 @@ namespace ET.Ability
             numericComponent.SetAsFloat(NumericType.SkillDisBase, skillCfg.Dis);
         }
 
+        public static void ResetSkillSlotIndex(this SkillObj self, int skillSlotIndex)
+        {
+            self.skillSlotIndex = skillSlotIndex;
+        }
+
         public static void DealLearnActionIds(this SkillObj self)
         {
             SkillCfg skillCfg = self.model;
@@ -77,6 +82,8 @@ namespace ET.Ability
                     skillCfgId = self.skillCfgId,
                     skillDis = self.GetSkillDis(),
                     skillSlotType = self.skillSlotType,
+                    skillSlotIndex = self.skillSlotIndex,
+                    skillGroupType = self.model.SkillGroupType,
                     skillLevel = self.skillLevel,
                 };
                 foreach (var actionId in skillCfg.LearnActionId)
@@ -89,6 +96,7 @@ namespace ET.Ability
         public static async ETTask<TimelineObj> CastSkill(this SkillObj self)
         {
             ET.Ability.UnitHelper.ClearOnceSelectHandle(self.GetUnit());
+            ET.Ability.UnitHelper.ClearExcludeSelectHandle(self.GetUnit());
 
             SkillCfg skillCfg = self.model;
             ActionContext actionContext = new ActionContext()
@@ -97,6 +105,8 @@ namespace ET.Ability
                 skillCfgId = self.skillCfgId,
                 skillDis = self.GetSkillDis(),
                 skillSlotType = self.skillSlotType,
+                skillSlotIndex = self.skillSlotIndex,
+                skillGroupType = self.model.SkillGroupType,
                 skillLevel = self.skillLevel,
             };
             SelectHandle selectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, skillCfg.SkillSelectAction_Ref, ref actionContext);

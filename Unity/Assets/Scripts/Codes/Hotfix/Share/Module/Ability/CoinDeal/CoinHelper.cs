@@ -35,7 +35,7 @@ namespace ET.Ability
             }
             foreach (var coinAdd in actionCfgCoinAdd.CoinAdd)
             {
-                CoinType coinType = coinAdd.Key;
+                CoinTypeInGame coinType = coinAdd.Key;
                 int chgValue = coinAdd.Value;
                 GamePlayHelper.ChgPlayerCoin(unit.DomainScene(), playerId, coinType, chgValue);
 

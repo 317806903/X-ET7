@@ -177,7 +177,7 @@ namespace ET.Client
         public static async ETTask _QuitBattle(this DlgBattleSetting self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+            if (gamePlayTowerDefenseComponent != null && gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {
@@ -265,7 +265,7 @@ namespace ET.Client
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
             long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinType.Gold);
+            int curGoldValue = (int)gamePlayComponent.GetPlayerCoin(playerId, CoinTypeInGame.Gold);
             return curGoldValue;
         }
 

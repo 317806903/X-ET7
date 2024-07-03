@@ -28,7 +28,7 @@ namespace ET.Client
 
 			Log.Debug($"M2C_GamePlayModeChgNotice 33");
 			gamePlayComponent.RemoveComponent<GamePlayTowerDefenseComponent>();
-			gamePlayComponent.RemoveComponent<GamePlayPKComponent>();
+			gamePlayComponent.RemoveComponent<GamePlayPkComponentBase>();
 
 			Entity gamePlayModeComponent = MongoHelper.Deserialize<Entity>(message.GamePlayModeInfo);
 			gamePlayComponent.AddComponent(gamePlayModeComponent);

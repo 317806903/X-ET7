@@ -29,6 +29,8 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
     {
         switch (_buf.ReadInt())
         {
+            case StayMoveTweenType.__ID__: return new StayMoveTweenType(_buf);
+            case StayOnGroundMoveTweenType.__ID__: return new StayOnGroundMoveTweenType(_buf);
             case StraightMoveTweenType.__ID__: return new StraightMoveTweenType(_buf);
             case TrackingMoveTweenType.__ID__: return new TrackingMoveTweenType(_buf);
             case AroundMoveTweenType.__ID__: return new AroundMoveTweenType(_buf);

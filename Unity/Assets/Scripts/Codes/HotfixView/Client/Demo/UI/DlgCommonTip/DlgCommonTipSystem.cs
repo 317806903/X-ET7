@@ -74,7 +74,7 @@ namespace ET.Client
 				self.ChkNeedClose(uiRect.gameObject);
 			});
 			twe.SetEase(Ease.OutCubic);
-			await Task.CompletedTask;
+			await ETTask.CompletedTask;
 		}
 
 		public static void ChkNeedClose(this DlgCommonTip self, GameObject go)

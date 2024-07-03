@@ -20,7 +20,7 @@ namespace ET
 		public MultiDictionary<string, string, int> towerCfgId2MonsterType2Num;
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public MultiDictionary<PlayerTowerType, string, int> towerType2MonsterType2Num;
+		public MultiDictionary<TowerType, string, int> towerType2MonsterType2Num;
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<string, int> playerAllMonsterType2Num;

@@ -14,7 +14,7 @@ namespace ET.Ability
                 return SkillCfgCategory.Instance.Get(this.skillCfgId);
             }
         }
-        
+
         /// <summary>
         /// 倒计时的cd
         /// </summary>
@@ -22,5 +22,6 @@ namespace ET.Ability
         public float skillDis;
         public int skillLevel;
         public SkillSlotType skillSlotType;
+        public int skillSlotIndex;
     }
 }

@@ -56,6 +56,10 @@ namespace ET
                 {
                     if (type.IsDefined(typeof (HideInInspector)))
                         continue;
+                    if (info.Name.Equals("Parent"))
+                    {
+                        continue;
+                    }
                     try
                     {
                         ComponentViewHelper.Draw(info.PropertyType, info.GetValue(obj), info.Name);
@@ -76,6 +80,10 @@ namespace ET
                 {
                     if (type.IsDefined(typeof (HideInInspector)))
                         continue;
+                    if (info.Name.Equals("parent"))
+                    {
+                        continue;
+                    }
                     ComponentViewHelper.Draw(info.FieldType, info.GetValue(obj), info.Name);
                 }
             }

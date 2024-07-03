@@ -9,6 +9,8 @@
 		public long towerUnitId;
 		public string towerCfgId;
 		public bool onlyChkPool;
+		public bool isSelf;
+		public bool isPool;
 	}
 
 	public class DlgBattleTowerHUD_ShowWindowData : ShowWindowData

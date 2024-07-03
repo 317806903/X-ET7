@@ -7,6 +7,23 @@ namespace ET.Client
 	[EnableMethod]
 	public class DlgBattleTowerHUDViewComponent : Entity, IAwake, IDestroy
 	{
+		public UnityEngine.UI.Button E_Sprite_BGButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Sprite_BGButton == null )
+				{
+					this.m_E_Sprite_BGButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Sprite_BG");
+				}
+				return this.m_E_Sprite_BGButton;
+			}
+		}
+
 		public UnityEngine.UI.Image E_Sprite_BGImage
 		{
 			get
@@ -126,7 +143,7 @@ namespace ET.Client
 			}
 		}
 
-		public TMPro.TextMeshProUGUI ELabel_SellTextMeshProUGUI
+		public UnityEngine.RectTransform EG_OperatorRootRectTransform
 		{
 			get
 			{
@@ -135,15 +152,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELabel_SellTextMeshProUGUI == null )
+				if( this.m_EG_OperatorRootRectTransform == null )
 				{
-					this.m_ELabel_SellTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/ELabel_Sell");
+					this.m_EG_OperatorRootRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot");
 				}
-				return this.m_ELabel_SellTextMeshProUGUI;
+				return this.m_EG_OperatorRootRectTransform;
 			}
 		}
 
-		public UITextLocalizeMonoView ELabel_SellUITextLocalizeMonoView
+		public UIGuide.EventTriggerListener EG_OperatorRootEventTriggerListener
 		{
 			get
 			{
@@ -152,11 +169,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELabel_SellUITextLocalizeMonoView == null )
+				if( this.m_EG_OperatorRootEventTriggerListener == null )
 				{
-					this.m_ELabel_SellUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/ELabel_Sell");
+					this.m_EG_OperatorRootEventTriggerListener = UIFindHelper.FindDeepChild<UIGuide.EventTriggerListener>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot");
 				}
-				return this.m_ELabel_SellUITextLocalizeMonoView;
+				return this.m_EG_OperatorRootEventTriggerListener;
 			}
 		}
 
@@ -171,7 +188,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_SaleButton == null )
 				{
-					this.m_EButton_SaleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale");
+					this.m_EButton_SaleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/Sell/EButton_Sale");
 				}
 				return this.m_EButton_SaleButton;
 			}
@@ -188,7 +205,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_SaleImage == null )
 				{
-					this.m_EButton_SaleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Sale");
+					this.m_EButton_SaleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/Sell/EButton_Sale");
 				}
 				return this.m_EButton_SaleImage;
 			}
@@ -205,7 +222,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_ConfirmButton == null )
 				{
-					this.m_EButton_ConfirmButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm");
+					this.m_EButton_ConfirmButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/Sell/EButton_Confirm");
 				}
 				return this.m_EButton_ConfirmButton;
 			}
@@ -222,7 +239,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_ConfirmImage == null )
 				{
-					this.m_EButton_ConfirmImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/EButton_Confirm");
+					this.m_EButton_ConfirmImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/Sell/EButton_Confirm");
 				}
 				return this.m_EButton_ConfirmImage;
 			}
@@ -239,7 +256,7 @@ namespace ET.Client
 				}
 				if( this.m_E_SaleMoney_textTextMeshProUGUI == null )
 				{
-					this.m_E_SaleMoney_textTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/Sell/money/E_SaleMoney_text");
+					this.m_E_SaleMoney_textTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/Sell/money/E_SaleMoney_text");
 				}
 				return this.m_E_SaleMoney_textTextMeshProUGUI;
 			}
@@ -256,7 +273,7 @@ namespace ET.Client
 				}
 				if( this.m_E_ReclaimButton == null )
 				{
-					this.m_E_ReclaimButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Reclaim");
+					this.m_E_ReclaimButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Reclaim");
 				}
 				return this.m_E_ReclaimButton;
 			}
@@ -273,7 +290,7 @@ namespace ET.Client
 				}
 				if( this.m_E_ReclaimImage == null )
 				{
-					this.m_E_ReclaimImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Reclaim");
+					this.m_E_ReclaimImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Reclaim");
 				}
 				return this.m_E_ReclaimImage;
 			}
@@ -290,7 +307,7 @@ namespace ET.Client
 				}
 				if( this.m_E_UpgradeButton == null )
 				{
-					this.m_E_UpgradeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Upgrade");
+					this.m_E_UpgradeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Upgrade");
 				}
 				return this.m_E_UpgradeButton;
 			}
@@ -307,7 +324,7 @@ namespace ET.Client
 				}
 				if( this.m_E_UpgradeImage == null )
 				{
-					this.m_E_UpgradeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Upgrade");
+					this.m_E_UpgradeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Upgrade");
 				}
 				return this.m_E_UpgradeImage;
 			}
@@ -324,7 +341,7 @@ namespace ET.Client
 				}
 				if( this.m_E_Upgrade_number_iconImage == null )
 				{
-					this.m_E_Upgrade_number_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Upgrade/number/E_Upgrade_number_icon");
+					this.m_E_Upgrade_number_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Upgrade/number/E_Upgrade_number_icon");
 				}
 				return this.m_E_Upgrade_number_iconImage;
 			}
@@ -341,7 +358,7 @@ namespace ET.Client
 				}
 				if( this.m_E_Upgrade_number_TextTextMeshProUGUI == null )
 				{
-					this.m_E_Upgrade_number_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_Upgrade/number/E_Upgrade_number_Text");
+					this.m_E_Upgrade_number_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_Upgrade/number/E_Upgrade_number_Text");
 				}
 				return this.m_E_Upgrade_number_TextTextMeshProUGUI;
 			}
@@ -358,7 +375,7 @@ namespace ET.Client
 				}
 				if( this.m_E_NotUpgradeableButton == null )
 				{
-					this.m_E_NotUpgradeableButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_NotUpgradeable");
+					this.m_E_NotUpgradeableButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_NotUpgradeable");
 				}
 				return this.m_E_NotUpgradeableButton;
 			}
@@ -375,9 +392,26 @@ namespace ET.Client
 				}
 				if( this.m_E_NotUpgradeableImage == null )
 				{
-					this.m_E_NotUpgradeableImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/OperatorRoot/E_NotUpgradeable");
+					this.m_E_NotUpgradeableImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_NotUpgradeable");
 				}
 				return this.m_E_NotUpgradeableImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_ShowDetailButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ShowDetailButton == null )
+				{
+					this.m_E_ShowDetailButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/E_ShowDetail");
+				}
+				return this.m_E_ShowDetailButton;
 			}
 		}
 
@@ -429,23 +463,6 @@ namespace ET.Client
 					this.m_E_IconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_MyTowerDesc/E_Icon");
 				}
 				return this.m_E_IconImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_TextDescTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_TextDescTextMeshProUGUI == null )
-				{
-					this.m_E_TextDescTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_MyTowerDesc/Scroll View/Viewport/Content/E_TextDesc");
-				}
-				return this.m_E_TextDescTextMeshProUGUI;
 			}
 		}
 
@@ -517,7 +534,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_OtherTowerDescRectTransform
+		public UnityEngine.UI.Image EImage_Label3Image
 		{
 			get
 			{
@@ -526,15 +543,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EG_OtherTowerDescRectTransform == null )
+				if( this.m_EImage_Label3Image == null )
 				{
-					this.m_EG_OtherTowerDescRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_OtherTowerDesc");
+					this.m_EImage_Label3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_MyTowerDesc/EImage_Label3");
 				}
-				return this.m_EG_OtherTowerDescRectTransform;
+				return this.m_EImage_Label3Image;
 			}
 		}
 
-		public UnityEngine.UI.Image EG_OtherTowerDescImage
+		public TMPro.TextMeshProUGUI ELabel_Label3TextMeshProUGUI
 		{
 			get
 			{
@@ -543,15 +560,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EG_OtherTowerDescImage == null )
+				if( this.m_ELabel_Label3TextMeshProUGUI == null )
 				{
-					this.m_EG_OtherTowerDescImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OtherTowerDesc");
+					this.m_ELabel_Label3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_MyTowerDesc/EImage_Label3/ELabel_Label3");
 				}
-				return this.m_EG_OtherTowerDescImage;
+				return this.m_ELabel_Label3TextMeshProUGUI;
 			}
 		}
 
-		public UnityEngine.UI.Image E_OtherIconImage
+		public UnityEngine.RectTransform EG_ViewInfoRectTransform
 		{
 			get
 			{
@@ -560,15 +577,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_OtherIconImage == null )
+				if( this.m_EG_ViewInfoRectTransform == null )
 				{
-					this.m_E_OtherIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OtherTowerDesc/E_OtherIcon");
+					this.m_EG_ViewInfoRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_ViewInfo");
 				}
-				return this.m_E_OtherIconImage;
+				return this.m_EG_ViewInfoRectTransform;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI E_OtherTowerNameTextMeshProUGUI
+		public TMPro.TextMeshProUGUI ELabel_DescriptionTextMeshProUGUI
 		{
 			get
 			{
@@ -577,15 +594,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_OtherTowerNameTextMeshProUGUI == null )
+				if( this.m_ELabel_DescriptionTextMeshProUGUI == null )
 				{
-					this.m_E_OtherTowerNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OtherTowerDesc/Image/E_OtherTowerName");
+					this.m_ELabel_DescriptionTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Scroll View/Viewport/Content/ELabel_Description");
 				}
-				return this.m_E_OtherTowerNameTextMeshProUGUI;
+				return this.m_ELabel_DescriptionTextMeshProUGUI;
 			}
 		}
 
-		public UnityEngine.UI.Image E_OtherIconStar1Image
+		public UnityEngine.UI.Image ENode_Attribute1Image
 		{
 			get
 			{
@@ -594,15 +611,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_OtherIconStar1Image == null )
+				if( this.m_ENode_Attribute1Image == null )
 				{
-					this.m_E_OtherIconStar1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OtherTowerDesc/Image/E_OtherIconStar/E_OtherIconStar1");
+					this.m_ENode_Attribute1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute1");
 				}
-				return this.m_E_OtherIconStar1Image;
+				return this.m_ENode_Attribute1Image;
 			}
 		}
 
-		public UnityEngine.UI.Image E_OtherIconStar2Image
+		public TMPro.TextMeshProUGUI Elabel_Attribute1TextMeshProUGUI
 		{
 			get
 			{
@@ -611,15 +628,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_OtherIconStar2Image == null )
+				if( this.m_Elabel_Attribute1TextMeshProUGUI == null )
 				{
-					this.m_E_OtherIconStar2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OtherTowerDesc/Image/E_OtherIconStar/E_OtherIconStar2");
+					this.m_Elabel_Attribute1TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute1/Elabel_Attribute1");
 				}
-				return this.m_E_OtherIconStar2Image;
+				return this.m_Elabel_Attribute1TextMeshProUGUI;
 			}
 		}
 
-		public UnityEngine.UI.Image E_OtherIconStar3Image
+		public TMPro.TextMeshProUGUI Elabel_AttributeValue1TextMeshProUGUI
 		{
 			get
 			{
@@ -628,15 +645,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_OtherIconStar3Image == null )
+				if( this.m_Elabel_AttributeValue1TextMeshProUGUI == null )
 				{
-					this.m_E_OtherIconStar3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OtherTowerDesc/Image/E_OtherIconStar/E_OtherIconStar3");
+					this.m_Elabel_AttributeValue1TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute1/Elabel_Attribute1/Elabel_AttributeValue1");
 				}
-				return this.m_E_OtherIconStar3Image;
+				return this.m_Elabel_AttributeValue1TextMeshProUGUI;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI E_TextOtherDescTextMeshProUGUI
+		public UnityEngine.UI.Image ENode_AttributeLine2Image
 		{
 			get
 			{
@@ -645,16 +662,136 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_TextOtherDescTextMeshProUGUI == null )
+				if( this.m_ENode_AttributeLine2Image == null )
 				{
-					this.m_E_TextOtherDescTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_OtherTowerDesc/Scroll View/Viewport/Content/E_TextOtherDesc");
+					this.m_ENode_AttributeLine2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_AttributeLine2");
 				}
-				return this.m_E_TextOtherDescTextMeshProUGUI;
+				return this.m_ENode_AttributeLine2Image;
+			}
+		}
+
+		public UnityEngine.UI.Image ENode_Attribute2Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ENode_Attribute2Image == null )
+				{
+					this.m_ENode_Attribute2Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute2");
+				}
+				return this.m_ENode_Attribute2Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI Elabel_Attribute2TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Elabel_Attribute2TextMeshProUGUI == null )
+				{
+					this.m_Elabel_Attribute2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute2/Elabel_Attribute2");
+				}
+				return this.m_Elabel_Attribute2TextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI Elabel_AttributeValue2TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Elabel_AttributeValue2TextMeshProUGUI == null )
+				{
+					this.m_Elabel_AttributeValue2TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute2/Elabel_Attribute2/Elabel_AttributeValue2");
+				}
+				return this.m_Elabel_AttributeValue2TextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Image ENode_AttributeLine3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ENode_AttributeLine3Image == null )
+				{
+					this.m_ENode_AttributeLine3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_AttributeLine3");
+				}
+				return this.m_ENode_AttributeLine3Image;
+			}
+		}
+
+		public UnityEngine.UI.Image ENode_Attribute3Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ENode_Attribute3Image == null )
+				{
+					this.m_ENode_Attribute3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute3");
+				}
+				return this.m_ENode_Attribute3Image;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI Elabel_Attribute3TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Elabel_Attribute3TextMeshProUGUI == null )
+				{
+					this.m_Elabel_Attribute3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute3/Elabel_Attribute3");
+				}
+				return this.m_Elabel_Attribute3TextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI Elabel_AttributeValue3TextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_Elabel_AttributeValue3TextMeshProUGUI == null )
+				{
+					this.m_Elabel_AttributeValue3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_ViewInfo/Attribute/Value/ENode_Attribute3/Elabel_Attribute3/Elabel_AttributeValue3");
+				}
+				return this.m_Elabel_AttributeValue3TextMeshProUGUI;
 			}
 		}
 
 		public void DestroyWidget()
 		{
+			this.m_E_Sprite_BGButton = null;
 			this.m_E_Sprite_BGImage = null;
 			this.m_EG_OperatorMenuRectTransform = null;
 			this.m_EG_OperatorMenuImage = null;
@@ -662,8 +799,8 @@ namespace ET.Client
 			this.m_E_IconStar1Image = null;
 			this.m_E_IconStar2Image = null;
 			this.m_E_IconStar3Image = null;
-			this.m_ELabel_SellTextMeshProUGUI = null;
-			this.m_ELabel_SellUITextLocalizeMonoView = null;
+			this.m_EG_OperatorRootRectTransform = null;
+			this.m_EG_OperatorRootEventTriggerListener = null;
 			this.m_EButton_SaleButton = null;
 			this.m_EButton_SaleImage = null;
 			this.m_EButton_ConfirmButton = null;
@@ -677,25 +814,33 @@ namespace ET.Client
 			this.m_E_Upgrade_number_TextTextMeshProUGUI = null;
 			this.m_E_NotUpgradeableButton = null;
 			this.m_E_NotUpgradeableImage = null;
+			this.m_E_ShowDetailButton = null;
 			this.m_EG_MyTowerDescRectTransform = null;
 			this.m_EG_MyTowerDescImage = null;
 			this.m_E_IconImage = null;
-			this.m_E_TextDescTextMeshProUGUI = null;
 			this.m_EImage_Label1Image = null;
 			this.m_ELabel_Label1TextMeshProUGUI = null;
 			this.m_EImage_Label2Image = null;
 			this.m_ELabel_Label2TextMeshProUGUI = null;
-			this.m_EG_OtherTowerDescRectTransform = null;
-			this.m_EG_OtherTowerDescImage = null;
-			this.m_E_OtherIconImage = null;
-			this.m_E_OtherTowerNameTextMeshProUGUI = null;
-			this.m_E_OtherIconStar1Image = null;
-			this.m_E_OtherIconStar2Image = null;
-			this.m_E_OtherIconStar3Image = null;
-			this.m_E_TextOtherDescTextMeshProUGUI = null;
+			this.m_EImage_Label3Image = null;
+			this.m_ELabel_Label3TextMeshProUGUI = null;
+			this.m_EG_ViewInfoRectTransform = null;
+			this.m_ELabel_DescriptionTextMeshProUGUI = null;
+			this.m_ENode_Attribute1Image = null;
+			this.m_Elabel_Attribute1TextMeshProUGUI = null;
+			this.m_Elabel_AttributeValue1TextMeshProUGUI = null;
+			this.m_ENode_AttributeLine2Image = null;
+			this.m_ENode_Attribute2Image = null;
+			this.m_Elabel_Attribute2TextMeshProUGUI = null;
+			this.m_Elabel_AttributeValue2TextMeshProUGUI = null;
+			this.m_ENode_AttributeLine3Image = null;
+			this.m_ENode_Attribute3Image = null;
+			this.m_Elabel_Attribute3TextMeshProUGUI = null;
+			this.m_Elabel_AttributeValue3TextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
+		private UnityEngine.UI.Button m_E_Sprite_BGButton = null;
 		private UnityEngine.UI.Image m_E_Sprite_BGImage = null;
 		private UnityEngine.RectTransform m_EG_OperatorMenuRectTransform = null;
 		private UnityEngine.UI.Image m_EG_OperatorMenuImage = null;
@@ -703,8 +848,8 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_IconStar1Image = null;
 		private UnityEngine.UI.Image m_E_IconStar2Image = null;
 		private UnityEngine.UI.Image m_E_IconStar3Image = null;
-		private TMPro.TextMeshProUGUI m_ELabel_SellTextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_ELabel_SellUITextLocalizeMonoView = null;
+		private UnityEngine.RectTransform m_EG_OperatorRootRectTransform = null;
+		private UIGuide.EventTriggerListener m_EG_OperatorRootEventTriggerListener = null;
 		private UnityEngine.UI.Button m_EButton_SaleButton = null;
 		private UnityEngine.UI.Image m_EButton_SaleImage = null;
 		private UnityEngine.UI.Button m_EButton_ConfirmButton = null;
@@ -718,22 +863,29 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_E_Upgrade_number_TextTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_NotUpgradeableButton = null;
 		private UnityEngine.UI.Image m_E_NotUpgradeableImage = null;
+		private UnityEngine.UI.Button m_E_ShowDetailButton = null;
 		private UnityEngine.RectTransform m_EG_MyTowerDescRectTransform = null;
 		private UnityEngine.UI.Image m_EG_MyTowerDescImage = null;
 		private UnityEngine.UI.Image m_E_IconImage = null;
-		private TMPro.TextMeshProUGUI m_E_TextDescTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_Label1Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_Label2Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Label2TextMeshProUGUI = null;
-		private UnityEngine.RectTransform m_EG_OtherTowerDescRectTransform = null;
-		private UnityEngine.UI.Image m_EG_OtherTowerDescImage = null;
-		private UnityEngine.UI.Image m_E_OtherIconImage = null;
-		private TMPro.TextMeshProUGUI m_E_OtherTowerNameTextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_E_OtherIconStar1Image = null;
-		private UnityEngine.UI.Image m_E_OtherIconStar2Image = null;
-		private UnityEngine.UI.Image m_E_OtherIconStar3Image = null;
-		private TMPro.TextMeshProUGUI m_E_TextOtherDescTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_EImage_Label3Image = null;
+		private TMPro.TextMeshProUGUI m_ELabel_Label3TextMeshProUGUI = null;
+		private UnityEngine.RectTransform m_EG_ViewInfoRectTransform = null;
+		private TMPro.TextMeshProUGUI m_ELabel_DescriptionTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ENode_Attribute1Image = null;
+		private TMPro.TextMeshProUGUI m_Elabel_Attribute1TextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue1TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ENode_AttributeLine2Image = null;
+		private UnityEngine.UI.Image m_ENode_Attribute2Image = null;
+		private TMPro.TextMeshProUGUI m_Elabel_Attribute2TextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue2TextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ENode_AttributeLine3Image = null;
+		private UnityEngine.UI.Image m_ENode_Attribute3Image = null;
+		private TMPro.TextMeshProUGUI m_Elabel_Attribute3TextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_Elabel_AttributeValue3TextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

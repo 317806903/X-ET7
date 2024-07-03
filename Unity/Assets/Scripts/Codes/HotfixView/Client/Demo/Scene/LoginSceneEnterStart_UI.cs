@@ -11,7 +11,8 @@ namespace ET.Client
         {
             Scene clientScene = scene;
 
-            clientScene.RemoveComponent<ARSessionComponent>();
+            clientScene.RemoveComponent<CurrentScenesComponent>();
+            clientScene.AddComponent<CurrentScenesComponent>();
 
             UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
 

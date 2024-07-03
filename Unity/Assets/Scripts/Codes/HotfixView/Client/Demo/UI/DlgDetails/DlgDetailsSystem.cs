@@ -117,6 +117,8 @@ namespace ET.Client
 			self.View.ENode_Attribute1Image.SetVisible(attributeList.Count >= 1);
 			self.View.ENode_Attribute2Image.SetVisible(attributeList.Count >= 2);
 			self.View.ENode_Attribute3Image.SetVisible(attributeList.Count >= 3);
+			self.View.ENode_AttributeLine2Image.SetVisible(attributeList.Count >= 2);
+			self.View.ENode_AttributeLine3Image.SetVisible(attributeList.Count >= 3);
 			if (attributeList.Count >= 1)
 			{
 				self.View.Elabel_Attribute1TextMeshProUGUI.text = attributeList[0].title;
@@ -132,8 +134,6 @@ namespace ET.Client
 				self.View.Elabel_Attribute3TextMeshProUGUI.text = attributeList[2].title;
 				self.View.Elabel_AttributeValue3TextMeshProUGUI.text = attributeList[2].content;
 			}
-			Canvas.ForceUpdateCanvases();
-			LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.ENode_Attribute2Image.transform.parent.GetComponent<RectTransform>());
 
 			self.ShowDetails(self.curItemCfgId, true).Coroutine();
 

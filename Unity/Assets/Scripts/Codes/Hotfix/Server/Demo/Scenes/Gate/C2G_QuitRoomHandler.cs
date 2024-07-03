@@ -25,7 +25,7 @@ namespace ET.Server
 			response.Message = _R2G_QuitRoom.Message;
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
-				playerStatusComponent.SubRoomType = SubRoomType.None;
+				//playerStatusComponent.RoomTypeInfo = null;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Hall;
 				playerStatusComponent.RoomId = 0;
 

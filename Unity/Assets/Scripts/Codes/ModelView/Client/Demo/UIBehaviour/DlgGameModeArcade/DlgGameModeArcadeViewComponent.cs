@@ -75,6 +75,24 @@ namespace ET.Client
 			}
 		}
 
+		public ES_AvatarShow ES_AvatarShow
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_es_avatarshow == null )
+				{
+					Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/ES_AvatarShow");
+					this.m_es_avatarshow = this.AddChild<ES_AvatarShow, Transform>(subTrans);
+				}
+				return this.m_es_avatarshow;
+			}
+		}
+
 		public UnityEngine.UI.Button E_AvatarButton
 		{
 			get
@@ -225,6 +243,23 @@ namespace ET.Client
 					this.m_E_TutorialButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Tutorial");
 				}
 				return this.m_E_TutorialButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_SettingButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_SettingButton == null )
+				{
+					this.m_E_SettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Setting");
+				}
+				return this.m_E_SettingButton;
 			}
 		}
 
@@ -506,6 +541,8 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
+			this.m_es_avatarshow?.Dispose();
+			this.m_es_avatarshow = null;
 			this.m_E_AvatarButton = null;
 			this.m_E_AvatarImage = null;
 			this.m_E_PlayerIcoImage = null;
@@ -515,6 +552,7 @@ namespace ET.Client
 			this.m_E_BattleDeckButton = null;
 			this.m_E_RankButton = null;
 			this.m_E_TutorialButton = null;
+			this.m_E_SettingButton = null;
 			this.m_E_MasterScanMeshButton = null;
 			this.m_E_MasterScanMeshImage = null;
 			this.m_E_EndlessChallengeButton = null;
@@ -538,6 +576,7 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private ES_AvatarShow m_es_avatarshow = null;
 		private UnityEngine.UI.Button m_E_AvatarButton = null;
 		private UnityEngine.UI.Image m_E_AvatarImage = null;
 		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
@@ -547,6 +586,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_BattleDeckButton = null;
 		private UnityEngine.UI.Button m_E_RankButton = null;
 		private UnityEngine.UI.Button m_E_TutorialButton = null;
+		private UnityEngine.UI.Button m_E_SettingButton = null;
 		private UnityEngine.UI.Button m_E_MasterScanMeshButton = null;
 		private UnityEngine.UI.Image m_E_MasterScanMeshImage = null;
 		private UnityEngine.UI.Button m_E_EndlessChallengeButton = null;

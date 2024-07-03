@@ -13,8 +13,14 @@ namespace ET
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
         {
             var argTypes = memberType.GetGenericArguments();
+            var tmp = value as IEnumerable;
+            var count = 0;
+            foreach (var val in tmp)
+            {
+                count++;
+            }
             var state = GUIElementStateManager.Add(GUIElementStateDomain.ComponentView, value);
-            state[1] = EditorGUILayout.Foldout(state[1], $"{memberName} {memberType.Name} {argTypes[0].Name}", "FoldoutHeader");
+            state[1] = EditorGUILayout.Foldout(state[1], $"{memberName}({count}) {memberType.Name} {argTypes[0].Name}", "FoldoutHeader");
             if (state[1])
             {
                 EditorGUILayout.BeginVertical("FrameBox");

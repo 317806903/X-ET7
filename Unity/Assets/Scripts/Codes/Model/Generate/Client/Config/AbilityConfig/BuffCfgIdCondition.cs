@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断是否拥有BuffCfgId
 /// </summary>
-public sealed partial class BuffCfgIdCondition:  Condition 
+public sealed partial class BuffCfgIdCondition:  UnitConditionBase 
 {
     public BuffCfgIdCondition(ByteBuf _buf)  : base(_buf) 
     {

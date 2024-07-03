@@ -13,7 +13,7 @@ namespace ET
         public static float FixedDetalTime = (1f / LogicFrame);
         [StaticField]
         public static long FixedDetalTimeLong = (long)(1000 * FixedDetalTime);
-        
+
         /// <summary>
         /// 客户端时间
         /// </summary>
@@ -42,10 +42,32 @@ namespace ET
         {
             return TimeInfo.Instance.ClientFrameTime();
         }
-        
+
         public static long ServerFrameTime()
         {
             return TimeInfo.Instance.ServerFrameTime();
+        }
+
+        public static DateTime ToDateTime(long timeStamp)
+        {
+            timeStamp = ChgToMillisecondTimeStamp(timeStamp);
+            return TimeInfo.Instance.ToDateTime(timeStamp);
+        }
+
+        public static bool ChkIsAfter(long timeStampA, long timeStampB)
+        {
+            timeStampA = ChgToMillisecondTimeStamp(timeStampA);
+            timeStampB = ChgToMillisecondTimeStamp(timeStampB);
+            return timeStampA > timeStampB;
+        }
+
+        public static long ChgToMillisecondTimeStamp(long timeStamp)
+        {
+            if (timeStamp < 1000000000000)
+            {
+                timeStamp *= 1000;
+            }
+            return timeStamp;
         }
     }
 }

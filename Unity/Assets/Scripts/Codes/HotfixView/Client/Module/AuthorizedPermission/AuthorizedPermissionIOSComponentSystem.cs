@@ -56,7 +56,19 @@ namespace ET.Client
         {
         }
 
-        public static async ETTask ChkCameraAuthorization(this AuthorizedPermissionIOSComponent self, Action<bool> callBack)
+        public static async ETTask<bool> ChkCameraAuthorization(this AuthorizedPermissionIOSComponent self)
+        {
+            if (Application.HasUserAuthorization(UserAuthorization.WebCam) == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionIOSComponent self, Action<bool> callBack)
         {
             if (Application.HasUserAuthorization(UserAuthorization.WebCam) == false)
             {

@@ -67,6 +67,9 @@ namespace ET.Ability
         public int canHitTimes = 1;
 
         [BsonIgnore]
+        public MultiMapSimple<AbilityConfig.BulletTriggerEvent, BulletActionCall> monitorTriggerList;
+
+        [BsonIgnore]
         public ActionContext actionContext;
     }
 

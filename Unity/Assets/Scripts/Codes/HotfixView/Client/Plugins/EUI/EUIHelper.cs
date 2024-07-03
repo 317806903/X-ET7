@@ -74,27 +74,20 @@ namespace ET.Client
             loopScrollRect.RefillCells();
         }
 
-        public static void SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect, int index)
+        public static void SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect)
         {
-            int poolSize = loopHorizontalScrollRect.prefabSource.poolSize;
             int count = loopHorizontalScrollRect.totalCount;
-            if (count >= poolSize)
+            if (count <= loopHorizontalScrollRect.prefabSource.poolSize)
             {
-                return;
+                // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
+                RectTransform contentRectTrans = loopHorizontalScrollRect.content;
+                Transform itemTransform = loopHorizontalScrollRect.content.GetChild(0).GetComponent<Transform>();
+                float LoopForhalf = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2 / contentRectTrans.localScale.x;
+                float halfSpacing = loopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().spacing / 2;
+                float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
+                float leftoffset = LoopForhalf - ((cellWidth / 2) * count) - (count - 1) * halfSpacing;
+                loopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().padding.left = (int)leftoffset;
             }
-
-            if (index < count - 1)
-            {
-                return;
-            }
-
-            float widthScroll = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
-            RectTransform contentRectTrans = loopHorizontalScrollRect.content;
-            float cellWidth = contentRectTrans.GetChild(0).GetComponent<RectTransform>().rect.width;
-            float widthContent = cellWidth * count + contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing * (count - 1);
-            float offset = widthScroll * 0.5f / contentRectTrans.localScale.x - widthContent * 0.5f;
-
-            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)offset;
         }
 
         public static void SetVisibleWithScale(this Transform transform, bool isVisible)

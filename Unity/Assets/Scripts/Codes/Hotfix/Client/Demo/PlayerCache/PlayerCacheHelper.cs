@@ -22,10 +22,11 @@ namespace ET.Client
 			    clientScene = currentScene.Parent.GetParent<Scene>();
 		    }
 
-		    PlayerCacheManagerComponent playerCacheManagerComponent = clientScene.GetComponent<PlayerCacheManagerComponent>();
+		    CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+		    PlayerCacheManagerComponent playerCacheManagerComponent = currentScenesComponent.GetComponent<PlayerCacheManagerComponent>();
 		    if (playerCacheManagerComponent == null)
 		    {
-			    playerCacheManagerComponent = clientScene.AddComponent<PlayerCacheManagerComponent>();
+			    playerCacheManagerComponent = currentScenesComponent.AddComponent<PlayerCacheManagerComponent>();
 		    }
 		    return playerCacheManagerComponent;
 	    }
@@ -80,6 +81,8 @@ namespace ET.Client
 	        await GetMyPlayerBackPack(scene, true);
 	        await GetMyPlayerBattleCard(scene, true);
 	        await GetMyPlayerFunctionMenu(scene, true);
+	        await GetMyPlayerMail(scene, true);
+	        await GetMyPlayerSeasonInfo(scene, true);
         }
 
         public static async ETTask<Entity> GetMyPlayerModel(Scene scene, PlayerModelType playerModelType, bool forceReGet = false)
@@ -116,6 +119,13 @@ namespace ET.Client
 	        return entity as PlayerOtherInfoComponent;
         }
 
+        public static async ETTask<PlayerSeasonInfoComponent> GetMyPlayerSeasonInfo(Scene scene, bool forceReGet = false)
+        {
+	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.SeasonInfo, forceReGet);
+	        return entity as PlayerSeasonInfoComponent;
+        }
+
         public static async ETTask<PlayerFunctionMenuComponent> GetMyPlayerFunctionMenu(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
@@ -144,6 +154,30 @@ namespace ET.Client
 		        list.Add(itemComponent);
 	        }
 	        return list;
+        }
+
+        public static async ETTask<int> GetTokenValue(Scene scene, string itemCfgId, bool forceReGet = false)
+        {
+            PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        var itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
+	        if (itemComponent == null)
+	        {
+		        return 0;
+	        }
+
+	        return itemComponent.GetCount();
+        }
+
+        public static async ETTask<int> GetTokenDiamond(Scene scene, bool forceReGet = false)
+        {
+	        string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+	        return await GetTokenValue(scene, itemCfgId, forceReGet);
+        }
+
+        public static async ETTask<int> GetTokenArcadeCoin(Scene scene, bool forceReGet = false)
+        {
+	        string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+	        return await GetTokenValue(scene, itemCfgId, forceReGet);
         }
 
         public static Entity ResetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, byte[] playerModelComponentBytes)
@@ -296,6 +330,91 @@ namespace ET.Client
 		        });
 	        }
 
+        }
+
+		/// <summary>
+		/// 发送重置养成消息
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns>重置是否成功</returns>
+		public static async ETTask<bool> ResetAllPowerUp(Scene scene)
+		{
+            try
+            {
+                scene = scene.ClientScene();
+
+                G2C_ResetPowerup Msg = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_ResetPowerup()
+                {
+                  
+                }) as G2C_ResetPowerup;
+                if (Msg.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"AddPlayerPhysicalStrenthByAdAsync Error==1 msg={Msg.Message}");
+                    return false;
+                }
+                else
+                {
+                    Log.Info($"AddPlayerPhysicalStrenthByAdAsync Success");
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+        }
+
+		/// <summary>
+		/// 发送升级养成消息
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <param name="cfg"></param>
+		/// <param name="cfgLevel"></param>
+		/// <returns></returns>
+		public static async ETTask<bool> UpdatePowerup(Scene scene, string cfg)
+        {
+            try
+            {
+                scene = scene.ClientScene();
+
+                G2C_UpdatePowerup Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_UpdatePowerup()
+                {
+					PowerUpcfg = cfg,
+                }) as G2C_UpdatePowerup;
+                if (Resp.Error != ET.ErrorCode.ERR_Success)
+                {
+                    Log.Error($"AddPlayerPhysicalStrenthByAdAsync Error==1 msg={Resp.Message}");
+                    return false;
+                }
+                else
+                {
+					return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+        }
+
+        public static async ETTask ReDealMyFunctionMenu(Scene scene)
+        {
+	        await ETTask.CompletedTask;
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        ET.Client.SessionHelper.GetSession(scene).Send(new C2G_ReDealMyFunctionMenu()
+			        {
+			        });
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+		        return;
+	        }
         }
     }
 }

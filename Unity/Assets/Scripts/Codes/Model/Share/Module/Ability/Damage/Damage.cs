@@ -52,7 +52,7 @@ namespace ET.Ability
                 damageValue += damageInfo.Value;
             }
 
-            return (int) damageValue;
+            return (int) (damageValue + 0.01f);
         }
 
         public static Damage operator +(Damage a, Damage b)

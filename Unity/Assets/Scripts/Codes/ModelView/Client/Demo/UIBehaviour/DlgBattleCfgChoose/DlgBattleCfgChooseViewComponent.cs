@@ -92,6 +92,23 @@ namespace ET.Client
 			}
 		}
 
+		public UITextLocalizeMonoView ELable_SureUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELable_SureUITextLocalizeMonoView == null )
+				{
+					this.m_ELable_SureUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/E_Sure/ELable_Sure");
+				}
+				return this.m_ELable_SureUITextLocalizeMonoView;
+			}
+		}
+
 		public UnityEngine.UI.Button E_BackButton
 		{
 			get
@@ -211,6 +228,40 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TMP_InputField E_InputFieldTMP_InputField
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_InputFieldTMP_InputField == null )
+				{
+					this.m_E_InputFieldTMP_InputField = UIFindHelper.FindDeepChild<TMPro.TMP_InputField>(this.uiTransform.gameObject, "EGBackGround/E_Menu/E_InputField");
+				}
+				return this.m_E_InputFieldTMP_InputField;
+			}
+		}
+
+		public UnityEngine.UI.Image E_InputFieldImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_InputFieldImage == null )
+				{
+					this.m_E_InputFieldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_Menu/E_InputField");
+				}
+				return this.m_E_InputFieldImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -218,6 +269,7 @@ namespace ET.Client
 			this.m_E_SureButton = null;
 			this.m_E_SureImage = null;
 			this.m_ELable_SureText = null;
+			this.m_ELable_SureUITextLocalizeMonoView = null;
 			this.m_E_BackButton = null;
 			this.m_E_BackImage = null;
 			this.m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
@@ -225,6 +277,8 @@ namespace ET.Client
 			this.m_E_DropdownGameModeImage = null;
 			this.m_E_DropdownTeamModeTMP_Dropdown = null;
 			this.m_E_DropdownTeamModeImage = null;
+			this.m_E_InputFieldTMP_InputField = null;
+			this.m_E_InputFieldImage = null;
 			this.uiTransform = null;
 		}
 
@@ -233,6 +287,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_SureButton = null;
 		private UnityEngine.UI.Image m_E_SureImage = null;
 		private UnityEngine.UI.Text m_ELable_SureText = null;
+		private UITextLocalizeMonoView m_ELable_SureUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_E_BackButton = null;
 		private UnityEngine.UI.Image m_E_BackImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
@@ -240,6 +295,8 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_DropdownGameModeImage = null;
 		private TMPro.TMP_Dropdown m_E_DropdownTeamModeTMP_Dropdown = null;
 		private UnityEngine.UI.Image m_E_DropdownTeamModeImage = null;
+		private TMPro.TMP_InputField m_E_InputFieldTMP_InputField = null;
+		private UnityEngine.UI.Image m_E_InputFieldImage = null;
 		public Transform uiTransform = null;
 	}
 }

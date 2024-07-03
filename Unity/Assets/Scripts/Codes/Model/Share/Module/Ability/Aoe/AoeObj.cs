@@ -6,7 +6,7 @@ using Unity.Mathematics;
 namespace ET.Ability
 {
     [ComponentOf(typeof (Unit))]
-    public class AoeObj: Entity, IAwake, IDestroy, IFixedUpdate
+    public class AoeObj: Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
     {
         public string CfgId { get; set; }
 
@@ -53,13 +53,23 @@ namespace ET.Ability
         ///<summary>
         ///现在aoe范围内的所有unitId
         ///</summary>
-        public HashSet<long> unitIds = new ();
-        public HashSet<long> chgUnitList = new ();
+        [BsonIgnore]
+        public HashSet<long> aoeInUnitList;
+        [BsonIgnore]
+        public HashSet<long> aoeChgUnitList;
+
+        [BsonIgnore]
+        public MultiMapSimple<AbilityConfig.AoeTriggerEvent, AoeActionCall> monitorTriggerList;
 
         [BsonIgnore]
         public AoeTargetCondition aoeTargetCondition;
 
         [BsonIgnore]
         public ActionContext actionContext;
+
+        [BsonIgnore]
+        public int waitFrameChk = 15;
+        [BsonIgnore]
+        public int curFrameChk = 0;
     }
 }

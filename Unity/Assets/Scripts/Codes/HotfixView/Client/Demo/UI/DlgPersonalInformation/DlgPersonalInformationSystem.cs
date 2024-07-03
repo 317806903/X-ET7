@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using ET.AbilityConfig;
 
 namespace ET.Client
 {
@@ -15,15 +16,22 @@ namespace ET.Client
             self.View.E_Logout_SdkButton.AddListener(self.OnLogout);
             self.View.E_GoogleLoginButton.AddListenerAsync(self.OnClickBindAccount);
             self.View.E_IphoneLoginButton.AddListenerAsync(self.OnClickBindAccount);
-            self.View.E_SaveButton.AddListenerAsync(self.OnSave);
             self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
-            self.View.E_InputFieldTMP_InputField.onEndEdit.AddListener(self.OnEndEdit);
-            self.View.E_InputFieldTMP_InputField.onValueChanged.AddListener(self.OnValueChanged);
+            self.View.E_BtnCloseButton.AddListener(self.OnBGClick);
 
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.prefabSource.prefabName = "Item_AvatarIcon";
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.prefabSource.poolSize = 6;
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                    self.AddAvatarItemRefreshListener(transform, i));
+            //改名按钮
+            self.View.EBtn_ChgNameButton.AddListener(() => {
+                Debug.Log("点击了改名按钮");
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersionalName>().Coroutine();
+                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
+            });
+
+            //改头像按钮
+            self.View.EBtn_ChgAvatarButton.AddListener(() => {
+                Debug.Log("点击了改头像按钮");
+                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersionalAvatar>().Coroutine();
+                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
+            });
         }
 
         public static void ShowWindow(this DlgPersonalInformation self, ShowWindowData contextData = null)
@@ -52,12 +60,10 @@ namespace ET.Client
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            self.oldName = playerBaseInfoComponent.PlayerName;
-            self.View.E_InputFieldTMP_InputField.text = self.oldName;
-            self.oldIconIndex = playerBaseInfoComponent.IconIndex;
-            self.curSelectedIconIndex = self.oldIconIndex;
+            self.View.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
             self.View.ELabel_IDTextMeshProUGUI.text = $"ID:{playerBaseInfoComponent.GetPlayerId()}";
-            self.View.E_SaveButton.SetVisible(false);
+
+            self.View.ES_AvatarShow.ShowMyAvatarIcon(false).Coroutine();
 
             self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
             self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
@@ -70,9 +76,6 @@ namespace ET.Client
             }else{
                 self.View.E_Account_TitleTextMeshProUGUI.text = "Account:";
             }
-            await self.CreateAvatarScrollItem();
-
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
         }
 
         public static void OnLogout(this DlgPersonalInformation self)
@@ -96,42 +99,10 @@ namespace ET.Client
                 sureTxt, cancelTxt, titleTxt);
         }
 
-        public static async ETTask OnSave(this DlgPersonalInformation self)
-        {
-            if (!self.DetermineNameLength(self.curName))
-            {
-                return;
-            }
-
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-
-            PlayerBaseInfoComponent playerBaseInfoComponent =
-                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            playerBaseInfoComponent.PlayerName = self.curName;
-            playerBaseInfoComponent.IconIndex = self.curSelectedIconIndex;
-            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"PlayerName", "IconIndex"});
-
-            self.oldName = self.curName;
-            self.oldIconIndex = self.curSelectedIconIndex;
-            self.View.E_SaveButton.SetVisible(false);
-
-            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PersonalInfo_Update");
-            ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-            //self.HidePersonalInfo().Coroutine();
-        }
 
         public static void OnBGClick(this DlgPersonalInformation self)
         {
-            if (self.ChkInfoChanged())
-            {
-                string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PersonalInfo_Abandon_Des");
-                ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () => { self.HidePersonalInfo().Coroutine(); }, null
-                    );
-            }
-            else
-            {
                 self.HidePersonalInfo().Coroutine();
-            }
         }
 
         public static async ETTask HidePersonalInfo(this DlgPersonalInformation self)
@@ -140,68 +111,7 @@ namespace ET.Client
             await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
 
-        public static bool DetermineNameLength(this DlgPersonalInformation self, string name)
-        {
-            if (name.Length < 1)
-            {
-                string tipMsg = "Name cannot be empty";
-                UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                return false;
-            }
 
-            if (name.Length > self.NameMaxLength)
-            {
-                string tipMsg = "Name length exceeds limit";
-                UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
-                return false;
-            }
-
-            return true;
-        }
-
-        public static void OnEndEdit(this DlgPersonalInformation self, string name)
-        {
-            self.DetermineNameLength(name);
-        }
-
-        public static void OnValueChanged(this DlgPersonalInformation self, string name)
-        {
-            self.curName = name;
-            //TODO 判断name是否合法
-            self.ChkInfoChanged();
-        }
-
-        public static async ETTask CreateAvatarScrollItem(this DlgPersonalInformation self)
-        {
-            int count = ET.Client.PlayerStatusHelper.GetAvatarIconList().Count;
-            self.AddUIScrollItems(ref self.ScrollItemAvatarIcons, count);
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.SetVisible(true, count);
-        }
-
-        public static async ETTask AddAvatarItemRefreshListener(this DlgPersonalInformation self, Transform transform, int index)
-        {
-            Scroll_Item_AvatarIcon itemAvatar = self.ScrollItemAvatarIcons[index].BindTrans(transform);
-            List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
-            await itemAvatar.EButton_IconImage.SetImageByPath(avatarIconList[index]);
-            if (self.curSelectedIconIndex == index)
-            {
-                itemAvatar.EG_SelectedImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                itemAvatar.EG_SelectedImage.gameObject.SetActive(false);
-            }
-
-            itemAvatar.EButton_IconButton.AddListener(() => { self.IconSelected(index).Coroutine(); });
-        }
-
-        public static async ETTask IconSelected(this DlgPersonalInformation self, int index)
-        {
-            self.curSelectedIconIndex = index;
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
-
-            self.ChkInfoChanged();
-        }
 
         public static async ETTask OnClickBindAccount(this DlgPersonalInformation self)
         {
@@ -241,7 +151,7 @@ namespace ET.Client
                         ET.Client.LoginSDKManagerComponent.Instance.SDKLoginOut(false).Coroutine();
                     }, sureTxt, titleTxt);
                 }else{
-                    self.View.E_InputFieldTMP_InputField.text = accountName;
+                    //self.View.E_InputFieldTMP_InputField.text = accountName;
                     self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && loginType == LoginType.Editor);
                     self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && loginType == LoginType.Editor);
                     self.View.E_AccountButton.SetVisible(loginType != LoginType.Editor);
@@ -265,15 +175,5 @@ namespace ET.Client
             });
         }
 
-        public static bool ChkInfoChanged(this DlgPersonalInformation self)
-        {
-            if (self.curSelectedIconIndex != self.oldIconIndex || self.curName != self.oldName)
-            {
-                self.View.E_SaveButton.SetVisible(true);
-                return true;
-            }
-            self.View.E_SaveButton.SetVisible(false);
-            return false;
-        }
     }
 }

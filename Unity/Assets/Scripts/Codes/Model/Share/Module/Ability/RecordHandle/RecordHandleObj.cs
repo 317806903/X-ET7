@@ -10,8 +10,8 @@ namespace ET.Ability
     public class RecordHandleObj: Entity, IAwake, IDestroy
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<RecordKeyInt, int> RecordIntDic;
-        
+        public Dictionary<RecordKeyInt, float> RecordIntDic;
+
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<RecordKeyString, string> RecordStringDic;
     }

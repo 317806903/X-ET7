@@ -72,8 +72,8 @@ namespace ET.Server
 				PlayerId = playerId,
 			});
 
-			playerStatusComponent.RoomType = (RoomType)_R2G_GetRoomIdByPlayer.RoomType;
-			playerStatusComponent.SubRoomType = (SubRoomType)_R2G_GetRoomIdByPlayer.SubRoomType;
+			RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(_R2G_GetRoomIdByPlayer.RoomTypeInfo);
+			playerStatusComponent.RoomTypeInfo = roomTypeInfo;
 			playerStatusComponent.RoomId = _R2G_GetRoomIdByPlayer.RoomId;
 			playerStatusComponent.LastBattleCfgId = "";
 			playerStatusComponent.LastBattleResult = BattleResult.Default;

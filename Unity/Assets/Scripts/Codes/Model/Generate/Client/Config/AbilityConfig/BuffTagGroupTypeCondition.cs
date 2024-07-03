@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断是否拥有BuffTagGroupType
 /// </summary>
-public sealed partial class BuffTagGroupTypeCondition:  Condition 
+public sealed partial class BuffTagGroupTypeCondition:  UnitConditionBase 
 {
     public BuffTagGroupTypeCondition(ByteBuf _buf)  : base(_buf) 
     {

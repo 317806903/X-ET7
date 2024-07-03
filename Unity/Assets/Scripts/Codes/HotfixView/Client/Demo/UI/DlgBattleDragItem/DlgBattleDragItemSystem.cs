@@ -15,6 +15,11 @@ namespace ET.Client
         {
             try
             {
+                if (self.IsDisposed)
+                {
+                    TimerComponent.Instance?.Remove(ref self.Timer);
+                    return;
+                }
                 self.Update();
             }
             catch (Exception e)
@@ -38,6 +43,8 @@ namespace ET.Client
             {
                 return;
             }
+            self.beginDragTime = TimeHelper.ClientNow();
+            self.canPutTime = (long)(0.3f * 1000);
             self.battleDragItemType = showWindowData.battleDragItemType;
             self.battleDragItemParam = showWindowData.battleDragItemParam;
             self.moveTowerUnitId = showWindowData.moveTowerUnitId;
@@ -173,6 +180,10 @@ namespace ET.Client
                 {
                     self.View.E_TipNodeImage.SetVisible(false);
                     self.ChgCurrentPlaceObj(true);
+                    if (self.beginDragTime + self.canPutTime > TimeHelper.ClientNow())
+                    {
+                        self.ChgCurrentPlaceObj(false);
+                    }
                 }
                 else
                 {
@@ -201,12 +212,33 @@ namespace ET.Client
             else if (self.isDragging)
             {
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
-                if (self.isClickUGUI == false)
+                if (self.beginDragTime + self.canPutTime > TimeHelper.ClientNow())
+                {
+                    self.ChgCurrentPlaceObj(false);
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_DragItem_TooFast");
+                    ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                    self.Close();
+                    return;
+                }
+                else if (self.isClickUGUI == false)
                 {
                     (bool canPut, bool isLimitRule) = self.ChkCanPut(self.rayHitPos);
                     if (canPut == false && isLimitRule == false)
                     {
-                        self.ChkCanPutWhenRepeat(self.rayHitPos, true);
+                        canPut = self.ChkCanPutWhenRepeat(self.rayHitPos, true);
+                        if (canPut)
+                        {
+                            self.View.E_TipNodeImage.SetVisible(false);
+                            self.ChgCurrentPlaceObj(true);
+                        }
+                        else
+                        {
+                            self.ChgCurrentPlaceObj(false);
+                        }
+                    }
+                    else
+                    {
+                        self.ChgCurrentPlaceObj(true);
                     }
                     if (self.isRaycast == false)
                     {
@@ -273,40 +305,34 @@ namespace ET.Client
 
         public static void OnSelectHeadQuarter(this DlgBattleDragItem self, string headQuarterUnitCfgId)
         {
+            self.currentPlaceObj = new GameObject("currentPlaceObj");
+
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(headQuarterUnitCfgId);
             float resScale = unitCfg.ResScale;
 
-            if (self.currentPlaceObj != null)
-            {
-                GameObject.DestroyImmediate(self.currentPlaceObj);
-                self.currentPlaceObj = null;
-            }
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
-
-            self.currentPlaceObj = GameObject.Instantiate(go);
-            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
-            self.currentPlaceObj.SetActive(false);
+            string resName = self.GetUnitPrefabName(unitCfg);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName, true, 1);
+            go.transform.SetParent(self.currentPlaceObj.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one * resScale;
+            self.currentPlaceObj.gameObject.SetActive(false);
 
         }
 
         public static void OnSelectMonsterCall(this DlgBattleDragItem self, string monsterCallUnitCfgId)
         {
+            self.currentPlaceObj = new GameObject("currentPlaceObj");
+
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCallUnitCfgId);
             float resScale = unitCfg.ResScale;
 
-            if (self.currentPlaceObj != null)
-            {
-                GameObject.DestroyImmediate(self.currentPlaceObj);
-                self.currentPlaceObj = null;
-            }
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
+            string resName = self.GetUnitPrefabName(unitCfg);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName, true, 1);
+            go.transform.SetParent(self.currentPlaceObj.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one * resScale;
 
-            self.currentPlaceObj = GameObject.Instantiate(go);
-            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
-            self.currentPlaceObj.SetActive(false);
-
+            self.currentPlaceObj.gameObject.SetActive(false);
         }
 
         public static void OnSelectTower(this DlgBattleDragItem self, string towerCfgId)
@@ -329,10 +355,10 @@ namespace ET.Client
                 float resScale = unitCfg.ResScale;
 
                 float3 forward = new float3(0, 0, 1);
-                string pathName = self.GetUnitPrefabName(unitCfg);
-                GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
+                string resName = self.GetUnitPrefabName(unitCfg);
+                GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName, true, 1);
 
-                GameObject goTmp = GameObject.Instantiate(go);
+                GameObject goTmp = go;
                 goTmp.transform.SetParent(self.currentPlaceObj.transform);
                 goTmp.transform.localPosition = releativePos;
                 goTmp.transform.localScale = Vector3.one * resScale;
@@ -341,11 +367,11 @@ namespace ET.Client
                 if (isAttackTower || isTrap)
                 {
                     ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
-                    GameObject resEffectGo = ResComponent.Instance.LoadAsset<GameObject>(resEffectCfg.ResName);
+                    string resEffectName = resEffectCfg.ResName;
+                    GameObject resEffectGoTmp = GameObjectPoolHelper.GetObjectFromPool(resEffectName, true, 1);
 
-                    GameObject resEffectGoTmp = GameObject.Instantiate(resEffectGo);
                     resEffectGoTmp.transform.SetParent(self.currentPlaceObj.transform);
-                    resEffectGoTmp.transform.localPosition = Vector3.zero;
+                    resEffectGoTmp.transform.localPosition = releativePos;
                     resEffectGoTmp.transform.localScale = Vector3.one * resScale;
 
                     Transform attackAreaTran = resEffectGoTmp.transform.Find("AttackArea");
@@ -399,29 +425,34 @@ namespace ET.Client
                 self.OnSelectTower(monsterCfgId);
                 return;
             }
+            self.currentPlaceObj = new GameObject("currentPlaceObj");
 
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get(monsterCfg.UnitId);
             float resScale = unitCfg.ResScale;
 
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
+            string resName = self.GetUnitPrefabName(unitCfg);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName, true, 1);
+            go.transform.SetParent(self.currentPlaceObj.transform);
+            go.transform.localPosition = Vector3.zero;
 
-            self.currentPlaceObj = GameObject.Instantiate(go);
-            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
+            go.transform.localScale = Vector3.one * resScale;
+
             self.currentPlaceObj.gameObject.SetActive(false);
         }
 
         public static void OnSelectPlayer(this DlgBattleDragItem self, string monsterCfgId)
         {
+            self.currentPlaceObj = new GameObject("currentPlaceObj");
+
             UnitCfg unitCfg = UnitCfgCategory.Instance.Get("Unit_PlayerPK");
             float resScale = unitCfg.ResScale;
 
-            string pathName = self.GetUnitPrefabName(unitCfg);
-            GameObject go = ResComponent.Instance.LoadAsset<GameObject>(pathName);
-
-            self.currentPlaceObj = GameObject.Instantiate(go);
-            self.currentPlaceObj.transform.localScale = Vector3.one * resScale;
+            string resName = self.GetUnitPrefabName(unitCfg);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName, true, 1);
+            go.transform.SetParent(self.currentPlaceObj.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one * resScale;
             self.currentPlaceObj.gameObject.SetActive(false);
         }
 
@@ -629,7 +660,7 @@ namespace ET.Client
 
                 Vector3 normal = raycastHit.normal;
                 //大概是66.6度
-                if (Vector3.Dot(normal, Vector3.up) < 0.5f)
+                //if (Vector3.Dot(normal, Vector3.up) < 0.5f)
                 {
                     float hitPointHeight = 0;
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0.5f, 0, 0));
@@ -640,6 +671,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(-0.5f, 0, 0));
                     if (hitPointHeight != 0)
                     {
@@ -648,6 +684,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, 0.5f));
                     if (hitPointHeight != 0)
                     {
@@ -656,6 +697,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, -0.5f));
                     if (hitPointHeight != 0)
                     {
@@ -663,6 +709,10 @@ namespace ET.Client
                         {
                             self.isCliffy = true;
                         }
+                    }
+                    else
+                    {
+                        self.isCliffy = true;
                     }
                 }
 
@@ -884,24 +934,27 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
-            self.isConfirming = true;
+            // self.isConfirming = true;
+            //
+            // self.View.EG_ConfirmRootRectTransform.SetVisible(true);
+            // self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
+            // {
+            //     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            //     await ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position);
+            //
+            //     self.isConfirming = false;
+            //     self.Close();
+            // });
+            // self.View.E_CancelButtonButton.AddListener(() =>
+            // {
+            //     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+            //
+            //     self.isConfirming = false;
+            //     self.Close();
+            // });
 
-            self.View.EG_ConfirmRootRectTransform.SetVisible(true);
-            self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
-            {
-                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
-                await ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position);
-
-                self.isConfirming = false;
-                self.Close();
-            });
-            self.View.E_CancelButtonButton.AddListener(() =>
-            {
-                UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
-
-                self.isConfirming = false;
-                self.Close();
-            });
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
+            await ET.Client.GamePlayTowerDefenseHelper.SendPutHome(self.ClientScene(), self.battleDragItemParam, position);
 
             return true;
         }
@@ -944,7 +997,20 @@ namespace ET.Client
             self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
             {
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
-                await ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position);
+                (bool bRet, string msg) = await ET.Client.GamePlayTowerDefenseHelper.SendPutMonsterCall(self.ClientScene(), self.battleDragItemParam, position);
+                if (bRet)
+                {
+                    GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+                    float length = gamePlayTowerDefenseComponent.GetPathLength();
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                    {
+                        eventName = "PortalPlaced",
+                        properties = new()
+                        {
+                            {"pathLength", length},
+                        }
+                    });
+                }
 
                 self.isConfirming = false;
                 self.Close();
@@ -954,6 +1020,7 @@ namespace ET.Client
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
                 self.isConfirming = false;
+
                 self.Close();
             });
 
@@ -1153,7 +1220,7 @@ namespace ET.Client
 
                 Vector3 normal = hitInfo.normal;
                 //大概是66.6度
-                if (Vector3.Dot(normal, Vector3.up) < 0.5f)
+                //if (Vector3.Dot(normal, Vector3.up) < 0.5f)
                 {
                     float hitPointHeight = 0;
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0.5f, 0, 0));
@@ -1164,6 +1231,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(-0.5f, 0, 0));
                     if (hitPointHeight != 0)
                     {
@@ -1172,6 +1244,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, 0.5f));
                     if (hitPointHeight != 0)
                     {
@@ -1180,6 +1257,11 @@ namespace ET.Client
                             self.isCliffy = true;
                         }
                     }
+                    else
+                    {
+                        self.isCliffy = true;
+                    }
+
                     hitPointHeight = self.GetHitPointHeight(point + new Vector3(0, 0, -0.5f));
                     if (hitPointHeight != 0)
                     {
@@ -1187,6 +1269,10 @@ namespace ET.Client
                         {
                             self.isCliffy = true;
                         }
+                    }
+                    else
+                    {
+                        self.isCliffy = true;
                     }
                 }
             }
@@ -1349,8 +1435,25 @@ namespace ET.Client
             self.isDragging = false;
             if (self.currentPlaceObj != null)
             {
+                if (self.battleDragItemType == BattleDragItemType.MonsterCall)
+                {
+                    self._HideMonsterCall2HeadQuarter().Coroutine();
+                }
+                foreach (var poolObject in self.currentPlaceObj.GetComponentsInChildren<PoolObject>())
+                {
+                    GameObjectPoolHelper.ReturnTransformToPool(poolObject.transform);
+                }
                 GameObject.Destroy(self.currentPlaceObj);
                 self.currentPlaceObj = null;
+            }
+
+        }
+
+        public static void Close(this DlgBattleDragItem self)
+        {
+            if (self.isConfirming)
+            {
+                return;
             }
 
             try
@@ -1364,21 +1467,13 @@ namespace ET.Client
             }
             self.sceneIn = null;
 
-        }
-
-        public static void Close(this DlgBattleDragItem self)
-        {
-            if (self.isConfirming)
-            {
-                return;
-            }
-
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
         }
 
         public static void HideWindow(this DlgBattleDragItem self)
         {
             self.Clear();
+
             TimerComponent.Instance?.Remove(ref self.Timer);
         }
 

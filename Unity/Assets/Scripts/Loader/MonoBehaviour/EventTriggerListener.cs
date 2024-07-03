@@ -105,7 +105,7 @@ namespace ET
             {
                 if (onPress.IsNull() == false)
                 {
-                    if (Time.unscaledTime - m_CurrDonwTime >= PRESS_TIME)
+                    if (m_CurrDonwTime > 0 && Time.unscaledTime - m_CurrDonwTime >= PRESS_TIME)
                     {
                         m_IsPress = true;
                         m_IsPointDown = false;
@@ -117,12 +117,15 @@ namespace ET
 
             if (m_ClickCount > 0)
             {
-                if (Time.unscaledTime - m_CurrDonwTime >= DOUBLE_CLICK_TIME)
+                if (m_CurrDonwTime > 0 && Time.unscaledTime - m_CurrDonwTime >= DOUBLE_CLICK_TIME)
                 {
                     if (m_ClickCount < 2)
                     {
                         onUp.Invoke(gameObject, m_OnUpEventData);
-                        onClick.Invoke(gameObject, m_OnUpEventData);
+                        if (m_IsTrigDrag == false)
+                        {
+                            onClick.Invoke(gameObject, m_OnUpEventData);
+                        }
                         m_OnUpEventData = null;
                     }
 
@@ -177,6 +180,7 @@ namespace ET
             m_ClickCountDone = false;
 
             m_IsPointDown = true;
+            m_IsTrigDrag = false;
             m_IsPointExit = false;
             m_IsPress = false;
             m_CurrDonwTime = Time.unscaledTime;
@@ -286,6 +290,7 @@ namespace ET
                     if (disX > disY)
                     {
                         this.m_IsPointDown = false;
+                        this.m_IsTrigDrag = true;
                     }
                 }
             }
@@ -296,6 +301,7 @@ namespace ET
                     if (disY > disX)
                     {
                         this.m_IsPointDown = false;
+                        this.m_IsTrigDrag = true;
                     }
                 }
             }
@@ -350,6 +356,7 @@ namespace ET
         public bool m_IsHorizontalDrag = true;
         private Vector2 beginDragPos;
         private bool m_IsPointDown = false;
+        private bool m_IsTrigDrag = false;
         private bool m_IsPointExit = false;
         private bool m_IsPress = false;
         private int m_ClickCount = 0;
@@ -402,8 +409,10 @@ namespace ET
                         var excuteGo = ExecuteEvents.GetEventHandler<T>(go);
                         if (excuteGo)
                         {
+                            // if (excuteGo.TryGetComponent<UITouchPass>(out var __))
+                            //     return null;
                             if (excuteGo.TryGetComponent<UITouchPass>(out var __))
-                                return null;
+                                continue;
                             ExecuteEvents.Execute(excuteGo, data, function);
                             return excuteGo;
                         }

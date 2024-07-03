@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断概率(0-100)
 /// </summary>
-public sealed partial class ProbabilityCondition:  Condition 
+public sealed partial class ProbabilityCondition:  UnitConditionBase 
 {
     public ProbabilityCondition(ByteBuf _buf)  : base(_buf) 
     {

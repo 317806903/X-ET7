@@ -94,6 +94,8 @@ namespace ET.Client
             float height = Ability.UnitHelper.GetBodyHeight(unit) / Ability.UnitHelper.GetResScale(unit);
             TowerShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
 
+            Transform  transCollider = self.transRoot.Find("ColliderRoot");
+            transCollider.gameObject.SetActive(true);
             self.transCollider = self.transRoot.Find("ColliderRoot/Collider");
             ET.Client.ModelClickManagerHelper.SetPlayerUnitInfoToClickInfo(self.DomainScene(), self.transCollider, self);
 

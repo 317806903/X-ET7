@@ -596,13 +596,7 @@ namespace ET
 		public int RoomStatus { get; set; }
 
 		[ProtoMember(6)]
-		public int RoomType { get; set; }
-
-		[ProtoMember(7)]
-		public int SubRoomType { get; set; }
-
-		[ProtoMember(8)]
-		public string BattleCfgId { get; set; }
+		public byte[] RoomTypeInfo { get; set; }
 
 	}
 
@@ -683,13 +677,7 @@ namespace ET
 		public long PlayerId { get; set; }
 
 		[ProtoMember(3)]
-		public string BattleCfgId { get; set; }
-
-		[ProtoMember(4)]
-		public int RoomType { get; set; }
-
-		[ProtoMember(5)]
-		public int SubRoomType { get; set; }
+		public byte[] RoomTypeInfo { get; set; }
 
 	}
 
@@ -741,10 +729,7 @@ namespace ET
 		public string Message { get; set; }
 
 		[ProtoMember(4)]
-		public int RoomType { get; set; }
-
-		[ProtoMember(5)]
-		public int SubRoomType { get; set; }
+		public byte[] RoomTypeInfo { get; set; }
 
 	}
 
@@ -1010,7 +995,7 @@ namespace ET
 		public long RoomId { get; set; }
 
 		[ProtoMember(4)]
-		public string NewBattleCfgId { get; set; }
+		public byte[] RoomTypeInfo { get; set; }
 
 	}
 
@@ -1779,6 +1764,149 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(R2S_ChgSeason))]
+	[Message(InnerMessage.S2R_ChgSeason)]
+	[ProtoContract]
+	public partial class S2R_ChgSeason: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int SeasonId { get; set; }
+
+	}
+
+	[Message(InnerMessage.R2S_ChgSeason)]
+	[ProtoContract]
+	public partial class R2S_ChgSeason: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(P2S_ChgSeason))]
+	[Message(InnerMessage.S2P_ChgSeason)]
+	[ProtoContract]
+	public partial class S2P_ChgSeason: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int SeasonId { get; set; }
+
+	}
+
+	[Message(InnerMessage.P2S_ChgSeason)]
+	[ProtoContract]
+	public partial class P2S_ChgSeason: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(S2G_GetSeasonComponent))]
+	[Message(InnerMessage.G2S_GetSeasonComponent)]
+	[ProtoContract]
+	public partial class G2S_GetSeasonComponent: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerMessage.S2G_GetSeasonComponent)]
+	[ProtoContract]
+	public partial class S2G_GetSeasonComponent: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public byte[] ComponentBytes { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2G_GetMailFromCenter))]
+	[Message(InnerMessage.G2M_GetMailFromCenter)]
+	[ProtoContract]
+	public partial class G2M_GetMailFromCenter: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long PlayerId { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2G_GetMailFromCenter)]
+	[ProtoContract]
+	public partial class M2G_GetMailFromCenter: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public List<byte[]> ComponentBytes { get; set; }
+
+	}
+
+	[ResponseType(nameof(M2G_InsertMailToCenter))]
+	[Message(InnerMessage.G2M_InsertMailToCenter)]
+	[ProtoContract]
+	public partial class G2M_InsertMailToCenter: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public byte[] ComponentBytes { get; set; }
+
+	}
+
+	[Message(InnerMessage.M2G_InsertMailToCenter)]
+	[ProtoContract]
+	public partial class M2G_InsertMailToCenter: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -1888,5 +2016,15 @@ namespace ET
 		 public const ushort P2G_GetArcadeCoinQrCode = 20106;
 		 public const ushort M2G_GetPlayerSessionInfo = 20107;
 		 public const ushort G2M_GetPlayerSessionInfo = 20108;
+		 public const ushort S2R_ChgSeason = 20109;
+		 public const ushort R2S_ChgSeason = 20110;
+		 public const ushort S2P_ChgSeason = 20111;
+		 public const ushort P2S_ChgSeason = 20112;
+		 public const ushort G2S_GetSeasonComponent = 20113;
+		 public const ushort S2G_GetSeasonComponent = 20114;
+		 public const ushort G2M_GetMailFromCenter = 20115;
+		 public const ushort M2G_GetMailFromCenter = 20116;
+		 public const ushort G2M_InsertMailToCenter = 20117;
+		 public const ushort M2G_InsertMailToCenter = 20118;
 	}
 }

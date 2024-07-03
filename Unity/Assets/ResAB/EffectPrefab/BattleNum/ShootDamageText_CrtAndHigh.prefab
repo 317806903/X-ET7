@@ -142,7 +142,7 @@ MonoBehaviour:
   shootTextMaxHeight: 100
   shootTextScaleFactor: 0.5
   delayMoveTime: 0.3
-  initializedVerticalPositionOffset: 1.25
+  initializedVerticalPositionOffset: 1.5
   initializedHorizontalPositionOffset: 0
   verticalMoveSpeed: 1.2
   horizontalMoveSpeed: 1.2

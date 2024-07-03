@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断recordString值
 /// </summary>
-public sealed partial class RecordStringRecordCondition:  Condition 
+public sealed partial class RecordStringRecordCondition:  UnitConditionBase 
 {
     public RecordStringRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

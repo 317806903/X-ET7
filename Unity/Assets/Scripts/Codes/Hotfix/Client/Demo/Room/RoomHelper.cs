@@ -1,4 +1,5 @@
 using System;
+using MongoDB.Bson;
 
 namespace ET.Client
 {
@@ -19,7 +20,12 @@ namespace ET.Client
                 clientScene = currentScene.Parent.GetParent<Scene>();
             }
 
-            RoomManagerComponent roomManagerComponent = clientScene.GetComponent<RoomManagerComponent>();
+            CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+            RoomManagerComponent roomManagerComponent = currentScenesComponent.GetComponent<RoomManagerComponent>();
+            if (roomManagerComponent == null)
+            {
+                roomManagerComponent = currentScenesComponent.AddComponent<RoomManagerComponent>();
+            }
             return roomManagerComponent;
         }
 
@@ -84,15 +90,13 @@ namespace ET.Client
         /// <param name="battleCfgId"></param>
         /// <param name="isARRoom"></param>
         /// <returns></returns>
-        public static async ETTask<(bool bRet, long roomId)> CreateRoomAsync(Scene clientScene, string battleCfgId, RoomType roomType, SubRoomType subRoomType)
+        public static async ETTask<(bool bRet, long roomId)> CreateRoomAsync(Scene clientScene, RoomTypeInfo roomTypeInfo)
         {
             try
             {
                 G2C_CreateRoom _G2C_CreateRoom = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_CreateRoom()
                 {
-                    BattleCfgId = battleCfgId,
-                    RoomType = (int)roomType,
-                    SubRoomType = (int)subRoomType,
+                    RoomTypeInfo = ET.RoomTypeInfo.ToBytes(roomTypeInfo),
                 }) as G2C_CreateRoom;
                 if (_G2C_CreateRoom.Error != ET.ErrorCode.ERR_Success)
                 {
@@ -269,14 +273,14 @@ namespace ET.Client
         /// </summary>
         /// <param name="clientScene"></param>
         /// <param name="newBattleCfgId"></param>
-        public static async ETTask ChgRoomBattleLevelCfgAsync(Scene clientScene, string newBattleCfgId)
+        public static async ETTask ChgRoomBattleLevelCfgAsync(Scene clientScene, RoomTypeInfo roomTypeInfo)
         {
             try
             {
                 G2C_ChgRoomBattleLevelCfg _G2C_ChgRoomBattleLevelCfg = await ET.Client.SessionHelper.GetSession(clientScene).Call(new
                         C2G_ChgRoomBattleLevelCfg()
                 {
-                    NewBattleCfgId = newBattleCfgId,
+                    RoomTypeInfo = RoomTypeInfo.ToBytes(roomTypeInfo),
                 }) as G2C_ChgRoomBattleLevelCfg;
                 if (_G2C_ChgRoomBattleLevelCfg.Error != ET.ErrorCode.ERR_Success)
                 {

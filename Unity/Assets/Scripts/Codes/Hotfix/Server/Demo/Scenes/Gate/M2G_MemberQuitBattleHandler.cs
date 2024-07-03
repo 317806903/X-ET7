@@ -9,14 +9,14 @@ namespace ET.Server
 		{
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			bool isInRoom = false;
-			if (playerStatusComponent.RoomType == RoomType.Normal)
+			if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.Normal)
 			{
-				if (playerStatusComponent.SubRoomType != SubRoomType.NormalSingleMap)
+				if (playerStatusComponent.RoomTypeInfo.subRoomType != SubRoomType.NormalSingleMap)
 				{
 					isInRoom = true;
 				}
 			}
-			else if (playerStatusComponent.RoomType == RoomType.AR)
+			else if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.AR)
 			{
 				isInRoom = true;
 			}

@@ -91,22 +91,27 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// AR模式新手指引关卡的cfgId
     /// </summary>
     public string ARTutorialFirstCfgId { get; private set; }
+    public GamePlayBattleLevelCfg ARTutorialFirstCfgId_Ref { get; private set; }
     /// <summary>
     /// AR模式PVP的cfgId
     /// </summary>
     public string ARPVPCfgId { get; private set; }
+    public GamePlayBattleLevelCfg ARPVPCfgId_Ref { get; private set; }
     /// <summary>
     /// AR模式PVE无尽模式的cfgId
     /// </summary>
     public string AREndlessChallengeCfgId { get; private set; }
+    public GamePlayBattleLevelCfg AREndlessChallengeCfgId_Ref { get; private set; }
     /// <summary>
     /// 非AR模式PVP的cfgId
     /// </summary>
     public string NoARPVPCfgId { get; private set; }
+    public GamePlayBattleLevelCfg NoARPVPCfgId_Ref { get; private set; }
     /// <summary>
     /// 非AR模式PVE无尽模式的cfgId
     /// </summary>
     public string NoAREndlessChallengeCfgId { get; private set; }
+    public GamePlayBattleLevelCfg NoAREndlessChallengeCfgId_Ref { get; private set; }
     /// <summary>
     /// 是否显示伤害数字展示
     /// </summary>
@@ -183,7 +188,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public System.Collections.Generic.List<string> InitialBackpackItem { get; private set; }
     public System.Collections.Generic.List<ItemCfg> InitialBackpackItem_Ref { get; private set; }
     /// <summary>
-    /// (DemoShow模式)初始背包物体
+    /// (展示模式)初始背包物体
     /// </summary>
     public System.Collections.Generic.List<string> DemoShowInitialBackpackItem { get; private set; }
     public System.Collections.Generic.List<ItemCfg> DemoShowInitialBackpackItem_Ref { get; private set; }
@@ -221,26 +226,32 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// (街机模式)PVP的cfgId
     /// </summary>
     public string GameModeArcadeARPVPCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeARPVPCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)PVE无尽模式的cfgId
     /// </summary>
     public string GameModeArcadeAREndlessChallengeCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeAREndlessChallengeCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)非AR模式PVP的cfgId
     /// </summary>
     public string GameModeArcadeNoARPVPCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeNoARPVPCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)非AR模式PVE无尽模式的cfgId
     /// </summary>
     public string GameModeArcadeNoAREndlessChallengeCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeNoAREndlessChallengeCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)管理员扫描地形的cfgId
     /// </summary>
     public string GameModeArcadeARScanMeshCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeARScanMeshCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)非AR管理员扫描地形的cfgId
     /// </summary>
     public string GameModeArcadeNoARScanMeshCfgId { get; private set; }
+    public GamePlayBattleLevelCfg GameModeArcadeNoARScanMeshCfgId_Ref { get; private set; }
     /// <summary>
     /// (街机模式)复活时超时时间(秒)
     /// </summary>
@@ -291,10 +302,21 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.ARTutorialFirstCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(ARTutorialFirstCfgId);
+        this.ARPVPCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(ARPVPCfgId);
+        this.AREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(AREndlessChallengeCfgId);
+        this.NoARPVPCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(NoARPVPCfgId);
+        this.NoAREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(NoAREndlessChallengeCfgId);
         { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.InitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in InitialBackpackItem) { this.InitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.DemoShowInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in DemoShowInitialBackpackItem) { this.DemoShowInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.GameModeArcadeInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in GameModeArcadeInitialBackpackItem) { this.GameModeArcadeInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
+        this.GameModeArcadeARPVPCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeARPVPCfgId);
+        this.GameModeArcadeAREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeAREndlessChallengeCfgId);
+        this.GameModeArcadeNoARPVPCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeNoARPVPCfgId);
+        this.GameModeArcadeNoAREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeNoAREndlessChallengeCfgId);
+        this.GameModeArcadeARScanMeshCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeARScanMeshCfgId);
+        this.GameModeArcadeNoARScanMeshCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(GameModeArcadeNoARScanMeshCfgId);
         PostResolve();
     }
 

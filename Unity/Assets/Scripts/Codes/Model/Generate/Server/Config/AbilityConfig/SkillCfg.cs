@@ -18,6 +18,8 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        SkillGroupType = (SkillGroupType)_buf.ReadInt();
+        Priority = _buf.ReadInt();
         Dis = _buf.ReadFloat();
         Cd = _buf.ReadFloat();
         SkillSelectAction = _buf.ReadString();
@@ -39,6 +41,14 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 技能组(就算学习多个，也仅保留最高优先级的那个)
+    /// </summary>
+    public SkillGroupType SkillGroupType { get; private set; }
+    /// <summary>
+    /// 优先级(越小越低)
+    /// </summary>
+    public int Priority { get; private set; }
     /// <summary>
     /// 技能施法距离
     /// </summary>
@@ -81,6 +91,8 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "SkillGroupType:" + SkillGroupType + ","
+        + "Priority:" + Priority + ","
         + "Dis:" + Dis + ","
         + "Cd:" + Cd + ","
         + "SkillSelectAction:" + SkillSelectAction + ","

@@ -9,5 +9,6 @@ namespace ET
     public class PlayerOtherInfoComponent : Entity, IAwake, IDestroy
     {
         public Dictionary<string, bool> battleGuideStatus;
+        public Dictionary<string, int> battleGuideStepIndex;
     }
 }

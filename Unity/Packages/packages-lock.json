@@ -14,16 +14,16 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": ">=12.1.6"
       },
-      "hash": "cfbe1d9d7693a567c517a184b5c17112d88a3430"
+      "hash": "8fcf7a0354751158fb8f1480957ac4349b1444c0"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "0.1.5"
+        "com.deepmirror.mirrorverse": "0.1.6"
       },
-      "hash": "cfbe1d9d7693a567c517a184b5c17112d88a3430"
+      "hash": "8fcf7a0354751158fb8f1480957ac4349b1444c0"
     },
     "com.dm.packages.blurbackground": {
       "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/BlurBackground",
@@ -104,7 +104,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.28",
+      "version": "3.0.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {

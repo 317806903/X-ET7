@@ -10,7 +10,7 @@
 				if (UnitHelper.ChkUnitAlive(args.createUnit) && UnitHelper.ChkIsBullet(args.createUnit))
 				{
 					Unit unit = args.createUnit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnCreate, null, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnCreate, null, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -24,12 +24,12 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -45,7 +45,7 @@
 					Unit unit = args.attackerUnit;
 					BulletObj bulletObj = unit.GetComponent<BulletObj>();
 					bulletObj.actionContext.hitPosition = args.hitPos;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnHitMesh, args.attackerUnit, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitMesh, args.attackerUnit, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -61,7 +61,7 @@
 					Unit unit = args.attackerUnit;
 					BulletObj bulletObj = unit.GetComponent<BulletObj>();
 					bulletObj.actionContext.hitPosition = args.hitPos;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnHitPos, args.attackerUnit, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitPos, args.attackerUnit, null);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -75,12 +75,12 @@
 		// 		if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 		// 		{
 		// 			Unit unit = args.attackerUnit;
-		// 			EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
+		// 			EventHandlerHelper.Run(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
 		// 		}
 		// 		if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
 		// 		{
 		// 			Unit unit = args.defenderUnit;
-		// 			EventHandlerHelper.Run(unit, AbilityBulletMonitorTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
+		// 			EventHandlerHelper.Run(unit, AbilityConfig.BulletTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
 		// 		}
 		// 		await ETTask.CompletedTask;
 		// 	}
@@ -94,7 +94,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsBullet(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityBulletMonitorTriggerEvent.BulletOnRemoved, null, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnRemoved, null, null);
 				}
 				await ETTask.CompletedTask;
 			}

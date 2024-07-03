@@ -75,6 +75,24 @@ namespace ET.Client
 			}
 		}
 
+		public ES_AvatarShow ES_AvatarShow
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_es_avatarshow == null )
+				{
+					Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/ES_AvatarShow");
+					this.m_es_avatarshow = this.AddChild<ES_AvatarShow, Transform>(subTrans);
+				}
+				return this.m_es_avatarshow;
+			}
+		}
+
 		public UnityEngine.UI.Button E_AvatarButton
 		{
 			get
@@ -557,6 +575,8 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
+			this.m_es_avatarshow?.Dispose();
+			this.m_es_avatarshow = null;
 			this.m_E_AvatarButton = null;
 			this.m_E_AvatarImage = null;
 			this.m_E_PlayerIcoImage = null;
@@ -592,6 +612,7 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private ES_AvatarShow m_es_avatarshow = null;
 		private UnityEngine.UI.Button m_E_AvatarButton = null;
 		private UnityEngine.UI.Image m_E_AvatarImage = null;
 		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;

@@ -9,8 +9,6 @@ namespace ET.Client
             Scene clientScene = EntitySceneFactory.CreateScene(zone, SceneType.Client, name, ClientSceneManagerComponent.Instance);
             clientScene.AddComponent<CurrentScenesComponent>();
             clientScene.AddComponent<ObjectWait>();
-            clientScene.AddComponent<PlayerComponent>();
-            clientScene.AddComponent<RoomManagerComponent>();
             clientScene.AddComponent<GameSettingComponent>();
 
             await EventSystem.Instance.PublishAsync(clientScene, new EventType.AfterCreateClientScene());

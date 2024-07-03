@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前选中对象数量(目前仅AttackArea时判断是否攻击到人使用)
 /// </summary>
-public sealed partial class ChkSelectUnitNumRecordCondition:  Condition 
+public sealed partial class ChkSelectUnitNumRecordCondition:  UnitConditionBase 
 {
     public ChkSelectUnitNumRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

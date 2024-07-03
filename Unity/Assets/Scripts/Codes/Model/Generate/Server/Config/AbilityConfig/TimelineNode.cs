@@ -23,8 +23,8 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
         DelayTime = _buf.ReadFloat();
         ActionId = _buf.ReadString();
         ActionCallParam = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition1.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition2.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition1.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition2.Add(_e0);}}
         PostInit();
     }
 
@@ -53,11 +53,11 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
     /// <summary>
     /// 条件1
     /// </summary>
-    public System.Collections.Generic.List<SubCondition> ActionCondition1 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition1 { get; private set; }
     /// <summary>
     /// 条件2
     /// </summary>
-    public System.Collections.Generic.List<SubCondition> ActionCondition2 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition2 { get; private set; }
 
     public const int __ID__ = 1630749187;
     public override int GetTypeId() => __ID__;

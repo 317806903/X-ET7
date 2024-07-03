@@ -11,6 +11,7 @@ namespace ET
             scene.AddComponent<UnitDelayRemoveComponent>();
             scene.AddComponent<DamageComponent>();
             scene.AddComponent<ActionHandlerComponent>();
+            scene.AddComponent<ActionGameHandlerComponent>();
             scene.AddComponent<SceneEffectComponent>();
             scene.AddComponent<SelectHandleRecordManager>();
             scene.AddComponent<RecycleSelectHandleComponent>();

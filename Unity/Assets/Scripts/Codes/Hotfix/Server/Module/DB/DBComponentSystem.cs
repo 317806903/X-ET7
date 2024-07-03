@@ -27,6 +27,23 @@ namespace ET.Server
 		    return self.database.GetCollection<Entity>(name);
 	    }
 
+	    #region RenameCollection
+	    public static async ETTask RenameCollection(this DBComponent self, string oldName, string newName)
+	    {
+		    if (self.GetCollection(oldName) == null)
+		    {
+			    Log.Error($"RenameCollection self.GetCollection({oldName}) == null");
+			    return;
+		    }
+		    if (self.GetCollection(newName) != null)
+		    {
+			    Log.Error($"RenameCollection self.GetCollection({newName}) != null");
+			    return;
+		    }
+		    await self.database.RenameCollectionAsync(oldName, newName);
+	    }
+	    #endregion
+
 	    #region Query
 
 	    public static async ETTask<T> Query<T>(this DBComponent self, long id, string collection = null) where T : Entity

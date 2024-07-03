@@ -143,7 +143,7 @@ namespace ET
             self.GetComponent<SyncDataManager_UnitPlayAudio>().AddSyncPlayAudio(unit, playAudioActionId, isOnlySelfShow);
         }
 
-        public static void AddSyncData_UnitGetCoinShow(this SyncDataManager self, long playerId, Unit unit, CoinType coinType, int chgValue)
+        public static void AddSyncData_UnitGetCoinShow(this SyncDataManager self, long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)
         {
             self.GetComponent<SyncDataManager_UnitGetCoinShow>().AddSyncGetCoinShow(playerId, unit, coinType, chgValue);
         }

@@ -634,9 +634,9 @@ namespace ET
             else if(packName == PackName.InNetZpb)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "http://192.168.10.58";
+                ResConfig.Instance.ResHostServerIP = "http://192.168.10.50";
                 ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "192.168.10.58";
+                ResConfig.Instance.RouterHttpHost = "192.168.10.50";
                 ResConfig.Instance.RouterHttpPort = 3478;
                 ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
                 ResConfig.Instance.areaType = AreaType.CN;

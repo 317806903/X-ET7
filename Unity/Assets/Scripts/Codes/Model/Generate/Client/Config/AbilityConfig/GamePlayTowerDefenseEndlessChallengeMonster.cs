@@ -15,11 +15,10 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 塔防(无尽出怪模式)
 /// </summary>
-public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  GamePlayModeBase 
+public sealed partial class GamePlayTowerDefenseEndlessChallengeMonster:  GamePlayTowerDefenseBase 
 {
     public GamePlayTowerDefenseEndlessChallengeMonster(ByteBuf _buf)  : base(_buf) 
     {
-        GamePlayModeCfgId = _buf.ReadString();
         RepeatNum = _buf.ReadInt();
         MonsterWaveNumScalePercentCoefficient = _buf.ReadFloat();
         MonsterWaveLevelScalePercentCoefficient = _buf.ReadFloat();
@@ -30,19 +29,9 @@ public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  Game
 
     public static GamePlayTowerDefenseEndlessChallengeMonster DeserializeGamePlayTowerDefenseEndlessChallengeMonster(ByteBuf _buf)
     {
-        switch (_buf.ReadInt())
-        {
-            case GamePlayTowerDefenseEndlessChallenge.__ID__: return new GamePlayTowerDefenseEndlessChallenge(_buf);
-            case GamePlayTowerDefensePVP.__ID__: return new GamePlayTowerDefensePVP(_buf);
-            default: throw new SerializationException();
-        }
+        return new GamePlayTowerDefenseEndlessChallengeMonster(_buf);
     }
 
-    /// <summary>
-    /// 玩法配置表id
-    /// </summary>
-    public string GamePlayModeCfgId { get; private set; }
-    public GamePlayTowerDefenseCfg GamePlayModeCfgId_Ref { get; private set; }
     /// <summary>
     /// 使用最后N关进行轮询
     /// </summary>
@@ -64,11 +53,12 @@ public abstract partial class GamePlayTowerDefenseEndlessChallengeMonster:  Game
     /// </summary>
     public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
 
+    public const int __ID__ = 1978480078;
+    public override int GetTypeId() => __ID__;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         base.Resolve(_tables);
-        this.GamePlayModeCfgId_Ref = (_tables["GamePlayTowerDefenseCfgCategory"] as GamePlayTowerDefenseCfgCategory).GetOrDefault(GamePlayModeCfgId);
         PostResolve();
     }
 

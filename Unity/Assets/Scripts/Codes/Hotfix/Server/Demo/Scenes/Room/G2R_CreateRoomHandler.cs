@@ -10,9 +10,8 @@ namespace ET.Server
 		{
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
-			string battleCfgId = request.BattleCfgId;
-			RoomType roomType = (RoomType)request.RoomType;
-			SubRoomType subRoomType = (SubRoomType)request.SubRoomType;
+			byte[] roomTypeInfoBytes = request.RoomTypeInfo;
+			RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(roomTypeInfoBytes);
 
 			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponentOld != null)
@@ -22,7 +21,7 @@ namespace ET.Server
 			}
 
 			RoomTeamMode roomTeamMode = RoomTeamMode.Single;
-			RoomComponent roomComponent = roomManagerComponent.CreateRoom(roomType, subRoomType, playerId, roomTeamMode, battleCfgId);
+			RoomComponent roomComponent = roomManagerComponent.CreateRoom(roomTypeInfo, playerId, roomTeamMode);
 
 			response.RoomId = roomComponent.Id;
 

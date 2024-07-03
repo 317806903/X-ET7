@@ -13,9 +13,7 @@
         public ARHallType _ARHallType;
         public long roomId = 0;
         public string arSceneId;
-        public RoomType RoomTypeIn;
-        public SubRoomType SubRoomTypeIn;
-        public string battleCfgId;
+        public RoomTypeInfo roomTypeInfo;
     }
 
     public enum ARHallType
@@ -45,10 +43,8 @@
     public class DlgARHall_ShowWindowData : ShowWindowData
     {
         public ARHallType ARHallType;
-        public RoomType RoomType;
-        public SubRoomType SubRoomType;
         public long roomId;
-        public string battleCfgId;
         public string arSceneId;
+        public RoomTypeInfo roomTypeInfo;
     }
 }

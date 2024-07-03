@@ -45,6 +45,17 @@ namespace ET
 			return true;
 		}
 
+		public static void ResetByPlayer(this PutMonsterCallComponent self, long playerId)
+		{
+			if (self.MonsterCallUnitId.TryGetValue(playerId, out long monsterCallUnitId))
+			{
+				Unit monsterCallUnit = UnitHelper.GetUnit(self.DomainScene(), monsterCallUnitId);
+				monsterCallUnit.DestroyNotDeathShow();
+				self.MonsterCallUnitId.Remove(playerId);
+				self.MonsterCallPos.Remove(playerId);
+			}
+		}
+
 		public static void InitWhenPVP(this PutMonsterCallComponent self, float3 midPos)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();

@@ -15,6 +15,9 @@ namespace ET.Ability
             protected override void Awake(SkillComponent self)
             {
                 self.skillSlotType2SkillObjs = new();
+                self.skillSlotTypeNone2SkillObjs = new();
+                self.skillGroupType2SkillObjs = new();
+                self.skillObjs2SkillSlotType = new();
                 self.skillCfgId2SkillObjs = new();
                 self.sortPrioritySkillObjs = new();
             }
@@ -26,6 +29,9 @@ namespace ET.Ability
             protected override void Destroy(SkillComponent self)
             {
                 self.skillSlotType2SkillObjs.Clear();
+                self.skillSlotTypeNone2SkillObjs.Clear();
+                self.skillGroupType2SkillObjs.Clear();
+                self.skillObjs2SkillSlotType.Clear();
                 self.skillCfgId2SkillObjs.Clear();
                 self.sortPrioritySkillObjs.Clear();
             }
@@ -70,16 +76,52 @@ namespace ET.Ability
                 skillSlotType = SkillSlotType.PassiveSkill;
             }
 
+            if (skillCfg.SkillGroupType != SkillGroupType.None && self.skillGroupType2SkillObjs.TryGetValue(skillCfg.SkillGroupType, out long curSkillObjId))
+            {
+                SkillObj curSkillObj = self.GetChild<SkillObj>(curSkillObjId);
+                if (curSkillObj.model.Priority > skillCfg.Priority)
+                {
+                    string msg = $"curSkillObj.model.Priority[{curSkillObj.skillCfgId} {curSkillObj.model.Priority}] > skillCfg.Priority[{skillCfg.Id} {skillCfg.Priority}]";
+                    return (false, msg);
+                }
+                else
+                {
+                    self.ForgetSkill(curSkillObj.skillCfgId, SkillSlotType.None, -1, SkillGroupType.None);
+                }
+            }
+
             SkillObj skillObj = self.AddChild<SkillObj>();
             skillObj.Init(skillCfgId, skillLevel, skillSlotType);
 
             self.skillSlotType2SkillObjs.Add(skillSlotType, skillObj.Id);
+            self.skillSlotTypeNone2SkillObjs.Add(SkillSlotType.None, skillObj.Id);
+            if (skillCfg.SkillGroupType != SkillGroupType.None)
+            {
+                self.skillGroupType2SkillObjs.Add(skillCfg.SkillGroupType, skillObj.Id);
+            }
             self.skillCfgId2SkillObjs.Add(skillCfgId, skillObj.Id);
+            self.skillObjs2SkillSlotType.Add(skillObj.Id, skillSlotType);
             self.ReSortPrioritySkillObjs();
 
             skillObj.DealLearnActionIds();
 
             return (true, "");
+        }
+
+        public static void ForgetSkill(this SkillComponent self, string skillCfgId, ET.AbilityConfig.SkillSlotType skillSlotType, int skillSlotIndex, ET.AbilityConfig.SkillGroupType skillGroupType)
+        {
+            List<SkillObj> skillList = self.GetSkillList(skillCfgId, skillSlotType, skillSlotIndex, skillGroupType);
+            foreach (SkillObj skillObj in skillList)
+            {
+                long curSkillObjId = skillObj.Id;
+                self.skillObjs2SkillSlotType.TryGetValue(curSkillObjId, out SkillSlotType curSkillSlotType);
+                self.skillObjs2SkillSlotType.Remove(curSkillObjId);
+                self.skillSlotType2SkillObjs.Remove(curSkillSlotType, curSkillObjId);
+                self.skillSlotTypeNone2SkillObjs.Remove(SkillSlotType.None, curSkillObjId);
+                self.skillGroupType2SkillObjs.Remove(skillObj.model.SkillGroupType);
+                self.skillCfgId2SkillObjs.Remove(skillCfgId);
+                self.RemoveChild(curSkillObjId);
+            }
         }
 
         public static Unit GetUnit(this SkillComponent self)
@@ -171,9 +213,11 @@ namespace ET.Ability
             self.sortPrioritySkillObjs.Clear();
             if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.InitiativeSkill, out List<long> skillObjs))
             {
-                foreach (long skillId in skillObjs)
+                for (int i = 0; i < skillObjs.Count; i++)
                 {
+                    long skillId = skillObjs[i];
                     SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    skillObj.ResetSkillSlotIndex(i);
                     if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
                     {
                         self.sortPrioritySkillObjs.Add(skillId);
@@ -182,9 +226,11 @@ namespace ET.Ability
             }
             if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.NormalAttack, out skillObjs))
             {
-                foreach (long skillId in skillObjs)
+                for (int i = 0; i < skillObjs.Count; i++)
                 {
+                    long skillId = skillObjs[i];
                     SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    skillObj.ResetSkillSlotIndex(i);
                     if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
                     {
                         self.sortPrioritySkillObjs.Add(skillId);
@@ -193,9 +239,11 @@ namespace ET.Ability
             }
             if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.PassiveSkill, out skillObjs))
             {
-                foreach (long skillId in skillObjs)
+                for (int i = 0; i < skillObjs.Count; i++)
                 {
+                    long skillId = skillObjs[i];
                     SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    skillObj.ResetSkillSlotIndex(i);
                     if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
                     {
                         self.sortPrioritySkillObjs.Add(skillId);
@@ -204,11 +252,34 @@ namespace ET.Ability
             }
         }
 
-        public static List<long> GetSkillListBySkillSlotType(this SkillComponent self, SkillSlotType skillSlotType)
+        public static List<long> GetSkillListBySkillSlotType(this SkillComponent self, SkillSlotType skillSlotType, int skillSlotIndex)
         {
-            if (self.skillSlotType2SkillObjs.TryGetValue(skillSlotType, out List<long> skillObjs))
+            if (skillSlotType == SkillSlotType.None)
             {
-                return skillObjs;
+                if (self.skillSlotTypeNone2SkillObjs.TryGetValue(skillSlotType, out List<long> skillObjs))
+                {
+                    return skillObjs;
+                }
+            }
+            else
+            {
+                if (self.skillSlotType2SkillObjs.TryGetValue(skillSlotType, out List<long> skillObjs))
+                {
+                    if (skillSlotIndex == -1)
+                    {
+                        return skillObjs;
+                    }
+                    else
+                    {
+                        if (skillSlotIndex >= skillObjs.Count)
+                        {
+                            return null;
+                        }
+                        ListComponent<long> skillObjList = ListComponent<long>.Create();
+                        skillObjList.Add(skillObjs[skillSlotIndex]);
+                        return skillObjList;
+                    }
+                }
             }
             return null;
         }
@@ -236,7 +307,7 @@ namespace ET.Ability
 
         public static float GetMaxSkillDis(this SkillComponent self, ET.AbilityConfig.SkillSlotType skillSlotType)
         {
-            List<long> list = self.GetSkillListBySkillSlotType(skillSlotType);
+            List<long> list = self.GetSkillListBySkillSlotType(skillSlotType, -1);
             float dis = 0;
             if (list != null)
             {
@@ -253,7 +324,7 @@ namespace ET.Ability
             return dis;
         }
 
-        public static List<SkillObj> GetSkillList(this SkillComponent self, string skillCfgId, ET.AbilityConfig.SkillSlotType skillSlotType)
+        public static List<SkillObj> GetSkillList(this SkillComponent self, string skillCfgId, ET.AbilityConfig.SkillSlotType skillSlotType, int skillSlotIndex, ET.AbilityConfig.SkillGroupType skillGroupType)
         {
             ListComponent<SkillObj> skillList = ListComponent<SkillObj>.Create();
             if (string.IsNullOrEmpty(skillCfgId) == false)
@@ -263,12 +334,23 @@ namespace ET.Ability
             }
             else
             {
-                List<long> list = self.GetSkillListBySkillSlotType(skillSlotType);
-                if (list != null)
+                if (skillGroupType == SkillGroupType.None)
                 {
-                    foreach (long skillId in list)
+                    List<long> list = self.GetSkillListBySkillSlotType(skillSlotType, skillSlotIndex);
+                    if (list != null)
                     {
-                        SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                        foreach (long skillObjId in list)
+                        {
+                            SkillObj skillObj = self.GetChild<SkillObj>(skillObjId);
+                            skillList.Add(skillObj);
+                        }
+                    }
+                }
+                else
+                {
+                    if (self.skillGroupType2SkillObjs.TryGetValue(skillGroupType, out long curSkillObjId))
+                    {
+                        SkillObj skillObj = self.GetChild<SkillObj>(curSkillObjId);
                         skillList.Add(skillObj);
                     }
                 }

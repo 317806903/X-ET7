@@ -1000,7 +1000,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
         {
             var _UIGuidePathList = ScriptableObject.CreateInstance<UIGuidePathList>();
             _UIGuidePathList.list = new();
-            for (int i = indexRun; i < this.makeGuide.list.Count; i++)
+            for (int i = 0; i < this.makeGuide.list.Count; i++)
             {
                 string json = ET.JsonHelper.ToJson(this.makeGuide.list[i]);
                 UIGuidePath _UIGuidePath = ET.JsonHelper.FromJson<UIGuidePath>(json);
@@ -1009,7 +1009,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
             }
 
             string guideFileName = Path.GetFileNameWithoutExtension(this.filePath);
-            ET.Client.UIGuideHelper.DoUIGuide(clientScene, guideFileName, _UIGuidePathList, null).Coroutine();
+            ET.Client.UIGuideHelper.DoUIGuide(clientScene, guideFileName, _UIGuidePathList, indexRun, null).Coroutine();
         }
     }
 
@@ -1043,7 +1043,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
         if (clientScene != null)
         {
-            ET.Client.UIGuideHelper.DoUIGuide(clientScene, fileName, null).Coroutine();
+            ET.Client.UIGuideHelper.DoUIGuide(clientScene, fileName, 0, null).Coroutine();
         }
     }
 

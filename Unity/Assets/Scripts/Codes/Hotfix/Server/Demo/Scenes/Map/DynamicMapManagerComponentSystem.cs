@@ -66,13 +66,13 @@ namespace ET.Server
             InstanceIdStruct instanceIdStruct = new InstanceIdStruct(dynamicMapBaseConfig.Process, (uint) dynamicMapBaseId);
             long dynamicMapBaseInstanceId = instanceIdStruct.ToLong();
 
-            string gamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId;
+            string gamePlayBattleLevelCfgId = roomComponent.roomTypeInfo.gamePlayBattleLevelCfgId;
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(gamePlayBattleLevelCfgId);
             Scene dynamicMapNew = await SceneHelper.CreateServerScene(self, dynamicMapBaseId, dynamicMapBaseInstanceId, dynamicMapBaseConfig.Zone,
                 gamePlayBattleLevelCfg.SceneMap, dynamicMapBaseConfig.Type);
 
             GamePlayComponent gamePlayComponent = dynamicMapNew.AddComponent<GamePlayComponent>();
-            await gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.gamePlayBattleLevelCfgId, roomComponent, roomMemberList, _ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
+            await gamePlayComponent.InitWhenRoom(dynamicMapNew.InstanceId, roomComponent.roomTypeInfo.gamePlayBattleLevelCfgId, roomComponent, roomMemberList, _ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
 
             self.dynamicMapList.Add(dynamicMapNew.InstanceId, dynamicMapNew.Id);
             self.dynamicUsedIndexList.Add(dynamicMapBaseId);

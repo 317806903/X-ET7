@@ -312,6 +312,7 @@ namespace ET.Ability.Client
 			{
 				float crossTime = 0.2f;
 
+				AnimatorMotionName CurMotionTypeOld = self.CurMotionType;
 				self.CurMotionType = self.NextMotionType;
 				self.NextMotionType = AnimatorMotionName.None;
 
@@ -329,7 +330,13 @@ namespace ET.Ability.Client
 						normalizedTime = time*0.001f / length;
 						if (normalizedTime > 1)
 						{
-							normalizedTime = 1;
+							if (CurMotionTypeOld == AnimatorMotionName.Idle)
+							{
+								self.CurMotionType = AnimatorMotionName.Idle;
+								return;
+							}
+							self.CurMotionType = AnimatorMotionName.Idle;
+							normalizedTime = 0;
 						}
 					}
 					else
@@ -435,13 +442,17 @@ namespace ET.Ability.Client
 				string clipName = self.curRecordAnimatorName.GetRecordValue(animatorMotionName.ToString());
 				if (string.IsNullOrEmpty(clipName))
 				{
+#if UNITY_EDITOR
 					Log.Error($"找不到该动作: {self.mainAnimator.name} {animatorMotionName.ToString()}");
+#endif
 					return 0;
 				}
 
 				if (!self.animationClips.TryGetValue(clipName, out animationClip))
 				{
+#if UNITY_EDITOR
 					Log.Error($"找不到该动作: {self.mainAnimator.name} {clipName}");
+#endif
 					return 0;
 				}
 				return animationClip.length;

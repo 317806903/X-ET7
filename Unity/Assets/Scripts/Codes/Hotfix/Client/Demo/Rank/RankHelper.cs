@@ -20,10 +20,11 @@ namespace ET.Client
 			    clientScene = currentScene.Parent.GetParent<Scene>();
 		    }
 
-		    RankShowPlayerComponent rankShowPlayerComponent = clientScene.GetComponent<RankShowPlayerComponent>();
+		    CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+		    RankShowPlayerComponent rankShowPlayerComponent = currentScenesComponent.GetComponent<RankShowPlayerComponent>();
 		    if (rankShowPlayerComponent == null)
 		    {
-			    rankShowPlayerComponent = clientScene.AddComponent<RankShowPlayerComponent>();
+			    rankShowPlayerComponent = currentScenesComponent.AddComponent<RankShowPlayerComponent>();
 		    }
 		    return rankShowPlayerComponent;
 	    }
@@ -50,6 +51,13 @@ namespace ET.Client
 
 		        return rankShowComponent;
 	        }
+        }
+
+        public static async ETTask<(int myRank, long score)> GetMyRank(Scene scene, RankType rankType, bool forceReGet)
+        {
+	        RankShowComponent rankShowComponent = await GetRankShow(scene, rankType, forceReGet);
+	        (int myRank, long score) = rankShowComponent.GetMyRank();
+	        return (myRank, score);
         }
 
         public static void ClearRankShow(Scene scene, RankType rankType)

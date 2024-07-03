@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断和发起者的夹角
 /// </summary>
-public sealed partial class AngleRecordCondition:  Condition 
+public sealed partial class AngleRecordCondition:  UnitConditionBase 
 {
     public AngleRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

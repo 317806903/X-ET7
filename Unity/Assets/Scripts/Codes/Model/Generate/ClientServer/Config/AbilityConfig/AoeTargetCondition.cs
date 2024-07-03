@@ -20,8 +20,9 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     public AoeTargetCondition(ByteBuf _buf) 
     {
         Radius = _buf.ReadFloat();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition1.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SubCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SubCondition _e0;  _e0 = SubCondition.DeserializeSubCondition(_buf); ActionCondition2.Add(_e0);}}
+        SelectObjectType = (SelectObjectType)_buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition1.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition2.Add(_e0);}}
         PostInit();
     }
 
@@ -35,13 +36,17 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     /// </summary>
     public float Radius { get; private set; }
     /// <summary>
+    /// 目标选择对象类型
+    /// </summary>
+    public SelectObjectType SelectObjectType { get; private set; }
+    /// <summary>
     /// 条件1
     /// </summary>
-    public System.Collections.Generic.List<SubCondition> ActionCondition1 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition1 { get; private set; }
     /// <summary>
     /// 条件2
     /// </summary>
-    public System.Collections.Generic.List<SubCondition> ActionCondition2 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition2 { get; private set; }
 
     public const int __ID__ = -189383757;
     public override int GetTypeId() => __ID__;
@@ -63,6 +68,7 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     {
         return "{ "
         + "Radius:" + Radius + ","
+        + "SelectObjectType:" + SelectObjectType + ","
         + "ActionCondition1:" + Bright.Common.StringUtil.CollectionToString(ActionCondition1) + ","
         + "ActionCondition2:" + Bright.Common.StringUtil.CollectionToString(ActionCondition2) + ","
         + "}";

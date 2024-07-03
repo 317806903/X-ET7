@@ -28,6 +28,7 @@ namespace ET.Client
                 if (self.shootTextRoot_Normal != null)
                 {
                     self.shootTextProManager_Normal.Clear();
+                    self.shootTextProManager_Normal.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot_Normal);
                     self.shootTextRoot_Normal = null;
                     self.shootTextProManager_Normal = null;
@@ -35,6 +36,7 @@ namespace ET.Client
                 if (self.shootTextRoot_High != null)
                 {
                     self.shootTextProManager_High.Clear();
+                    self.shootTextProManager_High.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot_High);
                     self.shootTextRoot_High = null;
                     self.shootTextProManager_High = null;
@@ -42,6 +44,7 @@ namespace ET.Client
                 if (self.shootTextRoot_Crt != null)
                 {
                     self.shootTextProManager_Crt.Clear();
+                    self.shootTextProManager_Crt.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot_Crt);
                     self.shootTextRoot_Crt = null;
                     self.shootTextProManager_Crt = null;
@@ -49,6 +52,7 @@ namespace ET.Client
                 if (self.shootTextRoot_CrtAndHigh != null)
                 {
                     self.shootTextProManager_CrtAndHigh.Clear();
+                    self.shootTextProManager_CrtAndHigh.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot_CrtAndHigh);
                     self.shootTextRoot_CrtAndHigh = null;
                     self.shootTextProManager_CrtAndHigh = null;
@@ -56,6 +60,7 @@ namespace ET.Client
                 if (self.shootTextRoot_Cure != null)
                 {
                     self.shootTextProManager_Cure.Clear();
+                    self.shootTextProManager_Cure.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot_Cure);
                     self.shootTextRoot_Cure = null;
                     self.shootTextProManager_Cure = null;
@@ -90,6 +95,7 @@ namespace ET.Client
                 shootTextRootGo.transform.localScale = Vector3.one;
 
                 self.shootTextProManager_Normal = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+                self.shootTextProManager_Normal.Init();
                 self.shootTextProManager_Normal.ShootTextCamera = null;
                 self.shootTextProManager_Normal.ShootTextCanvas = null;
             }
@@ -103,6 +109,7 @@ namespace ET.Client
                 shootTextRootGo.transform.localScale = Vector3.one;
 
                 self.shootTextProManager_High = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+                self.shootTextProManager_High.Init();
                 self.shootTextProManager_High.ShootTextCamera = null;
                 self.shootTextProManager_High.ShootTextCanvas = null;
             }
@@ -116,6 +123,7 @@ namespace ET.Client
                 shootTextRootGo.transform.localScale = Vector3.one;
 
                 self.shootTextProManager_Crt = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+                self.shootTextProManager_Crt.Init();
                 self.shootTextProManager_Crt.ShootTextCamera = null;
                 self.shootTextProManager_Crt.ShootTextCanvas = null;
             }
@@ -129,6 +137,7 @@ namespace ET.Client
                 shootTextRootGo.transform.localScale = Vector3.one;
 
                 self.shootTextProManager_CrtAndHigh = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+                self.shootTextProManager_CrtAndHigh.Init();
                 self.shootTextProManager_CrtAndHigh.ShootTextCamera = null;
                 self.shootTextProManager_CrtAndHigh.ShootTextCanvas = null;
             }
@@ -142,6 +151,7 @@ namespace ET.Client
                 shootTextRootGo.transform.localScale = Vector3.one;
 
                 self.shootTextProManager_Cure = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+                self.shootTextProManager_Cure.Init();
                 self.shootTextProManager_Cure.ShootTextCamera = null;
                 self.shootTextProManager_Cure.ShootTextCanvas = null;
             }

@@ -52,6 +52,23 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask RecordWhenSeasonFinished(this RankManagerComponent self, RankType rankType, int seasonId)
+        {
+            switch (rankType)
+            {
+                case RankType.PVE:
+                    await self.RecordWhenSeasonFinished<RankPVEComponent, RankPVEItemComponent>(seasonId);
+                    break;
+                case RankType.EndlessChallenge:
+                    await self.RecordWhenSeasonFinished<RankEndlessChallengeComponent, RankEndlessChallengeItemComponent>(seasonId);
+                    break;
+                default:
+                    break;
+            }
+
+            await ETTask.CompletedTask;
+        }
+
         public static async ETTask<T> InitByDBOne<T, TItem>(this RankManagerComponent self) where T : RankComponent, new() where TItem : RankItemComponent, new()
         {
             T rankComponent;
@@ -73,6 +90,12 @@ namespace ET.Server
         {
             T rankComponent = self.GetComponent<T>();
             await rankComponent.ResetRankItem<TItem>(playerId, scoreNew, killNum);
+        }
+
+        public static async ETTask RecordWhenSeasonFinished<T, TItem>(this RankManagerComponent self, int seasonId) where T : RankComponent where TItem : RankItemComponent
+        {
+            T rankComponent = self.GetComponent<T>();
+            await rankComponent.RecordWhenSeasonFinished(typeof(TItem), seasonId);
         }
 
     }

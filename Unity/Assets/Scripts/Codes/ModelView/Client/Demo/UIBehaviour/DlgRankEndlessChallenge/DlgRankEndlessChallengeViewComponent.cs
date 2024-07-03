@@ -160,6 +160,24 @@ namespace ET.Client
 			}
 		}
 
+		public ES_AvatarShow ES_AvatarShow
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_es_avatarshow == null )
+				{
+					Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, "EGRoot/IndividualRank/ES_AvatarShow");
+					this.m_es_avatarshow = this.AddChild<ES_AvatarShow, Transform>(subTrans);
+				}
+				return this.m_es_avatarshow;
+			}
+		}
+
 		public UnityEngine.UI.Image E_PlayerIcoImage
 		{
 			get
@@ -341,6 +359,8 @@ namespace ET.Client
 			this.m_EGRootRectTransform = null;
 			this.m_E_QuitRankButton = null;
 			this.m_E_QuitRankImage = null;
+			this.m_es_avatarshow?.Dispose();
+			this.m_es_avatarshow = null;
 			this.m_E_PlayerIcoImage = null;
 			this.m_E_PlayerNameTextMeshProUGUI = null;
 			this.m_EImage_ShortRankedBGImage = null;
@@ -363,6 +383,7 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EGRootRectTransform = null;
 		private UnityEngine.UI.Button m_E_QuitRankButton = null;
 		private UnityEngine.UI.Image m_E_QuitRankImage = null;
+		private ES_AvatarShow m_es_avatarshow = null;
 		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
 		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_ShortRankedBGImage = null;

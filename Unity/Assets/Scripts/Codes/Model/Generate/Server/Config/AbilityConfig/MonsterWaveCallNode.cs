@@ -55,6 +55,7 @@ public sealed partial class MonsterWaveCallNode: Bright.Config.BeanBase
     /// 怪物id
     /// </summary>
     public string MonsterCfgId { get; private set; }
+    public TowerDefense_MonsterCfg MonsterCfgId_Ref { get; private set; }
     /// <summary>
     /// 怪物等级
     /// </summary>
@@ -73,6 +74,7 @@ public sealed partial class MonsterWaveCallNode: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.MonsterCfgId_Ref = (_tables["TowerDefense_MonsterCfgCategory"] as TowerDefense_MonsterCfgCategory).GetOrDefault(MonsterCfgId);
         PostResolve();
     }
 

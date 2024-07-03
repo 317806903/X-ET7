@@ -19,7 +19,7 @@ namespace ET.AbilityConfig
         /// </summary>
         DropAll = 1,
         /// <summary>
-        /// 按权重单一掉落
+        /// 按权重单个掉落
         /// </summary>
         DropOne = 2,
     }

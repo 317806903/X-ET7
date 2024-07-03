@@ -8,8 +8,6 @@ namespace ET
     public class DataCacheWriteComponent : Entity, IAwake, IDestroy
     {
         public long Timer;
-        public long lastChkTime;
-        public float ChkTimeInterval;
-        public bool IsNeedWrite { get; set; }
+        public bool waitingForWrite;
     }
 }

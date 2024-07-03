@@ -63,6 +63,9 @@ namespace ET.Client
 
 		public float3 lastRayPos;
 		public float3 lastDragRectifyPos;
+
+		public long beginDragTime;
+		public long canPutTime;
 	}
 
 	public class DlgBattleDragItem_ShowWindowData : ShowWindowData

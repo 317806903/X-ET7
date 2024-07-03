@@ -16,6 +16,8 @@ namespace ET.Client
 			self.View.E_BackButton.AddListenerAsync(self.OnBack);
 			self.View.E_SureButton.AddListenerAsync(self.OnSure);
 
+			self.View.E_InputFieldTMP_InputField.onValueChanged.AddListener(self.OnValueChanged);
+
 			self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_GameCfgItem";
 			self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.poolSize = 6;
 			self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
@@ -61,6 +63,9 @@ namespace ET.Client
 			self.isAR = dlgBattleCfgChooseShowWindowData.isAR;
 
 			Log.Debug($"self.isAR {self.isAR}");
+			self.View.E_InputFieldTMP_InputField.text = "";
+			self.matchKey = "";
+
 			self.ShowBattleCfgList();
 		}
 
@@ -191,7 +196,33 @@ namespace ET.Client
 		        {
 			        continue;
 		        }
-		        self.curlist.Add(gamePlayBattleLevelCfg);
+
+		        if (string.IsNullOrEmpty(self.matchKey))
+		        {
+			        self.curlist.Add(gamePlayBattleLevelCfg);
+		        }
+		        else
+		        {
+			        bool isMatch = false;
+			        if (isMatch == false)
+			        {
+				        isMatch = gamePlayBattleLevelCfg.Id.ToLower().Contains(self.matchKey.ToLower());
+			        }
+			        if (isMatch == false)
+			        {
+				        isMatch = gamePlayBattleLevelCfg.Name.ToLower().Contains(self.matchKey.ToLower());
+				        isMatch = gamePlayBattleLevelCfg.Name.Contains(self.matchKey);
+			        }
+			        if (isMatch == false)
+			        {
+				        isMatch = gamePlayBattleLevelCfg.Desc.ToLower().Contains(self.matchKey.ToLower());
+			        }
+
+			        if (isMatch)
+			        {
+				        self.curlist.Add(gamePlayBattleLevelCfg);
+			        }
+		        }
 	        }
 
 	        return self.curlist;
@@ -218,19 +249,7 @@ namespace ET.Client
 	        {
 		        isMatching = true;
 	        }
-	        else if (gameMode[0] == "GamePlayTowerDefenseTutorialFirst" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseTutorialFirst)
-	        {
-		        isMatching = true;
-	        }
-	        else if (gameMode[0] == "GamePlayTowerDefensePVE" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVE)
-	        {
-		        isMatching = true;
-	        }
-	        else if (gameMode[0] == "GamePlayTowerDefenseEndlessChallenge" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallenge)
-	        {
-		        isMatching = true;
-	        }
-	        else if (gameMode[0] == "GamePlayTowerDefensePVP" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVP)
+	        else if (gameMode[0] == "GamePlayTowerDefenseEndlessChallengeMonster" && gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallengeMonster)
 	        {
 		        isMatching = true;
 	        }
@@ -272,6 +291,12 @@ namespace ET.Client
 	        }
 
 	        return isMatching;
+        }
+
+        public static void OnValueChanged(this DlgBattleCfgChoose self, string name)
+        {
+	        self.matchKey = self.View.E_InputFieldTMP_InputField.text;
+	        self.RefreshUI().Coroutine();
         }
 
 	}

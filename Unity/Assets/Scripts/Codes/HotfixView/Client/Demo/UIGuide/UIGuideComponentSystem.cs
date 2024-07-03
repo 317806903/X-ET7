@@ -79,7 +79,7 @@ namespace ET.Client
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(self.RootTrans.gameObject);
         }
 
-        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, Action finished = null, Action firstFindCallBack = null)
+        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, int startIndex, Action finished = null, Action<int> stepFinished = null)
         {
             string filePath = $"UIGuideConfig_{guideFileName}";
             UIGuidePathList _UIGuidePathList = await ResComponent.Instance.LoadAssetAsync<UIGuidePathList>(filePath);
@@ -95,11 +95,11 @@ namespace ET.Client
                 _UIGuidePath.index = i;
             }
 
-            await self.DoUIGuide(guideFileName, _UIGuidePathList, finished, firstFindCallBack);
+            await self.DoUIGuide(guideFileName, _UIGuidePathList, startIndex, finished, stepFinished);
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, Action finished = null, Action firstFindCallBack = null)
+        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action finished = null, Action<int> stepFinished = null)
         {
             if (_UIGuidePathList == null || _UIGuidePathList.list.Count == 0)
             {
@@ -118,9 +118,10 @@ namespace ET.Client
             }
 
             self.finished = finished;
+            self.stepFinished = stepFinished;
 
             self.guideFileName = guideFileName;
-            self.nowIndex = 0;
+            self.nowIndex = startIndex;
             self._UIGuidePathList = _UIGuidePathList;
             await self.DoGuideStep();
             await ETTask.CompletedTask;
@@ -136,14 +137,17 @@ namespace ET.Client
         {
             UIGuidePathList _UIGuidePathList = self._UIGuidePathList;
 
-            if (self.nowIndex >= _UIGuidePathList.list.Count)
+            if (self.nowIndex > 0)
             {
-                if (self.finished != null)
+                if (self.nowIndex >= _UIGuidePathList.list.Count)
                 {
-                    self.finished();
+                    if (self.finished != null)
+                    {
+                        self.finished();
+                    }
+                    self.DestroySelf();
+                    return;
                 }
-                self.DestroySelf();
-                return;
             }
 
 
@@ -183,6 +187,10 @@ namespace ET.Client
                 timerKey = self.nowIndex.ToString(),
             });
 
+            if (self.stepFinished != null)
+            {
+                self.stepFinished(self.nowIndex);
+            }
             self.nowIndex++;
             self.DoGuideStep().Coroutine();
         }

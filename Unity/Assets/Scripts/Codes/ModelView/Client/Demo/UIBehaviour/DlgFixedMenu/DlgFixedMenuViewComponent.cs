@@ -41,7 +41,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button EButton_ArcadeCoinButton
+		public UnityEngine.UI.Button EButton_TokenArcadeCoinButton
 		{
 			get
 			{
@@ -50,15 +50,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EButton_ArcadeCoinButton == null )
+				if( this.m_EButton_TokenArcadeCoinButton == null )
 				{
-					this.m_EButton_ArcadeCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_ArcadeCoin");
+					this.m_EButton_TokenArcadeCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenArcadeCoin");
 				}
-				return this.m_EButton_ArcadeCoinButton;
+				return this.m_EButton_TokenArcadeCoinButton;
 			}
 		}
 
-		public UnityEngine.UI.Image EButton_ArcadeCoinImage
+		public UnityEngine.UI.Image EButton_TokenArcadeCoinImage
 		{
 			get
 			{
@@ -67,15 +67,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EButton_ArcadeCoinImage == null )
+				if( this.m_EButton_TokenArcadeCoinImage == null )
 				{
-					this.m_EButton_ArcadeCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_ArcadeCoin");
+					this.m_EButton_TokenArcadeCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenArcadeCoin");
 				}
-				return this.m_EButton_ArcadeCoinImage;
+				return this.m_EButton_TokenArcadeCoinImage;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI ELabel_ArcadeCoinNumTextMeshProUGUI
+		public TMPro.TextMeshProUGUI ELabel_TokenArcadeCoinNumTextMeshProUGUI
 		{
 			get
 			{
@@ -84,11 +84,62 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELabel_ArcadeCoinNumTextMeshProUGUI == null )
+				if( this.m_ELabel_TokenArcadeCoinNumTextMeshProUGUI == null )
 				{
-					this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_ArcadeCoin/ELabel_ArcadeCoinNum");
+					this.m_ELabel_TokenArcadeCoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenArcadeCoin/ELabel_TokenArcadeCoinNum");
 				}
-				return this.m_ELabel_ArcadeCoinNumTextMeshProUGUI;
+				return this.m_ELabel_TokenArcadeCoinNumTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_TokenDiamondButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_TokenDiamondButton == null )
+				{
+					this.m_EButton_TokenDiamondButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenDiamond");
+				}
+				return this.m_EButton_TokenDiamondButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_TokenDiamondImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_TokenDiamondImage == null )
+				{
+					this.m_EButton_TokenDiamondImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenDiamond");
+				}
+				return this.m_EButton_TokenDiamondImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_TokenDiamondNumTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_TokenDiamondNumTextMeshProUGUI == null )
+				{
+					this.m_ELabel_TokenDiamondNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_Root/EG_CoinList/EButton_TokenDiamond/ELabel_TokenDiamondNum");
+				}
+				return this.m_ELabel_TokenDiamondNumTextMeshProUGUI;
 			}
 		}
 
@@ -147,9 +198,12 @@ namespace ET.Client
 		{
 			this.m_EG_RootRectTransform = null;
 			this.m_EG_CoinListRectTransform = null;
-			this.m_EButton_ArcadeCoinButton = null;
-			this.m_EButton_ArcadeCoinImage = null;
-			this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
+			this.m_EButton_TokenArcadeCoinButton = null;
+			this.m_EButton_TokenArcadeCoinImage = null;
+			this.m_ELabel_TokenArcadeCoinNumTextMeshProUGUI = null;
+			this.m_EButton_TokenDiamondButton = null;
+			this.m_EButton_TokenDiamondImage = null;
+			this.m_ELabel_TokenDiamondNumTextMeshProUGUI = null;
 			this.m_EButton_PhysicalStrengthButton = null;
 			this.m_EButton_PhysicalStrengthImage = null;
 			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
@@ -158,9 +212,12 @@ namespace ET.Client
 
 		private UnityEngine.RectTransform m_EG_RootRectTransform = null;
 		private UnityEngine.RectTransform m_EG_CoinListRectTransform = null;
-		private UnityEngine.UI.Button m_EButton_ArcadeCoinButton = null;
-		private UnityEngine.UI.Image m_EButton_ArcadeCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButton_TokenArcadeCoinButton = null;
+		private UnityEngine.UI.Image m_EButton_TokenArcadeCoinImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_TokenArcadeCoinNumTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButton_TokenDiamondButton = null;
+		private UnityEngine.UI.Image m_EButton_TokenDiamondImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_TokenDiamondNumTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_EButton_PhysicalStrengthButton = null;
 		private UnityEngine.UI.Image m_EButton_PhysicalStrengthImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;

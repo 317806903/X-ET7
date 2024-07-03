@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断剩余血量
 /// </summary>
-public sealed partial class CurHpCondition:  Condition 
+public sealed partial class CurHpCondition:  UnitConditionBase 
 {
     public CurHpCondition(ByteBuf _buf)  : base(_buf) 
     {

@@ -2,6 +2,7 @@
 {
     public enum TeamFlagType
     {
+        None = 0,
         /// <summary>
         /// 全局怪物
         /// </summary>

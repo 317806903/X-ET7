@@ -17,7 +17,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     public TowerDefense_TowerCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Type = (PlayerTowerType)_buf.ReadInt();
+        Type = (TowerType)_buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
         QualityRank = (QualityRank)_buf.ReadInt();
         Radius = _buf.ReadFloat();
@@ -49,7 +49,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// <summary>
     /// 类型
     /// </summary>
-    public PlayerTowerType Type { get; private set; }
+    public TowerType Type { get; private set; }
     /// <summary>
     /// 标签
     /// </summary>

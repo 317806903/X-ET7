@@ -30,7 +30,7 @@ namespace ET
             }
         }
 
-        public static void Init(this SyncData_UnitGetCoinShow self, List<(Unit unit, CoinType coinType, int chgValue)> list)
+        public static void Init(this SyncData_UnitGetCoinShow self, List<(Unit unit, CoinTypeInGame coinType, int chgValue)> list)
         {
             self.unitId.Clear();
             self.coinType.Clear();
@@ -39,7 +39,7 @@ namespace ET
             {
                 return;
             }
-            foreach ((Unit unit, CoinType coinType, int chgValue) in list)
+            foreach ((Unit unit, CoinTypeInGame coinType, int chgValue) in list)
             {
                 if (unit == null)
                 {
@@ -53,12 +53,12 @@ namespace ET
 
         public static async ETTask DealByBytes(this SyncData_UnitGetCoinShow self, UnitComponent unitComponent)
         {
-            ListComponent<(Unit unit, CoinType coinType, int chgValue)> list = ListComponent<(Unit unit, CoinType coinType, int chgValue)>.Create();
+            ListComponent<(Unit unit, CoinTypeInGame coinType, int chgValue)> list = ListComponent<(Unit unit, CoinTypeInGame coinType, int chgValue)>.Create();
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
             {
                 long unitId = self.unitId[i];
-                CoinType coinType = self.coinType[i];
+                CoinTypeInGame coinType = self.coinType[i];
                 int chgValue = self.chgValue[i];
                 Unit unit = unitComponent.Get(unitId);
                 if (unit == null)

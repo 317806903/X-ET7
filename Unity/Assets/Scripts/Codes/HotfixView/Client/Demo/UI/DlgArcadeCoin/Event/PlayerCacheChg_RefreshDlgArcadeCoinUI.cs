@@ -14,8 +14,8 @@ namespace ET.Client
             DlgArcadeCoin _DlgArcadeCoin = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgArcadeCoin>(true);
             if (_DlgArcadeCoin != null)
             {
-                if (args.playerModelType == PlayerModelType.ArcadeCoinAdd
-                    || args.playerModelType == PlayerModelType.ArcadeCoinReduce)
+                if (args.playerModelType == PlayerModelType.TokenArcadeCoinAdd
+                    || args.playerModelType == PlayerModelType.TokenArcadeCoinReduce)
                 {
                     _DlgArcadeCoin.RefreshWhenBaseInfoChg().Coroutine();
                 }

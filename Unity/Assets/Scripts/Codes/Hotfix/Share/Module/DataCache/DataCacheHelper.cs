@@ -2,14 +2,33 @@
 {
     public static class DataCacheHelper
     {
-        public static void SetDataCacheAutoWrite(this Entity entity)
+        public static void SetDataCacheAutoWrite(this Entity entity, bool isForce = false)
         {
             DataCacheWriteComponent dataCacheWriteComponent = entity.GetComponent<DataCacheWriteComponent>();
             if (dataCacheWriteComponent == null)
             {
                 dataCacheWriteComponent = entity.AddComponent<DataCacheWriteComponent>();
             }
-            dataCacheWriteComponent.SetNeedSave();
+            dataCacheWriteComponent.SetNeedSave(isForce);
+        }
+
+        public static async ETTask<bool> ChkDataCacheAutoWriteFinished(this Entity entity)
+        {
+            DataCacheWriteComponent dataCacheWriteComponent = entity.GetComponent<DataCacheWriteComponent>();
+            if (dataCacheWriteComponent == null)
+            {
+                return false;
+            }
+
+            while (dataCacheWriteComponent.waitingForWrite)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+                if (dataCacheWriteComponent.IsDisposed)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static void SetDataCacheAutoClear(this Entity entity, float chkTimeInterval = 30)

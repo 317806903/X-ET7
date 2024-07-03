@@ -126,6 +126,57 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button EButton_ResetHomeButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ResetHomeButton == null )
+				{
+					this.m_EButton_ResetHomeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/EButton_ResetHome");
+				}
+				return this.m_EButton_ResetHomeButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ResetHomeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ResetHomeImage == null )
+				{
+					this.m_EButton_ResetHomeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/EButton_ResetHome");
+				}
+				return this.m_EButton_ResetHomeImage;
+			}
+		}
+
+		public UnityEngine.UI.Image ELabel_ResetHome_iconImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ResetHome_iconImage == null )
+				{
+					this.m_ELabel_ResetHome_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/EButton_ResetHome/ELabel_ResetHome_icon");
+				}
+				return this.m_ELabel_ResetHome_iconImage;
+			}
+		}
+
 		public UnityEngine.UI.Image E_BattleImage
 		{
 			get
@@ -722,40 +773,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_Sprite_BGButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_Sprite_BGButton == null )
-				{
-					this.m_E_Sprite_BGButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/E_Sprite_BG");
-				}
-				return this.m_E_Sprite_BGButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_Sprite_BGImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_Sprite_BGImage == null )
-				{
-					this.m_E_Sprite_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/E_Sprite_BG");
-				}
-				return this.m_E_Sprite_BGImage;
-			}
-		}
-
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_TowerLoopHorizontalScrollRect
 		{
 			get
@@ -918,6 +935,9 @@ namespace ET.Client
 			this.m_EButton_PutMonsterPointButton = null;
 			this.m_EButton_PutMonsterPointImage = null;
 			this.m_ELabel_PutMonsterPoint_iconImage = null;
+			this.m_EButton_ResetHomeButton = null;
+			this.m_EButton_ResetHomeImage = null;
+			this.m_ELabel_ResetHome_iconImage = null;
 			this.m_E_BattleImage = null;
 			this.m_E_CoinsAndTowersTranslucentImage = null;
 			this.m_ELabel_shadow02Image = null;
@@ -954,8 +974,6 @@ namespace ET.Client
 			this.m_EButton_BuyCloseButton = null;
 			this.m_EButton_BuyCloseImage = null;
 			this.m_EButton_BuyClose_iconImage = null;
-			this.m_E_Sprite_BGButton = null;
-			this.m_E_Sprite_BGImage = null;
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 			this.m_E_TipNodeImage = null;
 			this.m_E_TipTextTextMeshProUGUI = null;
@@ -975,6 +993,9 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_PutMonsterPointButton = null;
 		private UnityEngine.UI.Image m_EButton_PutMonsterPointImage = null;
 		private UnityEngine.UI.Image m_ELabel_PutMonsterPoint_iconImage = null;
+		private UnityEngine.UI.Button m_EButton_ResetHomeButton = null;
+		private UnityEngine.UI.Image m_EButton_ResetHomeImage = null;
+		private UnityEngine.UI.Image m_ELabel_ResetHome_iconImage = null;
 		private UnityEngine.UI.Image m_E_BattleImage = null;
 		private BlurBackground.TranslucentImage m_E_CoinsAndTowersTranslucentImage = null;
 		private UnityEngine.UI.Image m_ELabel_shadow02Image = null;
@@ -1010,8 +1031,6 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_BuyCloseButton = null;
 		private UnityEngine.UI.Image m_EButton_BuyCloseImage = null;
 		private UnityEngine.UI.Image m_EButton_BuyClose_iconImage = null;
-		private UnityEngine.UI.Button m_E_Sprite_BGButton = null;
-		private UnityEngine.UI.Image m_E_Sprite_BGImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Image m_E_TipNodeImage = null;
 		private TMPro.TextMeshProUGUI m_E_TipTextTextMeshProUGUI = null;

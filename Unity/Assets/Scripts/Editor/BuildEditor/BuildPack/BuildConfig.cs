@@ -18,7 +18,11 @@ namespace ET
                 EditorUtility.DisplayDialog("警告", "请先停止运行Unity", "确定");
                 return;
             }
-            await BuildConfigInternal(ToolsEditor.ConfigType.All);
+
+            if (EditorUtility.DisplayDialog("确定一下", "将会生成所有服务器配置", "确定", "不了"))
+            {
+                await BuildConfigInternal(ToolsEditor.ConfigType.All);
+            }
         }
 
         [MenuItem("Pack/BuildConfig_AbilityConfig", false, 101)]

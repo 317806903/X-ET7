@@ -14,6 +14,10 @@ namespace ET.Client
             {
                 return;
             }
+            if (UIGuideComponent.Instance.CurUIGuideComponent == null || UIGuideComponent.Instance.CurUIGuideComponent.IsDisposed)
+            {
+                return;
+            }
             GuideConditionStaticMethodType guideConditionStaticMethodType = (GuideConditionStaticMethodType)Enum.Parse(typeof(GuideConditionStaticMethodType), args.guideConditionStaticMethodType);
             UIGuideComponent.Instance.CurUIGuideComponent.guideConditionStatus[guideConditionStaticMethodType] = true;
         }

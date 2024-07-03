@@ -15,7 +15,7 @@ namespace ET
         {
             Dictionary<int, long> dictionary = value as Dictionary<int, long>;
 
-            EditorGUILayout.LabelField($"{memberName}:");
+            EditorGUILayout.LabelField($"{memberName}({dictionary.Count}):");
             foreach ((int k, long v) in dictionary)
             {
                 if (v == 0)

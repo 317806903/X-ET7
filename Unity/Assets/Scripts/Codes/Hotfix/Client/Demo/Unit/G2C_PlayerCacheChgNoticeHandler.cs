@@ -18,8 +18,10 @@ namespace ET.Client
 				case PlayerModelType.BackPack:
 				case PlayerModelType.BattleCard:
 				case PlayerModelType.FunctionMenu:
-				case PlayerModelType.ArcadeCoinAdd:
-				case PlayerModelType.ArcadeCoinReduce:
+				case PlayerModelType.OtherInfo:
+				case PlayerModelType.Mails:
+				case PlayerModelType.SeasonInfo:
+				{
 					Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
 					if (player == null)
 					{
@@ -28,6 +30,21 @@ namespace ET.Client
 					long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(clientScene);
 					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, playerModelType);
 					break;
+				}
+				case PlayerModelType.TokenArcadeCoinAdd:
+				case PlayerModelType.TokenArcadeCoinReduce:
+				case PlayerModelType.TokenDiamondAdd:
+				case PlayerModelType.TokenDiamondReduce:
+				{
+					Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
+					if (player == null)
+					{
+						return;
+					}
+					long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(clientScene);
+					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, PlayerModelType.BackPack);
+					break;
+				}
 				case PlayerModelType.RankPVE:
 					ET.Client.RankHelper.ClearRankShow(clientScene, RankType.PVE);
 					break;

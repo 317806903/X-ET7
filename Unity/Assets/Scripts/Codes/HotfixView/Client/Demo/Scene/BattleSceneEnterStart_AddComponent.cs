@@ -30,15 +30,15 @@ namespace ET.Client
 
             bool isAR = false;
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
-            if (playerStatusComponent.RoomType == RoomType.Normal)
+            if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.Normal)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate
-                    || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
+                if (playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalARCreate
+                    || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalARScanCode)
                 {
                     isAR = true;
                 }
             }
-            else if (playerStatusComponent.RoomType == RoomType.AR)
+            else if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.AR)
             {
                 isAR = true;
             }

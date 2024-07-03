@@ -14,7 +14,7 @@ namespace ET.Client
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(scene);
             if (gamePlayTowerDefenseComponent != null)
             {
-                gamePlayTowerDefenseComponent.ChkAllMyTowerUpgrade();
+                await gamePlayTowerDefenseComponent.ChkAllMyTowerUpgrade();
             }
 
             await ETTask.CompletedTask;

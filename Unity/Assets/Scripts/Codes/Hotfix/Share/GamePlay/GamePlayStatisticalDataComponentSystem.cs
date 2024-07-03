@@ -58,7 +58,7 @@ namespace ET
             }
 
             string towerCfgId = towerComponent.towerCfgId;
-            PlayerTowerType towerType = towerComponent.model.Type;
+            TowerType towerType = towerComponent.model.Type;
 
             MonsterComponent monsterComponent = beKillUnit.GetComponent<MonsterComponent>();
             if (monsterComponent == null)

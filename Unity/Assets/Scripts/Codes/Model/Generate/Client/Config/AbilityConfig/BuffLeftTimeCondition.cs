@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前Buff剩余时间
 /// </summary>
-public sealed partial class BuffLeftTimeCondition:  Condition 
+public sealed partial class BuffLeftTimeCondition:  UnitConditionBase 
 {
     public BuffLeftTimeCondition(ByteBuf _buf)  : base(_buf) 
     {

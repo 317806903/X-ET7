@@ -49,7 +49,7 @@ namespace ET.Client
 		public static async ETTask RefreshWhenBaseInfoChg(this DlgFixedMenu self)
 		{
 			await self.UpdatePhysicalStrength();
-			await self.UpdateArcadeCoin();
+			await self.UpdateTokenArcadeCoin();
 		}
 
 		public static void ShowCoinList(this DlgFixedMenu self, bool status)
@@ -64,13 +64,25 @@ namespace ET.Client
 		{
 			if (ET.SceneHelper.ChkIsGameModeArcade() && status)
 			{
-				self.View.EButton_ArcadeCoinButton.SetVisible(true);
-				self.View.EButton_ArcadeCoinButton.AddListenerAsync(self.ClickArcadeCoin);
-				self.UpdateArcadeCoin().Coroutine();
+				self.View.EButton_TokenArcadeCoinButton.SetVisible(true);
+				self.View.EButton_TokenArcadeCoinButton.AddListenerAsync(self.ClickArcadeCoin);
+				self.UpdateTokenArcadeCoin().Coroutine();
 			}
 			else
 			{
-				self.View.EButton_ArcadeCoinButton.SetVisible(false);
+				self.View.EButton_TokenArcadeCoinButton.SetVisible(false);
+			}
+
+			if (ET.SceneHelper.ChkIsGameModeArcade() == false && status)
+			{
+				self.View.EButton_TokenDiamondButton.SetVisible(true);
+
+				self.View.EButton_TokenDiamondButton.AddListenerAsync(self.ClickDiamond);
+				self.UpdateTokenDiamond().Coroutine();
+			}
+			else
+			{
+				self.View.EButton_TokenDiamondButton.SetVisible(false);
 			}
 		}
 
@@ -107,17 +119,18 @@ namespace ET.Client
 			self.View.ELabel_PhysicalStrengthNumTextMeshProUGUI.text = msg;
 		}
 
-		public static async ETTask UpdateArcadeCoin(this DlgFixedMenu self)
+		public static async ETTask UpdateTokenArcadeCoin(this DlgFixedMenu self)
 		{
-			PlayerBaseInfoComponent playerBaseInfoComponent =
-				await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-			if (playerBaseInfoComponent == null)
-			{
-				return;
-			}
-			int arcadeCoinNum = playerBaseInfoComponent.arcadeCoinNum;
-			string msg = $"{arcadeCoinNum}";
-			self.View.ELabel_ArcadeCoinNumTextMeshProUGUI.text = msg;
+			int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(self.DomainScene());
+			string msg = $"{curArcadeCoin}";
+			self.View.ELabel_TokenArcadeCoinNumTextMeshProUGUI.text = msg;
+		}
+
+		public static async ETTask UpdateTokenDiamond(this DlgFixedMenu self)
+		{
+			int curDiamond = await PlayerCacheHelper.GetTokenDiamond(self.DomainScene());
+			string msg = $"{curDiamond}";
+			self.View.ELabel_TokenDiamondNumTextMeshProUGUI.text = msg;
 		}
 
 		public static void HideWindow(this DlgFixedMenu self)
@@ -178,6 +191,17 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			UIManagerHelper.ShowDlgArcade(self.DomainScene(), 8, null);
+		}
+
+		public static async ETTask ClickDiamond(this DlgFixedMenu self)
+		{
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            Log.Error($"Click ClickDiamond");
+            PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene(), false);
+            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+            playerBackPackComponent.AddItem(itemCfgId, 200);
+            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BackPack, null);
 		}
 
 	}

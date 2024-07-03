@@ -220,7 +220,7 @@ namespace ET.Server
                     EventType.NoticeGamePlayModeToClient _NoticeGamePlayModeToClient = new()
                     {
                         playerIds = self.waitNoticeGamePlayModeToClientList,
-                        gamePlayModeComponent = self.GetGamePlayMode(),
+                        GamePlayModeComponentBase = self.GetGamePlayMode(),
                         needSendSuccess = needSendSuccess,
                     };
                     EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayModeToClient);
@@ -313,25 +313,8 @@ namespace ET.Server
                 self.playerWaitQuitTime = new();
             }
 
-            if (self.playerListTmp == null)
-            {
-                self.playerListTmp = new();
-            }
-            else
-            {
-                if (self.playerListTmp.Count > 0)
-                {
-                    return;
-                }
-            }
-
-            for (int i = 0; i < playerList.Count; i++)
-            {
-                self.playerListTmp.Add(playerList[i]);
-            }
-
             //ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-            foreach (long playerId in self.playerListTmp)
+            foreach (long playerId in playerList)
             {
                 long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, self.DomainScene().InstanceId);
                 if (self.IsDisposed)
@@ -368,8 +351,6 @@ namespace ET.Server
                 //     }
                 // }
             }
-
-            self.playerListTmp.Clear();
 
             while (true)
             {
@@ -419,6 +400,35 @@ namespace ET.Server
             }
         }
 
+        public static async ETTask GameWaitForStartWhenServer(this GamePlayComponent self)
+        {
+            if (self.gamePlayStatus != GamePlayStatus.WaitForStart)
+            {
+                return;
+            }
+
+            List<long> playerList = self.GetPlayerList();
+            if (playerList == null)
+            {
+                return;
+            }
+
+            foreach (long playerId in playerList)
+            {
+                PlayerSeasonInfoComponent playerSeasonInfoComponent = await PlayerCacheHelper.GetPlayerSeasonInfoByPlayerId(self.DomainScene(), playerId, true);
+                foreach (var item in playerSeasonInfoComponent.GetSeasonBringUpDic())
+                {
+                    string bringUpCfgId = item.Key;
+                    int level = item.Value;
+                    SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(bringUpCfgId, level);
+                    foreach (var actionCfgGlobalBuffAdd in seasonBringUpCfg.BuffList_Ref)
+                    {
+                        await GlobalBuffHelper.AddGlobalBuff(self.DomainScene(), playerId, actionCfgGlobalBuffAdd, null, TeamFlagType.None);
+                    }
+                }
+            }
+        }
+
         public static async ETTask GameBeginWhenServer(this GamePlayComponent self)
         {
             if (self.gamePlayMode == GamePlayMode.TowerDefense)
@@ -429,9 +439,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetGamePlayMode() as GamePlayPKComponent;
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
 
-                await gamePlayPKComponent.GameBeginWhenServer();
+                await gamePlayPkComponentBase.GameBeginWhenServer();
             }
 
             await ETTask.CompletedTask;
@@ -447,9 +457,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetGamePlayMode() as GamePlayPKComponent;
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
 
-                await gamePlayPKComponent.GameEndWhenServer();
+                await gamePlayPkComponentBase.GameEndWhenServer();
             }
 
             await ETTask.CompletedTask;
@@ -465,9 +475,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetGamePlayMode() as GamePlayPKComponent;
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
 
-                await gamePlayPKComponent.GameRecoverWhenServer(playerId);
+                await gamePlayPkComponentBase.GameRecoverWhenServer(playerId);
             }
 
             await ETTask.CompletedTask;

@@ -122,7 +122,7 @@ namespace ET
 
         public struct SyncGetCoinShow
         {
-            public List<(Unit unit, CoinType coinType, int chgValue)> list;
+            public List<(Unit unit, CoinTypeInGame coinType, int chgValue)> list;
         }
 
         public struct SyncDamageShow
@@ -133,6 +133,11 @@ namespace ET
         public struct NoticeGuideConditionStatus
         {
             public string guideConditionStaticMethodType;
+        }
+
+        public struct NoticeGameWaitForStart2Server
+        {
+            public GamePlayComponent gamePlayComponent;
         }
 
         public struct NoticeGameBegin2Server
@@ -194,7 +199,7 @@ namespace ET
         public struct NoticeGamePlayModeToClient
         {
             public HashSet<long> playerIds;
-            public GamePlayModeComponent gamePlayModeComponent;
+            public GamePlayModeComponentBase GamePlayModeComponentBase;
             public bool needSendSuccess;
         }
 
@@ -257,11 +262,12 @@ namespace ET
 
         public struct NoticeUIShowCommonLoading
         {
+            public bool bForce;
         }
 
         public struct NoticeUIHideCommonLoading
         {
-            public bool bForceHide;
+            public bool bForce;
         }
 
         public struct NoticeEventLoggingLoginIn

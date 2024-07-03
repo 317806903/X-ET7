@@ -10,18 +10,14 @@ namespace ET.Server
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
-			string battleCfgId = request.BattleCfgId;
-			int RoomType = request.RoomType;
-			int SubRoomType = request.SubRoomType;
+			byte[] roomTypeInfoBytes = request.RoomTypeInfo;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
 			R2G_CreateRoom _R2G_CreateRoom = (R2G_CreateRoom) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_CreateRoom()
 			{
 				PlayerId = playerId,
-				BattleCfgId = battleCfgId,
-				RoomType = RoomType,
-				SubRoomType = SubRoomType,
+				RoomTypeInfo = roomTypeInfoBytes,
 			});
 
 			response.Error = _R2G_CreateRoom.Error;
@@ -33,8 +29,8 @@ namespace ET.Server
 				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 				playerStatusComponent.RoomId = _R2G_CreateRoom.RoomId;
-				playerStatusComponent.RoomType = (RoomType)RoomType;
-				playerStatusComponent.SubRoomType = (SubRoomType)SubRoomType;
+				RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(roomTypeInfoBytes);
+				playerStatusComponent.RoomTypeInfo = roomTypeInfo;
 
 				await playerStatusComponent.NoticeClient();
 			}

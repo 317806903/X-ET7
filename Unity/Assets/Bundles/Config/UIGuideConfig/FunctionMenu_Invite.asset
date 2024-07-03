@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
+  m_Name: FunctionMenu_Invite
+  m_EditorClassIdentifier: 
+  list:
+  - name: "\u70B9\u51FB\u5206\u4EAB"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Info/E_ShowQrCode
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_FunctionMenu_Invite0
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 

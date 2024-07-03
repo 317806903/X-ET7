@@ -26,8 +26,8 @@ namespace ET.Server
 			if (response.Error == ET.ErrorCode.ERR_Success)
 			{
 				PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
-				playerStatusComponent.RoomType = (RoomType)_R2G_JoinRoom.RoomType;
-				playerStatusComponent.SubRoomType = (SubRoomType)_R2G_JoinRoom.SubRoomType;
+				RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(_R2G_JoinRoom.RoomTypeInfo);
+				playerStatusComponent.RoomTypeInfo = roomTypeInfo;
 				playerStatusComponent.PlayerStatus = PlayerStatus.Room;
 				playerStatusComponent.RoomId = roomId;
 

@@ -10,6 +10,10 @@ namespace ET.Ability
             if (delayTime > 0)
             {
                 await TimerComponent.Instance.WaitTillAsync(TimeHelper.ServerFrameTime() + (long)(1000 * delayTime));
+                if (unit == null || unit.DomainScene() == null || unit.DomainScene().IsDisposed)
+                {
+                    return;
+                }
             }
 
             ActionCfg_GlobalBuffAdd actionCfgGlobalBuffAdd = ActionCfg_GlobalBuffAddCategory.Instance.Get(actionId);
@@ -22,7 +26,7 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                await GlobalBuffHelper.AddGlobalBuff_Unit(targetUnit, actionCfgGlobalBuffAdd.GlobalBuffId_Ref, actionContext);
+                await GlobalBuffHelper.AddGlobalBuff(unit.DomainScene(), -1, actionCfgGlobalBuffAdd, targetUnit, TeamFlagType.None);
             }
             list.Dispose();
 

@@ -14,7 +14,7 @@ namespace ET.Client
             DlgARRoom _DlgARRoom = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgARRoom>(true);
             if (_DlgARRoom != null)
             {
-                if (args.playerModelType == PlayerModelType.BaseInfo)
+                if (args.playerModelType == PlayerModelType.BaseInfo || args.playerModelType == PlayerModelType.BackPack)
                 {
                     _DlgARRoom.RefreshWhenBaseInfoChg().Coroutine();
                 }

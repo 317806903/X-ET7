@@ -21,34 +21,30 @@ namespace ET.Ability
         {
             protected override void Destroy(GlobalBuffPlayerObj self)
             {
-                self.monitorTriggerList?.Clear();
+                if (self.selfAoeList != null)
+                {
+                    self.selfAoeList.Clear();
+                    self.selfAoeList = null;
+                }
             }
         }
 
-        public static void Init(this GlobalBuffPlayerObj self, long playerId, PlayerGlobalBuffCfg playerGlobalBuffCfg)
+        public static async ETTask Init(this GlobalBuffPlayerObj self, long casterPlayerId, long playerId, string playerGlobalBuffCfgId)
         {
-            self.monitorTriggerList = new();
-            self.CfgId = playerGlobalBuffCfg.Id;
-            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
-            {
-                AbilityGameMonitorTriggerEvent abilityGameMonitorTriggerEvent = EnumHelper.FromString<AbilityGameMonitorTriggerEvent>(self.model.MonitorTriggers[i].GlobalBuffTrig.ToString());
-                self.monitorTriggerList.Add(abilityGameMonitorTriggerEvent, self.model.MonitorTriggers[i]);
-            }
+            self.CfgId = playerGlobalBuffCfgId;
+
+            GlobalConditionManagerComponent globalConditionManagerComponent = self.AddComponent<GlobalConditionManagerComponent>();
+            await globalConditionManagerComponent.Init(self.model.MonitorTriggers.ActionCondition1, self.model.MonitorTriggers.ActionCondition2);
 
             self.permanent = true;
             self.duration = 100;
             self.orgDuration = self.duration;
-            self.buffActions = playerGlobalBuffCfg.MonitorTriggers;
 
+            self.playerId = playerId;
+            self.teamFlagType = GamePlayHelper.GetHomeTeamFlagTypeByPlayer(self.DomainScene(), self.playerId);
+            self.casterPlayerId = casterPlayerId;
             self.timeElapsed = 0;
             self.ticked = 0;
-        }
-
-        public static void InitActionContext(this GlobalBuffPlayerObj self, ref ActionPlayerContext actionPlayerContext)
-        {
-            actionPlayerContext.buffCfgId = self.CfgId;
-            actionPlayerContext.buffId = self.Id;
-            self.actionPlayerContext = actionPlayerContext;
         }
 
         public static void ChgDuration(this GlobalBuffPlayerObj self, float duration)
@@ -57,9 +53,21 @@ namespace ET.Ability
             self.duration = duration;
         }
 
-        public static List<GlobalBuffActionCall> GetActionIds(this GlobalBuffPlayerObj self, AbilityGameMonitorTriggerEvent abilityGameMonitorTriggerEvent)
+        public static void SetEnabled(this GlobalBuffPlayerObj self, bool isEnabled)
         {
-            return self.monitorTriggerList[abilityGameMonitorTriggerEvent];
+            bool oldIsEnabled = self.isEnabled;
+            if (oldIsEnabled == isEnabled)
+            {
+                return;
+            }
+            if (isEnabled == false)
+            {
+                self.isEnabled = false;
+            }
+            else
+            {
+                self.isEnabled = true;
+            }
         }
 
         public static void FixedUpdate(this GlobalBuffPlayerObj self, float fixedDeltaTime)
@@ -81,15 +89,18 @@ namespace ET.Ability
                         lastCount++;
                         if (i == 0)
                         {
-                            self.TrigEvent(AbilityGameMonitorTriggerEvent.GlobalBuffOnTick1);
+                            ActionGameContext actionGameContext = new();
+                            self.TrigEvent(ET.AbilityConfig.GlobalBuffTriggerEvent.GlobalBuffOnTick1, ref actionGameContext);
                         }
                         else if (i == 1)
                         {
-                            self.TrigEvent(AbilityGameMonitorTriggerEvent.GlobalBuffOnTick2);
+                            ActionGameContext actionGameContext = new();
+                            self.TrigEvent(ET.AbilityConfig.GlobalBuffTriggerEvent.GlobalBuffOnTick2, ref actionGameContext);
                         }
                         else if (i == 2)
                         {
-                            self.TrigEvent(AbilityGameMonitorTriggerEvent.GlobalBuffOnTick3);
+                            ActionGameContext actionGameContext = new();
+                            self.TrigEvent(ET.AbilityConfig.GlobalBuffTriggerEvent.GlobalBuffOnTick3, ref actionGameContext);
                         }
 
                         self.ticked += 1;
@@ -98,22 +109,32 @@ namespace ET.Ability
             }
         }
 
-        public static void TrigEvent(this GlobalBuffPlayerObj self, AbilityGameMonitorTriggerEvent abilityGameMonitorTriggerEvent, Unit onAttackUnit = null, Unit beHurtUnit = null)
+        public static void TrigEvent(this GlobalBuffPlayerObj self, ET.AbilityConfig.GlobalBuffTriggerEvent abilityGameMonitorTriggerEvent, ref ActionGameContext actionGameContext)
         {
-            List<GlobalBuffActionCall> buffActionCalls = self.GetActionIds(abilityGameMonitorTriggerEvent);
-            if (buffActionCalls.Count > 0)
+            GlobalConditionManagerComponent globalConditionManagerComponent = self.GetComponent<GlobalConditionManagerComponent>();
+            globalConditionManagerComponent.EventHandler(abilityGameMonitorTriggerEvent, ref actionGameContext);
+            bool bPass = globalConditionManagerComponent.ChkConditionPass();
+            if (bPass)
             {
-                for (int i = 0; i < buffActionCalls.Count; i++)
+                ActionGameContext actionGameContextNew = actionGameContext;
+                if (actionGameContextNew.playerId == 0)
                 {
-                    self.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
+                    actionGameContextNew.playerId = self.playerId;
+                }
+                if (actionGameContextNew.teamFlagType == TeamFlagType.None)
+                {
+                    actionGameContextNew.teamFlagType = self.teamFlagType;
+                }
+                if (actionGameContextNew.unitId == 0)
+                {
+                    actionGameContextNew.unitId = self.playerId;
+                }
+                float delayTime = self.model.MonitorTriggers.DelayTime;
+                foreach (string actionId in self.model.MonitorTriggers.ActionId)
+                {
+                    ActionGameHandlerHelper.CreateAction(self.DomainScene(), actionId, delayTime, ref actionGameContextNew);
                 }
             }
-        }
-
-        public static void EventHandler(this GlobalBuffPlayerObj self, GlobalBuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit)
-        {
-            string actionId = buffActionCall.ActionId;
-            ActionPlayerHandlerHelper.CreateAction(self.DomainScene(), self.playerId, actionId, ref self.actionPlayerContext);
         }
 
         public static bool ChkNeedRemove(this GlobalBuffPlayerObj self)

@@ -85,7 +85,7 @@ namespace ET.Ability
                     {
                         float3 targetPositionInput = moveOrIdleComponent.GetMoveInput_TargetPosition();
                         float3 unitPos = unit.Position;
-                        if (math.abs(targetPositionInput.x - unitPos.x) < 0.1f && math.abs(targetPositionInput.z - unitPos.z) < 0.1f)
+                        if (math.abs(targetPositionInput.x - unitPos.x) < 0.01f && math.abs(targetPositionInput.z - unitPos.z) < 0.01f)
                         {
                             ET.Ability.UnitHelper.ResetPos(unit, targetPositionInput);
                             return;

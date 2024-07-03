@@ -73,8 +73,8 @@ namespace ET.Client
             }
 
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
-            int curHp = math.max(numericComponent.GetAsInt(NumericType.Hp), 0);
-            int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
+            float curHp = math.max(numericComponent.GetAsFloat(NumericType.Hp), 0);
+            float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
             float normalizedHealth = (float)curHp / maxHp;
             Vector3 scale = Vector3.one;
             self.targetNormalizedHealth = normalizedHealth;

@@ -32,14 +32,14 @@ MonoBehaviour:
     guideExecuteParam: false
     trigExitCondition: 1
     trigExitConditionStaticMethod: 
-    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
   - name: "\u653E\u7F6E\u5927\u672C\u8425(\u786E\u8BA4)"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
-    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
     guideTextType: 1
     guideTextImgPath: 
     text: 
@@ -72,14 +72,14 @@ MonoBehaviour:
     guideExecuteParam: 
     trigExitCondition: 1
     trigExitConditionStaticMethod: 
-    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
   - name: "\u653E\u7F6E\u51FA\u602A\u53E3(\u786E\u8BA4)"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
-    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/E_ConfirmButton
+    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
     guideTextType: 1
     guideTextImgPath: 
     text: 
@@ -232,14 +232,14 @@ MonoBehaviour:
     guideExecuteParam: 
     trigExitCondition: 1
     trigExitConditionStaticMethod: 
-    trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerHUD/EG_OperatorMenu/EG_OperatorRoot
   - name: "\u5347\u7EA7\u5854"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerHUD/EG_OperatorMenu/OperatorRoot/E_Upgrade
+    hierarchyGuidePath: DlgBattleTowerHUD/EG_OperatorMenu/EG_OperatorRoot/E_Upgrade
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_TowerDetail

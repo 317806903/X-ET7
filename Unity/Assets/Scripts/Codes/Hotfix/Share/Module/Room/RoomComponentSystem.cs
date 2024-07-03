@@ -15,17 +15,15 @@ namespace ET
             }
         }
 
-        public static void Init(this RoomComponent self, RoomType roomType, SubRoomType subRoomType, long playerId, RoomTeamMode roomTeamMode, string battleCfgId)
+        public static void Init(this RoomComponent self, RoomTypeInfo roomTypeInfo, long playerId, RoomTeamMode roomTeamMode)
         {
-            self.roomType = roomType;
-            self.subRoomType = subRoomType;
+            self.roomTypeInfo = roomTypeInfo;
             self.arSceneId = "";
             self.roomStatus = RoomStatus.Idle;
             self.ownerRoomMemberId = playerId;
             self.roomTeamMode = roomTeamMode;
-            self.gamePlayBattleLevelCfgId = battleCfgId;
 
-            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.roomTypeInfo.gamePlayBattleLevelCfgId);
             self.MaxMemberCount = gamePlayBattleLevelCfg.MaxPlayerCount;
             for (int i = 0; i < self.MaxMemberCount; i++)
             {
@@ -67,7 +65,7 @@ namespace ET
 
         public static List<RoomMember> GetRoomMemberList(this RoomComponent self)
         {
-            List<RoomMember> list = new();
+            ListComponent<RoomMember> list = ListComponent<RoomMember>.Create();
             foreach (var child in self.Children)
             {
                 list.Add(child.Value as RoomMember);
@@ -200,12 +198,12 @@ namespace ET
             ownerRoomMember.isReady = false;
         }
 
-        public static void ChgRoomBattleLevelCfg(this RoomComponent self, string newBattleCfgId)
+        public static void ChgRoomBattleLevelCfg(this RoomComponent self, RoomTypeInfo roomTypeInfo)
         {
-            self.gamePlayBattleLevelCfgId = newBattleCfgId;
+            self.roomTypeInfo = roomTypeInfo;
 
             int lastMaxMemberCount = self.MaxMemberCount;
-            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.roomTypeInfo.gamePlayBattleLevelCfgId);
             self.MaxMemberCount = gamePlayBattleLevelCfg.MaxPlayerCount;
             if (lastMaxMemberCount < self.MaxMemberCount)
             {
@@ -227,13 +225,13 @@ namespace ET
         public static bool IsARRoom(this RoomComponent self)
         {
             bool isAR = false;
-            if (self.roomType == RoomType.AR)
+            if (self.roomTypeInfo.roomType == RoomType.AR)
             {
                 isAR = true;
             }
-            else if(self.roomType == RoomType.Normal)
+            else if(self.roomTypeInfo.roomType == RoomType.Normal)
             {
-                if (self.subRoomType == SubRoomType.NormalARCreate || self.subRoomType == SubRoomType.NormalARScanCode)
+                if (self.roomTypeInfo.subRoomType == SubRoomType.NormalARCreate || self.roomTypeInfo.subRoomType == SubRoomType.NormalARScanCode)
                 {
                     isAR = true;
                 }
@@ -249,7 +247,7 @@ namespace ET
                 return (false, msg);
             }
 
-            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.roomTypeInfo.gamePlayBattleLevelCfgId);
             PlayerTeam playerTeam = gamePlayBattleLevelCfg.TeamMode as PlayerTeam;
             if (playerTeam != null)
             {

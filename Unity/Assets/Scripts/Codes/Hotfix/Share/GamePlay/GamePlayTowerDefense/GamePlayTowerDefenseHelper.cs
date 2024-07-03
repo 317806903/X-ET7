@@ -147,78 +147,12 @@ namespace ET
 
         public static TeamFlagType GetHomeTeamFlagType(TeamFlagType teamFlagType)
         {
-            if (teamFlagType == TeamFlagType.Monster1
-                || teamFlagType == TeamFlagType.TeamPlayer1
-                || teamFlagType == TeamFlagType.TeamGlobal1)
-            {
-                return TeamFlagType.TeamGlobal1;
-            }
-            else if (teamFlagType == TeamFlagType.Monster2
-                     || teamFlagType == TeamFlagType.TeamPlayer2
-                     || teamFlagType == TeamFlagType.TeamGlobal2)
-            {
-                return TeamFlagType.TeamGlobal2;
-            }
-            else if (teamFlagType == TeamFlagType.Monster3
-                     || teamFlagType == TeamFlagType.TeamPlayer3
-                     || teamFlagType == TeamFlagType.TeamGlobal3)
-            {
-                return TeamFlagType.TeamGlobal3;
-            }
-            else if (teamFlagType == TeamFlagType.Monster4
-                     || teamFlagType == TeamFlagType.TeamPlayer4
-                     || teamFlagType == TeamFlagType.TeamGlobal4)
-            {
-                return TeamFlagType.TeamGlobal4;
-            }
-            else if (teamFlagType == TeamFlagType.Monster5
-                     || teamFlagType == TeamFlagType.TeamPlayer5
-                     || teamFlagType == TeamFlagType.TeamGlobal5)
-            {
-                return TeamFlagType.TeamGlobal5;
-            }
-            else
-            {
-                return TeamFlagType.TeamGlobal1;
-            }
+            return GamePlayHelper.GetHomeTeamFlagType(teamFlagType);
         }
 
         public static TeamFlagType GetMonsterTeamFlagType(TeamFlagType teamFlagType)
         {
-            if (teamFlagType == TeamFlagType.Monster1
-                || teamFlagType == TeamFlagType.TeamPlayer1
-                || teamFlagType == TeamFlagType.TeamGlobal1)
-            {
-                return TeamFlagType.Monster1;
-            }
-            else if (teamFlagType == TeamFlagType.Monster2
-                     || teamFlagType == TeamFlagType.TeamPlayer2
-                     || teamFlagType == TeamFlagType.TeamGlobal2)
-            {
-                return TeamFlagType.Monster2;
-            }
-            else if (teamFlagType == TeamFlagType.Monster3
-                     || teamFlagType == TeamFlagType.TeamPlayer3
-                     || teamFlagType == TeamFlagType.TeamGlobal3)
-            {
-                return TeamFlagType.Monster3;
-            }
-            else if (teamFlagType == TeamFlagType.Monster4
-                     || teamFlagType == TeamFlagType.TeamPlayer4
-                     || teamFlagType == TeamFlagType.TeamGlobal4)
-            {
-                return TeamFlagType.Monster4;
-            }
-            else if (teamFlagType == TeamFlagType.Monster5
-                     || teamFlagType == TeamFlagType.TeamPlayer5
-                     || teamFlagType == TeamFlagType.TeamGlobal5)
-            {
-                return TeamFlagType.Monster5;
-            }
-            else
-            {
-                return TeamFlagType.Monster1;
-            }
+            return GamePlayHelper.GetMonsterTeamFlagType(teamFlagType);
         }
 
     }

@@ -30,6 +30,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         IdleTimelineId = _buf.ReadString();
         MoveTimelineId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     SkillList.Add(_k0, _v0);}}
+        IsSkillClearWhenExt1 = _buf.ReadBool();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ExtSkillList1 = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     ExtSkillList1.Add(_k0, _v0);}}
+        IsSkillClearWhenExt2 = _buf.ReadBool();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ExtSkillList2 = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     ExtSkillList2.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -95,9 +99,25 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public string MoveTimelineId { get; private set; }
     public TimelineCfg MoveTimelineId_Ref { get; private set; }
     /// <summary>
-    /// 拥有技能列表
+    /// 默认拥有技能列表(skill1,类型;skill2,类型)
     /// </summary>
     public System.Collections.Generic.Dictionary<string, SkillSlotType> SkillList { get; private set; }
+    /// <summary>
+    /// 获取时是否清空所有技能
+    /// </summary>
+    public bool IsSkillClearWhenExt1 { get; private set; }
+    /// <summary>
+    /// 扩展技能列表(skill1,类型;skill2,类型)
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, SkillSlotType> ExtSkillList1 { get; private set; }
+    /// <summary>
+    /// 获取时是否清空所有技能
+    /// </summary>
+    public bool IsSkillClearWhenExt2 { get; private set; }
+    /// <summary>
+    /// 扩展技能列表(skill1,类型;skill2,类型)
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, SkillSlotType> ExtSkillList2 { get; private set; }
 
     public const int __ID__ = 1378101280;
     public override int GetTypeId() => __ID__;
@@ -132,6 +152,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "IdleTimelineId:" + IdleTimelineId + ","
         + "MoveTimelineId:" + MoveTimelineId + ","
         + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
+        + "IsSkillClearWhenExt1:" + IsSkillClearWhenExt1 + ","
+        + "ExtSkillList1:" + Bright.Common.StringUtil.CollectionToString(ExtSkillList1) + ","
+        + "IsSkillClearWhenExt2:" + IsSkillClearWhenExt2 + ","
+        + "ExtSkillList2:" + Bright.Common.StringUtil.CollectionToString(ExtSkillList2) + ","
         + "}";
     }
     

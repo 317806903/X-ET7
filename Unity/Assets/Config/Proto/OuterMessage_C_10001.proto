@@ -528,9 +528,7 @@ message R2C_RoomInfoChgNotice // IActorMessage
 message C2G_CreateRoom // IRequest
 {
 	int32 RpcId = 1;
-	string BattleCfgId = 2;
-	int32 RoomType = 3;
-	int32 SubRoomType = 4;
+	bytes RoomTypeInfo = 2;
 }
 
 message G2C_CreateRoom // IResponse
@@ -653,7 +651,7 @@ message G2C_SetARRoomInfo // IResponse
 message C2G_ChgRoomBattleLevelCfg // IRequest
 {
 	int32 RpcId = 1;
-	string NewBattleCfgId = 2;
+	bytes RoomTypeInfo = 2;
 }
 
 message G2C_ChgRoomBattleLevelCfg // IResponse
@@ -745,6 +743,19 @@ message M2C_PutHome // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_ResetHome
+message C2M_ResetHome // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ResetHome // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2C_PutMonsterCall
 message C2M_PutMonsterCall // IActorLocationRequest
 {
@@ -807,7 +818,8 @@ message C2M_UpgradePlayerTower // IActorLocationRequest
 {
 	int32 RpcId = 1;
 	int64 TowerUnitId = 2;
-	int32 OnlyChkPool = 3;
+	string TowerCfgId = 3;
+	int32 OnlyChkPool = 4;
 }
 
 message M2C_UpgradePlayerTower // IActorLocationResponse
@@ -1104,6 +1116,11 @@ message G2C_RecordGameJudgeChoose // IResponse
 	string Message = 3;
 }
 
+message C2G_ReDealMyFunctionMenu // IMessage
+{
+	int32 RpcId = 1;
+}
+
 message C2M_SetStopActorMoveWhenDebug // IActorLocationMessage
 {
 	int32 RpcId = 1;
@@ -1157,4 +1174,65 @@ message G2C_GetArcadeCoinQrCode // IResponse
 	int32 Error = 2;
 	string Message = 3;
 	bytes PayComponentBytes = 4;
+}
+
+//ResponseType G2C_GetSeasonComponent
+message C2G_GetSeasonComponent // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_GetSeasonComponent // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes ComponentBytes = 4;
+}
+
+message C2G_InsertMailWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+}
+
+//ResponseType G2C_DealMyMail
+message C2G_DealMyMail // IRequest
+{
+	int32 RpcId = 1;
+	int64 MailId = 2;
+	int32 DealMailType = 3;
+}
+
+message G2C_DealMyMail // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ResetPowerup
+message C2G_ResetPowerup  // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_ResetPowerup // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_UpdatePowerup 
+message C2G_UpdatePowerup  // IRequest
+{
+	int32 RpcId = 1;
+    string PowerUpcfg = 3;          
+}
+
+message G2C_UpdatePowerup // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
 }

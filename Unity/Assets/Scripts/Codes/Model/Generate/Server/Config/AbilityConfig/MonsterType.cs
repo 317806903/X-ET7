@@ -14,7 +14,7 @@ namespace ET.AbilityConfig
     /// </summary>
     public enum MonsterType
     {
-        None = 1,
+        None = 0,
     }
 
 } 

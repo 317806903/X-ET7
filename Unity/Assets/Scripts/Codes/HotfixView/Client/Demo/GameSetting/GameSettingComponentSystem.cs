@@ -65,27 +65,42 @@ namespace ET.Client
         // 读取开关状态（内部）
         public static (bool isRecord, bool value) ReadIsOn(this GameSettingComponent self, GameSettingType gameSettingType)
         {
-            if (self.recordSettingValue.TryGetValue(gameSettingType, out bool tmp))
+            long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(self.ClientScene());
+            if (myPlayerId == -1)
+            {
+                return (false, true);
+            }
+            if (self.recordSettingValue.TryGetValue(myPlayerId, gameSettingType, out bool tmp))
             {
                 return (true, tmp);
             }
 
-            string key = $"GameSetting_{gameSettingType.ToString()}";
+            string key = $"GameSetting_{myPlayerId}_{gameSettingType.ToString()}";
             if (PlayerPrefs.HasKey(key) == false)
             {
-                return (false, false);
+                self.recordSettingValue.Add(myPlayerId, gameSettingType, true);
+                return (false, true);
             }
             int value = PlayerPrefs.GetInt(key);
-            self.recordSettingValue[gameSettingType] = value == 1;
-            return (true, value == 1);
+            bool isOn = value == 1;
+            self.recordSettingValue.Add(myPlayerId, gameSettingType, isOn);
+            return (true, isOn);
         }
 
         // 写入开关状态(内部)
         public static void WriteIsOn(this GameSettingComponent self, GameSettingType gameSettingType, bool isOn)
         {
-            string key = $"GameSetting_{gameSettingType.ToString()}";
+            long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(self.ClientScene());
+            string key = $"GameSetting_{myPlayerId}_{gameSettingType.ToString()}";
             int value = isOn ? 1 : 0;
-            self.recordSettingValue[gameSettingType] = value == 1;
+            if (self.recordSettingValue.TryGetValue(myPlayerId, gameSettingType, out bool tmp))
+            {
+                self.recordSettingValue[myPlayerId][gameSettingType] = isOn;
+            }
+            else
+            {
+                self.recordSettingValue.Add(myPlayerId, gameSettingType, isOn);
+            }
             PlayerPrefs.SetInt(key, value);
         }
     }

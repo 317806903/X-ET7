@@ -15,11 +15,12 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前是否类型的技能
 /// </summary>
-public sealed partial class SkillSlotTypeCondition:  Condition 
+public sealed partial class SkillSlotTypeCondition:  UnitConditionBase 
 {
     public SkillSlotTypeCondition(ByteBuf _buf)  : base(_buf) 
     {
         SkillSlotType = (SkillSlotType)_buf.ReadInt();
+        SkillSlotIndex = _buf.ReadInt();
         PostInit();
     }
 
@@ -32,6 +33,10 @@ public sealed partial class SkillSlotTypeCondition:  Condition
     /// 技能类型
     /// </summary>
     public SkillSlotType SkillSlotType { get; private set; }
+    /// <summary>
+    /// 技能类型序号(-1表示所有,0表示第一个)
+    /// </summary>
+    public int SkillSlotIndex { get; private set; }
 
     public const int __ID__ = -496017550;
     public override int GetTypeId() => __ID__;
@@ -52,6 +57,7 @@ public sealed partial class SkillSlotTypeCondition:  Condition
         return "{ "
         + "ConditionCompare:" + ConditionCompare + ","
         + "SkillSlotType:" + SkillSlotType + ","
+        + "SkillSlotIndex:" + SkillSlotIndex + ","
         + "}";
     }
     

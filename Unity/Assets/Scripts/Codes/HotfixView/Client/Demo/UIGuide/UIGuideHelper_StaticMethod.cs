@@ -109,11 +109,13 @@ namespace ET.Client
         {
             UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
 
+            RoomType roomType = RoomType.AR;
+            SubRoomType subRoomType = SubRoomType.ARTutorialFirst;
+            RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
                 ARHallType = ARHallType.CreateRoomWithOutARSceneId,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.ARTutorialFirst,
+                roomTypeInfo = roomTypeInfo,
                 roomId = 0,
             };
             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);

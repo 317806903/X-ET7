@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace ET.Server
 {
@@ -12,22 +13,16 @@ namespace ET.Server
 			RoomComponent roomComponent = roomManagerComponent.GetRoomByPlayerId(request.PlayerId);
 			long roomId = 0;
 			int roomStatus = 0;
-			int roomType = 0;
-			int subRoomType = 0;
-			string battleCfgId = "";
+			byte[] roomTypeInfo = null;
 			if (roomComponent != null)
 			{
 				roomId = roomComponent.Id;
 				roomStatus = (int)roomComponent.roomStatus;
-				roomType = (int)roomComponent.roomType;
-				subRoomType = (int)roomComponent.subRoomType;
-				battleCfgId = roomComponent.gamePlayBattleLevelCfgId;
+				roomTypeInfo = ET.RoomTypeInfo.ToBytes(roomComponent.roomTypeInfo);
 			}
 			response.RoomId = roomId;
 			response.RoomStatus = roomStatus;
-			response.RoomType = roomType;
-			response.SubRoomType = subRoomType;
-			response.BattleCfgId = battleCfgId;
+			response.RoomTypeInfo = roomTypeInfo;
 			await ETTask.CompletedTask;
 		}
 	}

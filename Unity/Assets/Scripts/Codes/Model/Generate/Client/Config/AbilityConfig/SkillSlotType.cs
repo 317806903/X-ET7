@@ -15,6 +15,10 @@ namespace ET.AbilityConfig
     public enum SkillSlotType
     {
         /// <summary>
+        /// 默认
+        /// </summary>
+        None = 0,
+        /// <summary>
         /// 普通攻击
         /// </summary>
         NormalAttack = 1,

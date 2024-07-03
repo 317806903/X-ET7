@@ -37,7 +37,7 @@ namespace ET.Ability
         {
             RecordKeyInt recordKey = actionCfgSetRecordInt.RecordKey;
             ValueOperation valueOperation = actionCfgSetRecordInt.ValueOperation;
-            int recordValue = actionCfgSetRecordInt.RecordValue;
+            float recordValue = actionCfgSetRecordInt.RecordValue;
 
             RecordHandleObj recordHandleObj = unit.GetComponent<RecordHandleObj>();
             if (recordHandleObj == null)
@@ -61,7 +61,7 @@ namespace ET.Ability
             recordHandleObj.DoRecordString(recordKey, valueOperation, recordValue);
         }
 
-        public static int GetRecordInt(Unit unit, RecordKeyInt recordKey)
+        public static float GetRecordInt(Unit unit, RecordKeyInt recordKey)
         {
             RecordHandleObj recordHandleObj = unit.GetComponent<RecordHandleObj>();
             if (recordHandleObj == null)

@@ -10,24 +10,16 @@ namespace ET.AbilityConfig
 	{
 		[ProtoIgnore]
 		[BsonIgnore]
-		public SortedDictionary<int, TowerDefense_ChallengeLevelCfg> Challenges = new();
+		public SortedDictionary<int, ChallengeLevelCfg> NormalChallenges = new();
 
-		[ProtoIgnore]
-		[BsonIgnore]
-		public SortedDictionary<int, TowerDefense_ChallengeLevelCfg> AR_Challenges = new();
-
-		public SortedDictionary<int, TowerDefense_ChallengeLevelCfg> GetChallenges(bool isAR)
+		public SortedDictionary<int, ChallengeLevelCfg> GetChallenges()
 		{
-			if (isAR)
-			{
-				return AR_Challenges;
-			}
-			return Challenges;
+			return this.NormalChallenges;
 		}
 
-		public TowerDefense_ChallengeLevelCfg GetChallengeByIndex(bool isAR, int index)
+		public ChallengeLevelCfg GetChallengeByIndex(int index)
 		{
-			var dic = this.GetChallenges(isAR);
+			var dic = this.GetChallenges();
 			if (dic.TryGetValue(index, out var challenge))
 			{
 				return challenge;
@@ -35,54 +27,150 @@ namespace ET.AbilityConfig
 			return null;
 		}
 
-		public bool ChkIsAR(string battleLevelCfgId)
+		public ChallengeLevelCfg GetChallenge(RoomTypeInfo roomTypeInfo)
 		{
-			if (this.Contain(battleLevelCfgId) == false)
-			{
-				return false;
-			}
-			TowerDefense_ChallengeLevelCfg challengeLevelCfg = this.Get(battleLevelCfgId);
-			return challengeLevelCfg.IsAR;
+			return this.GetChallengeByIndex(roomTypeInfo.pveIndex);
 		}
 
-		public int GetChallengeIndex(string battleLevelCfgId)
+		public string GetCurChallengeGamePlayBattleLevelCfgId(int pveIndex, bool isAR)
 		{
-			if (this.Contain(battleLevelCfgId) == false)
+			ChallengeLevelCfg ChallengeLevelCfg = GetChallengeByIndex(pveIndex);
+			if (ChallengeLevelCfg == null)
 			{
-				return -1;
+				return "";
 			}
-			TowerDefense_ChallengeLevelCfg challengeLevelCfg = this.Get(battleLevelCfgId);
-			int level = challengeLevelCfg.Index;
-
-			return level;
+			if (isAR)
+			{
+				return ChallengeLevelCfg.BattleCfgIdAR;
+			}
+			else
+			{
+				return ChallengeLevelCfg.BattleCfgIdNoAR;
+			}
 		}
 
-		public TowerDefense_ChallengeLevelCfg GetNextChallenge(string battleLevelCfgId)
+		public ChallengeLevelCfg GetNextChallenge(RoomTypeInfo roomTypeInfo)
 		{
-			if (this.Contain(battleLevelCfgId) == false)
+			(bool isChallenge, bool isAR) = ChkIsChallenge(roomTypeInfo);
+			if (isChallenge == false)
 			{
-				Log.Error($"GetNextChallenge Contain({battleLevelCfgId}) == false");
 				return null;
 			}
-			TowerDefense_ChallengeLevelCfg challengeLevelCfg = this.Get(battleLevelCfgId);
-			int level = challengeLevelCfg.Index;
-			TowerDefense_ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(challengeLevelCfg.IsAR, level + 1);
+			int pveIndex = roomTypeInfo.pveIndex;
 
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(pveIndex + 1);
+			if (nextChallengeLevelCfg == null)
+			{
+				return null;
+			}
 			return nextChallengeLevelCfg;
+		}
+
+		public ChallengeLevelCfg GetNextChallenge(int pveIndex)
+		{
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(pveIndex + 1);
+			if (nextChallengeLevelCfg == null)
+			{
+				return null;
+			}
+			return nextChallengeLevelCfg;
+		}
+
+		public ChallengeLevelCfg GetNextChallenge(ChallengeLevelCfg challengeLevelCfg)
+		{
+			int pveIndex = challengeLevelCfg.Index;
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(pveIndex + 1);
+			if (nextChallengeLevelCfg == null)
+			{
+				return null;
+			}
+			return nextChallengeLevelCfg;
+		}
+
+		public (bool, bool) ChkIsChallenge(RoomTypeInfo roomTypeInfo)
+		{
+			int seasonId = roomTypeInfo.seasonId;
+			int pveIndex = roomTypeInfo.pveIndex;
+			RoomType roomType = roomTypeInfo.roomType;
+			SubRoomType subRoomType = roomTypeInfo.subRoomType;
+
+			bool isChallenge = false;
+			bool isAR = false;
+			if (seasonId > 0)
+			{
+				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge seasonId <= 0");
+				return (false, false);
+			}
+			if (pveIndex <= 0)
+			{
+				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge pveIndex <= 0");
+				return (false, false);
+			}
+
+			if (roomType == RoomType.Normal)
+			{
+				if (subRoomType == SubRoomType.NormalPVE)
+				{
+					isChallenge = true;
+				}
+			}
+			else if (roomType == RoomType.AR)
+			{
+				if (subRoomType == SubRoomType.ARPVE)
+				{
+					isChallenge = true;
+					isAR = true;
+				}
+			}
+
+			return (isChallenge, isAR);
+		}
+
+		public string GetNextChallengeGamePlayBattleLevelCfgId(RoomTypeInfo roomTypeInfo)
+		{
+			(bool isChallenge, bool isAR) = ChkIsChallenge(roomTypeInfo);
+			if (isChallenge == false)
+			{
+				return null;
+			}
+
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetNextChallenge( roomTypeInfo);
+			if (nextChallengeLevelCfg == null)
+			{
+				return "";
+			}
+			if (isAR)
+			{
+				return nextChallengeLevelCfg.BattleCfgIdAR;
+			}
+			else
+			{
+				return nextChallengeLevelCfg.BattleCfgIdNoAR;
+			}
+		}
+
+		public string GetNextChallengeGamePlayBattleLevelCfgId(int pveIndex, bool isAR)
+		{
+			ChallengeLevelCfg nextChallengeLevelCfg = GetNextChallenge(pveIndex);
+			if (nextChallengeLevelCfg == null)
+			{
+				return "";
+			}
+			if (isAR)
+			{
+				return nextChallengeLevelCfg.BattleCfgIdAR;
+			}
+			else
+			{
+				return nextChallengeLevelCfg.BattleCfgIdNoAR;
+			}
 		}
 
 		partial void PostResolve()
 		{
 			foreach (var challengeCfg in this.DataList)
 			{
-				if (challengeCfg.IsAR)
-				{
-					this.AR_Challenges.Add(challengeCfg.Index, challengeCfg);
-				}
-				else
-				{
-					this.Challenges.Add(challengeCfg.Index, challengeCfg);
-				}
+				this.NormalChallenges.Add(challengeCfg.Index, challengeCfg);
 			}
 		}
 	}

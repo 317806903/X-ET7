@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [FriendOf(typeof(GamePlayPKComponent))]
+    [FriendOf(typeof(GamePlayPkComponentBase))]
     public static class GamePlayPKComponentSystem
 	{
 		[ObjectSystem]
-		public class GamePlayPKComponentUpdateSystem : UpdateSystem<GamePlayPKComponent>
+		public class GamePlayPKComponentUpdateSystem : UpdateSystem<GamePlayPkComponentBase>
 		{
-			protected override void Update(GamePlayPKComponent self)
+			protected override void Update(GamePlayPkComponentBase self)
 			{
 				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Current)
 				{
@@ -25,7 +25,7 @@ namespace ET.Client
 			}
 		}
 
-		public static void InitClient(this GamePlayPKComponent self)
+		public static void InitClient(this GamePlayPkComponentBase self)
 		{
 			if (self.isInitClient)
 			{
@@ -51,13 +51,13 @@ namespace ET.Client
 			});
 		}
 
-		public static void DoUpdate(this GamePlayPKComponent self)
+		public static void DoUpdate(this GamePlayPkComponentBase self)
 		{
 			//self.ChkMouseRightClick();
 			self.SendARCameraPos();
 		}
 
-		public static bool ChkIsHitMap(this GamePlayPKComponent self, RaycastHit hit)
+		public static bool ChkIsHitMap(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			GameObject hitGo = hit.collider.gameObject;
 			bool isHitMap = false;
@@ -73,7 +73,7 @@ namespace ET.Client
 			return isHitMap;
 		}
 
-		public static void DoClickModel(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoClickModel(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			self.DoCancelHitLast();
 			bool isHitMap = self.ChkIsHitMap(hit);
@@ -97,7 +97,7 @@ namespace ET.Client
 			}
 		}
 
-		public static void DoPressModel(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoPressModel(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			bool isHitMap = self.ChkIsHitMap(hit);
 			if (isHitMap)
@@ -119,35 +119,38 @@ namespace ET.Client
 			}
 		}
 
-		public static void OnHitMap(this GamePlayPKComponent self, RaycastHit hit)
+		public static void OnHitMap(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
 			self.OnPlayerMoveTarget(hit.point);
 		}
 
-		public static void OnPlayerMoveTarget(this GamePlayPKComponent self, float3 targetPos)
+		public static void OnPlayerMoveTarget(this GamePlayPkComponentBase self, float3 targetPos)
 		{
 			C2M_PathfindingResult c2MPathfindingResult = new ();
 			c2MPathfindingResult.Position = targetPos - new float3(0, 0f, 0);
 			ET.Client.SessionHelper.GetSession(self.DomainScene()).Send(c2MPathfindingResult);
 		}
 
-		public static void DoHitTower(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoHitTower(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			Log.Debug($" hit.collider.name[{hit.collider.name}]");
 			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
-			curTowerShowComponent?.DoSelect();
+			if (curTowerShowComponent != null)
+			{
+				curTowerShowComponent.DoSelect().Coroutine();
+			}
 		}
 
-		public static void DoHitPlayerUnit(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoHitPlayerUnit(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			Log.Debug($" hit.collider.name[{hit.collider.name}]");
 			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetPlayerUnitInfoFromClickInfo(self.DomainScene(), hit);
 			curPlayerUnitShowComponent?.DoSelect();
 		}
 
-		public static void DoCancelHitLast(this GamePlayPKComponent self)
+		public static void DoCancelHitLast(this GamePlayPkComponentBase self)
 		{
 			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetLastClickTowerInfo(self.DomainScene());
 			curTowerShowComponent?.CancelSelect();
@@ -155,7 +158,7 @@ namespace ET.Client
 			curPlayerUnitShowComponent?.CancelSelect();
 		}
 
-		public static void DoPressHitTower(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoPressHitTower(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			TowerShowComponent curTowerShowComponent = ET.Client.ModelClickManagerHelper.GetTowerInfoFromClickInfo(self.DomainScene(), hit);
@@ -166,7 +169,7 @@ namespace ET.Client
 			self.DoMoveTower(curTowerShowComponent.towerComponent.towerCfgId, curTowerShowComponent.GetUnit().Id);
 		}
 
-		public static void DoMoveTower(this GamePlayPKComponent self, string towerCfgId, long towerUnitId)
+		public static void DoMoveTower(this GamePlayPkComponentBase self, string towerCfgId, long towerUnitId)
 		{
 			Handheld.Vibrate();
 
@@ -195,7 +198,7 @@ namespace ET.Client
 			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
 		}
 
-		public static void DoPressPlayerUnit(this GamePlayPKComponent self, RaycastHit hit)
+		public static void DoPressPlayerUnit(this GamePlayPkComponentBase self, RaycastHit hit)
 		{
 			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			PlayerUnitShowComponent curPlayerUnitShowComponent = ET.Client.ModelClickManagerHelper.GetPlayerUnitInfoFromClickInfo(self.DomainScene(), hit);
@@ -206,7 +209,7 @@ namespace ET.Client
 			self.DoMovePlayer(curPlayerUnitShowComponent.GetUnit().Id);
 		}
 
-		public static void DoMovePlayer(this GamePlayPKComponent self, long towerUnitId)
+		public static void DoMovePlayer(this GamePlayPkComponentBase self, long towerUnitId)
 		{
 			Handheld.Vibrate();
 
@@ -234,7 +237,7 @@ namespace ET.Client
 			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
 		}
 
-		public static void ChkMouseRightClick(this GamePlayPKComponent self)
+		public static void ChkMouseRightClick(this GamePlayPkComponentBase self)
 		{
 			if (Application.isEditor == false)
 			{
@@ -258,7 +261,7 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask OnChkRay(this GamePlayPKComponent self, float3 startPos, float3 endPos)
+		public static async ETTask OnChkRay(this GamePlayPkComponentBase self, float3 startPos, float3 endPos)
 		{
 			self.ShowRay(startPos, endPos);
 			C2M_ChkRay _C2M_ChkRay = new ();
@@ -276,7 +279,7 @@ namespace ET.Client
 			}
 		}
 
-		public static void ShowRay(this GamePlayPKComponent self, float3 startPos, float3 endPos)
+		public static void ShowRay(this GamePlayPkComponentBase self, float3 startPos, float3 endPos)
 		{
 			GameObject showRay = GameObject.Find("ShowRay");
 			if (showRay != null)
@@ -301,7 +304,7 @@ namespace ET.Client
 			lineRenderer.SetPosition(1, endPos);
 		}
 
-		public static void SendARCameraPos(this GamePlayPKComponent self)
+		public static void SendARCameraPos(this GamePlayPkComponentBase self)
 		{
 			GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
 			if (gamePlayComponent.IsAR() == false)

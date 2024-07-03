@@ -130,6 +130,11 @@ namespace ET.Client
             {
                 self.ResetPlayerFunctionMenuStatusWhenDebug(playerId, operateType, functionMenuCfgIds).Coroutine();
             });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<int>("ShowPoolDictCount", "ShowPoolDictCount", (showCount) =>
+            {
+                ET.Client.GameObjectPoolHelper.ShowPoolDictCount(showCount);
+            });
         }
 
         public static void SetStopActorMoveWhenDebug(this DebugWhenEditorComponent self)

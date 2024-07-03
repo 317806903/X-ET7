@@ -64,8 +64,22 @@ namespace ET.Ability
             self.startPosition = self.GetUnit().Position;
             self.lastPosition = self.GetUnit().Position;
 
-            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
             {
+            }
+            else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
+            {
+                float3 hitNavmeshPos = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), self.GetUnit().Position);
+                if (hitNavmeshPos.Equals(float3.zero) == false)
+                {
+                    self.SetUnitPos(hitNavmeshPos);
+                    self.startPosition = hitNavmeshPos;
+                    self.lastPosition = hitNavmeshPos;
+                }
+            }
+            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
             }
             else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
             {
@@ -138,8 +152,22 @@ namespace ET.Ability
             }
             self.startPosition = self.GetUnit().Position;
             self.lastPosition = self.GetUnit().Position;
-            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
             {
+            }
+            else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
+            {
+                float3 hitNavmeshPos = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), self.GetUnit().Position);
+                if (hitNavmeshPos.Equals(float3.zero) == false)
+                {
+                    self.SetUnitPos(hitNavmeshPos);
+                    self.startPosition = hitNavmeshPos;
+                    self.lastPosition = hitNavmeshPos;
+                }
+            }
+            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            {
+                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
             }
             else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
             {
@@ -182,12 +210,20 @@ namespace ET.Ability
 
         public static bool IsNeedChkTouch(this MoveTweenObj self)
         {
-            if (self.selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            if (self.selectHandle != null && self.selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
                 return true;
             }
 
-            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
+            {
+                return false;
+            }
+            else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
+            {
+                return false;
+            }
+            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
                 return true;
             }
@@ -221,12 +257,20 @@ namespace ET.Ability
 
         public static bool ChkCanTouchUnit(this MoveTweenObj self, Unit unit)
         {
-            if (self.selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            if (self.selectHandle != null && self.selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
                 return true;
             }
 
-            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
+            {
+                return false;
+            }
+            else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
+            {
+                return false;
+            }
+            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
                 return true;
             }
@@ -284,7 +328,13 @@ namespace ET.Ability
 
         public static void DoMoveTween(this MoveTweenObj self, float fixedDeltaTime)
         {
-            if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
+            {
+            }
+            else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
+            {
+            }
+            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
             {
                 self.DoMoveTween_Straight(straightMoveTweenType, fixedDeltaTime);
             }
@@ -506,6 +556,12 @@ namespace ET.Ability
             float orgRadius = moveTweenType.Radius;
             float initAngle = moveTweenType.InitAngle;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
+
+            if (orgRadius == 0)
+            {
+                self.SetUnitPos(targetPosition);
+                return;
+            }
 
             float radiusAddSpeed = moveTweenType.RadiusAddSpeed;
             float radius = orgRadius + self.timeElapsed * radiusAddSpeed;
@@ -958,8 +1014,13 @@ namespace ET.Ability
                     }
                     else
                     {
-                        self.GetUnit().DestroyWithDeathShow();
-                        return;
+                        Unit bulletUnit = self.GetUnit();
+                        if (bulletUnit.Position.Equals(self.lastTargetPosition))
+                        {
+                            self.GetUnit().DestroyWithDeathShow();
+                            return;
+                        }
+                        targetPosition = self.lastTargetPosition;
                     }
                 }
                 else

@@ -13,6 +13,7 @@ namespace ET.Ability
         {
             protected override void Awake(BulletObj self)
             {
+                self.monitorTriggerList = new();
             }
         }
 
@@ -21,6 +22,9 @@ namespace ET.Ability
         {
             protected override void Destroy(BulletObj self)
             {
+                self.monitorTriggerList?.Clear();
+                self.monitorTriggerList = null;
+
                 if (self.hitRecords != null)
                 {
                     foreach (BulletHitRecord bulletHitRecord in self.hitRecords.Values)
@@ -58,8 +62,14 @@ namespace ET.Ability
 
         public static void Init(this BulletObj self, long casterUnitId, string bulletCfgId, float duration)
         {
-            self.casterUnitId = casterUnitId;
             self.CfgId = bulletCfgId;
+            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
+            {
+                AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent = self.model.MonitorTriggers[i].BulletTrig;
+                self.monitorTriggerList.Add(abilityBulletMonitorTriggerEvent, self.model.MonitorTriggers[i]);
+            }
+
+            self.casterUnitId = casterUnitId;
             self.duration = duration;
             self.timeElapsed = 0;
             self.canHitAfterCreated = self.model.CanHitAfterCreated;
@@ -75,17 +85,9 @@ namespace ET.Ability
             self.actionContext = actionContext;
         }
 
-        public static List<BulletActionCall> GetActionIds(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent)
+        public static List<BulletActionCall> GetActionIds(this BulletObj self, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent)
         {
-            ListComponent<BulletActionCall> actionList = ListComponent<BulletActionCall>.Create();
-            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
-            {
-                if (self.model.MonitorTriggers[i].BulletTrig.ToString() == abilityBulletMonitorTriggerEvent.ToString())
-                {
-                    actionList.Add(self.model.MonitorTriggers[i]);
-                }
-            }
-            return actionList;
+            return self.monitorTriggerList[abilityBulletMonitorTriggerEvent];
         }
 
         /// <summary>
@@ -118,7 +120,7 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void TrigEvent(this BulletObj self, AbilityBulletMonitorTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit = null, Unit
+        public static void TrigEvent(this BulletObj self, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit = null, Unit
             beHurtUnit = null)
         {
             List<BulletActionCall> bulletActionCalls = self.GetActionIds(abilityBulletMonitorTriggerEvent);

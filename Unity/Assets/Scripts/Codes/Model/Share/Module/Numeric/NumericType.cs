@@ -106,5 +106,61 @@
 	    // IceDamage = 2, //元素-冰伤害
 	    // ThunderDamage = 3, //元素-雷伤害
 
+	    public const int TowerDefense_HomeMaxHp = 2001;
+	    public const int TowerDefense_HomeMaxHpBase = TowerDefense_HomeMaxHp * 10 + 1;
+	    public const int TowerDefense_HomeMaxHpAdd = TowerDefense_HomeMaxHp * 10 + 2;
+	    public const int TowerDefense_HomeMaxHpPct = TowerDefense_HomeMaxHp * 10 + 3;
+	    public const int TowerDefense_HomeMaxHpFinalAdd = TowerDefense_HomeMaxHp * 10 + 4;
+	    public const int TowerDefense_HomeMaxHpFinalPct = TowerDefense_HomeMaxHp * 10 + 5;
+
+	    public const int TowerDefense_HomeCurHp = 2002;
+	    public const int TowerDefense_HomeCurHpBase = TowerDefense_HomeCurHp * 10 + 1;
+	    public const int TowerDefense_HomeCurHpAdd = TowerDefense_HomeCurHp * 10 + 2;
+	    public const int TowerDefense_HomeCurHpPct = TowerDefense_HomeCurHp * 10 + 3;
+	    public const int TowerDefense_HomeCurHpFinalAdd = TowerDefense_HomeCurHp * 10 + 4;
+	    public const int TowerDefense_HomeCurHpFinalPct = TowerDefense_HomeCurHp * 10 + 5;
+
+	    public const int TowerDefense_PlayerInitGold = 2003;
+	    public const int TowerDefense_PlayerInitGoldBase = TowerDefense_PlayerInitGold * 10 + 1;
+	    public const int TowerDefense_PlayerInitGoldAdd = TowerDefense_PlayerInitGold * 10 + 2;
+	    public const int TowerDefense_PlayerInitGoldPct = TowerDefense_PlayerInitGold * 10 + 3;
+	    public const int TowerDefense_PlayerInitGoldFinalAdd = TowerDefense_PlayerInitGold * 10 + 4;
+	    public const int TowerDefense_PlayerInitGoldFinalPct = TowerDefense_PlayerInitGold * 10 + 5;
+
+	    public const int TowerDefense_PlayerLimitTowerCount = 2004;
+	    public const int TowerDefense_PlayerLimitTowerCountBase = TowerDefense_PlayerLimitTowerCount * 10 + 1;
+	    public const int TowerDefense_PlayerLimitTowerCountAdd = TowerDefense_PlayerLimitTowerCount * 10 + 2;
+	    public const int TowerDefense_PlayerLimitTowerCountPct = TowerDefense_PlayerLimitTowerCount * 10 + 3;
+	    public const int TowerDefense_PlayerLimitTowerCountFinalAdd = TowerDefense_PlayerLimitTowerCount * 10 + 4;
+	    public const int TowerDefense_PlayerLimitTowerCountFinalPct = TowerDefense_PlayerLimitTowerCount * 10 + 5;
+
+	    public const int TowerDefense_PlayerTowerPrice = 2005;
+	    public const int TowerDefense_PlayerTowerPriceBase = TowerDefense_PlayerTowerPrice * 10 + 1;
+	    public const int TowerDefense_PlayerTowerPriceAdd = TowerDefense_PlayerTowerPrice * 10 + 2;
+	    public const int TowerDefense_PlayerTowerPricePct = TowerDefense_PlayerTowerPrice * 10 + 3;
+	    public const int TowerDefense_PlayerTowerPriceFinalAdd = TowerDefense_PlayerTowerPrice * 10 + 4;
+	    public const int TowerDefense_PlayerTowerPriceFinalPct = TowerDefense_PlayerTowerPrice * 10 + 5;
+
+	    public const int TowerDefense_PlayerResurrectionTimes = 2006;
+	    public const int TowerDefense_PlayerResurrectionTimesBase = TowerDefense_PlayerResurrectionTimes * 10 + 1;
+	    public const int TowerDefense_PlayerResurrectionTimesAdd = TowerDefense_PlayerResurrectionTimes * 10 + 2;
+	    public const int TowerDefense_PlayerResurrectionTimesPct = TowerDefense_PlayerResurrectionTimes * 10 + 3;
+	    public const int TowerDefense_PlayerResurrectionTimesFinalAdd = TowerDefense_PlayerResurrectionTimes * 10 + 4;
+	    public const int TowerDefense_PlayerResurrectionTimesFinalPct = TowerDefense_PlayerResurrectionTimes * 10 + 5;
+
+	    public const int TowerDefense_PlayerRewardWhenGameEnd = 2007;
+	    public const int TowerDefense_PlayerRewardWhenGameEndBase = TowerDefense_PlayerRewardWhenGameEnd * 10 + 1;
+	    public const int TowerDefense_PlayerRewardWhenGameEndAdd = TowerDefense_PlayerRewardWhenGameEnd * 10 + 2;
+	    public const int TowerDefense_PlayerRewardWhenGameEndPct = TowerDefense_PlayerRewardWhenGameEnd * 10 + 3;
+	    public const int TowerDefense_PlayerRewardWhenGameEndFinalAdd = TowerDefense_PlayerRewardWhenGameEnd * 10 + 4;
+	    public const int TowerDefense_PlayerRewardWhenGameEndFinalPct = TowerDefense_PlayerRewardWhenGameEnd * 10 + 5;
+
+	    public const int TowerDefense_PlayerRewardWhenKillMonster = 2008;
+	    public const int TowerDefense_PlayerRewardWhenKillMonsterBase = TowerDefense_PlayerRewardWhenKillMonster * 10 + 1;
+	    public const int TowerDefense_PlayerRewardWhenKillMonsterAdd = TowerDefense_PlayerRewardWhenKillMonster * 10 + 2;
+	    public const int TowerDefense_PlayerRewardWhenKillMonsterPct = TowerDefense_PlayerRewardWhenKillMonster * 10 + 3;
+	    public const int TowerDefense_PlayerRewardWhenKillMonsterFinalAdd = TowerDefense_PlayerRewardWhenKillMonster * 10 + 4;
+	    public const int TowerDefense_PlayerRewardWhenKillMonsterFinalPct = TowerDefense_PlayerRewardWhenKillMonster * 10 + 5;
+
     }
 }

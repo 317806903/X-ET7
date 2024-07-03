@@ -25,29 +25,13 @@ namespace ET.AbilityConfig
         SpeedFinalAdd = 10004,
         SpeedFinalPct = 10005,
         /// <summary>
-        /// 技能CD
+        /// 旋转速度
         /// </summary>
         RotationSpeedBase = 10011,
         RotationSpeedAdd = 10012,
         RotationSpeedPct = 10013,
         RotationSpeedFinalAdd = 10014,
         RotationSpeedFinalPct = 10015,
-        /// <summary>
-        /// 技能CD
-        /// </summary>
-        SkillCDBase = 10021,
-        SkillCDAdd = 10022,
-        SkillCDPct = 10023,
-        SkillCDFinalAdd = 10024,
-        SkillCDFinalPct = 10025,
-        /// <summary>
-        /// 技能释放距离
-        /// </summary>
-        SkillDisBase = 10031,
-        SkillDisAdd = 10032,
-        SkillDisPct = 10033,
-        SkillDisFinalAdd = 10034,
-        SkillDisFinalPct = 10035,
         /// <summary>
         /// 当前血量
         /// </summary>

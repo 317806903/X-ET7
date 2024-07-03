@@ -12,10 +12,14 @@ namespace ET.Client
 			//Log.Debug($"M2C_GamePlayCoinChgNotice 11");
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
-			while (currentScene == null || currentScene.IsDisposed)
+			// while (currentScene == null || currentScene.IsDisposed)
+			// {
+			// 	await TimerComponent.Instance.WaitFrameAsync();
+			// 	currentScene = session.DomainScene().CurrentScene();
+			// }
+			if (currentScene == null || currentScene.IsDisposed)
 			{
-				await TimerComponent.Instance.WaitFrameAsync();
-				currentScene = session.DomainScene().CurrentScene();
+				return;
 			}
 
 			GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);

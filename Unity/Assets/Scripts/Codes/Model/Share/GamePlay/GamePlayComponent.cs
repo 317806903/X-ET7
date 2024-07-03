@@ -40,14 +40,14 @@ namespace ET
 	{
 		// [BsonIgnore]
 		// public long Timer;
-		public string gamePlayBattleLevelCfgId { get; set; }
 		public GamePlayMode gamePlayMode { get; set; }
 		public long dynamicMapInstanceId;
-		public long roomId;
 		public long ownerPlayerId;
 		public GamePlayStatus gamePlayStatus;
+		public long roomId;
 		public bool isAR;
 		public float arMapScale;
+		public RoomTypeInfo roomTypeInfo { get; set; }
 
 		public ARMeshType _ARMeshType;
 		[BsonIgnore]
@@ -89,8 +89,6 @@ namespace ET
 		public int waitFrameChk = 60;
 		[BsonIgnore]
 		public int curFrameChk = 0;
-		[BsonIgnore]
-		public List<long> playerListTmp;
 
 		public bool isFirstSendGamePlayToClient;
 		public bool isFirstSendGamePlayModeToClient;

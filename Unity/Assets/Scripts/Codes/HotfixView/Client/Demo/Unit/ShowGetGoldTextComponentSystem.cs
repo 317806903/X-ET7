@@ -26,6 +26,7 @@ namespace ET.Client
                 if (self.shootTextRoot != null)
                 {
                     self.shootTextProManager.Clear();
+                    self.shootTextProManager.ClearPool();
                     GameObjectPoolHelper.ReturnTransformToPool(self.shootTextRoot);
                     self.shootTextRoot = null;
                     self.shootTextProManager = null;
@@ -58,6 +59,7 @@ namespace ET.Client
             shootTextRootGo.transform.localScale = Vector3.one;
 
             self.shootTextProManager = shootTextRootGo.GetComponentInChildren<ShootTextProManager>();
+            self.shootTextProManager.Init();
             self.shootTextProManager.ShootTextCamera = null;
             self.shootTextProManager.ShootTextCanvas = null;
 

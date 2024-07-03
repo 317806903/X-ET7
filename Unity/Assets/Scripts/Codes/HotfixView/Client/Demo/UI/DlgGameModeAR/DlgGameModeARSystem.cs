@@ -39,6 +39,7 @@ namespace ET.Client
             self.View.E_ScanCodeButton.AddListenerAsync(self.EnterScanCode);
 
             self.View.E_AvatarButton.AddListenerAsync(self.ClickAvatar);
+            self.View.ES_AvatarShow.ClickAvatarIconBtn(self.ClickAvatar);
 
             self.View.E_BagsButton.AddListenerAsync(self.ClickBags);
             self.View.E_BattleDeckButton.AddListenerAsync(self.ClickBattleDeck);
@@ -89,6 +90,13 @@ namespace ET.Client
                 string functionMenuCfgId = openningList[0];
                 FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
 
+                bool isUIGuideing = ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), functionMenuCfg.UIGuideConfigFileName);
+                if (isUIGuideing)
+                {
+                    return;
+                }
+                await ET.Client.UIGuideHelper.StopUIGuide(self.DomainScene());
+
                 Action doGuile = async () =>
                 {
                     if (string.IsNullOrEmpty(functionMenuCfg.UIGuideConfigFileName))
@@ -98,7 +106,7 @@ namespace ET.Client
                     }
                     else
                     {
-                        await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), functionMenuCfg.UIGuideConfigFileName, async () =>
+                        await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), functionMenuCfg.UIGuideConfigFileName, 0, async () =>
                         {
                             playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
                             await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.FunctionMenu, null);
@@ -129,13 +137,13 @@ namespace ET.Client
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
-            await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
+            await self.View.E_PlayerIcoImage.SetMyselfIcon(self.DomainScene());
 
             self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.GameModeARTimer, self);
 
-            self.View.ELabel_WavesUITextLocalizeMonoView.DynamicSet(playerBaseInfoComponent.EndlessChallengeScore);
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
-            int myRank = rankShowComponent.GetMyRank();
+            (int myRank, long score) = rankShowComponent.GetMyRank();
+            self.View.ELabel_WavesUITextLocalizeMonoView.DynamicSet(score);
             if (myRank == -1 || myRank > 1000)
             {
                 self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet("1000+");
@@ -144,6 +152,7 @@ namespace ET.Client
             {
                 self.View.ELabel_RankUITextLocalizeMonoView.DynamicSet(myRank);
             }
+            self.View.ES_AvatarShow.ShowMyAvatarIcon().Coroutine();
 
             await self.UpdatePhysical();
         }
@@ -191,14 +200,17 @@ namespace ET.Client
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
+            int seasonId = ET.Client.SeasonHelper.GetSeasonId(self.DomainScene());
             if (self.isAR)
             {
+                RoomType roomType = RoomType.AR;
+                SubRoomType subRoomType = SubRoomType.AREndlessChallenge;
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, seasonId);
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
                     ARHallType = ARHallType.CreateRoomWithOutARSceneId,
-                    RoomType = RoomType.AR,
-                    SubRoomType = SubRoomType.AREndlessChallenge,
                     roomId = 0,
+                    roomTypeInfo = roomTypeInfo,
                 };
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
             }
@@ -206,8 +218,8 @@ namespace ET.Client
             {
                 RoomType roomType = RoomType.Normal;
                 SubRoomType subRoomType = SubRoomType.NormalEndlessChallenge;
-                string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
-                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, seasonId);
+                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), roomTypeInfo);
                 if (result)
                 {
                     await ET.Client.UIManagerHelper.EnterRoomUI(self.DomainScene());
@@ -238,12 +250,14 @@ namespace ET.Client
 
             if (self.isAR)
             {
+                RoomType roomType = RoomType.AR;
+                SubRoomType subRoomType = SubRoomType.ARPVP;
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
                     ARHallType = ARHallType.CreateRoomWithOutARSceneId,
-                    RoomType = RoomType.AR,
-                    SubRoomType = SubRoomType.ARPVP,
                     roomId = 0,
+                    roomTypeInfo = roomTypeInfo,
                 };
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
             }
@@ -251,8 +265,8 @@ namespace ET.Client
             {
                 RoomType roomType = RoomType.Normal;
                 SubRoomType subRoomType = SubRoomType.NormalPVP;
-                string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(roomType, subRoomType, 0);
-                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, roomType, subRoomType);
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
+                (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), roomTypeInfo);
                 if (result)
                 {
                     await ET.Client.UIManagerHelper.EnterRoomUI(self.DomainScene());
@@ -263,15 +277,19 @@ namespace ET.Client
         public static async ETTask EnterScanCode(this DlgGameModeAR self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-
+#if UNITY_EDITOR
+            return;
+#endif
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
 
+            RoomType roomType = RoomType.AR;
+            SubRoomType subRoomType = SubRoomType.ARScanCode;
+            RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
                 ARHallType = ARHallType.ScanQRCode,
-                RoomType = RoomType.AR,
-                SubRoomType = SubRoomType.ARScanCode,
                 roomId = 0,
+                roomTypeInfo = roomTypeInfo,
             };
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
         }
@@ -290,7 +308,7 @@ namespace ET.Client
         {
             self.TrackFunctionClicked("rank");
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeAR>();
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRankEndlessChallenge>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgRankPowerupSeason>();
         }
 
         public static async ETTask ClickBags(this DlgGameModeAR self)

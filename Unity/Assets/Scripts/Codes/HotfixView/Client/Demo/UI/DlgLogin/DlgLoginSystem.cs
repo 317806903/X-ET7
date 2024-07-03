@@ -275,6 +275,9 @@ namespace ET.Client
         {
             self.View.E_Login_SDKButton.SetVisible(Application.platform == RuntimePlatform.Android);
             self.View.E_Login_AppleButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);
+            self.View.E_Login_SDKButton.SetVisible(false);
+            self.View.E_Login_AppleButton.SetVisible(false);
+
             self.View.EG_LoginAccountRootRectTransform.SetVisible(false);
             self.View.EG_LoginWhenSDKRectTransform.SetVisible(false);
             self.View.EG_LoginWhenEditorRectTransform.SetVisible(false);
@@ -476,14 +479,6 @@ namespace ET.Client
         {
             await TimerComponent.Instance.WaitFrameAsync();
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
-            EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-            {
-                eventName = "LoginClicked",
-                properties = new()
-                {
-                    {"success", true},
-                }
-            });
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
 			{
 				eventName = "RoleLoggedIn",
@@ -494,8 +489,24 @@ namespace ET.Client
                 await TimerComponent.Instance.WaitAsync(500);
                 self.ShowLoginTips(true);
                 self.LoginWhenSDK_LoginDone().Coroutine();
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "LoginClicked",
+                    properties = new()
+                    {
+                        {"success", true},
+                    }
+                });
             },()=>{
                 self.ShowLoginTips(false);
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "LoginClicked",
+                    properties = new()
+                    {
+                        {"success", false},
+                    }
+                });
             });
         }
 

@@ -130,10 +130,9 @@ public class ShootTextProManager : MonoBehaviour
     public GameObject shootTextPrefab = null;
     void Start()
     {
-        Initialized();
     }
 
-    private void Initialized()
+    public void Init()
     {
         //shootTextCure = new AnimationCurve(new Keyframe[] { new Keyframe(0, 1f), new Keyframe(moveLifeTime, 0f) });
         //shootTextPrefab = Resources.Load<GameObject>("Prefabs/ShootText_Pure");
@@ -144,12 +143,25 @@ public class ShootTextProManager : MonoBehaviour
             GameObject go = this.normalNumber[i];
             if (go != null)
             {
-                this.InitPool($"{i}", go);
+                if (this.ChkPoolExist($"{i}") == false)
+                {
+                    this.InitPool($"{i}", Instantiate(go));
+                }
             }
         }
-        this.InitPool("shootTextPrefab", this.shootTextPrefab);
-        this.InitPool("+", this.operatorPlusGo);
-        this.InitPool("-", this.operatorMinusGo);
+
+        if (this.ChkPoolExist("shootTextPrefab") == false)
+        {
+            this.InitPool("shootTextPrefab", Instantiate(this.shootTextPrefab));
+        }
+        if (this.ChkPoolExist("+") == false)
+        {
+            this.InitPool("+", Instantiate(this.operatorPlusGo));
+        }
+        if (this.ChkPoolExist("-") == false)
+        {
+            this.InitPool("-", Instantiate(this.operatorMinusGo));
+        }
     }
 
     public void Clear()
@@ -166,6 +178,27 @@ public class ShootTextProManager : MonoBehaviour
 
         waitShootTextGroup.Clear();
         waitDestoryGroup.Clear();
+    }
+
+    public void ClearPool()
+    {
+        foreach (var item in this.pool.Values)
+        {
+            foreach (GameObject go in item)
+            {
+                GameObject.Destroy(go);
+            }
+        }
+        this.pool.Clear();
+
+        foreach (var item in this.poolDamage.Values)
+        {
+            foreach (GameObject go in item)
+            {
+                GameObject.Destroy(go);
+            }
+        }
+        this.poolDamage.Clear();
     }
 
     void Update()
@@ -508,6 +541,18 @@ public class ShootTextProManager : MonoBehaviour
         return waitShootTextGroup.Count < MaxWaitCount;
     }
 
+    private bool ChkPoolExist(string name)
+    {
+        if (this.pool.TryGetValue(name, out var stack))
+        {
+            if (stack.Count >= 1)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void InitPool(string name, GameObject go)
     {
         if (this.pool.TryGetValue(name, out var stack) == false)
@@ -515,6 +560,8 @@ public class ShootTextProManager : MonoBehaviour
             stack = new();
             this.pool[name] = stack;
         }
+        go.transform.SetParent(this.transform);
+        this.transform.localScale = Vector3.zero;
         stack.Push(go);
     }
 

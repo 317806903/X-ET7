@@ -35,6 +35,13 @@ public partial class UICodeSpawner
                 Debug.LogWarning($"生成子UI: {uiName} 完毕!!!");
                 return;
             }
+            else if (uiName.StartsWith(UIPagePrefix))
+            {
+                Debug.LogWarning($"-------- 开始生成 page UI: {uiName} 相关代码 -------------");
+                SpawnPageUICode(gameObject);
+                Debug.LogWarning($"生成子UI: {uiName} 完毕!!!");
+                return;
+            }
             else if (uiName.StartsWith(UIItemPrefix))
             {
                 Debug.LogWarning($"-------- 开始生成滚动列表项: {uiName} 相关代码 -------------");
@@ -406,6 +413,12 @@ public partial class UICodeSpawner
                     strBuilder.AppendFormat("\t\t\t{0}.m_{1} = null;\r\n", pointStr, pair.Key.ToLower());
                     continue;
                 }
+                if (pair.Key.StartsWith(UIPagePrefix))
+                {
+                    strBuilder.AppendFormat("\t\t\t{0}.m_{1}?.Dispose();\r\n", pointStr, pair.Key.ToLower());
+                    strBuilder.AppendFormat("\t\t\t{0}.m_{1} = null;\r\n", pointStr, pair.Key.ToLower());
+                    continue;
+                }
 
                 string widgetName = widget.name + strClassType.Split('.').ToList().Last();
                 strBuilder.AppendFormat("\t\t\t{0}.m_{1} = null;\r\n", pointStr, widgetName);
@@ -434,6 +447,18 @@ public partial class UICodeSpawner
                     }
 
                     GetSubUIBaseWindowCode(ref strBuilder, pair.Key, strPath, subUIClassPrefab.name);
+                    continue;
+                }
+                if (pair.Key.StartsWith(UIPagePrefix))
+                {
+                    var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
+                    if (subUIClassPrefab == null)
+                    {
+                        Debug.LogError($"公共UI找不到所属的Prefab! {pair.Key}");
+                        return;
+                    }
+
+                    GetPageUIBaseWindowCode(ref strBuilder, pair.Key, strPath, subUIClassPrefab.name);
                     continue;
                 }
 
@@ -506,6 +531,20 @@ public partial class UICodeSpawner
                     continue;
                 }
 
+                if (pair.Key.StartsWith(UIPagePrefix))
+                {
+                    var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
+                    if (subUIClassPrefab == null)
+                    {
+                        Debug.LogError($"公共UI找不到所属的Prefab! {pair.Key}");
+                        return;
+                    }
+
+                    string subUIClassType = subUIClassPrefab.name;
+                    strBuilder.AppendFormat("\t\tprivate {0} m_{1} = null;\r\n", subUIClassType, pair.Key.ToLower());
+                    continue;
+                }
+
                 string widgetName = widget.name + strClassType.Split('.').ToList().Last();
                 strBuilder.AppendFormat("\t\tprivate {0} m_{1} = null;\r\n", strClassType, widgetName);
             }
@@ -525,6 +564,10 @@ public partial class UICodeSpawner
             string strTemp = strPath + "/" + child.name;
 
             bool isSubUI = child.name.StartsWith(CommonUIPrefix);
+            if (isSubUI == false)
+            {
+                isSubUI = child.name.StartsWith(UIPagePrefix);
+            }
             if (isSubUI)
             {
                 List<Component> rectTransfomrComponents = new List<Component>();
@@ -607,6 +650,31 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("\t\t}\n");
     }
 
+    static void GetPageUIBaseWindowCode(ref StringBuilder strBuilder, string widget, string strPath, string subUIClassType)
+    {
+        strBuilder.AppendFormat("\t\tpublic {0} {1}\r\n", subUIClassType, widget);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t\tget");
+        strBuilder.AppendLine("\t\t\t{");
+
+        strBuilder.AppendLine("\t\t\t\tif (this.uiTransform == null)");
+        strBuilder.AppendLine("\t\t\t\t{");
+        strBuilder.AppendLine("\t\t\t\t\tLog.Error(\"uiTransform is null.\");");
+        strBuilder.AppendLine("\t\t\t\t\treturn null;");
+        strBuilder.AppendLine("\t\t\t\t}");
+
+        strBuilder.AppendFormat("\t\t\t\tif( this.m_{0} == null )\n", widget.ToLower());
+        strBuilder.AppendLine("\t\t\t\t{");
+        strBuilder.AppendFormat("\t\t\t\t\tTransform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, \"{0}\");\r\n",
+            strPath);
+        strBuilder.AppendFormat("\t\t\t\t\tthis.m_{0} = this.AddChild<{1}, Transform>(subTrans);\r\n", widget.ToLower(), subUIClassType);
+        strBuilder.AppendLine("\t\t\t\t}");
+        strBuilder.AppendFormat("\t\t\t\treturn this.m_{0};\n", widget.ToLower());
+        strBuilder.AppendLine("\t\t\t}");
+
+        strBuilder.AppendLine("\t\t}\n");
+    }
+
     static UICodeSpawner()
     {
         WidgetInterfaceList = new List<string>();
@@ -638,6 +706,7 @@ public partial class UICodeSpawner
     private static List<string> WidgetInterfaceList = null;
     private const string CommonUIPrefix = "ES";
     private const string UIPanelPrefix = "Dlg";
+    private const string UIPagePrefix = "EPage";
     private const string UIWidgetPrefix = "E";
     private const string UIGameObjectPrefix = "EG";
     private const string UIItemPrefix = "Item";

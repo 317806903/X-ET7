@@ -16,9 +16,9 @@ namespace ET.Client
 			return GetGamePlay(scene)?.GetComponent<GamePlayTowerDefenseComponent>();
 		}
 
-		public static GamePlayPKComponent GetGamePlayPK(Scene scene)
+		public static GamePlayPkComponentBase GetGamePlayPK(Scene scene)
 		{
-			return GetGamePlay(scene)?.GetComponent<GamePlayPKComponent>();
+			return GetGamePlay(scene)?.GetComponent<GamePlayPkComponentBase>();
 		}
 
 		public static async ETTask SendARCameraPos(Scene scene, float3 ARCameraPosition, float3 ARCameraHitPosition)

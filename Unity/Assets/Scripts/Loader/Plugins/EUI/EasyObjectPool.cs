@@ -151,8 +151,6 @@ namespace ET.Client
             return result;
         }
 
-
-
         //o(1)
         public void ReturnObjectToPool(PoolObject po)
         {
@@ -176,6 +174,20 @@ namespace ET.Client
             else
             {
                 Debug.LogError(string.Format("Trying to add object to incorrect pool {0} {1}", po.poolName, poolName));
+            }
+        }
+
+        public int GetAvailableObjStackCount()
+        {
+            return availableObjStack.Count;
+        }
+
+        public void ResetPoolDictCount(int maxCount)
+        {
+            while (availableObjStack.Count > 1 && availableObjStack.Count > maxCount)
+            {
+                PoolObject po = availableObjStack.Pop();
+                GameObject.Destroy(po.gameObject);
             }
         }
     }

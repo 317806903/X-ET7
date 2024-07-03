@@ -25,19 +25,19 @@ namespace ET.Ability
             }
         }
 
-        public static void DoRecordInt(this RecordHandleObj self, RecordKeyInt recordKey, ValueOperation valueOperation, int recordValue)
+        public static void DoRecordInt(this RecordHandleObj self, RecordKeyInt recordKey, ValueOperation valueOperation, float recordValue)
         {
             if (self.RecordIntDic == null)
             {
                 self.RecordIntDic = new();
             }
 
-            if (self.RecordIntDic.TryGetValue(recordKey, out int orgValue) == false)
+            if (self.RecordIntDic.TryGetValue(recordKey, out float orgValue) == false)
             {
                 orgValue = 0;
             }
 
-            int newValue = 0;
+            float newValue = 0;
             if (valueOperation == ValueOperation.Add)
             {
                 newValue = orgValue + recordValue;
@@ -71,21 +71,21 @@ namespace ET.Ability
             }
         }
 
-        public static int GetRecordInt(this RecordHandleObj self, RecordKeyInt recordKey)
+        public static float GetRecordInt(this RecordHandleObj self, RecordKeyInt recordKey)
         {
             if (self.RecordIntDic == null)
             {
                 return 0;
             }
 
-            if (self.RecordIntDic.TryGetValue(recordKey, out int orgValue) == false)
+            if (self.RecordIntDic.TryGetValue(recordKey, out float orgValue) == false)
             {
                 orgValue = 0;
             }
 
             return orgValue;
         }
-        
+
         public static string GetRecordString(this RecordHandleObj self, RecordKeyString recordKey)
         {
             if (self.RecordStringDic == null)

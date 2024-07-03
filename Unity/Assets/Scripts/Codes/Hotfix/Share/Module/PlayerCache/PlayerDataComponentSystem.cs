@@ -29,6 +29,8 @@ namespace ET
                     return self.GetComponent<PlayerBattleCardComponent>();
                 case PlayerModelType.OtherInfo:
                     return self.GetComponent<PlayerOtherInfoComponent>();
+                case PlayerModelType.SeasonInfo:
+                    return self.GetComponent<PlayerSeasonInfoComponent>();
                 case PlayerModelType.FunctionMenu:
                     return self.GetComponent<PlayerFunctionMenuComponent>();
                 case PlayerModelType.Mails:
@@ -58,6 +60,9 @@ namespace ET
                         break;
                     case PlayerModelType.OtherInfo:
                         self.RemoveComponent<PlayerOtherInfoComponent>();
+                        break;
+                    case PlayerModelType.SeasonInfo:
+                        self.RemoveComponent<PlayerSeasonInfoComponent>();
                         break;
                     case PlayerModelType.FunctionMenu:
                         self.RemoveComponent<PlayerFunctionMenuComponent>();
@@ -94,6 +99,11 @@ namespace ET
                         self.ChgFieldValue<PlayerOtherInfoComponent>(playerOtherInfoComponent, (PlayerOtherInfoComponent)entity, setPlayerKeys);
                         entity.Dispose();
                         return playerOtherInfoComponent;
+                    case PlayerModelType.SeasonInfo:
+                        PlayerSeasonInfoComponent playerSeasonInfoComponent = self.GetComponent<PlayerSeasonInfoComponent>();
+                        self.ChgFieldValue<PlayerSeasonInfoComponent>(playerSeasonInfoComponent, (PlayerSeasonInfoComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerSeasonInfoComponent;
                     case PlayerModelType.FunctionMenu:
                         PlayerFunctionMenuComponent playerFunctionMenuComponent = self.GetComponent<PlayerFunctionMenuComponent>();
                         self.ChgFieldValue<PlayerFunctionMenuComponent>(playerFunctionMenuComponent, (PlayerFunctionMenuComponent)entity, setPlayerKeys);

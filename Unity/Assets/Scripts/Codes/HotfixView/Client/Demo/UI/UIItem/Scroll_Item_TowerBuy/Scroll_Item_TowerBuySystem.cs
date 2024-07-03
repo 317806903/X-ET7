@@ -59,15 +59,7 @@ namespace ET.Client
 				return;
 			}
 
-			if (ItemHelper.ChkIsTower(itemCfgId))
-			{
-				ET.Client.UIManagerHelper.SetTowerItemClick(self.DomainScene(), itemCfgId);
-			}
-
-			if (ItemHelper.ChkIsMonster(itemCfgId))
-			{
-				ET.Client.UIManagerHelper.SetMonsterItemClick(self.DomainScene(), itemCfgId, self.uiTransform.position);
-			}
+			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, self.uiTransform.position);
 		}
 
 		public static void SetQuality(this Scroll_Item_TowerBuy self, string itemCfgId)

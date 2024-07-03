@@ -27,7 +27,15 @@ namespace ET.Server
 	        PlayerDataComponent playerDataComponent = await GetPlayerCache(scene, playerId);
 
 	        Entity entityModel = playerDataComponent.GetPlayerModel(playerModelType);
-
+	        if (entityModel == null)
+	        {
+		        entityModel = await playerDataComponent.AddPlayerModelData(playerModelType);
+	        }
+	        if (playerModelType == PlayerModelType.Mails)
+	        {
+		        PlayerMailComponent playerMailComponent = entityModel as PlayerMailComponent;
+		        await playerMailComponent.Refresh();
+	        }
 	        return entityModel;
         }
 
@@ -37,6 +45,14 @@ namespace ET.Server
 
 	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
 	        entityModel.SetDataCacheAutoWrite();
+	        await ETTask.CompletedTask;
+        }
+
+        public static async ETTask RecordWhenSeasonFinished(Scene scene, int seasonId)
+        {
+	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+	        await playerCacheManagerComponent.RenameCollection(seasonId);
+
 	        await ETTask.CompletedTask;
         }
 

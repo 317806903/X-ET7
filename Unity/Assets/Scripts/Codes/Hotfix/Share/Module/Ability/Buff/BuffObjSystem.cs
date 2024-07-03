@@ -13,6 +13,7 @@ namespace ET.Ability
         {
             protected override void Awake(BuffObj self)
             {
+                self.monitorTriggerList = new();
             }
         }
 
@@ -34,11 +35,10 @@ namespace ET.Ability
 
         public static void Init(this BuffObj self, Unit casterUnit, Unit unit, AddBuffInfo addBuffInfo)
         {
-            self.monitorTriggerList = new();
             self.CfgId = addBuffInfo.BuffId;
             for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
             {
-                AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent = EnumHelper.FromString<AbilityBuffMonitorTriggerEvent>(self.model.MonitorTriggers[i].BuffTrig.ToString());
+                AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent = self.model.MonitorTriggers[i].BuffTrig;
                 self.monitorTriggerList.Add(abilityBuffMonitorTriggerEvent, self.model.MonitorTriggers[i]);
             }
 
@@ -85,7 +85,7 @@ namespace ET.Ability
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
             if (needPublic && op == ValueOperation.Add)
             {
-                self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
+                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh);
             }
             //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
@@ -102,7 +102,7 @@ namespace ET.Ability
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
             if (needPublic && addStackCount > 0)
             {
-                self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRefresh);
+                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh);
             }
             //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
@@ -170,7 +170,7 @@ namespace ET.Ability
             return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
         }
 
-        public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent)
+        public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent)
         {
             return self.monitorTriggerList[abilityBuffMonitorTriggerEvent];
         }
@@ -195,15 +195,15 @@ namespace ET.Ability
                         lastCount++;
                         if (i == 0)
                         {
-                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick1);
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1);
                         }
                         else if (i == 1)
                         {
-                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick2);
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2);
                         }
                         else if (i == 2)
                         {
-                            self.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnTick3);
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3);
                         }
 
                         self.ticked += 1;
@@ -212,7 +212,7 @@ namespace ET.Ability
             }
         }
 
-        public static void TrigEvent(this BuffObj self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit = null, Unit beHurtUnit = null)
+        public static void TrigEvent(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit = null, Unit beHurtUnit = null)
         {
             if (self.isEnabled == false)
             {

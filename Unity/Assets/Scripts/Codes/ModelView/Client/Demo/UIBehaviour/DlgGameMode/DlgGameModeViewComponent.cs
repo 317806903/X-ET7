@@ -364,6 +364,142 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button EButton_InsertMailButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_InsertMailButton == null )
+				{
+					this.m_EButton_InsertMailButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EButton_InsertMail");
+				}
+				return this.m_EButton_InsertMailButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_InsertMailImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_InsertMailImage == null )
+				{
+					this.m_EButton_InsertMailImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EButton_InsertMail");
+				}
+				return this.m_EButton_InsertMailImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_InsertTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_InsertTextMeshProUGUI == null )
+				{
+					this.m_ELabel_InsertTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/EButton_InsertMail/ELabel_Insert");
+				}
+				return this.m_ELabel_InsertTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ReadPlayerMailButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ReadPlayerMailButton == null )
+				{
+					this.m_EButton_ReadPlayerMailButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EButton_ReadPlayerMail");
+				}
+				return this.m_EButton_ReadPlayerMailButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ReadPlayerMailImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ReadPlayerMailImage == null )
+				{
+					this.m_EButton_ReadPlayerMailImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EButton_ReadPlayerMail");
+				}
+				return this.m_EButton_ReadPlayerMailImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_ReadTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ReadTextMeshProUGUI == null )
+				{
+					this.m_ELabel_ReadTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/EButton_ReadPlayerMail/ELabel_Read");
+				}
+				return this.m_ELabel_ReadTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button EButtonOpenDlgMailButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButtonOpenDlgMailButton == null )
+				{
+					this.m_EButtonOpenDlgMailButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EButtonOpenDlgMail");
+				}
+				return this.m_EButtonOpenDlgMailButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButtonOpenDlgMailImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButtonOpenDlgMailImage == null )
+				{
+					this.m_EButtonOpenDlgMailImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EButtonOpenDlgMail");
+				}
+				return this.m_EButtonOpenDlgMailImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -387,6 +523,14 @@ namespace ET.Client
 			this.m_E_ARRoomModeJoinImage = null;
 			this.m_E_ARRoomModeJoinTextText = null;
 			this.m_E_ARRoomModeJoinTextUITextLocalizeMonoView = null;
+			this.m_EButton_InsertMailButton = null;
+			this.m_EButton_InsertMailImage = null;
+			this.m_ELabel_InsertTextMeshProUGUI = null;
+			this.m_EButton_ReadPlayerMailButton = null;
+			this.m_EButton_ReadPlayerMailImage = null;
+			this.m_ELabel_ReadTextMeshProUGUI = null;
+			this.m_EButtonOpenDlgMailButton = null;
+			this.m_EButtonOpenDlgMailImage = null;
 			this.uiTransform = null;
 		}
 
@@ -411,6 +555,14 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_ARRoomModeJoinImage = null;
 		private UnityEngine.UI.Text m_E_ARRoomModeJoinTextText = null;
 		private UITextLocalizeMonoView m_E_ARRoomModeJoinTextUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_EButton_InsertMailButton = null;
+		private UnityEngine.UI.Image m_EButton_InsertMailImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_InsertTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButton_ReadPlayerMailButton = null;
+		private UnityEngine.UI.Image m_EButton_ReadPlayerMailImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_ReadTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_EButtonOpenDlgMailButton = null;
+		private UnityEngine.UI.Image m_EButtonOpenDlgMailImage = null;
 		public Transform uiTransform = null;
 	}
 }

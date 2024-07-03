@@ -9,13 +9,29 @@ namespace ET.Server
     {
         public static async ETTask GameBeginWhenServer(this GamePlayTowerDefenseComponent self)
         {
+            RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
+            int seasonId = roomTypeInfo.seasonId;
             if (self.IsEndlessChallengeMode())
             {
-                await self.GameBeginWhenServer_IsEndlessChallengeMode();
+                if (seasonId > 0)
+                {
+                    await self.GameBeginWhenServer_IsEndlessChallengeMode_Season();
+                }
+                else
+                {
+                    await self.GameBeginWhenServer_IsEndlessChallengeMode_Normal();
+                }
             }
             else if (self.IsPVEMode())
             {
-                await self.GameBeginWhenServer_IsPVEMode();
+                if (seasonId > 0)
+                {
+                    await self.GameBeginWhenServer_IsPVEMode_Season();
+                }
+                else
+                {
+                    await self.GameBeginWhenServer_IsPVEMode_Normal();
+                }
             }
             else if (self.IsPVPMode())
             {
@@ -27,13 +43,29 @@ namespace ET.Server
 
         public static async ETTask GameEndWhenServer(this GamePlayTowerDefenseComponent self)
         {
+            RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
+            int seasonId = roomTypeInfo.seasonId;
             if (self.IsEndlessChallengeMode())
             {
-                await self.GameEndWhenServer_IsEndlessChallengeMode();
+                if (seasonId > 0)
+                {
+                    await self.GameEndWhenServer_IsEndlessChallengeMode_Season();
+                }
+                else
+                {
+                    await self.GameEndWhenServer_IsEndlessChallengeMode_Normal();
+                }
             }
             else if (self.IsPVEMode())
             {
-                await self.GameEndWhenServer_IsPVEMode();
+                if (seasonId > 0)
+                {
+                    await self.GameEndWhenServer_IsPVEMode_Season();
+                }
+                else
+                {
+                    await self.GameEndWhenServer_IsPVEMode_Normal();
+                }
             }
             else if (self.IsPVPMode())
             {
@@ -52,12 +84,12 @@ namespace ET.Server
             {
                 return;
             }
-            await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+            await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
 
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask GameBeginWhenServer_IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
+        public static async ETTask GameBeginWhenServer_IsEndlessChallengeMode_Normal(this GamePlayTowerDefenseComponent self)
         {
             if (ET.SceneHelper.ChkIsGameModeArcade())
             {
@@ -66,7 +98,7 @@ namespace ET.Server
                 for (int i = 0; i < playerList.Count; i++)
                 {
                     long playerId = playerList[i];
-                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                    await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
                 }
             }
             else
@@ -78,16 +110,8 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask GameBeginWhenServer_IsPVEMode(this GamePlayTowerDefenseComponent self)
+        public static async ETTask GameBeginWhenServer_IsEndlessChallengeMode_Season(this GamePlayTowerDefenseComponent self)
         {
-            string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
-            bool isChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.Contain(cfgId);
-            if (isChallengeLevelCfg == false)
-            {
-                Log.Error($"TowerDefense_ChallengeLevelCfgCategory.Instance.Contain({cfgId}) == false");
-                return;
-            }
-
             if (ET.SceneHelper.ChkIsGameModeArcade())
             {
                 int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
@@ -95,7 +119,49 @@ namespace ET.Server
                 for (int i = 0; i < playerList.Count; i++)
                 {
                     long playerId = playerList[i];
-                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                    await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
+                }
+            }
+            else
+            {
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
+                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+            }
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask GameBeginWhenServer_IsPVEMode_Normal(this GamePlayTowerDefenseComponent self)
+        {
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
+                List<long> playerList = self.GetPlayerList();
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    long playerId = playerList[i];
+                    await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
+                }
+            }
+            else
+            {
+                //扣玩家体力
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+            }
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask GameBeginWhenServer_IsPVEMode_Season(this GamePlayTowerDefenseComponent self)
+        {
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                int costValue = ET.GamePlayHelper.GetArcadeCoinCost(self, false);
+                List<long> playerList = self.GetPlayerList();
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    long playerId = playerList[i];
+                    await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
                 }
             }
             else
@@ -116,7 +182,7 @@ namespace ET.Server
                 for (int i = 0; i < playerList.Count; i++)
                 {
                     long playerId = playerList[i];
-                    await ET.Server.PlayerCacheHelper.ReduceArcadeCoin(self.DomainScene(), playerId, costValue);
+                    await ET.Server.PlayerCacheHelper.ReduceTokenArcadeCoin(self.DomainScene(), playerId, costValue);
                 }
             }
             else
@@ -129,7 +195,7 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask GameEndWhenServer_IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
+        public static async ETTask GameEndWhenServer_IsEndlessChallengeMode_Normal(this GamePlayTowerDefenseComponent self)
         {
 
             MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
@@ -159,6 +225,33 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask GameEndWhenServer_IsEndlessChallengeMode_Season(this GamePlayTowerDefenseComponent self)
+        {
+
+            MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
+            List<long> playerList = self.GetPlayerList();
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                long playerId = playerList[i];
+
+                int killNum = self.GetGamePlay().GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerKillNum(playerId);
+
+                PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerSeasonInfoByPlayerId(self.DomainScene(), playerId, true);
+                if (playerSeasonInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex || (playerSeasonInfoComponent.EndlessChallengeScore == monsterWaveCallComponent.curIndex && playerSeasonInfoComponent.EndlessChallengeKillNum < killNum))
+                {
+                    playerSeasonInfoComponent.EndlessChallengeScore = monsterWaveCallComponent.curIndex;
+                    playerSeasonInfoComponent.EndlessChallengeKillNum = killNum;
+                    await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo,
+                        new() { "EndlessChallengeScore", "EndlessChallengeKillNum"}, PlayerModelChgType.PlayerSeasonInfo_EndlessChallengeScore);
+                    await ET.Server.PlayerCacheHelper.SavePlayerRank(self.DomainScene(), playerId, RankType.EndlessChallenge,
+                        playerSeasonInfoComponent.EndlessChallengeScore, playerSeasonInfoComponent.EndlessChallengeKillNum);
+                }
+
+            }
+
+            await ETTask.CompletedTask;
+        }
+
         public static async ETTask GameEndWhenServer_IsPVPMode(this GamePlayTowerDefenseComponent self)
         {
             List<long> playerList = self.GetPlayerList();
@@ -175,23 +268,26 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask GameEndWhenServer_IsPVEMode(this GamePlayTowerDefenseComponent self)
+        public static async ETTask GameEndWhenServer_IsPVEMode_Normal(this GamePlayTowerDefenseComponent self)
         {
-            string cfgId = self.GetGamePlay().GetGamePlayBattleConfig().Id;
-            bool isChallengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.Contain(cfgId);
-            if (isChallengeLevelCfg == false)
-            {
-                Log.Error($"TowerDefense_ChallengeLevelCfgCategory.Instance.Contain({cfgId}) == false");
-                return;
-            }
-            TowerDefense_ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.Get(cfgId);
-            int level = challengeLevelCfg.Index;
+            RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
+
+            int level = roomTypeInfo.pveIndex;
+
+            ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallenge(roomTypeInfo);
+            //发放首通奖励
+            Dictionary<string, int> firstClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
+            //重复通关奖励
+            Dictionary<string, int> repeatClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.RepeatClearDropItem);
+
+            int seasonId = roomTypeInfo.seasonId;
 
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
                 PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerBaseInfoByPlayerId(self.DomainScene(), playerId, true);
+                int curLevel = playerBaseInfoComponent.ChallengeClearLevel;
                 bool bHomeWin = self.ChkHomeWin(playerId);
 
                 playerBaseInfoComponent.ARPVEBattleCount++;
@@ -202,21 +298,132 @@ namespace ET.Server
                     continue;
                 }
 
-                if (playerBaseInfoComponent.ChallengeClearLevel + 1 == level)
+                if (curLevel + 1 == level)
                 {
                     playerBaseInfoComponent.ChallengeClearLevel = level;
                     await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, new() { "ChallengeClearLevel"}, PlayerModelChgType.PlayerBaseInfo_ChallengeClearLevel);
-                    //发放首通奖励
-                    Dictionary<string, int> dropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
-                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, dropItems);
-                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, dropItems);
+
+                    Dictionary<string, int> firstClearDropItemsNew = new();
+                    foreach (var item in firstClearDropItems)
+                    {
+                        string itemCfgId = item.Key;
+                        int count = item.Value;
+                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        {
+                            firstClearDropItemsNew[itemCfgId] = count;
+                            continue;
+                        }
+
+                        ET.GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEndBase, count, true);
+                        float newValue = ET.GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEnd);
+                        firstClearDropItemsNew[itemCfgId] = (int)newValue;
+                    }
+
+                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, firstClearDropItemsNew);
+                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, firstClearDropItemsNew);
                 }
-                else if (playerBaseInfoComponent.ChallengeClearLevel >= level)
+                else if (curLevel >= level)
                 {
-                    //重复通关奖励
-                    Dictionary<string, int> dropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.RepeatClearDropItem);
-                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, dropItems);
-                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, dropItems);
+                    Dictionary<string, int> repeatClearDropItemsNew = new();
+                    foreach (var item in repeatClearDropItems)
+                    {
+                        string itemCfgId = item.Key;
+                        int count = item.Value;
+                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        {
+                            repeatClearDropItemsNew[itemCfgId] = count;
+                            continue;
+                        }
+
+                        ET.GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEndBase, count, true);
+                        float newValue = ET.GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEnd);
+                        repeatClearDropItemsNew[itemCfgId] = (int)newValue;
+                    }
+
+                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, repeatClearDropItemsNew);
+                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, repeatClearDropItemsNew);
+                }
+                else
+                {
+                    //陪玩
+                }
+            }
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask GameEndWhenServer_IsPVEMode_Season(this GamePlayTowerDefenseComponent self)
+        {
+            RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
+
+            int level = roomTypeInfo.pveIndex;
+
+            int seasonId = roomTypeInfo.seasonId;
+            ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallenge(roomTypeInfo);
+            //发放首通奖励
+            Dictionary<string, int> firstClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
+            //重复通关奖励
+            Dictionary<string, int> repeatClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.RepeatClearDropItem);
+
+
+
+            List<long> playerList = self.GetPlayerList();
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                long playerId = playerList[i];
+                PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerSeasonInfoByPlayerId(self.DomainScene(), playerId, true);
+                int curLevel = playerSeasonInfoComponent.pveIndex;
+                bool bHomeWin = self.ChkHomeWin(playerId);
+
+                if (bHomeWin == false)
+                {
+                    continue;
+                }
+
+                if (curLevel + 1 == level)
+                {
+                    playerSeasonInfoComponent.pveIndex = level;
+                    await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo, new() { "pveIndex"}, PlayerModelChgType.PlayerSeasonInfo_ChallengeClearLevel);
+
+                    Dictionary<string, int> firstClearDropItemsNew = new();
+                    foreach (var item in firstClearDropItems)
+                    {
+                        string itemCfgId = item.Key;
+                        int count = item.Value;
+                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        {
+                            firstClearDropItemsNew[itemCfgId] = count;
+                            continue;
+                        }
+
+                        ET.GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEndBase, count, true);
+                        float newValue = ET.GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEnd);
+                        firstClearDropItemsNew[itemCfgId] = (int)newValue;
+                    }
+
+                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, firstClearDropItemsNew);
+                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, firstClearDropItemsNew);
+                }
+                else if (curLevel >= level)
+                {
+
+                    Dictionary<string, int> repeatClearDropItemsNew = new();
+                    foreach (var item in repeatClearDropItems)
+                    {
+                        string itemCfgId = item.Key;
+                        int count = item.Value;
+                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        {
+                            repeatClearDropItemsNew[itemCfgId] = count;
+                            continue;
+                        }
+
+                        ET.GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEndBase, count, true);
+                        float newValue = ET.GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenGameEnd);
+                        repeatClearDropItemsNew[itemCfgId] = (int)newValue;
+                    }
+
+                    await ET.Server.PlayerCacheHelper.AddItems(self.DomainScene(), playerId, repeatClearDropItemsNew);
+                    self.GetGamePlay().GetComponent<GamePlayDropItemComponent>().RecordPlayerDropItemsInfo(playerId, repeatClearDropItemsNew);
                 }
                 else
                 {
@@ -259,8 +466,8 @@ namespace ET.Server
         public static async ETTask<bool> ChkPlayerConfirmRecover(this GamePlayTowerDefenseComponent self, long playerId)
         {
             int costValue = self.GetComponent<GameRecoverOnceComponent>().recoverCostArcadeCoinNum;
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerModel(self.DomainScene(), playerId, PlayerModelType.BaseInfo, true) as PlayerBaseInfoComponent;
-            return playerBaseInfoComponent.arcadeCoinNum >= costValue;
+            int curArcadeCoin = await ET.Server.PlayerCacheHelper.GetTokenArcadeCoinByPlayerId(self.DomainScene(), playerId, true);
+            return curArcadeCoin >= costValue;
         }
 
         public static async ETTask DealPlayerConfirmRecover(this GamePlayTowerDefenseComponent self, long playerId)

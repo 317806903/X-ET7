@@ -11,11 +11,12 @@ namespace ET.Server
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			long playerId = request.PlayerId;
 			long roomId = request.RoomId;
-			string newBattleCfgId = request.NewBattleCfgId;
+			RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(request.RoomTypeInfo);
+			string newBattleCfgId = roomTypeInfo.gamePlayBattleLevelCfgId;
 			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
-			if (roomComponent.gamePlayBattleLevelCfgId == newBattleCfgId)
+			if (roomComponent.roomTypeInfo.gamePlayBattleLevelCfgId == newBattleCfgId)
 			{
-				string msg = $"roomComponent.gamePlayBattleLevelCfgId == newBattleCfgId[{newBattleCfgId}]";
+				string msg = $"roomComponent.roomTypeInfo.gamePlayBattleLevelCfgId == newBattleCfgId[{newBattleCfgId}]";
 				Log.Error(msg);
 				response.Error = ET.ErrorCode.ERR_LogicError;
 				response.Message = msg;
@@ -31,7 +32,7 @@ namespace ET.Server
 				return;
 			}
 
-			roomComponent.ChgRoomBattleLevelCfg(newBattleCfgId);
+			roomComponent.ChgRoomBattleLevelCfg(roomTypeInfo);
 
 			List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
 			for (int i = 0; i < roomMemberList.Count; i++)

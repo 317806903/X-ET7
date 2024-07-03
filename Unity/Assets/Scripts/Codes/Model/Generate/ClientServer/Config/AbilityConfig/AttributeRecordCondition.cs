@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断属性值
 /// </summary>
-public sealed partial class AttributeRecordCondition:  Condition 
+public sealed partial class AttributeRecordCondition:  UnitConditionBase 
 {
     public AttributeRecordCondition(ByteBuf _buf)  : base(_buf) 
     {

@@ -12,7 +12,7 @@ namespace ET.Server
 			PlayerStatusComponent playerStatusComponent = player.GetComponent<PlayerStatusComponent>();
 			long playerId = player.Id;
 			long roomId = playerStatusComponent.RoomId;
-			string newBattleCfgId = request.NewBattleCfgId;
+			RoomTypeInfo roomTypeInfo = ET.RoomTypeInfo.GetFromBytes(request.RoomTypeInfo);
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
@@ -20,11 +20,18 @@ namespace ET.Server
 			{
 				PlayerId = playerId,
 				RoomId = roomId,
-				NewBattleCfgId = newBattleCfgId,
+				RoomTypeInfo = request.RoomTypeInfo,
 			});
-			
-			response.Error = _R2G_ChgRoomBattleLevelCfg.Error;
-			response.Message = _R2G_ChgRoomBattleLevelCfg.Message;
+
+			if (_R2G_ChgRoomBattleLevelCfg.Error == ET.ErrorCode.ERR_LogicError)
+			{
+				response.Error = _R2G_ChgRoomBattleLevelCfg.Error;
+				response.Message = _R2G_ChgRoomBattleLevelCfg.Message;
+			}
+			else
+			{
+				playerStatusComponent.RoomTypeInfo = roomTypeInfo;
+			}
 
 			await ETTask.CompletedTask;
 		}

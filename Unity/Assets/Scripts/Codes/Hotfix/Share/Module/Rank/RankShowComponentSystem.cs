@@ -129,15 +129,15 @@ namespace ET
             return self.rankListTmp;
         }
 
-        public static int GetMyRank(this RankShowComponent self)
+        public static (int myRank, long score) GetMyRank(this RankShowComponent self)
         {
             RankShowItemComponent rankShowItemComponent = self.GetMyRankShowItemComponent();
             if (rankShowItemComponent != null)
             {
-                return rankShowItemComponent.rank;
+                return (rankShowItemComponent.rank, rankShowItemComponent.score);
             }
 
-            return -1;
+            return (-1, 0);
         }
 
         public static RankShowItemComponent GetMyRankShowItemComponent(this RankShowComponent self)

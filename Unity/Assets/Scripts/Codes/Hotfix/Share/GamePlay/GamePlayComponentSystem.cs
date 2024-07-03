@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ET.AbilityConfig;
 using Unity.Mathematics;
+using UnitHelper = ET.Ability.UnitHelper;
 
 namespace ET
 {
@@ -33,8 +34,8 @@ namespace ET
         List<RoomMember> roomMemberList, ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
         {
             self.dynamicMapInstanceId = dynamicMapInstanceId;
-            self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
             self.roomId = roomComponent.Id;
+            self.roomTypeInfo = roomComponent.roomTypeInfo;
             self.ownerPlayerId = roomComponent.ownerRoomMemberId;
 
             self.isAR = roomComponent.IsARRoom();
@@ -42,6 +43,8 @@ namespace ET
             self._ARMeshType = _ARMeshType;
             self._ARMeshDownLoadUrl = _ARMeshDownLoadUrl;
             self._ARMeshBytes = _ARMeshBytes;
+
+            self.gamePlayStatus = GamePlayStatus.WaitForStart;
 
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.AddComponent<GamePlayPlayerListComponent>();
             gamePlayPlayerListComponent.InitWhenRoom(roomComponent, roomMemberList);
@@ -55,11 +58,17 @@ namespace ET
             GamePlayDropItemComponent gamePlayDropItemComponent = self.AddComponent<GamePlayDropItemComponent>();
             gamePlayDropItemComponent.Init();
 
+            GamePlayNumericComponent gamePlayNumericComponent = self.AddComponent<GamePlayNumericComponent>();
+
             await self.DownloadMapRecast();
 
-            await self.CreateGamePlayMode();
+            await self.DoGlobalBuffForBattle();
 
-            //self.gamePlayStatus = GamePlayStatus.WaitForStart;
+            await self.DoWaitForStart();
+
+            await self.CreateGamePlayMode(self.roomTypeInfo);
+
+            await self.DoReadyForBattle();
 
             self.NoticeToClientAll();
             await ETTask.CompletedTask;
@@ -68,8 +77,8 @@ namespace ET
         public static async ETTask InitWhenGlobal(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId)
         {
             self.dynamicMapInstanceId = dynamicMapInstanceId;
-            self.gamePlayBattleLevelCfgId = gamePlayBattleLevelCfgId;
             self.roomId = 0;
+            self.roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(RoomType.Normal, SubRoomType.NormalSingleMap, -1, -1, gamePlayBattleLevelCfgId);
             self.ownerPlayerId = -1;
             self.isAR = false;
 
@@ -87,9 +96,17 @@ namespace ET
             GamePlayDropItemComponent gamePlayDropItemComponent = self.AddComponent<GamePlayDropItemComponent>();
             gamePlayDropItemComponent.Init();
 
+            GamePlayNumericComponent gamePlayNumericComponent = self.AddComponent<GamePlayNumericComponent>();
+
             await self.DownloadMapRecast();
 
-            await self.CreateGamePlayMode();
+            await self.DoGlobalBuffForBattle();
+
+            await self.DoWaitForStart();
+
+            await self.CreateGamePlayMode(self.roomTypeInfo);
+
+            await self.DoReadyForBattle();
 
             //self.NoticeToClientAll();
             await ETTask.CompletedTask;
@@ -266,8 +283,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-                gamePlayPKComponent.NoticeToClient(playerId);
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
+                gamePlayPkComponentBase.NoticeToClient(playerId);
             }
 
             self.NoticeToClient(playerId);
@@ -276,12 +293,18 @@ namespace ET
         public static void Start(this GamePlayComponent self)
         {
             self.gamePlayStatus = GamePlayStatus.Gaming;
+
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlay_Status_GameStart());
+
             self.NoticeToClientAll();
         }
 
         public static async ETTask GameEnd(this GamePlayComponent self)
         {
             self.gamePlayStatus = GamePlayStatus.GameEnd;
+
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlay_Status_GameEnd());
+
             self.StopAllAI();
 
             await self.NoticeGameEnd2Server();
@@ -310,48 +333,68 @@ namespace ET
             gamePlayFriendTeamFlagCompent.RecoveryAllAI();
         }
 
-        public static async ETTask CreateGamePlayMode(this GamePlayComponent self)
+        public static async ETTask CreateGamePlayMode(this GamePlayComponent self, RoomTypeInfo roomTypeInfo)
         {
+            bool isTowerDefense = false;
+            bool isPK = false;
+            string gamePlayModeCfgId = "";
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
-            if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseNormal gamePlayTowerDefenseNormal)
+            if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseBase gamePlayTowerDefenseBase)
+            {
+                isTowerDefense = true;
+                isPK = false;
+                gamePlayModeCfgId = gamePlayTowerDefenseBase.GamePlayModeCfgId;
+            }
+            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPKBase gamePlayPKBase)
+            {
+                isTowerDefense = false;
+                isPK = true;
+                gamePlayModeCfgId = gamePlayPKBase.GamePlayModeCfgId;
+            }
+
+            if (isTowerDefense)
             {
                 self.gamePlayMode = GamePlayMode.TowerDefense;
                 GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseNormal.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_Normal);
+                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayModeCfgId, roomTypeInfo);
             }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseTutorialFirst gamePlayTowerDefenseTutorialFirst)
-            {
-                self.gamePlayMode = GamePlayMode.TowerDefense;
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseTutorialFirst.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_TutorialFirst);
-            }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVE gamePlayTowerDefensePVE)
-            {
-                self.gamePlayMode = GamePlayMode.TowerDefense;
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVE.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVE);
-            }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefensePVP gamePlayTowerDefensePVP)
-            {
-                self.gamePlayMode = GamePlayMode.TowerDefense;
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefensePVP.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_PVP);
-            }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallenge gamePlayTowerDefenseEndlessChallenge)
-            {
-                self.gamePlayMode = GamePlayMode.TowerDefense;
-                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.AddComponent<GamePlayTowerDefenseComponent>();
-                await gamePlayTowerDefenseComponent.Init(self.ownerPlayerId, gamePlayTowerDefenseEndlessChallenge.GamePlayModeCfgId, GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge);
-            }
-            else if (gamePlayBattleLevelCfg.GamePlayMode is GamePlayPKNormal gamePlayPkNormal)
+
+            if (isPK)
             {
                 self.gamePlayMode = GamePlayMode.PK;
-                GamePlayPKComponent gamePlayPKComponent = self.AddComponent<GamePlayPKComponent>();
-                await gamePlayPKComponent.Init(self.ownerPlayerId, gamePlayPkNormal.GamePlayModeCfgId);
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.AddComponent<GamePlayPkComponentBase>();
+                await gamePlayPkComponentBase.Init(self.ownerPlayerId, gamePlayModeCfgId, roomTypeInfo);
             }
         }
 
-        public static GamePlayModeComponent GetGamePlayMode(this GamePlayComponent self)
+        public static async ETTask DoGlobalBuffForBattle(this GamePlayComponent self)
+        {
+            self.DomainScene().AddComponent<ET.Ability.GlobalBuffManagerComponent>();
+
+            await self.NoticeGameWaitForStart2Server();
+        }
+
+        public static async ETTask DoWaitForStart(this GamePlayComponent self)
+        {
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlay_Status_GameWaitForStart());
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask DoReadyForBattle(this GamePlayComponent self)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                await gamePlayTowerDefenseComponent.DoReadyForBattle();
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
+                await gamePlayPkComponentBase.DoReadyForBattle();
+            }
+        }
+
+        public static GamePlayModeComponentBase GetGamePlayMode(this GamePlayComponent self)
         {
             if (self.gamePlayMode == GamePlayMode.TowerDefense)
             {
@@ -360,8 +403,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-                return gamePlayPKComponent;
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
+                return gamePlayPkComponentBase;
             }
 
             return null;
@@ -369,7 +412,7 @@ namespace ET
 
         public static GamePlayBattleLevelCfg GetGamePlayBattleConfig(this GamePlayComponent self)
         {
-            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.gamePlayBattleLevelCfgId);
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(self.roomTypeInfo.gamePlayBattleLevelCfgId);
             return gamePlayBattleLevelCfg;
         }
 
@@ -469,8 +512,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-                gamePlayPKComponent.NoticeToClient(playerId);
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
+                gamePlayPkComponentBase.NoticeToClient(playerId);
             }
         }
 
@@ -495,7 +538,7 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                // GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
+                // GamePlayPkComponentBase gamePlayPKComponent = self.GetComponent<GamePlayPkComponentBase>();
                 // gamePlayPKComponent.NoticeToClient(playerId);
             }
             EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
@@ -520,6 +563,12 @@ namespace ET
         public static void NoticeGamePlayStatisticalData2Client(this GamePlayComponent self)
         {
             self.GetComponent<GamePlayStatisticalDataManagerComponent>().NoticeToClientAll();
+        }
+
+        public static async ETTask NoticeGameWaitForStart2Server(this GamePlayComponent self)
+        {
+            EventType.NoticeGameWaitForStart2Server _NoticeGameWaitForStart2Server = new() { gamePlayComponent = self, };
+            await EventSystem.Instance.PublishAsync(self.DomainScene(), _NoticeGameWaitForStart2Server);
         }
 
         public static void NoticeGameBegin2Server(this GamePlayComponent self)
@@ -687,12 +736,12 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = self.GetComponent<GamePlayPKComponent>();
-                gamePlayPKComponent.DealUnitBeKill(attackerUnit, beKillUnit);
+                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
+                gamePlayPkComponentBase.DealUnitBeKill(attackerUnit, beKillUnit);
             }
         }
 
-        public static float GetPlayerCoin(this GamePlayComponent self, long playerId, CoinType coinType)
+        public static float GetPlayerCoin(this GamePlayComponent self, long playerId, CoinTypeInGame coinType)
         {
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
             return gamePlayPlayerListComponent.GetPlayerCoin(playerId, coinType);

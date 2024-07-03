@@ -14,7 +14,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowMonsterItem(this Scroll_Item_Monsters self, string itemCfgId, bool needClickShowDetail)
+		public static void ShowMonsterItem(this Scroll_Item_Monsters self, string itemCfgId, bool needClickShowDetail,Vector3 detailsOffset = default)
 		{
 			ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
 			if (needClickShowDetail)
@@ -22,7 +22,7 @@ namespace ET.Client
 				ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
 				{
 					UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
-					self.ShowDetails(itemCfgId);
+					self.ShowDetails(itemCfgId,detailsOffset);
 				});
 			}
 
@@ -37,22 +37,14 @@ namespace ET.Client
 			}
 		}
 
-		public static void ShowDetails(this Scroll_Item_Monsters self, string itemCfgId)
+		public static void ShowDetails(this Scroll_Item_Monsters self, string itemCfgId, Vector3 detailsOffset)
 		{
 			if (string.IsNullOrEmpty(itemCfgId))
 			{
 				return;
 			}
 
-			if (ItemHelper.ChkIsTower(itemCfgId))
-			{
-				ET.Client.UIManagerHelper.SetTowerItemClick(self.DomainScene(), itemCfgId);
-			}
-
-			if (ItemHelper.ChkIsMonster(itemCfgId))
-			{
-				ET.Client.UIManagerHelper.SetMonsterItemClick(self.DomainScene(), itemCfgId, self.uiTransform.position);
-			}
+			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, self.uiTransform.position+ detailsOffset);
 		}
 
 	}

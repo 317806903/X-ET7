@@ -44,6 +44,21 @@ namespace ET.Client
             }
         }
 
+        public static void Clear(this PathLineRendererComponent self)
+        {
+            if (self.lineRendererRoot != null)
+            {
+                foreach (var lineRendererTran in self.lineRendererTrans)
+                {
+                    GameObject.Destroy(lineRendererTran.Value.gameObject);
+                }
+                GameObjectPoolHelper.ReturnTransformToPool(self.lineRendererRoot);
+                self.lineRendererRoot = null;
+            }
+            self.lineRendererTrans.Clear();
+            self.lineRenderers.Clear();
+        }
+
         public static bool ChkIsShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId, float3 pos)
         {
             string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
@@ -173,6 +188,35 @@ namespace ET.Client
             {
                 lineRenderer.enabled = false;
             }
+        }
+
+        public static float GetPathLength(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId)
+        {
+            LineRenderer lineRenderer;
+            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
+            if (self.lineRenderers.ContainsKey(key))
+            {
+                lineRenderer = self.lineRenderers[key];
+            }
+            else
+            {
+                return 0;
+            }
+
+            if (lineRenderer.enabled == false)
+            {
+                return 0;
+            }
+            int count = lineRenderer.positionCount;
+            Vector3[] linePoints = new Vector3[count];
+            lineRenderer.GetPositions(linePoints);
+            float length = 0;
+            for (int i = 1; i < linePoints.Length; i++)
+            {
+                length += (linePoints[i] - linePoints[i - 1]).magnitude;
+            }
+
+            return length;
         }
 
         public static Unit GetUnit(this PathLineRendererComponent self)

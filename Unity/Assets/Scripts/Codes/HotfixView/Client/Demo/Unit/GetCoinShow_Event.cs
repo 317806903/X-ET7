@@ -10,12 +10,12 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.SyncGetCoinShow args)
         {
-            List<(Unit unit, CoinType coinType, int chgValue)> list = args.list;
+            List<(Unit unit, CoinTypeInGame coinType, int chgValue)> list = args.list;
             if (list == null)
             {
                 return;
             }
-            foreach ((Unit unit, CoinType coinType, int chgValue) in list)
+            foreach ((Unit unit, CoinTypeInGame coinType, int chgValue) in list)
             {
                 ShowGetGoldTextComponent.Instance.ShowGetGold(unit, chgValue);
             }

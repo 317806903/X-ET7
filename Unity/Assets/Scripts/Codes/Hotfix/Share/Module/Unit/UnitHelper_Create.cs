@@ -41,7 +41,7 @@ namespace ET.Ability
             unit.Type = unitType;
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
-            if (unitType != UnitType.Bullet)
+            if (unit.model != null)
             {
                 numericComponent.SetAsFloat(NumericType.SpeedBase, unit.model.MoveSpeed);
                 numericComponent.SetAsFloat(NumericType.RotationSpeedBase, unit.model.RotationSpeed);
@@ -389,8 +389,15 @@ namespace ET.Ability
             UnitPropertyCfg unitPropertyCfg = UnitPropertyCfgCategory.Instance.Get(propertyType, unitLevel);
             if (unitPropertyCfg == null)
             {
-                Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null propertyType=[{propertyType}] unitLevel=[{unitLevel}] ForceSet unitLevel=1");
-                SetUnitNumeric(numericComponent, propertyType, 1);
+                if (UnitPropertyCfgCategory.Instance.Get(propertyType, 1) != null)
+                {
+                    Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null propertyType=[{propertyType}] unitLevel=[{unitLevel}] ForceSet unitLevel=1");
+                    SetUnitNumeric(numericComponent, propertyType, 1);
+                }
+                else
+                {
+                    Log.Error($"UnitHelper_Create.SetUnitNumeric unitPropertyCfg == null propertyType=[{propertyType}] unitLevel=[{unitLevel}]");
+                }
                 return;
             }
             numericComponent.SetAsInt(NumericType.MaxHpBase, unitPropertyCfg.HpBase);

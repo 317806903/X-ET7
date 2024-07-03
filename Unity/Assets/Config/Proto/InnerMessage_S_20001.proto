@@ -275,9 +275,7 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 	string Message = 3;
 	int64 RoomId = 4;
 	int32 RoomStatus = 5;
-	int32 RoomType = 6;
-	int32 SubRoomType = 7;
-	string BattleCfgId = 8;
+	bytes RoomTypeInfo = 6;
 }
 
 //ResponseType R2G_GetRoomList
@@ -316,9 +314,7 @@ message G2R_CreateRoom // IActorRequest
 {
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
-	string BattleCfgId = 3;
-	int32 RoomType = 4;
-	int32 SubRoomType = 5;
+	bytes RoomTypeInfo = 3;
 }
 
 message R2G_CreateRoom // IActorResponse
@@ -342,8 +338,7 @@ message R2G_JoinRoom // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	int32 RoomType = 4;
-	int32 SubRoomType = 5;
+	bytes RoomTypeInfo = 4;
 }
 
 //ResponseType R2G_QuitRoom
@@ -467,7 +462,7 @@ message G2R_ChgRoomBattleLevelCfg // IActorRequest
 	int32 RpcId = 1;
 	int64 PlayerId = 2;
 	int64 RoomId = 3;
-	string NewBattleCfgId = 4;
+	bytes RoomTypeInfo = 4;
 }
 
 message R2G_ChgRoomBattleLevelCfg // IActorResponse
@@ -837,4 +832,75 @@ message G2M_GetPlayerSessionInfo // IActorResponse
 	string Message = 3;
 	int32 Fps = 4;
 	int64 PingTime = 5;
+}
+
+//ResponseType R2S_ChgSeason
+message S2R_ChgSeason // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 SeasonId = 2;
+}
+
+message R2S_ChgSeason // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType P2S_ChgSeason
+message S2P_ChgSeason // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 SeasonId = 2;
+}
+
+message P2S_ChgSeason // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType S2G_GetSeasonComponent
+message G2S_GetSeasonComponent // IActorRequest
+{
+	int32 RpcId = 1;
+}
+
+message S2G_GetSeasonComponent // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	bytes ComponentBytes = 4;
+}
+
+//ResponseType M2G_GetMailFromCenter
+message G2M_GetMailFromCenter // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message M2G_GetMailFromCenter // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated bytes ComponentBytes = 4;
+}
+
+//ResponseType M2G_InsertMailToCenter
+message G2M_InsertMailToCenter // IActorRequest
+{
+	int32 RpcId = 1;
+	bytes ComponentBytes = 2;
+}
+
+message M2G_InsertMailToCenter // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace ET.Client
 {
-    [Event(SceneType.Client)]
+    [Event(SceneType.Current|SceneType.Client)]
     public class NoticeUITip_Event: AEvent<Scene, EventType.NoticeUITip>
     {
         protected override async ETTask Run(Scene scene, EventType.NoticeUITip args)

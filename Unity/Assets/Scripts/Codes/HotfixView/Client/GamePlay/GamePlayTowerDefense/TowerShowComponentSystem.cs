@@ -94,14 +94,23 @@ namespace ET.Client
             float height = Ability.UnitHelper.GetBodyHeight(unit) / Ability.UnitHelper.GetResScale(unit);
             TowerShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
 
+            Transform  transCollider = self.transRoot.Find("ColliderRoot");
+            transCollider.gameObject.SetActive(true);
             self.transCollider = self.transRoot.Find("ColliderRoot/Collider");
             ET.Client.ModelClickManagerHelper.SetTowerInfoToClickInfo(self.DomainScene(), self.transCollider, self);
 
+            float chgY = self.transRoot.localScale.x / self.transRoot.localScale.y;
             self.transDefaultShow = self.transRoot.Find("DefaultShow");
+            self.transDefaultShow.localScale = new Vector3(1f, chgY, 1f);
             self.transSelectShow = self.transRoot.Find("SelectShow");
+            self.transSelectShow.localScale = new Vector3(1f, chgY, 1f);
             self.transCanUpgradeShow = self.transRoot.Find("CanUpgradeShow");
+            self.transCanUpgradeShow.localScale = new Vector3(1f, chgY, 1f);
+
             self.transAttackArea = self.transRoot.Find("AttackArea");
+            self.transAttackArea.localScale = new Vector3(1f, chgY, 1f);
             self.transMyTowerShow = self.transRoot.Find("MyTowerShow");
+            self.transMyTowerShow.localScale = new Vector3(1f, chgY, 1f);
 
             self.transDefaultShow.gameObject.SetActive(true);
             self.transSelectShow.gameObject.SetActive(false);
@@ -149,7 +158,7 @@ namespace ET.Client
             }
         }
 
-        public static void DoSelect(this TowerShowComponent self)
+        public static async ETTask DoSelect(this TowerShowComponent self)
         {
             Log.Debug($"ET.Client.TowerShowComponentSystem.DoSelect unitId[{self.GetUnit().Id}] towerCfgId[{self.towerComponent.towerCfgId}]");
 

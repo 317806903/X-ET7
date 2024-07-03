@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 攻击时,能否被控制(破霸体)
 /// </summary>
-public sealed partial class OnHitChkCanBeControlCondition:  Condition 
+public sealed partial class OnHitChkCanBeControlCondition:  UnitConditionBase 
 {
     public OnHitChkCanBeControlCondition(ByteBuf _buf)  : base(_buf) 
     {

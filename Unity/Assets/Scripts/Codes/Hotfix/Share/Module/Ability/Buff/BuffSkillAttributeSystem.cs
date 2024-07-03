@@ -8,7 +8,7 @@ namespace ET.Ability
     [FriendOf(typeof (BuffObj))]
     public static class BuffSkillAttributeSystem
     {
-        public static (ET.AbilityConfig.NumericType, float) _GetSkillAttributeChg(this BuffObj self, BuffActionModifySkillAttribute buffActionModifySkillAttribute, int stackCount)
+        public static (ET.AbilityConfig.SkillNumericType, float) _GetSkillAttributeChg(this BuffObj self, BuffActionModifySkillAttribute buffActionModifySkillAttribute, int stackCount)
         {
             float chgValue = buffActionModifySkillAttribute.BaseValue + buffActionModifySkillAttribute.StackValue * stackCount;
             float maxChgValue = buffActionModifySkillAttribute.MaxChgValue;
@@ -29,13 +29,15 @@ namespace ET.Ability
         {
             string skillCfgId = buffActionModifySkillAttribute.SkillId;
             ET.AbilityConfig.SkillSlotType skillSlotType = buffActionModifySkillAttribute.SkillSlotType;
+            int skillSlotIndex = buffActionModifySkillAttribute.SkillSlotIndex;
+            ET.AbilityConfig.SkillGroupType skillGroupType = buffActionModifySkillAttribute.SkillGroupType;
             Unit unit = self.GetUnit();
-            return ET.Ability.SkillHelper.GetSkillList(unit, skillCfgId, skillSlotType);
+            return ET.Ability.SkillHelper.GetSkillList(unit, skillCfgId, skillSlotType, skillSlotIndex, skillGroupType);
         }
 
         public static void AddBuffWhenModifySkillAttribute(this BuffObj self, BuffActionModifySkillAttribute buffActionModifySkillAttribute)
         {
-            (AbilityConfig.NumericType numericType, float value) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, self.stack);
+            (AbilityConfig.SkillNumericType numericType, float value) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, self.stack);
             foreach (SkillObj skillObj in self._GetSkillList(buffActionModifySkillAttribute))
             {
                 NumericComponent numericComponent = skillObj.GetComponent<NumericComponent>();
@@ -50,8 +52,8 @@ namespace ET.Ability
             {
                 return;
             }
-            (AbilityConfig.NumericType numericType, float oldValue) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, oldStackCount);
-            (AbilityConfig.NumericType numericType2, float newValue) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, newStackCount);
+            (AbilityConfig.SkillNumericType numericType, float oldValue) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, oldStackCount);
+            (AbilityConfig.SkillNumericType numericType2, float newValue) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, newStackCount);
 
             foreach (SkillObj skillObj in self._GetSkillList(buffActionModifySkillAttribute))
             {
@@ -63,7 +65,7 @@ namespace ET.Ability
 
         public static void RemoveBuffWhenModifySkillAttribute(this BuffObj self, BuffActionModifySkillAttribute buffActionModifySkillAttribute)
         {
-            (AbilityConfig.NumericType numericType, float value) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, self.stack);
+            (AbilityConfig.SkillNumericType numericType, float value) = self._GetSkillAttributeChg(buffActionModifySkillAttribute, self.stack);
             foreach (SkillObj skillObj in self._GetSkillList(buffActionModifySkillAttribute))
             {
                 NumericComponent numericComponent = skillObj.GetComponent<NumericComponent>();

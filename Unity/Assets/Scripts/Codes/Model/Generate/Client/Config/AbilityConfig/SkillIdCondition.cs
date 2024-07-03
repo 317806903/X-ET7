@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 判断当前是否这个技能id
 /// </summary>
-public sealed partial class SkillIdCondition:  Condition 
+public sealed partial class SkillIdCondition:  UnitConditionBase 
 {
     public SkillIdCondition(ByteBuf _buf)  : base(_buf) 
     {

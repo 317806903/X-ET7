@@ -19,23 +19,46 @@ namespace ET.Client
 			self.showNum = 0;
 		}
 
-		public static void Show(this DlgCommonLoading self)
+		public static void Show(this DlgCommonLoading self, bool bForceShow)
 		{
 			self.showNum++;
 
 			CanvasGroup canvasGroup = self.View.EG_ShowRootRectTransform.GetComponent<CanvasGroup>();
-			if (self.showNum == 1)
+			if (bForceShow)
 			{
-				canvasGroup.alpha = 0;
-				canvasGroup.DOKill();
-				Tweener twe = canvasGroup.DOFade(0, 0).From(0).SetDelay(2);
-				twe.OnComplete(() =>
+				if (self.quence != null)
 				{
-					Tweener twe2 = canvasGroup.DOFade(1, 2).From(0).SetDelay(10);
-					twe2.OnComplete(() =>
-					{
-						self.Hide(true);
-					});
+					self.quence.Kill();
+					self.quence.Complete();
+					self.quence = null;
+				}
+				self.quence = DOTween.Sequence();
+				canvasGroup.alpha = 0;
+				self.quence.Append(canvasGroup.DOFade(0, 0).From(0));
+				self.quence.Append(canvasGroup.DOFade(1, 2).From(0));
+				self.quence.AppendInterval(10);
+				self.quence.OnComplete(() =>
+				{
+					self.Hide(true);
+				});
+			}
+			else
+			{
+				if (self.quence != null)
+				{
+					self.quence.Kill();
+					self.quence.Complete();
+					self.quence = null;
+				}
+				self.quence = DOTween.Sequence();
+				canvasGroup.alpha = 0;
+				self.quence.Append(canvasGroup.DOFade(0, 0).From(0));
+				self.quence.AppendInterval(2);
+				self.quence.Append(canvasGroup.DOFade(1, 2).From(0));
+				self.quence.AppendInterval(10);
+				self.quence.OnComplete(() =>
+				{
+					self.Hide(true);
 				});
 			}
 		}
@@ -52,10 +75,14 @@ namespace ET.Client
 			}
 			if (self.showNum <= 0)
 			{
+				if (self.quence != null)
+				{
+					self.quence.Kill();
+					self.quence.Complete();
+					self.quence = null;
+				}
 				UIComponent _UIComponent = UIManagerHelper.GetUIComponent(self.DomainScene());
 				_UIComponent.HideWindow<DlgCommonLoading>();
-				CanvasGroup canvasGroup = self.View.EG_ShowRootRectTransform.GetComponent<CanvasGroup>();
-				canvasGroup.DOKill();
 			}
 		}
 	}

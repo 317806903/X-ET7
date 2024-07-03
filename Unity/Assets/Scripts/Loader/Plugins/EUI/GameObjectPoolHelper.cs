@@ -130,49 +130,58 @@ namespace ET.Client
             {
                 return;
             }
-            ParticleSystem[] particleSystems = go.GetComponentsInChildren<ParticleSystem>();
-            foreach (ParticleSystem particleSystem in particleSystems)
-            {
-                if (particleSystem != null)
-                {
-                    particleSystem.Play();
-                }
-            }
-
-            TrailRenderer[] trailRenderers = go.GetComponentsInChildren<TrailRenderer>();
-            foreach (TrailRenderer trailRenderer in trailRenderers)
-            {
-                if (trailRenderer != null)
-                {
-                    trailRenderer.Clear();
-                    trailRenderer.enabled = true;
-                }
-            }
-        }
-
-        public static void TrigToPool(GameObject go)
-        {
-            if (go == null)
+            PoolObject po = go.GetComponent<PoolObject>();
+            if (po == null)
             {
                 return;
             }
 
-            ParticleSystem[] particleSystems = go.GetComponentsInChildren<ParticleSystem>(true);
-            foreach (ParticleSystem particleSystem in particleSystems)
+            if (po.particleSystemList != null)
             {
-                if (particleSystem != null)
+                foreach (ParticleSystem particleSystem in po.particleSystemList)
                 {
-                    particleSystem.Stop();
+                    if (particleSystem != null)
+                    {
+                        particleSystem.Play();
+                    }
                 }
             }
 
-            TrailRenderer[] trailRenderers = go.GetComponentsInChildren<TrailRenderer>(true);
-            foreach (TrailRenderer trailRenderer in trailRenderers)
+            if (po.trailRendererList != null)
             {
-                if (trailRenderer != null)
+                foreach (TrailRenderer trailRenderer in po.trailRendererList)
                 {
-                    trailRenderer.Clear();
-                    trailRenderer.enabled = false;
+                    if (trailRenderer != null)
+                    {
+                        trailRenderer.Clear();
+                        trailRenderer.enabled = true;
+                    }
+                }
+            }
+        }
+
+        public static void TrigToPool(PoolObject po)
+        {
+            if (po.particleSystemList != null)
+            {
+                foreach (ParticleSystem particleSystem in po.particleSystemList)
+                {
+                    if (particleSystem != null)
+                    {
+                        particleSystem.Stop();
+                    }
+                }
+            }
+
+            if (po.trailRendererList != null)
+            {
+                foreach (TrailRenderer trailRenderer in po.trailRendererList)
+                {
+                    if (trailRenderer != null)
+                    {
+                        trailRenderer.Clear();
+                        trailRenderer.enabled = false;
+                    }
                 }
             }
         }
@@ -183,8 +192,6 @@ namespace ET.Client
         /// <OtherParam name="go"></OtherParam>
         public static void ReturnObjectToPool(GameObject go)
         {
-            TrigToPool(go);
-
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
             {
@@ -194,6 +201,8 @@ namespace ET.Client
             }
             else
             {
+                TrigToPool(po);
+
                 GameObjectPool pool = null;
                 if (poolDict.TryGetValue(po.poolName, out pool))
                 {
@@ -234,6 +243,41 @@ namespace ET.Client
             //
             GameObject go = EventSystem.Instance.Invoke<ConfigComponent.GetRes, GameObject>(new ConfigComponent.GetRes() { ResName = poolName });
             return go;
+        }
+
+        public static void ShowPoolDictCount(int showCount)
+        {
+            foreach (var item in poolDict)
+            {
+                GameObjectPool gameObjectPool = item.Value;
+                if (gameObjectPool.GetAvailableObjStackCount() >= showCount)
+                {
+                    Log.Debug($"ShowPoolDictCount [{item.Key}] count[{gameObjectPool.GetAvailableObjStackCount()}]");
+                }
+            }
+        }
+
+        public static void ResetPoolDictCount(int maxCount)
+        {
+            foreach (var item in poolDict)
+            {
+                GameObjectPool gameObjectPool = item.Value;
+                if (gameObjectPool.GetAvailableObjStackCount() > maxCount)
+                {
+                    gameObjectPool.ResetPoolDictCount(maxCount);
+                }
+            }
+        }
+
+        public static void ResetPoolDictCount(string poolName, int maxCount)
+        {
+            if (poolDict.TryGetValue(poolName, out GameObjectPool gameObjectPool))
+            {
+                if (gameObjectPool.GetAvailableObjStackCount() > maxCount)
+                {
+                    gameObjectPool.ResetPoolDictCount(maxCount);
+                }
+            }
         }
     }
 }

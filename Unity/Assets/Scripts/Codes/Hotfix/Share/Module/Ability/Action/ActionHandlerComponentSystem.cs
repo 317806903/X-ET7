@@ -13,6 +13,7 @@ namespace ET.Ability
             protected override void Awake(ActionHandlerComponent self)
             {
                 self.dic = new();
+                self.actionIdIsChk = new();
                 self.actionId2ActionHandle = new();
                 self.Load();
             }
@@ -24,6 +25,7 @@ namespace ET.Ability
             protected override void Destroy(ActionHandlerComponent self)
             {
                 self.dic.Clear();
+                self.actionIdIsChk.Clear();
                 self.actionId2ActionHandle.Clear();
             }
         }
@@ -31,6 +33,7 @@ namespace ET.Ability
         public static void Load(this ActionHandlerComponent self)
         {
             self.dic.Clear();
+            self.actionIdIsChk.Clear();
             self.actionId2ActionHandle.Clear();
             var types = EventSystem.Instance.GetTypes(typeof (ActionHandlerAttribute));
             foreach (Type type in types)
@@ -54,6 +57,10 @@ namespace ET.Ability
         {
             if (self.actionId2ActionHandle.TryGetValue(actionId, out IActionHandler actionHandler) == false)
             {
+                if (self.actionIdIsChk.Contains(actionId))
+                {
+                    return null;
+                }
                 int index = actionId.IndexOf("_", 0);
                 if (index == -1)
                 {
@@ -74,6 +81,7 @@ namespace ET.Ability
                     }
                 }
 
+                self.actionIdIsChk.Add(actionId);
                 self.actionId2ActionHandle[actionId] = actionHandler;
             }
 

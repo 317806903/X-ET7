@@ -15,11 +15,10 @@ namespace ET.AbilityConfig
 /// <summary>
 /// pk
 /// </summary>
-public sealed partial class GamePlayPKNormal:  GamePlayModeBase 
+public sealed partial class GamePlayPKNormal:  GamePlayPKBase 
 {
     public GamePlayPKNormal(ByteBuf _buf)  : base(_buf) 
     {
-        GamePlayModeCfgId = _buf.ReadString();
         PostInit();
     }
 
@@ -28,11 +27,6 @@ public sealed partial class GamePlayPKNormal:  GamePlayModeBase
         return new GamePlayPKNormal(_buf);
     }
 
-    /// <summary>
-    /// 玩法配置表id
-    /// </summary>
-    public string GamePlayModeCfgId { get; private set; }
-    public GamePlayPKCfg GamePlayModeCfgId_Ref { get; private set; }
 
     public const int __ID__ = 1042328360;
     public override int GetTypeId() => __ID__;
@@ -40,7 +34,6 @@ public sealed partial class GamePlayPKNormal:  GamePlayModeBase
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         base.Resolve(_tables);
-        this.GamePlayModeCfgId_Ref = (_tables["GamePlayPKCfgCategory"] as GamePlayPKCfgCategory).GetOrDefault(GamePlayModeCfgId);
         PostResolve();
     }
 

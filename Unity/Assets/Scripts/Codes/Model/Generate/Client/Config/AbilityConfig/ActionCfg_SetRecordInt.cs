@@ -21,7 +21,7 @@ public sealed partial class ActionCfg_SetRecordInt: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         RecordKey = (RecordKeyInt)_buf.ReadInt();
         ValueOperation = (ValueOperation)_buf.ReadInt();
-        RecordValue = _buf.ReadInt();
+        RecordValue = _buf.ReadFloat();
         PostInit();
     }
 
@@ -53,7 +53,7 @@ public sealed partial class ActionCfg_SetRecordInt: Bright.Config.BeanBase
     /// <summary>
     /// value
     /// </summary>
-    public int RecordValue { get; private set; }
+    public float RecordValue { get; private set; }
 
     public const int __ID__ = 365591085;
     public override int GetTypeId() => __ID__;

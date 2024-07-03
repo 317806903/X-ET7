@@ -13,6 +13,7 @@ namespace ET
             protected override void Awake(PlayerOtherInfoComponent self)
             {
                 self.battleGuideStatus = new();
+                self.battleGuideStepIndex = new();
                 self.Init();
             }
         }
@@ -47,9 +48,23 @@ namespace ET
             return (true, gamePlayBattleLevelCfg.BattleGuideConfigFileName);
         }
 
+        public static int GetBattleGuideStepIndex(this PlayerOtherInfoComponent self, string battleCfgId)
+        {
+            if (self.battleGuideStepIndex.TryGetValue(battleCfgId, out var stepIndex))
+            {
+                return stepIndex;
+            }
+            return 0;
+        }
+
         public static void SetBattleGuideFinished(this PlayerOtherInfoComponent self, string battleCfgId)
         {
             self.battleGuideStatus.Add(battleCfgId, true);
+        }
+
+        public static void SetBattleGuideStepFinished(this PlayerOtherInfoComponent self, string battleCfgId, int stepIndex)
+        {
+            self.battleGuideStepIndex[battleCfgId] = stepIndex;
         }
     }
 }

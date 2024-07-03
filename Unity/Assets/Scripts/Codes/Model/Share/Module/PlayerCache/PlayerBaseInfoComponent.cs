@@ -25,8 +25,6 @@ namespace ET
         public int physicalStrength;
         public long nextRecoverPhysicalTime;
 
-        public int arcadeCoinNum;
-
         public LoginType BindLoginType;
         public string BindEmail;
     }

@@ -10,7 +10,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityAoeMonitorTriggerEvent.AoeOnCreate);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnCreate);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -24,7 +24,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityAoeMonitorTriggerEvent.AoeOnRemoved);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnRemoved);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -38,7 +38,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityAoeMonitorTriggerEvent.AoeOnEnter);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnEnter);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -52,7 +52,7 @@
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityAoeMonitorTriggerEvent.AoeOnExist);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnExist);
 				}
 				await ETTask.CompletedTask;
 			}

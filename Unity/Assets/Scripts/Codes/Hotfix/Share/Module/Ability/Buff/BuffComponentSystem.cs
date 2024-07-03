@@ -113,8 +113,8 @@ namespace ET.Ability
 
                 //Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
 
-                buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnAwake);
-                buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnStart);
+                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake);
+                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart);
             }
 
             self.NoticeUnitBuffStatusChg();
@@ -192,7 +192,7 @@ namespace ET.Ability
             }
         }
 
-        public static void EventHandler(this BuffComponent self, AbilityBuffMonitorTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(this BuffComponent self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
         {
             if (self.monitorTriggerList.ContainsKey(abilityBuffMonitorTriggerEvent) == false)
             {
@@ -209,7 +209,7 @@ namespace ET.Ability
 
         public static void Remove(this BuffComponent self, BuffObj buffObj)
         {
-            buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnDestroy);
+            buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnDestroy);
 
             self.DealWhenRemoveBuff(buffObj);
             self.DoEnabledTagGroup(buffObj);
@@ -248,7 +248,7 @@ namespace ET.Ability
 
                 if (buffObj.ChkNeedRemove())
                 {
-                    buffObj.TrigEvent(AbilityBuffMonitorTriggerEvent.BuffOnRemoved);
+                    buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRemoved);
                 }
                 if (buffObj.ChkNeedRemove())
                 {
@@ -282,7 +282,7 @@ namespace ET.Ability
 
         public static List<BuffObj> GetBuffListByBuffCfgId(this BuffComponent self, string buffCfgId)
         {
-            List<BuffObj> buffList = new();
+            List<BuffObj> buffList = ListComponent<BuffObj>.Create();
             foreach (var buffObjs in self.Children)
             {
                 BuffObj buffObj = buffObjs.Value as BuffObj;
@@ -296,7 +296,7 @@ namespace ET.Ability
 
         public static List<BuffObj> GetAllBuffList(this BuffComponent self)
         {
-            List<BuffObj> buffList = new();
+            List<BuffObj> buffList = ListComponent<BuffObj>.Create();
             foreach (var buffObjs in self.Children)
             {
                 BuffObj buffObj = buffObjs.Value as BuffObj;

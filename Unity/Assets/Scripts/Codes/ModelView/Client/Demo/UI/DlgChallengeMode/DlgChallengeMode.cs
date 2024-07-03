@@ -2,15 +2,14 @@
 
 namespace ET.Client
 {
-	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgChallengeMode : Entity, IAwake, IUILogic
-	{
-		public DlgChallengeModeViewComponent View { get => this.GetComponent<DlgChallengeModeViewComponent>(); }
+    [ComponentOf(typeof(UIBaseWindow))]
+    public class DlgChallengeMode : Entity, IAwake, IUILogic
+    {
+        public DlgChallengeModeViewComponent View { get => this.GetComponent<DlgChallengeModeViewComponent>(); }
 
-		public Dictionary<int, Scroll_Item_ChallengeList> ScrollItemChallengeList;
-		public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemReward;
-		public Dictionary<int, Scroll_Item_Monsters> ScrollItemMonster;
-		public int selectIndex;
-		public bool isAR;
-	}
+        //当前选择的页面索引：
+        //0代表常规界面；
+        //1代表赛季界面
+        public int pageIndex=0;
+    }
 }

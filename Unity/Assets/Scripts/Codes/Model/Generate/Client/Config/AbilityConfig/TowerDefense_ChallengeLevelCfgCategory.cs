@@ -17,39 +17,39 @@ namespace ET.AbilityConfig
 [Config]
 public partial class TowerDefense_ChallengeLevelCfgCategory: ConfigSingleton<TowerDefense_ChallengeLevelCfgCategory>
 {
-    private readonly Dictionary<string, TowerDefense_ChallengeLevelCfg> _dataMap;
-    private readonly List<TowerDefense_ChallengeLevelCfg> _dataList;
+    private readonly Dictionary<int, ChallengeLevelCfg> _dataMap;
+    private readonly List<ChallengeLevelCfg> _dataList;
     
     public TowerDefense_ChallengeLevelCfgCategory(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<string, TowerDefense_ChallengeLevelCfg>();
-        _dataList = new List<TowerDefense_ChallengeLevelCfg>();
+        _dataMap = new Dictionary<int, ChallengeLevelCfg>();
+        _dataList = new List<ChallengeLevelCfg>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
         {
-            TowerDefense_ChallengeLevelCfg _v;
-            _v = TowerDefense_ChallengeLevelCfg.DeserializeTowerDefense_ChallengeLevelCfg(_buf);
+            ChallengeLevelCfg _v;
+            _v = ChallengeLevelCfg.DeserializeChallengeLevelCfg(_buf);
             _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+            _dataMap.Add(_v.Index, _v);
         }
         PostInit();
     }
     
-    public bool Contain(string id)
+    public bool Contain(int id)
     {
         return _dataMap.ContainsKey(id);
     }
 
-    public Dictionary<string, TowerDefense_ChallengeLevelCfg> GetAll()
+    public Dictionary<int, ChallengeLevelCfg> GetAll()
     {
         return _dataMap;
     }
     
-    public List<TowerDefense_ChallengeLevelCfg> DataList => _dataList;
+    public List<ChallengeLevelCfg> DataList => _dataList;
 
-    public TowerDefense_ChallengeLevelCfg GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public TowerDefense_ChallengeLevelCfg Get(string key) => _dataMap[key];
-    public TowerDefense_ChallengeLevelCfg this[string key] => _dataMap[key];
+    public ChallengeLevelCfg GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public ChallengeLevelCfg Get(int key) => _dataMap[key];
+    public ChallengeLevelCfg this[int key] => _dataMap[key];
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
@@ -77,7 +77,7 @@ public partial class TowerDefense_ChallengeLevelCfgCategory: ConfigSingleton<Tow
     
     public override string ConfigName()
     {
-        return typeof(TowerDefense_ChallengeLevelCfg).Name;
+        return typeof(ChallengeLevelCfg).Name;
     }
     
     partial void PostInit();

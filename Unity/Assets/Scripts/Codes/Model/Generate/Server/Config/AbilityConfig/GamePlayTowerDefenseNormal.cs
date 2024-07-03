@@ -15,11 +15,10 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 塔防
 /// </summary>
-public sealed partial class GamePlayTowerDefenseNormal:  GamePlayModeBase 
+public sealed partial class GamePlayTowerDefenseNormal:  GamePlayTowerDefenseBase 
 {
     public GamePlayTowerDefenseNormal(ByteBuf _buf)  : base(_buf) 
     {
-        GamePlayModeCfgId = _buf.ReadString();
         PostInit();
     }
 
@@ -28,11 +27,6 @@ public sealed partial class GamePlayTowerDefenseNormal:  GamePlayModeBase
         return new GamePlayTowerDefenseNormal(_buf);
     }
 
-    /// <summary>
-    /// 玩法配置表id
-    /// </summary>
-    public string GamePlayModeCfgId { get; private set; }
-    public GamePlayTowerDefenseCfg GamePlayModeCfgId_Ref { get; private set; }
 
     public const int __ID__ = -1099965500;
     public override int GetTypeId() => __ID__;
@@ -40,7 +34,6 @@ public sealed partial class GamePlayTowerDefenseNormal:  GamePlayModeBase
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         base.Resolve(_tables);
-        this.GamePlayModeCfgId_Ref = (_tables["GamePlayTowerDefenseCfgCategory"] as GamePlayTowerDefenseCfgCategory).GetOrDefault(GamePlayModeCfgId);
         PostResolve();
     }
 

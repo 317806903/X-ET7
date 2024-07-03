@@ -56,6 +56,15 @@ namespace ET
 
         }
 
+        public static void RecordPlayerDropGold(this GamePlayDropItemComponent self, long playerId, int value)
+        {
+            if (self.playerId2DropGold.TryGetValue(playerId, out int curValue))
+            {
+
+            }
+            self.playerId2DropGold[playerId] = curValue + value;
+        }
+
         public static Dictionary<string, int> GetPlayerDropItemList(this GamePlayDropItemComponent self, long playerId)
         {
             if (self.playerId2DropItems == null)

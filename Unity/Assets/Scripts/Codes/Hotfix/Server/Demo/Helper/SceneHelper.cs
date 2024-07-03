@@ -39,11 +39,9 @@ namespace ET.Server
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
                     scene.AddComponent<PlayerComponent>();
                     scene.AddComponent<GateSessionKeyComponent>();
-                    scene.AddComponent<ET.Ability.GlobalBuffComponent>();
                     break;
                 case SceneType.Map:
                     ET.SceneHelper.InitWhenServer(scene);
-                    scene.AddComponent<ET.Ability.GlobalBuffComponent>();
                     scene.AddComponent<AOIManagerComponent>();
                     break;
                 case SceneType.Location:
@@ -77,6 +75,9 @@ namespace ET.Server
                     break;
                 case SceneType.Mail:
                     scene.AddComponent<MailManagerComponent>();
+                    break;
+                case SceneType.Season:
+                    scene.AddComponent<SeasonManagerComponent>();
                     break;
                 case SceneType.Pay:
                     scene.AddComponent<HttpComponent, string>($"http://*:{startSceneConfig.OuterPort}/");

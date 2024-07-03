@@ -95,6 +95,18 @@ namespace ET
             }
         }
 
+        public static void KeepHpLessMaxHp(this NumericComponent self)
+        {
+            long maxHp = self.GetByKey(NumericType.MaxHp);
+            long hp = self.GetByKey(NumericType.Hp);
+            if (hp <= maxHp)
+            {
+                return;
+            }
+
+            self.SetAsFloatToBase(NumericType.Hp, maxHp * 0.0001f);
+        }
+
         public static long GetByKey(this NumericComponent self, int key)
         {
             long value = 0;

@@ -19,6 +19,7 @@ namespace UnityEngine.UI
     public class LoopScrollPrefabSourceInstance : LoopScrollPrefabSource
     {
         public string prefabName;
+        public float prefabScale = 1;
         public int poolSize = 5;
 
         public static Action<GameObject> AddCellItemAction;
@@ -38,6 +39,7 @@ namespace UnityEngine.UI
                 if (go != null)
                 {
                     AddCellItemAction?.Invoke(go);
+                    go.transform.localScale = Vector3.one * prefabScale;
                 }
                 return go;
             }

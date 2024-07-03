@@ -6,7 +6,7 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    [FriendOf(typeof(GamePlayPKComponent))]
+    [FriendOf(typeof(GamePlayPkComponentBase))]
     [FriendOf(typeof(Unit))]
     public static class GamePlayPKHelper
 	{

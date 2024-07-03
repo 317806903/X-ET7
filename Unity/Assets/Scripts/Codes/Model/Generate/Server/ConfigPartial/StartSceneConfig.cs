@@ -54,6 +54,11 @@ namespace ET
             return GetBySceneName(zone, SceneType.PlayerCache.ToString());
         }
 
+        public StartSceneConfig GetSeasonManager(int zone)
+        {
+            return GetBySceneName(zone, SceneType.Season.ToString());
+        }
+
         public StartSceneConfig GetMailManager(int zone)
         {
             return GetBySceneName(zone, SceneType.Mail.ToString());
@@ -150,6 +155,8 @@ namespace ET
                     case SceneType.PlayerCache:
                         break;
                     case SceneType.Mail:
+                        break;
+                    case SceneType.Season:
                         break;
                 }
             }

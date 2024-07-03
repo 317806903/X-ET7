@@ -18,16 +18,19 @@ namespace ET.Ability
             return false;
         }
 
-        public static void DeathShow(Unit unit)
+        public static void DeathShow(Unit unit, ActionCfg_DeathShow actionCfg_DeathShow = null)
         {
-            if (unit.GetComponent<DeathShowComponent>() != null)
+            if (ChkIsInDeath(unit))
             {
                 return;
             }
             unit.RemoveComponent<AIComponent>();
             unit.Stop(WaitTypeError.Cancel);
             float deathShowDuration = 0;
-            ActionCfg_DeathShow actionCfg_DeathShow = UnitHelper.GetDeathShow(unit);
+            if (actionCfg_DeathShow == null)
+            {
+                actionCfg_DeathShow = UnitHelper.GetDeathShow(unit);
+            }
             deathShowDuration = actionCfg_DeathShow.Duration;
 
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();

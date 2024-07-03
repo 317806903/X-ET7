@@ -634,6 +634,11 @@ PrefabInstance:
       propertyPath: minimumMeshFases
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 1568929337869642417, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: supportIssueReport
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1884117110138393962, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
       propertyPath: m_FontData.m_Font
@@ -831,6 +836,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 6108054054629805404, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6108054054648836978, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
       propertyPath: m_FontData.m_Font
@@ -982,6 +992,11 @@ PrefabInstance:
     - target: {fileID: 6108054056348659019, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108054056348659020, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6108054056531927500, guid: 8451b30dbbf7a5048a029960a33aaf25,

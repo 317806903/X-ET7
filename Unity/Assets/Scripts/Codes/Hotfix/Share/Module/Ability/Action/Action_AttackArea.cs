@@ -10,6 +10,10 @@ namespace ET.Ability
 			if (delayTime > 0)
 			{
 				await TimerComponent.Instance.WaitTillAsync(TimeHelper.ServerFrameTime() + (long)(1000 * delayTime));
+				if (unit == null || unit.DomainScene() == null || unit.DomainScene().IsDisposed)
+				{
+					return;
+				}
 			}
 			ActionCfg_AttackArea actionCfg_AttackArea = ActionCfg_AttackAreaCategory.Instance.Get(actionId);
 			actionContext.isBreakSoftBati = actionCfg_AttackArea.IsBreakSoftBati;

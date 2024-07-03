@@ -229,16 +229,16 @@ namespace ET.Ability
                     damageValue = damageInfo.Value;
                     break;
                 case DamageType.PercentTotalBloodAttacker:
-                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
+                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.MaxHp) * damageInfo.Value;
                     break;
                 case DamageType.PercentTotalBloodBeHurter:
-                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.MaxHp) * damageInfo.Value;
+                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.MaxHp) * damageInfo.Value;
                     break;
                 case DamageType.PercentCurBloodAttacker:
-                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
+                    damageValue = attackerUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PercentCurBloodBeHurter:
-                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) * damageInfo.Value;
+                    damageValue = targetUnit.GetComponent<NumericComponent>().GetAsFloat(NumericType.Hp) * damageInfo.Value;
                     break;
                 case DamageType.PropertyBlood:
                     damageValue = GetDamageByProperty(attackerUnit, targetUnit, damageInfo.Value, isCriticalStrike);

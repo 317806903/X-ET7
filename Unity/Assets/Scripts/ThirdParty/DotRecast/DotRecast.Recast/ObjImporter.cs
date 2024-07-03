@@ -85,7 +85,7 @@ namespace DotRecast.Recast
             string[] v = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (v.Length < 4)
             {
-                throw new Exception("Invalid vector, expected 3 coordinates, found " + (v.Length - 1));
+                throw new Exception("Invalid vector, expected 3 coordinates, found " + line);
             }
 
             return new float[] { float.Parse(v[1]) * ForceScale, float.Parse(v[2]) * ForceScale, float.Parse(v[3]) * ForceScale };
@@ -96,7 +96,7 @@ namespace DotRecast.Recast
             string[] v = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (v.Length < 4)
             {
-                throw new Exception("Invalid number of face vertices: 3 coordinates expected, found " + v.Length);
+                throw new Exception("Invalid number of face vertices: 3 coordinates expected, found " + line);
             }
 
             for (int j = 0; j < v.Length - 3; j++)

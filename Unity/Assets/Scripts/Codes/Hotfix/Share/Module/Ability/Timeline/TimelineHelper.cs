@@ -33,6 +33,7 @@ namespace ET.Ability
             newActionContext.unitId = unit.Id;
             newActionContext.skillCfgId = actionContext.skillCfgId;
             newActionContext.skillSlotType = actionContext.skillSlotType;
+            newActionContext.skillGroupType = actionContext.skillGroupType;
             newActionContext.skillLevel = actionContext.skillLevel;
             TimelineObj timelineObj = await GetTimelineComponent(unit).PlayTimeline(casterUnitId, timelineCfgId, newActionContext);
             return timelineObj;

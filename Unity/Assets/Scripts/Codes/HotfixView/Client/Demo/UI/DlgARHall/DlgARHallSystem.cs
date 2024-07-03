@@ -25,9 +25,7 @@ namespace ET.Client
             else
             {
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = contextData as DlgARHall_ShowWindowData;
-                self.RoomTypeIn = _DlgARHall_ShowWindowData.RoomType;
-                self.SubRoomTypeIn = _DlgARHall_ShowWindowData.SubRoomType;
-                self.battleCfgId = _DlgARHall_ShowWindowData.battleCfgId;
+                self.roomTypeInfo = _DlgARHall_ShowWindowData.roomTypeInfo;
                 self.roomId = _DlgARHall_ShowWindowData.roomId;
                 self.arSceneId = _DlgARHall_ShowWindowData.arSceneId;
 
@@ -143,11 +141,11 @@ namespace ET.Client
 
             // 此时进入AR场景，开始扫图或扫码，或加载上次扫图
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.ARStart);
-            Log.Debug($"AR Prepare Start. game mode is {self.SubRoomTypeIn}.");
+            Log.Debug($"AR Prepare Start. game mode is {self.roomTypeInfo.subRoomType}.");
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
                 // 准备阶段开始
-                eventName = "PrepareStarted", properties = new() { { "game_mode", self.SubRoomTypeIn.ToString() }, }
+                eventName = "PrepareStarted", properties = new() { { "game_mode", self.roomTypeInfo.subRoomType.ToString() }, }
             });
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
@@ -173,34 +171,32 @@ namespace ET.Client
         {
             if (self.roomId == 0)
             {
-                if (string.IsNullOrEmpty(self.battleCfgId))
+                if (string.IsNullOrEmpty(self.roomTypeInfo.gamePlayBattleLevelCfgId))
                 {
-                    self.battleCfgId = ET.GamePlayHelper.GetBattleCfgId(self.RoomTypeIn, self.SubRoomTypeIn, 0);
+                    self.roomTypeInfo.gamePlayBattleLevelCfgId = ET.GamePlayHelper.GetBattleCfgId(self.roomTypeInfo);
                 }
 
-                Log.Debug($"self.roomId==0 {self.battleCfgId}");
+                Log.Debug($"self.roomId==0 {self.roomTypeInfo.gamePlayBattleLevelCfgId}");
                 return;
             }
 
             bool roomExist = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
             if (roomExist == false)
             {
-                if (string.IsNullOrEmpty(self.battleCfgId))
+                if (string.IsNullOrEmpty(self.roomTypeInfo.gamePlayBattleLevelCfgId))
                 {
-                    self.battleCfgId = ET.GamePlayHelper.GetBattleCfgId(self.RoomTypeIn, self.SubRoomTypeIn, 0);
+                    self.roomTypeInfo.gamePlayBattleLevelCfgId = ET.GamePlayHelper.GetBattleCfgId(self.roomTypeInfo);
                 }
 
-                Log.Debug($"roomExist==false {self.battleCfgId}");
+                Log.Debug($"roomExist==false {self.roomTypeInfo.gamePlayBattleLevelCfgId}");
                 return;
             }
 
             RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
             RoomComponent roomComponent = roomManagerComponent.GetRoom(self.roomId);
             self.arSceneId = roomComponent.arSceneId;
-            self.battleCfgId = roomComponent.gamePlayBattleLevelCfgId;
-            self.RoomTypeIn = roomComponent.roomType;
-            self.SubRoomTypeIn = roomComponent.subRoomType;
-            await Task.CompletedTask;
+            self.roomTypeInfo = roomComponent.roomTypeInfo;
+            await ETTask.CompletedTask;
         }
 
         public static async ETTask OnClose(this DlgARHall self)
@@ -217,7 +213,7 @@ namespace ET.Client
                 eventName = "PrepareEnded",
                 properties = new()
                 {
-                    { "success", false }, { "session_id", "" }, { "game_mode", self.SubRoomTypeIn.ToString() }, { "mesh_source", entranceType }
+                    { "success", false }, { "session_id", "" }, { "game_mode", self.roomTypeInfo.subRoomType.ToString() }, { "mesh_source", entranceType }
                 }
             });
             // 重置entrance type给下一个session
@@ -405,7 +401,7 @@ namespace ET.Client
                     {
                         { "success", true },
                         { "session_id", arSceneId },
-                        { "game_mode", self.SubRoomTypeIn.ToString() },
+                        { "game_mode", self.roomTypeInfo.subRoomType.ToString() },
                         { "mesh_source", entranceType }
                     }
                 });
@@ -432,14 +428,14 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-            if (GamePlayBattleLevelCfgCategory.Instance.Contain(self.battleCfgId) == false)
+            if (GamePlayBattleLevelCfgCategory.Instance.Contain(self.roomTypeInfo.gamePlayBattleLevelCfgId) == false)
             {
-                Log.Error($"GamePlayBattleLevelCfgCategory.Instance.Contain({self.battleCfgId}) == false");
+                Log.Error($"GamePlayBattleLevelCfgCategory.Instance.Contain({self.roomTypeInfo.gamePlayBattleLevelCfgId}) == false");
                 return;
             }
 
             self.isCreateRooming = true;
-            (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), self.battleCfgId, self.RoomTypeIn, self.SubRoomTypeIn);
+            (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), self.roomTypeInfo);
             self.isCreateRooming = false;
             if (result)
             {

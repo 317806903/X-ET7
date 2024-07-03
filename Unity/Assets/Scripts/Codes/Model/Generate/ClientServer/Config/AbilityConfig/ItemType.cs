@@ -26,6 +26,10 @@ namespace ET.AbilityConfig
         /// 头像框
         /// </summary>
         AvatarFrame = 2,
+        /// <summary>
+        /// 代币
+        /// </summary>
+        Token = 3,
     }
 
 } 

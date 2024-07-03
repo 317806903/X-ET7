@@ -146,6 +146,31 @@ public partial class UICodeSpawner
         strBuilder.AppendFormat("\t\tpublic Scroll_{0} BindTrans(Transform trans)\r\n",strDlgName);
         strBuilder.AppendLine("\t\t{");
         strBuilder.AppendLine("\t\t\tthis.uiTransform = trans;");
+        foreach (KeyValuePair<string, List<Component>> pair in Path2WidgetCachedDict)
+        {
+            foreach (var info in pair.Value)
+            {
+                if (pair.Key.StartsWith(CommonUIPrefix))
+                {
+                    strBuilder.AppendFormat("\t\t\tif(this.m_{0} != null)\r\n", pair.Key.ToLower());
+                    strBuilder.AppendLine("\t\t\t{");
+                    strBuilder.AppendFormat("\t\t\t\tthis.m_{0}?.Dispose();\r\n", pair.Key.ToLower());
+                    strBuilder.AppendFormat("\t\t\t\tthis.m_{0} = null;\r\n", pair.Key.ToLower());
+                    strBuilder.AppendLine("\t\t\t}");
+                    continue;
+                }
+                if (pair.Key.StartsWith(UIPagePrefix))
+                {
+                    strBuilder.AppendFormat("\t\t\tif( this.m_{0} != null )\r\n", pair.Key.ToLower());
+                    strBuilder.AppendLine("\t\t\t{");
+                    strBuilder.AppendFormat("\t\t\t\tthis.m_{0}?.Dispose();\r\n", pair.Key.ToLower());
+                    strBuilder.AppendFormat("\t\t\t\tthis.m_{0} = null;\r\n", pair.Key.ToLower());
+                    strBuilder.AppendLine("\t\t\t}");
+                    continue;
+                }
+                continue;
+            }
+        }
         strBuilder.AppendLine("\t\t\treturn this;");
         strBuilder.AppendLine("\t\t}\n");
 

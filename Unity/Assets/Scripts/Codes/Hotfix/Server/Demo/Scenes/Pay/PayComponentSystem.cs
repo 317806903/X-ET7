@@ -78,7 +78,7 @@ namespace ET.Server
 
         public static async ETTask AddPlayerArcadeCoinNum(this PayComponent self)
         {
-            await ET.Server.PlayerCacheHelper.AddArcadeCoin(self.DomainScene(), self.playerId, self.coinNum);
+            await ET.Server.PlayerCacheHelper.AddTokenArcadeCoin(self.DomainScene(), self.playerId, self.coinNum);
         }
 
     }

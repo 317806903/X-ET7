@@ -70,9 +70,9 @@ MonoBehaviour:
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 
-    trigExitCondition: 0
+    trigExitCondition: 1
     trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EImage_TowerBuyShow/EImage_Purchased
   - name: "\u6536\u8D77\u8D2D\u4E70\u5217\u8868"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0

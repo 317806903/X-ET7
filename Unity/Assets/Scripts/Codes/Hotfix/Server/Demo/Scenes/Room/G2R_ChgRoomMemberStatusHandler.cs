@@ -96,7 +96,7 @@ namespace ET.Server
 					R2G_StartBattle _R2G_StartBattle = new ()
 					{
 						DynamicMapInstanceId = dynamicMapInstanceId,
-						GamePlayBattleLevelCfgId = roomComponent.gamePlayBattleLevelCfgId,
+						GamePlayBattleLevelCfgId = roomComponent.roomTypeInfo.gamePlayBattleLevelCfgId,
 					};
 					ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
 					await oneTypeLocationType.Call(roomMember.Id, _R2G_StartBattle, scene.InstanceId);

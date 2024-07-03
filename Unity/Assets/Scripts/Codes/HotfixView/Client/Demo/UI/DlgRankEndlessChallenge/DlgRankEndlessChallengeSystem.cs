@@ -31,6 +31,7 @@ namespace ET.Client
         {
             await self.ShowPersonalInfo();
             await self.ShowRankScrollItem();
+            self.View.ES_AvatarShow.ShowMyAvatarIcon().Coroutine();
         }
 
         public static void ShowBg(this DlgRankEndlessChallenge self)
@@ -77,7 +78,7 @@ namespace ET.Client
             long playerId = rankShowItemComponent.playerId;
             long wave = rankShowItemComponent.score;
             PlayerBaseInfoComponent playerBaseInfoComponent = await PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(), playerId);
-            await itemRank.ES_AvatarShow.E_AvatarIconImage.SetPlayerIcon(self.DomainScene(), playerId);
+            await itemRank.ES_AvatarShow.ShowAvatarIconByPlayerId(playerId);
             itemRank.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
             itemRank.ELabel_WavesTextMeshProUGUI.text = wave.ToString();
             itemRank.ELabel_KillNumsTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_KillNum", rankShowItemComponent.killNum);
@@ -93,7 +94,7 @@ namespace ET.Client
             {
                 itemRank.ELabel_RankNumTextMeshProUGUI.text = "";
             }
-            
+
             long lastPlayerWave = -1, nextPlayerWave = -1;
             if (index - 1 >= 0)
             {
@@ -106,7 +107,7 @@ namespace ET.Client
                 nextPlayerWave = nextRankShowItemComponent.score;
             }
             itemRank.EImage_KillNumsBgImage.SetVisible(wave == lastPlayerWave || wave == nextPlayerWave);
-            
+
             PlayerBaseInfoComponent myBaseInfoComponent =
                     await PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             itemRank.Eimage_MyBGImage.gameObject.SetActive(myBaseInfoComponent.Id == playerBaseInfoComponent.Id);
@@ -114,25 +115,23 @@ namespace ET.Client
 
         public static async ETTask ShowPersonalInfo(this DlgRankEndlessChallenge self)
         {
-            await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
+            await self.View.E_PlayerIcoImage.SetMyselfIcon(self.DomainScene());
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
 
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
-            RankShowItemComponent rankShowItemComponent = rankShowComponent.GetMyRankShowItemComponent();
-            long waveIndex = rankShowItemComponent.score;
-            if (waveIndex != -1)
+            (int myRank, long score) = rankShowComponent.GetMyRank();
+            if (score != -1)
             {
-                string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", waveIndex);
+                string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", score);
                 self.View.ELabel_ChanllengeTextMeshProUGUI.text = text;
             }
 
-            int myRank = rankShowComponent.GetMyRank();
             if (myRank == -1)
             {
                 self.View.EImage_LongRankedBGImage.gameObject.SetActive(true);
-                if (waveIndex == -1)
+                if (score == -1)
                 {
                     self.View.ELabel_LongRankNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoData");
                 }

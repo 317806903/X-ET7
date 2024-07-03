@@ -223,8 +223,23 @@ namespace ET
 		/// <param name="curUnit"></param>
 		/// <param name="targetUnit"></param>
 		/// <returns></returns>
-		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, Unit curUnit, Unit targetUnit)
+		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, Unit curUnit, Unit targetUnit, bool needSamePlayer)
 		{
+			if (needSamePlayer)
+			{
+				long curPlayerId = self.GetPlayerIdByUnitId(curUnit.Id);
+				long targetPlayerId = self.GetPlayerIdByUnitId(targetUnit.Id);
+				if (curPlayerId == -1 || targetPlayerId == -1)
+				{
+					return false;
+				}
+				if (curPlayerId == targetPlayerId)
+				{
+					return true;
+				}
+				return false;
+			}
+
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
 			if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
 			{

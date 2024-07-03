@@ -14,20 +14,20 @@ namespace ET.Client
             Log.Debug("EnterMapFinish begins.");
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             bool isAR = false;
-            if (playerStatusComponent.RoomType == RoomType.Normal)
+            if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.Normal)
             {
-                if (playerStatusComponent.SubRoomType == SubRoomType.NormalARCreate
-                    || playerStatusComponent.SubRoomType == SubRoomType.NormalARScanCode)
+                if (playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalARCreate
+                    || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalARScanCode)
                 {
                     isAR = true;
                 }
             }
-            else if (playerStatusComponent.RoomType == RoomType.AR)
+            else if (playerStatusComponent.RoomTypeInfo.roomType == RoomType.AR)
             {
                 isAR = true;
             }
 
-            Log.Debug($"EnterMapFinish isAR={isAR} RoomType={playerStatusComponent.RoomType} SubRoomType={playerStatusComponent.SubRoomType}");
+            Log.Debug($"EnterMapFinish isAR={isAR} RoomType={playerStatusComponent.RoomTypeInfo.roomType} SubRoomType={playerStatusComponent.RoomTypeInfo.subRoomType}");
 
             EventSystem.Instance.Publish(scene, new EventType.NoticeUIShowCommonLoading());
 
@@ -107,11 +107,11 @@ namespace ET.Client
             }
             else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
+                GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
-                    gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                    gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
@@ -122,24 +122,24 @@ namespace ET.Client
         public async ETTask EnterMap_WhenNoAR(Scene scene)
         {
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
-            if (playerStatusComponent.SubRoomType == SubRoomType.NormalSingleMap)
+            if (playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalSingleMap)
             {
                 Scene currentScene = scene.CurrentScene();
-                GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
+                GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
-                    gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                    gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
                 Log.Debug($"EnterMapFinish nonAR NormalSingleMap ready.");
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
             }
-            else if (playerStatusComponent.SubRoomType == SubRoomType.NormalRoom
-                     || playerStatusComponent.SubRoomType == SubRoomType.NormalPVE
-                     || playerStatusComponent.SubRoomType == SubRoomType.NormalPVP
-                     || playerStatusComponent.SubRoomType == SubRoomType.NormalEndlessChallenge
-                     || playerStatusComponent.SubRoomType == SubRoomType.NormalScanMesh
+            else if (playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalRoom
+                     || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalPVE
+                     || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalPVP
+                     || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalEndlessChallenge
+                     || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalScanMesh
                      )
             {
                 Scene currentScene = scene.CurrentScene();
@@ -180,11 +180,11 @@ namespace ET.Client
                 }
                 else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
                 {
-                    GamePlayPKComponent gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
-                    while (gamePlayPKComponent == null || gamePlayPKComponent.IsDisposed)
+                    GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                    while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
-                        gamePlayPKComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                        gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                     }
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
                 }

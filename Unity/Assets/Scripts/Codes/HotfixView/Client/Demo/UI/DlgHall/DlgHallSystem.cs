@@ -86,8 +86,10 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-			string battleCfgId = ET.GamePlayHelper.GetBattleCfgId(RoomType.Normal, SubRoomType.NormalRoom, 0);
-			(bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), battleCfgId, RoomType.Normal, SubRoomType.NormalRoom);
+			RoomType roomType = RoomType.Normal;
+			SubRoomType subRoomType = SubRoomType.NormalRoom;
+			RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
+			(bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), roomTypeInfo);
 			if (result)
 			{
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgHall>();

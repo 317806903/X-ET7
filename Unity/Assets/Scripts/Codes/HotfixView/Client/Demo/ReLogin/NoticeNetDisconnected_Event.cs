@@ -2,11 +2,12 @@ using System;
 
 namespace ET.Client
 {
-    [Event(SceneType.Client)]
+    [Event(SceneType.Current|SceneType.Client)]
     public class NoticeNetDisconnected_Event: AEvent<Scene, EventType.NoticeNetDisconnected>
     {
         protected override async ETTask Run(Scene scene, EventType.NoticeNetDisconnected args)
         {
+            Scene clientScene = scene.ClientScene();
             bool bReLogin = args.bReLogin;
             if (bReLogin)
             {
@@ -14,7 +15,7 @@ namespace ET.Client
             }
             else
             {
-                EventSystem.Instance.Publish(scene, new EventType.NoticeUIReconnect());
+                EventSystem.Instance.Publish(clientScene, new EventType.NoticeUIReconnect());
             }
             await ETTask.CompletedTask;
         }

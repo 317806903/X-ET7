@@ -12,7 +12,7 @@ namespace ET.Ability
         /// <summary>
         /// 记录配置有触发事件对应的BuffObj
         /// </summary>
-        public MultiMapSimple<AbilityBuffMonitorTriggerEvent, BuffObj> monitorTriggerList;
+        public MultiMapSimple<AbilityConfig.BuffTriggerEvent, BuffObj> monitorTriggerList;
 
         /// <summary>
         /// tag标志对应buff列表

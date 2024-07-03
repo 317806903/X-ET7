@@ -88,6 +88,10 @@ namespace ET.Ability
 
         public static (bool, ListComponent<long>) ChkRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
         {
+            if (selectObjectCfg.IsNeedChkExcludeTarget || selectObjectCfg.IsSaveExcludeTarget)
+            {
+                return (false, null);
+            }
             if (self.unitId2ChildId.ContainsKey(unit.Id) == false)
             {
                 return (false, null);

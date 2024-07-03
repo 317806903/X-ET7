@@ -10,10 +10,13 @@ namespace ET
         BackPack,
         BattleCard,
         OtherInfo,
+        SeasonInfo,
         FunctionMenu,
         Mails,
-        ArcadeCoinAdd,
-        ArcadeCoinReduce,
+        TokenArcadeCoinAdd,
+        TokenArcadeCoinReduce,
+        TokenDiamondAdd,
+        TokenDiamondReduce,
         RankPVE,
         RankEndlessChallenge,
     }
@@ -26,6 +29,7 @@ namespace ET
         PlayerBattleCard_Client = 3,
         PlayerFunctionMenu_Client = 4,
         PlayerOtherInfo_Client = 5,
+        PlayerSeasonInfo_Client = 6,
 
         PlayerBaseInfo_AddPhysical = 100,
         PlayerBaseInfo_ReducePhysical = 101,
@@ -45,6 +49,12 @@ namespace ET
         PlayerFunctionMenu_BattleEnd = 400,
         PlayerFunctionMenu_ResetStatusWhenDebug = 401,
         PlayerFunctionMenu_DealWaitChg = 402,
+
+        PlayerSeasonInfo_ChallengeClearLevel = 501,
+        PlayerSeasonInfo_EndlessChallengeScore = 502,
+        PlayerSeasonInfo_PowerUP=503,
+
+        PlayerMailsGetItemGifts = 601,
     }
 
     [ChildOf(typeof(PlayerCacheManagerComponent))]

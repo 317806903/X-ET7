@@ -25,6 +25,14 @@ namespace ET.AbilityConfig
         BuffTagGroupTowerZaiE = 9,
         BuffTagGroupTowerCurse = 10,
         BuffTagGroupTowerScorpio = 11,
+        BuffTagGroupType_PlayerGlobalBuff_ExtraLives = 12,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_Damage = 13,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_AttackRange = 14,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_AttackInterval = 15,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_ToTower_Damage = 16,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_ToTower_AttackRange = 17,
+        BuffTagGroup_PlayerGlobalBuffTagGroup_ToTower_AttackInterval = 18,
+        BuffTagGroupNiao = 19,
     }
 
 } 

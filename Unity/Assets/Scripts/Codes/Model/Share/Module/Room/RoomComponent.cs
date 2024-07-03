@@ -30,15 +30,15 @@ namespace ET
     [ChildOf(typeof(RoomManagerComponent))]
     public class RoomComponent : Entity, IAwake, IDestroy, IFixedUpdate
     {
-        public RoomType roomType;
-        public SubRoomType subRoomType;
+        public RoomTypeInfo roomTypeInfo;
+
         public string arSceneId;
         public float arMapScale;
         public RoomStatus roomStatus;
         public RoomTeamMode roomTeamMode;
         public long ownerRoomMemberId;
         public long dynamicMapInstanceId;
-        public string gamePlayBattleLevelCfgId;
+
         public List<long> roomMemberSeat;
 
         public int MaxMemberCount = 10;

@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if ENABLE_VIEW
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -13,7 +15,8 @@ namespace ET
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
         {
             var state = GUIElementStateManager.Add(GUIElementStateDomain.ComponentView, value);
-            state[1] = EditorGUILayout.Foldout(state[1], memberName, "FoldoutHeader");
+            var dic = value as IDictionary;
+            state[1] = EditorGUILayout.Foldout(state[1], $"{memberName}({dic.Count})", "FoldoutHeader");
             if (state[1])
             {
                 EditorGUILayout.BeginVertical("box");
@@ -23,30 +26,48 @@ namespace ET
                 EditorGUILayout.LabelField($"Key ({argTypes[0].Name})", GUILayout.Width(width / 2));
                 EditorGUILayout.LabelField($"Value ({argTypes[1].Name})", GUILayout.Width(width / 2));
                 EditorGUILayout.EndHorizontal();
-                var dic = value as IDictionary;
-                foreach (var key in dic.Keys)
+                bool isNumericDic = false;
+                if (memberName == "NumericDic")
                 {
-                    EditorGUILayout.BeginHorizontal("OL box flat");
-                    if (GUILayout.Button(key.ToString(), GUILayout.Width(width / 2)))
-                    {
+                    isNumericDic = true;
+                }
 
-                    }
-
-                    string tmp1 = "";
-                    try
+                if (isNumericDic == false)
+                {
+                    foreach (var key in dic.Keys)
                     {
-                        tmp1 = dic[key]?.ToString();
+                        EditorGUILayout.BeginHorizontal("OL box flat");
+                        GUILayout.TextField(key.ToString(), GUILayout.MaxWidth(160));
+                        ComponentViewHelper.Draw(dic[key].GetType(), dic[key], dic[key].GetType().Name);
+                        EditorGUILayout.EndHorizontal();
                     }
-                    catch (Exception e)
+                }
+                else
+                {
+                    var type = Type.GetType("ET.NumericType, Unity.Model.Codes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+                    var publicFields = type.GetFields();
+                    Dictionary<string, string> numDic = new();
+                    foreach (var key in dic.Keys)
                     {
-                        tmp1 = "Error Null";
+                        foreach (var info in publicFields)
+                        {
+                            if ((int)info.GetValue(null) == (int)key)
+                            {
+                                numDic[$"{info.Name} {key.ToString()}"] = $"{((long)dic[key])*0.0001f}";
+                                break;
+                            }
+                        }
                     }
-                    if (GUILayout.Button(tmp1 ?? "Null", GUILayout.Width(width / 2)))
+                    Dictionary<string, string> numDicAsc = numDic.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
+                    foreach (var item in numDicAsc)
                     {
+                        EditorGUILayout.BeginHorizontal("OL box flat");
 
+                        GUILayout.TextField(item.Key, GUILayout.Width(200));
+                        GUILayout.TextField(item.Value);
+
+                        EditorGUILayout.EndHorizontal();
                     }
-
-                    EditorGUILayout.EndHorizontal();
                 }
                 EditorGUILayout.EndVertical();
             }
@@ -54,3 +75,4 @@ namespace ET
         }
     }
 }
+#endif

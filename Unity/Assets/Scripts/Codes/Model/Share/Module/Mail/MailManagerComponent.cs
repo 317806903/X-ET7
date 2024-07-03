@@ -5,10 +5,11 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
+	/// <summary>
+	/// 邮件管理器
+	/// </summary>
 	[ComponentOf(typeof(Scene))]
-	public class MailManagerComponent : Entity, IAwake, IDestroy, ISerializeToEntity
+	public class MailManagerComponent : Entity, IAwake, IDestroy
 	{
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, long> playerId2MailList = new();
 	}
 }

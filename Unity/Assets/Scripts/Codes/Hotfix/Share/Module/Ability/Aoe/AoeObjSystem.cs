@@ -14,6 +14,9 @@ namespace ET.Ability
         {
             protected override void Awake(AoeObj self)
             {
+                self.aoeInUnitList = new ();
+                self.aoeChgUnitList = new ();
+                self.monitorTriggerList = new();
             }
         }
 
@@ -22,6 +25,11 @@ namespace ET.Ability
         {
             protected override void Destroy(AoeObj self)
             {
+                self.aoeInUnitList.Clear();
+                self.aoeChgUnitList.Clear();
+                self.monitorTriggerList?.Clear();
+                self.monitorTriggerList = null;
+                self.aoeTargetCondition = null;
             }
         }
 
@@ -42,11 +50,15 @@ namespace ET.Ability
 
         public static void Init(this AoeObj self, long casterUnitId, string aoeCfgId, float duration, AoeTargetCondition aoeTargetCondition)
         {
+            self.CfgId = aoeCfgId;
+            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
+            {
+                AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent = self.model.MonitorTriggers[i].AoeTrig;
+                self.monitorTriggerList.Add(abilityAoeMonitorTriggerEvent, self.model.MonitorTriggers[i]);
+            }
             self.permanent = duration == -1? true : false;
             self.duration = duration == -1? 100 : duration;
             self.casterUnitId = casterUnitId;
-            self.CfgId = aoeCfgId;
-            self.duration = duration;
             self.timeElapsed = 0;
             self.aoeTargetCondition = aoeTargetCondition;
         }
@@ -57,17 +69,9 @@ namespace ET.Ability
             self.actionContext = actionContext;
         }
 
-        public static List<AoeActionCall> GetActionIds(this AoeObj self, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent)
+        public static List<AoeActionCall> GetActionIds(this AoeObj self, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
         {
-            ListComponent<AoeActionCall> actionList = ListComponent<AoeActionCall>.Create();
-            for (int i = 0; i < self.model.MonitorTriggers.Count; i++)
-            {
-                if (self.model.MonitorTriggers[i].AoeTrig.ToString() == abilityAoeMonitorTriggerEvent.ToString())
-                {
-                    actionList.Add(self.model.MonitorTriggers[i]);
-                }
-            }
-            return actionList;
+            return self.monitorTriggerList[abilityAoeMonitorTriggerEvent];
         }
 
 
@@ -101,24 +105,26 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void TrigEvent(this AoeObj self, AbilityAoeMonitorTriggerEvent abilityAoeMonitorTriggerEvent, Unit onAttackUnit = null, Unit
-            beHurtUnit = null)
+        public static void TrigEvent(this AoeObj self, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
         {
             List<AoeActionCall> aoeActionCalls = self.GetActionIds(abilityAoeMonitorTriggerEvent);
             if (aoeActionCalls.Count > 0)
             {
                 for (int i = 0; i < aoeActionCalls.Count; i++)
                 {
-                    self.EventHandler(aoeActionCalls[i], onAttackUnit, beHurtUnit);
+                    self.EventHandler(aoeActionCalls[i]);
                 }
             }
         }
 
-        public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall)
         {
-            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), aoeActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
-
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
+            SelectHandle selectHandle = ET.Ability.SelectHandleHelper.CreateSelectHandleWhenAoe(self.GetUnit(), aoeActionCall.AoeSelectObjectType);
+            if (selectHandle == null)
+            {
+                return;
+            }
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, null, ref self.actionContext);
         }
 
         public static void FixedUpdate(this AoeObj self, float fixedDeltaTime)
@@ -145,15 +151,15 @@ namespace ET.Ability
                         lastCount++;
                         if (i == 0)
                         {
-                            self.TrigEvent(AbilityAoeMonitorTriggerEvent.AoeOnTick1);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick1);
                         }
                         else if (i == 1)
                         {
-                            self.TrigEvent(AbilityAoeMonitorTriggerEvent.AoeOnTick2);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick2);
                         }
                         else if (i == 2)
                         {
-                            self.TrigEvent(AbilityAoeMonitorTriggerEvent.AoeOnTick3);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick3);
                         }
 
                         self.ticked += 1;
@@ -161,14 +167,19 @@ namespace ET.Ability
                 }
             }
 
-            self.ChkAoeEnterOrExist();
+            if (++self.curFrameChk >= self.waitFrameChk)
+            {
+                self.curFrameChk = 0;
+                self.ChkAoeEnterOrExist();
+            }
+
         }
 
         public static void ChkAoeEnterOrExist(this AoeObj self)
         {
             Unit curUnit = self.GetUnit();
-            SelectHandle curSelectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
             var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
+            using HashSetComponent<long> list = HashSetComponent<long>.Create();
             foreach (var seeUnit in seeUnits)
             {
                 AOIEntity aoiEntityTmp = seeUnit.Value;
@@ -181,9 +192,20 @@ namespace ET.Ability
                 {
                     continue;
                 }
-                curSelectHandle.unitIds.Add(unit.Id);
+
+                if (self.aoeTargetCondition.Radius > 0)
+                {
+                    float curDisSqr = UnitHelper.GetTargetUnitDisSqr(curUnit, unit);
+                    if (curDisSqr > self.aoeTargetCondition.Radius * self.aoeTargetCondition.Radius)
+                    {
+                        continue;
+                    }
+                }
+                list.Add(unit.Id);
             }
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, ref self.actionContext);
+
+            SelectHandle curSelectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(curUnit, self.aoeTargetCondition.SelectObjectType, list);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
@@ -191,7 +213,7 @@ namespace ET.Ability
 
             if (bRet1)
             {
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = ConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
                 if (isChgSelect2)
                 {
                     curSelectHandle = newSelectHandle2;
@@ -210,9 +232,9 @@ namespace ET.Ability
             for (int i = 0; i < newInList.Count; i++)
             {
                 long unitId = newInList[i];
-                if (self.unitIds.Contains(unitId))
+                if (self.aoeInUnitList.Contains(unitId))
                 {
-                    self.unitIds.Remove(unitId);
+                    self.aoeInUnitList.Remove(unitId);
                 }
                 else
                 {
@@ -220,22 +242,29 @@ namespace ET.Ability
                 }
             }
 
-            foreach (long unitId in self.unitIds)
+            foreach (long unitId in self.aoeInUnitList)
             {
                 newExistList.Add(unitId);
             }
 
-            self.unitIds.Clear();
+            self.aoeInUnitList.Clear();
             for (int i = 0; i < newInList.Count; i++)
             {
                 long unitId = newInList[i];
-                self.unitIds.Add(unitId);
+                self.aoeInUnitList.Add(unitId);
             }
 
-            self.chgUnitList = newEnterList;
-            self.TrigEvent(AbilityAoeMonitorTriggerEvent.AoeOnEnter);
-            self.chgUnitList = newExistList;
-            self.TrigEvent(AbilityAoeMonitorTriggerEvent.AoeOnExist);
+            if (newEnterList.Count > 0)
+            {
+                self.aoeChgUnitList = newEnterList;
+                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnEnter);
+            }
+
+            if (newExistList.Count > 0)
+            {
+                self.aoeChgUnitList = newExistList;
+                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnExist);
+            }
         }
     }
 }

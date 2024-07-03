@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 是否能被Bullet攻击
 /// </summary>
-public sealed partial class OnChkCanHitByBulletCondition:  Condition 
+public sealed partial class OnChkCanHitByBulletCondition:  UnitConditionBase 
 {
     public OnChkCanHitByBulletCondition(ByteBuf _buf)  : base(_buf) 
     {

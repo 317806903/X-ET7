@@ -9,6 +9,6 @@ namespace ET.Ability
     [ActionGameHandler]
     public abstract class IActionGameHandler
     {
-        public abstract ETTask Run(Scene scene, string actionId, ActionGameContext actionPlayerContext);
+        public abstract ETTask Run(Scene scene, string actionId, float delayTime, ActionGameContext actionGameContext);
     }
 }

@@ -47,6 +47,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     /// buffId
     /// </summary>
     public string BuffId { get; private set; }
+    public BuffCfg BuffId_Ref { get; private set; }
 
     public const int __ID__ = -829285566;
     public override int GetTypeId() => __ID__;
@@ -54,6 +55,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         foreach(var _e in BuffActions) { _e?.Resolve(_tables); }
+        this.BuffId_Ref = (_tables["BuffCfgCategory"] as BuffCfgCategory).GetOrDefault(BuffId);
         PostResolve();
     }
 

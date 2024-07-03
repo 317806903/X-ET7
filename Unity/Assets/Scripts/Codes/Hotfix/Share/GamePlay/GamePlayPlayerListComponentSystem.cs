@@ -340,7 +340,7 @@ namespace ET
             }
         }
 
-        public static void SetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, int setValue,
+        public static void SetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinTypeInGame coinType, int setValue,
         GetCoinType getCoinType)
         {
             setValue = math.max(0, setValue);
@@ -349,7 +349,7 @@ namespace ET
             self.NoticeCoinToClient(playerId, getCoinType);
         }
 
-        public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType, float chgValue,
+        public static void ChgPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinTypeInGame coinType, float chgValue,
         GetCoinType getCoinType)
         {
             self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out float curValue);
@@ -359,13 +359,13 @@ namespace ET
             self.NoticeCoinToClient(playerId, getCoinType);
         }
 
-        public static float GetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinType coinType)
+        public static float GetPlayerCoin(this GamePlayPlayerListComponent self, long playerId, CoinTypeInGame coinType)
         {
             self.playerId2CoinList.TryGetValue(playerId, coinType.ToString(), out float curValue);
             return curValue;
         }
 
-        public static void ChgTeamCoin(this GamePlayPlayerListComponent self, TeamFlagType teamFlagType, CoinType coinType, int chgValue,
+        public static void ChgTeamCoin(this GamePlayPlayerListComponent self, TeamFlagType teamFlagType, CoinTypeInGame coinType, int chgValue,
         GetCoinType getCoinType)
         {
             self.team2CoinList.TryGetValue(teamFlagType, coinType.ToString(), out float curValue);
@@ -417,7 +417,7 @@ namespace ET
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
-                float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerId, CoinType.Gold);
+                float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerId, CoinTypeInGame.Gold);
                 if (self.lastPlayerGold.ContainsKey(playerId))
                 {
                     self.lastPlayerGold[playerId] = curGold;
@@ -436,7 +436,7 @@ namespace ET
             {
                 long playerId = playerList[i];
                 int recoverGold = recoverAddGold + (int)self.lastPlayerGold[playerId];
-                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinType.Gold, recoverGold);
+                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, recoverGold);
             }
         }
 

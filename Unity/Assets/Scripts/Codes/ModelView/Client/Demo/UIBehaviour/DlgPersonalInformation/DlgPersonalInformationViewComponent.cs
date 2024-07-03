@@ -143,40 +143,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_SaveButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_SaveButton == null )
-				{
-					this.m_E_SaveButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Save");
-				}
-				return this.m_E_SaveButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_SaveImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_SaveImage == null )
-				{
-					this.m_E_SaveImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Save");
-				}
-				return this.m_E_SaveImage;
-			}
-		}
-
 		public UnityEngine.RectTransform EG_ConfirmRectTransform
 		{
 			get
@@ -330,23 +296,6 @@ namespace ET.Client
 			}
 		}
 
-		public UITextLocalizeMonoView E_Account_TextUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_Account_TextUITextLocalizeMonoView == null )
-				{
-					this.m_E_Account_TextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/Root/EG_Account/E_Account/E_Account_Text");
-				}
-				return this.m_E_Account_TextUITextLocalizeMonoView;
-			}
-		}
-
 		public TMPro.TextMeshProUGUI E_Account_TitleTextMeshProUGUI
 		{
 			get
@@ -432,7 +381,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_AvatarLoopHorizontalScrollRect
+		public UnityEngine.UI.Button EBtn_ChgNameButton
 		{
 			get
 			{
@@ -441,15 +390,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELoopScrollList_AvatarLoopHorizontalScrollRect == null )
+				if( this.m_EBtn_ChgNameButton == null )
 				{
-					this.m_ELoopScrollList_AvatarLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/Avatar/ELoopScrollList_Avatar");
+					this.m_EBtn_ChgNameButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/name/EBtn_ChgName");
 				}
-				return this.m_ELoopScrollList_AvatarLoopHorizontalScrollRect;
+				return this.m_EBtn_ChgNameButton;
 			}
 		}
 
-		public TMPro.TMP_InputField E_InputFieldTMP_InputField
+		public UnityEngine.UI.Image EBtn_ChgNameImage
 		{
 			get
 			{
@@ -458,15 +407,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_InputFieldTMP_InputField == null )
+				if( this.m_EBtn_ChgNameImage == null )
 				{
-					this.m_E_InputFieldTMP_InputField = UIFindHelper.FindDeepChild<TMPro.TMP_InputField>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/name/E_InputField");
+					this.m_EBtn_ChgNameImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/name/EBtn_ChgName");
 				}
-				return this.m_E_InputFieldTMP_InputField;
+				return this.m_EBtn_ChgNameImage;
 			}
 		}
 
-		public UnityEngine.UI.Image E_InputFieldImage
+		public TMPro.TextMeshProUGUI ELabel_NameTextMeshProUGUI
 		{
 			get
 			{
@@ -475,11 +424,63 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_InputFieldImage == null )
+				if( this.m_ELabel_NameTextMeshProUGUI == null )
 				{
-					this.m_E_InputFieldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/name/E_InputField");
+					this.m_ELabel_NameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/name/ELabel_Name");
 				}
-				return this.m_E_InputFieldImage;
+				return this.m_ELabel_NameTextMeshProUGUI;
+			}
+		}
+
+		public ES_AvatarShow ES_AvatarShow
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_es_avatarshow == null )
+				{
+					Transform subTrans = UIFindHelper.FindDeepChild<Transform>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/Avatar/ES_AvatarShow");
+					this.m_es_avatarshow = this.AddChild<ES_AvatarShow, Transform>(subTrans);
+				}
+				return this.m_es_avatarshow;
+			}
+		}
+
+		public UnityEngine.UI.Button EBtn_ChgAvatarButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EBtn_ChgAvatarButton == null )
+				{
+					this.m_EBtn_ChgAvatarButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/Avatar/EBtn_ChgAvatar");
+				}
+				return this.m_EBtn_ChgAvatarButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EBtn_ChgAvatarImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EBtn_ChgAvatarImage == null )
+				{
+					this.m_EBtn_ChgAvatarImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_info/Avatar/EBtn_ChgAvatar");
+				}
+				return this.m_EBtn_ChgAvatarImage;
 			}
 		}
 
@@ -517,6 +518,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_BtnCloseButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BtnCloseButton == null )
+				{
+					this.m_E_BtnCloseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/E_BtnClose");
+				}
+				return this.m_E_BtnCloseButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_BtnCloseImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BtnCloseImage == null )
+				{
+					this.m_E_BtnCloseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_BtnClose");
+				}
+				return this.m_E_BtnCloseImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -527,8 +562,6 @@ namespace ET.Client
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
 			this.m_ELabel_IDTextMeshProUGUI = null;
-			this.m_E_SaveButton = null;
-			this.m_E_SaveImage = null;
 			this.m_EG_ConfirmRectTransform = null;
 			this.m_E_LogoutButton = null;
 			this.m_E_LogoutImage = null;
@@ -538,17 +571,22 @@ namespace ET.Client
 			this.m_E_AccountButton = null;
 			this.m_E_AccountImage = null;
 			this.m_E_Account_TextTextMeshProUGUI = null;
-			this.m_E_Account_TextUITextLocalizeMonoView = null;
 			this.m_E_Account_TitleTextMeshProUGUI = null;
 			this.m_E_GoogleLoginButton = null;
 			this.m_E_GoogleLoginImage = null;
 			this.m_E_IphoneLoginButton = null;
 			this.m_E_IphoneLoginImage = null;
-			this.m_ELoopScrollList_AvatarLoopHorizontalScrollRect = null;
-			this.m_E_InputFieldTMP_InputField = null;
-			this.m_E_InputFieldImage = null;
+			this.m_EBtn_ChgNameButton = null;
+			this.m_EBtn_ChgNameImage = null;
+			this.m_ELabel_NameTextMeshProUGUI = null;
+			this.m_es_avatarshow?.Dispose();
+			this.m_es_avatarshow = null;
+			this.m_EBtn_ChgAvatarButton = null;
+			this.m_EBtn_ChgAvatarImage = null;
 			this.m_EG_titleRectTransform = null;
 			this.m_EG_titleImage = null;
+			this.m_E_BtnCloseButton = null;
+			this.m_E_BtnCloseImage = null;
 			this.uiTransform = null;
 		}
 
@@ -560,8 +598,6 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_IDTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_SaveButton = null;
-		private UnityEngine.UI.Image m_E_SaveImage = null;
 		private UnityEngine.RectTransform m_EG_ConfirmRectTransform = null;
 		private UnityEngine.UI.Button m_E_LogoutButton = null;
 		private UnityEngine.UI.Image m_E_LogoutImage = null;
@@ -571,17 +607,21 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_AccountButton = null;
 		private UnityEngine.UI.Image m_E_AccountImage = null;
 		private TMPro.TextMeshProUGUI m_E_Account_TextTextMeshProUGUI = null;
-		private UITextLocalizeMonoView m_E_Account_TextUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_E_Account_TitleTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_GoogleLoginButton = null;
 		private UnityEngine.UI.Image m_E_GoogleLoginImage = null;
 		private UnityEngine.UI.Button m_E_IphoneLoginButton = null;
 		private UnityEngine.UI.Image m_E_IphoneLoginImage = null;
-		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_AvatarLoopHorizontalScrollRect = null;
-		private TMPro.TMP_InputField m_E_InputFieldTMP_InputField = null;
-		private UnityEngine.UI.Image m_E_InputFieldImage = null;
+		private UnityEngine.UI.Button m_EBtn_ChgNameButton = null;
+		private UnityEngine.UI.Image m_EBtn_ChgNameImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_NameTextMeshProUGUI = null;
+		private ES_AvatarShow m_es_avatarshow = null;
+		private UnityEngine.UI.Button m_EBtn_ChgAvatarButton = null;
+		private UnityEngine.UI.Image m_EBtn_ChgAvatarImage = null;
 		private UnityEngine.RectTransform m_EG_titleRectTransform = null;
 		private UnityEngine.UI.Image m_EG_titleImage = null;
+		private UnityEngine.UI.Button m_E_BtnCloseButton = null;
+		private UnityEngine.UI.Image m_E_BtnCloseImage = null;
 		public Transform uiTransform = null;
 	}
 }

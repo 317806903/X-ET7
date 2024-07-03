@@ -1,14 +1,6 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DotRecast.Detour;
-using DotRecast.Recast.Toolset;
-using DotRecast.Recast.Toolset.Builder;
-using DotRecast.Recast.Toolset.Geom;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -62,42 +54,11 @@ namespace ET
         {
             return self.GetComponent<PutMonsterCallComponent>().GetPosition(playerId);
         }
-  //
-  //       public static GamePlayComponent GetGamePlay(this GamePlayTowerDefenseComponent self)
-  //       {
-  //           GamePlayComponent gamePlayComponent = self.GetParent<GamePlayComponent>();
-  //           return gamePlayComponent;
-  //       }
-  //
-  //       public static List<long> GetPlayerList(this GamePlayTowerDefenseComponent self)
-  //       {
-  //           GamePlayComponent gamePlayComponent = self.GetGamePlay();
-  //           return gamePlayComponent.GetPlayerList();
-  //       }
-  //
-  //       public static void NoticeToClientAll(this GamePlayTowerDefenseComponent self)
-  //       {
-  //           List<long> playerList = self.GetPlayerList();
-  //           for (int i = 0; i < playerList.Count; i++)
-  //           {
-  //               self.NoticeToClient(playerList[i]);
-  //           }
-  //       }
-  //
-  //       public static void NoticeToClient(this GamePlayTowerDefenseComponent self, long playerId)
-		// {
-		// 	EventType.WaitNoticeGamePlayModeToClient _WaitNoticeGamePlayModeChgToClient = new ()
-		// 	{
-		// 		playerId = playerId,
-		// 		gamePlayComponent = self.GetGamePlay(),
-		// 	};
-		// 	EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);
-  //       }
 
-        public static async ETTask Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, GamePlayTowerDefenseMode gamePlayTowerDefenseMode)
+        public static async ETTask Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, RoomTypeInfo roomTypeInfo)
         {
             self.gamePlayModeCfgId = gamePlayModeCfgId;
-            self.gamePlayTowerDefenseMode = gamePlayTowerDefenseMode;
+            self.roomTypeInfo = roomTypeInfo;
             self.ownerPlayerId = ownerPlayerId;
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.AddComponent<PlayerOwnerTowersComponent>();
             await playerOwnerTowersComponent.Init();
@@ -105,6 +66,98 @@ namespace ET
             MonsterWaveCallComponent monsterWaveCallComponent = self.AddComponent<MonsterWaveCallComponent>();
             monsterWaveCallComponent.Init(self.model.MonsterWaveCallRuleCfgId, self.model.MonsterWaveCallStartWaveIndex);
 
+            await self.InitPlayerGameRecover();
+            self.InitPlayerCoin();
+
+        }
+
+        public static async ETTask DoReadyForBattle(this GamePlayTowerDefenseComponent self)
+        {
+            await self.Start();
+            await ETTask.CompletedTask;
+        }
+
+        public static bool IsEndlessChallengeMonster(this GamePlayTowerDefenseComponent self)
+        {
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
+            return gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallengeMonster;
+        }
+
+        public static bool IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.roomTypeInfo.roomType == RoomType.Normal)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.NormalEndlessChallenge)
+                {
+                    return true;
+                }
+            }
+            else if (self.roomTypeInfo.roomType == RoomType.AR)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.AREndlessChallenge)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsPVEMode(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.roomTypeInfo.roomType == RoomType.Normal)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.NormalPVE)
+                {
+                    return true;
+                }
+            }
+            else if (self.roomTypeInfo.roomType == RoomType.AR)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.ARPVE)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsPVPMode(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.roomTypeInfo.roomType == RoomType.Normal)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.NormalPVP)
+                {
+                    return true;
+                }
+            }
+            else if (self.roomTypeInfo.roomType == RoomType.AR)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.ARPVP)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsTutorialFirstModel(this GamePlayTowerDefenseComponent self)
+        {
+            if (self.roomTypeInfo.roomType == RoomType.Normal)
+            {
+                return false;
+            }
+            else if (self.roomTypeInfo.roomType == RoomType.AR)
+            {
+                if (self.roomTypeInfo.subRoomType == SubRoomType.ARTutorialFirst)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static async ETTask InitPlayerGameRecover(this GamePlayTowerDefenseComponent self)
+        {
             int recoverTimeoutTime = 0;
             int recoverFreeTimes = 0;
             int recoverByWatchAdTimes = 0;
@@ -144,44 +197,28 @@ namespace ET
                 recoverAddGold = GlobalSettingCfgCategory.Instance.RecoverAddGold;
             }
 
+            int recoverByWatchAdTimesNew = recoverByWatchAdTimes;
+            Dictionary<long, TeamFlagType> allPlayerTeamFlag = self.GetGamePlay().GetAllPlayerTeamFlag();
+            foreach (var playerTeamFlag in allPlayerTeamFlag)
+            {
+                long playerId = playerTeamFlag.Key;
+                TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(playerId);
+
+                GamePlayHelper.ChgGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType, GameNumericType.TowerDefense_PlayerResurrectionTimesBase, recoverByWatchAdTimes, true);
+
+                float tmp = GamePlayHelper.GetGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType, GameNumericType.TowerDefense_PlayerResurrectionTimes);
+                if (recoverByWatchAdTimesNew < tmp)
+                {
+                    recoverByWatchAdTimesNew = (int)tmp;
+                }
+            }
+            recoverByWatchAdTimes = recoverByWatchAdTimesNew;
+
+
             GameRecoverComponent gameRecoverComponent = self.AddComponent<GameRecoverComponent>();
             gameRecoverComponent.Init(recoverTimeoutTime, recoverFreeTimes, recoverByWatchAdTimes, recoverCostArcadeCoinTimes, recoverCostArcadeCoinNum, recoverAddHp, recoverAddGold);
 
-            self.InitPlayerCoin();
-
-            self.DoReadyForBattle().Coroutine();
-        }
-
-        public static async ETTask DoReadyForBattle(this GamePlayTowerDefenseComponent self)
-        {
-            await self.Start();
             await ETTask.CompletedTask;
-        }
-
-        public static bool IsEndlessChallengeMonster(this GamePlayTowerDefenseComponent self)
-        {
-            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
-            return gamePlayBattleLevelCfg.GamePlayMode is GamePlayTowerDefenseEndlessChallengeMonster;
-        }
-
-        public static bool IsEndlessChallengeMode(this GamePlayTowerDefenseComponent self)
-        {
-            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_EndlessChallenge;
-        }
-
-        public static bool IsPVEMode(this GamePlayTowerDefenseComponent self)
-        {
-            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVE;
-        }
-
-        public static bool IsPVPMode(this GamePlayTowerDefenseComponent self)
-        {
-            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_PVP;
-        }
-
-        public static bool IsTutorialFirstModel(this GamePlayTowerDefenseComponent self)
-        {
-            return self.gamePlayTowerDefenseMode == GamePlayTowerDefenseMode.TowerDefense_TutorialFirst;
         }
 
         public static void InitPlayerCoin(this GamePlayTowerDefenseComponent self)
@@ -190,7 +227,11 @@ namespace ET
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
-                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerList[i], CoinType.Gold, initGold);
+                long playerId = playerList[i];
+                GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGoldBase, initGold, true);
+                float newInitGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGold);
+
+                ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, (int)newInitGold);
             }
         }
 
@@ -272,7 +313,14 @@ namespace ET
 
         public static async ETTask TransToPutHome(this GamePlayTowerDefenseComponent self)
         {
-            PutHomeComponent putHomeComponent = self.AddComponent<PutHomeComponent>();
+            self.GetComponent<PlayerOwnerTowersComponent>().RefreshAllPlayerTowerPool();
+
+            PutHomeComponent putHomeComponent = self.GetComponent<PutHomeComponent>();
+            if (putHomeComponent == null)
+            {
+                putHomeComponent = self.AddComponent<PutHomeComponent>();
+            }
+
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.PutHome;
             self.NoticeToClientAll();
 
@@ -323,6 +371,8 @@ namespace ET
                 return;
             }
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_InTheBattleEnd());
+
+            self.GetComponent<PutHomeComponent>().RecoveryHomeHP();
 
             //self.GetComponent<PlayerOwnerTowersComponent>().RefreshAllPlayerTowerPool();
 
@@ -394,7 +444,7 @@ namespace ET
             {
                 foreach (var coin in playerId2Coin.Value)
                 {
-                    CoinType coinType = (CoinType)Enum.Parse(typeof (CoinType), coin.Key);
+                    CoinTypeInGame coinType = (CoinTypeInGame)Enum.Parse(typeof (CoinTypeInGame), coin.Key);
                     gamePlayPlayerListComponent.ChgPlayerCoin(playerId2Coin.Key, coinType, coin.Value, GetCoinType.DivideEquallyTeamCoin);
                 }
             }
@@ -412,9 +462,9 @@ namespace ET
             for (int i = 0; i < playerList.Count; i++)
             {
                 GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
-                float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerList[i], CoinType.Gold);
+                float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerList[i], CoinTypeInGame.Gold);
                 float interestGold = curGold * interestOnDeposit * 0.01f;
-                gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinType.Gold, interestGold, GetCoinType.InterestOnDeposit);
+                gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinTypeInGame.Gold, interestGold, GetCoinType.InterestOnDeposit);
             }
 
             return true;
@@ -433,7 +483,7 @@ namespace ET
             {
                 GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
 
-                gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinType.Gold, waveRewardGold, GetCoinType.WaveRewardGold);
+                gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinTypeInGame.Gold, waveRewardGold, GetCoinType.WaveRewardGold);
             }
 
             return true;
@@ -508,8 +558,6 @@ namespace ET
             await gamePlayComponent.GameEnd();
 
             self.NoticeToClientAll();
-
-            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_GameEnd());
 
             await ETTask.CompletedTask;
         }
@@ -629,9 +677,19 @@ namespace ET
             return self.GetComponent<PlayerOwnerTowersComponent>().ChkUpgradePlayerTower(playerId, towerUnitId, onlyChkPool);
         }
 
+        public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, string towerCfgId, bool onlyChkPool)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().ChkUpgradePlayerTower(playerId, 0, towerCfgId, onlyChkPool);
+        }
+
         public static bool UpgradePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, bool onlyChkPool)
         {
             return self.GetComponent<PlayerOwnerTowersComponent>().UpgradePlayerTower(playerId, towerUnitId, onlyChkPool);
+        }
+
+        public static bool UpgradePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, string towerCfgId, bool onlyChkPool)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().UpgradePlayerTower(playerId, towerCfgId, onlyChkPool);
         }
 
         public static bool ScalePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId)
@@ -805,13 +863,18 @@ namespace ET
                     // GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
                     // if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
                     // {
-                    //     ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                    //     ET.GamePlayHelper.ChgTeamCoin(self.DomainScene(), attackerPlayerId, CoinTypeInGame.Gold, rewardGold);
                     // }
                     // else
                     // {
-                    //     ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold);
+                    //     ET.GamePlayHelper.ChgPlayerCoin(self.DomainScene(), attackerPlayerId, CoinTypeInGame.Gold, rewardGold);
                     // }
-                    ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinType.Gold, rewardGold, beKillUnit);
+
+                    long playerId = attackerPlayerId;
+                    GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenKillMonsterBase, rewardGold, true);
+                    float newRewardGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenKillMonster);
+
+                    ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinTypeInGame.Gold, (int)newRewardGold, beKillUnit);
 
                 }
             }
@@ -822,6 +885,12 @@ namespace ET
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
             return playerOwnerTowersComponent.GetPutTowers(playerId);
+        }
+
+        public static int GetPutAttackTowerLimitCount(this GamePlayTowerDefenseComponent self, long playerId)
+        {
+            PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
+            return playerOwnerTowersComponent.GetPutAttackTowerLimitCount(playerId);
         }
 
         public static int GetPutAttackTowerCount(this GamePlayTowerDefenseComponent self, long playerId)
@@ -844,16 +913,12 @@ namespace ET
 
         public static TeamFlagType GetHomeTeamFlagTypeByPlayer(this GamePlayTowerDefenseComponent self, long playerId)
         {
-            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByPlayerId(playerId);
-
-            return ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlagType);
+            return GamePlayHelper.GetHomeTeamFlagTypeByPlayer(self.DomainScene(), playerId);
         }
 
         public static TeamFlagType GetMonsterTeamFlagTypeByPlayer(this GamePlayTowerDefenseComponent self, long playerId)
         {
-            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByPlayerId(playerId);
-
-            return ET.GamePlayTowerDefenseHelper.GetMonsterTeamFlagType(teamFlagType);
+            return GamePlayHelper.GetMonsterTeamFlagTypeByPlayer(self.DomainScene(), playerId);
         }
 
         public static (TeamFlagType, Unit) GetNearHostileHomeByPlayerId(this GamePlayTowerDefenseComponent self, long playerId, float3 pos)

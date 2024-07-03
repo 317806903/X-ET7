@@ -10,6 +10,14 @@ namespace ET
         public long playerId;
 
         [BsonIgnore]
+        public TowerType towerType
+        {
+            get
+            {
+                return this.model.Type;
+            }
+        }
+        [BsonIgnore]
         public TowerDefense_TowerCfg model
         {
             get

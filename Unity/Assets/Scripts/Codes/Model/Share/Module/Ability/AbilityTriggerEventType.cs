@@ -238,6 +238,19 @@ namespace ET.Ability
             public Unit monsterUnit;
         }
 
+        public struct GamePlayTowerDefense_RefreshTowerBuyPool
+        {
+            public long playerId;
+        }
+
+        public struct GamePlay_Status_GameWaitForStart
+        {
+        }
+
+        public struct GamePlay_Status_GameStart
+        {
+        }
+
         public struct GamePlayTowerDefense_Status_PutHomeBegin
         {
         }
@@ -278,7 +291,7 @@ namespace ET.Ability
         {
         }
 
-        public struct GamePlayTowerDefense_Status_GameEnd
+        public struct GamePlay_Status_GameEnd
         {
         }
 

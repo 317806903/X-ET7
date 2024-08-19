@@ -60,7 +60,7 @@ namespace ET.Client
             }
         }
 
-        public static void ShowWindow(this DlgBattleTower self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgBattleTower self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Game);
             self.needResetMyOwnTowList = true;
@@ -68,6 +68,7 @@ namespace ET.Client
             self.View.ES_AvatarShow.View.E_AvatarIconImage.SetVisible(false);
 
             self.ShowPutTipMsg("");
+            self.ResetUIBase();
             self.SetStep();
             self.RefreshCoin();
 
@@ -84,6 +85,10 @@ namespace ET.Client
 
         public static async ETTask ChkNeedBattleGuide(this DlgBattleTower self)
         {
+            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene()))
+            {
+                return;
+            }
             PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
             string battleCfgId = self.GetGamePlayTowerDefense().GetGamePlay().GetGamePlayBattleConfig().Id;
             (bool bNeedBattleGuide, string battleGuideConfigFileName) = playerOtherInfoComponent.ChkNeedBattleGuide(battleCfgId);
@@ -99,16 +104,16 @@ namespace ET.Client
                     await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.OtherInfo, new(){"battleGuideStepIndex"});
                 }
 
-                await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), battleGuideConfigFileName, startIndex, async () =>
+                await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), battleGuideConfigFileName, startIndex, async (scene) =>
                 {
-                    PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
+                    PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
                     playerOtherInfoComponent.SetBattleGuideFinished(battleCfgId);
-                    await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.OtherInfo, new(){"battleGuideStatus"});
-                }, async (stepIndex) =>
+                    await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(scene, PlayerModelType.OtherInfo, new(){"battleGuideStatus"});
+                }, async (scene, stepIndex) =>
                 {
-                    PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
+                    PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
                     playerOtherInfoComponent.SetBattleGuideStepFinished(battleCfgId, stepIndex+1);
-                    await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.OtherInfo, new(){"battleGuideStepIndex"});
+                    await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(scene, PlayerModelType.OtherInfo, new(){"battleGuideStepIndex"});
                 });
             }
         }
@@ -137,8 +142,6 @@ namespace ET.Client
 
             if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
             {
-                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
-
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
                 self.View.E_BattleImage.gameObject.SetActive(false);
 
@@ -182,8 +185,6 @@ namespace ET.Client
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
             {
-                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
-
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
                 self.View.E_BattleImage.gameObject.SetActive(false);
 
@@ -662,7 +663,7 @@ namespace ET.Client
 
         public static void ResetScrollRectMoveWhenGuide(this DlgBattleTower self)
         {
-            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene()))
+            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true))
             {
                 self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.horizontal = false;
                 self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.horizontal = false;
@@ -734,6 +735,11 @@ namespace ET.Client
         public static async ETTask RefreshUI(this DlgBattleTower self)
         {
             self.needResetMyOwnTowList = true;
+
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDragItem>();
+
+            self.ResetUIBase();
+
             self.SetStep();
 
             if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitRescan)
@@ -764,16 +770,15 @@ namespace ET.Client
             int curTowerCount = gamePlayTowerDefenseComponent.GetPutAttackTowerCount(myPlayerId);
 
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurPutTowerCount", curTowerCount, limitTowerCount);
-            /*if (leftCount == 0)
+            self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.text = msg;
+            if (limitTowerCount == curTowerCount)
             {
-                msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxPutTowerCount");
+                self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.color = Color.red;
             }
             else
             {
-                msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurPutTowerCount", leftCount);
-            }*/
-            self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.text = msg;
-
+                self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.color = Color.white;
+            }
         }
 
         public static async ETTask QuitBattle(this DlgBattleTower self)
@@ -977,7 +982,7 @@ namespace ET.Client
             string itemCfgId = list[index];
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
-            itemTower.ShowBagItem(itemCfgId, false);
+            itemTower.ShowBagItem(itemCfgId, false).Coroutine();
             itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.myOwnTowerDic[itemCfgId]}";
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
@@ -989,7 +994,7 @@ namespace ET.Client
 
             ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {
-                if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene()) == false)
+                if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true) == false)
                 {
                     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
@@ -1015,7 +1020,7 @@ namespace ET.Client
             string towerCfgId = list[index];
             string itemCfgId = list[index];
 
-            itemTowerBuy.ShowBagItem(itemCfgId, false);
+            itemTowerBuy.ShowBagItem(itemCfgId, false).Coroutine();
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
             int buyTowerCostGold = self.GetTowerBuyCost(index);
@@ -1155,6 +1160,13 @@ namespace ET.Client
                 return;
             }
 
+            self.ResetUIBase();
+
+            self.SetStep();
+        }
+
+        public static void ResetUIBase(this DlgBattleTower self)
+        {
             self.View.E_TipNodeImage.SetVisible(false);
             self.View.EG_BuyNodeRectTransform.SetVisible(true);
             //self.View.E_QuitBattleButton.SetVisible(true);
@@ -1163,24 +1175,23 @@ namespace ET.Client
             self.View.ELabel_LeftTimeTextMeshProUGUI.SetVisible(true);
             //self.CloseTowerBuyShow().Coroutine();
 
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent == null)
-            {
-                return;
-            }
-            GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
-            if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
-            {
-                self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
-            }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
-            {
-                self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
-            }
-            else
-            {
-                self.SetStep();
-            }
+            // GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            // if (gamePlayTowerDefenseComponent == null)
+            // {
+            //     return;
+            // }
+            // GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
+            // if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
+            // {
+            //     self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
+            // }
+            // else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
+            // {
+            //     self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
+            // }
+
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(true);
         }
 
         public static async ETTask OnResetHeadQuarter(this DlgBattleTower self)
@@ -1225,7 +1236,7 @@ namespace ET.Client
 
         public static async ETTask ShowAvatar(this DlgBattleTower self)
         {
-            await self.View.ES_AvatarShow.View.E_AvatarIconImage.SetMyselfIcon(self.DomainScene());
+            await self.View.ES_AvatarShow.View.E_AvatarIconImage.SetMyIcon(self.DomainScene());
 
             long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());

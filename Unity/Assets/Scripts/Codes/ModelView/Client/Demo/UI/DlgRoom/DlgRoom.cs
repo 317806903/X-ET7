@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ComponentOf(typeof (UIBaseWindow))]
-    public class DlgRoom: Entity, IAwake, IUILogic
+    public class DlgRoom: Entity, IAwake, IUILogic, IUIDlg
     {
         public DlgRoomViewComponent View
         {

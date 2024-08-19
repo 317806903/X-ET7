@@ -58,7 +58,6 @@ namespace ET.Ability
             }
             self.permanent = duration == -1? true : false;
             self.duration = duration == -1? 100 : duration;
-            self.casterUnitId = casterUnitId;
             self.timeElapsed = 0;
             self.aoeTargetCondition = aoeTargetCondition;
         }
@@ -72,27 +71,6 @@ namespace ET.Ability
         public static List<AoeActionCall> GetActionIds(this AoeObj self, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
         {
             return self.monitorTriggerList[abilityAoeMonitorTriggerEvent];
-        }
-
-
-        /// <summary>
-        /// 获取aoe发射者(上级)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetCasterUnit(this AoeObj self)
-        {
-            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-        }
-
-        /// <summary>
-        /// 获取aoe发射者(player或monster)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetCasterActorUnit(this AoeObj self)
-        {
-            return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
         }
 
         /// <summary>
@@ -204,7 +182,7 @@ namespace ET.Ability
                 list.Add(unit.Id);
             }
 
-            SelectHandle curSelectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(curUnit, self.aoeTargetCondition.SelectObjectType, list);
+            SelectHandle curSelectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(curUnit, self.aoeTargetCondition.SelectObjectUnitTypeBase, list);
             (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, ref self.actionContext);
             if (isChgSelect1)
             {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -34,16 +35,27 @@ namespace ET
         {
             protected override void Awake(AIComponent self, string aiConfigId)
             {
+                self.actionContext = new ActionContext();
+
                 self.isEnable = true;
                 self.AICfgId = aiConfigId;
+                self.TargetUnitDic = new();
                 self.curFrameIndex = new();
+                self.ResetTargetTimeDic = new();
 
                 var oneAI = AICfgCategory.Instance.GetAI(self.AICfgId);
                 foreach (AICfg aiConfig in oneAI.Values)
                 {
                     self.curFrameIndex.Add(aiConfig.Order, 0);
+                    if (aiConfig.ResetTargetTime == -1)
+                    {
+                        self.ResetTargetTimeDic[aiConfig.Order] = -1;
+                    }
+                    else
+                    {
+                        self.ResetTargetTimeDic[aiConfig.Order] = TimeHelper.ServerNow() + (long)(aiConfig.ResetTargetTime * 1000);
+                    }
                 }
-
 
                 self.isNear = true;
                 self._ResetRepeatedTimer();
@@ -57,6 +69,10 @@ namespace ET
         {
             protected override void Destroy(AIComponent self)
             {
+                self.TargetUnitDic.Clear();
+                self.curFrameIndex.Clear();
+                self.ResetTargetTimeDic.Clear();
+
                 TimerComponent.Instance?.Remove(ref self.Timer);
                 self.CancellationToken?.Cancel();
                 self.CancellationToken = null;
@@ -70,7 +86,7 @@ namespace ET
             {
                 return;
             }
-            if (self.lastChkDisTime == 0 || self.lastChkDisTime < TimeHelper.ServerNow() - self.chkDisTimeInterval * 1000)
+            if (self.lastChkDisTime == 0 || self.lastChkDisTime < TimeHelper.ServerNow() - (long)(self.chkDisTimeInterval * 1000))
             {
                 self.lastChkDisTime = TimeHelper.ServerNow();
             }
@@ -234,6 +250,11 @@ namespace ET
 
                 if (self.Current == aiConfig.Order.ToString())
                 {
+                    if (self.ResetTargetTimeDic[aiConfig.Order] != -1 && self.ResetTargetTimeDic[aiConfig.Order] < TimeHelper.ServerNow())
+                    {
+                        self.ResetTargetTimeDic[aiConfig.Order] = TimeHelper.ServerNow() + (long)(aiConfig.ResetTargetTime * 1000);
+                        self.ResetTargetUnit(aiConfig);
+                    }
                     break;
                 }
 
@@ -255,5 +276,84 @@ namespace ET
             self.Current = "";
             self.CancellationToken = null;
         }
+
+        public static void ResetTargetUnit(this AIComponent self, AICfg aiConfig)
+        {
+            self.TargetUnitDic[aiConfig.SelectObject] = null;
+            self.GetUnit().RemoveComponent<SelectHandleObj>();
+        }
+
+        public static Unit GetTargetUnit(this AIComponent self, AICfg aiConfig, float radius, bool isNeedChkAttack)
+        {
+            if (isNeedChkAttack && radius == 0)
+            {
+                return null;
+            }
+
+            Unit unit = self.GetUnit();
+            if (self.IsDisposed)
+            {
+                return null;
+            }
+
+            self.TargetUnitDic.TryGetValue(aiConfig.SelectObject, out var targetUnitRec);
+            if ((Unit)targetUnitRec != null)
+            {
+                Unit unitSelect = (Unit)targetUnitRec;
+                if (UnitHelper.ChkUnitAlive(unitSelect))
+                {
+                    if (isNeedChkAttack)
+                    {
+                        if (Ability.UnitHelper.ChkCanAttack(unit, unitSelect, radius))
+                        {
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, unitSelect);
+                            if (bHitMesh == false)
+                            {
+                                return (Unit)targetUnitRec;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return (Unit)targetUnitRec;
+                    }
+                }
+            }
+
+            SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(unit, null, aiConfig.SelectObject_Ref, ref self.actionContext);
+            if (curSelectHandle == null)
+            {
+                return null;
+            }
+            List<long> unitList = curSelectHandle.unitIds;
+            Unit targetUnit = null;
+            foreach (long unitId in unitList)
+            {
+                Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+
+                if (isNeedChkAttack)
+                {
+                    if (Ability.UnitHelper.ChkCanAttack(unit, unitSelect, radius))
+                    {
+                        (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, unitSelect);
+                        if (bHitMesh)
+                        {
+                            continue;
+                        }
+                        targetUnit = unitSelect;
+                        break;
+                    }
+                }
+                else
+                {
+                    targetUnit = unitSelect;
+                    break;
+                }
+            }
+
+            self.TargetUnitDic[aiConfig.SelectObject] = targetUnit;
+            return targetUnit;
+        }
+
     }
 }

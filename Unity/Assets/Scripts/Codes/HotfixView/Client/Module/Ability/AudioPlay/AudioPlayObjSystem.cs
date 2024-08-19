@@ -97,6 +97,16 @@ namespace ET.Ability.Client
 
         public static async ETTask PlayAudio(this AudioPlayObj self, ActionCfg_PlayAudio actionCfg_PlayAudio)
         {
+            while (TimeHelper.ClientNow() > TimeHelper.ClientFrameTime() + 200)
+            {
+                //await TimerComponent.Instance.WaitFrameAsync();
+                await TimerComponent.Instance.WaitAsync(200);
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+            }
+
             if (self.go == null)
             {
                 await self._Init();

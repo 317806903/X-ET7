@@ -568,6 +568,57 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EG_ChgBattleDeckRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_ChgBattleDeckRectTransform == null )
+				{
+					this.m_EG_ChgBattleDeckRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck");
+				}
+				return this.m_EG_ChgBattleDeckRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ChgBattleDeckButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ChgBattleDeckButton == null )
+				{
+					this.m_EButton_ChgBattleDeckButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck/EButton_ChgBattleDeck");
+				}
+				return this.m_EButton_ChgBattleDeckButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ChgBattleDeckImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ChgBattleDeckImage == null )
+				{
+					this.m_EButton_ChgBattleDeckImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck/EButton_ChgBattleDeck");
+				}
+				return this.m_EButton_ChgBattleDeckImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -603,6 +654,9 @@ namespace ET.Client
 			this.m_EButton_ChooseBattleCfgButton = null;
 			this.m_EButton_ChooseBattleCfgImage = null;
 			this.m_ELabel_BattleCfgIdTextMeshProUGUI = null;
+			this.m_EG_ChgBattleDeckRectTransform = null;
+			this.m_EButton_ChgBattleDeckButton = null;
+			this.m_EButton_ChgBattleDeckImage = null;
 			this.uiTransform = null;
 		}
 
@@ -639,6 +693,9 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_ChooseBattleCfgButton = null;
 		private UnityEngine.UI.Image m_EButton_ChooseBattleCfgImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_BattleCfgIdTextMeshProUGUI = null;
+		private UnityEngine.RectTransform m_EG_ChgBattleDeckRectTransform = null;
+		private UnityEngine.UI.Button m_EButton_ChgBattleDeckButton = null;
+		private UnityEngine.UI.Image m_EButton_ChgBattleDeckImage = null;
 		public Transform uiTransform = null;
 	}
 }

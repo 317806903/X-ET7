@@ -25,6 +25,7 @@ namespace ET
 		public int RouterHttpPort = 30300;
 		public AreaType areaType;
 		public string languageType;
+		public bool IsShowLanguagePre = false;
 		public bool IsShowDebugMode = false;
 		public bool IsShowEditorLoginMode = false;
 		public bool IsNeedSendEventLog;

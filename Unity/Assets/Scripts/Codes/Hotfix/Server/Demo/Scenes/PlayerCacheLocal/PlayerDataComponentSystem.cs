@@ -19,24 +19,14 @@ namespace ET.Server
         {
             self.playerId = playerId;
 
-            PlayerBaseInfoComponent playerBaseInfoComponent = await self.InitByDBOne<PlayerBaseInfoComponent>(self.playerId);
-
-            PlayerBackPackComponent playerBackPackComponent = await self.InitByDBOne<PlayerBackPackComponent>(self.playerId);
-            playerBackPackComponent.Init();
-
-            PlayerBattleCardComponent playerBattleCardComponent = await self.InitByDBOne<PlayerBattleCardComponent>(self.playerId);
-
-            PlayerOtherInfoComponent playerOtherInfoComponent = await self.InitByDBOne<PlayerOtherInfoComponent>(self.playerId);
-            playerOtherInfoComponent.Init();
-
-            PlayerSeasonInfoComponent playerSeasonInfoComponent = await self.InitByDBOne<PlayerSeasonInfoComponent>(self.playerId);
-            playerSeasonInfoComponent.Init();
-
-            PlayerFunctionMenuComponent playerFunctionMenuComponent = await self.InitByDBOne<PlayerFunctionMenuComponent>(self.playerId);
-            playerFunctionMenuComponent.Init();
-
-            PlayerMailComponent playerMailComponent = await self.InitByDBOne<PlayerMailComponent>(self.playerId);
-            playerMailComponent.Init();
+            // await self.AddPlayerModelData(PlayerModelType.BaseInfo);
+            // await self.AddPlayerModelData(PlayerModelType.BackPack);
+            // await self.AddPlayerModelData(PlayerModelType.BattleCard);
+            // await self.AddPlayerModelData(PlayerModelType.OtherInfo);
+            // await self.AddPlayerModelData(PlayerModelType.SeasonInfo);
+            // await self.AddPlayerModelData(PlayerModelType.FunctionMenu);
+            // await self.AddPlayerModelData(PlayerModelType.Mails);
+            await ETTask.CompletedTask;
         }
 
         public static async ETTask<Entity> AddPlayerModelData(this PlayerDataComponent self, PlayerModelType playerModelType)
@@ -45,6 +35,13 @@ namespace ET.Server
             {
                 case PlayerModelType.BaseInfo:
                     PlayerBaseInfoComponent playerBaseInfoComponent = await self.InitByDBOne<PlayerBaseInfoComponent>(self.playerId);
+                    playerBaseInfoComponent.Init();
+                    if (playerBaseInfoComponent.seasonIndex == 0)
+                    {
+                        playerBaseInfoComponent.seasonIndex = await SeasonHelper.GetSeasonIndex(self.DomainScene());
+                        playerBaseInfoComponent.seasonCfgId = await SeasonHelper.GetSeasonCfgId(self.DomainScene());
+                        playerBaseInfoComponent.SetDataCacheAutoWrite();
+                    }
                     return playerBaseInfoComponent;
                 case PlayerModelType.BackPack:
                     PlayerBackPackComponent playerBackPackComponent = await self.InitByDBOne<PlayerBackPackComponent>(self.playerId);
@@ -52,6 +49,7 @@ namespace ET.Server
                     return playerBackPackComponent;
                 case PlayerModelType.BattleCard:
                     PlayerBattleCardComponent playerBattleCardComponent = await self.InitByDBOne<PlayerBattleCardComponent>(self.playerId);
+                    playerBattleCardComponent.Init();
                     return playerBattleCardComponent;
                 case PlayerModelType.OtherInfo:
                     PlayerOtherInfoComponent playerOtherInfoComponent = await self.InitByDBOne<PlayerOtherInfoComponent>(self.playerId);
@@ -60,6 +58,13 @@ namespace ET.Server
                 case PlayerModelType.SeasonInfo:
                     PlayerSeasonInfoComponent playerSeasonInfoComponent = await self.InitByDBOne<PlayerSeasonInfoComponent>(self.playerId);
                     playerSeasonInfoComponent.Init();
+                    if (playerSeasonInfoComponent.seasonIndex == 0)
+                    {
+                        playerSeasonInfoComponent.seasonIndex = await SeasonHelper.GetSeasonIndex(self.DomainScene());
+                        playerSeasonInfoComponent.seasonCfgId = await SeasonHelper.GetSeasonCfgId(self.DomainScene());
+                        playerSeasonInfoComponent.SetDataCacheAutoWrite();
+                    }
+
                     return playerSeasonInfoComponent;
                 case PlayerModelType.FunctionMenu:
                     PlayerFunctionMenuComponent playerFunctionMenuComponent = await self.InitByDBOne<PlayerFunctionMenuComponent>(self.playerId);

@@ -26,11 +26,6 @@ namespace ET.Ability
         public float radius;
 
         ///<summary>
-        ///aoe的施法者
-        ///</summary>
-        public long casterUnitId;
-
-        ///<summary>
         ///aoe存在的时间，单位：秒
         ///</summary>
         public float duration;

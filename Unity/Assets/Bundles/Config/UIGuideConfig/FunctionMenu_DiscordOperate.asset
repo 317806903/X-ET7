@@ -19,7 +19,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Setting
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_Setting
     guideTextType: 0
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_DiscordOperate_Discord1

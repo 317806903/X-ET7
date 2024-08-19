@@ -57,24 +57,25 @@ namespace ET.Client
 
         public static async ETTask Awake(this AppsflyerSDKComponent self)
         {
-            if (ResConfig.Instance.Channel == "10001")
-			{
-				AppsFlyer.initSDK("Mv3t3nzveDt2q4mJCd5rLD", "com.dm.realityguard");
-                AppsFlyer.startSDK();
-			}
-			else if (ResConfig.Instance.Channel == "10002")
-			{
-				AppsFlyer.initSDK("Mv3t3nzveDt2q4mJCd5rLD", "id6474414179");
+            bool isNeedAppsflyer = ChannelSettingComponent.Instance.ChkIsNeedAppsflyer();
+            if (isNeedAppsflyer == false)
+            {
+                return;
+            }
+            string appsflyerKey = ChannelSettingComponent.Instance.GetAppsflyerKey();
+            string appsflyerAppID = ChannelSettingComponent.Instance.GetAppsflyerAppID();
+
+            AppsFlyer.initSDK(appsflyerKey, appsflyerAppID);
 #if UNITY_IOS
-                AppsFlyer.waitForATTUserAuthorizationWithTimeoutInterval(60);
-                if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() 
-                    == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
-                {
-                    ATTrackingStatusBinding.RequestAuthorizationTracking();
-                }
+            AppsFlyer.waitForATTUserAuthorizationWithTimeoutInterval(60);
+            if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus()
+                == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+            {
+                ATTrackingStatusBinding.RequestAuthorizationTracking();
+            }
 #endif
-                AppsFlyer.startSDK();
-			}
+            AppsFlyer.startSDK();
+
             await ETTask.CompletedTask;
         }
 

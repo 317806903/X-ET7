@@ -275,8 +275,8 @@ namespace ET.Client
                         if (playerStatusComponent.LastBattleResult == BattleResult.Successed)
                         {
                             string nextBattleCfgId = "";
-                            int seasonId = roomTypeInfo.seasonId;
-                            if (seasonId > 0)
+                            int seasonCfgId = roomTypeInfo.seasonCfgId;
+                            if (seasonCfgId > 0)
                             {
                                 nextBattleCfgId = SeasonChallengeLevelCfgCategory.Instance.GetNextChallengeGamePlayBattleLevelCfgId(roomTypeInfo);
                             }
@@ -386,11 +386,6 @@ namespace ET.Client
                         await RoomHelper.MemberQuitBattleAsync(scene);
                     }
                     await UIManagerHelper.EnterGameModeUI(scene);
-                    DlgGameModeAR _DlgGameModeAR = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgGameModeAR>(true);
-                    if (_DlgGameModeAR != null)
-                    {
-                        _DlgGameModeAR.View.E_RedDotImage.SetVisible(true);
-                    }
                     return;
                 }
             }
@@ -407,8 +402,8 @@ namespace ET.Client
                     if (playerStatusComponent.LastBattleResult == BattleResult.Successed)
                     {
                         string nextBattleCfgId = "";
-                        int seasonId = roomTypeInfo.seasonId;
-                        if (seasonId > 0)
+                        int seasonCfgId = roomTypeInfo.seasonCfgId;
+                        if (seasonCfgId > 0)
                         {
                             nextBattleCfgId = SeasonChallengeLevelCfgCategory.Instance.GetNextChallengeGamePlayBattleLevelCfgId(roomTypeInfo);
                         }

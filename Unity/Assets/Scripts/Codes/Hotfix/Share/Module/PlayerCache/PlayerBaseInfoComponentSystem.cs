@@ -26,9 +26,18 @@ namespace ET
             }
         }
 
+        public static void Init(this PlayerBaseInfoComponent self)
+        {
+            if (string.IsNullOrEmpty(self.AvatarFrameItemCfgId))
+            {
+                self.AvatarFrameItemCfgId = "AvatarFrame_None";
+                self.SetDataCacheAutoWrite();
+            }
+        }
+
         public static long GetPlayerId(this PlayerBaseInfoComponent self)
         {
-            return self.GetParent<PlayerDataComponent>().playerId;
+            return self.Id;
         }
 
         public static string GetPlayerName(this PlayerBaseInfoComponent self)
@@ -109,7 +118,7 @@ namespace ET
             }
         }
 
-        public static int GetRevoerLeftTime(this PlayerBaseInfoComponent self)
+        public static int GetRecoverLeftTime(this PlayerBaseInfoComponent self)
         {
             //self.UpdatePhysicalStrength();
             if (self.physicalStrength == GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength)

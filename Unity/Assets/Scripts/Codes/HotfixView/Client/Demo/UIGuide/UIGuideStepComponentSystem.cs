@@ -48,6 +48,10 @@ namespace ET.Client
                     return;
                 }
 
+                if (self.isGuiding == false)
+                {
+                    return;
+                }
                 self.Update();
             }
         }
@@ -101,7 +105,7 @@ namespace ET.Client
                 {
                     return;
                 }
-                if (self.lastPos3D.Equals(self.guidePathGo.transform.localPosition) == false)
+                if (self.lastPos3D.Equals(self.guidePathGo.transform.position) == false)
                 {
                     //如果当前节点
                     await self._DoGuideStep(true);
@@ -322,15 +326,16 @@ namespace ET.Client
                         isNeedRefind = true;
                     }
 
-                    Vector3 localPosition = self.guidePathGo.GetComponent<RectTransform>().localPosition;
+                    Vector3 curPosition = self.guidePathGo.GetComponent<RectTransform>().position;
+                    //Log.Error($"curPosition {curPosition} {self.lastGuideRectPos.Equals(curPosition)}");
                     if (self.islastInit == false)
                     {
-                        self.lastGuideRectPos = localPosition;
+                        self.lastGuideRectPos = curPosition;
                         isNeedRefind = true;
                     }
-                    else if (self.lastGuideRectPos.Equals(localPosition) == false)
+                    else if (self.lastGuideRectPos.Equals(curPosition) == false)
                     {
-                        self.lastGuideRectPos = localPosition;
+                        self.lastGuideRectPos = curPosition;
                         isNeedRefind = true;
                     }
 
@@ -355,7 +360,8 @@ namespace ET.Client
                 if (isNeedRefind)
                 {
                     self.guidePathGo = null;
-                    await TimerComponent.Instance.WaitFrameAsync();
+                    //await TimerComponent.Instance.WaitFrameAsync();
+                    await TimerComponent.Instance.WaitAsync(100);
                     if (self.IsDisposed)
                     {
                         return;
@@ -1094,7 +1100,7 @@ namespace ET.Client
 
                 if (maskTrans != null)
                 {
-                    self.lastPos3D = maskTrans.localPosition;
+                    self.lastPos3D = maskTrans.position;
                     //self.lastPos3D = ((RectTransform)maskTrans).anchoredPosition3D;
                     self.lastCanvasSize = canvasTrans.GetComponent<RectTransform>().sizeDelta;
                 }
@@ -1167,6 +1173,8 @@ namespace ET.Client
                     return;
                 }
             }
+
+            self.isGuiding = false;
 
             self.finishedCallBack?.Invoke();
         }

@@ -62,5 +62,105 @@ namespace ET
             return self.Position;
         }
 
+        public static void AddOwnCaller(this Unit self, Unit caller)
+        {
+            ET.Ability.OwnCallerHelper.AddOwnCaller(self, caller);
+        }
+
+        public static HashSet<long> GetOwnCaller(this Unit self, bool ownCallActor, bool ownBullet, bool ownAoe)
+        {
+            HashSet<long> unitList = ET.Ability.OwnCallerHelper.GetOwnCaller(self, ownCallActor, ownBullet, ownAoe);
+            return unitList;
+        }
+
+        public static void AddCaster(this Unit self, Unit caster)
+        {
+            ET.Ability.CasterHelper.AddCaster(self, caster);
+        }
+
+        /// <summary>
+        /// 往上找到的第一个的Unit，例如 A1 召唤了 A2， A2 发射了子弹 B1， B1某个时刻再发射的子弹B2
+        ///     则 子弹B2通过这个接口可以找到B1
+        ///     则 子弹B1通过这个接口可以找到A2
+        ///     则 A2通过这个接口可以找到A1
+        /// </summary>
+        /// <returns></returns>
+        public static Unit GetCaster(this Unit self)
+        {
+            return ET.Ability.CasterHelper.GetCaster(self);
+        }
+
+        /// <summary>
+        /// 往上找到的第一个的Actor，例如 A1 召唤了 A2， A2 发射了子弹 B1， B1某个时刻再发射的子弹B2
+        ///     则 子弹B2通过这个接口可以找到A2
+        ///     则 子弹B1通过这个接口可以找到A2
+        ///     则 A2通过这个接口可以找到A1
+        /// </summary>
+        /// <returns></returns>
+        public static Unit GetCasterFirstActor(this Unit self, bool isContainSelf = true)
+        {
+            Unit unit = self;
+            while (true)
+            {
+                Unit casterUnit = unit.GetCaster();
+                if (casterUnit == null)
+                {
+                    break;
+                }
+
+                unit = casterUnit;
+                if (UnitHelper.ChkIsActor(unit))
+                {
+                    break;
+                }
+            }
+
+            if (isContainSelf == false)
+            {
+                if (unit == self)
+                {
+                    return null;
+                }
+            }
+
+            return unit;
+        }
+
+        /// <summary>
+        /// 往上找到的最后的Actor，例如 A1 召唤了 A2， A2 发射了子弹 B1， B1某个时刻再发射的子弹B2
+        ///     则 子弹B2通过这个接口可以找到A1
+        ///     则 子弹B1通过这个接口可以找到A1
+        ///     则 A2通过这个接口可以找到A1
+        /// </summary>
+        /// <returns></returns>
+        public static Unit GetCasterActor(this Unit self, bool isContainSelf = true)
+        {
+            Unit unit = self;
+            while (true)
+            {
+                Unit casterUnit = unit.GetCaster();
+                if (casterUnit == null)
+                {
+                    break;
+                }
+
+                unit = casterUnit;
+            }
+
+            if (isContainSelf == false)
+            {
+                if (unit == self)
+                {
+                    return null;
+                }
+            }
+
+            if (UnitHelper.ChkIsActor(unit) == false)
+            {
+                return null;
+            }
+            return unit;
+        }
+
     }
 }

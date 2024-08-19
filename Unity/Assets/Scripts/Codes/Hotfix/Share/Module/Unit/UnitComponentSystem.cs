@@ -152,8 +152,6 @@ namespace ET
 
 			ET.Ability.UnitHelper.AddUnitDelayRemove(self.DomainScene(), unit);
 
-			GamePlayHelper.RemoveUnitInfo(unit);
-
 			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
 			recordList.Remove(unit);
 			unit?.Dispose();
@@ -199,7 +197,7 @@ namespace ET
 					EventType.SyncNoticeUnitAdds _SyncNoticeUnitAdds = new ()
 					{
 						beNoticeUnit = beNoticeUnit,
-						units = new(),
+						units = ListComponent<Unit>.Create(),
 					};
 
 					self.NeedSyncNoticeUnitAddsTmp.Clear();
@@ -262,7 +260,7 @@ namespace ET
 					EventType.SyncNoticeUnitRemoves _SyncNoticeUnitRemoves = new ()
 					{
 						beNoticeUnit = beNoticeUnit,
-						unitIds = new(),
+						unitIds = ListComponent<long>.Create(),
 					};
 
 					self.NeedSyncNoticeUnitRemovesTmp.Clear();

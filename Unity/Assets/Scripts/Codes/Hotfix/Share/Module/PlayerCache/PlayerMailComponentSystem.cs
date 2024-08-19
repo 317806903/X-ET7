@@ -14,12 +14,34 @@ namespace ET
             protected override void Awake(PlayerMailComponent self)
             {
                 self.mailStatus = new();
-                self.Init();
             }
         }
 
         public static void Init(this PlayerMailComponent self)
         {
+            self.DealOvertimeMail();
+        }
+
+        public static void DealOvertimeMail(this PlayerMailComponent self)
+        {
+            using ListComponent<long> removeList = ListComponent<long>.Create();
+            foreach (KeyValuePair<long, Entity> child in self.Children)
+            {
+                MailInfoComponent mailInfoComponent = child.Value as MailInfoComponent;
+                if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                {
+                    removeList.Add(mailInfoComponent.Id);
+                }
+            }
+
+            if (removeList.Count > 0)
+            {
+                foreach (long mailId in removeList)
+                {
+                    self.RemoveChild(mailId);
+                }
+                self.SetDataCacheAutoWrite();
+            }
         }
 
         /// <summary>
@@ -44,6 +66,10 @@ namespace ET
             foreach (KeyValuePair<long, Entity> child in self.Children)
             {
                 MailInfoComponent mailInfoComponent = child.Value as MailInfoComponent;
+                if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                {
+                    continue;
+                }
                 list.Add((mailInfoComponent, self.mailStatus[mailInfoComponent.Id]));
             }
 
@@ -98,12 +124,16 @@ namespace ET
         /// <returns></returns>
         public static List<(MailInfoComponent, MailStatus)> GetPlayerMailListBySort(this PlayerMailComponent self, MailSortRule mailSortRule, bool isDescendingOrder)
         {
-            List<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)> unreadOrNotReceivedList = new List<(MailInfoComponent, MailStatus)>();
-            List<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)> readList = new List<(MailInfoComponent, MailStatus)>();
+            ListComponent<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)> unreadOrNotReceivedList = ListComponent<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)>.Create();
+            using ListComponent<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)> readList = ListComponent<(MailInfoComponent mailInfoComponent, MailStatus mailStatus)>.Create();
 
             foreach (KeyValuePair<long, Entity> child in self.Children)
             {
                 MailInfoComponent mailInfoComponent = child.Value as MailInfoComponent;
+                if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                {
+                    continue;
+                }
                 MailStatus mailStatus = self.mailStatus[mailInfoComponent.Id];
 
                 if (mailStatus == MailStatus.UnRead || mailStatus == MailStatus.ReadAndNotGetItem)

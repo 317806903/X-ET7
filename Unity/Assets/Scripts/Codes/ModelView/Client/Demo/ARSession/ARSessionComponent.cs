@@ -37,5 +37,7 @@ namespace ET.Client
 
 		public long Timer;
 		public bool targetIsARCamera;
+
+		public long lastSendCameraPosTime;
 	}
 }

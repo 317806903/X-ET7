@@ -1,5 +1,5 @@
 syntax = "proto3";
-// using 
+// using
 
 package ET;
 
@@ -282,7 +282,8 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 message G2R_GetRoomList // IActorRequest
 {
 	int32 RpcId = 1;
-	int32 IsARRoom = 2;
+	int32 NeedARRoom = 2;
+	int32 NeedNotARRoom = 3;
 }
 
 message R2G_GetRoomList // IActorResponse
@@ -838,7 +839,8 @@ message G2M_GetPlayerSessionInfo // IActorResponse
 message S2R_ChgSeason // IActorRequest
 {
 	int32 RpcId = 1;
-	int32 SeasonId = 2;
+	int32 SeasonIndex = 2;
+	int32 SeasonCfgId = 3;
 }
 
 message R2S_ChgSeason // IActorResponse
@@ -852,7 +854,8 @@ message R2S_ChgSeason // IActorResponse
 message S2P_ChgSeason // IActorRequest
 {
 	int32 RpcId = 1;
-	int32 SeasonId = 2;
+	int32 SeasonIndex = 2;
+	int32 SeasonCfgId = 3;
 }
 
 message P2S_ChgSeason // IActorResponse

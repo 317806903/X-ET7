@@ -21,11 +21,16 @@ namespace ET.Ability
 			{
 				return;
 			}
+
+			await TimerComponent.Instance.WaitFrameAsync();
+			await TimerComponent.Instance.WaitFrameAsync();
+
 			ActionCfg_GoToDie actionCfg_GoToDie = ActionCfg_GoToDieCategory.Instance.Get(actionId);
 
 			for (int i = 0; i < list.Count; i++)
 			{
 				Unit targetUnit = list[i];
+
 				if (actionCfg_GoToDie.IsOrgDeathShow)
 				{
 					ET.Ability.DeathShowHelper.DeathShow(targetUnit);

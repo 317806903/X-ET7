@@ -54,7 +54,7 @@ namespace ET.Client
         /// <param name="isNeedShowState"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetDlgLogic<T>(this UIComponent self, bool isNeedShowState = false, bool isNeedShowFront = false) where T : Entity, IUILogic
+        public static T GetDlgLogic<T>(this UIComponent self, bool isNeedShowState = false, bool isNeedShowFront = false) where T : Entity, IUILogic, IUIDlg
         {
             if (UIPathComponent.Instance == null || UIPathComponent.Instance.WindowTypeIdDict == null)
             {
@@ -113,7 +113,7 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <typeparam name="T"></typeparam>
-        public static void ShowStackWindow<T>(this UIComponent self) where T : Entity, IUILogic
+        public static void ShowStackWindow<T>(this UIComponent self) where T : Entity, IUILogic, IUIDlg
         {
             WindowID id = self.GetWindowIdByGeneric<T>();
             self.ShowStackWindow(id);
@@ -191,7 +191,7 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <param name="showData"></param>
         /// <typeparam name="T"></typeparam>
-        public static void ShowWindow<T>(this UIComponent self, ShowWindowData showData = null) where T : Entity, IUILogic
+        public static void ShowWindow<T>(this UIComponent self, ShowWindowData showData = null) where T : Entity, IUILogic, IUIDlg
         {
             WindowID windowsId = self.GetWindowIdByGeneric<T>();
             self._ShowWindow(windowsId, showData);
@@ -226,7 +226,7 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <param name="showData"></param>
         /// <typeparam name="T"></typeparam>
-        public static async ETTask ShowWindowAsync<T>(this UIComponent self, ShowWindowData showData = null) where T : Entity, IUILogic
+        public static async ETTask ShowWindowAsync<T>(this UIComponent self, ShowWindowData showData = null) where T : Entity, IUILogic, IUIDlg
         {
             WindowID windowsId = self.GetWindowIdByGeneric<T>();
             await self.ShowWindowAsync(windowsId, showData);
@@ -290,6 +290,8 @@ namespace ET.Client
             }
 
             UITextLocalizeComponent.Instance.RemoveUITextLocalizeView(baseWindow.UIPrefabGameObject);
+            UIImageLocalizeComponent.Instance.RemoveUIImageLocalizeView(baseWindow.UIPrefabGameObject);
+            UIRedDotHelper.RemoveUIRedDotView(self.DomainScene(), baseWindow.UIPrefabGameObject);
             UIEventComponent.Instance.GetUIEventHandler(id).BeforeUnload(baseWindow);
             if (baseWindow.IsPreLoad)
             {
@@ -312,7 +314,7 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <typeparam name="T"></typeparam>
-        public static void UnLoadWindow<T>(this UIComponent self) where T : Entity, IUILogic
+        public static void UnLoadWindow<T>(this UIComponent self) where T : Entity, IUILogic, IUIDlg
         {
             WindowID hideWindowId = self.GetWindowIdByGeneric<T>();
             self.UnLoadWindow(hideWindowId);
@@ -442,7 +444,7 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <typeparam name="T"></typeparam>
-        public static void CloseWindow<T>(this UIComponent self) where T : Entity, IUILogic
+        public static void CloseWindow<T>(this UIComponent self) where T : Entity, IUILogic, IUIDlg
         {
             if (self.IsDisposed)
             {
@@ -524,13 +526,17 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <param name="includeFixed"></param>
-        public static void HideAllShownWindow(this UIComponent self, bool includeFixed = false)
+        public static void HideAllShownWindow(this UIComponent self, bool includeFixed = false, bool includeNotice = true)
         {
             self.IsPopStackWndStatus = false;
             self.UIBaseWindowlistCached.Clear();
             foreach (KeyValuePair<int, UIBaseWindow> window in self.VisibleWindowsDic)
             {
-                if ((window.Value.windowType == UIWindowType.Fixed || window.Value.windowType == UIWindowType.HighestFixedRoot) && !includeFixed)
+                if ((window.Value.windowType == UIWindowType.Fixed ||
+                        window.Value.windowType == UIWindowType.HighestFixedRoot) && !includeFixed)
+                    continue;
+                if ((window.Value.windowType == UIWindowType.NoticeRoot ||
+                        window.Value.windowType == UIWindowType.HighestNoticeRoot) && !includeNotice)
                     continue;
                 if (window.Value.IsDisposed)
                 {
@@ -579,6 +585,8 @@ namespace ET.Client
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnInitComponent(baseWindow);
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnRegisterUIEvent(baseWindow);
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(baseWindow.UIPrefabGameObject);
+            UIImageLocalizeComponent.Instance.AddUIImageLocalizeView(baseWindow.UIPrefabGameObject);
+            ET.Client.UIRedDotHelper.AddUIRedDotView(self.DomainScene(), baseWindow.UIPrefabGameObject);
             self.ReplaceTranslucentImage(baseWindow.UIPrefabGameObject);
 
             self.AllWindowsDic[(int)baseWindow.WindowID] = baseWindow;
@@ -622,6 +630,8 @@ namespace ET.Client
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnInitComponent(baseWindow);
             UIEventComponent.Instance.GetUIEventHandler(baseWindow.WindowID).OnRegisterUIEvent(baseWindow);
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(baseWindow.UIPrefabGameObject);
+            UIImageLocalizeComponent.Instance.AddUIImageLocalizeView(baseWindow.UIPrefabGameObject);
+            ET.Client.UIRedDotHelper.AddUIRedDotView(self.DomainScene(), baseWindow.UIPrefabGameObject);
             self.ReplaceTranslucentImage(baseWindow.UIPrefabGameObject);
 
             self.AllWindowsDic[(int)baseWindow.WindowID] = baseWindow;

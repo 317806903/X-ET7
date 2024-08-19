@@ -80,15 +80,25 @@ namespace ET
             int showTotalCount = 30;
             int showMyCount = 2;
             List<SkipListNode> topList = self.SkipList.GetNodeListByRank(0, (uint)showTotalCount);
+            int index = 0;
             for (int i = 0; i < topList.Count; i++)
             {
                 RankItemComponent tmp = (RankItemComponent)topList[i].obj;
+                if (tmp == null)
+                {
+                    continue;
+                }
                 RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
+                if (rankItemComponent == null)
+                {
+                    continue;
+                }
                 if (rankItemComponent.score <= 0)
                 {
                     break;
                 }
-                rankIndex2PlayerId[i+1] = rankItemComponent;
+                rankIndex2PlayerId[index+1] = rankItemComponent;
+                index++;
             }
 
             if (myRank == -1 || myRank <= showTotalCount - showMyCount)
@@ -100,15 +110,25 @@ namespace ET
             int playerIndexEnd = math.min((int)self.SkipList.Length, myRank + showMyCount);
 
             List<SkipListNode> nearMyList = self.SkipList.GetNodeListByRank((uint)playerIndexBegin, (uint)playerIndexEnd);
+            index = 0;
             for (int i = 0; i < nearMyList.Count; i++)
             {
                 RankItemComponent tmp = (RankItemComponent)nearMyList[i].obj;
+                if (tmp == null)
+                {
+                    continue;
+                }
                 RankItemComponent rankItemComponent = self.GetChild<RankItemComponent>(tmp.playerId);
+                if (rankItemComponent == null)
+                {
+                    continue;
+                }
                 if (rankItemComponent.score <= 0)
                 {
                     break;
                 }
-                rankIndex2PlayerId[playerIndexBegin + i] = rankItemComponent;
+                rankIndex2PlayerId[playerIndexBegin + index] = rankItemComponent;
+                index++;
             }
             return rankIndex2PlayerId;
         }

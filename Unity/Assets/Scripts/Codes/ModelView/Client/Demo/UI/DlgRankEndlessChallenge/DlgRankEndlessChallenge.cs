@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgRankEndlessChallenge : Entity, IAwake, IUILogic
+	public class DlgRankEndlessChallenge : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgRankEndlessChallengeViewComponent View { get => this.GetComponent<DlgRankEndlessChallengeViewComponent>(); }
 		

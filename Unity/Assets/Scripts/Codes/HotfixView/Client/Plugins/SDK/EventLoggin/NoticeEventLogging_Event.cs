@@ -25,7 +25,8 @@ namespace ET.Client
                     {
                         properties["RoomType"] = playerStatusComponent.RoomTypeInfo.roomType.ToString();
                         properties["SubRoomType"] = playerStatusComponent.RoomTypeInfo.subRoomType.ToString();
-                        properties["seasonId"] = playerStatusComponent.RoomTypeInfo.seasonId.ToString();
+                        properties["seasonIndex"] = playerStatusComponent.RoomTypeInfo.seasonIndex.ToString();
+                        properties["seasonCfgId"] = playerStatusComponent.RoomTypeInfo.seasonCfgId.ToString();
                         properties["pveIndex"] = playerStatusComponent.RoomTypeInfo.pveIndex.ToString();
                         properties["gamePlayBattleLevelCfgId"] = playerStatusComponent.RoomTypeInfo.gamePlayBattleLevelCfgId;
                     }

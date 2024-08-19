@@ -27,7 +27,8 @@ namespace ET.Ability
             {
                 Unit targetUnit = list[i];
                 Unit actorUnit = GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
-                ET.Ability.OwnCallerHelper.AddOwnCaller(unit, actorUnit);
+                unit.AddOwnCaller(actorUnit);
+                actorUnit.AddCaster(unit);
             }
             list.Dispose();
 

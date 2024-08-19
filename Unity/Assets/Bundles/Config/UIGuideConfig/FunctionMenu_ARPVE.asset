@@ -39,7 +39,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/info/E_Select
+    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/EPage_ChallengSeason/info/E_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_ARPVE_Select

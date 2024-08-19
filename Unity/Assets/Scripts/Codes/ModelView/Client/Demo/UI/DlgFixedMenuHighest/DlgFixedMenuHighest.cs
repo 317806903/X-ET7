@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgFixedMenuHighest : Entity, IAwake, IUILogic
+	public class DlgFixedMenuHighest : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgFixedMenuHighestViewComponent View { get => this.GetComponent<DlgFixedMenuHighestViewComponent>(); }
 

@@ -1,7 +1,7 @@
 ﻿namespace ET.Client
 {
     [ComponentOf(typeof (UIBaseWindow))]
-    public class DlgARHall: Entity, IAwake, IUILogic
+    public class DlgARHall: Entity, IAwake, IUILogic, IUIDlg
     {
         public DlgARHallViewComponent View
         {

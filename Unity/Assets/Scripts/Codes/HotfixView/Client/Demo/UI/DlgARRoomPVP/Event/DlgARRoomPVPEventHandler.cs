@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgARRoomPVP>().ShowWindow(contextData);
+			uiBaseWindow.GetComponent<DlgARRoomPVP>().ShowWindow(contextData).Coroutine();
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

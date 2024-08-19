@@ -6,7 +6,7 @@
 	{
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.windowType = UIWindowType.Normal;
+			uiBaseWindow.windowType = UIWindowType.PopUp;
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgPersionalName>().ShowWindow(contextData);
+			uiBaseWindow.GetComponent<DlgPersionalName>().ShowWindow(contextData).Coroutine();
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

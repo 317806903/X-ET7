@@ -8,8 +8,19 @@ using Unity.Mathematics;
 namespace ET
 {
 	[ComponentOf(typeof(GamePlayComponent))]
-	public class GamePlayFriendTeamFlagCompent : Entity, IAwake, IDestroy, ITransferClient
+	public class GamePlayFriendTeamFlagCompent : Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
 	{
+		[BsonIgnore]
+		public int waitFrameChk = 60;
+		[BsonIgnore]
+		public int curFrameChk = 0;
+		[BsonIgnore]
+		public Dictionary<long , (TeamFlagType teamFlagType, long destroyTime)> unitId2TeamFlag_WaitDestroy = new();
+		[BsonIgnore]
+		public List<long> RemoveList = new();
+		[BsonIgnore]
+		public MultiDictionary<long, long, bool> curUnit2TargetUnitIsFriend = new();
+
 		/// <summary>
 		/// 此阵营的友方信息
 		/// </summary>

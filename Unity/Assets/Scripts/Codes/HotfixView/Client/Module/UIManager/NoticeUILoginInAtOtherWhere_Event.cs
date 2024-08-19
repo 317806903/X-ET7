@@ -11,7 +11,7 @@ namespace ET.Client
         {
             Scene clientScene = scene.ClientScene();
             string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_LoginInAtOtherWhere");
-            UIManagerHelper.ShowOnlyConfirm(clientScene, tipMsg, () =>
+            UIManagerHelper.ShowOnlyConfirmHighest(clientScene, tipMsg, () =>
             {
                 LoginHelper.LoginOut(clientScene, true).Coroutine();
             });

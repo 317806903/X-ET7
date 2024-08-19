@@ -38,18 +38,8 @@ namespace ET.Client
         {
             self.IsOpenEventLogging = ResConfig.Instance.IsNeedSendEventLog;
 
-            self.serverURL = "https://dev-event.deepmirror.com.cn";
-            if (ET.SceneHelper.ChkIsGameModeArcade())
-            {
-                // 摆摊版本的用 ARTD_Offline 项目进行统计
-                self.appID = "d6c1b920474345b5aee6f21d591015d2";
-            }
-            else
-            {
-                // 商店版本的用 ARTD 项目进行统计
-                self.appID = "e6a386f285574d80a1402d7c1bd4e42e";
-            }
-            
+            self.serverURL = ChannelSettingComponent.Instance.GetEventLogURL();
+            self.appID = ChannelSettingComponent.Instance.GetEventLogKey();
 
             self.enableLog = false;
             self.enableAutoTrack = true;

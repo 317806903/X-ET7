@@ -21,6 +21,8 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         WaitFrameNum = _buf.ReadInt();
+        ResetTargetTime = _buf.ReadFloat();
+        SelectObject = _buf.ReadString();
         {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);NodeParams = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); NodeParams[__index0] = __e0;}}
         PostInit();
     }
@@ -51,6 +53,15 @@ public sealed partial class AICfg: Bright.Config.BeanBase
     /// </summary>
     public int WaitFrameNum { get; private set; }
     /// <summary>
+    /// 多久后(秒)重置目标,-1表示不重置
+    /// </summary>
+    public float ResetTargetTime { get; private set; }
+    /// <summary>
+    /// 目标
+    /// </summary>
+    public string SelectObject { get; private set; }
+    public SelectObjectCfg SelectObject_Ref { get; private set; }
+    /// <summary>
     /// 节点参数
     /// </summary>
     public int[] NodeParams { get; private set; }
@@ -60,6 +71,7 @@ public sealed partial class AICfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.SelectObject_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(SelectObject);
         PostResolve();
     }
 
@@ -75,6 +87,8 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "WaitFrameNum:" + WaitFrameNum + ","
+        + "ResetTargetTime:" + ResetTargetTime + ","
+        + "SelectObject:" + SelectObject + ","
         + "NodeParams:" + Bright.Common.StringUtil.CollectionToString(NodeParams) + ","
         + "}";
     }

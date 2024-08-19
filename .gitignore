@@ -93,6 +93,8 @@ YooAsset.Editor.csproj
 
 /Unity/Assets/Bundles/AotDlls/*.bytes
 /Unity/Assets/Bundles/AotDlls/*.bytes.meta
+/Unity/Assets/Bundles/Code/*.bytes
+/Unity/Assets/Bundles/Code/*.bytes.meta
 /Unity/HybridCLRData
 /Unity/Assembly-CSharp-firstpass.csproj
 FGUIProject/settings/i18n.json
@@ -106,3 +108,4 @@ Unity/Assembly-CSharp-Editor-firstpass.csproj
 /Unity/MirrorVerse.UI.Renderers.csproj
 /Unity/*.csproj
 /Unity/MemoryCaptures
+/Unity/Assets/GoogleMobileAds.meta

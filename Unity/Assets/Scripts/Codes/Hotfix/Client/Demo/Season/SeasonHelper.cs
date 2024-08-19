@@ -30,7 +30,7 @@ namespace ET.Client
 		    return seasonShowManagerComponent;
 	    }
 
-	    public static int GetSeasonId(Scene scene)
+	    public static int GetSeasonCfgId(Scene scene)
 	    {
 		    SeasonShowManagerComponent seasonShowManagerComponent = _GetSeasonComponent(scene);
 		    SeasonComponent seasonComponent = seasonShowManagerComponent.SeasonComponent;
@@ -38,7 +38,18 @@ namespace ET.Client
 		    {
 			    return -1;
 		    }
-		    return seasonComponent.seasonId;
+		    return seasonComponent.seasonCfgId;
+	    }
+
+	    public static int GetSeasonIndex(Scene scene)
+	    {
+		    SeasonShowManagerComponent seasonShowManagerComponent = _GetSeasonComponent(scene);
+		    SeasonComponent seasonComponent = seasonShowManagerComponent.SeasonComponent;
+		    if (seasonComponent == null)
+		    {
+			    return -1;
+		    }
+		    return seasonComponent.seasonIndex;
 	    }
 
 	    public static SeasonComponent GetSeasonComponent(Scene scene)
@@ -46,6 +57,33 @@ namespace ET.Client
 		    SeasonShowManagerComponent seasonShowManagerComponent = _GetSeasonComponent(scene);
 		    SeasonComponent seasonComponent = seasonShowManagerComponent.SeasonComponent;
 		    return seasonComponent;
+	    }
+
+	    public static string GetSeasonLeftTime(Scene scene)
+	    {
+		    SeasonShowManagerComponent seasonShowManagerComponent = _GetSeasonComponent(scene);
+		    SeasonComponent seasonComponent = seasonShowManagerComponent.SeasonComponent;
+		    var tmp = TimeHelper.ToDateTime(seasonComponent.endTime) - TimeHelper.DateTimeNow();
+		    if (tmp.Days > 0)
+		    {
+			    string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_SeasonRemaining_Time_Days", tmp.Days);
+			    return msgTxt;
+		    }
+		    if (tmp.Hours > 0)
+		    {
+			    string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_SeasonRemaining_Time_Hours", tmp.Hours);
+			    return msgTxt;
+		    }
+		    if (tmp.Minutes > 0)
+		    {
+			    string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_SeasonRemaining_Time_Minutes", tmp.Minutes);
+			    return msgTxt;
+		    }
+		    else
+		    {
+			    string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_SeasonRemaining_Time_Minutes", 1);
+			    return msgTxt;
+		    }
 	    }
 
 	    public static async ETTask Init(Scene scene)
@@ -87,7 +125,7 @@ namespace ET.Client
 	        }
 	        G2C_GetSeasonComponent _G2C_GetSeasonComponent = await session.Call(new C2G_GetSeasonComponent()
 		        {
-		        }) as
+		        }, false) as
 		        G2C_GetSeasonComponent;
 	        if (_G2C_GetSeasonComponent.Error != ET.ErrorCode.ERR_Success)
 	        {

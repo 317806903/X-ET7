@@ -8,6 +8,9 @@ namespace ET
     [ComponentOf(typeof(PlayerDataComponent))]
     public class PlayerBaseInfoComponent : Entity, IAwake, IDestroy
     {
+        public int seasonIndex;
+        public int seasonCfgId;
+
         public string PlayerName;
         public int IconIndex;
         public string AvatarFrameItemCfgId;

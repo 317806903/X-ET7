@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgARSceneSlider : Entity, IAwake, IUILogic
+	public class DlgARSceneSlider : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgARSceneSliderViewComponent View { get => this.GetComponent<DlgARSceneSliderViewComponent>(); }
 		public float curScale;

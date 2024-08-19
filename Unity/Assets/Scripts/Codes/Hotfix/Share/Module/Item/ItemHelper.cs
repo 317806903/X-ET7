@@ -137,18 +137,30 @@ namespace ET
 
         public static string GetItemName(string itemCfgId)
         {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return "";
+            }
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
             return itemCfg.Name;
         }
 
         public static string GetItemDesc(string itemCfgId)
         {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return "";
+            }
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
             return itemCfg.Desc;
         }
 
         public static string GetItemIcon(string itemCfgId)
         {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return "";
+            }
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
             if (string.IsNullOrEmpty(itemCfg.Icon))
             {
@@ -160,6 +172,10 @@ namespace ET
 
         public static bool ChkItemCanStack(string itemCfgId)
         {
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
             return itemCfg.CanStack;
         }

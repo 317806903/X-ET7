@@ -15,7 +15,7 @@ namespace ET.Client
         }
 
         // 显示通用确认对话框窗口
-        public static void ShowWindow(this DlgCommonConfirm self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgCommonConfirm self, ShowWindowData contextData = null)
         {
             // 播放 UI 弹出音效
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
@@ -44,9 +44,20 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonConfirm>();
         }
 
+        public static bool ChkCanClickBg(this DlgCommonConfirm self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
+        }
+
         // 设置默认文本
         public static void SetDefaultText(this DlgCommonConfirm self)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
+
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_Title");
             self.View.E_TitleTextTextMeshProUGUI.text = msg;
             msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_Confirm");
@@ -154,6 +165,10 @@ namespace ET.Client
             {
                 self.View.E_BG_ClickButton.AddListener(() =>
                 {
+                    if (self.ChkCanClickBg() == false)
+                    {
+                        return;
+                    }
                     // 关闭对话框
                     self.Close();
                 });

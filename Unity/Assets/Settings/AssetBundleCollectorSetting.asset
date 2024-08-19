@@ -93,19 +93,6 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Res_UIPrefab
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/ResAB/UIPrefab
-        CollectorGUID: 91ae2d48ecf44c84dbdea3366f136a28
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
     - GroupName: Res_Scene
       GroupDesc: 
       AssetTags: 
@@ -174,6 +161,19 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: Res_UI_MultiLanguage
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UI_MultiLanguage
+        CollectorGUID: 9a1f97d6760415e45bada0d2448c2fa8
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackTopDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: Res_Font
       GroupDesc: 
       AssetTags: 
@@ -193,19 +193,6 @@ MonoBehaviour:
         AddressRuleName: AddressByFilePath
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: ARSession
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/ResAB/ARSession
-        CollectorGUID: c8716f69a4e18f5499382a205f984275
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
     - GroupName: Res_Audio
@@ -237,6 +224,11 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: Res_Video
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
       - CollectPath: Assets/ResAB/Video
         CollectorGUID: f98da048868ff894793bb771e4082718
         CollectorType: 0
@@ -245,7 +237,7 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Shader
+    - GroupName: Res_Shader
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -266,7 +258,33 @@ MonoBehaviour:
         FilterRuleName: CollectShaderVariants
         AssetTags: 
         UserData: 
-    - GroupName: UIRoot
+    - GroupName: UIPrefab
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/UIPrefab
+        CollectorGUID: 91ae2d48ecf44c84dbdea3366f136a28
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: UIPrefab_ARSession
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ResAB/ARSession
+        CollectorGUID: c8716f69a4e18f5499382a205f984275
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: UIPrefab_Root
       GroupDesc: 
       AssetTags: buildIn
       ActiveRuleName: EnableGroup

@@ -7,6 +7,23 @@ namespace ET.Client
 	[EnableMethod]
 	public class DlgLoginViewComponent : Entity, IAwake, IDestroy
 	{
+		public UnityEngine.UI.Image E_BGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BGImage == null )
+				{
+					this.m_E_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/E_BG");
+				}
+				return this.m_E_BGImage;
+			}
+		}
+
 		public UnityEngine.RectTransform EG_LoginAccountRootRectTransform
 		{
 			get
@@ -160,6 +177,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_Login_GuestButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_GuestButton == null )
+				{
+					this.m_E_Login_GuestButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest");
+				}
+				return this.m_E_Login_GuestButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_Login_GuestImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Login_GuestImage == null )
+				{
+					this.m_E_Login_GuestImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest");
+				}
+				return this.m_E_Login_GuestImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_Login_SDKButton
 		{
 			get
@@ -225,40 +276,6 @@ namespace ET.Client
 					this.m_E_Login_AppleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Apple");
 				}
 				return this.m_E_Login_AppleImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_Login_GuestButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_Login_GuestButton == null )
-				{
-					this.m_E_Login_GuestButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest");
-				}
-				return this.m_E_Login_GuestButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_Login_GuestImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_Login_GuestImage == null )
-				{
-					this.m_E_Login_GuestImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/EG_LoginAccountRoot/EG_LoginWhenSDK/E_Login_Guest");
-				}
-				return this.m_E_Login_GuestImage;
 			}
 		}
 
@@ -349,6 +366,7 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
+			this.m_E_BGImage = null;
 			this.m_EG_LoginAccountRootRectTransform = null;
 			this.m_EG_LoginWhenEditorRectTransform = null;
 			this.m_E_AccountInputField = null;
@@ -358,12 +376,12 @@ namespace ET.Client
 			this.m_E_LoginButton = null;
 			this.m_E_LoginImage = null;
 			this.m_EG_LoginWhenSDKRectTransform = null;
+			this.m_E_Login_GuestButton = null;
+			this.m_E_Login_GuestImage = null;
 			this.m_E_Login_SDKButton = null;
 			this.m_E_Login_SDKImage = null;
 			this.m_E_Login_AppleButton = null;
 			this.m_E_Login_AppleImage = null;
-			this.m_E_Login_GuestButton = null;
-			this.m_E_Login_GuestImage = null;
 			this.m_E_LoggingTextTextMeshProUGUI = null;
 			this.m_E_LoggingTextUITextLocalizeMonoView = null;
 			this.m_E_ToggleDebugModeToggle = null;
@@ -372,6 +390,7 @@ namespace ET.Client
 			this.uiTransform = null;
 		}
 
+		private UnityEngine.UI.Image m_E_BGImage = null;
 		private UnityEngine.RectTransform m_EG_LoginAccountRootRectTransform = null;
 		private UnityEngine.RectTransform m_EG_LoginWhenEditorRectTransform = null;
 		private UnityEngine.UI.InputField m_E_AccountInputField = null;
@@ -381,12 +400,12 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_LoginButton = null;
 		private UnityEngine.UI.Image m_E_LoginImage = null;
 		private UnityEngine.RectTransform m_EG_LoginWhenSDKRectTransform = null;
+		private UnityEngine.UI.Button m_E_Login_GuestButton = null;
+		private UnityEngine.UI.Image m_E_Login_GuestImage = null;
 		private UnityEngine.UI.Button m_E_Login_SDKButton = null;
 		private UnityEngine.UI.Image m_E_Login_SDKImage = null;
 		private UnityEngine.UI.Button m_E_Login_AppleButton = null;
 		private UnityEngine.UI.Image m_E_Login_AppleImage = null;
-		private UnityEngine.UI.Button m_E_Login_GuestButton = null;
-		private UnityEngine.UI.Image m_E_Login_GuestImage = null;
 		private TMPro.TextMeshProUGUI m_E_LoggingTextTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_E_LoggingTextUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Toggle m_E_ToggleDebugModeToggle = null;

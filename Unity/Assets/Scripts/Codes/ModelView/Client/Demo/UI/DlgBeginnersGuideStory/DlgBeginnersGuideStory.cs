@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBeginnersGuideStory : Entity, IAwake, IUILogic
+	public class DlgBeginnersGuideStory : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBeginnersGuideStoryViewComponent View { get => this.GetComponent<DlgBeginnersGuideStoryViewComponent>(); }
 

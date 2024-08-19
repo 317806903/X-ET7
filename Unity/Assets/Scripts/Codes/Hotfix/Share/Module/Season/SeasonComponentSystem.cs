@@ -14,15 +14,15 @@ namespace ET
             }
         }
 
-        public static int GetSeasonId(this SeasonComponent self)
+        public static int GetSeasonCfgId(this SeasonComponent self)
         {
-            return self.seasonId;
+            return self.seasonCfgId;
         }
 
         public static long GetClearTime(this SeasonComponent self)
         {
-            long quickReGetTime = 2000;
-            if (self.seasonStatus == SeasonStatus.InSeason)
+            long quickReGetTime = 5000;
+            if (self.GetComponent<SeasonComponentStatusInSeason>() != null)
             {
                 long disEndTime = ET.TimeHelper.ChgToMillisecondTimeStamp(self.endTime) - TimeHelper.ServerNow();
                 disEndTime -= 60000;
@@ -32,19 +32,9 @@ namespace ET
                 }
                 return disEndTime;
             }
-            else if (self.seasonStatus == SeasonStatus.SettlementSeason)
+            else if (self.GetComponent<SeasonComponentStatusSettlement>() != null)
             {
                 return quickReGetTime;
-            }
-            else if (self.seasonStatus == SeasonStatus.WaitingNewSeason)
-            {
-                long disEndTime = self.startTime - TimeHelper.ServerNow();
-                disEndTime -= 60000;
-                if (disEndTime < 0)
-                {
-                    return quickReGetTime;
-                }
-                return disEndTime;
             }
 
             return 30000;

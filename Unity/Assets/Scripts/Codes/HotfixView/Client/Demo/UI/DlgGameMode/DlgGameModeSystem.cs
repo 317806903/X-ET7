@@ -26,8 +26,15 @@ namespace ET.Client
 			});
 		}
 
-		public static void ShowWindow(this DlgGameMode self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgGameMode self, ShowWindowData contextData = null)
 		{
+			self.LoadBG().Coroutine();
+
+		}
+
+		public static async ETTask LoadBG(this DlgGameMode self)
+		{
+			self.View.E_BGImage.LoadBG().Coroutine();
 		}
 
 		public static async ETTask EnterSingleMapMode(this DlgGameMode self)

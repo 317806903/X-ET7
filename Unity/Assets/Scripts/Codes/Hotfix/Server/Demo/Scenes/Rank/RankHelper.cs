@@ -68,7 +68,7 @@ namespace ET.Server
 	        rankShowManagerComponent.RemoveRankShow(playerId, rankType);
         }
 
-        public static async ETTask RecordWhenSeasonFinished(Scene scene, RankType rankType, int seasonId)
+        public static async ETTask RecordWhenSeasonFinished(Scene scene, RankType rankType, int seasonIndex, int seasonCfgId)
         {
 	        RankManagerComponent rankManagerComponent = GetRankManager(scene);
 
@@ -78,10 +78,11 @@ namespace ET.Server
 		        await rankManagerComponent.LoadRank(rankType);
 	        }
 
-	        await rankManagerComponent.RecordWhenSeasonFinished(rankType, seasonId);
+	        await rankManagerComponent.RecordWhenSeasonFinished(rankType, seasonIndex, seasonCfgId);
 
 	        RankShowManagerComponent rankShowManagerComponent = GetRankShowManager(scene);
-	        rankShowManagerComponent.Dispose();
+	        rankShowManagerComponent?.Dispose();
+	        scene.AddComponent<RankShowManagerComponent>();
         }
 
         public static async ETTask<HashSet<long>> ClearRankWhenDebug(Scene scene, RankType rankType)

@@ -141,7 +141,7 @@ message C2M_NeedReNoticeTowerDefense // IActorLocationMessage
 message M2C_StartSceneChange // IActorMessage
 {
 	int64 SceneInstanceId = 1;
-	string SceneName = 2;	
+	string SceneName = 2;
 }
 
 message C2M_PathfindingResult // IActorLocationMessage
@@ -492,7 +492,8 @@ message M2C_ClearAllMonster // IActorLocationResponse
 message C2G_GetRoomList // IRequest
 {
 	int32 RpcId = 1;
-	int32 IsARRoom = 2;
+	int32 NeedARRoom = 2;
+	int32 NeedNotARRoom = 3;
 }
 
 message G2C_GetRoomList // IResponse
@@ -1223,14 +1224,29 @@ message G2C_ResetPowerup // IResponse
 	string Message = 3;
 }
 
-//ResponseType G2C_UpdatePowerup 
+//ResponseType G2C_UpdatePowerup
 message C2G_UpdatePowerup  // IRequest
 {
 	int32 RpcId = 1;
-    string PowerUpcfg = 3;          
+    string PowerUpcfg = 2;
 }
 
 message G2C_UpdatePowerup // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_SetUIRedDotType
+message C2G_SetUIRedDotType  // IRequest
+{
+	int32 RpcId = 1;
+    int32 UIRedDotType = 2;
+    int32 IsNeedShow = 3;
+}
+
+message G2C_SetUIRedDotType // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

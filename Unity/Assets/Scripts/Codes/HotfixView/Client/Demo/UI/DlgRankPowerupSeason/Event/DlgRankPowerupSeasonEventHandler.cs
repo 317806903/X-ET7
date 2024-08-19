@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgRankPowerupSeason>().ShowWindow(contextData);
+			uiBaseWindow.GetComponent<DlgRankPowerupSeason>().ShowWindow(contextData).Coroutine();
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

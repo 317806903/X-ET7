@@ -24,6 +24,7 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         ResTime = _buf.ReadFloat();
         LimitTowerCount = _buf.ReadInt();
         RefreshBuyTowerCost = _buf.ReadInt();
+        IsAutoRefreshBuyTower = _buf.ReadBool();
         BuyTowerPoolCount = _buf.ReadInt();
         HomeLife = _buf.ReadInt();
         BuyTowerRefreshRuleCfgId = _buf.ReadString();
@@ -70,6 +71,10 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// 玩家刷新可购买塔的费用
     /// </summary>
     public int RefreshBuyTowerCost { get; private set; }
+    /// <summary>
+    /// 是否每回合自动刷新玩家刷新可购买塔
+    /// </summary>
+    public bool IsAutoRefreshBuyTower { get; private set; }
     /// <summary>
     /// 可购买塔展示数量
     /// </summary>
@@ -120,6 +125,7 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         + "ResTime:" + ResTime + ","
         + "LimitTowerCount:" + LimitTowerCount + ","
         + "RefreshBuyTowerCost:" + RefreshBuyTowerCost + ","
+        + "IsAutoRefreshBuyTower:" + IsAutoRefreshBuyTower + ","
         + "BuyTowerPoolCount:" + BuyTowerPoolCount + ","
         + "HomeLife:" + HomeLife + ","
         + "BuyTowerRefreshRuleCfgId:" + BuyTowerRefreshRuleCfgId + ","

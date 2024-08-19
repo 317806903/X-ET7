@@ -19,6 +19,7 @@ namespace ET.Ability
                 self.name = AnimatorMotionName.None;
                 self.isStoppingAnimator = false;
                 self.controlStateName = AnimatorMotionName.None;
+                self.isControlAnimatorLoop = false;
             }
         }
 
@@ -50,7 +51,7 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void SetAnimatorMotion(this AnimatorComponent self, AnimatorMotionName animatorMotionName, bool isOnlySelfShow)
+        public static void SetAnimatorMotion(this AnimatorComponent self, AnimatorMotionName animatorMotionName, bool isLoop, bool isOnlySelfShow)
         {
             self.isOnlySelfShow = isOnlySelfShow;
             if (self.isInit == false)
@@ -60,13 +61,18 @@ namespace ET.Ability
             }
             else
             {
+                if (animatorMotionName == AnimatorMotionName.None)
+                {
+                    return;
+                }
                 if (self.name != animatorMotionName)
                 {
                     self.isNeedNoticeClient = true;
                 }
                 else
                 {
-                    if (self.name == AnimatorMotionName.None || ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.name))
+                    if (self.name == AnimatorMotionName.None ||
+                        ET.Ability.AnimatorHelper.ChkIsIdleOrMove(self.name))
                     {
                     }
                     else
@@ -77,18 +83,22 @@ namespace ET.Ability
             }
             self.name = animatorMotionName;
             self.animatorTickTime = TimeHelper.ServerNow();
+            self.isAnimatorLoop = isLoop;
         }
 
         public static void ResetControlStateAnimatorMotion(this AnimatorComponent self)
         {
-            (bool isStoppingAnimator, AnimatorMotionName animatorMotionName) = ET.Ability.BuffHelper.GetControlStateAnimatorMotion(self.GetUnit());
-            if (self.isStoppingAnimator != isStoppingAnimator || self.controlStateName != animatorMotionName)
+            (bool isStoppingAnimator, AnimatorMotionName animatorMotionName, bool isLoop) = ET.Ability.BuffHelper.GetControlStateAnimatorMotion(self.GetUnit());
+            if (self.isStoppingAnimator != isStoppingAnimator ||
+                self.controlStateName != animatorMotionName ||
+                self.isControlAnimatorLoop != isLoop)
             {
                 self.isNeedNoticeClient = true;
             }
             self.isStoppingAnimator = isStoppingAnimator;
             self.controlStateName = animatorMotionName;
             self.controlAnimatorTickTime = TimeHelper.ServerNow();
+            self.isControlAnimatorLoop = isLoop;
         }
 
         public static void NoticeClient(this AnimatorComponent self)

@@ -16,7 +16,7 @@ namespace ET.Client
 			self.isDoing = false;
 		}
 
-		public static void ShowWindow(this DlgCommonTipTopShow self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgCommonTipTopShow self, ShowWindowData contextData = null)
 		{
 			self.isDoing = false;
 			self.tips.Clear();

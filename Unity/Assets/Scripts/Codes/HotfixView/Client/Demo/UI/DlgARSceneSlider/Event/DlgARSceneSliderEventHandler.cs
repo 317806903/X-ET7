@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgARSceneSlider>().ShowWindow(contextData);
+			uiBaseWindow.GetComponent<DlgARSceneSlider>().ShowWindow(contextData).Coroutine();
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

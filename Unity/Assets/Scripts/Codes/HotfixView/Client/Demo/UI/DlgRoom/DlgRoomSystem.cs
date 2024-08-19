@@ -16,6 +16,7 @@ namespace ET.Client
             self.View.E_ShowQrCodeButton.AddListenerAsync(self.ShowQrCode);
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
             self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
+            self.View.EButton_ChgBattleDeckButton.AddListenerAsync(self.OnChgBattleDeck);
             self.View.E_RoomMemberChgTeamButton.AddListenerAsync(self.OnChgTeam);
 
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
@@ -24,7 +25,7 @@ namespace ET.Client
                 await self.AddMemberItemRefreshListener(transform, i));
         }
 
-        public static void ShowWindow(this DlgRoom self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgRoom self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
@@ -110,6 +111,12 @@ namespace ET.Client
 
         public static async ETTask RefreshUI(this DlgRoom self)
         {
+            RoomComponent roomComponent = self.GetRoomComponent();
+
+            int count = roomComponent.roomMemberSeat.Count;
+            self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
+            self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetVisible(true, count);
+
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.RefreshCells();
 
             self.SetRoomMemberStatusText();
@@ -149,10 +156,12 @@ namespace ET.Client
             if (DebugConnectComponent.Instance.IsDebugMode)
             {
                 self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(true);
+                self.View.EG_ChgBattleDeckRectTransform.gameObject.SetActive(true);
             }
             else
             {
                 self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
+                self.View.EG_ChgBattleDeckRectTransform.gameObject.SetActive(false);
             }
 
             RoomComponent roomComponent = self.GetRoomComponent();
@@ -283,8 +292,6 @@ namespace ET.Client
 
         public static async ETTask AddMemberItemRefreshListener(this DlgRoom self, Transform transform, int index)
         {
-            self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetSrcollMiddle();
-
             // 获取房间组件
             RoomComponent roomComponent = self.GetRoomComponent();
 
@@ -302,22 +309,15 @@ namespace ET.Client
             if (roomMemberId == -1)
             {
                 itemRoom.uiTransform.SetVisible(true);
-
                 await itemRoom.SetEmptyState(index);
-
             }
-
             // 如果有成员
             else
             {
                 itemRoom.uiTransform.SetVisible(true);
-
                 await itemRoom.SetMemberState(roomComponent, roomMemberId);
-
                 await itemRoom.SetAvatarFrame(roomMemberId);
-
             }
-
         }
 
         public static async ETTask QuitRoom(this DlgRoom self)
@@ -395,6 +395,13 @@ namespace ET.Client
             Log.Debug($"OnChooseBattleCfg isAR[{isAR}]");
             await UIManagerHelper.GetUIComponent(self.DomainScene())
                 .ShowWindowAsync<DlgBattleCfgChoose>(new DlgBattleCfgChoose_ShowWindowData() { isGlobalMode = false, isAR = isAR, });
+        }
+
+        public static async ETTask OnChgBattleDeck(this DlgRoom self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
         }
 
         public static async ETTask OnChgTeam(this DlgRoom self)

@@ -62,6 +62,14 @@ namespace ET.Ability
 
             float3 speedVector = BuffHelper.GetMotionSpeedVector(unit);
 
+            if (speedVector.Equals(float3.zero) && self.lastSpeedVector.Equals(float3.zero) == false)
+            {
+                if (pathfindingComponent != null)
+                {
+                    pathfindingComponent.ResetPos(unit.Position);
+                }
+            }
+            self.lastSpeedVector = speedVector;
 
             if (speedVector.Equals(float3.zero))
             {

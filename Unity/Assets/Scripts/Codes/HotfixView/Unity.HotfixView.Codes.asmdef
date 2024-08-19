@@ -23,7 +23,8 @@
         "EventLoggingAPIModule",
         "DOTwee.Pro.Runtime",
         "DOTween.Runtime",
-        "Unity.Advertisement.IosSupport"
+        "Unity.Advertisement.IosSupport",
+        "UniWebView-CSharp"
     ],
     "includePlatforms": [
         "Editor"

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
 	[EnableMethod]
-	public class Scroll_Item_Mail_Inbox : Entity, IAwake, IDestroy, IUIScrollItem
+	public class Scroll_Item_Mail_Inbox : Entity, IAwake, IDestroy, IUIScrollItem, IUILogic
 	{
 		public long DataId {get;set;}
 		private bool isCacheNode = false;
@@ -115,6 +115,30 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image ELabel_HaveReadImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_ELabel_HaveReadImage == null )
+					{
+						this.m_ELabel_HaveReadImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_HaveRead");
+					}
+					return this.m_ELabel_HaveReadImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_HaveRead");
+				}
+			}
+		}
+
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollListGiftLoopHorizontalScrollRect
 		{
 			get
@@ -187,7 +211,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image ELabel_HaveReadImage
+		public UnityEngine.UI.Image E_CollectUnSelectImage
 		{
 			get
 			{
@@ -198,15 +222,15 @@ namespace ET.Client
 				}
 				if (this.isCacheNode)
 				{
-					if( this.m_ELabel_HaveReadImage == null )
+					if( this.m_E_CollectUnSelectImage == null )
 					{
-						this.m_ELabel_HaveReadImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_HaveRead");
+						this.m_E_CollectUnSelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_CollectUnSelect");
 					}
-					return this.m_ELabel_HaveReadImage;
+					return this.m_E_CollectUnSelectImage;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "ELabel_HaveRead");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_CollectUnSelect");
 				}
 			}
 		}
@@ -314,10 +338,11 @@ namespace ET.Client
 			this.m_ELabel_NameTextMeshProUGUI = null;
 			this.m_ELabelExpireTextMeshProUGUI = null;
 			this.m_ELabelDescribeTextMeshProUGUI = null;
+			this.m_ELabel_HaveReadImage = null;
 			this.m_ELoopScrollListGiftLoopHorizontalScrollRect = null;
 			this.m_EBtnCollectButton = null;
 			this.m_EBtnCollectImage = null;
-			this.m_ELabel_HaveReadImage = null;
+			this.m_E_CollectUnSelectImage = null;
 			this.m_ELabel_HaveGiftButton = null;
 			this.m_ELabel_HaveGiftImage = null;
 			this.m_ELabel_NohaveGiftButton = null;
@@ -329,26 +354,24 @@ namespace ET.Client
             this.mailInfoComponent = null;
             this.mailStatus = 0;
             this.kvpItemCfgNumList = null;
-
-
         }
 
 		private ES_AvatarShow m_es_avatarshow = null;
 		private TMPro.TextMeshProUGUI m_ELabel_NameTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabelExpireTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabelDescribeTextMeshProUGUI = null;
+		private UnityEngine.UI.Image m_ELabel_HaveReadImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollListGiftLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_EBtnCollectButton = null;
 		private UnityEngine.UI.Image m_EBtnCollectImage = null;
-		private UnityEngine.UI.Image m_ELabel_HaveReadImage = null;
+		private UnityEngine.UI.Image m_E_CollectUnSelectImage = null;
 		private UnityEngine.UI.Button m_ELabel_HaveGiftButton = null;
 		private UnityEngine.UI.Image m_ELabel_HaveGiftImage = null;
 		private UnityEngine.UI.Button m_ELabel_NohaveGiftButton = null;
 		private UnityEngine.UI.Image m_ELabel_NohaveGiftImage = null;
 		public Transform uiTransform = null;
 
-
-        public Dictionary<int, Scroll_Item_Gifts> ScrollGiftDic = new Dictionary<int, Scroll_Item_Gifts>();
+        public Dictionary<int, Scroll_Item_TowerBuy> ScrollGiftDic = new Dictionary<int, Scroll_Item_TowerBuy>();
         public MailInfoComponent mailInfoComponent = new MailInfoComponent();
         public MailStatus mailStatus;
         public List<KeyValuePair<string, int>> kvpItemCfgNumList = new List<KeyValuePair<string, int>>();

@@ -194,10 +194,15 @@ namespace ET.Client
 				arMapScale = 30;
 			}
 
+			bool isGetMeshFromClient = ChannelSettingComponent.Instance.ChkIsGetMeshFromClient();
 			ARMeshType arMeshType = ARMeshType.FromRemoteURL;
-			if (ResConfig.Instance.Channel == "20001")
+			if (isGetMeshFromClient)
 			{
 				arMeshType = ARMeshType.FromClientObj;
+			}
+			else
+			{
+				arMeshType = ARMeshType.FromRemoteURL;
 			}
 
 			string arSceneId = ARSessionHelper.GetARSceneId(scene);

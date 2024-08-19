@@ -110,6 +110,29 @@ namespace ET
             return null;
         }
 
+        public static async ETTask<NavmeshComponent> CreateCrowdWhenPlayer(this NavmeshManagerComponent self, float agentRadius)
+        {
+            while (self.m_nav == null)
+            {
+                if (self.IsDisposed)
+                {
+                    return null;
+                }
+                await TimerComponent.Instance.WaitAsync(100);
+            }
+            agentRadius = self._sample.GetSettings().agentRadius;
+            NavmeshComponent navmeshComponent = self.playerNavmesh;
+            if (navmeshComponent != null)
+            {
+                return navmeshComponent;
+            }
+
+            navmeshComponent = self.AddChild<NavmeshComponent>();
+            await navmeshComponent.CreateCrowd(agentRadius);
+
+            return navmeshComponent;
+        }
+
         public static async ETTask<NavmeshComponent> CreateCrowd(this NavmeshManagerComponent self, float agentRadius)
         {
             while (self.m_nav == null)

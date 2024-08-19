@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Options;
 namespace ET
 {
 	[ComponentOf(typeof(Scene))]
-	public class SeasonShowManagerComponent : Entity, IAwake, IDestroy
+	public class SeasonShowManagerComponent : Entity, IAwake, IDestroy, IFixedUpdate
 	{
 		private EntityRef<SeasonComponent> _SeasonComponent;
 		public SeasonComponent SeasonComponent
@@ -21,5 +21,10 @@ namespace ET
 				this._SeasonComponent = value;
 			}
 		}
+		public bool isRequre;
+		public int waitFrameChk = 100;
+		public int curFrameChk = 0;
+		public string lastRemainDes;
+		public int lastSeasonIndex;
 	}
 }

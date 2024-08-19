@@ -32,7 +32,7 @@ namespace ET.Client
 
         }
 
-        public static void ShowPage(this EPage_ChallengSeason self, ShowWindowData contextData = null)
+        public static async ETTask ShowPage(this EPage_ChallengSeason self, ShowWindowData contextData = null)
         {
 #if UNITY_EDITOR
             self.isAR = false;
@@ -41,13 +41,12 @@ namespace ET.Client
 #endif
             self.View.uiTransform.SetVisible(true);
 
-            self.seasonId = ET.Client.SeasonHelper.GetSeasonId(self.DomainScene());
+            self.seasonCfgId = ET.Client.SeasonHelper.GetSeasonCfgId(self.DomainScene());
 
-            self.RefreshWhenBaseInfoChg().Coroutine();
-            self.ShowListScrollItem().Coroutine();
-            self.ScrollToCurrentLevel().Coroutine();
+            await self.RefreshWhenBaseInfoChg();
+            await self.ShowListScrollItem();
+            await self.ScrollToCurrentLevel();
 
-            //WJTODO修改赛季剩余时间
         }
 
         public static void HidePage(this EPage_ChallengSeason self)
@@ -61,10 +60,16 @@ namespace ET.Client
             await self.SetPlayerEnergy();
         }
 
+        public static async ETTask RefreshWhenSeasonRemainChg(this EPage_ChallengSeason self)
+        {
+            string textTime = ET.Client.SeasonHelper.GetSeasonLeftTime(self.DomainScene());
+            self.View.ELabelRestofseasonTextMeshProUGUI.text = textTime;
+        }
+
         public static async ETTask SetPlayerEnergy(this EPage_ChallengSeason self)
         {
-            self.View.E_SelectButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
-            self.View.E_UnlockedButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.E_SelectButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), ET.GamePlayHelper.GetPhysicalCostPVE()).Coroutine();
+            self.View.E_UnlockedButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), ET.GamePlayHelper.GetPhysicalCostPVE()).Coroutine();
         }
 
         public static async ETTask Select(this EPage_ChallengSeason self)
@@ -72,7 +77,7 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             if (await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(),
-                    GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength) == false)
+                    ET.GamePlayHelper.GetPhysicalCostPVE()) == false)
             {
                 return;
             }
@@ -87,7 +92,7 @@ namespace ET.Client
                 roomType = RoomType.AR;
                 subRoomType = SubRoomType.ARPVE;
                 int index = self.selectIndex;
-                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, self.seasonId, index + 1, "");
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, self.seasonCfgId, index + 1, "");
 
                 DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
                 {
@@ -102,7 +107,7 @@ namespace ET.Client
                 roomType = RoomType.Normal;
                 subRoomType = SubRoomType.NormalPVE;
                 int index = self.selectIndex;
-                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, self.seasonId, index + 1, "");
+                RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, self.seasonCfgId, index + 1, "");
 
                 (bool result, long roomId) = await RoomHelper.CreateRoomAsync(self.ClientScene(), roomTypeInfo);
                 if (result)
@@ -122,7 +127,7 @@ namespace ET.Client
 
         public static async ETTask ShowListScrollItem(this EPage_ChallengSeason self)
         {
-            int count = SeasonChallengeLevelCfgCategory.Instance.GetChallenges(self.seasonId).Count;
+            int count = SeasonChallengeLevelCfgCategory.Instance.GetChallenges(self.seasonCfgId).Count;
             self.selectIndex = await self.GetCurPveIndex();
             if (self.selectIndex == count)
             {
@@ -134,11 +139,13 @@ namespace ET.Client
                 self.RefreshLevelUI(false);
             }
 
-            self.AddUIScrollItemsPage(ref self.ScrollItemChallengeList, count);
+            self.AddUIScrollItems(ref self.ScrollItemChallengeList, count);
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.SetVisible(true, count);
 
             self.View.E_SelectButton.gameObject.SetActive(true);
             self.View.E_UnlockedButton.gameObject.SetActive(false);
+
+            await self.RefreshWhenSeasonRemainChg();
         }
 
         public static async ETTask ScrollToCurrentLevel(this EPage_ChallengSeason self)
@@ -161,7 +168,7 @@ namespace ET.Client
             challengeList.E_Normal_lineImage.gameObject.SetActive(index < clearLevel);
             challengeList.EG_Unlocked_lineRectTransform.gameObject.SetActive(index >= clearLevel);
 
-            if (index == SeasonChallengeLevelCfgCategory.Instance.GetChallenges(self.seasonId).Count - 1)
+            if (index == SeasonChallengeLevelCfgCategory.Instance.GetChallenges(self.seasonCfgId).Count - 1)
             {
                 challengeList.E_Normal_lineImage.gameObject.SetActive(false);
                 challengeList.EG_Unlocked_lineRectTransform.gameObject.SetActive(false);
@@ -186,23 +193,26 @@ namespace ET.Client
 
         public static bool CheckTowerReward(this EPage_ChallengSeason self, int selectLevel, int clearLevel)
         {
-            ChallengeLevelCfg challengeLevelCfg =
-                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, selectLevel);
-            List<string> rewardList;
+            ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonCfgId, selectLevel);
+
             if (clearLevel >= selectLevel)
             {
-                rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+                foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
+                {
+                    if (ItemHelper.ChkIsTower(item.Key))
+                    {
+                        return true;
+                    }
+                }
             }
             else
             {
-                rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
-            }
-
-            foreach (string itemId in rewardList)
-            {
-                if (ItemHelper.ChkIsTower(itemId))
+                foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
                 {
-                    return true;
+                    if (ItemHelper.ChkIsTower(item.Key))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -215,20 +225,35 @@ namespace ET.Client
                 LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeLevel", self.selectIndex + 1);
 
             ChallengeLevelCfg challengeLevelCfg =
-                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, self.selectIndex + 1);
-            List<string> rewardList;
-            rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
-            self.View.EG_RewardRectTransform.SetVisible(rewardList.Count != 0);
-            self.View.E_line02Image.SetVisible(rewardList.Count != 0);
-            self.AddUIScrollItemsPage(ref self.ScrollItemReward, rewardList.Count);
-            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, rewardList.Count);
+                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonCfgId, self.selectIndex + 1);
+
+            self.itemList = new();
+            if (bClear)
+            {
+                foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
+            }
+            else
+            {
+                foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
+            }
+;
+            self.View.EG_RewardRectTransform.SetVisible(self.itemList.Count != 0);
+            self.View.E_line02Image.SetVisible(self.itemList.Count != 0);
+            self.AddUIScrollItems(ref self.ScrollItemReward, self.itemList.Count);
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, self.itemList.Count);
 
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
-            self.AddUIScrollItemsPage(ref self.ScrollItemMonster, monsterList.Count);
+            self.AddUIScrollItems(ref self.ScrollItemMonster, monsterList.Count);
             self.View.ELoopScrollList_propLoopHorizontalScrollRect.SetVisible(true, monsterList.Count);
         }
 
-        public static async void AddTowerBuyListener(this EPage_ChallengSeason self, Transform transform, int index)
+        public static async ETTask AddTowerBuyListener(this EPage_ChallengSeason self, Transform transform, int index)
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
@@ -236,14 +261,16 @@ namespace ET.Client
 
             int clearLevel = await self.GetCurPveIndex();
             ChallengeLevelCfg challengeLevelCfg =
-                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, self.selectIndex + 1);
-            List<string> list;
-            list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonCfgId, self.selectIndex + 1);
 
-            string itemCfgId = list[index];
-            itemTowerBuy.ShowBagItem(itemCfgId, true);
+            string itemCfgId = self.itemList[index].itemCfgId;
+            int itemNum = self.itemList[index].itemNum;
+            await itemTowerBuy.ShowBagItem(itemCfgId, true, itemNum);
 
-            itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
+            if (ItemHelper.ChkIsTower(itemCfgId))
+            {
+                itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
+            }
         }
 
         public static void AddMonsterListener(this EPage_ChallengSeason self, Transform transform, int index)
@@ -251,11 +278,11 @@ namespace ET.Client
             transform.name = $"Item_Monster_{index}";
             Scroll_Item_Monsters itemMonster = self.ScrollItemMonster[index].BindTrans(transform);
             ChallengeLevelCfg challengeLevelCfg =
-                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, self.selectIndex + 1);
+                SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonCfgId, self.selectIndex + 1);
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
 
             string itemCfgId = monsterList[index];
-            itemMonster.ShowMonsterItem(itemCfgId, true);
+            itemMonster.ShowMonsterItem(itemCfgId, true).Coroutine();
         }
 
         public static async ETTask<int> GetCurPveIndex(this EPage_ChallengSeason self)

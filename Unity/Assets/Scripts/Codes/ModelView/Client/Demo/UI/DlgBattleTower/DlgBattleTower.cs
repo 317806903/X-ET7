@@ -13,7 +13,7 @@ namespace ET.Client
 		Monster,
 	}
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleTower : Entity, IAwake, IUILogic
+	public class DlgBattleTower : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleTowerViewComponent View { get => this.GetComponent<DlgBattleTowerViewComponent>();}
 

@@ -18,8 +18,7 @@ public class UITextLocalizeMonoView: MonoBehaviour
     public LocalizeType localizeType = LocalizeType.Static;
     [SerializeField]
     private object[] args;
-    public Func<string, string, string> GetTextKeyValue;
-    public Func<string, Func<string, string, string>> GetTextKeyValueActionBack;
+    public static Func<string, string, string, string> GetTextKeyValue;
     private void Awake()
     {
         this.mText = this.GetComponent<Text>();
@@ -65,11 +64,16 @@ public class UITextLocalizeMonoView: MonoBehaviour
     [ContextMenu("DoChangeLanguage_ResetKey")]
     public void DoChangeLanguage_ResetKey()
     {
+        if (Application.isPlaying)
+        {
+            EditorUtility.DisplayDialog("请注意", $"当前是运行模式,无法修改", "OK");
+            return;
+        }
         Debug.Log("DoChangeLanguage_ResetKey");
         string textKey = this.GetNodePath();
         if (this.textKey != null && this.textKey.Equals(textKey))
         {
-            Debug.LogError("key 一致");
+            EditorUtility.DisplayDialog("请注意", $"key 一致，没有改变", "OK");
             return;
         }
 
@@ -78,47 +82,21 @@ public class UITextLocalizeMonoView: MonoBehaviour
     }
 
     [ContextMenu("DoChangeLanguage_ReShowValue")]
-    private void DoChangeLanguage_ReShowValue()
+    public void DoChangeLanguage_ReShowValue()
     {
         Debug.Log("DoChangeLanguage_ReShowValue");
         OnChangeLanguage();
     }
-
-    [ContextMenu("DoChangeLanguage_CN")]
-    private void DoChangeLanguage_CN()
-    {
-        this.DoChangeLanguage_Force("CN");
-    }
-
-    [ContextMenu("DoChangeLanguage_TW")]
-    private void DoChangeLanguage_TW()
-    {
-        this.DoChangeLanguage_Force("TW");
-    }
-
-    [ContextMenu("DoChangeLanguage_EN")]
-    private void DoChangeLanguage_EN()
-    {
-        this.DoChangeLanguage_Force("EN");
-    }
-
 #endif
 
     private void OnDestroy()
     {
         this.args = null;
-        this.GetTextKeyValue = null;
-        this.GetTextKeyValueActionBack = null;
     }
 
-    public void SetGetTextKeyValueActionBack(Func<string, Func<string, string, string>> getTextKeyValueActionBack)
+    public static void SetTextLocalizeAction(Func<string, string, string, string> getTextKeyValue)
     {
-        this.GetTextKeyValueActionBack = getTextKeyValueActionBack;
-    }
-
-    public void SetTextLocalizeAction(Func<string, string, string> getTextKeyValue)
-    {
-        this.GetTextKeyValue = getTextKeyValue;
+        GetTextKeyValue = getTextKeyValue;
     }
 
     public void DoRefreshTextValue()
@@ -140,10 +118,10 @@ public class UITextLocalizeMonoView: MonoBehaviour
 
     private void StaticSet()
     {
-        this._StaticSet(this.GetTextKeyValue);
+        this._StaticSet(GetTextKeyValue, "None");
     }
 
-    private void _StaticSet(Func<string, string, string> InGetTextKeyValue)
+    private void _StaticSet(Func<string, string, string, string> InGetTextKeyValue, string language)
     {
         if (InGetTextKeyValue == null)
         {
@@ -153,7 +131,7 @@ public class UITextLocalizeMonoView: MonoBehaviour
         {
             return;
         }
-        string textValue = InGetTextKeyValue(this.textKey, this.textDefaultValue);
+        string textValue = InGetTextKeyValue(language, this.textKey, this.textDefaultValue);
         if (this.mText != null)
         {
             this.mText.text = textValue;
@@ -171,13 +149,13 @@ public class UITextLocalizeMonoView: MonoBehaviour
     {
         this.args = _args;
 
-        this._DynamicSet(this.GetTextKeyValue, _args);
+        this._DynamicSet(GetTextKeyValue, "None", _args);
     }
 
     /// <summary>
     /// 动态设置文本内容
     /// </summary>
-    private void _DynamicSet(Func<string, string, string> InGetTextKeyValue, params object[] _args)
+    private void _DynamicSet(Func<string, string, string, string> InGetTextKeyValue, string language, params object[] _args)
     {
         if (InGetTextKeyValue == null)
         {
@@ -187,7 +165,7 @@ public class UITextLocalizeMonoView: MonoBehaviour
         {
             return;
         }
-        string textValue = InGetTextKeyValue(this.textKey, this.textDefaultValue);
+        string textValue = InGetTextKeyValue(language, this.textKey, this.textDefaultValue);
         textValue = string.Format(textValue, _args);
         if (this.mText != null)
         {
@@ -200,21 +178,15 @@ public class UITextLocalizeMonoView: MonoBehaviour
     }
 
 
-    private void DoChangeLanguage_Force(string language)
+    public void DoChangeLanguage_Force(string language)
     {
-        if (this.GetTextKeyValueActionBack == null)
-        {
-            Debug.LogError("this.GetTextKeyValueActionBack == null");
-            return;
-        }
-        var getTextKeyValueTmp = this.GetTextKeyValueActionBack(language);
         if (this.localizeType == LocalizeType.Static)
         {
-            this._StaticSet(getTextKeyValueTmp);
+            this._StaticSet(GetTextKeyValue, language);
         }
         else if(this.args != null)
         {
-            this._DynamicSet(getTextKeyValueTmp, this.args);
+            this._DynamicSet(GetTextKeyValue, language, this.args);
         }
     }
 

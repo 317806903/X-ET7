@@ -9,7 +9,9 @@ namespace ET
 	/// 邮件管理器
 	/// </summary>
 	[ComponentOf(typeof(Scene))]
-	public class MailManagerComponent : Entity, IAwake, IDestroy
+	public class MailManagerComponent : Entity, IAwake, IDestroy, IFixedUpdate
 	{
+		public int waitFrameChk = 3000;
+		public int curFrameChk = 0;
 	}
 }

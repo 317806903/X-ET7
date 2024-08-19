@@ -609,7 +609,10 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public int IsARRoom { get; set; }
+		public int NeedARRoom { get; set; }
+
+		[ProtoMember(3)]
+		public int NeedNotARRoom { get; set; }
 
 	}
 
@@ -1773,7 +1776,10 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public int SeasonId { get; set; }
+		public int SeasonIndex { get; set; }
+
+		[ProtoMember(3)]
+		public int SeasonCfgId { get; set; }
 
 	}
 
@@ -1801,7 +1807,10 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public int SeasonId { get; set; }
+		public int SeasonIndex { get; set; }
+
+		[ProtoMember(3)]
+		public int SeasonCfgId { get; set; }
 
 	}
 

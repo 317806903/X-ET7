@@ -12,15 +12,18 @@ namespace ET.Ability
         {
             float chgValue = buffActionModifySkillAttribute.BaseValue + buffActionModifySkillAttribute.StackValue * stackCount;
             float maxChgValue = buffActionModifySkillAttribute.MaxChgValue;
-            if (chgValue > 0)
+            if (maxChgValue != -1)
             {
-                maxChgValue = Math.Abs(maxChgValue);
-                chgValue = Math.Min(chgValue, maxChgValue);
-            }
-            else
-            {
-                maxChgValue = -Math.Abs(maxChgValue);
-                chgValue = Math.Max(chgValue, maxChgValue);
+                if (chgValue > 0)
+                {
+                    maxChgValue = Math.Abs(maxChgValue);
+                    chgValue = Math.Min(chgValue, maxChgValue);
+                }
+                else
+                {
+                    maxChgValue = -Math.Abs(maxChgValue);
+                    chgValue = Math.Max(chgValue, maxChgValue);
+                }
             }
             return (buffActionModifySkillAttribute.NumericType, chgValue);
         }
@@ -43,6 +46,24 @@ namespace ET.Ability
                 NumericComponent numericComponent = skillObj.GetComponent<NumericComponent>();
                 float newValue = numericComponent.GetAsFloat((int)numericType) + value;
                 numericComponent.SetAsFloat((int)numericType, newValue);
+                if (numericType == SkillNumericType.SkillCDBase ||
+                    numericType == SkillNumericType.SkillCDAdd ||
+                    numericType == SkillNumericType.SkillCDPct ||
+                    numericType == SkillNumericType.SkillCDFinalAdd ||
+                    numericType == SkillNumericType.SkillCDFinalPct)
+                {
+                    skillObj.ResetSkillCDCountDown();
+                }
+                else if (numericType == SkillNumericType.SkillDisBase ||
+                         numericType == SkillNumericType.SkillDisAdd ||
+                         numericType == SkillNumericType.SkillDisPct ||
+                         numericType == SkillNumericType.SkillDisFinalAdd ||
+                         numericType == SkillNumericType.SkillDisFinalPct)
+                {
+                    skillObj.ResetSkillDis();
+                    NumericComponent numericComponentUnit = self.GetUnit().GetComponent<NumericComponent>();
+                    numericComponentUnit.SetAsFloat((int)numericType, newValue);
+                }
             }
         }
 
@@ -60,6 +81,24 @@ namespace ET.Ability
                 NumericComponent numericComponent = skillObj.GetComponent<NumericComponent>();
                 float value = numericComponent.GetAsFloat((int)numericType) - oldValue + newValue;
                 numericComponent.SetAsFloat((int)numericType, value);
+                if (numericType == SkillNumericType.SkillCDBase ||
+                    numericType == SkillNumericType.SkillCDAdd ||
+                    numericType == SkillNumericType.SkillCDPct ||
+                    numericType == SkillNumericType.SkillCDFinalAdd ||
+                    numericType == SkillNumericType.SkillCDFinalPct)
+                {
+                    skillObj.ResetSkillCDCountDown();
+                }
+                else if (numericType == SkillNumericType.SkillDisBase ||
+                         numericType == SkillNumericType.SkillDisAdd ||
+                         numericType == SkillNumericType.SkillDisPct ||
+                         numericType == SkillNumericType.SkillDisFinalAdd ||
+                         numericType == SkillNumericType.SkillDisFinalPct)
+                {
+                    skillObj.ResetSkillDis();
+                    NumericComponent numericComponentUnit = self.GetUnit().GetComponent<NumericComponent>();
+                    numericComponentUnit.SetAsFloat((int)numericType, newValue);
+                }
             }
         }
 
@@ -71,6 +110,24 @@ namespace ET.Ability
                 NumericComponent numericComponent = skillObj.GetComponent<NumericComponent>();
                 float newValue = numericComponent.GetAsFloat((int)numericType) - value;
                 numericComponent.SetAsFloat((int)numericType, newValue);
+                if (numericType == SkillNumericType.SkillCDBase ||
+                    numericType == SkillNumericType.SkillCDAdd ||
+                    numericType == SkillNumericType.SkillCDPct ||
+                    numericType == SkillNumericType.SkillCDFinalAdd ||
+                    numericType == SkillNumericType.SkillCDFinalPct)
+                {
+                    skillObj.ResetSkillCDCountDown();
+                }
+                else if (numericType == SkillNumericType.SkillDisBase ||
+                    numericType == SkillNumericType.SkillDisAdd ||
+                    numericType == SkillNumericType.SkillDisPct ||
+                    numericType == SkillNumericType.SkillDisFinalAdd ||
+                    numericType == SkillNumericType.SkillDisFinalPct)
+                {
+                    skillObj.ResetSkillDis();
+                    NumericComponent numericComponentUnit = self.GetUnit().GetComponent<NumericComponent>();
+                    numericComponentUnit.SetAsFloat((int)numericType, newValue);
+                }
             }
         }
 

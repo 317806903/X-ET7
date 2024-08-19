@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ET.AbilityConfig;
@@ -21,6 +22,34 @@ namespace ET.Client
             }
 
             Root.Instance.Scene.AddComponent<ResComponent>();
+
+            ChannelSettingComponent channelSettingComponent = Root.Instance.Scene.AddComponent<ChannelSettingComponent>();
+            channelSettingComponent.Init(ResConfig.Instance.Channel);
+            bool isExist = channelSettingComponent.ChkChannelCfg();
+            if (Application.isMobilePlatform && isExist)
+            {
+                ResConfig.Instance.IsGameModeArcade = channelSettingComponent.GetDeviceGameMode() == DeviceGameMode.Arcade;
+                ResConfig.Instance.IsDemoShow = channelSettingComponent.GetDeviceGameMode() == DeviceGameMode.DemoShow;
+
+                ResConfig.Instance.ResHostServerIP = channelSettingComponent.GetResHostServerIP();
+                ResConfig.Instance.ResGameVersion = channelSettingComponent.GetResGameVersion();
+                ResConfig.Instance.RouterHttpHost = channelSettingComponent.GetRouterHttpHost();
+                ResConfig.Instance.RouterHttpPort = channelSettingComponent.GetRouterHttpPort();
+
+
+                string areaTypeStr = channelSettingComponent.GetAreaType();
+                AreaType areaType = AreaType.CN;
+                if (System.Enum.TryParse(areaTypeStr, out areaType))
+                {
+                }
+                ResConfig.Instance.areaType = areaType;
+
+                ResConfig.Instance.languageType = channelSettingComponent.GetLanguageType();
+
+                ResConfig.Instance.IsNeedSendEventLog = channelSettingComponent.ChkIsNeedSendEventLog();
+
+                await MonoResComponent.Instance.ReLoadWhenDebugConnect();
+            }
 
             Root.Instance.Scene.AddComponent<GlobalComponent>();
 
@@ -78,6 +107,9 @@ namespace ET.Client
                 languageType = LanguageType.EN;
             }
             LocalizeComponent.Instance.SwitchLanguage(languageType, true);
+#if UNITY_EDITOR
+            LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
+#endif
 
             // 热更流程
             bool bRet = await ChkHotUpdateAsync(clientScene);
@@ -104,7 +136,7 @@ namespace ET.Client
                 {
                     string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkConnect");
                     string title = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Net_ChkDisconnect");
-                    UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
                     {
                         ChkHotUpdateAsync(clientScene).Coroutine();
                     }, null, title);
@@ -211,51 +243,137 @@ namespace ET.Client
             UIManagerHelper.PreLoadConfirm(clientScene);
 
             Log.Debug($"NetWork.GetIP[{NetWork.GetIP()}]");
-            // 更新版本号
-            (int errorCode, bool bNeedUpdate, bool bIsAuditing, string auditingRouterHttpHost, int auditingRouterHttpPort) = await ResComponent.Instance.UpdateVersionAsync();
-            if (errorCode != ErrorCode.ERR_Success)
+            int errorCode = 0;
+            bool isActivity = ChannelSettingComponent.Instance.ChkIsActivity();
+            if (isActivity)
             {
-                Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
-                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                // 更新版本号
+                (int errorCodeTmp, Dictionary<string, object> versionActivity) = await ResComponent.Instance.UpdateVersionWhenActivityAsync(ChannelSettingComponent.Instance.channelId);
+                if (errorCodeTmp != ErrorCode.ERR_Success)
                 {
-                    ChkHotUpdateAsync(clientScene).Coroutine();
-                });
-                return false;
-            }
-            else if (bNeedUpdate)
-            {
-                Log.Debug("bNeedUpdate == true");
-
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                    Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCodeTmp));
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
+                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else if ((bool)versionActivity["bNeedUpdate"])
                 {
-                    if (ResConfig.Instance.Channel == "10001")
-                    {
-                        Application.OpenURL("https://play.google.com/store/apps/details?id=com.dm.realityguard");
-                    }
-                    else if (ResConfig.Instance.Channel == "10002")
-                    {
-                        Application.OpenURL("https://apps.apple.com/us/app/realityguard/id6474414179");
-                    }
-                    else
-                    {
-                        Application.OpenURL("http://artd.corp.deepmirror.com/");
-                    }
+                    Log.Debug("bNeedUpdate == true");
 
-                    ChkHotUpdateAsync(clientScene).Coroutine();
-                });
-                return false;
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
+                        bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
+
+                        ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
+
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else if (string.IsNullOrEmpty((string)versionActivity["serverBusyMsg"]) == false)
+                {
+                    Log.Error($"serverBusyMsg {(string)versionActivity["serverBusyMsg"]}");
+
+                    string msg = (string)versionActivity["serverBusyMsg"];
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else if ((bool)versionActivity["bInActivityTime"] == false)
+                {
+                    Log.Debug("bInActivityTime == false");
+
+                    string msg = (string)versionActivity["activityNotInTimeMsg"];
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else
+                {
+                    string ResHostServerIP = (string)versionActivity["ResHostServerIP"];
+                    if (string.IsNullOrEmpty(ResHostServerIP) == false)
+                    {
+                        ResConfig.Instance.ResHostServerIP = ResHostServerIP;
+                        await MonoResComponent.Instance.ReLoadWhenDebugConnect();
+                    }
+                    string RouterHttpHost = (string)versionActivity["RouterHttpHost"];
+                    if (string.IsNullOrEmpty(RouterHttpHost) == false)
+                    {
+                        ResConfig.Instance.RouterHttpHost = RouterHttpHost;
+
+                        int RouterHttpPort = (int)versionActivity["RouterHttpPort"];
+                        ResConfig.Instance.RouterHttpPort = RouterHttpPort;
+                    }
+                }
             }
-            else if (bIsAuditing)
+            else
             {
-                Log.Debug("bIsAuditing == true");
+                // 更新版本号
+                (int errorCodeTmp, Dictionary<string, object> versionResult) = await ResComponent.Instance.UpdateVersionAsync();
+                if (errorCodeTmp != ErrorCode.ERR_Success)
+                {
+                    Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCodeTmp));
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
+                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else if ((bool)versionResult["bNeedUpdate"])
+                {
+                    Log.Debug("bNeedUpdate == true");
 
-                ResConfig.Instance.RouterHttpHost = auditingRouterHttpHost;
-                ResConfig.Instance.RouterHttpPort = auditingRouterHttpPort;
-                ResConfig.Instance.ResGameVersion = "vAuditing";
-                await MonoResComponent.Instance.ReLoadWhenDebugConnect();
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
+                        bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
+
+                        ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
+
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
+                else if ((bool)versionResult["bIsAuditing"])
+                {
+                    Log.Debug("bIsAuditing == true");
+
+                    string RouterHttpHost = (string)versionResult["auditingRouterHttpHost"];
+                    if (string.IsNullOrEmpty(RouterHttpHost) == false)
+                    {
+                        ResConfig.Instance.RouterHttpHost = RouterHttpHost;
+
+                        int RouterHttpPort = (int)versionResult["auditingRouterHttpPort"];
+                        ResConfig.Instance.RouterHttpPort = RouterHttpPort;
+                    }
+
+                    ResConfig.Instance.ResGameVersion = "vAuditing";
+                    await MonoResComponent.Instance.ReLoadWhenDebugConnect();
+                }
+                else if (string.IsNullOrEmpty((string)versionResult["serverBusyMsg"]) == false)
+                {
+                    Log.Error($"serverBusyMsg {(string)versionResult["serverBusyMsg"]}");
+
+                    string msg = (string)versionResult["serverBusyMsg"];
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                    return false;
+                }
             }
 
             // 更新资源版本号
@@ -265,7 +383,7 @@ namespace ET.Client
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -280,7 +398,7 @@ namespace ET.Client
                 Log.Error("ResourceComponent.UpdateManifest 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -294,7 +412,7 @@ namespace ET.Client
                 Log.Error("ResourceComponent.FsmCreateDownloader 出错！{0}".Fmt(errorCode));
                 string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
                 //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msg, () =>
+                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
                 {
                     ChkHotUpdateAsync(clientScene).Coroutine();
                 });
@@ -318,7 +436,7 @@ namespace ET.Client
                         LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTip", totalDownloadMB);
                 string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTitle");
                 string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Download");
-                UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
+                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msgTxt, () =>
                 {
                     DownloadPatch(clientScene, updatePackageManifestOperation).Coroutine();
                 }, sureTxt ,titleTxt);
@@ -378,7 +496,7 @@ namespace ET.Client
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateSuccessDes");
             string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Restart");
             string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_DownLoadSuccess");
-            UIManagerHelper.ShowOnlyConfirm(clientScene, msgTxt, () =>
+            UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msgTxt, () =>
             {
                 if (modelChanged || hotfixChanged)
                 {

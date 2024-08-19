@@ -32,8 +32,18 @@ namespace ET
 	}
 
 	[ComponentOf(typeof(GamePlayComponent))]
-	public class GamePlayPlayerListComponent : Entity, IAwake, IDestroy, ITransferClient
+	public class GamePlayPlayerListComponent : Entity, IAwake, IDestroy, ITransferClient, IFixedUpdate
 	{
+
+		[BsonIgnore]
+		public int waitFrameChk = 60;
+		[BsonIgnore]
+		public int curFrameChk = 0;
+		[BsonIgnore]
+		public Dictionary<long , (long playerId, long destroyTime)> unitId2PlayerId_WaitDestroy = new();
+		[BsonIgnore]
+		public List<long> unitId2PlayerId_RemoveList = new();
+
 		/// <summary>
 		/// playerId对应的unitId列表
 		/// </summary>
@@ -74,6 +84,6 @@ namespace ET
 		public MultiDictionary<TeamFlagType, string, float> team2CoinList;
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, float> lastPlayerGold = new Dictionary<long, float>();
+		public Dictionary<long, float> lastPlayerGold = new ();
 	}
 }

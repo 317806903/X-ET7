@@ -32,7 +32,7 @@ namespace ET.Client
 
         }
 
-        public static void ShowPage(this EPage_ChallengNormal self, ShowWindowData contextData = null)
+        public static async ETTask ShowPage(this EPage_ChallengNormal self, ShowWindowData contextData = null)
 		{
 #if UNITY_EDITOR
             self.isAR = false;
@@ -41,9 +41,9 @@ namespace ET.Client
 #endif
             self.View.uiTransform.SetVisible(true);
 
-            self.RefreshWhenBaseInfoChg().Coroutine();
-            self.ShowListScrollItem().Coroutine();
-            self.ScrollToCurrentLevel().Coroutine();
+            await self.RefreshWhenBaseInfoChg();
+            await self.ShowListScrollItem();
+            await self.ScrollToCurrentLevel();
         }
 
         public static void HidePage(this EPage_ChallengNormal self)
@@ -59,8 +59,8 @@ namespace ET.Client
 
         public static async ETTask SetPlayerEnergy(this EPage_ChallengNormal self)
         {
-            self.View.E_SelectButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
-            self.View.E_UnlockedButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength).Coroutine();
+            self.View.E_SelectButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), ET.GamePlayHelper.GetPhysicalCostPVE()).Coroutine();
+            self.View.E_UnlockedButton.transform.Find("number").ShowPhysicalCostText(self.DomainScene(), ET.GamePlayHelper.GetPhysicalCostPVE()).Coroutine();
         }
 
         public static async ETTask Select(this EPage_ChallengNormal self)
@@ -68,7 +68,7 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             if (await ET.Client.UIManagerHelper.ChkPhsicalAndShowtip(self.DomainScene(),
-                    GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength) == false)
+                    ET.GamePlayHelper.GetPhysicalCostPVE()) == false)
             {
                 return;
             }
@@ -130,7 +130,7 @@ namespace ET.Client
                 self.RefreshLevelUI(false);
             }
 
-            self.AddUIScrollItemsPage(ref self.ScrollItemChallengeList, count);
+            self.AddUIScrollItems(ref self.ScrollItemChallengeList, count);
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.SetVisible(true, count);
 
             self.View.E_SelectButton.gameObject.SetActive(true);
@@ -183,23 +183,25 @@ namespace ET.Client
 
         public static bool CheckTowerReward(this EPage_ChallengNormal self, int selectLevel, int clearLevel)
         {
-            ChallengeLevelCfg challengeLevelCfg =
-                TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(selectLevel);
-            List<string> rewardList;
+            ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(selectLevel);
             if (clearLevel >= selectLevel)
             {
-                rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+                foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
+                {
+                    if (ItemHelper.ChkIsTower(item.Key))
+                    {
+                        return true;
+                    }
+                }
             }
             else
             {
-                rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
-            }
-
-            foreach (string itemId in rewardList)
-            {
-                if (ItemHelper.ChkIsTower(itemId))
+                foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
                 {
-                    return true;
+                    if (ItemHelper.ChkIsTower(item.Key))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -213,34 +215,50 @@ namespace ET.Client
 
             ChallengeLevelCfg challengeLevelCfg =
                 TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.selectIndex + 1);
-            List<string> rewardList;
-            rewardList = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
-            self.View.EG_RewardRectTransform.SetVisible(rewardList.Count != 0);
-            self.View.E_line02Image.SetVisible(rewardList.Count != 0);
-            self.AddUIScrollItemsPage(ref self.ScrollItemReward, rewardList.Count);
-            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, rewardList.Count);
+
+            self.itemList = new();
+            if (bClear)
+            {
+                foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
+            }
+            else
+            {
+                foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
+            }
+
+            self.View.EG_RewardRectTransform.SetVisible(self.itemList.Count != 0);
+            self.View.E_line02Image.SetVisible(self.itemList.Count != 0);
+            self.AddUIScrollItems(ref self.ScrollItemReward, self.itemList.Count);
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, self.itemList.Count);
 
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
-            self.AddUIScrollItemsPage(ref self.ScrollItemMonster, monsterList.Count);
+            self.AddUIScrollItems(ref self.ScrollItemMonster, monsterList.Count);
             self.View.ELoopScrollList_propLoopHorizontalScrollRect.SetVisible(true, monsterList.Count);
         }
 
-        public static async void AddTowerBuyListener(this EPage_ChallengNormal self, Transform transform, int index)
+        public static async ETTask AddTowerBuyListener(this EPage_ChallengNormal self, Transform transform, int index)
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
             itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
 
             int clearLevel = await self.GetCurPveIndex();
-            ChallengeLevelCfg challengeLevelCfg =
-                TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.selectIndex + 1);
-            List<string> list;
-            list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+            ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.selectIndex + 1);
 
-            string itemCfgId = list[index];
-            itemTowerBuy.ShowBagItem(itemCfgId, true);
+            string itemCfgId = self.itemList[index].itemCfgId;
+            int itemNum = self.itemList[index].itemNum;
+            await itemTowerBuy.ShowBagItem(itemCfgId, true, itemNum);
 
-            itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
+            if (ItemHelper.ChkIsTower(itemCfgId))
+            {
+                itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
+            }
         }
 
         public static void AddMonsterListener(this EPage_ChallengNormal self, Transform transform, int index)
@@ -252,7 +270,7 @@ namespace ET.Client
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
 
             string itemCfgId = monsterList[index];
-            itemMonster.ShowMonsterItem(itemCfgId, true);
+            itemMonster.ShowMonsterItem(itemCfgId, true).Coroutine();
         }
 
         public static async ETTask<int> GetCurPveIndex(this EPage_ChallengNormal self)

@@ -26,66 +26,6 @@ MonoBehaviour:
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u70B9\u51FBload"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ConfirmLoadMenu/Canvas
-    hierarchyGuidePath: Panel/LoadButton
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Load
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u8BF4\u660Erescan"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ConfirmReviewMenu/Canvas
-    hierarchyGuidePath: RescanBlurButton
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Rescan
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 3
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u8BF4\u660Econfirm"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ConfirmReviewMenu/Canvas
-    hierarchyGuidePath: ConfirmButton
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Confirm
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
     waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None

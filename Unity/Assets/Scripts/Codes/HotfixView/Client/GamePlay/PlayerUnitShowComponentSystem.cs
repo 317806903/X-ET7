@@ -133,8 +133,7 @@ namespace ET.Client
         public static void ChgAttackArea(this PlayerUnitShowComponent self)
         {
             Unit unit = self.GetUnit();
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            float skillDis = numericComponent.GetAsFloat(NumericType.SkillDis);
+            float skillDis = ET.Client.UnitHelper.GetMaxSkillDis(unit);
             if (skillDis <= 0)
             {
                 self.transAttackArea.gameObject.SetActive(false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ET.Server
@@ -17,6 +18,17 @@ namespace ET.Server
 		    }
 	    }
 
+	    public static async ETTask<bool> CollectionExists(this DBComponent self, string collectionName)
+	    {
+		    // return self.database.collectionExists().Any(name => name == collectionName);
+		    // return self.database.ListCollectionNames().Any(name => name == collectionName);
+		    var filter = new BsonDocument("name", collectionName);
+		    //filter by collection name
+		    var collections = await self.database.ListCollectionsAsync(new ListCollectionsOptions { Filter = filter });
+		    //check for existence
+		    return await collections.AnyAsync();
+	    }
+
 	    private static IMongoCollection<T> GetCollection<T>(this DBComponent self, string collection = null)
 	    {
 		    return self.database.GetCollection<T>(collection ?? typeof (T).FullName);
@@ -30,14 +42,14 @@ namespace ET.Server
 	    #region RenameCollection
 	    public static async ETTask RenameCollection(this DBComponent self, string oldName, string newName)
 	    {
-		    if (self.GetCollection(oldName) == null)
+		    if (await self.CollectionExists(oldName) == false)
 		    {
-			    Log.Error($"RenameCollection self.GetCollection({oldName}) == null");
+			    Log.Error($"RenameCollection self.CollectionExists({oldName}) == false");
 			    return;
 		    }
-		    if (self.GetCollection(newName) != null)
+		    if (await self.CollectionExists(newName))
 		    {
-			    Log.Error($"RenameCollection self.GetCollection({newName}) != null");
+			    Log.Error($"RenameCollection self.CollectionExists({newName})");
 			    return;
 		    }
 		    await self.database.RenameCollectionAsync(oldName, newName);
@@ -51,6 +63,16 @@ namespace ET.Server
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, id % DBComponent.TaskCount))
 		    {
 			    IAsyncCursor<T> cursor = await self.GetCollection<T>(collection).FindAsync(d => d.Id == id);
+
+			    return await cursor.FirstOrDefaultAsync();
+		    }
+	    }
+
+	    public static async ETTask<T> QueryFirst<T>(this DBComponent self, string collection = null) where T : Entity
+	    {
+		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
+		    {
+			    IAsyncCursor<T> cursor = await self.GetCollection<T>(collection).FindAsync(d => true);
 
 			    return await cursor.FirstOrDefaultAsync();
 		    }
@@ -183,7 +205,7 @@ namespace ET.Server
 	    {
 		    if (collection == null)
 		    {
-			    collection = typeof (T).FullName;
+			    collection = typeof(T).FullName;
 		    }
 
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
@@ -210,6 +232,8 @@ namespace ET.Server
 			    collection = entity.GetType().FullName;
 		    }
 
+		    entity.BeginInit();
+
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, entity.Id % DBComponent.TaskCount))
 		    {
 			    await self.GetCollection(collection).ReplaceOneAsync(d => d.Id == entity.Id, entity, new ReplaceOptions { IsUpsert = true });
@@ -229,6 +253,8 @@ namespace ET.Server
 		    {
 			    collection = entity.GetType().FullName;
 		    }
+
+		    entity.BeginInit();
 
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
 		    {
@@ -252,6 +278,8 @@ namespace ET.Server
 				    {
 					    continue;
 				    }
+
+				    entity.BeginInit();
 
 				    await self.GetCollection(entity.GetType().FullName)
 						    .ReplaceOneAsync(d => d.Id == entity.Id, entity, new ReplaceOptions { IsUpsert = true });
@@ -277,6 +305,10 @@ namespace ET.Server
 
 	    public static async ETTask<long> Remove<T>(this DBComponent self, long id, string collection = null) where T : Entity
 	    {
+		    if (collection == null)
+		    {
+			    collection = typeof(T).FullName;
+		    }
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, id % DBComponent.TaskCount))
 		    {
 			    DeleteResult result = await self.GetCollection<T>(collection).DeleteOneAsync(d => d.Id == id);
@@ -287,6 +319,10 @@ namespace ET.Server
 
 	    public static async ETTask<long> Remove<T>(this DBComponent self, long taskId, long id, string collection = null) where T : Entity
 	    {
+		    if (collection == null)
+		    {
+			    collection = typeof(T).FullName;
+		    }
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
 		    {
 			    DeleteResult result = await self.GetCollection<T>(collection).DeleteOneAsync(d => d.Id == id);
@@ -297,6 +333,10 @@ namespace ET.Server
 
 	    public static async ETTask<long> Remove<T>(this DBComponent self, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
 	    {
+		    if (collection == null)
+		    {
+			    collection = typeof(T).FullName;
+		    }
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, RandomGenerator.RandInt64() % DBComponent.TaskCount))
 		    {
 			    DeleteResult result = await self.GetCollection<T>(collection).DeleteManyAsync(filter);
@@ -305,9 +345,12 @@ namespace ET.Server
 		    }
 	    }
 
-	    public static async ETTask<long> Remove<T>(this DBComponent self, long taskId, Expression<Func<T, bool>> filter, string collection = null)
-			    where T : Entity
+	    public static async ETTask<long> Remove<T>(this DBComponent self, long taskId, Expression<Func<T, bool>> filter, string collection = null) where T : Entity
 	    {
+		    if (collection == null)
+		    {
+			    collection = typeof(T).FullName;
+		    }
 		    using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.DB, taskId % DBComponent.TaskCount))
 		    {
 			    DeleteResult result = await self.GetCollection<T>(collection).DeleteManyAsync(filter);
@@ -317,5 +360,24 @@ namespace ET.Server
 	    }
 
 	    #endregion
+
+	    #region DropCollection
+	    public static async ETTask DropCollection(this DBComponent self, string collection)
+	    {
+		    if (await self.CollectionExists(collection) == false)
+		    {
+			    Log.Error($"DropCollection self.CollectionExists({collection}) == false");
+			    return;
+		    }
+		    await self.database.DropCollectionAsync(collection);
+	    }
+
+	    public static async ETTask DropCollection<T>(this DBComponent self) where T : Entity
+	    {
+		    string collection = typeof(T).FullName;
+		    await self.DropCollection(collection);
+	    }
+	    #endregion
+
     }
 }

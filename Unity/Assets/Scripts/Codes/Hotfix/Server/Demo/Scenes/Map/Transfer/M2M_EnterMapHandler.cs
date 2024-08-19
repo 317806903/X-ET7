@@ -24,6 +24,7 @@ namespace ET.Server
 				{
 					gamePlayComponent = scene.AddComponent<GamePlayComponent>();
 					await gamePlayComponent.InitWhenGlobal(scene.InstanceId, gamePlayBattleLevelCfgId);
+					gamePlayComponent.roomTypeInfo.seasonIndex = await SeasonHelper.GetSeasonIndex(scene);
 				}
 				gamePlayComponent.AddPlayerWhenGlobal(playerId, 1);
 			}

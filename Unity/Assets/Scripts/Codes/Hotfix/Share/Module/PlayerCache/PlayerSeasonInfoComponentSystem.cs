@@ -14,7 +14,6 @@ namespace ET
             protected override void Awake(PlayerSeasonInfoComponent self)
             {
                 self.seasonBringUpDic = new();
-                self.Init();
             }
         }
 
@@ -102,7 +101,7 @@ namespace ET
                 if(kvp.Value == 0)
                 {
                     continue;
-                }               
+                }
                 rewardSum += self.GetReWardBringup(kvp.Key);
             }
             await ETTask.CompletedTask;

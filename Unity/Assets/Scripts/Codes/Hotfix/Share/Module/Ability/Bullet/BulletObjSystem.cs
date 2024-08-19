@@ -69,7 +69,6 @@ namespace ET.Ability
                 self.monitorTriggerList.Add(abilityBulletMonitorTriggerEvent, self.model.MonitorTriggers[i]);
             }
 
-            self.casterUnitId = casterUnitId;
             self.duration = duration;
             self.timeElapsed = 0;
             self.canHitAfterCreated = self.model.CanHitAfterCreated;
@@ -88,26 +87,6 @@ namespace ET.Ability
         public static List<BulletActionCall> GetActionIds(this BulletObj self, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent)
         {
             return self.monitorTriggerList[abilityBulletMonitorTriggerEvent];
-        }
-
-        /// <summary>
-        /// 获取子弹发射者(上级)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetCasterUnit(this BulletObj self)
-        {
-            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-        }
-
-        /// <summary>
-        /// 获取子弹发射者(player或monster)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetCasterActorUnit(this BulletObj self)
-        {
-            return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
         }
 
         /// <summary>

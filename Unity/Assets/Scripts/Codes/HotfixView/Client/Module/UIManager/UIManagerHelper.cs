@@ -263,6 +263,27 @@ namespace ET.Client
             }
         }
 
+        public static void ShowUrl(Scene scene, string url, bool isWebView = true)
+        {
+            if (isWebView == false)
+            {
+                Application.OpenURL(url);
+                return;
+            }
+
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            DlgCommonWebView _DlgCommonWebView = _UIComponent.GetDlgLogic<DlgCommonWebView>(true, true);
+            if (_DlgCommonWebView == null)
+            {
+                _UIComponent.ShowWindow<DlgCommonWebView>();
+                _DlgCommonWebView = _UIComponent.GetDlgLogic<DlgCommonWebView>(true);
+            }
+            if (_DlgCommonWebView != null)
+            {
+                _DlgCommonWebView.ShowWebView(url);
+            }
+        }
+
         public static async ETTask<Sprite> LoadSprite(string imgPath)
         {
             if (string.IsNullOrEmpty(imgPath))
@@ -282,7 +303,7 @@ namespace ET.Client
         /// <param name="image"></param>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public static async ETTask SetMyselfIcon(this Image image, Scene scene)
+        public static async ETTask SetMyIcon(this Image image, Scene scene)
         {
             PlayerBaseInfoComponent playerBaseInfoComponent =await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
@@ -297,15 +318,14 @@ namespace ET.Client
         /// <param name="image"></param>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public static async ETTask SetMyselfFrame(this Image image, Scene scene)
+        public static async ETTask SetMyFrame(this Image image, Scene scene)
         {
             PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             //WJ 设置玩家的头像框
             if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
             {
                 ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
-                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
-                await image.SetImageByPath(resIconCfg.ResName);
+                await image.SetImageByResIconCfgId(itemCfg.Icon);
             }
 
         }
@@ -338,14 +358,29 @@ namespace ET.Client
             if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
             {
                 ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
-                ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
-                await image.SetImageByPath(resIconCfg.ResName);
+                await image.SetImageByResIconCfgId(itemCfg.Icon);
             }
 
         }
 
+        public static async ETTask SetImageByItemCfgId(this Image image, string itemCfgId, bool needSetNativeSize = false)
+        {
+            string resName = ItemHelper.GetItemIcon(itemCfgId);
+            await image.SetImageByPath(resName, needSetNativeSize);
+        }
+
+        public static async ETTask SetImageByResIconCfgId(this Image image, string resIconCfgId, bool needSetNativeSize = false)
+        {
+            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(resIconCfgId);
+            await image.SetImageByPath(resIconCfg.ResName, needSetNativeSize);
+        }
+
         public static async ETTask SetImageByPath(this Image image, string imgPath, bool needSetNativeSize = false)
         {
+            if (image == null)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(imgPath))
             {
                 image.sprite = null;
@@ -355,6 +390,10 @@ namespace ET.Client
                 return;
             }
             Sprite sprite = await ResComponent.Instance.LoadAssetAsync<Sprite>(imgPath);
+            if (image == null)
+            {
+                return;
+            }
             image.sprite = sprite;
             if (needSetNativeSize)
             {
@@ -374,6 +413,40 @@ namespace ET.Client
             foreach (Image img in imgs)
             {
                 img.SetImageGray(isGray);
+            }
+        }
+
+        public static async ETTask LoadBG(this Image image)
+        {
+            //image.sprite = null;
+            bool bFindBlackBG = false;
+            Transform blackBG = image.transform.Find("BlackBG");
+            if (blackBG != null)
+            {
+                bFindBlackBG = true;
+            }
+            if (bFindBlackBG)
+            {
+                blackBG.gameObject.SetActive(true);
+            }
+            else
+            {
+                image.color = new Color(1, 1, 1, 0.2f);
+            }
+            List<string> bgList = GlobalSettingCfgCategory.Instance.BGList;
+            string bg = RandomGenerator.RandomArray(bgList);
+            await image.SetImageByResIconCfgId(bg);
+            if (image == null)
+            {
+                return;
+            }
+            if (bFindBlackBG)
+            {
+                blackBG.gameObject.SetActive(false);
+            }
+            else
+            {
+                image.color = new Color(1, 1, 1, 1);
             }
         }
 
@@ -428,7 +501,7 @@ namespace ET.Client
             string itemDesc = ItemHelper.GetItemDesc(itemCfgId);
             DlgDescTips_ShowWindowData _DlgDescTips_ShowWindowData = new()
             {
-                Pos = pos + Vector3.up,
+                Pos = pos,
                 Desc = itemDesc,
             };
             _UIComponent.ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData).Coroutine();
@@ -701,6 +774,14 @@ namespace ET.Client
 
                 // Draco bytes
                 byte[] bytes = await gamePlayComponent.DownloadFileBytesAsync(gamePlayComponent._ARMeshDownLoadUrl);
+                if (bytes == null)
+                {
+                    return;
+                }
+                if (gamePlayComponent.IsDisposed)
+                {
+                    return;
+                }
                 MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
                 CreateMeshFromData(meshData, gamePlayComponent.GetARScale());
             }
@@ -709,6 +790,14 @@ namespace ET.Client
                 gamePlayComponent._ARMeshDownLoadUrl = gamePlayComponent.isTestARObjUrl;
 
                 string content = await gamePlayComponent.DownloadFileTextAsync(gamePlayComponent._ARMeshDownLoadUrl);
+                if (string.IsNullOrEmpty(content))
+                {
+                    return;
+                }
+                if (gamePlayComponent.IsDisposed)
+                {
+                    return;
+                }
                 ET.LoadMesh.ObjMesh objInstace = new ET.LoadMesh.ObjMesh();
                 objInstace = objInstace.LoadFromObj(content);
 
@@ -856,7 +945,7 @@ namespace ET.Client
             RoomTypeInfo roomTypeInfo = playerStatusComponent.RoomTypeInfo;
             RoomType roomType = roomTypeInfo.roomType;
             SubRoomType subRoomType = roomTypeInfo.subRoomType;
-            int seasonId = roomTypeInfo.seasonId;
+            int seasonCfgId = roomTypeInfo.seasonCfgId;
             if (playerStatusComponent.PlayerStatus != PlayerStatus.Room || playerStatusComponent.RoomId == 0)
             {
                 if (roomType == RoomType.Normal)
@@ -874,7 +963,7 @@ namespace ET.Client
             {
                 if (subRoomType == SubRoomType.NormalPVE)
                 {
-                    if (seasonId > 0)
+                    if (seasonCfgId > 0)
                     {
                         await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVESeason>();
                     }
@@ -906,7 +995,7 @@ namespace ET.Client
             }
             else if (roomType == RoomType.AR && subRoomType == SubRoomType.ARPVE)
             {
-                if (seasonId > 0)
+                if (seasonCfgId > 0)
                 {
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARRoomPVESeason>();
                 }

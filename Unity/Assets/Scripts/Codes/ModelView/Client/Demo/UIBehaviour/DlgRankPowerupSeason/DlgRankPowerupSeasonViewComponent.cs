@@ -126,125 +126,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_CoinListRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_CoinListRectTransform == null )
-				{
-					this.m_EG_CoinListRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGRoot/EG_CoinList");
-				}
-				return this.m_EG_CoinListRectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_ArcadeCoinButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ArcadeCoinButton == null )
-				{
-					this.m_EButton_ArcadeCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_ArcadeCoin");
-				}
-				return this.m_EButton_ArcadeCoinButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_ArcadeCoinImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ArcadeCoinImage == null )
-				{
-					this.m_EButton_ArcadeCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_ArcadeCoin");
-				}
-				return this.m_EButton_ArcadeCoinImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_ArcadeCoinNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_ArcadeCoinNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_ArcadeCoin/ELabel_ArcadeCoinNum");
-				}
-				return this.m_ELabel_ArcadeCoinNumTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_PhysicalStrengthButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PhysicalStrengthButton == null )
-				{
-					this.m_EButton_PhysicalStrengthButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_PhysicalStrength");
-				}
-				return this.m_EButton_PhysicalStrengthButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_PhysicalStrengthImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PhysicalStrengthImage == null )
-				{
-					this.m_EButton_PhysicalStrengthImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_PhysicalStrength");
-				}
-				return this.m_EButton_PhysicalStrengthImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PhysicalStrengthNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/EG_CoinList/EButton_PhysicalStrength/ELabel_PhysicalStrengthNum");
-				}
-				return this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI;
-			}
-		}
-
 		public UnityEngine.UI.Button E_QuitRankButton
 		{
 			get
@@ -615,7 +496,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabLeaderboardButton == null )
 				{
-					this.m_EBtnTabLeaderboardButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboard");
+					this.m_EBtnTabLeaderboardButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboard");
 				}
 				return this.m_EBtnTabLeaderboardButton;
 			}
@@ -632,7 +513,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabLeaderboardImage == null )
 				{
-					this.m_EBtnTabLeaderboardImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboard");
+					this.m_EBtnTabLeaderboardImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboard");
 				}
 				return this.m_EBtnTabLeaderboardImage;
 			}
@@ -649,7 +530,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtLeaderBoardTextMeshProUGUI == null )
 				{
-					this.m_ETxtLeaderBoardTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboard/ETxtLeaderBoard");
+					this.m_ETxtLeaderBoardTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboard/ETxtLeaderBoard");
 				}
 				return this.m_ETxtLeaderBoardTextMeshProUGUI;
 			}
@@ -666,7 +547,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtLeaderBoardUITextLocalizeMonoView == null )
 				{
-					this.m_ETxtLeaderBoardUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboard/ETxtLeaderBoard");
+					this.m_ETxtLeaderBoardUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboard/ETxtLeaderBoard");
 				}
 				return this.m_ETxtLeaderBoardUITextLocalizeMonoView;
 			}
@@ -683,7 +564,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabLeaderboardUnselectedButton == null )
 				{
-					this.m_EBtnTabLeaderboardUnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboardUnselected");
+					this.m_EBtnTabLeaderboardUnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboardUnselected");
 				}
 				return this.m_EBtnTabLeaderboardUnselectedButton;
 			}
@@ -700,7 +581,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabLeaderboardUnselectedImage == null )
 				{
-					this.m_EBtnTabLeaderboardUnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboardUnselected");
+					this.m_EBtnTabLeaderboardUnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboardUnselected");
 				}
 				return this.m_EBtnTabLeaderboardUnselectedImage;
 			}
@@ -717,7 +598,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtLeaderBoardUnselectedTextMeshProUGUI == null )
 				{
-					this.m_ETxtLeaderBoardUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboardUnselected/ETxtLeaderBoardUnselected");
+					this.m_ETxtLeaderBoardUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboardUnselected/ETxtLeaderBoardUnselected");
 				}
 				return this.m_ETxtLeaderBoardUnselectedTextMeshProUGUI;
 			}
@@ -734,7 +615,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtLeaderBoardUnselectedUITextLocalizeMonoView == null )
 				{
-					this.m_ETxtLeaderBoardUnselectedUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabLeaderboardUnselected/ETxtLeaderBoardUnselected");
+					this.m_ETxtLeaderBoardUnselectedUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabLeaderboardRoot/EBtnTabLeaderboardUnselected/ETxtLeaderBoardUnselected");
 				}
 				return this.m_ETxtLeaderBoardUnselectedUITextLocalizeMonoView;
 			}
@@ -751,7 +632,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabPowerupsButton == null )
 				{
-					this.m_EBtnTabPowerupsButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups");
+					this.m_EBtnTabPowerupsButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups");
 				}
 				return this.m_EBtnTabPowerupsButton;
 			}
@@ -768,7 +649,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabPowerupsImage == null )
 				{
-					this.m_EBtnTabPowerupsImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups");
+					this.m_EBtnTabPowerupsImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups");
 				}
 				return this.m_EBtnTabPowerupsImage;
 			}
@@ -785,7 +666,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtPowerupsTextMeshProUGUI == null )
 				{
-					this.m_ETxtPowerupsTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups/ETxtPowerups");
+					this.m_ETxtPowerupsTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups/ETxtPowerups");
 				}
 				return this.m_ETxtPowerupsTextMeshProUGUI;
 			}
@@ -802,7 +683,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtPowerupsUITextLocalizeMonoView == null )
 				{
-					this.m_ETxtPowerupsUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups/ETxtPowerups");
+					this.m_ETxtPowerupsUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups/ETxtPowerups");
 				}
 				return this.m_ETxtPowerupsUITextLocalizeMonoView;
 			}
@@ -819,7 +700,7 @@ namespace ET.Client
 				}
 				if( this.m_ERedDotIconImage == null )
 				{
-					this.m_ERedDotIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups/ERedDotIcon");
+					this.m_ERedDotIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups/ERedDotIcon");
 				}
 				return this.m_ERedDotIconImage;
 			}
@@ -836,7 +717,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabPowerups_UnselectedButton == null )
 				{
-					this.m_EBtnTabPowerups_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups_Unselected");
+					this.m_EBtnTabPowerups_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected");
 				}
 				return this.m_EBtnTabPowerups_UnselectedButton;
 			}
@@ -853,7 +734,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnTabPowerups_UnselectedImage == null )
 				{
-					this.m_EBtnTabPowerups_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups_Unselected");
+					this.m_EBtnTabPowerups_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected");
 				}
 				return this.m_EBtnTabPowerups_UnselectedImage;
 			}
@@ -870,7 +751,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtPowerupsUnselectedTextMeshProUGUI == null )
 				{
-					this.m_ETxtPowerupsUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups_Unselected/ETxtPowerupsUnselected");
+					this.m_ETxtPowerupsUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected/ETxtPowerupsUnselected");
 				}
 				return this.m_ETxtPowerupsUnselectedTextMeshProUGUI;
 			}
@@ -887,7 +768,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtPowerupsUnselectedUITextLocalizeMonoView == null )
 				{
-					this.m_ETxtPowerupsUnselectedUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups_Unselected/ETxtPowerupsUnselected");
+					this.m_ETxtPowerupsUnselectedUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected/ETxtPowerupsUnselected");
 				}
 				return this.m_ETxtPowerupsUnselectedUITextLocalizeMonoView;
 			}
@@ -904,7 +785,7 @@ namespace ET.Client
 				}
 				if( this.m_ERedDotIconUnselectedImage == null )
 				{
-					this.m_ERedDotIconUnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/EBtnTabPowerups_Unselected/ERedDotIconUnselected");
+					this.m_ERedDotIconUnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected/ERedDotIconUnselected");
 				}
 				return this.m_ERedDotIconUnselectedImage;
 			}
@@ -919,13 +800,6 @@ namespace ET.Client
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
 			this.m_EGRootRectTransform = null;
-			this.m_EG_CoinListRectTransform = null;
-			this.m_EButton_ArcadeCoinButton = null;
-			this.m_EButton_ArcadeCoinImage = null;
-			this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
-			this.m_EButton_PhysicalStrengthButton = null;
-			this.m_EButton_PhysicalStrengthImage = null;
-			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
 			this.m_E_QuitRankButton = null;
 			this.m_E_QuitRankImage = null;
 			this.m_ETxtTitleTextMeshProUGUI = null;
@@ -977,13 +851,6 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
 		private UnityEngine.RectTransform m_EGRootRectTransform = null;
-		private UnityEngine.RectTransform m_EG_CoinListRectTransform = null;
-		private UnityEngine.UI.Button m_EButton_ArcadeCoinButton = null;
-		private UnityEngine.UI.Image m_EButton_ArcadeCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_EButton_PhysicalStrengthButton = null;
-		private UnityEngine.UI.Image m_EButton_PhysicalStrengthImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_QuitRankButton = null;
 		private UnityEngine.UI.Image m_E_QuitRankImage = null;
 		private TMPro.TextMeshProUGUI m_ETxtTitleTextMeshProUGUI = null;

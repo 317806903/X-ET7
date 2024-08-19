@@ -15,7 +15,7 @@ namespace ET.Client
 
 		}
 
-		public static void ShowWindow(this DlgBattleTowerBegin self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleTowerBegin self, ShowWindowData contextData = null)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.ReadyGo);
 		}

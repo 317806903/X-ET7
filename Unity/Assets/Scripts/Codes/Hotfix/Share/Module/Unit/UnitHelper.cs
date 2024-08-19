@@ -237,187 +237,277 @@ namespace ET.Ability
             return false;
         }
 
-        public static List<Unit> GetUnitListBySelectObjectType(Unit curUnit, SelectObjectType selectObjectType, bool isNeedChkCanBeFind)
+        public static List<Unit> GetUnitList(Unit curUnit, SelectObjectUnitTypeBase selectObjectUnitTypeBase, bool isNeedChkCanBeFind)
         {
-            List<Unit> list = null;
-            if (selectObjectType == SelectObjectType.FriendPlayers
-                || selectObjectType == SelectObjectType.FriendButNotPlayers
-                || selectObjectType == SelectObjectType.Friends
-                || selectObjectType == SelectObjectType.Self
-                || selectObjectType == SelectObjectType.SelfPlayer)
+            bool isContainHome = false;
+            bool isContainSelf = false;
+            bool isContainFriend = false;
+            bool isContainHostile = false;
+            SelectObjectUnitType selectObjectUnitType;
+            if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelf selectObjectUnitTypeSelf)
             {
-                list = UnitHelper.GetFriends(curUnit, selectObjectType);
+                isContainHome = false;
+                isContainSelf = true;
+                isContainFriend = false;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeSelf.UnitType;
             }
-            else if (selectObjectType == SelectObjectType.HostilePlayers
-                     || selectObjectType == SelectObjectType.HostileButNotPlayers
-                     || selectObjectType == SelectObjectType.Hostiles)
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfAndFriend selectObjectUnitTypeSelfAndFriend)
             {
-                list = UnitHelper.GetHostileForces(curUnit, selectObjectType, isNeedChkCanBeFind);
+                isContainHome = false;
+                isContainSelf = true;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeSelfAndFriend.UnitType;
             }
-            else if (selectObjectType == SelectObjectType.AllPlayers)
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeFriend selectObjectUnitTypeFriend)
             {
-                list = UnitHelper.GetFriends(curUnit, SelectObjectType.FriendPlayers);
-                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.HostilePlayers, isNeedChkCanBeFind);
-                list.AddRange(listHostileForces);
+                isContainHome = false;
+                isContainSelf = false;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeFriend.UnitType;
             }
-            else if (selectObjectType == SelectObjectType.AllButNotPlayers)
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeHostile selectObjectUnitTypeHostile)
             {
-                list = UnitHelper.GetFriends(curUnit, SelectObjectType.FriendButNotPlayers);
-                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.HostileButNotPlayers, isNeedChkCanBeFind);
-                list.AddRange(listHostileForces);
+                isContainHome = false;
+                isContainSelf = false;
+                isContainFriend = false;
+                isContainHostile = true;
+                selectObjectUnitType = selectObjectUnitTypeHostile.UnitType;
             }
-            else if (selectObjectType == SelectObjectType.All)
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfHome selectObjectUnitTypeSelfHome)
             {
-                list = UnitHelper.GetFriends(curUnit, SelectObjectType.Friends);
-                List<Unit> listHostileForces = UnitHelper.GetHostileForces(curUnit, SelectObjectType.Hostiles, isNeedChkCanBeFind);
-                list.AddRange(listHostileForces);
+                isContainHome = true;
+                isContainSelf = true;
+                isContainFriend = false;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfAndFriendHome selectObjectUnitTypeSelfAndFriendHome)
+            {
+                isContainHome = true;
+                isContainSelf = true;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeFriendHome selectObjectUnitTypeFriendHome)
+            {
+                isContainHome = true;
+                isContainSelf = false;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeHostileHome selectObjectUnitTypeHostileHome)
+            {
+                isContainHome = true;
+                isContainSelf = false;
+                isContainFriend = false;
+                isContainHostile = true;
+                selectObjectUnitType = SelectObjectUnitType.All;
             }
             else
             {
-            }
-            return list;
-        }
-
-        public static List<Unit> GetFriends(Unit curUnit, SelectObjectType selectObjectType)
-        {
-            List<Unit> friends = ListComponent<Unit>.Create();
-            bool isContainPlayer = false;
-            bool isContainActor = false;
-            bool needSamePlayer = false;
-            if (selectObjectType == SelectObjectType.Friends)
-            {
-                isContainPlayer = true;
-                isContainActor = true;
-            }
-            else if (selectObjectType == SelectObjectType.FriendPlayers)
-            {
-                isContainPlayer = true;
-                isContainActor = false;
-            }
-            else if (selectObjectType == SelectObjectType.FriendButNotPlayers)
-            {
-                isContainPlayer = false;
-                isContainActor = true;
-            }
-            else if (selectObjectType == SelectObjectType.Self)
-            {
-                isContainPlayer = true;
-                isContainActor = true;
-                needSamePlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.SelfPlayer)
-            {
-                isContainPlayer = false;
-                isContainActor = true;
-                needSamePlayer = true;
+                // isContainHome = false;
+                // isContainSelf = false;
+                // isContainFriend = false;
+                // isContainHostile = false;
+                // selectObjectUnitType = SelectObjectUnitType.All;
+                return null;
             }
 
-            if (isContainPlayer)
+            List<Unit> unitList = ListComponent<Unit>.Create();
+
+            if (isContainHome)
             {
-                foreach (Unit unit in GetUnitComponent(curUnit).playerList)
+                GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(curUnit.DomainScene());
+                if (gamePlayComponent == null)
                 {
-                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit, needSamePlayer))
-                    {
-                        if (UnitHelper.ChkUnitAlive(unit))
-                        {
-                            friends.Add(unit);
-                        }
-                    }
+                    return null;
                 }
-            }
-
-            if (isContainActor)
-            {
-                foreach (Unit unit in GetUnitComponent(curUnit).actorList)
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(curUnit.DomainScene());
+                if (gamePlayTowerDefenseComponent == null)
                 {
-                    if (ET.GamePlayHelper.ChkIsFriend(curUnit, unit, needSamePlayer))
-                    {
-                        if (UnitHelper.ChkUnitAlive(unit))
-                        {
-                            friends.Add(unit);
-                        }
-                    }
+                    return null;
                 }
-            }
-
-            return friends;
-        }
-
-        /// <summary>
-        /// 获取敌对势力的对象列表
-        /// </summary>
-        /// <param name="curUnit"></param>
-        /// <param name="isOnlyPlayer"></param>
-        /// <returns></returns>
-        public static List<Unit> GetHostileForces(Unit curUnit, SelectObjectType selectObjectType, bool isNeedChkCanBeFind)
-        {
-            List<Unit> hostileForces = ListComponent<Unit>.Create();
-
-            bool isContainPlayer = false;
-            bool isContainActor = false;
-            if (selectObjectType == SelectObjectType.Hostiles)
-            {
-                isContainPlayer = true;
-                isContainActor = true;
-            }
-            else if (selectObjectType == SelectObjectType.HostilePlayers)
-            {
-                isContainPlayer = true;
-                isContainActor = false;
-            }
-            else if (selectObjectType == SelectObjectType.HostileButNotPlayers)
-            {
-                isContainPlayer = false;
-                isContainActor = true;
-            }
-
-            var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
-            foreach (var seeUnit in seeUnits)
-            {
-                AOIEntity aoiEntityTmp = seeUnit.Value;
-                Unit unit = aoiEntityTmp.Unit;
-                bool isContinue = false;
-                if (UnitHelper.ChkIsPlayer(unit) && isContainPlayer)
+                PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+                if (putHomeComponent == null)
                 {
-                    isContinue = true;
+                    return null;
                 }
-                else if (UnitHelper.ChkIsActor(unit) && isContainActor)
+                Dictionary<TeamFlagType, long> homeUnitList = putHomeComponent.GetHomeUnitList();
+                TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByUnitId(curUnit.Id);
+                foreach (var homeUnits in homeUnitList)
                 {
-                    isContinue = true;
-                }
-                else
-                {
-                    isContinue = false;
-                }
-
-                if (isContinue == false)
-                {
-                    continue;
-                }
-
-                if (UnitHelper.ChkUnitAlive(unit) == false)
-                {
-                    continue;
-                }
-                bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
-                if (isFriend)
-                {
-                    continue;
-                }
-
-                if (isNeedChkCanBeFind)
-                {
-                    bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
-                    if (isBeFind == false)
+                    TeamFlagType curHomeTeamFlagType = homeUnits.Key;
+                    long curHomeUnitId = homeUnits.Value;
+                    Unit curHomeUnit = UnitHelper.GetUnit(curUnit.DomainScene(), curHomeUnitId);
+                    if (UnitHelper.ChkUnitAlive(curHomeUnit) == false)
                     {
                         continue;
                     }
+
+                    if (isContainHostile)
+                    {
+                        bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                        if (isFriend)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (isContainSelf && isContainFriend)
+                        {
+                            bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainSelf)
+                        {
+                            if (GamePlayHelper.GetHomeTeamFlagType(teamFlagType) != curHomeTeamFlagType)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainFriend)
+                        {
+                            if (GamePlayHelper.GetHomeTeamFlagType(teamFlagType) == curHomeTeamFlagType)
+                            {
+                                continue;
+                            }
+                            bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (isNeedChkCanBeFind)
+                    {
+                        bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(curHomeUnit, curUnit);
+                        if (isBeFind == false)
+                        {
+                            continue;
+                        }
+                    }
+
+                    unitList.Add(curHomeUnit);
+                }
+            }
+            else
+            {
+                var seeUnits = curUnit.GetComponent<AOIEntity>().GetSeeUnits();
+                foreach (var seeUnit in seeUnits)
+                {
+                    AOIEntity aoiEntityTmp = seeUnit.Value;
+                    Unit unit = aoiEntityTmp.Unit;
+                    bool isContinue = false;
+                    if (UnitHelper.ChkIsPlayer(unit))
+                    {
+                        if (selectObjectUnitType == SelectObjectUnitType.All || selectObjectUnitType == SelectObjectUnitType.OnlyPlayer)
+                        {
+                            isContinue = true;
+                        }
+                        else
+                        {
+                            isContinue = false;
+                        }
+                    }
+                    else if (UnitHelper.ChkIsActor(unit))
+                    {
+                        if (selectObjectUnitType == SelectObjectUnitType.All || selectObjectUnitType == SelectObjectUnitType.NotPlayer)
+                        {
+                            isContinue = true;
+                        }
+                        else
+                        {
+                            isContinue = false;
+                        }
+                    }
+                    else
+                    {
+                        isContinue = false;
+                    }
+
+                    if (isContinue == false)
+                    {
+                        continue;
+                    }
+
+                    if (UnitHelper.ChkUnitAlive(unit) == false)
+                    {
+                        continue;
+                    }
+
+                    if (isContainHostile)
+                    {
+                        bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
+                        if (isFriend)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (isContainSelf && isContainFriend)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainSelf)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainFriend)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
+                            if (isFriend)
+                            {
+                                continue;
+                            }
+                            isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, false);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (isNeedChkCanBeFind)
+                    {
+                        bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
+                        if (isBeFind == false)
+                        {
+                            continue;
+                        }
+                    }
+
+                    unitList.Add(unit);
                 }
 
-                hostileForces.Add(unit);
             }
-
-            return hostileForces;
+            return unitList;
         }
 
         public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius, bool ignoreY = true)
@@ -472,7 +562,7 @@ namespace ET.Ability
             if (UnitHelper.ChkIsBullet(curUnit))
             {
                 BulletObj bulletObj = curUnit.GetComponent<BulletObj>();
-                Unit casterPlayerUnit = bulletObj?.GetCasterActorUnit();
+                Unit casterPlayerUnit = curUnit.GetCasterFirstActor();
                 if (casterPlayerUnit != null && casterPlayerUnit.model.IsNeedChkMesh == false)
                 {
                     return false;
@@ -482,7 +572,7 @@ namespace ET.Ability
             else if (ChkIsAoe(curUnit))
             {
                 AoeObj aoeObj = curUnit.GetComponent<AoeObj>();
-                Unit casterPlayerUnit = aoeObj?.GetCasterActorUnit();
+                Unit casterPlayerUnit = curUnit.GetCasterFirstActor();
                 if (casterPlayerUnit != null && casterPlayerUnit.model.IsNeedChkMesh == false)
                 {
                     return false;
@@ -712,35 +802,6 @@ namespace ET.Ability
             unitInfo.Type = (int)unit.Type;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
-
-            // MoveByPathComponent moveByPathComponent = unit.GetComponent<MoveByPathComponent>();
-            // if (moveByPathComponent != null)
-            // {
-            //     if (!moveByPathComponent.IsArrived())
-            //     {
-            //         unitInfo.MoveInfo = new MoveInfo() { Points = ListComponent<float3>.Create() };
-            //         unitInfo.MoveInfo.Points.Add(unit.Position);
-            //         for (int i = moveByPathComponent.N; i < moveByPathComponent.Targets.Count; ++i)
-            //         {
-            //             float3 pos = moveByPathComponent.Targets[i];
-            //             unitInfo.MoveInfo.Points.Add(pos);
-            //         }
-            //     }
-            // }
-
-            // var numericDic = DictionaryComponent<int, long>.Create();
-            // NumericComponent nc = unit.GetComponent<NumericComponent>();
-            // if (nc != null && nc.NumericDic != null)
-            // {
-            //     foreach ((int key, long value) in nc.NumericDic)
-            //     {
-            //         numericDic.Add(key, value);
-            //     }
-            // }
-            // if (numericDic.Count > 0)
-            // {
-            //     unitInfo.KV = new(numericDic);
-            // }
 
             unitInfo.Components = ListComponent<byte[]>.Create();
             foreach (Entity entity in unit.Components.Values)
@@ -1138,11 +1199,19 @@ namespace ET.Ability
             string idleTimelineId = "";
             if (UnitHelper.ChkIsBullet(unit))
             {
-                idleTimelineId = unit.GetComponent<BulletObj>().model.IdleTimelineId;
+                BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                if (bulletObj != null)
+                {
+                    idleTimelineId = bulletObj.model.IdleTimelineId;
+                }
             }
             else if (UnitHelper.ChkIsAoe(unit))
             {
-                idleTimelineId = unit.GetComponent<AoeObj>().model.IdleTimelineId;
+                AoeObj aoeObj = unit.GetComponent<AoeObj>();
+                if (aoeObj != null)
+                {
+                    idleTimelineId = aoeObj.model.IdleTimelineId;
+                }
             }
             else
             {
@@ -1169,99 +1238,6 @@ namespace ET.Ability
             }
 
             return moveTimelineId;
-        }
-
-        /// <summary>
-        /// 发送的Actor，例如 B发射的子弹，则 子弹通过这个接口可以找到B (A 召唤了 B， B发射的子弹，则 子弹通过这个接口可以找到B)
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static Unit GetCasterUnit(Unit unit)
-        {
-            Unit casterPlayerUnit = null;
-            if (UnitHelper.ChkIsBullet(unit))
-            {
-                BulletObj bulletObj = unit.GetComponent<BulletObj>();
-                if (bulletObj == null)
-                {
-#if UNITY_EDITOR
-                    Log.Error($"bulletObj == null");
-#endif
-                }
-                else
-                {
-                    casterPlayerUnit = bulletObj.GetCasterActorUnit();
-                }
-            }
-            else if (UnitHelper.ChkIsAoe(unit))
-            {
-                AoeObj aoeObj = unit.GetComponent<AoeObj>();
-                if (aoeObj == null)
-                {
-#if UNITY_EDITOR
-                    Log.Error($"aoeObj == null");
-#endif
-                }
-                else
-                {
-                    casterPlayerUnit = aoeObj.GetCasterActorUnit();
-                }
-            }
-            else
-            {
-                casterPlayerUnit = unit;
-            }
-
-            return casterPlayerUnit;
-        }
-
-        /// <summary>
-        /// 最开始的Actor，例如 A 召唤了 B， B发射的子弹，则 子弹通过这个接口可以找到A
-        /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="casterUnitId"></param>
-        /// <returns></returns>
-        public static Unit GetCasterActorUnit(Scene scene, long casterUnitId)
-        {
-            Unit unit = UnitHelper.GetUnit(scene, casterUnitId);
-            while (true)
-            {
-                Unit casterUnit = UnitHelper.GetCasterUnit(unit);
-                if (casterUnit == null)
-                {
-                    break;
-                }
-
-                if (casterUnit == unit)
-                {
-                    break;
-                }
-
-                unit = casterUnit;
-            }
-
-            return unit;
-        }
-
-        public static Unit GetCasterActorUnit(Unit unit)
-        {
-            while (true)
-            {
-                Unit casterUnit = UnitHelper.GetCasterUnit(unit);
-                if (casterUnit == null)
-                {
-                    break;
-                }
-
-                if (casterUnit == unit)
-                {
-                    break;
-                }
-
-                unit = casterUnit;
-            }
-
-            return unit;
         }
 
         public static ActionCfg_DeathShow GetDeathShow(Unit unit)

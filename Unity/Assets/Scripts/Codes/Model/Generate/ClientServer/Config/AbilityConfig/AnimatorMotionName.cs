@@ -22,6 +22,7 @@ namespace ET.AbilityConfig
         Skill2 = 6,
         Die = 7,
         Show = 8,
+        HideToIdle = 9,
     }
 
 } 

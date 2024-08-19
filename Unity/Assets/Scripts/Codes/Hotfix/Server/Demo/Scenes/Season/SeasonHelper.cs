@@ -1,4 +1,5 @@
-﻿using ET.AbilityConfig;
+﻿using System;
+using ET.AbilityConfig;
 using System.Collections.Generic;
 using Unity.Mathematics;
 
@@ -16,10 +17,16 @@ namespace ET.Server
 		    return seasonShowManagerComponent;
 	    }
 
-	    public static async ETTask<int> GetSeasonId(Scene scene, bool forceReGet = false)
+	    public static async ETTask<int> GetSeasonCfgId(Scene scene, bool forceReGet = false)
 	    {
 		    SeasonComponent seasonComponent = await GetSeasonComponent(scene, forceReGet);
-		    return seasonComponent.seasonId;
+		    return seasonComponent.seasonCfgId;
+	    }
+
+	    public static async ETTask<int> GetSeasonIndex(Scene scene, bool forceReGet = false)
+	    {
+		    SeasonComponent seasonComponent = await GetSeasonComponent(scene, forceReGet);
+		    return seasonComponent.seasonIndex;
 	    }
 
         public static async ETTask<SeasonComponent> GetSeasonComponent(Scene scene, bool forceReGet)
@@ -46,6 +53,42 @@ namespace ET.Server
 		        }
 		        return entity;
 	        }
+        }
+
+        public static void SetCurSeasonByTime(SeasonComponent seasonComponent)
+        {
+	        DateTime firstDateTIme = TimeHelper.ToDateTime(GlobalSettingCfgCategory.Instance.SeasonStartTime);
+	        if (TimeHelper.DateTimeNow() < firstDateTIme)
+	        {
+		        return;
+	        }
+	        float seasonDurationTime = GlobalSettingCfgCategory.Instance.SeasonDurationTime;
+	        //seasonDurationTime = 1/24f/60 * 3;
+	        var list = SeasonInfoCfgCategory.Instance.DataList;
+	        int seasonIndex = 1;
+	        int seasonCfgId = 1;
+	        DateTime startTime = firstDateTIme;
+	        DateTime endTime = firstDateTIme.AddDays(seasonDurationTime);
+	        while (TimeHelper.DateTimeNow() > startTime)
+	        {
+		        if (TimeHelper.DateTimeNow() < endTime)
+		        {
+			        break;
+		        }
+		        startTime = startTime.AddDays(seasonDurationTime);
+		        endTime = endTime.AddDays(seasonDurationTime);
+		        seasonIndex++;
+		        seasonCfgId++;
+		        if (seasonCfgId > list.Count)
+		        {
+			        seasonCfgId = 1;
+		        }
+	        }
+
+	        seasonComponent.seasonIndex = seasonIndex;
+	        seasonComponent.seasonCfgId = seasonCfgId;
+	        seasonComponent.startTime = TimeHelper.ToTimeStamp(startTime);
+	        seasonComponent.endTime = TimeHelper.ToTimeStamp(endTime);
         }
 
         public static async ETTask<(bool, SeasonComponent)> SendGetSeasonComponentAsync(Scene scene)

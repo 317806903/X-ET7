@@ -12,27 +12,6 @@ namespace ET.Client
         {
             protected override void Awake(HealthBarComponent self)
             {
-                bool isHome = false;
-                if (self.GetUnit().GetComponent<HomeComponent>() != null)
-                {
-                    isHome = true;
-                }
-                else if (self.GetUnit().GetComponent<TowerComponent>() != null)
-                {
-                    //isHome = true;
-                    isHome = false;
-                }
-
-                self.isHome = isHome;
-                if (self.isHome)
-                {
-                    //self.AddComponent<HealthBarHomeComponent>();
-                    self.AddComponent<HomeHealthBarComponent>();
-                }
-                else
-                {
-                    self.AddComponent<HealthBarNormalComponent>();
-                }
             }
         }
 
@@ -47,6 +26,43 @@ namespace ET.Client
         public static Unit GetUnit(this HealthBarComponent self)
         {
             return self.GetParent<Unit>();
+        }
+
+        public static async ETTask Init(this HealthBarComponent self)
+        {
+            while (TimeHelper.ClientNow() > TimeHelper.ClientFrameTime() + 200)
+            {
+                //await TimerComponent.Instance.WaitFrameAsync();
+                await TimerComponent.Instance.WaitAsync(200);
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+            }
+
+            bool isHome = false;
+            if (self.GetUnit().GetComponent<HomeComponent>() != null)
+            {
+                isHome = true;
+            }
+            else if (self.GetUnit().GetComponent<TowerComponent>() != null)
+            {
+                //isHome = true;
+                isHome = false;
+            }
+
+            self.isHome = isHome;
+            if (self.isHome)
+            {
+                //self.AddComponent<HealthBarHomeComponent>();
+                HomeHealthBarComponent homeHealthBarComponent = self.AddComponent<HomeHealthBarComponent>();
+                await homeHealthBarComponent.Init();
+            }
+            else
+            {
+                HealthBarNormalComponent healthBarNormalComponent = self.AddComponent<HealthBarNormalComponent>();
+                await healthBarNormalComponent.Init();
+            }
         }
 
         public static void UpdateHealth(this HealthBarComponent self, bool isInit)

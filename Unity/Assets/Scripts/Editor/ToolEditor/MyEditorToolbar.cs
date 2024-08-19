@@ -85,6 +85,8 @@ namespace ET
                 resConfig.IsNeedSendEventLog = false;
                 resConfig.IsGameModeArcade = false;
                 resConfig.IsDemoShow = false;
+                resConfig.languageType = "EN";
+                resConfig.IsShowLanguagePre = false;
                 //if (resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                 {
                     resConfig.ResGameVersion = "v1.0";

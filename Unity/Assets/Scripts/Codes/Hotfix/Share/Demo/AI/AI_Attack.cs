@@ -22,44 +22,18 @@ namespace ET
             }
 
             (float skillAttackDis, SkillObj skillObj) = ET.Ability.SkillHelper.GetSkillAttackDis(unit);
-            if (GetHostileForce(unit, skillAttackDis) == null)
+            if (aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true) == null)
             {
                 return 1;
             }
             return 0;
         }
 
-        public static bool ChkUnitCanAttack(Unit unit)
+        public bool ChkUnitCanAttack(Unit unit)
         {
             UnitCfg unitCfg = unit.model;
             int count = unitCfg.SkillList.Count;
             return count > 0;
-        }
-
-        public static Unit GetHostileForce(Unit unit, float radius)
-        {
-            if (radius == 0)
-            {
-                return null;
-            }
-            List<Unit> hostileForces = Ability.UnitHelper.GetUnitListBySelectObjectType(unit, SelectObjectType.Hostiles, true);
-
-            Unit unitHostileForce = null;
-            foreach (Unit hostileForce in hostileForces)
-            {
-                if (Ability.UnitHelper.ChkCanAttack(unit, hostileForce, radius))
-                {
-                    (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, hostileForce);
-                    if (bHitMesh)
-                    {
-                        continue;
-                    }
-                    unitHostileForce = hostileForce;
-                    break;
-                }
-            }
-
-            return unitHostileForce;
         }
 
         public override async ETTask Execute(AIComponent aiComponent, AICfg aiConfig, ETCancellationToken cancellationToken)
@@ -77,8 +51,8 @@ namespace ET
             //     aiComponent.Cancel();
             //     return;
             // }
-            Unit unitHostileForce = GetHostileForce(unit, skillAttackDis);
-            if (unitHostileForce == null || Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
+            Unit targetUnit = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true);
+            if (targetUnit == null || Ability.UnitHelper.ChkUnitAlive(targetUnit) == false)
             {
                 aiComponent.Cancel();
                 return;
@@ -101,8 +75,8 @@ namespace ET
                 //     aiComponent.Cancel();
                 //     return;
                 // }
-                unitHostileForce = GetHostileForce(unit, skillAttackDis);
-                if (unitHostileForce == null || Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
+                targetUnit = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true);
+                if (targetUnit == null || Ability.UnitHelper.ChkUnitAlive(targetUnit) == false)
                 {
                     await ET.Ability.MoveOrIdleHelper.DoIdle(unit);
                     aiComponent.Cancel();

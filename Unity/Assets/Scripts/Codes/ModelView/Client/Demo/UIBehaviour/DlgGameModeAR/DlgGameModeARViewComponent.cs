@@ -93,91 +93,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_AvatarButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_AvatarButton == null )
-				{
-					this.m_E_AvatarButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Avatar");
-				}
-				return this.m_E_AvatarButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_AvatarImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_AvatarImage == null )
-				{
-					this.m_E_AvatarImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Avatar");
-				}
-				return this.m_E_AvatarImage;
-			}
-		}
-
-		public UnityEngine.UI.Image E_PlayerIcoImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PlayerIcoImage == null )
-				{
-					this.m_E_PlayerIcoImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Avatar/Avatar/E_PlayerIco");
-				}
-				return this.m_E_PlayerIcoImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_PlayerNameTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_PlayerNameTextMeshProUGUI == null )
-				{
-					this.m_E_PlayerNameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Avatar/E_PlayerName");
-				}
-				return this.m_E_PlayerNameTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Image E_RedDotImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_RedDotImage == null )
-				{
-					this.m_E_RedDotImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Avatar/E_RedDot");
-				}
-				return this.m_E_RedDotImage;
-			}
-		}
-
 		public UnityEngine.UI.Button E_BagsButton
 		{
 			get
@@ -212,7 +127,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_RankButton
+		public UnityEngine.UI.Button E_SeasonButton
 		{
 			get
 			{
@@ -221,15 +136,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_RankButton == null )
+				if( this.m_E_SeasonButton == null )
 				{
-					this.m_E_RankButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Rank");
+					this.m_E_SeasonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Season");
 				}
-				return this.m_E_RankButton;
+				return this.m_E_SeasonButton;
 			}
 		}
 
-		public UnityEngine.UI.Button E_SettingButton
+		public TMPro.TextMeshProUGUI E_SeasonLeftTimeTextMeshProUGUI
 		{
 			get
 			{
@@ -238,11 +153,28 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_SettingButton == null )
+				if( this.m_E_SeasonLeftTimeTextMeshProUGUI == null )
 				{
-					this.m_E_SettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Setting");
+					this.m_E_SeasonLeftTimeTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Season/Remainin/E_SeasonLeftTime");
 				}
-				return this.m_E_SettingButton;
+				return this.m_E_SeasonLeftTimeTextMeshProUGUI;
+			}
+		}
+
+		public UnityEngine.UI.Button E_StoreButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_StoreButton == null )
+				{
+					this.m_E_StoreButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_function/E_Function/E_Store");
+				}
+				return this.m_E_StoreButton;
 			}
 		}
 
@@ -535,7 +467,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_GameSettingButton
+		public UnityEngine.UI.Button E_BtnMailButton
 		{
 			get
 			{
@@ -544,15 +476,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_GameSettingButton == null )
+				if( this.m_E_BtnMailButton == null )
 				{
-					this.m_E_GameSettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_play/E_GameMode/E_GameSetting");
+					this.m_E_BtnMailButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/Mail/E_BtnMail");
 				}
-				return this.m_E_GameSettingButton;
+				return this.m_E_BtnMailButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_GameSettingImage
+		public UnityEngine.UI.Image E_BtnMailImage
 		{
 			get
 			{
@@ -561,11 +493,45 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_GameSettingImage == null )
+				if( this.m_E_BtnMailImage == null )
 				{
-					this.m_E_GameSettingImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_OperationPanel/E_play/E_GameMode/E_GameSetting");
+					this.m_E_BtnMailImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/Mail/E_BtnMail");
 				}
-				return this.m_E_GameSettingImage;
+				return this.m_E_BtnMailImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_QuestionnaireButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_QuestionnaireButton == null )
+				{
+					this.m_E_QuestionnaireButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Questionnaire");
+				}
+				return this.m_E_QuestionnaireButton;
+			}
+		}
+
+		public UnityEngine.UI.Button E_SettingButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_SettingButton == null )
+				{
+					this.m_E_SettingButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Setting");
+				}
+				return this.m_E_SettingButton;
 			}
 		}
 
@@ -577,15 +543,11 @@ namespace ET.Client
 			this.m_EG_bgImage = null;
 			this.m_es_avatarshow?.Dispose();
 			this.m_es_avatarshow = null;
-			this.m_E_AvatarButton = null;
-			this.m_E_AvatarImage = null;
-			this.m_E_PlayerIcoImage = null;
-			this.m_E_PlayerNameTextMeshProUGUI = null;
-			this.m_E_RedDotImage = null;
 			this.m_E_BagsButton = null;
 			this.m_E_BattleDeckButton = null;
-			this.m_E_RankButton = null;
-			this.m_E_SettingButton = null;
+			this.m_E_SeasonButton = null;
+			this.m_E_SeasonLeftTimeTextMeshProUGUI = null;
+			this.m_E_StoreButton = null;
 			this.m_E_ScanCodeButton = null;
 			this.m_E_ScanCodeImage = null;
 			this.m_E_PVEButton = null;
@@ -603,8 +565,10 @@ namespace ET.Client
 			this.m_E_PVPButton = null;
 			this.m_E_PVPImage = null;
 			this.m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
-			this.m_E_GameSettingButton = null;
-			this.m_E_GameSettingImage = null;
+			this.m_E_BtnMailButton = null;
+			this.m_E_BtnMailImage = null;
+			this.m_E_QuestionnaireButton = null;
+			this.m_E_SettingButton = null;
 			this.uiTransform = null;
 		}
 
@@ -613,15 +577,11 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
 		private ES_AvatarShow m_es_avatarshow = null;
-		private UnityEngine.UI.Button m_E_AvatarButton = null;
-		private UnityEngine.UI.Image m_E_AvatarImage = null;
-		private UnityEngine.UI.Image m_E_PlayerIcoImage = null;
-		private TMPro.TextMeshProUGUI m_E_PlayerNameTextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_E_RedDotImage = null;
 		private UnityEngine.UI.Button m_E_BagsButton = null;
 		private UnityEngine.UI.Button m_E_BattleDeckButton = null;
-		private UnityEngine.UI.Button m_E_RankButton = null;
-		private UnityEngine.UI.Button m_E_SettingButton = null;
+		private UnityEngine.UI.Button m_E_SeasonButton = null;
+		private TMPro.TextMeshProUGUI m_E_SeasonLeftTimeTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_StoreButton = null;
 		private UnityEngine.UI.Button m_E_ScanCodeButton = null;
 		private UnityEngine.UI.Image m_E_ScanCodeImage = null;
 		private UnityEngine.UI.Button m_E_PVEButton = null;
@@ -639,8 +599,10 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_PVPButton = null;
 		private UnityEngine.UI.Image m_E_PVPImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PVPPhysicalStrengthTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_GameSettingButton = null;
-		private UnityEngine.UI.Image m_E_GameSettingImage = null;
+		private UnityEngine.UI.Button m_E_BtnMailButton = null;
+		private UnityEngine.UI.Image m_E_BtnMailImage = null;
+		private UnityEngine.UI.Button m_E_QuestionnaireButton = null;
+		private UnityEngine.UI.Button m_E_SettingButton = null;
 		public Transform uiTransform = null;
 	}
 }

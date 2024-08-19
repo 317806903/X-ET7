@@ -112,28 +112,67 @@ namespace ET
             await ETTask.CompletedTask;
         }
 
-        public static Task<byte[]> DownloadFileBytesAsync(this GamePlayComponent self, string url)
+        public static async Task<byte[]> DownloadFileBytesAsync(this GamePlayComponent self, string url)
         {
             if (string.IsNullOrEmpty(url))
             {
-                Log.Info("Empty URL, return an empty task.");
-                return Task.FromResult<byte[]>(null);
+                Log.Error("Empty URL, return an empty task.");
+                return null;
             }
 
-            HttpClient httpClient = new();
-            return httpClient.GetByteArrayAsync(url);
+            byte[] data = null;
+            int retryNum = 30;
+            for (int i = 0; i < retryNum; i++)
+            {
+                try
+                {
+                    using HttpClient httpClient = new();
+                    data = await httpClient.GetByteArrayAsync(url);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                    await TimerComponent.Instance.WaitAsync(1000);
+                    if (self.IsDisposed)
+                    {
+                        return null;
+                    }
+                }
+            }
+            return data;
         }
 
-        public static Task<string> DownloadFileTextAsync(this GamePlayComponent self, string url)
+        public static async Task<string> DownloadFileTextAsync(this GamePlayComponent self, string url)
         {
             if (string.IsNullOrEmpty(url))
             {
                 Log.Info("Empty URL, return an empty task.");
-                return Task.FromResult<string>(null);
+                return null;
             }
 
-            HttpClient httpClient = new();
-            return httpClient.GetStringAsync(url);
+            string data = null;
+            int retryNum = 30;
+            for (int i = 0; i < retryNum; i++)
+            {
+                try
+                {
+                    using HttpClient httpClient = new();
+                    data = await httpClient.GetStringAsync(url);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                    await TimerComponent.Instance.WaitAsync(1000);
+                    if (self.IsDisposed)
+                    {
+                        return null;
+                    }
+                }
+            }
+            return data;
+
         }
 
         public static async ETTask DownloadMapRecast(this GamePlayComponent self)
@@ -217,8 +256,21 @@ namespace ET
         public static async ETTask LoadByObjURL(this GamePlayComponent self)
         {
             byte[] bytes = await self.DownloadFileBytesAsync(self._ARMeshDownLoadUrl);
-            string pathfindingMapName = self.GetPathfindingMapName();
+            if (bytes == null)
+            {
+                return;
+            }
+            if (self.IsDisposed)
+            {
+                return;
+            }
+
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            if (navmeshManagerComponent == null)
+            {
+                return;
+            }
+
             Task task = new Task(
                     () => {
                         navmeshManagerComponent.InitByFileBytes(bytes, self.GetARScale());
@@ -236,16 +288,19 @@ namespace ET
                 return;
             }
 
-            string pathfindingMapName = self.GetPathfindingMapName();
-
-            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
-
             // Mesh URL
             string mapUrl = self._ARMeshDownLoadUrl;
 
             // Draco bytes
             byte[] bytes = await self.DownloadFileBytesAsync(mapUrl);
-
+            if (bytes == null)
+            {
+                return;
+            }
+            if (self.IsDisposed)
+            {
+                return;
+            }
             Log.Info($"====================Draco bytes length {bytes.Length}");
 
             // Decode draco obj to data
@@ -253,6 +308,11 @@ namespace ET
 
             Log.Info($"====================MeshData {meshData.vertices.Length}, {meshData.normals.Length}, {meshData.triangles.Length}");
 
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            if (navmeshManagerComponent == null)
+            {
+                return;
+            }
             Task task = new Task(
                 () => {
                     navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
@@ -625,10 +685,10 @@ namespace ET
             return gamePlayFriendTeamFlagCompent.GetAllPlayerTeamFlag();
         }
 
-        public static TeamFlagType GetTeamFlagByUnit(this GamePlayComponent self, Unit unit)
+        public static TeamFlagType GetTeamFlagByUnitId(this GamePlayComponent self, long unitId)
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-            return gamePlayFriendTeamFlagCompent.GetTeamFlagByUnit(unit);
+            return gamePlayFriendTeamFlagCompent.GetTeamFlagByUnitId(unitId);
         }
 
         public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayComponent self, long playerId)
@@ -661,8 +721,13 @@ namespace ET
         /// <param name="unit"></param>
         public static void AddUnitPathfinding(this GamePlayComponent self, Unit unit)
         {
+            bool isPlayer = false;
+            if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsObserver(unit))
+            {
+                isPlayer = true;
+            }
             PathfindingComponent pathfindingComponent = unit.AddComponent<PathfindingComponent>();
-            pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>()).Coroutine();
+            pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>(), isPlayer).Coroutine();
         }
 
         public static bool ChkNavMeshReady(this GamePlayComponent self)

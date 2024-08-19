@@ -13,8 +13,5 @@ namespace ET
 	{
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public MultiDictionary<long, string, int> playerId2DropItems;
-
-		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, int> playerId2DropGold;
 	}
 }

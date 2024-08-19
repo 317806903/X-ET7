@@ -314,6 +314,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_CollectUnSelectImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CollectUnSelectImage == null )
+				{
+					this.m_E_CollectUnSelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_MailReport/Root/EMainContentGifts/E_CollectUnSelect");
+				}
+				return this.m_E_CollectUnSelectImage;
+			}
+		}
+
 		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_LoopHorizontalScrollRect
 		{
 			get
@@ -352,6 +369,7 @@ namespace ET.Client
 			this.m_EMainContentGiftsImage = null;
 			this.m_E_CollectButton = null;
 			this.m_E_CollectImage = null;
+			this.m_E_CollectUnSelectImage = null;
 			this.m_ELoopScrollList_LoopHorizontalScrollRect = null;
 			this.uiTransform = null;
 		}
@@ -374,6 +392,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EMainContentGiftsImage = null;
 		private UnityEngine.UI.Button m_E_CollectButton = null;
 		private UnityEngine.UI.Image m_E_CollectImage = null;
+		private UnityEngine.UI.Image m_E_CollectUnSelectImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_LoopHorizontalScrollRect = null;
 		public Transform uiTransform = null;
 	}

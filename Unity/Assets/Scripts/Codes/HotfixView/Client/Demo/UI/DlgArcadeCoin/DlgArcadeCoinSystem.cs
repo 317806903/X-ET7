@@ -29,7 +29,7 @@ namespace ET.Client
         }
 
         //显示
-        public static void ShowWindow(this DlgArcadeCoin self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgArcadeCoin self, ShowWindowData contextData = null)
         {
             self.SetDefalut();
             self.ShowBg().Coroutine();

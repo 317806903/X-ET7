@@ -286,7 +286,6 @@ namespace ET.Server
 		/// <returns>需要返还的钻石</returns>
 		public static async ETTask<int> ResetAllPowerup(Scene scene, long playerId)
 		{
-
 			PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
 			int reward = await playerSeasonInfoComponent.GetSeasonBringupReward();
 			await playerSeasonInfoComponent.ResetSeasonBringUpDic();
@@ -336,20 +335,24 @@ namespace ET.Server
         /// </summary>
         /// <param name="scene"></param>
         /// <param name="playerId"></param>
-        /// <param name="cfg"></param>
+        /// <param name="seasonBringUpCfgId"></param>
         /// <returns></returns>
-        public static async ETTask<bool> IsPlayerCanUpdate(Scene scene, long playerId, string cfg)
+        public static async ETTask<bool> IsPlayerCanUpdate(Scene scene, long playerId, string seasonBringUpCfgId)
         {
-            PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
-            int playerDiamond = await GetTokenDiamondByPlayerId(scene, playerId);
-            int playerBringUpLevel = playerSeasonInfoComponent.GetSeasonBringUpLevel(cfg);
-            int maxLevel = SeasonBringUpCfgCategory.Instance.GetMaxLevel(cfg);
+            int maxLevel = SeasonBringUpCfgCategory.Instance.GetMaxLevel(seasonBringUpCfgId);
 
-            SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfg, playerBringUpLevel);
+            PlayerSeasonInfoComponent playerSeasonInfoComponent = await GetPlayerSeasonInfoByPlayerId(scene, playerId);
+            int playerBringUpLevel = playerSeasonInfoComponent.GetSeasonBringUpLevel(seasonBringUpCfgId);
+            if (playerBringUpLevel >= maxLevel)
+            {
+	            return false;
+            }
+
+            int playerDiamond = await GetTokenDiamondByPlayerId(scene, playerId);
+            SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(seasonBringUpCfgId, playerBringUpLevel);
 
             bool isDiamondEnough = (seasonBringUpCfg.Cost <= playerDiamond);
-			bool isMax = playerBringUpLevel >= maxLevel;
-            return !isMax && isDiamondEnough;
+            return isDiamondEnough;
         }
 
         /// <summary>
@@ -375,7 +378,7 @@ namespace ET.Server
             SeasonComponent seasonComponent = await SeasonHelper.GetSeasonComponent(scene, false);
             int resetCost = seasonComponent.cfg.BringUpResetCost;
             bool IsCanReset = (resetCost <= playerDiamond) && !isPlayerBringupIsNone;
-            
+
             return IsCanReset;
         }
 
@@ -650,5 +653,13 @@ namespace ET.Server
 			return false;
 		}
 
+		public static async ETTask SetUIRedDotType(Scene scene, long playerId, UIRedDotType uiRedDotType, bool isNeedShow)
+		{
+			PlayerOtherInfoComponent playerOtherInfoComponent = await GetPlayerOtherInfoByPlayerId(scene, playerId, true);
+			playerOtherInfoComponent.SetUIRedDotType(uiRedDotType, isNeedShow);
+
+			PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerOtherInfo_SetUIRedDotType;
+			await SavePlayerModel(scene, playerId, PlayerModelType.OtherInfo, new() { "uiRedDotTypes" }, playerModelChgType);
+		}
     }
 }

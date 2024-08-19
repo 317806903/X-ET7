@@ -60,6 +60,7 @@ namespace ET.Server
 			{
 				gamePlayComponent = scene.AddComponent<GamePlayComponent>();
 				await gamePlayComponent.InitWhenGlobal(scene.InstanceId, "GamePlayBattleLevel_Global1");
+				gamePlayComponent.roomTypeInfo.seasonIndex = await SeasonHelper.GetSeasonIndex(scene);
 			}
 			gamePlayComponent.AddPlayerWhenGlobal(unit.Id, 1);
 			ET.GamePlayHelper.AddUnitPathfinding(unit);

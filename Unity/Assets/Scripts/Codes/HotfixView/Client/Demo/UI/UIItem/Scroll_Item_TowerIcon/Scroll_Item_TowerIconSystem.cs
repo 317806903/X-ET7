@@ -21,7 +21,7 @@ namespace ET.Client
 			self.E_IconStar1Image.SetVisible(count >= 1);
 			self.E_IconStar2Image.SetVisible(count >= 2);
 			self.E_IconStar3Image.SetVisible(count >= 3);
-			await self.EImage_IconImage.SetImageByPath(ItemHelper.GetItemIcon(curItemCfgId));
+			await self.EImage_IconImage.SetImageByItemCfgId(curItemCfgId);
 		}
 
 	}

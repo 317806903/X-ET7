@@ -20,49 +20,12 @@ namespace ET
                 return 1;
             }
 
-            if (GetHeadQuarter(unit) == null)
+            if (aiComponent.GetTargetUnit(aiConfig, 0, false) == null)
             {
                 return 1;
             }
-            if (ChkIsBlockWhenToHeadQuarter(unit))
-            {
-                return 1;
-            }
-
 
             return 0;
-        }
-
-        public static Unit GetHeadQuarter(Unit unit)
-        {
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(unit.DomainScene());
-            if (gamePlayTowerDefenseComponent == null)
-            {
-                return null;
-            }
-            Unit unitHeadQuarter = gamePlayTowerDefenseComponent.GetHomeUnit(unit);
-            return unitHeadQuarter;
-        }
-
-        public static bool ChkIsBlockWhenToHeadQuarter(Unit unit)
-        {
-            Unit headQuarterUnit = GetHeadQuarter(unit);
-            if (headQuarterUnit == null)
-            {
-                return true;
-            }
-            if (Ability.UnitHelper.ChkCanAttack(unit, headQuarterUnit, 0f))
-            {
-                return false;
-            }
-
-            PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
-            if (pathfindingComponent == null)
-            {
-                return true;
-            }
-            bool canArrive = pathfindingComponent.ChkCanArrive(unit.Position, headQuarterUnit.Position);
-            return canArrive == false;
         }
 
         public override async ETTask Execute(AIComponent aiComponent, AICfg aiConfig, ETCancellationToken cancellationToken)
@@ -74,9 +37,9 @@ namespace ET
                 return;
             }
 
-            Unit headQuarterUnit = GetHeadQuarter(unit);
+            Unit targetUnit = aiComponent.GetTargetUnit(aiConfig, 0, false);
 
-            aiComponent.ResetRepeatedTimerByDis(headQuarterUnit);
+            aiComponent.ResetRepeatedTimerByDis(targetUnit);
 
             //Log.Debug("开始靠近 11");
 
@@ -87,26 +50,20 @@ namespace ET
                     aiComponent.Cancel();
                     return;
                 }
-                if (ET.Ability.UnitHelper.ChkUnitAlive(headQuarterUnit) == false)
+                if (ET.Ability.UnitHelper.ChkUnitAlive(targetUnit) == false)
                 {
                     aiComponent.Cancel();
                     return;
                 }
-                aiComponent.ResetRepeatedTimerByDis(headQuarterUnit);
+                aiComponent.ResetRepeatedTimerByDis(targetUnit);
 
-                if (ChkIsBlockWhenToHeadQuarter(unit))
-                {
-                    aiComponent.Cancel();
-                    return;
-                }
-
-                float3 nextTarget = headQuarterUnit.Position;
+                float3 nextTarget = targetUnit.Position;
                 //Log.Debug($"开始靠近 22 {nextTarget}");
 
-                if (Ability.UnitHelper.ChkCanAttack(unit, headQuarterUnit, 0f, false))
+                if (Ability.UnitHelper.ChkCanAttack(unit, targetUnit, 0f, false))
                 {
                     GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(unit.DomainScene());
-                    gamePlayTowerDefenseComponent.DealEscape(unit);
+                    gamePlayTowerDefenseComponent.DealEscape(unit, targetUnit);
 
                     aiComponent.Cancel();
                     return;

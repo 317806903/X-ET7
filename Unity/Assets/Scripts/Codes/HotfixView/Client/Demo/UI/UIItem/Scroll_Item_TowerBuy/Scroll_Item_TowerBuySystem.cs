@@ -13,7 +13,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowBagItem(this Scroll_Item_TowerBuy self, string itemCfgId, bool needClickShowDetail)
+        public static async ETTask ShowBagItem(this Scroll_Item_TowerBuy self, string itemCfgId, bool needClickShowDetail, int itemNum = 0)
 		{
 			ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
 			if (needClickShowDetail)
@@ -35,7 +35,7 @@ namespace ET.Client
 			self.EImage_TowerBuyShowImage.SetVisible(true);
 
 			self.EButton_nameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-			self.EButton_IconImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId)).Coroutine();
+			self.EButton_IconImage.SetImageByItemCfgId(itemCfgId).Coroutine();
 			self.EImage_BuyBGImage.SetVisible(false);
 			self.EButton_BuyButton.SetVisible(false);
 			//self.ELabel_BuyCostTextMeshProUGUI.SetVisible(false);
@@ -47,9 +47,19 @@ namespace ET.Client
 			{
 				self.SetLevel(itemCfgId);
 				self.SetLabels(itemCfgId);
-				self.SetCheckMark(false);
 			}
+			self.SetCheckMark(false);
 			self.SetQuality(itemCfgId);
+
+			if(itemNum >= 2)
+			{
+                self.ELabel_itemNumTextMeshProUGUI.SetVisible(true);
+                self.ELabel_itemNumTextMeshProUGUI.SetText(itemNum.ToString());
+			}
+			else
+			{
+                self.ELabel_itemNumTextMeshProUGUI.SetVisible(false);
+            }
 		}
 
 		public static void ShowDetails(this Scroll_Item_TowerBuy self, string itemCfgId)
@@ -59,7 +69,8 @@ namespace ET.Client
 				return;
 			}
 
-			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, self.uiTransform.position);
+			Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(self.uiTransform.GetComponent<RectTransform>());
+			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos);
 		}
 
 		public static void SetQuality(this Scroll_Item_TowerBuy self, string itemCfgId)
@@ -78,11 +89,11 @@ namespace ET.Client
 			self.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
 			if (labelCount >= 1)
 			{
-				self.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+				self.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[0]);
 			}
 			if (labelCount >= 2)
 			{
-				self.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+				self.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[1]);
 			}
 		}
 

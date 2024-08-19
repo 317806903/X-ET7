@@ -8,9 +8,9 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, S2R_ChgSeason request, R2S_ChgSeason response)
 		{
-			int seasonId = request.SeasonId;
+			int seasonCfgId = request.SeasonCfgId;
 			RankType rankType = RankType.EndlessChallenge;
-			await ET.Server.RankHelper.RecordWhenSeasonFinished(scene, rankType, seasonId);
+			await ET.Server.RankHelper.RecordWhenSeasonFinished(scene, rankType, request.SeasonIndex, request.SeasonCfgId);
 
 			await ETTask.CompletedTask;
 		}

@@ -12,6 +12,8 @@ namespace ET.Client
             protected override void Awake(UITextLocalizeComponent self)
             {
                 UITextLocalizeComponent.Instance = self;
+
+                self.SetTextLocalizeAction();
             }
         }
 
@@ -38,8 +40,6 @@ namespace ET.Client
                     continue;
                 }
                 self._UITextLocalizeMonoViewList.Add(uiTextLocalizeMonoView);
-                uiTextLocalizeMonoView.SetGetTextKeyValueActionBack(self.getTextKeyValueActionBack);
-                uiTextLocalizeMonoView.SetTextLocalizeAction(self.getTextKeyValue);
                 uiTextLocalizeMonoView.DoRefreshTextValue();
             }
         }
@@ -61,30 +61,21 @@ namespace ET.Client
             }
         }
 
-        public static void SetGetTextKeyValueActionBack(this UITextLocalizeComponent self, Func<string, Func<string, string, string>> getTextKeyValueActionBack)
+        public static void SetTextLocalizeAction(this UITextLocalizeComponent self)
         {
-            self.getTextKeyValueActionBack = getTextKeyValueActionBack;
-            foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in self._UITextLocalizeMonoViewList)
-            {
-                if (uiTextLocalizeMonoView == null)
-                {
-                    continue;
-                }
-                uiTextLocalizeMonoView.SetGetTextKeyValueActionBack(getTextKeyValueActionBack);
-            }
+            UITextLocalizeMonoView.SetTextLocalizeAction(self.LoadTextLocalizeAction);
         }
 
-        public static void SetTextLocalizeAction(this UITextLocalizeComponent self, Func<string, string, string> getTextKeyValue)
+        public static string LoadTextLocalizeAction(this UITextLocalizeComponent self, string language, string key, string originText)
         {
-            self.getTextKeyValue = getTextKeyValue;
-            foreach (UITextLocalizeMonoView uiTextLocalizeMonoView in self._UITextLocalizeMonoViewList)
+            if (language == "None")
             {
-                if (uiTextLocalizeMonoView == null)
-                {
-                    continue;
-                }
-                uiTextLocalizeMonoView.SetTextLocalizeAction(getTextKeyValue);
+                language = ET.LocalizeComponent.Instance.CurrentLanguage.ToString();
             }
+            LanguageType languageType = (LanguageType)Enum.Parse(typeof(LanguageType), language);
+            var translateUI = LocalizeComponent.Instance.GetCurrentTranslator_UI();
+
+            return translateUI(languageType, key, originText);
         }
 
         public static void DoRefreshTextValue(this UITextLocalizeComponent self)

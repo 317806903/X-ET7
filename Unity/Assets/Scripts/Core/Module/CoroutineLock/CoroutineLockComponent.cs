@@ -45,6 +45,16 @@ namespace ET
             return await coroutineLockQueueType.Wait(key, time);
         }
 
+        public bool ChkIsLock(int coroutineLockType, long key)
+        {
+            CoroutineLockQueueType coroutineLockQueueType;
+            if (this.dictionary.TryGetValue(coroutineLockType, out coroutineLockQueueType) == false)
+            {
+                return false;
+            }
+            return coroutineLockQueueType.ChkIsLock(key);
+        }
+
         private void Notify(int coroutineLockType, long key, int level)
         {
             CoroutineLockQueueType coroutineLockQueueType;
@@ -52,7 +62,7 @@ namespace ET
             {
                 return;
             }
-            
+
             coroutineLockQueueType.Notify(key, level);
         }
     }

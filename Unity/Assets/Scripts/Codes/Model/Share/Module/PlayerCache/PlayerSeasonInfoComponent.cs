@@ -8,7 +8,8 @@ namespace ET
     [ComponentOf(typeof(PlayerDataComponent))]
     public class PlayerSeasonInfoComponent : Entity, IAwake, IDestroy
     {
-        public int seasonId;
+        public int seasonIndex;
+        public int seasonCfgId;
 
         public Dictionary<string, int> seasonBringUpDic;
 

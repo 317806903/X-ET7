@@ -34,8 +34,10 @@ namespace ET.Client
 			self.transPercentage = self.View.uiTransform.Find("Sprite_BackGround/ProgressPrarent/Processing/Percentage");
 		}
 
-		public static void ShowWindow(this DlgLoading self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgLoading self, ShowWindowData contextData = null)
 		{
+			self.LoadBG().Coroutine();
+
 			self.ShowProcess(0);
 			self.targetProcess = 0.5f;
 			self.curProcess = 0.2f;
@@ -46,6 +48,11 @@ namespace ET.Client
 		public static void HideWindow(this DlgLoading self)
 		{
 			TimerComponent.Instance?.Remove(ref self.Timer);
+		}
+
+		public static async ETTask LoadBG(this DlgLoading self)
+		{
+			self.View.E_BGImage.LoadBG().Coroutine();
 		}
 
 		public static void UpdateProcess(this DlgLoading self, float process)

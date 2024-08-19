@@ -34,7 +34,7 @@ namespace ET.Client
 			self.View.EButton_3Button.AddListenerAsync(self.SetSceneScale3);
 		}
 
-		public static void ShowWindow(this DlgARSceneSliderSimple self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgARSceneSliderSimple self, ShowWindowData contextData = null)
 		{
 			self.SetSceneScaleInfo();
 

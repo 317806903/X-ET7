@@ -19,6 +19,15 @@ namespace ET
             return queue;
         }
 
+        public bool ChkIsLock(long key)
+        {
+            if (this.coroutineLockQueues.TryGetValue(key, out CoroutineLockQueue queue) == false)
+            {
+                return false;
+            }
+            return queue.ChkIsLock();
+        }
+
         private CoroutineLockQueue New(long key)
         {
             CoroutineLockQueue queue = CoroutineLockQueue.Create(this.type, key);

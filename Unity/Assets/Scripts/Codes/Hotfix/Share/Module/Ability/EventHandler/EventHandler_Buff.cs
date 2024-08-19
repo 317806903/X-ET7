@@ -29,7 +29,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.DamageBeforeOnHit, args.attackerUnit, args.defenderUnit);
@@ -58,7 +58,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.DamageAfterOnHit, args.attackerUnit, args.defenderUnit);
@@ -87,7 +87,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.DamageBeforeOnKill, args.attackerUnit, args.defenderUnit);
@@ -116,7 +116,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.DamageAfterOnKill, args.attackerUnit, args.defenderUnit);
@@ -180,7 +180,7 @@
 				{
 					Unit bulletUnit = args.attackerUnit;
 					BulletObj bulletObj = bulletUnit.GetComponent<BulletObj>();
-					Unit unitActor = bulletObj?.GetCasterActorUnit();
+					Unit unitActor = bulletUnit.GetCasterFirstActor();
 					if (unitActor != null)
                     {
                         EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.BulletOnHitMesh, bulletUnit, null);
@@ -203,7 +203,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.UnitOnHitMesh, unit, null);
@@ -227,7 +227,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.UnitOnHitPos, unit, null);
@@ -251,7 +251,7 @@
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
 						BulletObj bulletObj = unit.GetComponent<BulletObj>();
-						Unit unitActor = bulletObj?.GetCasterActorUnit();
+						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
 							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.UnitOnHit, args.attackerUnit, args.defenderUnit);

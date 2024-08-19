@@ -20,10 +20,20 @@ namespace ET.Client
 			self.View.E_ScrollView_IconLoopListView2.mOnSnapNearestChanged = self.SwitchSpriteCallback;
 		}
 
-		public static void ShowWindow(this DlgDetails self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgDetails self, ShowWindowData contextData = null)
 		{
+			self.dlgShowTime = TimeHelper.ClientNow();
 			self.AddUIScrollItems(ref self.ScrollTowerIcon, 3);
 			//self.ShowDetails(self.curItemCfgId).Coroutine();
+		}
+
+		public static bool ChkCanClickBg(this DlgDetails self)
+		{
+			if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 0.5f))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public static void SetCurItemCfgId(this DlgDetails self, string itemCfgId)
@@ -54,12 +64,12 @@ namespace ET.Client
 				self.View.EImage_Label2Image.gameObject.SetActive(labelCount >= 2);
 				if (labelCount >= 1)
 				{
-					self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+					self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[0]);
 				}
 
 				if (labelCount >= 2)
 				{
-					self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+					self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[1]);
 				}
 
 				LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.EImage_Label1Image.transform.parent.GetComponent<RectTransform>());
@@ -78,7 +88,7 @@ namespace ET.Client
 			else
 			{
 				self.View.EImage_IconImage.SetVisible(true);
-				await self.View.EButton_TowerIcoImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId));
+				await self.View.EButton_TowerIcoImage.SetImageByItemCfgId(itemCfgId);
 			}
 		}
 
@@ -169,6 +179,10 @@ namespace ET.Client
 
 		public static void OnDetailBgButton(this DlgDetails self)
 		{
+			if (self.ChkCanClickBg() == false)
+			{
+				return;
+			}
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgDetails>();
 		}
 

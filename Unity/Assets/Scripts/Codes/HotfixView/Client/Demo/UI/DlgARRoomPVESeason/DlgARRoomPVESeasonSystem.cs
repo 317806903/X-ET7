@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,20 +22,29 @@ namespace ET.Client
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                    self.AddMemberItemRefreshListener(transform, i));
+            {
+                self.AddMemberItemRefreshListener(transform, i).Coroutine();
+                self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
 
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddRewardItemRefreshListener(transform, i));
+            {
+                self.AddRewardItemRefreshListener(transform, i).Coroutine();
+                self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
 
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Monsters";
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.poolSize = 3;
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                 self.AddMonsterItemRefreshListener(transform, i));
+            {
+                self.AddMonsterItemRefreshListener(transform, i).Coroutine();
+                self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
         }
 
-        public static void ShowWindow(this DlgARRoomPVESeason self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgARRoomPVESeason self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
 
@@ -148,6 +158,12 @@ namespace ET.Client
 
         public static async ETTask RefreshUI(this DlgARRoomPVESeason self)
         {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+            int count = roomMemberList.Count;
+            self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
+            self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.SetVisible(true, count);
+
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.RefreshCells();
 
             self.SetRoomMemberStatusText();
@@ -266,33 +282,40 @@ namespace ET.Client
 
         public static async ETTask GetRoomInfo(this DlgARRoomPVESeason self)
         {
+            self.seasonCfgId = ET.Client.SeasonHelper.GetSeasonCfgId(self.DomainScene());
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
             await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
             RoomComponent roomComponent = self.GetRoomComponent();
-            int count = roomComponent.roomMemberSeat.Count;
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+            int count = roomMemberList.Count;
             self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.SetVisible(true, count);
 
             ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallenge(roomComponent.roomTypeInfo);
             self.level = roomComponent.roomTypeInfo.pveIndex;
             self.isAR = roomComponent.roomTypeInfo.ChkIsAR();
-            List<string> list;
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
             int pveIndex = await self.GetCurPveIndex();
-
+            self.itemList = new();
             if (pveIndex + 1 > self.level)
             {
-                list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.RepeatClearDropItem);
+                foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
             }
             else
             {
-                list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
+                foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
+                {
+                    self.itemList.Add((item.Key, item.Value));
+                }
             }
-            self.AddUIScrollItems(ref self.ScrollItemReward, list.Count);
-            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, list.Count);
+
+            self.AddUIScrollItems(ref self.ScrollItemReward, self.itemList.Count);
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetVisible(true, self.itemList.Count);
 
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
             self.AddUIScrollItems(ref self.ScrollItemMonsters, monsterList.Count);
@@ -421,7 +444,6 @@ namespace ET.Client
 
         public static async ETTask AddMemberItemRefreshListener(this DlgARRoomPVESeason self, Transform transform, int index)
         {
-            self.SetSrcollOffset();
             RoomComponent roomComponent = self.GetRoomComponent();
 
             Scroll_Item_RoomMember itemRoom = self.ScrollItemRoomMembers[index].BindTrans(transform);
@@ -429,7 +451,9 @@ namespace ET.Client
             itemRoom.InitItemRoom();
 
 
-            long roomMemberId = roomComponent.roomMemberSeat[index];
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+
+            long roomMemberId = roomMemberList[index].Id;
             if (roomMemberId == -1)
             {
                 itemRoom.uiTransform.SetVisible(false);
@@ -451,22 +475,20 @@ namespace ET.Client
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
 
-            ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, self.level);
-            List<string> list = ET.DropItemRuleHelper.GetPreviewDropItems(challengeLevelCfg.FirstClearDropItem);
-
-            string itemCfgId = list[index];
-            itemTowerBuy.ShowBagItem(itemCfgId, true);
+            string itemCfgId = self.itemList[index].itemCfgId;
+            int itemNum = self.itemList[index].itemNum;
+            await itemTowerBuy.ShowBagItem(itemCfgId, true, itemNum);
         }
 
         public static async ETTask AddMonsterItemRefreshListener(this DlgARRoomPVESeason self, Transform transform, int index)
         {
             transform.name = $"Item_Monster_{index}";
             Scroll_Item_Monsters itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
-            ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonId, self.level);
+            ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.seasonCfgId, self.level);
             List<string> monsterList = challengeLevelCfg.MonsterListShow;
 
             string itemCfgId = monsterList[index];
-            itemMonster.ShowMonsterItem(itemCfgId, true);
+            itemMonster.ShowMonsterItem(itemCfgId, true).Coroutine();
         }
 
         public static void QuitRoom(this DlgARRoomPVESeason self)
@@ -537,19 +559,6 @@ namespace ET.Client
             ARSessionHelper.TriggerReScan(self.DomainScene());
 
             await ETTask.CompletedTask;
-        }
-
-        public static void SetSrcollOffset(this DlgARRoomPVESeason self)
-        {
-            int width = (int)self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2;
-            int offset = width - (148 * 3);
-            RoomComponent roomComponent = self.GetRoomComponent();
-            int count = roomComponent.GetRoomMemberList().Count;
-            if (count < 3)
-            {
-                offset = width - (148 * count);
-            }
-            self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().padding.left = offset;
         }
 
         public static async ETTask<int> GetCurPveIndex(this DlgARRoomPVESeason self)

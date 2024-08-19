@@ -144,26 +144,38 @@ namespace ET
         }
 
         //获取当前房间列表
-        public static List<long> GetIdleRoomList(this RoomManagerComponent self, bool isARRoom)
+        public static List<RoomComponent> GetIdleRoomList(this RoomManagerComponent self, bool needARRoom, bool needNotARRoom)
         {
-            ListComponent<long> list = ListComponent<long>.Create();
+            ListComponent<RoomComponent> list = ListComponent<RoomComponent>.Create();
             foreach (long idleRoomId in self.IdleRoomList)
             {
                 RoomComponent roomComponent = self.GetRoom(idleRoomId);
-                if (roomComponent.IsARRoom() == isARRoom)
+                if (needARRoom && roomComponent.IsARRoom())
                 {
-                    list.Add(roomComponent.Id);
+                    list.Add(roomComponent);
+                }
+                else if (needNotARRoom && roomComponent.IsARRoom() == false)
+                {
+                    list.Add(roomComponent);
                 }
             }
             return list;
         }
 
-        public static List<RoomComponent> GetRoomList(this RoomManagerComponent self)
+        public static List<RoomComponent> GetRoomList(this RoomManagerComponent self, bool needARRoom, bool needNotARRoom)
         {
             ListComponent<RoomComponent> list = ListComponent<RoomComponent>.Create();
             foreach (var child in self.Children)
             {
-                list.Add(child.Value as RoomComponent);
+                RoomComponent roomComponent = child.Value as RoomComponent;
+                if (needARRoom && roomComponent.IsARRoom())
+                {
+                    list.Add(roomComponent);
+                }
+                else if (needNotARRoom && roomComponent.IsARRoom() == false)
+                {
+                    list.Add(roomComponent);
+                }
             }
             return list;
         }

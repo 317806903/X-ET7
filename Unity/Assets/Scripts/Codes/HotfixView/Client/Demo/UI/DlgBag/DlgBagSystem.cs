@@ -21,7 +21,7 @@ namespace ET.Client
 					self.AddBagItemRefreshListener(transform, i).Coroutine());
 		}
 
-		public static void ShowWindow(this DlgBag self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBag self, ShowWindowData contextData = null)
 		{
 			self.ShowBg();
 			self.CreateCardScrollItem();
@@ -75,11 +75,13 @@ namespace ET.Client
 			List<ItemComponent> itemList = playerBackPackComponent.GetItemList();
 			itemList.Sort((x, y) => x.model.ShowPriority.CompareTo(y.model.ShowPriority));
 			string itemCfgId = "";
+			int itemNum = 0;
 			if (index < itemList.Count)
 			{
 				itemCfgId = itemList[index].CfgId;
+				itemNum = itemList[index].count;
 			}
-			BagItem.ShowBagItem(itemCfgId, true);
+			await BagItem.ShowBagItem(itemCfgId, true, itemNum);
 		}
 
 		public static async ETTask OnBgClick(this DlgBag self)

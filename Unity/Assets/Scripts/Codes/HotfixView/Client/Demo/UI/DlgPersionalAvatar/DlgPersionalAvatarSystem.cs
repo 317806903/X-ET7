@@ -29,7 +29,7 @@ namespace ET.Client
         }
 
         #region Show相关
-        public static void ShowWindow(this DlgPersionalAvatar self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgPersionalAvatar self, ShowWindowData contextData = null)
         {
             self.ShowBg().Coroutine();
             self._ShowWindow().Coroutine();
@@ -68,6 +68,7 @@ namespace ET.Client
             List<ItemComponent> avatarFrameList = playerBackPackComponent.GetItemListByItemType(ItemType.AvatarFrame, ItemSubType.None);
             avatarFrameList.Sort((x, y) => x.model.ShowPriority.CompareTo(y.model.ShowPriority));
             self.avatarFrameList = avatarFrameList;
+
             //加载头像图片数据
             self.avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
 
@@ -77,19 +78,34 @@ namespace ET.Client
 
             self.View.ES_AvatarShow.ShowMyAvatarIcon(false).Coroutine();
 
-            if (playerBaseInfoComponent.AvatarFrameItemCfgId == null)
-                playerBaseInfoComponent.AvatarFrameItemCfgId = "AvatarFrame_None";
             self.oldFrameIcon = playerBaseInfoComponent.AvatarFrameItemCfgId;
-            Debug.Log(playerBaseInfoComponent.AvatarFrameItemCfgId);
             self.curSelectedFrameIcon = self.oldFrameIcon;
+            string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
+            self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
 
             self.ChkInfoIsChanged();
 
-             self.CreateAvatarScrollItem().Coroutine();
-             self.CreateFrameScrollItem().Coroutine();
+            self.CreateAvatarScrollItem().Coroutine();
+            self.CreateFrameScrollItem().Coroutine();
 
-            self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
-            self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
+            //若只有一个默认头像框特殊处理
+            if (self.avatarFrameList.Count < 2)
+            {
+                self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.gameObject.SetActive(false);
+                self.View.ELabel_NoFrameTipTextMeshProUGUI.gameObject.SetActive(true);
+                self.View.ELabelDesFrameTextMeshProUGUI.gameObject.SetActive(false);
+                self.View.ELabelDesNOFrameTextMeshProUGUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.gameObject.SetActive(true);
+                self.View.ELabel_NoFrameTipTextMeshProUGUI.gameObject.SetActive(false);
+                self.View.ELabelDesFrameTextMeshProUGUI.gameObject.SetActive(true);
+                self.View.ELabelDesNOFrameTextMeshProUGUI.gameObject.SetActive(false);
+            }
+
+            //self.View.ELoopScrollList_AvatarLoopHorizontalScrollRect.RefreshCells();
+            //self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
         }
         #endregion
 
@@ -156,7 +172,6 @@ namespace ET.Client
             self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.SetVisible(true, count);
         }
 
-
         public static async ETTask AddAvatarItemRefreshListener(this DlgPersionalAvatar self, Transform transform, int index)
         {
             Scroll_Item_AvatarIcon itemAvatar = self.ScrollItemAvatarIcons[index].BindTrans(transform);
@@ -183,12 +198,10 @@ namespace ET.Client
                 itemCfgId = self.avatarFrameList[index].CfgId;
             }
 
-            itemFrame.ShowFrameItem(itemCfgId, true);
+            itemFrame.ShowFrameItem(itemCfgId, false);
 
-            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
-            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
 
-            await itemFrame.EImage_FrameImage.SetImageByPath(resIconCfg.ResName);
+            await itemFrame.EImage_FrameImage.SetImageByItemCfgId(itemCfgId);
             if (self.curSelectedFrameIcon == self.avatarFrameList[index].CfgId)
             {
                 itemFrame.EIcon_SelectedImage.gameObject.SetActive(true);
@@ -198,7 +211,7 @@ namespace ET.Client
                 itemFrame.EIcon_SelectedImage.gameObject.SetActive(false);
             }
 
-            itemFrame.EImage_FrameButton.AddListener(() => { self.FrameIconSelected(index).Coroutine(); });
+            itemFrame.EButton_SelectButton.AddListener(() => { self.FrameIconSelected(index).Coroutine(); });
         }
 
 
@@ -220,7 +233,8 @@ namespace ET.Client
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(self.curSelectedFrameIcon);
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
             await self.View.ES_AvatarShow.SetFrameIcon(resIconCfg.ResName);
-
+            string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
+            self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
             self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
 
             self.ChkInfoIsChanged();

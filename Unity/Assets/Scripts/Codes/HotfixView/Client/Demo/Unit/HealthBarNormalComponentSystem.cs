@@ -13,27 +13,6 @@ namespace ET.Client
         {
             protected override void Awake(HealthBarNormalComponent self)
             {
-                string resName = "ResEffect_HealthBar_1";
-
-                GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-                if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
-                {
-                    return;
-                }
-                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
-                GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
-                HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
-                float scaleX = gameObjectComponent.gameObject.transform.localScale.x;
-                HealthBarGo.transform.localScale = Vector3.one / scaleX;
-                float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
-                HealthBarGo.transform.position = gameObjectComponent.gameObject.transform.position + new Vector3(0, height, 0);
-
-                self.go = HealthBarGo;
-                self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
-                self.delayHealthBar = self.go.transform.Find("Bar/DelayAnchor");
-                self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
-
-                self.UpdateHealth(true);
             }
         }
 
@@ -58,6 +37,31 @@ namespace ET.Client
             {
                 self.Update();
             }
+        }
+
+        public static async ETTask Init(this HealthBarNormalComponent self)
+        {
+            string resName = "ResEffect_HealthBar_1";
+
+            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+            {
+                return;
+            }
+            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
+            GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
+            HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
+            float scaleX = gameObjectComponent.gameObject.transform.localScale.x;
+            HealthBarGo.transform.localScale = Vector3.one / scaleX;
+            float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
+            HealthBarGo.transform.position = gameObjectComponent.gameObject.transform.position + new Vector3(0, height, 0);
+
+            self.go = HealthBarGo;
+            self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
+            self.delayHealthBar = self.go.transform.Find("Bar/DelayAnchor");
+            self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
+
+            self.UpdateHealth(true);
         }
 
         public static Unit GetUnit(this HealthBarNormalComponent self)

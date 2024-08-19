@@ -25,7 +25,7 @@ namespace ET.Client
 			self.View.E_InputFieldComplainTMP_InputField.onValueChanged.AddListener(self.OnValueChanged);
 		}
 
-		public static void ShowWindow(this DlgGameJudgeChoose self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgGameJudgeChoose self, ShowWindowData contextData = null)
 		{
 			self.limitNum = 450;
 
@@ -105,18 +105,10 @@ namespace ET.Client
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameJudgeChoose>();
 
-			if (ResConfig.Instance.Channel == "10001")
-			{
-				Application.OpenURL("https://play.google.com/store/apps/details?id=com.dm.realityguard");
-			}
-			else if (ResConfig.Instance.Channel == "10002")
-			{
-				Application.OpenURL("https://apps.apple.com/us/app/realityguard/id6474414179");
-			}
-			else
-			{
-				Application.OpenURL("http://artd.corp.deepmirror.com/");
-			}
+			string url = ChannelSettingComponent.Instance.GetGameJudgeURL();
+			bool isWebView = ChannelSettingComponent.Instance.ChkIsGameJudgeUseWebView();
+
+			ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),url, isWebView);
         }
 
         public static async ETTask OnSendComplain(this DlgGameJudgeChoose self)

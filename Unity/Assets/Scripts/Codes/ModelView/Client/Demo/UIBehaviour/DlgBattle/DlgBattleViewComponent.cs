@@ -58,7 +58,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_TankLoopHorizontalScrollRect
+		public TMPro.TMP_InputField E_InputFieldMatchTowerTMP_InputField
 		{
 			get
 			{
@@ -67,15 +67,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_ELoopScrollList_TankLoopHorizontalScrollRect == null )
+				if( this.m_E_InputFieldMatchTowerTMP_InputField == null )
 				{
-					this.m_ELoopScrollList_TankLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "GameObject/MonsterRoot/ELoopScrollList_Tank");
+					this.m_E_InputFieldMatchTowerTMP_InputField = UIFindHelper.FindDeepChild<TMPro.TMP_InputField>(this.uiTransform.gameObject, "GameObject/TowerRoot/E_InputFieldMatchTower");
 				}
-				return this.m_ELoopScrollList_TankLoopHorizontalScrollRect;
+				return this.m_E_InputFieldMatchTowerTMP_InputField;
 			}
 		}
 
-		public TMPro.TextMeshProUGUI E_TankOnceCountTextMeshProUGUI
+		public UnityEngine.UI.Image E_InputFieldMatchTowerImage
 		{
 			get
 			{
@@ -84,11 +84,45 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_TankOnceCountTextMeshProUGUI == null )
+				if( this.m_E_InputFieldMatchTowerImage == null )
 				{
-					this.m_E_TankOnceCountTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "GameObject/MonsterRoot/E_TankOnceCount");
+					this.m_E_InputFieldMatchTowerImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/TowerRoot/E_InputFieldMatchTower");
 				}
-				return this.m_E_TankOnceCountTextMeshProUGUI;
+				return this.m_E_InputFieldMatchTowerImage;
+			}
+		}
+
+		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_MonsterLoopHorizontalScrollRect
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELoopScrollList_MonsterLoopHorizontalScrollRect == null )
+				{
+					this.m_ELoopScrollList_MonsterLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "GameObject/MonsterRoot/ELoopScrollList_Monster");
+				}
+				return this.m_ELoopScrollList_MonsterLoopHorizontalScrollRect;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_MonsterOnceCountTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_MonsterOnceCountTextMeshProUGUI == null )
+				{
+					this.m_E_MonsterOnceCountTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "GameObject/MonsterRoot/E_MonsterOnceCount");
+				}
+				return this.m_E_MonsterOnceCountTextMeshProUGUI;
 			}
 		}
 
@@ -157,6 +191,40 @@ namespace ET.Client
 					this.m_E_InputFieldCreateActionImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/MonsterRoot/E_InputFieldCreateAction");
 				}
 				return this.m_E_InputFieldCreateActionImage;
+			}
+		}
+
+		public TMPro.TMP_InputField E_InputFieldMatchMonsterTMP_InputField
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_InputFieldMatchMonsterTMP_InputField == null )
+				{
+					this.m_E_InputFieldMatchMonsterTMP_InputField = UIFindHelper.FindDeepChild<TMPro.TMP_InputField>(this.uiTransform.gameObject, "GameObject/MonsterRoot/E_InputFieldMatchMonster");
+				}
+				return this.m_E_InputFieldMatchMonsterTMP_InputField;
+			}
+		}
+
+		public UnityEngine.UI.Image E_InputFieldMatchMonsterImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_InputFieldMatchMonsterImage == null )
+				{
+					this.m_E_InputFieldMatchMonsterImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "GameObject/MonsterRoot/E_InputFieldMatchMonster");
+				}
+				return this.m_E_InputFieldMatchMonsterImage;
 			}
 		}
 
@@ -590,12 +658,16 @@ namespace ET.Client
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 			this.m_E_InputFieldCreateActionTowerTMP_InputField = null;
 			this.m_E_InputFieldCreateActionTowerImage = null;
-			this.m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
-			this.m_E_TankOnceCountTextMeshProUGUI = null;
+			this.m_E_InputFieldMatchTowerTMP_InputField = null;
+			this.m_E_InputFieldMatchTowerImage = null;
+			this.m_ELoopScrollList_MonsterLoopHorizontalScrollRect = null;
+			this.m_E_MonsterOnceCountTextMeshProUGUI = null;
 			this.m_E_InputFieldTMP_InputField = null;
 			this.m_E_InputFieldImage = null;
 			this.m_E_InputFieldCreateActionTMP_InputField = null;
 			this.m_E_InputFieldCreateActionImage = null;
+			this.m_E_InputFieldMatchMonsterTMP_InputField = null;
+			this.m_E_InputFieldMatchMonsterImage = null;
 			this.m_E_QuitBattleButton = null;
 			this.m_E_QuitBattleImage = null;
 			this.m_EGSkillRootRectTransform = null;
@@ -627,12 +699,16 @@ namespace ET.Client
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 		private TMPro.TMP_InputField m_E_InputFieldCreateActionTowerTMP_InputField = null;
 		private UnityEngine.UI.Image m_E_InputFieldCreateActionTowerImage = null;
-		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TankLoopHorizontalScrollRect = null;
-		private TMPro.TextMeshProUGUI m_E_TankOnceCountTextMeshProUGUI = null;
+		private TMPro.TMP_InputField m_E_InputFieldMatchTowerTMP_InputField = null;
+		private UnityEngine.UI.Image m_E_InputFieldMatchTowerImage = null;
+		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_MonsterLoopHorizontalScrollRect = null;
+		private TMPro.TextMeshProUGUI m_E_MonsterOnceCountTextMeshProUGUI = null;
 		private TMPro.TMP_InputField m_E_InputFieldTMP_InputField = null;
 		private UnityEngine.UI.Image m_E_InputFieldImage = null;
 		private TMPro.TMP_InputField m_E_InputFieldCreateActionTMP_InputField = null;
 		private UnityEngine.UI.Image m_E_InputFieldCreateActionImage = null;
+		private TMPro.TMP_InputField m_E_InputFieldMatchMonsterTMP_InputField = null;
+		private UnityEngine.UI.Image m_E_InputFieldMatchMonsterImage = null;
 		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
 		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
 		private UnityEngine.RectTransform m_EGSkillRootRectTransform = null;

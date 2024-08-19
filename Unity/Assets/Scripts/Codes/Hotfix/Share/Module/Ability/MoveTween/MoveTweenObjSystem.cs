@@ -454,9 +454,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -481,9 +484,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -557,16 +563,18 @@ namespace ET.Ability
             float initAngle = moveTweenType.InitAngle;
             self.speed = speed + self.timeElapsed * acceleratedSpeed;
 
-            if (orgRadius == 0)
-            {
-                self.SetUnitPos(targetPosition);
-                return;
-            }
-
             float radiusAddSpeed = moveTweenType.RadiusAddSpeed;
             float radius = orgRadius + self.timeElapsed * radiusAddSpeed;
 
-            float curAngle = initAngle + self.speed / orgRadius * self.timeElapsed;
+            float curAngle;
+            if (orgRadius == 0)
+            {
+                curAngle = initAngle + self.speed * self.timeElapsed;
+            }
+            else
+            {
+                curAngle = initAngle + self.speed / orgRadius * self.timeElapsed;
+            }
             float3 curPosDir = math.mul(quaternion.RotateY(curAngle), math.forward());
             self.forward = math.mul(quaternion.RotateY(math.PI * 0.5f), curPosDir);
             self.forward = math.normalize(self.forward);
@@ -669,9 +677,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -695,9 +706,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -804,9 +818,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -836,9 +853,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -862,9 +882,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -962,9 +985,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif
@@ -1088,9 +1114,12 @@ namespace ET.Ability
 #if UNITY_EDITOR
                         if (self.DomainScene().SceneType == SceneType.Map)
                         {
-                            if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                            if (UnitHelper.ChkUnitAlive(targetUnit))
                             {
-                                Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                if (ET.GamePlayHelper.ChkIsFriend(targetUnit, unit))
+                                {
+                                    Log.Error($"===== DoMoveTween_Target ChkIsFriend");
+                                }
                             }
                         }
 #endif

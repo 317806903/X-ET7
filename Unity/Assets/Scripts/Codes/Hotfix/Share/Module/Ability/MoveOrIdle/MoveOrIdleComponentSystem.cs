@@ -82,6 +82,10 @@ namespace ET.Ability
 
             if (needEnterIdle)
             {
+                if (unit.IsDisposed)
+                {
+                    return;
+                }
                 if (self.CurIdleTimelineObj == null)
                 {
                     if (self.isIdleCreating == false)

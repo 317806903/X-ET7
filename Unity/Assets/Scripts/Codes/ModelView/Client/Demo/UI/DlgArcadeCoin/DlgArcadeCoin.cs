@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgArcadeCoin : Entity, IAwake, IUILogic
+	public class DlgArcadeCoin : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgArcadeCoinViewComponent View { get => this.GetComponent<DlgArcadeCoinViewComponent>(); }
 

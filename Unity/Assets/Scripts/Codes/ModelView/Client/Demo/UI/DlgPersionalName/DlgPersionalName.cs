@@ -3,9 +3,11 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgPersionalName : Entity, IAwake, IUILogic
+	public class DlgPersionalName : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgPersionalNameViewComponent View { get => this.GetComponent<DlgPersionalNameViewComponent>(); }
+
+		public long dlgShowTime;
 
         public string curName;
 

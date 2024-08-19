@@ -21,9 +21,28 @@ namespace ET.Server
             return playerDataComponent;
         }
 
-        public static async ETTask RenameCollection(this PlayerCacheManagerComponent self, int seasonId)
+        public static async ETTask RenameCollection(this PlayerCacheManagerComponent self, int seasonIndex)
         {
-            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), typeof(PlayerSessionComponent), seasonId);
+            await self.RenameCollection_SeasonInfo(seasonIndex);
+        }
+
+        public static async ETTask RenameCollection_SeasonInfo(this PlayerCacheManagerComponent self, int seasonIndex)
+        {
+            PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Server.DBHelper._LoadDBFirst<PlayerSeasonInfoComponent>(self.DomainScene());
+            if (playerSeasonInfoComponent != null)
+            {
+                if (playerSeasonInfoComponent.seasonIndex > seasonIndex)
+                {
+                    Log.Error($"ET.Server.PlayerCacheManagerComponentSystem.RenameCollection playerSeasonInfoComponent.seasonIndex[{playerSeasonInfoComponent.seasonIndex}] > seasonIndex[{seasonIndex}]");
+                    return;
+                }
+            }
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), typeof(PlayerSeasonInfoComponent), seasonIndex);
+            foreach (PlayerDataComponent playerDataComponent in self.Children.Values)
+            {
+                playerDataComponent.RemoveComponent<PlayerSeasonInfoComponent>();
+                playerDataComponent.RemoveComponent<PlayerMailComponent>();
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, S2P_ChgSeason request, P2S_ChgSeason response)
 		{
-			await ET.Server.PlayerCacheLocalHelper.RecordWhenSeasonFinished(scene, request.SeasonId);
+			await ET.Server.PlayerCacheLocalHelper.RecordWhenSeasonFinished(scene, request.SeasonIndex, request.SeasonCfgId);
 
 			await ETTask.CompletedTask;
 		}

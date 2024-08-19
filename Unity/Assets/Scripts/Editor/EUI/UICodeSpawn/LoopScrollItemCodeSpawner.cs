@@ -133,7 +133,7 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[EnableMethod]");
-        strBuilder.AppendFormat("\tpublic class Scroll_{0} : Entity, IAwake, IDestroy, IUIScrollItem\r\n", strDlgName)
+        strBuilder.AppendFormat("\tpublic class Scroll_{0} : Entity, IAwake, IDestroy, IUIScrollItem, IUILogic\r\n", strDlgName)
             .AppendLine("\t{");
 
         strBuilder.AppendLine("\t\tpublic long DataId {get;set;}");

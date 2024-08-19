@@ -31,26 +31,50 @@ namespace ET
 
         public static void BuildConfig_AbilityConfigAndBuildABAndPack_Android()
         {
+            string[] args = Environment.GetCommandLineArgs();
+            string param = args[args.Length - 1];
+
             Action build = async () =>
             {
                 await ET.BuildConfig.BuildConfig_AbilityConfig();
                 await ET.BuildAssetBundle.BuildAB_Android_Min(false);
-                await ET.BuildPack.BuildPack_Android_OutNet_CN();
-                await ET.BuildPack.BuildPack_Android_OutNet_EN();
-                await ET.BuildPack.BuildPack_Android_OutNet_CN_Demo();
+                if (param.Contains("CN") && param.Contains("CNDemo") == false)
+                {
+                    await ET.BuildPack.BuildPack_Android_OutNet_CN();
+                }
+                if (param.Contains("EN"))
+                {
+                    await ET.BuildPack.BuildPack_Android_OutNet_EN();
+                }
+                if (param.Contains("CNDemo"))
+                {
+                    await ET.BuildPack.BuildPack_Android_OutNet_CN_Demo();
+                }
             };
             build();
         }
 
         public static void BuildConfig_AbilityConfigAndBuildABAndPack_IOS()
         {
+            string[] args = Environment.GetCommandLineArgs();
+            string param = args[args.Length - 1];
+
             Action build = async () =>
             {
                 await ET.BuildConfig.BuildConfig_AbilityConfig();
                 await ET.BuildAssetBundle.BuildAB_IOS_Min(false);
-                await ET.BuildPack.BuildPack_IOS_OutNet_CN();
-                await ET.BuildPack.BuildPack_IOS_OutNet_EN();
-                await ET.BuildPack.BuildPack_IOS_OutNet_CN_Demo();
+                if (param.Contains("CN") && param.Contains("CNDemo") == false)
+                {
+                    await ET.BuildPack.BuildPack_IOS_OutNet_CN();
+                }
+                if (param.Contains("EN"))
+                {
+                    await ET.BuildPack.BuildPack_IOS_OutNet_EN();
+                }
+                if (param.Contains("CNDemo"))
+                {
+                    await ET.BuildPack.BuildPack_IOS_OutNet_CN_Demo();
+                }
             };
             build();
         }

@@ -29,6 +29,11 @@ namespace ET.Client
              //升级按钮
             self.View.EBtnUpdateButton.AddListenerAsync(self.UpdateBtnHandel);
 
+            //不够钻石升级按钮
+            self.View.EBtnUpdate_nullButton.AddListenerAsync(self.UnUpgradeNohaveDiamond);
+
+            //满级升级按钮
+            self.View.EBtnUpdate_maxButton.AddListenerAsync(self.UnUPgradeBecauseMax);
         }
 
         /// <summary>
@@ -36,17 +41,17 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <param name="contextData"></param>
-        public static async void ShowPage(this EPage_Powerup self, ShowWindowData contextData = null)
+        public static async ETTask ShowPage(this EPage_Powerup self, ShowWindowData contextData = null)
 		{
             self.BottomtItemCfg = null;
             self.View.uiTransform.SetVisible(true);
 
             SeasonComponent seasonComponent = SeasonHelper.GetSeasonComponent(self.DomainScene());
             int count = seasonComponent.cfg.BringUpList.Count;
-            self.AddUIScrollItemsPage(ref self.ScrollItemDic, count);
+            self.AddUIScrollItems(ref self.ScrollItemDic, count);
 
             self.View.ELoopScrollList_LoopVerticalScrollRect.SetVisible(true, count);
-            self.View.ELoopScrollList_LoopVerticalScrollRect.RefreshCells();
+            //self.View.ELoopScrollList_LoopVerticalScrollRect.RefreshCells();
 
             int resetCost = seasonComponent.cfg.BringUpResetCost;
             self.View.ETxtResetNumTextMeshProUGUI.SetText(resetCost.ToString());
@@ -58,12 +63,12 @@ namespace ET.Client
         /// 当钻石改变时重新刷新面板
         /// </summary>
         /// <param name="self"></param>
-        public static async void RefreshWhenDiamondChg(this EPage_Powerup self)
+        public static async ETTask RefreshWhenDiamondChg(this EPage_Powerup self)
         {
             if (self.isUpadaeting)
             {
                 return;
-            }              
+            }
             self.View.ELoopScrollList_LoopVerticalScrollRect.RefreshCells();
             bool isEnoughReset = await self.IsPlayeEnoughReset();
             self.View.EBtnResetButton.interactable = isEnoughReset;
@@ -85,24 +90,25 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
 		public static async ETTask ResetBtnHandel(this EPage_Powerup self)
-		{        
+		{
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
             string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PowerBringUp_Reset_Des");
             ET.Client.UIManagerHelper.ShowConfirm(
                 self.DomainScene(),
-                msgTxt, 
+                msgTxt,
                 async () => {
                     bool isSuccesful = await PlayerCacheHelper.ResetAllPowerUp(self.DomainScene());
                     if (isSuccesful)
                     {
                         self.BottomtItemCfg = null;
-                        self.ShowPage();
+                        self.ShowPage().Coroutine();
                     }
                     else
                     {
-                        //WJTODO 消息错误处理 
-                        self.ShowPage();
-                    }                                     
-                }, 
+                        //WJTODO 消息错误处理
+                        self.ShowPage().Coroutine();
+                    }
+                },
                 null
                 );
             await ETTask.CompletedTask;
@@ -178,6 +184,9 @@ namespace ET.Client
         {
             if (self.isUpadaeting)
                 return;
+
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
             /*创建临时变量是因为
                  * 避免玩家在升级时频繁切换Item，
                  * 会导致self.CurrentItemIndex和self.BottomtItemCfg改变
@@ -189,32 +198,60 @@ namespace ET.Client
             int maxLevel = SeasonBringUpCfgCategory.Instance.GetMaxLevel(tempCfgName);
             bool isCanUpdate = await self.IsPlayerCanUpdate(tempCfgName, playerBringupLevel);
 
+
             if (isCanUpdate)
             {
-                // 计算填充比例
-                int _playerBringupLevel = playerBringupLevel;
-                float fromValue = _playerBringupLevel / (float)maxLevel;
-                float toValue = (_playerBringupLevel + 1) / (float)maxLevel;
-
-                self.SmoothFillAmountChange(fromValue, toValue, 0.3f).Coroutine();
-                //刷新指定的Item
-                self.ScrollItemDic[tempIndex].Init(tempCfgName, playerBringupLevel + 1,true).Coroutine();
-
-                //WJTODO 这里进行等待
-                bool isUpdateSucces = await PlayerCacheHelper.UpdatePowerup(self.DomainScene(), tempCfgName);
-                if (isUpdateSucces)
+                bool isAccetServerUpdate = await PlayerCacheHelper.UpdatePowerup(self.DomainScene(), tempCfgName);
+                if (isAccetServerUpdate)
                 {
-                    await self.UpdateBottomUI(self.BottomtItemCfg);
+                    // 计算填充比例
+                    int _playerBringupLevel = playerBringupLevel;
+                    float fromValue = _playerBringupLevel / (float)maxLevel;
+                    float toValue = (_playerBringupLevel + 1) / (float)maxLevel;
+
+                    self.UpdateBottomUI(self.BottomtItemCfg).Coroutine();
+                    self.SmoothFillAmountChange(fromValue, toValue, 0.3f).Coroutine();
+
+                    //刷新指定的Item
+                    await self.ScrollItemDic[tempIndex].Init(tempCfgName, playerBringupLevel + 1,true);
                     self.View.ELoopScrollList_LoopVerticalScrollRect.RefreshCells();
+
                     bool isEnoughReset = await self.IsPlayeEnoughReset();
                     self.View.EBtnResetButton.interactable = isEnoughReset;
+
+                    self.isUpadaeting = false;
                 }
                 else
                 {
-                    //WJTODO 消息异常处理
+                    //WJTODO 升级失败处理
                 }
-                self.isUpadaeting = false;
             }
+        }
+
+        /// <summary>
+        /// 不够钻石升级按钮监听
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static async ETTask UnUpgradeNohaveDiamond(this EPage_Powerup self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PowerBringUp_UpgradeFail");
+            ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+        }
+
+        /// <summary>
+        /// 满级升级按钮监听
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static async ETTask UnUPgradeBecauseMax(this EPage_Powerup self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PowerBringUp_UpgradeMax");
+            ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
         }
         #endregion
 
@@ -232,6 +269,7 @@ namespace ET.Client
             int playerBringupLevel = await self.GetBringUpLevel(cfg);
             bool isPlayerDiamondEnough = await self.IsPlayerDiamondEnough(cfg, playerBringupLevel);
             bool isMax = (playerBringupLevel >= maxLevel);
+
             //控制三个按钮的显影
             if (isMax)
             {
@@ -255,15 +293,27 @@ namespace ET.Client
                 }
             }
 
+            //颜色
+            self.View.EOutlineColorImage.fillAmount = playerBringupLevel / (float)maxLevel;
+            if (playerBringupLevel == maxLevel)
+            {
+                self.View.EOutlineColorImage.color = Color.red;
+            }
+            else
+            {
+                self.View.EOutlineColorImage.color = Color.white;
+            }
+
             //底部的刷新逻辑 1.Item名字 2：Item的描述 3:Item升级的钻石花费 4：切换养成的Icon图 5:不同的Line图片显隐 6:NextLevel名字
             SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfg, playerBringupLevel);
-            string text = LocalizeComponent.Instance.GetTextValue(seasonBringUpCfg.NameExtend);
+
+            string text = seasonBringUpCfg.NameExtend;
             self.View.ETxtBottomItemNameTextMeshProUGUI.SetText(text);
 
             SeasonBringUpCfg nextSeasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetNextSeasonBringUpCfg(cfg, playerBringupLevel);
             if (nextSeasonBringUpCfg != null)
             {
-                text = LocalizeComponent.Instance.GetTextValue(nextSeasonBringUpCfg.NameExtend);
+                text = nextSeasonBringUpCfg.NameExtend;
                 self.View.ETxtBottomExtendNameTextMeshProUGUI.SetVisible(true);
                 self.View.ETxtBottomExtendNameTextMeshProUGUI.SetText(text);
                 self.View.ETxtNextLevelTextMeshProUGUI.SetVisible(true);
@@ -274,14 +324,13 @@ namespace ET.Client
                 self.View.ETxtNextLevelTextMeshProUGUI.SetVisible(false);
             }
 
-            text = LocalizeComponent.Instance.GetTextValue(seasonBringUpCfg.Desc);
+            text = seasonBringUpCfg.Desc;
             self.View.ETxtBottomItemDesTextMeshProUGUI.SetText(text);
 
             self.View.ETxtUpgradeNumTextMeshProUGUI.SetText(seasonBringUpCfg.Cost.ToString());
             self.View.ETxtUpgradeNumNullTextMeshProUGUI.SetText(seasonBringUpCfg.Cost.ToString());
 
-            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(seasonBringUpCfg.Icon);
-            self.View.EMainIconImage.SetImageByPath(resIconCfg.ResName).Coroutine();
+            self.View.EMainIconImage.SetImageByResIconCfgId(seasonBringUpCfg.Icon).Coroutine();
             switch (maxLevel)
              {
                 case 1:
@@ -306,16 +355,6 @@ namespace ET.Client
                      break;
              }
 
-            //颜色
-            self.View.EOutlineColorImage.fillAmount = playerBringupLevel / (float)maxLevel;
-            if (playerBringupLevel == maxLevel)
-            {
-                self.View.EOutlineColorImage.color = Color.red;
-            }
-            else
-            {
-                self.View.EOutlineColorImage.color = Color.white;
-            }
         }
 
         /// <summary>
@@ -342,8 +381,8 @@ namespace ET.Client
                 await TimerComponent.Instance.WaitFrameAsync();
             }
             self.View.EOutlineColorImage.fillAmount = toValue;
-            
-            
+
+
         }
 
         /// <summary>
@@ -392,7 +431,7 @@ namespace ET.Client
         /// 玩家是否足够重置
         /// </summary>
         public static async ETTask<bool> IsPlayeEnoughReset(this EPage_Powerup self)
-        {            
+        {
             PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerSeasonInfo(self.DomainScene());
             Dictionary<string, int> seasonBringUpDic = playerSeasonInfoComponent.GetSeasonBringUpDic();
             bool isPlayerBringupIsNone = true;
@@ -404,7 +443,7 @@ namespace ET.Client
                 }
             }
 
-            int playerDiamond = await PlayerCacheHelper.GetTokenDiamond(self.DomainScene());      
+            int playerDiamond = await PlayerCacheHelper.GetTokenDiamond(self.DomainScene());
             SeasonComponent seasonComponent = ET.Client.SeasonHelper.GetSeasonComponent(self.DomainScene());
             int reset = seasonComponent.cfg.BringUpResetCost;
             return playerDiamond >= reset&& !isPlayerBringupIsNone;
@@ -424,5 +463,7 @@ namespace ET.Client
 
             return playerBringupLevel >= maxLevel;
         }
+
+
     }
 }

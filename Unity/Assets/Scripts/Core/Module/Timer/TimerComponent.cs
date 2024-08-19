@@ -193,6 +193,19 @@ namespace ET
             return true;
         }
 
+        public void RemoveAll()
+        {
+            foreach (var item in this.timerActions)
+            {
+                TimerAction timerAction = item.Value;
+                timerAction.Recycle();
+            }
+            this.timerActions.Clear();
+            this.TimeId.Clear();
+            this.timeOutTime.Clear();
+            this.timeOutTimerIds.Clear();
+        }
+
         public async ETTask WaitTillAsync(long tillTime, ETCancellationToken cancellationToken = null)
         {
             long timeNow = GetNow();

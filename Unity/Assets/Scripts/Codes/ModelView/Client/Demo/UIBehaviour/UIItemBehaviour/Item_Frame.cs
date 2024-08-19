@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
 	[EnableMethod]
-	public class Scroll_Item_Frame : Entity, IAwake, IDestroy, IUIScrollItem
+	public class Scroll_Item_Frame : Entity, IAwake, IDestroy, IUIScrollItem, IUILogic
 	{
 		public long DataId {get;set;}
 		private bool isCacheNode = false;
@@ -17,30 +17,6 @@ namespace ET.Client
 		{
 			this.uiTransform = trans;
 			return this;
-		}
-
-		public UnityEngine.UI.Button EImage_FrameButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EImage_FrameButton == null )
-					{
-						this.m_EImage_FrameButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EImage_Frame");
-					}
-					return this.m_EImage_FrameButton;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EImage_Frame");
-				}
-			}
 		}
 
 		public UnityEngine.UI.Image EImage_FrameImage
@@ -91,18 +67,68 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button EButton_SelectButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EButton_SelectButton == null )
+					{
+						this.m_EButton_SelectButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Select");
+					}
+					return this.m_EButton_SelectButton;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Select");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_SelectImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_EButton_SelectImage == null )
+					{
+						this.m_EButton_SelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Select");
+					}
+					return this.m_EButton_SelectImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Select");
+				}
+			}
+		}
+
 		public void DestroyWidget()
 		{
-			this.m_EImage_FrameButton = null;
 			this.m_EImage_FrameImage = null;
 			this.m_EIcon_SelectedImage = null;
+			this.m_EButton_SelectButton = null;
+			this.m_EButton_SelectImage = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
 
-		private UnityEngine.UI.Button m_EImage_FrameButton = null;
 		private UnityEngine.UI.Image m_EImage_FrameImage = null;
 		private UnityEngine.UI.Image m_EIcon_SelectedImage = null;
+		private UnityEngine.UI.Button m_EButton_SelectButton = null;
+		private UnityEngine.UI.Image m_EButton_SelectImage = null;
 		public Transform uiTransform = null;
 	}
 }

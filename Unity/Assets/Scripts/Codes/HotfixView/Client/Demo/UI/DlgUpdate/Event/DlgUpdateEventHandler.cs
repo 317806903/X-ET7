@@ -22,7 +22,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgUpdate>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgUpdate>().ShowWindow(contextData).Coroutine(); 
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

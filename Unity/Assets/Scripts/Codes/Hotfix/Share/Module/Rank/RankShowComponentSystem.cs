@@ -82,7 +82,7 @@ namespace ET
             else
             {
                 myRankShowItemComponent.playerId = playerId;
-                myRankShowItemComponent.score = -1;
+                myRankShowItemComponent.score = 0;
             }
 
             self.myRankShowItemComponentId = myRankShowItemComponent.Id;

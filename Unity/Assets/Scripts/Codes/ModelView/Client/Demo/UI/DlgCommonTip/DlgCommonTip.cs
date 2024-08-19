@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgCommonTip : Entity, IAwake, IUILogic
+	public class DlgCommonTip : Entity, IAwake, IUILogic, IUIDlg
 	{
 
 		public DlgCommonTipViewComponent View { get => this.GetComponent<DlgCommonTipViewComponent>();}

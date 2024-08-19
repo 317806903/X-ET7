@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -11,19 +13,12 @@ namespace ET.Server
         {
             protected override void Awake(SeasonManagerComponent self)
             {
-                self.InitByDBOne().Coroutine();
             }
         }
 
-        public static async ETTask RecordWhenSeasonFinished(this SeasonManagerComponent self)
+        public static void Init(this SeasonManagerComponent self)
         {
-            SeasonComponent seasonComponent = self.SeasonComponent;
-            if (seasonComponent == null)
-            {
-                return;
-            }
-
-            await seasonComponent.RecordWhenSeasonFinished();
+            self.InitByDBOne().Coroutine();
         }
 
         public static async ETTask<SeasonComponent> InitByDBOne(this SeasonManagerComponent self)
@@ -33,13 +28,28 @@ namespace ET.Server
             if (list == null || list.Count == 0)
             {
                 seasonComponent = self.AddChild<SeasonComponent>();
-                seasonComponent.seasonId = 1;
-                seasonComponent.startTime = TimeHelper.ServerNow();
+                ET.Server.SeasonHelper.SetCurSeasonByTime(seasonComponent);
+                seasonComponent.initTime = TimeHelper.ServerNow();
+                seasonComponent.AddComponent<SeasonComponentStatusInSeason>();
                 seasonComponent.SetDataCacheAutoWrite();
             }
             else
             {
                 seasonComponent = list[0];
+
+                SeasonComponentStatusSettlement seasonComponentStatusSettlement = seasonComponent.GetComponent<SeasonComponentStatusSettlement>();
+                if (seasonComponentStatusSettlement != null)
+                {
+                    seasonComponentStatusSettlement.Init();
+                }
+                else
+                {
+                    SeasonComponentStatusInSeason seasonComponentStatusInSeason = seasonComponent.GetComponent<SeasonComponentStatusInSeason>();
+                    if (seasonComponentStatusInSeason == null)
+                    {
+                        seasonComponent.AddComponent<SeasonComponentStatusInSeason>();
+                    }
+                }
             }
             self.SeasonComponent = seasonComponent;
             return seasonComponent;

@@ -8,7 +8,7 @@ namespace ET.Client
 	[FriendOf(typeof(UIGuideComponent))]
 	public static class UIGuideHelper
 	{
-		public static async ETTask DoUIGuide(Scene scene, string fileName, int startIndex, Action finished, Action<int> stepFinished = null)
+		public static async ETTask DoUIGuide(Scene scene, string fileName, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -31,7 +31,7 @@ namespace ET.Client
 			await UIGuideComponent.Instance.DoUIGuideByName(fileName, startIndex, finished, stepFinished);
 		}
 
-		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action finished, Action<int> stepFinished = null)
+		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -63,7 +63,7 @@ namespace ET.Client
 			await UIGuideComponent.Instance.StopUIGuide();
 		}
 
-		public static bool ChkIsUIGuideing(Scene scene, string guideFileName)
+		public static bool ChkIsUIGuideing(Scene scene, string guideFileName, bool needIsGuiding = false)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -75,10 +75,22 @@ namespace ET.Client
 				return false;
 			}
 
-			return UIGuideComponent.Instance.guideFileName == guideFileName;
+			if (UIGuideComponent.Instance.guideFileName != guideFileName)
+			{
+				return false;
+			}
+
+			if (needIsGuiding)
+			{
+				if (uiGuideStepComponent.isGuiding == false)
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 
-		public static bool ChkIsUIGuideing(Scene scene)
+		public static bool ChkIsUIGuideing(Scene scene, bool needIsGuiding = false)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -90,6 +102,13 @@ namespace ET.Client
 				return false;
 			}
 
+			if (needIsGuiding)
+			{
+				if (uiGuideStepComponent.isGuiding == false)
+				{
+					return false;
+				}
+			}
 			return true;
 		}
 
@@ -170,8 +189,11 @@ namespace ET.Client
 				case GuideExecuteStaticMethodType.ShowVideo:
 					await UIGuideHelper_StaticMethod.ShowVideo(scene);
 					break;
-				case GuideExecuteStaticMethodType.EnterGuideBattle:
-					await UIGuideHelper_StaticMethod.EnterGuideBattle(scene);
+				case GuideExecuteStaticMethodType.EnterGuideBattleTutorialFirst:
+					await UIGuideHelper_StaticMethod.EnterGuideBattleTutorialFirst(scene);
+					break;
+				case GuideExecuteStaticMethodType.EnterGuideBattlePVEFirst:
+					await UIGuideHelper_StaticMethod.EnterGuideBattlePVEFirst(scene);
 					break;
 				case GuideExecuteStaticMethodType.ShowPointTower:
 					await UIGuideHelper_StaticMethod.ShowPointTower(scene);
@@ -263,7 +285,9 @@ namespace ET.Client
 					break;
 				case GuideExecuteStaticMethodType.ShowVideo:
 					break;
-				case GuideExecuteStaticMethodType.EnterGuideBattle:
+				case GuideExecuteStaticMethodType.EnterGuideBattleTutorialFirst:
+					break;
+				case GuideExecuteStaticMethodType.EnterGuideBattlePVEFirst:
 					break;
 				case GuideExecuteStaticMethodType.ShowPointTower:
 					break;

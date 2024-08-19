@@ -14,61 +14,6 @@ namespace ET.Client
         {
             protected override void Awake(GameObjectComponent self)
             {
-                Unit unit = self.GetUnit();
-                string resName = "";
-                float resScale = 1f;
-                if (Ability.UnitHelper.ChkIsBullet(unit))
-                {
-                    BulletObj bulletObj = unit.GetComponent<BulletObj>();
-                    if (bulletObj == null)
-                    {
-                        Log.Error($"bulletObj == null");
-                        return;
-                    }
-                    if (bulletObj.model == null)
-                    {
-                        Log.Error($"bulletObj.model[{bulletObj.CfgId}] == null");
-                        return;
-                    }
-                    if (bulletObj.model.ResId_Ref == null)
-                    {
-                        Log.Error($"bulletObj.model.ResId_Ref[{bulletObj.model.ResId}] == null");
-                        return;
-                    }
-                    resName = bulletObj.model.ResId_Ref.ResName;
-                    resScale = bulletObj.model.ResScale;
-                }
-                else if (Ability.UnitHelper.ChkIsAoe(unit))
-                {
-                    AoeObj aoeObj = unit.GetComponent<AoeObj>();
-                    resName = aoeObj.model.ResId_Ref.ResName;
-                    resScale = aoeObj.model.ResScale;
-                }
-                else
-                {
-                    resName = unit.model.ResId_Ref.ResName;
-                    resScale = unit.model.ResScale;
-                }
-
-                // if (Ability.UnitHelper.ChkIsPlayer(unit) == false && Ability.UnitHelper.ChkIsObserver(unit) == false)
-                // {
-                //     resName = "";
-                // }
-                // Unit View层
-                if (string.IsNullOrEmpty(resName) == false)
-                {
-                    GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
-                    go.transform.SetParent(GlobalComponent.Instance.Unit);
-                    go.transform.position = unit.Position;
-                    go.transform.forward = unit.Forward;
-                    go.transform.localScale = Vector3.one * resScale;
-
-                    ET.Client.GameObjectPoolHelper.TrigFromPool(go);
-
-                    self.SetGo(go);
-
-                }
-
             }
         }
 
@@ -269,6 +214,75 @@ namespace ET.Client
         public static GameObject GetGo(this GameObjectComponent self)
         {
             return self.gameObject;
+        }
+
+        public static async ETTask Init(this GameObjectComponent self)
+        {
+            Unit unit = self.GetUnit();
+            string resName = "";
+            float resScale = 1f;
+            if (Ability.UnitHelper.ChkIsBullet(unit))
+            {
+                BulletObj bulletObj = unit.GetComponent<BulletObj>();
+                if (bulletObj == null)
+                {
+                    Log.Error($"bulletObj == null");
+                    return;
+                }
+                if (bulletObj.model == null)
+                {
+                    Log.Error($"bulletObj.model[{bulletObj.CfgId}] == null");
+                    return;
+                }
+                if (bulletObj.model.ResId_Ref == null)
+                {
+                    Log.Error($"bulletObj.model.ResId_Ref[{bulletObj.model.ResId}] == null");
+                    return;
+                }
+                resName = bulletObj.model.ResId_Ref.ResName;
+                resScale = bulletObj.model.ResScale;
+            }
+            else if (Ability.UnitHelper.ChkIsAoe(unit))
+            {
+                AoeObj aoeObj = unit.GetComponent<AoeObj>();
+                resName = aoeObj.model.ResId_Ref.ResName;
+                resScale = aoeObj.model.ResScale;
+            }
+            else
+            {
+                resName = unit.model.ResId_Ref.ResName;
+                resScale = unit.model.ResScale;
+            }
+
+            // if (Ability.UnitHelper.ChkIsPlayer(unit) == false && Ability.UnitHelper.ChkIsObserver(unit) == false)
+            // {
+            //     resName = "";
+            // }
+            // Unit View层
+            if (string.IsNullOrEmpty(resName) == false)
+            {
+                while (TimeHelper.ClientNow() > TimeHelper.ClientFrameTime() + 200)
+                {
+                    //await TimerComponent.Instance.WaitFrameAsync();
+                    await TimerComponent.Instance.WaitAsync(200);
+                    if (self.IsDisposed)
+                    {
+                        return;
+                    }
+                }
+
+                GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
+                go.transform.SetParent(GlobalComponent.Instance.Unit);
+                go.transform.position = unit.Position;
+                go.transform.forward = unit.Forward;
+                go.transform.localScale = Vector3.one * resScale;
+
+                ET.Client.GameObjectPoolHelper.TrigFromPool(go);
+
+                self.SetGo(go);
+
+            }
+
         }
 
         public static Unit GetUnit(this GameObjectComponent self)

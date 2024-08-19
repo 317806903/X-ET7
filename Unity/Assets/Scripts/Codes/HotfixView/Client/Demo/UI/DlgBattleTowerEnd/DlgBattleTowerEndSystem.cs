@@ -17,7 +17,7 @@ namespace ET.Client
 			self.View.E_ReturnRoomButton.AddListenerAsync(self.OnReturnRoom);
 		}
 
-		public static void ShowWindow(this DlgBattleTowerEnd self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleTowerEnd self, ShowWindowData contextData = null)
 		{
 			self.Show().Coroutine();
 			self.ChkNeedShowGuide().Coroutine();
@@ -40,16 +40,8 @@ namespace ET.Client
 			{
 				return;
 			}
-			PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
-			List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
-			if (openningList.Count > 0)
-			{
-				string functionMenuCfgId = openningList[0];
-				await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), "BattleTowerEndGuide", 0, () =>
-				{
 
-				});
-			}
+			await ET.Client.FunctionMenu.ChkNeedShowGuideWhenBattleEnd(self.DomainScene());
 		}
 
 		public static async ETTask ShowEffect(this DlgBattleTowerEnd self)
@@ -70,11 +62,8 @@ namespace ET.Client
 
 			await TimerComponent.Instance.WaitAsync(500);
 
-
 			self.View.EG_ItemListRectTransform.SetVisible(false);
-			self.View.EG_GoldCoinsRectTransform.SetVisible(false);
 			await self.ShowDropItemList();
-			self.ShowDropGold();
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
 			GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
@@ -196,7 +185,7 @@ namespace ET.Client
             if (success)
             {
 	            bool haveNext = false;
-	            if (roomTypeInfo.seasonId > 0)
+	            if (roomTypeInfo.seasonCfgId > 0)
 	            {
 		            haveNext = SeasonChallengeLevelCfgCategory.Instance.GetNextChallenge(roomTypeInfo) != null;
 	            }
@@ -319,20 +308,6 @@ namespace ET.Client
 			return dropItemList;
 		}
 
-		public static int GetMyDropGold(this DlgBattleTowerEnd self)
-		{
-			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-
-			int dropGold = GamePlayHelper.GetGamePlay(self.DomainScene()).GetComponent<GamePlayDropItemComponent>().GetPlayerDropGold(myPlayerId);
-			return dropGold;
-		}
-
-		public static void ShowDropGold(this DlgBattleTowerEnd self)
-		{
-			int gold = self.GetMyDropGold();
-			self.View.E_GoldTextMeshProUGUI.SetText($"+{gold}");
-		}
-
 		public static async ETTask<bool> ShowDropItemList(this DlgBattleTowerEnd self)
 		{
 			int count = self.GetMyDropItemList().Count;
@@ -342,7 +317,10 @@ namespace ET.Client
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.poolSize = 7;
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-					self.AddItemRefreshListener(transform, i));
+				{
+					self.AddItemRefreshListener(transform, i).Coroutine();
+					self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+				});
 
 				self.AddUIScrollItems(ref self.ScrollItemReward, count);
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetVisible(true, count);
@@ -357,13 +335,12 @@ namespace ET.Client
 
         public static async ETTask AddItemRefreshListener(this DlgBattleTowerEnd self, Transform transform, int index)
         {
-	        self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle();
-
             Scroll_Item_TowerBuy itemTower = self.ScrollItemReward[index].BindTrans(transform);
 
             var dropItems = self.GetMyDropItemList();
             string itemCfgId = dropItems[index].itemCfgId;
-            itemTower.ShowBagItem(itemCfgId, true);
+            int itemNum = dropItems[index].num;
+            await itemTower.ShowBagItem(itemCfgId, true, itemNum);
         }
 	}
 }

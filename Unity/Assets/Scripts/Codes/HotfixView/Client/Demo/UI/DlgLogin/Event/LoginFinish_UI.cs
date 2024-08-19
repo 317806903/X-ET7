@@ -30,14 +30,14 @@ namespace ET.Client
                     if (Application.isMobilePlatform == false)
                     {
                         string msg = LocalizeComponent.Instance.GetTextValue("非手机模式，立即完成新手指引");
-                        ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, msg, () =>
+                        ET.Client.UIManagerHelper.ShowOnlyConfirmHighest(scene, msg, () =>
                         {
                             FinishedCallBack(scene).Coroutine();
                         });
                     }
                     else
                     {
-                        ET.Client.UIGuideHelper.DoUIGuide(scene, "TutorialFirst", 0, () =>
+                        ET.Client.UIGuideHelper.DoUIGuide(scene, "TutorialFirst", 0, (scene) =>
                         {
                             FinishedCallBack(scene).Coroutine();
                         }).Coroutine();

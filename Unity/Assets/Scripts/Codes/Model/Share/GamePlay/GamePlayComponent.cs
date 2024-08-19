@@ -67,7 +67,7 @@ namespace ET
 		[BsonIgnore]
 		public bool isTestARObj = false;
 		[BsonIgnore]
-		public string isTestARObjUrl = @"http://192.168.10.58/CDN/home-2.obj";
+		public string isTestARObjUrl = @"http://192.168.10.50/CDN/home-2.obj";
 
 		[BsonIgnore]
 		public HashSet<long> waitNoticeGamePlayToClientList;

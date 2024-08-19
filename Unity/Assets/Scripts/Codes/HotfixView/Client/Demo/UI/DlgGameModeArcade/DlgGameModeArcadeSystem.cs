@@ -48,7 +48,7 @@ namespace ET.Client
             self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
         }
 
-        public static void ShowWindow(this DlgGameModeArcade self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgGameModeArcade self, ShowWindowData contextData = null)
         {
 #if UNITY_EDITOR
             self.isAR = false;
@@ -59,7 +59,6 @@ namespace ET.Client
             self.ShowBg().Coroutine();
             self.ShowFunctionMenuLock().Coroutine();
             self._ShowWindow().Coroutine();
-            self.ChkNeedShowGuide().Coroutine();
         }
 
         public static async ETTask ShowBg(this DlgGameModeArcade self)
@@ -78,60 +77,13 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask ChkNeedShowGuide(this DlgGameModeArcade self)
-        {
-            if (ET.SceneHelper.ChkIsGameModeArcade())
-            {
-                return;
-            }
-            PlayerFunctionMenuComponent playerFunctionMenuComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerFunctionMenu(self.DomainScene());
-            List<string> openningList = playerFunctionMenuComponent.GetOpenningFunctionMenuList();
-            if (openningList.Count > 0)
-            {
-                string functionMenuCfgId = openningList[0];
-                FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(functionMenuCfgId);
-
-                Action doGuile = async () =>
-                {
-                    if (string.IsNullOrEmpty(functionMenuCfg.UIGuideConfigFileName))
-                    {
-                        playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
-                        await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.FunctionMenu, null);
-                    }
-                    else
-                    {
-                        await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), functionMenuCfg.UIGuideConfigFileName, 0, async () =>
-                        {
-                            playerFunctionMenuComponent.ChgStatus(functionMenuCfgId, FunctionMenuStatus.Openned);
-                            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.FunctionMenu, null);
-                        });
-                    }
-                };
-
-                if (string.IsNullOrEmpty(functionMenuCfg.Icon))
-                {
-                    doGuile();
-                }
-                else
-                {
-                    DlgFunctionMenuOpenShow_ShowWindowData _DlgFunctionMenuOpenShow_ShowWindowData = new()
-                    {
-                        functionMenuCfgId = functionMenuCfgId,
-                        finished = doGuile,
-                    };
-                    UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgFunctionMenuOpenShow>(_DlgFunctionMenuOpenShow_ShowWindowData).Coroutine();
-                }
-
-            }
-        }
-
         public static async ETTask _ShowWindow(this DlgGameModeArcade self)
         {
             self.View.E_RedDotImage.SetVisible(false);
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
-            await self.View.E_PlayerIcoImage.SetMyselfIcon(self.DomainScene());
+            await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
 
             self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.            GameModeArcadeTimer, self);
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
@@ -346,7 +298,7 @@ namespace ET.Client
             self.TrackFunctionClicked("tutorial");
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgTutorials>();
         }
 
         public static async ETTask GameSetting(this DlgGameModeArcade self)
@@ -373,14 +325,14 @@ namespace ET.Client
         public static async ETTask ClickBattleDeck(this DlgGameModeArcade self)
         {
             self.TrackFunctionClicked("battleDeck");
-            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeArcade>();
+            //UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeArcade>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
         }
 
         public static void ClickDiscord(this DlgGameModeArcade self)
         {
             self.TrackFunctionClicked("discord");
-            Application.OpenURL("https://discord.gg/jnf2qabe9C");
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://discord.gg/jnf2qabe9C");
         }
 
         public static async ETTask RefreshWhenBaseInfoChg(this DlgGameModeArcade self)
@@ -400,7 +352,6 @@ namespace ET.Client
         public static async ETTask RefreshWhenFunctionMenuChg(this DlgGameModeArcade self)
         {
             await self.ShowFunctionMenuLock();
-            await self.ChkNeedShowGuide();
         }
 
         public static void HideWindow(this DlgGameModeArcade self)

@@ -28,7 +28,7 @@ namespace ET.Ability
             {
                 Unit targetUnit = list[i];
                 AnimatorComponent animatorComponent = _GetAnimatorComponent(targetUnit);
-                animatorComponent.SetAnimatorMotion(actionCfg_PlayAnimator.AnimatorName, actionCfg_PlayAnimator.IsOnlySelfShow);
+                animatorComponent.SetAnimatorMotion(actionCfg_PlayAnimator.AnimatorName, actionCfg_PlayAnimator.IsLoop, actionCfg_PlayAnimator.IsOnlySelfShow);
             }
             list.Dispose();
         }
@@ -39,9 +39,11 @@ namespace ET.Ability
             animatorComponent.ResetControlStateAnimatorMotion();
         }
 
-        public static bool ChkIsLoopAnimatorMotion(AnimatorMotionName animatorMotionName)
+        public static bool ChkIsIdleOrMove(AnimatorMotionName animatorMotionName)
         {
-            if (animatorMotionName == AnimatorMotionName.Idle || animatorMotionName == AnimatorMotionName.Move)
+            if (animatorMotionName == AnimatorMotionName.Idle
+                || animatorMotionName == AnimatorMotionName.Move
+                || animatorMotionName == AnimatorMotionName.None)
             {
                 return true;
             }

@@ -18,7 +18,7 @@ namespace ET.Client
             self.View.EButton_CloseButton.AddListener(self.OnBGClick);
         }
 
-        public static void ShowWindow(this DlgPersionalName self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgPersionalName self, ShowWindowData contextData = null)
         {
             self.ShowBg().Coroutine();
             self._ShowWindow().Coroutine();

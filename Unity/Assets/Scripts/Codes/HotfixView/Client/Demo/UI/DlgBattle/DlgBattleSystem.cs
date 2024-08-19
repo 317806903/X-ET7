@@ -36,12 +36,15 @@ namespace ET.Client
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.poolSize = 10;
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddTowerItemRefreshListener(transform, i));
-            self.View.ELoopScrollList_TankLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddMonsterItemRefreshListener(transform, i));
             self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
 
             self.View.E_GameSettingButton.SetVisible(true);
             self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+
+            self.View.E_InputFieldMatchTowerTMP_InputField.onValueChanged.AddListener(self.OnTowerValueChanged);
+            self.View.E_InputFieldMatchMonsterTMP_InputField.onValueChanged.AddListener(self.OnMonsterValueChanged);
 
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 22");
             self.RegisterClear().Coroutine();
@@ -113,31 +116,226 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
 
-        public static void ShowWindow(this DlgBattle self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgBattle self, ShowWindowData contextData = null)
         {
+            self.DealList();
+
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Game);
-            int countTower = self.towerList.Count;
+            int countTower = self.matchTowerList.Count;
             self.AddUIScrollItems(ref self.ScrollItemTowers, countTower);
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);
 
-            int countTank = self.monsterList.Count;
-            self.AddUIScrollItems(ref self.ScrollItemMonsters, countTank);
-            self.View.ELoopScrollList_TankLoopHorizontalScrollRect.SetVisible(true, countTank);
+            int countMonster = self.monsterList.Count;
+            self.AddUIScrollItems(ref self.ScrollItemMonsters, countMonster);
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.SetVisible(true, countMonster);
 
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleFrameTimer, self);
 
             ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
             self.ShowPutTipMsg("");
 
-            //self.PlayMusic();
         }
 
-        // public static void PlayMusic(this DlgBattle self)
-        // {
-        //     GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-        //     List<string> musicList = gamePlayComponent.GetGamePlayBattleConfig().MusicList;
-        //     UIAudioManagerHelper.PlayMusic(self.DomainScene(), musicList);
-        // }
+        public static void OnTowerValueChanged(this DlgBattle self, string value)
+        {
+            string matchKey = value.ToLower();
+            self.GetMatchTowerList(matchKey);
+            int countTower = self.matchTowerList.Count;
+            self.AddUIScrollItems(ref self.ScrollItemTowers, countTower);
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);
+        }
+
+        public static void OnMonsterValueChanged(this DlgBattle self, string value)
+        {
+            string matchKey = value.ToLower();
+            self.GetMatchMonsterList(matchKey);
+            int countMonster = self.matchMonsterList.Count;
+            self.AddUIScrollItems(ref self.ScrollItemMonsters, countMonster);
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.SetVisible(true, countMonster);
+        }
+
+        public static void GetMatchMonsterList(this DlgBattle self, string matchKey)
+        {
+            self.matchMonsterList.Clear();
+            if (string.IsNullOrEmpty(matchKey))
+            {
+                self.matchMonsterList.AddRange(self.monsterList);
+                return;
+            }
+            var towerDefenseMonsterList = TowerDefense_MonsterCfgCategory.Instance.DataList;
+            foreach (TowerDefense_MonsterCfg towerDefenseMonster in towerDefenseMonsterList)
+            {
+                string cfgId = towerDefenseMonster.Id;
+                bool contains = cfgId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+
+                if (towerDefenseMonster.UnitId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+                ItemCfg item = ItemCfgCategory.Instance.Get(cfgId);
+                string nameKey = item.Name_l10n_key;
+                string name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.EN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+                name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.CN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+            }
+            var towerDefenseTowerList = TowerDefense_TowerCfgCategory.Instance.DataList;
+            foreach (TowerDefense_TowerCfg towerDefenseTowerCfg in towerDefenseTowerList)
+            {
+                string cfgId = towerDefenseTowerCfg.Id;
+                bool contains = cfgId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+
+                foreach (string unitCfgId in towerDefenseTowerCfg.UnitId)
+                {
+                    contains = unitCfgId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                    if (contains)
+                    {
+                        break;
+                    }
+                }
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+                ItemCfg item = ItemCfgCategory.Instance.Get(cfgId);
+                string nameKey = item.Name_l10n_key;
+                string name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.EN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+                name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.CN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchMonsterList.Add(cfgId);
+                    continue;
+                }
+            }
+        }
+
+        public static void GetMatchTowerList(this DlgBattle self, string matchKey)
+        {
+            self.matchTowerList.Clear();
+            if (string.IsNullOrEmpty(matchKey))
+            {
+                self.matchTowerList.AddRange(self.towerList);
+                return;
+            }
+            var towerDefenseTowerList = TowerDefense_TowerCfgCategory.Instance.DataList;
+            foreach (TowerDefense_TowerCfg towerDefenseTowerCfg in towerDefenseTowerList)
+            {
+                string cfgId = towerDefenseTowerCfg.Id;
+                bool contains = cfgId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchTowerList.Add(cfgId);
+                    continue;
+                }
+
+                foreach (string unitCfgId in towerDefenseTowerCfg.UnitId)
+                {
+                    contains = unitCfgId.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                    if (contains)
+                    {
+                        break;
+                    }
+                }
+                if (contains)
+                {
+                    self.matchTowerList.Add(cfgId);
+                    continue;
+                }
+                ItemCfg item = ItemCfgCategory.Instance.Get(cfgId);
+                string nameKey = item.Name_l10n_key;
+                string name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.EN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchTowerList.Add(cfgId);
+                    continue;
+                }
+                name = LocalizeComponent.Instance.GetTextValueByExcel(LanguageType.CN, nameKey);
+                contains = name.IndexOf(matchKey, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (contains)
+                {
+                    self.matchTowerList.Add(cfgId);
+                    continue;
+                }
+            }
+        }
+
+        public static void DealList(this DlgBattle self)
+        {
+            for (int i = self.towerList.Count - 1; i >= 0; i--)
+            {
+                string cfgId = self.towerList[i];
+                bool bRet = ItemCfgCategory.Instance.Contain(cfgId);
+                if (bRet == false)
+                {
+                    Log.Error($"ItemCfgCategory.Instance.Contain({cfgId}) == false");
+                    self.towerList.RemoveAt(i);
+                    continue;
+                }
+                bRet = TowerDefense_TowerCfgCategory.Instance.Contain(cfgId);
+                if (bRet == false)
+                {
+                    Log.Error($"TowerDefense_TowerCfgCategory.Instance.Contain({cfgId}) == false");
+                    self.towerList.RemoveAt(i);
+                    continue;
+                }
+            }
+            for (int i = self.monsterList.Count - 1; i >= 0; i--)
+            {
+                string cfgId = self.monsterList[i];
+                bool bRet = ItemCfgCategory.Instance.Contain(cfgId);
+                if (bRet == false)
+                {
+                    Log.Error($"ItemCfgCategory.Instance.Contain({cfgId}) == false");
+                    self.monsterList.RemoveAt(i);
+                    continue;
+                }
+                bRet = TowerDefense_MonsterCfgCategory.Instance.Contain(cfgId);
+                if (bRet == false)
+                {
+                    bRet = TowerDefense_TowerCfgCategory.Instance.Contain(cfgId);
+                    if (bRet == false)
+                    {
+                        Log.Error($"TowerDefense_MonsterCfgCategory.Instance.Contain({cfgId}) == false");
+                        Log.Error($"TowerDefense_TowerCfgCategory.Instance.Contain({cfgId}) == false");
+                        self.monsterList.RemoveAt(i);
+                        continue;
+                    }
+                }
+            }
+
+            self.GetMatchMonsterList("");
+            self.GetMatchTowerList("");
+        }
 
         public static void HideWindow(this DlgBattle self)
         {
@@ -175,8 +373,8 @@ namespace ET.Client
         {
             Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
-            string itemCfgId = self.towerList[index];
-            itemTower.ShowBagItem(itemCfgId, true);
+            string towerCfgId = self.matchTowerList[index];
+            itemTower.ShowBagItem(towerCfgId, true).Coroutine();
 
             itemTower.ELabel_NumTextMeshProUGUI.text = "1";
 
@@ -185,7 +383,7 @@ namespace ET.Client
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
                     battleDragItemType = BattleDragItemType.PKTower,
-                    battleDragItemParam = itemCfgId,
+                    battleDragItemParam = towerCfgId,
                     createActionIds = self.View.E_InputFieldCreateActionTowerTMP_InputField.text,
                     callBack = (scene) =>
                     {
@@ -199,9 +397,9 @@ namespace ET.Client
         {
             Scroll_Item_Tower itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
 
-            string itemCfgId = self.monsterList[index];
+            string monsterCfgId = self.matchMonsterList[index];
 
-            itemMonster.ShowBagItem(itemCfgId, true);
+            itemMonster.ShowBagItem(monsterCfgId, true).Coroutine();
             itemMonster.ELabel_NumTextMeshProUGUI.text = $"1";
 
             ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
@@ -209,7 +407,7 @@ namespace ET.Client
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
                     battleDragItemType = BattleDragItemType.PKMonster,
-                    battleDragItemParam = itemCfgId,
+                    battleDragItemParam = monsterCfgId,
                     countOnce = int.Parse(self.View.E_InputFieldTMP_InputField.text),
                     createActionIds = self.View.E_InputFieldCreateActionTMP_InputField.text,
                     callBack = (scene) =>
@@ -222,7 +420,7 @@ namespace ET.Client
 
         public static void ChgScrollRectMoveStatus(this DlgBattle self, bool status)
         {
-            self.View.ELoopScrollList_TankLoopHorizontalScrollRect.enabled = status;
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.enabled = status;
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.enabled = status;
         }
 

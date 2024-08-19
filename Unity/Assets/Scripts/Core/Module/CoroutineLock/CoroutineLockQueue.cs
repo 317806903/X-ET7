@@ -47,6 +47,16 @@ namespace ET
             return this.currentCoroutineLock;
         }
 
+        public bool ChkIsLock()
+        {
+            if (this.queue.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void Notify(int level)
         {
             // 有可能WaitCoroutineLock已经超时抛出异常，所以要找到一个未处理的WaitCoroutineLock

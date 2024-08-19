@@ -190,7 +190,7 @@ namespace ET.Client
             if (self.lastCacheDateTime != now)
             {
                 self.lastCacheDateTime = now;
-                self.lastCacheMillis = (now.ToFileTime() / 10000) - self.unixBaseMillis;
+                self.lastCacheMillis = (now.ToFileTimeUtc() / 10000) - self.unixBaseMillis;
             }
             return self.lastCacheMillis;
         }

@@ -33,6 +33,79 @@ namespace ET
 			}
 		}
 
+		[ObjectSystem]
+		public class GamePlayFriendTeamFlagCompentFixedUpdateSystem: FixedUpdateSystem<GamePlayFriendTeamFlagCompent>
+		{
+			protected override void FixedUpdate(GamePlayFriendTeamFlagCompent self)
+			{
+				if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+				{
+					return;
+				}
+
+				float fixedDeltaTime = TimeHelper.FixedDetalTime;
+				self.FixedUpdate(fixedDeltaTime);
+			}
+		}
+
+		public static void FixedUpdate(this GamePlayFriendTeamFlagCompent self, float fixedDeltaTime)
+		{
+			if (++self.curFrameChk >= self.waitFrameChk)
+			{
+				self.curFrameChk = 0;
+
+				self.DealWaitDestroy();
+				self.DealCurUnit2TargetUnitIsFriend();
+			}
+		}
+
+		public static void DealWaitDestroy(this GamePlayFriendTeamFlagCompent self)
+		{
+			if (self.unitId2TeamFlag_WaitDestroy.Count == 0)
+			{
+				return;
+			}
+
+			self.RemoveList.Clear();
+			foreach (var item in self.unitId2TeamFlag_WaitDestroy)
+			{
+				if (item.Value.destroyTime < TimeHelper.ServerNow() - 5000)
+				{
+					self.RemoveList.Add(item.Key);
+				}
+			}
+
+			foreach (long unitId in self.RemoveList)
+			{
+				self.unitId2TeamFlag_WaitDestroy.Remove(unitId);
+			}
+			self.RemoveList.Clear();
+		}
+
+		public static void DealCurUnit2TargetUnitIsFriend(this GamePlayFriendTeamFlagCompent self)
+		{
+			if (self.curUnit2TargetUnitIsFriend.Count == 0)
+			{
+				return;
+			}
+
+			self.RemoveList.Clear();
+			foreach (var item in self.curUnit2TargetUnitIsFriend)
+			{
+				long unitId = item.Key;
+				if (UnitHelper.ChkUnitAlive(self.DomainScene(), unitId) == false)
+				{
+					self.RemoveList.Add(item.Key);
+				}
+			}
+
+			foreach (long unitId in self.RemoveList)
+			{
+				self.curUnit2TargetUnitIsFriend.Remove(unitId);
+			}
+			self.RemoveList.Clear();
+		}
+
 		public static void InitWhenRoom(this GamePlayFriendTeamFlagCompent self, RoomComponent roomComponent, List<RoomMember> roomMemberList)
 		{
 			self.InitPlayerTeamFlagWhenRoom(roomComponent, roomMemberList);
@@ -113,17 +186,25 @@ namespace ET
 		/// </summary>
 		/// <param name="self"></param>
 		/// <param name="unit"></param>
-		public static void RemoveUnitTeamFlag(this GamePlayFriendTeamFlagCompent self, Unit unit)
+		public static void RemoveUnitTeamFlag(this GamePlayFriendTeamFlagCompent self, long unitId)
 		{
-			self.unitId2TeamFlag.Remove(unit.Id);
+			if (self.unitId2TeamFlag.TryGetValue(unitId, out var teamFlagType) == false)
+			{
+				self.unitId2TeamFlag.Remove(unitId);
+				self.unitId2TeamFlag_WaitDestroy.Add(unitId, (teamFlagType, TimeHelper.ServerNow()));
+			}
 		}
 
-		public static TeamFlagType GetTeamFlagByUnit(this GamePlayFriendTeamFlagCompent self, Unit unit)
+		public static TeamFlagType GetTeamFlagByUnitId(this GamePlayFriendTeamFlagCompent self, long unitId)
 		{
-			if (self.unitId2TeamFlag.TryGetValue(unit.Id, out var teamFlagType) == false)
+			if (self.unitId2TeamFlag.TryGetValue(unitId, out var teamFlagType) == false)
 			{
+				if (self.unitId2TeamFlag_WaitDestroy.ContainsKey(unitId))
+				{
+					return self.unitId2TeamFlag_WaitDestroy[unitId].teamFlagType;
+				}
 #if UNITY_EDITOR
-				Log.Error($"GetTeamFlagByUnit self.unitId2TeamFlag[{unit.Id}] == null");
+				Log.Error($"GetTeamFlagByUnitId self.unitId2TeamFlag[{unitId}] == null");
 #endif
 				return TeamFlagType.TeamGlobal1;
 			}
@@ -220,15 +301,15 @@ namespace ET
 		/// 判断阵营
 		/// </summary>
 		/// <param name="self"></param>
-		/// <param name="curUnit"></param>
-		/// <param name="targetUnit"></param>
+		/// <param name="curUnitId"></param>
+		/// <param name="targetUnitId"></param>
 		/// <returns></returns>
-		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, Unit curUnit, Unit targetUnit, bool needSamePlayer)
+		public static bool ChkIsFriend(this GamePlayFriendTeamFlagCompent self, long curUnitId, long targetUnitId, bool needSamePlayer)
 		{
 			if (needSamePlayer)
 			{
-				long curPlayerId = self.GetPlayerIdByUnitId(curUnit.Id);
-				long targetPlayerId = self.GetPlayerIdByUnitId(targetUnit.Id);
+				long curPlayerId = self.GetPlayerIdByUnitId(curUnitId);
+				long targetPlayerId = self.GetPlayerIdByUnitId(targetUnitId);
 				if (curPlayerId == -1 || targetPlayerId == -1)
 				{
 					return false;
@@ -240,34 +321,46 @@ namespace ET
 				return false;
 			}
 
+			if (self.curUnit2TargetUnitIsFriend.TryGetValue(curUnitId, targetUnitId, out bool isFriend))
+			{
+				return isFriend;
+			}
+
 			GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlayBattleConfig();
 			if (gamePlayBattleLevelCfg.TeamMode is AllPlayersOneGroup allPlayersOneGroup)
 			{
-				return self._ChkIsFriend(self.GetTeamFlagByUnit(curUnit), self.GetTeamFlagByUnit(targetUnit));
+				isFriend = self._ChkIsFriend(self.GetTeamFlagByUnitId(curUnitId), self.GetTeamFlagByUnitId(targetUnitId));
 			}
 			else if (gamePlayBattleLevelCfg.TeamMode is PlayerAlone playerAlone)
 			{
-				long curPlayerId = self.GetPlayerIdByUnitId(curUnit.Id);
-				long targetPlayerId = self.GetPlayerIdByUnitId(targetUnit.Id);
+				long curPlayerId = self.GetPlayerIdByUnitId(curUnitId);
+				long targetPlayerId = self.GetPlayerIdByUnitId(targetUnitId);
 				if (curPlayerId != -1 && targetPlayerId != -1)
 				{
 					if (curPlayerId == targetPlayerId)
 					{
-						return true;
+						isFriend = true;
 					}
 					else
 					{
-						return false;
+						isFriend = false;
 					}
+					self.curUnit2TargetUnitIsFriend.Add(curUnitId, targetUnitId, isFriend);
+					return isFriend;
 				}
-				return self._ChkIsFriend(self.GetTeamFlagByUnit(curUnit), self.GetTeamFlagByUnit(targetUnit));
+				isFriend = self._ChkIsFriend(self.GetTeamFlagByUnitId(curUnitId), self.GetTeamFlagByUnitId(targetUnitId));
 			}
 			else if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam playerTeam)
 			{
-				return self._ChkIsFriend(self.GetTeamFlagByUnit(curUnit), self.GetTeamFlagByUnit(targetUnit));
+				isFriend = self._ChkIsFriend(self.GetTeamFlagByUnitId(curUnitId), self.GetTeamFlagByUnitId(targetUnitId));
+			}
+			else
+			{
+				isFriend = false;
 			}
 
-			return false;
+			self.curUnit2TargetUnitIsFriend.Add(curUnitId, targetUnitId, isFriend);
+			return isFriend;
 		}
 
 		public static float3 GetPlayerColor(this GamePlayFriendTeamFlagCompent self, long playerId)

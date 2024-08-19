@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgHall : Entity, IAwake, IUILogic
+	public class DlgHall : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgHallViewComponent View { get => this.GetComponent<DlgHallViewComponent>();}
 

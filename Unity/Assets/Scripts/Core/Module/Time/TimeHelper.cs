@@ -28,9 +28,21 @@ namespace ET
             return ClientNow() / 1000;
         }
 
-        public static DateTime DateTimeNow()
+        public static DateTime DateTimeNow(bool isUtc = true, bool isZone = false, bool isLocal = false)
         {
-            return DateTime.Now;
+            if (isUtc)
+            {
+                return DateTime.UtcNow;
+            }
+            if (isZone)
+            {
+                return DateTime.UtcNow;
+            }
+            if (isLocal)
+            {
+                return DateTime.Now;
+            }
+            return DateTime.UtcNow;
         }
 
         public static long ServerNow()
@@ -48,10 +60,15 @@ namespace ET
             return TimeInfo.Instance.ServerFrameTime();
         }
 
-        public static DateTime ToDateTime(long timeStamp)
+        public static DateTime ToDateTime(long timeStamp, bool isUtc = true, bool isZone = false, bool isLocal = false)
         {
             timeStamp = ChgToMillisecondTimeStamp(timeStamp);
-            return TimeInfo.Instance.ToDateTime(timeStamp);
+            return TimeInfo.Instance.ToDateTime(timeStamp, isUtc, isZone, isLocal);
+        }
+
+        public static long ToTimeStamp(DateTime dateTime, bool isUtc = true, bool isZone = false, bool isLocal = false)
+        {
+            return TimeInfo.Instance.Transition(dateTime, isUtc, isZone, isLocal);
         }
 
         public static bool ChkIsAfter(long timeStampA, long timeStampB)

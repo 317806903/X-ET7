@@ -52,12 +52,19 @@ namespace ET
             }
         }
 
-        public static async ETTask Init(this PathfindingComponent self, NavmeshManagerComponent navmeshManagerComponent)
+        public static async ETTask Init(this PathfindingComponent self, NavmeshManagerComponent navmeshManagerComponent, bool isPlayer)
         {
             Unit unit = self.GetUnit();
             float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
             float radius = ET.Ability.UnitHelper.GetBodyRadius(unit);
-            self.NavMesh = await navmeshManagerComponent.CreateCrowd(radius);
+            if (isPlayer)
+            {
+                self.NavMesh = await navmeshManagerComponent.CreateCrowdWhenPlayer(radius);
+            }
+            else
+            {
+                self.NavMesh = await navmeshManagerComponent.CreateCrowd(radius);
+            }
             if (self.NavMesh == null)
             {
                 return;

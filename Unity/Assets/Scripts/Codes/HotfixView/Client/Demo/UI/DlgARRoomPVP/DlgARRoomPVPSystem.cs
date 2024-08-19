@@ -21,15 +21,21 @@ namespace ET.Client
             self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddMemberItemRefreshListener(transform, i, true));
+            {
+                self.AddMemberItemRefreshListener(transform, i, true).Coroutine();
+                self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
 
             self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddMemberItemRefreshListener(transform, i, false));
+            {
+                self.AddMemberItemRefreshListener(transform, i, false).Coroutine();
+                self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
         }
 
-        public static void ShowWindow(this DlgARRoomPVP self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgARRoomPVP self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.E_RoomMemberChgTeamButton.gameObject.SetActive(false);
@@ -311,7 +317,7 @@ namespace ET.Client
             }
         }
 
-        public static async void AddMemberItemRefreshListener(this DlgARRoomPVP self, Transform transform, int index, bool isLeft)
+        public static async ETTask AddMemberItemRefreshListener(this DlgARRoomPVP self, Transform transform, int index, bool isLeft)
         {
             RoomComponent roomComponent = self.GetRoomComponent();
 

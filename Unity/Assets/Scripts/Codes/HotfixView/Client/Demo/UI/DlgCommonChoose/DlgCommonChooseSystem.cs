@@ -34,8 +34,9 @@ namespace ET.Client
         {
         }
 
-        public static void ShowWindow(this DlgCommonChoose self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgCommonChoose self, ShowWindowData contextData = null)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
             bool isARCameraEnable = ET.Client.ARSessionHelper.ChkARCameraEnable(self.DomainScene());
             if (isARCameraEnable)

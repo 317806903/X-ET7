@@ -22,6 +22,8 @@ namespace ET.Ability.Client
         public Animator mainAnimator;
         public List<Animator> animatorOtherList;
 
+        public Dictionary<AnimatorMotionName, float> animatorMotion2Length;
+        public Dictionary<AnimatorMotionName, bool> animatorMotionIsLoop;
         private EntityRef<AnimatorComponent> _animatorComponent;
         public AnimatorComponent animatorComponent
         {

@@ -14,33 +14,38 @@ namespace ET.Client
             clientScene.RemoveComponent<CurrentScenesComponent>();
             clientScene.AddComponent<CurrentScenesComponent>();
 
-            UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
+            //UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
+
+            TimerComponent.Instance.RemoveAll();
 
             UIAudioManagerHelper.PlayMusic(scene, MusicType.Login);
 
-            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLoading>();
-            DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);
-            await ResComponent.Instance.LoadSceneAsync("Login", _DlgLoading.UpdateProcess);
+            //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgLoading>();
+            //DlgLoading _DlgLoading = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgLoading>(true);
+            //await ResComponent.Instance.LoadSceneAsync("Login", _DlgLoading.UpdateProcess);
+            await ResComponent.Instance.LoadSceneAsync("Login", null);
 
             bool isFromInit = args.isFromInit;
 
-            UIManagerHelper.GetUIComponent(clientScene).HideAllShownWindow();
-
+            UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
             if (isFromInit)
             {
-                await UIManagerHelper.GetUIComponent(clientScene).ShowWindowAsync<DlgLogin>();
+                uiComponent.HideAllShownWindow(true, true);
+                await uiComponent.ShowWindowAsync<DlgLogin>();
             }
             else
             {
-                UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
                 // 热更流程
-                bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, false);
+                bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, true);
                 if (bRet == false)
                 {
+                    uiComponent.HideAllShownWindow(true, false);
+                    // 打开热更界面
+                    await uiComponent.ShowWindowAsync<DlgUpdate>();
                 }
                 else
                 {
-                    uiComponent.HideAllShownWindow();
+                    uiComponent.HideAllShownWindow(true, true);
                     await uiComponent.ShowWindowAsync<DlgLogin>();
                 }
             }

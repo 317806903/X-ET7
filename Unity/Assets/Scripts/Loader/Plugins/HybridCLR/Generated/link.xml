@@ -240,7 +240,7 @@
     <type fullname="ET.TransparentSetter" preserve="all" />
     <type fullname="ET.YooAssetHelper" preserve="all" />
     <type fullname="NetWork" preserve="all" />
-    <type fullname="RedDotMonoView" preserve="all" />
+    <type fullname="UIRedDotMonoView" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
     <type fullname="ReferenceSimpleData" preserve="all" />
     <type fullname="SimulateSwitchToBackground" preserve="all" />

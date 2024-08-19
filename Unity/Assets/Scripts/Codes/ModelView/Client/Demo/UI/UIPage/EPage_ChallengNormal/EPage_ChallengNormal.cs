@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    public class EPage_ChallengNormal : Entity, IAwake<UnityEngine.Transform>, IDestroy
+    public class EPage_ChallengNormal : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic
     {
         public EPage_ChallengNormalViewComponent View { get => this.GetComponent<EPage_ChallengNormalViewComponent>(); }
 
@@ -12,5 +12,6 @@ namespace ET.Client
         public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemReward;
         public Dictionary<int, Scroll_Item_Monsters> ScrollItemMonster;
         public int selectIndex;
+        public List<(string itemCfgId, int itemNum)> itemList;
     }
 }

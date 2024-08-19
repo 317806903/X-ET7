@@ -23,7 +23,6 @@ namespace ET.Client
 		public static void HideCommonUI(this ES_AvatarShow self)
 		{
 			self.View.uiTransform.SetVisible(false);
-
 		}
 
         /// <summary>
@@ -31,17 +30,15 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static async ETTask ShowAvatarIconByPlayerId(this ES_AvatarShow self, long playerID,bool isNameActive=true)
+        public static async ETTask ShowAvatarIconByPlayerId(this ES_AvatarShow self, long playerId, bool isNameActive = true)
 		{
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(),playerID);
-            if (playerBaseInfoComponent.AvatarFrameItemCfgId == null)
-                playerBaseInfoComponent.AvatarFrameItemCfgId = "AvatarFrame_None";
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(self.DomainScene(), playerId);
 
             //设置头像框
-            await self.View.E_AvatarIconImage.SetOtherPlayerIcon(self.ClientScene(),playerID);
+            await self.View.E_AvatarIconImage.SetOtherPlayerIcon(self.ClientScene(), playerId);
 
             //设置头像
-            await self.View.EImage_FrameIconImage.SetOtherPlayerFrame(self.ClientScene(), playerID);
+            await self.View.EImage_FrameIconImage.SetOtherPlayerFrame(self.ClientScene(), playerId);
 
             self.SetPlayerName(playerBaseInfoComponent.PlayerName,isNameActive);
         }
@@ -81,14 +78,14 @@ namespace ET.Client
             self.View.E_PlayerNameTextMeshProUGUI.SetVisible(isActive);
         }
 
-        //设置头像框(给DlgpersonalFrame调用)
+        //设置头像框
         public static async ETTask SetFrameIcon(this ES_AvatarShow self, string resPath)
         {
             await self.View.EImage_FrameIconImage.SetImageByPath(resPath);
 
         }
 
-        //设置头像图片(给DlgpersonalFrame调用)
+        //设置头像图片
         public static async ETTask SetAvatarIcon(this ES_AvatarShow self, string resPath)
 		{
 			await self.View.E_AvatarIconImage.SetImageByPath(resPath);

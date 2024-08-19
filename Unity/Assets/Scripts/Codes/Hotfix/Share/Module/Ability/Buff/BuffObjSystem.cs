@@ -151,23 +151,14 @@ namespace ET.Ability
         }
 
         /// <summary>
-        /// 施法者
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetCasterUnit(this BuffObj self)
-        {
-            return UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-        }
-
-        /// <summary>
         /// 获取buff发射者(player或monster)
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
         public static Unit GetCasterActorUnit(this BuffObj self)
         {
-            return UnitHelper.GetCasterActorUnit(self.DomainScene(), self.casterUnitId);
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
+            return unit.GetCasterActor();
         }
 
         public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent)

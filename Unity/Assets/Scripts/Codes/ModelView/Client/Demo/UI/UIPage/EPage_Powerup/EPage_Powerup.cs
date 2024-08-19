@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-	public class EPage_Powerup : Entity, IAwake<UnityEngine.Transform>, IDestroy
+	public class EPage_Powerup : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic
 	{
 		public EPage_PowerupViewComponent View { get => this.GetComponent<EPage_PowerupViewComponent>(); }
 
@@ -10,12 +10,12 @@ namespace ET.Client
         /// Item的字典
         /// </summary>
         public Dictionary<int, Scroll_Item_PowerUps> ScrollItemDic;
-        
+
         /// <summary>
         /// 当前底部ITem的配置
         /// </summary>
         public string BottomtItemCfg;
-       
+
         /// <summary>
         /// 当前选中的Item的索引
         /// </summary>

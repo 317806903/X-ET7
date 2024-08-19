@@ -15,7 +15,7 @@ namespace ET.Client
 			self.View.E_BGButton.AddListenerAsync(self.OnCloseButton);
 		}
 
-		public static void ShowWindow(this DlgDescTips self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgDescTips self, ShowWindowData contextData = null)
 		{
 			if (contextData == null)
 			{

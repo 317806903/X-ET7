@@ -29,8 +29,8 @@ namespace ET.Client
         public UIGuidePathList _UIGuidePathList;
         public int nowIndex;
 
-        public Action finished;
-        public Action<int> stepFinished;
+        public Action<Scene> finished;
+        public Action<Scene, int> stepFinished;
     }
 
     public enum GuideConditionStaticMethodType
@@ -55,7 +55,8 @@ namespace ET.Client
         ShowStory,
         ShowVideo,
         //进入新手关卡
-        EnterGuideBattle,
+        EnterGuideBattleTutorialFirst,
+        EnterGuideBattlePVEFirst,
         ShowPointTower,
         HidePointTower,
         HideTowerInfo,

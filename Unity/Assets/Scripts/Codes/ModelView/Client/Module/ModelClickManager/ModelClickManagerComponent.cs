@@ -19,8 +19,6 @@ namespace ET.Client
 
     public enum ClickDataType
     {
-        HomeWhenPutting,
-        MonsterCallWhenPutting,
         Home,
         MonsterCall,
         Tower,

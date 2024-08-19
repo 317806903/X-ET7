@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ET.Ability;
 
 namespace ET
 {
@@ -9,7 +10,11 @@ namespace ET
     {
         public bool isEnable;
         public string AICfgId;
+        public Dictionary<string, EntityRef<Unit>> TargetUnitDic;
+
         public Dictionary<int, int> curFrameIndex;
+        public Dictionary<int, long> ResetTargetTimeDic;
+        public ActionContext actionContext;
 
         public ETCancellationToken CancellationToken;
 

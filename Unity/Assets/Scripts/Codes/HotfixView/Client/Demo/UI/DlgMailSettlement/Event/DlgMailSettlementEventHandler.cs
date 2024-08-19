@@ -6,7 +6,7 @@
 	{
 		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
 		{
-			uiBaseWindow.windowType = UIWindowType.NoticeRoot;
+			uiBaseWindow.windowType = UIWindowType.PopUp;
 		}
 
 		public void OnInitComponent(UIBaseWindow uiBaseWindow)
@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgMailSettlement>().ShowWindow(contextData);
+			uiBaseWindow.GetComponent<DlgMailSettlement>().ShowWindow(contextData).Coroutine();
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

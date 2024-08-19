@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattle : Entity, IAwake, IUILogic
+	public class DlgBattle : Entity, IAwake, IUILogic, IUIDlg
 	{
 
 		public DlgBattleViewComponent View { get => this.GetComponent<DlgBattleViewComponent>(); }
@@ -13,7 +13,9 @@ namespace ET.Client
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemMonsters;
 
-		public List<string> towerList = new List<string>()
+		public List<string> matchMonsterList = new();
+		public List<string> matchTowerList = new();
+		public List<string> towerList = new ()
 		{
 			"Tow26_1",
 			"Tow26_2",
@@ -99,10 +101,26 @@ namespace ET.Client
 			"TowCallMonster_4",
 		};
 
-		public List<string> monsterList = new List<string>()
+		public List<string> monsterList = new ()
 		{
-			"Monster_Season3_Challenge5_8_4",
-			"Monster_Season4_Challenge5_8_4",
+			"Monster_MiFeng1",
+			"Monster_MiFeng2",
+			"Monster_MiFeng3",
+			"Monster_BianFu1",
+			"Monster_BianFu2",
+			"Monster_BianFu3",
+			"Monster_ZhiZhu1",
+			"Monster_ZhiZhu2",
+			"Monster_ZhiZhu3",
+			"Monster_ZhongZi1",
+			"Monster_ZhongZi2",
+			"Monster_ZhongZi3",
+			"Monster_Gui1",
+			"Monster_Gui2",
+			"Monster_Gui3",
+			"Monster_Dan1",
+			"Monster_Dan2",
+			"Monster_Dan3",
 			"Monster_Niao1",
 			"Monster_Niao2",
 			"Monster_Niao3",

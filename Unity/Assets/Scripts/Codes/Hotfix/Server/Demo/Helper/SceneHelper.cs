@@ -75,9 +75,10 @@ namespace ET.Server
                     break;
                 case SceneType.Mail:
                     scene.AddComponent<MailManagerComponent>();
+                    scene.AddComponent<MailHistoryManagerComponent>();
                     break;
                 case SceneType.Season:
-                    scene.AddComponent<SeasonManagerComponent>();
+                    scene.AddComponent<SeasonManagerComponent>().Init();
                     break;
                 case SceneType.Pay:
                     scene.AddComponent<HttpComponent, string>($"http://*:{startSceneConfig.OuterPort}/");

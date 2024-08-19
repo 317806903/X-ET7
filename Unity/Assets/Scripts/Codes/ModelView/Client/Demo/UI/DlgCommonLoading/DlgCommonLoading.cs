@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgCommonLoading : Entity, IAwake, IUILogic
+	public class DlgCommonLoading : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgCommonLoadingViewComponent View { get => this.GetComponent<DlgCommonLoadingViewComponent>(); }
 

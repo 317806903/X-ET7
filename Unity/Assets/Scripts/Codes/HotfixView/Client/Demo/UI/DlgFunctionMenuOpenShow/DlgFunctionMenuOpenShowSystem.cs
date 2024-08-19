@@ -15,7 +15,7 @@ namespace ET.Client
 			self.View.E_BGButton.AddListenerAsync(self.OnCloseButton);
 		}
 
-		public static void ShowWindow(this DlgFunctionMenuOpenShow self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgFunctionMenuOpenShow self, ShowWindowData contextData = null)
 		{
 			if (contextData == null)
 			{
@@ -46,7 +46,7 @@ namespace ET.Client
 
 		public static async ETTask OnCloseButton(this DlgFunctionMenuOpenShow self)
 		{
-			self.finished?.Invoke();
+			self.finished?.Invoke(self.DomainScene());
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgFunctionMenuOpenShow>();
 		}
 	}

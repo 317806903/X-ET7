@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleTowerHUDShow : Entity, IAwake, IUILogic
+	public class DlgBattleTowerHUDShow : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleTowerHUDShowViewComponent View { get => this.GetComponent<DlgBattleTowerHUDShowViewComponent>(); }
 		

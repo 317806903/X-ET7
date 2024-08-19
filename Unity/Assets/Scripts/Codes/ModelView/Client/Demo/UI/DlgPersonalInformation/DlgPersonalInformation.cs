@@ -3,10 +3,10 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgPersonalInformation : Entity, IAwake, IUILogic
+	public class DlgPersonalInformation : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgPersonalInformationViewComponent View { get => this.GetComponent<DlgPersonalInformationViewComponent>(); }
-		
 
+		public long dlgShowTime;
 	}
 }

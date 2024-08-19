@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -74,20 +74,35 @@ namespace ET.Client
             loopScrollRect.RefillCells();
         }
 
-        public static void SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect)
+        public static async ETTask SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect)
         {
+            RectTransform contentRectTrans = loopHorizontalScrollRect.content;
             int count = loopHorizontalScrollRect.totalCount;
-            if (count <= loopHorizontalScrollRect.prefabSource.poolSize)
+            if (count > loopHorizontalScrollRect.prefabSource.poolSize || count > contentRectTrans.childCount)
             {
-                // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
-                RectTransform contentRectTrans = loopHorizontalScrollRect.content;
-                Transform itemTransform = loopHorizontalScrollRect.content.GetChild(0).GetComponent<Transform>();
-                float LoopForhalf = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2 / contentRectTrans.localScale.x;
-                float halfSpacing = loopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().spacing / 2;
-                float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
-                float leftoffset = LoopForhalf - ((cellWidth / 2) * count) - (count - 1) * halfSpacing;
-                loopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().padding.left = (int)leftoffset;
+                contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+                return;
             }
+
+            // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
+            float scrollRectWidth = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
+            if (contentRectTrans.rect.width > scrollRectWidth)
+            {
+                contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+                return;
+            }
+            Transform itemTransform = contentRectTrans.GetChild(0).GetComponent<Transform>();
+            float LoopForhalf = scrollRectWidth / 2;
+            float halfSpacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing / 2;
+            float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
+            float leftoffset = LoopForhalf - ((cellWidth / 2) * count) - (count - 1) * halfSpacing;
+            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset * contentRectTrans.localScale.x);
+            //
+            // await TimerComponent.Instance.WaitFrameAsync();
+            // if (contentRectTrans.rect.width > scrollRectWidth)
+            // {
+            //     contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+            // }
         }
 
         public static void SetVisibleWithScale(this Transform transform, bool isVisible)
@@ -173,7 +188,7 @@ namespace ET.Client
             toggle.onValueChanged?.Invoke(isSelected);
         }
 
-        public static void RemoveUIScrollItems<K, T>(this K self, ref Dictionary<int, T> dictionary) where K : Entity, IUILogic
+        public static void RemoveUIScrollItems<K, T>(this K self, ref Dictionary<int, T> dictionary) where K : Entity, IUILogic, IUIDlg
                 where T : Entity, IUIScrollItem
         {
             if (dictionary == null)
@@ -347,7 +362,7 @@ namespace ET.Client
         /// </summary>
         /// <OtherParam name="self"></OtherParam>
         /// <OtherParam name="closeButton"></OtherParam>
-        public static void RegisterCloseEvent<T>(this Entity self, Button closeButton, bool isClose = false) where T : Entity, IAwake, IUILogic
+        public static void RegisterCloseEvent<T>(this Entity self, Button closeButton, bool isClose = false) where T : Entity, IAwake, IUILogic, IUIDlg
         {
             closeButton.onClick.RemoveAllListeners();
             if (isClose)
@@ -458,6 +473,13 @@ namespace ET.Client
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ls.x);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ls.y);
             rt.localPosition = lp;
+        }
+
+        public static Vector3[] corners = new Vector3[4];
+        public static Vector3 GetRectTransformMidTop(this RectTransform rt)
+        {
+            rt.GetWorldCorners(corners);
+            return (corners[1] + corners[2]) * 0.5f;
         }
     }
 }

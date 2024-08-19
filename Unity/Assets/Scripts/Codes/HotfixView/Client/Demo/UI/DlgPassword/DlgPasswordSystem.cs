@@ -14,7 +14,7 @@ namespace ET.Client
             self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
         }
 
-        public static void ShowWindow(this DlgPassword self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgPassword self, ShowWindowData contextData = null)
         {
             self.ShowBg().Coroutine();
         }

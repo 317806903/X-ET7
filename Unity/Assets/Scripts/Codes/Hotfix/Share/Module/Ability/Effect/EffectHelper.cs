@@ -37,7 +37,7 @@ namespace ET.Ability
                 long effectCasterUnitId = unit.Id;
                 if (UnitHelper.ChkIsBullet(unit))
                 {
-                    effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+                    effectCasterUnitId = unit.GetCaster().Id;
                 }
                 foreach (var unitId in selectHandle.unitIds)
                 {
@@ -81,7 +81,7 @@ namespace ET.Ability
                 long effectCasterUnitId = unit.Id;
                 if (UnitHelper.ChkIsBullet(unit))
                 {
-                    effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+                    effectCasterUnitId = unit.GetCaster().Id;
                 }
                 foreach (var unitId in selectHandle.unitIds)
                 {
@@ -138,7 +138,7 @@ namespace ET.Ability
             long effectCasterUnitId = unit.Id;
             if (UnitHelper.ChkIsBullet(unit))
             {
-                effectCasterUnitId = UnitHelper.GetCasterUnit(unit).Id;
+                effectCasterUnitId = unit.GetCaster().Id;
             }
             float3 position = selectHandle.position;
             float3 forward = new float3(0, 0, 1);

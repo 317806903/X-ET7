@@ -211,7 +211,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8754938060832142238}
@@ -1231,7 +1231,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 144878688228228908}
@@ -1294,6 +1294,40 @@ MonoBehaviour:
       Value: Crawl Forward Slow In Place
     - Key: Die
       Value: Die
+    - Key: Idle
+      Value: Idle
+    - Key: Projectile Attack
+      Value: Projectile Attack
+    - Key: Take Damage
+      Value: Take Damage
+    - Key: Turn Left
+      Value: Turn Left
+    - Key: Turn Right
+      Value: Turn Right
+    - Key: Crawl Forward Slow In Place 1
+      Value: Crawl Forward Slow In Place
+    - Key: Crawl Forward Fast In Place 1
+      Value: Crawl Forward Fast In Place
+    - Key: Idle 0
+      Value: Idle
+    - Key: Idle 1
+      Value: Idle
+    - Key: Idle 2
+      Value: Idle
+    - Key: Idle 3
+      Value: Idle
+    - Key: Idle 4
+      Value: Idle
+    - Key: Idle 5
+      Value: Idle
+    - Key: Idle 6
+      Value: Idle
+    - Key: Idle 7
+      Value: Idle
+    - Key: Idle 8
+      Value: Idle
+    - Key: Move
+      Value: Crawl Forward Fast In Place
 --- !u!1 &8754938060832370622
 GameObject:
   m_ObjectHideFlags: 0

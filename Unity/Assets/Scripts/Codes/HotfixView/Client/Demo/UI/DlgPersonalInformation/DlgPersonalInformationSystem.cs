@@ -16,7 +16,14 @@ namespace ET.Client
             self.View.E_Logout_SdkButton.AddListener(self.OnLogout);
             self.View.E_GoogleLoginButton.AddListenerAsync(self.OnClickBindAccount);
             self.View.E_IphoneLoginButton.AddListenerAsync(self.OnClickBindAccount);
-            self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+            self.View.E_BG_ClickButton.AddListener(()=>
+            {
+                if (self.ChkCanClickBg() == false)
+                {
+                    return;
+                }
+                self.OnBGClick();
+            });
             self.View.E_BtnCloseButton.AddListener(self.OnBGClick);
 
             //改名按钮
@@ -34,10 +41,21 @@ namespace ET.Client
             });
         }
 
-        public static void ShowWindow(this DlgPersonalInformation self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgPersonalInformation self, ShowWindowData contextData = null)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
+
             self.ShowBg().Coroutine();
             self._ShowWindow().Coroutine();
+        }
+
+        public static bool ChkCanClickBg(this DlgPersonalInformation self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
         }
 
         public static async ETTask ShowBg(this DlgPersonalInformation self)
@@ -102,7 +120,7 @@ namespace ET.Client
 
         public static void OnBGClick(this DlgPersonalInformation self)
         {
-                self.HidePersonalInfo().Coroutine();
+            self.HidePersonalInfo().Coroutine();
         }
 
         public static async ETTask HidePersonalInfo(this DlgPersonalInformation self)
@@ -110,8 +128,6 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
             await UIManagerHelper.EnterGameModeUI(self.DomainScene());
         }
-
-
 
         public static async ETTask OnClickBindAccount(this DlgPersonalInformation self)
         {

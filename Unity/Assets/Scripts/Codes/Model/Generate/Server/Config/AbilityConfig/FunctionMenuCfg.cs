@@ -23,6 +23,8 @@ public sealed partial class FunctionMenuCfg: Bright.Config.BeanBase
         OpenCondition = FunctionMenuCondition.DeserializeFunctionMenuCondition(_buf);
         Icon = _buf.ReadString();
         UIGuideConfigFileName = _buf.ReadString();
+        IsGuideWhenBattleEnd = _buf.ReadBool();
+        Priority = _buf.ReadInt();
         PostInit();
     }
 
@@ -56,6 +58,14 @@ public sealed partial class FunctionMenuCfg: Bright.Config.BeanBase
     /// 指引文件名称
     /// </summary>
     public string UIGuideConfigFileName { get; private set; }
+    /// <summary>
+    /// 是否在战斗结束时强制退出房间并指引会首页
+    /// </summary>
+    public bool IsGuideWhenBattleEnd { get; private set; }
+    /// <summary>
+    /// 优先级(越小越低)
+    /// </summary>
+    public int Priority { get; private set; }
 
     public const int __ID__ = 1952930669;
     public override int GetTypeId() => __ID__;
@@ -84,6 +94,8 @@ public sealed partial class FunctionMenuCfg: Bright.Config.BeanBase
         + "OpenCondition:" + OpenCondition + ","
         + "Icon:" + Icon + ","
         + "UIGuideConfigFileName:" + UIGuideConfigFileName + ","
+        + "IsGuideWhenBattleEnd:" + IsGuideWhenBattleEnd + ","
+        + "Priority:" + Priority + ","
         + "}";
     }
     

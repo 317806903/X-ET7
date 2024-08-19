@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FunctionMenu_Invite
   m_EditorClassIdentifier: 
   list:
-  - name: "\u70B9\u51FB\u5206\u4EAB"
+  - name: "\u6307\u5F15\u591A\u4EBA"
     isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 

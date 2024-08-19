@@ -1160,7 +1160,13 @@ namespace ET
 				{
 					continue;
 				}
-				string towerCfgId = towerUnit.GetComponent<TowerComponent>().towerCfgId;
+
+				TowerComponent towerComponent = towerUnit.GetComponent<TowerComponent>();
+				if (towerComponent == null)
+				{
+					continue;
+				}
+				string towerCfgId = towerComponent.towerCfgId;
 				if (TowerDefense_TowerCfgCategory.Instance.ChkIsSameBaseTowerCfg(baseTowerCfgId, towerCfgId))
 				{
 					existTowerDic.Add(towerCfgId, towerUnitId);

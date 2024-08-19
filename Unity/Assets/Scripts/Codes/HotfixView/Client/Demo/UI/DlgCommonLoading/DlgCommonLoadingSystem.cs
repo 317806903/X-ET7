@@ -14,7 +14,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgCommonLoading self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgCommonLoading self, ShowWindowData contextData = null)
 		{
 			self.showNum = 0;
 		}

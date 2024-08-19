@@ -55,7 +55,7 @@ namespace ET
             { ServerEnum.Localhost, "127.0.0.1"},
             { ServerEnum.Release_148Master, "192.168.10.148"},
             { ServerEnum.Release_148Release, "192.168.10.148"},
-            { ServerEnum.Release_Zpb, "192.168.10.58"},
+            { ServerEnum.Release_Zpb, "192.168.10.50"},
             { ServerEnum.Release_OutNet_Arcade, "8.134.89.37"},
             { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
             { ServerEnum.Release_OutNet_CN_Demo, "8.134.156.170"},
@@ -82,7 +82,7 @@ namespace ET
             //{ ServerEnum.Release_148, "http://192.168.10.148"},
             { ServerEnum.Release_148Master, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master"},
             { ServerEnum.Release_148Release, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release"},
-            { ServerEnum.Release_Zpb, "http://192.168.10.58"},
+            { ServerEnum.Release_Zpb, "http://192.168.10.50"},
             { ServerEnum.Release_OutNet_Arcade, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_Arcade"},
             { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
             { ServerEnum.Release_OutNet_CN_Demo, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo"},
@@ -249,6 +249,18 @@ namespace ET
                     if (this.resConfig.ResLoadMode != EPlayMode.EditorSimulateMode)
                     {
                         this.resConfig.ResLoadMode = EPlayMode.EditorSimulateMode;
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.resConfig.languageType != "EN")
+                    {
+                        this.resConfig.languageType = "EN";
+                        EditorUtility.SetDirty(this.resConfig);
+                        AssetDatabase.SaveAssets();
+                    }
+                    if (this.resConfig.IsShowLanguagePre)
+                    {
+                        this.resConfig.IsShowLanguagePre = false;
                         EditorUtility.SetDirty(this.resConfig);
                         AssetDatabase.SaveAssets();
                     }
@@ -530,6 +542,24 @@ namespace ET
                 if (languageType.ToString() != this.resConfig.languageType)
                 {
                     languageType = (LanguageTypeEditor) Enum.Parse(typeof(LanguageTypeEditor), this.resConfig.languageType, true);
+                }
+            }
+            EditorGUI.BeginChangeCheck();
+            var IsShowLanguagePre = EditorGUILayout.Toggle("IsShowLanguagePre: ", this.resConfig.IsShowLanguagePre);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (IsShowLanguagePre != this.resConfig.IsShowLanguagePre)
+                {
+                    this.resConfig.IsShowLanguagePre = IsShowLanguagePre;
+                    EditorUtility.SetDirty(this.resConfig);
+                    AssetDatabase.SaveAssets();
+                }
+            }
+            else
+            {
+                if (IsShowLanguagePre != this.resConfig.IsShowLanguagePre)
+                {
+                    IsShowLanguagePre = this.resConfig.IsShowLanguagePre;
                 }
             }
 

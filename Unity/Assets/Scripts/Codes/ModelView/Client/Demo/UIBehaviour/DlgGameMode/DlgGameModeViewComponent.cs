@@ -24,6 +24,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_BGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BGImage == null )
+				{
+					this.m_E_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_BG");
+				}
+				return this.m_E_BGImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_ReturnLoginButton
 		{
 			get
@@ -503,6 +520,7 @@ namespace ET.Client
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
+			this.m_E_BGImage = null;
 			this.m_E_ReturnLoginButton = null;
 			this.m_E_ReturnLoginImage = null;
 			this.m_E_ReturnTextText = null;
@@ -535,6 +553,7 @@ namespace ET.Client
 		}
 
 		private UnityEngine.RectTransform m_EGBackGroundRectTransform = null;
+		private UnityEngine.UI.Image m_E_BGImage = null;
 		private UnityEngine.UI.Button m_E_ReturnLoginButton = null;
 		private UnityEngine.UI.Image m_E_ReturnLoginImage = null;
 		private UnityEngine.UI.Text m_E_ReturnTextText = null;

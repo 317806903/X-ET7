@@ -103,7 +103,7 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
 
-        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgName);
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic\r\n", strDlgName);
         strBuilder.AppendLine("\t{");
         strBuilder.AppendLine("\t\tpublic " + strDlgName + "ViewComponent View { get => this.GetComponent<" + strDlgName + "ViewComponent>(); }\r\n");
         strBuilder.AppendLine("\t}");

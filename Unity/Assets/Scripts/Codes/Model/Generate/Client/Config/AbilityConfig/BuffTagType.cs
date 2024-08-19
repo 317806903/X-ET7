@@ -23,61 +23,65 @@ namespace ET.AbilityConfig
         /// </summary>
         StrongBati = 2,
         /// <summary>
-        /// 虚弱(和霸体共存期间相当于无霸体)
+        /// 虚弱(和弱霸体共存期间相当于无霸体)
         /// </summary>
         Weak = 3,
         /// <summary>
+        /// 虚弱(和强霸体共存期间相当于无霸体)
+        /// </summary>
+        StrongWeak = 4,
+        /// <summary>
         /// 完全霸体（霸体表示 不受击退，击飞，禁锢等控制）
         /// </summary>
-        FullBati = 4,
+        FullBati = 5,
         /// <summary>
         /// 无敌(受攻击但不受伤害,不受控制)
         /// </summary>
-        Invincible = 5,
+        Invincible = 6,
         /// <summary>
         /// 破弱霸体
         /// </summary>
-        BreakSoftBati = 6,
+        BreakSoftBati = 7,
         /// <summary>
         /// 破强霸体
         /// </summary>
-        BreakStrongBati = 7,
+        BreakStrongBati = 8,
         /// <summary>
         /// 禁止主动移动(界面操作或AI操作)
         /// </summary>
-        NoMoveInput = 8,
+        NoMoveInput = 9,
         /// <summary>
         /// 禁止释放主动技能(界面操作或AI操作)
         /// </summary>
-        NoSkillCastInput = 9,
+        NoSkillCastInput = 10,
         /// <summary>
         /// 禁止主动修改面向(界面操作或AI操作)
         /// </summary>
-        NoFaceChgInput = 10,
+        NoFaceChgInput = 11,
         /// <summary>
         /// 禁止普通攻击(界面操作或AI操作)
         /// </summary>
-        NoNormalAttack = 11,
+        NoNormalAttack = 12,
         /// <summary>
         /// 隐身:不可被其他人看见(不被主动搜索到)
         /// </summary>
-        Invisible = 12,
+        Invisible = 13,
         /// <summary>
         /// 被显形
         /// </summary>
-        BeBreakInvisible = 13,
+        BeBreakInvisible = 14,
         /// <summary>
         /// 动作停止(被冰冻)
         /// </summary>
-        StopAnimator = 14,
+        StopAnimator = 15,
         /// <summary>
         /// 不可被移动(击退，击飞等)
         /// </summary>
-        NoMotion = 15,
-        BuffTagType1 = 16,
-        BuffTagType2 = 17,
-        BuffTagType3 = 18,
-        BuffTagType4 = 19,
+        NoMotion = 16,
+        BuffTagType1 = 17,
+        BuffTagType2 = 18,
+        BuffTagType3 = 19,
+        BuffTagType4 = 20,
     }
 
 } 

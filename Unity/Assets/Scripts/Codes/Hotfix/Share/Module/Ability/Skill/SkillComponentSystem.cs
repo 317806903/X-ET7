@@ -280,6 +280,29 @@ namespace ET.Ability
                         return skillObjList;
                     }
                 }
+                else
+                {
+                    if (skillSlotType == SkillSlotType.NormalAttack)
+                    {
+                        if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.PassiveSkill, out skillObjs))
+                        {
+                            if (skillSlotIndex == -1)
+                            {
+                                return skillObjs;
+                            }
+                            else
+                            {
+                                if (skillSlotIndex >= skillObjs.Count)
+                                {
+                                    return null;
+                                }
+                                ListComponent<long> skillObjList = ListComponent<long>.Create();
+                                skillObjList.Add(skillObjs[skillSlotIndex]);
+                                return skillObjList;
+                            }
+                        }
+                    }
+                }
             }
             return null;
         }

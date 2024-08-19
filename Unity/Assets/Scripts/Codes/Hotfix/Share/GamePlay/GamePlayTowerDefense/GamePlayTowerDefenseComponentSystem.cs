@@ -45,11 +45,6 @@ namespace ET
         {
         }
 
-        public static Unit GetHomeUnit(this GamePlayTowerDefenseComponent self, Unit unit)
-        {
-            return self.GetComponent<PutHomeComponent>().GetHomeUnit(unit);
-        }
-
         public static float3 GetCallMonsterPosition(this GamePlayTowerDefenseComponent self, long playerId)
         {
             return self.GetComponent<PutMonsterCallComponent>().GetPosition(playerId);
@@ -374,7 +369,10 @@ namespace ET
 
             self.GetComponent<PutHomeComponent>().RecoveryHomeHP();
 
-            //self.GetComponent<PlayerOwnerTowersComponent>().RefreshAllPlayerTowerPool();
+            if (self.model.IsAutoRefreshBuyTower)
+            {
+                self.GetComponent<PlayerOwnerTowersComponent>().RefreshAllPlayerTowerPool();
+            }
 
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.InTheBattleEnd;
             self.NoticeToClientAll();
@@ -748,47 +746,61 @@ namespace ET
             //TeamPlayer1, TeamGlobal1, Monster2 之间设成 友好
             foreach (var allPlayerTeamFlagOne in allPlayerTeamFlag)
             {
+                long playerId = allPlayerTeamFlagOne.Key;
+                TeamFlagType teamFlagType = allPlayerTeamFlagOne.Value;
                 List<TeamFlagType> teamFlagTypes = new();
-                teamFlagTypes.Add(allPlayerTeamFlagOne.Value);
-                teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(allPlayerTeamFlagOne.Key));
-                foreach (var allPlayerTeamFlagOne2 in allPlayerTeamFlag)
+                teamFlagTypes.Add(teamFlagType);
+                teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(playerId));
+                foreach (var allPlayerTeamFlagOneOther in allPlayerTeamFlag)
                 {
-                    if (allPlayerTeamFlagOne.Value == allPlayerTeamFlagOne2.Value)
+                    long otherPlayerId = allPlayerTeamFlagOneOther.Key;
+                    TeamFlagType otherTeamFlagType = allPlayerTeamFlagOneOther.Value;
+                    if (teamFlagType == otherTeamFlagType)
                     {
                         continue;
                     }
-                    teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(allPlayerTeamFlagOne2.Key));
+                    teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(otherPlayerId));
                 }
                 gamePlayComponent.DealFriendTeamFlag(teamFlagTypes, false, false);
             }
+
             //TeamPlayer1, TeamGlobal1, TeamGlobal2 之间设成 友好
             foreach (var allPlayerTeamFlagOne in allPlayerTeamFlag)
             {
+                long playerId = allPlayerTeamFlagOne.Key;
+                TeamFlagType teamFlagType = allPlayerTeamFlagOne.Value;
                 List<TeamFlagType> teamFlagTypes = new();
-                teamFlagTypes.Add(allPlayerTeamFlagOne.Value);
-                teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(allPlayerTeamFlagOne.Key));
-                foreach (var allPlayerTeamFlagOne2 in allPlayerTeamFlag)
+                teamFlagTypes.Add(teamFlagType);
+                teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(playerId));
+                foreach (var allPlayerTeamFlagOneOther in allPlayerTeamFlag)
                 {
-                    if (allPlayerTeamFlagOne.Value == allPlayerTeamFlagOne2.Value)
+                    long otherPlayerId = allPlayerTeamFlagOneOther.Key;
+                    TeamFlagType otherTeamFlagType = allPlayerTeamFlagOneOther.Value;
+                    if (teamFlagType == otherTeamFlagType)
                     {
                         continue;
                     }
-                    teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(allPlayerTeamFlagOne2.Key));
+                    teamFlagTypes.Add(self.GetHomeTeamFlagTypeByPlayer(otherPlayerId));
                 }
                 gamePlayComponent.DealFriendTeamFlag(teamFlagTypes, false, false);
             }
+
             //Monster1, Monster2 之间设成 友好
             foreach (var allPlayerTeamFlagOne in allPlayerTeamFlag)
             {
+                long playerId = allPlayerTeamFlagOne.Key;
+                TeamFlagType teamFlagType = allPlayerTeamFlagOne.Value;
                 List<TeamFlagType> teamFlagTypes = new();
-                teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(allPlayerTeamFlagOne.Key));
-                foreach (var allPlayerTeamFlagOne2 in allPlayerTeamFlag)
+                teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(playerId));
+                foreach (var allPlayerTeamFlagOneOther in allPlayerTeamFlag)
                 {
-                    if (allPlayerTeamFlagOne.Value == allPlayerTeamFlagOne2.Value)
+                    long otherPlayerId = allPlayerTeamFlagOneOther.Key;
+                    TeamFlagType otherTeamFlagType = allPlayerTeamFlagOneOther.Value;
+                    if (teamFlagType == otherTeamFlagType)
                     {
                         continue;
                     }
-                    teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(allPlayerTeamFlagOne2.Key));
+                    teamFlagTypes.Add(self.GetMonsterTeamFlagTypeByPlayer(otherPlayerId));
                 }
                 gamePlayComponent.DealFriendTeamFlag(teamFlagTypes, false, false);
             }
@@ -823,13 +835,13 @@ namespace ET
             self.TransToRestTime().Coroutine();
         }
 
-        public static void DealEscape(this GamePlayTowerDefenseComponent self, Unit unit)
+        public static void DealEscape(this GamePlayTowerDefenseComponent self, Unit unit, Unit homeUnit)
         {
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
 
             long attackValue = numericComponent.GetAsInt(NumericType.PhysicalAttack);
             Damage damage = new(NumericType.PhysicalAttack, attackValue);
-            ET.Ability.DamageHelper.CreateDamageInfo(unit, self.GetHomeUnit(unit), damage, false);
+            ET.Ability.DamageHelper.CreateDamageInfo(unit, homeUnit, damage, false);
             unit.DestroyWithDeathShow();
         }
 

@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-	public class EPage_Rank : Entity, IAwake<UnityEngine.Transform>, IDestroy
+	public class EPage_Rank : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic
 	{
 		public EPage_RankViewComponent View { get => this.GetComponent<EPage_RankViewComponent>(); }
 

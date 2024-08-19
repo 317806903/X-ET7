@@ -3,10 +3,11 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgMail : Entity, IAwake, IUILogic
+	public class DlgMail : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgMailViewComponent View { get => this.GetComponent<DlgMailViewComponent>(); }
 
+		public long dlgShowTime;
 
 		public Dictionary<int, Scroll_Item_Mail_Inbox> ScrollMailDic;
 		public List<(MailInfoComponent, MailStatus)> MailInfoAndStatus;

@@ -374,14 +374,16 @@ namespace ET.Client
 		}
 
 
-		public static float GetPathLength(this GamePlayTowerDefenseComponent self)
+		public static float GetPathLength(this GamePlayTowerDefenseComponent self, bool isARScale = true)
 		{
 			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
 			float length = ET.Client.PathLineRendererComponent.Instance.GetPathLength(homeTeamFlagType, myPlayerId);
-
-			GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
-			length /= gamePlayComponent.GetARScale();
+			if (isARScale)
+			{
+				GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(self.DomainScene());
+				length /= gamePlayComponent.GetARScale();
+			}
 			return length;
 		}
 

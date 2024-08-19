@@ -13,7 +13,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowBagItem(this Scroll_Item_Tower self, string itemCfgId, bool needClickShowDetail)
+		public static async ETTask ShowBagItem(this Scroll_Item_Tower self, string itemCfgId, bool needClickShowDetail)
 		{
 			ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
 			if (needClickShowDetail)
@@ -26,7 +26,7 @@ namespace ET.Client
 			}
 
 			self.ELabel_NameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-			self.EButton_TowerIcoImage.SetImageByPath(ItemHelper.GetItemIcon(itemCfgId)).Coroutine();
+			await self.EButton_TowerIcoImage.SetImageByItemCfgId(itemCfgId);
 
 			self.EG_IconStarRectTransform.SetVisible(false);
 			self.EImage_Label1Image.gameObject.SetActive(false);
@@ -46,7 +46,8 @@ namespace ET.Client
 				return;
 			}
 
-			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, self.uiTransform.position);
+			Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(self.uiTransform.GetComponent<RectTransform>());
+			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos);
 		}
 
 		public static void SetQuality(this Scroll_Item_Tower self, string itemCfgId)
@@ -65,11 +66,11 @@ namespace ET.Client
 			self.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
 			if (labelCount >= 1)
 			{
-				self.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+				self.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[0]);
 			}
 			if (labelCount >= 2)
 			{
-				self.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+				self.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[1]);
 			}
 		}
 

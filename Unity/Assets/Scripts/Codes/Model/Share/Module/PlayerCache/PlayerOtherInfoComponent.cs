@@ -10,5 +10,7 @@ namespace ET
     {
         public Dictionary<string, bool> battleGuideStatus;
         public Dictionary<string, int> battleGuideStepIndex;
+
+        public HashSet<UIRedDotType> uiRedDotTypes;
     }
 }

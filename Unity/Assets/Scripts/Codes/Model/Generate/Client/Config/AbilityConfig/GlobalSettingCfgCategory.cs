@@ -63,7 +63,14 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 是否显示金币获得展示
     /// </summary>
      public bool ShowGetGold => _data.ShowGetGold;
+    /// <summary>
+    /// 玩家头像列表
+    /// </summary>
      public System.Collections.Generic.List<string> AvatarIcons => _data.AvatarIcons;
+    /// <summary>
+    /// 背景图片列表
+    /// </summary>
+     public System.Collections.Generic.List<string> BGList => _data.BGList;
     /// <summary>
     /// 新手世界观信息
     /// </summary>
@@ -129,10 +136,6 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public System.Collections.Generic.List<string> InitialBackpackItem => _data.InitialBackpackItem;
     /// <summary>
-    /// (展示模式)初始背包物体
-    /// </summary>
-     public System.Collections.Generic.List<string> DemoShowInitialBackpackItem => _data.DemoShowInitialBackpackItem;
-    /// <summary>
     /// 需要重新评估游戏的时刻
     /// </summary>
      public long GameReJudgeTime => _data.GameReJudgeTime;
@@ -140,6 +143,18 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 最多出战卡数
     /// </summary>
      public int MaxBattleCardNum => _data.MaxBattleCardNum;
+    /// <summary>
+    /// 赛季开始时间
+    /// </summary>
+     public long SeasonStartTime => _data.SeasonStartTime;
+    /// <summary>
+    /// 单个赛季持续时间(天)
+    /// </summary>
+     public float SeasonDurationTime => _data.SeasonDurationTime;
+    /// <summary>
+    /// (展示模式)初始背包物体
+    /// </summary>
+     public System.Collections.Generic.List<string> DemoShowInitialBackpackItem => _data.DemoShowInitialBackpackItem;
     /// <summary>
     /// (街机模式)管理员密码
     /// </summary>
@@ -224,6 +239,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// (街机模式)无尽模式开始战斗需消耗代币
     /// </summary>
      public int GameModeArcadeEndlessChallengeCostWhenStart => _data.GameModeArcadeEndlessChallengeCostWhenStart;
+    /// <summary>
+    /// 上报相机位置的频率(秒)
+    /// </summary>
+     public float EventLogCameraPosHz => _data.EventLogCameraPosHz;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

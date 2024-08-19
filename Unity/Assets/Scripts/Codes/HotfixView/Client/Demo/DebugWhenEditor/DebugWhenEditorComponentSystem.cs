@@ -135,6 +135,16 @@ namespace ET.Client
             {
                 ET.Client.GameObjectPoolHelper.ShowPoolDictCount(showCount);
             });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<int>("OpenSeasonRoomWhenDebug", "OpenSeasonRoomWhenDebug", (index) =>
+            {
+                self.OpenSeasonRoomWhenDebug(index).Coroutine();
+            });
+
+            IngameDebugConsole.DebugLogConsole.AddCommand<string, bool>("ShowRedDotNode", "ShowRedDotNode", (target, isShow) =>
+            {
+                self.ShowRedDotNodeWhenDebug(target, isShow).Coroutine();
+            });
         }
 
         public static void SetStopActorMoveWhenDebug(this DebugWhenEditorComponent self)
@@ -259,6 +269,49 @@ namespace ET.Client
             // 具体 menu1;menu2;...
             _C2G_ResetPlayerFunctionMenuStatusWhenDebug.FunctionMenuCfgIds = functionMenuCfgIds;
             ET.Client.SessionHelper.GetSession(clientScene).Send(_C2G_ResetPlayerFunctionMenuStatusWhenDebug);
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask OpenSeasonRoomWhenDebug(this DebugWhenEditorComponent self, int index)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            RoomType roomType = RoomType.Normal;
+            SubRoomType subRoomType = SubRoomType.NormalPVE;
+
+            RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, 1, index + 1, "");
+
+            await RoomHelper.QuitRoomAsync(clientScene);
+            (bool result, long roomId) = await RoomHelper.CreateRoomAsync(clientScene, roomTypeInfo);
+            if (result)
+            {
+                await ET.Client.UIManagerHelper.EnterRoomUI(clientScene);
+            }
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask ShowRedDotNodeWhenDebug(this DebugWhenEditorComponent self, string target, bool isShow)
+        {
+            Scene clientScene = self.GetClientScene();
+            if (clientScene == null)
+            {
+                return;
+            }
+
+            if (isShow)
+            {
+                ET.Client.UIRedDotHelper.ShowRedDotNode(clientScene, target);
+            }
+            else
+            {
+                ET.Client.UIRedDotHelper.HideRedDotNode(clientScene, target);
+            }
+
             await ETTask.CompletedTask;
         }
 

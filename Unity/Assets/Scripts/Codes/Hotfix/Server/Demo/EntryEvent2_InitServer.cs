@@ -39,6 +39,9 @@ namespace ET.Server
                     languageType = LanguageType.EN;
                 }
                 LocalizeComponent.Instance.SwitchLanguage(languageType, true);
+#if UNITY_EDITOR
+                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
+#endif
             }
 
             // 发送普通actor消息

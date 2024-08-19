@@ -10,10 +10,10 @@ namespace ET.Server
         public static async ETTask GameBeginWhenServer(this GamePlayTowerDefenseComponent self)
         {
             RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
-            int seasonId = roomTypeInfo.seasonId;
+            int seasonCfgId = roomTypeInfo.seasonCfgId;
             if (self.IsEndlessChallengeMode())
             {
-                if (seasonId > 0)
+                if (seasonCfgId > 0)
                 {
                     await self.GameBeginWhenServer_IsEndlessChallengeMode_Season();
                 }
@@ -24,7 +24,7 @@ namespace ET.Server
             }
             else if (self.IsPVEMode())
             {
-                if (seasonId > 0)
+                if (seasonCfgId > 0)
                 {
                     await self.GameBeginWhenServer_IsPVEMode_Season();
                 }
@@ -44,10 +44,10 @@ namespace ET.Server
         public static async ETTask GameEndWhenServer(this GamePlayTowerDefenseComponent self)
         {
             RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
-            int seasonId = roomTypeInfo.seasonId;
+            int seasonCfgId = roomTypeInfo.seasonCfgId;
             if (self.IsEndlessChallengeMode())
             {
-                if (seasonId > 0)
+                if (seasonCfgId > 0)
                 {
                     await self.GameEndWhenServer_IsEndlessChallengeMode_Season();
                 }
@@ -58,7 +58,7 @@ namespace ET.Server
             }
             else if (self.IsPVEMode())
             {
-                if (seasonId > 0)
+                if (seasonCfgId > 0)
                 {
                     await self.GameEndWhenServer_IsPVEMode_Season();
                 }
@@ -104,7 +104,7 @@ namespace ET.Server
             else
             {
                 await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+                    ET.GamePlayHelper.GetPhysicalCostEndlessChallenge());
             }
 
             await ETTask.CompletedTask;
@@ -125,7 +125,7 @@ namespace ET.Server
             else
             {
                 await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                    GlobalSettingCfgCategory.Instance.AREndlessChallengeTakePhsicalStrength);
+                    ET.GamePlayHelper.GetPhysicalCostEndlessChallenge());
             }
 
             await ETTask.CompletedTask;
@@ -146,7 +146,7 @@ namespace ET.Server
             else
             {
                 //扣玩家体力
-                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, ET.GamePlayHelper.GetPhysicalCostPVE());
             }
 
             await ETTask.CompletedTask;
@@ -167,7 +167,7 @@ namespace ET.Server
             else
             {
                 //扣玩家体力
-                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, GlobalSettingCfgCategory.Instance.ARPVECfgTakePhsicalStrength);
+                await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId, ET.GamePlayHelper.GetPhysicalCostPVE());
             }
 
             await ETTask.CompletedTask;
@@ -189,7 +189,7 @@ namespace ET.Server
             {
                 //扣玩家体力
                 await ET.Server.PlayerCacheHelper.ReducePhysicalStrenth(self.DomainScene(), self.ownerPlayerId,
-                    GlobalSettingCfgCategory.Instance.ARPVPCfgTakePhsicalStrength);
+                    ET.GamePlayHelper.GetPhysicalCostPVP());
             }
 
             await ETTask.CompletedTask;
@@ -227,6 +227,7 @@ namespace ET.Server
 
         public static async ETTask GameEndWhenServer_IsEndlessChallengeMode_Season(this GamePlayTowerDefenseComponent self)
         {
+            int seasonIndex = await SeasonHelper.GetSeasonIndex(self.DomainScene());
 
             MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
             List<long> playerList = self.GetPlayerList();
@@ -236,15 +237,24 @@ namespace ET.Server
 
                 int killNum = self.GetGamePlay().GetComponent<GamePlayStatisticalDataManagerComponent>().GetPlayerKillNum(playerId);
 
-                PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerSeasonInfoByPlayerId(self.DomainScene(), playerId, true);
-                if (playerSeasonInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex || (playerSeasonInfoComponent.EndlessChallengeScore == monsterWaveCallComponent.curIndex && playerSeasonInfoComponent.EndlessChallengeKillNum < killNum))
+                RoomTypeInfo roomTypeInfo = self.GetGamePlay().roomTypeInfo;
+                if (seasonIndex != roomTypeInfo.seasonIndex)
                 {
-                    playerSeasonInfoComponent.EndlessChallengeScore = monsterWaveCallComponent.curIndex;
-                    playerSeasonInfoComponent.EndlessChallengeKillNum = killNum;
-                    await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo,
-                        new() { "EndlessChallengeScore", "EndlessChallengeKillNum"}, PlayerModelChgType.PlayerSeasonInfo_EndlessChallengeScore);
-                    await ET.Server.PlayerCacheHelper.SavePlayerRank(self.DomainScene(), playerId, RankType.EndlessChallenge,
-                        playerSeasonInfoComponent.EndlessChallengeScore, playerSeasonInfoComponent.EndlessChallengeKillNum);
+                    Log.Error($"GameEndWhenServer_IsEndlessChallengeMode_Season seasonIndex[{seasonIndex}] != roomTypeInfo.seasonIndex[{roomTypeInfo.seasonIndex}]");
+                }
+                else
+                {
+                    PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Server.PlayerCacheHelper.GetPlayerSeasonInfoByPlayerId(self.DomainScene(), playerId, true);
+                    if (playerSeasonInfoComponent.EndlessChallengeScore < monsterWaveCallComponent.curIndex ||
+                        (playerSeasonInfoComponent.EndlessChallengeScore == monsterWaveCallComponent.curIndex && playerSeasonInfoComponent.EndlessChallengeKillNum < killNum))
+                    {
+                        playerSeasonInfoComponent.EndlessChallengeScore = monsterWaveCallComponent.curIndex;
+                        playerSeasonInfoComponent.EndlessChallengeKillNum = killNum;
+                        await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo,
+                            new() { "EndlessChallengeScore", "EndlessChallengeKillNum"}, PlayerModelChgType.PlayerSeasonInfo_EndlessChallengeScore);
+                        await ET.Server.PlayerCacheHelper.SavePlayerRank(self.DomainScene(), playerId, RankType.EndlessChallenge,
+                            playerSeasonInfoComponent.EndlessChallengeScore, playerSeasonInfoComponent.EndlessChallengeKillNum);
+                    }
                 }
 
             }
@@ -279,8 +289,6 @@ namespace ET.Server
             Dictionary<string, int> firstClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
             //重复通关奖励
             Dictionary<string, int> repeatClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.RepeatClearDropItem);
-
-            int seasonId = roomTypeInfo.seasonId;
 
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
@@ -357,7 +365,6 @@ namespace ET.Server
 
             int level = roomTypeInfo.pveIndex;
 
-            int seasonId = roomTypeInfo.seasonId;
             ChallengeLevelCfg challengeLevelCfg = SeasonChallengeLevelCfgCategory.Instance.GetChallenge(roomTypeInfo);
             //发放首通奖励
             Dictionary<string, int> firstClearDropItems = ET.DropItemRuleHelper.Drop(challengeLevelCfg.FirstClearDropItem);
@@ -381,8 +388,12 @@ namespace ET.Server
 
                 if (curLevel + 1 == level)
                 {
-                    playerSeasonInfoComponent.pveIndex = level;
-                    await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo, new() { "pveIndex"}, PlayerModelChgType.PlayerSeasonInfo_ChallengeClearLevel);
+                    int seasonIndex = await SeasonHelper.GetSeasonIndex(self.DomainScene());
+                    if (seasonIndex == self.roomTypeInfo.seasonIndex)
+                    {
+                        playerSeasonInfoComponent.pveIndex = level;
+                        await ET.Server.PlayerCacheHelper.SavePlayerModel(self.DomainScene(), playerId, PlayerModelType.SeasonInfo, new() { "pveIndex"}, PlayerModelChgType.PlayerSeasonInfo_ChallengeClearLevel);
+                    }
 
                     Dictionary<string, int> firstClearDropItemsNew = new();
                     foreach (var item in firstClearDropItems)

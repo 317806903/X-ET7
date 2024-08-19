@@ -21,7 +21,7 @@ namespace ET.Client
                     self.AddRankItemRefreshListener(transform, i).Coroutine()));
         }
 
-        public static void ShowWindow(this DlgRankEndlessChallenge self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgRankEndlessChallenge self, ShowWindowData contextData = null)
         {
             self.ShowBg();
             self._ShowWindow().Coroutine();
@@ -115,7 +115,7 @@ namespace ET.Client
 
         public static async ETTask ShowPersonalInfo(this DlgRankEndlessChallenge self)
         {
-            await self.View.E_PlayerIcoImage.SetMyselfIcon(self.DomainScene());
+            await self.View.E_PlayerIcoImage.SetMyIcon(self.DomainScene());
             PlayerBaseInfoComponent playerBaseInfoComponent =
                     await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.E_PlayerNameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;

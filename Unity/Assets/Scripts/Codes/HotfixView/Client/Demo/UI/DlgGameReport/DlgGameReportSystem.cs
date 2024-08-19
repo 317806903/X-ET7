@@ -11,6 +11,14 @@ namespace ET.Client
 	{
 		public static void RegisterUIEvent(this DlgGameReport self)
 		{
+			self.View.E_BGButton.AddListener(()=>
+			{
+				if (self.ChkCanClickBg() == false)
+				{
+					return;
+				}
+				self.OnCloseComplain().Coroutine();
+			});
 			self.View.E_SendComplainButton.AddListenerAsync(self.OnSendComplain);
 			self.View.E_CloseComplainButton.AddListenerAsync(self.OnCloseComplain);
 
@@ -18,14 +26,25 @@ namespace ET.Client
 			self.View.E_InputFieldComplainTMP_InputField.onValueChanged.AddListener(self.OnValueChanged);
 		}
 
-		public static void ShowWindow(this DlgGameReport self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgGameReport self, ShowWindowData contextData = null)
 		{
+			self.dlgShowTime = TimeHelper.ClientNow();
+
 			self.limitNum = 450;
 
 			self.View.E_Toggle_3Toggle.isOn = true;
 			self.View.E_InputFieldComplainTMP_InputField.text = "";
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgFixedMenuHighest>();
+		}
+
+		public static bool ChkCanClickBg(this DlgGameReport self)
+		{
+			if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public static void HideWindow(this DlgGameReport self)

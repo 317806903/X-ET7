@@ -6,44 +6,21 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-	public enum SeasonStatus
+	[ComponentOf(typeof(SeasonManagerComponent))]
+	public class SeasonComponent : Entity, IAwake, IDestroy, ISerializeToEntity
 	{
-		/// <summary>
-		/// 赛季中
-		/// </summary>
-		InSeason,
-		/// <summary>
-		/// 赛季结算中
-		/// </summary>
-		SettlementSeason,
-		/// <summary>
-		/// 赛季等待中
-		/// </summary>
-		WaitingNewSeason,
-	}
-	[ComponentOf(typeof(Scene))]
-	public class SeasonComponent : Entity, IAwake, IDestroy
-	{
-		public int seasonId;
+		public int seasonIndex;
+		public int seasonCfgId;
 		[BsonIgnore]
 		public SeasonInfoCfg cfg
 		{
 			get
 			{
-				return SeasonInfoCfgCategory.Instance.Get(this.seasonId);
+				return SeasonInfoCfgCategory.Instance.Get(this.seasonCfgId);
 			}
 		}
+		public long initTime;
 		public long startTime;
-		[BsonIgnore]
-		public long endTime
-		{
-			get
-			{
-				return cfg.EndTime;
-			}
-		}
-		public SeasonStatus seasonStatus;
-
-		public List<(int seasonId, long startTime, long endTime)> seasonList;
+		public long endTime;
 	}
 }

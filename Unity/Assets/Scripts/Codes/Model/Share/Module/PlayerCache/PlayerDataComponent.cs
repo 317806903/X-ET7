@@ -13,6 +13,7 @@ namespace ET
         SeasonInfo,
         FunctionMenu,
         Mails,
+
         TokenArcadeCoinAdd,
         TokenArcadeCoinReduce,
         TokenDiamondAdd,
@@ -55,6 +56,8 @@ namespace ET
         PlayerSeasonInfo_PowerUP=503,
 
         PlayerMailsGetItemGifts = 601,
+
+        PlayerOtherInfo_SetUIRedDotType = 701,
     }
 
     [ChildOf(typeof(PlayerCacheManagerComponent))]

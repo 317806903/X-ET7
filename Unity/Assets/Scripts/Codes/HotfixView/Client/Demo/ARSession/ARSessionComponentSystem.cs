@@ -3,6 +3,7 @@ using MirrorVerse;
 using MirrorVerse.UI.MirrorSceneClassyUI;
 using System;
 using System.Reflection;
+using ET.AbilityConfig;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -1147,7 +1148,33 @@ namespace ET.Client
 					debugShowComponent.SetDebugPose(null);
 				}
 			}
-        }
+
+			if (MirrorScene.Get() != null && self.lastSendCameraPosTime < TimeHelper.ClientNow())
+			{
+				self.lastSendCameraPosTime = TimeHelper.ClientNow() + (long)(GlobalSettingCfgCategory.Instance.EventLogCameraPosHz * 1000);
+
+				string operationState = MirrorScene.Get().GetOperationState().ToString();
+				string camera_pose;
+				if (status.HasValue)
+				{
+					camera_pose = $"{status.Value.position} {status.Value.rotation.eulerAngles}";
+				}
+				else
+				{
+					camera_pose = $"{Vector3.zero} {Vector3.zero}";
+				}
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "CameraPose",
+					properties = new()
+					{
+						{"camera_pose", camera_pose},
+						{"status", operationState}
+					}
+				});
+			}
+
+		}
 
 		private static void LogLoadSceneStartEvent(this ARSessionComponent self)
 		{

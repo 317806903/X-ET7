@@ -39,5 +39,6 @@
         public const int GameModeArcadeTimer = 227;
         public const int DlgCommonChooseTimer = 228;
         public const int ARSessionComponentTimer = 229;
+        public const int DlgTutorialsFrameTimer = 230;
     }
 }

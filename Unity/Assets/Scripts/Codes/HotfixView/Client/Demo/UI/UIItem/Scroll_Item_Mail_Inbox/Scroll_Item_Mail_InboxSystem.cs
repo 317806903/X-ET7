@@ -11,16 +11,16 @@ namespace ET.Client
     /*
         * WJTODO
         * 若重新生成此类，需在Scroll_Item_Mail_Inbox类中添加如下数据
-           public Dictionary<int, Scroll_Item_Gifts> ScrollGiftDic = new Dictionary<int, Scroll_Item_Gifts>();
-           public MailInfoComponent mailInfoComponent = new MailInfoComponent();
-           public MailStatus mailStatus;
-           public List<KeyValuePair<string, int>> kvpItemCfgNumList = new List<KeyValuePair<string, int>>();
+            public Dictionary<int, Scroll_Item_TowerBuy> ScrollGiftDic = new Dictionary<int, Scroll_Item_TowerBuy>();
+            public MailInfoComponent mailInfoComponent = new MailInfoComponent();
+            public MailStatus mailStatus;
+            public List<KeyValuePair<string, int>> kvpItemCfgNumList = new List<KeyValuePair<string, int>>();
 
            在Item中Destroy中加上下面数据
-           this.ScrollGiftDic = null;
-           this.mailInfoComponent = null;
-           this.mailStatus = 0;
-           this.kvpItemCfgNumList = null;
+            this.ScrollGiftDic = null;
+            this.mailInfoComponent = null;
+            this.mailStatus = 0;
+            this.kvpItemCfgNumList = null;
    */
 
     [FriendOf(typeof(Scroll_Item_Mail_Inbox))]
@@ -44,17 +44,17 @@ namespace ET.Client
 
 
             //礼物列表
-            self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Gifts";
+            self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
             self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.ELoopScrollListGiftLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddGiftListener(transform, i));
             self.SetEloopNumber();
-            self.ELoopScrollListGiftLoopHorizontalScrollRect.RefreshCells();
-            
+            //self.ELoopScrollListGiftLoopHorizontalScrollRect.RefreshCells();
+
             //WJTODO  ESavatarshow
 
-            //三个文字
-            self.SetAllText();
+            //三个文字和头像
+            self.SetAllTextAndAvatar();
 
         }
 
@@ -67,22 +67,24 @@ namespace ET.Client
             //有奖励
             if (self.kvpItemCfgNumList != null)
             {
-                self.EBtnCollectButton.SetVisible(true);          
                 switch (self.mailStatus)
                 {
                     case MailStatus.UnRead:
-                        self.EBtnCollectButton.interactable = true;
+                        self.EBtnCollectButton.SetVisible(true);
+                        self.E_CollectUnSelectImage.gameObject.SetActive(false);
                         self.ELabel_HaveReadImage.gameObject.SetActive(false);
                         break;
                     case MailStatus.ReadAndGetItem:
-                        self.EBtnCollectButton.interactable = false;
+                        self.EBtnCollectButton.SetVisible(false);
+                        self.E_CollectUnSelectImage.gameObject.SetActive(true);
                         self.ELabel_HaveReadImage.gameObject.SetActive(true);
                         break;
                     case MailStatus.ReadAndNotGetItem:
-                        self.EBtnCollectButton.interactable = true;
+                        self.EBtnCollectButton.SetVisible(true);
+                        self.E_CollectUnSelectImage.gameObject.SetActive(false);
                         self.ELabel_HaveReadImage.gameObject.SetActive(true);
                         break;
-                }  
+                }
                 self.ELabel_HaveGiftButton.gameObject.SetActive(true);
                 self.ELabel_NohaveGiftButton.gameObject.SetActive(false);
             }
@@ -90,6 +92,7 @@ namespace ET.Client
             else
             {
                 self.EBtnCollectButton.SetVisible(false);
+                self.E_CollectUnSelectImage.gameObject.SetActive(false);
                 self.ELabel_HaveGiftButton.gameObject.SetActive(false);
                 self.ELabel_NohaveGiftButton.gameObject.SetActive(true);
                 switch (self.mailStatus)
@@ -100,7 +103,7 @@ namespace ET.Client
                     case MailStatus.ReadAndNoItem:
                         self.ELabel_HaveReadImage.gameObject.SetActive(true);
                         break;
-                    default:                      
+                    default:
                         break;
                 }
             }
@@ -108,18 +111,26 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
 
-
         /// <summary>
-        /// 设置所有有关Item的文字
+        /// 设置所有有关Item的文字和头像
         /// </summary>
         /// <param name="self"></param>
         /// <param name="mailInfoComponent"></param>
-        public static void SetAllText(this Scroll_Item_Mail_Inbox self)
+        public static async ETTask SetAllTextAndAvatar(this Scroll_Item_Mail_Inbox self)
         {
-            //WJTODO修改为发送方的名字()
-            self.ELabel_NameTextMeshProUGUI.SetText(self.mailInfoComponent.mailTitle);
-            self.ELabelExpireTextMeshProUGUI.SetText(self.mailInfoComponent.limitTime.ToString());
-            self.ELabelDescribeTextMeshProUGUI.SetText(self.mailInfoComponent.mailTitle);
+            string mailTitle = self.mailInfoComponent.mailTitle;
+            string mailContent = self.mailInfoComponent.mailContent;
+            self.ELabel_NameTextMeshProUGUI.SetText(self.mailInfoComponent.GetMailTypeName());
+
+            string mailLeftTime = ET.Client.MailHelper.GetMailLeftTime(self.mailInfoComponent.limitTime);
+            self.ELabelExpireTextMeshProUGUI.SetText(mailLeftTime);
+            self.ELabelDescribeTextMeshProUGUI.SetText(mailTitle);
+
+            string path = self.mailInfoComponent.GetMailTypeIcon();;
+            if (!string.IsNullOrEmpty(path))
+            {
+                await self.ES_AvatarShow.SetAvatarIcon(path);
+            }
         }
 
         #region 控件事件监听函数
@@ -129,12 +140,15 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <param name="transform"></param>
         /// <param name="index"></param>
-        public static async void AddGiftListener(this Scroll_Item_Mail_Inbox self, Transform transform, int index)
+        public static async ETTask AddGiftListener(this Scroll_Item_Mail_Inbox self, Transform transform, int index)
         {
-            transform.name = $"Item_Gifts{index}";
-            Scroll_Item_Gifts scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
+            transform.name = $"Item_TowerBuy{index}";
+            Scroll_Item_TowerBuy scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
 
-            scrollItemGift.Init(self.kvpItemCfgNumList[index]).Coroutine();
+            string itemcfg = self.kvpItemCfgNumList[index].Key;
+            int itemNum = self.kvpItemCfgNumList[index].Value;
+
+            await scrollItemGift.ShowBagItem(itemcfg, true, itemNum);
             await ETTask.CompletedTask;
 
         }
@@ -150,11 +164,7 @@ namespace ET.Client
                kvpItemCfgNumList = self.kvpItemCfgNumList,
             };
 
-            await ET.Client.SessionHelper.GetSession(self.DomainScene()).Call(new C2G_DealMyMail()
-            {
-                MailId = self.mailInfoComponent.Id,
-                DealMailType = 1,
-            });
+            await ET.Client.MailHelper.DealMyMail(self.DomainScene(), self.mailInfoComponent.Id, DealMailType.ReadAndGetItem);
 
             UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMailSettlement>(showdata).Coroutine();
 
@@ -167,7 +177,7 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <returns></returns>
         public static async ETTask ClickDesBtnClick(this Scroll_Item_Mail_Inbox self)
-        {      
+        {
             (MailInfoComponent, MailStatus) _mainInfo = (self.mailInfoComponent, self.mailStatus);
 
                 DlgMailInfo_ShowWindowData showdata = new()
@@ -175,13 +185,9 @@ namespace ET.Client
                     mainInfo = _mainInfo,
                 };
 
-                await ET.Client.SessionHelper.GetSession(self.DomainScene()).Call(new C2G_DealMyMail()
-                {
-                    MailId = self.mailInfoComponent.Id,
-                    DealMailType = 0,
-                });
+                await ET.Client.MailHelper.DealMyMail(self.DomainScene(), self.mailInfoComponent.Id, DealMailType.ReadOnly);
 
-                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMailInfo>(showdata);  
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMailInfo>(showdata);
         }
         #endregion
 
@@ -201,7 +207,7 @@ namespace ET.Client
             else
             {
                 self.kvpItemCfgNumList = null;
-            }        
+            }
             await ETTask.CompletedTask;
         }
 
@@ -210,19 +216,20 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <param name="bClear"></param>
-        public static async void SetEloopNumber(this Scroll_Item_Mail_Inbox self)
+        public static async ETTask SetEloopNumber(this Scroll_Item_Mail_Inbox self)
         {
             if (self.kvpItemCfgNumList != null)
             {
-                self.AddUIScrollItemsPage(ref self.ScrollGiftDic, self.kvpItemCfgNumList.Count);
+                self.AddUIScrollItems(ref self.ScrollGiftDic, self.kvpItemCfgNumList.Count);
                 self.ELoopScrollListGiftLoopHorizontalScrollRect.SetVisible(true, self.kvpItemCfgNumList.Count);
             }
             else
             {
-                self.AddUIScrollItemsPage(ref self.ScrollGiftDic, 0);
+                self.AddUIScrollItems(ref self.ScrollGiftDic, 0);
                 self.ELoopScrollListGiftLoopHorizontalScrollRect.gameObject.SetActive(false);
             }
             await ETTask.CompletedTask;
         }
+
     }
 }

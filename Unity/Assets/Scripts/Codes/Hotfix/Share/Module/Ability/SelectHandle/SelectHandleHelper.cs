@@ -37,9 +37,9 @@ namespace ET.Ability
             }
             else if (selectObjectCfg.ActionCallParam is ActionCallOwnCaller actionCallOwnCaller)
             {
-                HashSet<long> unitList = ET.Ability.OwnCallerHelper.GetOwnCaller(triggerUnit, actionCallOwnCaller.OwnActor, actionCallOwnCaller.OwnBullet, actionCallOwnCaller.OwnAoe);
+                HashSet<long> unitList = triggerUnit.GetOwnCaller(actionCallOwnCaller.OwnActor, actionCallOwnCaller.OwnBullet, actionCallOwnCaller.OwnAoe);
 
-                selectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(triggerUnit, SelectObjectType.All, unitList);
+                selectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(triggerUnit, selectObjectCfg.SelectObjectUnitType, unitList);
 
                 return (selectHandle, null);
             }
@@ -48,11 +48,15 @@ namespace ET.Ability
                 Unit targetUnit;
                 if (selectObjectCfg.ActionCallParam is ActionCallCasterUnit actionCallCasterUnit)
                 {
-                    targetUnit = UnitHelper.GetCasterUnit(triggerUnit);
+                    targetUnit = triggerUnit.GetCaster();
                 }
-                else if (selectObjectCfg.ActionCallParam is ActionCallCasterPlayerUnit actionCallCasterPlayerUnit)
+                else if (selectObjectCfg.ActionCallParam is ActionCallCasterFirstActorUnit actionCallCasterFirstActorUnit)
                 {
-                    targetUnit = UnitHelper.GetCasterActorUnit(triggerUnit);
+                    targetUnit = triggerUnit.GetCasterFirstActor();
+                }
+                else if (selectObjectCfg.ActionCallParam is ActionCallCasterActorUnit actionCallCasterActorUnit)
+                {
+                    targetUnit = triggerUnit.GetCasterActor();
                 }
                 else if (selectObjectCfg.ActionCallParam is ActionCallOnAttackUnit actionCallOnAttackUnit)
                 {
@@ -95,11 +99,11 @@ namespace ET.Ability
             }
             else if (aoeSelectObjectType is AoeSelectObjectType.AoeChgList)
             {
-                selectHandle = SelectHandleHelper.CreateAoeUnitSelectHandle(aoeUnit, SelectObjectType.All, true);
+                selectHandle = SelectHandleHelper.CreateAoeUnitSelectHandle(aoeUnit, null, true);
             }
             else if (aoeSelectObjectType is AoeSelectObjectType.AoeInList)
             {
-                selectHandle = SelectHandleHelper.CreateAoeUnitSelectHandle(aoeUnit, SelectObjectType.All, false);
+                selectHandle = SelectHandleHelper.CreateAoeUnitSelectHandle(aoeUnit, null, false);
             }
             else
             {
@@ -333,10 +337,14 @@ namespace ET.Ability
                     {
                         return (false, null);
                     }
-                    bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(selectUnit, unit);
-                    if (isBeFind == false)
+
+                    if (selectObjectCfg.IsNeedChkCanBeFind)
                     {
-                        return (false, null);
+                        bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(selectUnit, unit);
+                        if (isBeFind == false)
+                        {
+                            return (false, null);
+                        }
                     }
                 }
             }
@@ -415,7 +423,7 @@ namespace ET.Ability
             return selectHandle;
         }
 
-        public static SelectHandle CreateAoeUnitSelectHandle(Unit unit, SelectObjectType selectObjectType, bool isChgAoe)
+        public static SelectHandle CreateAoeUnitSelectHandle(Unit unit, SelectObjectUnitTypeBase selectObjectUnitTypeBase, bool isChgAoe)
         {
             if (UnitHelper.ChkIsAoe(unit) == false)
             {
@@ -441,136 +449,399 @@ namespace ET.Ability
                 {
                     unitList = aoeObj.aoeInUnitList;
                 }
-                return GetSelectHandleWithSelectObjectType(unit, selectObjectType, unitList);
+                return GetSelectHandleWithSelectObjectType(unit, selectObjectUnitTypeBase, unitList);
             }
         }
 
-        public static SelectHandle GetSelectHandleWithSelectObjectType(Unit unit, SelectObjectType selectObjectType, HashSet<long> unitList)
+        public static SelectHandle GetSelectHandleWithSelectObjectType(Unit unit, SelectObjectUnitTypeBase selectObjectUnitTypeBase, HashSet<long> unitList)
         {
-            List<long> unitListTmp = SelectHandleHelper.GetUnitListWithSelectObjectType(unit, selectObjectType, unitList);
             SelectHandle selectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
-            selectHandle.unitIds.AddRange(unitListTmp);
+            if (unitList != null)
+            {
+                List<long> unitListTmp = SelectHandleHelper.GetUnitListWithSelectObjectType(unit, selectObjectUnitTypeBase, unitList);
+                selectHandle.unitIds.AddRange(unitListTmp);
+            }
             return selectHandle;
         }
 
-        public static List<long> GetUnitListWithSelectObjectType(Unit unit, SelectObjectType selectObjectType, HashSet<long> unitList)
+        // public static List<long> GetUnitListWithSelectObjectType_Old(Unit unit, SelectObjectUnitTypeBase selectObjectUnitTypeBase, HashSet<long> unitList)
+        // {
+        //     ListComponent<long> unitListTmp = ListComponent<long>.Create();
+        //     bool isNeedChkIsFriend = false;
+        //     bool isNeedChkIsPlayer = false;
+        //     bool isFriend = false;
+        //     bool isOnlyPlayer = false;
+        //     bool needSamePlayer = false;
+        //
+        //     if (selectObjectType == SelectObjectType.FriendPlayers)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = true;
+        //         isOnlyPlayer = true;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.FriendButNotPlayers)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = true;
+        //         isOnlyPlayer = false;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.Self)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = true;
+        //         isOnlyPlayer = false;
+        //         needSamePlayer = true;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.SelfPlayer)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = true;
+        //         isOnlyPlayer = true;
+        //         needSamePlayer = true;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.Friends)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = false;
+        //         isFriend = true;
+        //         isOnlyPlayer = false;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.HostilePlayers)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = false;
+        //         isOnlyPlayer = true;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.HostileButNotPlayers)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = false;
+        //         isOnlyPlayer = false;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.Hostiles)
+        //     {
+        //         isNeedChkIsFriend = true;
+        //         isNeedChkIsPlayer = false;
+        //         isFriend = false;
+        //         isOnlyPlayer = false;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.AllPlayers)
+        //     {
+        //         isNeedChkIsFriend = false;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = false;
+        //         isOnlyPlayer = true;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.AllButNotPlayers)
+        //     {
+        //         isNeedChkIsFriend = false;
+        //         isNeedChkIsPlayer = true;
+        //         isFriend = false;
+        //         isOnlyPlayer = false;
+        //     }
+        //     else if (selectObjectType == SelectObjectType.All)
+        //     {
+        //         isNeedChkIsFriend = false;
+        //         isNeedChkIsPlayer = false;
+        //     }
+        //
+        //     foreach (long unitId in unitList)
+        //     {
+        //         Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+        //         if (UnitHelper.ChkUnitAlive(unitSelect) == false)
+        //         {
+        //             continue;
+        //         }
+        //
+        //         if (isNeedChkIsFriend)
+        //         {
+        //             if (isFriend && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer) == false)
+        //             {
+        //                 continue;
+        //             }
+        //             else if (isFriend == false && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer))
+        //             {
+        //                 continue;
+        //             }
+        //         }
+        //         if (isNeedChkIsPlayer)
+        //         {
+        //             if (isOnlyPlayer && UnitHelper.ChkIsPlayer(unitSelect) == false)
+        //             {
+        //                 continue;
+        //             }
+        //             else if (isOnlyPlayer == false && UnitHelper.ChkIsPlayer(unitSelect))
+        //             {
+        //                 continue;
+        //             }
+        //         }
+        //         unitListTmp.Add(unitId);
+        //     }
+        //     return unitListTmp;
+        // }
+
+        public static List<long> GetUnitListWithSelectObjectType(Unit unit, SelectObjectUnitTypeBase selectObjectUnitTypeBase, HashSet<long> unitList)
         {
             ListComponent<long> unitListTmp = ListComponent<long>.Create();
-            bool isNeedChkIsFriend = false;
-            bool isNeedChkIsPlayer = false;
-            bool isFriend = false;
-            bool isOnlyPlayer = false;
-            bool needSamePlayer = false;
-
-            if (selectObjectType == SelectObjectType.FriendPlayers)
+            if (selectObjectUnitTypeBase == null)
             {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.FriendButNotPlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectType == SelectObjectType.Self)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = false;
-                needSamePlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.SelfPlayer)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = true;
-                needSamePlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.Friends)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = false;
-                isFriend = true;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectType == SelectObjectType.HostilePlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.HostileButNotPlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectType == SelectObjectType.Hostiles)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = false;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectType == SelectObjectType.AllPlayers)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectType == SelectObjectType.AllButNotPlayers)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectType == SelectObjectType.All)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = false;
+                foreach (long unitId in unitList)
+                {
+                    Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                    if (UnitHelper.ChkUnitAlive(unitSelect) == false)
+                    {
+                        continue;
+                    }
+                    unitListTmp.Add(unitId);
+                }
+                return unitListTmp;
             }
 
-            foreach (long unitId in unitList)
+            bool isContainHome = false;
+            bool isContainSelf = false;
+            bool isContainFriend = false;
+            bool isContainHostile = false;
+            SelectObjectUnitType selectObjectUnitType;
+            if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelf selectObjectUnitTypeSelf)
             {
-                Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
-                if (UnitHelper.ChkUnitAlive(unitSelect) == false)
-                {
-                    continue;
-                }
+                isContainHome = false;
+                isContainSelf = true;
+                isContainFriend = false;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeSelf.UnitType;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfAndFriend selectObjectUnitTypeSelfAndFriend)
+            {
+                isContainHome = false;
+                isContainSelf = true;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeSelfAndFriend.UnitType;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeFriend selectObjectUnitTypeFriend)
+            {
+                isContainHome = false;
+                isContainSelf = false;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = selectObjectUnitTypeFriend.UnitType;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeHostile selectObjectUnitTypeHostile)
+            {
+                isContainHome = false;
+                isContainSelf = false;
+                isContainFriend = false;
+                isContainHostile = true;
+                selectObjectUnitType = selectObjectUnitTypeHostile.UnitType;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfHome selectObjectUnitTypeSelfHome)
+            {
+                isContainHome = true;
+                isContainSelf = true;
+                isContainFriend = false;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeSelfAndFriendHome selectObjectUnitTypeSelfAndFriendHome)
+            {
+                isContainHome = true;
+                isContainSelf = true;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeFriendHome selectObjectUnitTypeFriendHome)
+            {
+                isContainHome = true;
+                isContainSelf = false;
+                isContainFriend = true;
+                isContainHostile = false;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else if (selectObjectUnitTypeBase is SelectObjectUnitTypeHostileHome selectObjectUnitTypeHostileHome)
+            {
+                isContainHome = true;
+                isContainSelf = false;
+                isContainFriend = false;
+                isContainHostile = true;
+                selectObjectUnitType = SelectObjectUnitType.All;
+            }
+            else
+            {
+                return null;
+            }
 
-                if (isNeedChkIsFriend)
+            if (isContainHome)
+            {
+
+                GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());
+                if (gamePlayComponent == null)
                 {
-                    if (isFriend && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer) == false)
-                    {
-                        continue;
-                    }
-                    else if (isFriend == false && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer))
-                    {
-                        continue;
-                    }
+                    return null;
                 }
-                if (isNeedChkIsPlayer)
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(unit.DomainScene());
+                if (gamePlayTowerDefenseComponent == null)
                 {
-                    if (isOnlyPlayer && UnitHelper.ChkIsPlayer(unitSelect) == false)
-                    {
-                        continue;
-                    }
-                    else if (isOnlyPlayer == false && UnitHelper.ChkIsPlayer(unitSelect))
-                    {
-                        continue;
-                    }
+                    return null;
                 }
-                unitListTmp.Add(unitId);
+                PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+                if (putHomeComponent == null)
+                {
+                    return null;
+                }
+                Dictionary<TeamFlagType, long> homeUnitList = putHomeComponent.GetHomeUnitList();
+                TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByUnitId(unit.Id);
+                foreach (var homeUnits in homeUnitList)
+                {
+                    TeamFlagType curHomeTeamFlagType = homeUnits.Key;
+                    long curHomeUnitId = homeUnits.Value;
+                    Unit curHomeUnit = UnitHelper.GetUnit(unit.DomainScene(), curHomeUnitId);
+                    if (UnitHelper.ChkUnitAlive(curHomeUnit) == false)
+                    {
+                        continue;
+                    }
+
+                    if (isContainHostile)
+                    {
+                        bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                        if (isFriend)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (isContainSelf && isContainFriend)
+                        {
+                            bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainSelf)
+                        {
+                            if (GamePlayHelper.GetHomeTeamFlagType(teamFlagType) != curHomeTeamFlagType)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainFriend)
+                        {
+                            if (GamePlayHelper.GetHomeTeamFlagType(teamFlagType) == curHomeTeamFlagType)
+                            {
+                                continue;
+                            }
+                            bool isFriend = gamePlayComponent.ChkIsFriend(teamFlagType, curHomeTeamFlagType);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    unitListTmp.Add(curHomeUnitId);
+                }
+            }
+            else
+            {
+                foreach (long unitId in unitList)
+                {
+                    Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                    bool isContinue = false;
+                    if (UnitHelper.ChkIsPlayer(unitSelect))
+                    {
+                        if (selectObjectUnitType == SelectObjectUnitType.All || selectObjectUnitType == SelectObjectUnitType.OnlyPlayer)
+                        {
+                            isContinue = true;
+                        }
+                        else
+                        {
+                            isContinue = false;
+                        }
+                    }
+                    else if (UnitHelper.ChkIsActor(unitSelect))
+                    {
+                        if (selectObjectUnitType == SelectObjectUnitType.All || selectObjectUnitType == SelectObjectUnitType.NotPlayer)
+                        {
+                            isContinue = true;
+                        }
+                        else
+                        {
+                            isContinue = false;
+                        }
+                    }
+                    else
+                    {
+                        isContinue = false;
+                    }
+
+                    if (isContinue == false)
+                    {
+                        continue;
+                    }
+
+                    if (UnitHelper.ChkUnitAlive(unitSelect) == false)
+                    {
+                        continue;
+                    }
+
+                    if (isContainHostile)
+                    {
+                        bool isFriend = ET.GamePlayHelper.ChkIsFriend(unit, unitSelect);
+                        if (isFriend)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (isContainSelf && isContainFriend)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(unit, unitSelect);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainSelf)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(unit, unitSelect, true);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else if (isContainFriend)
+                        {
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(unit, unitSelect, true);
+                            if (isFriend)
+                            {
+                                continue;
+                            }
+                            isFriend = ET.GamePlayHelper.ChkIsFriend(unit, unitSelect, false);
+                            if (isFriend == false)
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    unitListTmp.Add(unitId);
+                }
             }
             return unitListTmp;
         }
@@ -601,10 +872,11 @@ namespace ET.Ability
 
         public static void GetUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            List<Unit> list = UnitHelper.GetUnitListBySelectObjectType(unit, selectObjectCfg.SelectObjectType, false);
+            List<Unit> list = UnitHelper.GetUnitList(unit, selectObjectCfg.SelectObjectUnitType, selectObjectCfg.IsNeedChkCanBeFind);
 
-            if(list == null)
+            if(list == null || list.Count == 0)
             {
+                selectHandle.unitIds.Clear();
                 return;
             }
 
@@ -622,8 +894,9 @@ namespace ET.Ability
                         }
                     }
                     list = newList;
-                    if(list == null)
+                    if(list == null || list.Count == 0)
                     {
+                        selectHandle.unitIds.Clear();
                         return;
                     }
                 }
@@ -745,10 +1018,13 @@ namespace ET.Ability
                     }
                     if (angleTmp < angleHalf)
                     {
-                        (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
-                        if (bHitMesh)
+                        if (selectObjectCfg.IsNeedChkMesh)
                         {
-                            continue;
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
+                            if (bHitMesh)
+                            {
+                                continue;
+                            }
                         }
 
                         dic.Add(angleTmp, targetUnit);
@@ -842,10 +1118,13 @@ namespace ET.Ability
                     //Log.Debug($" GetUnitsWhenRectangle dis={dis} curHalfWidth={curHalfWidth} curLength={curLength} angle={math.degrees(acos)}");
                     if (curHalfWidth <= width * 0.5f && curLength <= length)
                     {
-                        (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
-                        if (bHitMesh)
+                        if (selectObjectCfg.IsNeedChkMesh)
                         {
-                            continue;
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
+                            if (bHitMesh)
+                            {
+                                continue;
+                            }
                         }
 
                         dic.Add(dot, targetUnit);
@@ -858,7 +1137,33 @@ namespace ET.Ability
 
         public static void SelectObjectOrderHandle(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, MultiMapSimple<float, Unit> dic, List<Unit> listTmp, SelectHandle selectHandle, ref ActionContext actionContext)
         {
-            if (selectObjectCfg.SelectNum == -1)
+            int needSelectNum = selectObjectCfg.SelectNum;
+            if (needSelectNum == -1)
+            {
+                needSelectNum = 999;
+                // ListComponent<long> tmpList = ListComponent<long>.Create();
+                // foreach (long unitId in selectHandle.unitIds)
+                // {
+                //     Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+                //     if (UnitHelper.ChkUnitAlive(unitOne))
+                //     {
+                //         if (selectObjectCfg.IsNeedChkCanBeFind)
+                //         {
+                //             if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
+                //             {
+                //                 continue;
+                //             }
+                //         }
+                //         tmpList.Add(unitId);
+                //     }
+                // }
+                // selectHandle.unitIds.Dispose();
+                // selectHandle.unitIds = tmpList;
+                // return;
+            }
+
+            List<SelectObjectOrder> selectOrderList = selectObjectCfg.SelectOrder;
+            if (selectOrderList == null || selectOrderList.Count == 0)
             {
                 ListComponent<long> tmpList = ListComponent<long>.Create();
                 foreach (long unitId in selectHandle.unitIds)
@@ -866,25 +1171,15 @@ namespace ET.Ability
                     Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
                     if (UnitHelper.ChkUnitAlive(unitOne))
                     {
+                        if (selectObjectCfg.IsNeedChkCanBeFind)
+                        {
+                            if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
+                            {
+                                continue;
+                            }
+                        }
                         tmpList.Add(unitId);
-                    }
-                }
-                selectHandle.unitIds.Dispose();
-                selectHandle.unitIds = tmpList;
-                return;
-            }
-
-            List<SelectObjectOrder> selectOrderList = selectObjectCfg.SelectOrder;
-            if (selectOrderList == null)
-            {
-                ListComponent<long> tmpList = ListComponent<long>.Create();
-                foreach (long unitId in selectHandle.unitIds)
-                {
-                    Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
-                    if (UnitHelper.ChkUnitAlive(unitOne) && ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit))
-                    {
-                        tmpList.Add(unitId);
-                        if (tmpList.Count >= selectObjectCfg.SelectNum)
+                        if (tmpList.Count >= needSelectNum)
                         {
                             break;
                         }
@@ -899,31 +1194,45 @@ namespace ET.Ability
             foreach (long unitId in selectHandle.unitIds)
             {
                 Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
-                if (UnitHelper.ChkUnitAlive(unitOne) && ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit))
+                if (UnitHelper.ChkUnitAlive(unitOne))
                 {
+                    if (selectObjectCfg.IsNeedChkCanBeFind)
+                    {
+                        if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
+                        {
+                            continue;
+                        }
+                    }
                     listTmp.Add(unitOne);
                 }
             }
-
-            if (listTmp.Count <= selectObjectCfg.SelectNum)
-            {
-                ListComponent<long> tmpList = ListComponent<long>.Create();
-                foreach (long unitId in selectHandle.unitIds)
-                {
-                    Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
-                    if (UnitHelper.ChkUnitAlive(unitOne) && ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit))
-                    {
-                        tmpList.Add(unitId);
-                        if (tmpList.Count >= selectObjectCfg.SelectNum)
-                        {
-                            break;
-                        }
-                    }
-                }
-                selectHandle.unitIds.Dispose();
-                selectHandle.unitIds = tmpList;
-                return;
-            }
+            //
+            // if (listTmp.Count <= needSelectNum)
+            // {
+            //     ListComponent<long> tmpList = ListComponent<long>.Create();
+            //     foreach (long unitId in selectHandle.unitIds)
+            //     {
+            //         Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
+            //         if (UnitHelper.ChkUnitAlive(unitOne))
+            //         {
+            //             if (selectObjectCfg.IsNeedChkCanBeFind)
+            //             {
+            //                 if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
+            //                 {
+            //                     continue;
+            //                 }
+            //             }
+            //             tmpList.Add(unitId);
+            //             if (tmpList.Count >= needSelectNum)
+            //             {
+            //                 break;
+            //             }
+            //         }
+            //     }
+            //     selectHandle.unitIds.Dispose();
+            //     selectHandle.unitIds = tmpList;
+            //     return;
+            // }
 
             selectHandle.unitIds.Clear();
             for (int i = 0; i < selectOrderList.Count; i++)
@@ -965,7 +1274,7 @@ namespace ET.Ability
                     SelectObjectOrderHandle_RandomOrder(unit, listTmp, dic);
                 }
 
-                int needCount = selectObjectCfg.SelectNum - selectHandle.unitIds.Count;
+                int needCount = needSelectNum - selectHandle.unitIds.Count;
                 foreach (var sortList in dic)
                 {
                     needCount -= sortList.Value.Count;
@@ -991,7 +1300,7 @@ namespace ET.Ability
                             foreach (var item2 in item.Value)
                             {
                                 selectHandle.unitIds.Add(item2.Id);
-                                if (selectHandle.unitIds.Count >= selectObjectCfg.SelectNum)
+                                if (selectHandle.unitIds.Count >= needSelectNum)
                                 {
                                     return;
                                 }
@@ -1003,11 +1312,11 @@ namespace ET.Ability
                     {
                         foreach (var item in orderedEnumerable)
                         {
-                            if (selectHandle.unitIds.Count >= selectObjectCfg.SelectNum)
+                            if (selectHandle.unitIds.Count >= needSelectNum)
                             {
                                 return;
                             }
-                            if (selectHandle.unitIds.Count + item.Value.Count > selectObjectCfg.SelectNum)
+                            if (selectHandle.unitIds.Count + item.Value.Count > needSelectNum)
                             {
                                 //这一部分继续应用下个规则进行筛选
                                 listTmp.Clear();
@@ -1025,7 +1334,7 @@ namespace ET.Ability
                                     Unit unitOne = item2;
                                     selectHandle.unitIds.Add(unitOne.Id);
                                     listTmp.Remove(unitOne);
-                                    if (selectHandle.unitIds.Count >= selectObjectCfg.SelectNum)
+                                    if (selectHandle.unitIds.Count >= needSelectNum)
                                     {
                                         return;
                                     }
@@ -1037,14 +1346,23 @@ namespace ET.Ability
                 else
                 {
                     //数量不足够，全部选择
-                    foreach (var sortList in dic)
+                    IOrderedEnumerable<KeyValuePair<float, List<Unit>>> orderedEnumerable = null;
+                    if (isDescending)
                     {
-                        for (int i2 = 0; i2 < sortList.Value.Count; i2++)
+                        orderedEnumerable = dic.OrderByDescending(kv => kv.Key);
+                    }
+                    else
+                    {
+                        orderedEnumerable = dic.OrderBy(kv => kv.Key);
+                    }
+                    foreach (var item in orderedEnumerable)
+                    {
+                        foreach (var item2 in item.Value)
                         {
-                            Unit unitOne = sortList.Value[i2];
-                            selectHandle.unitIds.Add(unitOne.Id);
+                            selectHandle.unitIds.Add(item2.Id);
                         }
                     }
+
                     return;
                 }
             }
@@ -1296,90 +1614,6 @@ namespace ET.Ability
                 }
             }
 
-            bool isNeedChkIsFriend = false;
-            bool isNeedChkIsPlayer = false;
-            bool isFriend = false;
-            bool isOnlyPlayer = false;
-            bool needSamePlayer = false;
-
-            if (selectObjectCfg.SelectObjectType == SelectObjectType.FriendPlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.FriendButNotPlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.Self)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = false;
-                needSamePlayer = true;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.SelfPlayer)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = true;
-                isOnlyPlayer = true;
-                needSamePlayer = true;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.Friends)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = false;
-                isFriend = true;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.HostilePlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.HostileButNotPlayers)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.Hostiles)
-            {
-                isNeedChkIsFriend = true;
-                isNeedChkIsPlayer = false;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.AllPlayers)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = true;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.AllButNotPlayers)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = true;
-                isFriend = false;
-                isOnlyPlayer = false;
-            }
-            else if (selectObjectCfg.SelectObjectType == SelectObjectType.All)
-            {
-                isNeedChkIsFriend = false;
-                isNeedChkIsPlayer = false;
-            }
-
             using ListComponent<Unit> list = ListComponent<Unit>.Create();
             foreach (long unitId in saveSelectHandle.unitIds)
             {
@@ -1389,48 +1623,29 @@ namespace ET.Ability
                     return false;
                 }
 
-                if (isNeedChkIsFriend)
+                if (selectObjectCfg.IsNeedChkCanBeFind)
                 {
-                    if (isFriend && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer) == false)
+                    if (ET.Ability.BuffHelper.ChkCanBeFind(unitSelect, unit) == false)
                     {
                         return false;
                     }
-                    else if (isFriend == false && ET.GamePlayHelper.ChkIsFriend(unitSelect, unit, needSamePlayer))
-                    {
-                        return false;
-                    }
-                }
-                if (isNeedChkIsPlayer)
-                {
-                    if (isOnlyPlayer && UnitHelper.ChkIsPlayer(unitSelect) == false)
-                    {
-                        return false;
-                    }
-                    else if (isOnlyPlayer == false && UnitHelper.ChkIsPlayer(unitSelect))
-                    {
-                        return false;
-                    }
-                }
-                if (ET.Ability.BuffHelper.ChkCanBeFind(unitSelect, unit) == false)
-                {
-                    return false;
                 }
                 list.Add(unitSelect);
             }
 
             if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
             {
-                return ChkUnitsInAreaWhenUmbellate(unit, isResetPos, resetPos, list, actionCallAutoUnitWhenUmbellate, ref actionContext);
+                return ChkUnitsInAreaWhenUmbellate(unit, isResetPos, resetPos, list, selectObjectCfg, actionCallAutoUnitWhenUmbellate, ref actionContext);
             }
             else if (actionCallAutoUnitArea is ActionCallAutoUnitWhenRectangle actionCallAutoUnitWhenRectangle)
             {
-                return ChkUnitsInAreaWhenRectangle(unit, isResetPos, resetPos, list, actionCallAutoUnitWhenRectangle, ref actionContext);
+                return ChkUnitsInAreaWhenRectangle(unit, isResetPos, resetPos, list, selectObjectCfg, actionCallAutoUnitWhenRectangle, ref actionContext);
             }
 
             return true;
         }
 
-        public static bool ChkUnitsInAreaWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
+        public static bool ChkUnitsInAreaWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
         {
             float radius = actionCallAutoUnit.UmbellateArea.Radius;
             ResetDis(ref radius, ref actionContext);
@@ -1494,10 +1709,13 @@ namespace ET.Ability
                     }
                     if (angleTmp < angleHalf)
                     {
-                        (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
-                        if (bHitMesh)
+                        if (selectObjectCfg.IsNeedChkMesh)
                         {
-                            return false;
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
+                            if (bHitMesh)
+                            {
+                                return false;
+                            }
                         }
                     }
                     else
@@ -1514,7 +1732,7 @@ namespace ET.Ability
             return true;
         }
 
-        public static bool ChkUnitsInAreaWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
+        public static bool ChkUnitsInAreaWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
         {
             float width = actionCallAutoUnit.RectangleArea.Width;
             float length = actionCallAutoUnit.RectangleArea.Length;
@@ -1591,10 +1809,13 @@ namespace ET.Ability
                     //Log.Debug($" GetUnitsWhenRectangle dis={dis} curHalfWidth={curHalfWidth} curLength={curLength} angle={math.degrees(acos)}");
                     if (curHalfWidth <= width * 0.5f && curLength <= length)
                     {
-                        (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
-                        if (bHitMesh)
+                        if (selectObjectCfg.IsNeedChkMesh)
                         {
-                            return false;
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh(unit, curUnitPos, curUnitAttackPoint, targetUnit);
+                            if (bHitMesh)
+                            {
+                                return false;
+                            }
                         }
                     }
                     else
@@ -1613,6 +1834,10 @@ namespace ET.Ability
 
         public static void ResetDis(ref float dis, ref ActionContext actionContext)
         {
+            if (string.IsNullOrEmpty(actionContext.skillCfgId))
+            {
+                return;
+            }
             if (dis > actionContext.skillDis)
             {
                 //dis = actionContext.skillDis * 1.2f;

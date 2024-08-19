@@ -1,6 +1,7 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using ET.AbilityConfig;
 using Unity.Mathematics;
@@ -37,6 +38,49 @@ namespace ET
                 self.playerId2BirthPos?.Clear();
                 self.playerId2CoinList?.Clear();
                 self.team2CoinList?.Clear();
+            }
+        }
+
+        [ObjectSystem]
+        public class GamePlayPlayerListComponentFixedUpdateSystem: FixedUpdateSystem<GamePlayPlayerListComponent>
+        {
+            protected override void FixedUpdate(GamePlayPlayerListComponent self)
+            {
+                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                {
+                    return;
+                }
+
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
+
+        public static void FixedUpdate(this GamePlayPlayerListComponent self, float fixedDeltaTime)
+        {
+            if (++self.curFrameChk >= self.waitFrameChk)
+            {
+                self.curFrameChk = 0;
+
+                if (self.unitId2PlayerId_WaitDestroy.Count == 0)
+                {
+                    return;
+                }
+
+                self.unitId2PlayerId_RemoveList.Clear();
+                foreach (var item in self.unitId2PlayerId_WaitDestroy)
+                {
+                    if (item.Value.destroyTime < TimeHelper.ServerNow() - 5000)
+                    {
+                        self.unitId2PlayerId_RemoveList.Add(item.Key);
+                    }
+                }
+
+                foreach (long unitId in self.unitId2PlayerId_RemoveList)
+                {
+                    self.unitId2PlayerId_WaitDestroy.Remove(unitId);
+                }
+                self.unitId2PlayerId_RemoveList.Clear();
             }
         }
 
@@ -82,12 +126,15 @@ namespace ET
 
             if (isNeedRemoveAllPlayerUnits)
             {
-                foreach (var unitId in self.playerId2UnitIds[playerId])
+                if (self.playerId2UnitIds.TryGetValue(playerId, out var list))
                 {
-                    Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
-                    if (unit != null)
+                    foreach (var unitId in list.ToList())
                     {
-                        unit.DestroyNotDeathShow();
+                        Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+                        if (unit != null)
+                        {
+                            unit.DestroyNotDeathShow();
+                        }
                     }
                 }
             }
@@ -125,6 +172,14 @@ namespace ET
             {
                 self.playerId2UnitIds.Remove(playerId, unitId);
                 self.unitId2PlayerId.Remove(unitId);
+                if (self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId) == false)
+                {
+                    self.unitId2PlayerId_WaitDestroy.Add(unitId, (playerId, TimeHelper.ServerNow()));
+                }
+                else
+                {
+                    Log.Error($"ET.GamePlayPlayerListComponentSystem.RemoveUnitInfo self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId)");
+                }
 
                 if (isPlayerUnit)
                 {
@@ -153,6 +208,10 @@ namespace ET
         {
             if (self.unitId2PlayerId.ContainsKey(unitId) == false)
             {
+                if (self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId))
+                {
+                    return self.unitId2PlayerId_WaitDestroy[unitId].playerId;
+                }
                 return -1;
             }
 

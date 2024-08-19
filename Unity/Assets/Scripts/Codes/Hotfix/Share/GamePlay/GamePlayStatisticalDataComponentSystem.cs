@@ -40,7 +40,7 @@ namespace ET
 
         public static void AddKillInfo(this GamePlayStatisticalDataComponent self, Unit attackerUnit, Unit beKillUnit)
         {
-            Unit attackerActorUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+            Unit attackerActorUnit = attackerUnit.GetCasterActor();
             if (attackerActorUnit == null)
             {
                 return;

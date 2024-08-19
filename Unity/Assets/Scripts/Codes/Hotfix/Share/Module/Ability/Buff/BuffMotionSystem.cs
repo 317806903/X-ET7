@@ -46,14 +46,17 @@ namespace ET.Ability
                     {
                         maxSpeedVectorValueSq = math.lengthsq(curMotionSpeedVector);
                     }
-                    speedVector += buffObj.GetMotionSpeedVector();
+                    speedVector += curMotionSpeedVector;
                 }
             }
 
             if (maxSpeedVectorValueSq > 0)
             {
-                float3 dir = math.normalize(speedVector);
-                speedVector = dir * math.sqrt(maxSpeedVectorValueSq);
+                if (math.lengthsq(speedVector) > maxSpeedVectorValueSq)
+                {
+                    float3 dir = math.normalize(speedVector);
+                    speedVector = dir * math.sqrt(maxSpeedVectorValueSq);
+                }
             }
             return speedVector;
         }

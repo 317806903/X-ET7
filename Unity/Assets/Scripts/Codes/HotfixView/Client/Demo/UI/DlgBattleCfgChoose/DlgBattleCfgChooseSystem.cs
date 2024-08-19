@@ -56,7 +56,7 @@ namespace ET.Client
 
 		}
 
-		public static void ShowWindow(this DlgBattleCfgChoose self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleCfgChoose self, ShowWindowData contextData = null)
 		{
 			DlgBattleCfgChoose_ShowWindowData dlgBattleCfgChooseShowWindowData = contextData as DlgBattleCfgChoose_ShowWindowData;
 			self.isGlobalMode = dlgBattleCfgChooseShowWindowData.isGlobalMode;

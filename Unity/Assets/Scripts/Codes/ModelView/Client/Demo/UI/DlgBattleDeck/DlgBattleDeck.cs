@@ -4,9 +4,11 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleDeck : Entity, IAwake, IUILogic
+	public class DlgBattleDeck : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleDeckViewComponent View { get => this.GetComponent<DlgBattleDeckViewComponent>(); }
+
+		public long dlgShowTime;
 
 		public Dictionary<int, Scroll_Item_TowerBuy> ScrollBattleDeckItem;
 		public Dictionary<int, Scroll_Item_TowerBuy> ScrollBagItem;

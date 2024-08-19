@@ -3,9 +3,11 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgPersionalAvatar : Entity, IAwake, IUILogic
+	public class DlgPersionalAvatar : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgPersionalAvatarViewComponent View { get => this.GetComponent<DlgPersionalAvatarViewComponent>(); }
+
+		public long dlgShowTime;
 
         public Dictionary<int, Scroll_Item_AvatarIcon> ScrollItemAvatarIcons;
 

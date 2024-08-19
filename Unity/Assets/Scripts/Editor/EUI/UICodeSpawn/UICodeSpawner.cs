@@ -114,8 +114,20 @@ public partial class UICodeSpawner
             .AppendLine("\t\t}")
             .AppendLine();
 
-        strBuilder.AppendFormat("\t\tpublic static void ShowWindow(this {0} self, ShowWindowData contextData = null)\n", strDlgName);
+        strBuilder.AppendFormat("\t\tpublic static async ETTask ShowWindow(this {0} self, ShowWindowData contextData = null)\n", strDlgName);
         strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t\tself.dlgShowTime = TimeHelper.ClientNow();");
+        strBuilder.AppendLine("\t\t\t");
+        strBuilder.AppendLine("\t\t}")
+            .AppendLine();
+
+        strBuilder.AppendFormat("\t\tpublic static bool ChkCanClickBg(this {0} self)\n", strDlgName);
+        strBuilder.AppendLine("\t\t{");
+        strBuilder.AppendLine("\t\t\tif (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))");
+        strBuilder.AppendLine("\t\t\t{");
+        strBuilder.AppendLine("\t\t\t\treturn true;");
+        strBuilder.AppendLine("\t\t\t}");
+        strBuilder.AppendLine("\t\t\treturn false;");
         strBuilder.AppendLine("\t\t}")
             .AppendLine();
 
@@ -229,7 +241,7 @@ public partial class UICodeSpawner
 
         strBuilder.AppendLine("\t\tpublic void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)")
             .AppendLine("\t\t{");
-        strBuilder.AppendFormat("\t\t\tuiBaseWindow.GetComponent<{0}>().ShowWindow(contextData);\r\n", strDlgName);
+        strBuilder.AppendFormat("\t\t\tuiBaseWindow.GetComponent<{0}>().ShowWindow(contextData).Coroutine();\r\n", strDlgName);
         strBuilder.AppendLine("\t\t}")
             .AppendLine();
 
@@ -277,9 +289,10 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("{");
         strBuilder.AppendLine("\t[ComponentOf(typeof(UIBaseWindow))]");
 
-        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake, IUILogic\r\n", strDlgName);
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake, IUILogic, IUIDlg\r\n", strDlgName);
         strBuilder.AppendLine("\t{");
-        strBuilder.AppendLine("\t\tpublic " + strDlgName + "ViewComponent View { get => this.GetComponent<" + strDlgName + "ViewComponent>(); }\r\n");
+        strBuilder.AppendLine("\t\tpublic " + strDlgName + "ViewComponent View { get => this.GetComponent<" + strDlgName + "ViewComponent>(); }");
+        strBuilder.AppendLine("\t\tpublic long dlgShowTime;");
         strBuilder.AppendLine("\t}");
         strBuilder.AppendLine("}");
 
@@ -700,6 +713,7 @@ public partial class UICodeSpawner
         WidgetInterfaceList.Add("UnityEngine.EventSystems.EventTrigger");
         WidgetInterfaceList.Add("UITextLocalizeMonoView");
         WidgetInterfaceList.Add("LoopListView2");
+        WidgetInterfaceList.Add("VideoPlayer");
     }
 
     private static Dictionary<string, List<Component>> Path2WidgetCachedDict = null;

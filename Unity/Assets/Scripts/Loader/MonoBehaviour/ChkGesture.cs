@@ -8,7 +8,7 @@ namespace ET
 {
     public class ChkGesture: MonoBehaviour
     {
-        public int numOfTriangleToShow = 2;
+        public int numOfTriangleToShow = 1;
         public int numOfRoundToShow = 2;
         public int numOfRoundToHide = 2;
         private bool isShow = false;
@@ -19,6 +19,9 @@ namespace ET
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            numOfTriangleToShow = 0;
+#endif
         }
 
         void Update()

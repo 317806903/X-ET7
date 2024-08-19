@@ -38,6 +38,7 @@ namespace ET.Client
                 if (self.RootTrans != null)
                 {
                     UITextLocalizeComponent.Instance.RemoveUITextLocalizeView(self.RootTrans.gameObject);
+                    UIImageLocalizeComponent.Instance.RemoveUIImageLocalizeView(self.RootTrans.gameObject);
                     GameObject.DestroyImmediate(self.RootTrans.gameObject);
                     self.RootTrans = null;
                 }
@@ -77,9 +78,10 @@ namespace ET.Client
             GameObject.DontDestroyOnLoad(self.RootTrans.gameObject);
 
             UITextLocalizeComponent.Instance.AddUITextLocalizeView(self.RootTrans.gameObject);
+            UIImageLocalizeComponent.Instance.AddUIImageLocalizeView(self.RootTrans.gameObject);
         }
 
-        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, int startIndex, Action finished = null, Action<int> stepFinished = null)
+        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
         {
             string filePath = $"UIGuideConfig_{guideFileName}";
             UIGuidePathList _UIGuidePathList = await ResComponent.Instance.LoadAssetAsync<UIGuidePathList>(filePath);
@@ -99,7 +101,7 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action finished = null, Action<int> stepFinished = null)
+        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
         {
             if (_UIGuidePathList == null || _UIGuidePathList.list.Count == 0)
             {
@@ -143,7 +145,7 @@ namespace ET.Client
                 {
                     if (self.finished != null)
                     {
-                        self.finished();
+                        self.finished(self.DomainScene());
                     }
                     self.DestroySelf();
                     return;
@@ -189,7 +191,7 @@ namespace ET.Client
 
             if (self.stepFinished != null)
             {
-                self.stepFinished(self.nowIndex);
+                self.stepFinished(self.DomainScene(), self.nowIndex);
             }
             self.nowIndex++;
             self.DoGuideStep().Coroutine();

@@ -331,6 +331,23 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI ELabelDesNOFrameTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabelDesNOFrameTextMeshProUGUI == null )
+				{
+					this.m_ELabelDesNOFrameTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/EImageCurrentBk/ELabelDesNOFrame");
+				}
+				return this.m_ELabelDesNOFrameTextMeshProUGUI;
+			}
+		}
+
 		public UnityEngine.UI.Button E_BtnCloseButton
 		{
 			get
@@ -387,6 +404,7 @@ namespace ET.Client
 			this.m_ELabel_CurrentTextMeshProUGUI = null;
 			this.m_ELabel_PreviewTextMeshProUGUI = null;
 			this.m_ELabelDesFrameTextMeshProUGUI = null;
+			this.m_ELabelDesNOFrameTextMeshProUGUI = null;
 			this.m_E_BtnCloseButton = null;
 			this.m_E_BtnCloseImage = null;
 			this.uiTransform = null;
@@ -411,6 +429,7 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_CurrentTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabel_PreviewTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ELabelDesFrameTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_ELabelDesNOFrameTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_BtnCloseButton = null;
 		private UnityEngine.UI.Image m_E_BtnCloseImage = null;
 		public Transform uiTransform = null;

@@ -18,8 +18,8 @@ namespace ET.Client
 
             self.View.EBtnRegularButton.AddListener(() => {self.SwitchPage(0); });
             self.View.EBtnSeasonButton.AddListener(() => { self.SwitchPage(1); });
-            self.View.EBtnRegular_UnselectedButton.AddListener(() => { self.ToggleButtons(true); self.SwitchPage( 0); });
-            self.View.EBtnSeason_UnselectedButton.AddListener(() => { self.ToggleButtons(false);self.SwitchPage(1); });
+            self.View.EBtnRegular_UnselectedButton.AddListener(() => { self.SetToggleButtonsActive(true); self.SwitchPage( 0); });
+            self.View.EBtnSeason_UnselectedButton.AddListener(() => { self.SetToggleButtonsActive(false);self.SwitchPage(1); });
         }
 
         //切换界面
@@ -28,18 +28,18 @@ namespace ET.Client
             self.pageIndex = pageIndex;
             if (pageIndex == 0)
             {
-                self.View.EPage_ChallengNormal.ShowPage();
+                self.View.EPage_ChallengNormal.ShowPage().Coroutine();
                 self.View.EPage_ChallengSeason.HidePage();
             }
             else
             {
-                self.View.EPage_ChallengSeason.ShowPage();
+                self.View.EPage_ChallengSeason.ShowPage().Coroutine();
                 self.View.EPage_ChallengNormal.HidePage();
             }
         }
 
         //控制4个按钮的显影
-        private static void ToggleButtons(this DlgChallengeMode self, bool isRegular)
+        private static void SetToggleButtonsActive(this DlgChallengeMode self, bool isRegular)
         {
             self.View.EBtnRegularButton.SetVisible(isRegular);
             self.View.EBtnRegular_UnselectedButton.SetVisible(!isRegular);
@@ -49,20 +49,25 @@ namespace ET.Client
 
 
         //显示
-        public static void ShowWindow(this DlgChallengeMode self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgChallengeMode self, ShowWindowData contextData = null)
         {
             self.ShowBg().Coroutine();
 
-            // 赛季按钮失活，常规按钮激活
-            ToggleButtons(self, true);
+            SeasonComponent seasonComponent = ET.Client.SeasonHelper.GetSeasonComponent(self.DomainScene());
+            self.View.ETxtSeasonDesTextMeshProUGUI.SetText(seasonComponent.cfg.Desc);
 
             switch (self.pageIndex)
             {
                 case 0:
-                    self.View.EPage_ChallengNormal.ShowPage();
+                    // 赛季按钮失活，常规按钮激活
+                    self.SetToggleButtonsActive(true);
+                    self.View.EPage_ChallengNormal.ShowPage().Coroutine();
+                    self.View.EPage_ChallengSeason.HidePage();
                     break;
                 case 1:
-                    self.View.EPage_ChallengSeason.ShowPage();
+                    self.SetToggleButtonsActive(false);
+                    self.View.EPage_ChallengSeason.ShowPage().Coroutine();
+                    self.View.EPage_ChallengNormal.HidePage();
                     break;
             }
         }
@@ -96,6 +101,11 @@ namespace ET.Client
                     self.View.EPage_ChallengSeason.RefreshWhenBaseInfoChg().Coroutine();
                     break;
             }
+        }
+
+        public static async ETTask RefreshWhenSeasonRemainChg(this DlgChallengeMode self)
+        {
+            self.View.EPage_ChallengSeason.RefreshWhenSeasonRemainChg().Coroutine();
         }
 
         //退出按钮

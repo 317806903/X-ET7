@@ -46,6 +46,28 @@ namespace ET.Client
             return myPlayerUnit;
         }
 
+        public static Unit GetUnit(Scene scene, long unitId)
+        {
+            UnitComponent unitComponent = GetUnitComponent(scene);
+            if (unitComponent != null)
+            {
+                Unit unit = unitComponent.Get(unitId);
+                if (unit != null)
+                {
+                    return unit;
+                }
+            }
+
+            return null;
+        }
+
+        public static float GetMaxSkillDis(Unit unit)
+        {
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            float skillDis = numericComponent.GetAsFloat(NumericType.SkillDis);
+            return skillDis;
+        }
+
         public static void SendGetNumericUnit(Unit unit)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());

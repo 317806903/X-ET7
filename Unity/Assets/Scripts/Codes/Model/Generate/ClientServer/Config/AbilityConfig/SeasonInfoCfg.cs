@@ -17,13 +17,12 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
     public SeasonInfoCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
-        Name = _buf.ReadString();
-        Desc = _buf.ReadString();
-        EndTime = _buf.ReadLong();
+        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
+        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         AREndlessChallengeCfgId = _buf.ReadString();
         NoAREndlessChallengeCfgId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BringUpList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); BringUpList.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RewardDropItem = new System.Collections.Generic.Dictionary<int, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { int _k0;  _k0 = _buf.ReadInt(); string _v0;  _v0 = _buf.ReadString();     RewardDropItem.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RewardMail = new System.Collections.Generic.Dictionary<int, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { int _k0;  _k0 = _buf.ReadInt(); string _v0;  _v0 = _buf.ReadString();     RewardMail.Add(_k0, _v0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RewardItemListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); RewardItemListShow.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterListShow.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TowerListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TowerListShow.Add(_e0);}}
@@ -41,18 +40,15 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
     /// </summary>
     public int Id { get; private set; }
     /// <summary>
-    /// 名字
+    /// key
     /// </summary>
     public string Name { get; private set; }
+    public string Name_l10n_key { get; }
     /// <summary>
-    /// 描述
+    /// key
     /// </summary>
     public string Desc { get; private set; }
-    /// <summary>
-    /// 赛季结束时间
-    /// </summary>
-    public long EndTime { get; private set; }
-    public long EndTime_Millis => EndTime * 1000L;
+    public string Desc_l10n_key { get; }
     /// <summary>
     /// (AR模式)无尽模式的cfgId
     /// </summary>
@@ -68,10 +64,10 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
     /// </summary>
     public System.Collections.Generic.List<string> BringUpList { get; private set; }
     /// <summary>
-    /// 赛季结算奖励(1,xx;100,yy;400,zz)
+    /// 赛季结算邮件(1,xx;100,yy;400,zz)
     /// </summary>
-    public System.Collections.Generic.Dictionary<int, string> RewardDropItem { get; private set; }
-    public System.Collections.Generic.Dictionary<int, DropRuleCfg> RewardDropItem_Ref { get; private set; }
+    public System.Collections.Generic.Dictionary<int, string> RewardMail { get; private set; }
+    public System.Collections.Generic.Dictionary<int, MailCfg> RewardMail_Ref { get; private set; }
     /// <summary>
     /// 赛季结算奖励展示物品
     /// </summary>
@@ -99,7 +95,7 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
     {
         this.AREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(AREndlessChallengeCfgId);
         this.NoAREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(NoAREndlessChallengeCfgId);
-        { DropRuleCfgCategory __table = (DropRuleCfgCategory)_tables["DropRuleCfgCategory"]; this.RewardDropItem_Ref = new System.Collections.Generic.Dictionary<int, DropRuleCfg>(); foreach(var __e in RewardDropItem) { this.RewardDropItem_Ref.Add(__e.Key, __table.GetOrDefault(__e.Value)); } }
+        { MailCfgCategory __table = (MailCfgCategory)_tables["MailCfgCategory"]; this.RewardMail_Ref = new System.Collections.Generic.Dictionary<int, MailCfg>(); foreach(var __e in RewardMail) { this.RewardMail_Ref.Add(__e.Key, __table.GetOrDefault(__e.Value)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.RewardItemListShow_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in RewardItemListShow) { this.RewardItemListShow_Ref.Add(__table.GetOrDefault(__e)); } }
         { TowerDefense_MonsterCfgCategory __table = (TowerDefense_MonsterCfgCategory)_tables["TowerDefense_MonsterCfgCategory"]; this.MonsterListShow_Ref = new System.Collections.Generic.List<TowerDefense_MonsterCfg>(); foreach(var __e in MonsterListShow) { this.MonsterListShow_Ref.Add(__table.GetOrDefault(__e)); } }
         { TowerDefense_TowerCfgCategory __table = (TowerDefense_TowerCfgCategory)_tables["TowerDefense_TowerCfgCategory"]; this.TowerListShow_Ref = new System.Collections.Generic.List<TowerDefense_TowerCfg>(); foreach(var __e in TowerListShow) { this.TowerListShow_Ref.Add(__table.GetOrDefault(__e)); } }
@@ -108,6 +104,8 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        Name = translator(Name_l10n_key, Name);
+        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -116,11 +114,10 @@ public sealed partial class SeasonInfoCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "EndTime:" + EndTime + ","
         + "AREndlessChallengeCfgId:" + AREndlessChallengeCfgId + ","
         + "NoAREndlessChallengeCfgId:" + NoAREndlessChallengeCfgId + ","
         + "BringUpList:" + Bright.Common.StringUtil.CollectionToString(BringUpList) + ","
-        + "RewardDropItem:" + Bright.Common.StringUtil.CollectionToString(RewardDropItem) + ","
+        + "RewardMail:" + Bright.Common.StringUtil.CollectionToString(RewardMail) + ","
         + "RewardItemListShow:" + Bright.Common.StringUtil.CollectionToString(RewardItemListShow) + ","
         + "MonsterListShow:" + Bright.Common.StringUtil.CollectionToString(MonsterListShow) + ","
         + "TowerListShow:" + Bright.Common.StringUtil.CollectionToString(TowerListShow) + ","

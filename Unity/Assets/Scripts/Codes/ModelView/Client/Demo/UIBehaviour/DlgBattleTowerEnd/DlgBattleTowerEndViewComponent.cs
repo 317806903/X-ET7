@@ -568,108 +568,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_GoldCoinsRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_GoldCoinsRectTransform == null )
-				{
-					this.m_EG_GoldCoinsRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_Root/EG_GoldCoins");
-				}
-				return this.m_EG_GoldCoinsRectTransform;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI E_GoldTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_GoldTextMeshProUGUI == null )
-				{
-					this.m_E_GoldTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Root/EG_GoldCoins/E_Gold");
-				}
-				return this.m_E_GoldTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button E_btn_01Button
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_btn_01Button == null )
-				{
-					this.m_E_btn_01Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom_Next/E_btn_01");
-				}
-				return this.m_E_btn_01Button;
-			}
-		}
-
-		public UnityEngine.UI.Image E_btn_01Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_btn_01Image == null )
-				{
-					this.m_E_btn_01Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom_Next/E_btn_01");
-				}
-				return this.m_E_btn_01Image;
-			}
-		}
-
-		public UnityEngine.UI.Button E_btn_02Button
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_btn_02Button == null )
-				{
-					this.m_E_btn_02Button = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom_Next/E_btn_02");
-				}
-				return this.m_E_btn_02Button;
-			}
-		}
-
-		public UnityEngine.UI.Image E_btn_02Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_btn_02Image == null )
-				{
-					this.m_E_btn_02Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom_Next/E_btn_02");
-				}
-				return this.m_E_btn_02Image;
-			}
-		}
-
 		public UnityEngine.UI.Button E_ReturnRoomButton
 		{
 			get
@@ -721,74 +619,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button EButton_GameEndButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_GameEndButton == null )
-				{
-					this.m_EButton_GameEndButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Root/EButton_GameEnd");
-				}
-				return this.m_EButton_GameEndButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_GameEndImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_GameEndImage == null )
-				{
-					this.m_EButton_GameEndImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Root/EButton_GameEnd");
-				}
-				return this.m_EButton_GameEndImage;
-			}
-		}
-
-		public UnityEngine.UI.Text ELabel_GameEndText
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_GameEndText == null )
-				{
-					this.m_ELabel_GameEndText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject, "E_Root/EButton_GameEnd/ELabel_GameEnd");
-				}
-				return this.m_ELabel_GameEndText;
-			}
-		}
-
-		public UITextLocalizeMonoView ELabel_GameEndUITextLocalizeMonoView
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_GameEndUITextLocalizeMonoView == null )
-				{
-					this.m_ELabel_GameEndUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Root/EButton_GameEnd/ELabel_GameEnd");
-				}
-				return this.m_ELabel_GameEndUITextLocalizeMonoView;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_E_BG_ClickButton = null;
@@ -824,19 +654,9 @@ namespace ET.Client
 			this.m_E_RootImage = null;
 			this.m_EG_ItemListRectTransform = null;
 			this.m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
-			this.m_EG_GoldCoinsRectTransform = null;
-			this.m_E_GoldTextMeshProUGUI = null;
-			this.m_E_btn_01Button = null;
-			this.m_E_btn_01Image = null;
-			this.m_E_btn_02Button = null;
-			this.m_E_btn_02Image = null;
 			this.m_E_ReturnRoomButton = null;
 			this.m_E_ReturnRoomImage = null;
 			this.m_E_Return_TextTextMeshProUGUI = null;
-			this.m_EButton_GameEndButton = null;
-			this.m_EButton_GameEndImage = null;
-			this.m_ELabel_GameEndText = null;
-			this.m_ELabel_GameEndUITextLocalizeMonoView = null;
 			this.uiTransform = null;
 		}
 
@@ -873,19 +693,9 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_RootImage = null;
 		private UnityEngine.RectTransform m_EG_ItemListRectTransform = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_ItemLoopHorizontalScrollRect = null;
-		private UnityEngine.RectTransform m_EG_GoldCoinsRectTransform = null;
-		private TMPro.TextMeshProUGUI m_E_GoldTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_btn_01Button = null;
-		private UnityEngine.UI.Image m_E_btn_01Image = null;
-		private UnityEngine.UI.Button m_E_btn_02Button = null;
-		private UnityEngine.UI.Image m_E_btn_02Image = null;
 		private UnityEngine.UI.Button m_E_ReturnRoomButton = null;
 		private UnityEngine.UI.Image m_E_ReturnRoomImage = null;
 		private TMPro.TextMeshProUGUI m_E_Return_TextTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_EButton_GameEndButton = null;
-		private UnityEngine.UI.Image m_EButton_GameEndImage = null;
-		private UnityEngine.UI.Text m_ELabel_GameEndText = null;
-		private UITextLocalizeMonoView m_ELabel_GameEndUITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

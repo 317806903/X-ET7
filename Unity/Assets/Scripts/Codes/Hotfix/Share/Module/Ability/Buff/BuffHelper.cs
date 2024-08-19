@@ -9,6 +9,10 @@ namespace ET.Ability
     {
         public static BuffComponent _GetBuffComponent(Unit unit)
         {
+            if (unit == null)
+            {
+                return null;
+            }
             BuffComponent buffComponent = unit.GetComponent<BuffComponent>();
             if (buffComponent == null)
             {
@@ -505,12 +509,12 @@ namespace ET.Ability
             return buffComponent.GetMotionSpeedVector();
         }
 
-        public static (bool, AnimatorMotionName) GetControlStateAnimatorMotion(Unit unit)
+        public static (bool bStopAnimator, AnimatorMotionName animatorMotionName, bool isLoop) GetControlStateAnimatorMotion(Unit unit)
         {
             BuffComponent buffComponent = _GetBuffComponent(unit);
             if (buffComponent == null)
             {
-                return (false, AnimatorMotionName.None);
+                return (false, AnimatorMotionName.None, false);
             }
             return buffComponent.GetControlStateAnimatorMotion();
         }

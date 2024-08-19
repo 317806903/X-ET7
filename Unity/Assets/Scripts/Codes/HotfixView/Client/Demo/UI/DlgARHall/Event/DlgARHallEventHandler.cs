@@ -22,7 +22,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgARHall>().ShowWindow(contextData); 
+			uiBaseWindow.GetComponent<DlgARHall>().ShowWindow(contextData).Coroutine(); 
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

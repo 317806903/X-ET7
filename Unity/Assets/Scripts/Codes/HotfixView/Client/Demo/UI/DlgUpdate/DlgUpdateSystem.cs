@@ -23,14 +23,20 @@ namespace ET.Client
 			self.transCheckUpdate = self.View.uiTransform.Find("Sprite_BackGround/HotUpdates/CheckUpdate");
 		}
 
-		public static void ShowWindow(this DlgUpdate self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgUpdate self, ShowWindowData contextData = null)
 		{
+			self.LoadBG().Coroutine();
 			self.transProgress.gameObject.SetActive(false);
 			self.transCheckUpdate.gameObject.SetActive(true);
 			self.transCheckUpdate.GetComponent<TextMeshProUGUI>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
 			self.ShowProcess(0);
 			ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
 			self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{package.GetPackageVersion()}";
+		}
+
+		public static async ETTask LoadBG(this DlgUpdate self)
+		{
+			self.View.E_BGImage.LoadBG().Coroutine();
 		}
 
 		public static void ShowProcess(this DlgUpdate self, float per)

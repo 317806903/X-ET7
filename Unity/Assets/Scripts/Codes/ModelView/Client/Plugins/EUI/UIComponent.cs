@@ -4,14 +4,19 @@ namespace ET.Client
 {
     public interface IUILogic
     {
-        
+
+    }
+
+    public interface IUIDlg
+    {
+
     }
 
     public interface IUIScrollItem
     {
-        
+
     }
-    
+
     [ComponentOf(typeof(Scene))]
     [ChildOf(typeof(UIBaseWindow))]
     public class UIComponent : Entity,IAwake,IDestroy

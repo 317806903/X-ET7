@@ -259,7 +259,7 @@ namespace ET.Ability
         {
             if (damageInfo.ScaleByDis != 0)
             {
-                Unit casterActorUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+                Unit casterActorUnit = attackerUnit.GetCasterActor();
 
                 //按照距离变化(>0表示越远伤害越高,<0表示越近伤害越高)
                 float dis = math.length(casterActorUnit.Position - targetUnit.Position);
@@ -275,7 +275,7 @@ namespace ET.Ability
 
             if (damageInfo.ScaleByHeight != 0)
             {
-                Unit casterActorUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+                Unit casterActorUnit = attackerUnit.GetCasterActor();
 
                 //按照高度变化(>0表示往上越远伤害越高,<0表示往下越远伤害越高)
                 if (

@@ -15,9 +15,6 @@ namespace ET.Client
         {
             protected override void Awake(HomeHealthBarComponent self)
             {
-                self.Init().Coroutine();
-                self.UpdateHealth(true);
-                Application.onBeforeRender += self.OnBeforeRenderUpdate;
             }
         }
 
@@ -32,6 +29,16 @@ namespace ET.Client
 
         public static void UpdateHealth(this HomeHealthBarComponent self, bool isInit)
         {
+            if (self.IsDisposed || self.go == null || self.go.activeSelf == false || self.mainCamera == null)
+            {
+                return;
+            }
+
+            if (self.GetUnit() == null)
+            {
+                return;
+            }
+
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             int curHp = math.max(numericComponent.GetAsInt(NumericType.Hp), 0);
             int maxHp = numericComponent.GetAsInt(NumericType.MaxHp);
@@ -64,6 +71,11 @@ namespace ET.Client
         public static void OnBeforeRenderUpdate(this HomeHealthBarComponent self)
         {
             if (self.IsDisposed || self.go == null || self.go.activeSelf == false || self.mainCamera == null)
+            {
+                return;
+            }
+
+            if (self.GetUnit() == null)
             {
                 return;
             }
@@ -126,6 +138,11 @@ namespace ET.Client
 
         public static async ETTask Init(this HomeHealthBarComponent self)
         {
+            await self._Init();
+        }
+
+        public static async ETTask _Init(this HomeHealthBarComponent self)
+        {
             GameObject healthBarGo = GameObjectPoolHelper.GetObjectFromPool("HealthBarHome",true,1);
 
             self.go = healthBarGo;
@@ -166,6 +183,9 @@ namespace ET.Client
             self.rectTrans.SetParent(_DlgBattleTowerHUDShow.View.EGRootRectTransform);
             self.rectTrans.localPosition = Vector3.zero;
             self.rectTrans.localScale = Vector3.one;
+
+            self.UpdateHealth(true);
+            Application.onBeforeRender += self.OnBeforeRenderUpdate;
         }
 
         public static Unit GetUnit(this HomeHealthBarComponent self)

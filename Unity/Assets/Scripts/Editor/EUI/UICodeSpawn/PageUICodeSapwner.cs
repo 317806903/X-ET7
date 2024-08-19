@@ -59,7 +59,7 @@ public partial class UICodeSpawner
             .AppendLine("\t\t}")
             .AppendLine();
 
-        strBuilder.AppendFormat("\t\tpublic static void ShowPage(this {0} self, ShowWindowData contextData = null)\n", strDlgName);
+        strBuilder.AppendFormat("\t\tpublic static async ETTask ShowPage(this {0} self, ShowWindowData contextData = null)\n", strDlgName);
         strBuilder.AppendLine("\t\t{");
         strBuilder.AppendLine("\t\t\tself.View.uiTransform.SetVisible(true);");
         strBuilder.AppendLine("\t\t\t");
@@ -104,7 +104,7 @@ public partial class UICodeSpawner
         strBuilder.AppendLine("namespace ET.Client");
         strBuilder.AppendLine("{");
 
-        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake<UnityEngine.Transform>, IDestroy\r\n", strDlgName);
+        strBuilder.AppendFormat("\tpublic class {0} : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic\r\n", strDlgName);
         strBuilder.AppendLine("\t{");
         strBuilder.AppendLine("\t\tpublic " + strDlgName + "ViewComponent View { get => this.GetComponent<" + strDlgName + "ViewComponent>(); }\r\n");
         strBuilder.AppendLine("\t}");

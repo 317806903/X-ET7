@@ -34,7 +34,7 @@ namespace ET.Client
 			self.View.E_SliderSceneScaleSlider.AddListener(self.OnSceneScaleSider);
 		}
 
-		public static void ShowWindow(this DlgARSceneSlider self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgARSceneSlider self, ShowWindowData contextData = null)
 		{
 			self.SetSceneScaleInfo();
 

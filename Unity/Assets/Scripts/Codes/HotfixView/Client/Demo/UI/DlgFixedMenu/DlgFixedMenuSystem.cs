@@ -35,7 +35,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgFixedMenu self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgFixedMenu self, ShowWindowData contextData = null)
 		{
 			self._ShowWindow().Coroutine();
 		}
@@ -198,10 +198,14 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             Log.Error($"Click ClickDiamond");
-            PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene(), false);
-            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
-            playerBackPackComponent.AddItem(itemCfgId, 200);
-            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BackPack, null);
+            bool isGetDiamondWhenClick = ChannelSettingComponent.Instance.ChkIsGetDiamondWhenClick();
+            if (isGetDiamondWhenClick)
+            {
+	            PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene(), false);
+	            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+	            playerBackPackComponent.AddItem(itemCfgId, 50);
+	            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BackPack, null);
+            }
 		}
 
 	}

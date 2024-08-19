@@ -10,7 +10,8 @@ namespace ET.Ability
         {
             Unit aoeUnit = ET.GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), unit, actionCfg_CallAoe, selectHandle, ref actionContext);
 
-            ET.Ability.OwnCallerHelper.AddOwnCaller(unit, aoeUnit);
+            unit.AddOwnCaller(aoeUnit);
+            aoeUnit.AddCaster(unit);
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {

@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgARRoomPVE : Entity, IAwake, IUILogic
+	public class DlgARRoomPVE : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgARRoomPVEViewComponent View { get => this.GetComponent<DlgARRoomPVEViewComponent>(); }
 
@@ -13,5 +13,6 @@ namespace ET.Client
 
 		public int level;
 		public bool isAR;
+		public List<(string itemCfgId, int itemNum)> itemList;
 	}
 }

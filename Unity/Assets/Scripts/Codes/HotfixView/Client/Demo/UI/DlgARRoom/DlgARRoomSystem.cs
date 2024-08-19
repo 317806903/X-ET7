@@ -22,10 +22,13 @@ namespace ET.Client
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddMemberItemRefreshListener(transform, i));
+            {
+                self.AddMemberItemRefreshListener(transform, i).Coroutine();
+                self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+            });
         }
 
-        public static async void ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgARRoom self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
             self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
@@ -112,6 +115,12 @@ namespace ET.Client
 
         public static async ETTask RefreshUI(this DlgARRoom self)
         {
+            RoomComponent roomComponent = self.GetRoomComponent();
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+            int count = roomMemberList.Count;
+            self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
+            self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetVisible(true, count);
+
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.RefreshCells();
 
             self.SetRoomMemberStatusText();
@@ -282,7 +291,9 @@ namespace ET.Client
             self.View.E_RoomMemberList_titleImage.SetVisible(false);
             self.View.E_RoomMemberList_title_ChallengeImage.SetVisible(false);
 
-            int count = roomComponent.roomMemberSeat.Count;
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
+
+            int count = roomMemberList.Count;
             self.AddUIScrollItems(ref self.ScrollItemRoomMembers, count);
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetVisible(true, count);
 
@@ -303,15 +314,15 @@ namespace ET.Client
 
         public static async ETTask AddMemberItemRefreshListener(this DlgARRoom self, Transform transform, int index)
         {
-            self.SetSrcollOffset();
             RoomComponent roomComponent = self.GetRoomComponent();
 
             Scroll_Item_RoomMember itemRoom = self.ScrollItemRoomMembers[index].BindTrans(transform);
 
             itemRoom.InitItemRoom();
 
-            long roomMemberId = roomComponent.roomMemberSeat[index];
+            List<RoomMember> roomMemberList = roomComponent.GetRoomMemberList();
 
+            long roomMemberId = roomMemberList[index].Id;
             if (roomMemberId == -1)
             {
                 itemRoom.uiTransform.SetVisible(false);
@@ -533,19 +544,6 @@ namespace ET.Client
             }
 
             await RoomHelper.ChgRoomMemberTeamAsync(self.ClientScene(), roomTeamId);
-        }
-
-        public static void SetSrcollOffset(this DlgARRoom self)
-        {
-            int width = (int)self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width / 2;
-            int offset = width - (148 * 6);
-            RoomComponent roomComponent = self.GetRoomComponent();
-            int count = roomComponent.GetRoomMemberList().Count;
-            if (count < 6)
-            {
-                offset = width - (148 * count);
-            }
-            self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.content.GetComponent<HorizontalLayoutGroup>().padding.left = offset;
         }
     }
 }

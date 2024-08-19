@@ -37,7 +37,8 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
             case ActionCallOnAoeChgUnit.__ID__: return new ActionCallOnAoeChgUnit(_buf);
             case ActionCallOnAoeInUnit.__ID__: return new ActionCallOnAoeInUnit(_buf);
             case ActionCallCasterUnit.__ID__: return new ActionCallCasterUnit(_buf);
-            case ActionCallCasterPlayerUnit.__ID__: return new ActionCallCasterPlayerUnit(_buf);
+            case ActionCallCasterFirstActorUnit.__ID__: return new ActionCallCasterFirstActorUnit(_buf);
+            case ActionCallCasterActorUnit.__ID__: return new ActionCallCasterActorUnit(_buf);
             case ActionCallOnAttackUnit.__ID__: return new ActionCallOnAttackUnit(_buf);
             case ActionCallBeHurtUnit.__ID__: return new ActionCallBeHurtUnit(_buf);
             case ActionCallOwnCaller.__ID__: return new ActionCallOwnCaller(_buf);

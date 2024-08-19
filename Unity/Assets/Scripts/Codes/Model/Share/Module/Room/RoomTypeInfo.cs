@@ -10,7 +10,8 @@ namespace ET
     {
         public RoomType roomType;
         public SubRoomType subRoomType;
-        public int seasonId;
+        public int seasonIndex;
+        public int seasonCfgId;
         public int pveIndex;
         public string gamePlayBattleLevelCfgId;
 
@@ -57,7 +58,7 @@ namespace ET
             return "{ "
                 + "roomType:" + roomType.ToString() + ","
                 + "subRoomType:" + subRoomType.ToString() + ","
-                + "seasonId:" + seasonId + ","
+                + "seasonCfgId:" + seasonCfgId + ","
                 + "pveIndex:" + pveIndex + ","
                 + "gamePlayBattleLevelCfgId:" + gamePlayBattleLevelCfgId + ","
                 + "}";

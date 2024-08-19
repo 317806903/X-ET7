@@ -33,11 +33,15 @@ namespace ET.Client
         /// 获取房间列表
         /// </summary>
         /// <param name="clientScene"></param>
-        public static async ETTask GetRoomListAsync(Scene clientScene)
+        public static async ETTask GetRoomListAsync(Scene clientScene, bool needARRoom, bool needNotARRoom)
         {
             try
             {
-                G2C_GetRoomList _G2C_GetRoomList = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomList(), false) as G2C_GetRoomList;
+                G2C_GetRoomList _G2C_GetRoomList = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomList()
+                {
+                    NeedARRoom = needARRoom?1:0,
+                    NeedNotARRoom = needNotARRoom?1:0,
+                }, false) as G2C_GetRoomList;
                 if (_G2C_GetRoomList.Error != ET.ErrorCode.ERR_Success)
                 {
                     Log.Error($"ET.Client.RoomHelper.GetRoomListAsync Error==1 msg={_G2C_GetRoomList.Message}");
@@ -94,6 +98,7 @@ namespace ET.Client
         {
             try
             {
+                roomTypeInfo.seasonIndex = SeasonHelper.GetSeasonIndex(clientScene);
                 G2C_CreateRoom _G2C_CreateRoom = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_CreateRoom()
                 {
                     RoomTypeInfo = ET.RoomTypeInfo.ToBytes(roomTypeInfo),

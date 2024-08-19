@@ -52,15 +52,15 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask RecordWhenSeasonFinished(this RankManagerComponent self, RankType rankType, int seasonId)
+        public static async ETTask RecordWhenSeasonFinished(this RankManagerComponent self, RankType rankType, int seasonIndex, int seasonCfgId)
         {
             switch (rankType)
             {
                 case RankType.PVE:
-                    await self.RecordWhenSeasonFinished<RankPVEComponent, RankPVEItemComponent>(seasonId);
+                    await self.RecordWhenSeasonFinished<RankPVEComponent, RankPVEItemComponent>(seasonIndex, seasonCfgId);
                     break;
                 case RankType.EndlessChallenge:
-                    await self.RecordWhenSeasonFinished<RankEndlessChallengeComponent, RankEndlessChallengeItemComponent>(seasonId);
+                    await self.RecordWhenSeasonFinished<RankEndlessChallengeComponent, RankEndlessChallengeItemComponent>(seasonIndex, seasonCfgId);
                     break;
                 default:
                     break;
@@ -76,6 +76,8 @@ namespace ET.Server
             if (list == null || list.Count == 0)
             {
                 rankComponent = self.AddComponent<T>();
+                rankComponent.seasonIndex = await SeasonHelper.GetSeasonIndex(self.DomainScene());
+                rankComponent.seasonCfgId = await SeasonHelper.GetSeasonCfgId(self.DomainScene());
                 rankComponent.SetDataCacheAutoWrite();
             }
             else
@@ -92,10 +94,10 @@ namespace ET.Server
             await rankComponent.ResetRankItem<TItem>(playerId, scoreNew, killNum);
         }
 
-        public static async ETTask RecordWhenSeasonFinished<T, TItem>(this RankManagerComponent self, int seasonId) where T : RankComponent where TItem : RankItemComponent
+        public static async ETTask RecordWhenSeasonFinished<T, TItem>(this RankManagerComponent self, int seasonIndex, int seasonCfgId) where T : RankComponent where TItem : RankItemComponent
         {
             T rankComponent = self.GetComponent<T>();
-            await rankComponent.RecordWhenSeasonFinished(typeof(TItem), seasonId);
+            await rankComponent.RecordWhenSeasonFinished(typeof(TItem), seasonIndex, seasonCfgId);
         }
 
     }

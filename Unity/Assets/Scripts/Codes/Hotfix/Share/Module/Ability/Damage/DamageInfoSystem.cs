@@ -39,17 +39,6 @@ namespace ET.Ability
         }
 
         /// <summary>
-        /// 获取攻击者对应 的对象(player或monster)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static Unit GetAttackerPlayerUnit(this DamageInfo self)
-        {
-            Unit unit = GetAttackerUnit(self);
-            return UnitHelper.GetCasterActorUnit(unit);
-        }
-
-        /// <summary>
         /// 获取攻击者
         /// </summary>
         /// <param name="self"></param>
@@ -94,38 +83,35 @@ namespace ET.Ability
                     defenderUnit = defenderUnit,
                     damageInfo = self,
                 });
-            if (self.CanBeKilledByDamageInfo(defenderUnit) == true)
+
+            int damageValue = self.DamageValue();
+            bool canBeDamage = ET.Ability.BuffHelper.ChkCanBeDamage(defenderUnit);
+            if (canBeDamage)
             {
-                EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
+                if (self.CanBeKilledByDamageInfo(defenderUnit) == true)
+                {
+                    EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
                     {
                         attackerUnit = attackerUnit,
                         defenderUnit = defenderUnit,
                         damageInfo = self,
                     });
+                }
+
+                NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
+                float curHp = numericComponent.GetAsFloat(NumericType.Hp);
+                float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
+                float newHp = math.min(math.max(0, curHp - damageValue), maxHp);
+                numericComponent.SetAsFloatToBase(NumericType.Hp, newHp);
+            }
+            else
+            {
+                damageValue = 0;
             }
 
-            int damageValue = self.DamageValue();
-
-            NumericComponent numericComponent = defenderUnit.GetComponent<NumericComponent>();
-            float curHp = numericComponent.GetAsFloat(NumericType.Hp);
-            float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
-            float newHp = math.min(math.max(0, curHp - damageValue), maxHp);
-            numericComponent.SetAsFloatToBase(NumericType.Hp, newHp);
-
-
-            ET.Ability.UnitHelper.AddSyncData_DamageShow(defenderUnit, -damageValue, self.isCrit);
-
-            //if (isHeal == true)
+            if (damageValue != 0)
             {
-                // if (self.requireDoHurt() == true && defenderChaState.CanBeKilledByDamageInfo(self) == false)
-                // {
-                //     UnitAnim ua = defenderChaState.GetComponent<UnitAnim>();
-                //     if (ua) ua.Play("Hurt");
-                // }
-                //
-                // defenderChaState.ModResource(new ChaResource(-dVal));
-                // //按游戏设计的规则跳数字，如果要有暴击，也可以丢在策划脚本函数（lua可以返回多参数）也可以随便怎么滴
-                // SceneVariants.PopUpNumberOnCharacter(self.defender, Mathf.Abs(dVal), isHeal);
+                ET.Ability.UnitHelper.AddSyncData_DamageShow(defenderUnit, -damageValue, self.isCrit);
             }
 
             if (UnitHelper.ChkUnitAlive(defenderUnit) == false)
@@ -139,18 +125,7 @@ namespace ET.Ability
 
                 defenderUnit.DestroyWithDeathShow();
             }
-            //
-            // //伤害流程走完，添加buff
-            // for (int i = 0; i < self.addBuffs.Count; i++)
-            // {
-            //     GameObject toCha = self.addBuffs[i].targetUnitId;
-            //     ChaState toChaState = toCha.Equals(self.attackerUnitId)? attackerChaState : defenderChaState;
-            //
-            //     if (toChaState != null && toChaState.dead == false)
-            //     {
-            //         toChaState.AddBuff(self.addBuffs[i]);
-            //     }
-            // }
+
         }
 
         public static bool CanBeKilledByDamageInfo(this DamageInfo self, Unit targetUnit)

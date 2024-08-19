@@ -19,6 +19,7 @@ namespace ET
         public byte[] objBytes;
         public MeshHelper.MeshData meshData;
         public Dictionary<float, NavmeshComponent> NavmeshByRadius;
+        public NavmeshComponent playerNavmesh;
 
         public DtNavMesh m_nav;
         public Sample _sample;

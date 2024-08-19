@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -27,6 +28,10 @@ namespace ET
                 long sec = TimeHelper.ClientFrameTime() / 1000 % 15;
                 if (true || sec < 10)
                 {
+                    if (aiComponent.GetTargetUnit(aiConfig, 0, false) == null)
+                    {
+                        return 1;
+                    }
                     return 0;
                 }
             }
@@ -43,42 +48,15 @@ namespace ET
                 return;
             }
 
-            List<Unit> hostileForces = Ability.UnitHelper.GetUnitListBySelectObjectType(unit, SelectObjectType.Hostiles, true);
-            Unit unitPlayer = null;
-            float nearPlayerDisSq = 0;
-            foreach (Unit hostileForce in hostileForces)
-            {
-                if (Ability.UnitHelper.ChkIsPlayer(hostileForce))
-                {
-                    float disSq = math.lengthsq(unit.Position - hostileForce.Position);
-                    if (unitPlayer == null)
-                    {
-                        unitPlayer = hostileForce;
-                        nearPlayerDisSq = disSq;
-                    }
-                    else
-                    {
-                        if (nearPlayerDisSq > disSq)
-                        {
-                            unitPlayer = hostileForce;
-                            nearPlayerDisSq = disSq;
-                        }
-                    }
-                }
-            }
+            Unit targetUnit = aiComponent.GetTargetUnit(aiConfig, 0, false);
 
-            if (unitPlayer == null && hostileForces.Count > 0)
-            {
-                unitPlayer = hostileForces[0];
-            }
-
-            if (ET.Ability.UnitHelper.ChkUnitAlive(unitPlayer) == false)
+            if (ET.Ability.UnitHelper.ChkUnitAlive(targetUnit) == false)
             {
                 aiComponent.Cancel();
                 return;
             }
 
-            aiComponent.ResetRepeatedTimerByDis(unitPlayer);
+            aiComponent.ResetRepeatedTimerByDis(targetUnit);
 
             //Log.Debug("开始靠近 11");
 
@@ -89,14 +67,15 @@ namespace ET
                     aiComponent.Cancel();
                     return;
                 }
-                if (ET.Ability.UnitHelper.ChkUnitAlive(unitPlayer) == false)
+                targetUnit = aiComponent.GetTargetUnit(aiConfig, 0, false);
+                if (ET.Ability.UnitHelper.ChkUnitAlive(targetUnit) == false)
                 {
                     aiComponent.Cancel();
                     return;
                 }
-                aiComponent.ResetRepeatedTimerByDis(unitPlayer);
+                aiComponent.ResetRepeatedTimerByDis(targetUnit);
 
-                if (ET.Ability.UnitHelper.ChkIsNear(unit, unitPlayer, 0, false))
+                if (ET.Ability.UnitHelper.ChkIsNear(unit, targetUnit, 0, false))
                 {
                     await ET.Ability.MoveOrIdleHelper.DoIdle(unit);
                     await TimerComponent.Instance.WaitAsync(500, cancellationToken);
@@ -107,7 +86,7 @@ namespace ET
                     continue;
                 }
 
-                float3 nextTarget = unitPlayer.Position;
+                float3 nextTarget = targetUnit.Position;
                 //Log.Debug($"开始靠近 22 {nextTarget}");
                 //await unit.FindPathMoveToAsync(nextTarget, null);
                 await ET.Ability.MoveOrIdleHelper.DoMoveTargetPosition(unit, nextTarget);

@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Options;
 namespace ET
 {
 	[ComponentOf(typeof(Scene))]
-	public class SeasonManagerComponent : Entity, IAwake, IDestroy
+	public class SeasonManagerComponent : Entity, IAwake, IDestroy, IFixedUpdate, ISerializeToEntity
 	{
 		private EntityRef<SeasonComponent> _SeasonComponent;
 		public SeasonComponent SeasonComponent

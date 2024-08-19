@@ -18,7 +18,7 @@ namespace ET.Server
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
-			Unit homeUnit = putHomeComponent.GetHomeUnitByTeamFlagType(homeTeamFlagType);
+			Unit homeUnit = putHomeComponent.GetHomeUnit(homeTeamFlagType);
 			if (homeUnit == null)
 			{
 				response.Points = null;

@@ -13,7 +13,7 @@ namespace ET.Client
         {
         }
 
-        public static void ShowWindow(this DlgCommonConfirmHighest self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgCommonConfirmHighest self, ShowWindowData contextData = null)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
         }
@@ -27,8 +27,19 @@ namespace ET.Client
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonConfirmHighest>();
         }
 
+        public static bool ChkCanClickBg(this DlgCommonConfirmHighest self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void SetDefaultText(this DlgCommonConfirmHighest self)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
+
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_Title");
             self.View.E_TitleTextTextMeshProUGUI.text = msg;
             msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_Confirm");
@@ -119,6 +130,10 @@ namespace ET.Client
             {
                 self.View.E_BG_ClickButton.AddListener(()=>
                 {
+                    if (self.ChkCanClickBg() == false)
+                    {
+                        return;
+                    }
                     //UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
                     self.Close();
                 });

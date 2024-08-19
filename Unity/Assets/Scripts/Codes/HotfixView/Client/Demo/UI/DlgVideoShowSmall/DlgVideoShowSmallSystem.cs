@@ -14,7 +14,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgVideoShowSmall self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgVideoShowSmall self, ShowWindowData contextData = null)
 		{
 			self._ShowWindow().Coroutine();
 		}

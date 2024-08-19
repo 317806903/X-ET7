@@ -24,8 +24,8 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
         FirstClearDropItem = _buf.ReadString();
         RepeatClearDropItem = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterListShow.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FirstRewardItemListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); FirstRewardItemListShow.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RepeatRewardItemListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); RepeatRewardItemListShow.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FirstRewardItemListShow = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     FirstRewardItemListShow.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RepeatRewardItemListShow = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     RepeatRewardItemListShow.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -74,13 +74,11 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
     /// <summary>
     /// 首通前展示物品
     /// </summary>
-    public System.Collections.Generic.List<string> FirstRewardItemListShow { get; private set; }
-    public System.Collections.Generic.List<ItemCfg> FirstRewardItemListShow_Ref { get; private set; }
+    public System.Collections.Generic.Dictionary<string, int> FirstRewardItemListShow { get; private set; }
     /// <summary>
     /// 首通后展示物品
     /// </summary>
-    public System.Collections.Generic.List<string> RepeatRewardItemListShow { get; private set; }
-    public System.Collections.Generic.List<ItemCfg> RepeatRewardItemListShow_Ref { get; private set; }
+    public System.Collections.Generic.Dictionary<string, int> RepeatRewardItemListShow { get; private set; }
 
     public const int __ID__ = 90545059;
     public override int GetTypeId() => __ID__;
@@ -92,8 +90,6 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
         this.FirstClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(FirstClearDropItem);
         this.RepeatClearDropItem_Ref = (_tables["DropRuleCfgCategory"] as DropRuleCfgCategory).GetOrDefault(RepeatClearDropItem);
         { TowerDefense_MonsterCfgCategory __table = (TowerDefense_MonsterCfgCategory)_tables["TowerDefense_MonsterCfgCategory"]; this.MonsterListShow_Ref = new System.Collections.Generic.List<TowerDefense_MonsterCfg>(); foreach(var __e in MonsterListShow) { this.MonsterListShow_Ref.Add(__table.GetOrDefault(__e)); } }
-        { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.FirstRewardItemListShow_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in FirstRewardItemListShow) { this.FirstRewardItemListShow_Ref.Add(__table.GetOrDefault(__e)); } }
-        { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.RepeatRewardItemListShow_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in RepeatRewardItemListShow) { this.RepeatRewardItemListShow_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 

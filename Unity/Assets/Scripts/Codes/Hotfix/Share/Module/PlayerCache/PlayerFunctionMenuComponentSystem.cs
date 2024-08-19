@@ -13,12 +13,22 @@ namespace ET
             protected override void Awake(PlayerFunctionMenuComponent self)
             {
                 self.functionMenuDic = new();
-                self.Init();
             }
         }
 
         public static void Init(this PlayerFunctionMenuComponent self)
         {
+            bool isChg = false;
+
+            foreach (string functionMenuCfgId in self.functionMenuDic.Keys)
+            {
+                if (FunctionMenuCfgCategory.Instance.Contain(functionMenuCfgId) == false)
+                {
+                    self.functionMenuDic.Remove(functionMenuCfgId);
+                    isChg = true;
+                }
+            }
+
             var allFunctionMenu = FunctionMenuCfgCategory.Instance.DataList;
             foreach (var functionMenuCfg in allFunctionMenu)
             {
@@ -30,13 +40,20 @@ namespace ET
                     if (functionMenuCfg.OpenCondition is FunctionMenuConditionDefault)
                     {
                         self.functionMenuDic[functionMenuCfg.Id] = FunctionMenuStatus.Openned;
+                        isChg = true;
                     }
                     else
                     {
                         self.functionMenuDic[functionMenuCfg.Id] = FunctionMenuStatus.WaitChk;
+                        isChg = true;
                     }
 #endif
                 }
+            }
+
+            if (isChg)
+            {
+                self.SetDataCacheAutoWrite();
             }
         }
 

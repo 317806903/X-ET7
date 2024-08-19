@@ -6,5 +6,6 @@ namespace ET.Client
     public class GameObjectComponent: Entity, IAwake, IDestroy, IUpdate
     {
         public GameObject gameObject { get; set; }
+
     }
 }

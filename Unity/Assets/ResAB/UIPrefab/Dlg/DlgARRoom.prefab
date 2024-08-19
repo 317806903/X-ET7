@@ -23,6 +23,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: DlgARRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 4796139329640857955, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796139329640857955, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796139329640857955, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -342
+      objectReference: {fileID: 0}
     - target: {fileID: 4799227373223470695, guid: 7065a37d130f60d4c960e527caad620f,
         type: 3}
       propertyPath: m_IsActive
@@ -137,6 +152,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7468241359526235378, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 794.9467
+      objectReference: {fileID: 0}
+    - target: {fileID: 7468241359526235378, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 511.5266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7882460175926925318, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081406563155692853, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: textKey
+      value: DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_EndlessChallenge/title
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875971038253438582, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 257.3936
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875971038253438582, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 94.6887
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875971038253438582, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 253.6958
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875971038253438582, guid: 7065a37d130f60d4c960e527caad620f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -105
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

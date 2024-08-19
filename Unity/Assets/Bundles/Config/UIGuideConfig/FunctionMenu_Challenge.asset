@@ -13,36 +13,16 @@ MonoBehaviour:
   m_Name: FunctionMenu_Challenge
   m_EditorClassIdentifier: 
   list:
-  - name: "\u70B9\u51FB\u65E0\u9650\u6A21\u5F0F"
+  - name: "\u70B9\u51FB\u6311\u6218\u6A21\u5F0F"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_EndlessChallenge
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_AREndlessChallenge_Infinite
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 3
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u70B9\u51FB\u6392\u884C\u699C"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Rank
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_AREndlessChallenge_Rank
+    text: TextCode_Key_TutorialText_ARPVE_Challenge
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
@@ -53,16 +33,36 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u70B9\u51FB\u6311\u6218\u6A21\u5F0F"
+  - name: "\u9009\u62E9\u5173\u5361"
     isFreeClickBeforeEnter: 1
-    trigEnterCondition: 1
+    trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/EPage_ChallengNormal/info/E_Select
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u6307\u5F15reload"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas
+    hierarchyGuidePath: ReloadRecentButton
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Challenge
+    text: TextCode_Key_TutorialText_ARPVE_Reload
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0

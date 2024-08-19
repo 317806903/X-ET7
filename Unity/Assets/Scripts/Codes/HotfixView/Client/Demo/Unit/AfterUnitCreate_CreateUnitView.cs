@@ -13,12 +13,14 @@ namespace ET.Client
         {
             Unit unit = args.Unit;
             unit.RemoveComponent<GameObjectComponent>();
-            unit.AddComponent<GameObjectComponent>();
+            GameObjectComponent gameObjectComponent = unit.AddComponent<GameObjectComponent>();
+            await gameObjectComponent.Init();
 
             if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsActor(unit))
             {
                 unit.RemoveComponent<HealthBarComponent>();
-                unit.AddComponent<HealthBarComponent>();
+                HealthBarComponent healthBarComponent = unit.AddComponent<HealthBarComponent>();
+                await healthBarComponent.Init();
             }
             TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
             if (towerComponent != null)

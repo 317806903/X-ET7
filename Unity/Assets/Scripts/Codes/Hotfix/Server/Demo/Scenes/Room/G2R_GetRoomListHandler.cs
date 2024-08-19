@@ -8,12 +8,13 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Scene scene, G2R_GetRoomList request, R2G_GetRoomList response)
 		{
-			bool isARRoom = request.IsARRoom == 1? true : false;
+			bool needARRoom = request.NeedARRoom == 1? true : false;
+			bool needNotARRoom = request.NeedNotARRoom == 1? true : false;
+
 			RoomManagerComponent roomManagerComponent = ET.Server.RoomHelper.GetRoomManager(scene);
 			response.RoomInfos = new ();
-			foreach (long roomId in roomManagerComponent.GetIdleRoomList(isARRoom))
+			foreach (RoomComponent roomComponent in roomManagerComponent.GetIdleRoomList(needARRoom, needNotARRoom))
 			{
-				RoomComponent roomComponent = roomManagerComponent.GetChild<RoomComponent>(roomId);
 				response.RoomInfos.Add(roomComponent.ToBson());
 			}
 

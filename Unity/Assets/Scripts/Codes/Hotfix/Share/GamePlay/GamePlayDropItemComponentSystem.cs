@@ -16,7 +16,6 @@ namespace ET
             protected override void Awake(GamePlayDropItemComponent self)
             {
                 self.playerId2DropItems = new();
-                self.playerId2DropGold = new();
             }
         }
 
@@ -26,7 +25,6 @@ namespace ET
             protected override void Destroy(GamePlayDropItemComponent self)
             {
                 self.playerId2DropItems?.Clear();
-                self.playerId2DropGold?.Clear();
             }
         }
 
@@ -56,15 +54,6 @@ namespace ET
 
         }
 
-        public static void RecordPlayerDropGold(this GamePlayDropItemComponent self, long playerId, int value)
-        {
-            if (self.playerId2DropGold.TryGetValue(playerId, out int curValue))
-            {
-
-            }
-            self.playerId2DropGold[playerId] = curValue + value;
-        }
-
         public static Dictionary<string, int> GetPlayerDropItemList(this GamePlayDropItemComponent self, long playerId)
         {
             if (self.playerId2DropItems == null)
@@ -73,12 +62,6 @@ namespace ET
             }
             self.playerId2DropItems.TryGetValue(playerId, out var dropItemList);
             return dropItemList;
-        }
-
-        public static int GetPlayerDropGold(this GamePlayDropItemComponent self, long playerId)
-        {
-            self.playerId2DropGold.TryGetValue(playerId, out var dropGold);
-            return dropGold;
         }
     }
 }

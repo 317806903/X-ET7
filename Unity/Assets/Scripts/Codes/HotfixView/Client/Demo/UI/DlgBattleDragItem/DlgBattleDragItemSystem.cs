@@ -36,7 +36,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgBattleDragItem self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleDragItem self, ShowWindowData contextData = null)
         {
             DlgBattleDragItem_ShowWindowData showWindowData = contextData as DlgBattleDragItem_ShowWindowData;
             if (showWindowData == null)
@@ -47,6 +47,14 @@ namespace ET.Client
             self.canPutTime = (long)(0.3f * 1000);
             self.battleDragItemType = showWindowData.battleDragItemType;
             self.battleDragItemParam = showWindowData.battleDragItemParam;
+            if (self.battleDragItemType == BattleDragItemType.HeadQuarter)
+            {
+                self.battleDragItemParam = "Unit_HeadQuarter";
+            }
+            else if (self.battleDragItemType == BattleDragItemType.MonsterCall)
+            {
+                self.battleDragItemParam = "Unit_MonsterCall";
+            }
             self.moveTowerUnitId = showWindowData.moveTowerUnitId;
             self.countOnce = showWindowData.countOnce;
             self.createActionIds = showWindowData.createActionIds;
@@ -62,9 +70,8 @@ namespace ET.Client
             self.isDragging = false;
             self.isCliffy = false;
             self.isRaycast = false;
-            self.isChkPutMonsterCall = true;
             self.canPutMonsterCall = true;
-            self.tryNum = 30;
+            self.tryNum = 50;
             self.tryDis = 0.2f;
 
             self._groundLayerMask = LayerMask.GetMask("Map");
@@ -93,11 +100,9 @@ namespace ET.Client
                     self.OnSelectPlayer(self.battleDragItemParam);
                     break;
                 case BattleDragItemType.HeadQuarter:
-                    self.battleDragItemParam = "Unit_HeadQuarter";
                     self.OnSelectHeadQuarter(self.battleDragItemParam);
                     break;
                 case BattleDragItemType.MonsterCall:
-                    self.battleDragItemParam = "Unit_MonsterCall";
                     self.OnSelectMonsterCall(self.battleDragItemParam);
                     break;
                 case BattleDragItemType.Tower:
@@ -238,6 +243,7 @@ namespace ET.Client
                     }
                     else
                     {
+                        self.View.E_TipNodeImage.SetVisible(false);
                         self.ChgCurrentPlaceObj(true);
                     }
                     if (self.isRaycast == false)
@@ -339,6 +345,12 @@ namespace ET.Client
         {
             self.currentPlaceObj = new GameObject("currentPlaceObj");
 
+            Unit towerUnit = null;
+            if (self.moveTowerUnitId != 0)
+            {
+                towerUnit = UnitHelper.GetUnit(self.DomainScene(), self.moveTowerUnitId);
+            }
+
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
             bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
@@ -388,7 +400,16 @@ namespace ET.Client
                             child.gameObject.SetActive(false);
                         }
                     }
-                    float skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, ET.AbilityConfig.SkillSlotType.NormalAttack);
+
+                    float skillDis;
+                    if (towerUnit != null)
+                    {
+                        skillDis = UnitHelper.GetMaxSkillDis(towerUnit);
+                    }
+                    else
+                    {
+                        skillDis = ET.Ability.UnitHelper.GetMaxSkillDis(unitCfg, ET.AbilityConfig.SkillSlotType.NormalAttack);
+                    }
                     attackAreaTran.localScale = Vector3.one * skillDis*2 / resScale;
 
                     long playerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
@@ -763,6 +784,13 @@ namespace ET.Client
                     self.ShowPutTipMsg(tipMsg);
                     return (false, false);
                 }
+                if (self.ChkIsNearHeadQuarter(position))
+                {
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMonsterCall_IsNearHeadQuarter");
+                    self.ShowPutTipMsg(tipMsg);
+                    return (false, false);
+                }
+
             }
             else if (self.battleDragItemType == BattleDragItemType.Tower)
             {
@@ -904,6 +932,24 @@ namespace ET.Client
             return false;
         }
 
+        public static bool ChkIsNearHeadQuarter(this DlgBattleDragItem self, float3 pos)
+        {
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            if (gamePlayTowerDefenseComponent == null)
+            {
+                return false;
+            }
+
+            float nearDis = 12f;
+            float length = gamePlayTowerDefenseComponent.GetPathLength(false);
+            if (length <= nearDis)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this DlgBattleDragItem self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
@@ -961,16 +1007,13 @@ namespace ET.Client
 
         public static async ETTask<bool> DoPutMonsterCall(this DlgBattleDragItem self, float3 position)
         {
-            if (self.isChkPutMonsterCall == false)
-            {
-                return false;
-            }
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Forbidden);
 
             if (self.canPutMonsterCall == false)
             {
-                //string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
-                //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMesh_IsReachHome");
+                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                self.isConfirming = false;
                 self.Close();
                 return false;
             }
@@ -991,7 +1034,21 @@ namespace ET.Client
                 self.Close();
                 return false;
             }
+            else
+            {
+                self.View.E_TipNodeImage.SetVisible(false);
+                self.ChgCurrentPlaceObj(true);
+            }
 
+            if (self.ChkIsNearHeadQuarter(position))
+            {
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_ChkPutMonsterCall_IsNearHeadQuarter");
+                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+
+                self.isConfirming = false;
+                self.Close();
+                return false;
+            }
 
             self.View.EG_ConfirmRootRectTransform.SetVisible(true);
             self.View.E_ConfirmButtonButton.AddListenerAsync(async () =>
@@ -1020,7 +1077,6 @@ namespace ET.Client
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
                 self.isConfirming = false;
-
                 self.Close();
             });
 
@@ -1060,8 +1116,8 @@ namespace ET.Client
             (bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(myPlayerId, towerCfgId);
             if (bRet == false)
             {
-                //string tipMsg = msg;
-                //ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
+                string tipMsg = msg;
+                ET.Client.UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 self.Close();
                 return false;
             }
@@ -1408,7 +1464,6 @@ namespace ET.Client
                 self.canPutMonsterCall = false;
             }
             self.lineRendererReqing = false;
-            self.isChkPutMonsterCall = true;
         }
 
         public static async ETTask<bool> _DrawMonsterCall2HeadQuarter(this DlgBattleDragItem self, float3 pos)

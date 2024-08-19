@@ -40,7 +40,8 @@ namespace ET.Ability
         {
             Unit bulletUnit = ET.GamePlayHelper.CreateBulletByUnit(unit.DomainScene(), unit, actionCfgFireBullet, selectHandle, actionContext);
 
-            ET.Ability.OwnCallerHelper.AddOwnCaller(unit, bulletUnit);
+            unit.AddOwnCaller(bulletUnit);
+            bulletUnit.AddCaster(unit);
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {

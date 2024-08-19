@@ -59,7 +59,21 @@ public class UILocalize
         foreach (string value in execelLocalizeConfig_UI)
         {
             string[] tmp = value.Split("|");
-            dicExecel.Add(tmp[0], tmp[1]);
+            if (dicExecel.TryGetValue(tmp[0], out string content))
+            {
+                if (content == tmp[1])
+                {
+
+                }
+                else
+                {
+                    Debug.LogError($"tmp[0] 存在多个value [{tmp[1]}] 和 [{content}]");
+                }
+            }
+            else
+            {
+                dicExecel.Add(tmp[0], tmp[1]);
+            }
         }
         File.Delete(_LocalizeConfig_UI_Path);
 

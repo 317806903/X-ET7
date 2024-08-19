@@ -20,6 +20,15 @@ namespace ET.Server
 		    return mailManagerComponent;
 	    }
 
+        public static MailHistoryManagerComponent GetMailHistoryManager(Scene scene)
+	    {
+		    MailHistoryManagerComponent mailHistoryManagerComponent = scene.GetComponent<MailHistoryManagerComponent>();
+		    if (mailHistoryManagerComponent == null)
+		    {
+		    }
+		    return mailHistoryManagerComponent;
+	    }
+
         /// <summary>
         /// 获取邮箱数据MailInfoComponent
         /// </summary>
@@ -48,14 +57,14 @@ namespace ET.Server
         /// <param name="mailToPlayerType"></param>
         /// <param name="waitSendPlayerList"></param>
         /// <returns></returns>
-        public static async ETTask InsertMailToCenter(Scene scene, long playerId, MailType mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime, MailToPlayerType mailToPlayerType, List<long> waitSendPlayerList)
+        public static async ETTask InsertMailToCenter(Scene scene, long playerId, string mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime, MailToPlayerType mailToPlayerType, List<long> waitSendPlayerList, Dictionary<long, string> playerParam)
         {
             MailToPlayersComponent mailToPlayersComponent = scene.AddChild<MailToPlayersComponent>();
 	        mailToPlayersComponent.InitMailInfo(mailType, mailTitle, mailContent, itemCfgList, receiveTime, limitTime);
-	        mailToPlayersComponent.SetMailToPlayerType(mailToPlayerType, waitSendPlayerList);
-
-	        await InsertMailToCenter(scene, playerId, mailToPlayersComponent);
+	        mailToPlayersComponent.SetMailToPlayerType(mailToPlayerType, waitSendPlayerList, playerParam);
+	        byte[] bytes = mailToPlayersComponent.ToBson();
 	        mailToPlayersComponent.Dispose();
+	        await InsertMailToCenter(scene, playerId, bytes);
 
 	        await ETTask.CompletedTask;
         }
@@ -67,11 +76,10 @@ namespace ET.Server
 		/// <param name="playerId"></param>
 		/// <param name="mailToPlayersComponent"></param>
 		/// <returns></returns>
-        public static async ETTask InsertMailToCenter(Scene scene, long playerId, MailToPlayersComponent mailToPlayersComponent)
+        public static async ETTask InsertMailToCenter(Scene scene, long playerId, byte[] bytes)
         {
 	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.Mail, playerId))
 	        {
-		        byte[] bytes = mailToPlayersComponent.ToBson();
 		        await SendInsertMailToCenterAsync(scene, bytes);
 	        }
 

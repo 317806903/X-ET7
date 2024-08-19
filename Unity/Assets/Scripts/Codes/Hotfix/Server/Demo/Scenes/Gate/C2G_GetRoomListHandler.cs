@@ -10,15 +10,15 @@ namespace ET.Server
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
-			int isARRoom = request.IsARRoom;
 
 			StartSceneConfig roomSceneConfig = StartSceneConfigCategory.Instance.GetRoomManager(session.DomainZone());
 
 			R2G_GetRoomList _R2G_GetRoomList = (R2G_GetRoomList) await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId, new G2R_GetRoomList()
 			{
-				IsARRoom = isARRoom,
+				NeedARRoom = request.NeedARRoom,
+				NeedNotARRoom = request.NeedNotARRoom,
 			});
-			
+
 			response.Error = _R2G_GetRoomList.Error;
 			response.Message = _R2G_GetRoomList.Message;
 			response.RoomInfos = _R2G_GetRoomList.RoomInfos;

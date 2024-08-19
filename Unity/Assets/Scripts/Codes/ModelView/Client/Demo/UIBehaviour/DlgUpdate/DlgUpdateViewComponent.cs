@@ -7,6 +7,23 @@ namespace ET.Client
 	[EnableMethod]
 	public class DlgUpdateViewComponent : Entity, IAwake, IDestroy
 	{
+		public UnityEngine.UI.Image E_BGImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_BGImage == null )
+				{
+					this.m_E_BGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "Sprite_BackGround/E_BG");
+				}
+				return this.m_E_BGImage;
+			}
+		}
+
 		public UnityEngine.UI.Text ELabel_TotalDownloadCountText
 		{
 			get
@@ -94,6 +111,7 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
+			this.m_E_BGImage = null;
 			this.m_ELabel_TotalDownloadCountText = null;
 			this.m_ELabel_CurrentDownloadCountText = null;
 			this.m_ELabel_TotalDownloadSizeBytesText = null;
@@ -102,6 +120,7 @@ namespace ET.Client
 			this.uiTransform = null;
 		}
 
+		private UnityEngine.UI.Image m_E_BGImage = null;
 		private UnityEngine.UI.Text m_ELabel_TotalDownloadCountText = null;
 		private UnityEngine.UI.Text m_ELabel_CurrentDownloadCountText = null;
 		private UnityEngine.UI.Text m_ELabel_TotalDownloadSizeBytesText = null;

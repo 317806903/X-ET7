@@ -12,18 +12,18 @@ namespace ET.AbilityConfig
 		[BsonIgnore]
 		public Dictionary<int, SortedDictionary<int, ChallengeLevelCfg>> SeasonChallenges = new();
 
-		public SortedDictionary<int, ChallengeLevelCfg> GetChallenges(int seasonId)
+		public SortedDictionary<int, ChallengeLevelCfg> GetChallenges(int seasonCfgId)
 		{
-			if (this.SeasonChallenges.TryGetValue(seasonId, out var tmp))
+			if (this.SeasonChallenges.TryGetValue(seasonCfgId, out var tmp))
 			{
 				return tmp;
 			}
 			return null;
 		}
 
-		public ChallengeLevelCfg GetChallengeByIndex(int seasonId, int index)
+		public ChallengeLevelCfg GetChallengeByIndex(int seasonCfgId, int index)
 		{
-			var dic = this.GetChallenges(seasonId);
+			var dic = this.GetChallenges(seasonCfgId);
 			if (dic.TryGetValue(index, out var challenge))
 			{
 				return challenge;
@@ -33,12 +33,12 @@ namespace ET.AbilityConfig
 
 		public ChallengeLevelCfg GetChallenge(RoomTypeInfo roomTypeInfo)
 		{
-			return this.GetChallengeByIndex(roomTypeInfo.seasonId, roomTypeInfo.pveIndex);
+			return this.GetChallengeByIndex(roomTypeInfo.seasonCfgId, roomTypeInfo.pveIndex);
 		}
 
-		public string GetCurChallengeGamePlayBattleLevelCfgId(int seasonId, int pveIndex, bool isAR)
+		public string GetCurChallengeGamePlayBattleLevelCfgId(int seasonCfgId, int pveIndex, bool isAR)
 		{
-			ChallengeLevelCfg ChallengeLevelCfg = GetChallengeByIndex(seasonId, pveIndex);
+			ChallengeLevelCfg ChallengeLevelCfg = GetChallengeByIndex(seasonCfgId, pveIndex);
 			if (ChallengeLevelCfg == null)
 			{
 				return "";
@@ -60,19 +60,19 @@ namespace ET.AbilityConfig
 			{
 				return null;
 			}
-			int seasonId = roomTypeInfo.seasonId;
+			int seasonCfgId = roomTypeInfo.seasonCfgId;
 			int pveIndex = roomTypeInfo.pveIndex;
 			RoomType roomType = roomTypeInfo.roomType;
 			SubRoomType subRoomType = roomTypeInfo.subRoomType;
 
-			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonId, pveIndex + 1);
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonCfgId, pveIndex + 1);
 
 			return nextChallengeLevelCfg;
 		}
 
-		public ChallengeLevelCfg GetNextChallenge(int seasonId, int pveIndex)
+		public ChallengeLevelCfg GetNextChallenge(int seasonCfgId, int pveIndex)
 		{
-			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonId, pveIndex + 1);
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonCfgId, pveIndex + 1);
 			if (nextChallengeLevelCfg == null)
 			{
 				return null;
@@ -82,9 +82,9 @@ namespace ET.AbilityConfig
 
 		public ChallengeLevelCfg GetNextChallenge(ChallengeLevelCfg challengeLevelCfg)
 		{
-			int seasonId = challengeLevelCfg.SeasonId;
+			int seasonCfgId = challengeLevelCfg.SeasonId;
 			int pveIndex = challengeLevelCfg.Index;
-			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonId, pveIndex + 1);
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonCfgId, pveIndex + 1);
 			if (nextChallengeLevelCfg == null)
 			{
 				return null;
@@ -94,16 +94,16 @@ namespace ET.AbilityConfig
 
 		public (bool, bool) ChkIsChallenge(RoomTypeInfo roomTypeInfo)
 		{
-			int seasonId = roomTypeInfo.seasonId;
+			int seasonCfgId = roomTypeInfo.seasonCfgId;
 			int pveIndex = roomTypeInfo.pveIndex;
 			RoomType roomType = roomTypeInfo.roomType;
 			SubRoomType subRoomType = roomTypeInfo.subRoomType;
 
 			bool isChallenge = false;
 			bool isAR = false;
-			if (seasonId <= 0)
+			if (seasonCfgId <= 0)
 			{
-				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge seasonId <= 0");
+				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge seasonCfgId <= 0");
 				return (false, false);
 			}
 			if (pveIndex <= 0)
@@ -138,12 +138,12 @@ namespace ET.AbilityConfig
 			{
 				return null;
 			}
-			int seasonId = roomTypeInfo.seasonId;
+			int seasonCfgId = roomTypeInfo.seasonCfgId;
 			int pveIndex = roomTypeInfo.pveIndex;
 			RoomType roomType = roomTypeInfo.roomType;
 			SubRoomType subRoomType = roomTypeInfo.subRoomType;
 
-			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonId, pveIndex + 1);
+			ChallengeLevelCfg nextChallengeLevelCfg = this.GetChallengeByIndex(seasonCfgId, pveIndex + 1);
 			if (nextChallengeLevelCfg == null)
 			{
 				return "";
@@ -158,9 +158,9 @@ namespace ET.AbilityConfig
 			}
 		}
 
-		public string GetNextChallengeGamePlayBattleLevelCfgId(int seasonId, int pveIndex, bool isAR)
+		public string GetNextChallengeGamePlayBattleLevelCfgId(int seasonCfgId, int pveIndex, bool isAR)
 		{
-			ChallengeLevelCfg nextChallengeLevelCfg = GetNextChallenge(seasonId, pveIndex);
+			ChallengeLevelCfg nextChallengeLevelCfg = GetNextChallenge(seasonCfgId, pveIndex);
 			if (nextChallengeLevelCfg == null)
 			{
 				return "";
@@ -179,11 +179,11 @@ namespace ET.AbilityConfig
 		{
 			foreach (var challengeCfg in this.DataList)
 			{
-				int seasonId = challengeCfg.SeasonId;
-				if (this.SeasonChallenges.TryGetValue(seasonId, out var seasonChallenge) == false)
+				int seasonCfgId = challengeCfg.SeasonId;
+				if (this.SeasonChallenges.TryGetValue(seasonCfgId, out var seasonChallenge) == false)
 				{
 					seasonChallenge = new SortedDictionary<int, ChallengeLevelCfg>();
-					this.SeasonChallenges.Add(seasonId, seasonChallenge);
+					this.SeasonChallenges.Add(seasonCfgId, seasonChallenge);
 				}
 				seasonChallenge.Add(challengeCfg.Index, challengeCfg);
 			}

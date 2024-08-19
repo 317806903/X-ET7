@@ -83,7 +83,7 @@ namespace ET.Client
 
         public static async ETTask<bool> ChkIsNotShowVideo(Scene scene)
         {
-            DlgVideoShow _DlgVideoShow = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgVideoShow>(true);
+            DlgTutorials _DlgVideoShow = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgTutorials>(true);
             if (_DlgVideoShow == null)
             {
                 return true;
@@ -102,16 +102,32 @@ namespace ET.Client
 
         public static async ETTask ShowVideo(Scene scene)
         {
-            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgVideoShow>();
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgTutorials>();
         }
 
-        public static async ETTask EnterGuideBattle(Scene scene)
+        public static async ETTask EnterGuideBattleTutorialFirst(Scene scene)
         {
             UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
 
             RoomType roomType = RoomType.AR;
             SubRoomType subRoomType = SubRoomType.ARTutorialFirst;
             RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType);
+            DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
+            {
+                ARHallType = ARHallType.CreateRoomWithOutARSceneId,
+                roomTypeInfo = roomTypeInfo,
+                roomId = 0,
+            };
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgARHall>(_DlgARHall_ShowWindowData);
+        }
+
+        public static async ETTask EnterGuideBattlePVEFirst(Scene scene)
+        {
+            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+
+            RoomType roomType = RoomType.AR;
+            SubRoomType subRoomType = SubRoomType.ARPVE;
+            RoomTypeInfo roomTypeInfo = ET.GamePlayHelper.GetRoomTypeInfo(roomType, subRoomType, -1, 1);
             DlgARHall_ShowWindowData _DlgARHall_ShowWindowData = new()
             {
                 ARHallType = ARHallType.CreateRoomWithOutARSceneId,

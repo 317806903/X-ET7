@@ -51,11 +51,21 @@ namespace ET.Client
 		        Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
 		        if (entity == null || forceReGet)
 		        {
-			        (bool bRet, byte[] playerModelComponentBytes) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
-			        if (bRet)
+			        try
 			        {
-				        Entity entityModel = ResetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes);
-				        entity = entityModel;
+				        (bool bRet, byte[] playerModelComponentBytes) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
+				        if (bRet)
+				        {
+					        Entity entityModel = ResetPlayerModel(scene, playerId, playerModelType, playerModelComponentBytes);
+					        entity = entityModel;
+				        }
+			        }
+			        catch (Exception e)
+			        {
+				        string msg = e.Message;
+#if UNITY_EDITOR
+				        Log.Error($"ET.Client.PlayerCacheHelper._GetPlayerModel Error [{playerId}][{playerModelType.ToString()}][{msg}]");
+#endif
 			        }
 		        }
 		        return entity;
@@ -159,6 +169,11 @@ namespace ET.Client
         public static async ETTask<int> GetTokenValue(Scene scene, string itemCfgId, bool forceReGet = false)
         {
             PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+            if (playerBackPackComponent == null)
+            {
+	            return 0;
+            }
+
 	        var itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
 	        if (itemComponent == null)
 	        {
@@ -251,7 +266,7 @@ namespace ET.Client
 		        {
 			        PlayerId = playerId,
 			        PlayerModelType = (int)playerModelType,
-		        }) as
+		        }, false) as
 		        G2C_GetPlayerCache;
 	        if (_G2C_GetPlayerCache.Error != ET.ErrorCode.ERR_Success)
 	        {
@@ -345,7 +360,7 @@ namespace ET.Client
 
                 G2C_ResetPowerup Msg = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_ResetPowerup()
                 {
-                  
+
                 }) as G2C_ResetPowerup;
                 if (Msg.Error != ET.ErrorCode.ERR_Success)
                 {
@@ -355,6 +370,18 @@ namespace ET.Client
                 else
                 {
                     Log.Info($"AddPlayerPhysicalStrenthByAdAsync Success");
+                    int seasonCfgId = SeasonHelper.GetSeasonCfgId(scene);
+                    SeasonInfoCfg seasonInfoCfg = SeasonInfoCfgCategory.Instance.Get(seasonCfgId);
+                    string seasonName = seasonInfoCfg.Name;
+                    EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+                    {
+	                    eventName = "StrengthingReset",
+	                    properties = new()
+	                    {
+		                    {"seasonName", seasonName},
+	                    }
+                    });
+
                     return true;
                 }
             }
@@ -369,10 +396,10 @@ namespace ET.Client
 		/// 发送升级养成消息
 		/// </summary>
 		/// <param name="scene"></param>
-		/// <param name="cfg"></param>
+		/// <param name="cfgId"></param>
 		/// <param name="cfgLevel"></param>
 		/// <returns></returns>
-		public static async ETTask<bool> UpdatePowerup(Scene scene, string cfg)
+		public static async ETTask<bool> UpdatePowerup(Scene scene, string cfgId)
         {
             try
             {
@@ -380,7 +407,7 @@ namespace ET.Client
 
                 G2C_UpdatePowerup Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_UpdatePowerup()
                 {
-					PowerUpcfg = cfg,
+					PowerUpcfg = cfgId,
                 }) as G2C_UpdatePowerup;
                 if (Resp.Error != ET.ErrorCode.ERR_Success)
                 {
@@ -389,6 +416,25 @@ namespace ET.Client
                 }
                 else
                 {
+
+	                int seasonCfgId = SeasonHelper.GetSeasonCfgId(scene);
+	                SeasonInfoCfg seasonInfoCfg = SeasonInfoCfgCategory.Instance.Get(seasonCfgId);
+	                string seasonName = seasonInfoCfg.Name;
+	                PlayerSeasonInfoComponent playerSeasonInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerSeasonInfo(scene);
+	                int playerBringupLevel = playerSeasonInfoComponent.GetSeasonBringUpLevel(cfgId);
+	                SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.Get(cfgId, playerBringupLevel);
+	                string seasonBringUpCfgName = seasonBringUpCfg.Name;
+	                EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
+	                {
+		                eventName = "SeasonStrengthened",
+		                properties = new()
+		                {
+			                {"seasonName", seasonName},
+			                {"seasonBringUpCfgName", seasonBringUpCfgName},
+			                {"playerBringupLevel", playerBringupLevel},
+		                }
+	                });
+
 					return true;
                 }
             }
@@ -416,5 +462,42 @@ namespace ET.Client
 		        return;
 	        }
         }
+
+        public static async ETTask<bool> ChkUIRedDotType(Scene scene, UIRedDotType uiRedDotType)
+        {
+	        PlayerOtherInfoComponent playerOtherInfoComponent = await PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
+
+	        bool isNeedShow = playerOtherInfoComponent.ChkUIRedDotType(uiRedDotType);
+	        return isNeedShow;
+        }
+
+        public static async ETTask<bool> SetUIRedDotType(Scene scene, UIRedDotType uiRedDotType, bool isNeedShow)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        G2C_SetUIRedDotType Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_SetUIRedDotType()
+		        {
+			        UIRedDotType = (int)uiRedDotType,
+			        IsNeedShow = isNeedShow?1:0,
+		        }) as G2C_SetUIRedDotType;
+		        if (Resp.Error != ET.ErrorCode.ERR_Success)
+		        {
+			        Log.Error($"SetUIRedDotType Error==1 msg={Resp.Message}");
+			        return false;
+		        }
+		        else
+		        {
+			        return true;
+		        }
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+		        return false;
+	        }
+        }
+
     }
 }

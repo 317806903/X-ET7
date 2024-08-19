@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
@@ -22,19 +23,7 @@ namespace ET
 	[ChildOf(typeof(MailManagerComponent))]
 	public class MailToPlayersComponent : Entity, IAwake, IDestroy
 	{
-		private EntityRef<MailInfoComponent> _MailInfoComponent;
-		public MailInfoComponent CurMailInfoComponent
-		{
-			get
-			{
-				return this._MailInfoComponent;
-			}
-			set
-			{
-				this._MailInfoComponent = value;
-			}
-		}
-
+		public long createTime;
 		public MailToPlayerType mailToPlayerType;
 		/// <summary>
 		/// 等待发送的playerID哈希表
@@ -44,5 +33,8 @@ namespace ET
 		/// 已经发送的playerID哈希表
 		/// </summary>
 		public HashSet<long> deliveredPlayerList;
+
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<long, string> playerParam;
 	}
 }

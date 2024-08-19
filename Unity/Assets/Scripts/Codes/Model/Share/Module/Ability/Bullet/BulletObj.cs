@@ -24,12 +24,6 @@ namespace ET.Ability
         }
 
         ///<summary>
-        ///要发射子弹的这个人
-        ///当然可以是null发射的，但是写效果逻辑的时候得小心caster是null的情况
-        ///</summary>
-        public long casterUnitId;
-
-        ///<summary>
         ///子弹的生命周期，单位：秒
         ///</summary>
         public float duration;

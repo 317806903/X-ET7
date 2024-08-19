@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace ET
 {
@@ -15,8 +16,7 @@ namespace ET
     {
         public static LocalizeComponent Instance { get; set; }
 
+        public bool IsShowLanguagePre = false;
         public LanguageType CurrentLanguage { get; set; }
-        public Func<string, string, string> translateExcel;
-        public Func<string, string, string> translateUI;
     }
 }

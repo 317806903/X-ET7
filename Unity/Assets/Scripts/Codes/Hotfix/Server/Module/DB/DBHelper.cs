@@ -132,6 +132,19 @@ namespace ET.Server
             }
         }
 
+        public static async ETTask RemoveDB<T>(T entity) where T :Entity
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(entity.DomainZone());
+                await dbComponent.Remove<T>(entity.Id);
+            }
+        }
+
         public static async ETTask RenameCollection(Scene scene, string oldName, string newName)
         {
             if (DBManagerComponent.Instance.NeedDB == false)
@@ -145,7 +158,21 @@ namespace ET.Server
             }
         }
 
-        public static async ETTask RenameCollection(Scene scene, Type entityType, int seasonId)
+        public static async ETTask<T> _LoadDBFirst<T>(Scene scene) where T :Entity
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+                return null;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                return await dbComponent.QueryFirst<T>();
+            }
+        }
+
+        public static async ETTask RenameCollection(Scene scene, Type entityType, int seasonIndex)
         {
             if (DBManagerComponent.Instance.NeedDB == false)
             {
@@ -155,8 +182,34 @@ namespace ET.Server
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 string oldName = entityType.FullName;
-                string newName = $"Season{seasonId}_{oldName}";
+                string newName = $"{oldName}_Season{seasonIndex}";
                 await dbComponent.RenameCollection(oldName, newName);
+            }
+        }
+
+        public static async ETTask DropCollection<T>(Scene scene) where T :Entity
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                await dbComponent.DropCollection<T>();
+            }
+        }
+
+        public static async ETTask DropCollection(Scene scene, string collection)
+        {
+            if (DBManagerComponent.Instance.NeedDB == false)
+            {
+                await ETTask.CompletedTask;
+            }
+            else
+            {
+                DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
+                await dbComponent.DropCollection(collection);
             }
         }
 

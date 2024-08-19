@@ -16,6 +16,10 @@ namespace ET
             }
         }
 
+        public static void Init(this PlayerBattleCardComponent self)
+        {
+        }
+
         public static long GetPlayerId(this PlayerBattleCardComponent self)
         {
             return self.GetParent<PlayerDataComponent>().playerId;

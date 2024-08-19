@@ -23,7 +23,11 @@ namespace ET
         /// <returns></returns>
         public static MailInfoComponent GetMailInfo(this MailToPlayersComponent self)
         {
-            return self.CurMailInfoComponent;
+            foreach (var item in self.Children)
+            {
+                return item.Value as MailInfoComponent;
+            }
+            return null;
         }
 
         /// <summary>
@@ -36,12 +40,10 @@ namespace ET
         /// <param name="itemCfgList"></param>
         /// <param name="receiveTime"></param>
         /// <param name="limitTime"></param>
-        public static void InitMailInfo(this MailToPlayersComponent self, MailType mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime)
+        public static void InitMailInfo(this MailToPlayersComponent self, string mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime)
         {
             MailInfoComponent mailInfoComponent = self.AddChild<MailInfoComponent>();
             mailInfoComponent.Init(mailType, mailTitle, mailContent, itemCfgList, receiveTime, limitTime);
-            self.CurMailInfoComponent = mailInfoComponent;
-
         }
 
         /// <summary>
@@ -50,8 +52,9 @@ namespace ET
         /// <param name="self"></param>
         /// <param name="mailToPlayerType"></param>
         /// <param name="waitSendPlayerList"></param>
-        public static void SetMailToPlayerType(this MailToPlayersComponent self, MailToPlayerType mailToPlayerType, List<long> waitSendPlayerList)
+        public static void SetMailToPlayerType(this MailToPlayersComponent self, MailToPlayerType mailToPlayerType, List<long> waitSendPlayerList, Dictionary<long, string> playerParam)
         {
+            self.createTime = TimeHelper.ServerNow();
             self.mailToPlayerType = mailToPlayerType;
             if (self.mailToPlayerType == MailToPlayerType.PlayerList)
             {
@@ -61,6 +64,7 @@ namespace ET
                     self.waitSendPlayerList.Add(playerId);
                 }
             }
+            self.playerParam = playerParam;
         }
 
     }

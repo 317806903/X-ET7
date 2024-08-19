@@ -13,7 +13,14 @@ namespace ET.Client
         public static void RegisterUIEvent(this DlgGameModeSetting self)
         {
             // 背景与关闭按钮
-            self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+            self.View.E_BG_ClickButton.AddListener(()=>
+            {
+                if (self.ChkCanClickBg() == false)
+                {
+                    return;
+                }
+                self.OnBGClick();
+            });
             self.View.E_BtnCloseButton.AddListener(self.OnBGClick);
 
             //Community按钮
@@ -40,15 +47,50 @@ namespace ET.Client
 
             //教程按钮
             self.View.E_ButtonTutorialsButton.AddListenerAsync(self.ClickTutorial);
+
+
+            self.View.E_LanguageCNButton.AddListener(() =>
+            {
+#if UNITY_EDITOR
+                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
+#endif
+                LocalizeComponent.Instance.SwitchLanguage(LanguageType.CN, true);
+            });
+            self.View.E_LanguageENButton.AddListener(() =>
+            {
+#if UNITY_EDITOR
+                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
+#endif
+                LocalizeComponent.Instance.SwitchLanguage(LanguageType.EN, true);
+            });
+            self.View.E_LanguageTWButton.AddListener(() =>
+            {
+#if UNITY_EDITOR
+                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
+#endif
+                LocalizeComponent.Instance.SwitchLanguage(LanguageType.TW, true);
+            });
         }
 
         // 显示
-        public static void ShowWindow(this DlgGameModeSetting self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgGameModeSetting self, ShowWindowData contextData = null)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
+
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
             self.ShowBg();
             self.SetSwitchOnOffUI();
         }
+
+        public static bool ChkCanClickBg(this DlgGameModeSetting self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
+        }
+
         // 检查 AR 相机是否启用后设置不同的背景
         public static void ShowBg(this DlgGameModeSetting self)
         {
@@ -130,6 +172,7 @@ namespace ET.Client
         public static void OnBGClick(this DlgGameModeSetting self)
         {
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameModeSetting>();
+
         }
         // 教程按钮
         public static async ETTask ClickTutorial(this DlgGameModeSetting self)
@@ -137,19 +180,19 @@ namespace ET.Client
             self.TrackFunctionClicked("tutorial");
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgVideoShow>();
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgTutorials>();
         }
         // 社区（Community）按钮
         public static void ClickDiscord(this DlgGameModeSetting self)
         {
             self.TrackFunctionClicked("discord");
-            Application.OpenURL("https://discord.gg/jnf2qabe9C");
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://discord.gg/jnf2qabe9C");
         }
 
         public static void ClickPrivacyPolicy(this DlgGameModeSetting self)
         {
             self.TrackFunctionClicked("PrivacyPolicy");
-            Application.OpenURL("https://www.realityguardar.com/privacy");
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://www.realityguardar.com/privacy");
         }
 
 

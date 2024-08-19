@@ -22,6 +22,16 @@ namespace ET.Server
 		    return playerDataComponent;
 	    }
 
+	    public static void ClearPlayerCache(Scene scene, long playerId)
+	    {
+		    PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
+		    PlayerDataComponent playerDataComponent = playerCacheManagerComponent.GetPlayerData(playerId);
+		    if (playerDataComponent != null)
+		    {
+			    playerDataComponent.Dispose();
+		    }
+	    }
+
         public static async ETTask<Entity> GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType)
         {
 	        PlayerDataComponent playerDataComponent = await GetPlayerCache(scene, playerId);
@@ -48,10 +58,10 @@ namespace ET.Server
 	        await ETTask.CompletedTask;
         }
 
-        public static async ETTask RecordWhenSeasonFinished(Scene scene, int seasonId)
+        public static async ETTask RecordWhenSeasonFinished(Scene scene, int seasonIndex, int SeasonCfgId)
         {
 	        PlayerCacheManagerComponent playerCacheManagerComponent = GetPlayerCacheManager(scene);
-	        await playerCacheManagerComponent.RenameCollection(seasonId);
+	        await playerCacheManagerComponent.RenameCollection(seasonIndex);
 
 	        await ETTask.CompletedTask;
         }

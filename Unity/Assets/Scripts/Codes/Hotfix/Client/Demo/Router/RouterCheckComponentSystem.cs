@@ -65,6 +65,11 @@ namespace ET.Client
 
                     (uint localConn, uint remoteConn) = await NetServices.Instance.GetChannelConn(session.ServiceId, sessionId);
 
+                    if (self.ClientScene() == null)
+                    {
+                        EventSystem.Instance.Publish(scene, new EventType.NoticeNetDisconnected());
+                        return;
+                    }
                     IPEndPoint realAddress = session.RemoteAddress;
                     Log.Info($"get recvLocalConn start: {self.ClientScene().Id} {realAddress} {localConn} {remoteConn} self.retryIndex={self.retryIndex}");
 

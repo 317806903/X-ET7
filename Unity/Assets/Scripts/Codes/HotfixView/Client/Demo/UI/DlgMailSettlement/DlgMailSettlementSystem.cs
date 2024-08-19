@@ -16,19 +16,30 @@ namespace ET.Client
             self.View.E_BG_ClickButton.AddListenerAsync(self.Back);
 
             //循环列表
-            self.View.ELoopScrollList_LoopVerticalScrollRect.prefabSource.prefabName = "Item_Gifts";
+            self.View.ELoopScrollList_LoopVerticalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
             self.View.ELoopScrollList_LoopVerticalScrollRect.prefabSource.poolSize = 10;
             self.View.ELoopScrollList_LoopVerticalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddGiftListener(transform, i));
         }
 
-        public static void ShowWindow(this DlgMailSettlement self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgMailSettlement self, ShowWindowData contextData = null)
 		{
+            self.dlgShowTime = TimeHelper.ClientNow();
             DlgMailSettlement_ShowWindowData showData = contextData as DlgMailSettlement_ShowWindowData;
             self.kvpItemCfgNumList = showData.kvpItemCfgNumList;
 
             self.ShowBg().Coroutine();
             self.SetEloopNumber(true);
+        }
+
+
+        public static bool ChkCanClickBg(this DlgMailSettlement self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -68,6 +79,10 @@ namespace ET.Client
         /// <returns></returns>
         public static async ETTask Back(this DlgMailSettlement self)
         {
+            if (self.ChkCanClickBg() == false)
+            {
+                return;
+            }
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Back);
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgMailSettlement>();
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMail>();
@@ -79,11 +94,14 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <param name="transform"></param>
         /// <param name="index"></param>
-        public static async void AddGiftListener(this DlgMailSettlement self, Transform transform, int index)
+        public static async ETTask AddGiftListener(this DlgMailSettlement self, Transform transform, int index)
         {
-            transform.name = $"Item_Gifts{index}";
-            Scroll_Item_Gifts itemGift = self.ScrollItemGiftDic[index].BindTrans(transform);
-            itemGift.Init(self.kvpItemCfgNumList[index]).Coroutine();
+            transform.name = $"Item_TowerBuy{index}";
+            Scroll_Item_TowerBuy itemGift = self.ScrollItemGiftDic[index].BindTrans(transform);
+
+            string itemcfg = self.kvpItemCfgNumList[index].Key;
+            int itemNum = self.kvpItemCfgNumList[index].Value;
+            await itemGift.ShowBagItem(itemcfg, true, itemNum);
             await ETTask.CompletedTask;
         }
         #endregion
@@ -93,7 +111,7 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <param name="bClear"></param>
-        public static async void SetEloopNumber(this DlgMailSettlement self, bool bClear)
+        public static async ETTask SetEloopNumber(this DlgMailSettlement self, bool bClear)
         {
             self.AddUIScrollItems(ref self.ScrollItemGiftDic, self.kvpItemCfgNumList.Count);
             self.View.ELoopScrollList_LoopVerticalScrollRect.SetVisible(true, self.kvpItemCfgNumList.Count);

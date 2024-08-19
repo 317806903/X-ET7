@@ -28,7 +28,7 @@ MonoBehaviour:
     curInNextType: 0
     waitToNextUIGuideStep: 2
     audioPath: 
-    guideExecuteStaticMethod: EnterGuideBattle
+    guideExecuteStaticMethod: EnterGuideBattlePVEFirst
     guideExecuteParam: 
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
@@ -159,8 +159,8 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgARRoom/EGBackGround/E_RoomMemberStatus
-    guideTextType: 1
+    hierarchyGuidePath: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus
+    guideTextType: 0
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_RoomStart
     specImgMatchType: 0

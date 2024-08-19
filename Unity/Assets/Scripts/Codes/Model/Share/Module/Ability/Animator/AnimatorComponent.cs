@@ -14,8 +14,11 @@ namespace ET.Ability
         public bool isOnlySelfShow;
         public AnimatorMotionName name;
         public long animatorTickTime;
+        public bool isAnimatorLoop;
         public bool isStoppingAnimator;
         public AnimatorMotionName controlStateName;
         public long controlAnimatorTickTime;
+        public bool isControlAnimatorLoop;
+
     }
 }

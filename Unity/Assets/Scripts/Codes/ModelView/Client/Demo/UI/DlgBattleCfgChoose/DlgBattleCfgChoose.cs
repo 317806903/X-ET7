@@ -4,7 +4,7 @@ using ET.AbilityConfig;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleCfgChoose : Entity, IAwake, IUILogic
+	public class DlgBattleCfgChoose : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleCfgChooseViewComponent View { get => this.GetComponent<DlgBattleCfgChooseViewComponent>(); }
 

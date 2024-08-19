@@ -14,7 +14,7 @@ namespace ET
             {
                 self.battleGuideStatus = new();
                 self.battleGuideStepIndex = new();
-                self.Init();
+                self.uiRedDotTypes = new();
             }
         }
 
@@ -66,5 +66,27 @@ namespace ET
         {
             self.battleGuideStepIndex[battleCfgId] = stepIndex;
         }
+
+        public static bool ChkUIRedDotType(this PlayerOtherInfoComponent self, UIRedDotType uiRedDotType)
+        {
+            if (self.uiRedDotTypes.Contains(uiRedDotType))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void SetUIRedDotType(this PlayerOtherInfoComponent self, UIRedDotType uiRedDotType, bool isNeedShow)
+        {
+            if (isNeedShow)
+            {
+                self.uiRedDotTypes.Add(uiRedDotType);
+            }
+            else
+            {
+                self.uiRedDotTypes.Remove(uiRedDotType);
+            }
+        }
+
     }
 }

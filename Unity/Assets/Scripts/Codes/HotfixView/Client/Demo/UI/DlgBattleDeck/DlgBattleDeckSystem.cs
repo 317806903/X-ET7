@@ -43,10 +43,19 @@ namespace ET.Client
 					self.AddBagItemRefreshListener(transform, i).Coroutine());
 
 			self.BindMoveBagItem();
+
+#if UNITY_EDITOR
+			self.View.E_DebugButton.SetVisible(true);
+			self.View.E_DebugButton.AddListenerAsync(self.AddCardsWhenDebug);
+#else
+			self.View.E_DebugButton.SetVisible(false);
+#endif
 		}
 
-		public static void ShowWindow(this DlgBattleDeck self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleDeck self, ShowWindowData contextData = null)
 		{
+			self.dlgShowTime = TimeHelper.ClientNow();
+
 			self.moveItemCfgId = "";
 			self.replaceIndex = -1;
 			self.HideMoveBagItem();
@@ -54,6 +63,15 @@ namespace ET.Client
 			self.ShowBg();
 			self.CreateCardScrollItem().Coroutine();
 			self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.DlgBattleDeckFrameTimer, self);
+		}
+
+		public static bool ChkCanClickBg(this DlgBattleDeck self)
+		{
+			if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public static void HideWindow(this DlgBattleDeck self)
@@ -106,7 +124,7 @@ namespace ET.Client
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDeck>();
-			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
+			//await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 
 		public static void BindMoveBagItem(this DlgBattleDeck self)
@@ -139,7 +157,7 @@ namespace ET.Client
 
 		public static async ETTask ShowBagItem(this DlgBattleDeck self, Scroll_Item_TowerBuy BagItem, string itemCfgId)
 		{
-			BagItem.ShowBagItem(itemCfgId, true);
+			await BagItem.ShowBagItem(itemCfgId, true);
 		}
 
 		public static void MoveMoveBagItem(this DlgBattleDeck self, Vector2 screenPos)
@@ -194,6 +212,7 @@ namespace ET.Client
 			string itemCfgId = itemList[index].CfgId;
 			self.ShowBagItem(BagItem, itemCfgId).Coroutine();
 
+
 			ET.EventTriggerListener.Get(BagItem.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
 			{
 				//Log.Debug($"zpb BagItem Press");
@@ -214,6 +233,10 @@ namespace ET.Client
 			}
 
 			List<ItemComponent> itemList = await ET.Client.PlayerCacheHelper.GetMyBattleCardItemList(self.DomainScene());
+			if (self.IsDisposed)
+			{
+				return;
+			}
 			if (BattleDeckItem.uiTransform == null)
 			{
 				return;
@@ -228,33 +251,43 @@ namespace ET.Client
 
 			ET.EventTriggerListener.Get(BattleDeckItem.EButton_SelectButton.gameObject).onDrop.AddListener((go, xx) =>
 			{
-				//Log.Debug($"zpb BattleDeckItem onDrop");
+				//Log.Error($"zpb BattleDeckItem onDrop self.moveItemCfgId[{self.moveItemCfgId}] index[{index}] self.replaceIndex[{self.replaceIndex}]");
 				self.replaceIndex = index;
 			});
 
 			ET.EventTriggerListener.Get(BattleDeckItem.EButton_SelectButton.gameObject).onEnter.AddListener((go, xx) =>
 			{
-				//Log.Debug($"zpb BattleDeckItem onEnter");
+				//Log.Error($"zpb BattleDeckItem onEnter self.moveItemCfgId[{self.moveItemCfgId}] index[{index}]");
 				if (string.IsNullOrEmpty(self.moveItemCfgId))
 				{
 					return;
 				}
 
 				BattleDeckItem.uiTransform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+
+				self.replaceIndex = index;
 			});
 
-			ET.EventTriggerListener.Get(BattleDeckItem.EButton_SelectButton.gameObject).onExit.AddListener((go, xx) =>
+			ET.EventTriggerListener.Get(BattleDeckItem.EButton_SelectButton.gameObject).onExit.AddListener(async (go, xx) =>
 			{
-				//Log.Debug($"zpb BattleDeckItem onExit");
+				await TimerComponent.Instance.WaitFrameAsync();
+				//Log.Error($"zpb BattleDeckItem onExit self.moveItemCfgId[{self.moveItemCfgId}] index[{index}] self.replaceIndex[{self.replaceIndex}]");
 				BattleDeckItem.uiTransform.localScale = Vector3.one;
+				if (string.IsNullOrEmpty(self.moveItemCfgId) == false)
+				{
+					self.replaceIndex = -1;
+				}
 			});
-
 		}
 
 		public static async ETTask OnBgClick(this DlgBattleDeck self)
 		{
+			if (self.ChkCanClickBg() == false)
+			{
+				return;
+			}
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleDeck>();
-			await UIManagerHelper.EnterGameModeUI(self.DomainScene());
+			//await UIManagerHelper.EnterGameModeUI(self.DomainScene());
 		}
 
 		public static void Update(this DlgBattleDeck self)
@@ -283,21 +316,56 @@ namespace ET.Client
 
 		public static async ETTask ChkPointUp(this DlgBattleDeck self)
 		{
+			//Log.Error($"zpb BattleDeckItem ChkPointUp self.moveItemCfgId[{self.moveItemCfgId}] self.replaceIndex[{self.replaceIndex}]");
+
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.BattleForbidden);
 			string moveItemCfgId = self.moveItemCfgId;
 			self.moveItemCfgId = "";
 			self.HideMoveBagItem();
 
-			await TimerComponent.Instance.WaitFrameAsync();
 			if (self.replaceIndex == -1)
 			{
 				return;
 			}
 
+			int replaceIndex = self.replaceIndex;
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 			PlayerBattleCardComponent playerBattleCardComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBattleCard(self.DomainScene(), false);
-			playerBattleCardComponent.ReplaceBattleCardItemCfgId(self.replaceIndex, moveItemCfgId);
+			playerBattleCardComponent.ReplaceBattleCardItemCfgId(replaceIndex, moveItemCfgId);
 			await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BattleCard, null);
+
+			string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleDeckOperateSuccess");
+			UIManagerHelper.ShowTip(self.DomainScene(), txt);
+		}
+
+		public static async ETTask AddCardsWhenDebug(this DlgBattleDeck self)
+		{
+			if (GlobalConfig.Instance.NeedDB == false)
+			{
+				PlayerBackPackComponent playerBackPackComponent = await PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
+				bool isChg = false;
+				var towerDefenseTowerList = TowerDefense_TowerCfgCategory.Instance.DataList;
+				foreach (TowerDefense_TowerCfg towerDefenseTowerCfg in towerDefenseTowerList)
+				{
+					string cfgId = towerDefenseTowerCfg.Id;
+					if (towerDefenseTowerCfg.Level[0] == 1)
+					{
+						ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(cfgId);
+						if (itemComponent == null)
+						{
+							isChg = true;
+							playerBackPackComponent.AddItem(cfgId, 1);
+						}
+					}
+				}
+
+				if (isChg)
+				{
+					await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BackPack, null);
+
+					await self.Refresh();
+				}
+			}
 		}
 
 	}

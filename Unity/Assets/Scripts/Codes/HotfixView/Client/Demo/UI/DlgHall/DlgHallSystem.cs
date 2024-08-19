@@ -36,7 +36,7 @@ namespace ET.Client
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnBack);
 		}
 
-		public static void ShowWindow(this DlgHall self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgHall self, ShowWindowData contextData = null)
 		{
 			self.GetRoomList().Coroutine();
 
@@ -51,10 +51,14 @@ namespace ET.Client
 
 		public static async ETTask GetRoomList(this DlgHall self)
 		{
+			bool needARRoom = self.View.E_ARToggleToggle.isOn;
+			bool needNotARRoom = self.View.E_NotARToggleToggle.isOn;
+
 			Scene clientScene = self.ClientScene();
-			await RoomHelper.GetRoomListAsync(clientScene);
+			await RoomHelper.GetRoomListAsync(clientScene, needARRoom, needNotARRoom);
 			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(clientScene);
-			self.roomList = roomManagerComponent.GetRoomList();
+
+			self.roomList = roomManagerComponent.GetRoomList(needARRoom, needNotARRoom);
 
 			int count = self.roomList.Count;
 			self.AddUIScrollItems(ref self.ScrollItemRooms, count);
@@ -68,9 +72,20 @@ namespace ET.Client
 			RoomComponent roomComponent = self.roomList[index];
 			long roomId = roomComponent.Id;
 			RoomStatus roomStatus = roomComponent.roomStatus;
-			itemRoom.ELabel_ContentText.text = $"RoomId:{index}:{roomId}";
+			bool isARRoom = roomComponent.IsARRoom();
+			if (isARRoom)
+			{
+				itemRoom.ELabel_ContentText.text = $"AR:{index}:{roomId}";
+			}
+			else
+			{
+				itemRoom.ELabel_ContentText.text = $"{index}:{roomId}";
+			}
+
 			if (roomStatus == RoomStatus.Idle)
 			{
+				itemRoom.ELabel_StatusText.SetVisible(false);
+				itemRoom.EButton_JoinButton.SetVisible(true);
 				itemRoom.EButton_JoinButton.AddListener(() =>
 				{
 					self.JoinRoom(roomId).Coroutine();
@@ -78,7 +93,9 @@ namespace ET.Client
 			}
 			else
 			{
-				itemRoom.ELabel_JoinText.text = $"状态{roomStatus.ToString()}";
+				itemRoom.ELabel_StatusText.SetVisible(true);
+				itemRoom.ELabel_StatusText.text = $"状态{roomStatus.ToString()}";
+				itemRoom.EButton_JoinButton.SetVisible(false);
 			}
 		}
 

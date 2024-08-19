@@ -104,6 +104,8 @@ namespace ET.Ability.Client
 
 			self.animationClips = new ();
 			self.Parameter = new ();
+			self.animatorMotion2Length = new ();
+			self.animatorMotionIsLoop = new ();
 
 			foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
 			{
@@ -166,25 +168,6 @@ namespace ET.Ability.Client
 				}
 			}
 
-			if (self.CurMotionType != AnimatorMotionName.None)
-			{
-				if (ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.CurMotionType))
-				{
-				}
-				else
-				{
-					AnimatorStateInfo stateInfo = self.mainAnimator.GetCurrentAnimatorStateInfo(0);
-					if (stateInfo.IsName(self.CurMotionType.ToString()) == false)
-					{
-						self.CurMotionType = AnimatorMotionName.None;
-					}
-					else if (stateInfo.loop == false && stateInfo.normalizedTime >= 0.99f)
-					{
-						self.CurMotionType = AnimatorMotionName.None;
-					}
-				}
-			}
-
 			if (animatorComponent != null)
 			{
 				if (animatorComponent.isStoppingAnimator != self.isStop)
@@ -203,20 +186,66 @@ namespace ET.Ability.Client
 			AnimatorMotionName nextAnimatorMotionName = AnimatorMotionName.None;
 			float motionSpeed = 1f;
 			long motionTickTime = 0;
+			bool isAnimatorLoop = false;
 			if (animatorComponent != null)
 			{
 				if (animatorComponent.controlStateName != AnimatorMotionName.None)
 				{
 					nextAnimatorMotionName = animatorComponent.controlStateName;
 					motionTickTime = animatorComponent.controlAnimatorTickTime;
+					isAnimatorLoop = animatorComponent.isControlAnimatorLoop;
 				}
 				else
 				{
 					nextAnimatorMotionName = animatorComponent.name;
+					animatorComponent.name = AnimatorMotionName.None;
 					motionTickTime = animatorComponent.animatorTickTime;
+					isAnimatorLoop = animatorComponent.isAnimatorLoop;
 				}
 			}
-			if (nextAnimatorMotionName == AnimatorMotionName.None)
+
+			if (self.CurMotionType != AnimatorMotionName.None)
+			{
+				if (self.ChkIsLoop(self.CurMotionType))
+				{
+				}
+				else
+				{
+					if (self.ChkIsPlayFinished(self.CurMotionType))
+					{
+						if (nextAnimatorMotionName == self.CurMotionType)
+						{
+							if (isAnimatorLoop)
+							{
+								motionTickTime = 0;
+							}
+						}
+						else
+						{
+							self.CurMotionType = AnimatorMotionName.None;
+						}
+					}
+				}
+			}
+
+			if (nextAnimatorMotionName != AnimatorMotionName.None)
+			{
+				if (motionTickTime == 0)
+				{
+				}
+				else
+				{
+					long time = TimeHelper.ServerNow() - motionTickTime;
+					float length = self.GetAnimationLength(nextAnimatorMotionName);
+					if (time > length * 1000)
+					{
+						nextAnimatorMotionName = AnimatorMotionName.None;
+					}
+				}
+			}
+
+			if (nextAnimatorMotionName == AnimatorMotionName.None &&
+			    ET.Ability.AnimatorHelper.ChkIsIdleOrMove(self.CurMotionType))
 			{
 				motionTickTime = 0;
 				float dis = 0.0001f;
@@ -265,7 +294,7 @@ namespace ET.Ability.Client
 
 			if (nextAnimatorMotionName != AnimatorMotionName.None)
 			{
-				if (nextAnimatorMotionName != self.CurMotionType)
+				if (nextAnimatorMotionName != self.CurMotionType || motionTickTime == 0)
 				{
 					self.Play(nextAnimatorMotionName, motionSpeed, motionTickTime);
 				}
@@ -302,7 +331,7 @@ namespace ET.Ability.Client
 
 			if (self.CurMotionType == self.NextMotionType)
 			{
-				if (ET.Ability.AnimatorHelper.ChkIsLoopAnimatorMotion(self.CurMotionType))
+				if (self.ChkIsLoop(self.CurMotionType))
 				{
 					return;
 				}
@@ -310,7 +339,7 @@ namespace ET.Ability.Client
 
 			try
 			{
-				float crossTime = 0.2f;
+				float crossTime = 0.1f;
 
 				AnimatorMotionName CurMotionTypeOld = self.CurMotionType;
 				self.CurMotionType = self.NextMotionType;
@@ -323,7 +352,7 @@ namespace ET.Ability.Client
 				}
 				else
 				{
-					float length = self.AnimationTime(self.CurMotionType);
+					float length = self.GetAnimationLength(self.CurMotionType);
 					if (length > 0)
 					{
 						long time = TimeHelper.ServerNow() - self.NextMotionTickTime;
@@ -396,12 +425,12 @@ namespace ET.Ability.Client
 				string clipName = self.curRecordAnimatorName.GetRecordValue(motionType.ToString());
 				if (string.IsNullOrEmpty(clipName))
 				{
-					throw new Exception($"找不到该动作: {self.mainAnimator.name} {motionType}");
+					throw new Exception($"{self.mainAnimator.name} 找不到该动作: {motionType}");
 				}
 
 				if (!self.animationClips.TryGetValue(clipName, out animationClip))
 				{
-					throw new Exception($"找不到该动作: {self.mainAnimator.name} {clipName}");
+					throw new Exception($"{self.mainAnimator.name} 找不到该动作: {clipName}");
 				}
 
 				motionSpeed = animationClip.length / time;
@@ -429,8 +458,66 @@ namespace ET.Ability.Client
 			self.SetAnimatorSpeed(motionSpeed);
 		}
 
-		public static float AnimationTime(this AnimatorShowComponent self, AnimatorMotionName animatorMotionName)
+		public static bool ChkIsLoop(this AnimatorShowComponent self, AnimatorMotionName animatorMotionName)
 		{
+			if (self.animatorMotionIsLoop.TryGetValue(animatorMotionName, out bool isLoop))
+			{
+				return isLoop;
+			}
+
+			if (animatorMotionName == AnimatorMotionName.Idle || animatorMotionName == AnimatorMotionName.Move)
+			{
+				self.animatorMotionIsLoop[animatorMotionName] = true;
+			}
+			else
+			{
+				AnimatorStateInfo stateInfo = self.mainAnimator.GetCurrentAnimatorStateInfo(0);
+				if (stateInfo.IsName(animatorMotionName.ToString()) == false)
+				{
+					self.animatorMotionIsLoop[animatorMotionName] = false;
+				}
+				else if (stateInfo.loop)
+				{
+					self.animatorMotionIsLoop[animatorMotionName] = true;
+				}
+				else
+				{
+					self.animatorMotionIsLoop[animatorMotionName] = false;
+				}
+			}
+			return self.animatorMotionIsLoop[animatorMotionName];
+		}
+
+		public static bool ChkIsPlayFinished(this AnimatorShowComponent self, AnimatorMotionName animatorMotionName)
+		{
+			AnimatorStateInfo stateInfo = self.mainAnimator.GetCurrentAnimatorStateInfo(0);
+			if (stateInfo.IsName(animatorMotionName.ToString()) == false)
+			{
+				return true;
+			}
+			else if (stateInfo.loop)
+			{
+				return false;
+			}
+			else
+			{
+				if (stateInfo.normalizedTime >= 1.0f)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+
+		public static float GetAnimationLength(this AnimatorShowComponent self, AnimatorMotionName animatorMotionName)
+		{
+			if (self.animatorMotion2Length.TryGetValue(animatorMotionName, out float length))
+			{
+				return length;
+			}
 			AnimationClip animationClip;
 
 			if (self.curRecordAnimatorName == null)
@@ -443,19 +530,23 @@ namespace ET.Ability.Client
 				if (string.IsNullOrEmpty(clipName))
 				{
 #if UNITY_EDITOR
-					Log.Error($"找不到该动作: {self.mainAnimator.name} {animatorMotionName.ToString()}");
+					Log.Error($"{self.mainAnimator.name} 找不到该动作: {animatorMotionName.ToString()}");
 #endif
+					self.animatorMotion2Length[animatorMotionName] = 0;
 					return 0;
 				}
 
 				if (!self.animationClips.TryGetValue(clipName, out animationClip))
 				{
 #if UNITY_EDITOR
-					Log.Error($"找不到该动作: {self.mainAnimator.name} {clipName}");
+					Log.Error($"{self.mainAnimator.name} 找不到该动作: {clipName}");
 #endif
+					self.animatorMotion2Length[animatorMotionName] = 0;
 					return 0;
 				}
-				return animationClip.length;
+				length = animationClip.length;
+				self.animatorMotion2Length[animatorMotionName] = length;
+				return length;
 			}
 		}
 

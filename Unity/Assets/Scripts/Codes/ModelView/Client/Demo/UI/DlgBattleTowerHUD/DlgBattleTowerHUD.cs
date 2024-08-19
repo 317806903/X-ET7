@@ -1,7 +1,7 @@
 ﻿namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleTowerHUD : Entity, IAwake, IUILogic
+	public class DlgBattleTowerHUD : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleTowerHUDViewComponent View { get => this.GetComponent<DlgBattleTowerHUDViewComponent>();}
 

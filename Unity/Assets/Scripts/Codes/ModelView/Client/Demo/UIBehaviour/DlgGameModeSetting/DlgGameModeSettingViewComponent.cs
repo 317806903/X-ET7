@@ -313,6 +313,125 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_LanguageImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageImage == null )
+				{
+					this.m_E_LanguageImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language");
+				}
+				return this.m_E_LanguageImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_LanguageCNButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageCNButton == null )
+				{
+					this.m_E_LanguageCNButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageCN");
+				}
+				return this.m_E_LanguageCNButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_LanguageCNImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageCNImage == null )
+				{
+					this.m_E_LanguageCNImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageCN");
+				}
+				return this.m_E_LanguageCNImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_LanguageENButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageENButton == null )
+				{
+					this.m_E_LanguageENButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageEN");
+				}
+				return this.m_E_LanguageENButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_LanguageENImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageENImage == null )
+				{
+					this.m_E_LanguageENImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageEN");
+				}
+				return this.m_E_LanguageENImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_LanguageTWButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageTWButton == null )
+				{
+					this.m_E_LanguageTWButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageTW");
+				}
+				return this.m_E_LanguageTWButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_LanguageTWImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageTWImage == null )
+				{
+					this.m_E_LanguageTWImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageTW");
+				}
+				return this.m_E_LanguageTWImage;
+			}
+		}
+
 		public UnityEngine.RectTransform EG_Toggle_AudioRectTransform
 		{
 			get
@@ -741,6 +860,13 @@ namespace ET.Client
 			this.m_E_PrivacyPolicyImage = null;
 			this.m_E_DiscordButton = null;
 			this.m_E_DiscordImage = null;
+			this.m_E_LanguageImage = null;
+			this.m_E_LanguageCNButton = null;
+			this.m_E_LanguageCNImage = null;
+			this.m_E_LanguageENButton = null;
+			this.m_E_LanguageENImage = null;
+			this.m_E_LanguageTWButton = null;
+			this.m_E_LanguageTWImage = null;
 			this.m_EG_Toggle_AudioRectTransform = null;
 			this.m_EG_Toggle_AudioImage = null;
 			this.m_EG_Audio_OnRectTransform = null;
@@ -786,6 +912,13 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_PrivacyPolicyImage = null;
 		private UnityEngine.UI.Button m_E_DiscordButton = null;
 		private UnityEngine.UI.Image m_E_DiscordImage = null;
+		private UnityEngine.UI.Image m_E_LanguageImage = null;
+		private UnityEngine.UI.Button m_E_LanguageCNButton = null;
+		private UnityEngine.UI.Image m_E_LanguageCNImage = null;
+		private UnityEngine.UI.Button m_E_LanguageENButton = null;
+		private UnityEngine.UI.Image m_E_LanguageENImage = null;
+		private UnityEngine.UI.Button m_E_LanguageTWButton = null;
+		private UnityEngine.UI.Image m_E_LanguageTWImage = null;
 		private UnityEngine.RectTransform m_EG_Toggle_AudioRectTransform = null;
 		private UnityEngine.UI.Image m_EG_Toggle_AudioImage = null;
 		private UnityEngine.RectTransform m_EG_Audio_OnRectTransform = null;

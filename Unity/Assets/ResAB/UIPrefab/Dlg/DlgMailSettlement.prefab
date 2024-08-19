@@ -125,8 +125,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 1.2103271, y: 0}
-  m_SizeDelta: {x: 2.4206314, y: 547.5424}
+  m_AnchoredPosition: {x: 1.2103271, y: 37.69362}
+  m_SizeDelta: {x: 2.4207, y: 551.4224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7331245923442548685
 CanvasRenderer:
@@ -318,8 +318,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -47}
-  m_SizeDelta: {x: 1162.7712, y: 401.2477}
+  m_AnchoredPosition: {x: 3.6539, y: -65.63776}
+  m_SizeDelta: {x: 1666.9165, y: 346.149}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2523882231972113680
 MonoBehaviour:
@@ -405,8 +405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.2098389, y: 205.94073}
-  m_SizeDelta: {x: 1920.0012, y: 76.2286}
+  m_AnchoredPosition: {x: 0, y: 167}
+  m_SizeDelta: {x: 1004.384, y: 106.1174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5926005458072621020
 CanvasRenderer:
@@ -463,8 +463,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
-  m_fontSizeBase: 46
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -729,8 +729,8 @@ RectTransform:
   m_GameObject: {fileID: 7730797932313381142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1302130895610507859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -759,10 +759,10 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 160, y: 160}
+  m_CellSize: {x: 300, y: 350}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 7
+  m_ConstraintCount: 6
 --- !u!114 &7431518553100937893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.2103271, y: -324}
+  m_AnchoredPosition: {x: 0, y: -294}
   m_SizeDelta: {x: 864.4443, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5303364783253895333
@@ -870,8 +870,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

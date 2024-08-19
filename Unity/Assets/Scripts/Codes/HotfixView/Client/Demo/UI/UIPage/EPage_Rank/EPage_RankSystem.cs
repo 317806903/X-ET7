@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ET.Client
 {
@@ -23,44 +24,42 @@ namespace ET.Client
         }
 
         #region 展示
-        public static void ShowPage(this EPage_Rank self, ShowWindowData contextData = null)
+        public static async ETTask ShowPage(this EPage_Rank self, ShowWindowData contextData = null)
 		{
-            self._ShowPage(contextData).Coroutine();
-        }
-
-        public static async ETTask _ShowPage(this EPage_Rank self, ShowWindowData contextData = null)
-        {
-            self.View.uiTransform.SetVisible(true);
             await self.ShowPersonalInfo();
+            self.View.uiTransform.SetVisible(true);
             await self.ShowRankScrollItem();
             self.View.ES_AvatarShow.ShowMyAvatarIcon().Coroutine();
         }
 
         public static async ETTask ShowPersonalInfo(this EPage_Rank self)
         {
-
             RankShowComponent rankShowComponent = await ET.Client.RankHelper.GetRankShow(self.DomainScene(), RankType.EndlessChallenge, false);
             (int myRank, long score) = rankShowComponent.GetMyRank();
             if (score != -1)
             {
-                string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", score);
-                self.View.ELabel_ChanllengeTextMeshProUGUI.text = text;
+                //string text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_ChallengeEnds1", score);
+                self.View.ELabel_ChanllengeTextMeshProUGUI.text = $"{score}";
+            }
+            else
+            {
+                self.View.ELabel_ChanllengeTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoData");
             }
 
             //没有排名
             if (myRank == -1)
             {
-                if (score == -1)
-                {
-                    self.View.ETxtRankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoData");
-                }
-                else
-                {
+                //if (score == -1)
+                //{
+                //    self.View.ETxtRankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoData");
+                //}
+                //else
+                //{
                     self.View.ETxtRankTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Rank_NoRank");
-                }
+                //}
                 return;
-            }            
-               self.View.ETxtRankTextMeshProUGUI.text = myRank.ToString();          
+            }
+               self.View.ETxtRankTextMeshProUGUI.text = myRank.ToString();
         }
 
         public static async ETTask ShowRankScrollItem(this EPage_Rank self)
@@ -69,7 +68,7 @@ namespace ET.Client
             var list = rankShowComponent.GetRankList();
             int count = list.Count;
             self.View.ELabel_EmptyLeaderbordTextMeshProUGUI.SetVisible(count == 0);
-            self.AddUIScrollItemsPage(ref self.ScrollItemRankEndlessChallenges, count);
+            self.AddUIScrollItems(ref self.ScrollItemRankEndlessChallenges, count);
             self.View.ELoopScrollList_RankLoopVerticalScrollRect.SetVisible(true, count);
         }
         #endregion
@@ -81,7 +80,7 @@ namespace ET.Client
         public static void HidePage(this EPage_Rank self)
 		{
 			self.View.uiTransform.SetVisible(false);
-			
+
 		}
 
         #region 事件监听函数

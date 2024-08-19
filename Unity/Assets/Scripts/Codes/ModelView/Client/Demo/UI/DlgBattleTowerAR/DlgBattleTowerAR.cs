@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleTowerAR : Entity, IAwake, IUILogic
+	public class DlgBattleTowerAR : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleTowerARViewComponent View { get => this.GetComponent<DlgBattleTowerARViewComponent>(); }
 

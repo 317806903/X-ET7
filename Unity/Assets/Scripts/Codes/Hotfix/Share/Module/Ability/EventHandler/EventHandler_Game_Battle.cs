@@ -25,7 +25,7 @@
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnHit args)
 			{
 				Unit attackerUnit = args.attackerUnit;
-				attackerUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+				attackerUnit = attackerUnit.GetCasterActor();
 				Unit defenderUnit = args.defenderUnit;
 
 				EventSystem.Instance.Publish(scene, new ET.Ability.AbilityTriggerEventType.NearUnitOnHit()
@@ -66,7 +66,7 @@
 				{
 					return;
 				}
-				attackerUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+				attackerUnit = attackerUnit.GetCasterActor();
 				GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 				if (gamePlayComponent != null)
 				{

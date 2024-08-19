@@ -23,8 +23,6 @@ namespace ET
         {
             protected override void Destroy(LocalizeComponent self)
             {
-                self.translateExcel = null;
-                self.translateUI = null;
                 LocalizeComponent.Instance = null;
             }
         }
@@ -38,12 +36,9 @@ namespace ET
 
             self.CurrentLanguage = language;
 
-            self.translateExcel = self.GetCurrentTranslator_Excel(self.CurrentLanguage);
-            self.translateUI = self.GetCurrentTranslator_UI(self.CurrentLanguage);
-
             self.PreLoad(self.CurrentLanguage);
 
-            ConfigComponent.Instance.TranslateText(self.translateExcel);
+            ConfigComponent.Instance.TranslateText(self.GetTextValueByExcel);
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.SwitchLanguage() {languageType = language});
 
@@ -52,153 +47,214 @@ namespace ET
 
         public static void ResetLanguage(this LocalizeComponent self)
         {
-            self.translateExcel = self.GetCurrentTranslator_Excel(self.CurrentLanguage);
-            self.translateUI = self.GetCurrentTranslator_UI(self.CurrentLanguage);
-
-            ConfigComponent.Instance.TranslateText(self.translateExcel);
+            ConfigComponent.Instance.TranslateText(self.GetTextValueByExcel);
 
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.SwitchLanguage() {languageType = self.CurrentLanguage});
 
             return;
         }
 
+        public static string GetTextValueByExcel(this LocalizeComponent self, string textKey)
+        {
+            var translateCode = self.GetCurrentTranslator_Excel();
+            string textValue = translateCode(self.CurrentLanguage, textKey, textKey);
+            return textValue;
+        }
+
+        public static string GetTextValueByExcel(this LocalizeComponent self, string textKey, string originText)
+        {
+            var translateCode = self.GetCurrentTranslator_Excel();
+            string textValue = translateCode(self.CurrentLanguage, textKey, originText);
+            return textValue;
+        }
+
+        public static string GetTextValueByExcel(this LocalizeComponent self, LanguageType languageType, string textKey)
+        {
+            var translateCode = self.GetCurrentTranslator_Excel();
+            string textValue = translateCode(languageType, textKey, textKey);
+            return textValue;
+        }
+
+        public static string GetTextValueByExcel(this LocalizeComponent self, LanguageType languageType, string textKey, string originText)
+        {
+            var translateCode = self.GetCurrentTranslator_Excel();
+            string textValue = translateCode(languageType, textKey, originText);
+            return textValue;
+        }
+
         public static string GetTextValue(this LocalizeComponent self, string textKey)
         {
-            var translateExcel = self.GetCurrentTranslator_Excel(self.CurrentLanguage);
-            string textValue = translateExcel(textKey, textKey);
+            var translateCode = self.GetCurrentTranslator_Code();
+            string textValue = translateCode(self.CurrentLanguage, textKey, textKey);
             return textValue;
         }
 
         public static string GetTextValue(this LocalizeComponent self, LanguageType languageType, string textKey)
         {
-            var translateExcel = self.GetCurrentTranslator_Excel(languageType);
-            string textValue = translateExcel(textKey, textKey);
+            var translateCode = self.GetCurrentTranslator_Code();
+            string textValue = translateCode(languageType, textKey, textKey);
             return textValue;
         }
 
         public static string GetTextValue(this LocalizeComponent self, string textKey, params object[] args)
         {
-            var translateExcel = self.GetCurrentTranslator_Excel(self.CurrentLanguage);
-            string textValue = translateExcel(textKey, textKey);
+            var translateCode = self.GetCurrentTranslator_Code();
+            string textValue = translateCode(self.CurrentLanguage, textKey, textKey);
             textValue = string.Format(textValue, args);
             return textValue;
         }
 
         public static string GetTextValue(this LocalizeComponent self, LanguageType languageType, string textKey, params object[] args)
         {
-            var translateExcel = self.GetCurrentTranslator_Excel(languageType);
-            string textValue = translateExcel(textKey, textKey);
+            var translateCode = self.GetCurrentTranslator_Code();
+            string textValue = translateCode(languageType, textKey, textKey);
             textValue = string.Format(textValue, args);
             return textValue;
         }
 
-        public static Func<string, string, string> GetCurrentTranslator_Excel(this LocalizeComponent self, LanguageType languageType)
+        public static Func<LanguageType, string, string, string> GetCurrentTranslator_Excel(this LocalizeComponent self)
         {
-            switch (languageType)
-            {
-                case LanguageType.CN:
-                    return self._Translate_Excel_CN;
+            return self._Translate_Excel;
+        }
 
-                case LanguageType.TW:
-                    return self._Translate_Excel_TW;
-
-                case LanguageType.EN:
-                default:
-                    return self._Translate_Excel_EN;
-            }
+        public static Func<LanguageType, string, string, string> GetCurrentTranslator_Code(this LocalizeComponent self)
+        {
+            return self._Translate_Code;
         }
 
         public static void PreLoad(this LocalizeComponent self, LanguageType languageType)
         {
-            switch (languageType)
+            var tmp = LocalizeConfig_Excel_Category.Instance;
+            var tmp2 = LocalizeConfig_Code_Category.Instance;
+            var tmp3 = LocalizeConfig_UI_Category.Instance;
+        }
+
+        public static Func<LanguageType, string, string, string> GetCurrentTranslator_UI(this LocalizeComponent self)
+        {
+            return self._Translate_UI;
+        }
+
+        private static string _Translate_Excel(this LocalizeComponent self, LanguageType languageType, string key, string originText)
+        {
+            if (string.IsNullOrEmpty(key))
             {
-                case LanguageType.CN:
-                    self._PreLoad_CN();
-                    return;
-                case LanguageType.TW:
-                    self._PreLoad_TW();
-                    return;
-                case LanguageType.EN:
-                default:
-                    self._PreLoad_EN();
-                    return;
+                return string.Empty;
             }
-        }
-
-        public static Func<string, string, string> GetCurrentTranslator_UI(this LocalizeComponent self, LanguageType languageType)
-        {
-            switch (languageType)
+            string str = string.Empty;
+            if (LocalizeConfig_Excel_Category.Instance.Contain(key))
             {
-                case LanguageType.CN:
-                    return self._Translate_UI_CN;
+                LocalizeConfig localizeConfig = LocalizeConfig_Excel_Category.Instance.GetOrDefault(key);
 
-                case LanguageType.TW:
-                    return self._Translate_UI_TW;
+                switch (languageType)
+                {
+                    case LanguageType.CN:
+                        str = localizeConfig.TextCn;
+                        break;
+                    case LanguageType.TW:
+                        str = localizeConfig.TextTw;
+                        break;
+                    case LanguageType.EN:
+                        str = localizeConfig.TextEn;
+                        break;
+                    default:
+                        str = localizeConfig.TextEn;
+                        break;
+                }
 
-                case LanguageType.EN:
-                default:
-                    return self._Translate_UI_EN;
+                self._DecodeString(ref str);
+                if (self.IsShowLanguagePre)
+                {
+                    str = $"[{languageType.ToString()}][Excel]{str}";
+                }
             }
-        }
-
-        private static void _PreLoad_CN(this LocalizeComponent self)
-        {
-            var tmp = LocalizeConfig_Excel_CNCategory.Instance;
-        }
-
-        private static void _PreLoad_TW(this LocalizeComponent self)
-        {
-            var tmp = LocalizeConfig_Excel_TWCategory.Instance;
-        }
-
-        private static void _PreLoad_EN(this LocalizeComponent self)
-        {
-            var tmp = LocalizeConfig_Excel_ENCategory.Instance;
-        }
-
-        private static string _Translate_Excel_CN(this LocalizeComponent self, string key, string originText)
-        {
-            return LocalizeConfig_Excel_CNCategory.Instance.GetOrDefault(key)?.TextCn ?? originText;
-        }
-
-        private static string _Translate_Excel_TW(this LocalizeComponent self, string key, string originText)
-        {
-            return LocalizeConfig_Excel_TWCategory.Instance.GetOrDefault(key)?.TextTw ?? originText;
-        }
-
-        private static string _Translate_Excel_EN(this LocalizeComponent self, string key, string originText)
-        {
-            return LocalizeConfig_Excel_ENCategory.Instance.GetOrDefault(key)?.TextEn ?? originText;
-        }
-
-        private static string _Translate_UI_CN(this LocalizeComponent self, string key, string originText)
-        {
-            string str = LocalizeConfig_UI_CNCategory.Instance.GetOrDefault(key)?.TextCn ?? originText;
-            str = _DecodeString(str);
+            else
+            {
+                str = $"[Org][Excel]{originText}";
+            }
             return str;
         }
 
-        private static string _Translate_UI_TW(this LocalizeComponent self, string key, string originText)
+        private static string _Translate_Code(this LocalizeComponent self, LanguageType languageType, string key, string originText)
         {
-            string str = LocalizeConfig_UI_TWCategory.Instance.GetOrDefault(key)?.TextTw ?? originText;
-            str = _DecodeString(str);
+            if (string.IsNullOrEmpty(key))
+            {
+                return string.Empty;
+            }
+            string str = string.Empty;
+            if (LocalizeConfig_Code_Category.Instance.Contain(key))
+            {
+                LocalizeConfig localizeConfig = LocalizeConfig_Code_Category.Instance.GetOrDefault(key);
+
+                switch (languageType)
+                {
+                    case LanguageType.CN:
+                        str = localizeConfig.TextCn;
+                        break;
+                    case LanguageType.TW:
+                        str = localizeConfig.TextTw;
+                        break;
+                    case LanguageType.EN:
+                        str = localizeConfig.TextEn;
+                        break;
+                    default:
+                        str = localizeConfig.TextEn;
+                        break;
+                }
+                self._DecodeString(ref str);
+                if (self.IsShowLanguagePre)
+                {
+                    str = $"[{languageType.ToString()}][Code]{str}";
+                }
+            }
+            else
+            {
+                str = $"[Org][Code]{originText}";
+            }
             return str;
         }
 
-        private static string _Translate_UI_EN(this LocalizeComponent self, string key, string originText)
+        private static string _Translate_UI(this LocalizeComponent self, LanguageType languageType, string key, string originText)
         {
-            string str = LocalizeConfig_UI_ENCategory.Instance.GetOrDefault(key)?.TextEn ?? originText;
-            str = _DecodeString(str);
+            if (string.IsNullOrEmpty(key))
+            {
+                return string.Empty;
+            }
+            string str = string.Empty;
+            if (LocalizeConfig_UI_Category.Instance.Contain(key))
+            {
+                LocalizeConfig localizeConfig = LocalizeConfig_UI_Category.Instance.GetOrDefault(key);
+
+                switch (languageType)
+                {
+                    case LanguageType.CN:
+                        str = localizeConfig.TextCn;
+                        break;
+                    case LanguageType.TW:
+                        str = localizeConfig.TextTw;
+                        break;
+                    case LanguageType.EN:
+                        str = localizeConfig.TextEn;
+                        break;
+                    default:
+                        str = localizeConfig.TextEn;
+                        break;
+                }
+                self._DecodeString(ref str);
+                if (self.IsShowLanguagePre)
+                {
+                    str = $"[{languageType.ToString()}][UI]{str}";
+                }
+            }
+            else
+            {
+                str = $"[Org][UI]{originText}";
+            }
             return str;
         }
 
-        private static string _DecodeString(string text)
+        private static void _DecodeString(this LocalizeComponent self, ref string text)
         {
-            StringBuilder sb = new StringBuilder(text);
-            sb.Replace("\\n", "\n");
-            sb.Replace("\\t", "\t");
-            sb.Replace("\\r", "\r");
-            return sb.ToString();
+            text = text.Replace("\\n", "\n").Replace("\\t", "\t").Replace("\\r", "\r");
         }
     }
 }

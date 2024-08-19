@@ -21,6 +21,7 @@ MonoBehaviour:
   RouterHttpPort: 3478
   areaType: 0
   languageType: EN
+  IsShowLanguagePre: 0
   IsShowDebugMode: 1
   IsShowEditorLoginMode: 1
   IsNeedSendEventLog: 0

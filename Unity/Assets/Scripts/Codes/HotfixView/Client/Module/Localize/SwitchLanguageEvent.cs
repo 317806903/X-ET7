@@ -7,36 +7,20 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, SwitchLanguage arg)
         {
-            var translateUI = LocalizeComponent.Instance.GetCurrentTranslator_UI(arg.languageType);
-
-            UITextLocalizeComponent.Instance?.SetGetTextKeyValueActionBack((languageType) =>
-            {
-                if (languageType == "CN")
-                {
-                    return LocalizeComponent.Instance.GetCurrentTranslator_UI(LanguageType.CN);
-                }
-                else if (languageType == "TW")
-                {
-                    return LocalizeComponent.Instance.GetCurrentTranslator_UI(LanguageType.TW);
-                }
-                else if (languageType == "EN")
-                {
-                    return LocalizeComponent.Instance.GetCurrentTranslator_UI(LanguageType.EN);
-                }
-                return LocalizeComponent.Instance.GetCurrentTranslator_UI(LanguageType.CN);
-            });
-
-            UITextLocalizeComponent.Instance?.SetTextLocalizeAction(translateUI);
             UITextLocalizeComponent.Instance?.DoRefreshTextValue();
+
+            UIImageLocalizeComponent.Instance?.DoRefreshImageValue();
 
             UnityEngine.UI.LoopScrollPrefabSourceInstance.AddCellItemAction = (go) =>
             {
                 UITextLocalizeComponent.Instance.AddUITextLocalizeView(go);
+                UIImageLocalizeComponent.Instance.AddUIImageLocalizeView(go);
             };
 
             UnityEngine.UI.LoopScrollPrefabSourceInstance.RemoveCellItemAction = (go) =>
             {
                 UITextLocalizeComponent.Instance.RemoveUITextLocalizeView(go);
+                UIImageLocalizeComponent.Instance.RemoveUIImageLocalizeView(go);
             };
 
             await ETTask.CompletedTask;

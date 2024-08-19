@@ -33,6 +33,10 @@
 
         public static void SetDataCacheAutoClear(this Entity entity, float chkTimeInterval = 30)
         {
+            if (entity == null)
+            {
+                return;
+            }
             if (chkTimeInterval < 0)
             {
                 Log.Error($"ET.DataCacheHelper.SetDataCacheAutoClear chkTimeInterval[{chkTimeInterval}] < 0");

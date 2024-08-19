@@ -26,7 +26,23 @@ namespace ET
                     if (mailToPlayersComponent.deliveredPlayerList.Contains(playerId) == false)
                     {
                         MailInfoComponent mailInfoComponent = mailToPlayersComponent.GetMailInfo();
+                        if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                        {
+                            continue;
+                        }
+
+                        string mailTitleOrg = mailInfoComponent.mailTitle;
+                        string mailContentOrg = mailInfoComponent.mailContent;
+                        if (mailToPlayersComponent.playerParam != null &&
+                            mailToPlayersComponent.playerParam.ContainsKey(playerId))
+                        {
+                            mailInfoComponent.mailTitle = mailInfoComponent.mailTitle.Replace("{Rank}", mailToPlayersComponent.playerParam[playerId]);
+                            mailInfoComponent.mailContent = mailInfoComponent.mailContent.Replace("{Rank}", mailToPlayersComponent.playerParam[playerId]);
+                        }
                         componentBytes.Add(mailInfoComponent.ToBson());
+                        mailInfoComponent.mailTitle = mailTitleOrg;
+                        mailInfoComponent.mailContent = mailContentOrg;
+
                         bRet = true;
                         //加入已经发送的list
                         mailToPlayersComponent.deliveredPlayerList.Add(playerId);
@@ -38,7 +54,23 @@ namespace ET
                     if (mailToPlayersComponent.waitSendPlayerList.Contains(playerId) && mailToPlayersComponent.deliveredPlayerList.Contains(playerId) == false)
                     {
                         MailInfoComponent mailInfoComponent = mailToPlayersComponent.GetMailInfo();
+                        if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                        {
+                            continue;
+                        }
+                        string mailTitleOrg = mailInfoComponent.mailTitle;
+                        string mailContentOrg = mailInfoComponent.mailContent;
+                        if (mailToPlayersComponent.playerParam != null &&
+                            mailToPlayersComponent.playerParam.ContainsKey(playerId))
+                        {
+                            mailInfoComponent.mailTitle = mailInfoComponent.mailTitle.Replace("{Rank}", mailToPlayersComponent.playerParam[playerId]);
+                            mailInfoComponent.mailContent = mailInfoComponent.mailContent.Replace("{Rank}", mailToPlayersComponent.playerParam[playerId]);
+                        }
                         componentBytes.Add(mailInfoComponent.ToBson());
+
+                        mailInfoComponent.mailTitle = mailTitleOrg;
+                        mailInfoComponent.mailContent = mailContentOrg;
+
                         bRet = true;
                         //Playerid加入已经发送的list
                         mailToPlayersComponent.deliveredPlayerList.Add(playerId);

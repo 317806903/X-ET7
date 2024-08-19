@@ -21,6 +21,7 @@ public sealed partial class ActionCfg_PlayAnimator: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         IsOnlySelfShow = _buf.ReadBool();
         AnimatorName = (AnimatorMotionName)_buf.ReadInt();
+        IsLoop = _buf.ReadBool();
         PostInit();
     }
 
@@ -49,6 +50,10 @@ public sealed partial class ActionCfg_PlayAnimator: Bright.Config.BeanBase
     /// 动作名称
     /// </summary>
     public AnimatorMotionName AnimatorName { get; private set; }
+    /// <summary>
+    /// 是否循环播放
+    /// </summary>
+    public bool IsLoop { get; private set; }
 
     public const int __ID__ = 631630028;
     public override int GetTypeId() => __ID__;
@@ -70,6 +75,7 @@ public sealed partial class ActionCfg_PlayAnimator: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "IsOnlySelfShow:" + IsOnlySelfShow + ","
         + "AnimatorName:" + AnimatorName + ","
+        + "IsLoop:" + IsLoop + ","
         + "}";
     }
     

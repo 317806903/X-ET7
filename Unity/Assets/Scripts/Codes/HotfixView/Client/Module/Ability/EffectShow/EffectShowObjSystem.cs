@@ -50,6 +50,16 @@ namespace ET.Ability.Client
                 return;
             }
 
+            while (TimeHelper.ClientNow() > TimeHelper.ClientFrameTime() + 200)
+            {
+                //await TimerComponent.Instance.WaitFrameAsync();
+                await TimerComponent.Instance.WaitAsync(200);
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+            }
+
             GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
             if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
             {

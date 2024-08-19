@@ -25,7 +25,9 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         IsNeedChkExcludeTarget = _buf.ReadBool();
         IsChgToSelectPos = _buf.ReadBool();
         SelectNum = _buf.ReadInt();
-        SelectObjectType = (SelectObjectType)_buf.ReadInt();
+        IsNeedChkMesh = _buf.ReadBool();
+        IsNeedChkCanBeFind = _buf.ReadBool();
+        SelectObjectUnitType = SelectObjectUnitTypeBase.DeserializeSelectObjectUnitTypeBase(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectOrder = new System.Collections.Generic.List<SelectObjectOrder>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SelectObjectOrder _e0;  _e0 = SelectObjectOrder.DeserializeSelectObjectOrder(_buf); SelectOrder.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectPreCondition = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); SelectPreCondition.Add(_e0);}}
         ActionCallParam = ActionCallParam.DeserializeActionCallParam(_buf);
@@ -74,9 +76,14 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
     /// </summary>
     public int SelectNum { get; private set; }
     /// <summary>
-    /// 选取对象的类型
+    /// 是否需要检测Mesh
     /// </summary>
-    public SelectObjectType SelectObjectType { get; private set; }
+    public bool IsNeedChkMesh { get; private set; }
+    /// <summary>
+    /// 是否需要检测隐身单位
+    /// </summary>
+    public bool IsNeedChkCanBeFind { get; private set; }
+    public SelectObjectUnitTypeBase SelectObjectUnitType { get; private set; }
     /// <summary>
     /// 对象选择排序规则
     /// </summary>
@@ -92,6 +99,7 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        SelectObjectUnitType?.Resolve(_tables);
         foreach(var _e in SelectOrder) { _e?.Resolve(_tables); }
         foreach(var _e in SelectPreCondition) { _e?.Resolve(_tables); }
         ActionCallParam?.Resolve(_tables);
@@ -100,6 +108,7 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        SelectObjectUnitType?.TranslateText(translator);
         foreach(var _e in SelectOrder) { _e?.TranslateText(translator); }
         foreach(var _e in SelectPreCondition) { _e?.TranslateText(translator); }
         ActionCallParam?.TranslateText(translator);
@@ -117,7 +126,9 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         + "IsNeedChkExcludeTarget:" + IsNeedChkExcludeTarget + ","
         + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "SelectNum:" + SelectNum + ","
-        + "SelectObjectType:" + SelectObjectType + ","
+        + "IsNeedChkMesh:" + IsNeedChkMesh + ","
+        + "IsNeedChkCanBeFind:" + IsNeedChkCanBeFind + ","
+        + "SelectObjectUnitType:" + SelectObjectUnitType + ","
         + "SelectOrder:" + Bright.Common.StringUtil.CollectionToString(SelectOrder) + ","
         + "SelectPreCondition:" + Bright.Common.StringUtil.CollectionToString(SelectPreCondition) + ","
         + "ActionCallParam:" + ActionCallParam + ","

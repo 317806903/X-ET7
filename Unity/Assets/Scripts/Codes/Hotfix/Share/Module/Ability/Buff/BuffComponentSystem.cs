@@ -140,7 +140,8 @@ namespace ET.Ability
                 {
                     return (true, buffObj);
                 }
-                Unit casterUnitActor = UnitHelper.GetCasterActorUnit(self.DomainScene(), casterUnit.Id);
+
+                Unit casterUnitActor = UnitHelper.GetUnit(self.DomainScene(), casterUnit.Id).GetCasterActor();
                 if (buffObj.GetCasterActorUnit() == casterUnitActor)
                 {
                     return (true, buffObj);

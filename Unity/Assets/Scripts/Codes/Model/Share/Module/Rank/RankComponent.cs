@@ -8,6 +8,9 @@ namespace ET
     [ChildOf(typeof(RankManagerComponent))]
     public class RankComponent : Entity, IAwake, IDestroy, ISerializeToEntity
     {
+        public int seasonIndex;
+        public int seasonCfgId;
+
         /// <summary>
         /// 上榜人数
         /// </summary>

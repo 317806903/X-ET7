@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ET.AbilityConfig;
 
 namespace ET.Server
 {
@@ -61,8 +62,22 @@ namespace ET.Server
             }
         }
 
-        public static async ETTask RecordWhenSeasonFinished(this RankComponent self, Type rankItemType, int seasonId)
+        public static async ETTask RecordWhenSeasonFinished(this RankComponent self, Type rankItemType, int seasonIndex, int seasonCfgId)
         {
+            if (self.seasonIndex > seasonIndex)
+            {
+                Log.Error($"ET.Server.RankComponentSystem.RecordWhenSeasonFinished self.seasonIndex[{self.seasonIndex}] > seasonIndex[{seasonIndex}]");
+                return;
+            }
+            SeasonInfoCfg seasonInfoCfg = SeasonInfoCfgCategory.Instance.Get(seasonCfgId);
+            string seasonName = seasonInfoCfg.Name;
+
+            Dictionary<int, (List<long> playerList, string mailCfgId)> rank2Mail = new();
+            foreach (var item in seasonInfoCfg.RewardMail)
+            {
+                rank2Mail.Add(item.Key, (new(), item.Value));
+            }
+
             self.playerId2Score.Clear();
             ulong totalCount = self.topRankPlayerCount > self.SkipList.Length? self.SkipList.Length : self.topRankPlayerCount;
             List<SkipListNode> topList = self.SkipList.GetNodeListByRank(0, (uint)totalCount);
@@ -87,8 +102,53 @@ namespace ET.Server
             {
                 return;
             }
+            await self.RenameCollection(rankItemType, seasonIndex);
 
-            await self.RenameCollection(rankItemType, seasonId);
+            Dictionary<long, string> playerParam = new();
+            for (int i = 0; i < self.recordWhenFinished.Count; i++)
+            {
+                long playerId = self.recordWhenFinished[i].playerId;
+                playerParam[playerId] = $"{i + 1}";
+                foreach (var item in rank2Mail)
+                {
+                    if (i <= item.Key - 1)
+                    {
+                        item.Value.playerList.Add(playerId);
+                        break;
+                    }
+                }
+            }
+
+            long receiveTime = TimeHelper.ServerNow();
+            foreach (var item in rank2Mail)
+            {
+                MailToPlayerType mailToPlayerType = MailToPlayerType.PlayerList;
+                List<long> waitSendPlayerList = item.Value.playerList;
+                if (waitSendPlayerList.Count == 0)
+                {
+                    continue;
+                }
+                MailCfg mailCfg = MailCfgCategory.Instance.Get(item.Value.mailCfgId);
+                DateTime limitTimeTmp = TimeHelper.DateTimeNow().AddDays(mailCfg.EffectiveTime);
+                long limitTime = TimeHelper.ToTimeStamp(limitTimeTmp);
+                Dictionary<string, int> itemCfgList = ET.DropItemRuleHelper.Drop(mailCfg.DropRuleId);
+
+                Dictionary<long, string> playerParamTmp = new();
+                foreach (long playerId in waitSendPlayerList)
+                {
+                    playerParamTmp[playerId] = playerParam[playerId];
+                }
+
+                // 赛季名称 {SeasonName}
+                // 玩家名称	{Name}
+                // 玩家排名	{Rank}
+                string mailTitle = mailCfg.MailTitle;
+                mailTitle = mailTitle.Replace("{SeasonName}", seasonName);
+                string mailContent = mailCfg.MailContent;
+                mailContent = mailContent.Replace("{SeasonName}", seasonName);
+                await ET.Server.MailHelper.InsertMailToCenter(self.DomainScene(), -1, mailCfg.MailType, mailTitle, mailContent, itemCfgList, receiveTime, limitTime, mailToPlayerType, waitSendPlayerList, playerParamTmp);
+            }
+
             self.Dispose();
         }
 
@@ -102,10 +162,10 @@ namespace ET.Server
             return await ET.Server.DBHelper.GetDBCount<T>(self.DomainScene());
         }
 
-        public static async ETTask RenameCollection(this RankComponent self, Type rankItemType, int seasonId)
+        public static async ETTask RenameCollection(this RankComponent self, Type rankItemType, int seasonCfgId)
         {
-            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), self.GetType(), seasonId);
-            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), rankItemType, seasonId);
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), self.GetType(), seasonCfgId);
+            await ET.Server.DBHelper.RenameCollection(self.DomainScene(), rankItemType, seasonCfgId);
         }
     }
 }

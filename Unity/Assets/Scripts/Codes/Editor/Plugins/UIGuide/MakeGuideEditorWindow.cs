@@ -35,6 +35,14 @@ public class UIGuidePathListEditorWindow: EditorWindow
     private int indexRun = 0;
     private bool[] showFoldoutList;
 
+    GUIStyle redStyle = new GUIStyle();
+
+    void Awake()
+    {
+        // 设置文本颜色
+        redStyle.normal.textColor = Color.red;
+    }
+
     void OnGUI()
     {
         bool reFresh = false;
@@ -307,7 +315,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                                 if (makeGuide.list[i].trigEnterConditionGo == null)
                                 {
-                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigEnterConditionParam);
+                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigEnterConditionParam, redStyle);
                                 }
                                 else
                                 {
@@ -399,8 +407,8 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                             if (makeGuide.list[i].go == null)
                             {
-                                EditorGUILayout.LabelField("canvas路径(可能有问题，留意!!!): " + makeGuide.list[i].hierarchyCanvasPath);
-                                EditorGUILayout.LabelField("后面路径(可能有问题，留意!!!):" + makeGuide.list[i].hierarchyGuidePath);
+                                EditorGUILayout.LabelField("canvas路径(可能有问题，留意!!!): " + makeGuide.list[i].hierarchyCanvasPath, redStyle);
+                                EditorGUILayout.LabelField("后面路径(可能有问题，留意!!!):" + makeGuide.list[i].hierarchyGuidePath, redStyle);
                             }
                             else
                             {
@@ -641,7 +649,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                                 if (makeGuide.list[i].trigExitConditionGo == null)
                                 {
-                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigExitConditionParam);
+                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigExitConditionParam, redStyle);
                                 }
                                 else
                                 {

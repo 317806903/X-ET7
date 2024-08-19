@@ -224,19 +224,19 @@ namespace ET
 
         public static Unit GetHomeUnit(this PutHomeComponent self, TeamFlagType teamFlagType)
         {
-            return self.GetHomeUnitByTeamFlagType(teamFlagType);
+            return self._GetHomeUnitByTeamFlagType(teamFlagType);
         }
 
         public static Unit GetHomeUnit(this PutHomeComponent self, Unit unit)
         {
-            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnit(unit);
-            return self.GetHomeUnitByTeamFlagType(teamFlagType);
+            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnitId(unit.Id);
+            return self._GetHomeUnitByTeamFlagType(teamFlagType);
         }
 
         public static Unit GetHomeUnit(this PutHomeComponent self, long playerId)
         {
             TeamFlagType teamFlagType = self.GetGamePlayTowerDefense().GetHomeTeamFlagTypeByPlayer(playerId);
-            return self.GetHomeUnitByTeamFlagType(teamFlagType);
+            return self._GetHomeUnitByTeamFlagType(teamFlagType);
         }
 
         public static Dictionary<TeamFlagType, long> GetHomeUnitList(this PutHomeComponent self)
@@ -244,12 +244,12 @@ namespace ET
             return self.HomeUnitIdList;
         }
 
-        public static Unit GetHomeUnitByTeamFlagType(this PutHomeComponent self, TeamFlagType teamFlagType)
+        public static Unit _GetHomeUnitByTeamFlagType(this PutHomeComponent self, TeamFlagType teamFlagType)
         {
             TeamFlagType homeTeamFlagType = ET.GamePlayTowerDefenseHelper.GetHomeTeamFlagType(teamFlagType);
             if (self.HomeUnitIdList.TryGetValue(homeTeamFlagType, out long homeUnitId))
             {
-                return UnitHelper.GetUnit(self.DomainScene(), self.HomeUnitIdList[homeTeamFlagType]);
+                return UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
             }
             return null;
         }
@@ -261,6 +261,11 @@ namespace ET
                 Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId.Value);
                 if (ET.Ability.UnitHelper.ChkUnitAlive(homeUnit) == false)
                 {
+                    if (ET.Ability.DeathShowHelper.ChkIsInDeath(homeUnit))
+                    {
+                        self.GetGamePlay().PauseAllAI();
+                        return true;
+                    }
                     self.GetGamePlayTowerDefense().TransToGameResult(false, false).Coroutine();
                     return false;
                 }

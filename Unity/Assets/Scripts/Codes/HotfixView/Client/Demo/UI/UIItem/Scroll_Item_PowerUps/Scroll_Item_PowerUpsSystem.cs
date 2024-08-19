@@ -17,7 +17,7 @@ namespace ET.Client
         public static async ETTask Init(this Scroll_Item_PowerUps self, string bringUpNameStr, int playBringUpLevel, bool isSmooth = false)
 		{
             self.SetMainIcon(bringUpNameStr,playBringUpLevel);
-            self.SetOutline(bringUpNameStr);            
+            self.SetOutline(bringUpNameStr);
             self.SetItemNameTxt(bringUpNameStr, playBringUpLevel);
             await self.SetColorOutLine(bringUpNameStr, playBringUpLevel, isSmooth);
             self.SetIconUP(bringUpNameStr, playBringUpLevel).Coroutine();
@@ -30,8 +30,7 @@ namespace ET.Client
         public static void SetMainIcon(this Scroll_Item_PowerUps self,string bringUpNameStr,int playerLevel)
 		{
             SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(bringUpNameStr, playerLevel);
-            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(seasonBringUpCfg.Icon);
-            self.EMainIconImage.SetImageByPath(resIconCfg.ResName).Coroutine(); 
+            self.EMainIconImage.SetImageByResIconCfgId(seasonBringUpCfg.Icon).Coroutine();
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace ET.Client
             {
                 self.EOutlineColorImage.fillAmount = playerBringUpLevel/(float)maxLevel;
             }
-           
+
         }
 
         /// <summary>
@@ -72,21 +71,21 @@ namespace ET.Client
                     self.ELevelline3Image.SetVisible(false);
                     self.ELevelline4Image.SetVisible(false);
                     break;
-                case 2: 
+                case 2:
 					self.ELevelline2Image.SetVisible(true);
 					self.ELevelline3Image.SetVisible(false);
 					self.ELevelline4Image.SetVisible(false);
-					break; 
+					break;
 				case 3:
                     self.ELevelline2Image.SetVisible(false);
                     self.ELevelline3Image.SetVisible(true);
                     self.ELevelline4Image.SetVisible(false);
-                    break; 
+                    break;
 				case 4:
                     self.ELevelline2Image.SetVisible(false);
                     self.ELevelline3Image.SetVisible(false);
                     self.ELevelline4Image.SetVisible(true);
-                    break; 
+                    break;
 			}
         }
 
@@ -118,7 +117,7 @@ namespace ET.Client
         public static void SetItemNameTxt(this Scroll_Item_PowerUps self, string bringUpNameStr, int playerBringupLevel)
         {
             SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(bringUpNameStr, playerBringupLevel);
-            string text = LocalizeComponent.Instance.GetTextValue(seasonBringUpCfg.Name);
+            string text = seasonBringUpCfg.Name;
             self.ETxtItemDesTextMeshProUGUI.SetText(text);
         }
 

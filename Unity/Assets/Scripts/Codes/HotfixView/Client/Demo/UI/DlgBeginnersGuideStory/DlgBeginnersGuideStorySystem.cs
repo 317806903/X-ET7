@@ -22,7 +22,7 @@ namespace ET.Client
 			self.View.E_VideoImgButton.AddListenerAsync(self.ClickVideo);
 		}
 
-		public static void ShowWindow(this DlgBeginnersGuideStory self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBeginnersGuideStory self, ShowWindowData contextData = null)
 		{
 			//self.index = 1;
 			self.index = self.totalNum;

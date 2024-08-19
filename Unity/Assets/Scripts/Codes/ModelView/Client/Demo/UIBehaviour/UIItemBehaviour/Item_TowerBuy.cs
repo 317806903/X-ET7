@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
 	[EnableMethod]
-	public class Scroll_Item_TowerBuy : Entity, IAwake, IDestroy, IUIScrollItem
+	public class Scroll_Item_TowerBuy : Entity, IAwake, IDestroy, IUIScrollItem, IUILogic
 	{
 		public long DataId {get;set;}
 		private bool isCacheNode = false;
@@ -667,7 +667,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_ReplaceImage
+		public TMPro.TextMeshProUGUI ELabel_itemNumTextMeshProUGUI
 		{
 			get
 			{
@@ -678,15 +678,15 @@ namespace ET.Client
 				}
 				if (this.isCacheNode)
 				{
-					if( this.m_EImage_ReplaceImage == null )
+					if( this.m_ELabel_itemNumTextMeshProUGUI == null )
 					{
-						this.m_EImage_ReplaceImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_TowerBuyShow/EImage_Replace");
+						this.m_ELabel_itemNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_TowerBuyShow/ELabel_itemNum");
 					}
-					return this.m_EImage_ReplaceImage;
+					return this.m_ELabel_itemNumTextMeshProUGUI;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_TowerBuyShow/EImage_Replace");
+					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_TowerBuyShow/ELabel_itemNum");
 				}
 			}
 		}
@@ -792,7 +792,7 @@ namespace ET.Client
 			this.m_ELabel_BuyCostTextMeshProUGUI = null;
 			this.m_ELabel_UnableBuy_iconImage = null;
 			this.m_EImage_PurchasedImage = null;
-			this.m_EImage_ReplaceImage = null;
+			this.m_ELabel_itemNumTextMeshProUGUI = null;
 			this.m_E_iconImage = null;
 			this.m_EButton_SelectButton = null;
 			this.m_EButton_SelectImage = null;
@@ -827,7 +827,7 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_BuyCostTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_ELabel_UnableBuy_iconImage = null;
 		private UnityEngine.UI.Image m_EImage_PurchasedImage = null;
-		private UnityEngine.UI.Image m_EImage_ReplaceImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_itemNumTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_E_iconImage = null;
 		private UnityEngine.UI.Button m_EButton_SelectButton = null;
 		private UnityEngine.UI.Image m_EButton_SelectImage = null;

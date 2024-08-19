@@ -123,6 +123,7 @@ namespace ET.Client
             self.ChgColor(self.transSelectShow);
             self.ChgColor(self.transAttackArea);
 
+            await TimerComponent.Instance.WaitAsync(500);
             self.ChkUpgradePlayerTower();
         }
 
@@ -144,8 +145,7 @@ namespace ET.Client
         public static void ChgAttackArea(this TowerShowComponent self)
         {
             Unit unit = self.GetUnit();
-            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            float skillDis = numericComponent.GetAsFloat(NumericType.SkillDis);
+            float skillDis = ET.Client.UnitHelper.GetMaxSkillDis(unit);
             if (skillDis <= 0)
             {
                 self.transAttackArea.gameObject.SetActive(false);
@@ -192,7 +192,7 @@ namespace ET.Client
 
         public static void ChkUpgradePlayerTower(this TowerShowComponent self)
         {
-            if (self.transRoot == null)
+            if (self == null || self.IsDisposed || self.transRoot == null)
             {
                 return;
             }

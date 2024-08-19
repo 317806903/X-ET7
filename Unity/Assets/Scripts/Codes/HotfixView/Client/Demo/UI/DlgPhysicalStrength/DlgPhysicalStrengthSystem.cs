@@ -30,19 +30,36 @@ namespace ET.Client
 		public static void RegisterUIEvent(this DlgPhysicalStrength self)
 		{
 			self.View.EButton_CloseButton.AddListener(self.OnCloseBtnClick);
-			//self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+			self.View.E_BGButton.AddListener(() =>
+			{
+				if (self.ChkCanClickBg() == false)
+				{
+					return;
+				}
+				self.OnCloseBtnClick();
+			});
 
 			self.View.EButton_WatchADButton.AddListenerAsync(self.GetPhysicalStrenthByADAsync);
 			self.View.EButton_CoinButton.AddListener(self.GetPhysicalStrengthByCoin);
 
 		}
 
-		public static void ShowWindow(this DlgPhysicalStrength self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgPhysicalStrength self, ShowWindowData contextData = null)
 		{
+			self.dlgShowTime = TimeHelper.ClientNow();
 			self.ShowBg();
 			self.Update().Coroutine();
 
 			self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.PhysicalStrengthTimer, self);
+		}
+
+		public static bool ChkCanClickBg(this DlgPhysicalStrength self)
+		{
+			if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public static void ShowBg(this DlgPhysicalStrength self)
@@ -69,7 +86,7 @@ namespace ET.Client
 			self.View.ELabel_PercentageTextMeshProUGUI.text = msg;
 			self.View.E_PhysicalStrengthSlider.value = (float)curPhysicalStrength / maxPhysicalStrength;
 
-			TimeSpan timeSpan = TimeSpan.FromSeconds(playerBaseInfoComponent.GetRevoerLeftTime());
+			TimeSpan timeSpan = TimeSpan.FromSeconds(playerBaseInfoComponent.GetRecoverLeftTime());
 
 			self.View.ELabel_RcoverNumTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_Regain", GlobalSettingCfgCategory.Instance.RecoverIncreaseOfPhysicalStrength, timeSpan.ToString());
 
@@ -84,13 +101,6 @@ namespace ET.Client
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
 		}
 
-		public static void OnBGClick(this DlgPhysicalStrength self)
-		{
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
-
-			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPhysicalStrength>();
-		}
-
 		public static async ETTask GetPhysicalStrenthByADAsync(this DlgPhysicalStrength self)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
@@ -98,7 +108,7 @@ namespace ET.Client
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 					await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 			int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
-			if (playerBaseInfoComponent.physicalStrength == maxPhysicalStrength)
+			if (playerBaseInfoComponent.GetPhysicalStrength() == maxPhysicalStrength)
 			{
 				string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_IsFull");
 				UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msg, null, null, null);

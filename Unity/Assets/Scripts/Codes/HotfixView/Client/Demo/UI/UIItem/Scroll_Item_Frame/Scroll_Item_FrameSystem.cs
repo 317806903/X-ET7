@@ -10,7 +10,7 @@ namespace ET.Client
 	public static class Scroll_Item_FrameSystem
 	{
         /*
-            WJTODO:待把头像框逻辑合并在此Item中        
+            WJTODO:待把头像框逻辑合并在此Item中
         */
 		public static void Init(this Scroll_Item_Frame self)
 		{
@@ -18,10 +18,9 @@ namespace ET.Client
 
         public static void ShowFrameItem(this Scroll_Item_Frame self, string itemCfgId, bool needClickShowDetail)
         {
-            
             if (needClickShowDetail)
             {
-               self.EImage_FrameButton.onClick.AddListener(() =>
+                ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
                 {
                     UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
                     self.ShowDetails(itemCfgId);
@@ -36,7 +35,8 @@ namespace ET.Client
                 return;
             }
 
-            ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, self.uiTransform.position+Vector3.down*0.3f);
+            Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(self.uiTransform.GetComponent<RectTransform>());
+            ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos);
         }
 
 

@@ -19,7 +19,27 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Tutorial
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_Setting
+    guideTextType: 0
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: 
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgGameModeSetting/EGBackGround/Root/E_Other/E_ButtonTutorials
     guideTextType: 0
     guideTextImgPath: 
     text: 

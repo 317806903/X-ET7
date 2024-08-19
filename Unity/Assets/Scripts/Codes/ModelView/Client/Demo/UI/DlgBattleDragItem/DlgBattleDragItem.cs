@@ -17,7 +17,7 @@ namespace ET.Client
 	}
 
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgBattleDragItem : Entity, IAwake, IUILogic
+	public class DlgBattleDragItem : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBattleDragItemViewComponent View { get => this.GetComponent<DlgBattleDragItemViewComponent>(); }
 
@@ -45,7 +45,6 @@ namespace ET.Client
 		public int tryNum = 0;
 		public float tryDis = 0f;
 
-		public bool isChkPutMonsterCall = false;
 		public bool canPutMonsterCall = true;
 
 		//坐标在Y轴上的偏移量

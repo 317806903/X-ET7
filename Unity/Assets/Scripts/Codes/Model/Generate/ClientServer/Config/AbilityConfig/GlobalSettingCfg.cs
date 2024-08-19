@@ -28,6 +28,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         ShowDamage = _buf.ReadBool();
         ShowGetGold = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AvatarIcons = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AvatarIcons.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BGList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); BGList.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeginnersGuideImgs = new System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.Dictionary<string, string> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.Dictionary<string, string>(n1 * 3 / 2);for(var i1 = 0 ; i1 < n1 ; i1++) { string _k1;  _k1 = _buf.ReadString(); string _v1;  _v1 = _buf.ReadString();     _e0.Add(_k1, _v1);}} BeginnersGuideImgs.Add(_e0);}}
         InitialPhysicalStrength = _buf.ReadInt();
         UpperLimitOfPhysicalStrength = _buf.ReadInt();
@@ -44,9 +45,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         RecoverAddHp = _buf.ReadInt();
         RecoverAddGold = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DemoShowInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DemoShowInitialBackpackItem.Add(_e0);}}
         GameReJudgeTime = _buf.ReadLong();
         MaxBattleCardNum = _buf.ReadInt();
+        SeasonStartTime = _buf.ReadLong();
+        SeasonDurationTime = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DemoShowInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DemoShowInitialBackpackItem.Add(_e0);}}
         GameModeArcadeMasterPassword = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GameModeArcadeInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GameModeArcadeInitialBackpackItem.Add(_e0);}}
         GameModeArcadeSessionTimeOut = _buf.ReadInt();
@@ -69,6 +72,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         GameModeArcadeEndlessChallengeReviveTimeWhenPay = _buf.ReadInt();
         GameModeArcadeEndlessChallengeCostWhenRevive = _buf.ReadInt();
         GameModeArcadeEndlessChallengeCostWhenStart = _buf.ReadInt();
+        EventLogCameraPosHz = _buf.ReadFloat();
         PostInit();
     }
 
@@ -120,8 +124,16 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 是否显示金币获得展示
     /// </summary>
     public bool ShowGetGold { get; private set; }
+    /// <summary>
+    /// 玩家头像列表
+    /// </summary>
     public System.Collections.Generic.List<string> AvatarIcons { get; private set; }
     public System.Collections.Generic.List<ResIconCfg> AvatarIcons_Ref { get; private set; }
+    /// <summary>
+    /// 背景图片列表
+    /// </summary>
+    public System.Collections.Generic.List<string> BGList { get; private set; }
+    public System.Collections.Generic.List<ResIconCfg> BGList_Ref { get; private set; }
     /// <summary>
     /// 新手世界观信息
     /// </summary>
@@ -188,11 +200,6 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public System.Collections.Generic.List<string> InitialBackpackItem { get; private set; }
     public System.Collections.Generic.List<ItemCfg> InitialBackpackItem_Ref { get; private set; }
     /// <summary>
-    /// (展示模式)初始背包物体
-    /// </summary>
-    public System.Collections.Generic.List<string> DemoShowInitialBackpackItem { get; private set; }
-    public System.Collections.Generic.List<ItemCfg> DemoShowInitialBackpackItem_Ref { get; private set; }
-    /// <summary>
     /// 需要重新评估游戏的时刻
     /// </summary>
     public long GameReJudgeTime { get; private set; }
@@ -201,6 +208,20 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 最多出战卡数
     /// </summary>
     public int MaxBattleCardNum { get; private set; }
+    /// <summary>
+    /// 赛季开始时间
+    /// </summary>
+    public long SeasonStartTime { get; private set; }
+    public long SeasonStartTime_Millis => SeasonStartTime * 1000L;
+    /// <summary>
+    /// 单个赛季持续时间(天)
+    /// </summary>
+    public float SeasonDurationTime { get; private set; }
+    /// <summary>
+    /// (展示模式)初始背包物体
+    /// </summary>
+    public System.Collections.Generic.List<string> DemoShowInitialBackpackItem { get; private set; }
+    public System.Collections.Generic.List<ItemCfg> DemoShowInitialBackpackItem_Ref { get; private set; }
     /// <summary>
     /// (街机模式)管理员密码
     /// </summary>
@@ -296,6 +317,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// (街机模式)无尽模式开始战斗需消耗代币
     /// </summary>
     public int GameModeArcadeEndlessChallengeCostWhenStart { get; private set; }
+    /// <summary>
+    /// 上报相机位置的频率(秒)
+    /// </summary>
+    public float EventLogCameraPosHz { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -308,6 +333,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         this.NoARPVPCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(NoARPVPCfgId);
         this.NoAREndlessChallengeCfgId_Ref = (_tables["GamePlayBattleLevelCfgCategory"] as GamePlayBattleLevelCfgCategory).GetOrDefault(NoAREndlessChallengeCfgId);
         { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.AvatarIcons_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in AvatarIcons) { this.AvatarIcons_Ref.Add(__table.GetOrDefault(__e)); } }
+        { ResIconCfgCategory __table = (ResIconCfgCategory)_tables["ResIconCfgCategory"]; this.BGList_Ref = new System.Collections.Generic.List<ResIconCfg>(); foreach(var __e in BGList) { this.BGList_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.InitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in InitialBackpackItem) { this.InitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.DemoShowInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in DemoShowInitialBackpackItem) { this.DemoShowInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
         { ItemCfgCategory __table = (ItemCfgCategory)_tables["ItemCfgCategory"]; this.GameModeArcadeInitialBackpackItem_Ref = new System.Collections.Generic.List<ItemCfg>(); foreach(var __e in GameModeArcadeInitialBackpackItem) { this.GameModeArcadeInitialBackpackItem_Ref.Add(__table.GetOrDefault(__e)); } }
@@ -339,6 +365,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "ShowDamage:" + ShowDamage + ","
         + "ShowGetGold:" + ShowGetGold + ","
         + "AvatarIcons:" + Bright.Common.StringUtil.CollectionToString(AvatarIcons) + ","
+        + "BGList:" + Bright.Common.StringUtil.CollectionToString(BGList) + ","
         + "BeginnersGuideImgs:" + Bright.Common.StringUtil.CollectionToString(BeginnersGuideImgs) + ","
         + "InitialPhysicalStrength:" + InitialPhysicalStrength + ","
         + "UpperLimitOfPhysicalStrength:" + UpperLimitOfPhysicalStrength + ","
@@ -355,9 +382,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "RecoverAddHp:" + RecoverAddHp + ","
         + "RecoverAddGold:" + RecoverAddGold + ","
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
-        + "DemoShowInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(DemoShowInitialBackpackItem) + ","
         + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "MaxBattleCardNum:" + MaxBattleCardNum + ","
+        + "SeasonStartTime:" + SeasonStartTime + ","
+        + "SeasonDurationTime:" + SeasonDurationTime + ","
+        + "DemoShowInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(DemoShowInitialBackpackItem) + ","
         + "GameModeArcadeMasterPassword:" + GameModeArcadeMasterPassword + ","
         + "GameModeArcadeInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(GameModeArcadeInitialBackpackItem) + ","
         + "GameModeArcadeSessionTimeOut:" + GameModeArcadeSessionTimeOut + ","
@@ -380,6 +409,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "GameModeArcadeEndlessChallengeReviveTimeWhenPay:" + GameModeArcadeEndlessChallengeReviveTimeWhenPay + ","
         + "GameModeArcadeEndlessChallengeCostWhenRevive:" + GameModeArcadeEndlessChallengeCostWhenRevive + ","
         + "GameModeArcadeEndlessChallengeCostWhenStart:" + GameModeArcadeEndlessChallengeCostWhenStart + ","
+        + "EventLogCameraPosHz:" + EventLogCameraPosHz + ","
         + "}";
     }
     

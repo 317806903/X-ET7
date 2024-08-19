@@ -36,7 +36,7 @@ namespace ET.Client
             self.View.E_Login_AppleButton.AddListenerAsync(self.LoginWhenSDK);
         }
 
-        public static void ShowWindow(this DlgLogin self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgLogin self, ShowWindowData contextData = null)
         {
             self.PrintSystemInfo();
             self.SetGameInfo();
@@ -48,12 +48,18 @@ namespace ET.Client
 
         public static async ETTask _ShowWindow(this DlgLogin self)
         {
+            await self.LoadBG();
             self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{ResComponent.Instance.PackageVersion}";
             await self.ChkIsShowDebugUI();
             await self.InitAccount();
             await self.InitDebugMode();
 
             await ETTask.CompletedTask;
+        }
+
+        public static async ETTask LoadBG(this DlgLogin self)
+        {
+            self.View.E_BGImage.LoadBG().Coroutine();
         }
 
         public static void HideWindow(this DlgLogin self)
@@ -275,8 +281,8 @@ namespace ET.Client
         {
             self.View.E_Login_SDKButton.SetVisible(Application.platform == RuntimePlatform.Android);
             self.View.E_Login_AppleButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);
-            self.View.E_Login_SDKButton.SetVisible(false);
-            self.View.E_Login_AppleButton.SetVisible(false);
+            // self.View.E_Login_SDKButton.SetVisible(false);
+            // self.View.E_Login_AppleButton.SetVisible(false);
 
             self.View.EG_LoginAccountRootRectTransform.SetVisible(false);
             self.View.EG_LoginWhenSDKRectTransform.SetVisible(false);
@@ -528,7 +534,7 @@ namespace ET.Client
                 string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ServerFail_Des");
                 string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ServerFail_Title");
                 string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ServerFail_Btn");
-                UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), msgTxt, () =>
+                UIManagerHelper.ShowOnlyConfirmHighest(self.DomainScene(), msgTxt, () =>
                 {
                     self.LoginWhenSDK_LoginDone().Coroutine();
                 }, sureTxt, titleTxt);

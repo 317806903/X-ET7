@@ -1016,7 +1016,10 @@ namespace ET
 		public int RpcId { get; set; }
 
 		[ProtoMember(2)]
-		public int IsARRoom { get; set; }
+		public int NeedARRoom { get; set; }
+
+		[ProtoMember(3)]
+		public int NeedNotARRoom { get; set; }
 
 	}
 
@@ -2516,7 +2519,7 @@ namespace ET
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
 
-		[ProtoMember(3)]
+		[ProtoMember(2)]
 		public string PowerUpcfg { get; set; }
 
 	}
@@ -2524,6 +2527,37 @@ namespace ET
 	[Message(OuterMessage.G2C_UpdatePowerup)]
 	[ProtoContract]
 	public partial class G2C_UpdatePowerup: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
+	[ResponseType(nameof(G2C_SetUIRedDotType))]
+	[Message(OuterMessage.C2G_SetUIRedDotType)]
+	[ProtoContract]
+	public partial class C2G_SetUIRedDotType: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int UIRedDotType { get; set; }
+
+		[ProtoMember(3)]
+		public int IsNeedShow { get; set; }
+
+	}
+
+	[Message(OuterMessage.G2C_SetUIRedDotType)]
+	[ProtoContract]
+	public partial class G2C_SetUIRedDotType: ProtoObject, IResponse
 	{
 		[ProtoMember(1)]
 		public int RpcId { get; set; }
@@ -2711,5 +2745,7 @@ namespace ET
 		 public const ushort G2C_ResetPowerup = 10172;
 		 public const ushort C2G_UpdatePowerup = 10173;
 		 public const ushort G2C_UpdatePowerup = 10174;
+		 public const ushort C2G_SetUIRedDotType = 10175;
+		 public const ushort G2C_SetUIRedDotType = 10176;
 	}
 }

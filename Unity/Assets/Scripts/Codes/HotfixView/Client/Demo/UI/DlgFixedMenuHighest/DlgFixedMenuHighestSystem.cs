@@ -34,7 +34,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgFixedMenuHighest self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgFixedMenuHighest self, ShowWindowData contextData = null)
 		{
 			self._ShowWindow().Coroutine();
 		}

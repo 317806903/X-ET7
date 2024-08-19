@@ -14,11 +14,11 @@ namespace ET
             }
         }
 
-        public static int GetSeasonId(this SeasonManagerComponent self)
+        public static int GetSeasonCfgId(this SeasonManagerComponent self)
         {
             if (self.SeasonComponent != null)
             {
-                return self.SeasonComponent.seasonId;
+                return self.SeasonComponent.seasonCfgId;
             }
             return -1;
         }

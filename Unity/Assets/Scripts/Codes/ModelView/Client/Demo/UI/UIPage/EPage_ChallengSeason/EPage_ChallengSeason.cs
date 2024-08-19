@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    public class EPage_ChallengSeason : Entity, IAwake<UnityEngine.Transform>, IDestroy
+    public class EPage_ChallengSeason : Entity, IAwake<UnityEngine.Transform>, IDestroy, IUILogic
     {
         public EPage_ChallengSeasonViewComponent View { get => this.GetComponent<EPage_ChallengSeasonViewComponent>(); }
 
@@ -11,7 +11,8 @@ namespace ET.Client
         public Dictionary<int, Scroll_Item_ChallengeList> ScrollItemChallengeList;
         public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemReward;
         public Dictionary<int, Scroll_Item_Monsters> ScrollItemMonster;
-        public int seasonId;
+        public int seasonCfgId;
         public int selectIndex;
+        public List<(string itemCfgId, int itemNum)> itemList;
     }
 }

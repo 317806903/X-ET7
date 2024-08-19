@@ -89,16 +89,16 @@ namespace ET.AbilityConfig
 
 		public (bool, bool) ChkIsChallenge(RoomTypeInfo roomTypeInfo)
 		{
-			int seasonId = roomTypeInfo.seasonId;
+			int seasonCfgId = roomTypeInfo.seasonCfgId;
 			int pveIndex = roomTypeInfo.pveIndex;
 			RoomType roomType = roomTypeInfo.roomType;
 			SubRoomType subRoomType = roomTypeInfo.subRoomType;
 
 			bool isChallenge = false;
 			bool isAR = false;
-			if (seasonId > 0)
+			if (seasonCfgId > 0)
 			{
-				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge seasonId <= 0");
+				Log.Error($"ET.AbilityConfig.ChallengeLevelCfgCategory.ChkIsChallenge seasonCfgId <= 0");
 				return (false, false);
 			}
 			if (pveIndex <= 0)

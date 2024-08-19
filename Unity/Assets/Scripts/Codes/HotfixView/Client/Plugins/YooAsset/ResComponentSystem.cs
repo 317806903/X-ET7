@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
@@ -91,13 +92,164 @@ namespace ET.Client
         #region 热更相关
 
 
-        public static async ETTask<(int, bool, bool, string, int)> UpdateVersionAsync(this ResComponent self)
+        public static async ETTask<(int, Dictionary<string, object>)> UpdateVersionWhenActivityAsync(this ResComponent self, string channelId)
+        {
+            int errorCode = ErrorCode.ERR_Success;
+            bool bNeedUpdate = false;
+            string serverBusyMsg = "";
+            bool bInActivityTime = true;
+            long activityBeginTime = -1;
+            long activityEndTime = -1;
+            string activityNotInTimeMsg = "";
+            string ResHostServerIP = "";
+            string RouterHttpHost = "";
+            int RouterHttpPort = 0;
+
+            Dictionary<string, object> versionActivity = new();
+            YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
+            if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
+            {
+            }
+            else if (resLoadMode == YooAsset.EPlayMode.OfflinePlayMode)
+            {
+            }
+            else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
+            {
+                //Version_{ChannelId}.txt格式扩展为：最新版本;服务器维护提示语(为空时表示服务器正常)|活动开始时间(-1表示没有);活动结束时间(-1表示没有);不在活动时间提示语(支持{BeginTime}和{EndTime})|资源热更地址|服务器ip|服务器端口
+                //时间戳转换 http://shijianchuo.wiicha.com/
+                string url = $"{MonoResComponent.GetHostServerVersionURL($"Version_{channelId}.txt")}?v={RandomGenerator.RandUInt32()}";
+                Log.Debug($"UpdateVersionWhenActivityAsync url: {url}");
+                try
+                {
+                    string versionText = await HttpClientHelper.Get(url);
+                    versionText = versionText.Trim();
+                    Log.Debug($"UpdateVersionWhenActivityAsync versionText: {versionText}");
+
+                    string [] versionInfoList = versionText.Split("|");
+                    string newVersionParam = versionInfoList[0];
+                    newVersionParam = newVersionParam.Trim();
+                    string newVersion;
+                    {
+                        string[] newVersionParamList = newVersionParam.Split(";");
+                        newVersion = newVersionParamList[0];
+                        newVersion = newVersion.Trim();
+                        if (newVersionParamList.Length > 1)
+                        {
+                            serverBusyMsg = newVersionParamList[1];
+                        }
+                    }
+                    {
+                        string [] curVersionTmp = ResConfig.Instance.Version.Split(".");
+                        string [] newVersionTmp = newVersion.Split(".");
+                        Log.Debug($"UpdateVersionWhenActivityAsync curVersion[{ResConfig.Instance.Version}], newVersion[{newVersion}]");
+
+                        if (curVersionTmp[0].CompareTo(newVersionTmp[0]) < 0)
+                        {
+                            bNeedUpdate = true;
+                        }
+                        else if (curVersionTmp[0].CompareTo(newVersionTmp[0]) == 0)
+                        {
+                            if (int.Parse(curVersionTmp[1]) < int.Parse(newVersionTmp[1]))
+                            {
+                                bNeedUpdate = true;
+                            }
+                        }
+                    }
+                    if (versionInfoList.Length >= 2)
+                    {
+                        string activityParam = versionInfoList[1];
+                        activityParam = activityParam.Trim();
+                        string[] activityParamList = activityParam.Split(";");
+                        activityBeginTime = long.Parse(activityParamList[0]);
+                        activityEndTime = long.Parse(activityParamList[1]);
+                        activityNotInTimeMsg = activityParamList[2];
+                        long clientTime = TimeHelper.ClientNow();
+                        if (activityBeginTime > 0 && activityEndTime > 0)
+                        {
+                            if (clientTime >= activityBeginTime && clientTime <= activityEndTime)
+                            {
+                                bInActivityTime = true;
+                            }
+                            else
+                            {
+                                bInActivityTime = false;
+                                DateTime beginDateTIme = TimeHelper.ToDateTime(activityBeginTime, false, false, true);
+                                DateTime endDateTIme = TimeHelper.ToDateTime(activityEndTime, false, false, true);
+                                activityNotInTimeMsg = activityNotInTimeMsg.Replace("{BeginTime}", beginDateTIme.ToString("yyyy-MM-dd HH:mm:ss"));
+                                activityNotInTimeMsg = activityNotInTimeMsg.Replace("{EndTime}", endDateTIme.ToString("yyyy-MM-dd HH:mm:ss"));
+                            }
+                        }
+                        else if (activityBeginTime > 0)
+                        {
+                            if (clientTime >= activityBeginTime)
+                            {
+                                bInActivityTime = true;
+                            }
+                            else
+                            {
+                                bInActivityTime = false;
+                                DateTime beginDateTIme = TimeHelper.ToDateTime(activityBeginTime, false, false, true);
+                                activityNotInTimeMsg = activityNotInTimeMsg.Replace("{BeginTime}", beginDateTIme.ToString("yyyy-MM-dd HH:mm:ss"));
+                            }
+                        }
+                        else if (activityEndTime > 0)
+                        {
+                            if (clientTime >= activityEndTime)
+                            {
+                                bInActivityTime = true;
+                            }
+                            else
+                            {
+                                bInActivityTime = false;
+                                DateTime endDateTIme = TimeHelper.ToDateTime(activityEndTime, false, false, true);
+                                activityNotInTimeMsg = activityNotInTimeMsg.Replace("{EndTime}", endDateTIme.ToString("yyyy-MM-dd HH:mm:ss"));
+                            }
+                        }
+                    }
+                    if (versionInfoList.Length >= 3)
+                    {
+                        ResHostServerIP = versionInfoList[2];
+                        ResHostServerIP = ResHostServerIP.Trim();
+                    }
+                    if (versionInfoList.Length >= 4)
+                    {
+                        RouterHttpHost = versionInfoList[3];
+                        RouterHttpHost = RouterHttpHost.Trim();
+                    }
+                    if (versionInfoList.Length >= 5)
+                    {
+                        RouterHttpPort = int.Parse(versionInfoList[4].Trim());
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"UpdateVersionAsync Exception[{e.Message}]");
+                    errorCode = ErrorCode.ERR_ResourceInitError;
+                    bNeedUpdate = false;
+                }
+            }
+
+            versionActivity["bNeedUpdate"] = bNeedUpdate;
+            versionActivity["serverBusyMsg"] = serverBusyMsg;
+            versionActivity["bInActivityTime"] = bInActivityTime;
+            versionActivity["activityNotInTimeMsg"] = activityNotInTimeMsg;
+            versionActivity["ResHostServerIP"] = ResHostServerIP;
+            versionActivity["RouterHttpHost"] = RouterHttpHost;
+            versionActivity["RouterHttpPort"] = RouterHttpPort;
+            return (errorCode, versionActivity);
+        }
+
+        public static async ETTask<(int, Dictionary<string, object>)> UpdateVersionAsync(this ResComponent self)
         {
             int errorCode = ErrorCode.ERR_Success;
             bool bNeedUpdate = false;
             bool bIsAuditing = false;
             string auditingRouterHttpHost = "";
             int auditingRouterHttpPort = 0;
+
+            string serverBusyMsg = "";
+
+            Dictionary<string, object> versionResult = new();
 
             YooAsset.EPlayMode resLoadMode = ResConfig.Instance.ResLoadMode;
             if (resLoadMode == YooAsset.EPlayMode.EditorSimulateMode)
@@ -108,6 +260,7 @@ namespace ET.Client
             }
             else if (resLoadMode == YooAsset.EPlayMode.HostPlayMode)
             {
+                //Version.txt格式扩展为：最新版本;服务器维护提示语(为空时表示服务器正常)|审核版本1;审核版本2|审核服务器ip|审核服务器端口
                 string url = $"{MonoResComponent.GetHostServerVersionURL()}?v={RandomGenerator.RandUInt32()}";
                 Log.Debug($"UpdateVersionAsync url: {url}");
                 try
@@ -118,8 +271,18 @@ namespace ET.Client
                     // HttpGetRouterResponse httpGetRouterResponse = JsonHelper.FromJson<HttpGetRouterResponse>(routerInfo);
 
                     string [] versionInfoList = versionText.Split("|");
-                    string newVersion = versionInfoList[0];
-                    newVersion = newVersion.Trim();
+                    string newVersionParam = versionInfoList[0];
+                    newVersionParam = newVersionParam.Trim();
+                    string newVersion;
+                    {
+                        string[] newVersionParamList = newVersionParam.Split(";");
+                        newVersion = newVersionParamList[0];
+                        newVersion = newVersion.Trim();
+                        if (newVersionParamList.Length > 1)
+                        {
+                            serverBusyMsg = newVersionParamList[1];
+                        }
+                    }
                     {
                         string [] curVersionTmp = ResConfig.Instance.Version.Split(".");
                         string [] newVersionTmp = newVersion.Split(".");
@@ -137,37 +300,40 @@ namespace ET.Client
                             }
                         }
                     }
-                    if (versionInfoList.Length >= 2)
+                    if (bNeedUpdate == false)
                     {
-                        string auditingVersions = versionInfoList[1];
-                        auditingVersions = auditingVersions.Trim();
-                        string [] versionInfoList2 = auditingVersions.Split(";");
-                        foreach (string auditingVersion in versionInfoList2)
+                        if (versionInfoList.Length >= 2)
                         {
-                            if (string.IsNullOrEmpty(auditingVersion))
+                            string auditingVersions = versionInfoList[1];
+                            auditingVersions = auditingVersions.Trim();
+                            string [] versionInfoList2 = auditingVersions.Split(";");
+                            foreach (string auditingVersion in versionInfoList2)
                             {
-                                continue;
-                            }
-                            if (newVersion != auditingVersion && ResConfig.Instance.Version == auditingVersion)
-                            {
-                                bIsAuditing = true;
-                                break;
+                                if (string.IsNullOrEmpty(auditingVersion))
+                                {
+                                    continue;
+                                }
+                                if (newVersion != auditingVersion && ResConfig.Instance.Version == auditingVersion)
+                                {
+                                    bIsAuditing = true;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (bIsAuditing)
-                    {
-                        if (versionInfoList.Length >= 3)
+                        if (bIsAuditing)
                         {
-                            auditingRouterHttpHost = versionInfoList[2];
-                            auditingRouterHttpHost = auditingRouterHttpHost.Trim();
-                        }
-                        if (versionInfoList.Length >= 4)
-                        {
-                            string auditingRouterHttpPortTmp = versionInfoList[3];
-                            auditingRouterHttpPortTmp = auditingRouterHttpPortTmp.Trim();
-                            auditingRouterHttpPort = int.Parse(auditingRouterHttpPortTmp);
+                            if (versionInfoList.Length >= 3)
+                            {
+                                auditingRouterHttpHost = versionInfoList[2];
+                                auditingRouterHttpHost = auditingRouterHttpHost.Trim();
+                            }
+                            if (versionInfoList.Length >= 4)
+                            {
+                                string auditingRouterHttpPortTmp = versionInfoList[3];
+                                auditingRouterHttpPortTmp = auditingRouterHttpPortTmp.Trim();
+                                auditingRouterHttpPort = int.Parse(auditingRouterHttpPortTmp);
+                            }
                         }
                     }
                 }
@@ -179,7 +345,13 @@ namespace ET.Client
                 }
             }
 
-            return (errorCode, bNeedUpdate, bIsAuditing, auditingRouterHttpHost, auditingRouterHttpPort);
+            versionResult["bNeedUpdate"] = bNeedUpdate;
+            versionResult["serverBusyMsg"] = serverBusyMsg;
+            versionResult["bIsAuditing"] = bIsAuditing;
+            versionResult["auditingRouterHttpHost"] = auditingRouterHttpHost;
+            versionResult["auditingRouterHttpPort"] = auditingRouterHttpPort;
+
+            return (errorCode, versionResult);
         }
 
         public static async ETTask<int> UpdateMainifestVersionAsync(this ResComponent self, int timeout = 30)

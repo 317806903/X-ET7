@@ -1,4 +1,10 @@
 dotnet publish -r win-x64 --no-self-contained --no-dependencies -c Release
+if($?){
+	echo success
+} else {
+	pause
+	exit
+}
 
 $path = ".\Publish\win-x64"
 Remove-Item $path\Bin\ -Recurse -ErrorAction Ignore
@@ -31,4 +37,4 @@ Remove-Item $path\Config -Recurse -ErrorAction Ignore
 Copy-Item .\Config\Excel\s -Destination $path\Config\Excel\s  -Recurse -Force
 
 echo "`n`n=========================Build Server win-x64 Success========================="
-timeout /t 3
+timeout /t 1

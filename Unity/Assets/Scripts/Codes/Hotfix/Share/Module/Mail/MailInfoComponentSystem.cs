@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ET.AbilityConfig;
 
 namespace ET
 {
@@ -24,14 +25,34 @@ namespace ET
         /// <param name="itemCfgList"></param>
         /// <param name="receiveTime"></param>
         /// <param name="limitTime"></param>
-        public static void Init(this MailInfoComponent self, MailType mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime)
+        public static void Init(this MailInfoComponent self, string mailType, string mailTitle, string mailContent, Dictionary<string, int> itemCfgList, long receiveTime, long limitTime)
         {
             self.mailType = mailType;
             self.mailTitle = mailTitle;
             self.mailContent = mailContent;
-            self.itemCfgList = itemCfgList;
+            if (itemCfgList != null)
+            {
+                self.itemCfgList = new();
+                foreach (var item in itemCfgList)
+                {
+                    self.itemCfgList.Add(item.Key, item.Value);
+                }
+            }
             self.receiveTime = receiveTime;
             self.limitTime = limitTime;
+        }
+
+        public static string GetMailTypeIcon(this MailInfoComponent self)
+        {
+            MailTypeCfg mailTypeCfg = MailTypeCfgCategory.Instance.Get(self.mailType);
+            ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(mailTypeCfg.MaiTypeIcon);
+            return resIconCfg.ResName;
+        }
+
+        public static string GetMailTypeName(this MailInfoComponent self)
+        {
+            MailTypeCfg mailTypeCfg = MailTypeCfgCategory.Instance.Get(self.mailType);
+            return mailTypeCfg.MaiTypeName;
         }
 
     }

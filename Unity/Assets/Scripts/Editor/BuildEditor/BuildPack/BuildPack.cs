@@ -493,7 +493,6 @@ namespace ET
 
             //UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.DevelopmentOnly;
             UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
-            ResConfig.Instance.IsNeedSendEventLog = false;
             string productName = $"RealityGuard";
             string packageName = $"com.dm.ARGame";
 
@@ -504,8 +503,11 @@ namespace ET
             ResConfig.Instance.MirrorARSessionAuthAppKey = MirrorARSessionAuthAppKey;
             ResConfig.Instance.MirrorARSessionAuthAppSecret = MirrorARSessionAuthAppSecret;
             ResConfig.Instance.Channel = "10000";
+            ResConfig.Instance.IsNeedSendEventLog = false;
             ResConfig.Instance.IsGameModeArcade = false;
             ResConfig.Instance.IsDemoShow = false;
+            ResConfig.Instance.IsShowDebugMode = false;
+            ResConfig.Instance.IsShowEditorLoginMode = false;
             PlayerSettings.Android.useCustomKeystore = false;
             PlayerSettings.iOS.appleDeveloperTeamID = "9882G66R3A";
 
@@ -515,12 +517,6 @@ namespace ET
             {
                 //ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "http://192.168.10.58";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "127.0.0.1";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"Local_RealityGuard";
@@ -535,165 +531,154 @@ namespace ET
                 ResConfig.Instance.areaType = AreaType.GDC;
                 productName = $"GDC_RealityGuard";
                 packageName = $"com.dm.ARGameInNetGDC";
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguarddebug";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.AppleVisionPro)
             {
-                ResConfig.Instance.Channel = "20001";
+                ResConfig.Instance.Channel = "4001";
 
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
-                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
-                ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.OnDevice;
+
                 productName = $"AVP_RealityGuard";
                 packageName = $"com.dm.ARGameAVP";
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguarddebug";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if (packName == PackName.MetaQuest3)
             {
-                ResConfig.Instance.Channel = "20001";
+                ResConfig.Instance.Channel = "4002";
 
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
-                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
-                ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.OnDevice;
+
                 productName = $"Quest3_RealityGuard";
                 packageName = $"com.dm.ARGameQuest3";
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguarddebug";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.InNet148Master)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9021";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9022";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                //ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
-                ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
+
                 productName = $"148Master_RealityGuard";
                 packageName = $"com.dm.ARGameInNet148Master";
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguarddebug";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.InNet148Release)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9031";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9032";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                //ResConfig.Instance.ResHostServerIP = "http://192.168.10.148";
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "192.168.10.148";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
+
                 productName = $"148Release_RealityGuard";
                 packageName = $"com.dm.ARGameInNet148Release";
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
                 PlayerSettings.Android.keyaliasName = "realityguarddebug";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             }
             else if(packName == PackName.InNetZpb)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9999";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9999";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "http://192.168.10.50";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "192.168.10.50";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"Zpb_RealityGuard";
                 packageName = $"com.dm.ARGameInNetZpb";
-                UnityEditor.PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
                 //EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Debugging;
 
             }
             else if (packName == PackName.OutNet_Benchmark)
             {
                 ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
-                ResConfig.Instance.RouterHttpHost = "18.166.14.188";   // Linux machine in AWS HK.
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 productName = $"RealityGuard_Benchmark";
                 packageName = $"com.dm.ARGameBenchmark";
             }
             // ============== Staging environments (Aliyun/AWS) =================================
             else if (packName == PackName.OutNet_Arcade)
             {
-                ResConfig.Instance.IsGameModeArcade = true;
+                // NOTE: Arcade is now for offline tryouts. Built with DeepMirror INC Apple Developer, and signed with prod key.
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "2001";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "2002";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_Arcade";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "8.134.89.37";
-                ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.CN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
-                ResConfig.Instance.IsNeedSendEventLog = true;  // Log events from real users.
+
+                ResConfig.Instance.MirrorARSessionAuthAppKey = "63f72bdc21c28002a4f4b218#chinajoy";
+                ResConfig.Instance.MirrorARSessionAuthAppSecret = "31d8ee5843b392d271232afcd0568968";
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
-                PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
+                PlayerSettings.Android.keystoreName = "realityguard.keystore"; // Unity root path
                 PlayerSettings.Android.keystorePass = "DMDM0731!";
-                PlayerSettings.Android.keyaliasName = "realityguarddebug";
+                PlayerSettings.Android.keyaliasName = "realityguard";
                 PlayerSettings.Android.keyaliasPass = "DMDM0731!";
-                productName = $"Arcade_RealityGuard";
-                packageName = $"com.dm.RealityGuardArcade";
+                productName = $"RealityGuard Demo";
+                packageName = $"com.dm.realityguard.demo";
+                // Apple Team ID "DeepMirror Inc"
+                PlayerSettings.iOS.appleDeveloperTeamID = "T5X59PQT4X";
             }
             else if (packName == PackName.OutNet_CN)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9001";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9002";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "8.134.156.170";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
@@ -705,17 +690,16 @@ namespace ET
             }
             else if (packName == PackName.OutNet_CN_Demo)
             {
-                ResConfig.Instance.IsDemoShow = true;
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "3001";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "3002";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "8.134.156.170";
-                ResConfig.Instance.RouterHttpPort = 5478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.CN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
-                ResConfig.Instance.IsNeedSendEventLog = true;  // Log events from real users.
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
@@ -727,15 +711,16 @@ namespace ET
             }
             else if(packName == PackName.OutNet_EN || packName == PackName.OutNet_EN_AAB)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9011";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9012";
+                }
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_EN";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "34.225.211.137";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.EN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
+
                 // 设置签名
                 PlayerSettings.Android.useCustomKeystore = true;
                 PlayerSettings.Android.keystoreName = "realityguarddebug.keystore"; // Unity root path
@@ -759,23 +744,15 @@ namespace ET
             {
                 if (buildTarget == BuildTarget.Android)
                 {
-                    ResConfig.Instance.Channel = "10001";
+                    ResConfig.Instance.Channel = "1001";
                 }
                 else if (buildTarget == BuildTarget.iOS)
                 {
-                    ResConfig.Instance.Channel = "10002";
+                    ResConfig.Instance.Channel = "1002";
                 }
 
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
-                ResConfig.Instance.ResHostServerIP = "https://download-realityguard.deepmirror.com/resources";
-                ResConfig.Instance.ResGameVersion = "v1.0";
-                ResConfig.Instance.RouterHttpHost = "artd-gateway.deepmirror.com";
-                ResConfig.Instance.RouterHttpPort = 3478;
-                ResConfig.Instance.languageType = LanguageTypeEditor.EN.ToString();
-                ResConfig.Instance.areaType = AreaType.EN;
-                ResConfig.Instance.IsShowDebugMode = false;
-                ResConfig.Instance.IsShowEditorLoginMode = false;
-                ResConfig.Instance.IsNeedSendEventLog = true;  // Log events from real users.
+
                 ResConfig.Instance.MirrorARSessionAuthAppKey = "63f72bdc21c28002a4f4b218#artd-test";
                 ResConfig.Instance.MirrorARSessionAuthAppSecret = "8c1b80ac5da324652e08b3c75d3494ee";
                 productName = $"RealityGuard";

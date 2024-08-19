@@ -19,7 +19,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Avatar
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/ES_AvatarShow/Ebox
     guideTextType: 0
     guideTextImgPath: 
     text: 

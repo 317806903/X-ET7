@@ -215,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfTriangleToShow: 1
   numOfRoundToShow: 2
-  numOfRoundToHide: 1
+  numOfRoundToHide: 2
 --- !u!1 &1515395792735875438
 GameObject:
   m_ObjectHideFlags: 0

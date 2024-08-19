@@ -30,7 +30,7 @@ namespace ET.Client
 			self.View.E_ShowDetailButton.AddListener(self.OnShowDetail);
 		}
 
-		public static void ShowWindow(this DlgBattleTowerHUD self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleTowerHUD self, ShowWindowData contextData = null)
 		{
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
@@ -175,11 +175,11 @@ namespace ET.Client
 
 			if (labelCount >= 1)
 			{
-				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[0]);
+				self.View.ELabel_Label1TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[0]);
 			}
 			if (labelCount >= 2)
 			{
-				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue(labels[1]);
+				self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValueByExcel(labels[1]);
 			}
 		}
 

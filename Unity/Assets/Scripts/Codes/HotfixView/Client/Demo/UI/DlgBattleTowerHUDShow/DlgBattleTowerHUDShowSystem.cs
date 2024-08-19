@@ -30,7 +30,7 @@ namespace ET.Client
 		{
 		}
 
-		public static void ShowWindow(this DlgBattleTowerHUDShow self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgBattleTowerHUDShow self, ShowWindowData contextData = null)
 		{
 			self.HomeHealthBarDictionary.Clear();
 			self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.BattleTowerHUDShowFrameTimer, self);

@@ -86,7 +86,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnRegularButton == null )
 				{
-					this.m_EBtnRegularButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular");
+					this.m_EBtnRegularButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular");
 				}
 				return this.m_EBtnRegularButton;
 			}
@@ -103,7 +103,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnRegularImage == null )
 				{
-					this.m_EBtnRegularImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular");
+					this.m_EBtnRegularImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular");
 				}
 				return this.m_EBtnRegularImage;
 			}
@@ -120,7 +120,7 @@ namespace ET.Client
 				}
 				if( this.m_ERegularTxtTextMeshProUGUI == null )
 				{
-					this.m_ERegularTxtTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular/ERegularTxt");
+					this.m_ERegularTxtTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular/ERegularTxt");
 				}
 				return this.m_ERegularTxtTextMeshProUGUI;
 			}
@@ -137,7 +137,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtinfoTextMeshProUGUI == null )
 				{
-					this.m_ETxtinfoTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular/ETxtinfo");
+					this.m_ETxtinfoTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular/ETxtinfo");
 				}
 				return this.m_ETxtinfoTextMeshProUGUI;
 			}
@@ -154,7 +154,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnRegular_UnselectedButton == null )
 				{
-					this.m_EBtnRegular_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular_Unselected");
+					this.m_EBtnRegular_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular_Unselected");
 				}
 				return this.m_EBtnRegular_UnselectedButton;
 			}
@@ -171,7 +171,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnRegular_UnselectedImage == null )
 				{
-					this.m_EBtnRegular_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular_Unselected");
+					this.m_EBtnRegular_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular_Unselected");
 				}
 				return this.m_EBtnRegular_UnselectedImage;
 			}
@@ -188,7 +188,7 @@ namespace ET.Client
 				}
 				if( this.m_ERegularTxtUnselectedTextMeshProUGUI == null )
 				{
-					this.m_ERegularTxtUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnRegular_Unselected/ERegularTxtUnselected");
+					this.m_ERegularTxtUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabRegularRoot/EBtnRegular_Unselected/ERegularTxtUnselected");
 				}
 				return this.m_ERegularTxtUnselectedTextMeshProUGUI;
 			}
@@ -205,7 +205,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnSeasonButton == null )
 				{
-					this.m_EBtnSeasonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason");
+					this.m_EBtnSeasonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason");
 				}
 				return this.m_EBtnSeasonButton;
 			}
@@ -222,7 +222,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnSeasonImage == null )
 				{
-					this.m_EBtnSeasonImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason");
+					this.m_EBtnSeasonImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason");
 				}
 				return this.m_EBtnSeasonImage;
 			}
@@ -239,9 +239,26 @@ namespace ET.Client
 				}
 				if( this.m_ETxtTextMeshProUGUI == null )
 				{
-					this.m_ETxtTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason/ETxt");
+					this.m_ETxtTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason/ETxt");
 				}
 				return this.m_ETxtTextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ETxtSeasonDesTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ETxtSeasonDesTextMeshProUGUI == null )
+				{
+					this.m_ETxtSeasonDesTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason/ETxtDes/ETxtSeasonDes");
+				}
+				return this.m_ETxtSeasonDesTextMeshProUGUI;
 			}
 		}
 
@@ -256,7 +273,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnSeason_UnselectedButton == null )
 				{
-					this.m_EBtnSeason_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason_Unselected");
+					this.m_EBtnSeason_UnselectedButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason_Unselected");
 				}
 				return this.m_EBtnSeason_UnselectedButton;
 			}
@@ -273,7 +290,7 @@ namespace ET.Client
 				}
 				if( this.m_EBtnSeason_UnselectedImage == null )
 				{
-					this.m_EBtnSeason_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason_Unselected");
+					this.m_EBtnSeason_UnselectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason_Unselected");
 				}
 				return this.m_EBtnSeason_UnselectedImage;
 			}
@@ -290,7 +307,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtUnselectedTextMeshProUGUI == null )
 				{
-					this.m_ETxtUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/EBtnSeason_Unselected/ETxtUnselected");
+					this.m_ETxtUnselectedTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason_Unselected/ETxtUnselected");
 				}
 				return this.m_ETxtUnselectedTextMeshProUGUI;
 			}
@@ -366,125 +383,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_CoinListRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_CoinListRectTransform == null )
-				{
-					this.m_EG_CoinListRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList");
-				}
-				return this.m_EG_CoinListRectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_ArcadeCoinButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ArcadeCoinButton == null )
-				{
-					this.m_EButton_ArcadeCoinButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_ArcadeCoin");
-				}
-				return this.m_EButton_ArcadeCoinButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_ArcadeCoinImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ArcadeCoinImage == null )
-				{
-					this.m_EButton_ArcadeCoinImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_ArcadeCoin");
-				}
-				return this.m_EButton_ArcadeCoinImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_ArcadeCoinNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_ArcadeCoinNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_ArcadeCoin/ELabel_ArcadeCoinNum");
-				}
-				return this.m_ELabel_ArcadeCoinNumTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_PhysicalStrengthButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PhysicalStrengthButton == null )
-				{
-					this.m_EButton_PhysicalStrengthButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_PhysicalStrength");
-				}
-				return this.m_EButton_PhysicalStrengthButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_PhysicalStrengthImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_PhysicalStrengthImage == null )
-				{
-					this.m_EButton_PhysicalStrengthImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_PhysicalStrength");
-				}
-				return this.m_EButton_PhysicalStrengthImage;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_PhysicalStrengthNumTextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI == null )
-				{
-					this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/EG_CoinList/EButton_PhysicalStrength/ELabel_PhysicalStrengthNum");
-				}
-				return this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_EG_bgARRectTransform = null;
@@ -501,6 +399,7 @@ namespace ET.Client
 			this.m_EBtnSeasonButton = null;
 			this.m_EBtnSeasonImage = null;
 			this.m_ETxtTextMeshProUGUI = null;
+			this.m_ETxtSeasonDesTextMeshProUGUI = null;
 			this.m_EBtnSeason_UnselectedButton = null;
 			this.m_EBtnSeason_UnselectedImage = null;
 			this.m_ETxtUnselectedTextMeshProUGUI = null;
@@ -510,13 +409,6 @@ namespace ET.Client
 			this.m_epage_challengnormal = null;
 			this.m_E_QuitBattleButton = null;
 			this.m_E_QuitBattleImage = null;
-			this.m_EG_CoinListRectTransform = null;
-			this.m_EButton_ArcadeCoinButton = null;
-			this.m_EButton_ArcadeCoinImage = null;
-			this.m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
-			this.m_EButton_PhysicalStrengthButton = null;
-			this.m_EButton_PhysicalStrengthImage = null;
-			this.m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
 			this.uiTransform = null;
 		}
 
@@ -534,6 +426,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EBtnSeasonButton = null;
 		private UnityEngine.UI.Image m_EBtnSeasonImage = null;
 		private TMPro.TextMeshProUGUI m_ETxtTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_ETxtSeasonDesTextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_EBtnSeason_UnselectedButton = null;
 		private UnityEngine.UI.Image m_EBtnSeason_UnselectedImage = null;
 		private TMPro.TextMeshProUGUI m_ETxtUnselectedTextMeshProUGUI = null;
@@ -541,13 +434,6 @@ namespace ET.Client
 		private EPage_ChallengNormal m_epage_challengnormal = null;
 		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
 		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
-		private UnityEngine.RectTransform m_EG_CoinListRectTransform = null;
-		private UnityEngine.UI.Button m_EButton_ArcadeCoinButton = null;
-		private UnityEngine.UI.Image m_EButton_ArcadeCoinImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_ArcadeCoinNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_EButton_PhysicalStrengthButton = null;
-		private UnityEngine.UI.Image m_EButton_PhysicalStrengthImage = null;
-		private TMPro.TextMeshProUGUI m_ELabel_PhysicalStrengthNumTextMeshProUGUI = null;
 		public Transform uiTransform = null;
 	}
 }

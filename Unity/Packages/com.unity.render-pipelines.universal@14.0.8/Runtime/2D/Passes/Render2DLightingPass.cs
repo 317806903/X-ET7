@@ -429,7 +429,7 @@ namespace UnityEngine.Rendering.Universal
                 context.ExecuteCommandBuffer(cmd);
                 cmd.Clear();
 
-                //Profiler.BeginSample("Render Sprites Unlit");
+                Profiler.BeginSample("Render Sprites Unlit");
                 if (m_Renderer2DData.useCameraSortingLayerTexture)
                 {
                     filterSettings.sortingLayerRange = new SortingLayerRange(short.MinValue, m_CameraSortingLayerBoundsIndex);
@@ -444,7 +444,7 @@ namespace UnityEngine.Rendering.Universal
                 {
                     Render(context, cmd, ref renderingData, ref filterSettings, unlitDrawSettings);
                 }
-                //Profiler.EndSample();
+                Profiler.EndSample();
             }
 
             filterSettings.sortingLayerRange = SortingLayerRange.all;

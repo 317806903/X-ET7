@@ -3,9 +3,11 @@
 namespace ET.Client
 {
 	[ComponentOf(typeof(UIBaseWindow))]
-	public class DlgCommonChoose : Entity, IAwake, IUILogic
+	public class DlgCommonChoose : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgCommonChooseViewComponent View { get => this.GetComponent<DlgCommonChooseViewComponent>(); }
+
+		public long dlgShowTime;
 
 		public long Timer;
 

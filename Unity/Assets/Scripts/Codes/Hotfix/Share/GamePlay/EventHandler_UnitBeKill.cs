@@ -19,7 +19,7 @@ namespace ET
 				{
 					return;
 				}
-				attackerUnit = UnitHelper.GetCasterActorUnit(attackerUnit);
+				attackerUnit = attackerUnit.GetCasterActor();
 				GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 				if (gamePlayComponent != null)
 				{

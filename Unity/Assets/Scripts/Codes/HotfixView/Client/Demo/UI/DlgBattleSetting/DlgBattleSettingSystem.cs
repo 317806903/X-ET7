@@ -15,7 +15,14 @@ namespace ET.Client
         public static void RegisterUIEvent(this DlgBattleSetting self)
         {
             // 背景与关闭按钮
-            self.View.E_BG_ClickButton.AddListener(self.OnBGClick);
+            self.View.E_BG_ClickButton.AddListener(()=>
+            {
+                if (self.ChkCanClickBg() == false)
+                {
+                    return;
+                }
+                self.OnBGClick();
+            });
             self.View.E_BtnCloseButton.AddListener(self.OnBGClick);
 
             //Rescan与Quitbatte按钮
@@ -42,13 +49,24 @@ namespace ET.Client
         }
 
         // 显示
-        public static void ShowWindow(this DlgBattleSetting self, ShowWindowData contextData = null)
+        public static async ETTask ShowWindow(this DlgBattleSetting self, ShowWindowData contextData = null)
         {
+            self.dlgShowTime = TimeHelper.ClientNow();
+
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
             self.ShowBg();
             self.SetSwitchOnOffUI();
 
             self.ChkShowReScan();
+        }
+
+        public static bool ChkCanClickBg(this DlgBattleSetting self)
+        {
+            if (self.dlgShowTime < TimeHelper.ClientNow() - (long)(1000 * 1f))
+            {
+                return true;
+            }
+            return false;
         }
 
         public static void ChkShowReScan(this DlgBattleSetting self)

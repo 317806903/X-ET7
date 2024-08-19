@@ -165,7 +165,10 @@ namespace ET
                 }
             }
 
-            self.roomMemberSeat[curRoomMember.seatIndex] = -1;
+            if (self.roomMemberSeat.Count > curRoomMember.seatIndex)
+            {
+                self.roomMemberSeat[curRoomMember.seatIndex] = -1;
+            }
 
             curRoomMember.Dispose();
 
@@ -216,11 +219,26 @@ namespace ET
             {
                 for (int i = lastMaxMemberCount - 1; i >= self.MaxMemberCount; i--)
                 {
+                    long playerId = self.roomMemberSeat[i];
+                    if (playerId != -1)
+                    {
+                        for (int j = 0; j < self.MaxMemberCount; j++)
+                        {
+                            if (self.roomMemberSeat[j] == -1)
+                            {
+                                self.roomMemberSeat[j] = playerId;
+                                RoomMember roomMember = self.GetRoomMember(playerId);
+                                roomMember.seatIndex = j;
+                                break;
+                            }
+                        }
+                    }
                     self.roomMemberSeat.RemoveAt(i);
                 }
             }
 
         }
+
 
         public static bool IsARRoom(this RoomComponent self)
         {

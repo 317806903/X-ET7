@@ -306,5 +306,14 @@ namespace ET
         {
             public PlayerModelType playerModelType;
         }
+
+        public struct NoticeUISeasonIndexChg
+        {
+        }
+
+        public struct NoticeUISeasonRemainChg
+        {
+        }
+
     }
 }

@@ -6,7 +6,6 @@ namespace ET.Client
         WindowID_MessageBox,
         WindowID_Lobby,    //房间界面
         WindowID_Login,     //登录界面
-        WindowID_RedDot,   //红点测试界面
 		WindowID_Update,
 		WindowID_Battle,
 		WindowID_Hall,
@@ -62,5 +61,9 @@ namespace ET.Client
 		WindowID_Mail,
 		WindowID_MailSettlement,
 		WindowID_MailInfo,
+		WindowID_CommonWebView,
+		WindowID_SeasonNotice,
+		WindowID_Questionnaire,
+		WindowID_Tutorials,
 	}
 }

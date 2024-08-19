@@ -949,6 +949,10 @@ namespace ET
 
         public override void BeginInit()
         {
+            if (this.domain == null)
+            {
+                return;
+            }
             this.componentsDB?.Clear();
             if (this.components != null && this.components.Count != 0)
             {

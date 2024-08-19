@@ -19,7 +19,7 @@ namespace ET.Client
 
 		}
 
-		public static void ShowWindow(this DlgLobby self, ShowWindowData contextData = null)
+		public static async ETTask ShowWindow(this DlgLobby self, ShowWindowData contextData = null)
 		{
 			self.ShowCurBattleCfgId("GamePlayBattleLevel_Global1");
 		}

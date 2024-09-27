@@ -4,6 +4,12 @@ using UIGuide;
 
 namespace ET.Client
 {
+    public enum GuidePriority
+    {
+        BattleGuide = 100,
+        TutorialFirst = 200,
+        BattleTowerEndGuide = 300,
+    }
     [ComponentOf(typeof(Scene))]
     public class UIGuideComponent: Entity, IAwake, IDestroy, IUpdate
     {
@@ -26,6 +32,7 @@ namespace ET.Client
         public Transform RootTrans;
 
         public string guideFileName;
+        public int priority;
         public UIGuidePathList _UIGuidePathList;
         public int nowIndex;
 

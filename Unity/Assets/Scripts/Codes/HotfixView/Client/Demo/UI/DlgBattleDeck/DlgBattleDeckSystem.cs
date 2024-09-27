@@ -155,9 +155,9 @@ namespace ET.Client
 			return itemListWhenNotBattleDeck;
 		}
 
-		public static async ETTask ShowBagItem(this DlgBattleDeck self, Scroll_Item_TowerBuy BagItem, string itemCfgId)
+		public static async ETTask ShowBagItem(this DlgBattleDeck self, Scroll_Item_TowerBuy BagItem, string itemCfgId, bool isShowRedDot)
 		{
-			await BagItem.ShowBagItem(itemCfgId, true);
+			await BagItem.ShowBagItem(itemCfgId, true, 0, isShowRedDot);
 		}
 
 		public static void MoveMoveBagItem(this DlgBattleDeck self, Vector2 screenPos)
@@ -174,7 +174,7 @@ namespace ET.Client
 			var canvasRT = BagItem.uiTransform.parent.GetComponent<RectTransform>();
 			// 将屏幕坐标转换为UI坐标
 			Vector2 canvasPosition;
-			if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screenPos, UIManagerComponent.Instance.UICamera, out canvasPosition))
+			if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screenPos, UIRootManagerComponent.Instance.UICamera, out canvasPosition))
 			{
 				BagItem.uiTransform.GetComponent<RectTransform>().anchoredPosition = canvasPosition;
 			}
@@ -184,7 +184,7 @@ namespace ET.Client
 		public static async ETTask ShowMoveBagItem(this DlgBattleDeck self, string itemCfgId)
 		{
 			Scroll_Item_TowerBuy BagItem = self.moveBagItem;
-			self.ShowBagItem(BagItem, itemCfgId).Coroutine();
+			self.ShowBagItem(BagItem, itemCfgId, false).Coroutine();
 			BagItem.uiTransform.gameObject.SetActive(true);
 		}
 
@@ -198,19 +198,26 @@ namespace ET.Client
 		public static async ETTask AddBagItemRefreshListener(this DlgBattleDeck self, Transform transform, int index)
 		{
 			Scroll_Item_TowerBuy BagItem = self.ScrollBagItem[index].BindTrans(transform);
-			if (BagItem.uiTransform == null)
+			if (self.IsDisposed || BagItem.uiTransform == null)
 			{
 				return;
 			}
 			List<ItemComponent> itemList = await self.GetTowerItemListWhenNotBattleDeck();
-			if (BagItem.uiTransform == null)
+			if (self.IsDisposed || BagItem.uiTransform == null)
 			{
 				return;
 			}
 
 			long itemId = itemList[index].Id;
 			string itemCfgId = itemList[index].CfgId;
-			self.ShowBagItem(BagItem, itemCfgId).Coroutine();
+			PlayerBackPackComponent playerBackPackComponent = await PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
+			if (self.IsDisposed || BagItem.uiTransform == null)
+			{
+				return;
+			}
+			bool isShowRedDot = playerBackPackComponent.ChkIsNewItem(itemCfgId);
+
+			self.ShowBagItem(BagItem, itemCfgId, isShowRedDot).Coroutine();
 
 
 			ET.EventTriggerListener.Get(BagItem.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
@@ -247,7 +254,10 @@ namespace ET.Client
 				itemCfgId = itemList[index].CfgId;
 			}
 
-			self.ShowBagItem(BattleDeckItem, itemCfgId).Coroutine();
+			PlayerBackPackComponent playerBackPackComponent = await PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
+			bool isShowRedDot = playerBackPackComponent.ChkIsNewItem(itemCfgId);
+
+			self.ShowBagItem(BattleDeckItem, itemCfgId, isShowRedDot).Coroutine();
 
 			ET.EventTriggerListener.Get(BattleDeckItem.EButton_SelectButton.gameObject).onDrop.AddListener((go, xx) =>
 			{
@@ -340,7 +350,7 @@ namespace ET.Client
 
 		public static async ETTask AddCardsWhenDebug(this DlgBattleDeck self)
 		{
-			if (GlobalConfig.Instance.NeedDB == false)
+			if (GlobalConfig.Instance.dbType == DBType.NoDB)
 			{
 				PlayerBackPackComponent playerBackPackComponent = await PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
 				bool isChg = false;

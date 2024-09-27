@@ -364,7 +364,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_NotUpgradeableButton
+		public UnityEngine.UI.Button E_MaxUpgradeButton
 		{
 			get
 			{
@@ -373,15 +373,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_NotUpgradeableButton == null )
+				if( this.m_E_MaxUpgradeButton == null )
 				{
-					this.m_E_NotUpgradeableButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_NotUpgradeable");
+					this.m_E_MaxUpgradeButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_MaxUpgrade");
 				}
-				return this.m_E_NotUpgradeableButton;
+				return this.m_E_MaxUpgradeButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_NotUpgradeableImage
+		public UnityEngine.UI.Image E_MaxUpgradeImage
 		{
 			get
 			{
@@ -390,11 +390,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_NotUpgradeableImage == null )
+				if( this.m_E_MaxUpgradeImage == null )
 				{
-					this.m_E_NotUpgradeableImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_NotUpgradeable");
+					this.m_E_MaxUpgradeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EG_OperatorMenu/EG_OperatorRoot/E_MaxUpgrade");
 				}
-				return this.m_E_NotUpgradeableImage;
+				return this.m_E_MaxUpgradeImage;
 			}
 		}
 
@@ -812,8 +812,8 @@ namespace ET.Client
 			this.m_E_UpgradeImage = null;
 			this.m_E_Upgrade_number_iconImage = null;
 			this.m_E_Upgrade_number_TextTextMeshProUGUI = null;
-			this.m_E_NotUpgradeableButton = null;
-			this.m_E_NotUpgradeableImage = null;
+			this.m_E_MaxUpgradeButton = null;
+			this.m_E_MaxUpgradeImage = null;
 			this.m_E_ShowDetailButton = null;
 			this.m_EG_MyTowerDescRectTransform = null;
 			this.m_EG_MyTowerDescImage = null;
@@ -861,8 +861,8 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_UpgradeImage = null;
 		private UnityEngine.UI.Image m_E_Upgrade_number_iconImage = null;
 		private TMPro.TextMeshProUGUI m_E_Upgrade_number_TextTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_NotUpgradeableButton = null;
-		private UnityEngine.UI.Image m_E_NotUpgradeableImage = null;
+		private UnityEngine.UI.Button m_E_MaxUpgradeButton = null;
+		private UnityEngine.UI.Image m_E_MaxUpgradeImage = null;
 		private UnityEngine.UI.Button m_E_ShowDetailButton = null;
 		private UnityEngine.RectTransform m_EG_MyTowerDescRectTransform = null;
 		private UnityEngine.UI.Image m_EG_MyTowerDescImage = null;

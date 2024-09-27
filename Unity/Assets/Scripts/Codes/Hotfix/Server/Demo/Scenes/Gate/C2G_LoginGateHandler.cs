@@ -9,6 +9,7 @@ namespace ET.Server
 		protected override async ETTask Run(Session session, C2G_LoginGate request, G2C_LoginGate response)
 		{
 			Scene scene = session.DomainScene();
+			bool IsFirstLogin = request.IsFirstLogin == 1? true : false;
 			string accountId = scene.GetComponent<GateSessionKeyComponent>().GetAccountId(request.Key);
 			if (accountId == null)
 			{
@@ -107,7 +108,15 @@ namespace ET.Server
 			response.PlayerStatusComponentBytes = playerStatusComponent.ToBson();
 
 			await PlayerCacheHelper.DealPlayerFunctionMenuWaitChk(scene, playerId);
+			await PlayerCacheHelper.DealPlayerUIRedDotType(scene, playerId, PlayerModelType.None);
 
+			if (IsFirstLogin)
+			{
+				await PlayerCacheHelper.SetUIRedDotTypeList(scene, playerId, new()
+				{
+					UIRedDotType.PVESeason, UIRedDotType.Tutorial, UIRedDotType.Questionnaire, UIRedDotType.MultPlayers,
+				}, true, true);
+			}
 			await ETTask.CompletedTask;
 		}
 	}

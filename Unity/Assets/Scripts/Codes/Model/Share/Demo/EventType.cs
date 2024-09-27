@@ -172,6 +172,7 @@ namespace ET
         public struct WaitNoticeGamePlayModeToClient
         {
             public long playerId;
+            public bool forceSend;
             public GamePlayComponent gamePlayComponent;
         }
 
@@ -313,6 +314,11 @@ namespace ET
 
         public struct NoticeUISeasonRemainChg
         {
+        }
+
+        public struct NoticeShowBattleNotice
+        {
+            public string tutorialCfgId;
         }
 
     }

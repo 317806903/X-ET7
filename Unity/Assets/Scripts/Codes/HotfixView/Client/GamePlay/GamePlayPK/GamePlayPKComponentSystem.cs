@@ -174,10 +174,10 @@ namespace ET.Client
 			Handheld.Vibrate();
 
 			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
-			GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-			if (gameObjectComponent != null)
+			GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
+			if (gameObjectShowComponent != null)
 			{
-				gameObjectComponent.ChgColor(true);
+				gameObjectShowComponent.ChgColor(true);
 			}
 			DlgBattleDragItem_ShowWindowData showWindowData = new()
 			{
@@ -188,10 +188,10 @@ namespace ET.Client
 				callBack = (scene) =>
 				{
 					Unit unitTower = Ability.UnitHelper.GetUnit(scene, towerUnitId);
-					GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-					if (gameObjectComponent != null)
+					GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
+					if (gameObjectShowComponent != null)
 					{
-						gameObjectComponent.ChgColor(false);
+						gameObjectShowComponent.ChgColor(false);
 					}
 				},
 			};
@@ -214,10 +214,10 @@ namespace ET.Client
 			Handheld.Vibrate();
 
 			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
-			GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-			if (gameObjectComponent != null)
+			GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
+			if (gameObjectShowComponent != null)
 			{
-				gameObjectComponent.ChgColor(true);
+				gameObjectShowComponent.ChgColor(true);
 			}
 			DlgBattleDragItem_ShowWindowData showWindowData = new()
 			{
@@ -227,10 +227,10 @@ namespace ET.Client
 				callBack = (scene) =>
 				{
 					Unit unitTower = Ability.UnitHelper.GetUnit(scene, towerUnitId);
-					GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-					if (gameObjectComponent != null)
+					GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
+					if (gameObjectShowComponent != null)
 					{
-						gameObjectComponent.ChgColor(false);
+						gameObjectShowComponent.ChgColor(false);
 					}
 				},
 			};
@@ -329,7 +329,7 @@ namespace ET.Client
 			float3 cameraHitPos = float3.zero;
 			RaycastHit hitInfo;
 			LayerMask _groundLayerMask = LayerMask.GetMask("Map");
-			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 10000, _groundLayerMask))
+			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 1000, _groundLayerMask))
 			{
 				cameraHitPos = hitInfo.point;
 				ET.Client.GamePlayHelper.SendARCameraPos(self.DomainScene(), cameraPos, cameraHitPos).Coroutine();

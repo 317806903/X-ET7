@@ -21,7 +21,7 @@ namespace ET.Ability
             {
                 await AddEffectWhenSelectUnits(unit, actionCfgCreateEffect, selectHandle, actionContext);
             }
-            else if (selectHandle.selectHandleType == SelectHandleType.SelectPosition)
+            else
             {
                 await AddEffectWhenSelectPosition(unit, actionCfgCreateEffect, selectHandle, actionContext);
             }
@@ -142,6 +142,10 @@ namespace ET.Ability
             }
             float3 position = selectHandle.position;
             float3 forward = new float3(0, 0, 1);
+            if (selectHandle.selectHandleType == SelectHandleType.SelectDirection)
+            {
+                forward = selectHandle.direction;
+            }
             Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
             EffectComponent effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
             if (effectComponent == null)

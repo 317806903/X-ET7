@@ -12,7 +12,8 @@
         "Unity.Services.PlayerAccounts",
         "Unity.Services.Authentication",
         "Unity.Services.Core",
-        "BlurBackground"
+        "BlurBackground",
+        "StatusIndiactors"
     ],
     "includePlatforms": [
         "Editor"

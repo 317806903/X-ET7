@@ -97,7 +97,9 @@ namespace ET
 				self.unitList.Enqueue(unitRemove.Id);
 				self.unitRemoveTimeList.Enqueue(TimeHelper.ServerNow() + 5 * 1000);
 			}
-			else if (UnitHelper.ChkIsActor(unit) || UnitHelper.ChkIsPlayer(unit))
+			else if (UnitHelper.ChkIsPlayer(unit)
+			         || UnitHelper.ChkIsCameraPlayer(unit)
+			         || UnitHelper.ChkIsActor(unit))
 			{
 				Unit unitRemove = self.AddChildWithId<Unit, string>(unit.Id, unit.CfgId);
 				unitRemove.level = unit.level;

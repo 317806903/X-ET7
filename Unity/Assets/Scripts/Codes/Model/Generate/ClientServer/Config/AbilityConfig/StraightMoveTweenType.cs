@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 直线轨迹
 /// </summary>
-public sealed partial class StraightMoveTweenType:  MoveTweenType 
+public sealed partial class StraightMoveTweenType:  SpeedMoveTweenType 
 {
     public StraightMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

@@ -27,10 +27,11 @@ namespace ET.Server
 
             ARMeshType _ARMeshType = (ARMeshType)request.ARMeshType;
             string _ARMeshDownLoadUrl = request.ARMeshDownLoadUrl;
+            string _ARSceneId = request.ARSceneId;
             byte[] _ARMeshBytes = request.ARMeshBytes;
             try
             {
-	            Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList, _ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
+	            Scene dynamicMap = await dynamicMapManagerComponent.CreateDynamicMap(roomComponent, roomMemberList, _ARMeshType, _ARSceneId, _ARMeshDownLoadUrl, _ARMeshBytes);
 	            response.DynamicMapInstanceId = dynamicMap.InstanceId;
             }
             catch (Exception e)

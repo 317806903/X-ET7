@@ -24,7 +24,8 @@
         "DOTwee.Pro.Runtime",
         "DOTween.Runtime",
         "Unity.Advertisement.IosSupport",
-        "UniWebView-CSharp"
+        "UniWebView-CSharp",
+        "StatusIndiactors"
     ],
     "includePlatforms": [
         "Editor"

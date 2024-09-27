@@ -234,7 +234,9 @@ namespace ET
             Unit monsterUnit = ET.GamePlayTowerDefenseHelper.CreateMonster(self.DomainScene(), playerId, monsterCfgId, level, randomPos,
                 randomForward, teamFlagType, rewardGold, self.curIndex + 1, self.curIndex + 1 - self.sortWaveIndex.Count);
 
-            ET.GamePlayHelper.DoCreateActions(monsterUnit, gamePlayTowerDefenseComponent.model.MonsterWaveCallCreateActionIds);
+            monsterUnit.AddComponent<UnitWaitResetPosComponent, float3>(pos);
+
+            ET.GamePlayHelper.DoCreateActions(monsterUnit, gamePlayTowerDefenseComponent.model.MonsterWaveCallCreateActionIds).Coroutine();
 
             if (self.curIndex >= self.sortWaveIndex.Count)
             {
@@ -243,7 +245,7 @@ namespace ET
                     GamePlayBattleLevelCfg gamePlayBattleLevelCfg = gamePlayTowerDefenseComponent.GetGamePlay().GetGamePlayBattleConfig();
                     GamePlayTowerDefenseEndlessChallengeMonster gamePlayTowerDefenseEndlessChallengeMonster =
                         gamePlayBattleLevelCfg.GamePlayMode as GamePlayTowerDefenseEndlessChallengeMonster;
-                    ET.GamePlayHelper.DoCreateActions(monsterUnit, gamePlayTowerDefenseEndlessChallengeMonster.CreateActionIds);
+                    ET.GamePlayHelper.DoCreateActions(monsterUnit, gamePlayTowerDefenseEndlessChallengeMonster.CreateActionIds).Coroutine();
                 }
             }
 

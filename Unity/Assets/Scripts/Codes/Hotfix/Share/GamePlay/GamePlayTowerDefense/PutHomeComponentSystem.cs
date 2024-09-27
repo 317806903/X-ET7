@@ -239,6 +239,12 @@ namespace ET
             return self._GetHomeUnitByTeamFlagType(teamFlagType);
         }
 
+        public static float3 GetPosition(this PutHomeComponent self, long playerId)
+        {
+            Unit homeUnit = self.GetHomeUnit(playerId);
+            return homeUnit.Position;
+        }
+
         public static Dictionary<TeamFlagType, long> GetHomeUnitList(this PutHomeComponent self)
         {
             return self.HomeUnitIdList;
@@ -346,174 +352,78 @@ namespace ET
             }
         }
 
-        public static float3 GetMidPos(this PutHomeComponent self)
+        public static (float3 midPos, float3 forward) GetMidPos(this PutHomeComponent self)
         {
+            float3 midPos = float3.zero;
+            float3 forward = float3.zero;
             Dictionary<TeamFlagType, long> homeUnitList = self.GetHomeUnitList();
+
+            List<float3> posList = ListComponent<float3>.Create();
+            foreach (long homeUnitId in homeUnitList.Values)
+            {
+                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
+                posList.Add(homeUnit.Position);
+            }
+
             if (homeUnitList.Count == 2)
             {
-                return self.GetMidPosWhen2Homes(homeUnitList);
+                midPos = self.GetMidPosWhen2Homes(posList);
             }
             else if (homeUnitList.Count == 3)
             {
-                return self.GetMidPosWhen3Homes(homeUnitList);
+                midPos = self.GetMidPosWhen3Homes(posList);
+            }
+            else if (homeUnitList.Count >= 4)
+            {
+                midPos = self.GetMidPosWhenNHomes(posList);
             }
 
-            return float3.zero;
+            foreach (var pos in posList)
+            {
+                forward += midPos - pos;
+            }
+
+            if (forward.Equals(float3.zero))
+            {
+                forward = new float3(0, 0, 1);
+            }
+            forward = math.normalize(forward);
+            return (midPos, forward);
         }
 
-        public static float3 GetMidPosWhen2Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
+        public static float3 GetMidPosWhen2Homes(this PutHomeComponent self, List<float3> posList)
         {
-            Unit homeUnit1 = null;
-            Unit homeUnit2 = null;
-            List<long> list = homeUnitList.Values.ToList();
-            for (int i = 0; i < list.Count; i++)
-            {
-                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
-                if (i == 0)
-                {
-                    homeUnit1 = homeUnit;
-                }
-                else if (i == 1)
-                {
-                    homeUnit2 = homeUnit;
-                }
-            }
-
-            Unit observerUnit = self.GetOneObserverUnit();
-
-            List<float3> points = ET.RecastHelper.GetArrivePath(observerUnit, homeUnit1.Position, homeUnit2.Position);
-            if (points == null)
+            if (posList.Count != 2)
             {
                 return float3.zero;
             }
 
-            if (points.Count <= 1)
+            return ET.RecastHelper.GetMidPosWhen2Pos(self.DomainScene(), posList[0], posList[1]);
+        }
+
+        public static float3 GetMidPosWhen3Homes(this PutHomeComponent self, List<float3> posList)
+        {
+            if (posList.Count != 3)
             {
                 return float3.zero;
             }
 
-            float totalLength = 0;
-            float3 midPos = float3.zero;
-            for (int i = 1; i < points.Count; i++)
-            {
-                totalLength += math.length(points[i] - points[i - 1]);
-            }
-
-            float curLength = 0;
-            for (int i = 1; i < points.Count; i++)
-            {
-                float lastLength = curLength;
-                curLength += math.length(points[i] - points[i - 1]);
-                if (lastLength <= 0.5f * totalLength && curLength > 0.5f * totalLength)
-                {
-                    float needLength = 0.5f * totalLength - lastLength;
-                    midPos = points[i - 1] + math.normalize(points[i] - points[i - 1]) * needLength;
-                    break;
-                }
-            }
-
-            return midPos;
+            return ET.RecastHelper.GetMidPosWhen3Pos(self.DomainScene(), posList);
         }
 
-        public static float3 GetMidPosWhen3Homes(this PutHomeComponent self, Dictionary<TeamFlagType, long> homeUnitList)
+        public static float3 GetMidPosWhenNHomes(this PutHomeComponent self, List<float3> posList)
         {
-            Unit homeUnit1 = null;
-            Unit homeUnit2 = null;
-            Unit homeUnit3 = null;
-            List<long> list = homeUnitList.Values.ToList();
-            for (int i = 0; i < list.Count; i++)
+            if (posList.Count < 4)
             {
-                Unit homeUnit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), list[i]);
-                if (i == 0)
-                {
-                    homeUnit1 = homeUnit;
-                }
-                else if (i == 1)
-                {
-                    homeUnit2 = homeUnit;
-                }
-                else if (i == 2)
-                {
-                    homeUnit3 = homeUnit;
-                }
+                return float3.zero;
             }
 
-            float2 circleCenter2D = GetCircleCenter(new float2(homeUnit1.Position.x, homeUnit1.Position.z),
-                new float2(homeUnit2.Position.x, homeUnit2.Position.z),
-                new float2(homeUnit3.Position.x, homeUnit3.Position.z));
-            float3 circleCenterOrg = new float3(circleCenter2D.x, homeUnit1.Position.y, circleCenter2D.y);
-
-            Func<Unit, float3, (bool, float3)> chkCanReach = (observerUnit, pos) =>
-            {
-                float3 centerPos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, pos);
-
-                if (self.ChkHomeUnitPosition(homeUnit1, centerPos) == false)
-                {
-                    return (false, float3.zero);
-                }
-
-                if (self.ChkHomeUnitPosition(homeUnit2, centerPos) == false)
-                {
-                    return (false, float3.zero);
-                }
-
-                if (self.ChkHomeUnitPosition(homeUnit3, centerPos) == false)
-                {
-                    return (false, float3.zero);
-                }
-
-                return (true, centerPos);
-            };
-            Unit observerUnit = self.GetOneObserverUnit();
-            float dis = 0.1f;
-            for (int i = 0; i < 100; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    float3 circleCenter = circleCenterOrg + new float3(dis * i, 0, dis * j);
-                    (bool canReach, float3 point) = chkCanReach(observerUnit, circleCenter);
-                    if (canReach)
-                    {
-                        return point;
-                    }
-
-                    circleCenter = circleCenterOrg + new float3(-dis * i, 0, dis * j);
-                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
-                    if (canReach)
-                    {
-                        return point;
-                    }
-
-                    circleCenter = circleCenterOrg + new float3(-dis * i, 0, -dis * j);
-                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
-                    if (canReach)
-                    {
-                        return point;
-                    }
-
-                    circleCenter = circleCenterOrg + new float3(dis * i, 0, -dis * j);
-                    (canReach, point) = chkCanReach(observerUnit, circleCenter);
-                    if (canReach)
-                    {
-                        return point;
-                    }
-                }
-            }
-
-            return float3.zero;
+            return ET.RecastHelper.GetMidPosWhenNPos(self.DomainScene(), posList);
         }
 
         public static Unit GetOneObserverUnit(this PutHomeComponent self)
         {
-            Unit observerUnit = null;
-            UnitComponent unitComponent = UnitHelper.GetUnitComponent(self.DomainScene());
-            foreach (var _observerUnit in unitComponent.observerList)
-            {
-                observerUnit = _observerUnit;
-                break;
-            }
-
-            return observerUnit;
+            return ET.Ability.UnitHelper.GetOneObserverUnit(self.DomainScene());
         }
 
         public static bool ChkPosition(this PutHomeComponent self, float3 putHomePos)
@@ -568,28 +478,6 @@ namespace ET
                 }
             }
             return (canArrive, forward);
-        }
-
-        public static float2 GetCircleCenter(float2 p1, float2 p2, float2 p3)
-        {
-            float a = p1.x - p2.x;
-            float b = p1.y - p2.y;
-            float c = p1.x - p3.x;
-            float d = p1.y - p3.y;
-            float e = (math.pow(p1.x, 2) - math.pow(p2.x, 2) + math.pow(p1.y, 2) - math.pow(p2.y, 2)) / 2.0f;
-            float f = (math.pow(p1.x, 2) - math.pow(p3.x, 2) + math.pow(p1.y, 2) - math.pow(p3.y, 2)) / 2.0f;
-            float det = b * c - a * d;
-            if (math.abs(det) > 0)
-            {
-                //x0,y0为计算得到的原点
-                float x0 = -(d * e - b * f) / det;
-                float y0 = -(a * f - c * e) / det;
-                return new float2(x0, y0);
-            }
-            else
-            {
-                return new float2(0, 0);
-            }
         }
 
         public static (TeamFlagType, Unit) GetNearHostileHomeByPlayerId(this PutHomeComponent self, TeamFlagType playerTeamFlagType, float3 pos)

@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 定向目标轨迹(实时面向目标且固定时间)
 /// </summary>
-public sealed partial class TargetLimitTimeMoveTweenType:  MoveTweenType 
+public sealed partial class TargetLimitTimeMoveTweenType:  SpeedMoveTweenType 
 {
     public TargetLimitTimeMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

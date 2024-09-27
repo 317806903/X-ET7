@@ -224,4 +224,22 @@ namespace ET.Client
             return GlobalConfig.Instance.CodeMode.ToString();
         }
     }
+
+    [Invoke]
+    public class GetLocalDBSavePath: AInvokeHandler<ConfigComponent.GetLocalDBSavePath, string>
+    {
+        public override string Handle(ConfigComponent.GetLocalDBSavePath args)
+        {
+            return Path.Combine(PathHelper.AppHotfixResPath, "LocalDB");
+        }
+    }
+
+    [Invoke]
+    public class GetLocalMeshSavePath: AInvokeHandler<ConfigComponent.GetLocalMeshSavePath, string>
+    {
+        public override string Handle(ConfigComponent.GetLocalMeshSavePath args)
+        {
+            return Path.Combine(PathHelper.AppHotfixResPath, "LocalMeshData");
+        }
+    }
 }

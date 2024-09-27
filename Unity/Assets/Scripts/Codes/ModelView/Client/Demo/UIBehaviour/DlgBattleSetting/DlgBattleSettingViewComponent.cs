@@ -262,6 +262,23 @@ namespace ET.Client
 			}
 		}
 
+		public UITextLocalizeMonoView ELabel_ReScanUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_ReScanUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_ReScanUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_ReScan/ELabel_ReScan");
+				}
+				return this.m_ELabel_ReScanUITextLocalizeMonoView;
+			}
+		}
+
 		public UnityEngine.UI.Button E_QuitBattleButton
 		{
 			get
@@ -310,6 +327,91 @@ namespace ET.Client
 					this.m_ELabel_QuitBattleTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_QuitBattle/ELabel_QuitBattle");
 				}
 				return this.m_ELabel_QuitBattleTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_QuitBattleUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_QuitBattleUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_QuitBattleUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_QuitBattle/ELabel_QuitBattle");
+				}
+				return this.m_ELabel_QuitBattleUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Button E_TutorialButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TutorialButton == null )
+				{
+					this.m_E_TutorialButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_Tutorial");
+				}
+				return this.m_E_TutorialButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_TutorialImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TutorialImage == null )
+				{
+					this.m_E_TutorialImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_Tutorial");
+				}
+				return this.m_E_TutorialImage;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI ELabel_TutorialTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_TutorialTextMeshProUGUI == null )
+				{
+					this.m_ELabel_TutorialTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_Tutorial/ELabel_Tutorial");
+				}
+				return this.m_ELabel_TutorialTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_TutorialUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_TutorialUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_TutorialUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/Root/E_Other/E_Tutorial/ELabel_Tutorial");
+				}
+				return this.m_ELabel_TutorialUITextLocalizeMonoView;
 			}
 		}
 
@@ -738,9 +840,15 @@ namespace ET.Client
 			this.m_E_ReScanButton = null;
 			this.m_E_ReScanImage = null;
 			this.m_ELabel_ReScanTextMeshProUGUI = null;
+			this.m_ELabel_ReScanUITextLocalizeMonoView = null;
 			this.m_E_QuitBattleButton = null;
 			this.m_E_QuitBattleImage = null;
 			this.m_ELabel_QuitBattleTextMeshProUGUI = null;
+			this.m_ELabel_QuitBattleUITextLocalizeMonoView = null;
+			this.m_E_TutorialButton = null;
+			this.m_E_TutorialImage = null;
+			this.m_ELabel_TutorialTextMeshProUGUI = null;
+			this.m_ELabel_TutorialUITextLocalizeMonoView = null;
 			this.m_EG_Toggle_AudioRectTransform = null;
 			this.m_EG_Toggle_AudioImage = null;
 			this.m_EG_Audio_OnRectTransform = null;
@@ -783,9 +891,15 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_ReScanButton = null;
 		private UnityEngine.UI.Image m_E_ReScanImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_ReScanTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_ReScanUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
 		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
 		private TMPro.TextMeshProUGUI m_ELabel_QuitBattleTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_QuitBattleUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_E_TutorialButton = null;
+		private UnityEngine.UI.Image m_E_TutorialImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_TutorialTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_TutorialUITextLocalizeMonoView = null;
 		private UnityEngine.RectTransform m_EG_Toggle_AudioRectTransform = null;
 		private UnityEngine.UI.Image m_EG_Toggle_AudioImage = null;
 		private UnityEngine.RectTransform m_EG_Audio_OnRectTransform = null;

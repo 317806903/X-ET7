@@ -15,6 +15,13 @@ namespace ET.Client
             self.View.E_SelectButton.AddListenerAsync(self.Select);
             self.View.E_UnlockedButton.AddListenerAsync(self.Unlocked);
 
+#if UNITY_EDITOR
+            self.View.E_DebugButton.SetVisible(true);
+            self.View.E_DebugButton.AddListenerAsync(self.SetCurPveIndexWhenDebug);
+#else
+			self.View.E_DebugButton.SetVisible(false);
+#endif
+
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ChallengeList";
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.poolSize = 7;
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.AddItemRefreshListener(((transform, i) =>
@@ -246,7 +253,7 @@ namespace ET.Client
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
+            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
 
             int clearLevel = await self.GetCurPveIndex();
             ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.selectIndex + 1);
@@ -279,6 +286,16 @@ namespace ET.Client
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             int clearLevel = playerBaseInfoComponent.ChallengeClearLevel;
             return clearLevel;
+        }
+
+        public static async ETTask SetCurPveIndexWhenDebug(this EPage_ChallengNormal self)
+        {
+            PlayerBaseInfoComponent playerBaseInfoComponent =
+                await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+            playerBaseInfoComponent.ChallengeClearLevel = self.selectIndex;
+            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"ChallengeClearLevel"});
+            await self.ShowListScrollItem();
+            //self.RefreshLevelUI(false);
         }
 
 

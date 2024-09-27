@@ -9,7 +9,8 @@ namespace ET.Client
 		public DlgCommonTipTopShowViewComponent View { get => this.GetComponent<DlgCommonTipTopShowViewComponent>(); }
 
 		public Transform transTipNode;
-		public Stack<string> tips = new();
+		public Queue<string> tips = new();
+		public HashSet<GameObject> tipShowGoList = new();
 		public bool isDoing;
 	}
 }

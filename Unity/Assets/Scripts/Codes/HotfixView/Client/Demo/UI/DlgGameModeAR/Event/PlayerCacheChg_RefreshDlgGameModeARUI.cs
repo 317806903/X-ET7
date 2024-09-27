@@ -22,6 +22,10 @@ namespace ET.Client
                 {
                     _DlgGameModeAR.RefreshWhenFunctionMenuChg().Coroutine();
                 }
+                else if (args.playerModelType == PlayerModelType.OtherInfo)
+                {
+                    _DlgGameModeAR.RefreshWhenOtherInfoChg().Coroutine();
+                }
             }
             await ETTask.CompletedTask;
         }

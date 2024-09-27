@@ -35,6 +35,10 @@ namespace ET.Client
             while (currentScene == null || currentScene.IsDisposed)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
+                if (scene.IsDisposed)
+                {
+                    return;
+                }
                 currentScene = scene.CurrentScene();
             }
 
@@ -42,12 +46,17 @@ namespace ET.Client
             while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
+                if (currentScene.IsDisposed)
+                {
+                    return;
+                }
                 gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
             }
 
 
             //await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenu>();
             await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgFixedMenuHighest>();
+            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattleTowerNotice>();
 
             EventSystem.Instance.Publish(scene, new EventType.NoticeUIHideCommonLoading());
 
@@ -79,8 +88,13 @@ namespace ET.Client
                 while (gamePlayTowerDefenseComponent == null || gamePlayTowerDefenseComponent.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
+                    if (currentScene.IsDisposed)
+                    {
+                        return;
+                    }
                     gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                 }
+                gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 
                 //if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
                 {
@@ -111,6 +125,10 @@ namespace ET.Client
                 while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
+                    if (currentScene.IsDisposed)
+                    {
+                        return;
+                    }
                     gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
@@ -129,6 +147,10 @@ namespace ET.Client
                 while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
+                    if (currentScene.IsDisposed)
+                    {
+                        return;
+                    }
                     gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
@@ -153,8 +175,13 @@ namespace ET.Client
                     while (gamePlayTowerDefenseComponent == null || gamePlayTowerDefenseComponent.IsDisposed)
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
+                        if (currentScene.IsDisposed)
+                        {
+                            return;
+                        }
                         gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(currentScene);
                     }
+                    gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
                     //if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
                     {
                         EventSystem.Instance.Publish(scene, new EventType.NoticeEventLogging()
@@ -184,6 +211,10 @@ namespace ET.Client
                     while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
+                        if (currentScene.IsDisposed)
+                        {
+                            return;
+                        }
                         gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
                     }
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();

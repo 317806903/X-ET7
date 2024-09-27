@@ -31,7 +31,7 @@ namespace ET
 
         public static async ETTask InitWhenRoom(this GamePlayComponent self, long dynamicMapInstanceId, string gamePlayBattleLevelCfgId,
         RoomComponent roomComponent,
-        List<RoomMember> roomMemberList, ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
+        List<RoomMember> roomMemberList, ARMeshType _ARMeshType, string _ARSceneId, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
         {
             self.dynamicMapInstanceId = dynamicMapInstanceId;
             self.roomId = roomComponent.Id;
@@ -41,6 +41,7 @@ namespace ET
             self.isAR = roomComponent.IsARRoom();
             self.arMapScale = roomComponent.arMapScale;
             self._ARMeshType = _ARMeshType;
+            self._ARSceneId = _ARSceneId;
             self._ARMeshDownLoadUrl = _ARMeshDownLoadUrl;
             self._ARMeshBytes = _ARMeshBytes;
 
@@ -60,6 +61,8 @@ namespace ET
 
             GamePlayNumericComponent gamePlayNumericComponent = self.AddComponent<GamePlayNumericComponent>();
 
+            self.AddComponent<RestoreEnergyComponent>();
+
             await self.DownloadMapRecast();
 
             await self.DoGlobalBuffForBattle();
@@ -69,6 +72,8 @@ namespace ET
             await self.CreateGamePlayMode(self.roomTypeInfo);
 
             await self.DoReadyForBattle();
+
+            self.AddComponent<PlayerLocationChkComponent>();
 
             self.NoticeToClientAll();
             await ETTask.CompletedTask;
@@ -98,6 +103,8 @@ namespace ET
 
             GamePlayNumericComponent gamePlayNumericComponent = self.AddComponent<GamePlayNumericComponent>();
 
+            self.AddComponent<RestoreEnergyComponent>();
+
             await self.DownloadMapRecast();
 
             await self.DoGlobalBuffForBattle();
@@ -108,8 +115,38 @@ namespace ET
 
             await self.DoReadyForBattle();
 
+            self.AddComponent<PlayerLocationChkComponent>();
+
             //self.NoticeToClientAll();
             await ETTask.CompletedTask;
+        }
+
+        public static async Task<byte[]> ReadMeshFile(this GamePlayComponent self, string fileName)
+        {
+            await ETTask.CompletedTask;
+            string savePath = EventSystem.Instance.Invoke<ConfigComponent.GetLocalMeshSavePath, string>(new ConfigComponent.GetLocalMeshSavePath());
+
+            string file = System.IO.Path.Combine(savePath, fileName);
+            if (System.IO.File.Exists(file) == false)
+            {
+                return null;
+            }
+            return System.IO.File.ReadAllBytes(file);
+        }
+
+        public static async Task WriteMeshFile(this GamePlayComponent self, string fileName, byte[] data)
+        {
+            await ETTask.CompletedTask;
+            string savePath = EventSystem.Instance.Invoke<ConfigComponent.GetLocalMeshSavePath, string>(new ConfigComponent.GetLocalMeshSavePath());
+
+            string file = System.IO.Path.Combine(savePath, fileName);
+            if (System.IO.File.Exists(file))
+            {
+                return;
+            }
+
+            FileHelper.CreateDirectory(file);
+            System.IO.File.WriteAllBytes(file, data);
         }
 
         public static async Task<byte[]> DownloadFileBytesAsync(this GamePlayComponent self, string url)
@@ -121,7 +158,7 @@ namespace ET
             }
 
             byte[] data = null;
-            int retryNum = 30;
+            int retryNum = 5;
             for (int i = 0; i < retryNum; i++)
             {
                 try
@@ -216,15 +253,39 @@ namespace ET
 
         public static async ETTask LoadByClientObj(this GamePlayComponent self)
         {
+            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+            if (navmeshManagerComponent == null)
+            {
+                return;
+            }
 
-            // Note: ARMeshBytes is zipped.
-            //byte[] bytes = self._ARMeshBytes;
-            byte[] bytes = ZipHelper.Decompress(self._ARMeshBytes);
+            byte[] bytes = null;
+            try
+            {
+                // Note: ARMeshBytes is zipped.
+                //byte[] bytes = self._ARMeshBytes;
+                bytes = ZipHelper.Decompress(self._ARMeshBytes);
 
-            Log.Info($"Received obj content from client. Zipped size = {self._ARMeshBytes.Length}, Obj size = {bytes.Length}");
+                Log.Info($"Received obj content from client. Zipped size = {self._ARMeshBytes.Length}, Obj size = {bytes.Length}");
+            }
+            catch (Exception e)
+            {
+                Log.Error($"ET.GamePlayComponentSystem.LoadByClientObj Error {e}");
+            }
+            if (self.IsDisposed)
+            {
+                return;
+            }
+
+            if (bytes == null || bytes.Length == 0)
+            {
+                navmeshManagerComponent.isLoadMeshFinished = true;
+                navmeshManagerComponent.isLoadMeshError = true;
+                return;
+            }
 
             string pathfindingMapName = self.GetPathfindingMapName();
-            NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
+
             Task task = new Task(
                 () => {
                     navmeshManagerComponent.InitByFileBytes(bytes, self.GetARScale());
@@ -237,37 +298,57 @@ namespace ET
 
         public static async ETTask LoadByFile(this GamePlayComponent self)
         {
-            string pathfindingMapName = self.GetPathfindingMapName();
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
-            Task task = new Task(
-                    () => {
-                        navmeshManagerComponent.InitByFile(pathfindingMapName, 1);
-                    }
-                );
-            task.Start();
-
-            // var tmp = Task.Run(() =>
-            // {
-            //     navmeshManagerComponent.InitByFile(pathfindingMapName);
-            // });
-            await ETTask.CompletedTask;
-        }
-
-        public static async ETTask LoadByObjURL(this GamePlayComponent self)
-        {
-            byte[] bytes = await self.DownloadFileBytesAsync(self._ARMeshDownLoadUrl);
-            if (bytes == null)
+            if (navmeshManagerComponent == null)
             {
                 return;
             }
+
+            string pathfindingMapName = self.GetPathfindingMapName();
+
+            byte[] bytes = EventSystem.Instance.Invoke<NavmeshManagerComponent.RecastFileLoader, byte[]>(new NavmeshManagerComponent.RecastFileLoader() {Name = pathfindingMapName});
+
             if (self.IsDisposed)
             {
                 return;
             }
 
+            if (bytes == null || bytes.Length == 0)
+            {
+                navmeshManagerComponent.isLoadMeshFinished = true;
+                navmeshManagerComponent.isLoadMeshError = true;
+                return;
+            }
+
+            Task task = new Task(
+                    () => {
+                        navmeshManagerComponent.InitByFileBytes(bytes, 1);
+                    }
+                );
+            task.Start();
+
+            await ETTask.CompletedTask;
+        }
+
+        public static async ETTask LoadByObjURL(this GamePlayComponent self)
+        {
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
             if (navmeshManagerComponent == null)
             {
+                return;
+            }
+
+            byte[] bytes = await self.DownloadFileBytesAsync(self._ARMeshDownLoadUrl);
+
+            if (self.IsDisposed)
+            {
+                return;
+            }
+
+            if (bytes == null || bytes.Length == 0)
+            {
+                navmeshManagerComponent.isLoadMeshFinished = true;
+                navmeshManagerComponent.isLoadMeshError = true;
                 return;
             }
 
@@ -288,42 +369,58 @@ namespace ET
                 return;
             }
 
-            // Mesh URL
-            string mapUrl = self._ARMeshDownLoadUrl;
-
-            // Draco bytes
-            byte[] bytes = await self.DownloadFileBytesAsync(mapUrl);
-            if (bytes == null)
-            {
-                return;
-            }
-            if (self.IsDisposed)
-            {
-                return;
-            }
-            Log.Info($"====================Draco bytes length {bytes.Length}");
-
-            // Decode draco obj to data
-            MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
-
-            Log.Info($"====================MeshData {meshData.vertices.Length}, {meshData.normals.Length}, {meshData.triangles.Length}");
-
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
             if (navmeshManagerComponent == null)
             {
                 return;
             }
-            Task task = new Task(
-                () => {
-                    navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
-                }
-            );
-            task.Start();
 
-            // var tmp2 = Task.Run(() =>
-            // {
-            //     navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
-            // });
+            byte[] bytes = await self.ReadMeshFile(self._ARSceneId);
+            if (bytes == null)
+            {
+                // Mesh URL
+                string mapUrl = self._ARMeshDownLoadUrl;
+
+                // Draco bytes
+                bytes = await self.DownloadFileBytesAsync(mapUrl);
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+
+                if (bytes == null || bytes.Length == 0)
+                {
+                    navmeshManagerComponent.isLoadMeshFinished = true;
+                    navmeshManagerComponent.isLoadMeshError = true;
+                    return;
+                }
+            }
+
+            Log.Info($"====================Draco bytes length {bytes.Length}");
+
+            try
+            {
+                // Decode draco obj to data
+                MeshHelper.MeshData meshData = MeshHelper.GetMeshDataFromBytes(bytes);
+
+                await self.WriteMeshFile(self._ARSceneId, bytes);
+
+                Log.Info($"====================MeshData {meshData.vertices.Length}, {meshData.normals.Length}, {meshData.triangles.Length}");
+
+                Task task = new Task(
+                    () => {
+                        navmeshManagerComponent.InitByMeshData(meshData, self.GetARScale());
+                    }
+                );
+                task.Start();
+
+            }
+            catch (Exception e)
+            {
+                Log.Error($"ET.GamePlayComponentSystem.LoadByMeshData Error {e}");
+                navmeshManagerComponent.isLoadMeshFinished = true;
+                navmeshManagerComponent.isLoadMeshError = true;
+            }
 
             await ETTask.CompletedTask;
         }
@@ -508,17 +605,52 @@ namespace ET
             return gamePlayPlayerListComponent.GetPlayerIdByUnitId(unitId);
         }
 
-        public static Unit GetPlayerUnit(this GamePlayComponent self, long playerId)
+        public static Unit GetCurPlayerUnit(this GamePlayComponent self, long playerId)
         {
             GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
 
-            long playerUnitId = gamePlayPlayerListComponent.GetPlayerUnitId(playerId);
+            long playerUnitId = gamePlayPlayerListComponent.GetCurPlayerUnitId(playerId);
             if (playerUnitId == -1)
             {
                 return null;
             }
             Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerUnitId);
             return playerUnit;
+        }
+
+        public static List<Unit> GetPlayerUnitList(this GamePlayComponent self, long playerId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+
+            HashSet<long> playerUnitIdList = gamePlayPlayerListComponent.GetPlayerUnitIdList(playerId);
+            if (playerUnitIdList == null)
+            {
+                return null;
+            }
+            List<Unit> list = ListComponent<Unit>.Create();
+            foreach (long unitId in playerUnitIdList)
+            {
+                Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+                if (UnitHelper.ChkUnitAlive(playerUnit) == false)
+                {
+                    continue;
+                }
+                list.Add(playerUnit);
+            }
+            return list;
+        }
+
+        public static Unit GetCameraPlayerUnit(this GamePlayComponent self, long playerId)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+
+            long cameraPlayerUnitId = gamePlayPlayerListComponent.GetCameraPlayerUnitId(playerId);
+            if (cameraPlayerUnitId == -1)
+            {
+                return null;
+            }
+            Unit cameraPlayerUnit = UnitHelper.GetUnit(self.DomainScene(), cameraPlayerUnitId);
+            return cameraPlayerUnit;
         }
 
         public static void PlayerQuitBattle(this GamePlayComponent self, long playerId, bool isNeedRemoveAllPlayerUnits)
@@ -722,7 +854,9 @@ namespace ET
         public static void AddUnitPathfinding(this GamePlayComponent self, Unit unit)
         {
             bool isPlayer = false;
-            if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsObserver(unit))
+            if (UnitHelper.ChkIsObserver(unit)
+                || UnitHelper.ChkIsPlayer(unit)
+                || UnitHelper.ChkIsCameraPlayer(unit))
             {
                 isPlayer = true;
             }
@@ -730,14 +864,11 @@ namespace ET
             pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>(), isPlayer).Coroutine();
         }
 
-        public static bool ChkNavMeshReady(this GamePlayComponent self)
+        public static (bool, bool) ChkNavMeshReady(this GamePlayComponent self)
         {
             NavmeshManagerComponent navmeshManagerComponent = self.GetComponent<NavmeshManagerComponent>();
-            if (navmeshManagerComponent.GetNavMesh() == null)
-            {
-                return false;
-            }
-            return true;
+
+            return (navmeshManagerComponent.isLoadMeshFinished, navmeshManagerComponent.isLoadMeshError);
         }
 
         public static bool ChkIsAR(this GamePlayComponent self)
@@ -755,7 +886,7 @@ namespace ET
         {
             if (self.isTestARMesh || self.isTestARObj)
             {
-                return 30f;
+                return self.isTestARObjScale;
             }
 
             if (self.ChkIsAR())

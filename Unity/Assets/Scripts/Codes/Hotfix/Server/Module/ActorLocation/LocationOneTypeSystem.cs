@@ -113,7 +113,9 @@ namespace ET.Server
             using (await CoroutineLockComponent.Instance.Wait(coroutineLockType, key))
             {
                 self.locations.TryGetValue(key, out long instanceId);
+#if UNITY_EDITOR
                 Log.Info($"location get key: {key} instanceId: {instanceId}");
+#endif
                 return instanceId;
             }
         }

@@ -57,7 +57,17 @@ namespace ET.Server
             //Root.Instance.Scene.AddComponent<NavmeshManagerComponent>();
 
             DBManagerComponent dbManagerComponent = Root.Instance.Scene.AddComponent<DBManagerComponent>();
-            dbManagerComponent.NeedDB = Options.Instance.NeedDB == 1;
+            dbManagerComponent.dbType = (DBType)Options.Instance.NeedDB;
+#if !UNITY_EDITOR
+            if (codeMode == "ClientServer")
+            {
+                dbManagerComponent.dbType = DBType.LocalDB;
+            }
+#endif
+            if (dbManagerComponent.dbType == DBType.LocalDB)
+            {
+                dbManagerComponent.SetLocalDB();
+            }
             Log.Error($"--zpb-- Options.Instance.NeedDB {Options.Instance.NeedDB}");
 
             ServerSceneManagerComponent.Instance.IsGameModeArcade = Options.Instance.IsGameModeArcade == 1;

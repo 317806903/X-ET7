@@ -27,13 +27,19 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
         switch (_buf.ReadInt())
         {
             case ActionCallSelectLast.__ID__: return new ActionCallSelectLast(_buf);
-            case ActionCallSelectUnit.__ID__: return new ActionCallSelectUnit(_buf);
-            case ActionCallSelectDirection.__ID__: return new ActionCallSelectDirection(_buf);
-            case ActionCallSelectPosition.__ID__: return new ActionCallSelectPosition(_buf);
+            case ActionCallShow_Self_Unit.__ID__: return new ActionCallShow_Self_Unit(_buf);
+            case ActionCallShow_Self_Area.__ID__: return new ActionCallShow_Self_Area(_buf);
+            case ActionCallShow_Self_OtherUnit.__ID__: return new ActionCallShow_Self_OtherUnit(_buf);
+            case ActionCallShow_Self_OtherArea.__ID__: return new ActionCallShow_Self_OtherArea(_buf);
+            case ActionCallShow_Self_RectangleArea.__ID__: return new ActionCallShow_Self_RectangleArea(_buf);
+            case ActionCallShow_Self_UmbellateArea.__ID__: return new ActionCallShow_Self_UmbellateArea(_buf);
+            case ActionCallShow_Camera_Unit.__ID__: return new ActionCallShow_Camera_Unit(_buf);
+            case ActionCallShow_Camera_Area.__ID__: return new ActionCallShow_Camera_Area(_buf);
+            case ActionCallShow_Camera_RectangleArea.__ID__: return new ActionCallShow_Camera_RectangleArea(_buf);
+            case ActionCallShow_Camera_UmbellateArea.__ID__: return new ActionCallShow_Camera_UmbellateArea(_buf);
             case ActionCallAutoSelf.__ID__: return new ActionCallAutoSelf(_buf);
             case ActionCallAutoUnitWhenUmbellate.__ID__: return new ActionCallAutoUnitWhenUmbellate(_buf);
             case ActionCallAutoUnitWhenRectangle.__ID__: return new ActionCallAutoUnitWhenRectangle(_buf);
-            case ActionCallAutoUnitOne.__ID__: return new ActionCallAutoUnitOne(_buf);
             case ActionCallOnAoeChgUnit.__ID__: return new ActionCallOnAoeChgUnit(_buf);
             case ActionCallOnAoeInUnit.__ID__: return new ActionCallOnAoeInUnit(_buf);
             case ActionCallCasterUnit.__ID__: return new ActionCallCasterUnit(_buf);

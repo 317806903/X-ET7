@@ -150,6 +150,13 @@ namespace ET.Client
 	        return entity as PlayerMailComponent;
         }
 
+        public static async ETTask<PlayerSkillComponent> GetMyPlayerSkill(Scene scene, bool forceReGet = false)
+        {
+	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.Skills, forceReGet);
+	        return entity as PlayerSkillComponent;
+        }
+
         public static async ETTask<List<ItemComponent>> GetMyBattleCardItemList(Scene scene, bool forceReGet = false)
         {
 	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
@@ -352,7 +359,7 @@ namespace ET.Client
 		/// </summary>
 		/// <param name="scene"></param>
 		/// <returns>重置是否成功</returns>
-		public static async ETTask<bool> ResetAllPowerUp(Scene scene)
+		public static async ETTask<bool> ResetAllSeasonBringUp(Scene scene)
 		{
             try
             {
@@ -399,7 +406,7 @@ namespace ET.Client
 		/// <param name="cfgId"></param>
 		/// <param name="cfgLevel"></param>
 		/// <returns></returns>
-		public static async ETTask<bool> UpdatePowerup(Scene scene, string cfgId)
+		public static async ETTask<bool> UpdateSeasonBringUp(Scene scene, string cfgId)
         {
             try
             {
@@ -471,20 +478,56 @@ namespace ET.Client
 	        return isNeedShow;
         }
 
-        public static async ETTask<bool> SetUIRedDotType(Scene scene, UIRedDotType uiRedDotType, bool isNeedShow)
+        public static async ETTask SetUIRedDotType(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "", string skillCfgId = "")
         {
 	        try
 	        {
+		        if (uiRedDotType != UIRedDotType.None)
+		        {
+			        bool isShow = await PlayerCacheHelper.ChkUIRedDotType(scene, uiRedDotType);
+			        if (isShow == false)
+			        {
+				        return;
+			        }
+		        }
 		        scene = scene.ClientScene();
 
 		        G2C_SetUIRedDotType Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_SetUIRedDotType()
 		        {
 			        UIRedDotType = (int)uiRedDotType,
-			        IsNeedShow = isNeedShow?1:0,
+			        ItemCfgId = itemCfgId,
+			        SkillCfgId = skillCfgId,
 		        }) as G2C_SetUIRedDotType;
 		        if (Resp.Error != ET.ErrorCode.ERR_Success)
 		        {
 			        Log.Error($"SetUIRedDotType Error==1 msg={Resp.Message}");
+			        return;
+		        }
+		        else
+		        {
+			        return;
+		        }
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+		        return;
+	        }
+        }
+
+        public static async ETTask<bool> SetQuestionnaireFinished(Scene scene, string questionnaireCfgId)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        G2C_SetQuestionnaireFinished Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_SetQuestionnaireFinished()
+		        {
+			        QuestionnaireCfgId = questionnaireCfgId,
+		        }) as G2C_SetQuestionnaireFinished;
+		        if (Resp.Error != ET.ErrorCode.ERR_Success)
+		        {
+			        Log.Error($"SetQuestionnaireFinished Error==1 msg={Resp.Message}");
 			        return false;
 		        }
 		        else
@@ -497,6 +540,72 @@ namespace ET.Client
 		        Log.Error(e);
 		        return false;
 	        }
+        }
+
+        public static void SendAddDiamondWhenDebug(Scene scene)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        ET.Client.SessionHelper.GetSession(scene).Send(new C2G_AddDiamondWhenDebug()
+		        {
+		        });
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+	        }
+        }
+
+        public static void SendChkSeasonIndexChg(Scene scene)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        ET.Client.SessionHelper.GetSession(scene).Send(new C2G_ChkSeasonIndexChg()
+		        {
+		        });
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+	        }
+        }
+
+        public static void SendSetBattleNoticeFinished(Scene scene, string battleNoticeCfgId)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        ET.Client.SessionHelper.GetSession(scene).Send(new C2G_SetBattleNoticeFinished()
+		        {
+			        BattleNoticeCfgId = battleNoticeCfgId,
+		        });
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+	        }
+        }
+
+        public static async ETTask<QuestionnaireCfg> GetNextQuestionnaire(Scene scene)
+        {
+	        if (ChannelSettingComponent.Instance.ChkIsNeedQuestionnaire())
+	        {
+		        List<QuestionnaireCfg> questionnaireCfgList = ChannelSettingComponent.Instance.GetQuestionnaireCfgIdList();
+		        PlayerOtherInfoComponent playerOtherInfoComponent = await PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
+		        foreach (var questionnaireCfg in questionnaireCfgList)
+		        {
+			        if (playerOtherInfoComponent.ChkNeedQuestionnaire(questionnaireCfg.Id))
+			        {
+				        return questionnaireCfg;
+			        }
+		        }
+	        }
+	        return null;
         }
 
     }

@@ -25,10 +25,11 @@ namespace ET
         Green,
         Red,
         Blue,
+        Yellow,
     }
 
     [ChildOf(typeof(RoomManagerComponent))]
-    public class RoomComponent : Entity, IAwake, IDestroy, IFixedUpdate
+    public class RoomComponent : Entity, IAwake, IDestroy
     {
         public RoomTypeInfo roomTypeInfo;
 
@@ -42,11 +43,5 @@ namespace ET
         public List<long> roomMemberSeat;
 
         public int MaxMemberCount = 10;
-        [BsonIgnore]
-        public int waitFrameChk = 900;
-        [BsonIgnore]
-        public int curFrameChk = 0;
-        [BsonIgnore]
-        public Dictionary<long, long> playerWaitQuitTime;
     }
 }

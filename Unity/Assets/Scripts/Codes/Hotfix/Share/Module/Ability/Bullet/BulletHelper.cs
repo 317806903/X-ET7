@@ -78,7 +78,7 @@ namespace ET.Ability
                 }
             }
 
-            if (bulletObj.CanHitMesh())
+            if (bulletObj.CanHitMesh(false))
             {
                 (bool isHitMesh, float3 hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
                 if (isHitMesh)
@@ -90,6 +90,30 @@ namespace ET.Ability
             }
 
             return (bHitUnit, bHitMesh, hitPos);
+        }
+
+        public static (bool, float3) ChkBulletHitMesh(Unit unitBullet)
+        {
+            BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
+
+            MoveTweenObj moveTweenObj = unitBullet.GetComponent<MoveTweenObj>();
+            float3 posBeforeBullet = moveTweenObj.lastPosition;
+            float3 posAfterBullet = unitBullet.Position;
+
+            bool bHitMesh = false;
+            float3 hitPos = float3.zero;
+
+            if (bulletObj.CanHitMesh(true))
+            {
+                (bool isHitMesh, float3 hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
+                if (isHitMesh)
+                {
+                    bHitMesh = true;
+                    hitPos = hitMeshPos;
+                }
+            }
+
+            return (bHitMesh, hitPos);
         }
 
         public static (bool, float3) _ChkBulletHitUnit(Unit unitBullet, Unit unit, float3 posBeforeBullet, float3 posAfterBullet)
@@ -199,7 +223,7 @@ namespace ET.Ability
 
             if (bulletObj.canHitTimes > 0)
             {
-                if (bulletObj.hitRecords.ContainsKey(-1) == false)
+                if (bulletObj.hitRecords.ContainsKey(-1))
                 {
                     return;
                 }

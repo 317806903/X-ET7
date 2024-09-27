@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 定向目标跳跃
 /// </summary>
-public sealed partial class TargetQuickMoveTweenType:  MoveTweenType 
+public sealed partial class TargetQuickMoveTweenType:  SpeedMoveTweenType 
 {
     public TargetQuickMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

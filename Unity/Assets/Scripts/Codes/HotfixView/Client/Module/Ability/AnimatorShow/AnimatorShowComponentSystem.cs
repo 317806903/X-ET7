@@ -43,13 +43,13 @@ namespace ET.Ability.Client
 		public static void Awake(this AnimatorShowComponent self)
 		{
 			RecordAnimatorName recordAnimatorName = null;
-			GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-			if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
+			GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+			if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
 			{
-				recordAnimatorName = gameObjectComponent.GetGo().GetComponent<RecordAnimatorName>();
+				recordAnimatorName = gameObjectShowComponent.GetGo().GetComponent<RecordAnimatorName>();
 				if (recordAnimatorName == null)
 				{
-					recordAnimatorName = gameObjectComponent.GetGo().GetComponentInChildren<RecordAnimatorName>();
+					recordAnimatorName = gameObjectShowComponent.GetGo().GetComponentInChildren<RecordAnimatorName>();
 				}
 			}
 
@@ -77,7 +77,7 @@ namespace ET.Ability.Client
 			self.curRecordAnimatorName = recordAnimatorName;
 
 			self.mainAnimator = animator;
-			var list = gameObjectComponent.GetGo().GetComponentsInChildren<RecordAnimatorName>();
+			var list = gameObjectShowComponent.GetGo().GetComponentsInChildren<RecordAnimatorName>();
 			if (list.Length > 0)
 			{
 				for (int i = 0; i < list.Length; i++)
@@ -254,7 +254,7 @@ namespace ET.Ability.Client
 					dis = 0.01f;
 				}
 				float3 unitPos = self.GetUnit().Position;
-				float3 goPos = self.GetUnit().GetComponent<GameObjectComponent>().GetGo().transform.position;
+				float3 goPos = self.GetUnit().GetComponent<GameObjectShowComponent>().GetGo().transform.position;
 				if (math.abs(unitPos.x - goPos.x) <= dis
 				    && math.abs(unitPos.z - goPos.z) <= dis
 				   )
@@ -263,7 +263,8 @@ namespace ET.Ability.Client
 					nextAnimatorMotionName = AnimatorMotionName.None;
 					if (self.chgToIdleTime == -1)
 					{
-						if (UnitHelper.ChkIsPlayer(self.GetUnit()))
+						if (UnitHelper.ChkIsPlayer(self.GetUnit())
+						    || UnitHelper.ChkIsCameraPlayer(self.GetUnit()))
 						{
 							self.chgToIdleTime = TimeHelper.ServerNow();
 						}
@@ -373,8 +374,15 @@ namespace ET.Ability.Client
 						normalizedTime = 0;
 					}
 				}
-				//self.Animator.Play(self.CurMotionType.ToString(), 0, normalizedTime);
-				self.mainAnimator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+
+				if (CurMotionTypeOld == AnimatorMotionName.Move)
+				{
+					self.mainAnimator.Play(self.CurMotionType.ToString(), 0, normalizedTime);
+				}
+				else
+				{
+					self.mainAnimator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+				}
 
 				if (self.animatorOtherList != null)
 				{

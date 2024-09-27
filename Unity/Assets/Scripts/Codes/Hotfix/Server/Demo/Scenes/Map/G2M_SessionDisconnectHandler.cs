@@ -7,7 +7,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Unit observerUnit, G2M_SessionDisconnect message)
 		{
-			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+			//Unit playerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
 
 			long playerId = observerUnit.Id;
 			await LocationProxyComponent.Instance.RemoveLocation(playerId, LocationType.Player);

@@ -29,6 +29,13 @@ namespace ET
 
         private static void OnUpdateButton()
         {
+            if (EditorApplication.isPlaying == false)
+            {
+                if (DateTime.Now.Second % 15 == 0)
+                {
+                    System.GC.Collect();
+                }
+            }
             if (sCurrentToolbar == null)
             {
                 UnityEngine.Object[] toolbars = Resources.FindObjectsOfTypeAll(kToolbarType);
@@ -52,6 +59,10 @@ namespace ET
             }
         }
 
+        static GUIContent ResetLocalEditorGuiContent = new GUIContent("ResetLocalEditor", EditorGUIUtility.FindTexture("PlayButton"));
+        static GUIContent HotFixGuiContent = new GUIContent("热重载HotFix", EditorGUIUtility.FindTexture("PlayButton"));
+        static GUIContent ReloadAllGuiContent = new GUIContent("热重载All", EditorGUIUtility.FindTexture("PlayButton"));
+        static GUIContent BuildAndRunGuiContent = new GUIContent("编译启动", EditorGUIUtility.FindTexture("PlayButton"));
         private static void OnGuiReset()
         {
             if (EditorApplication.isPlaying)
@@ -60,7 +71,7 @@ namespace ET
             }
             //自定义按钮加在此处
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("ResetLocalEditor", EditorGUIUtility.FindTexture("PlayButton"))))
+            if (GUILayout.Button(ResetLocalEditorGuiContent))
             {
                 GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Bundles/Config/GlobalConfig/GlobalConfig.asset");
                 // if (globalConfig.CodeMode != CodeMode.ClientServer)
@@ -77,7 +88,7 @@ namespace ET
                 // }
                 globalConfig.CodeMode = CodeMode.ClientServer;
                 globalConfig.StartConfig = "Localhost";
-                globalConfig.NeedDB = false;
+                globalConfig.dbType = DBType.NoDB;
                 EditorUtility.SetDirty(globalConfig);
                 AssetDatabase.SaveAssets();
 
@@ -120,19 +131,19 @@ namespace ET
             GUILayout.BeginHorizontal();
             if (EditorApplication.isPlaying)
             {
-                if (GUILayout.Button(new GUIContent("热重载HotFix", EditorGUIUtility.FindTexture("PlayButton"))))
+                if (GUILayout.Button(HotFixGuiContent))
                 {
                     ReLoadHotFixDll().Coroutine();
                 }
 
-                if (GUILayout.Button(new GUIContent("热重载All", EditorGUIUtility.FindTexture("PlayButton"))))
+                if (GUILayout.Button(ReloadAllGuiContent))
                 {
                     ReLoadDll().Coroutine();
                 }
             }
             else
             {
-                if (GUILayout.Button(new GUIContent("编译启动", EditorGUIUtility.FindTexture("PlayButton"))))
+                if (GUILayout.Button(BuildAndRunGuiContent))
                 {
                     BuildAndStart().Coroutine();
                 }

@@ -36,7 +36,7 @@ namespace ET.Client
             else
             {
                 // 热更流程
-                bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, true);
+                bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, false);
                 if (bRet == false)
                 {
                     uiComponent.HideAllShownWindow(true, false);

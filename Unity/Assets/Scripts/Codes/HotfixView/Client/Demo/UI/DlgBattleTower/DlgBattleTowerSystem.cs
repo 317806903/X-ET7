@@ -41,22 +41,24 @@ namespace ET.Client
             self.View.EButton_BuyCloseButton.AddListenerAsync(self.CloseTowerBuyShow);
             self.View.EButton_ReadyWhenRestTimeButton.AddListenerAsync(self.ReadyWhenRestTime);
 
-            self.View.E_ReScanButton.SetVisible(false);
-            self.View.E_QuitBattleButton.SetVisible(false);
-            self.View.E_ReScanButton.AddListenerAsync(self.ReScan);
-            self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
+            self.View.E_GameSettingButton.SetVisible(true);
+            self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
 
-            if (ET.SceneHelper.ChkIsGameModeArcade())
+            if (Application.isMobilePlatform)
             {
-                self.View.E_GameSettingButton.SetVisible(true);
-                self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
+                self.View.E_ForceGameEndWhenDebugButton.SetVisible(false);
+                self.View.E_ForceAddGameGoldWhenDebugButton.SetVisible(false);
+                self.View.E_ForceAddHomeHpWhenDebugButton.SetVisible(false);
+
             }
             else
             {
-                //WeiJie Test:这里先不管是不是街机模式都让设置按钮激活
-                self.View.E_GameSettingButton.SetVisible(true);
-                self.View.E_GameSettingButton.AddListenerAsync(self.GameSetting);
-
+                self.View.E_ForceGameEndWhenDebugButton.SetVisible(true);
+                self.View.E_ForceAddGameGoldWhenDebugButton.SetVisible(true);
+                self.View.E_ForceAddHomeHpWhenDebugButton.SetVisible(true);
+                self.View.E_ForceGameEndWhenDebugButton.AddListenerAsync(self.ForceGameEndWhenDebug);
+                self.View.E_ForceAddGameGoldWhenDebugButton.AddListenerAsync(self.ForceAddGameGoldWhenDebug);
+                self.View.E_ForceAddHomeHpWhenDebugButton.AddListenerAsync(self.ForceAddHomeHpWhenDebug);
             }
         }
 
@@ -85,12 +87,30 @@ namespace ET.Client
 
         public static async ETTask ChkNeedBattleGuide(this DlgBattleTower self)
         {
-            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene()))
+            string battleCfgId = self.GetGamePlayTowerDefense().GetGamePlay().GetGamePlayBattleConfig().Id;
+
+            GamePlayBattleLevelCfg gamePlayBattleLevelCfg = GamePlayBattleLevelCfgCategory.Instance.Get(battleCfgId);
+            if (gamePlayBattleLevelCfg == null)
             {
                 return;
             }
+            if (string.IsNullOrEmpty(gamePlayBattleLevelCfg.BattleGuideConfigFileName))
+            {
+                return;
+            }
+
+            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene()))
+            {
+                if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), gamePlayBattleLevelCfg.BattleGuideConfigFileName) == false)
+                {
+                    if (ET.Client.UIGuideHelper.ChkCanReplaceCurGuideing(self.DomainScene(), (int)ET.Client.GuidePriority.BattleGuide) == false)
+                    {
+                        return;
+                    }
+                }
+            }
+
             PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
-            string battleCfgId = self.GetGamePlayTowerDefense().GetGamePlay().GetGamePlayBattleConfig().Id;
             (bool bNeedBattleGuide, string battleGuideConfigFileName) = playerOtherInfoComponent.ChkNeedBattleGuide(battleCfgId);
             if (bNeedBattleGuide)
             {
@@ -104,7 +124,7 @@ namespace ET.Client
                     await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.OtherInfo, new(){"battleGuideStepIndex"});
                 }
 
-                await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), battleGuideConfigFileName, startIndex, async (scene) =>
+                await ET.Client.UIGuideHelper.DoUIGuide(self.DomainScene(), battleGuideConfigFileName, (int)ET.Client.GuidePriority.BattleGuide, startIndex,async (scene) =>
                 {
                     PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
                     playerOtherInfoComponent.SetBattleGuideFinished(battleCfgId);
@@ -140,7 +160,40 @@ namespace ET.Client
             ET.Client.UIManagerHelper.HideChoose(self.DomainScene());
             self.ResetScrollRectMoveWhenGuide();
 
-            if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome && gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
+            {
+                Log.Error($"--zpb self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome && gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished");
+                return;
+            }
+            if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
+            {
+                self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
+                self.View.E_BattleImage.gameObject.SetActive(false);
+                string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_WaitMeshFinished");
+                self.ShowPutTipMsg(txt);
+
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging() { eventName = "MeshLoadingStarted"});
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart() { eventName = "MeshLoadingEnded"});
+
+            }
+            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.LoadMeshErr)
+            {
+                self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
+                self.View.E_BattleImage.gameObject.SetActive(false);
+                string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_LoadMeshErr");
+                self.ShowPutTipMsg(txt);
+
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "MeshLoadingEnded",
+                    properties = new()
+                    {
+                        {"success", false},
+                    }
+                });
+
+            }
+            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
                 self.View.E_BattleImage.gameObject.SetActive(false);
@@ -182,6 +235,16 @@ namespace ET.Client
 
 
                 ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
+
+                EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+                {
+                    eventName = "MeshLoadingEnded",
+                    properties = new()
+                    {
+                        {"success", true},
+                    }
+                });
+
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
             {
@@ -234,6 +297,8 @@ namespace ET.Client
                 self.View.E_BattleImage.gameObject.SetActive(false);
 
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerBegin>().Coroutine();
+
+                self.NoticeShowBattleNoticeWhenFirstShow();
             }
             else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
             {
@@ -913,7 +978,7 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-            self.View.E_TowerBuyShowImage.gameObject.SetActive(true);
+            self.View.EG_TowerBuyShowRectTransform.gameObject.SetActive(true);
             self.View.EButton_BuyButton.gameObject.SetActive(false);
 
             int countBuy = self.GetTowerBuyList().Count;
@@ -934,13 +999,13 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
-            self.View.E_TowerBuyShowImage.gameObject.SetActive(false);
+            self.View.EG_TowerBuyShowRectTransform.gameObject.SetActive(false);
             self.View.EButton_BuyButton.gameObject.SetActive(true);
         }
 
         public static async ETTask NotTowerBuyShowWhenBattle(this DlgBattleTower self)
         {
-            self.View.E_TowerBuyShowImage.gameObject.SetActive(false);
+            self.View.EG_TowerBuyShowRectTransform.gameObject.SetActive(false);
             self.View.EButton_BuyButton.gameObject.SetActive(false);
             self.View.EButton_ReadyWhenRestTimeButton.gameObject.SetActive(false);
         }
@@ -1012,7 +1077,7 @@ namespace ET.Client
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
-            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
+            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
 
             List<string> list = self.GetTowerBuyList();
             List<bool> listBought = self.GetTowerBoughtsList();
@@ -1037,7 +1102,7 @@ namespace ET.Client
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
             }
 
-            itemTowerBuy.EImage_BuyBGImage.SetVisible(true);
+            itemTowerBuy.EG_BuyBGRectTransform.SetVisible(true);
             itemTowerBuy.EButton_BuyButton.SetVisible(true);
             //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
 
@@ -1048,23 +1113,16 @@ namespace ET.Client
                 self.BuyTower(index, towerCfgId).Coroutine();
             });
 
-            if (buyTowerCostGold <= self.GetMyGold())
+            if (string.IsNullOrEmpty(towerCfg.TutorialCfgId) == false)
             {
-                itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuyButton");
-            }
-            else
-            {
-                itemTowerBuy.ELabel_BuyText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuy_NotEnough");
-            }
-
-            // TODO 暂时取消
-            /*itemTowerBuy.EButton_SelectButton.AddListener(() =>
-            {
-                UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerHUD>(new DlgBattleTowerHUD_ShowWindowData()
+                if (transform.gameObject.activeInHierarchy)
                 {
-                    towerCfgId = towerCfgId,
-                }).Coroutine();
-            });*/
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeShowBattleNotice()
+                    {
+                        tutorialCfgId = towerCfg.TutorialCfgId,
+                    });
+                }
+            }
         }
 
         public static async ETTask BuyTower(this DlgBattleTower self, int index, string towerCfgId)
@@ -1111,18 +1169,53 @@ namespace ET.Client
             await ET.Client.GamePlayTowerDefenseHelper.SendReadyWhenRestTime(self.ClientScene());
         }
 
-        public static async ETTask ReScan(this DlgBattleTower self)
+        public static void NoticeShowBattleNoticeWhenFirstShow(this DlgBattleTower self)
+        {
+            List<string> list = self.GetTowerBuyList();
+            foreach (string towerCfgId in list)
+            {
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
+                if (string.IsNullOrEmpty(towerCfg.TutorialCfgId) == false)
+                {
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeShowBattleNotice()
+                    {
+                        tutorialCfgId = towerCfg.TutorialCfgId,
+                    });
+                }
+            }
+        }
+
+        public static async ETTask ForceGameEndWhenDebug(this DlgBattleTower self)
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
 
-            string msgTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_RescanTheGame_Des");
-            string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_RescanTheGame_Confirm");
-            string cancelTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_RescanTheGame_Cancel");
-            string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Dialog_RescanTheGame_Title");
+            string msgTxt = LocalizeComponent.Instance.GetTextValue("是否快速胜利(需要已放置大本营)");
             ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () =>
             {
-                ET.Client.GamePlayTowerDefenseHelper.SendReScan(self.ClientScene()).Coroutine();
-            }, null, sureTxt, cancelTxt, titleTxt);
+                ET.Client.GamePlayHelper.SendForceGameEndWhenDebug(self.DomainScene()).Coroutine();
+            }, null);
+        }
+
+        public static async ETTask ForceAddGameGoldWhenDebug(this DlgBattleTower self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
+
+            string msgTxt = LocalizeComponent.Instance.GetTextValue("是否增加金币(需要已放置大本营)");
+            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () =>
+            {
+                ET.Client.GamePlayHelper.SendForceAddGameGoldWhenDebug(self.DomainScene()).Coroutine();
+            }, null);
+        }
+
+        public static async ETTask ForceAddHomeHpWhenDebug(this DlgBattleTower self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(),SoundEffectType.Back);
+
+            string msgTxt = LocalizeComponent.Instance.GetTextValue("是否增加大本营血量(需要已放置大本营)");
+            ET.Client.UIManagerHelper.ShowConfirm(self.DomainScene(), msgTxt, () =>
+            {
+                ET.Client.GamePlayHelper.SendForceAddHomeHpWhenDebug(self.DomainScene()).Coroutine();
+            }, null);
         }
 
         public static async ETTask GameSetting(this DlgBattleTower self)

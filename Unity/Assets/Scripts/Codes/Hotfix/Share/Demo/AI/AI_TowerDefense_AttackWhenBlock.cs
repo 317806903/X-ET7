@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
-using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET
 {
@@ -28,7 +27,7 @@ namespace ET
                 return 1;
             }
             (float skillAttackDis, SkillObj skillObj) = ET.Ability.SkillHelper.GetSkillAttackDis(unit);
-            if (aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true) == null)
+            if (aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true, 1) == null)
             {
                 return 1;
             }
@@ -50,7 +49,7 @@ namespace ET
                 return true;
             }
 
-            if (Ability.UnitHelper.ChkCanAttack(unit, targetUnit, 0f))
+            if (aiComponent.ChkCanAttack(unit, targetUnit, 0f))
             {
                 return false;
             }
@@ -79,7 +78,7 @@ namespace ET
             //     aiComponent.Cancel();
             //     return;
             // }
-            Unit unitHostileForce = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true);
+            Unit unitHostileForce = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true, 1);
             if (unitHostileForce == null || Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
             {
                 aiComponent.Cancel();
@@ -102,7 +101,7 @@ namespace ET
                 //     aiComponent.Cancel();
                 //     return;
                 // }
-                unitHostileForce = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true);
+                unitHostileForce = aiComponent.GetTargetUnit(aiConfig, skillAttackDis, true, 1);
                 if (unitHostileForce == null || Ability.UnitHelper.ChkUnitAlive(unitHostileForce) == false)
                 {
                     aiComponent.Cancel();

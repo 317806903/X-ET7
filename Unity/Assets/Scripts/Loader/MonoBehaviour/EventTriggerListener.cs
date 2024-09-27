@@ -109,7 +109,10 @@ namespace ET
                     {
                         m_IsPress = true;
                         m_IsPointDown = false;
-                        m_CurrDonwTime = 0f;
+                        if (isNeedClickWhenPress == false)
+                        {
+                            m_CurrDonwTime = 0f;
+                        }
                         onPress.Invoke(gameObject, null);
                     }
                 }
@@ -196,7 +199,7 @@ namespace ET
             m_IsPointDown = false;
             m_OnUpEventData = eventData;
 
-            if (!m_IsPress)
+            if (m_IsPress == false || (this.m_IsPress && this.isNeedClickWhenPress))
             {
                 if (this.m_IsPointExit == false)
                 {
@@ -352,6 +355,7 @@ namespace ET
         private const float DOUBLE_CLICK_TIME = 0.2f;
         public float PRESS_TIME = 0.1f;
 
+        public bool isNeedClickWhenPress = false;
         private float m_CurrDonwTime = 0f;
         public bool m_IsHorizontalDrag = true;
         private Vector2 beginDragPos;

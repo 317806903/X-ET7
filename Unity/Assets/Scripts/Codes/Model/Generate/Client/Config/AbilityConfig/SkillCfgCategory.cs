@@ -11,6 +11,9 @@ using System.Collections.Generic;
 namespace ET.AbilityConfig
 {
    
+/// <summary>
+/// 技能表
+/// </summary>
 [Config]
 public partial class SkillCfgCategory: ConfigSingleton<SkillCfgCategory>
 {

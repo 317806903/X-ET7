@@ -31,12 +31,12 @@ namespace ET.Client
 			self.transCheckUpdate.GetComponent<TextMeshProUGUI>().text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_CheckUpdate");
 			self.ShowProcess(0);
 			ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
-			self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{package.GetPackageVersion()}";
+			self.View.ELabel_VersionTextMeshProUGUI.text = $"{ResConfig.Instance.Channel} {Application.version}-{package.GetPackageVersion()}";
 		}
 
 		public static async ETTask LoadBG(this DlgUpdate self)
 		{
-			self.View.E_BGImage.LoadBG().Coroutine();
+			self.View.E_BGImage.LoadBG(self).Coroutine();
 		}
 
 		public static void ShowProcess(this DlgUpdate self, float per)

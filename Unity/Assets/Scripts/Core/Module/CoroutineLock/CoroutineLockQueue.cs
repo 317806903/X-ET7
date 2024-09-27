@@ -57,7 +57,8 @@ namespace ET
             return false;
         }
 
-        public void Notify(int level)
+        // 返回值，有没有成功执行下一个协程锁
+        public bool Notify(int level)
         {
             // 有可能WaitCoroutineLock已经超时抛出异常，所以要找到一个未处理的WaitCoroutineLock
             while (this.queue.Count > 0)
@@ -72,8 +73,9 @@ namespace ET
                 CoroutineLock coroutineLock = CoroutineLock.Create(type, key, level);
 
                 waitCoroutineLock.SetResult(coroutineLock);
-                break;
+                return true;
             }
+            return false;
         }
 
         public void Recycle()

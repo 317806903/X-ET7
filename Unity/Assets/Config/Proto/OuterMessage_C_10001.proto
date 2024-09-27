@@ -273,6 +273,7 @@ message C2G_LoginGate // IRequest
 	int32 RpcId = 1;
 	int64 Key = 2;  // 帐号
 	int64 GateId = 3;
+	int32 IsFirstLogin = 4;
 }
 
 message G2C_LoginGate // IResponse
@@ -374,7 +375,8 @@ message G2C_Benchmark // IResponse
 message C2M_LearnSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	string SkillId = 2;
+	string SkillCfgId = 2;
+	int64 unitId = 3;
 }
 
 message M2C_LearnSkill // IActorLocationResponse
@@ -388,10 +390,72 @@ message M2C_LearnSkill // IActorLocationResponse
 message C2M_CastSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	string SkillId = 2;
+	string SkillCfgId = 2;
+	int64 unitId = 3;
+	Unity.Mathematics.float3 CameraPosition = 4;
+	Unity.Mathematics.float3 CameraDirect = 5;
+	bytes SelectHandleBytes = 6;
 }
 
 message M2C_CastSkill // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_BuySkillEnergy
+message C2M_BuySkillEnergy // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	string SkillCfgId = 2;
+	int64 unitId = 3;
+}
+
+message M2C_BuySkillEnergy // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_LearnPlayerSkill
+message C2G_LearnPlayerSkill // IRequest
+{
+	int32 RpcId = 1;
+	string SkillCfgId = 2;
+}
+
+message G2C_LearnPlayerSkill // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_UpdatePlayerSkill
+message C2G_UpdatePlayerSkill // IRequest
+{
+	int32 RpcId = 1;
+	string SkillCfgId = 2;
+}
+
+message G2C_UpdatePlayerSkill // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_ReplacePlayerSkill
+message C2G_ReplacePlayerSkill // IRequest
+{
+	int32 RpcId = 1;
+	string SkillCfgId = 2;
+	int32 Index = 3;
+}
+
+message G2C_ReplacePlayerSkill // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -1133,6 +1197,16 @@ message C2M_ForceGameEndWhenDebug // IActorLocationMessage
 	int32 RpcId = 1;
 }
 
+message C2M_ForceAddGameGoldWhenDebug // IActorLocationMessage
+{
+	int32 RpcId = 1;
+}
+
+message C2M_ForceAddHomeHpWhenDebug // IActorLocationMessage
+{
+	int32 RpcId = 1;
+}
+
 message C2G_SetMyRankScoreWhenDebug // IMessage
 {
 	int32 RpcId = 1;
@@ -1196,6 +1270,11 @@ message C2G_InsertMailWhenDebug // IMessage
 	int32 RpcId = 1;
 }
 
+message C2G_AddDiamondWhenDebug // IMessage
+{
+	int32 RpcId = 1;
+}
+
 //ResponseType G2C_DealMyMail
 message C2G_DealMyMail // IRequest
 {
@@ -1243,10 +1322,44 @@ message C2G_SetUIRedDotType  // IRequest
 {
 	int32 RpcId = 1;
     int32 UIRedDotType = 2;
-    int32 IsNeedShow = 3;
+	string ItemCfgId = 3;
+	string SkillCfgId = 4;
 }
 
 message G2C_SetUIRedDotType // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+message C2G_ChkSeasonIndexChg // IMessage
+{
+	int32 RpcId = 1;
+}
+
+//ResponseType G2C_SetQuestionnaireFinished
+message C2G_SetQuestionnaireFinished  // IRequest
+{
+	int32 RpcId = 1;
+    string QuestionnaireCfgId = 2;
+}
+
+message G2C_SetQuestionnaireFinished // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_SetBattleNoticeFinished
+message C2G_SetBattleNoticeFinished  // IRequest
+{
+	int32 RpcId = 1;
+    string BattleNoticeCfgId = 2;
+}
+
+message G2C_SetBattleNoticeFinished // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

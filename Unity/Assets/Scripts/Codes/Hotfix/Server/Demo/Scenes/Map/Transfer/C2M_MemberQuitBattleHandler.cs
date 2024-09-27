@@ -7,7 +7,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Unit observerUnit, C2M_MemberQuitBattle request, M2C_MemberQuitBattle response)
 		{
-			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+			//Unit playerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
 
 			long playerId = observerUnit.Id;
 

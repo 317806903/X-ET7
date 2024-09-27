@@ -27,7 +27,7 @@ namespace ET.Client
 
 		public static void ShowTip(this DlgCommonTip self, string tipMsg)
 		{
-			self.tips.Push(tipMsg);
+			self.tips.Enqueue(tipMsg);
 
 			self._DoShowTip().Coroutine();
 		}
@@ -45,7 +45,7 @@ namespace ET.Client
 			}
 
 			self.isDoing = true;
-			string tipMsg = self.tips.Pop();
+			string tipMsg = self.tips.Dequeue();
 			self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
 			GameObject tipNode = GameObject.Instantiate(self.transTipNode.gameObject);
 			self.tipShowGoList.Add(tipNode);
@@ -59,7 +59,7 @@ namespace ET.Client
 
 			self._TipMove(uiRect).Coroutine();
 
-			await TimerComponent.Instance.WaitAsync(100);
+			await TimerComponent.Instance.WaitAsync(200);
 
 			self.isDoing = false;
 
@@ -68,12 +68,15 @@ namespace ET.Client
 
 		public static async ETTask _TipMove(this DlgCommonTip self, RectTransform uiRect)
 		{
-			Tweener twe = uiRect.transform.DOLocalMoveY(300, 2); //3秒时间在世界坐标中,让X轴移动到5的位置
-			twe.OnComplete(() =>
+			Sequence mySequence = DOTween.Sequence();
+			Tweener twe = uiRect.transform.DOLocalMoveY(300, 1);
+			twe.SetEase(Ease.OutCubic);
+			mySequence.Append(twe);
+			mySequence.AppendInterval(1);
+			mySequence.OnComplete(() =>
 			{
 				self.ChkNeedClose(uiRect.gameObject);
 			});
-			twe.SetEase(Ease.OutCubic);
 			await ETTask.CompletedTask;
 		}
 

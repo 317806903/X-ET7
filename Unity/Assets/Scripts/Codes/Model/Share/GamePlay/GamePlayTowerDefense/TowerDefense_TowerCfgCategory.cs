@@ -22,7 +22,7 @@ namespace ET.AbilityConfig
 		public MultiMapSimple<string, string> baseTowerCfgId2towerCfgIds = new();
 		[ProtoIgnore]
 		[BsonIgnore]
-		public MultiDictionary<string, string, int> towerCfgId2BaseTowerCfgIdAndCount = new();
+		public Dictionary<string, (string, int)> towerCfgId2BaseTowerCfgIdAndCount = new();
 
 		partial void PostResolve()
 		{
@@ -49,36 +49,78 @@ namespace ET.AbilityConfig
 					int costCount = 1;
 
 					this.baseTowerCfgId2towerCfgIds.Add(baseTowerCfgId, curTowerCfgId);
-					this.towerCfgId2BaseTowerCfgIdAndCount.Add(curTowerCfgId, baseTowerCfgId, costCount);
+					this.towerCfgId2BaseTowerCfgIdAndCount.Add(curTowerCfgId, (baseTowerCfgId, costCount));
 					while (this.towerCfgId2NextTowerCfgId.TryGetValue(curTowerCfgId, out nextTowerCfgId))
 					{
 						this.baseTowerCfgId2towerCfgIds.Add(baseTowerCfgId, nextTowerCfgId);
 						TowerDefense_TowerCfg towerCfgTmp = this.Get(curTowerCfgId);
 						costCount *= towerCfgTmp.NewTowerCostCount;
-						this.towerCfgId2BaseTowerCfgIdAndCount.Add(nextTowerCfgId, baseTowerCfgId, costCount);
+						this.towerCfgId2BaseTowerCfgIdAndCount.Add(nextTowerCfgId, (baseTowerCfgId, costCount));
 						curTowerCfgId = nextTowerCfgId;
 					}
 				}
 			}
 		}
 
-
-		public TowerDefense_TowerCfg GetPreTowerCfg(string towerCfgId)
+		public int GetTowerMaxLevel(string towerCfgId)
 		{
-			if (this.towerCfgId2PreTowerCfgId.TryGetValue(towerCfgId, out var preTowerCfgId))
+			int count = 1;
+			string curTowerCfgId = towerCfgId;
+			string nextTowerCfgId;
+			while (this.towerCfgId2NextTowerCfgId.TryGetValue(curTowerCfgId, out nextTowerCfgId))
 			{
-				return this.Get(preTowerCfgId);
+				count++;
+				curTowerCfgId = nextTowerCfgId;
 			}
-			return null;
+			return count;
 		}
 
-		public TowerDefense_TowerCfg GetNextTowerCfg(string towerCfgId)
+		public string GetPreTowerCfgId(string towerCfgId, int index)
 		{
-			if (this.towerCfgId2NextTowerCfgId.TryGetValue(towerCfgId, out var nextTowerCfgId))
+			while (index > 0)
 			{
-				return this.Get(nextTowerCfgId);
+				index--;
+				if (this.towerCfgId2PreTowerCfgId.TryGetValue(towerCfgId, out var preTowerCfgId))
+				{
+					return GetPreTowerCfgId(preTowerCfgId, index);
+				}
+				return "";
 			}
-			return null;
+			return towerCfgId;
+		}
+
+		public TowerDefense_TowerCfg GetPreTowerCfg(string towerCfgId, int index = 1)
+		{
+			string preTowerCfgId = GetPreTowerCfgId(towerCfgId, index);
+			if (string.IsNullOrEmpty(preTowerCfgId))
+			{
+				return null;
+			}
+			return this.Get(preTowerCfgId);
+		}
+
+		public string GetNextTowerCfgId(string towerCfgId, int index)
+		{
+			while (index > 0)
+			{
+				index--;
+				if (this.towerCfgId2NextTowerCfgId.TryGetValue(towerCfgId, out var nextTowerCfgId))
+				{
+					return GetNextTowerCfgId(nextTowerCfgId, index);
+				}
+				return "";
+			}
+			return towerCfgId;
+		}
+
+		public TowerDefense_TowerCfg GetNextTowerCfg(string towerCfgId, int index = 1)
+		{
+			string nextTowerCfgId = GetNextTowerCfgId(towerCfgId, index);
+			if (string.IsNullOrEmpty(nextTowerCfgId))
+			{
+				return null;
+			}
+			return this.Get(nextTowerCfgId);
 		}
 
 		public bool ChkIsSameBaseTowerCfg(string baseTowerCfgId, string towerCfgId)
@@ -93,10 +135,8 @@ namespace ET.AbilityConfig
 
 		public (string, int) GetBaseTowerCfgIdAndCount(string curTowerCfgId)
 		{
-			this.towerCfgId2BaseTowerCfgIdAndCount.TryGetDic(curTowerCfgId, out var baseTowerInfo);
-			string baseTowerCfgId = baseTowerInfo.Keys.ToList()[0];
-			int costCount = baseTowerInfo.Values.ToList()[0];
-			return (baseTowerCfgId, costCount);
+			this.towerCfgId2BaseTowerCfgIdAndCount.TryGetValue(curTowerCfgId, out var baseTowerInfo);
+			return baseTowerInfo;
 		}
 
 	}

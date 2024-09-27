@@ -82,15 +82,21 @@ namespace ET
                 if (unitClientPosComponent == null)
                 {
                     unitClientPosComponent = unit.AddComponent<UnitClientPosComponent>();
-                    unitClientPosComponent.lastClientPosition = float3.zero;
-                    unitClientPosComponent.targetPosClientNeedTime = 0.2f;
+                    unitClientPosComponent.targetPosClientNeedTime = 0;
                     unitClientPosComponent.targetPosClientTime = TimeHelper.ClientNow() + (long)(unitClientPosComponent.targetPosClientNeedTime * 1000);
                     unitClientPosComponent.serverTime = self.serverTime;
                 }
                 else
                 {
-                    unitClientPosComponent.lastClientPosition = unitClientPosComponent.clientPosition;
-                    unitClientPosComponent.targetPosClientNeedTime = (self.serverTime - unitClientPosComponent.serverTime) * 0.001f;
+                    // Log.Error($"--zpb Sync[{(self.serverTime - unitClientPosComponent.serverTime) * 0.001f}] unitClientPosComponent.targetPosClientNeedTime[{unitClientPosComponent.targetPosClientNeedTime}] ");
+                    if (unitClientPosComponent.serverTime == 0)
+                    {
+                        unitClientPosComponent.targetPosClientNeedTime = 0;
+                    }
+                    else
+                    {
+                        unitClientPosComponent.targetPosClientNeedTime = (self.serverTime - unitClientPosComponent.serverTime) * 0.001f;
+                    }
                     unitClientPosComponent.targetPosClientTime = TimeHelper.ClientNow() + (long)(unitClientPosComponent.targetPosClientNeedTime * 1000);
                     unitClientPosComponent.serverTime = self.serverTime;
                 }

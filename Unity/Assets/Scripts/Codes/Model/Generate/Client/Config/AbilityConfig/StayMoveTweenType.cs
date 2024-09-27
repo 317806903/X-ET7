@@ -19,6 +19,7 @@ public sealed partial class StayMoveTweenType:  MoveTweenType
 {
     public StayMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {
+        KeepHorizontal = _buf.ReadBool();
         PostInit();
     }
 
@@ -27,6 +28,10 @@ public sealed partial class StayMoveTweenType:  MoveTweenType
         return new StayMoveTweenType(_buf);
     }
 
+    /// <summary>
+    /// 是否保持水平
+    /// </summary>
+    public bool KeepHorizontal { get; private set; }
 
     public const int __ID__ = -1032061573;
     public override int GetTypeId() => __ID__;
@@ -45,9 +50,7 @@ public sealed partial class StayMoveTweenType:  MoveTweenType
     public override string ToString()
     {
         return "{ "
-        + "HoldTime:" + HoldTime + ","
-        + "Speed:" + Speed + ","
-        + "AcceleratedSpeed:" + AcceleratedSpeed + ","
+        + "KeepHorizontal:" + KeepHorizontal + ","
         + "}";
     }
     

@@ -3,6 +3,7 @@
 	ActionCfg_PlayAnimatorCategory,
 	ActionCfg_FireBulletCategory,
 	ActionCfg_MoveTweenChgTargetCategory,
+	ActionCfg_GameObjectDealCategory,
 	ActionCfg_EffectCreateCategory,
 	ActionCfg_EffectRemoveCategory,
 	ActionCfg_EffectRecordPointLightningTrailTargetCategory,

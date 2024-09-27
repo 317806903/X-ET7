@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ET.AbilityConfig;
 
@@ -14,12 +15,32 @@ namespace ET
             {
                 self.battleGuideStatus = new();
                 self.battleGuideStepIndex = new();
-                self.uiRedDotTypes = new();
+                self.uiRedDotTypeDic = new();
             }
         }
 
         public static void Init(this PlayerOtherInfoComponent self)
         {
+            if (self.battleGuideStatus == null)
+            {
+                self.battleGuideStatus = new();
+            }
+            if (self.battleGuideStepIndex == null)
+            {
+                self.battleGuideStepIndex = new();
+            }
+            if (self.uiRedDotTypeDic == null)
+            {
+                self.uiRedDotTypeDic = new();
+            }
+            if (self.questionnaireStatus == null)
+            {
+                self.questionnaireStatus = new();
+            }
+            if (self.battleNoticeStatus == null)
+            {
+                self.battleNoticeStatus = new();
+            }
         }
 
         public static long GetPlayerId(this PlayerOtherInfoComponent self)
@@ -69,24 +90,48 @@ namespace ET
 
         public static bool ChkUIRedDotType(this PlayerOtherInfoComponent self, UIRedDotType uiRedDotType)
         {
-            if (self.uiRedDotTypes.Contains(uiRedDotType))
+            if (self.uiRedDotTypeDic.ContainsKey(uiRedDotType))
             {
-                return true;
+                return self.uiRedDotTypeDic[uiRedDotType];
             }
             return false;
         }
 
         public static void SetUIRedDotType(this PlayerOtherInfoComponent self, UIRedDotType uiRedDotType, bool isNeedShow)
         {
-            if (isNeedShow)
-            {
-                self.uiRedDotTypes.Add(uiRedDotType);
-            }
-            else
-            {
-                self.uiRedDotTypes.Remove(uiRedDotType);
-            }
+            self.uiRedDotTypeDic[uiRedDotType] = isNeedShow;
         }
+
+        public static bool ChkNeedQuestionnaire(this PlayerOtherInfoComponent self, string questionnaireCfgId)
+        {
+            if (self.questionnaireStatus.Contains(questionnaireCfgId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void SetQuestionnaireFinished(this PlayerOtherInfoComponent self, string questionnaireCfgId)
+        {
+            self.questionnaireStatus.Add(questionnaireCfgId);
+        }
+
+        public static bool ChkNeedBattleNotice(this PlayerOtherInfoComponent self, string battleNoticeCfgId)
+        {
+            if (self.battleNoticeStatus.Contains(battleNoticeCfgId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void SetBattleNoticeFinished(this PlayerOtherInfoComponent self, string battleNoticeCfgId)
+        {
+            self.battleNoticeStatus.Add(battleNoticeCfgId);
+        }
+
 
     }
 }

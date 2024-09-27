@@ -37,13 +37,13 @@ namespace ET.Client
             {
                 return null;
             }
-            foreach (Entity entity in playerComponent.Children.Values)
-            {
-                Player player = entity as Player;
-                return player;
-            }
 
-            return null;
+            if (playerComponent.clientPlayerId == 0)
+            {
+                return null;
+            }
+            Player player = playerComponent.GetChild<Player>(playerComponent.clientPlayerId);
+            return player;
         }
 
         public static PlayerStatusComponent GetMyPlayerStatusComponent(Scene scene)
@@ -65,6 +65,7 @@ namespace ET.Client
                 player.Dispose();
             }
             playerComponent.AddChild(entity);
+            playerComponent.clientPlayerId = entity.Id;
         }
 
         public static void RefreshMyPlayerStatus(Scene scene, Entity entity)

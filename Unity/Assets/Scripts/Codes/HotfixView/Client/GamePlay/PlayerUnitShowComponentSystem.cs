@@ -72,21 +72,21 @@ namespace ET.Client
                 gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
             }
 
-            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-            while (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+            while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
             {
                 if (self.IsDisposed)
                 {
                     return;
                 }
                 await TimerComponent.Instance.WaitFrameAsync();
-                gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+                gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
             }
 
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
             GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
             self.transRoot = TowerShowGo.transform;
-            TowerShowGo.transform.SetParent(gameObjectComponent.GetGo().transform);
+            TowerShowGo.transform.SetParent(gameObjectShowComponent.GetGo().transform);
             TowerShowGo.transform.localPosition = new float3(0, 0, 0);
 
             Unit unit = self.GetUnit();

@@ -6,5 +6,6 @@ namespace ET
 	[ComponentOf(typeof(Scene))]
 	public class PlayerComponent : Entity, IAwake, IDestroy
 	{
+		public long clientPlayerId;
 	}
 }

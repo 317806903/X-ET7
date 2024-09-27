@@ -27,5 +27,15 @@ namespace ET.Ability
             return unitList;
         }
 
+        public static int GetOwnCallerCount(Unit unit, bool ownCallActor, bool ownBullet, bool ownAoe)
+        {
+            OwnCallerComponent ownCallerComponent = unit.GetComponent<OwnCallerComponent>();
+            if (ownCallerComponent == null)
+            {
+                return 0;
+            }
+            return ownCallerComponent.GetOwnCallerCount(ownCallActor, ownBullet, ownAoe);
+        }
+
     }
 }

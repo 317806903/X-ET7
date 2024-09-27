@@ -18,6 +18,7 @@ namespace ET
                 self.unitId = new();
                 self.unitComponentCount = new();
                 self.unitComponents = new();
+                self.deleteUnitComponents = new();
             }
         }
 
@@ -29,6 +30,7 @@ namespace ET
                 self.unitId.Clear();
                 self.unitComponentCount.Clear();
                 self.unitComponents.Clear();
+                self.deleteUnitComponents.Clear();
             }
         }
 
@@ -37,6 +39,7 @@ namespace ET
             self.unitId.Clear();
             self.unitComponentCount.Clear();
             self.unitComponents.Clear();
+            self.deleteUnitComponents.Clear();
             if (list == null)
             {
                 return;
@@ -48,10 +51,17 @@ namespace ET
                 foreach (Type type in types)
                 {
                     Entity component = unit.GetComponent(type);
-                    if (component != null)
+                    if (component != null && component.IsDisposed == false)
                     {
                         count++;
                         self.unitComponents.Add(component.ToBson());
+                        self.deleteUnitComponents.Add(-1);
+                    }
+                    else
+                    {
+                        count++;
+                        self.unitComponents.Add(null);
+                        self.deleteUnitComponents.Add(type.TypeHandle.Value.ToInt64());
                     }
                 }
                 self.unitId.Add(unitId);
@@ -78,10 +88,18 @@ namespace ET
                 for (int j = indexBegin; j < index; j++)
                 {
                     byte[] component = self.unitComponents[j];
-                    Entity entity = MongoHelper.Deserialize<Entity>(component);
-                    System.Type type = entity.GetType();
-                    unit.RemoveComponent(type);
-                    unit.AddComponent(entity);
+                    if (component == null)
+                    {
+                        long longHashCode = self.deleteUnitComponents[j];
+                        unit.RemoveComponent(longHashCode);
+                    }
+                    else
+                    {
+                        Entity entity = MongoHelper.Deserialize<Entity>(component);
+                        System.Type type = entity.GetType();
+                        unit.RemoveComponent(type);
+                        unit.AddComponent(entity);
+                    }
                 }
             }
             await ETTask.CompletedTask;

@@ -5,13 +5,6 @@ using UnityEngine.EventSystems;
 
 namespace ET.Client
 {
-	public enum UISelectCfgType
-	{
-		HeadQuarter,
-		MonsterCall,
-		Tower,
-		Monster,
-	}
 	[ComponentOf(typeof(UIBaseWindow))]
 	public class DlgBattleTower : Entity, IAwake, IUILogic, IUIDlg
 	{

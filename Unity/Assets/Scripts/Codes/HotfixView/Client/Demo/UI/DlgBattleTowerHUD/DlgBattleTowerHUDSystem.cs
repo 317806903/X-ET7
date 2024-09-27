@@ -62,6 +62,9 @@ namespace ET.Client
 
 			self._ShowWindow();
 			self.ShowTowerInfo();
+
+			//升级按钮UI状态
+			await self.SetUpgradeUIStatus();
 		}
 
 		public static void _ShowWindow(this DlgBattleTowerHUD self)
@@ -185,8 +188,10 @@ namespace ET.Client
 
 		public static void ShowTowerInfo_Attr(this DlgBattleTowerHUD self)
 		{
+			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
+
 			string itemCfgId = self.towerCfgId;
-			var attributeList = ItemHelper.GetTowerAttribute(itemCfgId, 1);
+			var attributeList = ItemHelper.GetTowerAttribute(itemCfgId, towerCfg.Level[0]);
 			self.View.ENode_Attribute1Image.SetVisible(attributeList.Count >= 1);
 			self.View.ENode_Attribute2Image.SetVisible(attributeList.Count >= 2);
 			self.View.ENode_Attribute3Image.SetVisible(attributeList.Count >= 3);
@@ -336,6 +341,65 @@ namespace ET.Client
 			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 			self.View.E_ShowDetailButton.SetVisible(false);
 			self.View.EG_ViewInfoRectTransform.SetVisible(true);
+		}
+
+
+		public static async ETTask SetUpgradeUIStatus(this DlgBattleTowerHUD self)
+		{
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+			if (gamePlayTowerDefenseComponent == null)
+				return;
+            if (self.isPool)
+            {
+                (bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerCfgId, self.onlyChkPool);
+                if (bRet == false)
+                {
+					if(msg == LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxLevelTower"))
+					{
+                        self.View.E_UpgradeButton.SetVisible(false);
+						self.View.E_MaxUpgradeButton.SetVisible(true);
+                    }
+					else
+					{
+                        UIManagerHelper.SetImageGray(self.View.E_UpgradeButton.transform, true);
+                        self.View.E_MaxUpgradeButton.SetVisible(false);
+                        self.View.E_UpgradeButton.SetVisible(true);
+                    }
+
+                }
+				else
+				{
+                    self.View.E_UpgradeButton.SetVisible(true);
+                    self.View.E_MaxUpgradeButton.SetVisible(false);
+                    UIManagerHelper.SetImageGray(self.View.E_UpgradeButton.transform, false);
+                }
+            }
+            else
+            {
+                (bool bRet, string msg, Dictionary<string, int> costTowers, List<long> existTowerUnitIds) = gamePlayTowerDefenseComponent.ChkUpgradePlayerTower(self.playerId, self.towerUnitId, self.onlyChkPool);
+                if (bRet == false)
+                {
+                    if (msg == LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxLevelTower"))
+                    {
+                        self.View.E_UpgradeButton.SetVisible(false);
+                        self.View.E_MaxUpgradeButton.SetVisible(true);
+                    }
+                    else
+                    {
+                        UIManagerHelper.SetImageGray(self.View.E_UpgradeButton.transform, true);
+                        self.View.E_MaxUpgradeButton.SetVisible(false);
+                        self.View.E_UpgradeButton.SetVisible(true);
+                    }
+                }
+                else
+                {
+                    self.View.E_UpgradeButton.SetVisible(true);
+                    self.View.E_MaxUpgradeButton.SetVisible(false);
+                    UIManagerHelper.SetImageGray(self.View.E_UpgradeButton.transform, false);
+                }
+            }
+
+			await ETTask.CompletedTask;
 		}
 
 	}

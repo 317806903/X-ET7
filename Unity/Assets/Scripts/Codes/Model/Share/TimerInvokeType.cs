@@ -40,5 +40,10 @@
         public const int DlgCommonChooseTimer = 228;
         public const int ARSessionComponentTimer = 229;
         public const int DlgTutorialsFrameTimer = 230;
+        public const int DlgTutorialOneFrameTimer = 231;
+        public const int DlgBattleSkillFrameTimer = 232;
+        public const int DlgSkillDetailsFrameTimer = 233;
+        
+
     }
 }

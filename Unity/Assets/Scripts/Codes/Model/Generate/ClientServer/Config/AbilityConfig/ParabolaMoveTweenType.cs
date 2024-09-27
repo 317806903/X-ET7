@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 抛物线轨迹
 /// </summary>
-public sealed partial class ParabolaMoveTweenType:  MoveTweenType 
+public sealed partial class ParabolaMoveTweenType:  SpeedMoveTweenType 
 {
     public ParabolaMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

@@ -45,7 +45,6 @@ namespace ET.Server
 			}
 
 			Unit observerUnit = null;
-			Unit playerUnit = null;
 			if (bExistUnit)
 			{
 				observerUnit = unitComponent.Get(playerId);
@@ -64,10 +63,16 @@ namespace ET.Server
 
 				float3 position = gamePlayComponent.GetPlayerBirthPos(playerId);
 				float3 forward = new float3(0, 0, 1);
-				playerUnit = ET.GamePlayHelper.CreatePlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
+				Unit playerUnit = ET.GamePlayHelper.CreatePlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
 				if (playerUnit != null)
 				{
 					unitComponent.Add(playerUnit);
+				}
+
+				Unit cameraPlayerUnit = ET.GamePlayHelper.CreateCameraPlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
+				if (cameraPlayerUnit != null)
+				{
+					unitComponent.Add(cameraPlayerUnit);
 				}
 			}
 

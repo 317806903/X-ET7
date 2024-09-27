@@ -19,6 +19,8 @@ namespace ET.Client
         public int curSelectedAvatarIconIndex;
         public int oldAvatarIconIndex;
 
+        public int lastSelectFrameIndex;
+
         public string curSelectedFrameIcon;
         public string oldFrameIcon;
 

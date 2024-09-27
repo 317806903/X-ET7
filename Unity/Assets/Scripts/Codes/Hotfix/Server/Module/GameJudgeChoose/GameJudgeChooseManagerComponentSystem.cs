@@ -16,28 +16,10 @@ namespace ET.Server
 
         public static async ETTask RecordGameJudgeChoose(this GameJudgeChooseManagerComponent self, long playerId, GameJudgeChooseType gameJudgeChooseType, string complainMsg)
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
-            {
-                await self.RecordGameJudgeChooseNoDB(playerId, gameJudgeChooseType, complainMsg);
-            }
-            else
-            {
-                await self.RecordGameJudgeChooseWithDB(playerId, gameJudgeChooseType, complainMsg);
-            }
-        }
-
-        public static async ETTask RecordGameJudgeChooseWithDB(this GameJudgeChooseManagerComponent self, long playerId, GameJudgeChooseType gameJudgeChooseType, string complainMsg)
-        {
             GameJudgeChooseComponent gameJudgeChooseComponent = await self.GetGameJudgeChooseComponent(playerId);
             gameJudgeChooseComponent.Record(gameJudgeChooseType, complainMsg);
 
             gameJudgeChooseComponent.SetDataCacheAutoWrite();
-        }
-
-        public static async ETTask RecordGameJudgeChooseNoDB(this GameJudgeChooseManagerComponent self, long playerId, GameJudgeChooseType gameJudgeChooseType, string complainMsg)
-        {
-            GameJudgeChooseComponent gameJudgeChooseComponent = await self.GetGameJudgeChooseComponent(playerId);
-            gameJudgeChooseComponent.Record(gameJudgeChooseType, complainMsg);
         }
 
         public static async ETTask<GameJudgeChooseComponent> GetGameJudgeChooseComponent(this GameJudgeChooseManagerComponent self, long playerId)

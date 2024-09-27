@@ -1,4 +1,5 @@
-﻿using System;
+﻿﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ namespace ET
     public class ETTask: ICriticalNotifyCompletion
     {
         public static Action<Exception> ExceptionHandler;
-        
+
         public static ETTaskCompleted CompletedTask
         {
             get
@@ -19,7 +20,7 @@ namespace ET
             }
         }
 
-        private static readonly Queue<ETTask> queue = new Queue<ETTask>();
+        private static readonly ConcurrentQueue<ETTask> queue = new();
 
         /// <summary>
         /// 请不要随便使用ETTask的对象池，除非你完全搞懂了ETTask!!!
@@ -32,12 +33,11 @@ namespace ET
             {
                 return new ETTask();
             }
-            
-            if (queue.Count == 0)
+            if (!queue.TryDequeue(out ETTask task))
             {
-                return new ETTask() {fromPool = true};    
+                return new ETTask() {fromPool = true};
             }
-            return queue.Dequeue();
+            return task;
         }
 
         private void Recycle()
@@ -46,7 +46,7 @@ namespace ET
             {
                 return;
             }
-            
+
             this.state = AwaiterStatus.Pending;
             this.callback = null;
             // 太多了
@@ -64,7 +64,7 @@ namespace ET
         private ETTask()
         {
         }
-        
+
         [DebuggerHidden]
         private async ETVoid InnerCoroutine()
         {
@@ -83,7 +83,7 @@ namespace ET
             return this;
         }
 
-        
+
         public bool IsCompleted
         {
             [DebuggerHidden]
@@ -165,8 +165,8 @@ namespace ET
     [AsyncMethodBuilder(typeof (ETAsyncTaskMethodBuilder<>))]
     public class ETTask<T>: ICriticalNotifyCompletion
     {
-        private static readonly Queue<ETTask<T>> queue = new Queue<ETTask<T>>();
-        
+        private static readonly ConcurrentQueue<ETTask<T>> queue = new();
+
         /// <summary>
         /// 请不要随便使用ETTask的对象池，除非你完全搞懂了ETTask!!!
         /// 假如开启了池,await之后不能再操作ETTask，否则可能操作到再次从池中分配出来的ETTask，产生灾难性的后果
@@ -178,14 +178,14 @@ namespace ET
             {
                 return new ETTask<T>();
             }
-            
-            if (queue.Count == 0)
+
+            if (!queue.TryDequeue(out ETTask<T> task))
             {
-                return new ETTask<T>() { fromPool = true };    
+                return new ETTask<T>() {fromPool = true};
             }
-            return queue.Dequeue();
+            return task;
         }
-        
+
         private void Recycle()
         {
             if (!this.fromPool)
@@ -258,7 +258,7 @@ namespace ET
             {
                 return state != AwaiterStatus.Pending;
             }
-        } 
+        }
 
         [DebuggerHidden]
         public void UnsafeOnCompleted(Action action)
@@ -294,7 +294,7 @@ namespace ET
             this.callback = null;
             c?.Invoke();
         }
-        
+
         [DebuggerHidden]
         public void SetException(Exception e)
         {

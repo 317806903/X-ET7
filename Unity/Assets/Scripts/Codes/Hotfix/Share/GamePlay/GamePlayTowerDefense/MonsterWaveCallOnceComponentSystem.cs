@@ -123,7 +123,7 @@ namespace ET
                         monsterWaveCallComponent.CallMonsterOnce(self.playerId, monsterWaveCallNode.MonsterCfgId, monsterLevel, monsterRewardGold);
                     self.monsterWaveUnitList.Add(monsterUnit.Id);
 
-                    ET.GamePlayHelper.DoCreateActions(monsterUnit, createActionIds);
+                    ET.GamePlayHelper.DoCreateActions(monsterUnit, createActionIds).Coroutine();
 
                     leftNum -= 1;
                     if (leftNum == 0)

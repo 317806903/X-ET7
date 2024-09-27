@@ -216,9 +216,9 @@ namespace ET
                         EditorUtility.SetDirty(this.globalConfig);
                         AssetDatabase.SaveAssets();
                     }
-                    if (this.globalConfig.NeedDB != false)
+                    if (this.globalConfig.dbType != DBType.NoDB)
                     {
-                        this.globalConfig.NeedDB = false;
+                        this.globalConfig.dbType = DBType.NoDB;
                         EditorUtility.SetDirty(this.globalConfig);
                         AssetDatabase.SaveAssets();
                     }
@@ -279,6 +279,10 @@ namespace ET
             GUILayout.Label("====================================");
             GUILayout.Space(5);
 
+            if (this.globalConfig == null)
+            {
+                this.RefreshBase();
+            }
             EditorGUI.BeginChangeCheck();
             var codeOptimization = (CodeOptimization) EditorGUILayout.EnumPopup("CodeOptimization ", this.globalConfig.codeOptimization);
             if (EditorGUI.EndChangeCheck())
@@ -447,21 +451,21 @@ namespace ET
 
             GUILayout.Space(5);
             EditorGUI.BeginChangeCheck();
-            var NeedDB = EditorGUILayout.Toggle("NeedDB: ", this.globalConfig.NeedDB);
+            DBType dbType = (DBType)EditorGUILayout.EnumPopup("DBType: ",this.globalConfig.dbType);
             if (EditorGUI.EndChangeCheck())
             {
-                if (NeedDB != this.globalConfig.NeedDB)
+                if (dbType != this.globalConfig.dbType)
                 {
-                    this.globalConfig.NeedDB = NeedDB;
+                    this.globalConfig.dbType = dbType;
                     EditorUtility.SetDirty(this.globalConfig);
                     AssetDatabase.SaveAssets();
                 }
             }
             else
             {
-                if (NeedDB != this.globalConfig.NeedDB)
+                if (dbType != this.globalConfig.dbType)
                 {
-                    NeedDB = this.globalConfig.NeedDB;
+                    dbType = this.globalConfig.dbType;
                 }
             }
             GUILayout.Space(5);

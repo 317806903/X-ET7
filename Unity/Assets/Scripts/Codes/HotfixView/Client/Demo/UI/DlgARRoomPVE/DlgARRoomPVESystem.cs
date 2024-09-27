@@ -523,6 +523,8 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
+            UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.MultPlayers).Coroutine();
+
             bool isFull = self.GetRoomComponent().ChkRoomMemberIsFull();
             if (isFull)
             {

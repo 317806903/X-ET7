@@ -1102,7 +1102,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8115737333444824134}
@@ -1252,10 +1252,16 @@ MonoBehaviour:
       Value: Turn Right
     - Key: Turn Left
       Value: Turn Left
-    - Key: Move
-      Value: Hide And Spin Attack In Place
     - Key: HideToIdle
       Value: Hide to Idle
+    - Key: Attack1
+      Value: Stab Attack
+    - Key: Attack2
+      Value: Slash Attack
+    - Key: Attack3
+      Value: Summon Attack
+    - Key: Move
+      Value: Walk Forward In Place
 --- !u!1 &8115737333444989030
 GameObject:
   m_ObjectHideFlags: 0

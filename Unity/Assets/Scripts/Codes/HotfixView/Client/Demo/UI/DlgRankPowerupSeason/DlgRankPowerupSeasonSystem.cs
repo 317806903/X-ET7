@@ -199,7 +199,7 @@ namespace ET.Client
 
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
+            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
 
             //int clearLevel = await self.GetCurPveIndex();
             //ChallengeLevelCfg challengeLevelCfg =
@@ -247,7 +247,7 @@ namespace ET.Client
             string itemCfgId = null;
             itemCfgId = self.avatarFrameList[index];
             itemFrame.ShowFrameItem(itemCfgId, true);
-            await itemFrame.EImage_FrameImage.SetImageByItemCfgId(itemCfgId);
+            await itemFrame.EImage_FrameImage.SetImageByItemCfgId(self, itemCfgId);
             itemFrame.EIcon_SelectedImage.gameObject.SetActive(false);
         }
 

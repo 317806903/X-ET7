@@ -47,6 +47,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); InitialBackpackItem.Add(_e0);}}
         GameReJudgeTime = _buf.ReadLong();
         MaxBattleCardNum = _buf.ReadInt();
+        MaxBattleSkillNum = _buf.ReadInt();
         SeasonStartTime = _buf.ReadLong();
         SeasonDurationTime = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DemoShowInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DemoShowInitialBackpackItem.Add(_e0);}}
@@ -207,6 +208,10 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 最多出战卡数
     /// </summary>
     public int MaxBattleCardNum { get; private set; }
+    /// <summary>
+    /// 最多出战技能数
+    /// </summary>
+    public int MaxBattleSkillNum { get; private set; }
     /// <summary>
     /// 赛季开始时间
     /// </summary>
@@ -379,6 +384,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "InitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(InitialBackpackItem) + ","
         + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "MaxBattleCardNum:" + MaxBattleCardNum + ","
+        + "MaxBattleSkillNum:" + MaxBattleSkillNum + ","
         + "SeasonStartTime:" + SeasonStartTime + ","
         + "SeasonDurationTime:" + SeasonDurationTime + ","
         + "DemoShowInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(DemoShowInitialBackpackItem) + ","

@@ -49,7 +49,7 @@ namespace ET.Client
         public static async ETTask _ShowWindow(this DlgLogin self)
         {
             await self.LoadBG();
-            self.View.ELabel_VersionTextMeshProUGUI.text = $"{Application.version}-{ResComponent.Instance.PackageVersion}";
+            self.View.ELabel_VersionTextMeshProUGUI.text = $"{ResConfig.Instance.Channel} {Application.version}-{ResComponent.Instance.PackageVersion}";
             await self.ChkIsShowDebugUI();
             await self.InitAccount();
             await self.InitDebugMode();
@@ -59,7 +59,7 @@ namespace ET.Client
 
         public static async ETTask LoadBG(this DlgLogin self)
         {
-            self.View.E_BGImage.LoadBG().Coroutine();
+            self.View.E_BGImage.LoadBG(self).Coroutine();
         }
 
         public static void HideWindow(this DlgLogin self)
@@ -71,7 +71,7 @@ namespace ET.Client
         {
             Scene clientScene = self.ClientScene();
             // 热更流程
-            bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, true);
+            bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(clientScene, false);
             if (bRet == false)
             {
                 UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
@@ -178,13 +178,7 @@ namespace ET.Client
         {
             Application.targetFrameRate = 30;
 
-            Screen.orientation = ScreenOrientation.AutoRotation;
-            Screen.autorotateToLandscapeLeft = true;
-            Screen.autorotateToLandscapeRight = true;
-            // Screen.autorotateToPortrait = true;
-            // Screen.autorotateToPortraitUpsideDown = true;
-            Screen.autorotateToPortrait = false;
-            Screen.autorotateToPortraitUpsideDown = false;
+            ET.Client.UIRootManagerComponent.Instance.SetDefaultRotation().Coroutine();
         }
 
         public static async ETTask ChkIsShowDebugUI(this DlgLogin self)
@@ -279,10 +273,16 @@ namespace ET.Client
 
         public static async ETTask InitAccount_Normal(this DlgLogin self)
         {
-            self.View.E_Login_SDKButton.SetVisible(Application.platform == RuntimePlatform.Android);
-            self.View.E_Login_AppleButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);
-            // self.View.E_Login_SDKButton.SetVisible(false);
-            // self.View.E_Login_AppleButton.SetVisible(false);
+            if (ChannelSettingComponent.Instance.ChkIsNeedSDKLogin())
+            {
+                self.View.E_Login_SDKButton.SetVisible(Application.platform == RuntimePlatform.Android);
+                self.View.E_Login_AppleButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);
+            }
+            else
+            {
+                self.View.E_Login_SDKButton.SetVisible(false);
+                self.View.E_Login_AppleButton.SetVisible(false);
+            }
 
             self.View.EG_LoginAccountRootRectTransform.SetVisible(false);
             self.View.EG_LoginWhenSDKRectTransform.SetVisible(false);

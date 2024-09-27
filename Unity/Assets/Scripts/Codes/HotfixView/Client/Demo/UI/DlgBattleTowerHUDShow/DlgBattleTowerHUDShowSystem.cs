@@ -43,6 +43,16 @@ namespace ET.Client
 
 		public static void Update(this DlgBattleTowerHUDShow self)
 		{
+			if (++self.curFrame >= self.waitFrame)
+			{
+				self.curFrame = 0;
+
+				self.UpdateSiblingIndex();
+			}
+		}
+
+		public static void UpdateSiblingIndex(this DlgBattleTowerHUDShow self)
+		{
 			var sortedList = self.HomeHealthBarDictionary.OrderByDescending(x => x.Value).ToList();
 			for (int i = 0; i < sortedList.Count; i++)
 			{
@@ -52,7 +62,7 @@ namespace ET.Client
 
 		public static void UpdateDistance(this DlgBattleTowerHUDShow self, RectTransform rectTrans, float distance)
 		{
-				self.HomeHealthBarDictionary[rectTrans] = distance;
+			self.HomeHealthBarDictionary[rectTrans] = distance;
 		}
 
 		public static void RemoveDic(this DlgBattleTowerHUDShow self, RectTransform rectTrans)

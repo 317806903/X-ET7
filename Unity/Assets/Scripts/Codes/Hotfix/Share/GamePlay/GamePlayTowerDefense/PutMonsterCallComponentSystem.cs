@@ -56,14 +56,13 @@ namespace ET
 			}
 		}
 
-		public static void InitWhenPVP(this PutMonsterCallComponent self, float3 midPos)
+		public static void InitWhenPVP(this PutMonsterCallComponent self, float3 midPos, float3 forward)
 		{
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 
 			TeamFlagType teamFlagType = TeamFlagType.Monster1;
 			string unitCfgId = "Unit_MonsterCall";
 			float3 monsterCallPos = midPos;
-			float3 forward = new float3(0, 0, 1);
 			Unit monsterCallUnit = self.CreateMonsterCall(teamFlagType, unitCfgId, monsterCallPos, forward);
 			List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
 			foreach (long playerId in playerList)
@@ -98,9 +97,7 @@ namespace ET
 				}
 			}
 
-			EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_PutMonsterPointEnd());
-
-			gamePlayTowerDefenseComponent.DoNextStep().Coroutine();
+			gamePlayTowerDefenseComponent.FinishedPutMonsterPoint().Coroutine();
 		}
 
 		public static GamePlayTowerDefenseComponent GetGamePlayTowerDefense(this PutMonsterCallComponent self)
@@ -126,6 +123,15 @@ namespace ET
 				}
 			}
 			return self.MonsterCallPos[playerId];
+		}
+
+		public static long GetCallMonsterUnitId(this PutMonsterCallComponent self, long playerId)
+		{
+			if (self.MonsterCallUnitId.ContainsKey(playerId))
+			{
+				return self.MonsterCallUnitId[playerId];
+			}
+			return 0;
 		}
 
 	}

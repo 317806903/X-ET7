@@ -29,6 +29,9 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         DeathShow = _buf.ReadString();
         IdleTimelineId = _buf.ReadString();
         MoveTimelineId = _buf.ReadString();
+        TotalCommonEnergy = _buf.ReadInt();
+        RestoreCommonEnergyByTime = _buf.ReadFloat();
+        RestoreCommonEnergyByWave = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     SkillList.Add(_k0, _v0);}}
         IsSkillClearWhenExt1 = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ExtSkillList1 = new System.Collections.Generic.Dictionary<string, SkillSlotType>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); SkillSlotType _v0;  _v0 = (SkillSlotType)_buf.ReadInt();     ExtSkillList1.Add(_k0, _v0);}}
@@ -99,6 +102,18 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     public string MoveTimelineId { get; private set; }
     public TimelineCfg MoveTimelineId_Ref { get; private set; }
     /// <summary>
+    /// 技能本身总通用能量点
+    /// </summary>
+    public int TotalCommonEnergy { get; private set; }
+    /// <summary>
+    /// 恢复通用能量点(每秒)
+    /// </summary>
+    public float RestoreCommonEnergyByTime { get; private set; }
+    /// <summary>
+    /// 恢复通用能量点(每回合)
+    /// </summary>
+    public float RestoreCommonEnergyByWave { get; private set; }
+    /// <summary>
     /// 默认拥有技能列表(skill1,类型;skill2,类型)
     /// </summary>
     public System.Collections.Generic.Dictionary<string, SkillSlotType> SkillList { get; private set; }
@@ -151,6 +166,9 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "DeathShow:" + DeathShow + ","
         + "IdleTimelineId:" + IdleTimelineId + ","
         + "MoveTimelineId:" + MoveTimelineId + ","
+        + "TotalCommonEnergy:" + TotalCommonEnergy + ","
+        + "RestoreCommonEnergyByTime:" + RestoreCommonEnergyByTime + ","
+        + "RestoreCommonEnergyByWave:" + RestoreCommonEnergyByWave + ","
         + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
         + "IsSkillClearWhenExt1:" + IsSkillClearWhenExt1 + ","
         + "ExtSkillList1:" + Bright.Common.StringUtil.CollectionToString(ExtSkillList1) + ","

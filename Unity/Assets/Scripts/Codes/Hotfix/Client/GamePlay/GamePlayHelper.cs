@@ -76,5 +76,29 @@ namespace ET.Client
 			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_ForceGameEndWhenDebug);
 			await ETTask.CompletedTask;
 		}
+
+		public static async ETTask SendForceAddGameGoldWhenDebug(Scene scene)
+		{
+			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)
+			{
+				return;
+			}
+
+			C2M_ForceAddGameGoldWhenDebug _C2M_ForceAddGameGoldWhenDebug = new ();
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_ForceAddGameGoldWhenDebug);
+			await ETTask.CompletedTask;
+		}
+
+		public static async ETTask SendForceAddHomeHpWhenDebug(Scene scene)
+		{
+			if (ET.Client.SessionHelper.ChkSessionExist(scene) == false)
+			{
+				return;
+			}
+
+			C2M_ForceAddHomeHpWhenDebug _C2M_ForceAddHomeHpWhenDebug = new ();
+			ET.Client.SessionHelper.GetSession(scene).Send(_C2M_ForceAddHomeHpWhenDebug);
+			await ETTask.CompletedTask;
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 环绕轨迹
 /// </summary>
-public sealed partial class AroundMoveTweenType:  MoveTweenType 
+public sealed partial class AroundMoveTweenType:  SpeedMoveTweenType 
 {
     public AroundMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

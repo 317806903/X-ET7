@@ -394,7 +394,9 @@ namespace ET.Client
             UIEventComponent.Instance.GetUIEventHandler(id).OnShowWindow(baseWindow, contextData);
 
             self.VisibleWindowsDic[(int)id] = baseWindow;
+#if UNITY_EDITOR
             Debug.Log("<color=magenta>### current Navigation window </color>" + baseWindow.WindowID.ToString());
+#endif
         }
 
         public static void Destroy(this UIComponent self)
@@ -436,7 +438,9 @@ namespace ET.Client
 
             self.HideWindow(windowId);
             self.UnLoadWindow(windowId);
+#if UNITY_EDITOR
             Debug.Log("<color=magenta>## close window without PopNavigationWindow() ##</color>");
+#endif
         }
 
         /// <summary>

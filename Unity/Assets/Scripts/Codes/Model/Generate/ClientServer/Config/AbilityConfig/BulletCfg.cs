@@ -26,6 +26,8 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         BodyRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
         CanHitAfterCreated = _buf.ReadFloat();
+        CanHitUnit = _buf.ReadBool();
+        CanHitMesh = _buf.ReadBool();
         HitTimes = _buf.ReadInt();
         SameTargetDelay = _buf.ReadFloat();
         DeathShow = _buf.ReadString();
@@ -81,6 +83,14 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
     /// </summary>
     public float CanHitAfterCreated { get; private set; }
     /// <summary>
+    /// 能否攻击Unit
+    /// </summary>
+    public bool CanHitUnit { get; private set; }
+    /// <summary>
+    /// 能否攻击Mesh
+    /// </summary>
+    public bool CanHitMesh { get; private set; }
+    /// <summary>
     /// 子弹可以碰触的次数，每次碰到合理目标-1，到0的时候子弹就结束了
     /// </summary>
     public int HitTimes { get; private set; }
@@ -130,6 +140,8 @@ public sealed partial class BulletCfg: Bright.Config.BeanBase
         + "BodyRadius:" + BodyRadius + ","
         + "ResScale:" + ResScale + ","
         + "CanHitAfterCreated:" + CanHitAfterCreated + ","
+        + "CanHitUnit:" + CanHitUnit + ","
+        + "CanHitMesh:" + CanHitMesh + ","
         + "HitTimes:" + HitTimes + ","
         + "SameTargetDelay:" + SameTargetDelay + ","
         + "DeathShow:" + DeathShow + ","

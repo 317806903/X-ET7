@@ -15,6 +15,13 @@ namespace ET.Client
             self.View.E_SelectButton.AddListenerAsync(self.Select);
             self.View.E_UnlockedButton.AddListenerAsync(self.Unlocked);
 
+#if UNITY_EDITOR
+            self.View.E_DebugButton.SetVisible(true);
+            self.View.E_DebugButton.AddListenerAsync(self.SetCurPveIndexWhenDebug);
+#else
+			self.View.E_DebugButton.SetVisible(false);
+#endif
+
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ChallengeList";
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.poolSize = 7;
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.AddItemRefreshListener(((transform, i) =>
@@ -242,7 +249,7 @@ namespace ET.Client
                     self.itemList.Add((item.Key, item.Value));
                 }
             }
-;
+
             self.View.EG_RewardRectTransform.SetVisible(self.itemList.Count != 0);
             self.View.E_line02Image.SetVisible(self.itemList.Count != 0);
             self.AddUIScrollItems(ref self.ScrollItemReward, self.itemList.Count);
@@ -257,7 +264,7 @@ namespace ET.Client
         {
             transform.name = $"Item_TowerBuy_{index}";
             Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EImage_TowerBuyShowImage.SetVisible(true);
+            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
 
             int clearLevel = await self.GetCurPveIndex();
             ChallengeLevelCfg challengeLevelCfg =
@@ -291,6 +298,16 @@ namespace ET.Client
                 await ET.Client.PlayerCacheHelper.GetMyPlayerSeasonInfo(self.DomainScene());
             int pveIndex = playerSeasonInfoComponent.pveIndex;
             return pveIndex;
+        }
+
+        public static async ETTask SetCurPveIndexWhenDebug(this EPage_ChallengSeason self)
+        {
+            PlayerSeasonInfoComponent playerSeasonInfoComponent =
+                await ET.Client.PlayerCacheHelper.GetMyPlayerSeasonInfo(self.DomainScene());
+            playerSeasonInfoComponent.pveIndex = self.selectIndex;
+            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.SeasonInfo, new (){"pveIndex"});
+            await self.ShowListScrollItem();
+            //self.RefreshLevelUI(false);
         }
 
 

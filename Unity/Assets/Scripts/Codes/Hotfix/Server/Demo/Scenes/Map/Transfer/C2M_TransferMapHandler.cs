@@ -9,7 +9,7 @@ namespace ET.Server
 		{
 			await ETTask.CompletedTask;
 
-			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+			//Unit playerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
 
 			string currentMap = observerUnit.DomainScene().Name;
 			string toMap = null;

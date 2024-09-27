@@ -79,6 +79,15 @@ namespace ET.Client
             self.View.ES_AvatarShow.ShowMyAvatarIcon(false).Coroutine();
 
             self.oldFrameIcon = playerBaseInfoComponent.AvatarFrameItemCfgId;
+            for (int i = 0; i < self.avatarFrameList.Count; i++)
+            {
+                if (self.avatarFrameList[i].CfgId == self.oldFrameIcon)
+                {
+                    self.lastSelectFrameIndex = i;
+                    break;
+                }
+            }
+
             self.curSelectedFrameIcon = self.oldFrameIcon;
             string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
             self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
@@ -175,7 +184,7 @@ namespace ET.Client
         public static async ETTask AddAvatarItemRefreshListener(this DlgPersionalAvatar self, Transform transform, int index)
         {
             Scroll_Item_AvatarIcon itemAvatar = self.ScrollItemAvatarIcons[index].BindTrans(transform);
-            await itemAvatar.EButton_IconImage.SetImageByPath(self.avatarIconList[index]);
+            await itemAvatar.EButton_IconImage.SetImageByPath(self, self.avatarIconList[index]);
             if (self.curSelectedAvatarIconIndex == index)
             {
                 itemAvatar.EG_SelectedImage.gameObject.SetActive(true);
@@ -198,10 +207,20 @@ namespace ET.Client
                 itemCfgId = self.avatarFrameList[index].CfgId;
             }
 
+            PlayerBackPackComponent playerBackPackComponent = await PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
+            bool isShowRedDot = playerBackPackComponent.ChkIsNewItem(itemCfgId);
+
             itemFrame.ShowFrameItem(itemCfgId, false);
 
-
-            await itemFrame.EImage_FrameImage.SetImageByItemCfgId(itemCfgId);
+            if (isShowRedDot)
+            {
+                itemFrame.E_RedDotImage.SetVisible(true);
+            }
+            else
+            {
+                itemFrame.E_RedDotImage.SetVisible(false);
+            }
+            await itemFrame.EImage_FrameImage.SetImageByItemCfgId(self, itemCfgId);
             if (self.curSelectedFrameIcon == self.avatarFrameList[index].CfgId)
             {
                 itemFrame.EIcon_SelectedImage.gameObject.SetActive(true);
@@ -211,7 +230,17 @@ namespace ET.Client
                 itemFrame.EIcon_SelectedImage.gameObject.SetActive(false);
             }
 
-            itemFrame.EButton_SelectButton.AddListener(() => { self.FrameIconSelected(index).Coroutine(); });
+            itemFrame.EButton_SelectButton.AddListener(() =>
+            {
+                if (isShowRedDot)
+                {
+                    UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.None, itemCfgId).Coroutine();
+                    itemFrame.E_RedDotImage.SetVisible(false);
+                    isShowRedDot = false;
+                }
+
+                self.FrameIconSelected(index).Coroutine();
+            });
         }
 
 
@@ -228,6 +257,13 @@ namespace ET.Client
 
         public static async ETTask FrameIconSelected(this DlgPersionalAvatar self, int index)
         {
+            Scroll_Item_Frame lastItemFrame = self.ScrollItemFrameIcons[self.lastSelectFrameIndex];
+            lastItemFrame.EIcon_SelectedImage.gameObject.SetActive(false);
+
+            Scroll_Item_Frame itemFrame = self.ScrollItemFrameIcons[index];
+            itemFrame.EIcon_SelectedImage.gameObject.SetActive(true);
+
+            self.lastSelectFrameIndex = index;
             self.curSelectedFrameIcon = self.avatarFrameList[index].CfgId;
 
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(self.curSelectedFrameIcon);
@@ -235,7 +271,7 @@ namespace ET.Client
             await self.View.ES_AvatarShow.SetFrameIcon(resIconCfg.ResName);
             string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
             self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
-            self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
+            //self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
 
             self.ChkInfoIsChanged();
         }

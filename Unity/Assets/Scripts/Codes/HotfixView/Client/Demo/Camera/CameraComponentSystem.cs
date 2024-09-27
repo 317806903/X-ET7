@@ -49,11 +49,11 @@ namespace ET.Client
 			}
 			while (true)
 			{
-				GameObjectComponent gameObjectComponent = self.Unit.GetComponent<GameObjectComponent>();
-				if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
+				GameObjectShowComponent gameObjectShowComponent = self.Unit.GetComponent<GameObjectShowComponent>();
+				if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
 				{
 					WorldCameraController worldCameraController = self.MainCamera.gameObject.GetComponent<WorldCameraController>();
-					worldCameraController.ForceSetPosition(gameObjectComponent.GetGo().transform, 1f, 30, new Vector3(30f, 116, 0));
+					worldCameraController.ForceSetPosition(gameObjectShowComponent.GetGo().transform, 1f, 30, new Vector3(30f, 116, 0));
 					return;
 				}
 				else

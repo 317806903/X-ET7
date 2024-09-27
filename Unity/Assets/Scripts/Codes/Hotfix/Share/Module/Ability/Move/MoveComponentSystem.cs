@@ -95,7 +95,7 @@ namespace ET.Ability
                         float3 unitPos = unit.Position;
                         if (math.abs(targetPositionInput.x - unitPos.x) < 0.01f && math.abs(targetPositionInput.z - unitPos.z) < 0.01f)
                         {
-                            ET.Ability.UnitHelper.ResetPos(unit, targetPositionInput);
+                            ET.Ability.UnitHelper.ResetPos(unit, targetPositionInput, float3.zero);
                             return;
                         }
                         unit.FindPathMoveToAsync(targetPositionInput, null).Coroutine();

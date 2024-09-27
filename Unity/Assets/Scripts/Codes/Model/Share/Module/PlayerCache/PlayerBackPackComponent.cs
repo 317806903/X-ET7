@@ -7,6 +7,6 @@ namespace ET
     [ComponentOf(typeof(PlayerDataComponent))]
     public class PlayerBackPackComponent : Entity, IAwake, IDestroy
     {
-
+        public HashSet<string> newItemList = new();
     }
 }

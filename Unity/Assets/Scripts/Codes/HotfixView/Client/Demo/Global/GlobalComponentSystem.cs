@@ -12,8 +12,6 @@ namespace ET.Client
             protected override void Awake(GlobalComponent self)
             {
                 GlobalComponent.Instance = self;
-
-                self.Awake().Coroutine();
             }
         }
 
@@ -46,7 +44,7 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask Awake(this GlobalComponent self)
+        public static async ETTask Init(this GlobalComponent self)
         {
             await self.CreateGlobalRoot();
             self.Unit = self.Global.Find("Unit").transform;
@@ -63,7 +61,6 @@ namespace ET.Client
             self.ShowDebugRoot();
 
             await self.AddComponents();
-
         }
 
         public static async ETTask CreateGlobalRoot(this GlobalComponent self)
@@ -88,10 +85,12 @@ namespace ET.Client
             ApplicationStatusComponent applicationPauseComponent = self.AddComponent<ApplicationStatusComponent>();
             await applicationPauseComponent.Init(self.ChkApplicationStatus);
 
-            UIManagerComponent uiManagerComponent = self.AddComponent<UIManagerComponent>();
-            await uiManagerComponent.Init(self.UICamera, self.UIRoot);
+            UIRootManagerComponent uiRootManagerComponent = self.AddComponent<UIRootManagerComponent>();
+            await uiRootManagerComponent.Init(self.UICamera, self.UIRoot);
 
             MainQualitySettingComponent mainQualitySettingComponent = self.AddComponent<MainQualitySettingComponent>();
+
+            self.AddComponent<DynamicAtlasManagerComponent>();
 
             self.AddComponent<DebugConnectComponent>();
 
@@ -100,6 +99,24 @@ namespace ET.Client
 
             DebugWhenEditorComponent debugWhenEditorComponent = self.AddComponent<DebugWhenEditorComponent>();
             await debugWhenEditorComponent.Init(self.DebugRoot);
+        }
+
+        public static async ETTask SetUpdateFinished(this GlobalComponent self)
+        {
+            if (self.isUpdateFinished)
+            {
+                return;
+            }
+
+            self.isUpdateFinished = true;
+
+            await self.AddComponentsAfterUpdate();
+        }
+
+        public static async ETTask AddComponentsAfterUpdate(this GlobalComponent self)
+        {
+            ResDefaultManagerComponent resDefaultManagerComponent = self.AddComponent<ResDefaultManagerComponent>();
+            await resDefaultManagerComponent.Init();
         }
 
         public static void ShowDebugRoot(this GlobalComponent self)

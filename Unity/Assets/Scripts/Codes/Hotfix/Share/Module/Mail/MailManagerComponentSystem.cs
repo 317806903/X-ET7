@@ -87,6 +87,42 @@ namespace ET
             return componentBytes;
         }
 
+        public static bool ChkIsNewPlayerMailFromCenter(this MailManagerComponent self, long playerId)
+        {
+            foreach (MailToPlayersComponent mailToPlayersComponent in self.Children.Values)
+            {
+                //若是发送给全部玩家
+                if (mailToPlayersComponent.mailToPlayerType == MailToPlayerType.AllPlayer)
+                {
+                    if (mailToPlayersComponent.deliveredPlayerList.Contains(playerId) == false)
+                    {
+                        MailInfoComponent mailInfoComponent = mailToPlayersComponent.GetMailInfo();
+                        if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                        {
+                            continue;
+                        }
+
+                        return true;
+                    }
+                }
+                //发送给部分玩家
+                else if (mailToPlayersComponent.mailToPlayerType == MailToPlayerType.PlayerList)
+                {
+                    if (mailToPlayersComponent.waitSendPlayerList.Contains(playerId) && mailToPlayersComponent.deliveredPlayerList.Contains(playerId) == false)
+                    {
+                        MailInfoComponent mailInfoComponent = mailToPlayersComponent.GetMailInfo();
+                        if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                        {
+                            continue;
+                        }
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// 写入mailToPlayersComponent组件到MailManagerComponent
         /// </summary>

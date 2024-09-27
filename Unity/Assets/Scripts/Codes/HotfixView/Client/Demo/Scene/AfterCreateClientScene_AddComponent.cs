@@ -7,7 +7,6 @@ namespace ET.Client
         {
             scene.AddComponent<UIEventComponent>();
             scene.AddComponent<UIPathComponent>();
-            scene.AddComponent<UIRedDotComponent>();
             scene.AddComponent<UITextLocalizeComponent>();
             scene.AddComponent<UIImageLocalizeComponent>();
             scene.AddComponent<UIComponent>();

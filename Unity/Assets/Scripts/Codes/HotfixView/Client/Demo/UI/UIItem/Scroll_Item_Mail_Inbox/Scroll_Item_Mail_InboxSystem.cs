@@ -185,7 +185,10 @@ namespace ET.Client
                     mainInfo = _mainInfo,
                 };
 
-                await ET.Client.MailHelper.DealMyMail(self.DomainScene(), self.mailInfoComponent.Id, DealMailType.ReadOnly);
+                if (self.mailStatus == MailStatus.UnRead)
+                {
+                    await ET.Client.MailHelper.DealMyMail(self.DomainScene(), self.mailInfoComponent.Id, DealMailType.ReadOnly);
+                }
 
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMailInfo>(showdata);
         }

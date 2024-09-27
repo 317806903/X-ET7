@@ -21,6 +21,8 @@ namespace ET
         public Dictionary<float, NavmeshComponent> NavmeshByRadius;
         public NavmeshComponent playerNavmesh;
 
+        public bool isLoadMeshFinished;
+        public bool isLoadMeshError;
         public DtNavMesh m_nav;
         public Sample _sample;
 
@@ -40,5 +42,6 @@ namespace ET
         };
 
         public Dictionary<int, Dictionary<int, Dictionary<int, bool>>> recordMeshHitDic;
+        public Dictionary<int, Dictionary<int, Dictionary<int, (bool, float)>>> recordMeshHeightDic;
     }
 }

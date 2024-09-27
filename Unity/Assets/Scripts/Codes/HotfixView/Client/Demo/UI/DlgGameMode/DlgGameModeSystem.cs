@@ -34,7 +34,7 @@ namespace ET.Client
 
 		public static async ETTask LoadBG(this DlgGameMode self)
 		{
-			self.View.E_BGImage.LoadBG().Coroutine();
+			self.View.E_BGImage.LoadBG(self).Coroutine();
 		}
 
 		public static async ETTask EnterSingleMapMode(this DlgGameMode self)

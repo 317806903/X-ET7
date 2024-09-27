@@ -21,6 +21,7 @@ namespace ET
                 self.NavmeshByRadius = new ();
                 self.segPoints = new();
                 self.recordMeshHitDic = new();
+                self.recordMeshHeightDic = new();
             }
         }
 
@@ -35,32 +36,7 @@ namespace ET
             self.tileNavMeshBuilder = null;
             self.segPoints = null;
             self.recordMeshHitDic.Clear();
-        }
-
-        public static void InitByFile(this NavmeshManagerComponent self, string filePath, float scale)
-        {
-            byte[] bytes = EventSystem.Instance.Invoke<NavmeshManagerComponent.RecastFileLoader, byte[]>(new NavmeshManagerComponent.RecastFileLoader() {Name = filePath});
-            if (bytes.Length == 0)
-            {
-                Log.Error($"no nav data: {filePath}");
-                return;
-            }
-
-            self.objBytes = bytes;
-            try
-            {
-                DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
-
-                self._sample = new Sample(geom, null, null);
-                self.ResetSampleSettings(self._sample, 1);
-
-                self._InitNavMeshBuilder();
-            }
-            catch (Exception e)
-            {
-                Log.Error($"InitByFile {e.Message}");
-                return;
-            }
+            self.recordMeshHeightDic.Clear();
         }
 
         public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes, float scale)
@@ -188,14 +164,17 @@ namespace ET
             if (!buildResult.Success)
             {
                 Log.Error("failed to build");
+                self.isLoadMeshFinished = true;
+                self.isLoadMeshError = true;
                 return;
             }
 
             self.m_nav = buildResult.NavMesh;
             self._sample.Update(self._sample.GetInputGeom(), buildResult.RecastBuilderResults, buildResult.NavMesh);
             self._sample.SetChanged(false);
+            self.isLoadMeshFinished = true;
+            self.isLoadMeshError = false;
         }
-
 
         public static DtNavMesh GetNavMesh(this NavmeshManagerComponent self)
         {
@@ -451,6 +430,140 @@ namespace ET
             // }
 
             return false;
+        }
+
+        public static (bool, (bool isHitMesh, float height)) GetMeshHeightOnPointRecord(this NavmeshManagerComponent self, int x, int y, int z)
+        {
+            if (self.recordMeshHeightDic.TryGetValue(x, out var dic2))
+            {
+                if (dic2.TryGetValue(y, out var dic3))
+                {
+                    if (dic3.TryGetValue(z, out var isHitMesh))
+                    {
+                        return (true, isHitMesh);
+                    }
+                }
+            }
+
+            return (false, (false, 0));
+        }
+
+        public static void RecordMeshHeightOnPoint(this NavmeshManagerComponent self, int x, int y, int z, (bool isHitMesh, float height)info)
+        {
+            if (self.recordMeshHeightDic.TryGetValue(x, out var dic2) == false)
+            {
+                dic2 = new();
+                self.recordMeshHeightDic[x] = dic2;
+            }
+
+            if (dic2.TryGetValue(y, out var dic3) == false)
+            {
+                dic3 = new();
+                dic2[y] = dic3;
+            }
+
+            dic3[z] = info;
+        }
+
+        public static (bool isHitMesh, float height) GetMeshHeightOnPoint(this NavmeshManagerComponent self, float3 rayPosIn)
+        {
+            int x = (int)(rayPosIn.x * 100);
+            int y = (int)(rayPosIn.y * 100);
+            int z = (int)(rayPosIn.z * 100);
+
+            (bool isRecord, (bool isHitMesh, float height)info) = self.GetMeshHeightOnPointRecord(x, y, z);
+            if (isRecord)
+            {
+                return info;
+            }
+
+            RcVec3f rayPos = new RcVec3f(-rayPosIn.x, rayPosIn.y, rayPosIn.z);
+
+            foreach (RecastBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
+            {
+                RcHeightfield rcHeightfield = recastBuilderResult.GetSolidHeightfield();
+                try
+                {
+                    (bool bHit, float height) = self._GetMeshHeightfield(rayPos, rcHeightfield);
+                    if (bHit)
+                    {
+                        self.RecordMeshHeightOnPoint(x, y, z, (true, height));
+                        return (true, height);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+
+            self.RecordMeshHeightOnPoint(x, y, z, (false, 0));
+            return (false, 0);
+        }
+
+        public static (bool, float) _GetMeshHeightfield(this NavmeshManagerComponent self, RcVec3f rayPosIn, RcHeightfield hf)
+        {
+            RcVec3f orig = hf.bmin;
+            float cs = hf.cs;
+            float ch = hf.ch;
+
+            int w = hf.width;
+            int h = hf.height;
+
+            if (rayPosIn.x >= orig.x && rayPosIn.x < orig.x + w * cs
+                && rayPosIn.z >= orig.z && rayPosIn.z < orig.z + h * cs)
+            {
+            }
+            else
+            {
+                return (false, 0);
+            }
+
+            float disX = (rayPosIn.x - orig.x) / cs;
+            int indexX = (int)Math.Floor(disX);
+
+            float disZ = (rayPosIn.z - orig.z) / cs;
+            int indexZ = (int)Math.Floor(disZ);
+
+            RcSpan s = null;
+            try
+            {
+                if (indexX + indexZ * w >= hf.spans.Length)
+                {
+                    return (false, 0);
+                }
+                s = hf.spans[indexX + indexZ * w];
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+
+            float curHeight = -99999;
+            bool bRet = false;
+            while (s != null)
+            {
+                if (rayPosIn.y >= orig.y + s.smax * ch)
+                {
+                    if (bRet == false)
+                    {
+                        bRet = true;
+                        curHeight = orig.y + s.smax * ch;
+                    }
+                    else if (curHeight < orig.y + s.smax * ch)
+                    {
+                        curHeight = orig.y + s.smax * ch;
+                    }
+                }
+                s = s.next;
+            }
+
+            if (bRet)
+            {
+                return (true, curHeight);
+            }
+
+            return (false, 0);
         }
 
         public static bool FrustumTest(this NavmeshManagerComponent self, float bmin_x, float bmin_y, float bmin_z, float bmax_x, float bmax_y, float bmax_z)

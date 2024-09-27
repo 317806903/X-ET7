@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: FunctionMenu_AREndlessChallenge
   m_EditorClassIdentifier: 
   list:
-  - name: "\u70B9\u51FB\u8D5B\u5B63\u5173\u5361"
+  - name: "\u70B9\u51FB\u65E0\u9650"
     isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/E_GameMode/titleBK/TabSeasonRoot/EBtnSeason_Unselected
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_EndlessChallenge
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_AREndlessChallenge_Season
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Infinite
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
-    waitToNextUIGuideStep: 0
+    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 

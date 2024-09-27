@@ -102,6 +102,7 @@ namespace ET
                 self.curFrameSyncPos = 0;
 
                 self.ResetPosAndFace();
+                self.ChkIsUpOrDown();
             }
         }
 
@@ -138,11 +139,69 @@ namespace ET
             }
         }
 
-        public static void ResetAgentSpeed(this PathfindingComponent self)
+        public static void ChkIsUpOrDown(this PathfindingComponent self)
+        {
+            if (self.NavMesh == null)
+            {
+                return;
+            }
+
+            float3 forward = self.NavMesh.GetAgentForward(self.navMeshAgent);
+            if (forward.Equals(float3.zero))
+            {
+                return;
+            }
+            float3 position = self.NavMesh.GetAgentPos(self.navMeshAgent);
+            (bool isHitMesh, float height) = ET.RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), position);
+            if (isHitMesh == false)
+            {
+                return;
+            }
+
+            float3 nextPosition = position + forward * 0.3f;
+            (bool isHitMeshNext, float heightNext) = ET.RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), nextPosition);
+            if (isHitMeshNext == false)
+            {
+                return;
+            }
+
+            float startChgHeight = 0.15f;
+            float upBigChgHeight = 0.2f;
+            float downBigChgHeight = 0.2f;
+            //Log.Error($"--zpb {math.abs(nextHitPos.y - hitPosition.y)} {nextHitPos.y > hitPosition.y} ");
+            if(math.abs(heightNext - height) < startChgHeight)
+            {
+                self.ResetAgentSpeed(1f);
+            }
+            else if (heightNext > height)
+            {
+                if (heightNext > height + upBigChgHeight)
+                {
+                    self.ResetAgentSpeed(0.3f);
+                }
+                else
+                {
+                    self.ResetAgentSpeed(0.7f);
+                }
+            }
+            else
+            {
+                if (heightNext < height - downBigChgHeight)
+                {
+                    self.ResetAgentSpeed(1.25f);
+                }
+                else
+                {
+                    self.ResetAgentSpeed(1.1f);
+                }
+            }
+        }
+
+        public static void ResetAgentSpeed(this PathfindingComponent self, float speedScale = 1)
         {
             Unit unit = self.GetUnit();
             float newSpeed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
-            self.NavMesh.ResetAgentSpeed(self.navMeshAgent, newSpeed);
+            self.NavMesh.ResetAgentSpeed(self.navMeshAgent, newSpeed * speedScale);
         }
 
         public static void ResetPos(this PathfindingComponent self, float3 position)

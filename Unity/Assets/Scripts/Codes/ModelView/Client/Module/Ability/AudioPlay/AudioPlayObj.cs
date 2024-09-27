@@ -7,7 +7,7 @@ namespace ET.Ability.Client
 	public class AudioPlayObj: Entity, IAwake, IDestroy, IFixedUpdate
     {
         public GameObject go;
-        
+
         ///<summary>
         ///剩余多久，单位：秒
         ///</summary>

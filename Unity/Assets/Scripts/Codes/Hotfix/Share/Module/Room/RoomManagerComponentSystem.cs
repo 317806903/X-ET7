@@ -108,12 +108,12 @@ namespace ET
             roomComponent.arMapScale = SetARMapScale * 0.01f;
         }
 
-        public static void SetARMeshInfo(this RoomManagerComponent self, long roomId, ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
+        public static void SetARMeshInfo(this RoomManagerComponent self, long roomId, ARMeshType _ARMeshType, string _ARSceneId, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes)
         {
-            self._ARMeshInfoDic[roomId] = (_ARMeshType, _ARMeshDownLoadUrl, _ARMeshBytes);
+            self._ARMeshInfoDic[roomId] = (_ARMeshType, _ARSceneId, _ARMeshDownLoadUrl, _ARMeshBytes);
         }
 
-        public static (ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes) GetARMeshInfo(this RoomManagerComponent self, long roomId)
+        public static (ARMeshType _ARMeshType, string _ARSceneId, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes) GetARMeshInfo(this RoomManagerComponent self, long roomId)
         {
             if (self._ARMeshInfoDic.ContainsKey(roomId))
             {

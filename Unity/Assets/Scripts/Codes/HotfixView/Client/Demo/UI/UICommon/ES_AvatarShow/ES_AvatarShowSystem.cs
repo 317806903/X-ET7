@@ -81,14 +81,14 @@ namespace ET.Client
         //设置头像框
         public static async ETTask SetFrameIcon(this ES_AvatarShow self, string resPath)
         {
-            await self.View.EImage_FrameIconImage.SetImageByPath(resPath);
+            await self.View.EImage_FrameIconImage.SetImageByPath(self, resPath);
 
         }
 
         //设置头像图片
         public static async ETTask SetAvatarIcon(this ES_AvatarShow self, string resPath)
 		{
-			await self.View.E_AvatarIconImage.SetImageByPath(resPath);
+			await self.View.E_AvatarIconImage.SetImageByPath(self, resPath);
 		}
 
     }

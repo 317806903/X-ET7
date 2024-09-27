@@ -35,6 +35,8 @@ namespace ET
                     return self.GetComponent<PlayerFunctionMenuComponent>();
                 case PlayerModelType.Mails:
                     return self.GetComponent<PlayerMailComponent>();
+                case PlayerModelType.Skills:
+                    return self.GetComponent<PlayerSkillComponent>();
                 default:
                     break;
             }
@@ -69,6 +71,9 @@ namespace ET
                         break;
                     case PlayerModelType.Mails:
                         self.RemoveComponent<PlayerMailComponent>();
+                        break;
+                    case PlayerModelType.Skills:
+                        self.RemoveComponent<PlayerSkillComponent>();
                         break;
                     default:
                         break;
@@ -114,6 +119,11 @@ namespace ET
                         self.ChgFieldValue<PlayerMailComponent>(playerMailComponent, (PlayerMailComponent)entity, setPlayerKeys);
                         entity.Dispose();
                         return playerMailComponent;
+                    case PlayerModelType.Skills:
+                        PlayerSkillComponent playerSkillComponent = self.GetComponent<PlayerSkillComponent>();
+                        self.ChgFieldValue<PlayerSkillComponent>(playerSkillComponent, (PlayerSkillComponent)entity, setPlayerKeys);
+                        entity.Dispose();
+                        return playerSkillComponent;
                     default:
                         entity.Dispose();
                         break;
@@ -135,7 +145,7 @@ namespace ET
                 }
                 catch (Exception e)
                 {
-                    Log.Error($"{e}");
+                    Log.Error($"Err [{type.Name}] [{setPlayerKeys[i]}] ChgFieldValue {e}");
                 }
             }
         }

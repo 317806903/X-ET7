@@ -19,7 +19,7 @@ namespace ET.Client
 			return this;
 		}
 
-		public BlurBackground.TranslucentImage E_BoxTranslucentImage
+		public UnityEngine.UI.Image E_BoxImage
 		{
 			get
 			{
@@ -30,15 +30,15 @@ namespace ET.Client
 				}
 				if (this.isCacheNode)
 				{
-					if( this.m_E_BoxTranslucentImage == null )
+					if( this.m_E_BoxImage == null )
 					{
-						this.m_E_BoxTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Box");
+						this.m_E_BoxImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Box");
 					}
-					return this.m_E_BoxTranslucentImage;
+					return this.m_E_BoxImage;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Box");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Box");
 				}
 			}
 		}
@@ -111,30 +111,6 @@ namespace ET.Client
 				else
 				{
 					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Box/EImage_High");
-				}
-			}
-		}
-
-		public UnityEngine.UI.Image E_EmptyLatticeImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_E_EmptyLatticeImage == null )
-					{
-						this.m_E_EmptyLatticeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_EmptyLattice");
-					}
-					return this.m_E_EmptyLatticeImage;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_EmptyLattice");
 				}
 			}
 		}
@@ -403,78 +379,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_Label3Image
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EImage_Label3Image == null )
-					{
-						this.m_EImage_Label3Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label3");
-					}
-					return this.m_EImage_Label3Image;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Label3");
-				}
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_Label3TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_ELabel_Label3TextMeshProUGUI == null )
-					{
-						this.m_ELabel_Label3TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label3/ELabel_Label3");
-					}
-					return this.m_ELabel_Label3TextMeshProUGUI;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EImage_Label3/ELabel_Label3");
-				}
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_SelectedImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if (this.isCacheNode)
-				{
-					if( this.m_EButton_SelectedImage == null )
-					{
-						this.m_EButton_SelectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Selected");
-					}
-					return this.m_EButton_SelectedImage;
-				}
-				else
-				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Selected");
-				}
-			}
-		}
-
 		public UnityEngine.UI.Button EButton_SelectButton
 		{
 			get
@@ -525,11 +429,10 @@ namespace ET.Client
 
 		public void DestroyWidget()
 		{
-			this.m_E_BoxTranslucentImage = null;
+			this.m_E_BoxImage = null;
 			this.m_EImage_LowImage = null;
 			this.m_EImage_MiddleImage = null;
 			this.m_EImage_HighImage = null;
-			this.m_E_EmptyLatticeImage = null;
 			this.m_EButton_TowerIcoImage = null;
 			this.m_EG_IconStarRectTransform = null;
 			this.m_E_IconStar1Image = null;
@@ -541,20 +444,16 @@ namespace ET.Client
 			this.m_ELabel_Label1TextMeshProUGUI = null;
 			this.m_EImage_Label2Image = null;
 			this.m_ELabel_Label2TextMeshProUGUI = null;
-			this.m_EImage_Label3Image = null;
-			this.m_ELabel_Label3TextMeshProUGUI = null;
-			this.m_EButton_SelectedImage = null;
 			this.m_EButton_SelectButton = null;
 			this.m_EButton_SelectImage = null;
 			this.uiTransform = null;
 			this.DataId = 0;
 		}
 
-		private BlurBackground.TranslucentImage m_E_BoxTranslucentImage = null;
+		private UnityEngine.UI.Image m_E_BoxImage = null;
 		private UnityEngine.UI.Image m_EImage_LowImage = null;
 		private UnityEngine.UI.Image m_EImage_MiddleImage = null;
 		private UnityEngine.UI.Image m_EImage_HighImage = null;
-		private UnityEngine.UI.Image m_E_EmptyLatticeImage = null;
 		private UnityEngine.UI.Image m_EButton_TowerIcoImage = null;
 		private UnityEngine.RectTransform m_EG_IconStarRectTransform = null;
 		private UnityEngine.UI.Image m_E_IconStar1Image = null;
@@ -566,9 +465,6 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_Label2Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Label2TextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_EImage_Label3Image = null;
-		private TMPro.TextMeshProUGUI m_ELabel_Label3TextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_EButton_SelectedImage = null;
 		private UnityEngine.UI.Button m_EButton_SelectButton = null;
 		private UnityEngine.UI.Image m_EButton_SelectImage = null;
 		public Transform uiTransform = null;

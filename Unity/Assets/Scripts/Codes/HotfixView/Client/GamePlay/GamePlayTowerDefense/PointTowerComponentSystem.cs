@@ -14,11 +14,11 @@ namespace ET.Client
         {
             protected override void Awake(PointTowerComponent self)
             {
-                GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+                GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
                 ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_PointTower_1");
                 GameObject PointTowerPrefab = ResComponent.Instance.LoadAsset<GameObject>(resEffectCfg.ResName);
                 PointTowerPrefab = GameObject.Instantiate(PointTowerPrefab);
-                PointTowerPrefab.transform.SetParent(gameObjectComponent.gameObject.transform);
+                PointTowerPrefab.transform.SetParent(gameObjectShowComponent.gameObject.transform);
                 PointTowerPrefab.transform.localPosition = new float3(0, 0, 0);
                 PointTowerPrefab.transform.localScale = Vector3.one;
 

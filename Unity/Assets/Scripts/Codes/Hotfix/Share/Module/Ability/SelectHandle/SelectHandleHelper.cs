@@ -83,7 +83,7 @@ namespace ET.Ability
             if (selectHandle.selectHandleType == SelectHandleType.SelectUnits && selectHandle.unitIds.Count == 0)
             {
 #if UNITY_EDITOR
-                Log.Error($"selectHandle.selectHandleType == SelectHandleType.SelectUnits && selectHandle.unitIds.Count == 0");
+                //Log.Error($"triggerUnit[{triggerUnit}] [{selectObjectCfg}] selectHandle.selectHandleType == SelectHandleType.SelectUnits && selectHandle.unitIds.Count == 0");
 #endif
                 return (null, null);
             }
@@ -122,6 +122,109 @@ namespace ET.Ability
             return selectHandle;
         }
 
+        public static SelectHandle CreateSelectHandleWhenClient(Unit unit, SelectObjectCfg selectObjectCfg, ref ActionContext actionContext, SelectHandle selectHandleShow, SelectObjectCfg selectObjectCfgShow)
+        {
+            if (unit == null)
+            {
+                return null;
+            }
+            ActionCallParam actionCallParam = selectObjectCfgShow.ActionCallParam;
+            if (actionCallParam is ActionCallShow_Self_Unit actionCallShowSelfUnit)
+            {
+                return CreateUnitSelfSelectHandle(unit);
+            }
+            else if(actionCallParam is ActionCallShow_Self_Area actionCallShowSelfArea)
+            {
+                bool isResetPos = false;
+                float3 resetPos = float3.zero;
+                bool isResetForward = false;
+                float3 resetForward = float3.zero;
+                bool canUseRecordResult = false;
+                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
+            }
+            else if(actionCallParam is ActionCallShow_Self_OtherUnit actionCallShowSelfOtherUnit)
+            {
+                if (selectHandleShow.unitIds == null)
+                {
+                    Log.Error($"ActionCallShow_Self_OtherUnit selectHandleShow.unitIds == null");
+                    return null;
+                }
+                else if (selectHandleShow.unitIds.Count > 1)
+                {
+                    Log.Error($"ActionCallShow_Self_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
+                    return null;
+                }
+
+                long targetUnitId = selectHandleShow.unitIds[0];
+                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), targetUnitId);
+                return CreateUnitSelectHandle(unit, targetUnit, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Self_OtherArea actionCallShowSelfOtherArea)
+            {
+                bool isResetPos = true;
+                float3 resetPos = selectHandleShow.position;
+                bool isResetForward = false;
+                float3 resetForward = float3.zero;
+                bool canUseRecordResult = false;
+                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
+            }
+            else if (actionCallParam is ActionCallShow_Self_RectangleArea actionCallShowSelfRectangleArea)
+            {
+                bool isResetPos = false;
+                float3 resetPos = float3.zero;
+                bool isResetForward = true;
+                float3 resetForward = selectHandleShow.direction;
+                bool canUseRecordResult = false;
+                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
+            }
+            else if (actionCallParam is ActionCallShow_Self_UmbellateArea actionCallShowSelfUmbellateArea)
+            {
+                bool isResetPos = false;
+                float3 resetPos = float3.zero;
+                bool isResetForward = true;
+                float3 resetForward = selectHandleShow.direction;
+                bool canUseRecordResult = false;
+                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_Unit actionCallShowCameraUnit)
+            {
+                if (selectHandleShow.unitIds == null)
+                {
+                    Log.Error($"ActionCallShow_Camera_Unit selectHandleShow.unitIds == null");
+                    return null;
+                }
+                else if (selectHandleShow.unitIds.Count > 1)
+                {
+                    Log.Error($"ActionCallShow_Camera_Unit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
+                    return null;
+                }
+
+                long targetUnitId = selectHandleShow.unitIds[0];
+                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), targetUnitId);
+                return CreateUnitSelectHandle(unit, targetUnit, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_Area actionCallShowCameraArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = float3.zero;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_RectangleArea actionCallShowCameraRectangleArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = selectHandleShow.direction;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_UmbellateArea actionCallShowCameraUmbellateArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = selectHandleShow.direction;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+
+            return null;
+        }
+
         public static SelectHandle CreateSelectHandle(Unit unit, Unit resetPosByUnit, SelectObjectCfg selectObjectCfg, ref ActionContext actionContext, bool canUseRecordResult = true)
         {
             bool isResetPos = false;
@@ -131,10 +234,13 @@ namespace ET.Ability
                 isResetPos = true;
                 resetPos = resetPosByUnit.Position;
             }
-            return CreateSelectHandle(unit, isResetPos, resetPos, selectObjectCfg, ref actionContext, canUseRecordResult);
+
+            bool isResetForward = false;
+            float3 resetForward = float3.zero;
+            return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
         }
 
-        public static SelectHandle CreateSelectHandle(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ref ActionContext actionContext, bool canUseRecordResult = true)
+        public static SelectHandle CreateSelectHandle(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, ref ActionContext actionContext, bool canUseRecordResult = true)
         {
             if (unit == null)
             {
@@ -147,33 +253,23 @@ namespace ET.Ability
                 saveSelectHandle = UnitHelper.GetSaveSelectHandle(unit);
                 if (saveSelectHandle == null)
                 {
-                    Log.Error($" ActionCallSelectLast saveSelectHandle == null");
+#if UNITY_EDITOR
+                    Log.Error($" ActionCallSelectLast saveSelectHandle == null [{unit.CfgId}] [{selectObjectCfg.Id}]");
+#endif
                 }
                 return saveSelectHandle;
             }
 
             bool bRet;
-            (bRet, saveSelectHandle) = _ChkIsUseSaveSelectHandle(unit, isResetPos, resetPos, selectObjectCfg, ref actionContext);
+            (bRet, saveSelectHandle) = _ChkIsUseSaveSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext);
             if (bRet)
             {
                 return saveSelectHandle;
             }
 
             SelectHandle selectHandle = SelectHandle.Create();
-            if (actionCallParam is ActionCallSelectDirection)
+            if (actionCallParam is ActionCallCasterShow)
             {
-                selectHandle.selectHandleType = SelectHandleType.SelectDirection;
-                //消息
-            }
-            else if (actionCallParam is ActionCallSelectPosition)
-            {
-                selectHandle.selectHandleType = SelectHandleType.SelectPosition;
-                //消息
-            }
-            else if (actionCallParam is ActionCallSelectUnit)
-            {
-                selectHandle.selectHandleType = SelectHandleType.SelectUnits;
-                //消息
             }
             else if (actionCallParam is ActionCallAutoSelf)
             {
@@ -193,7 +289,7 @@ namespace ET.Ability
                     ListComponent<long > recordUnitIds = null;
                     if (canUseRecordResult)
                     {
-                        (bRecord, recordUnitIds) = ChkRecordUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg);
+                        (bRecord, recordUnitIds) = ChkRecordUnitsByArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg);
                     }
                     if (bRecord)
                     {
@@ -202,14 +298,11 @@ namespace ET.Ability
                     }
                     else
                     {
-                        GetUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg, actionCallAutoUnitArea, selectHandle, ref actionContext);
+                        GetUnitsByArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, actionCallAutoUnitArea, selectHandle, ref actionContext);
 
-                        DoRecordUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg, selectHandle.unitIds);
+                        DoRecordUnitsByArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, selectHandle);
                     }
 
-                }
-                else if (actionCallParam is ActionCallAutoUnitOne actionCallAutoUnitOne)
-                {
                 }
 
                 if (selectObjectCfg.IsChgToSelectPos)
@@ -252,7 +345,7 @@ namespace ET.Ability
             return selectHandle;
         }
 
-        public static (bool, SelectHandle) _ChkIsUseSaveSelectHandle(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg,
+        public static (bool, SelectHandle) _ChkIsUseSaveSelectHandle(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg,
         ref ActionContext actionContext)
         {
             ActionCallParam actionCallParam = selectObjectCfg.ActionCallParam;
@@ -276,28 +369,29 @@ namespace ET.Ability
                 return (false, null);
             }
 
-            if (actionCallParam is ActionCallSelectDirection)
-            {
-                if (saveSelectHandle.selectHandleType != SelectHandleType.SelectDirection)
-                {
-                    return (false, null);
-                }
-            }
-            else if (actionCallParam is ActionCallSelectPosition)
-            {
-                if (saveSelectHandle.selectHandleType != SelectHandleType.SelectPosition)
-                {
-                    return (false, null);
-                }
-            }
-            else if (actionCallParam is ActionCallSelectUnit)
-            {
-                if (saveSelectHandle.selectHandleType != SelectHandleType.SelectUnits)
-                {
-                    return (false, null);
-                }
-            }
-            else if (actionCallParam is ActionCallAutoSelf)
+            // if (actionCallParam is ActionCallSelectDirection)
+            // {
+            //     if (saveSelectHandle.selectHandleType != SelectHandleType.SelectDirection)
+            //     {
+            //         return (false, null);
+            //     }
+            // }
+            // else if (actionCallParam is ActionCallSelectPosition)
+            // {
+            //     if (saveSelectHandle.selectHandleType != SelectHandleType.SelectPosition)
+            //     {
+            //         return (false, null);
+            //     }
+            // }
+            // else if (actionCallParam is ActionCallSelectUnit)
+            // {
+            //     if (saveSelectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            //     {
+            //         return (false, null);
+            //     }
+            // }
+            // else
+            if (actionCallParam is ActionCallAutoSelf)
             {
                 if (saveSelectHandle.selectHandleType != SelectHandleType.SelectUnits)
                 {
@@ -317,14 +411,11 @@ namespace ET.Ability
                 }
                 if (actionCallParam is ActionCallAutoUnitArea actionCallAutoUnitArea)
                 {
-                    bool bRet = ChkUnitsInArea(unit, isResetPos, resetPos, selectObjectCfg, actionCallAutoUnitArea, saveSelectHandle, ref actionContext);
+                    bool bRet = ChkUnitsInArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, actionCallAutoUnitArea, saveSelectHandle, ref actionContext);
                     if (bRet == false)
                     {
                         return (false, null);
                     }
-                }
-                else if (actionCallParam is ActionCallAutoUnitOne actionCallAutoUnitOne)
-                {
                 }
             }
 
@@ -361,6 +452,37 @@ namespace ET.Ability
                 saveSelectHandle.direction = unit.Forward;
             }
             return (true, saveSelectHandle);
+        }
+
+
+        public static SelectHandle CreatePositionSelectHandle(Unit unit, float3 position, float3 direction, SelectObjectCfg selectObjectCfg)
+        {
+            SelectHandle selectHandle = SelectHandle.Create();
+            if (direction.Equals(float3.zero))
+            {
+                selectHandle.selectHandleType = SelectHandleType.SelectPosition;
+                selectHandle.position = position;
+            }
+            else
+            {
+                selectHandle.selectHandleType = SelectHandleType.SelectDirection;
+                selectHandle.position = position;
+                selectHandle.direction = direction;
+            }
+
+            if (selectObjectCfg != null)
+            {
+                if (selectObjectCfg.IsSaveTarget)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle, false);
+                }
+                if (selectObjectCfg.IsSaveTargetOnce)
+                {
+                    UnitHelper.SaveSelectHandle(unit, selectHandle, true);
+                }
+            }
+
+            return selectHandle;
         }
 
         public static SelectHandle CreateUnitSelectHandle(Unit unit, Unit targetUnit, SelectObjectCfg selectObjectCfg)
@@ -850,13 +972,13 @@ namespace ET.Ability
         private static MultiMapSimple<float, Unit> tmp_dic2 = new();
         private static List<Unit> tmp_list1 = new();
 
-        public static void DoRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ListComponent<long> unitIds)
+        public static void DoRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, SelectHandle selectHandle)
         {
             SelectHandleRecordManager selectHandleRecordManager = unit.DomainScene().GetComponent<SelectHandleRecordManager>();
-            selectHandleRecordManager.DoRecordUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg, unitIds);
+            selectHandleRecordManager.DoRecordUnitsByArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, selectHandle);
         }
 
-        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
+        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg)
         {
             if (unit == null || unit.DomainScene() == null)
             {
@@ -867,10 +989,10 @@ namespace ET.Ability
             {
                 return (false, null);
             }
-            return selectHandleRecordManager.ChkRecordUnitsByArea(unit, isResetPos, resetPos, selectObjectCfg);
+            return selectHandleRecordManager.ChkRecordUnitsByArea(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg);
         }
 
-        public static void GetUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle selectHandle, ref ActionContext actionContext)
+        public static void GetUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             List<Unit> list = UnitHelper.GetUnitList(unit, selectObjectCfg.SelectObjectUnitType, selectObjectCfg.IsNeedChkCanBeFind);
 
@@ -909,11 +1031,11 @@ namespace ET.Ability
             MultiMapSimple<float, Unit> dic = tmp_dic;
             if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
             {
-                _GetUnitsWhenUmbellate(unit, isResetPos, resetPos, list, dic, selectObjectCfg, actionCallAutoUnitWhenUmbellate, ref actionContext);
+                _GetUnitsWhenUmbellate(unit, isResetPos, resetPos, isResetForward, resetForward, list, dic, selectObjectCfg, actionCallAutoUnitWhenUmbellate, ref actionContext);
             }
             else if (actionCallAutoUnitArea is ActionCallAutoUnitWhenRectangle actionCallAutoUnitWhenRectangle)
             {
-                _GetUnitsWhenRectangle(unit, isResetPos, resetPos, list, dic, selectObjectCfg, actionCallAutoUnitWhenRectangle, ref actionContext);
+                _GetUnitsWhenRectangle(unit, isResetPos, resetPos, isResetForward, resetForward, list, dic, selectObjectCfg, actionCallAutoUnitWhenRectangle, ref actionContext);
             }
 
             selectHandle.unitIds.Clear();
@@ -941,7 +1063,7 @@ namespace ET.Ability
                 selectHandle.unitIds.AddRange(newSelectHandle1.unitIds);
             }
 
-            SelectObjectOrderHandle(unit, isResetPos, resetPos, selectObjectCfg, dic, tmp_list1, selectHandle, ref actionContext);
+            SelectObjectOrderHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, dic, tmp_list1, selectHandle, ref actionContext);
 
             dic.Clear();
             tmp_dic.Clear();
@@ -958,7 +1080,7 @@ namespace ET.Ability
         /// <param name="list"></param>
         /// <param name="dic"></param>
         /// <param name="actionCallAutoUnit"></param>
-        public static void _GetUnitsWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
+        public static void _GetUnitsWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, MultiMapSimple<float, Unit> dic, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
         {
             float radius = actionCallAutoUnit.UmbellateArea.Radius;
             ResetDis(ref radius, ref actionContext);
@@ -973,12 +1095,16 @@ namespace ET.Ability
             float3 curUnitForward;
             if (isResetPos)
             {
-                curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                curUnitForward = unit.Forward;
+                (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
             }
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
+            }
+
+            if (isResetForward)
+            {
+                curUnitForward = resetForward;
             }
 
             if (IgnoringHeight || KeepHorizontal)
@@ -1044,7 +1170,7 @@ namespace ET.Ability
         /// <param name="list"></param>
         /// <param name="dic"></param>
         /// <param name="actionCallAutoUnit"></param>
-        public static void _GetUnitsWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
+        public static void _GetUnitsWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, MultiMapSimple<float, Unit> dic, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
         {
             float width = actionCallAutoUnit.RectangleArea.Width;
             float length = actionCallAutoUnit.RectangleArea.Length;
@@ -1057,12 +1183,16 @@ namespace ET.Ability
             float3 curUnitForward;
             if (isResetPos)
             {
-                curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                curUnitForward = unit.Forward;
+                (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
             }
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
+            }
+
+            if (isResetForward)
+            {
+                curUnitForward = resetForward;
             }
 
             if (IgnoringHeight || KeepHorizontal)
@@ -1135,7 +1265,7 @@ namespace ET.Ability
             return;
         }
 
-        public static void SelectObjectOrderHandle(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, MultiMapSimple<float, Unit> dic, List<Unit> listTmp, SelectHandle selectHandle, ref ActionContext actionContext)
+        public static void SelectObjectOrderHandle(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, MultiMapSimple<float, Unit> dic, List<Unit> listTmp, SelectHandle selectHandle, ref ActionContext actionContext)
         {
             int needSelectNum = selectObjectCfg.SelectNum;
             if (needSelectNum == -1)
@@ -1243,11 +1373,11 @@ namespace ET.Ability
                 dic.Clear();
                 if (selectObjectOrder is DisOrder)
                 {
-                    SelectObjectOrderHandle_DisOrder(unit, isResetPos, resetPos, listTmp, dic);
+                    SelectObjectOrderHandle_DisOrder(unit, isResetPos, resetPos, isResetForward, resetForward, listTmp, dic);
                 }
                 else if (selectObjectOrder is AngleOrder)
                 {
-                    SelectObjectOrderHandle_AngleOrder(unit, isResetPos, resetPos, listTmp, dic);
+                    SelectObjectOrderHandle_AngleOrder(unit, isResetPos, resetPos, isResetForward, resetForward, listTmp, dic);
                 }
                 else if (selectObjectOrder is CurHpOrder)
                 {
@@ -1369,18 +1499,22 @@ namespace ET.Ability
 
         }
 
-        public static void SelectObjectOrderHandle_DisOrder(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic)
+        public static void SelectObjectOrderHandle_DisOrder(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, MultiMapSimple<float, Unit> dic)
         {
             float3 curUnitPos;
             float3 curUnitForward;
             if (isResetPos)
             {
-                curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                curUnitForward = unit.Forward;
+                (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
             }
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
+            }
+
+            if (isResetForward)
+            {
+                curUnitForward = resetForward;
             }
 
             for (int i = 0; i < list.Count; i++)
@@ -1394,7 +1528,7 @@ namespace ET.Ability
             }
         }
 
-        public static void SelectObjectOrderHandle_AngleOrder(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, MultiMapSimple<float, Unit> dic)
+        public static void SelectObjectOrderHandle_AngleOrder(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, MultiMapSimple<float, Unit> dic)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -1403,12 +1537,16 @@ namespace ET.Ability
                 float3 curUnitForward;
                 if (isResetPos)
                 {
-                    curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                    curUnitForward = unit.Forward;
+                    (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
                 }
                 else
                 {
                     (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
+                }
+
+                if (isResetForward)
+                {
+                    curUnitForward = resetForward;
                 }
 
                 float3 dir = math.normalize(targetUnit.Position - curUnitPos);
@@ -1587,7 +1725,7 @@ namespace ET.Ability
 
         ///--------------------
 
-        public static bool ChkUnitsInArea(Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle saveSelectHandle, ref ActionContext actionContext)
+        public static bool ChkUnitsInArea(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitArea actionCallAutoUnitArea, SelectHandle saveSelectHandle, ref ActionContext actionContext)
         {
             int selectNum = selectObjectCfg.SelectNum;
             if (selectNum == -1)
@@ -1635,17 +1773,17 @@ namespace ET.Ability
 
             if (actionCallAutoUnitArea is ActionCallAutoUnitWhenUmbellate actionCallAutoUnitWhenUmbellate)
             {
-                return ChkUnitsInAreaWhenUmbellate(unit, isResetPos, resetPos, list, selectObjectCfg, actionCallAutoUnitWhenUmbellate, ref actionContext);
+                return ChkUnitsInAreaWhenUmbellate(unit, isResetPos, resetPos, isResetForward, resetForward, list, selectObjectCfg, actionCallAutoUnitWhenUmbellate, ref actionContext);
             }
             else if (actionCallAutoUnitArea is ActionCallAutoUnitWhenRectangle actionCallAutoUnitWhenRectangle)
             {
-                return ChkUnitsInAreaWhenRectangle(unit, isResetPos, resetPos, list, selectObjectCfg, actionCallAutoUnitWhenRectangle, ref actionContext);
+                return ChkUnitsInAreaWhenRectangle(unit, isResetPos, resetPos, isResetForward, resetForward, list, selectObjectCfg, actionCallAutoUnitWhenRectangle, ref actionContext);
             }
 
             return true;
         }
 
-        public static bool ChkUnitsInAreaWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
+        public static bool ChkUnitsInAreaWhenUmbellate(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenUmbellate actionCallAutoUnit, ref ActionContext actionContext)
         {
             float radius = actionCallAutoUnit.UmbellateArea.Radius;
             ResetDis(ref radius, ref actionContext);
@@ -1661,12 +1799,16 @@ namespace ET.Ability
             float3 curUnitForward;
             if (isResetPos)
             {
-                curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                curUnitForward = unit.Forward;
+                (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
             }
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
+            }
+
+            if (isResetForward)
+            {
+                curUnitForward = resetForward;
             }
 
             if (IgnoringHeight || KeepHorizontal)
@@ -1732,7 +1874,7 @@ namespace ET.Ability
             return true;
         }
 
-        public static bool ChkUnitsInAreaWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
+        public static bool ChkUnitsInAreaWhenRectangle(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, List<Unit> list, SelectObjectCfg selectObjectCfg, ActionCallAutoUnitWhenRectangle actionCallAutoUnit, ref ActionContext actionContext)
         {
             float width = actionCallAutoUnit.RectangleArea.Width;
             float length = actionCallAutoUnit.RectangleArea.Length;
@@ -1745,13 +1887,18 @@ namespace ET.Ability
             float3 curUnitForward;
             if (isResetPos)
             {
-                curUnitPos = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
-                curUnitForward = unit.Forward;
+                (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, resetPos, null);
             }
             else
             {
                 (curUnitPos, curUnitForward) = ET.Ability.UnitHelper.GetNewNodePosition(unit, null);
             }
+
+            if (isResetForward)
+            {
+                curUnitForward = resetForward;
+            }
+
             if (IgnoringHeight || KeepHorizontal)
             {
                 curUnitForward.y = 0;
@@ -1834,14 +1981,21 @@ namespace ET.Ability
 
         public static void ResetDis(ref float dis, ref ActionContext actionContext)
         {
-            if (string.IsNullOrEmpty(actionContext.skillCfgId))
+            if (string.IsNullOrEmpty(actionContext.skillCfgId) || actionContext.skillDis <= 0)
             {
                 return;
             }
             if (dis > actionContext.skillDis)
             {
                 //dis = actionContext.skillDis * 1.2f;
-                dis = actionContext.skillDis + 1.5f;
+                if (actionContext.skillDis <= 2)
+                {
+                    dis = actionContext.skillDis + 1f;
+                }
+                else
+                {
+                    dis = actionContext.skillDis + 1.5f;
+                }
             }
         }
     }

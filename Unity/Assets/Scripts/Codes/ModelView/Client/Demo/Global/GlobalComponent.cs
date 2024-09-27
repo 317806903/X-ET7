@@ -20,5 +20,6 @@ namespace ET.Client
         public Transform ErrerLogManagerRoot{ get; set; }
         public Transform DebugRoot{ get; set; }
 
+        public bool isUpdateFinished = false;
     }
 }

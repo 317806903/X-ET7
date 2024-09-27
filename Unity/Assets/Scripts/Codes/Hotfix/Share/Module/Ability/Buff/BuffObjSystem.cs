@@ -174,30 +174,58 @@ namespace ET.Ability
             self.timeElapsedReal += timePassed;
             self.timeElapsed += timePassed;
 
-            int tickCount = math.min(self.model.TickTime.Count, 3);
-            for (int i = 0; i < tickCount; i++)
-            {
-                if (self.model.TickTime[i] > 0)
-                {
-                    int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
-                    int newCount = (int)(self.timeElapsedReal / self.model.TickTime[i]);
-                    while (newCount > lastCount)
-                    {
-                        lastCount++;
-                        if (i == 0)
-                        {
-                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1);
-                        }
-                        else if (i == 1)
-                        {
-                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2);
-                        }
-                        else if (i == 2)
-                        {
-                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3);
-                        }
+            self.ChkBuffTick(lastTimeElapsed);
+        }
 
-                        self.ticked += 1;
+        public static void ChkBuffTick(this BuffObj self, float lastTimeElapsed)
+        {
+            int tickCount = math.min(self.model.TickTime.Count, 3);
+            if (tickCount > 0)
+            {
+                bool bContinue = true;
+                if (self.model.BuffType == BuffType.Debuff)
+                {
+                    bContinue = true;
+                }
+                else
+                {
+                    bool bRet = BuffHelper.ChkCanBuffTick(self.GetUnit());
+                    if (bRet)
+                    {
+                        bContinue = true;
+                    }
+                    else
+                    {
+                        bContinue = false;
+                    }
+                }
+                if (bContinue)
+                {
+                    for (int i = 0; i < tickCount; i++)
+                    {
+                        if (self.model.TickTime[i] > 0)
+                        {
+                            int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
+                            int newCount = (int)(self.timeElapsedReal / self.model.TickTime[i]);
+                            while (newCount > lastCount)
+                            {
+                                lastCount++;
+                                if (i == 0)
+                                {
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1);
+                                }
+                                else if (i == 1)
+                                {
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2);
+                                }
+                                else if (i == 2)
+                                {
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3);
+                                }
+
+                                self.ticked += 1;
+                            }
+                        }
                     }
                 }
             }
@@ -212,9 +240,29 @@ namespace ET.Ability
             List<BuffActionCall> buffActionCalls = self.GetActionIds(abilityBuffMonitorTriggerEvent);
             if (buffActionCalls.Count > 0)
             {
-                for (int i = 0; i < buffActionCalls.Count; i++)
+                bool bContinue = true;
+                if (self.model.BuffType == BuffType.Debuff)
                 {
-                    self.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
+                    bContinue = true;
+                }
+                else
+                {
+                    bool bRet = BuffHelper.ChkCanBuffTrig(self.GetUnit());
+                    if (bRet)
+                    {
+                        bContinue = true;
+                    }
+                    else
+                    {
+                        bContinue = false;
+                    }
+                }
+                if (bContinue)
+                {
+                    for (int i = 0; i < buffActionCalls.Count; i++)
+                    {
+                        self.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
+                    }
                 }
             }
         }
@@ -230,7 +278,10 @@ namespace ET.Ability
 
 
             (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), buffActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
-
+            if (resetPosByUnit == null && self.GetUnit() != casterActorUnit)
+            {
+                resetPosByUnit = self.GetUnit();
+            }
             ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
         }
 

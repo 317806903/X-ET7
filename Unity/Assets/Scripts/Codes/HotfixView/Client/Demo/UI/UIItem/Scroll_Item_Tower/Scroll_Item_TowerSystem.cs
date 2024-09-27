@@ -26,7 +26,7 @@ namespace ET.Client
 			}
 
 			self.ELabel_NameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-			await self.EButton_TowerIcoImage.SetImageByItemCfgId(itemCfgId);
+			await self.EButton_TowerIcoImage.SetImageByItemCfgId(self, itemCfgId);
 
 			self.EG_IconStarRectTransform.SetVisible(false);
 			self.EImage_Label1Image.gameObject.SetActive(false);

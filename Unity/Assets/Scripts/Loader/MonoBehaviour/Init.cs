@@ -52,7 +52,7 @@ namespace ET
 					.WithParsed(Game.AddSingleton);
 
 #if UNITY_EDITOR
-			Options.Instance.NeedDB = GlobalConfig.Instance.NeedDB?1:0;
+			Options.Instance.NeedDB = (int)GlobalConfig.Instance.dbType;
 			Options.Instance.IsGameModeArcade = ResConfig.Instance.IsGameModeArcade?1:0;
 #endif
 

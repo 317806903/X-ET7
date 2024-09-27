@@ -220,6 +220,20 @@ namespace ET.Client
                 return true;
             }
 
+            var _DlgARRoomPVE = _UIComponent.GetDlgLogic<DlgARRoomPVE>(true);
+            if (_DlgARRoomPVE != null)
+            {
+                Log.Debug($"IsInRoomUI true DlgARRoomPVE");
+                return true;
+            }
+
+            var _DlgARRoomPVESeason = _UIComponent.GetDlgLogic<DlgARRoomPVESeason>(true);
+            if (_DlgARRoomPVESeason != null)
+            {
+                Log.Debug($"IsInRoomUI true DlgARRoomPVESeason");
+                return true;
+            }
+
             var _DlgARRoomPVP = _UIComponent.GetDlgLogic<DlgARRoomPVP>(true);
             if (_DlgARRoomPVP != null)
             {

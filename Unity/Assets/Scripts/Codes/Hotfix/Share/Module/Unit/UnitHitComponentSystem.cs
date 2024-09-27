@@ -11,7 +11,12 @@ namespace ET
 	{
 		public static void DoUnitHit(this UnitComponent self, float fixedDeltaTime)
 		{
-			foreach (Unit unitBullet in self.bulletList)
+			HashSet<Unit> bulletList = self.GetRecordList(UnitType.Bullet);
+			if (bulletList == null)
+			{
+				return;
+			}
+			foreach (Unit unitBullet in bulletList)
 			{
 				if (UnitHelper.ChkUnitAlive(unitBullet) == false)
 				{
@@ -62,8 +67,14 @@ namespace ET
 					}
 					AOIEntity aoiEntityTmp = seeUnit.Value;
 					Unit unit = aoiEntityTmp.Unit;
+					if (unit == unitBullet)
+					{
+						continue;
+					}
 					bool isChkHit = false;
-					if (UnitHelper.ChkIsPlayer(unit) || UnitHelper.ChkIsActor(unit))
+					if (UnitHelper.ChkIsPlayer(unit)
+					    || UnitHelper.ChkIsCameraPlayer(unit)
+					    || UnitHelper.ChkIsActor(unit))
 					{
 						isChkHit = true;
 					}
@@ -87,6 +98,15 @@ namespace ET
 						{
 							BulletHelper.DoBulletHitMesh(unitBullet, hitPos);
 						}
+					}
+				}
+
+				if (bulletObj.model.CanHitMesh)
+				{
+					(bool bHitMesh, float3 hitPos) = BulletHelper.ChkBulletHitMesh(unitBullet);
+					if (bHitMesh)
+					{
+						BulletHelper.DoBulletHitMesh(unitBullet, hitPos);
 					}
 				}
 			}

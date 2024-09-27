@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,7 @@ namespace ET.Client
 
 		public static void ShowTip(this DlgCommonTipTopShow self, string tipMsg)
 		{
-			self.tips.Push(tipMsg);
+			self.tips.Enqueue(tipMsg);
 
 			self._DoShowTip().Coroutine();
 		}
@@ -42,31 +43,50 @@ namespace ET.Client
 			}
 
 			self.isDoing = true;
-			string tipMsg = self.tips.Pop();
+			string tipMsg = self.tips.Dequeue();
 			self.View.E_TipTextTextMeshProUGUI.text = tipMsg;
 			GameObject tipNode = GameObject.Instantiate(self.transTipNode.gameObject);
+			self.tipShowGoList.Add(tipNode);
 			tipNode.SetActive(true);
 			Transform parent = self.View.EGBackGroundRectTransform.transform;
 			tipNode.transform.SetParent(parent);
 			var uiRect = tipNode.GetComponent<RectTransform>();
 			uiRect.localScale = Vector3.one;
-			uiRect.localPosition = new Vector3(0, parent.GetComponent<RectTransform>().rect.height / 2 - 80, 0); // 注意PosZ也要设置，否则有可能会不显示
+			uiRect.localPosition = new Vector3(0, parent.GetComponent<RectTransform>().rect.height / 2 + 40, 0); // 注意PosZ也要设置，否则有可能会不显示
 			uiRect.sizeDelta = parent.GetComponent<RectTransform>().sizeDelta;
 
-			await TimerComponent.Instance.WaitAsync(5000);
+			self._TipMove(uiRect, parent.GetComponent<RectTransform>().rect.height / 2 - 84).Coroutine();
 
-			self.ChkNeedClose(tipNode);
+			await TimerComponent.Instance.WaitAsync(2000);
+
+			//self.ChkNeedClose(tipNode);
 
 			self.isDoing = false;
 
 			await self._DoShowTip();
 		}
 
+		public static async ETTask _TipMove(this DlgCommonTipTopShow self, RectTransform uiRect, float height)
+		{
+			Sequence mySequence = DOTween.Sequence();
+			Tweener twe = uiRect.transform.DOLocalMoveY(height, 0.5f);
+			twe.SetEase(Ease.OutCubic);
+			mySequence.Append(twe);
+			mySequence.AppendInterval(2.3f);
+			mySequence.OnComplete(() =>
+			{
+				self.ChkNeedClose(uiRect.gameObject);
+			});
+
+			await ETTask.CompletedTask;
+		}
+
 		public static void ChkNeedClose(this DlgCommonTipTopShow self, GameObject go)
 		{
+			self.tipShowGoList.Remove(go);
 			GameObject.Destroy(go);
 
-			if (self.tips.Count == 0)
+			if (self.tipShowGoList.Count == 0 && self.tips.Count == 0)
 			{
 				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTipTopShow>();
 			}

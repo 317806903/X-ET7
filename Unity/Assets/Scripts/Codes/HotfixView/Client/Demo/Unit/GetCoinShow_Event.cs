@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ET.Ability.Client;
 using ET.AbilityConfig;
 
 namespace ET.Client

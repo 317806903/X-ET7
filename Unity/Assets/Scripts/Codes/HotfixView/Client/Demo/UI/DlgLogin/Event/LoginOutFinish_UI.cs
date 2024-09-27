@@ -12,7 +12,13 @@ namespace ET.Client
 
             Player player = PlayerStatusHelper.GetMyPlayer(scene);
             Log.Debug($"--zpb player[{player}]");
-            if (player.LoginType == LoginType.UnitySDK || player.LoginType == LoginType.GoogleSDK || player.LoginType == LoginType.AppleSDK)
+            if (player == null)
+            {
+                return;
+            }
+            if (player.LoginType == LoginType.UnitySDK ||
+                player.LoginType == LoginType.GoogleSDK ||
+                player.LoginType == LoginType.AppleSDK)
             {
                 if (isNeedLoginOutAccount)
                 {

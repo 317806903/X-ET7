@@ -20,6 +20,9 @@ namespace ET.Ability
                 self.skillObjs2SkillSlotType = new();
                 self.skillCfgId2SkillObjs = new();
                 self.sortPrioritySkillObjs = new();
+                self.manualSkillObjs = new();
+
+                self.SetCommonEnergyFull();
             }
         }
 
@@ -28,12 +31,13 @@ namespace ET.Ability
         {
             protected override void Destroy(SkillComponent self)
             {
-                self.skillSlotType2SkillObjs.Clear();
-                self.skillSlotTypeNone2SkillObjs.Clear();
-                self.skillGroupType2SkillObjs.Clear();
-                self.skillObjs2SkillSlotType.Clear();
-                self.skillCfgId2SkillObjs.Clear();
-                self.sortPrioritySkillObjs.Clear();
+                self.skillSlotType2SkillObjs?.Clear();
+                self.skillSlotTypeNone2SkillObjs?.Clear();
+                self.skillGroupType2SkillObjs?.Clear();
+                self.skillObjs2SkillSlotType?.Clear();
+                self.skillCfgId2SkillObjs?.Clear();
+                self.sortPrioritySkillObjs?.Clear();
+                self.manualSkillObjs?.Clear();
             }
         }
 
@@ -42,7 +46,8 @@ namespace ET.Ability
         {
             protected override void FixedUpdate(SkillComponent self)
             {
-                if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                //if (self.IsDisposed || self.DomainScene().SceneType != SceneType.Map)
+                if (self.IsDisposed)
                 {
                     return;
                 }
@@ -54,6 +59,69 @@ namespace ET.Ability
 
         public static void FixedUpdate(this SkillComponent self, float fixedDeltaTime)
         {
+            self.DealCurCommonEnergyNumByTime(fixedDeltaTime);
+        }
+
+        public static float GetCurCommonEnergyNum(this SkillComponent self)
+        {
+            return self.curCommonEnergyNum;
+        }
+
+        public static void CostCommonEnergyNum(this SkillComponent self, float costComonEnergyNum)
+        {
+            self.curCommonEnergyNum = math.max(self.curCommonEnergyNum - costComonEnergyNum, 0);
+        }
+
+        public static void SetCommonEnergyFull(this SkillComponent self)
+        {
+            UnitCfg unitCfg = self.GetUnit().model;
+            if (unitCfg == null)
+            {
+                return;
+            }
+            self.curCommonEnergyNum = unitCfg.TotalCommonEnergy;
+        }
+
+        public static int GetCommonEnergyFullNum(this SkillComponent self)
+        {
+            UnitCfg unitCfg = self.GetUnit().model;
+            if (unitCfg == null)
+            {
+                return 0;
+            }
+            return unitCfg.TotalCommonEnergy;
+        }
+
+        public static void DealCurCommonEnergyNumByTime(this SkillComponent self, float fixedDeltaTime)
+        {
+            UnitCfg unitCfg = self.GetUnit().model;
+            if (unitCfg == null)
+            {
+                return;
+            }
+            float restoreCommonEnergyByTime = unitCfg.RestoreCommonEnergyByTime;
+            if (restoreCommonEnergyByTime <= 0)
+            {
+                return;
+            }
+
+            self.curCommonEnergyNum = math.clamp(self.curCommonEnergyNum + restoreCommonEnergyByTime * fixedDeltaTime, 0, unitCfg.TotalCommonEnergy);
+        }
+
+        public static void DealCurCommonEnergyNumByWave(this SkillComponent self)
+        {
+            UnitCfg unitCfg = self.GetUnit().model;
+            if (unitCfg == null)
+            {
+                return;
+            }
+            float restoreCommonEnergyByWave = unitCfg.RestoreCommonEnergyByWave;
+            if (restoreCommonEnergyByWave <= 0)
+            {
+                return;
+            }
+
+            self.curCommonEnergyNum = math.clamp(self.curCommonEnergyNum + restoreCommonEnergyByWave, 0, unitCfg.TotalCommonEnergy);
         }
 
         public static (bool ret, string msg) LearnSkill(this SkillComponent self, string skillCfgId, int skillLevel, SkillSlotType skillSlotType)
@@ -101,9 +169,10 @@ namespace ET.Ability
             }
             self.skillCfgId2SkillObjs.Add(skillCfgId, skillObj.Id);
             self.skillObjs2SkillSlotType.Add(skillObj.Id, skillSlotType);
+            self.ReSortManualSkillObjs();
             self.ReSortPrioritySkillObjs();
 
-            skillObj.DealLearnActionIds();
+            skillObj.DealLearnActionIds().Coroutine();
 
             return (true, "");
         }
@@ -138,7 +207,7 @@ namespace ET.Ability
             return null;
         }
 
-        public static async ETTask<(bool ret, string msg)> CastSkill(this SkillComponent self, string skillCfgId)
+        public static async ETTask<(bool ret, string msg)> CastSkill(this SkillComponent self, string skillCfgId, SelectHandle selectHandleIn)
         {
             SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
             if (string.IsNullOrEmpty(skillCfg.TimelineId))
@@ -161,8 +230,11 @@ namespace ET.Ability
 
             ET.Ability.MoveOrIdleHelper.StopMove(self.GetUnit());
 
-            TimelineObj timelineObj = await skillObj.CastSkill();
-
+            TimelineObj timelineObj = await skillObj.CastSkill(selectHandleIn);
+            if (timelineObj == null)
+            {
+                return (false, "no target");
+            }
             self.CurSkillTimelineObj = timelineObj;
 
             EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.SkillOnCast()
@@ -171,6 +243,18 @@ namespace ET.Ability
             });
 
             return (true, "");
+        }
+
+        public static async ETTask<(bool ret, string msg)> BuySkillEnergy(this SkillComponent self, string skillCfgId)
+        {
+            SkillObj skillObj = self.GetSkillObj(skillCfgId);
+            if (skillObj == null)
+            {
+                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_HaveNotLearned", skillCfgId);
+                return (false, msg);
+            }
+
+            return await skillObj.BuySkillEnergy();
         }
 
         public static async ETTask ReplaceSkillTimeline(this SkillComponent self, string newTimelineCfgId)
@@ -206,6 +290,24 @@ namespace ET.Ability
             }
 
             return (true, "");
+        }
+
+        public static void ReSortManualSkillObjs(this SkillComponent self)
+        {
+            self.manualSkillObjs.Clear();
+            if (self.skillSlotType2SkillObjs.TryGetValue(SkillSlotType.ManualSkill, out List<long> skillObjs))
+            {
+                for (int i = 0; i < skillObjs.Count; i++)
+                {
+                    long skillId = skillObjs[i];
+                    SkillObj skillObj = self.GetChild<SkillObj>(skillId);
+                    skillObj.ResetSkillSlotIndex(i);
+                    if (string.IsNullOrEmpty(skillObj.model.TimelineId) == false)
+                    {
+                        self.manualSkillObjs.Add(skillId);
+                    }
+                }
+            }
         }
 
         public static void ReSortPrioritySkillObjs(this SkillComponent self)
@@ -314,14 +416,24 @@ namespace ET.Ability
             {
                 long skillId = self.sortPrioritySkillObjs[i];
                 SkillObj skillObj = self.GetChild<SkillObj>(skillId);
-                if (dis < skillObj.GetSkillDis())
-                {
-                    dis = skillObj.GetSkillDis();
-                }
                 var result = skillObj.ChkCanUseSkill();
                 if (result.ret)
                 {
+                    if (dis < skillObj.GetSkillDis())
+                    {
+                        dis = skillObj.GetSkillDis();
+                    }
                     return (skillObj.GetSkillDis(), skillObj);
+                }
+                else
+                {
+                    if (self.skillObjs2SkillSlotType[skillId] == SkillSlotType.NormalAttack)
+                    {
+                        if (dis < skillObj.GetSkillDis())
+                        {
+                            dis = skillObj.GetSkillDis();
+                        }
+                    }
                 }
             }
 
@@ -379,6 +491,27 @@ namespace ET.Ability
                 }
             }
             return skillList;
+        }
+
+        public static List<SkillObj> GetManualSkillList(this SkillComponent self)
+        {
+            ListComponent<SkillObj> skillList = ListComponent<SkillObj>.Create();
+            foreach (long curSkillObjId in self.manualSkillObjs)
+            {
+                SkillObj skillObj = self.GetChild<SkillObj>(curSkillObjId);
+                skillList.Add(skillObj);
+            }
+            return skillList;
+        }
+
+        public static void NoticeClient(this SkillComponent self)
+        {
+            Unit unit = self.GetUnit();
+            if (UnitHelper.ChkIsPlayer(unit)
+                || UnitHelper.ChkIsCameraPlayer(unit))
+            {
+                Ability.UnitHelper.AddSyncData_UnitComponent(self.GetUnit(), self.GetType());
+            }
         }
 
     }

@@ -7,6 +7,7 @@ namespace ET.Client
     {
         protected override void Awake(PingComponent self)
         {
+            PingComponent.Instance = self;
             PingAsync(self).Coroutine();
         }
 
@@ -26,9 +27,10 @@ namespace ET.Client
                 try
                 {
                     int fps = EventSystem.Instance.Invoke<ET.Client.GetFPS, int>(new ET.Client.GetFPS());
+                    self.fps = fps;
                     G2C_Ping response = await session.Call(new C2G_Ping()
                     {
-                        Fps = fps,
+                        Fps = self.fps,
                         PingTime = self.Ping,
                     }, false) as G2C_Ping;
 
@@ -63,6 +65,7 @@ namespace ET.Client
     {
         protected override void Destroy(PingComponent self)
         {
+            PingComponent.Instance = null;
             self.Ping = default;
         }
     }

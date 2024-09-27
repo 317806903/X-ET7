@@ -400,6 +400,8 @@ namespace ET.Client
         {
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
+            UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.MultPlayers).Coroutine();
+
             bool isFull = self.GetRoomComponent().ChkRoomMemberIsFull();
             if (isFull)
             {
@@ -567,6 +569,25 @@ namespace ET.Client
                 else if (roomTeamId == RoomTeamId.Blue)
                 {
                     roomTeamId = RoomTeamId.Green;
+                }
+            }
+            else if (playerTeam.MaxTeamCount >= 4)
+            {
+                if (roomTeamId == RoomTeamId.Green)
+                {
+                    roomTeamId = RoomTeamId.Red;
+                }
+                else if (roomTeamId == RoomTeamId.Red)
+                {
+                    roomTeamId = RoomTeamId.Blue;
+                }
+                else if (roomTeamId == RoomTeamId.Blue)
+                {
+                    roomTeamId = RoomTeamId.Green;
+                }
+                else if (roomTeamId == RoomTeamId.Green)
+                {
+                    roomTeamId = RoomTeamId.Yellow;
                 }
             }
 

@@ -60,7 +60,7 @@ namespace ET
                 float3 nextTarget = targetUnit.Position;
                 //Log.Debug($"开始靠近 22 {nextTarget}");
 
-                if (Ability.UnitHelper.ChkCanAttack(unit, targetUnit, 0f, false))
+                if (aiComponent.ChkCanAttack(unit, targetUnit, 0f, false))
                 {
                     GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(unit.DomainScene());
                     gamePlayTowerDefenseComponent.DealEscape(unit, targetUnit);

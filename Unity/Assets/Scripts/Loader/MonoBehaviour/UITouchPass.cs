@@ -83,6 +83,10 @@ namespace ET
         GameObject PassEvent<T>(BaseEventData data, ExecuteEvents.EventFunction<T> function) where T : IEventSystemHandler
         {
             PointerEventData eventData = data as PointerEventData;
+            if (eventData == null)
+            {
+                return null;
+            }
             var pointerGo = eventData.pointerCurrentRaycast.gameObject ?? eventData.pointerDrag;
             UnityEngine.EventSystems.EventSystem.current.RaycastAll(eventData, result);
             foreach (var item in result)

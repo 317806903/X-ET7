@@ -34,7 +34,7 @@ namespace ET.Client
 		WindowID_ChallengeMode,
 		WindowID_CommonLoading,
 		WindowID_Bag,
-		WindowID_Details,
+		WindowID_ItemDetails,
 		WindowID_ARSceneSlider,
 		WindowID_ARSceneSliderSimple,
 		WindowID_CommonTipTopShow,
@@ -65,5 +65,10 @@ namespace ET.Client
 		WindowID_SeasonNotice,
 		WindowID_Questionnaire,
 		WindowID_Tutorials,
+		WindowID_TutorialOne,
+		WindowID_LanguageChoose,
+		WindowID_BattleTowerNotice,
+		WindowID_BattleSkill,
+		WindowID_SkillDetails,
 	}
 }

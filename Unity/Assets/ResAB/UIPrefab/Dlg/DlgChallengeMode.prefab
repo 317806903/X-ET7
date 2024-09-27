@@ -117,7 +117,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7922227662459238749
@@ -451,7 +451,7 @@ MonoBehaviour:
   isRedDotActive: 0
   UIRedDotType: PVESeason
   RedDotScale: {x: 1, y: 1, z: 1}
-  PositionOffset: {x: 176, y: 61}
+  PositionOffset: {x: 180, y: 40}
 --- !u!1 &2101495567970083209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 3
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1370,7 +1370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 2.3805, y: -15.848}
+  m_AnchoredPosition: {x: 2.3805, y: -15.848022}
   m_SizeDelta: {x: 2060.7, y: 199.5106}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &5122473644132662108
@@ -3128,7 +3128,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 3
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3241,32 +3241,32 @@ PrefabInstance:
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3767353483593455870, guid: 565de78dbee768443a00e8e8dbf989f0,
         type: 3}
@@ -3380,32 +3380,32 @@ PrefabInstance:
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2612619911117819709, guid: 7d24d4a4fe42a0549a3c7226ea5b128b,
         type: 3}

@@ -15,35 +15,35 @@ namespace ET.Client
         {
             if (type == UIWindowType.WorldHub)
             {
-                return UIManagerComponent.Instance.WorldHubRoot;
+                return UIRootManagerComponent.Instance.WorldHubRoot;
             }
             else if (type == UIWindowType.Normal)
             {
-                return UIManagerComponent.Instance.NormalRoot;
+                return UIRootManagerComponent.Instance.NormalRoot;
             }
             else if (type == UIWindowType.Fixed)
             {
-                return UIManagerComponent.Instance.FixedRoot;
+                return UIRootManagerComponent.Instance.FixedRoot;
             }
             else if (type == UIWindowType.PopUp)
             {
-                return UIManagerComponent.Instance.PopUpRoot;
+                return UIRootManagerComponent.Instance.PopUpRoot;
             }
             else if (type == UIWindowType.NoticeRoot)
             {
-                return UIManagerComponent.Instance.NoticeRoot;
+                return UIRootManagerComponent.Instance.NoticeRoot;
             }
             else if (type == UIWindowType.LoadingRoot)
             {
-                return UIManagerComponent.Instance.LoadingRoot;
+                return UIRootManagerComponent.Instance.LoadingRoot;
             }
             else if (type == UIWindowType.HighestFixedRoot)
             {
-                return UIManagerComponent.Instance.HighestFixedRoot;
+                return UIRootManagerComponent.Instance.HighestFixedRoot;
             }
             else if (type == UIWindowType.HighestNoticeRoot)
             {
-                return UIManagerComponent.Instance.HighestNoticeRoot;
+                return UIRootManagerComponent.Instance.HighestNoticeRoot;
             }
 
             Log.Error("uiroot type is error: " + type.ToString());

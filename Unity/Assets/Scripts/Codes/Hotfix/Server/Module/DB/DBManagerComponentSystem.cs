@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ET.Server
 {
@@ -22,7 +23,7 @@ namespace ET.Server
                 DBManagerComponent.Instance = null;
             }
         }
-        
+
         public static DBComponent GetZoneDB(this DBManagerComponent self, int zone)
         {
             DBComponent dbComponent = self.DBComponents[zone];
@@ -40,6 +41,29 @@ namespace ET.Server
             dbComponent = self.AddChild<DBComponent, string, string, int>(startZoneConfig.DBConnection, startZoneConfig.DBName, zone);
             self.DBComponents[zone] = dbComponent;
             return dbComponent;
+        }
+
+        public static void SetLocalDB(this DBManagerComponent self)
+        {
+            DBLocalComponent dbLocalComponent = self.GetComponent<DBLocalComponent>();
+            if (dbLocalComponent == null)
+            {
+                dbLocalComponent = self.AddComponent<DBLocalComponent>();
+                string savePath = EventSystem.Instance.Invoke<ConfigComponent.GetLocalDBSavePath, string>(new ConfigComponent.GetLocalDBSavePath());
+                dbLocalComponent.SetSavePath(savePath);
+                DataCacheWriteComponent.DefaultSaveWaitTime = 100;
+            }
+        }
+
+        public static DBLocalComponent GetLocalDB(this DBManagerComponent self)
+        {
+            DBLocalComponent dbLocalComponent = self.GetComponent<DBLocalComponent>();
+            if (dbLocalComponent == null)
+            {
+                return null;
+            }
+
+            return dbLocalComponent;
         }
     }
 }

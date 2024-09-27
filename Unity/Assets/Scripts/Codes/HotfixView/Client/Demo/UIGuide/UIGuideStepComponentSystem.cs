@@ -774,7 +774,7 @@ namespace ET.Client
             string txt = LocalizeComponent.Instance.GetTextValue(self.curUIGuidePath.text);
             Image image = tipImageNode.GetComponent<Image>();
             string imgPath = self.curUIGuidePath.guideTextImgPath;
-            await image.SetImageByPath(imgPath);
+            await image.SetImageByPath(self, imgPath);
 
             image.SetNativeSize();
             tipImageNode.gameObject.SetActive(true);
@@ -1032,7 +1032,7 @@ namespace ET.Client
 
             Image image = specImageNodeTrans.Find("Image").GetComponent<Image>();
             string imgPath = self.curUIGuidePath.specImgPath;
-            await image.SetImageByPath(imgPath);
+            await image.SetImageByPath(self, imgPath);
             RectTransform rect = image.transform as RectTransform;
             rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.anchorMin = new Vector2(0.5f, 0.5f);

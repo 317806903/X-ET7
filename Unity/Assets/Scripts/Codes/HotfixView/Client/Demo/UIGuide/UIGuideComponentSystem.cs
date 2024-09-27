@@ -81,7 +81,7 @@ namespace ET.Client
             UIImageLocalizeComponent.Instance.AddUIImageLocalizeView(self.RootTrans.gameObject);
         }
 
-        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
+        public static async ETTask DoUIGuideByName(this UIGuideComponent self, string guideFileName, int priority, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
         {
             string filePath = $"UIGuideConfig_{guideFileName}";
             UIGuidePathList _UIGuidePathList = await ResComponent.Instance.LoadAssetAsync<UIGuidePathList>(filePath);
@@ -97,11 +97,11 @@ namespace ET.Client
                 _UIGuidePath.index = i;
             }
 
-            await self.DoUIGuide(guideFileName, _UIGuidePathList, startIndex, finished, stepFinished);
+            await self.DoUIGuide(guideFileName, priority, _UIGuidePathList, startIndex, finished, stepFinished);
             await ETTask.CompletedTask;
         }
 
-        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
+        public static async ETTask DoUIGuide(this UIGuideComponent self, string guideFileName, int priority, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished = null, Action<Scene, int> stepFinished = null)
         {
             if (_UIGuidePathList == null || _UIGuidePathList.list.Count == 0)
             {
@@ -123,6 +123,7 @@ namespace ET.Client
             self.stepFinished = stepFinished;
 
             self.guideFileName = guideFileName;
+            self.priority = priority;
             self.nowIndex = startIndex;
             self._UIGuidePathList = _UIGuidePathList;
             await self.DoGuideStep();

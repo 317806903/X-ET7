@@ -13,25 +13,65 @@ MonoBehaviour:
   m_Name: LevelTutorial_Challenge1_NoAR
   m_EditorClassIdentifier: 
   list:
-  - name: "\u9690\u85CF\u8BBE\u7F6E"
+  - name: "\u653E\u7F6E\u5927\u672C\u8425"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
-    hierarchyCanvasPath: 
-    hierarchyGuidePath: 
-    guideTextType: 0
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutHome
+    guideTextType: 1
     guideTextImgPath: 
-    text: 
+    text: TextCode_Key_TutorialText_PlaceHQ
     specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 2
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    curInNextType: 1
+    waitToNextUIGuideStep: 4
     audioPath: 
     guideExecuteStaticMethod: ShowBattleTowerQuit
     guideExecuteParam: false
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
+  - name: "\u653E\u7F6E\u51FA\u602A\u53E3"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTower/E_PutHomeAndMonsterPoint/EButton_PutMonsterPoint
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_PlaceSP
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_portal.png
+    curInNextType: 1
+    waitToNextUIGuideStep: 4
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 1
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
+  - name: "\u653E\u7F6E\u51FA\u602A\u53E3(\u786E\u8BA4)"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
+    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
+    guideTextType: 1
+    guideTextImgPath: 
+    text: 
+    specImgMatchType: 0
+    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: false
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
     trigExitConditionParam: 
   - name: "\u9690\u85CFready\u6309\u94AE"
     isFreeClickBeforeEnter: 1
@@ -59,10 +99,10 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_Challenge1_Buy1
+    text: TextCode_Key_TutorialText_BuyTower
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_buybtn2.png
     curInNextType: 0
@@ -70,16 +110,16 @@ MonoBehaviour:
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 
-    trigExitCondition: 0
+    trigExitCondition: 1
     trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
+    trigExitConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower_0
   - name: "\u6536\u8D77\u8D2D\u4E70\u5217\u8868"
     isFreeClickBeforeEnter: 0
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_BuyClose
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_CloseDLG
@@ -153,11 +193,11 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u9690\u85CFready\u6309\u94AE"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
+  - name: "\u663E\u793A\u89C6\u9891"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 1
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow
     hierarchyCanvasPath: 
     hierarchyGuidePath: 
     guideTextType: 0
@@ -168,123 +208,23 @@ MonoBehaviour:
     curInNextType: 0
     waitToNextUIGuideStep: 2
     audioPath: 
-    guideExecuteStaticMethod: ShowBattleTowerReady
-    guideExecuteParam: false
+    guideExecuteStaticMethod: ShowVideo
+    guideExecuteParam: Video_Upgrade
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u5237\u65B0\u8D2D\u4E70\u5217\u8868"
-    isFreeClickBeforeEnter: 1
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
+  - name: "\u5237\u65B0"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 2
+    trigEnterConditionStaticMethod: ChkIsNotShowVideo
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_Refresh
     specImgMatchType: 0
     specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u8D2D\u4E70\u58541"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_Challenge1_Buy2
-    specImgMatchType: 0
-    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_buybtn2.png
-    curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u6536\u8D77\u8D2D\u4E70\u5217\u8868"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_CloseDLG
-    specImgMatchType: 0
-    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img-back.png
-    curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u653E\u7F6E\u5854"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower_0/EButton_Select
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_PlaceTower
-    specImgMatchType: 0
-    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_card.png
-    curInNextType: 1
-    waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 2
-    trigExitConditionStaticMethod: ChkTowerPutSuccess
-    trigExitConditionParam: 
-  - name: "\u663E\u793Aready\u6309\u94AE"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: 
-    hierarchyGuidePath: 
-    guideTextType: 0
-    guideTextImgPath: 
-    text: 
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 2
-    audioPath: 
-    guideExecuteStaticMethod: ShowBattleTowerReady
-    guideExecuteParam: true
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u51C6\u5907\u597D"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_Ready/EButton_ReadyWhenRestTime
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_WaveStart
-    specImgMatchType: 0
-    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_imreadybtn.png
     curInNextType: 0
     waitToNextUIGuideStep: 0
     audioPath: 

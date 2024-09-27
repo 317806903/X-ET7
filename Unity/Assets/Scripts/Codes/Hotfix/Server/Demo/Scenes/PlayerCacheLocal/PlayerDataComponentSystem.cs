@@ -74,6 +74,10 @@ namespace ET.Server
                     PlayerMailComponent playerMailComponent = await self.InitByDBOne<PlayerMailComponent>(self.playerId);
                     playerMailComponent.Init();
                     return playerMailComponent;
+                case PlayerModelType.Skills:
+                    PlayerSkillComponent playerSkillComponent = await self.InitByDBOne<PlayerSkillComponent>(self.playerId);
+                    playerSkillComponent.Init();
+                    return playerSkillComponent;
                 default:
                     break;
             }

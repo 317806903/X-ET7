@@ -412,6 +412,7 @@ GameObject:
   - component: {fileID: 8669402746409987054}
   - component: {fileID: 5222287877885873025}
   - component: {fileID: 8304967385845440776}
+  - component: {fileID: 515680134099687109}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -536,6 +537,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &515680134099687109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880966380347489218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/E_ToggleGroup/E_Toggle_2/info
+  localizeType: 0
 --- !u!1 &1454548797735251282
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +693,7 @@ GameObject:
   - component: {fileID: 9098811752038692033}
   - component: {fileID: 745580517681675890}
   - component: {fileID: 434158402867810489}
+  - component: {fileID: 6911331960968615890}
   m_Layer: 5
   m_Name: title
   m_TagString: Untagged
@@ -801,6 +817,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6911331960968615890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432974807394413835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/title
+  localizeType: 0
 --- !u!1 &2505900337280225869
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +1015,7 @@ GameObject:
   - component: {fileID: 7399223295561517168}
   - component: {fileID: 782136327515917482}
   - component: {fileID: 1415154452453033910}
+  - component: {fileID: 8705291931373022590}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -1109,6 +1140,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8705291931373022590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642459531895166236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/E_ToggleGroup/E_Toggle_3/info
+  localizeType: 0
 --- !u!1 &2946459327374295930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1165,7 @@ GameObject:
   - component: {fileID: 5421691846179687113}
   - component: {fileID: 725434186121597799}
   - component: {fileID: 6730781079362321053}
+  - component: {fileID: 890176904865017796}
   m_Layer: 5
   m_Name: info (1)
   m_TagString: Untagged
@@ -1244,6 +1290,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &890176904865017796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946459327374295930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/OperatorRoot/info (1)
+  localizeType: 0
 --- !u!1 &2968578265716782290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1686,7 @@ GameObject:
   - component: {fileID: 4048052989743212315}
   - component: {fileID: 3796935169738997094}
   - component: {fileID: 3428964299240929482}
+  - component: {fileID: 1966312391480917149}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -1750,6 +1811,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1966312391480917149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3393398232088859528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/info
+  localizeType: 0
 --- !u!1 &3463082016976740584
 GameObject:
   m_ObjectHideFlags: 0
@@ -3173,6 +3248,7 @@ GameObject:
   - component: {fileID: 2879409394033639526}
   - component: {fileID: 481980406415964383}
   - component: {fileID: 5466383055000131584}
+  - component: {fileID: 2278433770521385715}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -3297,6 +3373,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2278433770521385715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426115590902119983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/E_ToggleGroup/E_Toggle_1/info
+  localizeType: 0
 --- !u!1 &8496913961948963042
 GameObject:
   m_ObjectHideFlags: 0
@@ -3567,6 +3657,7 @@ GameObject:
   - component: {fileID: 8831952638994839360}
   - component: {fileID: 578994650106073433}
   - component: {fileID: 9168588714116435979}
+  - component: {fileID: 8642480092627785969}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3691,6 +3782,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8642480092627785969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8902349608877700010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameReport/EG_Report/Root/OperatorRoot/E_CloseComplain/Text (TMP)
+  localizeType: 0
 --- !u!1 &8906442838323838923
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,8 +45,8 @@ namespace ET.Client
             self.View.E_BagsButton.AddListenerAsync(self.ClickBags);
             self.View.E_BattleDeckButton.AddListenerAsync(self.ClickBattleDeck);
             self.View.E_SeasonButton.AddListenerAsync(self.ClickRank);
-            self.View.E_SettingButton.AddListenerAsync(self.GameSetting);
-
+            //self.View.E_SettingButton.AddListenerAsync(self.GameSetting);
+            self.View.E_SettingLeftButton.AddListenerAsync(self.GameSetting);
             self.View.E_BtnMailButton.AddListenerAsync(async () =>
             {
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgMail>();
@@ -54,6 +54,14 @@ namespace ET.Client
 
             //添加问卷按钮点击事件
             self.View.E_QuestionnaireButton.AddListenerAsync(self.ClickQuerstionare);
+
+#if UNITY_EDITOR
+            self.View.E_SkillButton.SetVisible(true);
+            //技能
+            self.View.E_SkillButton.AddListenerAsync(self.OnClickSkill);
+#else
+            self.View.E_SkillButton.SetVisible(false);
+#endif
         }
 
         public static async ETTask ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -91,25 +99,15 @@ namespace ET.Client
 
         public static async ETTask ChkNeedShowSeasonChg(this DlgGameModeAR self)
         {
-            if (ET.SceneHelper.ChkIsDemoShow())
+            PlayerOtherInfoComponent playerOtherInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerOtherInfo(self.DomainScene());
+            bool bRet = playerOtherInfoComponent.ChkUIRedDotType(UIRedDotType.NewSeasonNotice);
+            if (bRet)
             {
-                return;
-            }
-
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            if (playerBaseInfoComponent.seasonIndex != SeasonHelper.GetSeasonIndex(self.DomainScene()))
-            {
-
                 await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgSeasonNotice>();
 
-                playerBaseInfoComponent.seasonIndex = SeasonHelper.GetSeasonIndex(self.DomainScene());
-                playerBaseInfoComponent.seasonCfgId = SeasonHelper.GetSeasonCfgId(self.DomainScene());
-
-                await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BaseInfo, new (){"seasonIndex", "seasonCfgId"});
-
-                UIRedDotHelper.ShowRedDotNode(self.DomainScene(), UIRedDotType.PVESeason);
-                await ET.Client.PlayerCacheHelper.SetUIRedDotType(self.DomainScene(), UIRedDotType.PVESeason, true);
+                await UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.NewSeasonNotice);
             }
+
         }
 
         public static async ETTask ChkNeedShowGuide(this DlgGameModeAR self)
@@ -127,7 +125,7 @@ namespace ET.Client
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
 
-            self.Timer = TimerComponent.Instance.NewRepeatedTimer(1000, TimerInvokeType.GameModeARTimer, self);
+            self.Timer = TimerComponent.Instance.NewRepeatedTimer(5000, TimerInvokeType.GameModeARTimer, self);
 
             await self.RefreshWhenSeasonRemainChg();
 
@@ -145,6 +143,20 @@ namespace ET.Client
             self.View.ES_AvatarShow.ShowMyAvatarIcon().Coroutine();
 
             await self.UpdatePhysical();
+            await self.ChkIsShowQuestionnaire();
+        }
+
+        public static async ETTask ChkIsShowQuestionnaire(this DlgGameModeAR self)
+        {
+            QuestionnaireCfg questionnaire = await ET.Client.PlayerCacheHelper.GetNextQuestionnaire(self.DomainScene());
+            if (questionnaire == null)
+            {
+                self.View.E_QuestionnaireButton.SetVisible(false);
+            }
+            else
+            {
+                self.View.E_QuestionnaireButton.SetVisible(true);
+            }
         }
 
         public static async ETTask ShowFunctionMenuLock(this DlgGameModeAR self)
@@ -335,6 +347,12 @@ namespace ET.Client
             await self.UpdatePhysical();
         }
 
+        public static async ETTask RefreshWhenOtherInfoChg(this DlgGameModeAR self)
+        {
+            await self.ChkIsShowQuestionnaire();
+            await self.ChkNeedShowSeasonChg();
+        }
+
         public static async ETTask UpdatePhysical(this DlgGameModeAR self)
         {
 
@@ -378,6 +396,12 @@ namespace ET.Client
                     {"function_name", name},
                 }
             });
+        }
+
+        public static async ETTask OnClickSkill(this DlgGameModeAR self)
+        {
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindow<DlgBattleSkill>();
+            await ETTask.CompletedTask;
         }
     }
 }

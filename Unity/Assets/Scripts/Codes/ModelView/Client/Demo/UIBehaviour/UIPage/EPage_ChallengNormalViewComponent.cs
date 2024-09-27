@@ -193,6 +193,40 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Button E_DebugButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_DebugButton == null )
+				{
+					this.m_E_DebugButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Debug");
+				}
+				return this.m_E_DebugButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_DebugImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_DebugImage == null )
+				{
+					this.m_E_DebugImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Debug");
+				}
+				return this.m_E_DebugImage;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_ELabelModeDesTextMeshProUGUI = null;
@@ -206,6 +240,8 @@ namespace ET.Client
 			this.m_ELoopScrollList_RewardLoopHorizontalScrollRect = null;
 			this.m_ELoopScrollList_propLoopHorizontalScrollRect = null;
 			this.m_ELabel_LvTextMeshProUGUI = null;
+			this.m_E_DebugButton = null;
+			this.m_E_DebugImage = null;
 			this.uiTransform = null;
 		}
 
@@ -220,6 +256,8 @@ namespace ET.Client
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RewardLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_propLoopHorizontalScrollRect = null;
 		private TMPro.TextMeshProUGUI m_ELabel_LvTextMeshProUGUI = null;
+		private UnityEngine.UI.Button m_E_DebugButton = null;
+		private UnityEngine.UI.Image m_E_DebugImage = null;
 		public Transform uiTransform = null;
 	}
 }

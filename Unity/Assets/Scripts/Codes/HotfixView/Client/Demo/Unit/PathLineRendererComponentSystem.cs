@@ -16,6 +16,7 @@ namespace ET.Client
             {
                 self.lineRendererTrans = new();
                 self.lineRenderers = new();
+                self.lineRendererMidPos = new();
                 PathLineRendererComponent.Instance = self;
             }
         }
@@ -36,6 +37,7 @@ namespace ET.Client
                 }
                 self.lineRendererTrans.Clear();
                 self.lineRenderers.Clear();
+                self.lineRendererMidPos.Clear();
 
                 if (PathLineRendererComponent.Instance == self)
                 {
@@ -48,9 +50,12 @@ namespace ET.Client
         {
             if (self.lineRendererRoot != null)
             {
-                foreach (var lineRendererTran in self.lineRendererTrans)
+                foreach (var lineRendererTran in self.lineRendererTrans.Values)
                 {
-                    GameObject.Destroy(lineRendererTran.Value.gameObject);
+                    if (lineRendererTran != null)
+                    {
+                        GameObject.Destroy(lineRendererTran.gameObject);
+                    }
                 }
                 GameObjectPoolHelper.ReturnTransformToPool(self.lineRendererRoot);
                 self.lineRendererRoot = null;
@@ -65,6 +70,12 @@ namespace ET.Client
             if (self.lineRenderers.ContainsKey(key))
             {
                 LineRenderer lineRenderer = self.lineRenderers[key];
+                if (lineRenderer == null)
+                {
+                    self.lineRendererTrans.Remove(key);
+                    self.lineRenderers.Remove(key);
+                    return false;
+                }
                 float3 startPos = lineRenderer.GetPosition(0);
                 if (math.abs(startPos.x - pos.x) < 0.1f && math.abs(startPos.z - pos.z) < 0.1f)
                 {
@@ -100,15 +111,18 @@ namespace ET.Client
             }
             else
             {
-                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_PathLineRenderer_1");
-                GameObject PathLineRendererGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
-                self.lineRendererRoot = PathLineRendererGo.transform;
-                PathLineRendererGo.transform.SetParent(GlobalComponent.Instance.ClientManagerRoot);
-                PathLineRendererGo.transform.localPosition = Vector3.zero;
-                PathLineRendererGo.transform.localScale = Vector3.one;
+                if (self.lineRendererRoot == null)
+                {
+                    ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_PathLineRenderer_1");
+                    GameObject PathLineRendererGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
+                    self.lineRendererRoot = PathLineRendererGo.transform;
+                    PathLineRendererGo.transform.SetParent(GlobalComponent.Instance.ClientManagerRoot);
+                    PathLineRendererGo.transform.localPosition = Vector3.zero;
+                    PathLineRendererGo.transform.localScale = Vector3.one;
 
-                self.lineRendererItem = PathLineRendererGo.transform.Find("LineRendererItem");
-                self.lineRendererItem.gameObject.SetActive(false);
+                    self.lineRendererItem = PathLineRendererGo.transform.Find("LineRendererItem");
+                    self.lineRendererItem.gameObject.SetActive(false);
+                }
 
                 GameObject lineRendererNew = GameObject.Instantiate(self.lineRendererItem.gameObject);
                 lineRendererNew.SetActive(true);
@@ -125,6 +139,7 @@ namespace ET.Client
 
             if (points != null && points.Count > 0)
             {
+                self.lineRendererMidPos[key] = ET.RecastHelper.GetMidPosWhen2Pos(points);
                 lineRenderer.enabled = true;
                 float alpha = lineRenderer.material.color.a;
                 if (canArrive)
@@ -136,13 +151,17 @@ namespace ET.Client
                     lineRenderer.material.color = new Color(1, 0, 0, alpha);
                 }
                 lineRenderer.positionCount = points.Count;
+                float lineRendererHeight = lineRenderer.transform.localPosition.y;
+                if (lineRendererHeight <= 0)
+                {
+                    lineRendererHeight = 0.02f;
+                }
                 Vector3[] linePoints = new Vector3[points.Count];
                 for (int i = 0; i < points.Count; i++)
                 {
-                    linePoints[i] = new Vector3(0, 0.01f, 0) + (Vector3)points[i];
+                    linePoints[i] = new Vector3(0, lineRendererHeight, 0) + (Vector3)points[i];
                 }
                 lineRenderer.SetPositions(linePoints);
-
 
                 MeshCollider meshCollider = lineRendererTran.gameObject.GetComponent<MeshCollider>();
                 Mesh lineMesh;
@@ -217,6 +236,19 @@ namespace ET.Client
             }
 
             return length;
+        }
+
+        public static float3 GetPathMidPos(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId)
+        {
+            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
+            if (self.lineRendererMidPos.ContainsKey(key))
+            {
+                return self.lineRendererMidPos[key];
+            }
+            else
+            {
+                return float3.zero;
+            }
         }
 
         public static Unit GetUnit(this PathLineRendererComponent self)

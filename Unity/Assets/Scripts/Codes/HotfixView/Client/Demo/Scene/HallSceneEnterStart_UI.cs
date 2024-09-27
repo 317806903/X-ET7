@@ -12,11 +12,11 @@ namespace ET.Client
         {
             Scene clientScene = scene;
 
+            //UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
+            UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
+
             ET.Client.GameObjectPoolHelper.ResetPoolDictCount(10);
             System.GC.Collect();
-
-            UIManagerHelper.GetUIComponent(scene).HideAllShownWindow();
-            //zpb UIManagerHelper.GetUIComponent(scene).CloseAllWindow();
 
             UIAudioManagerHelper.PlayMusic(scene, MusicType.Main);
 

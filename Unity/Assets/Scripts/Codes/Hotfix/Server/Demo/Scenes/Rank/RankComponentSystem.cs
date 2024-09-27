@@ -128,16 +128,18 @@ namespace ET.Server
                 {
                     continue;
                 }
-                MailCfg mailCfg = MailCfgCategory.Instance.Get(item.Value.mailCfgId);
-                DateTime limitTimeTmp = TimeHelper.DateTimeNow().AddDays(mailCfg.EffectiveTime);
-                long limitTime = TimeHelper.ToTimeStamp(limitTimeTmp);
-                Dictionary<string, int> itemCfgList = ET.DropItemRuleHelper.Drop(mailCfg.DropRuleId);
-
                 Dictionary<long, string> playerParamTmp = new();
                 foreach (long playerId in waitSendPlayerList)
                 {
                     playerParamTmp[playerId] = playerParam[playerId];
                 }
+
+                string mailCfgId = item.Value.mailCfgId;
+
+                MailCfg mailCfg = MailCfgCategory.Instance.Get(mailCfgId);
+                DateTime limitTimeTmp = TimeHelper.DateTimeNow().AddDays(mailCfg.EffectiveTime);
+                long limitTime = TimeHelper.ToTimeStamp(limitTimeTmp);
+                Dictionary<string, int> itemCfgList = ET.DropItemRuleHelper.Drop(mailCfg.DropRuleId);
 
                 // 赛季名称 {SeasonName}
                 // 玩家名称	{Name}

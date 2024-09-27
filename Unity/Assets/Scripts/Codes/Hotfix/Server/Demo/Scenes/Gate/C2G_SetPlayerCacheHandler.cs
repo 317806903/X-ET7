@@ -41,6 +41,18 @@ namespace ET.Server
 			{
 				playerModelChgType = PlayerModelChgType.PlayerOtherInfo_Client;
 			}
+			else if (playerModelType == PlayerModelType.SeasonInfo)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerSeasonInfo_Client;
+			}
+			else if (playerModelType == PlayerModelType.FunctionMenu)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerFunctionMenu_Client;
+			}
+			else if (playerModelType == PlayerModelType.Mails)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerMail_Client;
+			}
 			await ET.Server.PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, playerModelType, setPlayerKeys, playerModelChgType);
 
 			await ETTask.CompletedTask;

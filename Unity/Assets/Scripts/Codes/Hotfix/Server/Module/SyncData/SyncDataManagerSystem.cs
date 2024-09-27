@@ -54,7 +54,11 @@ namespace ET.Server
                     {
                         return;
                     }
-                    self.playerSessionInfoList[playerId] = self.GetPlayerSessionInfo(_G2M_GetPlayerSessionInfo.Fps, _G2M_GetPlayerSessionInfo.PingTime);
+
+                    if (_G2M_GetPlayerSessionInfo.Error == ET.ErrorCode.ERR_Success)
+                    {
+                        self.playerSessionInfoList[playerId] = self.GetPlayerSessionInfo(_G2M_GetPlayerSessionInfo.Fps, _G2M_GetPlayerSessionInfo.PingTime);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -94,6 +98,8 @@ namespace ET.Server
                 synFrame = 3;
             }
             //Log.Debug($"zpb synFrame[{synFrame}] fps[{fps}] pingTime[{pingTime}]");
+
+            //synFrame = RandomGenerator.RandomNumber(3, 20);
             return synFrame;
         }
     }

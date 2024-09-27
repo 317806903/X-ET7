@@ -14,8 +14,14 @@ namespace ET.Client
 
             sessionComponent.Session.AddComponent<ReLoginComponent>();
 
+            await ET.Client.UIManagerHelper.DealPlayerUIRedDotType(scene, true);
             await SceneHelper.EnterHall(scene, true, false);
 
+            await ChkIsNeedTutorialFirst(scene);
+        }
+
+        protected async ETTask ChkIsNeedTutorialFirst(Scene scene)
+        {
             if (DebugConnectComponent.Instance.IsDebugMode == false)
             {
                 if (ET.SceneHelper.ChkIsGameModeArcade())
@@ -37,14 +43,13 @@ namespace ET.Client
                     }
                     else
                     {
-                        ET.Client.UIGuideHelper.DoUIGuide(scene, "TutorialFirst", 0, (scene) =>
+                        ET.Client.UIGuideHelper.DoUIGuide(scene, "TutorialFirst", (int)ET.Client.GuidePriority.TutorialFirst, 0, (scene) =>
                         {
                             FinishedCallBack(scene).Coroutine();
                         }).Coroutine();
                     }
                 }
             }
-
         }
 
         protected async ETTask FinishedCallBack(Scene scene)

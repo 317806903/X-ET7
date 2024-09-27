@@ -8,9 +8,13 @@ namespace ET.Client
 	{
 		public DlgFixedMenuViewComponent View { get => this.GetComponent<DlgFixedMenuViewComponent>(); }
 
-		public int waitFrame = 20;
+		public int waitFrame = 15;
 		public int curFrame = 0;
 
+		public int waitChkUpdateFrame = 300;
+		public int curChkUpdateFrame = 0;
+
+		public bool IsShowCoinList;
 		public long Timer;
 	}
 }

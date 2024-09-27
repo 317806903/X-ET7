@@ -17,6 +17,11 @@ namespace ET
             return "Token_ArcadeCoin";
         }
 
+        public static string GetAvatarFrameNoneCfgId()
+        {
+            return "AvatarFrame_None";
+        }
+
         public static bool ChkIsToken(string itemCfgId)
         {
             if (string.IsNullOrEmpty(itemCfgId))
@@ -30,6 +35,26 @@ namespace ET
 
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
             if (itemCfg.ItemType != ItemType.Token)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ChkIsAvatarFrame(string itemCfgId)
+        {
+            if (string.IsNullOrEmpty(itemCfgId))
+            {
+                return false;
+            }
+            if (ItemCfgCategory.Instance.Contain(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemType != ItemType.AvatarFrame)
             {
                 return false;
             }
@@ -198,20 +223,14 @@ namespace ET
             return towerCfg.Labels;
         }
 
-        public static string GetTowerItemPreTowerConfigId(string itemCfgId)
+        public static string GetTowerItemPreTowerConfigId(string itemCfgId, int index = 1)
         {
-            TowerDefense_TowerCfg preTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetPreTowerCfg(itemCfgId);
-            if (preTowerCfg == null)
-                return null;
-            return preTowerCfg.Id;
+            return TowerDefense_TowerCfgCategory.Instance.GetPreTowerCfgId(itemCfgId, index);
         }
 
-        public static string GetTowerItemNextTowerConfigId(string itemCfgId)
+        public static string GetTowerItemNextTowerConfigId(string itemCfgId, int index = 1)
         {
-            TowerDefense_TowerCfg nextTowerCfg = TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfg(itemCfgId);
-            if (nextTowerCfg == null)
-                return null;
-            return nextTowerCfg.Id;
+            return TowerDefense_TowerCfgCategory.Instance.GetNextTowerCfgId(itemCfgId, index);
         }
 
         public static List<(string title, string content)> GetTowerAttribute(string itemCfgId, int level)

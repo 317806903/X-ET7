@@ -191,7 +191,7 @@ MonoBehaviour:
         CollectorGUID: 6ab70aee4d56447429c680537fbf93ed
         CollectorType: 0
         AddressRuleName: AddressByFilePath
-        PackRuleName: PackDirectory
+        PackRuleName: PackSeparately
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
@@ -214,7 +214,7 @@ MonoBehaviour:
         AddressRuleName: AddressByFilePath
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
-        AssetTags: 
+        AssetTags: buildIn
         UserData: 
       - CollectPath: Assets/ResAB/Audio/Music
         CollectorGUID: a4c69b9ee6490214aaecfe944efc9d16

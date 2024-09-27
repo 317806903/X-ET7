@@ -493,6 +493,19 @@ namespace ET.Ability
                     return ChkCompare(curHp/maxHp, unitCondition.ConditionCompare, recordIntValue);
                 }
             }
+            else if (unitCondition is OwerCountCondition owerCountCondition)
+            {
+                int count = ET.Ability.OwnCallerHelper.GetOwnCallerCount(unit, owerCountCondition.OwnActor, owerCountCondition.OwnBullet, owerCountCondition.OwnActor);
+
+                return ChkCompare(count, unitCondition.ConditionCompare, owerCountCondition.Value);
+            }
+            else if (unitCondition is OwerCountRecordCondition owerCountRecordCondition)
+            {
+                int count = ET.Ability.OwnCallerHelper.GetOwnCallerCount(unit, owerCountRecordCondition.OwnActor, owerCountRecordCondition.OwnBullet, owerCountRecordCondition.OwnActor);
+
+                float recordIntValue = RecordHandleHelper.GetRecordInt(unit, owerCountRecordCondition.RecordKey);
+                return ChkCompare(count, unitCondition.ConditionCompare, recordIntValue);
+            }
             else if (unitCondition is RecordIntCondition recordIntCondition)
             {
                 float curValue = RecordHandleHelper.GetRecordInt(unit, recordIntCondition.RecordKey);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DynamicAtlas;
 using ET.AbilityConfig;
 using TMPro;
 using Unity.Mathematics;
@@ -265,6 +266,15 @@ namespace ET.Client
 
         public static void ShowUrl(Scene scene, string url, bool isWebView = true)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return;
+            }
+            if (Application.isMobilePlatform == false)
+            {
+                Application.OpenURL(url);
+                return;
+            }
             if (isWebView == false)
             {
                 Application.OpenURL(url);
@@ -303,11 +313,11 @@ namespace ET.Client
         /// <param name="image"></param>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public static async ETTask SetMyIcon(this Image image, Scene scene)
+        public static async ETTask SetMyIcon(this Image image, Entity entity)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent =await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(entity.DomainScene());
             List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
-            await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+            await image.SetImageByPath(entity, avatarIconList[playerBaseInfoComponent.IconIndex]);
 
 
         }
@@ -318,14 +328,14 @@ namespace ET.Client
         /// <param name="image"></param>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public static async ETTask SetMyFrame(this Image image, Scene scene)
+        public static async ETTask SetMyFrame(this Image image, Entity entity)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(entity.DomainScene());
             //WJ 设置玩家的头像框
             if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
             {
                 ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
-                await image.SetImageByResIconCfgId(itemCfg.Icon);
+                await image.SetImageByResIconCfgId(entity, itemCfg.Icon);
             }
 
         }
@@ -337,11 +347,11 @@ namespace ET.Client
         /// <param name="scene"></param>
         /// <param name="playerId">玩家的ID</param>
         /// <returns></returns>
-        public static async ETTask SetOtherPlayerIcon(this Image image, Scene scene, long playerId)
+        public static async ETTask SetOtherPlayerIcon(this Image image, Entity entity, long playerId)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(entity.DomainScene(), playerId);
             List<string> avatarIconList = ET.Client.PlayerStatusHelper.GetAvatarIconList();
-            await image.SetImageByPath(avatarIconList[playerBaseInfoComponent.IconIndex]);
+            await image.SetImageByPath(entity, avatarIconList[playerBaseInfoComponent.IconIndex]);
 
         }
 
@@ -352,32 +362,37 @@ namespace ET.Client
         /// <param name="scene"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        public static async ETTask SetOtherPlayerFrame(this Image image, Scene scene, long playerId)
+        public static async ETTask SetOtherPlayerFrame(this Image image, Entity entity, long playerId)
         {
-            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(scene, playerId);
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetOtherPlayerBaseInfo(entity.DomainScene(), playerId);
             if (string.IsNullOrEmpty(playerBaseInfoComponent.AvatarFrameItemCfgId) == false)
             {
                 ItemCfg itemCfg = ItemCfgCategory.Instance.Get(playerBaseInfoComponent.AvatarFrameItemCfgId);
-                await image.SetImageByResIconCfgId(itemCfg.Icon);
+                await image.SetImageByResIconCfgId(entity, itemCfg.Icon);
             }
 
         }
 
-        public static async ETTask SetImageByItemCfgId(this Image image, string itemCfgId, bool needSetNativeSize = false)
+        public static async ETTask SetImageByItemCfgId(this Image image, Entity entity, string itemCfgId, bool needSetNativeSize = false)
         {
+            //Log.Error($"zpb SetImageByItemCfgId itemCfgId {itemCfgId}");
             string resName = ItemHelper.GetItemIcon(itemCfgId);
-            await image.SetImageByPath(resName, needSetNativeSize);
+            await image.SetImageByPath(entity, resName, needSetNativeSize);
         }
 
-        public static async ETTask SetImageByResIconCfgId(this Image image, string resIconCfgId, bool needSetNativeSize = false)
+        public static async ETTask SetImageByResIconCfgId(this Image image, Entity entity, string resIconCfgId, bool needSetNativeSize = false, bool hideAtFirst = true)
         {
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(resIconCfgId);
-            await image.SetImageByPath(resIconCfg.ResName, needSetNativeSize);
+            await image.SetImageByPath(entity, resIconCfg.ResName, needSetNativeSize, hideAtFirst);
         }
 
-        public static async ETTask SetImageByPath(this Image image, string imgPath, bool needSetNativeSize = false)
+        public static async ETTask SetImageByPath(this Image image, Entity entity, string imgPath, bool needSetNativeSize = false, bool hideAtFirst = true)
         {
             if (image == null)
+            {
+                return;
+            }
+            if (entity == null || entity.IsDisposed)
             {
                 return;
             }
@@ -389,15 +404,37 @@ namespace ET.Client
 #endif
                 return;
             }
+
+            if (hideAtFirst)
+            {
+                image.enabled = false;
+            }
+
             Sprite sprite = await ResComponent.Instance.LoadAssetAsync<Sprite>(imgPath);
             if (image == null)
             {
                 return;
             }
-            image.sprite = sprite;
-            if (needSetNativeSize)
+            if (entity == null || entity.IsDisposed)
             {
-                image.SetNativeSize();
+                return;
+            }
+            DynamicImage dynamicImage = image.gameObject.GetComponent<DynamicImage>();
+            if (dynamicImage != null && dynamicImage.ChkStatus() && dynamicImage.ChkTextureCanDynamic(sprite.texture))
+            {
+                dynamicImage.SetImage(imgPath, sprite.texture);
+            }
+            else
+            {
+                image.sprite = sprite;
+                if (needSetNativeSize)
+                {
+                    image.SetNativeSize();
+                }
+            }
+            if (hideAtFirst)
+            {
+                image.enabled = true;
             }
         }
 
@@ -416,7 +453,7 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask LoadBG(this Image image)
+        public static async ETTask LoadBG(this Image image, Entity entity)
         {
             //image.sprite = null;
             bool bFindBlackBG = false;
@@ -435,7 +472,7 @@ namespace ET.Client
             }
             List<string> bgList = GlobalSettingCfgCategory.Instance.BGList;
             string bg = RandomGenerator.RandomArray(bgList);
-            await image.SetImageByResIconCfgId(bg);
+            await image.SetImageByResIconCfgId(entity, bg, false, false);
             if (image == null)
             {
                 return;
@@ -478,11 +515,11 @@ namespace ET.Client
             }
 
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            _UIComponent.ShowWindow<DlgDetails>();
-            DlgDetails _DlgDetails = _UIComponent.GetDlgLogic<DlgDetails>(true);
-            if (_DlgDetails != null)
+            _UIComponent.ShowWindow<DlgItemDetails>();
+            DlgItemDetails _DlgItemDetails = _UIComponent.GetDlgLogic<DlgItemDetails>(true);
+            if (_DlgItemDetails != null)
             {
-                _DlgDetails.SetCurItemCfgId(itemCfgId);
+                _DlgItemDetails.SetCurItemCfgId(itemCfgId);
             }
         }
 
@@ -704,6 +741,7 @@ namespace ET.Client
             bool isEnough = curGoldValue >= costValue;
             textTrans.ChgTMPColor(isEnough);
             textTrans.ChgTMPText($"{costValue}");
+            await ETTask.CompletedTask;
         }
 
         public static async ETTask ShowPhysicalCostText(this Transform textTrans, Scene scene, int costValue)
@@ -740,6 +778,7 @@ namespace ET.Client
             bool isEnough = curGoldValue >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
             textMeshProUGUI.ChgTMPText($"{costValue}");
+            await ETTask.CompletedTask;
         }
 
         public static async ETTask ShowPhysicalCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
@@ -874,9 +913,11 @@ namespace ET.Client
             mesh.Optimize();
             mesh.UploadMeshData(false);
 
+            Material material = null;
             GameObject zpbTestObj = GameObject.Find("zpbTestObj");
             if (zpbTestObj != null)
             {
+                material = zpbTestObj.GetComponent<MeshRenderer>().material;
                 GameObject.Destroy(zpbTestObj);
             }
             zpbTestObj = new GameObject("zpbTestObj");
@@ -884,7 +925,7 @@ namespace ET.Client
             zpbTestObj.transform.localScale = new Vector3(1, 1, 1);
             zpbTestObj.layer = LayerMask.NameToLayer("Map");
             zpbTestObj.AddComponent<MeshCollider>().sharedMesh = mesh;
-            zpbTestObj.AddComponent<MeshRenderer>();
+            zpbTestObj.AddComponent<MeshRenderer>().material = material;
             zpbTestObj.AddComponent<MeshFilter>().sharedMesh = mesh;
             // Mesh without wireframe data.
             return mesh;
@@ -1036,6 +1077,50 @@ namespace ET.Client
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgGameModeAR>();
                 }
             }
+        }
+
+        #endregion
+
+        #region RedDot
+
+        public static async ETTask DealPlayerUIRedDotType(Scene scene, bool isNeedInit)
+        {
+            if (isNeedInit)
+            {
+                foreach (var item in PlayerOtherInfoComponent.UIRedDot2Parent)
+                {
+                    UIRedDotType uiRedDotType = item.Key;
+                    UIRedDotType uiRedDotTypeParent = item.Value;
+                    ET.Client.UIRedDotHelper.AddRedDotNode(scene, uiRedDotTypeParent, uiRedDotType, false);
+                }
+            }
+
+            PlayerOtherInfoComponent playerOtherInfoComponent = await PlayerCacheHelper.GetMyPlayerOtherInfo(scene);
+            foreach (var item in playerOtherInfoComponent.uiRedDotTypeDic)
+            {
+                if (item.Value)
+                {
+                    UIRedDotHelper.ShowRedDotNode(scene, item.Key);
+                }
+                else
+                {
+                    UIRedDotHelper.HideRedDotNode(scene, item.Key);
+                }
+            }
+        }
+
+        public static void HideRedDotNodeLocal(Scene scene, UIRedDotType uiRedDotType)
+        {
+            UIRedDotHelper.HideRedDotNode(scene, uiRedDotType);
+        }
+
+        public static async ETTask HideUIRedDot(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "", string skillCfgId = "")
+        {
+            if (uiRedDotType != UIRedDotType.None)
+            {
+                UIRedDotHelper.HideRedDotNode(scene, uiRedDotType);
+            }
+            await ET.Client.PlayerCacheHelper.SetUIRedDotType(scene, uiRedDotType, itemCfgId, skillCfgId);
         }
 
         #endregion

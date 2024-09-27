@@ -181,7 +181,7 @@ namespace ET.Client
                         }
                         else if (activityBeginTime > 0)
                         {
-                            if (clientTime >= activityBeginTime)
+                            if (ET.TimeHelper.ChkIsAfter(clientTime, activityBeginTime))
                             {
                                 bInActivityTime = true;
                             }
@@ -194,7 +194,7 @@ namespace ET.Client
                         }
                         else if (activityEndTime > 0)
                         {
-                            if (clientTime >= activityEndTime)
+                            if (ET.TimeHelper.ChkIsAfter(clientTime, activityEndTime) == false)
                             {
                                 bInActivityTime = true;
                             }
@@ -449,6 +449,11 @@ namespace ET.Client
 
         public static void UnloadAsset(this ResComponent self, string location)
         {
+            if (string.IsNullOrEmpty(location))
+            {
+                Log.Error($" {location} == null");
+                return;
+            }
             if (self.AssetsOperationHandles.TryGetValue(location, out AssetOperationHandle assetOperationHandle))
             {
                 assetOperationHandle.Release();

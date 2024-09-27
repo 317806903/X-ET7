@@ -19,9 +19,6 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
 {
     public MoveTweenType(ByteBuf _buf) 
     {
-        HoldTime = _buf.ReadFloat();
-        Speed = _buf.ReadFloat();
-        AcceleratedSpeed = _buf.ReadFloat();
         PostInit();
     }
 
@@ -42,18 +39,6 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
         }
     }
 
-    /// <summary>
-    /// 停留时间
-    /// </summary>
-    public float HoldTime { get; private set; }
-    /// <summary>
-    /// 速度
-    /// </summary>
-    public float Speed { get; private set; }
-    /// <summary>
-    /// 加速度
-    /// </summary>
-    public float AcceleratedSpeed { get; private set; }
 
 
     public virtual void Resolve(Dictionary<string, IConfigSingleton> _tables)
@@ -68,9 +53,6 @@ public abstract partial class MoveTweenType: Bright.Config.BeanBase
     public override string ToString()
     {
         return "{ "
-        + "HoldTime:" + HoldTime + ","
-        + "Speed:" + Speed + ","
-        + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "}";
     }
     

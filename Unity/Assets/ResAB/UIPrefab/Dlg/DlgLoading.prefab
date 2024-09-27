@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 2967190744169381351}
   - component: {fileID: 1879792655119157645}
   - component: {fileID: 1625263125248031424}
+  - component: {fileID: 6698533520838898050}
   m_Layer: 5
   m_Name: logo
   m_TagString: Untagged
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1fae41e7ed2e4404189857162666ff39, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee37bc87472ed914387ea99d6bd52064, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -123,6 +124,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6698533520838898050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200404255829720310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464881188eddd3648bd2744795722c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mImage: {fileID: 1625263125248031424}
+  mRawImage: {fileID: 0}
+  path: Logo/Icon_Logo_Foreground.png
+  localizeImageScaleType: 1
 --- !u!1 &2352544782233210138
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,7 +674,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6125301236020477452, guid: fd618effa87b23a4cba03756192c692f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8271439406195287277}
   m_SourcePrefab: {fileID: 100100000, guid: fd618effa87b23a4cba03756192c692f, type: 3}
 --- !u!224 &2121144260816267575 stripped
 RectTransform:
@@ -665,3 +686,23 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5231646883751408635}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2133573838251412983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6125301236020477452, guid: fd618effa87b23a4cba03756192c692f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5231646883751408635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8271439406195287277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133573838251412983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgLoading/Sprite_BackGround/ProgressPrarent/Processing/Text
+  localizeType: 0

@@ -75,11 +75,11 @@ namespace ET.AbilityConfig
         /// </summary>
         DamageBeforeOnBeKilled = 15,
         /// <summary>
-        /// 监听 在伤害流程中，击杀目标后触发
+        /// 监听 在伤害流程中，击杀目标后触发，如果击杀目标，则会触发的啥事情
         /// </summary>
         DamageAfterOnKill = 16,
         /// <summary>
-        /// 监听 在伤害流程中，击杀目标后触发
+        /// 监听 在伤害流程中，击杀目标后触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
         DamageAfterOnBeKilled = 17,
         /// <summary>

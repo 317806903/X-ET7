@@ -320,7 +320,7 @@ public class WorldCameraController : MonoBehaviour
         }
         else
         {
-            CurrentTargetPos = CurrentTargetPosTmp;
+            CurrentTargetPos = Vector3.Lerp(CurrentTargetPos, CurrentTargetPosTmp, 0.5f);
         }
 
 
@@ -395,7 +395,7 @@ public class WorldCameraController : MonoBehaviour
         }
         else
         {
-            CurrentTargetPos = CurrentTargetPosTmp;
+            CurrentTargetPos = Vector3.Lerp(CurrentTargetPos, CurrentTargetPosTmp, 0.5f);
         }
 
 

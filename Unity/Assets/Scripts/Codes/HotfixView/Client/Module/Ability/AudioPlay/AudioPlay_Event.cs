@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ET.Ability.Client;
 using UnityEngine.SceneManagement;
 
 namespace ET.Client
@@ -17,7 +16,7 @@ namespace ET.Client
             }
             foreach ((Unit unit, string playAudioActionId, bool isOnlySelfShow) in list)
             {
-                AudioPlayHelper.PlayAudio(unit, playAudioActionId);
+                ET.Ability.Client.AudioPlayHelper.PlayAudio(unit, playAudioActionId);
             }
         }
     }

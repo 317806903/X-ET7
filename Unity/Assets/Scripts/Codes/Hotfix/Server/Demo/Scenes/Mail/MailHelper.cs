@@ -43,6 +43,14 @@ namespace ET.Server
 	        }
         }
 
+        public static async ETTask<(bool, bool)> ChkIsNewPlayerMailFromCenter(Scene scene, long playerId)
+        {
+	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.Mail, playerId))
+	        {
+		        return await SendChkIsNewPlayerMailFromCenterAsync(scene, playerId);
+	        }
+        }
+
         /// <summary>
         /// 初始化mailToPlayersComponent组件并插入到邮箱中心
         /// </summary>
@@ -114,6 +122,27 @@ namespace ET.Server
 			        return (false, null);
 		        }
 		        return (true, componentBytes);
+	        }
+        }
+
+        public static async ETTask<(bool, bool)> SendChkIsNewPlayerMailFromCenterAsync(Scene scene, long playerId)
+        {
+	        StartSceneConfig mailSceneConfig = StartSceneConfigCategory.Instance.GetMailManager(scene.DomainZone());
+
+	        M2G_ChkIsNewMailFromCenter _M2G_ChkIsNewMailFromCenter = (M2G_ChkIsNewMailFromCenter) await ActorMessageSenderComponent.Instance.Call(mailSceneConfig.InstanceId, new G2M_ChkIsNewMailFromCenter()
+	        {
+		        PlayerId = playerId,
+	        });
+
+	        if (_M2G_ChkIsNewMailFromCenter.Error != ET.ErrorCode.ERR_Success)
+	        {
+		        Log.Error($"SendChkIsNewPlayerMailFromCenterAsync Error==1 msg={_M2G_ChkIsNewMailFromCenter.Message}");
+		        return (false, false);
+	        }
+	        else
+	        {
+		        bool isNew = _M2G_ChkIsNewMailFromCenter.IsNew == 1? true : false;
+		        return (true, isNew);
 	        }
         }
 

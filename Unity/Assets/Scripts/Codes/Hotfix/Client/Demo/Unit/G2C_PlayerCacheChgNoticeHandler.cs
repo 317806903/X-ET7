@@ -10,38 +10,48 @@ namespace ET.Client
 		protected override async ETTask Run(Session session, G2C_PlayerCacheChgNotice message)
 		{
 			Scene clientScene = session.DomainScene();
+
+			Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
+			if (player == null)
+			{
+				return;
+			}
+			long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(clientScene);
+
 			PlayerModelType playerModelType = (PlayerModelType)message.PlayerModelType;
 
+			bool isNeedClearPlayerModel = false;
 			switch (playerModelType)
 			{
 				case PlayerModelType.BaseInfo:
-				case PlayerModelType.BackPack:
-				case PlayerModelType.BattleCard:
-				case PlayerModelType.FunctionMenu:
-				case PlayerModelType.OtherInfo:
-				case PlayerModelType.Mails:
-				case PlayerModelType.SeasonInfo:
-				{
-					Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
-					if (player == null)
-					{
-						return;
-					}
-					long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(clientScene);
-					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, playerModelType);
+					isNeedClearPlayerModel = true;
 					break;
-				}
+				case PlayerModelType.BackPack:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.BattleCard:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.FunctionMenu:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.OtherInfo:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.Mails:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.SeasonInfo:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.Skills:
+					isNeedClearPlayerModel = true;
+					break;
 				case PlayerModelType.TokenArcadeCoinAdd:
 				case PlayerModelType.TokenArcadeCoinReduce:
 				case PlayerModelType.TokenDiamondAdd:
 				case PlayerModelType.TokenDiamondReduce:
 				{
-					Player player = PlayerStatusHelper.GetMyPlayer(clientScene);
-					if (player == null)
-					{
-						return;
-					}
-					long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(clientScene);
 					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, PlayerModelType.BackPack);
 					break;
 				}
@@ -53,6 +63,11 @@ namespace ET.Client
 					break;
 				default:
 					break;
+			}
+
+			if(isNeedClearPlayerModel)
+			{
+				ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, playerModelType);
 			}
 
 			EventSystem.Instance.Publish(clientScene, new EventType.NoticePlayerCacheChg()

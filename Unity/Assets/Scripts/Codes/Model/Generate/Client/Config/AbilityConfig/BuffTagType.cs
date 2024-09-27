@@ -63,25 +63,33 @@ namespace ET.AbilityConfig
         /// </summary>
         NoNormalAttack = 12,
         /// <summary>
+        /// 暂停Buff的Tick(对非Debuff生效)
+        /// </summary>
+        StopBuffTick = 13,
+        /// <summary>
+        /// 暂停Buff的相关触发(对非Debuff生效)
+        /// </summary>
+        StopBuffTrig = 14,
+        /// <summary>
         /// 隐身:不可被其他人看见(不被主动搜索到)
         /// </summary>
-        Invisible = 13,
+        Invisible = 15,
         /// <summary>
         /// 被显形
         /// </summary>
-        BeBreakInvisible = 14,
+        BeBreakInvisible = 16,
         /// <summary>
         /// 动作停止(被冰冻)
         /// </summary>
-        StopAnimator = 15,
+        StopAnimator = 17,
         /// <summary>
         /// 不可被移动(击退，击飞等)
         /// </summary>
-        NoMotion = 16,
-        BuffTagType1 = 17,
-        BuffTagType2 = 18,
-        BuffTagType3 = 19,
-        BuffTagType4 = 20,
+        NoMotion = 18,
+        BuffTagType1 = 19,
+        BuffTagType2 = 20,
+        BuffTagType3 = 21,
+        BuffTagType4 = 22,
     }
 
 } 

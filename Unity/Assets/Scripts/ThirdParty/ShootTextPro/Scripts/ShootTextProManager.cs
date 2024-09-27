@@ -134,8 +134,6 @@ public class ShootTextProManager : MonoBehaviour
 
     public void Init()
     {
-        //shootTextCure = new AnimationCurve(new Keyframe[] { new Keyframe(0, 1f), new Keyframe(moveLifeTime, 0f) });
-        //shootTextPrefab = Resources.Load<GameObject>("Prefabs/ShootText_Pure");
         updateCreatTempTime = updateCreatTime;
 
         for (int i = 0; i < this.normalNumber.Count; i++)

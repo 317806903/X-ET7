@@ -29,5 +29,8 @@ namespace ET.Client
         public bool forceResetResoution = false;
         public int lastHeight;
         public float lastChgLenScale;
+
+        public int waitFrameChk = 100;
+        public int curFrameChk = 0;
     }
 }

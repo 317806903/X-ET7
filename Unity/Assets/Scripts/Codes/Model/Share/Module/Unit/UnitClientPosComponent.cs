@@ -8,7 +8,6 @@ namespace ET
 	public class UnitClientPosComponent: Entity, IAwake, IDestroy
 	{
 		public float3 clientPosition;
-		public float3 lastClientPosition;
 		public long serverTime;
 		public long targetPosClientTime;
 		public float targetPosClientNeedTime;

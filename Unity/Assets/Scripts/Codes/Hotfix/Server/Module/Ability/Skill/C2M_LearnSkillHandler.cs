@@ -9,10 +9,26 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Unit observerUnit, C2M_LearnSkill request, M2C_LearnSkill response)
 		{
-			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+			//Unit playerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
 
-			string skillId = request.SkillId;
-			(bool ret, string msg) = SkillHelper.LearnSkill(playerUnit, skillId, 1, SkillSlotType.InitiativeSkill);
+			Scene scene = observerUnit.DomainScene();
+			long unitId = request.unitId;
+			Unit unit = Ability.UnitHelper.GetUnit(scene, unitId);
+
+			long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
+			if (playerId == -1)
+			{
+				Log.Error($"playerId == -1");
+				return;
+			}
+			if (playerId != observerUnit.Id)
+			{
+				Log.Error($"playerId[{playerId}] != observerUnit.Id[{observerUnit.Id}]");
+				return;
+			}
+
+			string skillCfgId = request.SkillCfgId;
+			(bool ret, string msg) = SkillHelper.LearnSkill(unit, skillCfgId, 1, SkillSlotType.InitiativeSkill);
 			if (ret == false)
 			{
 				response.Error = ET.ErrorCode.ERR_LogicError;

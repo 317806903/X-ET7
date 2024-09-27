@@ -24,7 +24,11 @@ namespace ET
         OutNet_EN_AAB,
 
         ExternalTest,  // External test for US users.
-        ExternalTest_AAB
+        ExternalTest_AAB,
+
+        // External events
+        Event_Huanyu,
+        Event_Huanyu_Harmony  // Special pack for Harmony 4.0 which is Android but using different AR system.
     }
 
     public static class BuildPack
@@ -420,6 +424,51 @@ namespace ET
             });
         }
 
+        [MenuItem("Pack/BuildPack_Android_EventHuanyu", false, 341)]
+        public static async ETTask BuildPack_Android_EventHuanyu()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_EventHuanyu", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_EventHuanyu", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.Event_Huanyu).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_IOS_EventHuanyu", false, 342)]
+        public static async ETTask BuildPack_IOS_EventHuanyu()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_IOS_EventHuanyu", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.iOS;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_IOS_EventHuanyu", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.Event_Huanyu).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/BuildPack_Harmony_EventHuanyu", false, 343)]
+        public static async ETTask BuildPack_Harmony_EventHuanyu()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Harmony_EventHuanyu", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Harmony_EventHuanyu", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.Event_Huanyu_Harmony).Coroutine();
+            });
+        }
+
         public static void BuildPack_CommandLine()
         {
             BuildTarget buildTarget = BuildHelper.GetBuildTargetFromCommandLine("BuildPack");
@@ -515,6 +564,14 @@ namespace ET
 
             if (packName == PackName.Local)
             {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9999";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9999";
+                }
                 //ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
                 ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
                 ResConfig.Instance.IsShowDebugMode = true;
@@ -772,6 +829,41 @@ namespace ET
 
                 // Apple Team ID "DeepMirror Inc"
                 PlayerSettings.iOS.appleDeveloperTeamID = "T5X59PQT4X";
+            }
+
+            // ============= Events environments ===================================================
+            else if (packName == PackName.Event_Huanyu || packName == PackName.Event_Huanyu_Harmony)
+            {
+                if (packName == PackName.Event_Huanyu_Harmony)
+                {
+                    // Note: If building Harmony pack, manually change the settings:
+                    // 1. Enable Huawei AREngine plugin and disable ARCore plugin  (until they can merged to one apk)
+                    // 2. Disable Multithreaded Rendering (until it's fixed)
+                    ResConfig.Instance.Channel = "1103";
+                }
+                else
+                {
+                    if (buildTarget == BuildTarget.Android)
+                    {
+                        ResConfig.Instance.Channel = "1101";
+                    }
+                    else if (buildTarget == BuildTarget.iOS)
+                    {
+                        ResConfig.Instance.Channel = "1102";
+                    }
+                }
+
+                ResConfig.Instance.ResLoadMode = EPlayMode.HostPlayMode;
+                ResConfig.Instance.MirrorARSessionAuthAppKey = "63f72bdc21c28002a4f4b218#chinajoy";
+                ResConfig.Instance.MirrorARSessionAuthAppSecret = "31d8ee5843b392d271232afcd0568968";
+                productName = $"镜界守卫";
+                packageName = $"com.dm.realityguard.demo";
+                // 设置签名
+                PlayerSettings.Android.useCustomKeystore = true;
+                PlayerSettings.Android.keystoreName = "realityguard.keystore"; // Unity root path
+                PlayerSettings.Android.keystorePass = "DMDM0731!";
+                PlayerSettings.Android.keyaliasName = "realityguard";
+                PlayerSettings.Android.keyaliasPass = "DMDM0731!";
             }
 
             lastProductName = PlayerSettings.productName;

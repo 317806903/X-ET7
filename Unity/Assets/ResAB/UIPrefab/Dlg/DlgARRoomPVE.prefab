@@ -629,7 +629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 57, y: 5.4}
+  m_AnchoredPosition: {x: 65.8, y: 5.4}
   m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5892350056601614348
@@ -825,7 +825,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: 11}
+  m_AnchoredPosition: {x: 24.8, y: 9.2}
   m_SizeDelta: {x: 2, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8815814303652858628
@@ -1353,6 +1353,7 @@ GameObject:
   - component: {fileID: 1108977679768368899}
   - component: {fileID: 3143461599700210110}
   - component: {fileID: 2292148023151731374}
+  - component: {fileID: 3686201371493065789}
   m_Layer: 5
   m_Name: Txt_Monsters
   m_TagString: Untagged
@@ -1477,6 +1478,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3686201371493065789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354340633248196734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Level/monster/Txt_Monsters
+  localizeType: 0
 --- !u!1 &4614080424030156050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,8 +1526,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118.461426, y: 9.125099}
-  m_SizeDelta: {x: -300.367, y: -50.9449}
+  m_AnchoredPosition: {x: 123.64138, y: 9.125099}
+  m_SizeDelta: {x: -304.4498, y: -50.9449}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5459774078950961622
 CanvasRenderer:
@@ -1645,7 +1660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.45636564, y: 0.293}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -111.555664, y: 23}
+  m_AnchoredPosition: {x: -119.3, y: 23}
   m_SizeDelta: {x: 54.49746, y: 46.849426}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &783084001784507023
@@ -1773,6 +1788,7 @@ GameObject:
   - component: {fileID: 5674940255373722952}
   - component: {fileID: 2349237571055230428}
   - component: {fileID: 485108941932172889}
+  - component: {fileID: 7137809358099387909}
   m_Layer: 5
   m_Name: ELable_RoomMemberStatus
   m_TagString: Untagged
@@ -1796,8 +1812,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -46.0796, y: 9.1251}
-  m_SizeDelta: {x: -206.2133, y: -50.945}
+  m_AnchoredPosition: {x: -46.753, y: 9.125099}
+  m_SizeDelta: {x: -250.11, y: -50.945}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2349237571055230428
 CanvasRenderer:
@@ -1854,14 +1870,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 34
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 16
+  m_fontSizeMax: 34
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1896,6 +1912,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7137809358099387909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789351077137044644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVESeason/EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/ELable_RoomMemberStatus
+  localizeType: 0
 --- !u!1 &5054024250885783722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,6 +1938,7 @@ GameObject:
   - component: {fileID: 9170343278534017394}
   - component: {fileID: 3712768728684077363}
   - component: {fileID: 7936646599778819223}
+  - component: {fileID: 3086472284886594219}
   m_Layer: 5
   m_Name: E_ShowQrCode
   m_TagString: Untagged
@@ -2018,6 +2049,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3086472284886594219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054024250885783722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72fa3781b1d7b6d48ab03962964d5a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRedDotActive: 0
+  UIRedDotType: MultPlayers
+  RedDotScale: {x: 1, y: 1, z: 1}
+  PositionOffset: {x: 140, y: 50}
 --- !u!1 &5331244599704909987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,6 +2604,7 @@ GameObject:
   - component: {fileID: 5911838120620070429}
   - component: {fileID: 3856411388997622707}
   - component: {fileID: 7994811690388695522}
+  - component: {fileID: 8867967633826171444}
   m_Layer: 5
   m_Name: Txt_Reward
   m_TagString: Untagged
@@ -2681,6 +2729,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8867967633826171444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071599637172308066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Level/Reward/Txt_Reward
+  localizeType: 0
 --- !u!1 &7138036207007091193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,7 +2919,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

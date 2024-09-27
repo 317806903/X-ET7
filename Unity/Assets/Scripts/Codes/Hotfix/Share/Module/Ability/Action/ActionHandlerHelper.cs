@@ -23,7 +23,7 @@ namespace ET.Ability
             if (curSelectHandle == null)
             {
 #if UNITY_EDITOR
-                Log.Error($"curSelectHandle == null");
+                //Log.Error($"curSelectHandle == null");
 #endif
                 return false;
             }

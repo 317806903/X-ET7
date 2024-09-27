@@ -10,6 +10,8 @@ namespace ET
 	public enum GamePlayTowerDefenseStatus
 	{
 		GameBegin,
+		WaitMeshFinished,
+		LoadMeshErr,
 		PutHome,
 		PutMonsterPoint,
 		ShowStartEffect,

@@ -116,14 +116,14 @@ namespace ET.Client
         {
             if (name.Length < 1)
             {
-                string tipMsg = "Name cannot be empty";
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Empty");
                 UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 return false;
             }
 
             if (name.Length > self.NameMaxLength)
             {
-                string tipMsg = "Name length exceeds limit";
+                string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Limit");
                 UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
                 return false;
             }

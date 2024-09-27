@@ -25,7 +25,7 @@ namespace ET
 			GamePlayHelper.AddUnitTeamFlag(monsterUnit, TeamFlagType.Monster1);
 
             UnitHelper_Create.ActorUnitLearnSkillWhenCreate(monsterUnit);
-            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds);
+            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds).Coroutine();
 
 			return monsterUnit;
 		}
@@ -90,7 +90,7 @@ namespace ET
                     }
 
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
-                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds);
+                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds).Coroutine();
 
 
                     unitList.Add(towerUnit);

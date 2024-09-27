@@ -42,8 +42,15 @@ namespace ET.Client
         public static Unit GetMyPlayerUnit(Scene scene)
         {
             Unit observerUnit = GetMyObserverUnit(scene);
-            Unit myPlayerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+            Unit myPlayerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
             return myPlayerUnit;
+        }
+
+        public static Unit GetMyCameraPlayerUnit(Scene scene)
+        {
+            Unit observerUnit = GetMyObserverUnit(scene);
+            Unit myCameraPlayerUnit = ET.GamePlayHelper.GetCameraPlayerUnit(observerUnit);
+            return myCameraPlayerUnit;
         }
 
         public static Unit GetUnit(Scene scene, long unitId)

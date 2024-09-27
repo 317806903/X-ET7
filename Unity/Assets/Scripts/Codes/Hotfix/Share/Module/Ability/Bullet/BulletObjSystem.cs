@@ -181,6 +181,10 @@ namespace ET.Ability
 
         public static bool CanHitUnit(this BulletObj self, Unit unit)
         {
+            if (self.model.CanHitUnit == false)
+            {
+                return false;
+            }
             if (self.ChkCanTrigHit() == false)
                 return false;
 
@@ -195,14 +199,24 @@ namespace ET.Ability
             return true;
         }
 
-        public static bool CanHitMesh(this BulletObj self)
+        public static bool CanHitMesh(this BulletObj self, bool isOnlyChkMesh)
         {
             if (self.ChkCanTrigHit() == false)
                 return false;
 
-            if (UnitHelper.IsNeedChkMesh(self.GetUnit()) == false)
+            if (isOnlyChkMesh)
             {
-                return false;
+                if (self.model.CanHitMesh == false)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (UnitHelper.IsNeedChkMesh(self.GetUnit()) == false)
+                {
+                    return false;
+                }
             }
 
             if (self.hitRecords != null)

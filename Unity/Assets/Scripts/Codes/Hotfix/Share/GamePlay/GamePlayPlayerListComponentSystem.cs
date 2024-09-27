@@ -17,7 +17,8 @@ namespace ET
             protected override void Awake(GamePlayPlayerListComponent self)
             {
                 self.playerId2UnitIds = new();
-                self.playerId2PlayerUnitId = new();
+                self.playerId2PlayerUnitIdList = new();
+                self.playerId2CameraPlayerUnitId = new();
                 self.unitId2PlayerId = new();
                 self.playerId2IsQuit = new();
                 self.playerId2BirthPos = new();
@@ -32,7 +33,8 @@ namespace ET
             protected override void Destroy(GamePlayPlayerListComponent self)
             {
                 self.playerId2UnitIds?.Clear();
-                self.playerId2PlayerUnitId?.Clear();
+                self.playerId2PlayerUnitIdList?.Clear();
+                self.playerId2CameraPlayerUnitId?.Clear();
                 self.unitId2PlayerId?.Clear();
                 self.playerId2IsQuit?.Clear();
                 self.playerId2BirthPos?.Clear();
@@ -117,7 +119,7 @@ namespace ET
             Unit observerUnit = UnitHelper.GetUnit(self.DomainScene(), playerId);
             if (observerUnit != null)
             {
-                Unit playerUnit = GamePlayHelper.GetPlayerUnit(observerUnit);
+                Unit playerUnit = GamePlayHelper.GetCurPlayerUnit(observerUnit);
                 if (playerUnit != null)
                 {
                     self._InitPlayerBirthPos(playerId, playerUnit.Position, true);
@@ -146,16 +148,20 @@ namespace ET
         /// <param name="self"></param>
         /// <param name="playerId"></param>
         /// <param name="unitId"></param>
-        public static void AddUnitInfo(this GamePlayPlayerListComponent self, long playerId, long unitId, bool isPlayerUnit)
+        public static void AddUnitInfo(this GamePlayPlayerListComponent self, long playerId, long unitId, UnitType unitType)
         {
             if (self.unitId2PlayerId.ContainsKey(unitId) == false)
             {
                 self.playerId2UnitIds.Add(playerId, unitId);
                 self.unitId2PlayerId.Add(unitId, playerId);
 
-                if (isPlayerUnit)
+                if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
                 {
-                    self.playerId2PlayerUnitId.Add(playerId, unitId);
+                    self.playerId2CameraPlayerUnitId.Add(playerId, unitId);
+                }
+                else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
+                {
+                    self.playerId2PlayerUnitIdList.Add(playerId, unitId);
                     self.NoticeCoinToClient(playerId, GetCoinType.Normal);
                 }
             }
@@ -166,7 +172,7 @@ namespace ET
         /// </summary>
         /// <param name="self"></param>
         /// <param name="unitId"></param>
-        public static void RemoveUnitInfo(this GamePlayPlayerListComponent self, long unitId, bool isPlayerUnit)
+        public static void RemoveUnitInfo(this GamePlayPlayerListComponent self, long unitId, UnitType unitType)
         {
             if (self.unitId2PlayerId.TryGetValue(unitId, out long playerId))
             {
@@ -181,16 +187,43 @@ namespace ET
                     Log.Error($"ET.GamePlayPlayerListComponentSystem.RemoveUnitInfo self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId)");
                 }
 
-                if (isPlayerUnit)
+                if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
                 {
-                    self.playerId2PlayerUnitId.Remove(playerId);
+                    self.playerId2CameraPlayerUnitId.Remove(playerId);
+                }
+                else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
+                {
+                    self.playerId2PlayerUnitIdList.Remove(playerId);
                 }
             }
         }
 
-        public static long GetPlayerUnitId(this GamePlayPlayerListComponent self, long playerId)
+        public static long GetCurPlayerUnitId(this GamePlayPlayerListComponent self, long playerId)
         {
-            if (self.playerId2PlayerUnitId.TryGetValue(playerId, out long id))
+            if (self.playerId2PlayerUnitIdList.TryGetValue(playerId, out var ids))
+            {
+                foreach (var unitId in ids)
+                {
+                    return unitId;
+                }
+            }
+
+            return -1;
+        }
+
+        public static HashSet<long> GetPlayerUnitIdList(this GamePlayPlayerListComponent self, long playerId)
+        {
+            if (self.playerId2PlayerUnitIdList.TryGetValue(playerId, out var id))
+            {
+                return id;
+            }
+
+            return null;
+        }
+
+        public static long GetCameraPlayerUnitId(this GamePlayPlayerListComponent self, long playerId)
+        {
+            if (self.playerId2CameraPlayerUnitId.TryGetValue(playerId, out long id))
             {
                 return id;
             }
@@ -388,12 +421,16 @@ namespace ET
 
                 self._InitPlayerBirthPos(playerId, pos, true);
 
-                if (self.playerId2PlayerUnitId.TryGetValue(playerId, out long playerUnitId))
+                HashSet<long> list = self.GetPlayerUnitIdList(playerId);
+                if (list != null)
                 {
-                    Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), playerUnitId);
-                    if (playerUnit != null)
+                    foreach (long unitId in list)
                     {
-                        ET.Ability.UnitHelper.ResetPos(playerUnit, pos);
+                        Unit playerUnit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+                        if (playerUnit != null)
+                        {
+                            ET.Ability.UnitHelper.ResetPos(playerUnit, pos, float3.zero);
+                        }
                     }
                 }
             }

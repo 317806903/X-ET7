@@ -677,6 +677,7 @@ GameObject:
   - component: {fileID: 6123863985350802585}
   - component: {fileID: 6903935938087993523}
   - component: {fileID: 228849390890380550}
+  - component: {fileID: 6503738294843130412}
   m_Layer: 0
   m_Name: ELabel_Preview
   m_TagString: Untagged
@@ -801,6 +802,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6503738294843130412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2523402724700033648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgPersionalAvatar/EGBackGround/Root/EImageCurrentBk/ELabel_Preview
+  localizeType: 0
 --- !u!1 &2778157757009658810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2051,7 @@ GameObject:
   - component: {fileID: 6092836702207124026}
   - component: {fileID: 4963503978588586635}
   - component: {fileID: 4178522531654854765}
+  - component: {fileID: 2787120020091310830}
   m_Layer: 0
   m_Name: ELabel_Current
   m_TagString: Untagged
@@ -2160,6 +2176,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2787120020091310830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860062720924999821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgPersionalAvatar/EGBackGround/Root/EImageCurrentBk/ELabel_Current
+  localizeType: 0
 --- !u!1 &6155749128012645264
 GameObject:
   m_ObjectHideFlags: 0

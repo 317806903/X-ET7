@@ -8,7 +8,8 @@ namespace ET
     {
         public static bool ChkNeedNoticePlayer(Unit unit)
         {
-            if (unit.Type == UnitType.PlayerUnit || unit.Type == UnitType.ObserverUnit)
+            //if (unit.Type == UnitType.PlayerUnit || unit.Type == UnitType.ObserverUnit)
+            if (unit.Type == UnitType.ObserverUnit)
             {
                 return true;
             }
@@ -47,6 +48,25 @@ namespace ET
                 }
             }
         }
-        
+
+        public static async ETTask<bool> ChkAOIReady(Entity self, Unit unit)
+        {
+            bool isReady = false;
+            while (isReady == false)
+            {
+                AOIEntity aoiEntity = unit.GetComponent<AOIEntity>();
+                if (aoiEntity != null)
+                {
+                    isReady = aoiEntity.ChkIsReady();
+                }
+                await TimerComponent.Instance.WaitFrameAsync();
+                if ((self != null && self.IsDisposed) || unit.IsDisposed)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

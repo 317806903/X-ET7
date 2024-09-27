@@ -12,11 +12,17 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, EventType.AfterUnitCreate args)
         {
             Unit unit = args.Unit;
-            unit.RemoveComponent<GameObjectComponent>();
-            GameObjectComponent gameObjectComponent = unit.AddComponent<GameObjectComponent>();
-            await gameObjectComponent.Init();
 
-            if (Ability.UnitHelper.ChkIsPlayer(unit) || Ability.UnitHelper.ChkIsActor(unit))
+            GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
+            if (gameObjectComponent != null)
+            {
+                unit.RemoveComponent<GameObjectShowComponent>();
+                GameObjectShowComponent gameObjectShowComponent = unit.AddComponent<GameObjectShowComponent>();
+                await gameObjectShowComponent.Init();
+            }
+
+            if (Ability.UnitHelper.ChkIsPlayer(unit)
+                || Ability.UnitHelper.ChkIsActor(unit))
             {
                 unit.RemoveComponent<HealthBarComponent>();
                 HealthBarComponent healthBarComponent = unit.AddComponent<HealthBarComponent>();
@@ -55,6 +61,7 @@ namespace ET.Client
             {
                 unit.AddComponent<ET.Ability.Client.AudioPlayComponent>();
             }
+
             await ETTask.CompletedTask;
         }
     }

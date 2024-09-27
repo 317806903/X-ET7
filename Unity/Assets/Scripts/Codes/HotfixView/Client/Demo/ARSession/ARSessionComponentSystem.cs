@@ -221,7 +221,7 @@ namespace ET.Client
 				Canvas canvas = canvasScaler.gameObject.GetComponent<Canvas>();
 				if (canvas != null)
 				{
-					UIManagerComponent.Instance.AddUIRootRotation(canvasScaler.transform);
+					UIRootManagerComponent.Instance.AddUIRootRotation(canvasScaler.transform);
 				}
 
 			}
@@ -243,6 +243,12 @@ namespace ET.Client
 			await TimerComponent.Instance.WaitFrameAsync();
 
 			next();
+
+			await TimerComponent.Instance.WaitFrameAsync();
+			self.ARSessoinGo.SetActive(false);
+			await TimerComponent.Instance.WaitFrameAsync();
+			self.ARSessoinGo.SetActive(true);
+
 		}
 
 		private static void SetArSessionServiceEndpoint()
@@ -275,7 +281,7 @@ namespace ET.Client
 			var setAppAuthOptionsMethod = coreValue.GetType().GetMethod("SetAppAuthOptions", InstanceBindFlags);
 			Log.Debug($"SetAppAuthOptions {setAppAuthOptionsMethod}");
 			setAppAuthOptionsMethod.Invoke(coreValue, new object[] { ResConfig.Instance.MirrorARSessionAuthAppKey, ResConfig.Instance.MirrorARSessionAuthAppSecret });
-			Log.Debug($"SetAppAuthOptions succeeded. {ResConfig.Instance.MirrorARSessionAuthAppKey} {ResConfig.Instance.MirrorARSessionAuthAppSecret}");
+			Log.Debug($"SetAppAuthOptions succeeded.");
 		}
 
 		private static string GetXrPlatformInfo()
@@ -681,8 +687,9 @@ namespace ET.Client
 		{
 			if (MirrorScene.IsAvailable())
 			{
-				self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas/BackButton")
-						.SetVisible(isShow);
+				Transform transBackButton = self.ARSessoinGo.transform.Find("MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas/BackButton");
+				Image image = transBackButton.gameObject.GetComponent<Image>();
+				image.enabled = isShow;
 			}
 			else
 			{
@@ -947,6 +954,8 @@ namespace ET.Client
 
 		public static void OnMenuExitScene(this ARSessionComponent self)
 		{
+			UIAudioManagerHelper.PlayHighestMusic(self.DomainScene(), MusicType.None);
+
 			Log.Debug($"ARSessionComponent OnMenuExitScene");
 			// 退出当前AR场景时从Kappa来的回调。
 			if (self.ARScenePrepared)

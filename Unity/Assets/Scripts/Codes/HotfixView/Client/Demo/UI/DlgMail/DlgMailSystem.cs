@@ -43,7 +43,7 @@ namespace ET.Client
             self.View.ELoopScrollList_MailLoopVerticalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddMailListener(transform, i));
 
-            
+
 
         }
 
@@ -56,7 +56,7 @@ namespace ET.Client
         {
             self.dlgShowTime = TimeHelper.ClientNow();
             self._ShowWindow().Coroutine();
-           
+
         }
 
 
@@ -76,6 +76,9 @@ namespace ET.Client
         /// <param name="contextData"></param>
         public static async ETTask _ShowWindow(this DlgMail self, ShowWindowData contextData = null)
         {
+            self.View.EBtnCollectAllButton.SetVisible(false);
+            self.View.EBtnCollectAll_NoneButton.SetVisible(false);
+
             self.ShowBg().Coroutine();
             await self.SetEloopNumber();
             //self.View.ELoopScrollList_MailLoopVerticalScrollRect.RefreshCells();
@@ -114,11 +117,12 @@ namespace ET.Client
         public static async ETTask SetEloopNumber(this DlgMail self)
         {
             self.GetDropIndexByPlayerPrefs();
-            if(self.View.EMailDropdownTMP_Dropdown.options.Count<=0)
-            {
-                await self.SetDrapdownLocalizeText();
-            }
+
+            await self.SetDrapdownLocalizeText();
             self.View.EMailDropdownTMP_Dropdown.value =self.DropDownIndex;
+            string Captiontext = self.View.EMailDropdownTMP_Dropdown.options[self.DropDownIndex].text;
+            self.View.EMailDropdownTMP_Dropdown.captionText.text= Captiontext;
+
             await self.ReGetMailInfoAndStatusListSort();
             self.AddUIScrollItems(ref self.ScrollMailDic, self.MailInfoAndStatus.Count);
             self.View.ELoopScrollList_MailLoopVerticalScrollRect.SetVisible(true, self.MailInfoAndStatus.Count);
@@ -294,13 +298,13 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static async ETTask _ReGetMailInfoAndStatusListSort(this DlgMail self,MailSortRule mailSortRule,bool isDescendingOrder)
+        public static async ETTask _ReGetMailInfoAndStatusListSort(this DlgMail self,MailSortRule mailSortRule, bool isDescendingOrder)
         {
             if(self.MailInfoAndStatus != null)
             {
                 self.MailInfoAndStatus.Clear();
             }
-            PlayerMailComponent playerMailComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerMail(self.DomainScene(), true);
+            PlayerMailComponent playerMailComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerMail(self.DomainScene());
             self.MailInfoAndStatus = playerMailComponent.GetPlayerMailListBySort(mailSortRule, isDescendingOrder);
         }
 
@@ -328,34 +332,33 @@ namespace ET.Client
         /// <param name="self"></param>
         /// <returns></returns>
         public static async ETTask SetDrapdownLocalizeText(this DlgMail self)
-        {         
+        {
             self.View.EMailDropdownTMP_Dropdown.options.Clear();
-            string textKey1 = "TextCode_Key_MailSortRule_ReceivedTimeUp";
+            string textKey1 = "TextCode_Key_MailSortRule_LimitTimeDown";
             var tempData = new TMP_Dropdown.OptionData();
             tempData.text = LocalizeComponent.Instance.GetTextValue(textKey1);
-            tempData.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_expire_02.png");
+            tempData.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_expire_01.png");
             self.View.EMailDropdownTMP_Dropdown.options.Add(tempData);
 
-            string textKey2 = "TextCode_Key_MailSortRule_ReceivedTimeDown";
+            string textKey2 = "TextCode_Key_MailSortRule_LimitTimeUp";
             var tempData2 = new TMP_Dropdown.OptionData();
             tempData2.text = LocalizeComponent.Instance.GetTextValue(textKey2);
-            tempData2.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_expire_01.png");
+            tempData2.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_expire_02.png");
             self.View.EMailDropdownTMP_Dropdown.options.Add(tempData2);
 
-            string textKey3 = "TextCode_Key_MailSortRule_LimitTimeUp";
+            string textKey3 = "TextCode_Key_MailSortRule_ReceivedTimeDown";
             var tempData3 = new TMP_Dropdown.OptionData();
             tempData3.text = LocalizeComponent.Instance.GetTextValue(textKey3);
-            tempData3.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_received_02.png");
+            tempData3.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_received_01.png");
             self.View.EMailDropdownTMP_Dropdown.options.Add(tempData3);
 
-            string textKey4 = "TextCode_Key_MailSortRule_LimitTimeDown";
+            string textKey4 = "TextCode_Key_MailSortRule_ReceivedTimeUp";
             var tempData4 = new TMP_Dropdown.OptionData();
             tempData4.text = LocalizeComponent.Instance.GetTextValue(textKey4);
-            tempData4.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_received_01.png");
+            tempData4.image = await UIManagerHelper.LoadSprite("Assets/ResAB/UI/Mail/Mail_icon_received_02.png");
             self.View.EMailDropdownTMP_Dropdown.options.Add(tempData4);
+           await ETTask.CompletedTask;
 
-            await ETTask.CompletedTask; 
-            
         }
     }
 }

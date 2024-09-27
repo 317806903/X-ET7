@@ -51,7 +51,8 @@ namespace ET.Client
                 await MonoResComponent.Instance.ReLoadWhenDebugConnect();
             }
 
-            Root.Instance.Scene.AddComponent<GlobalComponent>();
+            GlobalComponent globalComponent = Root.Instance.Scene.AddComponent<GlobalComponent>();
+            await globalComponent.Init();
 
             Root.Instance.Scene.AddComponent<FsmDispatcherComponent>();
 
@@ -67,19 +68,7 @@ namespace ET.Client
             ClientSceneManagerComponent.Instance.IsDemoShow = ResConfig.Instance.IsDemoShow;
 
             LanguageType languageType = LanguageType.EN;
-            if (ResConfig.Instance.languageType == LanguageType.CN.ToString())
-            {
-                languageType = LanguageType.CN;
-            }
-            else if (ResConfig.Instance.languageType == LanguageType.EN.ToString())
-            {
-                languageType = LanguageType.EN;
-            }
-            else if (ResConfig.Instance.languageType == LanguageType.TW.ToString())
-            {
-                languageType = LanguageType.TW;
-            }
-            else if (ResConfig.Instance.languageType == LanguageType.Auto.ToString())
+            if (ResConfig.Instance.languageType == LanguageType.Auto.ToString())
             {
                 switch(Application.systemLanguage)
                 {
@@ -104,7 +93,10 @@ namespace ET.Client
             }
             else
             {
-                languageType = LanguageType.EN;
+                if (System.Enum.TryParse(ResConfig.Instance.languageType, out languageType) == false)
+                {
+                    languageType = LanguageType.EN;
+                }
             }
             LocalizeComponent.Instance.SwitchLanguage(languageType, true);
 #if UNITY_EDITOR
@@ -118,9 +110,9 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask<bool> ChkHotUpdateAsync(Scene clientScene, bool onlyChk = false)
+        public static async ETTask<bool> ChkHotUpdateAsync(Scene clientScene, bool isAutoInToDlgUpdate = true, bool isShowTipWhenNeedUpdate = true)
         {
-            if (onlyChk == false)
+            if (isAutoInToDlgUpdate)
             {
                 UIComponent uiComponent = UIManagerHelper.GetUIComponent(clientScene);
                 // 打开热更界面
@@ -145,10 +137,11 @@ namespace ET.Client
             }
 
             // 热更流程
-            bool bRet = await HotUpdateAsync(clientScene);
+            bool bRet = await HotUpdateAsync(clientScene, isShowTipWhenNeedUpdate);
             if (bRet)
             {
-                if (onlyChk == false)
+                await ET.Client.GlobalComponent.Instance.SetUpdateFinished();
+                if (isAutoInToDlgUpdate)
                 {
                     await DoAfterChkHotUpdate(clientScene);
                 }
@@ -193,6 +186,7 @@ namespace ET.Client
             {
                 ET.ConstValue.SessionTimeoutTime = GlobalSettingCfgCategory.Instance.GameModeArcadeSessionTimeOut * 1000;
             }
+
             await EnterLogin(clientScene);
         }
 
@@ -233,7 +227,7 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
 
-        private static async ETTask<bool> HotUpdateAsync(Scene clientScene)
+        private static async ETTask<bool> HotUpdateAsync(Scene clientScene, bool isShowTipWhenNeedUpdate = true)
         {
             await ShowHotUpdateInfo(clientScene);
 
@@ -252,50 +246,60 @@ namespace ET.Client
                 if (errorCodeTmp != ErrorCode.ERR_Success)
                 {
                     Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCodeTmp));
-                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
-                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
+                        //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else if ((bool)versionActivity["bNeedUpdate"])
                 {
                     Log.Debug("bNeedUpdate == true");
-
-                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
-                        bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
+                            bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
 
-                        ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
+                            ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
 
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else if (string.IsNullOrEmpty((string)versionActivity["serverBusyMsg"]) == false)
                 {
                     Log.Error($"serverBusyMsg {(string)versionActivity["serverBusyMsg"]}");
-
-                    string msg = (string)versionActivity["serverBusyMsg"];
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                        string msg = (string)versionActivity["serverBusyMsg"];
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else if ((bool)versionActivity["bInActivityTime"] == false)
                 {
                     Log.Debug("bInActivityTime == false");
 
-                    string msg = (string)versionActivity["activityNotInTimeMsg"];
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                        string msg = (string)versionActivity["activityNotInTimeMsg"];
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else
@@ -323,28 +327,34 @@ namespace ET.Client
                 if (errorCodeTmp != ErrorCode.ERR_Success)
                 {
                     Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCodeTmp));
-                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
-                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCodeTmp);
+                        //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else if ((bool)versionResult["bNeedUpdate"])
                 {
                     Log.Debug("bNeedUpdate == true");
 
-                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
-                        bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
+                        string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NewGameVersion");
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            string url = ChannelSettingComponent.Instance.GetGameDownLoadURL();
+                            bool isWebView = ChannelSettingComponent.Instance.ChkIsGameDownLoadWebView();
 
-                        ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
+                            ET.Client.UIManagerHelper.ShowUrl(clientScene, url, isWebView);
 
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
                 else if ((bool)versionResult["bIsAuditing"])
@@ -367,11 +377,14 @@ namespace ET.Client
                 {
                     Log.Error($"serverBusyMsg {(string)versionResult["serverBusyMsg"]}");
 
-                    string msg = (string)versionResult["serverBusyMsg"];
-                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    if (isShowTipWhenNeedUpdate)
                     {
-                        ChkHotUpdateAsync(clientScene).Coroutine();
-                    });
+                        string msg = (string)versionResult["serverBusyMsg"];
+                        UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                        {
+                            ChkHotUpdateAsync(clientScene).Coroutine();
+                        });
+                    }
                     return false;
                 }
             }
@@ -381,12 +394,15 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("FsmUpdateStaticVersion 出错！{0}".Fmt(errorCode));
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
-                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                if (isShowTipWhenNeedUpdate)
                 {
-                    ChkHotUpdateAsync(clientScene).Coroutine();
-                });
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                }
                 return false;
             }
 
@@ -396,12 +412,15 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("ResourceComponent.UpdateManifest 出错！{0}".Fmt(errorCode));
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
-                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                if (isShowTipWhenNeedUpdate)
                 {
-                    ChkHotUpdateAsync(clientScene).Coroutine();
-                });
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                }
                 return false;
             }
 
@@ -410,12 +429,15 @@ namespace ET.Client
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error("ResourceComponent.FsmCreateDownloader 出错！{0}".Fmt(errorCode));
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
-                //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
-                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                if (isShowTipWhenNeedUpdate)
                 {
-                    ChkHotUpdateAsync(clientScene).Coroutine();
-                });
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateErr", errorCode);
+                    //UIManagerHelper.ShowConfirmNoClose(clientScene, msg);
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msg, () =>
+                    {
+                        ChkHotUpdateAsync(clientScene).Coroutine();
+                    });
+                }
                 return false;
             }
 
@@ -427,19 +449,23 @@ namespace ET.Client
                     return true;
                 }
 
-                long totalDownloadMB = ResComponent.Instance.Downloader.TotalDownloadBytes / (1024 * 1024);
-                if (totalDownloadMB == 0)
+                if (isShowTipWhenNeedUpdate)
                 {
-                    totalDownloadMB = 1;
-                }
-                string msgTxt =
+                    long totalDownloadMB = ResComponent.Instance.Downloader.TotalDownloadBytes / (1024 * 1024);
+                    if (totalDownloadMB == 0)
+                    {
+                        totalDownloadMB = 1;
+                    }
+                    string msgTxt =
                         LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTip", totalDownloadMB);
-                string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTitle");
-                string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Download");
-                UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msgTxt, () =>
-                {
-                    DownloadPatch(clientScene, updatePackageManifestOperation).Coroutine();
-                }, sureTxt ,titleTxt);
+                    string titleTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_UpdateTitle");
+                    string sureTxt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_Download");
+                    UIManagerHelper.ShowOnlyConfirmHighest(clientScene, msgTxt, () =>
+                    {
+                        DownloadPatch(clientScene, updatePackageManifestOperation).Coroutine();
+                    }, sureTxt ,titleTxt);
+
+                }
                 return false;
             }
             else

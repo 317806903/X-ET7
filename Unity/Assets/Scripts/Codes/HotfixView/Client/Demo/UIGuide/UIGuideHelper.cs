@@ -8,7 +8,7 @@ namespace ET.Client
 	[FriendOf(typeof(UIGuideComponent))]
 	public static class UIGuideHelper
 	{
-		public static async ETTask DoUIGuide(Scene scene, string fileName, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
+		public static async ETTask DoUIGuide(Scene scene, string fileName, int priority, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -28,10 +28,10 @@ namespace ET.Client
 				CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
 				currentScenesComponent.AddComponent<UIGuideComponent>();
 			}
-			await UIGuideComponent.Instance.DoUIGuideByName(fileName, startIndex, finished, stepFinished);
+			await UIGuideComponent.Instance.DoUIGuideByName(fileName, priority, startIndex, finished, stepFinished);
 		}
 
-		public static async ETTask DoUIGuide(Scene scene, string guideFileName, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
+		public static async ETTask DoUIGuide(Scene scene, string guideFileName, int priority, UIGuidePathList _UIGuidePathList, int startIndex, Action<Scene> finished, Action<Scene, int> stepFinished = null)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
@@ -51,7 +51,7 @@ namespace ET.Client
 				CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
 				currentScenesComponent.AddComponent<UIGuideComponent>();
 			}
-			await UIGuideComponent.Instance.DoUIGuide(guideFileName, _UIGuidePathList, startIndex, finished, stepFinished);
+			await UIGuideComponent.Instance.DoUIGuide(guideFileName, priority, _UIGuidePathList, startIndex, finished, stepFinished);
 		}
 
 		public static async ETTask StopUIGuide(Scene scene)
@@ -112,18 +112,37 @@ namespace ET.Client
 			return true;
 		}
 
-		public static UIGuidePath GetCurUIGuide(Scene scene)
+		public static bool ChkCanReplaceCurGuideing(Scene scene, int priority)
 		{
 			if (UIGuideComponent.Instance == null)
 			{
-				return null;
+				return true;
+			}
+			UIGuideStepComponent uiGuideStepComponent = UIGuideComponent.Instance.CurUIGuideComponent;
+			if (uiGuideStepComponent == null)
+			{
+				return true;
+			}
+
+			if (UIGuideComponent.Instance.priority > priority)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public static (string, UIGuidePath) GetCurUIGuide(Scene scene)
+		{
+			if (UIGuideComponent.Instance == null)
+			{
+				return (string.Empty, null);
 			}
 			UIGuideStepComponent uiGuideStepComponent = UIGuideComponent.Instance.CurUIGuideComponent;
 			if (uiGuideStepComponent != null)
 			{
-				return uiGuideStepComponent.curUIGuidePath;
+				return (UIGuideComponent.Instance.guideFileName, uiGuideStepComponent.curUIGuidePath);
 			}
-			return null;
+			return (string.Empty, null);
 		}
 
 		public static async ETTask<bool> DoStaticMethodChk(Scene scene, GuideConditionStaticMethodType staticMethod, string param, UIGuideStepComponent guideStepComponent)
@@ -187,7 +206,8 @@ namespace ET.Client
 					await UIGuideHelper_StaticMethod.ShowStory(scene);
 					break;
 				case GuideExecuteStaticMethodType.ShowVideo:
-					await UIGuideHelper_StaticMethod.ShowVideo(scene);
+					string tutorialCfgId = executeParam;
+					await UIGuideHelper_StaticMethod.ShowVideo(scene, tutorialCfgId);
 					break;
 				case GuideExecuteStaticMethodType.EnterGuideBattleTutorialFirst:
 					await UIGuideHelper_StaticMethod.EnterGuideBattleTutorialFirst(scene);

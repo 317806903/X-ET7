@@ -437,6 +437,26 @@ namespace ET.Ability
             return buffComponent.ChkCanBeFind(seeUnit);
         }
 
+        public static bool ChkCanBuffTick(Unit unit)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return true;
+            }
+            return buffComponent.ChkCanBuffTick();
+        }
+
+        public static bool ChkCanBuffTrig(Unit unit)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(unit);
+            if (buffComponent == null)
+            {
+                return true;
+            }
+            return buffComponent.ChkCanBuffTrig();
+        }
+
         /// <summary>
         /// GameObject的显示状态
         /// </summary>

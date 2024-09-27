@@ -33,10 +33,12 @@ namespace ET.Client
         {
             protected override void Update(MainQualitySettingComponent self)
             {
-                // if (self.UIRoot == null)
-                // {
-                //     return;
-                // }
+	            if (self.IsDisposed)
+	            {
+		            return;
+	            }
+
+	            self.Update();
             }
         }
 
@@ -368,6 +370,21 @@ namespace ET.Client
 	    }
 
 	    public static void Update(this MainQualitySettingComponent self)
+	    {
+		    if (self.curFrameChk++ < self.waitFrameChk)
+		    {
+			    self.curFrameChk = 0;
+			    self.UpdateFrameRate();
+		    }
+		    //self.UpdateResoution();
+	    }
+
+	    public static void UpdateFrameRate(this MainQualitySettingComponent self)
+	    {
+		    Application.targetFrameRate = 30;
+	    }
+
+	    public static void UpdateResoution(this MainQualitySettingComponent self)
 	    {
 		    if (self.forceResetResoution)
 		    {

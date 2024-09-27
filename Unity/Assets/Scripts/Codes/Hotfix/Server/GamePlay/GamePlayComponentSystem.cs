@@ -33,6 +33,7 @@ namespace ET.Server
                 //self.Timer = TimerComponent.Instance.NewRepeatedTimer(5000, TimerInvokeType.GamePlayChkTimer, self);
                 self.waitNoticeGamePlayToClientList = new();
                 self.waitNoticeGamePlayModeToClientList = new();
+                self.waitNoticeGamePlayModeToClientListForceSend = new();
                 self.waitNoticeGamePlayPlayerListToClientList = new();
                 self.waitNoticeGamePlayStatisticalToClientList = new();
             }
@@ -46,6 +47,7 @@ namespace ET.Server
                 //TimerComponent.Instance?.Remove(ref self.Timer);
                 self.waitNoticeGamePlayToClientList?.Clear();
                 self.waitNoticeGamePlayModeToClientList?.Clear();
+                self.waitNoticeGamePlayModeToClientListForceSend?.Clear();
                 self.waitNoticeGamePlayPlayerListToClientList?.Clear();
                 self.waitNoticeGamePlayStatisticalToClientList?.Clear();
             }
@@ -99,14 +101,26 @@ namespace ET.Server
             self.waitNoticeGamePlayToClientList.Add(playerId);
         }
 
-        public static void AddWaitNoticeGamePlayModeToClientList(this GamePlayComponent self, long playerId)
+        public static void AddWaitNoticeGamePlayModeToClientList(this GamePlayComponent self, long playerId, bool bForceSend)
         {
-            if (self.waitNoticeGamePlayModeToClientList.Contains(playerId))
+            if (bForceSend)
             {
-                return;
-            }
+                if (self.waitNoticeGamePlayModeToClientListForceSend.Contains(playerId))
+                {
+                    return;
+                }
 
-            self.waitNoticeGamePlayModeToClientList.Add(playerId);
+                self.waitNoticeGamePlayModeToClientListForceSend.Add(playerId);
+            }
+            else
+            {
+                if (self.waitNoticeGamePlayModeToClientList.Contains(playerId))
+                {
+                    return;
+                }
+
+                self.waitNoticeGamePlayModeToClientList.Add(playerId);
+            }
         }
 
         public static void AddWaitNoticeGamePlayPlayerListToClientList(this GamePlayComponent self, long playerId)
@@ -232,6 +246,26 @@ namespace ET.Server
 
                 self.waitNoticeGamePlayModeToClientList.Clear();
             }
+
+            while (self.waitNoticeGamePlayModeToClientListForceSend.Count > 0)
+            {
+                try
+                {
+                    EventType.NoticeGamePlayModeToClient _NoticeGamePlayModeToClient = new()
+                    {
+                        playerIds = self.waitNoticeGamePlayModeToClientListForceSend,
+                        GamePlayModeComponentBase = self.GetGamePlayMode(),
+                        needSendSuccess = true,
+                    };
+                    EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayModeToClient);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+
+                self.waitNoticeGamePlayModeToClientListForceSend.Clear();
+            }
         }
 
         public static bool ChkGamePlayWaitDestroy(this GamePlayComponent self)
@@ -273,8 +307,7 @@ namespace ET.Server
 
             try
             {
-                R2M_MemberQuitRoom _R2M_MemberQuitRoom =
-                    (R2M_MemberQuitRoom)await ActorMessageSenderComponent.Instance.Call(roomSceneConfig.InstanceId,
+                ActorMessageSenderComponent.Instance.Send(roomSceneConfig.InstanceId,
                         new M2R_MemberQuitRoom() { PlayerId = playerId, RoomId = self.roomId, });
             }
             catch (Exception e)
@@ -302,76 +335,29 @@ namespace ET.Server
 
         public static async ETTask ChkPlayerWaitDestroy(this GamePlayComponent self)
         {
-            await ETTask.CompletedTask;
             List<long> playerList = self.GetPlayerList();
             if (playerList == null)
             {
                 return;
             }
-            if (self.playerWaitQuitTime == null)
+            PlayerLocationChkComponent playerLocationChkComponent = self.GetComponent<PlayerLocationChkComponent>();
+            if (playerLocationChkComponent == null)
             {
-                self.playerWaitQuitTime = new();
+                return;
             }
+            playerLocationChkComponent.SetChkPlayerOfflineList(playerList);
 
-            //ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-            foreach (long playerId in playerList)
+            HashSet<long> notExistPlayerList = playerLocationChkComponent.GetPlayerOfflineList();
+            foreach (long playerId in notExistPlayerList)
             {
-                long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, self.DomainScene().InstanceId);
                 if (self.IsDisposed)
                 {
-                    Log.Error($" ChkPlayerWaitDestroy self.IsDisposed==true ");
                     return;
                 }
-                if (locationActorId == 0)
-                {
-                    if (self.playerWaitQuitTime.ContainsKey(playerId) == false)
-                    {
-                        self.playerWaitQuitTime[playerId] = TimeHelper.ServerNow() + 5000;
-                    }
-                }
-                else
-                {
-                    if (self.playerWaitQuitTime.ContainsKey(playerId))
-                    {
-                        self.playerWaitQuitTime.Remove(playerId);
-                    }
-                }
-                // if (oneTypeLocationType.GetChild<Entity>(playerId) == null)
-                // {
-                //     if (self.playerWaitQuitTime.ContainsKey(playerId) == false)
-                //     {
-                //         self.playerWaitQuitTime[playerId] = TimeHelper.ServerNow() + 5000;
-                //     }
-                // }
-                // else
-                // {
-                //     if (self.playerWaitQuitTime.ContainsKey(playerId))
-                //     {
-                //         self.playerWaitQuitTime.Remove(playerId);
-                //     }
-                // }
-            }
 
-            while (true)
-            {
-                bool bWhile = false;
-                foreach (var playerWaitQuitTime in self.playerWaitQuitTime)
+                if (self.ChkPlayerIsQuit(playerId) == false)
                 {
-                    long playerId = playerWaitQuitTime.Key;
-                    long time = playerWaitQuitTime.Value;
-                    if (time != -1 && time < TimeHelper.ServerNow())
-                    {
-                        self.playerWaitQuitTime[playerId] = -1;
-                        bWhile = true;
-
-                        await self.TrigDestroyPlayer(playerId);
-                        break;
-                    }
-                }
-
-                if (bWhile == false)
-                {
-                    break;
+                    await self.TrigDestroyPlayer(playerId);
                 }
             }
         }
@@ -391,11 +377,17 @@ namespace ET.Server
 
             foreach (long playerId in playerList)
             {
-                Unit playerUnit = self.GetPlayerUnit(playerId);
-                if (playerUnit != null)
+                List<Unit> playerUnitList = self.GetPlayerUnitList(playerId);
+                if (playerUnitList != null)
                 {
-                    Unit observerUnit = Ability.UnitHelper.GetUnit(self.DomainScene(), playerId);
-                    observerUnit.Position = playerUnit.Position;
+                    foreach (Unit playerUnit in playerUnitList)
+                    {
+                        if (playerUnit != null)
+                        {
+                            Unit observerUnit = Ability.UnitHelper.GetUnit(self.DomainScene(), playerId);
+                            observerUnit.Position = playerUnit.Position;
+                        }
+                    }
                 }
             }
         }

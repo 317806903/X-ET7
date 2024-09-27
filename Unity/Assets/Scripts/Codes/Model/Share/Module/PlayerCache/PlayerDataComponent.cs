@@ -6,6 +6,7 @@ namespace ET
 {
     public enum PlayerModelType: byte
     {
+        None,
         BaseInfo,
         BackPack,
         BattleCard,
@@ -13,6 +14,7 @@ namespace ET
         SeasonInfo,
         FunctionMenu,
         Mails,
+        Skills,
 
         TokenArcadeCoinAdd,
         TokenArcadeCoinReduce,
@@ -31,6 +33,7 @@ namespace ET
         PlayerFunctionMenu_Client = 4,
         PlayerOtherInfo_Client = 5,
         PlayerSeasonInfo_Client = 6,
+        PlayerMail_Client = 7,
 
         PlayerBaseInfo_AddPhysical = 100,
         PlayerBaseInfo_ReducePhysical = 101,
@@ -41,9 +44,11 @@ namespace ET
         PlayerBaseInfo_ChallengeClearLevel = 106,
         PlayerBaseInfo_AddArcadeCoinNum = 107,
         PlayerBaseInfo_ReduceArcadeCoinNum = 108,
+        PlayerBaseInfo_ChgSeasonIndex = 109,
 
         PlayerBackPack_AddItem = 200,
         PlayerBackPack_DeleteItem = 201,
+        PlayerBackPack_NewItemList = 202,
 
         PlayerBattleCard_AutoSetByBackPack = 300,
 
@@ -53,11 +58,18 @@ namespace ET
 
         PlayerSeasonInfo_ChallengeClearLevel = 501,
         PlayerSeasonInfo_EndlessChallengeScore = 502,
-        PlayerSeasonInfo_PowerUP=503,
+        PlayerSeasonInfo_PowerUP = 503,
 
-        PlayerMailsGetItemGifts = 601,
+        PlayerMails_GetItemGifts = 601,
 
         PlayerOtherInfo_SetUIRedDotType = 701,
+        PlayerOtherInfo_RewardQuestionnaire = 702,
+        PlayerOtherInfo_BattleNotice = 703,
+        PlayerOtherInfo_DealUIRedDotType = 704,
+
+        PlayerSkill_LearnOrUpdate = 801,
+        PlayerSkill_Replace = 802,
+        PlayerSkill_NewSkillList = 803,
     }
 
     [ChildOf(typeof(PlayerCacheManagerComponent))]

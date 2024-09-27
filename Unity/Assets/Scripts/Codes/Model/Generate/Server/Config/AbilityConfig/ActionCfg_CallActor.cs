@@ -19,6 +19,7 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         UnitId = _buf.ReadString();
+        CallCount = _buf.ReadInt();
         BeCallActorAttrType = BeCallActorAttrType.DeserializeBeCallActorAttrType(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeCallActorActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); BeCallActorActionId.Add(_e0);}}
         UnitAiCfg = _buf.ReadString();
@@ -45,6 +46,10 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
     /// </summary>
     public string UnitId { get; private set; }
     public UnitCfg UnitId_Ref { get; private set; }
+    /// <summary>
+    /// 召唤的数量
+    /// </summary>
+    public int CallCount { get; private set; }
     public BeCallActorAttrType BeCallActorAttrType { get; private set; }
     /// <summary>
     /// 被召唤时的Action事件
@@ -55,7 +60,7 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
     /// </summary>
     public string UnitAiCfg { get; private set; }
     /// <summary>
-    /// 持续时间(s)
+    /// 持续时间(s)(-1表示永久)
     /// </summary>
     public float Duration { get; private set; }
     public OffSetInfo OffSetInfo { get; private set; }
@@ -83,6 +88,7 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "UnitId:" + UnitId + ","
+        + "CallCount:" + CallCount + ","
         + "BeCallActorAttrType:" + BeCallActorAttrType + ","
         + "BeCallActorActionId:" + Bright.Common.StringUtil.CollectionToString(BeCallActorActionId) + ","
         + "UnitAiCfg:" + UnitAiCfg + ","

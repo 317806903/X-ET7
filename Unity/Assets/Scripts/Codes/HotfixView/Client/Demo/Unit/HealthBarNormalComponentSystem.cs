@@ -43,18 +43,18 @@ namespace ET.Client
         {
             string resName = "ResEffect_HealthBar_1";
 
-            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+            if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
             {
                 return;
             }
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
-            GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
-            HealthBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
-            float scaleX = gameObjectComponent.gameObject.transform.localScale.x;
+            GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,30);
+            HealthBarGo.transform.SetParent(gameObjectShowComponent.gameObject.transform);
+            float scaleX = gameObjectShowComponent.gameObject.transform.localScale.x;
             HealthBarGo.transform.localScale = Vector3.one / scaleX;
             float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
-            HealthBarGo.transform.position = gameObjectComponent.gameObject.transform.position + new Vector3(0, height, 0);
+            HealthBarGo.transform.position = gameObjectShowComponent.gameObject.transform.position + new Vector3(0, height, 0);
 
             self.go = HealthBarGo;
             self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
@@ -116,16 +116,26 @@ namespace ET.Client
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {
-                if (self.go.activeSelf == false)
+                if (isInit || self.isActivity == false)
                 {
                     self.go.SetActive(true);
+                    self.isActivity = true;
                 }
             }
-            else
+            else if(normalizedHealth == 0)
             {
-                if (self.go.activeSelf == true)
+                if (isInit || self.isActivity)
                 {
                     self.go.SetActive(false);
+                    self.isActivity = false;
+                }
+            }
+            else if(normalizedHealth == 1)
+            {
+                if (isInit || self.isActivity)
+                {
+                    self.go.SetActive(false);
+                    self.isActivity = false;
                 }
             }
         }
@@ -147,7 +157,18 @@ namespace ET.Client
                 return;
             }
 
-            self.UpdateForward();
+            if (self.isActivity == false)
+            {
+                return;
+            }
+
+            if (++self.curFrame >= self.waitFrame)
+            {
+                self.curFrame = 0;
+
+                self.UpdateForward();
+            }
+
             self.UpdateDelayHp();
         }
 

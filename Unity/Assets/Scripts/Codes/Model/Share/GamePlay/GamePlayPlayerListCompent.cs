@@ -51,7 +51,10 @@ namespace ET
 		public MultiMapSetSimple<long, long> playerId2UnitIds;
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-		public Dictionary<long, long> playerId2PlayerUnitId;
+		public MultiMapSetSimple<long, long> playerId2PlayerUnitIdList;
+
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+		public Dictionary<long, long> playerId2CameraPlayerUnitId;
 
 		/// <summary>
 		/// unitId对应playerId

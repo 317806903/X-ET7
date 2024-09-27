@@ -84,12 +84,18 @@ namespace ET.Client
         public static async ETTask<bool> ChkIsNotShowVideo(Scene scene)
         {
             DlgTutorials _DlgVideoShow = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgTutorials>(true);
-            if (_DlgVideoShow == null)
+            if (_DlgVideoShow != null)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            DlgTutorialOne _DlgTutorialOne = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgTutorialOne>(true);
+            if (_DlgTutorialOne != null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         //-----------------------------------------------------------------------------------------------
@@ -100,9 +106,18 @@ namespace ET.Client
                 .ShowWindowAsync<DlgBeginnersGuideStory>(new DlgBeginnersGuideStory_ShowWindowData() { finishCallBack = null, });
         }
 
-        public static async ETTask ShowVideo(Scene scene)
+        public static async ETTask ShowVideo(Scene scene, string tutorialCfgId)
         {
-            await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgTutorials>();
+            if (string.IsNullOrEmpty(tutorialCfgId))
+            {
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgTutorials>();
+            }
+            else
+            {
+                DlgTutorialOne_ShowWindowData _DlgTutorialOne_ShowWindowData = new();
+                _DlgTutorialOne_ShowWindowData.tutorialCfgId = tutorialCfgId;
+                await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgTutorialOne>(_DlgTutorialOne_ShowWindowData);
+            }
         }
 
         public static async ETTask EnterGuideBattleTutorialFirst(Scene scene)
@@ -167,8 +182,8 @@ namespace ET.Client
                     unit = unitComponent.Get(unitId);
                 }
 
-                GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-                while (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
+                while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                 }
@@ -210,8 +225,8 @@ namespace ET.Client
                     unit = unitComponent.Get(unitId);
                 }
 
-                GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-                while (gameObjectComponent == null || gameObjectComponent.GetGo() == null)
+                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
+                while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                 }

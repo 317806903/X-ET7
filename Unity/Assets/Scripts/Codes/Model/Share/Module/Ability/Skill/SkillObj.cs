@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using ET.AbilityConfig;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET.Ability
 {
     [ChildOf(typeof (SkillComponent))]
-    public class SkillObj: Entity, IAwake, IDestroy, IFixedUpdate
+    public class SkillObj: Entity, IAwake, IDestroy, IFixedUpdate, ISerializeToEntity
     {
         public string skillCfgId;
+        [BsonIgnore]
         public SkillCfg model
         {
             get
@@ -19,6 +21,9 @@ namespace ET.Ability
         /// 倒计时的cd
         /// </summary>
         public float cdCountDown;
+
+        public float curEnergyNum;
+
         public float skillDis;
         public int skillLevel;
         public SkillSlotType skillSlotType;

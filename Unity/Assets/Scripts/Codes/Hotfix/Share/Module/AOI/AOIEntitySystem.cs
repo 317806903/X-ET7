@@ -40,6 +40,11 @@ namespace ET
             }
         }
 
+        public static bool ChkIsReady(this AOIEntity self)
+        {
+            return self.bInit;
+        }
+
         public static async ETTask WaitNextFrame(this AOIEntity self, float posX, float posZ)
         {
             await TimerComponent.Instance.WaitFrameAsync();

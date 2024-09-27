@@ -60,8 +60,8 @@ namespace ET.Ability.Client
                 }
             }
 
-            GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-            if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+            GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
+            if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
             {
                 return;
             }
@@ -77,7 +77,7 @@ namespace ET.Ability.Client
             self.go = go;
 
             // 通过 effectObj.hangPointName 找到节点
-            Transform tran = gameObjectComponent.GetGo().transform;
+            Transform tran = gameObjectShowComponent.GetGo().transform;
             go.transform.SetParent(tran);
             go.transform.localPosition = effectObj.offSet;
             go.transform.localEulerAngles = effectObj.rotation;

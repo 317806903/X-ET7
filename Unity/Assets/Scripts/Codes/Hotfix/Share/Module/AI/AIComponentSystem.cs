@@ -279,11 +279,30 @@ namespace ET
 
         public static void ResetTargetUnit(this AIComponent self, AICfg aiConfig)
         {
-            self.TargetUnitDic[aiConfig.SelectObject] = null;
+            foreach (var selectObjectCfgId in aiConfig.SelectObject)
+            {
+                self.TargetUnitDic[selectObjectCfgId] = null;
+            }
             self.GetUnit().RemoveComponent<SelectHandleObj>();
         }
 
-        public static Unit GetTargetUnit(this AIComponent self, AICfg aiConfig, float radius, bool isNeedChkAttack)
+        public static bool ChkCanAttack(this AIComponent self, Unit curUnit, Unit targetUnit, float radius, bool ignoreY = true)
+        {
+            float curUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(curUnit);
+            float targetUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(targetUnit);
+            if (radius < curUnitRadius + targetUnitRadius + 0.2f)
+            {
+                radius = curUnitRadius + targetUnitRadius + 0.2f;
+            }
+            if (ET.Ability.UnitHelper.ChkIsNearNoRadius(curUnit, targetUnit, radius, ignoreY))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static Unit GetTargetUnit(this AIComponent self, AICfg aiConfig, float radius, bool isNeedChkAttack, int selectObjectIndex = 0)
         {
             if (isNeedChkAttack && radius == 0)
             {
@@ -296,44 +315,46 @@ namespace ET
                 return null;
             }
 
-            self.TargetUnitDic.TryGetValue(aiConfig.SelectObject, out var targetUnitRec);
-            if ((Unit)targetUnitRec != null)
+            SelectObjectCfg selectObjectCfg = aiConfig.SelectObject_Ref[selectObjectIndex];
+            self.TargetUnitDic.TryGetValue(selectObjectCfg.Id, out var targetUnitRec);
+            Unit targetUnit = targetUnitRec;
+            if (targetUnit != null)
             {
-                Unit unitSelect = (Unit)targetUnitRec;
-                if (UnitHelper.ChkUnitAlive(unitSelect))
+                if (UnitHelper.ChkUnitAlive(targetUnit))
                 {
                     if (isNeedChkAttack)
                     {
-                        if (Ability.UnitHelper.ChkCanAttack(unit, unitSelect, radius))
+                        if (self.ChkCanAttack(unit, targetUnit, radius))
                         {
-                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, unitSelect);
+                            (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, targetUnit);
                             if (bHitMesh == false)
                             {
-                                return (Unit)targetUnitRec;
+                                return targetUnit;
                             }
                         }
                     }
                     else
                     {
-                        return (Unit)targetUnitRec;
+                        return targetUnit;
                     }
                 }
             }
 
-            SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(unit, null, aiConfig.SelectObject_Ref, ref self.actionContext);
+            SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(unit, null, selectObjectCfg, ref self.actionContext);
             if (curSelectHandle == null)
             {
                 return null;
             }
+
+            targetUnit = null;
             List<long> unitList = curSelectHandle.unitIds;
-            Unit targetUnit = null;
             foreach (long unitId in unitList)
             {
                 Unit unitSelect = UnitHelper.GetUnit(unit.DomainScene(), unitId);
 
                 if (isNeedChkAttack)
                 {
-                    if (Ability.UnitHelper.ChkCanAttack(unit, unitSelect, radius))
+                    if (self.ChkCanAttack(unit, unitSelect, radius))
                     {
                         (bool bHitMesh, float3 hitPos) = ET.Ability.UnitHelper.ChkHitMesh( unit, unitSelect);
                         if (bHitMesh)
@@ -351,7 +372,7 @@ namespace ET
                 }
             }
 
-            self.TargetUnitDic[aiConfig.SelectObject] = targetUnit;
+            self.TargetUnitDic[selectObjectCfg.Id] = targetUnit;
             return targetUnit;
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -67,5 +68,22 @@ namespace ET.Client
 			}
 			return null;
 		}
+
+		public static (float3, float3, float3) GetCameraHit(Scene scene)
+		{
+			Camera camera = CameraHelper.GetMainCamera(scene);
+			float3 cameraPos = camera.transform.position;
+			float3 cameraDirect = camera.transform.forward;
+			float3 cameraHitPos = float3.zero;
+			RaycastHit hitInfo;
+			LayerMask _groundLayerMask = LayerMask.GetMask("Map");
+			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 1000, _groundLayerMask))
+			{
+				cameraHitPos = hitInfo.point;
+			}
+
+			return (cameraPos, cameraDirect, cameraHitPos);
+		}
+
 	}
 }

@@ -16,14 +16,8 @@ namespace ET
 				self.NeedSyncNoticeUnitAdds = new();
 				self.NeedSyncNoticeUnitRemoves = new();
 				self.waitRemoveList = new();
-				self.observerList = HashSetComponent<Unit>.Create();
-				self.playerList = HashSetComponent<Unit>.Create();
-				self.actorList = HashSetComponent<Unit>.Create();
-				self.npcList = HashSetComponent<Unit>.Create();
-				self.sceneObjList = HashSetComponent<Unit>.Create();
-				self.bulletList = HashSetComponent<Unit>.Create();
-				self.aoeList = HashSetComponent<Unit>.Create();
-				self.sceneEffectList = HashSetComponent<Unit>.Create();
+				self.recordDic = new();
+				self.addRecordTmp = new();
 			}
 		}
 
@@ -36,22 +30,10 @@ namespace ET
 				self.NeedSyncNoticeUnitRemoves.Clear();
 				self.waitRemoveList.Clear();
 				self.waitRemoveList = null;
-				self.observerList.Dispose();
-				self.observerList = null;
-				self.playerList.Dispose();
-				self.playerList = null;
-				self.actorList.Dispose();
-				self.actorList = null;
-				self.npcList.Dispose();
-				self.npcList = null;
-				self.sceneObjList.Dispose();
-				self.sceneObjList = null;
-				self.bulletList.Dispose();
-				self.bulletList = null;
-				self.aoeList.Dispose();
-				self.aoeList = null;
-				self.sceneEffectList.Dispose();
-				self.sceneEffectList = null;
+				self.recordDic.Clear();
+				self.recordDic = null;
+				self.addRecordTmp.Clear();
+				self.addRecordTmp = null;
 			}
 		}
 
@@ -74,10 +56,20 @@ namespace ET
 		{
 			self.DoUnitHit(fixedDeltaTime);
 
+			self.DoUnitAdd();
 			self.DoUnitRemove();
 
 			self.SyncNoticeUnitAdd().Coroutine();
 			self.SyncNoticeUnitRemove().Coroutine();
+		}
+
+		public static void DoUnitAdd(this UnitComponent self)
+		{
+			foreach (Unit unit in self.addRecordTmp)
+			{
+				self.recordDic.Add(unit.Type, unit);
+			}
+			self.addRecordTmp.Clear();
 		}
 
 		public static void DoUnitRemove(this UnitComponent self)
@@ -90,45 +82,15 @@ namespace ET
 			self.waitRemoveList.Clear();
 		}
 
-		public static HashSetComponent<Unit> GetRecordList(this UnitComponent self, UnitType unitType)
+		public static HashSet<Unit> GetRecordList(this UnitComponent self, UnitType unitType)
 		{
-			HashSetComponent<Unit> recordList;
-			switch (unitType)
-			{
-				case UnitType.ObserverUnit:
-					recordList = self.observerList;
-					break;
-				case UnitType.PlayerUnit:
-					recordList = self.playerList;
-					break;
-				case UnitType.ActorUnit:
-					recordList = self.actorList;
-					break;
-				case UnitType.NPC:
-					recordList = self.npcList;
-					break;
-				case UnitType.SceneObj:
-					recordList = self.sceneObjList;
-					break;
-				case UnitType.Bullet:
-					recordList = self.bulletList;
-					break;
-				case UnitType.Aoe:
-					recordList = self.aoeList;
-					break;
-				case UnitType.SceneEffect:
-					recordList = self.sceneEffectList;
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
+			self.recordDic.TryGetValue(unitType, out HashSet<Unit> recordList);
 			return recordList;
 		}
 
 		public static void Add(this UnitComponent self, Unit unit)
 		{
-			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
-			recordList.Add(unit);
+			self.addRecordTmp.Add(unit);
 		}
 
 		public static Unit Get(this UnitComponent self, long id)
@@ -152,8 +114,8 @@ namespace ET
 
 			ET.Ability.UnitHelper.AddUnitDelayRemove(self.DomainScene(), unit);
 
-			HashSetComponent<Unit> recordList = self.GetRecordList(unit.Type);
-			recordList.Remove(unit);
+			self.recordDic.Remove(unit.Type, unit);
+
 			unit?.Dispose();
 		}
 

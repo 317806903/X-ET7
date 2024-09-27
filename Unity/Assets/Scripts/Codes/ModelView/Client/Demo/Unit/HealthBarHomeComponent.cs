@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ET.Client
@@ -9,7 +10,12 @@ namespace ET.Client
         public Camera mainCamera { get; set; }
         public Transform healthBar { get; set; }
         public Transform backgroundBar { get; set; }
-        public Transform HpValueShowTrans { get; set; }
-        public Material mat;
+        public Transform hpValueShowTrans { get; set; }
+
+        public RectTransform canvas;
+        public RectTransform rectTrans;
+
+        public int curFrame = 0;
+        public int waitFrame = 0;
     }
 }

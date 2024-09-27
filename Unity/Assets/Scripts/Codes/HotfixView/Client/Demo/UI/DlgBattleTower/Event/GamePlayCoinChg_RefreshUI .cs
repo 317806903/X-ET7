@@ -28,8 +28,9 @@ namespace ET.Client
                         {
                             Log.Debug($" GetCoinType.DivideEquallyTeamCoin myCoinListChg[{coinList.Key}] [{coinList.Value}]");
 
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_DivideEquallyTeamCoin", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_DivideEquallyTeamCoin", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                     else if (args.getCoinType == GetCoinType.InterestOnDeposit)
@@ -38,8 +39,9 @@ namespace ET.Client
                         {
                             Log.Debug($" GetCoinType.InterestOnDeposit myCoinListChg[{coinList.Key}] [{coinList.Value}]");
 
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_InterestOnDeposit", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_InterestOnDeposit", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                     else if (args.getCoinType == GetCoinType.WaveRewardGold)
@@ -47,8 +49,9 @@ namespace ET.Client
                         foreach (var coinList in args.myCoinListChg)
                         {
                             Log.Debug($" GetCoinType.WaveRewardGold myCoinListChg[{coinList.Key}] [{coinList.Value}]");
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_WaveRewardGold", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_WaveRewardGold", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                 }
@@ -70,8 +73,9 @@ namespace ET.Client
                         {
                             Log.Debug($" GetCoinType.DivideEquallyTeamCoin myCoinListChg[{coinList.Key}] [{coinList.Value}]");
 
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_DivideEquallyTeamCoin", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_DivideEquallyTeamCoin", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                     else if (args.getCoinType == GetCoinType.InterestOnDeposit)
@@ -80,8 +84,9 @@ namespace ET.Client
                         {
                             Log.Debug($" GetCoinType.InterestOnDeposit myCoinListChg[{coinList.Key}] [{coinList.Value}]");
 
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_InterestOnDeposit", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_InterestOnDeposit", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                     else if (args.getCoinType == GetCoinType.WaveRewardGold)
@@ -89,8 +94,9 @@ namespace ET.Client
                         foreach (var coinList in args.myCoinListChg)
                         {
                             Log.Debug($" GetCoinType.WaveRewardGold myCoinListChg[{coinList.Key}] [{coinList.Value}]");
-                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_WaveRewardGold", coinList.Value);
-                            ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_WaveRewardGold", (int)coinList.Value);
+                            //ET.Client.UIManagerHelper.ShowOnlyConfirm(scene, tipMsg, null);
+                            ET.Client.UIManagerHelper.ShowTipTopShow(scene, tipMsg);
                         }
                     }
                 }

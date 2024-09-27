@@ -22,8 +22,8 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         WaitFrameNum = _buf.ReadInt();
         ResetTargetTime = _buf.ReadFloat();
-        SelectObject = _buf.ReadString();
-        {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);NodeParams = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); NodeParams[__index0] = __e0;}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectObject = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SelectObject.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);NodeParams = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); NodeParams.Add(_e0);}}
         PostInit();
     }
 
@@ -49,7 +49,7 @@ public sealed partial class AICfg: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 间隔多少帧执行
+    /// 间隔多少次执行(每次0.5秒)
     /// </summary>
     public int WaitFrameNum { get; private set; }
     /// <summary>
@@ -59,19 +59,19 @@ public sealed partial class AICfg: Bright.Config.BeanBase
     /// <summary>
     /// 目标
     /// </summary>
-    public string SelectObject { get; private set; }
-    public SelectObjectCfg SelectObject_Ref { get; private set; }
+    public System.Collections.Generic.List<string> SelectObject { get; private set; }
+    public System.Collections.Generic.List<SelectObjectCfg> SelectObject_Ref { get; private set; }
     /// <summary>
     /// 节点参数
     /// </summary>
-    public int[] NodeParams { get; private set; }
+    public System.Collections.Generic.List<int> NodeParams { get; private set; }
 
     public const int __ID__ = 62271260;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        this.SelectObject_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(SelectObject);
+        { SelectObjectCfgCategory __table = (SelectObjectCfgCategory)_tables["SelectObjectCfgCategory"]; this.SelectObject_Ref = new System.Collections.Generic.List<SelectObjectCfg>(); foreach(var __e in SelectObject) { this.SelectObject_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -88,7 +88,7 @@ public sealed partial class AICfg: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "WaitFrameNum:" + WaitFrameNum + ","
         + "ResetTargetTime:" + ResetTargetTime + ","
-        + "SelectObject:" + SelectObject + ","
+        + "SelectObject:" + Bright.Common.StringUtil.CollectionToString(SelectObject) + ","
         + "NodeParams:" + Bright.Common.StringUtil.CollectionToString(NodeParams) + ","
         + "}";
     }

@@ -207,18 +207,18 @@ namespace ET.Client
 			{
 				return;
 			}
-			self.DoMoveTower(curTowerShowComponent.towerComponent.towerCfgId, curTowerShowComponent.GetUnit().Id);
+			self.DoMoveTower(curTowerShowComponent.towerComponent.towerCfgId, curTowerShowComponent.GetUnit().Id).Coroutine();
 		}
 
-		public static void DoMoveTower(this GamePlayTowerDefenseComponent self, string towerCfgId, long towerUnitId)
+		public static async ETTask DoMoveTower(this GamePlayTowerDefenseComponent self, string towerCfgId, long towerUnitId)
 		{
 			Handheld.Vibrate();
 
 			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
-			GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-			if (gameObjectComponent != null)
+			GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
+			if (gameObjectShowComponent != null)
 			{
-				gameObjectComponent.ChgColor(true);
+				gameObjectShowComponent.ChgColor(true);
 			}
 			DlgBattleDragItem_ShowWindowData showWindowData = new()
 			{
@@ -228,18 +228,23 @@ namespace ET.Client
 				sceneIn = self.DomainScene(),
 				callBack = (scene) =>
 				{
-					Unit unitTower = Ability.UnitHelper.GetUnit(scene, towerUnitId);
-					if (unitTower != null)
-					{
-						GameObjectComponent gameObjectComponent = unitTower.GetComponent<GameObjectComponent>();
-						if (gameObjectComponent != null)
-						{
-							gameObjectComponent.ChgColor(false);
-						}
-					}
 				},
 			};
-			UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData).Coroutine();
+			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDragItem>(showWindowData);
+
+			while (UIManagerHelper.GetUIComponent(self.DomainScene()).GetDlgLogic<DlgBattleDragItem>(true) != null)
+			{
+				await TimerComponent.Instance.WaitFrameAsync();
+				if (self.IsDisposed)
+				{
+					break;
+				}
+			}
+
+			if (gameObjectShowComponent != null)
+			{
+				gameObjectShowComponent.ChgColor(false);
+			}
 		}
 
 		public static async ETTask ChkAllMyTowerUpgrade(this GamePlayTowerDefenseComponent self)
@@ -387,6 +392,15 @@ namespace ET.Client
 			return length;
 		}
 
+		public static float3 GetPathMidPos(this GamePlayTowerDefenseComponent self)
+		{
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+			long callMonsterUnitId = self.GetCallMonsterUnitId(myPlayerId);
+			float3 midPos = ET.Client.PathLineRendererComponent.Instance.GetPathMidPos(homeTeamFlagType, callMonsterUnitId);
+			return midPos;
+		}
+
 		public static void ChkMouseRightClick(this GamePlayTowerDefenseComponent self)
 		{
 			if (Application.isEditor == false)
@@ -479,7 +493,7 @@ namespace ET.Client
 			float3 cameraHitPos = float3.zero;
 			RaycastHit hitInfo;
 			LayerMask _groundLayerMask = LayerMask.GetMask("Map");
-			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 10000, _groundLayerMask))
+			if (Physics.Raycast(cameraPos, camera.transform.forward, out hitInfo, 1000, _groundLayerMask))
 			{
 				cameraHitPos = hitInfo.point;
 				ET.Client.GamePlayHelper.SendARCameraPos(self.DomainScene(), cameraPos, cameraHitPos).Coroutine();

@@ -1091,7 +1091,7 @@ namespace ET
 
 			Unit curTownUnit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
 
-			ET.Ability.UnitHelper.ResetPos(curTownUnit, position);
+			ET.Ability.UnitHelper.ResetPos(curTownUnit, position, float3.zero);
 
 
 			//self.NoticeToClient(playerId);

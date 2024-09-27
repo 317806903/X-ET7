@@ -9,14 +9,18 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Session session, C2G_DealMyMail request, G2C_DealMyMail response)
 		{
+			Scene scene = session.DomainScene();
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 			long playerId = player.Id;
 			DealMailType dealMailType = (DealMailType)request.DealMailType;
 			long mailId = request.MailId;
-			PlayerMailComponent playerMailComponent = await ET.Server.PlayerCacheHelper.GetPlayerMailByPlayerId(session.DomainScene(), playerId);
+			PlayerMailComponent playerMailComponent = await ET.Server.PlayerCacheHelper.GetPlayerMailByPlayerId(scene, playerId);
 
 			await playerMailComponent.DealPlayerMail(dealMailType, mailId);
-			await PlayerCacheHelper.SavePlayerModel(session.DomainScene(), playerId, PlayerModelType.Mails, new() { "mailStatus" }, PlayerModelChgType.PlayerMailsGetItemGifts);
+			await PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.Mails, new() { "mailStatus" }, PlayerModelChgType.PlayerMails_GetItemGifts);
+
+			await PlayerCacheHelper.DealPlayerUIRedDotType(scene, playerId, PlayerModelType.Mails);
+
 		}
 	}
 }

@@ -34,7 +34,7 @@ Copy-Item .\Bin\linux-x64\publish\Core.dll -Destination $path\Bin\Core.dll -Recu
 Copy-Item .\Bin\linux-x64\publish\ThirdParty.dll -Destination $path\Bin\ThirdParty.dll -Recurse -Force
 
 Remove-Item $path\Config -Recurse -ErrorAction Ignore
-Copy-Item .\Config\Excel\s -Destination $path\Config\Excel\s  -Recurse -Force
+Copy-Item .\Config\Excel\s\AbilityConfig -Destination $path\Config\Excel\s\AbilityConfig  -Recurse -Force
 
 echo "`n`n=========================Build Server linux-x64 Success========================="
 timeout /t 1

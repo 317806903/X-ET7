@@ -51,9 +51,12 @@ namespace ET
             GamePlayHelper.AddUnitPathfinding(monsterUnit);
             GamePlayHelper.AddUnitTeamFlag(monsterUnit, teamFlagType);
 
+            float3 hitPosition = ET.RecastHelper.GetNearNavmeshPos(monsterUnit, monsterUnit.Position);
+            ET.Ability.UnitHelper.ResetPos(monsterUnit, hitPosition, float3.zero);
+
             UnitHelper_Create.ActorUnitLearnSkillWhenCreate(monsterUnit);
 
-            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds);
+            ET.GamePlayHelper.DoCreateActions(monsterUnit, monsterCfg.CreateActionIds).Coroutine();
 
             return monsterUnit;
         }
@@ -134,7 +137,7 @@ namespace ET
                     }
 
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
-                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds);
+                    ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds).Coroutine();
 
                     if (isAttackTower || isTrap)
                     {

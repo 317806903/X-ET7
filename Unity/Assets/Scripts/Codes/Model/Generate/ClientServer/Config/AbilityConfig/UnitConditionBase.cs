@@ -41,6 +41,8 @@ public abstract partial class UnitConditionBase: Bright.Config.BeanBase
             case AttributeRecordCondition.__ID__: return new AttributeRecordCondition(_buf);
             case CurHpCondition.__ID__: return new CurHpCondition(_buf);
             case CurHpRecordCondition.__ID__: return new CurHpRecordCondition(_buf);
+            case OwerCountCondition.__ID__: return new OwerCountCondition(_buf);
+            case OwerCountRecordCondition.__ID__: return new OwerCountRecordCondition(_buf);
             case RecordIntCondition.__ID__: return new RecordIntCondition(_buf);
             case RecordStringCondition.__ID__: return new RecordStringCondition(_buf);
             case RecordIntRecordCondition.__ID__: return new RecordIntRecordCondition(_buf);

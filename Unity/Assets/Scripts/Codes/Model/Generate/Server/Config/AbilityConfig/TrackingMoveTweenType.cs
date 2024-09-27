@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 追踪轨迹
 /// </summary>
-public sealed partial class TrackingMoveTweenType:  MoveTweenType 
+public sealed partial class TrackingMoveTweenType:  SpeedMoveTweenType 
 {
     public TrackingMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

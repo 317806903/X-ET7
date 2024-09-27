@@ -111,10 +111,82 @@ PrefabInstance:
     - target: {fileID: 8851954446996661739, guid: 9e17309d19528bd46af71c463ef52b40,
         type: 3}
       propertyPath: m_Name
-      value: DlgARRoomPVE
+      value: DlgARRoomPVESeason
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7071599637172308066, guid: 9e17309d19528bd46af71c463ef52b40,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1358871663808344762}
+    - targetCorrespondingSourceObject: {fileID: 4354340633248196734, guid: 9e17309d19528bd46af71c463ef52b40,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7344320660836697245}
+    - targetCorrespondingSourceObject: {fileID: 4789351077137044644, guid: 9e17309d19528bd46af71c463ef52b40,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7865989710173184195}
   m_SourcePrefab: {fileID: 100100000, guid: 9e17309d19528bd46af71c463ef52b40, type: 3}
+--- !u!1 &619023172386363687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4789351077137044644, guid: 9e17309d19528bd46af71c463ef52b40,
+    type: 3}
+  m_PrefabInstance: {fileID: 5395320214733737347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7865989710173184195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619023172386363687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVESeason/EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/ELable_RoomMemberStatus
+  localizeType: 0
+--- !u!1 &2937289519828796897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7071599637172308066, guid: 9e17309d19528bd46af71c463ef52b40,
+    type: 3}
+  m_PrefabInstance: {fileID: 5395320214733737347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1358871663808344762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937289519828796897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVESeason/EGBackGround/EGRoot/E_OperationPanel/Level/Reward/Txt_Reward
+  localizeType: 0
+--- !u!1 &8542693636884571645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4354340633248196734, guid: 9e17309d19528bd46af71c463ef52b40,
+    type: 3}
+  m_PrefabInstance: {fileID: 5395320214733737347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7344320660836697245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542693636884571645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgARRoomPVESeason/EGBackGround/EGRoot/E_OperationPanel/Level/monster/Txt_Monsters
+  localizeType: 0

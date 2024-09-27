@@ -105,6 +105,10 @@ namespace ET.Client
                {
                    itemRoom.EImage_TeamImage.color = Color.blue;
                }
+               else if (roomMember.roomTeamId == RoomTeamId.Yellow)
+               {
+                   itemRoom.EImage_TeamImage.color = Color.yellow;
+               }
            }
             await ETTask.CompletedTask;
 

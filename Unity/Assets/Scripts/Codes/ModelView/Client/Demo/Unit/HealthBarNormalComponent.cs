@@ -12,5 +12,9 @@ namespace ET.Client
         public Transform backgroundBar { get; set; }
         public float targetNormalizedHealth;
         public float curNormalizedHealth;
+
+        public int curFrame = 0;
+        public int waitFrame = 3;
+        public bool isActivity;
     }
 }

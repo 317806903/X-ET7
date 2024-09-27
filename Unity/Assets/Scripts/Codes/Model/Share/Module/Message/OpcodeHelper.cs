@@ -26,9 +26,13 @@ namespace ET
             OuterMessage.M2C_GamePlayChgNotice,
             OuterMessage.M2C_GamePlayModeChgNotice,
             OuterMessage.M2C_GamePlayStatisticalDataChgNotice,
-
             ushort.MaxValue, // ActorResponse
         };
+
+        public static void AddIgnoreDebugLogMessage(ushort opcode)
+        {
+            ignoreDebugLogMessageSet.Add(opcode);
+        }
 
         private static bool IsNeedLogMessage(ushort opcode)
         {

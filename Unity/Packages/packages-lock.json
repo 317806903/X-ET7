@@ -14,7 +14,7 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": ">=12.1.6"
       },
-      "hash": "cd8cb008cfa0aafc808d65ba65ec2063e0dff8d7"
+      "hash": "56d042b24f96659b4847b70a0cc52053560d6fd0"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
@@ -23,7 +23,7 @@
       "dependencies": {
         "com.deepmirror.mirrorverse": "0.1.7"
       },
-      "hash": "cd8cb008cfa0aafc808d65ba65ec2063e0dff8d7"
+      "hash": "56d042b24f96659b4847b70a0cc52053560d6fd0"
     },
     "com.dm.packages.blurbackground": {
       "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/BlurBackground",
@@ -208,10 +208,10 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.ugui": "1.0.0",
         "com.unity.services.core": "1.11.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.ugui": "1.0.0"
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -220,9 +220,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -287,9 +287,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -318,27 +318,40 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.arfoundation": "5.1.1",
         "com.unity.xr.core-utils": "2.1.0",
         "com.unity.xr.management": "4.0.1",
+        "com.unity.xr.arfoundation": "5.1.1",
         "com.unity.modules.androidjni": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.xr.arfoundation": {
-      "version": "5.1.1",
+    "com.unity.xr.arengine": {
+      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/AREnginePlugin",
       "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.xr.arfoundation": "5.1.3",
+        "com.unity.xr.core-utils": "2.1.0",
+        "com.unity.xr.management": "4.0.1",
+        "com.unity.modules.androidjni": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
+      },
+      "hash": "c82fba09fbdec7021516fed25f03709b9a7736d4"
+    },
+    "com.unity.xr.arfoundation": {
+      "version": "5.1.3",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
         "com.unity.inputsystem": "1.3.0",
+        "com.unity.mathematics": "1.2.5",
         "com.unity.xr.core-utils": "2.2.1",
         "com.unity.xr.management": "4.0.1",
-        "com.unity.ugui": "1.0.0",
-        "com.unity.mathematics": "1.2.5",
+        "com.unity.editorcoroutines": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0",
-        "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.unityanalytics": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
@@ -349,10 +362,10 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0",
-        "com.unity.xr.arfoundation": "5.1.1",
         "com.unity.xr.core-utils": "2.1.0",
-        "com.unity.xr.management": "4.0.1"
+        "com.unity.xr.management": "4.0.1",
+        "com.unity.xr.arfoundation": "5.1.1",
+        "com.unity.editorcoroutines": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -380,12 +393,21 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
+    },
+    "xyz.candycoded.hapticfeedback": {
+      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/HapticFeedback",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.androidjni": "1.0.0"
+      },
+      "hash": "8ac057eb706b72bb6ccc31939ff63e9118a758c0"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

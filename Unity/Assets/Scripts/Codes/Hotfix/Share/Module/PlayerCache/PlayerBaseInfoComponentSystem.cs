@@ -30,7 +30,7 @@ namespace ET
         {
             if (string.IsNullOrEmpty(self.AvatarFrameItemCfgId))
             {
-                self.AvatarFrameItemCfgId = "AvatarFrame_None";
+                self.AvatarFrameItemCfgId = ET.ItemHelper.GetAvatarFrameNoneCfgId();
                 self.SetDataCacheAutoWrite();
             }
         }

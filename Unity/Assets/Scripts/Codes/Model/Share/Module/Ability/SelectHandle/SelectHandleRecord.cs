@@ -10,6 +10,8 @@ namespace ET.Ability
         public long unitId;
         public bool isResetPos;
         public float3 resetPos;
+        public bool isResetForward;
+        public float3 resetForward;
         public string selectObjectCfgId;
         public ListComponent<long> unitIds;
     }

@@ -11,33 +11,36 @@ namespace ET.Ability
         public static async ETTask DoAttackArea(Unit unit, Unit resetPosByUnit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
         {
             SelectHandle selectHandle;
-            if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
+            if (actionCfg_AttackArea.ActionCallAutoUnitArea_Ref.ActionCallParam is ActionCallSelectLast)
             {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
-            }
-            else if(selectHandleOld.selectHandleType == SelectHandleType.SelectPosition)
-            {
-                selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
+                selectHandle = SelectHandleHelper.CreateUnitNoneSelectHandle();
+                selectHandle.unitIds.AddRange(selectHandleOld.unitIds);
             }
             else
             {
-                Log.Error($"ET.Ability.DamageHelper.DoAttackArea selectHandleOld.selectHandleType err");
-                return;
-            }
-            if (selectHandle == null)
-            {
-                Log.Error($"DoAttackArea selectHandle == null");
-                return;
-            }
-            if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
-            {
-                Log.Error($"DoAttackArea selectHandle.selectHandleType != SelectHandleType.SelectUnits");
-                return;
-            }
-            if (actionCfg_AttackArea.ActionCallAutoUnitArea_Ref.ActionCallParam is ActionCallAutoUnitOne actionCallAutoUnitOne)
-            {
-                selectHandle.unitIds.Clear();
-                selectHandle.unitIds.AddRange(selectHandleOld.unitIds);
+                if (selectHandleOld.selectHandleType == SelectHandleType.SelectUnits)
+                {
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(unit, resetPosByUnit, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
+                }
+                else if(selectHandleOld.selectHandleType == SelectHandleType.SelectPosition)
+                {
+                    selectHandle = SelectHandleHelper.CreateSelectHandle(unit, true, selectHandleOld.position, false, float3.zero, actionCfg_AttackArea.ActionCallAutoUnitArea_Ref, ref actionContext);
+                }
+                else
+                {
+                    Log.Error($"ET.Ability.DamageHelper.DoAttackArea selectHandleOld.selectHandleType err [{actionCfg_AttackArea.Id}]");
+                    return;
+                }
+                if (selectHandle == null)
+                {
+                    Log.Error($"DoAttackArea selectHandle == null [{actionCfg_AttackArea.Id}]");
+                    return;
+                }
+                if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+                {
+                    Log.Error($"DoAttackArea selectHandle.selectHandleType != SelectHandleType.SelectUnits");
+                    return;
+                }
             }
             actionContext.attackerUnitId = unit.Id;
             int count = selectHandle.unitIds.Count;

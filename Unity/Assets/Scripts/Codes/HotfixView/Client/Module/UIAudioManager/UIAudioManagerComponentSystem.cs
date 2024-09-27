@@ -79,6 +79,7 @@ namespace ET.Client
             {
                 return;
             }
+            self.audioSource.volume = 1f;
             self.audioSource.PlayOneShot(audioClip);
             await ETTask.CompletedTask;
         }
@@ -225,7 +226,7 @@ namespace ET.Client
             self.musicSource.spatialBlend = 0;
             self.musicSource.loop = false;
             self.musicSource.mute = self.isMute;
-            self.musicSource.volume = 0.1f;
+            self.musicSource.volume = 1f;
             self.musicSource.pitch = 1;
             self.musicSource.Play();
             await ETTask.CompletedTask;

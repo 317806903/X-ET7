@@ -44,7 +44,11 @@ namespace ET.Server
 	        if (playerModelType == PlayerModelType.Mails)
 	        {
 		        PlayerMailComponent playerMailComponent = entityModel as PlayerMailComponent;
-		        await playerMailComponent.Refresh();
+		        bool bRet = await playerMailComponent.Refresh();
+		        if (bRet)
+		        {
+			        await ShowMailUIRedDot(scene, playerId);
+		        }
 	        }
 	        return entityModel;
         }
@@ -66,5 +70,12 @@ namespace ET.Server
 	        await ETTask.CompletedTask;
         }
 
+        public static async ETTask ShowMailUIRedDot(Scene scene, long playerId)
+        {
+	        PlayerOtherInfoComponent playerOtherInfoComponent = await PlayerCacheLocalHelper.GetPlayerModel(scene, playerId, PlayerModelType.OtherInfo) as PlayerOtherInfoComponent;
+	        playerOtherInfoComponent.SetUIRedDotType(UIRedDotType.Mail, true);
+
+	        playerOtherInfoComponent.SetDataCacheAutoWrite();
+        }
     }
 }

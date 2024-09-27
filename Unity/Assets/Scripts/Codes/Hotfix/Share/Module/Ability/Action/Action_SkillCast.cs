@@ -34,7 +34,7 @@ namespace ET.Ability
 				}
 				foreach (var skillObj in skillList)
 				{
-					await SkillHelper.CastSkill(targetUnit, skillObj.skillCfgId);
+					await SkillHelper.CastSkill(targetUnit, skillObj.skillCfgId, null);
 				}
 			}
 			list.Dispose();

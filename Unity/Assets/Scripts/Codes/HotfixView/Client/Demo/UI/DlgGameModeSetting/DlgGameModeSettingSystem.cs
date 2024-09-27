@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using ET.AbilityConfig;
 
 namespace ET.Client
 {   //主页设置面板
@@ -13,7 +14,7 @@ namespace ET.Client
         public static void RegisterUIEvent(this DlgGameModeSetting self)
         {
             // 背景与关闭按钮
-            self.View.E_BG_ClickButton.AddListener(()=>
+            self.View.E_BG_ClickButton.AddListener(() =>
             {
                 if (self.ChkCanClickBg() == false)
                 {
@@ -48,28 +49,9 @@ namespace ET.Client
             //教程按钮
             self.View.E_ButtonTutorialsButton.AddListenerAsync(self.ClickTutorial);
 
+            //语言选择
+            self.View.E_btn_LanguageButton.AddListenerAsync(self.OnClickLanugage);
 
-            self.View.E_LanguageCNButton.AddListener(() =>
-            {
-#if UNITY_EDITOR
-                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
-#endif
-                LocalizeComponent.Instance.SwitchLanguage(LanguageType.CN, true);
-            });
-            self.View.E_LanguageENButton.AddListener(() =>
-            {
-#if UNITY_EDITOR
-                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
-#endif
-                LocalizeComponent.Instance.SwitchLanguage(LanguageType.EN, true);
-            });
-            self.View.E_LanguageTWButton.AddListener(() =>
-            {
-#if UNITY_EDITOR
-                LocalizeComponent.Instance.IsShowLanguagePre = ResConfig.Instance.IsShowLanguagePre;
-#endif
-                LocalizeComponent.Instance.SwitchLanguage(LanguageType.TW, true);
-            });
         }
 
         // 显示
@@ -80,6 +62,7 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.PopUp);
             self.ShowBg();
             self.SetSwitchOnOffUI();
+            await self.SetCurLanguageText();
         }
 
         public static bool ChkCanClickBg(this DlgGameModeSetting self)
@@ -186,13 +169,15 @@ namespace ET.Client
         public static void ClickDiscord(this DlgGameModeSetting self)
         {
             self.TrackFunctionClicked("discord");
-            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://discord.gg/jnf2qabe9C");
+            string url = ChannelSettingComponent.Instance.GetDiscordURL();
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(), url);
         }
 
         public static void ClickPrivacyPolicy(this DlgGameModeSetting self)
         {
             self.TrackFunctionClicked("PrivacyPolicy");
-            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://www.realityguardar.com/privacy");
+            string url = ChannelSettingComponent.Instance.GetPrivacyPolicyURL();
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(), url);
         }
 
 
@@ -211,5 +196,26 @@ namespace ET.Client
             });
         }
 
+        //语言选择按钮
+        public static async ETTask OnClickLanugage(this DlgGameModeSetting self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindow<DlgLanguageChoose>();
+            await ETTask.CompletedTask;
+        }
+        //显示当前的语言类型
+        public static async ETTask SetCurLanguageText(this DlgGameModeSetting self)
+        {
+            LanguageType curLanguageType = LocalizeComponent.Instance.CurrentLanguage;
+            self.SetLanguageText(curLanguageType);
+            await ETTask.CompletedTask;
+        }
+
+        public static void SetLanguageText(this DlgGameModeSetting self, LanguageType languageType)
+        {
+            string keyCode = $"TextCode_key_LanguageChoose_{languageType.ToString()}";
+            string languageText = LocalizeComponent.Instance.GetTextValue(keyCode);
+            self.View.E_LanguageTextTextMeshProUGUI.text = languageText;            
+        }
     }
 }

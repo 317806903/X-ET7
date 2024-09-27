@@ -177,7 +177,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_TowerBuyShowImage
+		public UnityEngine.UI.Image EG_TowerBuyShowRectTransform
 		{
 			get
 			{
@@ -186,11 +186,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EImage_TowerBuyShowImage == null )
+				if( this.m_EG_TowerBuyShowRectTransform == null )
 				{
-					this.m_EImage_TowerBuyShowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Bag/EG_MoveItem/Item_TowerBuy/EImage_TowerBuyShow");
+					this.m_EG_TowerBuyShowRectTransform = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Bag/EG_MoveItem/Item_TowerBuy/EImage_TowerBuyShow");
 				}
-				return this.m_EImage_TowerBuyShowImage;
+				return this.m_EG_TowerBuyShowRectTransform;
 			}
 		}
 
@@ -483,7 +483,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EImage_BuyBGImage
+		public UnityEngine.UI.Image EG_BuyBGRectTransform
 		{
 			get
 			{
@@ -492,11 +492,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_EImage_BuyBGImage == null )
+				if( this.m_EG_BuyBGRectTransform == null )
 				{
-					this.m_EImage_BuyBGImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Bag/EG_MoveItem/Item_TowerBuy/EImage_TowerBuyShow/EImage_BuyBG");
+					this.m_EG_BuyBGRectTransform = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Bag/EG_MoveItem/Item_TowerBuy/EImage_TowerBuyShow/EImage_BuyBG");
 				}
-				return this.m_EImage_BuyBGImage;
+				return this.m_EG_BuyBGRectTransform;
 			}
 		}
 
@@ -767,7 +767,7 @@ namespace ET.Client
 			this.m_ELoopScrollList_TowerCardItemLoopHorizontalScrollRect = null;
 			this.m_EG_MoveItemRectTransform = null;
 			this.m_E_NoneImage = null;
-			this.m_EImage_TowerBuyShowImage = null;
+			this.m_EG_TowerBuyShowRectTransform = null;
 			this.m_E_BoxImage = null;
 			this.m_EImage_LowImage = null;
 			this.m_EImage_MiddleImage = null;
@@ -785,7 +785,7 @@ namespace ET.Client
 			this.m_ELabel_Label2TextMeshProUGUI = null;
 			this.m_EImage_Label3Image = null;
 			this.m_ELabel_Label3TextMeshProUGUI = null;
-			this.m_EImage_BuyBGImage = null;
+			this.m_EG_BuyBGRectTransform = null;
 			this.m_ELabel_BuyText = null;
 			this.m_ELabel_BuyUITextLocalizeMonoView = null;
 			this.m_EButton_BuyButton = null;
@@ -814,7 +814,7 @@ namespace ET.Client
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerCardItemLoopHorizontalScrollRect = null;
 		private UnityEngine.RectTransform m_EG_MoveItemRectTransform = null;
 		private UnityEngine.UI.Image m_E_NoneImage = null;
-		private UnityEngine.UI.Image m_EImage_TowerBuyShowImage = null;
+		private UnityEngine.UI.Image m_EG_TowerBuyShowRectTransform = null;
 		private UnityEngine.UI.Image m_E_BoxImage = null;
 		private UnityEngine.UI.Image m_EImage_LowImage = null;
 		private UnityEngine.UI.Image m_EImage_MiddleImage = null;
@@ -832,7 +832,7 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_Label2TextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EImage_Label3Image = null;
 		private TMPro.TextMeshProUGUI m_ELabel_Label3TextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_EImage_BuyBGImage = null;
+		private UnityEngine.UI.Image m_EG_BuyBGRectTransform = null;
 		private UnityEngine.UI.Text m_ELabel_BuyText = null;
 		private UITextLocalizeMonoView m_ELabel_BuyUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Button m_EButton_BuyButton = null;

@@ -80,6 +80,10 @@ namespace ET.Client
 		{
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 					await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
+			if (self.IsDisposed || playerBaseInfoComponent == null || playerBaseInfoComponent.IsDisposed)
+			{
+				return;
+			}
 			int maxPhysicalStrength = GlobalSettingCfgCategory.Instance.UpperLimitOfPhysicalStrength;
 			int curPhysicalStrength = playerBaseInfoComponent.GetPhysicalStrength();
 			string msg = curPhysicalStrength + "/" + maxPhysicalStrength;

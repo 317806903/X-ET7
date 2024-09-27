@@ -87,6 +87,8 @@ namespace ET.Ability
         {
             this.isDisposed = false;
             this._isHoldingCount = 0;
+            this.position = float3.zero;
+            this.direction = float3.zero;
             if (this.unitIds != null)
             {
                 this.unitIds.Dispose();

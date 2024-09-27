@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 402359144277772738}
   - component: {fileID: 426844018245837602}
   - component: {fileID: 3210078652426510668}
+  - component: {fileID: 7982680264305823111}
   m_Layer: 5
   m_Name: logo
   m_TagString: Untagged
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1fae41e7ed2e4404189857162666ff39, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee37bc87472ed914387ea99d6bd52064, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -151,6 +152,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7982680264305823111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351678267928842231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464881188eddd3648bd2744795722c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mImage: {fileID: 3210078652426510668}
+  mRawImage: {fileID: 0}
+  path: Logo/Icon_Logo_Foreground.png
+  localizeImageScaleType: 1
 --- !u!1 &418508799544746994
 GameObject:
   m_ObjectHideFlags: 0

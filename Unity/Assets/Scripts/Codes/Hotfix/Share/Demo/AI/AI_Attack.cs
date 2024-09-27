@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ET.Ability;
 using ET.AbilityConfig;
 using Unity.Mathematics;
-using SkillSlotType = ET.AbilityConfig.SkillSlotType;
 
 namespace ET
 {

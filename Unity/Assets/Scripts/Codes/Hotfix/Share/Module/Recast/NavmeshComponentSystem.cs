@@ -68,7 +68,7 @@ namespace ET
 
         public static DtNavMesh GetNavMesh(this NavmeshComponent self)
         {
-            return self.GetParent<NavmeshManagerComponent>().m_nav;
+            return self.GetParent<NavmeshManagerComponent>().GetNavMesh();
         }
 
         public static Sample GetSample(this NavmeshComponent self)
@@ -374,13 +374,13 @@ namespace ET
             for (int i = 0; i < arrivePath.Count; i++)
             {
                 float3 pos = arrivePath[i];
-                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos);
-                if (pos2.Equals(float3.zero))
+                (bool isHitMesh, float height) = RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), pos);
+                if (isHitMesh == false)
                 {
                     continue;
                     //return false;
                 }
-                if (pos2.y < pos.y - 2f || pos2.y > pos.y + 2f)
+                if (height < pos.y - 3f || height > pos.y + 3f)
                 {
                     return false;
                 }
@@ -395,8 +395,8 @@ namespace ET
                 //float lowHeight = math.min(arrivePath[i].y, arrivePath[i+1].y);
                 float3 pos = (arrivePath[i] + arrivePath[i+1])/2;
                 float disY = math.max(1, absDisY * 0.5f);
-                float3 pos2 = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), pos, disY);
-                if (pos2.Equals(float3.zero))
+                (bool isHitMesh, float height) = RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), pos, disY);
+                if (isHitMesh == false)
                 {
                     return false;
                     // if (math.abs(arrivePath[i].y - arrivePath[i+1].y) > 4)
@@ -406,11 +406,11 @@ namespace ET
                     // continue;
                 }
 
-                if (pos2.y > arrivePath[i].y && pos2.y > arrivePath[i+1].y)
+                if (height > arrivePath[i].y && height > arrivePath[i+1].y)
                 {
                     continue;
                 }
-                if (pos2.y < pos.y - 2f || pos2.y > pos.y + 2f)
+                if (height < pos.y - 3f || height > pos.y + 3f)
                 {
                     return false;
                 }

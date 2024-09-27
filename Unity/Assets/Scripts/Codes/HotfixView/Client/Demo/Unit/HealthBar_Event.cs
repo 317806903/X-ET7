@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ET.Ability.Client;
 using UnityEngine.SceneManagement;
 
 namespace ET.Client

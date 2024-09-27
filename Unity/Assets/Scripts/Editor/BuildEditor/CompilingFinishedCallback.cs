@@ -97,14 +97,14 @@ namespace ET
                 Type type = Type.GetType(className);
                 if (type == null)
                 {
-                    Debug.LogError("type == null");
+                    Debug.LogError($" method[{method}] className[{className}] type == null");
                     continue;
                 }
 
                 var method1 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, new Type[] { }, null);
                 if (method1 != null && argName.Trim() == "")
                 {
-                    Debug.Log("method1.Invoke");
+                    Debug.Log($" method[{method}] className[{className}] {methodName}.Invoke");
                     method1.Invoke(null, null);
                     return;
                 }
@@ -112,7 +112,7 @@ namespace ET
                 var method2 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, new Type[] { typeof (string) }, null);
                 if (method2 != null && argName.Trim() != "")
                 {
-                    Debug.Log("CallMethod(method2, argName");
+                    Debug.Log($" method[{method}] className[{className}] CallMethod({methodName}, {argName}");
                     CallMethod(method2, argName);
                     return;
                 }
@@ -120,14 +120,14 @@ namespace ET
                 var method3 = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (method3 != null)
                 {
-                    Debug.Log("CallMethod(method3, argName)");
+                    Debug.Log($" method[{method}] className[{className}] CallMethod({methodName}, {argName})");
                     CallMethod(method3, argName);
                     return;
                 }
 
                 if (method1 == null && method2 == null && method3 == null)
                 {
-                    Debug.LogError("method1 == null && method2 == null && method3 == null");
+                    Debug.LogError($" method[{method}] className[{className}] method1 == null && method2 == null && method3 == null");
                     continue;
                 }
 

@@ -25,7 +25,12 @@ namespace ET.Client
 		        }
 	        }
 
-	        EffectComponent effectComponent = unit.AddComponent<EffectComponent>();
+	        EffectComponent effectComponent = unit.GetComponent<EffectComponent>();
+	        if (effectComponent != null)
+	        {
+		        unit.RemoveComponent<EffectComponent>();
+	        }
+	        effectComponent = unit.AddComponent<EffectComponent>();
 	        if (unitInfo.EffectComponents != null)
 	        {
 		        EffectShowChgComponent effectShowChgComponent = unit.GetComponent<EffectShowChgComponent>();

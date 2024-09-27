@@ -14,8 +14,10 @@ namespace ET.Client
         {
             self.View.E_LogoutButton.AddListener(self.OnLogout);
             self.View.E_Logout_SdkButton.AddListener(self.OnLogout);
+
             self.View.E_GoogleLoginButton.AddListenerAsync(self.OnClickBindAccount);
             self.View.E_IphoneLoginButton.AddListenerAsync(self.OnClickBindAccount);
+
             self.View.E_BG_ClickButton.AddListener(()=>
             {
                 if (self.ChkCanClickBg() == false)
@@ -28,14 +30,12 @@ namespace ET.Client
 
             //改名按钮
             self.View.EBtn_ChgNameButton.AddListener(() => {
-                Debug.Log("点击了改名按钮");
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersionalName>().Coroutine();
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
             });
 
             //改头像按钮
             self.View.EBtn_ChgAvatarButton.AddListener(() => {
-                Debug.Log("点击了改头像按钮");
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgPersionalAvatar>().Coroutine();
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgPersonalInformation>();
             });
@@ -83,17 +83,43 @@ namespace ET.Client
 
             self.View.ES_AvatarShow.ShowMyAvatarIcon(false).Coroutine();
 
-            self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
-            self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer && playerBaseInfoComponent.BindLoginType == LoginType.Editor);
-            self.View.E_AccountButton.SetVisible(playerBaseInfoComponent.BindLoginType != LoginType.Editor);
-            self.View.E_Account_TextTextMeshProUGUI.text = playerBaseInfoComponent.BindEmail;
-            if(playerBaseInfoComponent.BindLoginType == LoginType.GoogleSDK){
-                self.View.E_Account_TitleTextMeshProUGUI.text = "Google Account:";
-            }else if(playerBaseInfoComponent.BindLoginType == LoginType.AppleSDK){
-                self.View.E_Account_TitleTextMeshProUGUI.text = "Apple ID:";
-            }else{
-                self.View.E_Account_TitleTextMeshProUGUI.text = "Account:";
+            Log.Debug($"playerBaseInfoComponent.BindLoginType[{playerBaseInfoComponent.BindLoginType.ToString()}]");
+            if (ChannelSettingComponent.Instance.ChkIsNeedSDKLogin())
+            {
+                if (playerBaseInfoComponent.BindLoginType == LoginType.Editor)
+                {
+                    self.View.E_GoogleLoginButton.SetVisible(Application.platform == RuntimePlatform.Android);
+                    self.View.E_IphoneLoginButton.SetVisible(Application.platform == RuntimePlatform.IPhonePlayer);
+                    self.View.E_AccountButton.SetVisible(false);
+                }
+                else
+                {
+                    self.View.E_GoogleLoginButton.SetVisible(false);
+                    self.View.E_IphoneLoginButton.SetVisible(false);
+                    self.View.E_AccountButton.SetVisible(true);
+                }
+
+                self.View.E_Account_TextTextMeshProUGUI.text = playerBaseInfoComponent.BindEmail;
+                if(playerBaseInfoComponent.BindLoginType == LoginType.GoogleSDK)
+                {
+                    self.View.E_Account_TitleTextMeshProUGUI.text = "Google Account:";
+                }
+                else if(playerBaseInfoComponent.BindLoginType == LoginType.AppleSDK)
+                {
+                    self.View.E_Account_TitleTextMeshProUGUI.text = "Apple ID:";
+                }
+                else
+                {
+                    self.View.E_Account_TitleTextMeshProUGUI.text = "Account:";
+                }
             }
+            else
+            {
+                self.View.E_AccountButton.SetVisible(false);
+                self.View.E_GoogleLoginButton.SetVisible(false);
+                self.View.E_IphoneLoginButton.SetVisible(false);
+            }
+
         }
 
         public static void OnLogout(this DlgPersonalInformation self)

@@ -41,22 +41,31 @@ namespace ET.Client
             }
 
             bool isHome = false;
+            bool isTower = false;
             if (self.GetUnit().GetComponent<HomeComponent>() != null)
             {
                 isHome = true;
             }
             else if (self.GetUnit().GetComponent<TowerComponent>() != null)
             {
-                //isHome = true;
-                isHome = false;
+                isTower = true;
+            }
+            else if (self.GetUnit().GetComponent<PlayerUnitComponent>() != null)
+            {
+                isTower = true;
             }
 
             self.isHome = isHome;
+            self.isTower = isTower;
             if (self.isHome)
             {
-                //self.AddComponent<HealthBarHomeComponent>();
-                HomeHealthBarComponent homeHealthBarComponent = self.AddComponent<HomeHealthBarComponent>();
-                await homeHealthBarComponent.Init();
+                HealthBarHomeComponent healthBarHomeComponent = self.AddComponent<HealthBarHomeComponent>();
+                await healthBarHomeComponent.Init();
+            }
+            else if (self.isTower)
+            {
+                HealthBarTowerComponent healthBarTowerComponent = self.AddComponent<HealthBarTowerComponent>();
+                await healthBarTowerComponent.Init();
             }
             else
             {
@@ -69,9 +78,12 @@ namespace ET.Client
         {
             if (self.isHome)
             {
-                //self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Attacked);
-                self.GetComponent<HomeHealthBarComponent>()?.UpdateHealth(isInit);
+                self.GetComponent<HealthBarHomeComponent>()?.UpdateHealth(isInit);
+            }
+            else if (self.isTower)
+            {
+                self.GetComponent<HealthBarTowerComponent>()?.UpdateHealth(isInit);
             }
             else
             {

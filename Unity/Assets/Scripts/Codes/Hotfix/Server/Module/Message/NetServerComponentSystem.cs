@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 
 namespace ET.Server
 {
@@ -23,6 +24,19 @@ namespace ET.Server
             protected override void Destroy(NetServerComponent self)
             {
                 NetServices.Instance.RemoveService(self.ServiceId);
+            }
+        }
+
+        private static void AddIgnoreDebugLogMessage(this NetServerComponent self)
+        {
+            HashSet<ushort> ignoreDebugLogMessageSet = new HashSet<ushort>
+            {
+                InnerMessage.M2R_CreateDynamicMap,
+                InnerMessage.R2M_CreateDynamicMap,
+            };
+            foreach (var opcode in ignoreDebugLogMessageSet)
+            {
+                ET.OpcodeHelper.AddIgnoreDebugLogMessage(opcode);
             }
         }
 
@@ -52,7 +66,7 @@ namespace ET.Server
                 session.AddComponent<SessionIdleCheckerComponent>();
             }
         }
-        
+
         private static void OnRead(this NetServerComponent self, long channelId, long actorId, object message)
         {
             Session session = self.GetChild<Session>(channelId);
@@ -61,9 +75,9 @@ namespace ET.Server
                 return;
             }
             session.LastRecvTime = TimeHelper.ClientNow();
-            
+
             OpcodeHelper.LogMsg(self.DomainZone(), message);
-			
+
             EventSystem.Instance.Publish(Root.Instance.Scene, new NetServerComponentOnRead() {Session = session, Message = message});
         }
     }

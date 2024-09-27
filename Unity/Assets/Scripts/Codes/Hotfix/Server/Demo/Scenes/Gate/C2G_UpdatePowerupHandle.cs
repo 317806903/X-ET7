@@ -16,7 +16,7 @@ namespace ET.Server
             long playerId = player.Id;
 
             //升级指定养成
-            bool isUPdateSucces = await PlayerCacheHelper.UpdatePowerup(session.DomainScene(), playerId, powerupCfg);
+            bool isUPdateSucces = await PlayerCacheHelper.UpdateSeasonBringUp(session.DomainScene(), playerId, powerupCfg);
 
             if (!isUPdateSucces)
             {

@@ -30,7 +30,7 @@ namespace ET.Client
         public static void SetMainIcon(this Scroll_Item_PowerUps self,string bringUpNameStr,int playerLevel)
 		{
             SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(bringUpNameStr, playerLevel);
-            self.EMainIconImage.SetImageByResIconCfgId(seasonBringUpCfg.Icon).Coroutine();
+            self.EMainIconImage.SetImageByResIconCfgId(self, seasonBringUpCfg.Icon).Coroutine();
         }
 
         /// <summary>

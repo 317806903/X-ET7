@@ -70,20 +70,21 @@ namespace ET
             return gamePlayComponent.ChkPlayerIsQuit(playerId);
         }
 
-        public static void NoticeToClientAll(this GamePlayModeComponentBase self)
+        public static void NoticeToClientAll(this GamePlayModeComponentBase self, bool bForceSend = false)
         {
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
-                self.NoticeToClient(playerList[i]);
+                self.NoticeToClient(playerList[i], bForceSend);
             }
         }
 
-        public static void NoticeToClient(this GamePlayModeComponentBase self, long playerId)
+        public static void NoticeToClient(this GamePlayModeComponentBase self, long playerId, bool bForceSend = false)
 		{
 			EventType.WaitNoticeGamePlayModeToClient _WaitNoticeGamePlayModeChgToClient = new ()
 			{
 				playerId = playerId,
+                forceSend = bForceSend,
 				gamePlayComponent = self.GetGamePlay(),
 			};
 			EventSystem.Instance.Publish(self.DomainScene(), _WaitNoticeGamePlayModeChgToClient);

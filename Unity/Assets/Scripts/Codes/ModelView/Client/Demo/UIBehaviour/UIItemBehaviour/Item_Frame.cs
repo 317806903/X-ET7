@@ -32,13 +32,37 @@ namespace ET.Client
 				{
 					if( this.m_EImage_FrameImage == null )
 					{
-						this.m_EImage_FrameImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Frame");
+						this.m_EImage_FrameImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EImage_Frame");
 					}
 					return this.m_EImage_FrameImage;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EImage_Frame");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EImage_Frame");
+				}
+			}
+		}
+
+		public UnityEngine.UI.Image E_RedDotImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if (this.isCacheNode)
+				{
+					if( this.m_E_RedDotImage == null )
+					{
+						this.m_E_RedDotImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/E_RedDot");
+					}
+					return this.m_E_RedDotImage;
+				}
+				else
+				{
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/E_RedDot");
 				}
 			}
 		}
@@ -56,13 +80,13 @@ namespace ET.Client
 				{
 					if( this.m_EIcon_SelectedImage == null )
 					{
-						this.m_EIcon_SelectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EIcon_Selected");
+						this.m_EIcon_SelectedImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EIcon_Selected");
 					}
 					return this.m_EIcon_SelectedImage;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EIcon_Selected");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EIcon_Selected");
 				}
 			}
 		}
@@ -80,13 +104,13 @@ namespace ET.Client
 				{
 					if( this.m_EButton_SelectButton == null )
 					{
-						this.m_EButton_SelectButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Select");
+						this.m_EButton_SelectButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "MainIcon/EButton_Select");
 					}
 					return this.m_EButton_SelectButton;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EButton_Select");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "MainIcon/EButton_Select");
 				}
 			}
 		}
@@ -104,13 +128,13 @@ namespace ET.Client
 				{
 					if( this.m_EButton_SelectImage == null )
 					{
-						this.m_EButton_SelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Select");
+						this.m_EButton_SelectImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EButton_Select");
 					}
 					return this.m_EButton_SelectImage;
 				}
 				else
 				{
-					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EButton_Select");
+					return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "MainIcon/EButton_Select");
 				}
 			}
 		}
@@ -118,6 +142,7 @@ namespace ET.Client
 		public void DestroyWidget()
 		{
 			this.m_EImage_FrameImage = null;
+			this.m_E_RedDotImage = null;
 			this.m_EIcon_SelectedImage = null;
 			this.m_EButton_SelectButton = null;
 			this.m_EButton_SelectImage = null;
@@ -126,6 +151,7 @@ namespace ET.Client
 		}
 
 		private UnityEngine.UI.Image m_EImage_FrameImage = null;
+		private UnityEngine.UI.Image m_E_RedDotImage = null;
 		private UnityEngine.UI.Image m_EIcon_SelectedImage = null;
 		private UnityEngine.UI.Button m_EButton_SelectButton = null;
 		private UnityEngine.UI.Image m_EButton_SelectImage = null;

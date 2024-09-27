@@ -9,6 +9,7 @@ Shader "MyShader/PathNode"  { // 路径上的节点移动特效
         tags{"Queue" = "Transparent" "RenderType" = "Transparent" "IgnoreProjector" = "True"}
         Blend  SrcAlpha One // 混合
         // Cull off // 双面
+        ZWrite Off
 
         Pass {
             CGPROGRAM

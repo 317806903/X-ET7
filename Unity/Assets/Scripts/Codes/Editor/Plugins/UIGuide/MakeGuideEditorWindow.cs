@@ -315,7 +315,10 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                                 if (makeGuide.list[i].trigEnterConditionGo == null)
                                 {
-                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigEnterConditionParam, redStyle);
+                                    if (string.IsNullOrEmpty(makeGuide.list[i].trigEnterConditionParam) == false)
+                                    {
+                                        EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigEnterConditionParam, redStyle);
+                                    }
                                 }
                                 else
                                 {
@@ -359,7 +362,21 @@ public class UIGuidePathListEditorWindow: EditorWindow
                         EditorGUILayout.LabelField("★指引内容:");
                         EditorGUI.indentLevel++;
                         EditorGUI.BeginChangeCheck();
-                        makeGuide.list[i].go = EditorGUILayout.ObjectField("指引节点:", makeGuide.list[i].go, typeof (GameObject), true) as GameObject;
+
+                        if (makeGuide.list[i].go == null &&
+                            (string.IsNullOrEmpty(makeGuide.list[i].hierarchyCanvasPath) == false ||
+                            string.IsNullOrEmpty(makeGuide.list[i].hierarchyGuidePath) == false))
+                        {
+                            //EditorGUILayout.Space(5);
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("指引节点:", redStyle, new []{GUILayout.Width(100)});
+                            makeGuide.list[i].go = EditorGUILayout.ObjectField(makeGuide.list[i].go, typeof (GameObject), true) as GameObject;
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        else
+                        {
+                            makeGuide.list[i].go = EditorGUILayout.ObjectField("指引节点:", makeGuide.list[i].go, typeof (GameObject), true) as GameObject;
+                        }
 
                         EditorGUI.indentLevel++;
                         if (EditorGUI.EndChangeCheck())
@@ -407,8 +424,15 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                             if (makeGuide.list[i].go == null)
                             {
-                                EditorGUILayout.LabelField("canvas路径(可能有问题，留意!!!): " + makeGuide.list[i].hierarchyCanvasPath, redStyle);
-                                EditorGUILayout.LabelField("后面路径(可能有问题，留意!!!):" + makeGuide.list[i].hierarchyGuidePath, redStyle);
+                                if (string.IsNullOrEmpty(makeGuide.list[i].hierarchyCanvasPath) || string.IsNullOrEmpty(makeGuide.list[i].hierarchyGuidePath))
+                                {
+
+                                }
+                                else
+                                {
+                                    EditorGUILayout.LabelField("canvas路径(可能有问题，留意!!!): " + makeGuide.list[i].hierarchyCanvasPath, redStyle);
+                                    EditorGUILayout.LabelField("后面路径(可能有问题，留意!!!):" + makeGuide.list[i].hierarchyGuidePath, redStyle);
+                                }
                             }
                             else
                             {
@@ -649,7 +673,10 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
                                 if (makeGuide.list[i].trigExitConditionGo == null)
                                 {
-                                    EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigExitConditionParam, redStyle);
+                                    if (string.IsNullOrEmpty(makeGuide.list[i].trigExitConditionParam) == false)
+                                    {
+                                        EditorGUILayout.LabelField("路径(可能有问题，留意!!!): " + makeGuide.list[i].trigExitConditionParam, redStyle);
+                                    }
                                 }
                                 else
                                 {
@@ -725,6 +752,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
         EditorGUI.indentLevel++;
         EditorGUILayout.LabelField(filePath);
         EditorGUI.indentLevel--;
+        EditorGUILayout.Space(10);
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("打开存储目录"))
@@ -753,19 +781,19 @@ public class UIGuidePathListEditorWindow: EditorWindow
         }
         if (Application.isPlaying)
         {
-            UIGuidePath curUIGuidePath = GetCurUIGuide();
+            (string guideName, UIGuidePath curUIGuidePath) = GetCurUIGuide();
             if (curUIGuidePath != null)
             {
-                EditorGUILayout.LabelField($"当前运行的指引步骤:{curUIGuidePath.index}");
+                EditorGUILayout.LabelField($"[指引中]当前运行[{guideName}]的指引步骤:{curUIGuidePath.index} {curUIGuidePath.name}");
             }
             else
             {
-                EditorGUILayout.LabelField($"当前没有指引");
+                EditorGUILayout.LabelField($"[当前没有指引]");
             }
         }
         else
         {
-            EditorGUILayout.LabelField($"非运行状态");
+            EditorGUILayout.LabelField($"运行时会显示指引状态");
         }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(10);
@@ -1017,7 +1045,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
             }
 
             string guideFileName = Path.GetFileNameWithoutExtension(this.filePath);
-            ET.Client.UIGuideHelper.DoUIGuide(clientScene, guideFileName, _UIGuidePathList, indexRun, null).Coroutine();
+            ET.Client.UIGuideHelper.DoUIGuide(clientScene, guideFileName, 1000, _UIGuidePathList, indexRun, null).Coroutine();
         }
     }
 
@@ -1051,7 +1079,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
 
         if (clientScene != null)
         {
-            ET.Client.UIGuideHelper.DoUIGuide(clientScene, fileName, 0, null).Coroutine();
+            ET.Client.UIGuideHelper.DoUIGuide(clientScene, fileName, 1000, 0, null).Coroutine();
         }
     }
 
@@ -1080,16 +1108,16 @@ public class UIGuidePathListEditorWindow: EditorWindow
         }
     }
 
-    public UIGuidePath GetCurUIGuide()
+    public (string, UIGuidePath) GetCurUIGuide()
     {
         if (Application.isPlaying == false)
         {
-            return null;
+            return (string.Empty, null);
         }
 
         if (ClientSceneManagerComponent.Instance == null)
         {
-            return null;
+            return (string.Empty, null);
         }
         Scene clientScene = null;
         var childs = ClientSceneManagerComponent.Instance.Children;
@@ -1108,7 +1136,7 @@ public class UIGuidePathListEditorWindow: EditorWindow
             return ET.Client.UIGuideHelper.GetCurUIGuide(clientScene);
         }
 
-        return null;
+        return (string.Empty, null);
     }
 
 }

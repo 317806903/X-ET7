@@ -12,6 +12,7 @@ namespace ET
         {
             protected override void Awake(PlayerBackPackComponent self)
             {
+                self.newItemList = new();
             }
         }
 
@@ -112,6 +113,8 @@ namespace ET
 
         public static void AddItem(this PlayerBackPackComponent self, string itemCfgId, int count)
         {
+            self.AddNewItemRecord(itemCfgId);
+
             self._GetItemManagerComponent().AddItem(itemCfgId, count);
         }
 
@@ -129,5 +132,80 @@ namespace ET
         {
             self._GetItemManagerComponent().ClearAllItem();
         }
+
+        public static bool _ChkItemExist(this PlayerBackPackComponent self, string itemCfgId)
+        {
+            bool canStack = ET.ItemHelper.ChkItemCanStack(itemCfgId);
+            if (canStack)
+            {
+                ItemComponent itemComponent = self.GetItemWhenStack(itemCfgId);
+                if (itemComponent != null)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                List<ItemComponent> list = self.GetItemWhenNoStack(itemCfgId);
+                if (list != null && list.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void AddNewItemRecord(this PlayerBackPackComponent self, string itemCfgId)
+        {
+            if (self._ChkItemExist(itemCfgId) == false)
+            {
+                if (ET.ItemHelper.GetAvatarFrameNoneCfgId() == itemCfgId)
+                {
+                    return;
+                }
+                self.newItemList.Add(itemCfgId);
+            }
+        }
+
+        public static void RemoveNewItemRecord(this PlayerBackPackComponent self, string itemCfgId)
+        {
+            self.newItemList.Remove(itemCfgId);
+        }
+
+        public static bool ChkIsNewItem(this PlayerBackPackComponent self, string itemCfgId)
+        {
+            return self.newItemList.Contains(itemCfgId);
+        }
+
+        public static bool ChkIsNewTower(this PlayerBackPackComponent self)
+        {
+            foreach (string itemCfgId in self.newItemList)
+            {
+                if (ItemHelper.ChkIsTower(itemCfgId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool ChkIsNewAvatarFrame(this PlayerBackPackComponent self)
+        {
+            foreach (string itemCfgId in self.newItemList)
+            {
+                if (ET.ItemHelper.GetAvatarFrameNoneCfgId() == itemCfgId)
+                {
+                    continue;
+                }
+                if (ItemHelper.ChkIsAvatarFrame(itemCfgId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

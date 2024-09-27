@@ -28,7 +28,6 @@ public abstract partial class ActionCallAutoUnit:  ActionCallAuto
         {
             case ActionCallAutoUnitWhenUmbellate.__ID__: return new ActionCallAutoUnitWhenUmbellate(_buf);
             case ActionCallAutoUnitWhenRectangle.__ID__: return new ActionCallAutoUnitWhenRectangle(_buf);
-            case ActionCallAutoUnitOne.__ID__: return new ActionCallAutoUnitOne(_buf);
             default: throw new SerializationException();
         }
     }

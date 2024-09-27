@@ -158,6 +158,17 @@ namespace ET.Client
                     }
                 }
             }
+
+            if (po.audioSourceList != null)
+            {
+                foreach (AudioSource audioSource in po.audioSourceList)
+                {
+                    if (audioSource != null)
+                    {
+                        audioSource.enabled = true;
+                    }
+                }
+            }
         }
 
         public static void TrigToPool(PoolObject po)
@@ -168,7 +179,7 @@ namespace ET.Client
                 {
                     if (particleSystem != null)
                     {
-                        particleSystem.Stop();
+                        particleSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
                     }
                 }
             }
@@ -181,6 +192,18 @@ namespace ET.Client
                     {
                         trailRenderer.Clear();
                         trailRenderer.enabled = false;
+                    }
+                }
+            }
+
+            if (po.audioSourceList != null)
+            {
+                foreach (AudioSource audioSource in po.audioSourceList)
+                {
+                    if (audioSource != null)
+                    {
+                        audioSource.Stop();
+                        audioSource.enabled = false;
                     }
                 }
             }

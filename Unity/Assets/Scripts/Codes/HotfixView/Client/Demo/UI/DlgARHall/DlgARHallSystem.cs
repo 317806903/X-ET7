@@ -219,6 +219,9 @@ namespace ET.Client
             // 重置entrance type给下一个session
             ARSessionHelper.ResetAREntranceType(self.DomainScene());
 
+            // 播放主界面音乐
+            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Main);
+
             await UIManagerHelper.ExitRoomUI(self.DomainScene());
         }
 

@@ -17,6 +17,13 @@ namespace ET
         Release = 3,
     }
 
+    public enum DBType
+    {
+        NoDB,
+        MongoDB,
+        LocalDB,
+    }
+
     [CreateAssetMenu(menuName = "ET/CreateGlobalConfig", fileName = "GlobalConfig", order = 0)]
     public class GlobalConfig: ScriptableObject
     {
@@ -31,7 +38,7 @@ namespace ET
 
         public int HotFixVersion = 1;
 
-        public bool NeedDB;
+        public DBType dbType;
 
     }
 }

@@ -15,14 +15,8 @@ namespace ET
 
 		public List<long> waitRemoveList;
 
-		public HashSetComponent<Unit> observerList;
-		public HashSetComponent<Unit> playerList;
-		public HashSetComponent<Unit> actorList;
-		public HashSetComponent<Unit> npcList;
-		public HashSetComponent<Unit> sceneObjList;
-		public HashSetComponent<Unit> bulletList;
-		public HashSetComponent<Unit> aoeList;
-		public HashSetComponent<Unit> sceneEffectList;
+		public MultiMapSetSimple<UnitType, Unit> recordDic;
+		public HashSet<Unit> addRecordTmp;
 
 		public bool IsStopActorMove { get; set; }
 	}

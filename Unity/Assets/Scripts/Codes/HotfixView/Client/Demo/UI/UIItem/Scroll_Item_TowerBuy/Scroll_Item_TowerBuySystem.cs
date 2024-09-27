@@ -13,7 +13,7 @@ namespace ET.Client
 		{
 		}
 
-        public static async ETTask ShowBagItem(this Scroll_Item_TowerBuy self, string itemCfgId, bool needClickShowDetail, int itemNum = 0)
+        public static async ETTask ShowBagItem(this Scroll_Item_TowerBuy self, string itemCfgId, bool needClickShowDetail, int itemNum = 0, bool isShowRedDot = false)
 		{
 			ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
 			if (needClickShowDetail)
@@ -21,6 +21,19 @@ namespace ET.Client
 				ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
 				{
 					UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+					if (string.IsNullOrEmpty(itemCfgId))
+					{
+						return;
+					}
+
+					if (isShowRedDot)
+					{
+						UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.None, itemCfgId).Coroutine();
+						self.E_RedDotImage.SetVisible(false);
+						isShowRedDot = false;
+					}
+
 					self.ShowDetails(itemCfgId);
 				});
 			}
@@ -28,15 +41,16 @@ namespace ET.Client
 			if (string.IsNullOrEmpty(itemCfgId))
 			{
 				self.E_NoneImage.SetVisible(true);
-				self.EImage_TowerBuyShowImage.SetVisible(false);
+				self.EG_TowerBuyShowRectTransform.SetVisible(false);
 				return;
 			}
 			self.E_NoneImage.SetVisible(false);
-			self.EImage_TowerBuyShowImage.SetVisible(true);
+			self.EG_TowerBuyShowRectTransform.SetVisible(true);
 
 			self.EButton_nameTextMeshProUGUI.text = ItemHelper.GetItemName(itemCfgId);
-			self.EButton_IconImage.SetImageByItemCfgId(itemCfgId).Coroutine();
-			self.EImage_BuyBGImage.SetVisible(false);
+			self.EButton_IconImage.SetVisible(true);
+			self.EButton_IconImage.SetImageByItemCfgId(self, itemCfgId).Coroutine();
+			self.EG_BuyBGRectTransform.SetVisible(false);
 			self.EButton_BuyButton.SetVisible(false);
 			//self.ELabel_BuyCostTextMeshProUGUI.SetVisible(false);
 
@@ -51,6 +65,14 @@ namespace ET.Client
 			self.SetCheckMark(false);
 			self.SetQuality(itemCfgId);
 
+			if (isShowRedDot)
+			{
+				self.E_RedDotImage.SetVisible(true);
+			}
+			else
+			{
+				self.E_RedDotImage.SetVisible(false);
+			}
 			if(itemNum >= 2)
 			{
                 self.ELabel_itemNumTextMeshProUGUI.SetVisible(true);
@@ -64,11 +86,6 @@ namespace ET.Client
 
 		public static void ShowDetails(this Scroll_Item_TowerBuy self, string itemCfgId)
 		{
-			if (string.IsNullOrEmpty(itemCfgId))
-			{
-				return;
-			}
-
 			Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(self.uiTransform.GetComponent<RectTransform>());
 			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos);
 		}

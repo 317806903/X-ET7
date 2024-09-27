@@ -109,7 +109,9 @@ namespace ET
                 }
 
                 unit = casterUnit;
-                if (UnitHelper.ChkIsActor(unit))
+                if (UnitHelper.ChkIsPlayer(unit)
+                    || UnitHelper.ChkIsCameraPlayer(unit)
+                    || UnitHelper.ChkIsActor(unit))
                 {
                     break;
                 }
@@ -155,11 +157,13 @@ namespace ET
                 }
             }
 
-            if (UnitHelper.ChkIsActor(unit) == false)
+            if (UnitHelper.ChkIsPlayer(unit)
+                || UnitHelper.ChkIsCameraPlayer(unit)
+                || UnitHelper.ChkIsActor(unit))
             {
-                return null;
+                return unit;
             }
-            return unit;
+            return null;
         }
 
     }

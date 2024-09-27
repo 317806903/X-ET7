@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 定向目标轨迹(实时面向目标)
 /// </summary>
-public sealed partial class TargetMoveTweenType:  MoveTweenType 
+public sealed partial class TargetMoveTweenType:  SpeedMoveTweenType 
 {
     public TargetMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {

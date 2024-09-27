@@ -64,7 +64,7 @@ namespace ET.Client
             return _UIAudioManagerComponent;
         }
 
-        public static void PlayUIAudio(Scene scene, SoundEffectType soundEffectType, bool needLoopPlay = false)
+        public static void PlayUIAudio(Scene scene, SoundEffectType soundEffectType)
         {
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             string resAudioCfgId = "";
@@ -141,31 +141,6 @@ namespace ET.Client
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
             _UIAudioManagerComponent.PlayUIAudioByPath(audioPath).Coroutine();
         }
-
-        // public static void PlayMusicLogin(Scene scene)
-        // {
-        //     List<string> musicList = new List<string>(){"ResAudio_Music_login"};
-        //     PlayMusic(scene, musicList);
-        // }
-
-        // public static void PlayMusicMain(Scene scene)
-        // {
-        //     List<string> musicList = new List<string>(){"ResAudio_Music_main"};
-        //     PlayMusic(scene, musicList);
-        // }
-
-        // public static void PlayMusicARStart(Scene scene)
-        // {
-        //     List<string> musicList = new List<string>(){"ResAudio_Music_ARStarted"};
-        //     PlayMusic(scene, musicList);
-        // }
-
-        // public static void PlayMusicGame(Scene scene)
-        // {
-        //     GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
-        //     List<string> musicList = gamePlayComponent.GetGamePlayBattleConfig().MusicList;
-        //     PlayMusic(scene, musicList);
-        // }
 
         public static void PlayMusic(Scene scene, MusicType musicType)
         {

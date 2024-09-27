@@ -79,137 +79,201 @@ namespace ET.Server
 
         public static async ETTask<long> GetDBCount<T>(Scene scene) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
                 return 0;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 return await dbComponent.QueryCount<T>();
             }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                return dbLocalComponent.QueryCount<T>();
+            }
+            return 0;
         }
 
         public static async ETTask<T> _LoadDB<T>(Scene scene, long Id) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
                 return null;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 return await dbComponent.Query<T>(Id);
             }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                return dbLocalComponent.Query<T>(Id);
+            }
+
+            return null;
         }
 
-        public static async ETTask<List<T>> _LoadDBList<T>(Scene scene) where T :Entity
+        public static async ETTask<List<T>> _LoadDBList<T>(Scene scene, Expression<Func<T, bool>> filter = null) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
                 return null;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
-                return await dbComponent.Query<T>((db)=>true);
+                if (filter == null)
+                {
+                    return await dbComponent.Query<T>((db)=>true);
+                }
+                else
+                {
+                    return await dbComponent.Query<T>(filter);
+                }
             }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                return dbLocalComponent.QueryAll<T>();
+            }
+            return null;
         }
 
         public static async ETTask SaveDB<T>(T entity) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(entity.DomainZone());
                 await dbComponent.SaveNotWait(entity);
+            }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                dbLocalComponent.Save(entity);
             }
         }
 
         public static async ETTask RemoveDB<T>(T entity) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(entity.DomainZone());
                 await dbComponent.Remove<T>(entity.Id);
+            }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                dbLocalComponent.Remove<T>(entity.Id);
             }
         }
 
         public static async ETTask RenameCollection(Scene scene, string oldName, string newName)
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 await dbComponent.RenameCollection(oldName, newName);
+            }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                dbLocalComponent.RenameCollection(oldName, newName);
             }
         }
 
         public static async ETTask<T> _LoadDBFirst<T>(Scene scene) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
                 return null;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 return await dbComponent.QueryFirst<T>();
             }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                return dbLocalComponent.QueryFirst<T>();
+            }
+            return null;
         }
 
         public static async ETTask RenameCollection(Scene scene, Type entityType, int seasonIndex)
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 string oldName = entityType.FullName;
                 string newName = $"{oldName}_Season{seasonIndex}";
                 await dbComponent.RenameCollection(oldName, newName);
             }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                string oldName = entityType.FullName;
+                string newName = $"{oldName}_Season{seasonIndex}";
+                dbLocalComponent.RenameCollection(oldName, newName);
+            }
         }
 
         public static async ETTask DropCollection<T>(Scene scene) where T :Entity
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 await dbComponent.DropCollection<T>();
+            }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                dbLocalComponent.DropCollection<T>();
             }
         }
 
         public static async ETTask DropCollection(Scene scene, string collection)
         {
-            if (DBManagerComponent.Instance.NeedDB == false)
+            if (DBManagerComponent.Instance.dbType == DBType.NoDB)
             {
                 await ETTask.CompletedTask;
             }
-            else
+            else if (DBManagerComponent.Instance.dbType == DBType.MongoDB)
             {
                 DBComponent dbComponent = DBManagerComponent.Instance.GetZoneDB(scene.DomainZone());
                 await dbComponent.DropCollection(collection);
+            }
+            else if (DBManagerComponent.Instance.dbType == DBType.LocalDB)
+            {
+                DBLocalComponent dbLocalComponent = DBManagerComponent.Instance.GetLocalDB();
+                dbLocalComponent.DropCollection(collection);
             }
         }
 

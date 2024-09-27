@@ -313,125 +313,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image E_LanguageImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageImage == null )
-				{
-					this.m_E_LanguageImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language");
-				}
-				return this.m_E_LanguageImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_LanguageCNButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageCNButton == null )
-				{
-					this.m_E_LanguageCNButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageCN");
-				}
-				return this.m_E_LanguageCNButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_LanguageCNImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageCNImage == null )
-				{
-					this.m_E_LanguageCNImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageCN");
-				}
-				return this.m_E_LanguageCNImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_LanguageENButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageENButton == null )
-				{
-					this.m_E_LanguageENButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageEN");
-				}
-				return this.m_E_LanguageENButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_LanguageENImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageENImage == null )
-				{
-					this.m_E_LanguageENImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageEN");
-				}
-				return this.m_E_LanguageENImage;
-			}
-		}
-
-		public UnityEngine.UI.Button E_LanguageTWButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageTWButton == null )
-				{
-					this.m_E_LanguageTWButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageTW");
-				}
-				return this.m_E_LanguageTWButton;
-			}
-		}
-
-		public UnityEngine.UI.Image E_LanguageTWImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_LanguageTWImage == null )
-				{
-					this.m_E_LanguageTWImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Language/E_LanguageTW");
-				}
-				return this.m_E_LanguageTWImage;
-			}
-		}
-
 		public UnityEngine.RectTransform EG_Toggle_AudioRectTransform
 		{
 			get
@@ -704,6 +585,176 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EG_LanguageRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_LanguageRectTransform == null )
+				{
+					this.m_EG_LanguageRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language");
+				}
+				return this.m_EG_LanguageRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image EG_LanguageImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_LanguageImage == null )
+				{
+					this.m_EG_LanguageImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language");
+				}
+				return this.m_EG_LanguageImage;
+			}
+		}
+
+		public UnityEngine.RectTransform EG_DamageShow_On1RectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_DamageShow_On1RectTransform == null )
+				{
+					this.m_EG_DamageShow_On1RectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_DamageShow_On1");
+				}
+				return this.m_EG_DamageShow_On1RectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image EG_DamageShow_On1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_DamageShow_On1Image == null )
+				{
+					this.m_EG_DamageShow_On1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_DamageShow_On1");
+				}
+				return this.m_EG_DamageShow_On1Image;
+			}
+		}
+
+		public UnityEngine.RectTransform EG_DamageShow_Off1RectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_DamageShow_Off1RectTransform == null )
+				{
+					this.m_EG_DamageShow_Off1RectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_DamageShow_Off1");
+				}
+				return this.m_EG_DamageShow_Off1RectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image EG_DamageShow_Off1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_DamageShow_Off1Image == null )
+				{
+					this.m_EG_DamageShow_Off1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_DamageShow_Off1");
+				}
+				return this.m_EG_DamageShow_Off1Image;
+			}
+		}
+
+		public UnityEngine.RectTransform EG_Button_DamagerShow1RectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_Button_DamagerShow1RectTransform == null )
+				{
+					this.m_EG_Button_DamagerShow1RectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_Button_DamagerShow1");
+				}
+				return this.m_EG_Button_DamagerShow1RectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Image EG_Button_DamagerShow1Image
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_Button_DamagerShow1Image == null )
+				{
+					this.m_EG_Button_DamagerShow1Image = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/EG_Button_DamagerShow1");
+				}
+				return this.m_EG_Button_DamagerShow1Image;
+			}
+		}
+
+		public UnityEngine.UI.Button E_btn_LanguageButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_btn_LanguageButton == null )
+				{
+					this.m_E_btn_LanguageButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/E_btn_Language");
+				}
+				return this.m_E_btn_LanguageButton;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_LanguageTextTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_LanguageTextTextMeshProUGUI == null )
+				{
+					this.m_E_LanguageTextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/E_Operator/EG_Language/E_btn_Language/E_LanguageText");
+				}
+				return this.m_E_LanguageTextTextMeshProUGUI;
+			}
+		}
+
 		public UnityEngine.RectTransform EG_Toggle_MusicRectTransform
 		{
 			get
@@ -860,13 +911,6 @@ namespace ET.Client
 			this.m_E_PrivacyPolicyImage = null;
 			this.m_E_DiscordButton = null;
 			this.m_E_DiscordImage = null;
-			this.m_E_LanguageImage = null;
-			this.m_E_LanguageCNButton = null;
-			this.m_E_LanguageCNImage = null;
-			this.m_E_LanguageENButton = null;
-			this.m_E_LanguageENImage = null;
-			this.m_E_LanguageTWButton = null;
-			this.m_E_LanguageTWImage = null;
 			this.m_EG_Toggle_AudioRectTransform = null;
 			this.m_EG_Toggle_AudioImage = null;
 			this.m_EG_Audio_OnRectTransform = null;
@@ -883,6 +927,16 @@ namespace ET.Client
 			this.m_EG_DamageShow_OffImage = null;
 			this.m_EG_Button_DamagerShowRectTransform = null;
 			this.m_EG_Button_DamagerShowImage = null;
+			this.m_EG_LanguageRectTransform = null;
+			this.m_EG_LanguageImage = null;
+			this.m_EG_DamageShow_On1RectTransform = null;
+			this.m_EG_DamageShow_On1Image = null;
+			this.m_EG_DamageShow_Off1RectTransform = null;
+			this.m_EG_DamageShow_Off1Image = null;
+			this.m_EG_Button_DamagerShow1RectTransform = null;
+			this.m_EG_Button_DamagerShow1Image = null;
+			this.m_E_btn_LanguageButton = null;
+			this.m_E_LanguageTextTextMeshProUGUI = null;
 			this.m_EG_Toggle_MusicRectTransform = null;
 			this.m_EG_Toggle_MusicImage = null;
 			this.m_EG_Music_OnRectTransform = null;
@@ -912,13 +966,6 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_PrivacyPolicyImage = null;
 		private UnityEngine.UI.Button m_E_DiscordButton = null;
 		private UnityEngine.UI.Image m_E_DiscordImage = null;
-		private UnityEngine.UI.Image m_E_LanguageImage = null;
-		private UnityEngine.UI.Button m_E_LanguageCNButton = null;
-		private UnityEngine.UI.Image m_E_LanguageCNImage = null;
-		private UnityEngine.UI.Button m_E_LanguageENButton = null;
-		private UnityEngine.UI.Image m_E_LanguageENImage = null;
-		private UnityEngine.UI.Button m_E_LanguageTWButton = null;
-		private UnityEngine.UI.Image m_E_LanguageTWImage = null;
 		private UnityEngine.RectTransform m_EG_Toggle_AudioRectTransform = null;
 		private UnityEngine.UI.Image m_EG_Toggle_AudioImage = null;
 		private UnityEngine.RectTransform m_EG_Audio_OnRectTransform = null;
@@ -935,6 +982,16 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EG_DamageShow_OffImage = null;
 		private UnityEngine.RectTransform m_EG_Button_DamagerShowRectTransform = null;
 		private UnityEngine.UI.Image m_EG_Button_DamagerShowImage = null;
+		private UnityEngine.RectTransform m_EG_LanguageRectTransform = null;
+		private UnityEngine.UI.Image m_EG_LanguageImage = null;
+		private UnityEngine.RectTransform m_EG_DamageShow_On1RectTransform = null;
+		private UnityEngine.UI.Image m_EG_DamageShow_On1Image = null;
+		private UnityEngine.RectTransform m_EG_DamageShow_Off1RectTransform = null;
+		private UnityEngine.UI.Image m_EG_DamageShow_Off1Image = null;
+		private UnityEngine.RectTransform m_EG_Button_DamagerShow1RectTransform = null;
+		private UnityEngine.UI.Image m_EG_Button_DamagerShow1Image = null;
+		private UnityEngine.UI.Button m_E_btn_LanguageButton = null;
+		private TMPro.TextMeshProUGUI m_E_LanguageTextTextMeshProUGUI = null;
 		private UnityEngine.RectTransform m_EG_Toggle_MusicRectTransform = null;
 		private UnityEngine.UI.Image m_EG_Toggle_MusicImage = null;
 		private UnityEngine.RectTransform m_EG_Music_OnRectTransform = null;

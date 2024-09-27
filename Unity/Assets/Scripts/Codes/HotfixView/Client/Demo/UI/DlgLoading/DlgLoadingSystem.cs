@@ -52,7 +52,7 @@ namespace ET.Client
 
 		public static async ETTask LoadBG(this DlgLoading self)
 		{
-			self.View.E_BGImage.LoadBG().Coroutine();
+			self.View.E_BGImage.LoadBG(self).Coroutine();
 		}
 
 		public static void UpdateProcess(this DlgLoading self, float process)

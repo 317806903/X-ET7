@@ -643,6 +643,23 @@ namespace ET
             c.Dispose();
         }
 
+        public void RemoveComponent(long longHashCode)
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            Entity c;
+            if (!this.components.TryGetValue(longHashCode, out c))
+            {
+                return;
+            }
+
+            RemoveFromComponents(c);
+            c.Dispose();
+        }
+
         public K GetComponent<K>() where K : Entity
         {
             if (this.components == null)

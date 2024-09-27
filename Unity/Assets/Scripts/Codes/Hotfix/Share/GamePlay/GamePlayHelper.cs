@@ -49,6 +49,12 @@ namespace ET
 			return unit;
 		}
 
+		public static Unit CreateCameraPlayerUnit(GamePlayMode gamePlayMode, Scene scene, long playerId, int playerLevel, float3 position, float3 forward)
+		{
+			Unit unit = CreateCameraPlayerUnit(scene, playerId, playerLevel, position, forward);
+			return unit;
+		}
+
 		public static Unit CreatePlayerUnit(GamePlayMode gamePlayMode, Scene scene, long playerId, int playerLevel, float3 position, float3 forward)
 		{
 			if (gamePlayMode == GamePlayMode.TowerDefense)
@@ -86,6 +92,25 @@ namespace ET
 			}
 
 			return playerUnit;
+		}
+
+		public static Unit CreateCameraPlayerUnit(Scene scene, long playerId, int playerLevel, float3 position, float3 forward)
+		{
+			Unit cameraPlayerUnit = ET.Ability.UnitHelper_Create.CreateWhenServer_CameraPlayerUnit(scene, playerId, playerLevel, position, forward);
+
+			GamePlayHelper.AddUnitPathfinding(cameraPlayerUnit);
+			GamePlayHelper.AddUnitInfo(playerId, cameraPlayerUnit);
+			GamePlayHelper.AddPlayerUnitTeamFlag(playerId, cameraPlayerUnit);
+
+			UnitCfg unitCfg = cameraPlayerUnit.model;
+			foreach (var item in unitCfg.SkillList)
+			{
+				string skillCfgId = item.Key;
+				ET.AbilityConfig.SkillSlotType skillSlotType = item.Value;
+				SkillHelper.LearnSkill(cameraPlayerUnit, skillCfgId, 1, skillSlotType);
+			}
+
+			return cameraPlayerUnit;
 		}
 
 		public static Unit CreateBulletByUnit(Scene scene, Unit unitCaster, ActionCfg_FireBullet actionCfgFireBullet, SelectHandle selectHandle,
@@ -167,8 +192,7 @@ namespace ET
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
-			bool isPlayerUnit = UnitHelper.ChkIsPlayer(unit);
-			gamePlayPlayerListComponent.AddUnitInfo(playerId, unit.Id, isPlayerUnit);
+			gamePlayPlayerListComponent.AddUnitInfo(playerId, unit.Id, unit.Type);
 		}
 
 		/// <summary>
@@ -183,14 +207,14 @@ namespace ET
 				return;
 			}
 			GamePlayPlayerListComponent gamePlayPlayerListComponent = gamePlayComponent.GetComponent<GamePlayPlayerListComponent>();
-			bool isPlayerUnit = UnitHelper.ChkIsPlayer(unit);
-			gamePlayPlayerListComponent.RemoveUnitInfo(unit.Id, isPlayerUnit);
+
+			gamePlayPlayerListComponent.RemoveUnitInfo(unit.Id, unit.Type);
 
 			GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = gamePlayComponent.GetComponent<GamePlayFriendTeamFlagCompent>();
 			gamePlayFriendTeamFlagCompent.RemoveUnitTeamFlag(unit.Id);
 		}
 
-		public static Unit GetPlayerUnit(Unit observerUnit)
+		public static Unit GetCurPlayerUnit(Unit observerUnit)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(observerUnit);
 			if (gamePlayComponent == null)
@@ -199,10 +223,10 @@ namespace ET
 			}
 
 			long playerId = observerUnit.Id;
-			return gamePlayComponent.GetPlayerUnit(playerId);
+			return gamePlayComponent.GetCurPlayerUnit(playerId);
 		}
 
-		public static Unit GetPlayerUnit(Unit unit, long playerId)
+		public static Unit GetCurPlayerUnit(Unit unit, long playerId)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
 			if (gamePlayComponent == null)
@@ -210,7 +234,53 @@ namespace ET
 				return null;
 			}
 
-			return gamePlayComponent.GetPlayerUnit(playerId);
+			return gamePlayComponent.GetCurPlayerUnit(playerId);
+		}
+
+		public static List<Unit> GetPlayerUnitList(Unit observerUnit)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(observerUnit);
+			if (gamePlayComponent == null)
+			{
+				return null;
+			}
+
+			long playerId = observerUnit.Id;
+			return gamePlayComponent.GetPlayerUnitList(playerId);
+		}
+
+		public static List<Unit> GetPlayerUnitList(Unit unit, long playerId)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
+			if (gamePlayComponent == null)
+			{
+				return null;
+			}
+
+			return gamePlayComponent.GetPlayerUnitList(playerId);
+		}
+
+		public static Unit GetCameraPlayerUnit(Unit observerUnit)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(observerUnit);
+			if (gamePlayComponent == null)
+			{
+				return null;
+			}
+
+			long playerId = observerUnit.Id;
+			return gamePlayComponent.GetCameraPlayerUnit(playerId);
+		}
+
+		public static Unit GetCameraPlayerUnit(Unit unit, long playerId)
+		{
+			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
+			if (gamePlayComponent == null)
+			{
+				return null;
+			}
+
+			return gamePlayComponent.GetCameraPlayerUnit(playerId);
 		}
 
 		public static long GetPlayerIdByUnitId(Unit unit)
@@ -840,9 +910,15 @@ namespace ET
 			return arcadeCoinCost;
 		}
 
-		public static void DoCreateActions(Unit unit, List<string> createActionIds)
+		public static async ETTask DoCreateActions(Unit unit, List<string> createActionIds)
 		{
 			if (createActionIds == null || createActionIds.Count == 0)
+			{
+				return;
+			}
+
+			bool isReady = await ET.AOIHelper.ChkAOIReady(null, unit);
+			if (isReady == false)
 			{
 				return;
 			}

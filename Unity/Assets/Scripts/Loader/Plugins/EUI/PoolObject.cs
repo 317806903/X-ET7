@@ -14,6 +14,7 @@ namespace ET.Client
         public bool isPooled;
         public List<ParticleSystem> particleSystemList;
         public List<TrailRenderer> trailRendererList;
+        public List<AudioSource> audioSourceList;
 
         private void Awake()
         {
@@ -27,6 +28,12 @@ namespace ET.Client
             if (trailRenderers.Length > 0)
             {
                 this.trailRendererList = new(trailRenderers);
+            }
+
+            AudioSource[] audioSourceList = this.gameObject.GetComponentsInChildren<AudioSource>(true);
+            if (audioSourceList.Length > 0)
+            {
+                this.audioSourceList = new(audioSourceList);
             }
         }
     }

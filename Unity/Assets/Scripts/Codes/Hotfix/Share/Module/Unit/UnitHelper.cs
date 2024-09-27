@@ -153,6 +153,47 @@ namespace ET.Ability
             return false;
         }
 
+        public static bool ChkIsPlayer(UnitType unitType)
+        {
+            if (unitType == UnitType.PlayerUnit)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool ChkIsCameraPlayer(Scene scene, long unitId)
+        {
+            Unit unit = GetUnit(scene, unitId);
+            return ChkIsCameraPlayer(unit);
+        }
+
+        public static bool ChkIsCameraPlayer(Unit unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            if (unit.Type == UnitType.CameraPlayerUnit)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool ChkIsCameraPlayer(UnitType unitType)
+        {
+            if (unitType == UnitType.CameraPlayerUnit)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool ChkIsActor(Scene scene, long unitId)
         {
             Unit unit = GetUnit(scene, unitId);
@@ -510,16 +551,6 @@ namespace ET.Ability
             return unitList;
         }
 
-        public static bool ChkCanAttack(Unit curUnit, Unit targetUnit, float radius, bool ignoreY = true)
-        {
-            if (ChkIsNear(curUnit, targetUnit, radius, ignoreY))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public static (bool, float3) ChkHitMesh(Unit curUnit, float3 curUnitPos, float curUnitAttackPoint, Unit targetUnit)
         {
             if (IsNeedChkMesh(curUnit) == false)
@@ -615,6 +646,32 @@ namespace ET.Ability
             return true;
         }
 
+        public static bool ChkIsNearNoRadius(Unit curUnit, Unit targetUnit, float radius, bool ignoreY)
+        {
+            return ChkIsNearNoRadius(curUnit.Position, targetUnit.Position, radius, ignoreY);
+        }
+
+        public static bool ChkIsNearNoRadius(float3 curUnitPos, float3 targetPos, float radius, bool ignoreY)
+        {
+            float3 dis = curUnitPos - targetPos;
+            float targetDisSq = math.pow(radius, 2);
+            if (ignoreY)
+            {
+                if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= targetDisSq)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (math.lengthsq(dis) <= targetDisSq)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool ChkIsNear(Unit curUnit, Unit targetUnit, float radius, bool ignoreY)
         {
             float targetUnitRadius = ET.Ability.UnitHelper.GetBodyRadius(targetUnit);
@@ -694,7 +751,7 @@ namespace ET.Ability
             return (newPosition, newForward);
         }
 
-        public static float3 GetNewNodePosition(Unit unit, float3 resetPos, OffSetInfo offSetInfo)
+        public static (float3, float3) GetNewNodePosition(Unit unit, float3 resetPos, OffSetInfo offSetInfo)
         {
             EffectNodeName nodeName = EffectNodeName.Self;
             Vector3 offSetPosition = Vector3.Zero;
@@ -710,7 +767,8 @@ namespace ET.Ability
             offSetPos *= Ability.UnitHelper.GetResScale(unit);
             var t1 = math.rotate(unit.Rotation, offSetPos);
             float3 newPosition = resetPos + t1;
-            return newPosition;
+            float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
+            return (newPosition, newForward);
         }
 
         public static void AddSyncNoticeUnitAdd(Unit beNoticeUnit, Unit unit)
@@ -870,6 +928,10 @@ namespace ET.Ability
 
         public static void SaveSelectHandle(Unit curUnit, SelectHandle selectHandle, bool isOnce)
         {
+            if (selectHandle.selectHandleType == SelectHandleType.SelectUnits && selectHandle.unitIds.Count == 0)
+            {
+                return;
+            }
             SelectHandleObj selectHandleObj = curUnit.GetComponent<SelectHandleObj>();
             if (selectHandleObj == null)
             {
@@ -930,9 +992,13 @@ namespace ET.Ability
             return excludeSelectHandleObj.GetSaveExcludeSelectHandle();
         }
 
-        public static void ResetPos(Unit unit, float3 resetPos)
+        public static void ResetPos(Unit unit, float3 resetPos, float3 resetForward)
         {
             unit.Position = resetPos;
+            if (resetForward.Equals(float3.zero) == false)
+            {
+                unit.Forward = resetForward;
+            }
 
             ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
@@ -1283,5 +1349,19 @@ namespace ET.Ability
             }
             return dis;
         }
+
+        public static Unit GetOneObserverUnit(Scene scene)
+        {
+            Unit observerUnit = null;
+            UnitComponent unitComponent = UnitHelper.GetUnitComponent(scene);
+            foreach (var _observerUnit in unitComponent.GetRecordList(UnitType.ObserverUnit))
+            {
+                observerUnit = _observerUnit;
+                break;
+            }
+
+            return observerUnit;
+        }
+
     }
 }

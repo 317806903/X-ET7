@@ -109,7 +109,7 @@ namespace ET.Client
 		{
 			PlayerBaseInfoComponent playerBaseInfoComponent =
 				await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-			if (playerBaseInfoComponent == null)
+			if (self.IsDisposed || playerBaseInfoComponent == null || playerBaseInfoComponent.IsDisposed)
 			{
 				return;
 			}
@@ -129,6 +129,10 @@ namespace ET.Client
 		public static async ETTask UpdateTokenDiamond(this DlgFixedMenu self)
 		{
 			int curDiamond = await PlayerCacheHelper.GetTokenDiamond(self.DomainScene());
+			if (self.IsDisposed)
+			{
+				return;
+			}
 			string msg = $"{curDiamond}";
 			self.View.ELabel_TokenDiamondNumTextMeshProUGUI.text = msg;
 		}
@@ -144,8 +148,16 @@ namespace ET.Client
 			{
 				self.curFrame = 0;
 
-				bool status = self.ChkIsShowCoinList();
-				self.ShowCoinList(status);
+				self.IsShowCoinList = self.ChkIsShowCoinList();
+				self.ShowCoinList(self.IsShowCoinList);
+			}
+			if (++self.curChkUpdateFrame >= self.waitChkUpdateFrame)
+			{
+				self.curChkUpdateFrame = 0;
+				if (self.IsShowCoinList)
+				{
+					self.ChkUpdate().Coroutine();
+				}
 			}
 		}
 
@@ -201,11 +213,22 @@ namespace ET.Client
             bool isGetDiamondWhenClick = ChannelSettingComponent.Instance.ChkIsGetDiamondWhenClick();
             if (isGetDiamondWhenClick)
             {
-	            PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene(), false);
-	            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
-	            playerBackPackComponent.AddItem(itemCfgId, 50);
-	            await ET.Client.PlayerCacheHelper.SaveMyPlayerModel(self.DomainScene(), PlayerModelType.BackPack, null);
+	            PlayerCacheHelper.SendAddDiamondWhenDebug(self.DomainScene());
             }
+		}
+
+		public static async ETTask ChkUpdate(this DlgFixedMenu self)
+		{
+			// 热更流程
+			bool bRet = await EntryEvent3_InitClient.ChkHotUpdateAsync(self.DomainScene(), false, false);
+			if (bRet == false)
+			{
+				string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Res_ChkUpdateExist");
+				UIManagerHelper.ShowOnlyConfirmHighest(self.DomainScene(), msg, () =>
+				{
+					ET.Client.LoginHelper.LoginOut(self.DomainScene()).Coroutine();
+				});
+			}
 		}
 
 	}

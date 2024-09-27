@@ -31,7 +31,7 @@ namespace ET.Client
 				return;
 			}
 
-			await self.EImage_MonsterImage.SetImageByItemCfgId(itemCfgId);
+			await self.EImage_MonsterImage.SetImageByItemCfgId(self, itemCfgId);
 		}
 
 		public static void ShowDetails(this Scroll_Item_Monsters self, string itemCfgId)

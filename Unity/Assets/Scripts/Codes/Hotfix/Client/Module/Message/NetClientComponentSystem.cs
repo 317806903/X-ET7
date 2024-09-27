@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 
 namespace ET.Client
@@ -11,6 +12,7 @@ namespace ET.Client
         {
             protected override void Awake(NetClientComponent self, AddressFamily addressFamily)
             {
+                self.AddIgnoreDebugLogMessage();
                 self.ServiceId = NetServices.Instance.AddService(new KService(addressFamily, ServiceType.Outer));
                 NetServices.Instance.RegisterReadCallback(self.ServiceId, self.OnRead);
                 NetServices.Instance.RegisterErrorCallback(self.ServiceId, self.OnError);
@@ -26,6 +28,17 @@ namespace ET.Client
             }
         }
 
+        private static void AddIgnoreDebugLogMessage(this NetClientComponent self)
+        {
+            HashSet<ushort> ignoreDebugLogMessageSet = new HashSet<ushort>
+            {
+            };
+            foreach (var opcode in ignoreDebugLogMessageSet)
+            {
+                ET.OpcodeHelper.AddIgnoreDebugLogMessage(opcode);
+            }
+        }
+
         private static void OnRead(this NetClientComponent self, long channelId, long actorId, object message)
         {
             Session session = self.GetChild<Session>(channelId);
@@ -35,9 +48,9 @@ namespace ET.Client
             }
 
             session.LastRecvTime = TimeHelper.ClientNow();
-            
+
             OpcodeHelper.LogMsg(self.DomainZone(), message);
-            
+
             EventSystem.Instance.Publish(Root.Instance.Scene, new NetClientComponentOnRead() {Session = session, Message = message});
         }
 
@@ -66,7 +79,7 @@ namespace ET.Client
 
             return session;
         }
-        
+
         public static Session Create(this NetClientComponent self, IPEndPoint routerIPEndPoint, IPEndPoint realIPEndPoint, uint localConn)
         {
             long channelId = localConn;

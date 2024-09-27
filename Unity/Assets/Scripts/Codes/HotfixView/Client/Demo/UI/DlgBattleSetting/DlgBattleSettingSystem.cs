@@ -46,6 +46,10 @@ namespace ET.Client
             {
                 self.ChgStatus_DamageShow();
             });
+
+            //教学视频
+            self.View.E_TutorialButton.AddListenerAsync(self.OnClickTutorial);
+
         }
 
         // 显示
@@ -297,6 +301,13 @@ namespace ET.Client
                     {"function_name", name},
                 }
             });
+        }
+
+        public static async ETTask OnClickTutorial(this  DlgBattleSetting self)
+        {
+            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
+            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindow<DlgTutorials>();
+            await ETTask.CompletedTask;
         }
 
     }

@@ -14,6 +14,14 @@ namespace ET
 	    {
 	    }
 
+	    public struct GetLocalDBSavePath
+	    {
+	    }
+
+	    public struct GetLocalMeshSavePath
+	    {
+	    }
+
         public struct GetAllConfigBytes
         {
         }

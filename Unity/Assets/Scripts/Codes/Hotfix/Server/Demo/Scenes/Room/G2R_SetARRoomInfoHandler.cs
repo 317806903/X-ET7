@@ -35,7 +35,7 @@ namespace ET.Server
 				isNeedResetReady = true;
 			}
 			roomManagerComponent.SetARSceneId(roomId, ARSceneId);
-			roomManagerComponent.SetARMeshInfo(roomId, ARMeshType, ARMeshDownLoadUrl, ARMeshBytes);
+			roomManagerComponent.SetARMeshInfo(roomId, ARMeshType, ARSceneId, ARMeshDownLoadUrl, ARMeshBytes);
 			roomManagerComponent.SetARMapScale(roomId, ARMapScale);
 
 			if (isNeedResetReady)

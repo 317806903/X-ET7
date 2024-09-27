@@ -113,7 +113,14 @@ namespace ET.Ability
 
                 //Log.Debug($" AddBuff buffId[{buffObj.model.Id}] canStack==false curStackCount={buffObj.stack}");
 
+                bool isReady = await ET.AOIHelper.ChkAOIReady(self, unit);
+                if (isReady == false)
+                {
+                    return null;
+                }
+
                 buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake);
+
                 buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart);
             }
 

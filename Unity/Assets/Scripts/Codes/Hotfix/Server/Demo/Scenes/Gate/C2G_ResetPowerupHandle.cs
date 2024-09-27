@@ -12,14 +12,14 @@ namespace ET.Server
             Player player = session.GetComponent<SessionPlayerComponent>().Player;
             long playerId = player.Id;
 
-            bool isPlayerCanReset = await PlayerCacheHelper.IsPlayerCanReset(session.DomainScene(), playerId);
+            bool isPlayerCanReset = await PlayerCacheHelper.IsCanResetSeasonBringUp(session.DomainScene(), playerId);
             if(isPlayerCanReset)
             {
                 SeasonComponent seasonComponent = await SeasonHelper.GetSeasonComponent(session.DomainScene(), false);
                 int resetCost = seasonComponent.cfg.BringUpResetCost;
                 await PlayerCacheHelper.ReduceTokenDiamond(session.DomainScene(), playerId, resetCost);
 
-                int rewardDiamond = await PlayerCacheHelper.ResetAllPowerup(session.DomainScene(), playerId);
+                int rewardDiamond = await PlayerCacheHelper.ResetAllSeasonBringUp(session.DomainScene(), playerId);
 
                 await PlayerCacheHelper.AddTokenDiamond(session.DomainScene(), playerId, rewardDiamond);
             }

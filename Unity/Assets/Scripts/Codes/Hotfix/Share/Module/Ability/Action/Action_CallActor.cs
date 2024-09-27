@@ -26,9 +26,12 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                Unit actorUnit = GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
-                unit.AddOwnCaller(actorUnit);
-                actorUnit.AddCaster(unit);
+                for (int j = 0; j < actionCfgCallActor.CallCount; j++)
+                {
+                    Unit actorUnit = GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
+                    unit.AddOwnCaller(actorUnit);
+                    actorUnit.AddCaster(unit);
+                }
             }
             list.Dispose();
 

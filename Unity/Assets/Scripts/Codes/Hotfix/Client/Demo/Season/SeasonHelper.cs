@@ -106,9 +106,13 @@ namespace ET.Client
 				        {
 					        entity.Dispose();
 				        }
-				        seasonShowManagerComponent.AddChild(seasonComponent);
-				        seasonShowManagerComponent.SeasonComponent = seasonComponent;
-				        seasonComponent.SetDataCacheAutoClear(seasonComponent.GetClearTime()*0.001f);
+
+				        if (seasonShowManagerComponent.SeasonComponent == null || seasonShowManagerComponent.SeasonComponent.Id != seasonComponent.Id)
+				        {
+					        seasonShowManagerComponent.AddChild(seasonComponent);
+					        seasonShowManagerComponent.SeasonComponent = seasonComponent;
+					        seasonComponent.SetDataCacheAutoClear(seasonComponent.GetClearTime()*0.001f);
+				        }
 				        entity = seasonComponent;
 			        }
 		        }

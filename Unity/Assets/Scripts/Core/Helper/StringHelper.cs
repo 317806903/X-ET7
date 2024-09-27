@@ -7,6 +7,11 @@ namespace ET
 {
 	public static class StringHelper
 	{
+		public static bool IsNullOrEmpty(this string str)
+		{
+			return string.IsNullOrEmpty(str);
+		}
+
 		public static IEnumerable<byte> ToBytes(this string str)
 		{
 			byte[] byteArray = Encoding.Default.GetBytes(str);
@@ -58,7 +63,7 @@ namespace ET
 			}
 			return sb.ToString();
 		}
-		
+
 		public static string ArrayToString<T>(this T[] args)
 		{
 			if (args == null)
@@ -79,7 +84,7 @@ namespace ET
 			argStr += "]";
 			return argStr;
 		}
-        
+
 		public static string ArrayToString<T>(this T[] args, int index, int count)
 		{
 			if (args == null)

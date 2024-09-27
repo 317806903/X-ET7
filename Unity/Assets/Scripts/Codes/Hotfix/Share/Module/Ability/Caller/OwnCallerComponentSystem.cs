@@ -80,6 +80,24 @@ namespace ET.Ability
             return unitList;
         }
 
+        public static int GetOwnCallerCount(this OwnCallerComponent self, bool ownCallActor, bool ownBullet, bool ownAoe)
+        {
+            int count = 0;
+            if (ownCallActor)
+            {
+                self._GetOwnCallerCount(self.ownCallActor, ref count);
+            }
+            if (ownBullet)
+            {
+                self._GetOwnCallerCount(self.ownCallBullet, ref count);
+            }
+            if (ownAoe)
+            {
+                self._GetOwnCallerCount(self.ownCallAoe, ref count);
+            }
+            return count;
+        }
+
         /// <summary>
         /// 获取unit
         /// </summary>
@@ -108,17 +126,17 @@ namespace ET.Ability
 
         public static void _ClearNotExist(this OwnCallerComponent self, HashSet<EntityRef<Unit>> ownCaller)
         {
-            using ListComponent<EntityRef<Unit>> tmp = ListComponent<EntityRef<Unit>>.Create();
+            self.clearList.Clear();
             foreach (EntityRef<Unit> entityRef in ownCaller)
             {
                 Unit unit = entityRef;
                 if (unit == null)
                 {
-                    tmp.Add(entityRef);
+                    self.clearList.Add(entityRef);
                 }
             }
 
-            foreach (EntityRef<Unit> entityRef in tmp)
+            foreach (EntityRef<Unit> entityRef in self.clearList)
             {
                 ownCaller.Remove(entityRef);
             }
@@ -132,6 +150,18 @@ namespace ET.Ability
                 if (unit != null)
                 {
                     unitList.Add(unit.Id);
+                }
+            }
+        }
+
+        public static void _GetOwnCallerCount(this OwnCallerComponent self, HashSet<EntityRef<Unit>> ownCaller, ref int count)
+        {
+            foreach (var entityRef in ownCaller)
+            {
+                Unit unit = entityRef;
+                if (unit != null)
+                {
+                    count++;
                 }
             }
         }

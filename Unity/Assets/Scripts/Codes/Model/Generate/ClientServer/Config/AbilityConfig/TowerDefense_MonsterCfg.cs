@@ -18,6 +18,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = (MonsterType)_buf.ReadInt();
+        TutorialCfgId = _buf.ReadString();
         UnitId = _buf.ReadString();
         AiCfgId = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
@@ -39,6 +40,11 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// </summary>
     public MonsterType Type { get; private set; }
     /// <summary>
+    /// 指引视频
+    /// </summary>
+    public string TutorialCfgId { get; private set; }
+    public TutorialCfg TutorialCfgId_Ref { get; private set; }
+    /// <summary>
     /// unitId
     /// </summary>
     public string UnitId { get; private set; }
@@ -58,6 +64,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.Id_Ref = (_tables["ItemCfgCategory"] as ItemCfgCategory).GetOrDefault(Id);
+        this.TutorialCfgId_Ref = (_tables["TutorialCfgCategory"] as TutorialCfgCategory).GetOrDefault(TutorialCfgId);
         this.UnitId_Ref = (_tables["UnitCfgCategory"] as UnitCfgCategory).GetOrDefault(UnitId);
         PostResolve();
     }
@@ -71,6 +78,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Type:" + Type + ","
+        + "TutorialCfgId:" + TutorialCfgId + ","
         + "UnitId:" + UnitId + ","
         + "AiCfgId:" + AiCfgId + ","
         + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","

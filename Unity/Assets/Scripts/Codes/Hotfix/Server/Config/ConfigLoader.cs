@@ -77,4 +77,30 @@ namespace ET.Server
 #endif
         }
     }
+
+    [Invoke]
+    public class GetLocalDBSavePath: AInvokeHandler<ConfigComponent.GetLocalDBSavePath, string>
+    {
+        public override string Handle(ConfigComponent.GetLocalDBSavePath args)
+        {
+#if DOTNET
+            return "../LocalDB";
+#else
+            return Path.Combine(PathHelper.AppHotfixResPath, "LocalDB");
+#endif
+        }
+    }
+
+    [Invoke]
+    public class GetLocalMeshSavePath: AInvokeHandler<ConfigComponent.GetLocalMeshSavePath, string>
+    {
+        public override string Handle(ConfigComponent.GetLocalMeshSavePath args)
+        {
+#if DOTNET
+            return "../LocalMeshData";
+#else
+            return Path.Combine(PathHelper.AppHotfixResPath, "LocalMeshData");
+#endif
+        }
+    }
 }

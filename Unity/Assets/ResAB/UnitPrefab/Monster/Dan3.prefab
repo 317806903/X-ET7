@@ -546,6 +546,8 @@ MonoBehaviour:
       Value: Idle
     - Key: Move
       Value: Walk Forward In Place
+    - Key: Attack1
+      Value: Cast Spell
 --- !u!1 &1734572081990470154
 GameObject:
   m_ObjectHideFlags: 0

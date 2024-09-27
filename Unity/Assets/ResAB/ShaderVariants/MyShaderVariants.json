@@ -1,6 +1,6 @@
 {
-    "ShaderTotalCount": 45,
-    "VariantTotalCount": 57,
+    "ShaderTotalCount": 61,
+    "VariantTotalCount": 106,
     "ShaderVariantInfos": [
         {
             "AssetPath": "Resources/unity_builtin_extra",
@@ -33,7 +33,7 @@
                 {
                     "PassType": 8,
                     "Keywords": [
-                        "SHADOWS_DEPTH"
+                        ""
                     ]
                 }
             ]
@@ -65,6 +65,18 @@
         {
             "AssetPath": "Resources/unity_builtin_extra",
             "ShaderName": "Legacy Shaders/Particles/Additive",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Legacy Shaders/Particles/Additive (Soft)",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -117,7 +129,20 @@
                 {
                     "PassType": 0,
                     "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
                         "_ALPHABLEND_ON"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_COLORCOLOR_ON"
                     ]
                 },
                 {
@@ -138,7 +163,19 @@
                 {
                     "PassType": 8,
                     "Keywords": [
+                        "PROCEDURAL_INSTANCING_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
                         "PROCEDURAL_INSTANCING_ON",
+                        "_ALPHABLEND_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
                         "_ALPHABLEND_ON"
                     ]
                 }
@@ -313,6 +350,18 @@
             ]
         },
         {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/ScanLine/ScanLine.shader",
+            "ShaderName": "MirrorVerse/ScanLine",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
             "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader",
             "ShaderName": "Universal Render Pipeline/Lit",
             "ShaderVariantElements": [
@@ -326,6 +375,14 @@
                     "PassType": 8,
                     "Keywords": [
                         "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_EMISSION",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE"
                     ]
                 },
                 {
@@ -361,6 +418,22 @@
                         "_MAIN_LIGHT_SHADOWS_CASCADE",
                         "_RECEIVE_SHADOWS_OFF"
                     ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE",
+                        "_SPECULARHIGHLIGHTS_OFF"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE",
+                        "_SURFACE_TYPE_TRANSPARENT"
+                    ]
                 }
             ]
         },
@@ -368,6 +441,32 @@
             "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Particles/ParticlesUnlit.shader",
             "ShaderName": "Universal Render Pipeline/Particles/Unlit",
             "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_ALPHATEST_ON",
+                        "_EMISSION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_COLOROVERLAY_ON",
+                        "_EMISSION",
+                        "_SURFACE_TYPE_TRANSPARENT"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_DISTORTION_ON",
+                        "_EMISSION",
+                        "_FADING_ON",
+                        "_FLIPBOOKBLENDING_ON",
+                        "_SOFTPARTICLES_ON",
+                        "_SURFACE_TYPE_TRANSPARENT"
+                    ]
+                },
                 {
                     "PassType": 0,
                     "Keywords": [
@@ -382,6 +481,24 @@
                     "Keywords": [
                         "_EMISSION",
                         "_SURFACE_TYPE_TRANSPARENT"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_SURFACE_TYPE_TRANSPARENT"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Decal.shadergraph",
+            "ShaderName": "Shader Graphs/Decal",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        ""
                     ]
                 }
             ]
@@ -416,6 +533,12 @@
             "ShaderName": "MirrorVerse/AR Occlusion Shadow Caster",
             "ShaderVariantElements": [
                 {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
                     "PassType": 8,
                     "Keywords": [
                         ""
@@ -431,6 +554,30 @@
                     "PassType": 8,
                     "Keywords": [
                         ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "INSTANCING_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_EMISSION",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE",
+                        "_RECEIVE_SHADOWS_OFF",
+                        "_SPECULAR_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE",
+                        "_RECEIVE_SHADOWS_OFF"
                     ]
                 }
             ]
@@ -449,7 +596,55 @@
         },
         {
             "AssetPath": "Assets/Res/TmpRes5/Hovl Studio/AAA Projectiles Vol 1/Shaders/Add_CenterGlow.shader",
-            "ShaderName": "Hovl/Particles/Add_CenterGlow",
+            "ShaderName": "ERB/Particles/Add_CenterGlow",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/VertexColor.shader",
+            "ShaderName": "MirrorVerse/VertexColor",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/Terrain/FadingMembrane.shader",
+            "ShaderName": "MirrorVerse/FadingMembrane",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/Terrain/Wireframe.shader",
+            "ShaderName": "MirrorVerse/Wireframe",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Scripts/Loader/Plugins/UIGuide/Shaders/CircleGuideMaskShader.shader",
+            "ShaderName": "UI/UIMask/CircleGuideMask",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -473,7 +668,7 @@
         },
         {
             "AssetPath": "Assets/Res/TmpRes5/Hovl Studio/AAA Projectiles Vol 1/Shaders/Blend_CenterGlow.shader",
-            "ShaderName": "Hovl/Particles/Blend_CenterGlow",
+            "ShaderName": "ERB/Particles/Blend_CenterGlow",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -512,7 +707,25 @@
             "ShaderName": "Shader Graphs/HCFX_Particle_apb",
             "ShaderVariantElements": [
                 {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
                     "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/Terrain/FadingWireframe.shader",
+            "ShaderName": "MirrorVerse/FadingWirefame",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
                     "Keywords": [
                         ""
                     ]
@@ -532,19 +745,25 @@
             ]
         },
         {
-            "AssetPath": "Assets/Res/tower1127/Model/StylizedFantasyElementalsPack/Shaders/Elementals_Shader.shadergraph",
-            "ShaderName": "Shader Graphs/Elementals_Shader",
+            "AssetPath": "Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader",
+            "ShaderName": "TextMeshPro/Mobile/Distance Field",
             "ShaderVariantElements": [
                 {
-                    "PassType": 8,
+                    "PassType": 0,
+                    "Keywords": [
+                        "OUTLINE_ON"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.deepmirror.mirrorverse.ui/Renderers/Shaders/AROcclusion.shader",
+            "ShaderName": "MirrorVerse/AR Occlusion",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
                     "Keywords": [
                         ""
-                    ]
-                },
-                {
-                    "PassType": 8,
-                    "Keywords": [
-                        "INSTANCING_ON"
                     ]
                 }
             ]
@@ -586,8 +805,44 @@
             ]
         },
         {
-            "AssetPath": "Assets/ResAB/Shader/UI/UIGray.shader",
+            "AssetPath": "Assets/ResAB/UI/UIGray.shader",
             "ShaderName": "Custom/UIGray",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/towers_new/new bullet/a new bullet/sucai/Hovl Studio/Toon projectiles/Shaders/Add_Fresnel.shader",
+            "ShaderName": "ERB/Particles/Add_Fresnel",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/towers_new/new bullet/a new bullet/sucai/ErbGameArt/AAA Projectiles Vol 2/Shaders/Electricity.shader",
+            "ShaderName": "Hovl/Particles/Electricity",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/towers_new/new bullet/a new bullet/sucai/Hovl Studio/Toon projectiles/Shaders/DissolveNoise.shader",
+            "ShaderName": "Hovl/Particles/DissolveNoise",
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
@@ -602,6 +857,12 @@
             "ShaderName": "Shader Graphs/HCFX_Particle_add",
             "ShaderVariantElements": [
                 {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
                     "PassType": 8,
                     "Keywords": [
                         ""
@@ -610,7 +871,7 @@
             ]
         },
         {
-            "AssetPath": "Assets/ResAB/Shader/UI/RectShader.shader",
+            "AssetPath": "Assets/ResAB/UI/RectShader.shader",
             "ShaderName": "CustomBoold/RectShader",
             "ShaderVariantElements": [
                 {
@@ -629,6 +890,193 @@
                     "PassType": 0,
                     "Keywords": [
                         ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/FallbackShader.shader",
+            "ShaderName": "Hidden/Core/FallbackError",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/VFX/VFX 11/VFX_JMO Assets/Cartoon FX Remaster/CFXR Assets/Shaders/CFXR Particle Ubershader.shader",
+            "ShaderName": "Cartoon FX/Remaster/Particle Ubershader",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_ALPHATEST_ON",
+                        "_CFXR_OVERLAYBLEND_RGB"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_DISSOLVE_ALONG_UV_X",
+                        "_CFXR_OVERLAYBLEND_RGB",
+                        "_CFXR_SINGLE_CHANNEL"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_DITHERED_SHADOWS_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_DITHERED_SHADOWS_ON",
+                        "_CFXR_SINGLE_CHANNEL"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_SINGLE_CHANNEL"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DITHERED_SHADOWS_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_SINGLE_CHANNEL"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_ALPHATEST_ON",
+                        "_CFXR_HDR_BOOST",
+                        "_CFXR_OVERLAYBLEND_RGB"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_DISSOLVE_ALONG_UV_X",
+                        "_CFXR_HDR_BOOST",
+                        "_CFXR_OVERLAYBLEND_RGB",
+                        "_CFXR_SINGLE_CHANNEL"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_CFXR_SINGLE_CHANNEL",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_DISSOLVE",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_FONT_COLORS",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_HDR_BOOST",
+                        "_CFXR_SINGLE_CHANNEL",
+                        "_FADING_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ALPHABLEND_ON",
+                        "_CFXR_SINGLE_CHANNEL",
+                        "_FADING_ON"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/VFX/Nokdef_VFXPack/Shaders/UberFX.shader",
+            "ShaderName": "Nokdef/UberFX",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_USESOFTALPHA_ON"
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_USESOFTALPHA_ON"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/ResAB/Shader/DecalShaderGraph.shadergraph",
+            "ShaderName": "Shader Graphs/DecalShaderGraph",
+            "ShaderVariantElements": [
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 13,
+                    "Keywords": [
+                        "_ADDITIONAL_LIGHTS",
+                        "_DECAL_NORMAL_BLEND_LOW",
+                        "_MAIN_LIGHT_SHADOWS_CASCADE"
                     ]
                 }
             ]

@@ -433,6 +433,24 @@ namespace ET.Client
                         mainModule.startColor = new ParticleSystem.MinMaxGradient(color);
                     }
 
+                    UnityEngine.Rendering.Universal.DecalProjector[] projectorList = attackAreaTran.gameObject.GetComponentsInChildren<UnityEngine.Rendering.Universal.DecalProjector>(true);
+                    foreach (UnityEngine.Rendering.Universal.DecalProjector projector in projectorList)
+                    {
+                        Material projectorMaterial = new Material(projector.material);
+                        float alpha = projectorMaterial.GetColor("_Color").a;
+                        color.a = alpha;
+                        projectorMaterial.SetColor("_Color", color);
+                        projector.material = projectorMaterial;
+                    }
+                    projectorList = defaultShowTran.gameObject.GetComponentsInChildren<UnityEngine.Rendering.Universal.DecalProjector>(true);
+                    foreach (UnityEngine.Rendering.Universal.DecalProjector projector in projectorList)
+                    {
+                        Material projectorMaterial = new Material(projector.material);
+                        float alpha = projectorMaterial.GetColor("_Color").a;
+                        color.a = alpha;
+                        projectorMaterial.SetColor("_Color", color);
+                        projector.material = projectorMaterial;
+                    }
                 }
             }
 
@@ -1171,8 +1189,30 @@ namespace ET.Client
 
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.TowerPush);
 
+            (bool isFirstPutOwnTower, float3 firstPos) = await self.ChkIsFirstPutOwnTower();
+            if (isFirstPutOwnTower)
+            {
+                position = firstPos;
+            }
             ET.Client.GamePlayTowerDefenseHelper.SendCallOwnTower(self.ClientScene(), self.battleDragItemParam, position).Coroutine();
             return true;
+        }
+
+        public static async ETTask<(bool, float3)> ChkIsFirstPutOwnTower(this DlgBattleDragItem self)
+        {
+            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true) == false)
+            {
+                return (false, float3.zero);
+            }
+
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            if (gamePlayTowerDefenseComponent == null)
+            {
+                return (false, float3.zero);
+            }
+
+            float3 midPos = gamePlayTowerDefenseComponent.GetPathMidPos();
+            return (true, midPos);
         }
 
         public static async ETTask<bool> DoPutMoveTower(this DlgBattleDragItem self, float3 position)

@@ -7,6 +7,7 @@ namespace ET.Ability
     [ComponentOf(typeof (Unit))]
     public class OwnCallerComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
+        public List<EntityRef<Unit>> clearList = new();
         public HashSet<EntityRef<Unit>> ownCallActor;
         public HashSet<EntityRef<Unit>> ownCallBullet;
         public HashSet<EntityRef<Unit>> ownCallAoe;

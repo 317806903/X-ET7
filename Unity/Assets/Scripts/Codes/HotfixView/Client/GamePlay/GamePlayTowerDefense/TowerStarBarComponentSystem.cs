@@ -14,14 +14,14 @@ namespace ET.Client
         {
             protected override void Awake(TowerStarBarComponent self)
             {
-                GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
-                if (gameObjectComponent == null || gameObjectComponent.gameObject == null)
+                GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+                if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
                 {
                     return;
                 }
                 ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerStarBar_1");
                 GameObject towerStarBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,5);
-                towerStarBarGo.transform.SetParent(gameObjectComponent.gameObject.transform);
+                towerStarBarGo.transform.SetParent(gameObjectShowComponent.gameObject.transform);
                 towerStarBarGo.transform.position = Vector3.zero;
                 towerStarBarGo.transform.localScale = Vector3.one;
 

@@ -1,7 +1,7 @@
-Font: FZHanZhenGuangBiaoS-GB  Style: Regular
-Point Size: 57   SP/PD Ratio: 8.8%
+Font: Alibaba PuHuiTi 3.0  Style: 65 Medium
+Point Size: 60   SP/PD Ratio: 8.3%
 
-Characters included: 3956/3956
+Characters included: 3958/3958
 Missing characters: 0
 Excluded characters: 0
 

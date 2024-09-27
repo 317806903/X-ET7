@@ -8,10 +8,6 @@ namespace ET.Ability
     [ComponentOf(typeof (Unit))]
     public class MoveTweenObj: Entity, IAwake, IDestroy, IFixedUpdate, ITransferClient
     {
-        ///<summary>
-        ///</summary>
-        public long unitId;
-
         public bool isNeedChkHoldTime;
 
         ///<summary>

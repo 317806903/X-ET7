@@ -39,6 +39,7 @@ namespace ET
                 foreach (long mailId in removeList)
                 {
                     self.RemoveChild(mailId);
+                    self.mailStatus.Remove(mailId);
                 }
                 self.SetDataCacheAutoWrite();
             }
@@ -171,6 +172,24 @@ namespace ET
 
             unreadOrNotReceivedList.AddRange(readList);
             return unreadOrNotReceivedList;
+        }
+
+        public static bool ChkIsNeedRedDot(this PlayerMailComponent self)
+        {
+            foreach (KeyValuePair<long, Entity> child in self.Children)
+            {
+                MailInfoComponent mailInfoComponent = child.Value as MailInfoComponent;
+                if (mailInfoComponent.limitTime < TimeHelper.ServerNow())
+                {
+                    continue;
+                }
+                MailStatus mailStatus = self.mailStatus[mailInfoComponent.Id];
+                if (mailStatus == MailStatus.UnRead || mailStatus == MailStatus.ReadAndNotGetItem)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

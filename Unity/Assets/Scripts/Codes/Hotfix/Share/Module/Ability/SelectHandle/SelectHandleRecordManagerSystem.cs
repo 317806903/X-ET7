@@ -71,22 +71,32 @@ namespace ET.Ability
             self.removeList.Clear();
         }
 
-        public static void DoRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg, ListComponent<long> unitIds)
+        public static void DoRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, SelectHandle selectHandle)
         {
+            if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            {
+                return;
+            }
+            if (selectHandle.unitIds == null || selectHandle.unitIds.Count == 0)
+            {
+                return;
+            }
             SelectHandleRecord selectHandleRecord = self.AddChild<SelectHandleRecord>();
             selectHandleRecord.unitId = unit.Id;
             selectHandleRecord.isResetPos = isResetPos;
             selectHandleRecord.resetPos = resetPos;
+            selectHandleRecord.isResetForward = isResetForward;
+            selectHandleRecord.resetForward = resetForward;
             selectHandleRecord.selectObjectCfgId = selectObjectCfg.Id;
             selectHandleRecord.unitIds = ListComponent<long>.Create();
-            selectHandleRecord.unitIds.AddRange(unitIds);
+            selectHandleRecord.unitIds.AddRange(selectHandle.unitIds);
 
             self.time2ChildId.Add(TimeHelper.ServerFrameTime(), selectHandleRecord.Id);
             self.unitId2ChildId.RemoveByKey(unit.Id);
             self.unitId2ChildId.Add(unit.Id, selectHandleRecord.Id);
         }
 
-        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, SelectObjectCfg selectObjectCfg)
+        public static (bool, ListComponent<long>) ChkRecordUnitsByArea(this SelectHandleRecordManager self, Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg)
         {
             if (selectObjectCfg.IsNeedChkExcludeTarget || selectObjectCfg.IsSaveExcludeTarget)
             {
@@ -102,7 +112,7 @@ namespace ET.Ability
             {
                 return (false, null);
             }
-            return selectHandleRecord.Check(unit, isResetPos, resetPos, selectObjectCfg);
+            return selectHandleRecord.Check(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg);
         }
     }
 }

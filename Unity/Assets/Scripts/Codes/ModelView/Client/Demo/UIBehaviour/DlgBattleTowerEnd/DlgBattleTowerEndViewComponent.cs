@@ -511,7 +511,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_LvTextMeshProUGUI == null )
 				{
-					this.m_ELabel_LvTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/ELabel_Lv");
+					this.m_ELabel_LvTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Effect_EndChallengeMode/Effect_GameEnd_ChallengeModeEnds/title/ELabel_Lv");
 				}
 				return this.m_ELabel_LvTextMeshProUGUI;
 			}
@@ -619,6 +619,23 @@ namespace ET.Client
 			}
 		}
 
+		public UITextLocalizeMonoView E_Return_TextUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_Return_TextUITextLocalizeMonoView == null )
+				{
+					this.m_E_Return_TextUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Root/E_ReturnRoom/E_Return_Text");
+				}
+				return this.m_E_Return_TextUITextLocalizeMonoView;
+			}
+		}
+
 		public void DestroyWidget()
 		{
 			this.m_E_BG_ClickButton = null;
@@ -657,6 +674,7 @@ namespace ET.Client
 			this.m_E_ReturnRoomButton = null;
 			this.m_E_ReturnRoomImage = null;
 			this.m_E_Return_TextTextMeshProUGUI = null;
+			this.m_E_Return_TextUITextLocalizeMonoView = null;
 			this.uiTransform = null;
 		}
 
@@ -696,6 +714,7 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_ReturnRoomButton = null;
 		private UnityEngine.UI.Image m_E_ReturnRoomImage = null;
 		private TMPro.TextMeshProUGUI m_E_Return_TextTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_E_Return_TextUITextLocalizeMonoView = null;
 		public Transform uiTransform = null;
 	}
 }

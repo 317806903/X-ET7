@@ -8,13 +8,25 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Session session, M2C_GamePlayModeChgNotice message)
 		{
-			Log.Debug($"M2C_GamePlayModeChgNotice 11");
 			Scene clientScene = session.DomainScene();
-			Scene currentScene = session.DomainScene().CurrentScene();
+			using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.GamePlay, 0))
+			{
+				await Deal(clientScene, message);
+			}
+		}
+
+		protected async ETTask Deal(Scene clientScene, M2C_GamePlayModeChgNotice message)
+		{
+			Log.Debug($"M2C_GamePlayModeChgNotice 11");
+			Scene currentScene = clientScene.CurrentScene();
 			while (currentScene == null || currentScene.IsDisposed)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
-				currentScene = session.DomainScene().CurrentScene();
+				if (clientScene.IsDisposed)
+				{
+					return;
+				}
+				currentScene = clientScene.CurrentScene();
 			}
 
 			Log.Debug($"M2C_GamePlayModeChgNotice 22");
@@ -23,6 +35,10 @@ namespace ET.Client
 			while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (currentScene.IsDisposed)
+				{
+					return;
+				}
 				gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 			}
 

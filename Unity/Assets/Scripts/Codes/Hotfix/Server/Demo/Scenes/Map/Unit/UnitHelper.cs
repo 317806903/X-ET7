@@ -161,9 +161,9 @@ namespace ET.Server
             protected override async ETTask Run(Scene scene, EventType.WaitNoticeGamePlayModeToClient args)
             {
                 long playerId = args.playerId;
-
+                bool bForceSend = args.forceSend;
                 GamePlayComponent gamePlayComponent = args.gamePlayComponent;
-                gamePlayComponent.AddWaitNoticeGamePlayModeToClientList(playerId);
+                gamePlayComponent.AddWaitNoticeGamePlayModeToClientList(playerId, bForceSend);
                 await ETTask.CompletedTask;
             }
         }

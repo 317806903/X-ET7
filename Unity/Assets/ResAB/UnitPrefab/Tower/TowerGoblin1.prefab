@@ -628,6 +628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlowZoneBlue (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1448971607870028, guid: d01a7b49ea71d0a47bb667a590616946, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4341449868645458, guid: d01a7b49ea71d0a47bb667a590616946, type: 3}
       propertyPath: m_RootOrder
       value: 2

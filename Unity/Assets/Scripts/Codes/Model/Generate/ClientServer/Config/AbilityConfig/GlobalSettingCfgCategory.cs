@@ -144,6 +144,10 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public int MaxBattleCardNum => _data.MaxBattleCardNum;
     /// <summary>
+    /// 最多出战技能数
+    /// </summary>
+     public int MaxBattleSkillNum => _data.MaxBattleSkillNum;
+    /// <summary>
     /// 赛季开始时间
     /// </summary>
      public long SeasonStartTime => _data.SeasonStartTime;

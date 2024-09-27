@@ -50,6 +50,7 @@ namespace ET
 		public RoomTypeInfo roomTypeInfo { get; set; }
 
 		public ARMeshType _ARMeshType;
+		public string _ARSceneId;
 		[BsonIgnore]
 		public string _ARMeshDownLoadUrl;
 		[BsonIgnore]
@@ -67,6 +68,8 @@ namespace ET
 		[BsonIgnore]
 		public bool isTestARObj = false;
 		[BsonIgnore]
+		public int isTestARObjScale = 35;
+		[BsonIgnore]
 		public string isTestARObjUrl = @"http://192.168.10.50/CDN/home-2.obj";
 
 		[BsonIgnore]
@@ -77,6 +80,8 @@ namespace ET
 		public HashSet<long> waitNoticeGamePlayStatisticalToClientList;
 		[BsonIgnore]
 		public HashSet<long> waitNoticeGamePlayModeToClientList;
+		[BsonIgnore]
+		public HashSet<long> waitNoticeGamePlayModeToClientListForceSend;
 
 		[BsonIgnore]
 		public int waitFrameSyncPos = 10;

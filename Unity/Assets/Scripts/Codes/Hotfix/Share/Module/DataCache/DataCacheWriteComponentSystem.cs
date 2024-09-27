@@ -26,7 +26,7 @@ namespace ET
         public static void SetNeedSave(this DataCacheWriteComponent self, bool isForce)
         {
             TimerComponent.Instance?.Remove(ref self.Timer);
-            long time = 2000;
+            long time = DataCacheWriteComponent.DefaultSaveWaitTime;
             if (isForce)
             {
                 time = 100;

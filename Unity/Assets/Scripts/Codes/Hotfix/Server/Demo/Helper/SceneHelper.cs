@@ -58,7 +58,8 @@ namespace ET.Server
                     scene.AddComponent<BenchmarkClientComponent>();
                     break;
                 case SceneType.Room:
-                    scene.AddComponent<RoomManagerComponent>();
+                    RoomManagerComponent roomManagerComponent = scene.AddComponent<RoomManagerComponent>();
+                    roomManagerComponent.AddComponent<PlayerLocationChkComponent>();
                     scene.AddComponent<RoomGetDynamicMapCountComponent>();
                     break;
                 case SceneType.Match:

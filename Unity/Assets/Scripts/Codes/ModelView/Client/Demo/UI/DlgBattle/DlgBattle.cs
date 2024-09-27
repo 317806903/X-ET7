@@ -10,6 +10,8 @@ namespace ET.Client
 
 		public DlgBattleViewComponent View { get => this.GetComponent<DlgBattleViewComponent>(); }
 
+		public Dictionary<int, Scroll_Item_SkillBattleInfo> ScrollItemSkills;
+
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
 		public Dictionary<int, Scroll_Item_Tower> ScrollItemMonsters;
 

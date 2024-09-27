@@ -177,6 +177,74 @@ namespace ET.Client
 			}
 		}
 
+		public TMPro.TextMeshProUGUI ELabel_CancelTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_CancelTextMeshProUGUI == null )
+				{
+					this.m_ELabel_CancelTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/EButton_ResetHome/ELabel_Cancel");
+				}
+				return this.m_ELabel_CancelTextMeshProUGUI;
+			}
+		}
+
+		public UITextLocalizeMonoView ELabel_CancelUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELabel_CancelUITextLocalizeMonoView == null )
+				{
+					this.m_ELabel_CancelUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/EButton_ResetHome/ELabel_Cancel");
+				}
+				return this.m_ELabel_CancelUITextLocalizeMonoView;
+			}
+		}
+
+		public UnityEngine.UI.Button E_CancelButtonButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CancelButtonButton == null )
+				{
+					this.m_E_CancelButtonButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/E_CancelButton");
+				}
+				return this.m_E_CancelButtonButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_CancelButtonImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_CancelButtonImage == null )
+				{
+					this.m_E_CancelButtonImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_PutHomeAndMonsterPoint/E_CancelButton");
+				}
+				return this.m_E_CancelButtonImage;
+			}
+		}
+
 		public UnityEngine.UI.Image E_BattleImage
 		{
 			get
@@ -569,7 +637,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image E_TowerBuyShowImage
+		public UnityEngine.RectTransform EG_TowerBuyShowRectTransform
 		{
 			get
 			{
@@ -578,11 +646,11 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_TowerBuyShowImage == null )
+				if( this.m_EG_TowerBuyShowRectTransform == null )
 				{
-					this.m_E_TowerBuyShowImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow");
+					this.m_EG_TowerBuyShowRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow");
 				}
-				return this.m_E_TowerBuyShowImage;
+				return this.m_EG_TowerBuyShowRectTransform;
 			}
 		}
 
@@ -597,7 +665,7 @@ namespace ET.Client
 				}
 				if( this.m_E_TowerBuyShow_boxTranslucentImage == null )
 				{
-					this.m_E_TowerBuyShow_boxTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/E_TowerBuyShow_box");
+					this.m_E_TowerBuyShow_boxTranslucentImage = UIFindHelper.FindDeepChild<BlurBackground.TranslucentImage>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/E_TowerBuyShow_box");
 				}
 				return this.m_E_TowerBuyShow_boxTranslucentImage;
 			}
@@ -614,7 +682,7 @@ namespace ET.Client
 				}
 				if( this.m_ELoopScrollList_BuyLoopHorizontalScrollRect == null )
 				{
-					this.m_ELoopScrollList_BuyLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy");
+					this.m_ELoopScrollList_BuyLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy");
 				}
 				return this.m_ELoopScrollList_BuyLoopHorizontalScrollRect;
 			}
@@ -631,7 +699,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_RefreshButton == null )
 				{
-					this.m_EButton_RefreshButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh");
+					this.m_EButton_RefreshButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh");
 				}
 				return this.m_EButton_RefreshButton;
 			}
@@ -648,7 +716,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_RefreshImage == null )
 				{
-					this.m_EButton_RefreshImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh");
+					this.m_EButton_RefreshImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh");
 				}
 				return this.m_EButton_RefreshImage;
 			}
@@ -665,7 +733,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_RefreshTextMeshProUGUI == null )
 				{
-					this.m_ELabel_RefreshTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh");
+					this.m_ELabel_RefreshTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh/ELabel_Refresh");
 				}
 				return this.m_ELabel_RefreshTextMeshProUGUI;
 			}
@@ -682,7 +750,7 @@ namespace ET.Client
 				}
 				if( this.m_ELabel_RefreshUITextLocalizeMonoView == null )
 				{
-					this.m_ELabel_RefreshUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh/ELabel_Refresh");
+					this.m_ELabel_RefreshUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh/ELabel_Refresh");
 				}
 				return this.m_ELabel_RefreshUITextLocalizeMonoView;
 			}
@@ -699,7 +767,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_Refresh_iconImage == null )
 				{
-					this.m_EButton_Refresh_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh/EButton_Refresh_icon");
+					this.m_EButton_Refresh_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh/EButton_Refresh_icon");
 				}
 				return this.m_EButton_Refresh_iconImage;
 			}
@@ -716,7 +784,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_Refresh_icon_goldImage == null )
 				{
-					this.m_EButton_Refresh_icon_goldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh/EButton_Refresh_icon_gold");
+					this.m_EButton_Refresh_icon_goldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh/EButton_Refresh_icon_gold");
 				}
 				return this.m_EButton_Refresh_icon_goldImage;
 			}
@@ -733,7 +801,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_BuyCloseButton == null )
 				{
-					this.m_EButton_BuyCloseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
+					this.m_EButton_BuyCloseButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_BuyClose");
 				}
 				return this.m_EButton_BuyCloseButton;
 			}
@@ -750,7 +818,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_BuyCloseImage == null )
 				{
-					this.m_EButton_BuyCloseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose");
+					this.m_EButton_BuyCloseImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_BuyClose");
 				}
 				return this.m_EButton_BuyCloseImage;
 			}
@@ -767,7 +835,7 @@ namespace ET.Client
 				}
 				if( this.m_EButton_BuyClose_iconImage == null )
 				{
-					this.m_EButton_BuyClose_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose/BuyClose/EButton_BuyClose_icon");
+					this.m_EButton_BuyClose_iconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_BuyClose/EButton_BuyClose_icon");
 				}
 				return this.m_EButton_BuyClose_iconImage;
 			}
@@ -824,7 +892,7 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_QuitBattleButton
+		public UnityEngine.UI.Button E_ForceGameEndWhenDebugButton
 		{
 			get
 			{
@@ -833,15 +901,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_QuitBattleButton == null )
+				if( this.m_E_ForceGameEndWhenDebugButton == null )
 				{
-					this.m_E_QuitBattleButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_QuitBattle");
+					this.m_E_ForceGameEndWhenDebugButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ForceGameEndWhenDebug");
 				}
-				return this.m_E_QuitBattleButton;
+				return this.m_E_ForceGameEndWhenDebugButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_QuitBattleImage
+		public UnityEngine.UI.Image E_ForceGameEndWhenDebugImage
 		{
 			get
 			{
@@ -850,15 +918,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_QuitBattleImage == null )
+				if( this.m_E_ForceGameEndWhenDebugImage == null )
 				{
-					this.m_E_QuitBattleImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_QuitBattle");
+					this.m_E_ForceGameEndWhenDebugImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ForceGameEndWhenDebug");
 				}
-				return this.m_E_QuitBattleImage;
+				return this.m_E_ForceGameEndWhenDebugImage;
 			}
 		}
 
-		public UnityEngine.UI.Button E_ReScanButton
+		public UnityEngine.UI.Button E_ForceAddGameGoldWhenDebugButton
 		{
 			get
 			{
@@ -867,15 +935,15 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ReScanButton == null )
+				if( this.m_E_ForceAddGameGoldWhenDebugButton == null )
 				{
-					this.m_E_ReScanButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ReScan");
+					this.m_E_ForceAddGameGoldWhenDebugButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ForceAddGameGoldWhenDebug");
 				}
-				return this.m_E_ReScanButton;
+				return this.m_E_ForceAddGameGoldWhenDebugButton;
 			}
 		}
 
-		public UnityEngine.UI.Image E_ReScanImage
+		public UnityEngine.UI.Image E_ForceAddGameGoldWhenDebugImage
 		{
 			get
 			{
@@ -884,11 +952,45 @@ namespace ET.Client
 					Log.Error("uiTransform is null.");
 					return null;
 				}
-				if( this.m_E_ReScanImage == null )
+				if( this.m_E_ForceAddGameGoldWhenDebugImage == null )
 				{
-					this.m_E_ReScanImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ReScan");
+					this.m_E_ForceAddGameGoldWhenDebugImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ForceAddGameGoldWhenDebug");
 				}
-				return this.m_E_ReScanImage;
+				return this.m_E_ForceAddGameGoldWhenDebugImage;
+			}
+		}
+
+		public UnityEngine.UI.Button E_ForceAddHomeHpWhenDebugButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ForceAddHomeHpWhenDebugButton == null )
+				{
+					this.m_E_ForceAddHomeHpWhenDebugButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_ForceAddHomeHpWhenDebug");
+				}
+				return this.m_E_ForceAddHomeHpWhenDebugButton;
+			}
+		}
+
+		public UnityEngine.UI.Image E_ForceAddHomeHpWhenDebugImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ForceAddHomeHpWhenDebugImage == null )
+				{
+					this.m_E_ForceAddHomeHpWhenDebugImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_ForceAddHomeHpWhenDebug");
+				}
+				return this.m_E_ForceAddHomeHpWhenDebugImage;
 			}
 		}
 
@@ -938,6 +1040,10 @@ namespace ET.Client
 			this.m_EButton_ResetHomeButton = null;
 			this.m_EButton_ResetHomeImage = null;
 			this.m_ELabel_ResetHome_iconImage = null;
+			this.m_ELabel_CancelTextMeshProUGUI = null;
+			this.m_ELabel_CancelUITextLocalizeMonoView = null;
+			this.m_E_CancelButtonButton = null;
+			this.m_E_CancelButtonImage = null;
 			this.m_E_BattleImage = null;
 			this.m_E_CoinsAndTowersTranslucentImage = null;
 			this.m_ELabel_shadow02Image = null;
@@ -962,7 +1068,7 @@ namespace ET.Client
 			this.m_EButton_BuyShow_iconImage = null;
 			this.m_ELabel_BuyText = null;
 			this.m_ELabel_BuyUITextLocalizeMonoView = null;
-			this.m_E_TowerBuyShowImage = null;
+			this.m_EG_TowerBuyShowRectTransform = null;
 			this.m_E_TowerBuyShow_boxTranslucentImage = null;
 			this.m_ELoopScrollList_BuyLoopHorizontalScrollRect = null;
 			this.m_EButton_RefreshButton = null;
@@ -977,10 +1083,12 @@ namespace ET.Client
 			this.m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 			this.m_E_TipNodeImage = null;
 			this.m_E_TipTextTextMeshProUGUI = null;
-			this.m_E_QuitBattleButton = null;
-			this.m_E_QuitBattleImage = null;
-			this.m_E_ReScanButton = null;
-			this.m_E_ReScanImage = null;
+			this.m_E_ForceGameEndWhenDebugButton = null;
+			this.m_E_ForceGameEndWhenDebugImage = null;
+			this.m_E_ForceAddGameGoldWhenDebugButton = null;
+			this.m_E_ForceAddGameGoldWhenDebugImage = null;
+			this.m_E_ForceAddHomeHpWhenDebugButton = null;
+			this.m_E_ForceAddHomeHpWhenDebugImage = null;
 			this.m_E_GameSettingButton = null;
 			this.m_E_GameSettingImage = null;
 			this.uiTransform = null;
@@ -996,6 +1104,10 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_EButton_ResetHomeButton = null;
 		private UnityEngine.UI.Image m_EButton_ResetHomeImage = null;
 		private UnityEngine.UI.Image m_ELabel_ResetHome_iconImage = null;
+		private TMPro.TextMeshProUGUI m_ELabel_CancelTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELabel_CancelUITextLocalizeMonoView = null;
+		private UnityEngine.UI.Button m_E_CancelButtonButton = null;
+		private UnityEngine.UI.Image m_E_CancelButtonImage = null;
 		private UnityEngine.UI.Image m_E_BattleImage = null;
 		private BlurBackground.TranslucentImage m_E_CoinsAndTowersTranslucentImage = null;
 		private UnityEngine.UI.Image m_ELabel_shadow02Image = null;
@@ -1019,7 +1131,7 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_EButton_BuyShow_iconImage = null;
 		private UnityEngine.UI.Text m_ELabel_BuyText = null;
 		private UITextLocalizeMonoView m_ELabel_BuyUITextLocalizeMonoView = null;
-		private UnityEngine.UI.Image m_E_TowerBuyShowImage = null;
+		private UnityEngine.RectTransform m_EG_TowerBuyShowRectTransform = null;
 		private BlurBackground.TranslucentImage m_E_TowerBuyShow_boxTranslucentImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_BuyLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Button m_EButton_RefreshButton = null;
@@ -1034,10 +1146,12 @@ namespace ET.Client
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_TowerLoopHorizontalScrollRect = null;
 		private UnityEngine.UI.Image m_E_TipNodeImage = null;
 		private TMPro.TextMeshProUGUI m_E_TipTextTextMeshProUGUI = null;
-		private UnityEngine.UI.Button m_E_QuitBattleButton = null;
-		private UnityEngine.UI.Image m_E_QuitBattleImage = null;
-		private UnityEngine.UI.Button m_E_ReScanButton = null;
-		private UnityEngine.UI.Image m_E_ReScanImage = null;
+		private UnityEngine.UI.Button m_E_ForceGameEndWhenDebugButton = null;
+		private UnityEngine.UI.Image m_E_ForceGameEndWhenDebugImage = null;
+		private UnityEngine.UI.Button m_E_ForceAddGameGoldWhenDebugButton = null;
+		private UnityEngine.UI.Image m_E_ForceAddGameGoldWhenDebugImage = null;
+		private UnityEngine.UI.Button m_E_ForceAddHomeHpWhenDebugButton = null;
+		private UnityEngine.UI.Image m_E_ForceAddHomeHpWhenDebugImage = null;
 		private UnityEngine.UI.Button m_E_GameSettingButton = null;
 		private UnityEngine.UI.Image m_E_GameSettingImage = null;
 		public Transform uiTransform = null;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 231990476108141271}
   - component: {fileID: 3869673966897563124}
   - component: {fileID: 3741305149034418229}
+  - component: {fileID: 3770763012308063397}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -135,6 +136,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3770763012308063397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3761349073232536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_Complain/Root/OperatorRoot/E_CloseComplain/Text
+    (TMP)
+  localizeType: 0
 --- !u!1 &55202556491803387
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +815,7 @@ GameObject:
   - component: {fileID: 2034324410466837612}
   - component: {fileID: 275872043375154686}
   - component: {fileID: 3085509273004299300}
+  - component: {fileID: 8831950977436977327}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -923,6 +940,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8831950977436977327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918353535904077853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_OperatorMenu/Root/OperatorRoot/E_CloseMenu/Text
+    (TMP)
+  localizeType: 0
 --- !u!1 &2158135060094244746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1265,7 @@ GameObject:
   - component: {fileID: 9098811752038692033}
   - component: {fileID: 745580517681675890}
   - component: {fileID: 434158402867810489}
+  - component: {fileID: 7232302103317415240}
   m_Layer: 5
   m_Name: title
   m_TagString: Untagged
@@ -1356,6 +1389,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7232302103317415240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432974807394413835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_Complain/Root/title
+  localizeType: 0
 --- !u!1 &2505900337280225869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1780,7 @@ GameObject:
   - component: {fileID: 4048052989743212315}
   - component: {fileID: 3796935169738997094}
   - component: {fileID: 3428964299240929482}
+  - component: {fileID: 4683884838898414027}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -1857,6 +1905,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4683884838898414027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3393398232088859528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_Complain/Root/info
+  localizeType: 0
 --- !u!1 &3463082016976740584
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,6 +3157,7 @@ GameObject:
   - component: {fileID: 6797675417464557959}
   - component: {fileID: 1878987278699829886}
   - component: {fileID: 7734460900064484017}
+  - component: {fileID: 2277721029454667940}
   m_Layer: 5
   m_Name: title
   m_TagString: Untagged
@@ -3218,6 +3281,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2277721029454667940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926909315079566640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_OperatorMenu/Root/bg/title
+  localizeType: 0
 --- !u!1 &6012656430383580571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3304,6 +3381,7 @@ GameObject:
   - component: {fileID: 680341061057990715}
   - component: {fileID: 5993611238725212692}
   - component: {fileID: 542114164782500278}
+  - component: {fileID: 5865916363979513182}
   m_Layer: 5
   m_Name: title
   m_TagString: Untagged
@@ -3427,6 +3505,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5865916363979513182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6171075798269560039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_LoveIt/Root/title
+  localizeType: 0
 --- !u!1 &6489248968765686209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,6 +3726,7 @@ GameObject:
   - component: {fileID: 6770108689008036810}
   - component: {fileID: 2597299413129747705}
   - component: {fileID: 7019349603289966842}
+  - component: {fileID: 2678338858799024794}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -3758,6 +3851,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2678338858799024794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6762797330430972420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_LoveIt/Root/info
+  localizeType: 0
 --- !u!1 &7134541915653661068
 GameObject:
   m_ObjectHideFlags: 0
@@ -4639,6 +4746,7 @@ GameObject:
   - component: {fileID: 8831952638994839360}
   - component: {fileID: 578994650106073433}
   - component: {fileID: 9168588714116435979}
+  - component: {fileID: 1394865897949565797}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4763,6 +4871,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1394865897949565797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8902349608877700010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_Complain/Root/OperatorRoot/E_CloseComplain/Text
+    (TMP)
+  localizeType: 0
 --- !u!1 &9073708539841823968
 GameObject:
   m_ObjectHideFlags: 0
@@ -4908,6 +5031,7 @@ GameObject:
   - component: {fileID: 3936381344234868448}
   - component: {fileID: 6930272450279293583}
   - component: {fileID: 8911991454931955609}
+  - component: {fileID: 9104306040802617803}
   m_Layer: 5
   m_Name: info
   m_TagString: Untagged
@@ -5031,6 +5155,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9104306040802617803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9089020061233194005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgGameJudgeChoose/EG_OperatorMenu/Root/bg/info
+  localizeType: 0
 --- !u!1 &9152371631237022620
 GameObject:
   m_ObjectHideFlags: 0

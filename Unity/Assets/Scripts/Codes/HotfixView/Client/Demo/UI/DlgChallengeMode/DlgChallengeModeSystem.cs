@@ -33,6 +33,9 @@ namespace ET.Client
             }
             else
             {
+
+                UIManagerHelper.HideUIRedDot(self.DomainScene(), UIRedDotType.PVESeason).Coroutine();
+
                 self.View.EPage_ChallengSeason.ShowPage().Coroutine();
                 self.View.EPage_ChallengNormal.HidePage();
             }

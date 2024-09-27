@@ -75,23 +75,26 @@ namespace ET.Server
 
         public static async ETTask WaitToSendToClient(long actionId, IActorMessage message, long sceneInstanceId)
         {
-            // 此处需要actionId指定的Player出现，但有可能出现等很久都没有（一直是null）。目前把重试次数调大，但需要找个更鲁棒的方法确保消息能发给player
-            int retryCount = 120;
-            ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-            while (oneTypeLocationType.GetChild<Entity>(actionId) == null)
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.GamePlay, actionId + sceneInstanceId))
             {
-                if (retryCount-- <= 0)
+                // 此处需要actionId指定的Player出现，但有可能出现等很久都没有（一直是null）。目前把重试次数调大，但需要找个更鲁棒的方法确保消息能发给player
+                int retryCount = 120;
+                ActorLocationSenderOneType oneTypeLocationType = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+                while (oneTypeLocationType.GetChild<Entity>(actionId) == null)
                 {
-                    Log.Error($"A message of type [{message.GetType().Name}] should be sent to player [{actionId}] but failed to sent after all retries of waiting.");
-                    return;
+                    if (retryCount-- <= 0)
+                    {
+                        Log.Error($"A message of type [{message.GetType().Name}] should be sent to player [{actionId}] but failed to sent after all retries of waiting.");
+                        return;
+                    }
+                    await TimerComponent.Instance.WaitFrameAsync();
                 }
-                await TimerComponent.Instance.WaitFrameAsync();
+                if (retryCount < 100)
+                {
+                    Log.Debug($"A message of type [{message.GetType().Name}] is sending player [{actionId}] after unexpected long retries of waiting {120 - retryCount}.");
+                }
+                oneTypeLocationType.Send(actionId, message, sceneInstanceId);
             }
-            if (retryCount < 100)
-            {
-                Log.Debug($"A message of type [{message.GetType().Name}] is sending player [{actionId}] after unexpected long retries of waiting {120 - retryCount}.");
-            }
-            oneTypeLocationType.Send(actionId, message, sceneInstanceId);
         }
 
         public static void SendToLocationActor(int locationType, long id, IActorLocationMessage message, long sceneInstanceId, bool needChkExist = true)

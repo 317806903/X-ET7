@@ -76,7 +76,10 @@ namespace ET.Client
 		{
 			self.videoPlayer.Stop();
 			self.videoPlayer = null;
-			ResComponent.Instance.UnloadAsset(self.videoPath);
+			if(string.IsNullOrEmpty(self.videoPath) == false)
+			{
+				ResComponent.Instance.UnloadAsset(self.videoPath);
+			}
 
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgVideoShowSmall>();
 			GL.Clear(false, true, Color.black);

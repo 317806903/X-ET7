@@ -144,7 +144,7 @@ namespace ET.Client
 			var canvasRT = self.View.EG_RootRectTransform;
 			// 将屏幕坐标转换为UI坐标
 			Vector2 canvasPosition;
-			if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screenPos, UIManagerComponent.Instance.UICamera, out canvasPosition))
+			if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screenPos, UIRootManagerComponent.Instance.UICamera, out canvasPosition))
 			{
 				if (isNeedAdsorb)
 				{

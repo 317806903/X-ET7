@@ -8,5 +8,6 @@ namespace ET
         public List<long> unitId { get; set; }
         public List<int> unitComponentCount;
         public List<byte[]> unitComponents;
+        public List<long> deleteUnitComponents;
     }
 }

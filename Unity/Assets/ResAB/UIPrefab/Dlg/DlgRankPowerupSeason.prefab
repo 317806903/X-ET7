@@ -1466,7 +1466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &583956126591514314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1486,8 +1486,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.000030517578}
-  m_SizeDelta: {x: 316.813, y: 85.9881}
+  m_AnchoredPosition: {x: 58, y: 0}
+  m_SizeDelta: {x: 424, y: 85.9881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5142815415531123317
 MonoBehaviour:
@@ -2472,7 +2472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29861158, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -24.750412, y: -0.000061035156}
+  m_AnchoredPosition: {x: -56, y: -0.000061035156}
   m_SizeDelta: {x: 18.1494, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4325111398967749793
@@ -3173,8 +3173,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29861158, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -41.8, y: 0}
-  m_SizeDelta: {x: 63.5754, y: 0}
+  m_AnchoredPosition: {x: -26.503, y: 0}
+  m_SizeDelta: {x: 32.981, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8464177641414428228
 CanvasRenderer:
@@ -3237,8 +3237,8 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 3
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3427,7 +3427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5090313824181742009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3447,8 +3447,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
-  m_SizeDelta: {x: 316.81, y: 85.9881}
+  m_AnchoredPosition: {x: 58, y: 0}
+  m_SizeDelta: {x: 424, y: 85.9881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &625296454908630616
 MonoBehaviour:
@@ -3655,8 +3655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29861158, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -41.80005, y: 0}
-  m_SizeDelta: {x: 63.5754, y: 0}
+  m_AnchoredPosition: {x: -26.502998, y: 0}
+  m_SizeDelta: {x: 32.980995, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7085670368712047461
 CanvasRenderer:
@@ -3720,7 +3720,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3805,7 +3805,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 85.24695, y: 2.005951}
-  m_SizeDelta: {x: 316.81, y: 85.9881}
+  m_SizeDelta: {x: 424, y: 85.9881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7643510756539290114
 MonoBehaviour:
@@ -3821,8 +3821,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRedDotActive: 0
   UIRedDotType: SeasonBringUp
-  RedDotScale: {x: 1, y: 1, z: 1}
-  PositionOffset: {x: 159, y: 43}
+  RedDotScale: {x: 0.8, y: 0.8, z: 0.8}
+  PositionOffset: {x: 140, y: 20}
 --- !u!1 &8065838551078336907
 GameObject:
   m_ObjectHideFlags: 0
@@ -4156,8 +4156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 706.6345, y: -81.98474}
-  m_SizeDelta: {x: 908.8552, y: 72.1595}
+  m_AnchoredPosition: {x: 706.6345, y: -83.82538}
+  m_SizeDelta: {x: 908.8552, y: 68.4782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7924672889211528405
 CanvasRenderer:
@@ -4291,8 +4291,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29861158, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -21.4751, y: -0.000061035156}
-  m_SizeDelta: {x: 24.7, y: 0}
+  m_AnchoredPosition: {x: -37.0999, y: -0.000061035156}
+  m_SizeDelta: {x: 55.9496, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2218118652586105211
 CanvasRenderer:
@@ -4357,7 +4357,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 3
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4719,10 +4719,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: EPage_Powerup
       objectReference: {fileID: 0}
+    - target: {fileID: 6419354646579751159, guid: 67f34d0844b299f4fb2e5ef96126b18d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3203985158575948910, guid: 67f34d0844b299f4fb2e5ef96126b18d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1005239051994721675}
   m_SourcePrefab: {fileID: 100100000, guid: 67f34d0844b299f4fb2e5ef96126b18d, type: 3}
 --- !u!224 &6311180349634586958 stripped
 RectTransform:
@@ -4730,3 +4739,23 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8236148818788103638}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6789873735052898744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3203985158575948910, guid: 67f34d0844b299f4fb2e5ef96126b18d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8236148818788103638}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1005239051994721675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789873735052898744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgRankPowerupSeason/EGRoot/EPage_Powerup/BottomInfo/Txt/Nextlevel/ETxtNextLevel
+  localizeType: 0

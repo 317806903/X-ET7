@@ -5,11 +5,11 @@ using ET.AbilityConfig;
 
 namespace ET
 {
-    [FriendOf(typeof(PlayerSeasonInfoComponent))]
+    [FriendOf(typeof (PlayerSeasonInfoComponent))]
     public static class PlayerSeasonInfoComponentSystem
     {
         [ObjectSystem]
-        public class PlayerSeasonInfoComponentAwakeSystem : AwakeSystem<PlayerSeasonInfoComponent>
+        public class PlayerSeasonInfoComponentAwakeSystem: AwakeSystem<PlayerSeasonInfoComponent>
         {
             protected override void Awake(PlayerSeasonInfoComponent self)
             {
@@ -56,6 +56,7 @@ namespace ET
             {
                 bringUpLevel = 0;
             }
+
             return bringUpLevel;
         }
 
@@ -75,6 +76,7 @@ namespace ET
                     return false;
                 }
             }
+
             self.seasonBringUpDic[seasonBringUpCfgId] = level;
             return true;
         }
@@ -95,15 +97,17 @@ namespace ET
         /// <param name="self"></param>
         public static async ETTask<int> GetSeasonBringupReward(this PlayerSeasonInfoComponent self)
         {
-            int rewardSum=0;
+            int rewardSum = 0;
             foreach (KeyValuePair<string, int> kvp in self.seasonBringUpDic)
             {
-                if(kvp.Value == 0)
+                if (kvp.Value == 0)
                 {
                     continue;
                 }
+
                 rewardSum += self.GetReWardBringup(kvp.Key);
             }
+
             await ETTask.CompletedTask;
             return rewardSum;
         }
@@ -113,15 +117,16 @@ namespace ET
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static int  GetReWardBringup(this PlayerSeasonInfoComponent self,string cfg)
+        public static int GetReWardBringup(this PlayerSeasonInfoComponent self, string cfgId)
         {
-            int playerLevel = self.GetSeasonBringUpLevel(cfg);//当前养成的等级
-            int rewardSum = 0;//单个养成所有的花费值
-            for (int i = (--playerLevel);i >= 0; i--)
+            int playerLevel = self.GetSeasonBringUpLevel(cfgId); //当前养成的等级
+            int rewardSum = 0; //单个养成所有的花费值
+            for (int i = (--playerLevel); i >= 0; i--)
             {
-                SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfg,i);
+                SeasonBringUpCfg seasonBringUpCfg = SeasonBringUpCfgCategory.Instance.GetSeasonBringUpCfg(cfgId, i);
                 rewardSum += seasonBringUpCfg.Cost;
             }
+
             return rewardSum;
         }
 

@@ -55,7 +55,7 @@ namespace ET
             rankShowComponent.Init(rankType);
 
             rankShowComponent.SetRankShow(playerId, myRank, myRankItemComponent, rankIndex2PlayerId);
-            rankShowComponent.SetDataCacheAutoClear(10);
+            rankShowComponent.SetDataCacheAutoClear(15);
             long rankShowComponentId = rankShowComponent.Id;
             self.RankList.Add(rankType, rankShowComponentId);
             return rankShowComponent;
@@ -65,7 +65,7 @@ namespace ET
         {
             rankShowComponent = (RankShowComponent)self.AddChild(rankShowComponent);
 
-            rankShowComponent.SetDataCacheAutoClear(10);
+            rankShowComponent.SetDataCacheAutoClear(15);
 
             long rankShowComponentId = rankShowComponent.Id;
             self.RankList.Add(rankType, rankShowComponentId);

@@ -136,6 +136,46 @@ namespace ET.Ability
         }
 
         /// <summary>
+        /// 是否可以BuffTick
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool ChkCanBuffTick(this BuffComponent self)
+        {
+            bool bStopBuffTick = self.ChkBuffByTagType(BuffTagType.StopBuffTick);
+            if (bStopBuffTick == false)
+            {
+                return true;
+            }
+            bool bCanBeControl = self.ChkCanBeControl();
+            if (bCanBeControl == false)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 是否可以BuffTrig
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool ChkCanBuffTrig(this BuffComponent self)
+        {
+            bool bStopBuffTrig = self.ChkBuffByTagType(BuffTagType.StopBuffTrig);
+            if (bStopBuffTrig == false)
+            {
+                return true;
+            }
+            bool bCanBeControl = self.ChkCanBeControl();
+            if (bCanBeControl == false)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// 是否可以播放动画(被冰住则动画停止)
         /// </summary>
         /// <param name="self"></param>

@@ -147,6 +147,23 @@ message ObjectGetResponse // IActorResponse
 	int64 InstanceId = 5;
 }
 
+//ResponseType ChkObjectListExistResponse
+message ChkObjectListExistRequest // IActorRequest
+{
+	int32 RpcId = 1;
+	int32 Type = 2;
+	repeated int64 KeyList = 3;
+	int64 SceneInstanceId = 4;
+}
+message ChkObjectListExistResponse // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 Type = 4;
+	repeated int64 NotExistKeyList = 5;
+}
+
 //ResponseType G2R_GetLoginKey
 message R2G_GetLoginKey // IActorRequest
 {
@@ -494,8 +511,9 @@ message R2M_CreateDynamicMap // IActorRequest
 	bytes RoomInfo = 2;
 	repeated bytes RoomMemberInfos = 3;
 	int32 ARMeshType = 4;
-	string ARMeshDownLoadUrl = 5;
-	bytes ARMeshBytes = 6;
+	string ARSceneId = 5;
+	string ARMeshDownLoadUrl = 6;
+	bytes ARMeshBytes = 7;
 }
 
 message M2R_CreateDynamicMap // IActorResponse
@@ -906,4 +924,19 @@ message M2G_InsertMailToCenter // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+//ResponseType M2G_ChkIsNewMailFromCenter
+message G2M_ChkIsNewMailFromCenter // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message M2G_ChkIsNewMailFromCenter // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 IsNew = 4;
 }

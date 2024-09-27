@@ -6,5 +6,6 @@ namespace ET.Client
     public class HealthBarComponent: Entity, IAwake, IDestroy, IUpdate
     {
         public bool isHome;
+        public bool isTower;
     }
 }

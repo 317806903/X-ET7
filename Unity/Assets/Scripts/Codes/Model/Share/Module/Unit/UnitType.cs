@@ -7,12 +7,13 @@ namespace ET
     {
         ObserverUnit = 0,
         PlayerUnit = 1,
-        ActorUnit = 2,
-        NPC = 3,
-        SceneObj = 4,
-        Bullet = 5,
-        Aoe = 6,
-        SceneEffect = 7,
+        CameraPlayerUnit = 2,
+        ActorUnit = 3,
+        NPC = 4,
+        SceneObj = 5,
+        Bullet = 6,
+        Aoe = 7,
+        SceneEffect = 8,
     }
 
 }

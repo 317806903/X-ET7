@@ -128,6 +128,9 @@ namespace ET.Client
 
             await GameJudgeChooseHelper.SendRecordGameJudgeChooseAsync(self.DomainScene(), GameJudgeChooseType.ClickComplain, msg);
 
+            string successMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Success");
+            UIManagerHelper.ShowTip(self.DomainScene(), successMsg);
+
             UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgGameJudgeChoose>();
         }
 
@@ -135,14 +138,14 @@ namespace ET.Client
         {
 	        if (value.Length < 1)
 	        {
-		        string tipMsg = "cannot be empty";
+		        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Empty");
 		        UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
 		        return;
 	        }
 
 	        if (value.Length > self.limitNum)
 	        {
-		        string tipMsg = "length exceeds limit";
+		        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Limit");
 		        UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
 		        return;
 	        }
@@ -155,7 +158,7 @@ namespace ET.Client
 		        string valueLimit = value.Substring(0, self.limitNum);
 		        self.View.E_InputFieldComplainTMP_InputField.SetTextWithoutNotify(valueLimit);
 
-		        string tipMsg = "length exceeds limit";
+		        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_key_CommonTip_Report_Limit");
 		        UIManagerHelper.ShowTip(self.DomainScene(), tipMsg);
 		        return;
 	        }

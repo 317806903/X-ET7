@@ -332,7 +332,8 @@ namespace ET.Client
         public static void ClickDiscord(this DlgGameModeArcade self)
         {
             self.TrackFunctionClicked("discord");
-            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(),"https://discord.gg/jnf2qabe9C");
+            string url = ChannelSettingComponent.Instance.GetDiscordURL();
+            ET.Client.UIManagerHelper.ShowUrl(self.DomainScene(), url);
         }
 
         public static async ETTask RefreshWhenBaseInfoChg(this DlgGameModeArcade self)

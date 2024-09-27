@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 1048147210570295550}
   - component: {fileID: 5926005458072621020}
   - component: {fileID: 5298495730038932508}
+  - component: {fileID: 6583122607066643750}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -505,6 +506,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6583122607066643750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032536898827113646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgMailSettlement/GiftsCollected/bg/Title
+  localizeType: 0
 --- !u!1 &6335832677214870284
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +803,7 @@ GameObject:
   - component: {fileID: 8313809602578280813}
   - component: {fileID: 5303364783253895333}
   - component: {fileID: 8292010085158012843}
+  - component: {fileID: 1651536377530741406}
   m_Layer: 5
   m_Name: Tips
   m_TagString: Untagged
@@ -912,3 +928,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1651536377530741406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708065330778833187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e5d2a0d3b86b4eb6a3437429277bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: DlgMailSettlement/GiftsCollected/bg/Tips
+  localizeType: 0

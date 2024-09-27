@@ -37,7 +37,7 @@ namespace ET.Client
 			FunctionMenuCfg functionMenuCfg = FunctionMenuCfgCategory.Instance.Get(self.functionMenuCfgId);
 			self.View.ELabel_Label1TextMeshProUGUI.text = functionMenuCfg.Name;
 			self.View.ELabel_Label2TextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_FunctionMenu_Unlocked");
-			await self.View.E_ImageImage.SetImageByPath(functionMenuCfg.Icon_Ref.ResName, true);
+			await self.View.E_ImageImage.SetImageByPath(self, functionMenuCfg.Icon_Ref.ResName, true);
 		}
 
 		public static void HideWindow(this DlgFunctionMenuOpenShow self)

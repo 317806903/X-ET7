@@ -59,14 +59,14 @@ namespace ET.Ability.Client
             Unit unit = self.GetParent<AudioPlayComponent>()?.GetParent<Unit>();
             if (unit == null)
             {
-                Log.Error($"ET.Ability.Client.AudioPlayObjSystem.Init unit == null");
+                Log.Error($"AudioPlayObjSystem.Init unit == null");
             }
             else
             {
-                GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
-                if (gameObjectComponent != null && gameObjectComponent.GetGo() != null)
+                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
+                if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
                 {
-                    Transform tran = gameObjectComponent.GetGo().transform;
+                    Transform tran = gameObjectShowComponent.GetGo().transform;
                     go.transform.SetParent(tran);
                     go.transform.localScale = UnityEngine.Vector3.one;
                     go.transform.localPosition = UnityEngine.Vector3.zero;
@@ -74,7 +74,7 @@ namespace ET.Ability.Client
                 }
                 else
                 {
-                    Log.Error($"ET.Ability.Client.AudioPlayObjSystem.Init gameObject == null");
+                    Log.Error($"AudioPlayObjSystem.Init gameObject == null");
                 }
             }
         }

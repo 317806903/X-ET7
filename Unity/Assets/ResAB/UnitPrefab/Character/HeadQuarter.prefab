@@ -3075,7 +3075,6 @@ GameObject:
   - component: {fileID: 33961339964175550}
   - component: {fileID: 23356032824291718}
   - component: {fileID: 8644747008858137053}
-  - component: {fileID: 449487770074011457}
   m_Layer: 0
   m_Name: Custle
   m_TagString: Untagged
@@ -3172,20 +3171,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8712905642630325470}
   m_Enabled: 1
---- !u!114 &449487770074011457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984149150762500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0eb9661dcb8ea4f8acb45586df32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalRenderers:
-  - {fileID: 23356032824291718}
 --- !u!1 &1989589974597350
 GameObject:
   m_ObjectHideFlags: 0

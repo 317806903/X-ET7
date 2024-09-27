@@ -66,12 +66,13 @@ namespace ET.Server
 					}
 				}
 
-				(ARMeshType _ARMeshType, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes) = roomManagerComponent.GetARMeshInfo(roomId);
+				(ARMeshType _ARMeshType, string _ARSceneId, string _ARMeshDownLoadUrl, byte[] _ARMeshBytes) = roomManagerComponent.GetARMeshInfo(roomId);
 				R2M_CreateDynamicMap _R2M_CreateDynamicMap = new ()
 				{
 					RoomInfo = roomInfo,
 					RoomMemberInfos = roomMemberInfos,
 					ARMeshType = (int)_ARMeshType,
+					ARSceneId = _ARSceneId,
 					ARMeshDownLoadUrl = _ARMeshDownLoadUrl,
 					ARMeshBytes = _ARMeshBytes,
 				};

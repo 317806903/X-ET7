@@ -56,54 +56,118 @@ namespace ET.Ability
         {
             self.moveTweenCfgId = moveTweenCfgId;
 
-            self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, self.moveTweenType.HoldTime) * 1000);
-            self.unitId = unitId;
-            self.speed = self.moveTweenType.Speed;
-            self.forward = selectHandle.direction;
             self.isNeedChkHoldTime = true;
             self.startPosition = self.GetUnit().Position;
             self.lastPosition = self.GetUnit().Position;
 
             if (self.moveTweenType is StayMoveTweenType stayMoveTweenType)
             {
+                float3 newPosition = selectHandle.position;
+                float3 newForward = selectHandle.direction;
+                self.SetUnitPos(newPosition);
+                self.startPosition = self.GetUnit().Position;
+                self.lastPosition = self.GetUnit().Position;
+                if (stayMoveTweenType.KeepHorizontal)
+                {
+                    if (newForward.Equals(float3.zero) == false)
+                    {
+                        newForward.y = 0;
+                        self.SetUnitForward(newForward);
+                    }
+                    else
+                    {
+                        float3 forward = self.GetUnit().Forward;
+                        forward.y = 0;
+                        self.SetUnitForward(forward);
+                    }
+                }
+                else
+                {
+                    if (newForward.Equals(float3.zero) == false)
+                    {
+                        self.SetUnitForward(newForward);
+                    }
+                }
             }
             else if (self.moveTweenType is StayOnGroundMoveTweenType stayOnGroundMoveTweenType)
             {
+                float3 newPosition = selectHandle.position;
+                float3 newForward = selectHandle.direction;
+                self.SetUnitPos(newPosition);
+                self.startPosition = self.GetUnit().Position;
+                self.lastPosition = self.GetUnit().Position;
                 float3 hitNavmeshPos = ET.RecastHelper.GetHitNavmeshPos(self.DomainScene(), self.GetUnit().Position);
                 if (hitNavmeshPos.Equals(float3.zero) == false)
                 {
                     self.SetUnitPos(hitNavmeshPos);
-                    self.startPosition = hitNavmeshPos;
-                    self.lastPosition = hitNavmeshPos;
+                    self.startPosition = self.GetUnit().Position;
+                    self.lastPosition = self.GetUnit().Position;
+                }
+                if (stayOnGroundMoveTweenType.KeepHorizontal)
+                {
+                    if (newForward.Equals(float3.zero) == false)
+                    {
+                        newForward.y = 0;
+                        self.SetUnitForward(newForward);
+                    }
+                    else
+                    {
+                        float3 forward = self.GetUnit().Forward;
+                        forward.y = 0;
+                        self.SetUnitForward(forward);
+                    }
+                }
+                else
+                {
+                    if (newForward.Equals(float3.zero) == false)
+                    {
+                        self.SetUnitForward(newForward);
+                    }
                 }
             }
-            else if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+            else if (self.moveTweenType is SpeedMoveTweenType speedMoveTweenType)
             {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is TargetLimitTimeMoveTweenType targetLimitTimeMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
-            }
-            else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
-            {
-                self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                if (selectHandle.direction.Equals(float3.zero))
+                {
+                    self.forward = self.GetUnit().Forward;
+                }
+                else
+                {
+                    self.forward = selectHandle.direction;
+                    self.SetUnitForward(self.forward);
+                }
+
+                self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, speedMoveTweenType.HoldTime) * 1000);
+                self.speed = speedMoveTweenType.Speed;
+
+                if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is AroundMoveTweenType aroundMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is TargetLimitTimeMoveTweenType targetLimitTimeMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
+                else if (self.moveTweenType is ParabolaMoveTweenType parabolaMoveTweenType)
+                {
+                    self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
+                }
             }
         }
 
@@ -142,9 +206,16 @@ namespace ET.Ability
         public static void ChgSelectHandle(this MoveTweenObj self, SelectHandle selectHandle)
         {
             self.timeElapsed = 0;
-            if (self.isNeedChkHoldTime)
+            if (self.moveTweenType is SpeedMoveTweenType speedMoveTweenType)
             {
-                self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, self.moveTweenType.HoldTime) * 1000);
+                if (self.isNeedChkHoldTime)
+                {
+                    self.startTime = TimeHelper.ServerNow() + (long)(math.max(0, speedMoveTweenType.HoldTime) * 1000);
+                }
+                else
+                {
+                    self.startTime = TimeHelper.ServerNow();
+                }
             }
             else
             {
@@ -401,7 +472,7 @@ namespace ET.Ability
             Unit unit = self.GetUnit();
 
             float3 pos = unit.Position + math.normalize(self.forward) * self.speed * fixedDeltaTime;
-            self.SetUnitForward(self.forward);
+            //self.SetUnitForward(self.forward);
             self.SetUnitPos(pos);
         }
 

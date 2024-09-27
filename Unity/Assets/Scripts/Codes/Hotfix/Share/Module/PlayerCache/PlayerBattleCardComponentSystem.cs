@@ -51,6 +51,11 @@ namespace ET
             bool isNeedChg = false;
             if (self.itemCfgIdList.Count < GlobalSettingCfgCategory.Instance.MaxBattleCardNum)
             {
+                using HashSetComponent<string> itemCfgIdHashSet = HashSetComponent<string>.Create();
+                foreach (string itemCfgId in self.itemCfgIdList)
+                {
+                    itemCfgIdHashSet.Add(itemCfgId);
+                }
                 foreach (ItemComponent itemComponent in itemList)
                 {
                     if (ET.ItemHelper.ChkIsTower(itemComponent.CfgId) == false)
@@ -58,7 +63,7 @@ namespace ET
                         continue;
                     }
 
-                    if (self.itemCfgIdList.Contains(itemComponent.CfgId))
+                    if (itemCfgIdHashSet.Contains(itemComponent.CfgId))
                     {
                         continue;
                     }

@@ -7,7 +7,7 @@ namespace ET.Server
 	{
 		protected override async ETTask Run(Unit observerUnit, C2M_TestRobotCase request, M2C_TestRobotCase response)
 		{
-			Unit playerUnit = ET.GamePlayHelper.GetPlayerUnit(observerUnit);
+			//Unit playerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
 
 			response.N = request.N;
 			await ETTask.CompletedTask;

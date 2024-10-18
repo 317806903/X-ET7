@@ -1,17 +1,18 @@
 using System;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Detour.Extras.Jumplink
 {
-    public class ClimbTrajectory : Trajectory
+    public class ClimbTrajectory : ITrajectory
     {
-        public override RcVec3f Apply(RcVec3f start, RcVec3f end, float u)
+        public RcVec3f Apply(RcVec3f start, RcVec3f end, float u)
         {
             return new RcVec3f()
             {
-                x = Lerp(start.x, end.x, Math.Min(2f * u, 1f)),
-                y = Lerp(start.y, end.y, Math.Max(0f, 2f * u - 1f)),
-                z = Lerp(start.z, end.z, Math.Min(2f * u, 1f))
+                X = RcMath.Lerp(start.X, end.X, Math.Min(2f * u, 1f)),
+                Y = RcMath.Lerp(start.Y, end.Y, Math.Max(0f, 2f * u - 1f)),
+                Z = RcMath.Lerp(start.Z, end.Z, Math.Min(2f * u, 1f))
             };
         }
     }

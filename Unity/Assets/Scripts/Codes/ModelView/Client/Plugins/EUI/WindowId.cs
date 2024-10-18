@@ -68,7 +68,9 @@ namespace ET.Client
 		WindowID_TutorialOne,
 		WindowID_LanguageChoose,
 		WindowID_BattleTowerNotice,
-		WindowID_BattleSkill,
+		WindowID_CameraPlayerSkill,
 		WindowID_SkillDetails,
+		WindowID_BattlePlayerSkill,
+		WindowID_BattleCameraPlayerSkill,
 	}
 }

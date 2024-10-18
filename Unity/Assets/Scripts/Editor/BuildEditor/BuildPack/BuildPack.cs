@@ -16,6 +16,7 @@ namespace ET
         InNet148Master,
         InNet148Release,
         InNetZpb,
+        InNetUSDebug,
         OutNet_Benchmark,
         OutNet_Arcade,
         OutNet_CN,
@@ -48,7 +49,7 @@ namespace ET
         private static string lastProductName;
         private static string lastPackageName;
 
-        [MenuItem("Pack/BuildPack_Android_Local", false, 300)]
+        [MenuItem("Pack/Dev/BuildPack_Android_Local", false, 300)]
         public static async ETTask BuildPack_Android_Local()
         {
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_Local", null))
@@ -108,7 +109,7 @@ namespace ET
             });
         }
 
-        [MenuItem("Pack/BuildPack_Android_InNetZpb", false, 302)]
+        [MenuItem("Pack/Dev/BuildPack_Android_InNetZpb", false, 302)]
         public static async ETTask BuildPack_Android_InNetZpb()
         {
             if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNetZpb", null))
@@ -120,6 +121,21 @@ namespace ET
             ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNetZpb", () =>
             {
                 BuildPackInternal(buildTarget, PackName.InNetZpb).Coroutine();
+            });
+        }
+
+        [MenuItem("Pack/Dev/BuildPack_Android_InNetUSDebug", false, 302)]
+        public static async ETTask BuildPack_Android_InNetUSDebug()
+        {
+            if (ET.BuildAssetBundle.ChkIsEnableCodes(typeof(BuildPack), "BuildPack_Android_InNetUSDebug", null))
+            {
+                return;
+            }
+
+            BuildTarget buildTarget = BuildTarget.Android;
+            ET.BuildAssetBundle.ChkTarget(buildTarget, $"BuildPack_Android_InNetUSDebug", () =>
+            {
+                BuildPackInternal(buildTarget, PackName.InNetUSDebug).Coroutine();
             });
         }
 
@@ -688,7 +704,23 @@ namespace ET
                 productName = $"Zpb_RealityGuard";
                 packageName = $"com.dm.ARGameInNetZpb";
                 //EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Debugging;
-
+            }
+            else if(packName == PackName.InNetUSDebug)
+            {
+                if (buildTarget == BuildTarget.Android)
+                {
+                    ResConfig.Instance.Channel = "9998";
+                }
+                else if (buildTarget == BuildTarget.iOS)
+                {
+                    ResConfig.Instance.Channel = "9998";
+                }
+                ResConfig.Instance.ResLoadMode = EPlayMode.OfflinePlayMode;
+                ResConfig.Instance.IsShowDebugMode = true;
+                ResConfig.Instance.IsShowEditorLoginMode = true;
+                productName = $"UsDebug_RealityGuard";
+                packageName = $"com.dm.ARGameInNetUsDebug";
+                //EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Debugging;
             }
             else if (packName == PackName.OutNet_Benchmark)
             {
@@ -946,6 +978,7 @@ namespace ET
             string appName = PlayerSettings.applicationIdentifier["com.dm.".Length..];
 
             string packFileName = $"{appName}_{GetBuildPackageVersion()}_{GetBuildVersionCode()}";
+            Log.Debug($"================={packFileName}");
             (bool bRet, string packFullPath) = BuildHelper.Build(buildTarget, buildOptions, packFileName);
             if (bRet)
             {

@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -21,12 +21,11 @@ freely, subject to the following restrictions:
 using System;
 using System.Collections.Generic;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 
 namespace DotRecast.Detour.Crowd
 {
-    using static RcMath;
-
     public class DtLocalBoundary
     {
         public const int MAX_LOCAL_SEGS = 8;
@@ -38,12 +37,12 @@ namespace DotRecast.Detour.Crowd
 
         public DtLocalBoundary()
         {
-            m_center.x = m_center.y = m_center.z = float.MaxValue;
+            m_center.X = m_center.Y = m_center.Z = float.MaxValue;
         }
 
         public void Reset()
         {
-            m_center.x = m_center.y = m_center.z = float.MaxValue;
+            m_center.X = m_center.Y = m_center.Z = float.MaxValue;
             m_polys.Clear();
             m_segs.Clear();
         }
@@ -54,7 +53,7 @@ namespace DotRecast.Detour.Crowd
             DtSegment seg = new DtSegment();
             seg.s[0] = s.vmin;
             seg.s[1] = s.vmax;
-            //Array.Copy(s, seg.s, 6);
+            //RcArrays.Copy(s, seg.s, 6);
             seg.d = dist;
             if (0 == m_segs.Count)
             {
@@ -92,6 +91,8 @@ namespace DotRecast.Detour.Crowd
 
         public void Update(long startRef, RcVec3f pos, float collisionQueryRange, DtNavMeshQuery navquery, IDtQueryFilter filter)
         {
+            const int MAX_SEGS_PER_POLY = DtDetour.DT_VERTS_PER_POLYGON * 3;
+
             if (startRef == 0)
             {
                 Reset();
@@ -106,24 +107,23 @@ namespace DotRecast.Detour.Crowd
             {
                 // Secondly, store all polygon edges.
                 m_segs.Clear();
+                Span<RcSegmentVert> segs = stackalloc RcSegmentVert[MAX_SEGS_PER_POLY];
+                int nsegs = 0;
 
-                var segmentVerts = new List<RcSegmentVert>();
-                var segmentRefs = new List<long>();
-                
                 for (int j = 0; j < m_polys.Count; ++j)
                 {
-                    var result = navquery.GetPolyWallSegments(m_polys[j], false, filter, ref segmentVerts, ref segmentRefs);
+                    var result = navquery.GetPolyWallSegments(m_polys[j], filter, segs, null, ref nsegs, MAX_SEGS_PER_POLY);
                     if (result.Succeeded())
                     {
-                        for (int k = 0; k < segmentRefs.Count; ++k)
+                        for (int k = 0; k < nsegs; ++k)
                         {
-                            RcSegmentVert s = segmentVerts[k];
+                            ref RcSegmentVert s = ref segs[k];
                             var s0 = s.vmin;
                             var s3 = s.vmax;
 
                             // Skip too distant segments.
                             var distSqr = DtUtils.DistancePtSegSqr2D(pos, s0, s3, out var tseg);
-                            if (distSqr > Sqr(collisionQueryRange))
+                            if (distSqr > RcMath.Sqr(collisionQueryRange))
                             {
                                 continue;
                             }

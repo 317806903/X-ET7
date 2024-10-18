@@ -19,7 +19,7 @@ namespace UnityEngine.UI
             {
                 size += LayoutUtility.GetPreferredHeight(item);
             }
-            size *= m_Content.localScale.y;
+            size *= m_Content.localScale.y * this.prefabSource.prefabScale;
             return size;
         }
 
@@ -27,7 +27,7 @@ namespace UnityEngine.UI
         {
             return vector.y;
         }
-        
+
         protected override float GetAbsDimension(Vector2 vector)
         {
             return vector.y;

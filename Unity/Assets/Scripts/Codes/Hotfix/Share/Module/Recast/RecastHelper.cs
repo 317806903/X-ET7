@@ -84,6 +84,13 @@ namespace ET
             return navmeshManagerComponent.GetMeshHeightOnPoint(pos + new float3(0, height, 0));
         }
 
+        public static NavmeshManagerComponent.NavMeshData GetNavMesh(Scene scene, float3 startPos)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
+            NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
+            return navmeshManagerComponent.GetNavMeshData(startPos);
+        }
+
         public static List<float3> GetSegmentPoints(Scene scene, float3 rayStartIn, float3 rayEndIn)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);

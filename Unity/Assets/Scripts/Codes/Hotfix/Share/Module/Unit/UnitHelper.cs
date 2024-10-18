@@ -735,19 +735,35 @@ namespace ET.Ability
         {
             EffectNodeName nodeName = EffectNodeName.Self;
             Vector3 offSetPosition = Vector3.Zero;
-            Vector3 relateForward = Vector3.Zero;
+            Vector3 relateRotation = Vector3.Zero;
             if (offSetInfo != null)
             {
                 nodeName = offSetInfo.NodeName;
                 offSetPosition = offSetInfo.OffSetPosition;
-                relateForward = offSetInfo.RelateForward;
+                relateRotation = offSetInfo.RelateRotation;
+                if (offSetInfo.KeepHorizontal)
+                {
+                    relateRotation.X = 0;
+                    relateRotation.Z = 0;
+                }
             }
 
             float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             offSetPos *= Ability.UnitHelper.GetResScale(unit);
             var t1 = math.rotate(unit.Rotation, offSetPos);
             float3 newPosition = unit.Position + t1;
-            float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
+
+            float3 newForward = unit.Forward;
+            float3 relateRotationFloat3 = new float3(relateRotation.X, relateRotation.Y, relateRotation.Z);
+            if (relateRotationFloat3.Equals(float3.zero) == false)
+            {
+                // 创建四元数表示旋转（绕 Y 轴旋转）
+                quaternion rotation = quaternion.Euler(math.radians(relateRotationFloat3));
+
+                // 使用四元数旋转 float3 向量
+                newForward = math.mul(rotation, newForward);
+            }
+
             return (newPosition, newForward);
         }
 
@@ -755,19 +771,35 @@ namespace ET.Ability
         {
             EffectNodeName nodeName = EffectNodeName.Self;
             Vector3 offSetPosition = Vector3.Zero;
-            Vector3 relateForward = Vector3.Zero;
+            Vector3 relateRotation = Vector3.Zero;
             if (offSetInfo != null)
             {
                 nodeName = offSetInfo.NodeName;
                 offSetPosition = offSetInfo.OffSetPosition;
-                relateForward = offSetInfo.RelateForward;
+                relateRotation = offSetInfo.RelateRotation;
+                if (offSetInfo.KeepHorizontal)
+                {
+                    relateRotation.X = 0;
+                    relateRotation.Z = 0;
+                }
             }
 
             float3 offSetPos = new float3(offSetPosition.X, offSetPosition.Y, offSetPosition.Z);
             offSetPos *= Ability.UnitHelper.GetResScale(unit);
             var t1 = math.rotate(unit.Rotation, offSetPos);
             float3 newPosition = resetPos + t1;
-            float3 newForward = unit.Forward + new float3(relateForward.X, relateForward.Y, relateForward.Z);
+
+            float3 newForward = unit.Forward;
+            float3 relateRotationFloat3 = new float3(relateRotation.X, relateRotation.Y, relateRotation.Z);
+            if (relateRotationFloat3.Equals(float3.zero) == false)
+            {
+                // 创建四元数表示旋转（绕 Y 轴旋转）
+                quaternion rotation = quaternion.Euler(math.radians(relateRotationFloat3));
+
+                // 使用四元数旋转 float3 向量
+                newForward = math.mul(rotation, newForward);
+            }
+
             return (newPosition, newForward);
         }
 
@@ -997,7 +1029,7 @@ namespace ET.Ability
             unit.Position = resetPos;
             if (resetForward.Equals(float3.zero) == false)
             {
-                unit.Forward = resetForward;
+                unit.Forward = math.normalize(resetForward);
             }
 
             ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();

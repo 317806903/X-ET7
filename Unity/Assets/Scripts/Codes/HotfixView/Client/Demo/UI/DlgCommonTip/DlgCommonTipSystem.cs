@@ -86,7 +86,10 @@ namespace ET.Client
 			GameObject.Destroy(go);
 			if (self.tipShowGoList.Count == 0 && self.tips.Count == 0)
 			{
-				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTip>();
+				if (self.IsDisposed == false)
+				{
+					UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTip>();
+				}
 			}
 		}
 	}

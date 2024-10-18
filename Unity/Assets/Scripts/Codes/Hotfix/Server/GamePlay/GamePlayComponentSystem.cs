@@ -70,7 +70,7 @@ namespace ET.Server
 
         public static void FixedUpdate(this GamePlayComponent self, float fixedDeltaTime)
         {
-            self.ChkNeedNoticeClient();
+            self.ChkNeedNoticeClient().Coroutine();
 
             if (++self.curFrameChk >= self.waitFrameChk)
             {
@@ -143,8 +143,85 @@ namespace ET.Server
             self.waitNoticeGamePlayStatisticalToClientList.Add(playerId);
         }
 
-        public static void ChkNeedNoticeClient(this GamePlayComponent self)
+        public static async ETTask<bool> ChkPlayerConnected(this GamePlayComponent self)
         {
+            if (self.waitNoticeGamePlayToClientList.Count > 0)
+            {
+                if (self.isChkPlayerConnect)
+                {
+                    return false;
+                }
+
+                if (self.isFirstSendGamePlayToClient == false)
+                {
+                    self.isChkPlayerConnect = true;
+                    foreach (long playerId in self.waitNoticeGamePlayToClientList)
+                    {
+                        bool bRet = await ET.Server.MessageHelper.ChkPlayerConnected(playerId);
+                        if (bRet == false)
+                        {
+                            return false;
+                        }
+                    }
+
+                    self.isChkPlayerConnect = false;
+                }
+            }
+            if (self.waitNoticeGamePlayPlayerListToClientList.Count > 0)
+            {
+                if (self.isChkPlayerConnect)
+                {
+                    return false;
+                }
+
+                if (self.isFirstSendGamePlayPlayerListToClient == false)
+                {
+                    self.isChkPlayerConnect = true;
+                    foreach (long playerId in self.waitNoticeGamePlayPlayerListToClientList)
+                    {
+                        bool bRet = await ET.Server.MessageHelper.ChkPlayerConnected(playerId);
+                        if (bRet == false)
+                        {
+                            return false;
+                        }
+                    }
+
+                    self.isChkPlayerConnect = false;
+                }
+            }
+            if (self.waitNoticeGamePlayModeToClientList.Count > 0)
+            {
+                if (self.isChkPlayerConnect)
+                {
+                    return false;
+                }
+
+                if (self.isFirstSendGamePlayModeToClient == false)
+                {
+                    self.isChkPlayerConnect = true;
+                    foreach (long playerId in self.waitNoticeGamePlayModeToClientList)
+                    {
+                        bool bRet = await ET.Server.MessageHelper.ChkPlayerConnected(playerId);
+                        if (bRet == false)
+                        {
+                            return false;
+                        }
+                    }
+
+                    self.isChkPlayerConnect = false;
+                }
+            }
+            return true;
+        }
+
+        public static async ETTask ChkNeedNoticeClient(this GamePlayComponent self)
+        {
+            bool bRet = await self.ChkPlayerConnected();
+            if (bRet == false)
+            {
+                return;
+            }
+
             while (self.waitNoticeGamePlayToClientList.Count > 0)
             {
                 try

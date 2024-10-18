@@ -419,6 +419,21 @@ message M2C_BuySkillEnergy // IActorLocationResponse
 	string Message = 3;
 }
 
+//ResponseType M2C_RestoreSkillEnergy
+message C2M_RestoreSkillEnergy // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	string SkillCfgId = 2;
+	int64 unitId = 3;
+}
+
+message M2C_RestoreSkillEnergy // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType G2C_LearnPlayerSkill
 message C2G_LearnPlayerSkill // IRequest
 {
@@ -992,6 +1007,22 @@ message M2C_GetMonsterCall2HeadQuarterPath // IActorLocationResponse
 	string Message = 3;
 	Unity.Mathematics.float3 Position = 4;
 	repeated Unity.Mathematics.float3 Points = 5;
+}
+
+//ResponseType M2C_GetNavMeshFromHeadQuarter
+message C2M_GetNavMeshFromHeadQuarter // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int32 HomeTeamFlagType = 2;
+}
+
+message M2C_GetNavMeshFromHeadQuarter // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated Unity.Mathematics.float3 Vertices = 4;
+	repeated int32 Indices = 5;
 }
 
 //ResponseType M2C_ChkRay

@@ -9,14 +9,18 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Session session, M2C_GamePlayCoinChgNotice message)
 		{
-			//Log.Debug($"M2C_GamePlayCoinChgNotice 11");
+			//Log.Debug($"zpb M2C_GamePlayCoinChgNotice 11");
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
-			// while (currentScene == null || currentScene.IsDisposed)
-			// {
-			// 	await TimerComponent.Instance.WaitFrameAsync();
-			// 	currentScene = session.DomainScene().CurrentScene();
-			// }
+			while (currentScene == null || currentScene.IsDisposed)
+			{
+				await TimerComponent.Instance.WaitFrameAsync();
+				if (clientScene.IsDisposed)
+				{
+					return;
+				}
+				currentScene = session.DomainScene().CurrentScene();
+			}
 			if (currentScene == null || currentScene.IsDisposed)
 			{
 				return;
@@ -26,6 +30,10 @@ namespace ET.Client
 			while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (currentScene.IsDisposed)
+				{
+					return;
+				}
 				gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 			}
 
@@ -41,7 +49,9 @@ namespace ET.Client
 			}
 
 			Entity component = MongoHelper.Deserialize<Entity>(message.GamePlayPlayerListComponent);
+			//Log.Error($"---zpb List 111 {gamePlayPlayerListComponent}");
 			gamePlayComponent.AddComponent(component);
+			//Log.Error($"---zpb List 222 {component}");
 
 			if (getCoinType == GetCoinType.Normal)
 			{
@@ -85,7 +95,7 @@ namespace ET.Client
 				EventSystem.Instance.Publish(clientScene, _GamePlayCoinChg);
 			}
 
-			//Log.Debug($"M2C_GamePlayCoinChgNotice end");
+			//Log.Debug($"zpb M2C_GamePlayCoinChgNotice end");
 			await ETTask.CompletedTask;
 		}
 	}

@@ -321,5 +321,14 @@ namespace ET
             public string tutorialCfgId;
         }
 
+        public struct NoticeGamePlayTowerDefenseStatusWhenClient
+        {
+            public GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus;
+        }
+
+        public struct NoticeGamePlayPKStatusWhenClient
+        {
+        }
+
     }
 }

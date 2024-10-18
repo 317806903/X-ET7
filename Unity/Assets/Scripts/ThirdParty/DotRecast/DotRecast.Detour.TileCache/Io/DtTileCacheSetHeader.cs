@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -20,7 +20,7 @@ freely, subject to the following restrictions:
 
 namespace DotRecast.Detour.TileCache.Io
 {
-    public class DtTileCacheSetHeader
+    public struct DtTileCacheSetHeader
     {
         public const int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; // 'TSET';
         public const int TILECACHESET_VERSION = 1;
@@ -29,7 +29,7 @@ namespace DotRecast.Detour.TileCache.Io
         public int magic;
         public int version;
         public int numTiles;
-        public DtNavMeshParams meshParams = new DtNavMeshParams();
-        public DtTileCacheParams cacheParams = new DtTileCacheParams();
+        public DtNavMeshParams meshParams;
+        public DtTileCacheParams cacheParams;
     }
 }

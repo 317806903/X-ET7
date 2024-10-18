@@ -390,6 +390,24 @@ namespace ET.Client
                 }
             }
 
+            PlayerBaseInfoComponent playerBaseInfoComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
+            if (playerBaseInfoComponent.isFinishTutorialFirst == false)
+            {
+                if (isRelogin == false)
+                {
+                    if (playerStatus == PlayerStatus.Room)
+                    {
+                        await RoomHelper.QuitRoomAsync(scene);
+                    }
+                    else if (playerStatus == PlayerStatus.Battle)
+                    {
+                        await RoomHelper.MemberQuitBattleAsync(scene);
+                    }
+                    await UIManagerHelper.EnterGameModeUI(scene);
+                    return;
+                }
+            }
+
             if (playerStatus == PlayerStatus.Hall)
             {
                 //AR战斗自行退出 会进到这里

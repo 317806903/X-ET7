@@ -13,7 +13,7 @@ namespace ET.Ability
 		public MultiMapSimple<SkillSlotType, long> skillSlotTypeNone2SkillObjs;
 		[BsonIgnore]
 		public Dictionary<SkillGroupType, long> skillGroupType2SkillObjs;
-		[BsonIgnore]
+
 		public Dictionary<string, long> skillCfgId2SkillObjs;
 		[BsonIgnore]
 		public Dictionary<long, SkillSlotType> skillObjs2SkillSlotType;

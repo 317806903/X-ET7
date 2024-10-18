@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -34,8 +35,7 @@ namespace DotRecast.Detour.Extras
                 {
                     for (int v = 0; v < tile.data.header.vertCount; v++)
                     {
-                        fw.Write("v " + tile.data.verts[v * 3] + " " + tile.data.verts[v * 3 + 1] + " "
-                                 + tile.data.verts[v * 3 + 2] + "\n");
+                        fw.Write("v " + tile.data.verts[v * 3] + " " + tile.data.verts[v * 3 + 1] + " " + tile.data.verts[v * 3 + 2] + "\n");
                     }
                 }
             }

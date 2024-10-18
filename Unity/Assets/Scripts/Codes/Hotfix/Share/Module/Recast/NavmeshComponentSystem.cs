@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using DotRecast.Core;
+using DotRecast.Core.Numerics;
 using DotRecast.Detour;
 using DotRecast.Detour.Crowd;
-using DotRecast.Detour.Io;
-using DotRecast.Recast;
-using DotRecast.Recast.Toolset;
 using DotRecast.Recast.Toolset.Builder;
-using DotRecast.Recast.Toolset.Geom;
 using Unity.Mathematics;
 
 namespace ET
@@ -135,17 +128,17 @@ namespace ET
 
         public static float3 GetAgentTargetPos(this NavmeshComponent self, DtCrowdAgent ag)
         {
-            return new float3(-ag.targetPos.x, ag.targetPos.y, ag.targetPos.z);
+            return new float3(-ag.targetPos.X, ag.targetPos.Y, ag.targetPos.Z);
         }
 
         public static float3 GetAgentPos(this NavmeshComponent self, DtCrowdAgent ag)
         {
-            return new float3(-ag.npos.x, ag.npos.y, ag.npos.z);
+            return new float3(-ag.npos.X, ag.npos.Y, ag.npos.Z);
         }
 
         public static float3 GetAgentForward(this NavmeshComponent self, DtCrowdAgent ag)
         {
-            return new float3(-ag.vel.x, ag.vel.y, ag.vel.z);
+            return new float3(-ag.vel.X, ag.vel.Y, ag.vel.Z);
         }
 
         public static void DisableAgent(this NavmeshComponent self, DtCrowdAgent ag)
@@ -215,7 +208,7 @@ namespace ET
             {
                 return false;
             }
-            return ag.corners.Count > 0;
+            return ag.corners.Length > 0;
         }
 
         public static bool ChkIsNeedChgFace(this NavmeshComponent self, DtCrowdAgent ag)
@@ -341,9 +334,12 @@ namespace ET
                     // {
                     //     navquery.ClosestPointOnPoly(pathList[npolys - 1], endNearestPt, epos1, 0);
                     // }
-                    using ListComponent<StraightPathItem> straightPathTmp = ListComponent<StraightPathItem>.Create();
-                    List<StraightPathItem> straightPath = straightPathTmp;
-                    var result = navquery.FindStraightPath(startNearPos, targetNearPos, pathList, ref straightPath, 100, DtNavMeshQuery.DT_STRAIGHTPATH_ALL_CROSSINGS);
+                    // using ListComponent<DtStraightPath> straightPathTmp = ListComponent<DtStraightPath>.Create();
+                    // List<DtStraightPath> straightPath = straightPathTmp;
+                    int maxPath = 256;
+                    Span<DtStraightPath> straightPath = stackalloc DtStraightPath[maxPath];
+                    var result = navquery.FindStraightPath(startNearPos, targetNearPos, pathList, pathList.Count, straightPath, out var straightPathCount, maxPath, 
+                        DtStraightPathOptions.DT_STRAIGHTPATH_ALL_CROSSINGS);
                     if (result.Failed())
                     {
                         return null;
@@ -352,10 +348,10 @@ namespace ET
                     List<float3> arrivePath = self.arrivePath;
                     arrivePath.Clear();
 
-                    for (int i = 0; i < straightPath.Count; i++)
+                    for (int i = 0; i < straightPathCount; i++)
                     {
                         RcVec3f pos = straightPath[i].pos;
-                        float3 pos2 = new float3(-pos.x, pos.y, pos.z);
+                        float3 pos2 = new float3(-pos.X, pos.Y, pos.Z);
                         arrivePath.Add(pos2);
                     }
 
@@ -444,7 +440,7 @@ namespace ET
             nearestRefOut = nearestRef;
             nearestPtOut = nearestPt;
 
-            nearestPos = new float3(-nearestPt.x, nearestPt.y, nearestPt.z);
+            nearestPos = new float3(-nearestPt.X, nearestPt.Y, nearestPt.Z);
             self.RecordNearestPos(x, y, z, nearestPos, nearestRef);
 
             return nearestPos;
@@ -481,27 +477,27 @@ namespace ET
             int updateFlags = 0;
             //if (toolParams.m_anticipateTurns)
             {
-                updateFlags |= DtCrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS;
+                updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_ANTICIPATE_TURNS;
             }
 
             //if (toolParams.m_optimizeVis)
             {
-                updateFlags |= DtCrowdAgentParams.DT_CROWD_OPTIMIZE_VIS;
+                updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OPTIMIZE_VIS;
             }
 
             //if (toolParams.m_optimizeTopo)
             {
-                updateFlags |= DtCrowdAgentParams.DT_CROWD_OPTIMIZE_TOPO;
+                updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OPTIMIZE_TOPO;
             }
 
             //if (toolParams.m_obstacleAvoidance)
             {
-                updateFlags |= DtCrowdAgentParams.DT_CROWD_OBSTACLE_AVOIDANCE;
+                updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OBSTACLE_AVOIDANCE;
             }
 
             //if (toolParams.m_separation)
             {
-                updateFlags |= DtCrowdAgentParams.DT_CROWD_SEPARATION;
+                updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_SEPARATION;
             }
 
             return updateFlags;

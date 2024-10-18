@@ -12,6 +12,10 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, EventType.AfterUnitCreate args)
         {
             Unit unit = args.Unit;
+            if (unit == null || unit.IsDisposed)
+            {
+                return;
+            }
 
             GameObjectComponent gameObjectComponent = unit.GetComponent<GameObjectComponent>();
             if (gameObjectComponent != null)
@@ -19,6 +23,10 @@ namespace ET.Client
                 unit.RemoveComponent<GameObjectShowComponent>();
                 GameObjectShowComponent gameObjectShowComponent = unit.AddComponent<GameObjectShowComponent>();
                 await gameObjectShowComponent.Init();
+                if (unit.IsDisposed)
+                {
+                    return;
+                }
             }
 
             if (Ability.UnitHelper.ChkIsPlayer(unit)
@@ -27,7 +35,12 @@ namespace ET.Client
                 unit.RemoveComponent<HealthBarComponent>();
                 HealthBarComponent healthBarComponent = unit.AddComponent<HealthBarComponent>();
                 await healthBarComponent.Init();
+                if (unit.IsDisposed)
+                {
+                    return;
+                }
             }
+
             TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
             if (towerComponent != null)
             {
@@ -39,6 +52,7 @@ namespace ET.Client
                 TowerStarBarComponent towerStarBarComponent = unit.AddComponent<TowerStarBarComponent>();
                 towerStarBarComponent.Init(towerComponent);
             }
+
             PlayerUnitComponent playerUnitComponent = unit.GetComponent<PlayerUnitComponent>();
             if (playerUnitComponent != null)
             {

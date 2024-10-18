@@ -152,10 +152,10 @@ namespace ET.Client
                 string tutorialCfgId = self.tutorialCfgList[self.videoIndex].Id;
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {
-                    eventName = "ViedoFinished",
+                    eventName = "VideoFinished",
                     properties = new()
                     {
-                        {"viedo_id", tutorialCfgId},
+                        {"video_id", tutorialCfgId},
                     }
                 });
             };
@@ -214,10 +214,10 @@ namespace ET.Client
             string tutorialCfgId = self.tutorialCfgList[self.videoIndex].Id;
             EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
             {
-                eventName = "ViedoPlayed",
+                eventName = "VideoPlayed",
                 properties = new()
                 {
-                    {"viedo_id", tutorialCfgId},
+                    {"video_id", tutorialCfgId},
                 }
             });
 

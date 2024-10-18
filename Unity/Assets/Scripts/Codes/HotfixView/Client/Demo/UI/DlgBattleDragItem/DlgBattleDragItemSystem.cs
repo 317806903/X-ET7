@@ -146,6 +146,7 @@ namespace ET.Client
 
 		public static async ETTask _Update2(this DlgBattleDragItem self)
 		{
+            NavMeshRendererComponent.Instance.ShowMesh(false);
             if (self.currentPlaceObj == null)
             {
                 self.InitPrefab();
@@ -161,12 +162,17 @@ namespace ET.Client
             {
                 if (self.isDragging)
                 {
-                    ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), true);
+                    ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), ARSessionComponent.ArMeshVisibility.Visible);
                 }
+            }
+            else if (self.battleDragItemType == BattleDragItemType.MonsterCall)
+            {
+                ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), ARSessionComponent.ArMeshVisibility.ColliderOnly);
+                NavMeshRendererComponent.Instance.ShowMesh(true);
             }
             else
             {
-                ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), true);
+                ARSessionHelper.ShowARMesh(self.DomainScene(), ARSessionComponent.ArMeshVisibility.Visible);
             }
 
             if (self.CheckUserInput())
@@ -1200,19 +1206,20 @@ namespace ET.Client
 
         public static async ETTask<(bool, float3)> ChkIsFirstPutOwnTower(this DlgBattleDragItem self)
         {
-            if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true) == false)
-            {
-                return (false, float3.zero);
-            }
-
-            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent == null)
-            {
-                return (false, float3.zero);
-            }
-
-            float3 midPos = gamePlayTowerDefenseComponent.GetPathMidPos();
-            return (true, midPos);
+            return (false, float3.zero);
+            // if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true) == false)
+            // {
+            //     return (false, float3.zero);
+            // }
+            //
+            // GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
+            // if (gamePlayTowerDefenseComponent == null)
+            // {
+            //     return (false, float3.zero);
+            // }
+            //
+            // float3 midPos = gamePlayTowerDefenseComponent.GetPathMidPos();
+            // return (true, midPos);
         }
 
         public static async ETTask<bool> DoPutMoveTower(this DlgBattleDragItem self, float3 position)
@@ -1525,7 +1532,9 @@ namespace ET.Client
                 return;
             }
 
-            ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), false);
+            ET.Client.ARSessionHelper.ShowARMesh(self.DomainScene(), ARSessionComponent.ArMeshVisibility.TranslucentOcclusion);
+            NavMeshRendererComponent.Instance.ShowMesh(false);
+
             self.isConfirming = false;
             self.isDragging = false;
             if (self.currentPlaceObj != null)

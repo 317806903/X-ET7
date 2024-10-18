@@ -79,6 +79,7 @@ namespace ET.Ability
         {
             public Unit attackerUnit;
             public Unit defenderUnit;
+            public float3 hitPos;
         }
 
         /// <summary>
@@ -251,6 +252,10 @@ namespace ET.Ability
         {
         }
 
+        public struct GamePlay_Status_GameStartShow
+        {
+        }
+
         public struct GamePlayTowerDefense_Status_PutHomeBegin
         {
         }
@@ -293,6 +298,12 @@ namespace ET.Ability
 
         public struct GamePlay_Status_GameEnd
         {
+        }
+
+        public struct GamePlayTowerDefense_AddRestoreEnergy
+        {
+            public SkillComponent skillComponent;
+            public SkillObj skillObj;
         }
 
         //=========================================================

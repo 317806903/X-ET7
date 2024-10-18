@@ -1,44 +1,48 @@
-using System;
 using DotRecast.Core;
-
+using DotRecast.Core.Numerics;
 using DotRecast.Recast;
 
 namespace DotRecast.Detour.Extras.Jumplink
 {
-    class NavMeshGroundSampler : AbstractGroundSampler
+    public class NavMeshGroundSampler : AbstractGroundSampler
     {
-        private readonly IDtQueryFilter filter = new DtQueryNoOpFilter();
-
-        public override void Sample(JumpLinkBuilderConfig acfg, RecastBuilderResult result, EdgeSampler es)
+        public override void Sample(JumpLinkBuilderConfig acfg, RcBuilderResult result, EdgeSampler es)
         {
             DtNavMeshQuery navMeshQuery = CreateNavMesh(result, acfg.agentRadius, acfg.agentHeight, acfg.agentClimb);
             SampleGround(acfg, es, (RcVec3f pt, float heightRange, out float height) => GetNavMeshHeight(navMeshQuery, pt, acfg.cellSize, heightRange, out height));
         }
 
-        private DtNavMeshQuery CreateNavMesh(RecastBuilderResult r, float agentRadius, float agentHeight, float agentClimb)
+        private DtNavMeshQuery CreateNavMesh(RcBuilderResult r, float agentRadius, float agentHeight, float agentClimb)
         {
             DtNavMeshCreateParams option = new DtNavMeshCreateParams();
-            option.verts = r.GetMesh().verts;
-            option.vertCount = r.GetMesh().nverts;
-            option.polys = r.GetMesh().polys;
-            option.polyAreas = r.GetMesh().areas;
-            option.polyFlags = r.GetMesh().flags;
-            option.polyCount = r.GetMesh().npolys;
-            option.nvp = r.GetMesh().nvp;
-            option.detailMeshes = r.GetMeshDetail().meshes;
-            option.detailVerts = r.GetMeshDetail().verts;
-            option.detailVertsCount = r.GetMeshDetail().nverts;
-            option.detailTris = r.GetMeshDetail().tris;
-            option.detailTriCount = r.GetMeshDetail().ntris;
+            option.verts = r.Mesh.verts;
+            option.vertCount = r.Mesh.nverts;
+            option.polys = r.Mesh.polys;
+            option.polyAreas = r.Mesh.areas;
+            option.polyFlags = r.Mesh.flags;
+            option.polyCount = r.Mesh.npolys;
+            option.nvp = r.Mesh.nvp;
+            option.detailMeshes = r.MeshDetail.meshes;
+            option.detailVerts = r.MeshDetail.verts;
+            option.detailVertsCount = r.MeshDetail.nverts;
+            option.detailTris = r.MeshDetail.tris;
+            option.detailTriCount = r.MeshDetail.ntris;
             option.walkableRadius = agentRadius;
             option.walkableHeight = agentHeight;
             option.walkableClimb = agentClimb;
-            option.bmin = r.GetMesh().bmin;
-            option.bmax = r.GetMesh().bmax;
-            option.cs = r.GetMesh().cs;
-            option.ch = r.GetMesh().ch;
+            option.bmin = r.Mesh.bmin;
+            option.bmax = r.Mesh.bmax;
+            option.cs = r.Mesh.cs;
+            option.ch = r.Mesh.ch;
             option.buildBvTree = true;
-            return new DtNavMeshQuery(new DtNavMesh(DtNavMeshBuilder.CreateNavMeshData(option), option.nvp, 0));
+            var mesh = new DtNavMesh();
+            var status = mesh.Init(DtNavMeshBuilder.CreateNavMeshData(option), option.nvp, 0);
+            if (status.Failed())
+            {
+                return null;
+            }
+
+            return new DtNavMeshQuery(mesh);
         }
 
 
@@ -46,12 +50,12 @@ namespace DotRecast.Detour.Extras.Jumplink
         {
             height = default;
 
-            RcVec3f halfExtents = new RcVec3f { x = cs, y = heightRange, z = cs };
-            float maxHeight = pt.y + heightRange;
+            RcVec3f halfExtents = new RcVec3f { X = cs, Y = heightRange, Z = cs };
+            float maxHeight = pt.Y + heightRange;
             RcAtomicBoolean found = new RcAtomicBoolean();
-            RcAtomicFloat minHeight = new RcAtomicFloat(pt.y);
+            RcAtomicFloat minHeight = new RcAtomicFloat(pt.Y);
 
-            navMeshQuery.QueryPolygons(pt, halfExtents, filter, new PolyQueryInvoker((tile, poly, refs) =>
+            navMeshQuery.QueryPolygons(pt, halfExtents, DtQueryNoOpFilter.Shared, new DtCallbackPolyQuery((tile, poly, refs) =>
             {
                 var status = navMeshQuery.GetPolyHeight(refs, pt, out var h);
                 if (status.Succeeded())
@@ -70,7 +74,7 @@ namespace DotRecast.Detour.Extras.Jumplink
                 return true;
             }
 
-            height = pt.y;
+            height = pt.Y;
             return false;
         }
     }

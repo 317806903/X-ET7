@@ -39,5 +39,12 @@ namespace ET.Client
 		public bool targetIsARCamera;
 
 		public long lastSendCameraPosTime;
+
+		public enum ArMeshVisibility
+		{
+			ColliderOnly,
+			Visible,
+			TranslucentOcclusion
+		}
 	}
 }

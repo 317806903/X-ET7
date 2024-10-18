@@ -150,7 +150,7 @@ public partial class UICodeSpawner
         {
             foreach (var info in pair.Value)
             {
-                if (pair.Key.StartsWith(CommonUIPrefix))
+                if (pair.Key.StartsWith(CommonUIPrefix) && pair.Key.StartsWith(NotCommonUIPrefix) == false)
                 {
                     strBuilder.AppendFormat("\t\t\tif(this.m_{0} != null)\r\n", pair.Key.ToLower());
                     strBuilder.AppendLine("\t\t\t{");

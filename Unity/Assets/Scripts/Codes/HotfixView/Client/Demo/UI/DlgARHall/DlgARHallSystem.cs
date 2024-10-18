@@ -32,6 +32,9 @@ namespace ET.Client
                 self.isCreateRooming = false;
 
                 self._ARHallType = _DlgARHall_ShowWindowData.ARHallType;
+
+                Log.Debug($"DlgARHall_ShowWindowData[{_DlgARHall_ShowWindowData}]");
+
                 if (self._ARHallType == ARHallType.JoinTheRoom)
                 {
                     if (self.roomId <= 0)
@@ -180,7 +183,7 @@ namespace ET.Client
                 return;
             }
 
-            bool roomExist = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
+            (bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
             if (roomExist == false)
             {
                 if (string.IsNullOrEmpty(self.roomTypeInfo.gamePlayBattleLevelCfgId))
@@ -192,10 +195,10 @@ namespace ET.Client
                 return;
             }
 
-            RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
-            RoomComponent roomComponent = roomManagerComponent.GetRoom(self.roomId);
             self.arSceneId = roomComponent.arSceneId;
             self.roomTypeInfo = roomComponent.roomTypeInfo;
+            long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+            self.isHost = roomComponent.ownerRoomMemberId == myPlayerId;
             await ETTask.CompletedTask;
         }
 
@@ -303,7 +306,7 @@ namespace ET.Client
             self.isHost = false;
             self.roomId = long.Parse(sQRCodeInfo);
 
-            bool roomExist = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
+            (bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
             if (roomExist == false)
             {
                 self.HideMenu().Coroutine();
@@ -334,6 +337,7 @@ namespace ET.Client
 
         public static async ETTask OnFinishedCallBack(this DlgARHall self)
         {
+            Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack 000 self.isCreateRooming[{self.isCreateRooming}]");
             while (self.isCreateRooming)
             {
                 await TimerComponent.Instance.WaitFrameAsync();
@@ -342,7 +346,7 @@ namespace ET.Client
                     return;
                 }
             }
-            Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack ");
+            Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack 111");
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Confirm);
 
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
@@ -366,7 +370,7 @@ namespace ET.Client
                 {
 
                 }
-                bool roomExist = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
+                (bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), self.roomId);
                 if (roomExist == false)
                 {
                     self.HideMenu().Coroutine();
@@ -379,6 +383,7 @@ namespace ET.Client
                     return;
                 }
 
+                Log.Debug($"ET.Client.DlgARHallSystem.OnFinishedCallBack self.isHost[{self.isHost}]");
                 if (self.isHost)
                 {
                     await self.SetARRoomInfoAsync();

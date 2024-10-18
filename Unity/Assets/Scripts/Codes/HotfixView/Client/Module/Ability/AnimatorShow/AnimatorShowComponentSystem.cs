@@ -14,7 +14,7 @@ namespace ET.Ability.Client
 		{
 			protected override void Awake(AnimatorShowComponent self)
 			{
-				self.Awake();
+				self.Awake().Coroutine();
 			}
 		}
 
@@ -23,7 +23,6 @@ namespace ET.Ability.Client
 		{
 			protected override void Update(AnimatorShowComponent self)
 			{
-				self.ChkAnimator();
 				self.Update();
 			}
 		}
@@ -40,17 +39,19 @@ namespace ET.Ability.Client
 			}
 		}
 
-		public static void Awake(this AnimatorShowComponent self)
+		public static async ETTask Awake(this AnimatorShowComponent self)
 		{
-			RecordAnimatorName recordAnimatorName = null;
-			GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
-			if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
+			bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(self, self.GetUnit());
+			if (bRet == false)
 			{
-				recordAnimatorName = gameObjectShowComponent.GetGo().GetComponent<RecordAnimatorName>();
-				if (recordAnimatorName == null)
-				{
-					recordAnimatorName = gameObjectShowComponent.GetGo().GetComponentInChildren<RecordAnimatorName>();
-				}
+				return;
+			}
+			GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+
+			RecordAnimatorName recordAnimatorName = gameObjectShowComponent.GetGo().GetComponent<RecordAnimatorName>();
+			if (recordAnimatorName == null)
+			{
+				recordAnimatorName = gameObjectShowComponent.GetGo().GetComponentInChildren<RecordAnimatorName>();
 			}
 
 			if (recordAnimatorName == null)
@@ -129,27 +130,21 @@ namespace ET.Ability.Client
 			return self.GetParent<Unit>();
 		}
 
-		public static void ChkAnimator(this AnimatorShowComponent self)
+		public static void ResetAnimatorComponent(this AnimatorShowComponent self)
 		{
-			if (self.mainAnimator == null)
-			{
-				return;
-			}
-
-			AnimatorComponent animatorComponent;
 			if (self.animatorComponent == null)
 			{
-				animatorComponent = self.GetUnit().GetComponent<AnimatorComponent>();
+				AnimatorComponent animatorComponent = self.GetUnit().GetComponent<AnimatorComponent>();
 				if (animatorComponent != null)
 				{
 					self.animatorComponent = animatorComponent;
 				}
 			}
-			else
-			{
-				animatorComponent = self.animatorComponent;
-			}
+		}
 
+		public static void ChkAnimator(this AnimatorShowComponent self)
+		{
+			AnimatorComponent animatorComponent = self.animatorComponent;
 			if (animatorComponent == null)
 			{
 				return;
@@ -168,40 +163,40 @@ namespace ET.Ability.Client
 				}
 			}
 
-			if (animatorComponent != null)
+			if (animatorComponent.isStoppingAnimator != self.isStop)
 			{
-				if (animatorComponent.isStoppingAnimator != self.isStop)
+				if (animatorComponent.isStoppingAnimator)
 				{
-					if (animatorComponent.isStoppingAnimator)
-					{
-						self.PauseAnimator();
-					}
-					else
-					{
-						self.RunAnimator();
-					}
+					self.PauseAnimator();
 				}
+				else
+				{
+					self.RunAnimator();
+				}
+			}
+
+			if (self.isStop)
+			{
+				return;
 			}
 
 			AnimatorMotionName nextAnimatorMotionName = AnimatorMotionName.None;
 			float motionSpeed = 1f;
 			long motionTickTime = 0;
 			bool isAnimatorLoop = false;
-			if (animatorComponent != null)
+
+			if (animatorComponent.controlStateName != AnimatorMotionName.None)
 			{
-				if (animatorComponent.controlStateName != AnimatorMotionName.None)
-				{
-					nextAnimatorMotionName = animatorComponent.controlStateName;
-					motionTickTime = animatorComponent.controlAnimatorTickTime;
-					isAnimatorLoop = animatorComponent.isControlAnimatorLoop;
-				}
-				else
-				{
-					nextAnimatorMotionName = animatorComponent.name;
-					animatorComponent.name = AnimatorMotionName.None;
-					motionTickTime = animatorComponent.animatorTickTime;
-					isAnimatorLoop = animatorComponent.isAnimatorLoop;
-				}
+				nextAnimatorMotionName = animatorComponent.controlStateName;
+				motionTickTime = animatorComponent.controlAnimatorTickTime;
+				isAnimatorLoop = animatorComponent.isControlAnimatorLoop;
+			}
+			else
+			{
+				nextAnimatorMotionName = animatorComponent.name;
+				animatorComponent.name = AnimatorMotionName.None;
+				motionTickTime = animatorComponent.animatorTickTime;
+				isAnimatorLoop = animatorComponent.isAnimatorLoop;
 			}
 
 			if (self.CurMotionType != AnimatorMotionName.None)
@@ -314,6 +309,13 @@ namespace ET.Ability.Client
 				return;
 			}
 
+			self.ResetAnimatorComponent();
+			self.ChkAnimator();
+			self.UpdateNextMotionType();
+		}
+
+		public static void UpdateNextMotionType(this AnimatorShowComponent self)
+		{
 			if (self.isStop)
 			{
 				return;
@@ -388,7 +390,14 @@ namespace ET.Ability.Client
 				{
 					foreach (Animator animator in self.animatorOtherList)
 					{
-						animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+						if (CurMotionTypeOld == AnimatorMotionName.Move)
+						{
+							animator.Play(self.CurMotionType.ToString(), 0, normalizedTime);
+						}
+						else
+						{
+							animator.ForceCrossFade(self.CurMotionType.ToString(), crossTime, 0, normalizedTime);
+						}
 					}
 				}
 			}

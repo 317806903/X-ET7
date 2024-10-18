@@ -49,13 +49,6 @@ namespace ET.Ability.Client
 
         public static async ETTask _Init(this AudioPlayObj self)
         {
-            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_AudioSource");
-            GameObject go = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
-            if (go == null)
-            {
-                Log.Error($"AudioPlayObjSystem.Init go == null when resName={resEffectCfg.ResName}");
-            }
-            self.go = go;
             Unit unit = self.GetParent<AudioPlayComponent>()?.GetParent<Unit>();
             if (unit == null)
             {
@@ -63,19 +56,25 @@ namespace ET.Ability.Client
             }
             else
             {
+                bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(self, unit);
+                if (bRet == false)
+                {
+                    return;
+                }
                 GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
-                if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
+
+                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_AudioSource");
+                GameObject go = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
+                if (go == null)
                 {
-                    Transform tran = gameObjectShowComponent.GetGo().transform;
-                    go.transform.SetParent(tran);
-                    go.transform.localScale = UnityEngine.Vector3.one;
-                    go.transform.localPosition = UnityEngine.Vector3.zero;
-                    go.transform.localEulerAngles = UnityEngine.Vector3.zero;
+                    Log.Error($"AudioPlayObjSystem.Init go == null when resName={resEffectCfg.ResName}");
                 }
-                else
-                {
-                    Log.Error($"AudioPlayObjSystem.Init gameObject == null");
-                }
+                self.go = go;
+                Transform tran = gameObjectShowComponent.GetGo().transform;
+                go.transform.SetParent(tran);
+                go.transform.localScale = UnityEngine.Vector3.one;
+                go.transform.localPosition = UnityEngine.Vector3.zero;
+                go.transform.localEulerAngles = UnityEngine.Vector3.zero;
             }
         }
 
@@ -110,6 +109,11 @@ namespace ET.Ability.Client
             if (self.go == null)
             {
                 await self._Init();
+            }
+
+            if (self.IsDisposed || self.go == null)
+            {
+                return;
             }
 
             self.timeElapsed = 0;

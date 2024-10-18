@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -18,11 +19,12 @@ freely, subject to the following restrictions:
 
 using System;
 using System.IO.Compression;
-using System.Numerics;
 using DotRecast.Core;
 
 namespace DotRecast.Detour.Extras.Unity.Astar
 {
+    using static DtDetour;
+
     public class GraphMeshDataReader : ZipBinaryReader
     {
         public const float INT_PRECISION_FACTOR = 1000f;
@@ -77,7 +79,7 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                     int nodeCount = buffer.GetInt();
                     DtPoly[] nodes = new DtPoly[nodeCount];
                     DtPolyDetail[] detailNodes = new DtPolyDetail[nodeCount];
-                    float[] detailVerts = new float[0];
+                    float[] detailVerts = Array.Empty<float>();
                     int[] detailTris = new int[4 * nodeCount];
                     int vertMask = GetVertMask(vertsCount);
                     float ymin = float.PositiveInfinity;
@@ -98,11 +100,11 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                         ymax = Math.Max(ymax, verts[nodes[i].verts[0] * 3 + 1]);
                         ymax = Math.Max(ymax, verts[nodes[i].verts[1] * 3 + 1]);
                         ymax = Math.Max(ymax, verts[nodes[i].verts[2] * 3 + 1]);
-                        detailNodes[i] = new DtPolyDetail();
-                        detailNodes[i].vertBase = 0;
-                        detailNodes[i].vertCount = 0;
-                        detailNodes[i].triBase = i;
-                        detailNodes[i].triCount = 1;
+                        int vertBase = 0;
+                        byte vertCount = 0;
+                        int triBase = i;
+                        byte triCount = 1;
+                        detailNodes[i] = new DtPolyDetail(vertBase, triBase, vertCount, triCount);
                         detailTris[4 * i] = 0;
                         detailTris[4 * i + 1] = 1;
                         detailTris[4 * i + 2] = 2;
@@ -117,25 +119,25 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                     tiles[tileIndex].detailVerts = detailVerts;
                     tiles[tileIndex].detailTris = detailTris;
                     DtMeshHeader header = new DtMeshHeader();
-                    header.magic = DtMeshHeader.DT_NAVMESH_MAGIC;
-                    header.version = DtMeshHeader.DT_NAVMESH_VERSION;
+                    header.magic = DT_NAVMESH_MAGIC;
+                    header.version = DT_NAVMESH_VERSION;
                     header.x = x;
                     header.y = z;
                     header.polyCount = nodeCount;
                     header.vertCount = vertsCount;
                     header.detailMeshCount = nodeCount;
                     header.detailTriCount = nodeCount;
-                    header.maxLinkCount = nodeCount * 3 * 2; // XXX: Needed by Recast, not needed by recast4j
-                    header.bmin.x = meta.forcedBoundsCenter.x - 0.5f * meta.forcedBoundsSize.x
-                                     + meta.cellSize * meta.tileSizeX * x;
-                    header.bmin.y = ymin;
-                    header.bmin.z = meta.forcedBoundsCenter.z - 0.5f * meta.forcedBoundsSize.z
-                                     + meta.cellSize * meta.tileSizeZ * z;
-                    header.bmax.x = meta.forcedBoundsCenter.x - 0.5f * meta.forcedBoundsSize.x
-                                     + meta.cellSize * meta.tileSizeX * (x + 1);
-                    header.bmax.y = ymax;
-                    header.bmax.z = meta.forcedBoundsCenter.z - 0.5f * meta.forcedBoundsSize.z
-                                     + meta.cellSize * meta.tileSizeZ * (z + 1);
+                    header.maxLinkCount = nodeCount * 3 * 2; // needed by Recast, not needed by recast4j, needed by DotRecast
+                    header.bmin.X = meta.forcedBoundsCenter.x - 0.5f * meta.forcedBoundsSize.x +
+                                    meta.cellSize * meta.tileSizeX * x;
+                    header.bmin.Y = ymin;
+                    header.bmin.Z = meta.forcedBoundsCenter.z - 0.5f * meta.forcedBoundsSize.z +
+                                    meta.cellSize * meta.tileSizeZ * z;
+                    header.bmax.X = meta.forcedBoundsCenter.x - 0.5f * meta.forcedBoundsSize.x +
+                                    meta.cellSize * meta.tileSizeX * (x + 1);
+                    header.bmax.Y = ymax;
+                    header.bmax.Z = meta.forcedBoundsCenter.z - 0.5f * meta.forcedBoundsSize.z +
+                                    meta.cellSize * meta.tileSizeZ * (z + 1);
                     header.bvQuantFactor = 1.0f / meta.cellSize;
                     header.offMeshBase = nodeCount;
                     header.walkableClimb = meta.walkableClimb;

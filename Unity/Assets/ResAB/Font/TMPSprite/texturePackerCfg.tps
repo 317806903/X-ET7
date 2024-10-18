@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.3.0</string>
+        <string>7.4.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -174,6 +174,7 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">SingleIco/ArcadeCoin.png</key>
+            <key type="filename">SingleIco/Diamond.png</key>
             <key type="filename">SingleIco/Energy.png</key>
             <key type="filename">SingleIco/Gold.png</key>
             <struct type="IndividualSpriteSettings">

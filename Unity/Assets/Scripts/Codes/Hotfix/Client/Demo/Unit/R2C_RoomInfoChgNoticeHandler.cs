@@ -14,13 +14,11 @@ namespace ET.Client
 
 			PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(clientScene);
 			long roomId = playerStatusComponent.RoomId;
-			await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
+			(bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(clientScene, roomId);
 
 			EventSystem.Instance.Publish(clientScene, new EventType.RoomInfoChg());
 
 #if UNITY_EDITOR
-			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(clientScene);
-			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
 			if (roomComponent.dynamicMapInstanceId > 0)
 			{
 				var instanceIdStruct = new InstanceIdStruct(roomComponent.dynamicMapInstanceId);

@@ -57,7 +57,7 @@ namespace ET.Server
         {
 	        PlayerDataComponent playerDataComponent = await GetPlayerCache(scene, playerId);
 
-	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
+	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys, playerModelChgType);
 	        entityModel.SetDataCacheAutoWrite();
 	        await ETTask.CompletedTask;
         }

@@ -18,10 +18,11 @@ freely, subject to the following restrictions:
 
 using System.IO;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Detour.Io
 {
-    public class DtMeshSetWriter : DtWriter
+    public class DtMeshSetWriter
     {
         private readonly DtMeshDataWriter writer = new DtMeshDataWriter();
         private readonly DtNavMeshParamWriter paramWriter = new DtNavMeshParamWriter();
@@ -34,8 +35,8 @@ namespace DotRecast.Detour.Io
 
         private void WriteHeader(BinaryWriter stream, DtNavMesh mesh, RcByteOrder order, bool cCompatibility)
         {
-            Write(stream, NavMeshSetHeader.NAVMESHSET_MAGIC, order);
-            Write(stream, cCompatibility ? NavMeshSetHeader.NAVMESHSET_VERSION : NavMeshSetHeader.NAVMESHSET_VERSION_RECAST4J, order);
+            RcIO.Write(stream, NavMeshSetHeader.NAVMESHSET_MAGIC, order);
+            RcIO.Write(stream, cCompatibility ? NavMeshSetHeader.NAVMESHSET_VERSION : NavMeshSetHeader.NAVMESHSET_VERSION_RECAST4J, order);
             int numTiles = 0;
             for (int i = 0; i < mesh.GetMaxTiles(); ++i)
             {
@@ -48,11 +49,11 @@ namespace DotRecast.Detour.Io
                 numTiles++;
             }
 
-            Write(stream, numTiles, order);
+            RcIO.Write(stream, numTiles, order);
             paramWriter.Write(stream, mesh.GetParams(), order);
             if (!cCompatibility)
             {
-                Write(stream, mesh.GetMaxVertsPerPoly(), order);
+                RcIO.Write(stream, mesh.GetMaxVertsPerPoly(), order);
             }
         }
 
@@ -68,19 +69,19 @@ namespace DotRecast.Detour.Io
 
                 NavMeshTileHeader tileHeader = new NavMeshTileHeader();
                 tileHeader.tileRef = mesh.GetTileRef(tile);
-                using MemoryStream bb = new MemoryStream();
-                using BinaryWriter baos = new BinaryWriter(bb);
-                writer.Write(baos, tile.data, order, cCompatibility);
-                baos.Flush();
-                baos.Close();
+                using MemoryStream msw = new MemoryStream();
+                using BinaryWriter bw = new BinaryWriter(msw);
+                writer.Write(bw, tile.data, order, cCompatibility);
+                bw.Flush();
+                bw.Close();
 
-                byte[] ba = bb.ToArray();
+                byte[] ba = msw.ToArray();
                 tileHeader.dataSize = ba.Length;
-                Write(stream, tileHeader.tileRef, order);
-                Write(stream, tileHeader.dataSize, order);
+                RcIO.Write(stream, tileHeader.tileRef, order);
+                RcIO.Write(stream, tileHeader.dataSize, order);
                 if (cCompatibility)
                 {
-                    Write(stream, 0, order); // C struct padding
+                    RcIO.Write(stream, 0, order); // C struct padding
                 }
 
                 stream.Write(ba);

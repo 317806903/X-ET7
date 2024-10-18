@@ -284,7 +284,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EButton_Buy
+    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EButton_Buy
     guideTextType: 1
     guideTextImgPath: 
     text: "\u8D2D\u4E70\u5854"
@@ -303,7 +303,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/E_TowerBuyShow/EButton_BuyClose
+    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/EG_TowerBuyShow/EButton_BuyClose
     guideTextType: 1
     guideTextImgPath: 
     text: "\u70B9\u51FB\u5173\u95ED"

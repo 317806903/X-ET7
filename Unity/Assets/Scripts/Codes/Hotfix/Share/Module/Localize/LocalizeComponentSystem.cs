@@ -100,7 +100,14 @@ namespace ET
         {
             var translateCode = self.GetCurrentTranslator_Code();
             string textValue = translateCode(self.CurrentLanguage, textKey, textKey);
-            textValue = string.Format(textValue, args);
+            try
+            {
+                textValue = string.Format(textValue, args);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
             return textValue;
         }
 
@@ -108,7 +115,14 @@ namespace ET
         {
             var translateCode = self.GetCurrentTranslator_Code();
             string textValue = translateCode(languageType, textKey, textKey);
-            textValue = string.Format(textValue, args);
+            try
+            {
+                textValue = string.Format(textValue, args);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
             return textValue;
         }
 
@@ -169,7 +183,14 @@ namespace ET
             }
             else
             {
-                str = $"[Org][Excel]{originText}";
+                if (string.IsNullOrEmpty(originText))
+                {
+                    str = $"[Org][Excel]{key}";
+                }
+                else
+                {
+                    str = $"[Org][Excel]{originText}";
+                }
             }
             return str;
         }
@@ -208,7 +229,14 @@ namespace ET
             }
             else
             {
-                str = $"[Org][Code]{originText}";
+                if (string.IsNullOrEmpty(originText))
+                {
+                    str = $"[Org][Code]{key}";
+                }
+                else
+                {
+                    str = $"[Org][Code]{originText}";
+                }
             }
             return str;
         }
@@ -247,7 +275,14 @@ namespace ET
             }
             else
             {
-                str = $"[Org][UI]{originText}";
+                if (string.IsNullOrEmpty(originText))
+                {
+                    str = $"[Org][UI]{key}";
+                }
+                else
+                {
+                    str = $"[Org][UI]{originText}";
+                }
             }
             return str;
         }

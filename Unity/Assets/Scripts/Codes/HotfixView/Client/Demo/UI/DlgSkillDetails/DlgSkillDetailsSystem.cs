@@ -33,12 +33,12 @@ namespace ET.Client
 	{
 		public static void RegisterUIEvent(this DlgSkillDetails self)
 		{
-			self.View.EButton_DetailBgButton.AddListenerAsync(self.OnClickBG);          
-           
+			self.View.EButton_DetailBgButton.AddListenerAsync(self.OnClickBG);
+
         }
 
 		public static async ETTask ShowWindow(this DlgSkillDetails self, ShowWindowData contextData = null)
-		{           
+		{
 			self.dlgShowTime = TimeHelper.ClientNow();
             self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.DlgSkillDetailsFrameTimer, self);
             ShowData_SkillInfo  showData_SkillInfo = contextData as ShowData_SkillInfo;
@@ -50,13 +50,13 @@ namespace ET.Client
             self.View.E_SkillFuncButton.AddListenerAsync(async () =>
             {
                 await self.SkillGetOrUpgrade((showData_SkillInfo.skillCfgId, showData_SkillInfo.isLearned));
-               
+
             });
             self.View.E_DetailsButton_VideoButton.AddListenerAsync(async () =>
             {
                 DlgTutorialOne_ShowWindowData dlgTutorialOne_ShowWindowData=new DlgTutorialOne_ShowWindowData();
                 dlgTutorialOne_ShowWindowData.tutorialCfgId = playerSkillCfg.TutorialCfgId;
-                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgTutorialOne>(dlgTutorialOne_ShowWindowData);                
+                await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgTutorialOne>(dlgTutorialOne_ShowWindowData);
             });
 
             await self.ShowSkillDetailsUI(showData_SkillInfo.skillCfgId);
@@ -90,18 +90,18 @@ namespace ET.Client
 			if(!self.ChkCanClickBg())
 			{
 				return;
-			}	
+			}
 			UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgSkillDetails>();
 			await ETTask.CompletedTask;
 		}
-       
+
 
         //解锁或升级技能
         public static async ETTask SkillGetOrUpgrade(this DlgSkillDetails self, (string skillCfg, bool isLearned) skillItemCfgId)
         {
             if(skillItemCfgId.isLearned)
             {
-                await SkillHelper.UpdatePlayerSkill(self.DomainScene(), skillItemCfgId.skillCfg);               
+                await SkillHelper.UpdatePlayerSkill(self.DomainScene(), skillItemCfgId.skillCfg);
             }
             else
             {
@@ -152,9 +152,9 @@ namespace ET.Client
 
         public static async ETTask ShowSkillDetailsUI(this DlgSkillDetails self, string skillCfgId)
         {
-            PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(skillCfgId);
-            string skillName = playerSkillCfg.Name;
-            string skillDesc = playerSkillCfg.Desc;
+            SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
+            string skillName = skillCfg.Name;
+            string skillDesc = skillCfg.Desc;
             self.View.ELabel_NameTextMeshProUGUI.text = skillName;
             self.View.ELabel_DescriptionTextMeshProUGUI.text = skillDesc;
             await ETTask.CompletedTask;

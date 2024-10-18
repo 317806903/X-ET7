@@ -72,16 +72,12 @@ namespace ET.Client
                 gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
             }
 
-            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
-            while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
+            bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(self, self.GetUnit());
+            if (bRet == false)
             {
-                if (self.IsDisposed)
-                {
-                    return;
-                }
-                await TimerComponent.Instance.WaitFrameAsync();
-                gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+                return;
             }
+            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
 
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
             GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);

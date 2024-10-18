@@ -72,6 +72,7 @@ namespace ET.Server
 				Unit cameraPlayerUnit = ET.GamePlayHelper.CreateCameraPlayerUnit(gamePlayMode, scene, playerId, playerLevel, position, forward);
 				if (cameraPlayerUnit != null)
 				{
+					await ET.Server.GamePlayHelper.LoadCameraPlayerSkillList(playerId, cameraPlayerUnit);
 					unitComponent.Add(cameraPlayerUnit);
 				}
 			}

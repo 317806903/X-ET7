@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -19,7 +19,7 @@ freely, subject to the following restrictions:
 */
 
 using System.Linq;
-using DotRecast.Core;
+using DotRecast.Core.Collections;
 
 namespace DotRecast.Recast.Toolset.Builder
 {
@@ -34,12 +34,12 @@ namespace DotRecast.Recast.Toolset.Builder
         public const int SAMPLE_POLYAREA_TYPE_JUMP_AUTO = 0x6;
         public const int SAMPLE_POLYAREA_TYPE_WALKABLE = 0x3f;
 
-        public static readonly int SAMPLE_POLYFLAGS_WALK = 0x01; // Ability to walk (ground, grass, road)
-        public static readonly int SAMPLE_POLYFLAGS_SWIM = 0x02; // Ability to swim (water).
-        public static readonly int SAMPLE_POLYFLAGS_DOOR = 0x04; // Ability to move through doors.
-        public static readonly int SAMPLE_POLYFLAGS_JUMP = 0x08; // Ability to jump.
-        public static readonly int SAMPLE_POLYFLAGS_DISABLED = 0x10; // Disabled polygon
-        public static readonly int SAMPLE_POLYFLAGS_ALL = 0xffff; // All abilities.
+        public const int SAMPLE_POLYFLAGS_WALK = 0x01; // Ability to walk (ground, grass, road)
+        public const int SAMPLE_POLYFLAGS_SWIM = 0x02; // Ability to swim (water).
+        public const int SAMPLE_POLYFLAGS_DOOR = 0x04; // Ability to move through doors.
+        public const int SAMPLE_POLYFLAGS_JUMP = 0x08; // Ability to jump.
+        public const int SAMPLE_POLYFLAGS_DISABLED = 0x10; // Disabled polygon
+        public const int SAMPLE_POLYFLAGS_ALL = 0xffff; // All abilities.
 
         public static readonly RcAreaModification SAMPLE_AREAMOD_WALKABLE = new RcAreaModification(SAMPLE_POLYAREA_TYPE_WALKABLE);
         public static readonly RcAreaModification SAMPLE_AREAMOD_GROUND = new RcAreaModification(SAMPLE_POLYAREA_TYPE_GROUND);
@@ -61,7 +61,15 @@ namespace DotRecast.Recast.Toolset.Builder
 
         public static RcAreaModification OfValue(int value)
         {
-            return Values.FirstOrDefault(x => x.Value == value) ?? SAMPLE_AREAMOD_GRASS;
+            foreach (var v in Values)
+            {
+                if (v.Value == value)
+                {
+                    return v;
+                }
+            }
+
+            return SAMPLE_AREAMOD_GRASS;
         }
     }
 }

@@ -95,6 +95,7 @@ namespace ET
 		[BsonIgnore]
 		public int curFrameChk = 0;
 
+		public bool isChkPlayerConnect;
 		public bool isFirstSendGamePlayToClient;
 		public bool isFirstSendGamePlayModeToClient;
 		public bool isFirstSendGamePlayPlayerListToClient;

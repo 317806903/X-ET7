@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -21,6 +22,8 @@ using System.Collections.Generic;
 
 namespace DotRecast.Detour.Extras.Unity.Astar
 {
+    using static DtDetour;
+
     public class LinkBuilder
     {
         // Process connections and transform them into recast neighbour flags
@@ -49,7 +52,7 @@ namespace DotRecast.Detour.Extras.Unity.Astar
 
         private void BuildInternalLink(DtMeshData tile, DtPoly node, DtMeshData neighbourTile, DtPoly neighbour)
         {
-            int edge = PolyUtils.FindEdge(node, neighbour, tile, neighbourTile);
+            int edge = DtPolyUtils.FindEdge(node, neighbour, tile, neighbourTile);
             if (edge >= 0)
             {
                 node.neis[edge] = neighbour.index + 1;
@@ -63,21 +66,21 @@ namespace DotRecast.Detour.Extras.Unity.Astar
         // In case of external link to other tiles we must find the direction
         private void BuildExternalLink(DtMeshData tile, DtPoly node, DtMeshData neighbourTile)
         {
-            if (neighbourTile.header.bmin.x > tile.header.bmin.x)
+            if (neighbourTile.header.bmin.X > tile.header.bmin.X)
             {
-                node.neis[PolyUtils.FindEdge(node, tile, neighbourTile.header.bmin.x, 0)] = DtNavMesh.DT_EXT_LINK;
+                node.neis[DtPolyUtils.FindEdge(node, tile, neighbourTile.header.bmin.X, 0)] = DT_EXT_LINK;
             }
-            else if (neighbourTile.header.bmin.x < tile.header.bmin.x)
+            else if (neighbourTile.header.bmin.X < tile.header.bmin.X)
             {
-                node.neis[PolyUtils.FindEdge(node, tile, tile.header.bmin.x, 0)] = DtNavMesh.DT_EXT_LINK | 4;
+                node.neis[DtPolyUtils.FindEdge(node, tile, tile.header.bmin.X, 0)] = DT_EXT_LINK | 4;
             }
-            else if (neighbourTile.header.bmin.z > tile.header.bmin.z)
+            else if (neighbourTile.header.bmin.Z > tile.header.bmin.Z)
             {
-                node.neis[PolyUtils.FindEdge(node, tile, neighbourTile.header.bmin.z, 2)] = DtNavMesh.DT_EXT_LINK | 2;
+                node.neis[DtPolyUtils.FindEdge(node, tile, neighbourTile.header.bmin.Z, 2)] = DT_EXT_LINK | 2;
             }
             else
             {
-                node.neis[PolyUtils.FindEdge(node, tile, tile.header.bmin.z, 2)] = DtNavMesh.DT_EXT_LINK | 6;
+                node.neis[DtPolyUtils.FindEdge(node, tile, tile.header.bmin.Z, 2)] = DT_EXT_LINK | 6;
             }
         }
     }

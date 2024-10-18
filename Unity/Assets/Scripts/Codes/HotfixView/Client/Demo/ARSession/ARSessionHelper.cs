@@ -156,7 +156,7 @@ namespace ET.Client
 			arSessionComponent.TriggerReScan();
 		}
 
-		public static void ShowARMesh(Scene scene, bool show)
+		public static void ShowARMesh(Scene scene, ARSessionComponent.ArMeshVisibility show)
 		{
 			if (ChkARCameraEnable(scene) == false)
 			{

@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -20,12 +20,12 @@ freely, subject to the following restrictions:
 
 namespace DotRecast.Recast
 {
-    public class RcAreaModification
+    public readonly struct RcAreaModification
     {
         public const int RC_AREA_FLAGS_MASK = 0x3F;
 
-        public int Value { get; }
-        public int Mask { get; }
+        public readonly int Value;
+        public readonly int Mask;
 
         /**
          * Mask is set to all available bits, which means value is fully applied
@@ -35,7 +35,7 @@ namespace DotRecast.Recast
          */
         public RcAreaModification(int value)
         {
-            this.Value = value;
+            Value = value;
             Mask = RC_AREA_FLAGS_MASK;
         }
 
@@ -48,8 +48,8 @@ namespace DotRecast.Recast
          */
         public RcAreaModification(int value, int mask)
         {
-            this.Value = value;
-            this.Mask = mask;
+            Value = value;
+            Mask = mask;
         }
 
         public RcAreaModification(RcAreaModification other)
@@ -58,12 +58,12 @@ namespace DotRecast.Recast
             Mask = other.Mask;
         }
 
-        public int GetMaskedValue()
+        public readonly int GetMaskedValue()
         {
             return Value & Mask;
         }
 
-        public int Apply(int area)
+        public readonly int Apply(int area)
         {
             return ((Value & Mask) | (area & ~Mask));
         }

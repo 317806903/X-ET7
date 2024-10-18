@@ -133,7 +133,7 @@ namespace ET
                     float3 forward = self.NavMesh.GetAgentForward(self.navMeshAgent);
                     if (forward.Equals(float3.zero) == false)
                     {
-                        unit.Forward = forward;
+                        unit.Forward = math.normalize(forward);
                     }
                 }
             }

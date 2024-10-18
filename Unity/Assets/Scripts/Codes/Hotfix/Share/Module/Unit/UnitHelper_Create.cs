@@ -137,6 +137,7 @@ namespace ET.Ability
 
             SetUnitNumeric(numericComponent, unit.model.PropertyType, level);
 
+            unit.AddComponent<GameObjectComponent>();
             unitComponent.Add(unit);
             ET.Ability.MoveOrIdleHelper.DoIdle(unit).Coroutine();
 

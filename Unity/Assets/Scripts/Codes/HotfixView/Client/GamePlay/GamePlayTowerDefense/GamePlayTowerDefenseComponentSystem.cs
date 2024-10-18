@@ -58,6 +58,22 @@ namespace ET.Client
 			self.SendARCameraPos();
 			self.SendNeedReNoticeUnitIds();
 			self.SendNeedReNoticeTowerDefense();
+			if (self.previousGamePlayTowerDefenseStatus != self.gamePlayTowerDefenseStatus)
+			{
+				if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
+				{
+					self.OnPutMonsterPointStart().Coroutine();
+				}
+			}
+			self.previousGamePlayTowerDefenseStatus = self.gamePlayTowerDefenseStatus;
+		}
+
+		public static async ETTask OnPutMonsterPointStart(this GamePlayTowerDefenseComponent self)
+		{
+			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+			TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+			var navMeshData = await GamePlayTowerDefenseHelper.GetReachableAreaFromHeadQuarter(self.ClientScene(), homeTeamFlagType);
+			NavMeshRendererComponent.Instance.SetNavMesh(self.DomainScene(), navMeshData);
 		}
 
 		public static bool ChkIsHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
@@ -259,38 +275,25 @@ namespace ET.Client
 			{
 				return;
 			}
-			foreach (long unitId in unitIds)
-			{
-				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
-				int retryNum = 100;
-				while (unit == null)
-				{
-					await TimerComponent.Instance.WaitFrameAsync();
-					if (self.IsDisposed)
-					{
-						return;
-					}
-					if (playerOwnerTowersComponent.IsDisposed)
-					{
-						return;
-					}
-					retryNum--;
-					if (retryNum <= 0)
-					{
-						continue;
-					}
-					unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
-				}
-			}
 
 			foreach (long unitId in unitIds)
 			{
+				bool bUnitExist = await ET.Client.UnitHelper.ChkUnitExist(self, unitId);
+				if (bUnitExist == false)
+				{
+					continue;
+				}
 				Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
 				if (unit == null)
 				{
 					continue;
 				}
 
+				bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(self, unit);
+				if (bRet == false)
+				{
+					continue;
+				}
 				TowerShowComponent towerShowComponent = unit.GetComponent<TowerShowComponent>();
 				if (towerShowComponent != null)
 				{

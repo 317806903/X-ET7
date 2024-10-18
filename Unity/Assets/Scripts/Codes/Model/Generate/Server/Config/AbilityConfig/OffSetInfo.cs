@@ -21,7 +21,8 @@ public sealed partial class OffSetInfo: Bright.Config.BeanBase
     {
         NodeName = (EffectNodeName)_buf.ReadInt();
         OffSetPosition = _buf.ReadVector3();
-        RelateForward = _buf.ReadVector3();
+        RelateRotation = _buf.ReadVector3();
+        KeepHorizontal = _buf.ReadBool();
         PostInit();
     }
 
@@ -41,7 +42,11 @@ public sealed partial class OffSetInfo: Bright.Config.BeanBase
     /// <summary>
     /// 相对旋转
     /// </summary>
-    public System.Numerics.Vector3 RelateForward { get; private set; }
+    public System.Numerics.Vector3 RelateRotation { get; private set; }
+    /// <summary>
+    /// 是否保持水平
+    /// </summary>
+    public bool KeepHorizontal { get; private set; }
 
     public const int __ID__ = -1289080863;
     public override int GetTypeId() => __ID__;
@@ -60,7 +65,8 @@ public sealed partial class OffSetInfo: Bright.Config.BeanBase
         return "{ "
         + "NodeName:" + NodeName + ","
         + "OffSetPosition:" + OffSetPosition + ","
-        + "RelateForward:" + RelateForward + ","
+        + "RelateRotation:" + RelateRotation + ","
+        + "KeepHorizontal:" + KeepHorizontal + ","
         + "}";
     }
     

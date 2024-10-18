@@ -22,6 +22,7 @@ public sealed partial class SkillConsumeCfg: Bright.Config.BeanBase
         ConsumeCommonEnergy = _buf.ReadInt();
         RestoreEnergyByTime = _buf.ReadFloat();
         RestoreEnergyByWave = _buf.ReadFloat();
+        ResetFullEnergyByCostDiamond = _buf.ReadInt();
         PostInit();
     }
 
@@ -55,6 +56,10 @@ public sealed partial class SkillConsumeCfg: Bright.Config.BeanBase
     /// 恢复能量点(每回合)
     /// </summary>
     public float RestoreEnergyByWave { get; private set; }
+    /// <summary>
+    /// 填充满能量需要花费钻石
+    /// </summary>
+    public int ResetFullEnergyByCostDiamond { get; private set; }
 
     public const int __ID__ = -638965799;
     public override int GetTypeId() => __ID__;
@@ -78,6 +83,7 @@ public sealed partial class SkillConsumeCfg: Bright.Config.BeanBase
         + "ConsumeCommonEnergy:" + ConsumeCommonEnergy + ","
         + "RestoreEnergyByTime:" + RestoreEnergyByTime + ","
         + "RestoreEnergyByWave:" + RestoreEnergyByWave + ","
+        + "ResetFullEnergyByCostDiamond:" + ResetFullEnergyByCostDiamond + ","
         + "}";
     }
     

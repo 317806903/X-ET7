@@ -34,6 +34,10 @@ namespace ET.Client
         public static Unit GetMyObserverUnit(Scene scene)
         {
             UnitComponent unitComponent = GetUnitComponent(scene);
+            if (unitComponent == null)
+            {
+                return null;
+            }
             long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
             Unit observerUnit = unitComponent.Get(myPlayerId);
             return observerUnit;
@@ -42,6 +46,10 @@ namespace ET.Client
         public static Unit GetMyPlayerUnit(Scene scene)
         {
             Unit observerUnit = GetMyObserverUnit(scene);
+            if (observerUnit == null)
+            {
+                return null;
+            }
             Unit myPlayerUnit = ET.GamePlayHelper.GetCurPlayerUnit(observerUnit);
             return myPlayerUnit;
         }
@@ -49,6 +57,10 @@ namespace ET.Client
         public static Unit GetMyCameraPlayerUnit(Scene scene)
         {
             Unit observerUnit = GetMyObserverUnit(scene);
+            if (observerUnit == null)
+            {
+                return null;
+            }
             Unit myCameraPlayerUnit = ET.GamePlayHelper.GetCameraPlayerUnit(observerUnit);
             return myCameraPlayerUnit;
         }
@@ -79,6 +91,26 @@ namespace ET.Client
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());
             gamePlayComponent.RecordNeedGetNumericUnit(unit);
+        }
+
+        public static async ETTask<bool> ChkUnitExist(Entity self, long unitId, int retryNum = 1000)
+        {
+            Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+            while (unit == null)
+            {
+                await TimerComponent.Instance.WaitFrameAsync();
+                if (self.IsDisposed)
+                {
+                    return false;
+                }
+                retryNum--;
+                if (retryNum <= 0)
+                {
+                    continue;
+                }
+                unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+            }
+            return true;
         }
 
     }

@@ -1,4 +1,64 @@
 ---------这是 prefab中存在, 但是excel中没有配置的项
+DlgMail/Inbox/MainContent/TopTitle/titleBK/Txt 	Inbox
 
 
 ---------这是 excel配置,但是不存在prefab中的项
+Canvas (Environment)/Item_Level/Unopened/null/Text (TMP)	未开启
+Canvas (Environment)/Item_Level/TurnOn/TreasureChest_normal/Text (TMP)	{0}
+Canvas (Environment)/Item_Level/TurnOn/TreasureChest_Open/Text (TMP)	打开
+SinglePlayerMode/E_SinglePlayerMode/E_Mode/E_CreateRoom/Text	开始游戏
+SinglePlayerMode/E_SinglePlayerMode/E_ReturnLogin/Text	返回
+Canvas (Environment)/E_QuitBattle/Text	退出战斗
+DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_01/Text	回到房间
+DlgBattleTowerEnd/E_Root/E_ReturnRoom_Next/E_btn_02/Text	首页
+DlgBattleTowerEnd/E_Root/EButton_GameEnd/ELabel_GameEnd	战斗结束
+Canvas (Environment)/Item_TowerBuy/ELabel_Content	金币:{0}
+Canvas (Environment)/Item_TowerBuy/EButton_Buy/ELabel_Buy	购买
+Canvas (Environment)/Item_TowerBuy/EButton_name	防御塔名称
+DlgGameModeAR/E_HomePage/E_ReturnLogin/E_ReturnText	返回
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/txt	失败
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content	金币:10
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy	购买
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Item_TowerBuy/1EButton_name	炮塔名字
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1/Text (TMP)	名称
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1ELabel_Content	金币:10
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy	购买
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Item_TowerBuy/1EButton_name	炮塔名字
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (1)/Text (TMP)	名称
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1ELabel_Content	金币:10
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_Buy/1ELabel_Buy	购买
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Item_TowerBuy/1EButton_name	炮塔名字
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/Card/Effect_Card1 (2)/Text (TMP)	名称
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_lose/DrawCards/title/Text (TMP)	胜者抽卡
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1ELabel_Content	金币:10
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_Buy/1ELabel_Buy	购买
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Item_TowerBuy/1EButton_name	炮塔名字
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/DrawCards (1)/Card/Effect_Card1/Text (TMP)	名称
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final	胜利
+DlgBattleTowerEnd/E_Effect_PVE/Effect_GameEnd_Model/EButton_GameEnd_victory/final (1)	胜利
+DlgBattleTower/E_Battle/E_TowerBuyShow/Text (TMP)	获得防御塔
+Canvas (Environment)/Effect_GameEnd_ChallengeEnds/EButton_GameEnd_ChallengeEnds/Text_2	战胜{0}%的玩家
+DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_PVP/locking/Text	即将开放
+DlgGameModeAR/E_HomePage/E_play/E_GameMode/E_join/locking/Text	即将开放
+DlgGameModeAR/E_HomePage/E_Function/E_Cards/Text (TMP)	背包
+DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text01	你需要
+DlgPhysicalStrengthTip/EGBackGround/tips/E_info/Text02	进行游戏。
+DlgPhysicalStrengthTip/EGBackGround/tips/EG_title/E_TitleText	能量不足
+DlgLogin/Sprite_BackGround/Hot updates/ProgressPrarent/Processing/Text	下载中 {0}/{1} MB
+DlgLogin/Sprite_BackGround/Hot updates/txt_updates	检查更新…
+DlgGameModeAR/E_HomePage/E_Function/E_Setting/Text (TMP)	设置
+DlgGameModeAR/E_HomePage/E_Function/E_Community/Text (TMP)	社区
+	
+DlgMail/Inbox/MainContent/TopTitle/titleBK/Txt	邮箱
+DlgQuestionnaire/EG_Report/Root/info	参与问卷调查并获得奖励。
+DlgQuestionnaire/EG_Report/Root/title	参与问卷调查
+DlgChallengeMode/E_HomePage/E_play/EPage_ChallengSeason/info/E_Unlocked/Text (TMP)	选择
+DlgChallengeMode/E_HomePage/E_play/EPage_ChallengNormal/info/E_Unlocked/Text (TMP)	选择
+DlgGameModeSetting/EGBackGround/Root/E_Language/E_LanguageCN/Text (TMP)	简体中文
+DlgGameModeSetting/EGBackGround/Root/E_Language/E_LanguageEN/Text (TMP)	英文
+DlgGameModeSetting/EGBackGround/Root/E_Language/E_LanguageTW/Text (TMP)	繁体中文
+DlgTutorials/Tutorials/E_Tutorials/E_video/EButton_Pause/ELabel_Pause	暂停
+MarkerCanvas/GameModeText	无限模式
+MarkerCanvas/Text	其他玩家可扫码加入
+MarkerCanvas/info/Image/btn	加入游戏
+MarkerCanvas/info/Image/Text (TMP)	如何加入你的房间？

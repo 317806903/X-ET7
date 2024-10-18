@@ -175,17 +175,17 @@ namespace ET.Client
             UnitComponent unitComponent = ET.Client.UnitHelper.GetUnitComponent(scene);
             foreach (var unitId in playerOwnerTowersComponent.playerId2unitTowerId[myPlayerId])
             {
-                Unit unit = unitComponent.Get(unitId);
-                while (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
+                bool bUnitExist = await ET.Client.UnitHelper.ChkUnitExist(playerOwnerTowersComponent, unitId);
+                if (bUnitExist == false)
                 {
-                    await TimerComponent.Instance.WaitFrameAsync();
-                    unit = unitComponent.Get(unitId);
+                    continue;
                 }
+                Unit unit = unitComponent.Get(unitId);
 
-                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
-                while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
+                bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(playerOwnerTowersComponent, unit);
+                if (bRet == false)
                 {
-                    await TimerComponent.Instance.WaitFrameAsync();
+                    return;
                 }
 
                 unit.AddComponent<PointTowerComponent>();
@@ -218,17 +218,17 @@ namespace ET.Client
             UnitComponent unitComponent = ET.Client.UnitHelper.GetUnitComponent(scene);
             foreach (var unitId in playerOwnerTowersComponent.playerId2unitTowerId[myPlayerId])
             {
-                Unit unit = unitComponent.Get(unitId);
-                while (ET.Ability.UnitHelper.ChkUnitAlive(unit) == false)
+                bool bUnitExist = await ET.Client.UnitHelper.ChkUnitExist(playerOwnerTowersComponent, unitId);
+                if (bUnitExist == false)
                 {
-                    await TimerComponent.Instance.WaitFrameAsync();
-                    unit = unitComponent.Get(unitId);
+                    continue;
                 }
+                Unit unit = unitComponent.Get(unitId);
 
-                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
-                while (gameObjectShowComponent == null || gameObjectShowComponent.GetGo() == null)
+                bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(playerOwnerTowersComponent, unit);
+                if (bRet == false)
                 {
-                    await TimerComponent.Instance.WaitFrameAsync();
+                    return;
                 }
 
                 unit.RemoveComponent<PointTowerComponent>();

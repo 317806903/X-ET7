@@ -199,7 +199,7 @@ namespace ET.Client
         public static async ETTask _QuitBattle(this DlgBattleSetting self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent != null && gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+            if (gamePlayTowerDefenseComponent != null)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {

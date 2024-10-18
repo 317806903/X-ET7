@@ -5,10 +5,13 @@
     <type fullname="BlurBackground.TranslucentImageSource" preserve="all" />
   </assembly>
   <assembly fullname="DOTween">
+    <type fullname="DG.Tweening.Core.DOGetter`1" preserve="all" />
+    <type fullname="DG.Tweening.Core.DOSetter`1" preserve="all" />
     <type fullname="DG.Tweening.Core.TweenerCore`3" preserve="all" />
     <type fullname="DG.Tweening.DOTween" preserve="all" />
     <type fullname="DG.Tweening.Ease" preserve="all" />
     <type fullname="DG.Tweening.Plugins.Options.FloatOptions" preserve="all" />
+    <type fullname="DG.Tweening.Plugins.Options.NoOptions" preserve="all" />
     <type fullname="DG.Tweening.Plugins.Options.VectorOptions" preserve="all" />
     <type fullname="DG.Tweening.Sequence" preserve="all" />
     <type fullname="DG.Tweening.ShortcutExtensions" preserve="all" />
@@ -99,6 +102,9 @@
     <type fullname="ShootTextProManager" preserve="all" />
     <type fullname="TextMoveType" preserve="all" />
   </assembly>
+  <assembly fullname="StatusIndiactors">
+    <type fullname="Werewolf.StatusIndicators.Components.Cone" preserve="all" />
+  </assembly>
   <assembly fullname="System">
     <type fullname="System.CodeDom.Compiler.GeneratedCodeAttribute" preserve="all" />
     <type fullname="System.Collections.Generic.Queue`1" preserve="all" />
@@ -106,7 +112,7 @@
     <type fullname="System.Collections.Generic.SortedDictionary`2/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection/Enumerator" preserve="all" />
-    <type fullname="System.Collections.Generic.Stack`1" preserve="all" />
+    <type fullname="System.Collections.Generic.SortedSet`1" preserve="all" />
     <type fullname="System.ComponentModel.EditorBrowsableAttribute" preserve="all" />
     <type fullname="System.ComponentModel.EditorBrowsableState" preserve="all" />
     <type fullname="System.Net.EndPoint" preserve="all" />
@@ -266,7 +272,6 @@
     <type fullname="ET.PathHelper" preserve="all" />
     <type fullname="ET.ResConfig" preserve="all" />
     <type fullname="ET.ShowFPS" preserve="all" />
-    <type fullname="ET.TransparentSetter" preserve="all" />
     <type fullname="ET.UITouchPass" preserve="all" />
     <type fullname="ET.YooAssetHelper" preserve="all" />
     <type fullname="NetWork" preserve="all" />
@@ -304,6 +309,7 @@
     <type fullname="Unity.Mathematics.float3" preserve="all" />
     <type fullname="Unity.Mathematics.float4" preserve="all" />
     <type fullname="Unity.Mathematics.math" preserve="all" />
+    <type fullname="Unity.Mathematics.math/RotationOrder" preserve="all" />
     <type fullname="Unity.Mathematics.quaternion" preserve="all" />
   </assembly>
   <assembly fullname="Unity.RenderPipelines.Universal.Runtime">
@@ -330,6 +336,8 @@
     <type fullname="TMPro.TMP_InputField" preserve="all" />
     <type fullname="TMPro.TMP_InputField/OnChangeEvent" preserve="all" />
     <type fullname="TMPro.TMP_InputField/SubmitEvent" preserve="all" />
+    <type fullname="TMPro.TMP_Settings" preserve="all" />
+    <type fullname="TMPro.TMP_SpriteAsset" preserve="all" />
     <type fullname="TMPro.TMP_Text" preserve="all" />
     <type fullname="TMPro.TextMeshPro" preserve="all" />
     <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
@@ -341,9 +349,12 @@
     <type fullname="Bright.Config.BeanBase" preserve="all" />
     <type fullname="Bright.Serialization.ByteBuf" preserve="all" />
     <type fullname="Bright.Serialization.SerializationException" preserve="all" />
-    <type fullname="DotRecast.Core.RcVec3f" preserve="all" />
+    <type fullname="DotRecast.Core.Numerics.RcVec3f" preserve="all" />
+    <type fullname="DotRecast.Core.RcObjImporter" preserve="all" />
+    <type fullname="DotRecast.Core.RcObjImporterContext" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowd" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowdAgent" preserve="all" />
+    <type fullname="DotRecast.Detour.Crowd.DtCrowdAgentDebugInfo" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowdAgentParams" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowdAgentState" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowdConfig" preserve="all" />
@@ -352,27 +363,27 @@
     <type fullname="DotRecast.Detour.Crowd.DtMoveRequestState" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtObstacleAvoidanceParams" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtPathCorridor" preserve="all" />
-    <type fullname="DotRecast.Detour.Crowd.Tracking.DtCrowdAgentDebugInfo" preserve="all" />
     <type fullname="DotRecast.Detour.DtFindPathOption" preserve="all" />
+    <type fullname="DotRecast.Detour.DtMeshData" preserve="all" />
+    <type fullname="DotRecast.Detour.DtMeshTile" preserve="all" />
     <type fullname="DotRecast.Detour.DtNavMesh" preserve="all" />
     <type fullname="DotRecast.Detour.DtNavMeshQuery" preserve="all" />
     <type fullname="DotRecast.Detour.DtNavMeshRaycast" preserve="all" />
+    <type fullname="DotRecast.Detour.DtPoly" preserve="all" />
     <type fullname="DotRecast.Detour.DtQueryDefaultFilter" preserve="all" />
     <type fullname="DotRecast.Detour.DtStatus" preserve="all" />
+    <type fullname="DotRecast.Detour.DtStraightPath" preserve="all" />
     <type fullname="DotRecast.Detour.IDtQueryFilter" preserve="all" />
-    <type fullname="DotRecast.Detour.StraightPathItem" preserve="all" />
+    <type fullname="DotRecast.Recast.Geom.IInputGeomProvider" preserve="all" />
+    <type fullname="DotRecast.Recast.RcBuilderResult" preserve="all" />
     <type fullname="DotRecast.Recast.RcHeightfield" preserve="all" />
     <type fullname="DotRecast.Recast.RcPolyMeshRaycast" preserve="all" />
     <type fullname="DotRecast.Recast.RcSpan" preserve="all" />
-    <type fullname="DotRecast.Recast.RecastBuilderResult" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.NavMeshBuildResult" preserve="all" />
-    <type fullname="DotRecast.Recast.Toolset.Builder.SampleAreaModifications" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.SoloNavMeshBuilder" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.TileNavMeshBuilder" preserve="all" />
-    <type fullname="DotRecast.Recast.Toolset.DemoObjImporter" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Geom.DemoInputGeomProvider" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.RcNavMeshBuildSettings" preserve="all" />
-    <type fullname="DotRecast.Recast.Toolset.Sample" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder`1" preserve="all" />
     <type fullname="ET.ETCancellationToken" preserve="all" />
@@ -573,12 +584,14 @@
     <type fullname="System.BitConverter" preserve="all" />
     <type fullname="System.Boolean" preserve="all" />
     <type fullname="System.Byte" preserve="all" />
+    <type fullname="System.Collections.Generic.Comparer`1" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/KeyCollection" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/KeyCollection/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator" preserve="all" />
+    <type fullname="System.Collections.Generic.IComparer`1" preserve="all" />
     <type fullname="System.Collections.Generic.IDictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.IEnumerable`1" preserve="all" />
     <type fullname="System.Collections.Generic.IEnumerator`1" preserve="all" />
@@ -643,6 +656,7 @@
     <type fullname="System.Security.Permissions.SecurityPermissionAttribute" preserve="all" />
     <type fullname="System.Security.UnverifiableCodeAttribute" preserve="all" />
     <type fullname="System.Single" preserve="all" />
+    <type fullname="System.Span`1" preserve="all" />
     <type fullname="System.String" preserve="all" />
     <type fullname="System.StringComparison" preserve="all" />
     <type fullname="System.StringSplitOptions" preserve="all" />

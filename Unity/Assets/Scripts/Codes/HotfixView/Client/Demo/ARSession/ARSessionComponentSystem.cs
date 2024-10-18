@@ -1220,27 +1220,36 @@ namespace ET.Client
 			});
 		}
 
-		public static void ShowARMesh(this ARSessionComponent self, bool show)
+		public static void ShowARMesh(this ARSessionComponent self, ARSessionComponent.ArMeshVisibility show)
 		{
 			//Log.Debug($"ARSessionComponent SetMeshShow");
 			Transform staticMeshTrans = self.StaticMeshTran;
 			MirrorVerse.UI.Renderers.StaticMeshRenderer staticMeshRenderer = staticMeshTrans.gameObject.GetComponent<MirrorVerse.UI.Renderers.StaticMeshRenderer>();
 			MirrorVerse.Options.StaticMeshRendererOptions staticMeshRendererOptions = staticMeshRenderer.options;
-			if (show)
+			staticMeshRendererOptions.visible = true;
+			staticMeshRendererOptions.collidable = true;
+			staticMeshRendererOptions.withOcclusion = false;
+			staticMeshRendererOptions.castsShadow = false;
+			staticMeshRendererOptions.receivesShadow = false;
+			bool enableMeshRenderer = true;
+			switch (show)
 			{
-				staticMeshRendererOptions.visible = true;
-				staticMeshRendererOptions.collidable = true;
-				staticMeshRendererOptions.withOcclusion = false;
-				staticMeshRendererOptions.castsShadow = false;
-				staticMeshRendererOptions.receivesShadow = false;
+				case ARSessionComponent.ArMeshVisibility.ColliderOnly:
+					enableMeshRenderer = false;
+					break;
+				case ARSessionComponent.ArMeshVisibility.Visible:
+					break;
+				case ARSessionComponent.ArMeshVisibility.TranslucentOcclusion:
+				default:
+					staticMeshRendererOptions.withOcclusion = true;
+					staticMeshRendererOptions.receivesShadow = true;
+					enableMeshRenderer = true;
+					break;
 			}
-			else
+			MeshRenderer[] meshRenderers = staticMeshRenderer.GetComponentsInChildren<MeshRenderer>();
+			foreach (MeshRenderer meshRenderer in meshRenderers)
 			{
-				staticMeshRendererOptions.visible = true;
-				staticMeshRendererOptions.collidable = true;
-				staticMeshRendererOptions.withOcclusion = true;
-				staticMeshRendererOptions.castsShadow = false;
-				staticMeshRendererOptions.receivesShadow = true;
+				meshRenderer.enabled = enableMeshRenderer;
 			}
 		}
 
@@ -1364,9 +1373,11 @@ namespace ET.Client
 			}
 			long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 			long roomId = playerStatusComponent.RoomId;
-			await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
-			RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(self.DomainScene());
-			RoomComponent roomComponent = roomManagerComponent.GetRoom(roomId);
+			(bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
+			if (roomExist == false)
+			{
+				return false;
+			}
 			if (roomComponent.ChkIsOwner(myPlayerId) == false)
 			{
 				return false;

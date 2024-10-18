@@ -27,14 +27,14 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
         switch (_buf.ReadInt())
         {
             case ActionCallSelectLast.__ID__: return new ActionCallSelectLast(_buf);
-            case ActionCallShow_Self_Unit.__ID__: return new ActionCallShow_Self_Unit(_buf);
-            case ActionCallShow_Self_Area.__ID__: return new ActionCallShow_Self_Area(_buf);
-            case ActionCallShow_Self_OtherUnit.__ID__: return new ActionCallShow_Self_OtherUnit(_buf);
-            case ActionCallShow_Self_OtherArea.__ID__: return new ActionCallShow_Self_OtherArea(_buf);
-            case ActionCallShow_Self_RectangleArea.__ID__: return new ActionCallShow_Self_RectangleArea(_buf);
-            case ActionCallShow_Self_UmbellateArea.__ID__: return new ActionCallShow_Self_UmbellateArea(_buf);
-            case ActionCallShow_Camera_Unit.__ID__: return new ActionCallShow_Camera_Unit(_buf);
-            case ActionCallShow_Camera_Area.__ID__: return new ActionCallShow_Camera_Area(_buf);
+            case ActionCallShow_Drag_SelfUnit.__ID__: return new ActionCallShow_Drag_SelfUnit(_buf);
+            case ActionCallShow_Drag_SelfArea.__ID__: return new ActionCallShow_Drag_SelfArea(_buf);
+            case ActionCallShow_Drag_OtherUnit.__ID__: return new ActionCallShow_Drag_OtherUnit(_buf);
+            case ActionCallShow_Drag_OtherArea.__ID__: return new ActionCallShow_Drag_OtherArea(_buf);
+            case ActionCallShow_Drag_RectangleArea.__ID__: return new ActionCallShow_Drag_RectangleArea(_buf);
+            case ActionCallShow_Drag_UmbellateArea.__ID__: return new ActionCallShow_Drag_UmbellateArea(_buf);
+            case ActionCallShow_Camera_OtherUnit.__ID__: return new ActionCallShow_Camera_OtherUnit(_buf);
+            case ActionCallShow_Camera_OtherArea.__ID__: return new ActionCallShow_Camera_OtherArea(_buf);
             case ActionCallShow_Camera_RectangleArea.__ID__: return new ActionCallShow_Camera_RectangleArea(_buf);
             case ActionCallShow_Camera_UmbellateArea.__ID__: return new ActionCallShow_Camera_UmbellateArea(_buf);
             case ActionCallAutoSelf.__ID__: return new ActionCallAutoSelf(_buf);
@@ -47,6 +47,7 @@ public abstract partial class ActionCallParam: Bright.Config.BeanBase
             case ActionCallCasterActorUnit.__ID__: return new ActionCallCasterActorUnit(_buf);
             case ActionCallOnAttackUnit.__ID__: return new ActionCallOnAttackUnit(_buf);
             case ActionCallBeHurtUnit.__ID__: return new ActionCallBeHurtUnit(_buf);
+            case ActionCallOnAttackHitPos.__ID__: return new ActionCallOnAttackHitPos(_buf);
             case ActionCallOwnCaller.__ID__: return new ActionCallOwnCaller(_buf);
             default: throw new SerializationException();
         }

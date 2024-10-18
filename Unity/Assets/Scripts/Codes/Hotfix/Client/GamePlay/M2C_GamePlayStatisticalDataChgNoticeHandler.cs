@@ -9,12 +9,16 @@ namespace ET.Client
 	{
 		protected override async ETTask Run(Session session, M2C_GamePlayStatisticalDataChgNotice message)
 		{
-			//Log.Debug($"M2C_GamePlayStatisticalDataChgNotice 11");
+			//Log.Debug($"zpb M2C_GamePlayStatisticalDataChgNotice 11");
 			Scene clientScene = session.DomainScene();
 			Scene currentScene = session.DomainScene().CurrentScene();
 			while (currentScene == null || currentScene.IsDisposed)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (clientScene.IsDisposed)
+				{
+					return;
+				}
 				currentScene = session.DomainScene().CurrentScene();
 			}
 
@@ -22,6 +26,10 @@ namespace ET.Client
 			while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
 			{
 				await TimerComponent.Instance.WaitFrameAsync();
+				if (currentScene.IsDisposed)
+				{
+					return;
+				}
 				gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 			}
 
@@ -37,7 +45,7 @@ namespace ET.Client
 			gamePlayStatisticalDataManagerComponent.RemoveChild(myPlayerId);
 			gamePlayStatisticalDataManagerComponent.AddChild(component);
 
-			//Log.Debug($"M2C_GamePlayStatisticalDataChgNotice end");
+			//Log.Debug($"zpb M2C_GamePlayStatisticalDataChgNotice end");
 			await ETTask.CompletedTask;
 		}
 	}

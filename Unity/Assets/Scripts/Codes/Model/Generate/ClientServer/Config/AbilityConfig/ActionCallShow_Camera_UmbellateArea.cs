@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 投射点-指定方向-扇形
 /// </summary>
-public sealed partial class ActionCallShow_Camera_UmbellateArea:  ActionCallCasterShow 
+public sealed partial class ActionCallShow_Camera_UmbellateArea:  ActionCallShow_Camera 
 {
     public ActionCallShow_Camera_UmbellateArea(ByteBuf _buf)  : base(_buf) 
     {

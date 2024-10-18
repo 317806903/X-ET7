@@ -44,7 +44,7 @@ namespace ET
 					foreach (long preHitUnitId in preHitUnitIds)
 					{
 						Unit preHitUnit = UnitHelper.GetUnit(self.DomainScene(), preHitUnitId);
-						BulletHelper.DoBulletHitUnit(unitBullet, preHitUnit);
+						BulletHelper.DoBulletHitUnit(unitBullet, preHitUnit, preHitUnit.Position);
 					}
 					bulletObj.ResetPreHitUnit();
 					if (bulletObj.ChkCanTrigHit() == false)
@@ -89,24 +89,24 @@ namespace ET
 					bool isFriend = ET.GamePlayHelper.ChkIsFriend(unitBullet, unit);
 					if (isFriend == false)
 					{
-						(bool bHitUnit, bool bHitMesh, float3 hitPos) = BulletHelper.ChkBulletHit(unitBullet, unit);
-						if (bHitUnit)
+						(bool isHitUnit, bool isHitMesh, float3 hitUnitPos, float3 hitMeshPos) = BulletHelper.ChkBulletHit(unitBullet, unit);
+						if (isHitUnit)
 						{
-							BulletHelper.DoBulletHitUnit(unitBullet, unit);
+							BulletHelper.DoBulletHitUnit(unitBullet, unit, hitUnitPos);
 						}
-						if (bHitMesh)
+						if (isHitMesh)
 						{
-							BulletHelper.DoBulletHitMesh(unitBullet, hitPos);
+							BulletHelper.DoBulletHitMesh(unitBullet, hitMeshPos);
 						}
 					}
 				}
 
 				if (bulletObj.model.CanHitMesh)
 				{
-					(bool bHitMesh, float3 hitPos) = BulletHelper.ChkBulletHitMesh(unitBullet);
-					if (bHitMesh)
+					(bool isHitMesh, float3 hitMeshPos) = BulletHelper.ChkBulletHitMesh(unitBullet);
+					if (isHitMesh)
 					{
-						BulletHelper.DoBulletHitMesh(unitBullet, hitPos);
+						BulletHelper.DoBulletHitMesh(unitBullet, hitMeshPos);
 					}
 				}
 			}

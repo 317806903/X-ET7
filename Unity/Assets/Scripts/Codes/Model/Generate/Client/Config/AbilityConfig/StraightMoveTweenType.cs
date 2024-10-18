@@ -19,6 +19,9 @@ public sealed partial class StraightMoveTweenType:  SpeedMoveTweenType
 {
     public StraightMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {
+        KeepHorizontal = _buf.ReadBool();
+        IsDownFromAir = _buf.ReadBool();
+        HeightWhenAir = _buf.ReadFloat();
         PostInit();
     }
 
@@ -27,6 +30,18 @@ public sealed partial class StraightMoveTweenType:  SpeedMoveTweenType
         return new StraightMoveTweenType(_buf);
     }
 
+    /// <summary>
+    /// 是否保持水平
+    /// </summary>
+    public bool KeepHorizontal { get; private set; }
+    /// <summary>
+    /// 是否从天垂直下降
+    /// </summary>
+    public bool IsDownFromAir { get; private set; }
+    /// <summary>
+    /// 从天而降的高度
+    /// </summary>
+    public float HeightWhenAir { get; private set; }
 
     public const int __ID__ = 1684715130;
     public override int GetTypeId() => __ID__;
@@ -48,6 +63,9 @@ public sealed partial class StraightMoveTweenType:  SpeedMoveTweenType
         + "HoldTime:" + HoldTime + ","
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
+        + "KeepHorizontal:" + KeepHorizontal + ","
+        + "IsDownFromAir:" + IsDownFromAir + ","
+        + "HeightWhenAir:" + HeightWhenAir + ","
         + "}";
     }
     

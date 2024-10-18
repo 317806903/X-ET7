@@ -420,7 +420,7 @@ public partial class UICodeSpawner
                 Component widget = info;
                 string strClassType = widget.GetType().ToString();
 
-                if (pair.Key.StartsWith(CommonUIPrefix))
+                if (pair.Key.StartsWith(CommonUIPrefix) && pair.Key.StartsWith(NotCommonUIPrefix) == false)
                 {
                     strBuilder.AppendFormat("\t\t\t{0}.m_{1}?.Dispose();\r\n", pointStr, pair.Key.ToLower());
                     strBuilder.AppendFormat("\t\t\t{0}.m_{1} = null;\r\n", pointStr, pair.Key.ToLower());
@@ -450,7 +450,7 @@ public partial class UICodeSpawner
                 string strClassType = widget.GetType().ToString();
                 string strInterfaceType = strClassType;
 
-                if (pair.Key.StartsWith(CommonUIPrefix))
+                if (pair.Key.StartsWith(CommonUIPrefix) && pair.Key.StartsWith(NotCommonUIPrefix) == false)
                 {
                     var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
                     if (subUIClassPrefab == null)
@@ -530,7 +530,7 @@ public partial class UICodeSpawner
                 Component widget = info;
                 string strClassType = widget.GetType().ToString();
 
-                if (pair.Key.StartsWith(CommonUIPrefix))
+                if (pair.Key.StartsWith(CommonUIPrefix) && pair.Key.StartsWith(NotCommonUIPrefix) == false)
                 {
                     var subUIClassPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(widget);
                     if (subUIClassPrefab == null)
@@ -576,10 +576,18 @@ public partial class UICodeSpawner
             Transform child = trans.GetChild(nIndex);
             string strTemp = strPath + "/" + child.name;
 
-            bool isSubUI = child.name.StartsWith(CommonUIPrefix);
+            bool isSubUI = child.name.StartsWith(CommonUIPrefix) && child.name.StartsWith(NotCommonUIPrefix) == false;
             if (isSubUI == false)
             {
                 isSubUI = child.name.StartsWith(UIPagePrefix);
+            }
+            if (isSubUI == false)
+            {
+                bool isItemUI = child.name.StartsWith(UIItemPrefix);
+                if (isItemUI)
+                {
+                    continue;
+                }
             }
             if (isSubUI)
             {
@@ -719,6 +727,7 @@ public partial class UICodeSpawner
     private static Dictionary<string, List<Component>> Path2WidgetCachedDict = null;
     private static List<string> WidgetInterfaceList = null;
     private const string CommonUIPrefix = "ES";
+    private const string NotCommonUIPrefix = "ESprite";
     private const string UIPanelPrefix = "Dlg";
     private const string UIPagePrefix = "EPage";
     private const string UIWidgetPrefix = "E";

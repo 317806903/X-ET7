@@ -66,6 +66,20 @@ namespace ET.Ability
                 {
                     targetUnit = beHurtUnit;
                 }
+                else if (selectObjectCfg.ActionCallParam is ActionCallOnAttackHitPos actionCallOnAttackHitPos)
+                {
+                    if (UnitHelper.ChkIsBullet(onAttackUnit))
+                    {
+                        BulletObj bulletObj = onAttackUnit.GetComponent<BulletObj>();
+                        float3 hitPos = bulletObj.actionContext.hitPosition;
+                        selectHandle = SelectHandleHelper.CreatePositionSelectHandle(triggerUnit, hitPos, float3.zero, selectObjectCfg);
+                        return (selectHandle, resetPosByUnit);
+                    }
+                    else
+                    {
+                        return (null, null);
+                    }
+                }
                 else
                 {
                     targetUnit = triggerUnit;
@@ -129,73 +143,37 @@ namespace ET.Ability
                 return null;
             }
             ActionCallParam actionCallParam = selectObjectCfgShow.ActionCallParam;
-            if (actionCallParam is ActionCallShow_Self_Unit actionCallShowSelfUnit)
+            if (actionCallParam is ActionCallShow_Drag_SelfUnit actionCallShowDragSelfUnit)
             {
                 return CreateUnitSelfSelectHandle(unit);
             }
-            else if(actionCallParam is ActionCallShow_Self_Area actionCallShowSelfArea)
+            else if(actionCallParam is ActionCallShow_Drag_SelfArea actionCallShowDragSelfArea)
             {
-                bool isResetPos = false;
-                float3 resetPos = float3.zero;
-                bool isResetForward = false;
-                float3 resetForward = float3.zero;
-                bool canUseRecordResult = false;
-                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
-            }
-            else if(actionCallParam is ActionCallShow_Self_OtherUnit actionCallShowSelfOtherUnit)
-            {
-                if (selectHandleShow.unitIds == null)
-                {
-                    Log.Error($"ActionCallShow_Self_OtherUnit selectHandleShow.unitIds == null");
-                    return null;
-                }
-                else if (selectHandleShow.unitIds.Count > 1)
-                {
-                    Log.Error($"ActionCallShow_Self_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
-                    return null;
-                }
-
-                long targetUnitId = selectHandleShow.unitIds[0];
-                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), targetUnitId);
-                return CreateUnitSelectHandle(unit, targetUnit, selectObjectCfg);
-            }
-            else if (actionCallParam is ActionCallShow_Self_OtherArea actionCallShowSelfOtherArea)
-            {
-                bool isResetPos = true;
                 float3 resetPos = selectHandleShow.position;
-                bool isResetForward = false;
                 float3 resetForward = float3.zero;
-                bool canUseRecordResult = false;
-                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
             }
-            else if (actionCallParam is ActionCallShow_Self_RectangleArea actionCallShowSelfRectangleArea)
-            {
-                bool isResetPos = false;
-                float3 resetPos = float3.zero;
-                bool isResetForward = true;
-                float3 resetForward = selectHandleShow.direction;
-                bool canUseRecordResult = false;
-                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
-            }
-            else if (actionCallParam is ActionCallShow_Self_UmbellateArea actionCallShowSelfUmbellateArea)
-            {
-                bool isResetPos = false;
-                float3 resetPos = float3.zero;
-                bool isResetForward = true;
-                float3 resetForward = selectHandleShow.direction;
-                bool canUseRecordResult = false;
-                return CreateSelectHandle(unit, isResetPos, resetPos, isResetForward, resetForward, selectObjectCfg, ref actionContext, canUseRecordResult);
-            }
-            else if (actionCallParam is ActionCallShow_Camera_Unit actionCallShowCameraUnit)
+            else if(actionCallParam is ActionCallShow_Drag_OtherUnit actionCallShowDragOtherUnit)
             {
                 if (selectHandleShow.unitIds == null)
                 {
-                    Log.Error($"ActionCallShow_Camera_Unit selectHandleShow.unitIds == null");
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Drag_OtherUnit selectHandleShow.unitIds == null");
+#endif
+                    return null;
+                }
+                else if (selectHandleShow.unitIds.Count == 0)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Drag_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] == 0");
+#endif
                     return null;
                 }
                 else if (selectHandleShow.unitIds.Count > 1)
                 {
-                    Log.Error($"ActionCallShow_Camera_Unit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Drag_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
+#endif
                     return null;
                 }
 
@@ -203,7 +181,53 @@ namespace ET.Ability
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), targetUnitId);
                 return CreateUnitSelectHandle(unit, targetUnit, selectObjectCfg);
             }
-            else if (actionCallParam is ActionCallShow_Camera_Area actionCallShowCameraArea)
+            else if (actionCallParam is ActionCallShow_Drag_OtherArea actionCallShowDragOtherArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = float3.zero;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Drag_RectangleArea actionCallShowDragRectangleArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = float3.zero;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Drag_UmbellateArea actionCallShowDragUmbellateArea)
+            {
+                float3 resetPos = selectHandleShow.position;
+                float3 resetForward = float3.zero;
+                return CreatePositionSelectHandle(unit, resetPos, resetForward, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_OtherUnit actionCallShowCameraOtherUnit)
+            {
+                if (selectHandleShow.unitIds == null)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Camera_OtherUnit selectHandleShow.unitIds == null");
+#endif
+                    return null;
+                }
+                else if (selectHandleShow.unitIds.Count == 0)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Camera_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] == 0");
+#endif
+                    return null;
+                }
+                else if (selectHandleShow.unitIds.Count > 1)
+                {
+#if UNITY_EDITOR
+                    Log.Error($"ActionCallShow_Camera_OtherUnit selectHandleShow.unitIds.Count[{selectHandleShow.unitIds.Count}] > 1");
+#endif
+                    return null;
+                }
+
+                long targetUnitId = selectHandleShow.unitIds[0];
+                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), targetUnitId);
+                return CreateUnitSelectHandle(unit, targetUnit, selectObjectCfg);
+            }
+            else if (actionCallParam is ActionCallShow_Camera_OtherArea actionCallShowCameraOtherArea)
             {
                 float3 resetPos = selectHandleShow.position;
                 float3 resetForward = float3.zero;
@@ -968,9 +992,9 @@ namespace ET.Ability
             return unitListTmp;
         }
 
-        private static MultiMapSimple<float, Unit> tmp_dic = new();
-        private static MultiMapSimple<float, Unit> tmp_dic2 = new();
-        private static List<Unit> tmp_list1 = new();
+        public static MultiMapSimple<float, Unit> tmp_dic = new();
+        public static MultiMapSimple<float, Unit> tmp_dic2 = new();
+        public static List<Unit> tmp_list1 = new();
 
         public static void DoRecordUnitsByArea(Unit unit, bool isResetPos, float3 resetPos, bool isResetForward, float3 resetForward, SelectObjectCfg selectObjectCfg, SelectHandle selectHandle)
         {

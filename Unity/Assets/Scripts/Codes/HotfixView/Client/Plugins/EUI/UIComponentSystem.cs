@@ -549,15 +549,25 @@ namespace ET.Client
 
                 self.UIBaseWindowlistCached.Add((WindowID)window.Key);
                 window.Value.UIPrefabGameObject?.SetActive(false);
-                UIEventComponent.Instance.GetUIEventHandler(window.Value.WindowID).OnHideWindow(window.Value);
             }
 
             if (self.UIBaseWindowlistCached.Count > 0)
             {
                 for (int i = 0; i < self.UIBaseWindowlistCached.Count; i++)
                 {
-                    self.VisibleWindowsDic.Remove((int)self.UIBaseWindowlistCached[i]);
+                    int id = (int)self.UIBaseWindowlistCached[i];
+                    if (self.VisibleWindowsDic.ContainsKey(id))
+                    {
+                        UIBaseWindow uiBaseWindow = self.VisibleWindowsDic[id];
+                        if (uiBaseWindow.IsDisposed == false)
+                        {
+                            UIEventComponent.Instance.GetUIEventHandler(uiBaseWindow.WindowID).OnHideWindow(uiBaseWindow);
+                        }
+                        self.VisibleWindowsDic.Remove(id);
+                    }
                 }
+
+                self.UIBaseWindowlistCached.Clear();
             }
 
             self.StackWindowsQueue.Clear();

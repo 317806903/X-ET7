@@ -13,6 +13,7 @@ namespace Werewolf.StatusIndicators.Components
         // Constants
 
         public const float CONE_ANIM_SPEED = 40f;
+        public bool isNeedRotationByMouse = false;
 
         public Transform LBord;
 
@@ -48,7 +49,10 @@ namespace Werewolf.StatusIndicators.Components
         public override void Update()
         {
             base.Update();
-            this.transform.rotation = SkillCastDirAndTargetHelper.GetQuaFromMouseAndCaster(this.transform.position);
+            if (this.isNeedRotationByMouse)
+            {
+                this.transform.rotation = SkillCastDirAndTargetHelper.GetQuaFromMouseAndCaster(this.transform.position);
+            }
         }
 
         private void SetAngle(float angle)

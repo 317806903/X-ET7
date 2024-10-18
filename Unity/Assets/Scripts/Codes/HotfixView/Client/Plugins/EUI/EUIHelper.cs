@@ -96,6 +96,10 @@ namespace ET.Client
             float halfSpacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing / 2;
             float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
             float leftoffset = LoopForhalf - ((cellWidth / 2) * count) - (count - 1) * halfSpacing;
+            if (leftoffset < 0)
+            {
+                leftoffset = 0;
+            }
             contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset * contentRectTrans.localScale.x);
             //
             // await TimerComponent.Instance.WaitFrameAsync();

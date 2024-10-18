@@ -15,7 +15,7 @@ namespace ET.AbilityConfig
 /// <summary>
 /// 投射点-指定方向-矩形
 /// </summary>
-public sealed partial class ActionCallShow_Camera_RectangleArea:  ActionCallCasterShow 
+public sealed partial class ActionCallShow_Camera_RectangleArea:  ActionCallShow_Camera 
 {
     public ActionCallShow_Camera_RectangleArea(ByteBuf _buf)  : base(_buf) 
     {

@@ -88,7 +88,10 @@ namespace ET.Client
 
 			if (self.tipShowGoList.Count == 0 && self.tips.Count == 0)
 			{
-				UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTipTopShow>();
+				if (self.IsDisposed == false)
+				{
+					UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonTipTopShow>();
+				}
 			}
 		}
 	}

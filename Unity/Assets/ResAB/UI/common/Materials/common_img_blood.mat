@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: common_img_blood
-  m_Shader: {fileID: 4800000, guid: 3301c8c1628187942a9e783f9c6d6f1e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 8628b3bba8988c7418fd71e73c81dc4a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

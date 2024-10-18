@@ -41,7 +41,7 @@ namespace ET.Server
                     (bool bRet, byte[] playerModelComponentBytes) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
                     if (bRet)
                     {
-                        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, playerModelComponentBytes, null);
+                        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, playerModelComponentBytes, null, PlayerModelChgType.None);
                         entityModel.SetDataCacheAutoClear();
                         entity = entityModel;
                     }
@@ -148,7 +148,7 @@ namespace ET.Server
         {
             PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-            Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys);
+            Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, bytes, setPlayerKeys, PlayerModelChgType.None);
             entityModel.SetDataCacheAutoClear();
             await ETTask.CompletedTask;
         }

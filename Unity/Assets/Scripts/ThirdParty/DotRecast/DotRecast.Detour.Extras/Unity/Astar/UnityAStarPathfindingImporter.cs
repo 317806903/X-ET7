@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -48,8 +49,7 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                 int nodeCount = graphMeshData.CountNodes();
                 if (connections.Count != nodeCount)
                 {
-                    throw new ArgumentException("Inconsistent number of nodes in data file: " + nodeCount
-                                                                                              + " and connecton files: " + connections.Count);
+                    throw new ArgumentException($"Inconsistent number of nodes in data file: {nodeCount} and connection files: {connections.Count}");
                 }
 
                 // Build BV tree
@@ -63,13 +63,14 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                 option.maxPolys = 32768;
                 option.tileWidth = graphMeta.tileSizeX * graphMeta.cellSize;
                 option.tileHeight = graphMeta.tileSizeZ * graphMeta.cellSize;
-                option.orig.x = -0.5f * graphMeta.forcedBoundsSize.x + graphMeta.forcedBoundsCenter.x;
-                option.orig.y = -0.5f * graphMeta.forcedBoundsSize.y + graphMeta.forcedBoundsCenter.y;
-                option.orig.z = -0.5f * graphMeta.forcedBoundsSize.z + graphMeta.forcedBoundsCenter.z;
-                DtNavMesh mesh = new DtNavMesh(option, 3);
+                option.orig.X = -0.5f * graphMeta.forcedBoundsSize.x + graphMeta.forcedBoundsCenter.x;
+                option.orig.Y = -0.5f * graphMeta.forcedBoundsSize.y + graphMeta.forcedBoundsCenter.y;
+                option.orig.Z = -0.5f * graphMeta.forcedBoundsSize.z + graphMeta.forcedBoundsCenter.z;
+                DtNavMesh mesh = new DtNavMesh();
+                mesh.Init(option, 3);
                 foreach (DtMeshData t in graphMeshData.tiles)
                 {
-                    mesh.AddTile(t, 0, 0);
+                    mesh.AddTile(t, 0, 0, out _);
                 }
 
                 meshes[graphIndex] = mesh;

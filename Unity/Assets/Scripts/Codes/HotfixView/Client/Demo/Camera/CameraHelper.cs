@@ -72,6 +72,12 @@ namespace ET.Client
 		public static (float3, float3, float3) GetCameraHit(Scene scene)
 		{
 			Camera camera = CameraHelper.GetMainCamera(scene);
+
+			return GetCameraHit(camera);
+		}
+
+		public static (float3, float3, float3) GetCameraHit(Camera camera)
+		{
 			float3 cameraPos = camera.transform.position;
 			float3 cameraDirect = camera.transform.forward;
 			float3 cameraHitPos = float3.zero;

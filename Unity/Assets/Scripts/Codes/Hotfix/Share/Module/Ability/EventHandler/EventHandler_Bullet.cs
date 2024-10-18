@@ -24,6 +24,8 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
+					BulletObj bulletObj = unit.GetComponent<BulletObj>();
+					bulletObj.actionContext.hitPosition = args.hitPos;
 					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))

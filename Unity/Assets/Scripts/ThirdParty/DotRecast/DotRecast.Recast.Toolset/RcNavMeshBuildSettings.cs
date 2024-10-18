@@ -1,4 +1,4 @@
-﻿namespace DotRecast.Recast.Toolset
+namespace DotRecast.Recast.Toolset
 {
     public class RcNavMeshBuildSettings
     {
@@ -29,7 +29,10 @@
         public float detailSampleDist = 6f;
         public float detailSampleMaxError = 1f;
 
-        public bool tiled = false;
-        public int tileSize = 32;
+        public bool tiled = true;
+        public int tileSize = 128;
+        
+        public bool keepInterResults = true; // full memory
+        public bool buildAll = true;
     }
 }

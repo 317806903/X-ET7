@@ -99,6 +99,12 @@ namespace ET.Ability
 
                     float3 position = unitEffect.Position;
                     float3 forward = unitEffect.Forward;
+                    OffSetInfo offSetInfo = actionCfgCreateEffect.OffSetInfo;
+                    if (offSetInfo.KeepHorizontal)
+                    {
+                        forward.y = 0;
+                        forward = math.normalize(forward);
+                    }
                     Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
                     effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
                     if (effectComponent == null)
@@ -141,11 +147,18 @@ namespace ET.Ability
                 effectCasterUnitId = unit.GetCaster().Id;
             }
             float3 position = selectHandle.position;
-            float3 forward = new float3(0, 0, 1);
+            float3 forward = unit.Forward;
             if (selectHandle.selectHandleType == SelectHandleType.SelectDirection)
             {
                 forward = selectHandle.direction;
             }
+            OffSetInfo offSetInfo = actionCfgCreateEffect.OffSetInfo;
+            if (offSetInfo.KeepHorizontal)
+            {
+                forward.y = 0;
+                forward = math.normalize(forward);
+            }
+
             Unit unitSceneEffect = ET.GamePlayHelper.CreateSceneEffect(unit.DomainScene(), position, forward);
             EffectComponent effectComponent = unitSceneEffect.GetComponent<EffectComponent>();
             if (effectComponent == null)

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using DotRecast.Core.Numerics;
+using DotRecast.Detour;
+using DotRecast.Recast;
 using DotRecast.Recast.Toolset;
 using DotRecast.Recast.Toolset.Builder;
 using DotRecast.Recast.Toolset.Geom;
+using System.Linq;
 using Unity.Mathematics;
-using DotRecast.Core;
-using DotRecast.Detour;
-using DotRecast.Recast;
 
 namespace ET
 {
@@ -22,6 +22,7 @@ namespace ET
                 self.segPoints = new();
                 self.recordMeshHitDic = new();
                 self.recordMeshHeightDic = new();
+                self.navMeshDataDictionary = new();
             }
         }
 
@@ -174,6 +175,7 @@ namespace ET
             self._sample.SetChanged(false);
             self.isLoadMeshFinished = true;
             self.isLoadMeshError = false;
+            self.navMeshDataDictionary.Clear();
         }
 
         public static DtNavMesh GetNavMesh(this NavmeshManagerComponent self)
@@ -215,9 +217,9 @@ namespace ET
             if (hit)
             {
                 RcVec3f pos = new RcVec3f();
-                pos.x = rayStart.x + (rayEnd.x - rayStart.x) * hitTime;
-                pos.y = rayStart.y + (rayEnd.y - rayStart.y) * hitTime;
-                pos.z = rayStart.z + (rayEnd.z - rayStart.z) * hitTime;
+                pos.X = rayStart.X + (rayEnd.X - rayStart.X) * hitTime;
+                pos.Y = rayStart.Y + (rayEnd.Y - rayStart.Y) * hitTime;
+                pos.Z = rayStart.Z + (rayEnd.Z - rayStart.Z) * hitTime;
                 //Log.Debug($"hitPos={pos}");
                 return (true, pos);
             }
@@ -235,7 +237,7 @@ namespace ET
             var (bRet, rcVec3f) = self._OnRaycast(rayStart, rayEnd);
             if (bRet)
             {
-                return (true, new float3(-rcVec3f.x, rcVec3f.y, rcVec3f.z));
+                return (true, new float3(-rcVec3f.X, rcVec3f.Y, rcVec3f.Z));
             }
             else
             {
@@ -336,9 +338,9 @@ namespace ET
 
             RcVec3f rayPos = new RcVec3f(-rayPosIn.x, rayPosIn.y, rayPosIn.z);
 
-            foreach (RecastBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
+            foreach (RcBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
             {
-                RcHeightfield rcHeightfield = recastBuilderResult.GetSolidHeightfield();
+                RcHeightfield rcHeightfield = recastBuilderResult.SolidHeightfiled;
                 try
                 {
                     bool bHit = self._ChkHitPointOneHeightfield(rayPos, rcHeightfield);
@@ -367,8 +369,8 @@ namespace ET
             int w = hf.width;
             int h = hf.height;
 
-            if (rayPosIn.x >= orig.x && rayPosIn.x < orig.x + w * cs
-                && rayPosIn.z >= orig.z && rayPosIn.z < orig.z + h * cs)
+            if (rayPosIn.X >= orig.X && rayPosIn.X < orig.X + w * cs
+                && rayPosIn.Z >= orig.Z && rayPosIn.Z < orig.Z + h * cs)
             {
             }
             else
@@ -381,10 +383,10 @@ namespace ET
             //     return false;
             // }
 
-            float disX = (rayPosIn.x - orig.x) / cs;
+            float disX = (rayPosIn.X - orig.X) / cs;
             int indexX = (int)Math.Floor(disX);
 
-            float disZ = (rayPosIn.z - orig.z) / cs;
+            float disZ = (rayPosIn.Z - orig.Z) / cs;
             int indexZ = (int)Math.Floor(disZ);
 
             RcSpan s = null;
@@ -402,7 +404,7 @@ namespace ET
             }
             while (s != null)
             {
-                if (rayPosIn.y >= orig.y + s.smin * ch && rayPosIn.y <= orig.y + s.smax * ch)
+                if (rayPosIn.Y >= orig.Y + s.smin * ch && rayPosIn.Y <= orig.Y + s.smax * ch)
                 {
                     return true;
                 }
@@ -465,6 +467,85 @@ namespace ET
             dic3[z] = info;
         }
 
+        private static readonly RcVec3f MPolyPickExt = new RcVec3f(2, 4, 2);
+        private static readonly DtQueryDefaultFilter MFilter = new DtQueryDefaultFilter();
+        
+        public static NavmeshManagerComponent.NavMeshData GetNavMeshData(this NavmeshManagerComponent self, float3 startPosition)
+        {
+            NavmeshManagerComponent.NavMeshData result = new ();
+            if (!self.isLoadMeshFinished || self.isLoadMeshError)
+            {
+                Log.Warning("NavMesh is not ready.");
+                return result;
+            }
+
+            long polyRef;
+            var query = self.GetSample().GetNavMeshQuery();
+            RcVec3f pos = new RcVec3f(-startPosition.x, startPosition.y, startPosition.z);
+            if (!query.FindNearestPoly(pos, MPolyPickExt, MFilter, out polyRef, out var _, out var _).Succeeded())
+            {
+                Log.Warning("Failed to find nearest poly.");
+                return result;
+            }
+
+            if (self.navMeshDataDictionary.TryGetValue(polyRef, out result))
+            {
+                Log.Debug("Found previous nav mesh data.");
+                return result;
+            }
+
+            var polyCenter = self.m_nav.GetPolyCenter(polyRef);
+            var diameter = (self.GetSample().GetInputGeom().GetMeshBoundsMax() - self.GetSample().GetInputGeom().GetMeshBoundsMin()).Length();
+            List<long> polys = new List<long>();
+            List<long> resultParent = new List<long>();
+            List<float> resultCost = new List<float>();
+            List<(DtMeshTile, DtPoly)> tilesAndPolygons = new List<(DtMeshTile, DtPoly)>();
+            if (!query.FindPolysAroundCircle(polyRef, polyCenter, diameter / 2, MFilter, ref polys, ref resultParent, ref resultCost).Succeeded())
+            {
+                Log.Warning("Failed to find polys around circle.");
+                return result;
+            }
+            int totalIndices = 0;
+            var comparer = Comparer<float3>.Create((x, y) =>
+            {
+                if (x.Equals(y)) return 0;
+                if (!x.x.Equals(y.x)) return x.x.CompareTo(y.x);
+                if (!x.y.Equals(y.y)) return x.y.CompareTo(y.y);
+                return x.z.CompareTo(y.z);
+            });
+            SortedSet<float3> vertices = new SortedSet<float3>(comparer);
+
+            for (int i = 0; i < polys.Count; i++)
+            {
+                var status = self.m_nav.GetTileAndPolyByRef(polys[i], out var tile, out var poly);
+                if (!status.Succeeded())
+                {
+                    continue;
+                }
+                for (int j = 0; j < poly.vertCount; j++)
+                {
+                    int v = poly.verts[j] * 3;
+                    vertices.Add(new float3(-tile.data.verts[v], tile.data.verts[v + 1], tile.data.verts[v + 2]));
+                }
+                totalIndices += poly.vertCount + 1;
+                tilesAndPolygons.Add((tile, poly));
+            }
+            result.Indices = new List<int>(totalIndices);
+            result.Vertices = vertices.ToList();
+            foreach ((var tile, var poly) in tilesAndPolygons)
+            {
+                result.Indices.Add(poly.vertCount);
+                for (int j = 0; j < poly.vertCount; j++)
+                {
+                    int v = poly.verts[j] * 3;
+                    var vertice = new float3(-tile.data.verts[v], tile.data.verts[v + 1], tile.data.verts[v + 2]);
+                    result.Indices.Add(result.Vertices.BinarySearch(0, result.Vertices.Count, vertice, comparer));
+                }
+            }
+            Log.Debug($"Found NavMesh with {result.Vertices.Count} vertices and {result.Indices.Count} indices for position: {pos}.");
+            return result;
+        }
+
         public static (bool isHitMesh, float height) GetMeshHeightOnPoint(this NavmeshManagerComponent self, float3 rayPosIn)
         {
             int x = (int)(rayPosIn.x * 100);
@@ -479,9 +560,9 @@ namespace ET
 
             RcVec3f rayPos = new RcVec3f(-rayPosIn.x, rayPosIn.y, rayPosIn.z);
 
-            foreach (RecastBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
+            foreach (RcBuilderResult recastBuilderResult in self.GetSample().GetRecastResults())
             {
-                RcHeightfield rcHeightfield = recastBuilderResult.GetSolidHeightfield();
+                RcHeightfield rcHeightfield = recastBuilderResult.SolidHeightfiled;
                 try
                 {
                     (bool bHit, float height) = self._GetMeshHeightfield(rayPos, rcHeightfield);
@@ -510,8 +591,8 @@ namespace ET
             int w = hf.width;
             int h = hf.height;
 
-            if (rayPosIn.x >= orig.x && rayPosIn.x < orig.x + w * cs
-                && rayPosIn.z >= orig.z && rayPosIn.z < orig.z + h * cs)
+            if (rayPosIn.X >= orig.X && rayPosIn.X < orig.X + w * cs
+                && rayPosIn.Z >= orig.Z && rayPosIn.Z < orig.Z + h * cs)
             {
             }
             else
@@ -519,10 +600,10 @@ namespace ET
                 return (false, 0);
             }
 
-            float disX = (rayPosIn.x - orig.x) / cs;
+            float disX = (rayPosIn.X - orig.X) / cs;
             int indexX = (int)Math.Floor(disX);
 
-            float disZ = (rayPosIn.z - orig.z) / cs;
+            float disZ = (rayPosIn.Z - orig.Z) / cs;
             int indexZ = (int)Math.Floor(disZ);
 
             RcSpan s = null;
@@ -543,16 +624,16 @@ namespace ET
             bool bRet = false;
             while (s != null)
             {
-                if (rayPosIn.y >= orig.y + s.smax * ch)
+                if (rayPosIn.Y >= orig.Y + s.smax * ch)
                 {
                     if (bRet == false)
                     {
                         bRet = true;
-                        curHeight = orig.y + s.smax * ch;
+                        curHeight = orig.Y + s.smax * ch;
                     }
-                    else if (curHeight < orig.y + s.smax * ch)
+                    else if (curHeight < orig.Y + s.smax * ch)
                     {
-                        curHeight = orig.y + s.smax * ch;
+                        curHeight = orig.Y + s.smax * ch;
                     }
                 }
                 s = s.next;
@@ -620,7 +701,7 @@ namespace ET
 
         public static bool FrustumTest(this NavmeshManagerComponent self, RcVec3f bmin, RcVec3f bmax)
         {
-            return self.FrustumTest(bmin.x, bmin.y, bmin.z, bmax.x, bmax.y, bmax.z);
+            return self.FrustumTest(bmin.X, bmin.Y, bmin.Z, bmax.X, bmax.Y, bmax.Z);
         }
     }
 }

@@ -20,6 +20,8 @@ public sealed partial class TargetLimitTimeMoveTweenType:  SpeedMoveTweenType
     public TargetLimitTimeMoveTweenType(ByteBuf _buf)  : base(_buf) 
     {
         LimitTime = _buf.ReadFloat();
+        IsDownFromAir = _buf.ReadBool();
+        HeightWhenAir = _buf.ReadFloat();
         PostInit();
     }
 
@@ -32,6 +34,14 @@ public sealed partial class TargetLimitTimeMoveTweenType:  SpeedMoveTweenType
     /// 特定时间到达
     /// </summary>
     public float LimitTime { get; private set; }
+    /// <summary>
+    /// 是否从天垂直下降
+    /// </summary>
+    public bool IsDownFromAir { get; private set; }
+    /// <summary>
+    /// 从天而降的高度
+    /// </summary>
+    public float HeightWhenAir { get; private set; }
 
     public const int __ID__ = -473559491;
     public override int GetTypeId() => __ID__;
@@ -54,6 +64,8 @@ public sealed partial class TargetLimitTimeMoveTweenType:  SpeedMoveTweenType
         + "Speed:" + Speed + ","
         + "AcceleratedSpeed:" + AcceleratedSpeed + ","
         + "LimitTime:" + LimitTime + ","
+        + "IsDownFromAir:" + IsDownFromAir + ","
+        + "HeightWhenAir:" + HeightWhenAir + ","
         + "}";
     }
     

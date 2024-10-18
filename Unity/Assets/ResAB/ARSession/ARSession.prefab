@@ -1226,8 +1226,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1568929337869642417, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
+      propertyPath: minimumMeshFases
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568929337869642417, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
       propertyPath: supportIssueReport
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568929337869642417, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: minimumRegisteredImages
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568929337869642417, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      propertyPath: minimumMeshFasesWithDuration
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1884117110138393962, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}

@@ -285,9 +285,8 @@ namespace ET.Client
         {
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
-            await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
+            (bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
-            RoomComponent roomComponent = self.GetRoomComponent();
             self.View.E_RoomMemberList_titleImage.SetVisible(false);
             self.View.E_RoomMemberList_title_ChallengeImage.SetVisible(false);
 

@@ -63,11 +63,11 @@ namespace ET.Client
         /// </summary>
         /// <param name="clientScene"></param>
         /// <param name="roomId"></param>
-        public static async ETTask<bool> GetRoomInfoAsync(Scene clientScene, long roomId)
+        public static async ETTask<(bool, RoomComponent)> GetRoomInfoAsync(Scene clientScene, long roomId)
         {
             if (roomId == 0)
             {
-                return false;
+                return (false, null);
             }
             G2C_GetRoomInfo _G2C_GetRoomInfo = await ET.Client.SessionHelper.GetSession(clientScene).Call(new C2G_GetRoomInfo()
                 {
@@ -77,13 +77,13 @@ namespace ET.Client
             if (_G2C_GetRoomInfo.Error != ET.ErrorCode.ERR_Success)
             {
                 Log.Error($"ET.Client.RoomHelper.GetRoomInfoAsync Error==1 msg={_G2C_GetRoomInfo.Message}");
-                return false;
+                return (false, null);
             }
             else
             {
                 RoomManagerComponent roomManagerComponent = ET.Client.RoomHelper.GetRoomManager(clientScene);
-                roomManagerComponent.Init(roomId, _G2C_GetRoomInfo.RoomInfo, _G2C_GetRoomInfo.RoomMemberInfos);
-                return true;
+                RoomComponent roomComponent = roomManagerComponent.Init(roomId, _G2C_GetRoomInfo.RoomInfo, _G2C_GetRoomInfo.RoomMemberInfos);
+                return (true, roomComponent);
             }
         }
 

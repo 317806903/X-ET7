@@ -10,7 +10,7 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_SkillInfo))]
 	public static class Scroll_Item_SkillInfoSystem
 	{
-		public static void Init(this Scroll_Item_SkillInfo self, (string skillCfg,bool isLearned) skillItemCfgId, bool isShowRedDot=false)
+		public static void Init(this Scroll_Item_SkillInfo self, (string skillCfg, bool isLearned) skillItemCfgId, bool isShowRedDot=false)
 		{
 			EventTriggerListener.Get(self.EButton_SelectButton.gameObject).RemoveAllListeners();
 			EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
@@ -64,13 +64,14 @@ namespace ET.Client
                 self.E_LockImage.SetVisible(true);
             }
 			//icon
-			PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(skillItemCfgId.skillCfg);
-			string icon_Res = playerSkillCfg.Icon;
+			SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillItemCfgId.skillCfg);
+			string icon_Res = skillCfg.Icon;
 			self.EButton_IconImage.SetImageByResIconCfgId(self, icon_Res).Coroutine();
 			//name
-			string name=playerSkillCfg.Name;
+			string name = skillCfg.Name;
 			self.EButton_nameTextMeshProUGUI.text = name;
 			//level
+			PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(skillItemCfgId.skillCfg);
 			int skillLevel = playerSkillCfg.Level;
 			self.EG_IconStarRectTransform.SetVisible(true);
 			self.E_IconStar1Image.SetVisible(skillLevel > 0);

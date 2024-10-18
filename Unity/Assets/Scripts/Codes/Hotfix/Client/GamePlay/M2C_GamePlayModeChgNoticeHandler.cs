@@ -9,7 +9,7 @@ namespace ET.Client
 		protected override async ETTask Run(Session session, M2C_GamePlayModeChgNotice message)
 		{
 			Scene clientScene = session.DomainScene();
-			using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.GamePlay, 0))
+			using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.GamePlay, 1))
 			{
 				await Deal(clientScene, message);
 			}
@@ -17,7 +17,7 @@ namespace ET.Client
 
 		protected async ETTask Deal(Scene clientScene, M2C_GamePlayModeChgNotice message)
 		{
-			Log.Debug($"M2C_GamePlayModeChgNotice 11");
+			Log.Debug($"zpb M2C_GamePlayModeChgNotice 11 message.RpcId={message.RpcId}");
 			Scene currentScene = clientScene.CurrentScene();
 			while (currentScene == null || currentScene.IsDisposed)
 			{
@@ -29,7 +29,7 @@ namespace ET.Client
 				currentScene = clientScene.CurrentScene();
 			}
 
-			Log.Debug($"M2C_GamePlayModeChgNotice 22");
+			Log.Debug($"zpb M2C_GamePlayModeChgNotice 22 message.RpcId={message.RpcId}");
 
 			GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 			while (gamePlayComponent == null || gamePlayComponent.IsDisposed)
@@ -42,7 +42,7 @@ namespace ET.Client
 				gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
 			}
 
-			Log.Debug($"M2C_GamePlayModeChgNotice 33");
+			Log.Debug($"zpb M2C_GamePlayModeChgNotice 33 message.RpcId={message.RpcId}");
 			gamePlayComponent.RemoveComponent<GamePlayTowerDefenseComponent>();
 			gamePlayComponent.RemoveComponent<GamePlayPkComponentBase>();
 
@@ -57,10 +57,10 @@ namespace ET.Client
 				}
 			}
 
-			Log.Debug($"M2C_GamePlayModeChgNotice 44");
+			Log.Debug($"zpb M2C_GamePlayModeChgNotice 44");
 			EventSystem.Instance.Publish(clientScene, new EventType.GamePlayChg());
 
-			Log.Debug($"M2C_GamePlayModeChgNotice 55");
+			Log.Debug($"zpb M2C_GamePlayModeChgNotice 55");
 			await ETTask.CompletedTask;
 		}
 	}

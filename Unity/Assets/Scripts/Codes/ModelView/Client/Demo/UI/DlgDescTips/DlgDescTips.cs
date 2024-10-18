@@ -13,5 +13,7 @@ namespace ET.Client
     {
         public string Desc;
         public Vector3 Pos;
+        public bool tipTextAlignmentMid;
+        public bool notNeedClickBg;
     }
 }

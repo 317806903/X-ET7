@@ -302,9 +302,11 @@ namespace ET
         public static async ETTask TransToShowStartEffect(this GamePlayTowerDefenseComponent self)
         {
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.ShowStartEffect;
+
             self.NoticeToClientAll();
 
             GamePlayComponent gamePlayComponent = self.GetGamePlay();
+            gamePlayComponent.StartShow();
             gamePlayComponent.NoticeGameBegin2Server();
 
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_ShowStartEffectBegin());

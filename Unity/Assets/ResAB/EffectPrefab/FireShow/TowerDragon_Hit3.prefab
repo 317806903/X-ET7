@@ -129,6 +129,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -139,6 +143,22 @@ PrefabInstance:
     - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 0.403333
+      objectReference: {fileID: 0}
+    - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 1.8908417
+      objectReference: {fileID: 0}
+    - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 1.8908417
+      objectReference: {fileID: 0}
+    - target: {fileID: 19832318, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.12028301
       objectReference: {fileID: 0}
     - target: {fileID: 19862402, guid: f9d7400d5137d3a45a28b639dbbad101, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b

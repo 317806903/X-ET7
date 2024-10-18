@@ -47,21 +47,11 @@ namespace ET.Client
 
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 22");
             self.RegisterClear().Coroutine();
-            self.RegisterSkill().Coroutine();
-            self.RegisterSkill2().Coroutine();
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 33");
         }
 
         public static async ETTask RegisterClear(this DlgBattle self)
         {
-            Unit myUnit = UnitHelper.GetMyPlayerUnit(self.DomainScene());
-            while (myUnit == null)
-            {
-                await TimerComponent.Instance.WaitFrameAsync();
-                myUnit = UnitHelper.GetMyPlayerUnit(self.DomainScene());
-            }
-            UnitCfg unitCfg = myUnit.model;
-
             self.View.EButton_ClearMyTowerButton.AddListener(() =>
             {
                 ET.Client.GamePlayPKHelper.SendClearMyTower(self.DomainScene(), -1).Coroutine();
@@ -71,106 +61,6 @@ namespace ET.Client
             {
                 ET.Client.GamePlayPKHelper.SendClearAllMonster(self.DomainScene()).Coroutine();
             });
-        }
-
-        public static async ETTask RegisterSkill(this DlgBattle self)
-        {
-            Unit myUnit = UnitHelper.GetMyPlayerUnit(self.DomainScene());
-            while (myUnit == null)
-            {
-                await TimerComponent.Instance.WaitFrameAsync();
-                myUnit = UnitHelper.GetMyPlayerUnit(self.DomainScene());
-            }
-            UnitCfg unitCfg = myUnit.model;
-            long unitId = myUnit.Id;
-
-            int count = unitCfg.SkillList.Count;
-            List<string> skillList = unitCfg.SkillList.Keys.ToList();
-            if (count > 0)
-            {
-                self.View.EButton_Skill1Button.AddListener(() =>
-                {
-                    (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                    SelectHandle selectHandle = SelectHandle.Create();
-                    selectHandle.selectHandleType = SelectHandleType.SelectPosition;
-                    selectHandle.position = cameraHitPosition;
-
-
-                    SkillHelper.CastSkill(self.DomainScene(), skillList[0], unitId, cameraPosition,  cameraDirect, selectHandle).Coroutine();
-                });
-            }
-            if (count > 1)
-            {
-                self.View.EButton_Skill2Button.AddListener(() =>
-                {
-                    (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                    SelectHandle selectHandle = SelectHandle.Create();
-                    selectHandle.selectHandleType = SelectHandleType.SelectPosition;
-                    selectHandle.position = cameraHitPosition;
-
-                    SkillHelper.CastSkill(self.DomainScene(), skillList[1], unitId, cameraPosition, cameraDirect, selectHandle).Coroutine();
-                });
-            }
-            if (count > 2)
-            {
-                self.View.EButton_Skill3Button.AddListener(() =>
-                {
-                    (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                    SelectHandle selectHandle = SelectHandle.Create();
-                    selectHandle.selectHandleType = SelectHandleType.SelectPosition;
-                    selectHandle.position = cameraHitPosition;
-
-
-                    SkillHelper.CastSkill(self.DomainScene(), skillList[2], unitId, cameraPosition, cameraDirect, selectHandle).Coroutine();
-                });
-            }
-            if (count > 3)
-            {
-                self.View.EButton_Skill4Button.AddListener(() =>
-                {
-                    (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                    SelectHandle selectHandle = SelectHandle.Create();
-                    selectHandle.selectHandleType = SelectHandleType.SelectPosition;
-                    selectHandle.position = cameraHitPosition;
-
-
-                    SkillHelper.CastSkill(self.DomainScene(), skillList[3], unitId, cameraPosition, cameraDirect, selectHandle).Coroutine();
-                });
-            }
-
-            await ETTask.CompletedTask;
-        }
-
-        public static async ETTask RegisterSkill2(this DlgBattle self)
-        {
-            Unit myCameraPlayerUnit = UnitHelper.GetMyCameraPlayerUnit(self.DomainScene());
-            while (myCameraPlayerUnit == null)
-            {
-                await TimerComponent.Instance.WaitFrameAsync();
-                myCameraPlayerUnit = UnitHelper.GetMyCameraPlayerUnit(self.DomainScene());
-            }
-
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.prefabSource.prefabName = "Item_SkillBattleInfo";
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.prefabSource.poolSize = 4;
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.prefabSource.prefabScale = 0.6f;
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
-                self.AddSkillItemRefreshListener(transform, i));
-
-            List<ET.Ability.SkillObj> skillList = ET.Ability.SkillHelper.GetManualSkillList(myCameraPlayerUnit);
-            int countSkill = skillList.Count;
-            self.AddUIScrollItems(ref self.ScrollItemSkills, countSkill);
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.SetVisible(true, countSkill);
-
-            await ETTask.CompletedTask;
-        }
-
-        public static async ETTask RefreshSkill(this DlgBattle self)
-        {
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.RefreshCells();
         }
 
         public static async ETTask ShowWindow(this DlgBattle self, ShowWindowData contextData = null)
@@ -191,6 +81,13 @@ namespace ET.Client
             ET.Client.UIManagerHelper.ShowARMesh(self.DomainScene()).Coroutine();
             self.ShowPutTipMsg("");
 
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleCameraPlayerSkill>();
+            EventType.NoticeGamePlayPKStatusWhenClient _NoticeGamePlayPKStatusWhenClient = new()
+            {
+            };
+            EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayPKStatusWhenClient);
+
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattlePlayerSkill>();
         }
 
         public static void OnTowerValueChanged(this DlgBattle self, string value)
@@ -397,6 +294,8 @@ namespace ET.Client
         public static void HideWindow(this DlgBattle self)
         {
             TimerComponent.Instance?.Remove(ref self.Timer);
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleCameraPlayerSkill>();
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattlePlayerSkill>();
         }
 
         public static async ETTask QuitBattle(this DlgBattle self)
@@ -475,73 +374,6 @@ namespace ET.Client
             });
         }
 
-        public static void AddSkillItemRefreshListener(this DlgBattle self, Transform transform, int index)
-        {
-            Scroll_Item_SkillBattleInfo itemSkill = self.ScrollItemSkills[index].BindTrans(transform);
-
-            Unit myCameraPlayerUnit = UnitHelper.GetMyCameraPlayerUnit(self.DomainScene());
-            long unitId = myCameraPlayerUnit.Id;
-            List<ET.Ability.SkillObj> skillList = ET.Ability.SkillHelper.GetManualSkillList(myCameraPlayerUnit);
-            ET.Ability.SkillObj skillObj = skillList[index];
-
-            string skillCfgId = skillObj.skillCfgId;
-            itemSkill.ELabel_CDTextMeshProUGUI.text = $"{Math.Round(skillObj.cdCountDown, 2)}";
-            itemSkill.ELabel_EnergyTextMeshProUGUI.text = $"{Math.Round(skillObj.curEnergyNum, 2)}/{skillObj.GetEnergyFullNum()}";
-            itemSkill.ELabel_CommonEnergyTextMeshProUGUI.text = $"{Math.Round(skillObj.GetCurCommonEnergyNum(), 2)}/{skillObj.GetCommonEnergyFullNum()}";
-
-            ET.EventTriggerListener.Get(itemSkill.EButton_SelectButton.gameObject).isNeedClickWhenPress = true;
-            ET.EventTriggerListener.Get(itemSkill.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
-            {
-                Log.Error($"====onPress");
-                PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(skillCfgId);
-                ActionCallParam actionCallParam = playerSkillCfg.SkillSelectAction_Ref.ActionCallParam;
-                if (actionCallParam is ActionCallShow_Camera_Unit)
-                {
-                    string resName = "ResEffect_SkillShow_Camera_OtherUnit";
-                    ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
-                    GameObject skillShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
-                    skillShowGo.transform.SetParent(GlobalComponent.Instance.ClientManagerRoot);
-                    skillShowGo.transform.localPosition = Vector3.zero;
-                    skillShowGo.transform.localScale = Vector3.one;
-
-                    Unit myPlayerUnit = UnitHelper.GetMyPlayerUnit(self.DomainScene());
-                    GameObject go11 = myPlayerUnit.GetComponent<GameObjectShowComponent>().GetGo();
-                    var point = skillShowGo.GetComponent<Werewolf.StatusIndicators.Components.Point>();
-                    point.SplatBelongToUnit = go11.transform;
-                    (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                    skillShowGo.transform.localPosition = cameraHitPosition;
-
-                }
-            });
-            ET.EventTriggerListener.Get(itemSkill.EButton_SelectButton.gameObject).onUp.AddListener((go, xx) =>
-            {
-                Log.Error($"====onPress");
-
-            });
-            ET.EventTriggerListener.Get(itemSkill.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
-            {
-                if (self.IsDisposed || skillObj.IsDisposed)
-                {
-                    return;
-                }
-                (bool bRet, string msg) = skillObj.ChkCanUseSkill();
-                if (bRet == false)
-                {
-                    UIManagerHelper.ShowTip(self.DomainScene(), msg);
-                    return;
-                }
-
-                (float3 cameraPosition, float3 cameraDirect, float3 cameraHitPosition) = ET.Client.CameraHelper.GetCameraHit(self.DomainScene());
-
-                SelectHandle selectHandle = SelectHandle.Create();
-                selectHandle.position = cameraHitPosition;
-                selectHandle.direction = math.normalize(cameraHitPosition - cameraPosition);
-
-                SkillHelper.CastSkill(self.DomainScene(), skillCfgId, unitId, cameraPosition, cameraDirect, selectHandle).Coroutine();
-            });
-        }
-
         public static void ChgScrollRectMoveStatus(this DlgBattle self, bool status)
         {
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.enabled = status;
@@ -550,7 +382,7 @@ namespace ET.Client
 
         public static void Update(this DlgBattle self)
         {
-            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.RefreshCells();
+            //self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.RefreshCells();
         }
 
         public static void ShowPutTipMsg(this DlgBattle self, string tipMsg)

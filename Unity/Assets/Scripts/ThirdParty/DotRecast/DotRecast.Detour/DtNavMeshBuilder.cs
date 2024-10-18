@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -20,10 +20,11 @@ freely, subject to the following restrictions:
 
 using System;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Detour
 {
-    using static DotRecast.Core.RcMath;
+    using static DtDetour;
 
     public static class DtNavMeshBuilder
     {
@@ -110,8 +111,11 @@ namespace DotRecast.Detour
                 node.bmin = minmax[0];
                 node.bmax = minmax[1];
 
-                int axis = LongestAxis(node.bmax[0] - node.bmin[0], node.bmax[1] - node.bmin[1],
-                    node.bmax[2] - node.bmin[2]);
+                int axis = LongestAxis(
+                    node.bmax[0] - node.bmin[0],
+                    node.bmax[1] - node.bmin[1],
+                    node.bmax[2] - node.bmin[2]
+                );
 
                 if (axis == 0)
                 {
@@ -159,25 +163,23 @@ namespace DotRecast.Detour
                 {
                     int vb = option.detailMeshes[i * 4 + 0];
                     int ndv = option.detailMeshes[i * 4 + 1];
-                    RcVec3f bmin = new RcVec3f();
-                    RcVec3f bmax = new RcVec3f();
                     int dv = vb * 3;
-                    bmin.Set(option.detailVerts, dv);
-                    bmax.Set(option.detailVerts, dv);
+                    var bmin = RcVec.Create(option.detailVerts, dv);
+                    var bmax = RcVec.Create(option.detailVerts, dv);
                     for (int j = 1; j < ndv; j++)
                     {
-                        bmin.Min(option.detailVerts, dv + j * 3);
-                        bmax.Max(option.detailVerts, dv + j * 3);
+                        bmin = RcVec3f.Min(bmin, RcVec.Create(option.detailVerts, dv + j * 3));
+                        bmax = RcVec3f.Max(bmax, RcVec.Create(option.detailVerts, dv + j * 3));
                     }
 
                     // BV-tree uses cs for all dimensions
-                    it.bmin[0] = Clamp((int)((bmin.x - option.bmin.x) * quantFactor), 0, int.MaxValue);
-                    it.bmin[1] = Clamp((int)((bmin.y - option.bmin.y) * quantFactor), 0, int.MaxValue);
-                    it.bmin[2] = Clamp((int)((bmin.z - option.bmin.z) * quantFactor), 0, int.MaxValue);
+                    it.bmin[0] = Math.Clamp((int)((bmin.X - option.bmin.X) * quantFactor), 0, int.MaxValue);
+                    it.bmin[1] = Math.Clamp((int)((bmin.Y - option.bmin.Y) * quantFactor), 0, int.MaxValue);
+                    it.bmin[2] = Math.Clamp((int)((bmin.Z - option.bmin.Z) * quantFactor), 0, int.MaxValue);
 
-                    it.bmax[0] = Clamp((int)((bmax.x - option.bmin.x) * quantFactor), 0, int.MaxValue);
-                    it.bmax[1] = Clamp((int)((bmax.y - option.bmin.y) * quantFactor), 0, int.MaxValue);
-                    it.bmax[2] = Clamp((int)((bmax.z - option.bmin.z) * quantFactor), 0, int.MaxValue);
+                    it.bmax[0] = Math.Clamp((int)((bmax.X - option.bmin.X) * quantFactor), 0, int.MaxValue);
+                    it.bmax[1] = Math.Clamp((int)((bmax.Y - option.bmin.Y) * quantFactor), 0, int.MaxValue);
+                    it.bmax[2] = Math.Clamp((int)((bmax.Z - option.bmin.Z) * quantFactor), 0, int.MaxValue);
                 }
                 else
                 {
@@ -210,8 +212,8 @@ namespace DotRecast.Detour
                     }
 
                     // Remap y
-                    it.bmin[1] = (int)Math.Floor(it.bmin[1] * option.ch * quantFactor);
-                    it.bmax[1] = (int)Math.Ceiling(it.bmax[1] * option.ch * quantFactor);
+                    it.bmin[1] = (int)MathF.Floor(it.bmin[1] * option.ch * quantFactor);
+                    it.bmax[1] = (int)MathF.Ceiling(it.bmax[1] * option.ch * quantFactor);
                 }
             }
 
@@ -226,10 +228,10 @@ namespace DotRecast.Detour
         public static int ClassifyOffMeshPoint(RcVec3f pt, RcVec3f bmin, RcVec3f bmax)
         {
             int outcode = 0;
-            outcode |= (pt.x >= bmax.x) ? XP : 0;
-            outcode |= (pt.z >= bmax.z) ? ZP : 0;
-            outcode |= (pt.x < bmin.x) ? XM : 0;
-            outcode |= (pt.z < bmin.z) ? ZM : 0;
+            outcode |= (pt.X >= bmax.X) ? XP : 0;
+            outcode |= (pt.Z >= bmax.Z) ? ZP : 0;
+            outcode |= (pt.X < bmin.X) ? XM : 0;
+            outcode |= (pt.Z < bmin.Z) ? ZM : 0;
 
             switch (outcode)
             {
@@ -254,14 +256,15 @@ namespace DotRecast.Detour
             return 0xff;
         }
 
-        /**
-     * Builds navigation mesh tile data from the provided tile creation data.
-     *
-     * @param option
-     *            Tile creation data.
-     *
-     * @return created tile data
-     */
+        // TODO: Better error handling.
+
+        /// @par
+        /// 
+        /// The output data array is allocated using the detour allocator (dtAlloc()).  The method
+        /// used to free the memory will be determined by how the tile is added to the navigation
+        /// mesh.
+        ///
+        /// @see dtNavMesh, dtNavMesh::addTile()
         public static DtMeshData CreateNavMeshData(DtNavMeshCreateParams option)
         {
             if (option.vertCount >= 0xffff)
@@ -302,7 +305,7 @@ namespace DotRecast.Detour
                     for (int i = 0; i < option.vertCount; ++i)
                     {
                         int iv = i * 3;
-                        float h = option.bmin.y + option.verts[iv + 1] * option.ch;
+                        float h = option.bmin.Y + option.verts[iv + 1] * option.ch;
                         hmin = Math.Min(hmin, h);
                         hmax = Math.Max(hmax, h);
                     }
@@ -314,13 +317,13 @@ namespace DotRecast.Detour
                 RcVec3f bmax = new RcVec3f();
                 bmin = option.bmin;
                 bmax = option.bmax;
-                bmin.y = hmin;
-                bmax.y = hmax;
+                bmin.Y = hmin;
+                bmax.Y = hmax;
 
                 for (int i = 0; i < option.offMeshConCount; ++i)
                 {
-                    var p0 = RcVec3f.Of(option.offMeshConVerts, (i * 2 + 0) * 3);
-                    var p1 = RcVec3f.Of(option.offMeshConVerts, (i * 2 + 1) * 3);
+                    var p0 = RcVec.Create(option.offMeshConVerts, (i * 2 + 0) * 3);
+                    var p1 = RcVec.Create(option.offMeshConVerts, (i * 2 + 1) * 3);
 
                     offMeshConClass[i * 2 + 0] = ClassifyOffMeshPoint(p0, bmin, bmax);
                     offMeshConClass[i * 2 + 1] = ClassifyOffMeshPoint(p1, bmin, bmax);
@@ -329,7 +332,7 @@ namespace DotRecast.Detour
                     // potentially touching the mesh.
                     if (offMeshConClass[i * 2 + 0] == 0xff)
                     {
-                        if (p0.y < bmin.y || p0.y > bmax.y)
+                        if (p0.Y < bmin.Y || p0.Y > bmax.Y)
                             offMeshConClass[i * 2 + 0] = 0;
                     }
 
@@ -345,7 +348,7 @@ namespace DotRecast.Detour
                 }
             }
 
-            // Off-mesh connectionss are stored as polygons, adjust values.
+            // Off-mesh connections are stored as polygons, adjust values.
             int totPolyCount = option.polyCount + storedOffMeshConCount;
             int totVertCount = option.vertCount + storedOffMeshConCount * 2;
 
@@ -427,8 +430,8 @@ namespace DotRecast.Detour
             DtOffMeshConnection[] offMeshCons = new DtOffMeshConnection[storedOffMeshConCount];
 
             // Store header
-            header.magic = DtMeshHeader.DT_NAVMESH_MAGIC;
-            header.version = DtMeshHeader.DT_NAVMESH_VERSION;
+            header.magic = DT_NAVMESH_MAGIC;
+            header.version = DT_NAVMESH_VERSION;
             header.x = option.tileX;
             header.y = option.tileZ;
             header.layer = option.tileLayer;
@@ -458,9 +461,9 @@ namespace DotRecast.Detour
             {
                 int iv = i * 3;
                 int v = i * 3;
-                navVerts[v] = option.bmin.x + option.verts[iv] * option.cs;
-                navVerts[v + 1] = option.bmin.y + option.verts[iv + 1] * option.ch;
-                navVerts[v + 2] = option.bmin.z + option.verts[iv + 2] * option.cs;
+                navVerts[v] = option.bmin.X + option.verts[iv] * option.cs;
+                navVerts[v + 1] = option.bmin.Y + option.verts[iv + 1] * option.ch;
+                navVerts[v + 2] = option.bmin.Z + option.verts[iv + 2] * option.cs;
             }
 
             // Off-mesh link vertices.
@@ -472,7 +475,7 @@ namespace DotRecast.Detour
                 {
                     int linkv = i * 2 * 3;
                     int v = (offMeshVertsBase + n * 2) * 3;
-                    Array.Copy(option.offMeshConVerts, linkv, navVerts, v, 6);
+                    RcArrays.Copy(option.offMeshConVerts, linkv, navVerts, v, 6);
                     n++;
                 }
             }
@@ -487,7 +490,7 @@ namespace DotRecast.Detour
                 p.vertCount = 0;
                 p.flags = option.polyFlags[i];
                 p.SetArea(option.polyAreas[i]);
-                p.SetPolyType(DtPoly.DT_POLYTYPE_GROUND);
+                p.SetPolyType(DtPolyTypes.DT_POLYTYPE_GROUND);
                 for (int j = 0; j < nvp; ++j)
                 {
                     if (option.polys[src + j] == MESH_NULL_IDX)
@@ -500,13 +503,13 @@ namespace DotRecast.Detour
                         if (dir == 0xf) // Border
                             p.neis[j] = 0;
                         else if (dir == 0) // Portal x-
-                            p.neis[j] = DtNavMesh.DT_EXT_LINK | 4;
+                            p.neis[j] = DT_EXT_LINK | 4;
                         else if (dir == 1) // Portal z+
-                            p.neis[j] = DtNavMesh.DT_EXT_LINK | 2;
+                            p.neis[j] = DT_EXT_LINK | 2;
                         else if (dir == 2) // Portal x+
-                            p.neis[j] = DtNavMesh.DT_EXT_LINK | 0;
+                            p.neis[j] = DT_EXT_LINK | 0;
                         else if (dir == 3) // Portal z-
-                            p.neis[j] = DtNavMesh.DT_EXT_LINK | 6;
+                            p.neis[j] = DT_EXT_LINK | 6;
                     }
                     else
                     {
@@ -534,7 +537,7 @@ namespace DotRecast.Detour
                     p.verts[1] = offMeshVertsBase + n * 2 + 1;
                     p.flags = option.offMeshConFlags[i];
                     p.SetArea(option.offMeshConAreas[i]);
-                    p.SetPolyType(DtPoly.DT_POLYTYPE_OFFMESH_CONNECTION);
+                    p.SetPolyType(DtPolyTypes.DT_POLYTYPE_OFFMESH_CONNECTION);
                     n++;
                 }
             }
@@ -549,26 +552,25 @@ namespace DotRecast.Detour
                 int vbase = 0;
                 for (int i = 0; i < option.polyCount; ++i)
                 {
-                    DtPolyDetail dtl = new DtPolyDetail();
-                    navDMeshes[i] = dtl;
                     int vb = option.detailMeshes[i * 4 + 0];
                     int ndv = option.detailMeshes[i * 4 + 1];
                     int nv = navPolys[i].vertCount;
-                    dtl.vertBase = vbase;
-                    dtl.vertCount = (ndv - nv);
-                    dtl.triBase = option.detailMeshes[i * 4 + 2];
-                    dtl.triCount = option.detailMeshes[i * 4 + 3];
+                    int vertBase = vbase;
+                    byte vertCount = (byte)(ndv - nv);
+                    int triBase = option.detailMeshes[i * 4 + 2];
+                    byte triCount = (byte)option.detailMeshes[i * 4 + 3];
+                    navDMeshes[i] = new DtPolyDetail(vertBase, triBase, vertCount, triCount);
                     // Copy vertices except the first 'nv' verts which are equal to
                     // nav poly verts.
                     if (ndv - nv != 0)
                     {
-                        Array.Copy(option.detailVerts, (vb + nv) * 3, navDVerts, vbase * 3, 3 * (ndv - nv));
+                        RcArrays.Copy(option.detailVerts, (vb + nv) * 3, navDVerts, vbase * 3, 3 * (ndv - nv));
                         vbase += ndv - nv;
                     }
                 }
 
                 // Store triangles.
-                Array.Copy(option.detailTris, 0, navDTris, 0, 4 * option.detailTriCount);
+                RcArrays.Copy(option.detailTris, 0, navDTris, 0, 4 * option.detailTriCount);
             }
             else
             {
@@ -576,13 +578,12 @@ namespace DotRecast.Detour
                 int tbase = 0;
                 for (int i = 0; i < option.polyCount; ++i)
                 {
-                    DtPolyDetail dtl = new DtPolyDetail();
-                    navDMeshes[i] = dtl;
                     int nv = navPolys[i].vertCount;
-                    dtl.vertBase = 0;
-                    dtl.vertCount = 0;
-                    dtl.triBase = tbase;
-                    dtl.triCount = (nv - 2);
+                    int vertBase = 0;
+                    byte vertCount = 0;
+                    int triBase = tbase;
+                    byte triCount = (byte)(nv - 2);
+                    navDMeshes[i] = new DtPolyDetail(vertBase, triBase, vertCount, triCount);
                     // Triangulate polygon (local indices).
                     for (int j = 2; j < nv; ++j)
                     {
@@ -621,9 +622,13 @@ namespace DotRecast.Detour
                     con.poly = (offMeshPolyBase + n);
                     // Copy connection end-points.
                     int endPts = i * 2 * 3;
-                    Array.Copy(option.offMeshConVerts, endPts, con.pos, 0, 6);
+                    for (int j = 0; j < 2; ++j)
+                    {
+                        con.pos[j] = RcVec.Create(option.offMeshConVerts, endPts + (j * 3));
+                    }
+
                     con.rad = option.offMeshConRad[i];
-                    con.flags = option.offMeshConDir[i] != 0 ? DtNavMesh.DT_OFFMESH_CON_BIDIR : 0;
+                    con.flags = option.offMeshConDir[i] != 0 ? DT_OFFMESH_CON_BIDIR : 0;
                     con.side = offMeshConClass[i * 2 + 1];
                     if (option.offMeshConUserID != null)
                         con.userId = option.offMeshConUserID[i];

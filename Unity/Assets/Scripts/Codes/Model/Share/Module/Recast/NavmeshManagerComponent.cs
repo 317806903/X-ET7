@@ -43,5 +43,16 @@ namespace ET
 
         public Dictionary<int, Dictionary<int, Dictionary<int, bool>>> recordMeshHitDic;
         public Dictionary<int, Dictionary<int, Dictionary<int, (bool, float)>>> recordMeshHeightDic;
+        
+        public struct NavMeshData
+        {
+            public List<float3> Vertices { get; set; }
+            // Indices of vertices of the nav mesh polygons, each polygon contains n + 1 numbers, where the first number is the number of vertices of
+            // the polygon, and the following n numbers are the indices of the vertices. 
+            public List<int> Indices { get; set; }
+        }
+
+        // Dictionary that stores (Polygon Ref -> NavMeshData) pairs.
+        public Dictionary<long, NavMeshData> navMeshDataDictionary;
     }
 }

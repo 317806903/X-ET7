@@ -39,7 +39,12 @@ namespace ET.Ability
 
             EffectNodeName nodeName = offSetInfo.NodeName;
             float3 offSetPosition = new float3(offSetInfo.OffSetPosition.X, offSetInfo.OffSetPosition.Y, offSetInfo.OffSetPosition.Z);
-            float3 relateForward = new float3(offSetInfo.RelateForward.X, offSetInfo.RelateForward.Y, offSetInfo.RelateForward.Z);
+            float3 relateRotation = new float3(offSetInfo.RelateRotation.X, offSetInfo.RelateRotation.Y, offSetInfo.RelateRotation.Z);
+            if (offSetInfo.KeepHorizontal)
+            {
+                relateRotation.x = 0;
+                relateRotation.z = 0;
+            }
 
             self.CfgId = effectCfgId;
             self.PlayAudioActionId = playAudioActionId;
@@ -55,7 +60,7 @@ namespace ET.Ability
             if (self.hangPointName == EffectNodeName.Self)
             {
                 self.offSet = offSetPosition;
-                self.rotation = relateForward;
+                self.rotation = relateRotation;
                 self.createPos = self.GetUnit().Position + self.offSet;
             }
             else
@@ -63,7 +68,7 @@ namespace ET.Ability
                 Unit casterUnit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
 
                 self.offSet = casterUnit.Position - self.GetUnit().Position + offSetPosition;
-                self.rotation = relateForward;
+                self.rotation = relateRotation;
                 self.createPos = self.GetUnit().Position + self.offSet;
             }
         }

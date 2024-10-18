@@ -79,6 +79,15 @@ namespace ET.Ability
                 return;
             }
             SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(self.skillCfgId);
+
+            if (skillConsumeCfg.RestoreEnergyByTime <= 0)
+            {
+                return;
+            }
+            if (self.curEnergyNum >= skillConsumeCfg.TotalEnergy)
+            {
+                return;
+            }
             self.curEnergyNum = math.clamp(self.curEnergyNum + skillConsumeCfg.RestoreEnergyByTime * fixedDeltaTime, 0, skillConsumeCfg.TotalEnergy);
         }
 
@@ -89,7 +98,18 @@ namespace ET.Ability
                 return;
             }
             SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(self.skillCfgId);
+            if (skillConsumeCfg.RestoreEnergyByWave <= 0)
+            {
+                return;
+            }
+            if (self.curEnergyNum >= skillConsumeCfg.TotalEnergy)
+            {
+                return;
+            }
             self.curEnergyNum = math.clamp(self.curEnergyNum + skillConsumeCfg.RestoreEnergyByWave, 0, skillConsumeCfg.TotalEnergy);
+
+            self.NoticeClient();
+
         }
 
         public static Unit GetUnit(this SkillObj self)
@@ -111,6 +131,28 @@ namespace ET.Ability
             numericComponent.SetAsFloat(NumericType.SkillDisBase, skillCfg.Dis);
 
             self.SetEnergyFull();
+            self.AddRestoreEnergy();
+        }
+
+        public static void AddRestoreEnergy(this SkillObj self)
+        {
+            if (SkillConsumeCfgCategory.Instance.Contain(self.skillCfgId) == false)
+            {
+                return;
+            }
+            SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(self.skillCfgId);
+            if (skillConsumeCfg.TotalEnergy <= 0)
+            {
+                return;
+            }
+            if (skillConsumeCfg.RestoreEnergyByWave <= 0)
+            {
+                return;
+            }
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_AddRestoreEnergy()
+            {
+                skillObj = self,
+            });
         }
 
         public static void ResetSkillSlotIndex(this SkillObj self, int skillSlotIndex)
@@ -169,7 +211,7 @@ namespace ET.Ability
             SelectHandle selectHandle = null;
             if (selectHandleShow != null)
             {
-                SelectObjectCfg selectObjectCfgShow = PlayerSkillCfgCategory.Instance.Get(self.model.Id).SkillSelectAction_Ref;
+                SelectObjectCfg selectObjectCfgShow = ManualSkillCfgCategory.Instance.Get(self.model.Id).SkillSelectAction_Ref;
                 selectHandle = SelectHandleHelper.CreateSelectHandleWhenClient(self.GetUnit(), skillCfg.SkillSelectAction_Ref, ref actionContext, selectHandleShow, selectObjectCfgShow);
             }
             else
@@ -193,21 +235,26 @@ namespace ET.Ability
             return timelineObj;
         }
 
-        public static async ETTask<(bool ret, string msg)> BuySkillEnergy(this SkillObj self)
+        public static async ETTask<(bool ret, string msg)> RestoreSkillEnergy(this SkillObj self)
         {
             await ETTask.CompletedTask;
             if (SkillConsumeCfgCategory.Instance.Contain(self.skillCfgId) == false)
             {
-                return (true, "");
+                return (false, "not find");
             }
             SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(self.skillCfgId);
-            if (skillConsumeCfg.ConsumeEnergy > 0 && self.curEnergyNum < skillConsumeCfg.ConsumeEnergy)
+            if (self.curEnergyNum < skillConsumeCfg.TotalEnergy)
             {
                 self.curEnergyNum = skillConsumeCfg.TotalEnergy;
+
+                self.NoticeClient();
             }
-            if (skillConsumeCfg.ConsumeCommonEnergy > 0 && self.GetCurCommonEnergyNum() < skillConsumeCfg.ConsumeCommonEnergy)
+
+            if (self.GetCurCommonEnergyNum() < self.GetCommonEnergyFullNum())
             {
                 self.SetCommonEnergyFull();
+
+                self.NoticeClient();
             }
             return (true, "");
         }

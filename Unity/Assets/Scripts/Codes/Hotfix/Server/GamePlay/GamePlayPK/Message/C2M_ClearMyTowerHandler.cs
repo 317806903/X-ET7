@@ -14,7 +14,7 @@ namespace ET.Server
 			long towerUnitId = request.TowerUnitId;
 
 			UnitComponent unitComponent = Ability.UnitHelper.GetUnitComponent(observerUnit);
-			foreach (Unit unit in unitComponent.GetRecordList(UnitType.ObserverUnit))
+			foreach (Unit unit in unitComponent.GetRecordList(UnitType.ActorUnit))
 			{
 				TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
 				if (towerComponent != null)

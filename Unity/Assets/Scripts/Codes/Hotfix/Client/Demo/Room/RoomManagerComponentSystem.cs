@@ -43,7 +43,7 @@ namespace ET.Client
             }
         }
 
-        public static void Init(this RoomManagerComponent self, long roomId, byte[] roomInfo, List<byte[]> roomMemberList)
+        public static RoomComponent Init(this RoomManagerComponent self, long roomId, byte[] roomInfo, List<byte[]> roomMemberList)
         {
             Log.Debug($"self[{self}], roomId[{roomId}], roomInfo[{roomInfo.Length}], roomMemberList[{roomMemberList.Count}]");
             self.RemoveChild(roomId);
@@ -57,6 +57,7 @@ namespace ET.Client
                 roomComponent.AddChild(roomMember);
             }
             Log.Debug($"ET.Client.RoomManagerComponentSystem.Init End");
+            return roomComponent;
         }
 
     }

@@ -72,12 +72,14 @@ namespace ET.Ability
                     if (newForward.Equals(float3.zero) == false)
                     {
                         newForward.y = 0;
+                        newForward = math.normalize(newForward);
                         self.SetUnitForward(newForward);
                     }
                     else
                     {
                         float3 forward = self.GetUnit().Forward;
                         forward.y = 0;
+                        forward = math.normalize(forward);
                         self.SetUnitForward(forward);
                     }
                 }
@@ -85,6 +87,7 @@ namespace ET.Ability
                 {
                     if (newForward.Equals(float3.zero) == false)
                     {
+                        newForward = math.normalize(newForward);
                         self.SetUnitForward(newForward);
                     }
                 }
@@ -108,12 +111,14 @@ namespace ET.Ability
                     if (newForward.Equals(float3.zero) == false)
                     {
                         newForward.y = 0;
+                        newForward = math.normalize(newForward);
                         self.SetUnitForward(newForward);
                     }
                     else
                     {
                         float3 forward = self.GetUnit().Forward;
                         forward.y = 0;
+                        forward = math.normalize(forward);
                         self.SetUnitForward(forward);
                     }
                 }
@@ -121,6 +126,7 @@ namespace ET.Ability
                 {
                     if (newForward.Equals(float3.zero) == false)
                     {
+                        newForward = math.normalize(newForward);
                         self.SetUnitForward(newForward);
                     }
                 }
@@ -129,11 +135,18 @@ namespace ET.Ability
             {
                 if (selectHandle.direction.Equals(float3.zero))
                 {
-                    self.forward = self.GetUnit().Forward;
+                    self.forward = selectHandle.position - self.GetUnit().Position;
+                    if (self.forward.Equals(float3.zero))
+                    {
+                        self.forward = self.GetUnit().Forward;
+                    }
+                    self.forward = math.normalize(self.forward);
+                    self.SetUnitForward(self.forward);
                 }
                 else
                 {
                     self.forward = selectHandle.direction;
+                    self.forward = math.normalize(self.forward);
                     self.SetUnitForward(self.forward);
                 }
 
@@ -142,6 +155,23 @@ namespace ET.Ability
 
                 if (self.moveTweenType is StraightMoveTweenType straightMoveTweenType)
                 {
+                    if (straightMoveTweenType.IsDownFromAir)
+                    {
+                        float3 newPosition = selectHandle.position + new float3(0, straightMoveTweenType.HeightWhenAir, 0);
+                        self.SetUnitPos(newPosition);
+                        self.startPosition = self.GetUnit().Position;
+                        self.lastPosition = self.GetUnit().Position;
+
+                        self.forward = selectHandle.position - newPosition;
+                        self.forward = math.normalize(self.forward);
+                        self.SetUnitForward(self.forward);
+                    }
+                    if (straightMoveTweenType.KeepHorizontal)
+                    {
+                        self.forward.y = 0;
+                        self.forward = math.normalize(self.forward);
+                        self.SetUnitForward(self.forward);
+                    }
                     self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
                 }
                 else if (self.moveTweenType is TrackingMoveTweenType trackingMoveTweenType)
@@ -154,10 +184,46 @@ namespace ET.Ability
                 }
                 else if (self.moveTweenType is TargetMoveTweenType targetMoveTweenType)
                 {
+                    if (targetMoveTweenType.IsDownFromAir)
+                    {
+                        if (selectHandle.unitIds != null && selectHandle.unitIds.Count > 0)
+                        {
+                            long targetUnitId = selectHandle.unitIds[0];
+                            Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                            if (targetUnit != null)
+                            {
+                                float3 newPosition = targetUnit.Position + new float3(0, targetMoveTweenType.HeightWhenAir, 0);
+                                self.SetUnitPos(newPosition);
+                                self.startPosition = self.GetUnit().Position;
+                                self.lastPosition = self.GetUnit().Position;
+                                self.forward = targetUnit.Position - newPosition;
+                                self.forward = math.normalize(self.forward);
+                                self.SetUnitForward(self.forward);
+                            }
+                        }
+                    }
                     self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
                 }
                 else if (self.moveTweenType is TargetLimitTimeMoveTweenType targetLimitTimeMoveTweenType)
                 {
+                    if (targetLimitTimeMoveTweenType.IsDownFromAir)
+                    {
+                        if (selectHandle.unitIds != null && selectHandle.unitIds.Count > 0)
+                        {
+                            long targetUnitId = selectHandle.unitIds[0];
+                            Unit targetUnit = UnitHelper.GetUnit(self.DomainScene(), targetUnitId);
+                            if (targetUnit != null)
+                            {
+                                float3 newPosition = targetUnit.Position + new float3(0, targetLimitTimeMoveTweenType.HeightWhenAir, 0);
+                                self.SetUnitPos(newPosition);
+                                self.startPosition = self.GetUnit().Position;
+                                self.lastPosition = self.GetUnit().Position;
+                                self.forward = targetUnit.Position - newPosition;
+                                self.forward = math.normalize(self.forward);
+                                self.SetUnitForward(self.forward);
+                            }
+                        }
+                    }
                     self.selectHandle = ET.Ability.SelectHandle.Clone(selectHandle);
                 }
                 else if (self.moveTweenType is TargetQuickMoveTweenType targetQuickMoveTweenType)
@@ -191,8 +257,19 @@ namespace ET.Ability
 
         public static void SetUnitForward(this MoveTweenObj self, float3 forward)
         {
+            if (forward.Equals(float3.zero))
+            {
+                return;
+            }
             Unit unit = self.GetUnit();
-            quaternion rotation = quaternion.LookRotation(forward, math.up());
+            quaternion rotation;
+            if (forward.x == 0 && forward.z == 0)
+            {
+                forward.x = 0.0001f;
+                forward = math.normalize(forward);
+            }
+
+            rotation = quaternion.LookRotation(forward, math.up());
             if (self.DomainScene().SceneType != SceneType.Map)
             {
                 unit.SetRotationWhenClient(rotation);

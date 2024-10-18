@@ -45,13 +45,6 @@ namespace ET.Server
             {
                 await PlayerCacheHelper.SetUIRedDotType(scene, playerId, uiRedDotType, false, true);
             }
-            if (string.IsNullOrEmpty(itemCfgId))
-            {
-                await PlayerCacheHelper.SetUIRedDotType(scene, playerId, uiRedDotType, false, true);
-            }
-            else
-            {
-            }
 
             await ETTask.CompletedTask;
         }

@@ -80,6 +80,27 @@ namespace ET.Client
 			}
 		}
 
+		public static async ETTask<NavmeshManagerComponent.NavMeshData> GetReachableAreaFromHeadQuarter(Scene scene, TeamFlagType homeTeamFlagType)
+		{
+			M2C_GetNavMeshFromHeadQuarter _M2C_GetNavMeshFromHeadQuarter = await ET.Client.SessionHelper.GetSession(scene).Call(
+				new C2M_GetNavMeshFromHeadQuarter()
+				{
+					HomeTeamFlagType = (int)homeTeamFlagType,
+				}, false) as M2C_GetNavMeshFromHeadQuarter;
+			NavmeshManagerComponent.NavMeshData meshData = new ();
+			if (_M2C_GetNavMeshFromHeadQuarter.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_GetNavMeshFromHeadQuarter.Message,
+				});
+				return meshData;
+			}
+			meshData.Indices = _M2C_GetNavMeshFromHeadQuarter.Indices;
+			meshData.Vertices = _M2C_GetNavMeshFromHeadQuarter.Vertices;
+			return meshData;
+		} 
+
 		public static async ETTask<(bool, string)> SendPutMonsterCall(Scene scene, string unitCfgId, float3 pos)
 		{
 			M2C_PutMonsterCall _M2C_PutMonsterCall = await ET.Client.SessionHelper.GetSession(scene).Call(new C2M_PutMonsterCall()

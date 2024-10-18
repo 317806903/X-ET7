@@ -27,7 +27,7 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask CastSkill(Scene clientScene, string skillCfgId, long unitId, float3 cameraPosition, float3 cameraDirect, ET.Ability.SelectHandle selectHandle)
+        public static async ETTask<bool> CastSkill(Scene clientScene, string skillCfgId, long unitId, float3 cameraPosition, float3 cameraDirect, ET.Ability.SelectHandle selectHandle)
         {
             try
             {
@@ -52,6 +52,32 @@ namespace ET.Client
                     {
                         tipMsg = _M2C_CastSkill.Message,
                     });
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+        }
+
+        public static async ETTask BuySkillEnergy(Scene clientScene, long unitId, string skillCfgId)
+        {
+            try
+            {
+                C2M_BuySkillEnergy _C2M_BuySkillEnergy = new ();
+                _C2M_BuySkillEnergy.SkillCfgId = skillCfgId;
+                _C2M_BuySkillEnergy.unitId = unitId;
+                M2C_BuySkillEnergy _M2C_BuySkillEnergy = await ET.Client.SessionHelper.GetSession(clientScene).Call(_C2M_BuySkillEnergy) as M2C_BuySkillEnergy;
+                if (_M2C_BuySkillEnergy.Error != ET.ErrorCode.ERR_Success)
+                {
+                    EventSystem.Instance.Publish(clientScene, new EventType.NoticeUITip()
+                    {
+                        tipMsg = _M2C_BuySkillEnergy.Message,
+                    });
                 }
             }
             catch (Exception e)
@@ -60,18 +86,19 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask BuySkillEnergy(Scene clientScene, string skillCfgId)
+        public static async ETTask RestoreSkillEnergy(Scene clientScene, long unitId, string skillCfgId)
         {
             try
             {
-                C2M_BuySkillEnergy _C2M_BuySkillEnergy = new ();
-                _C2M_BuySkillEnergy.SkillCfgId = skillCfgId;
-                M2C_BuySkillEnergy _M2C_BuySkillEnergy = await ET.Client.SessionHelper.GetSession(clientScene).Call(_C2M_BuySkillEnergy) as M2C_BuySkillEnergy;
-                if (_M2C_BuySkillEnergy.Error != ET.ErrorCode.ERR_Success)
+                C2M_RestoreSkillEnergy _C2M_RestoreSkillEnergy = new ();
+                _C2M_RestoreSkillEnergy.unitId = unitId;
+                _C2M_RestoreSkillEnergy.SkillCfgId = skillCfgId;
+                M2C_RestoreSkillEnergy _M2C_RestoreSkillEnergy = await ET.Client.SessionHelper.GetSession(clientScene).Call(_C2M_RestoreSkillEnergy) as M2C_RestoreSkillEnergy;
+                if (_M2C_RestoreSkillEnergy.Error != ET.ErrorCode.ERR_Success)
                 {
                     EventSystem.Instance.Publish(clientScene, new EventType.NoticeUITip()
                     {
-                        tipMsg = _M2C_BuySkillEnergy.Message,
+                        tipMsg = _M2C_RestoreSkillEnergy.Message,
                     });
                 }
             }

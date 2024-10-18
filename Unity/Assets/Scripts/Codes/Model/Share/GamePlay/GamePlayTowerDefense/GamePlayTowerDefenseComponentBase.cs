@@ -38,6 +38,8 @@ namespace ET
 		[BsonIgnore]
 		public bool isNeedReNoticeTowerDefense;
 		[BsonIgnore]
+		public GamePlayTowerDefenseStatus previousGamePlayTowerDefenseStatus;
+		[BsonIgnore]
 		public GamePlayTowerDefenseCfg model
 		{
 			get

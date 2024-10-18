@@ -23,6 +23,7 @@ namespace ET.Client
 		public long curLeftTime;
 		public string curLeftTimeMsg;
 
+		public int oldGold;
 		public long Timer;
 	}
 }

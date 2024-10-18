@@ -4,12 +4,12 @@ using DotRecast.Core;
 
 namespace DotRecast.Detour.Extras.Jumplink
 {
-    class JumpSegmentBuilder
+    public class JumpSegmentBuilder
     {
         public JumpSegment[] Build(JumpLinkBuilderConfig acfg, EdgeSampler es)
         {
             int n = es.end[0].gsamples.Length;
-            int[][] sampleGrid = RcArrayUtils.Of<int>(n, es.end.Count);
+            int[][] sampleGrid = RcArrays.Of<int>(n, es.end.Count);
             for (int j = 0; j < es.end.Count; j++)
             {
                 for (int i = 0; i < n; i++)
@@ -94,7 +94,7 @@ namespace DotRecast.Detour.Extras.Jumplink
                 {
                     GroundSample p = es.end[j].gsamples[i];
                     sampleGrid[i][j] = region;
-                    float h = p.p.y;
+                    float h = p.p.Y;
                     if (i < sampleGrid.Length - 1)
                     {
                         AddNeighbour(es, queue, agentClimb, h, i + 1, j);
@@ -121,7 +121,7 @@ namespace DotRecast.Detour.Extras.Jumplink
         private void AddNeighbour(EdgeSampler es, Queue<int[]> queue, float agentClimb, float h, int i, int j)
         {
             GroundSample q = es.end[j].gsamples[i];
-            if (q.validTrajectory && Math.Abs(q.p.y - h) < agentClimb)
+            if (q.validTrajectory && MathF.Abs(q.p.Y - h) < agentClimb)
             {
                 queue.Enqueue(new int[] { i, j });
             }

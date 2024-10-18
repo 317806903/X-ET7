@@ -18,7 +18,7 @@ namespace UnityEngine.UI
             {
                 size += LayoutUtility.GetPreferredWidth(item);
             }
-            size *= m_Content.localScale.x;
+            size *= m_Content.localScale.x * this.prefabSource.prefabScale;
             return size;
         }
 
@@ -26,7 +26,7 @@ namespace UnityEngine.UI
         {
             return -vector.x;
         }
-        
+
         protected override float GetAbsDimension(Vector2 vector)
         {
             return vector.x;
@@ -96,7 +96,7 @@ namespace UnityEngine.UI
                 ReturnToTempPool(true, itemTypeEnd - itemTypeStart);
                 // TODO: fix with contentConstraint?
                 itemTypeStart = itemTypeEnd;
-            
+
                 int offsetCount = Mathf.FloorToInt((viewBounds.min.x - contentBounds.max.x) / (elementSize + contentSpacing));
                 if (maxItemTypeStart >= 0 && itemTypeStart + offsetCount * contentConstraintCount > maxItemTypeStart)
                 {

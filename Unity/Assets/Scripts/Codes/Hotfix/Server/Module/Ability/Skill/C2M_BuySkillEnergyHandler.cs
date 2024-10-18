@@ -13,6 +13,7 @@ namespace ET.Server
 
 			Scene scene = observerUnit.DomainScene();
 			long unitId = request.unitId;
+			string skillCfgId = request.SkillCfgId;
 			Unit unit = Ability.UnitHelper.GetUnit(scene, unitId);
 
 			long playerId = ET.GamePlayHelper.GetPlayerIdByUnitId(unit);
@@ -27,10 +28,11 @@ namespace ET.Server
 				return;
 			}
 
-			bool isCostGold = true;
-			bool isCostDiamond = false;
-			int costGold = 40;
-			int costDiamond = 20;
+			SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(skillCfgId);
+			bool isCostGold = false;
+			bool isCostDiamond = true;
+			int costGold = 0;
+			int costDiamond = skillConsumeCfg.ResetFullEnergyByCostDiamond;
 			if (isCostGold)
 			{
 				float curGold = ET.GamePlayHelper.GetPlayerCoin(scene, playerId, CoinTypeInGame.Gold);
@@ -52,8 +54,7 @@ namespace ET.Server
 				}
 			}
 
-			string skillCfgId = request.SkillCfgId;
-			(bool ret, string msg) = await SkillHelper.BuySkillEnergy(unit, skillCfgId);
+			(bool ret, string msg) = await SkillHelper.RestoreSkillEnergy(unit, skillCfgId);
 			if (ret == false)
 			{
 				response.Error = ET.ErrorCode.ERR_LogicError;

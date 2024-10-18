@@ -99,7 +99,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -119,7 +119,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_1/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_1/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -139,7 +139,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_2/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_2/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BuyTower
@@ -159,7 +159,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_BuyClose
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_BuyClose
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_CloseDLG
@@ -319,7 +319,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/E_TowerBuyShow/EButton_Refresh
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_Refresh

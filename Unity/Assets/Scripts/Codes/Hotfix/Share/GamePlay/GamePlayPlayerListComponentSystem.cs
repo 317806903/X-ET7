@@ -162,7 +162,6 @@ namespace ET
                 else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
                 {
                     self.playerId2PlayerUnitIdList.Add(playerId, unitId);
-                    self.NoticeCoinToClient(playerId, GetCoinType.Normal);
                 }
             }
         }
@@ -533,6 +532,15 @@ namespace ET
                 long playerId = playerList[i];
                 int recoverGold = recoverAddGold + (int)self.lastPlayerGold[playerId];
                 ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, recoverGold);
+            }
+        }
+
+        public static void NoticeToClientAll(this GamePlayPlayerListComponent self)
+        {
+            List<long> playerList = self.GetPlayerList();
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                self.NoticeCoinToClient(playerList[i], GetCoinType.Normal);
             }
         }
 

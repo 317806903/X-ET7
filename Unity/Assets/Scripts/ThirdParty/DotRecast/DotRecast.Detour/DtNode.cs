@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -18,82 +18,41 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-using System;
 using System.Collections.Generic;
-using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Detour
 {
-    public class DtNode: IDisposable
+    public class DtNode
     {
-        public const int DT_NODE_OPEN = 0x01;
-        public const int DT_NODE_CLOSED = 0x02;
+        public readonly int ptr;
 
-        /** parent of the node is not adjacent. Found using raycast. */
-        public const int DT_NODE_PARENT_DETACHED = 0x04;
+        public RcVec3f pos; // Position of the node.
+        public float cost; // Cost from previous node to current node.
+        public float total; // Cost up to the node.
+        public int pidx; // Index to parent node.
+        public int state; // extra state information. A polyRef can have multiple nodes with different extra info. see DT_MAX_STATES_PER_NODE
+        public int flags; // Node flags. A combination of dtNodeFlags.
+        public long id; // Polygon ref the node corresponds to.
+        public List<long> shortcut; // Shortcut found by raycast.
 
-        public int index { get; private set; }
-
-        /** Position of the node. */
-        public RcVec3f pos = new RcVec3f();
-
-        /** Cost of reaching the given node. */
-        public float cost;
-
-        /** Total cost of reaching the goal via the given node including heuristics. */
-        public float total;
-
-        /** Index to parent node. */
-        public int pidx;
-
-        /**
-     * extra state information. A polyRef can have multiple nodes with different extra info. see DT_MAX_STATES_PER_NODE
-     */
-        public int state;
-
-        /** Node flags. A combination of dtNodeFlags. */
-        public int flags;
-
-        /** Polygon ref the node corresponds to. */
-        public long id;
-
-        /** Shortcut found by raycast. */
-        public List<long> shortcut;
-
-        private DtNodePool _DtNodePool;
-
-        public void SetIndex(DtNodePool dtNodePool, int index)
+        public DtNode(int ptr)
         {
-            this._DtNodePool = dtNodePool;
+            this.ptr = ptr;
+        }
+        
+        public static int ComparisonNodeTotal(DtNode a, DtNode b)
+        {
+            int compare = a.total.CompareTo(b.total);
+            if (0 != compare)
+                return compare;
 
-            this.index = index;
-            this.pos = new RcVec3f();
-            this.cost = 0;
-            this.total = 0;
-            this.pidx = 0;
-            this.state = 0;
-            this.flags = 0;
-            this.id = 0;
-            this.shortcut = null;
+            return a.ptr.CompareTo(b.ptr);
         }
 
         public override string ToString()
         {
-            return "Node [id=" + id + "]";
-        }
-
-        public static DtNode Create(DtNodePool dtNodePool, int index)
-        {
-            DtNode dtNode = dtNodePool.Fetch();
-            dtNode.SetIndex(dtNodePool, index);
-            return dtNode;
-        }
-
-        public void Dispose()
-        {
-            this._DtNodePool.Recycle(this);
-            this._DtNodePool = null;
-            this.shortcut = null;
+            return $"Node [ptr={ptr} id={id} cost={cost} total={total}]";
         }
     }
 }

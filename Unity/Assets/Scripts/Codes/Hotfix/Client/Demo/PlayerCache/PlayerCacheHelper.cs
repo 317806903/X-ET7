@@ -206,7 +206,7 @@ namespace ET.Client
         {
 	        PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, playerModelComponentBytes, null);
+	        Entity entityModel = playerDataComponent.SetPlayerModel(playerModelType, playerModelComponentBytes, null, PlayerModelChgType.None);
 	        entityModel.SetDataCacheAutoClear();
 
 	        return entityModel;

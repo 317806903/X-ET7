@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ET.AbilityConfig;
 using Unity.Mathematics;
-using UnitHelper = ET.Ability.UnitHelper;
 
 namespace ET
 {
@@ -454,6 +453,16 @@ namespace ET
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlay_Status_GameStart());
 
             self.NoticeToClientAll();
+        }
+
+        public static void StartShow(this GamePlayComponent self)
+        {
+            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
+            if (gamePlayPlayerListComponent == null)
+            {
+                return;
+            }
+            gamePlayPlayerListComponent.NoticeToClientAll();
         }
 
         public static async ETTask GameEnd(this GamePlayComponent self)

@@ -17,8 +17,9 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     public SkillCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Name = _buf.ReadString();
-        Desc = _buf.ReadString();
+        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
+        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
+        Icon = _buf.ReadString();
         SkillGroupType = (SkillGroupType)_buf.ReadInt();
         Priority = _buf.ReadInt();
         Dis = _buf.ReadFloat();
@@ -42,10 +43,17 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    public string Name_l10n_key { get; }
     /// <summary>
     /// 描述
     /// </summary>
     public string Desc { get; private set; }
+    public string Desc_l10n_key { get; }
+    /// <summary>
+    /// icon资源路径
+    /// </summary>
+    public string Icon { get; private set; }
+    public ResIconCfg Icon_Ref { get; private set; }
     /// <summary>
     /// 技能组(就算学习多个，也仅保留最高优先级的那个)
     /// </summary>
@@ -82,6 +90,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
         this.SkillSelectAction_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(SkillSelectAction);
         this.TimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(TimelineId);
         PostResolve();
@@ -89,6 +98,8 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        Name = translator(Name_l10n_key, Name);
+        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -97,6 +108,7 @@ public sealed partial class SkillCfg: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
+        + "Icon:" + Icon + ","
         + "SkillGroupType:" + SkillGroupType + ","
         + "Priority:" + Priority + ","
         + "Dis:" + Dis + ","

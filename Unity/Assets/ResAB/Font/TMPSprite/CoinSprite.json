@@ -10,7 +10,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "Energy.png",
+	"filename": "Diamond.png",
 	"frame": {"x":82,"y":0,"w":82,"h":82},
 	"rotated": false,
 	"trimmed": false,
@@ -19,8 +19,17 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "Gold.png",
+	"filename": "Energy.png",
 	"frame": {"x":164,"y":0,"w":82,"h":82},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":82,"h":82},
+	"sourceSize": {"w":82,"h":82},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "Gold.png",
+	"frame": {"x":246,"y":0,"w":82,"h":82},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":82,"h":82},
@@ -32,8 +41,8 @@
 	"version": "1.0",
 	"image": "CoinSprite.png",
 	"format": "RGBA8888",
-	"size": {"w":246,"h":82},
+	"size": {"w":328,"h":82},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:ab42007786f3d1b95d59b4580a1569f4:31215988fd766fdd3dc76312e7c04fac:491ed39627b64298040f847970e6f6c7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f2a65b2fb9aee6c45020827b96b0a3d2:329ac9e2e0502689d93224ab314147fc:491ed39627b64298040f847970e6f6c7$"
 }
 }

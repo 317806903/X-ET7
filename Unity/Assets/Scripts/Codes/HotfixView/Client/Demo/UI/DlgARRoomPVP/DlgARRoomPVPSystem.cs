@@ -263,11 +263,9 @@ namespace ET.Client
         {
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(self.DomainScene());
             long roomId = playerStatusComponent.RoomId;
-            await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
+            (bool roomExist, RoomComponent roomComponent) = await RoomHelper.GetRoomInfoAsync(self.DomainScene(), roomId);
 
             self.ResetRoomMembers();
-
-            RoomComponent roomComponent = self.GetRoomComponent();
 
             int count = 3;
             self.AddUIScrollItems(ref self.ScrollItemRoomMembersLeft, count);

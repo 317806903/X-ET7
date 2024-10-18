@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 using DotRecast.Recast;
-using static DotRecast.Core.RcMath;
 
 namespace DotRecast.Detour.Extras.Jumplink
 {
@@ -16,12 +16,12 @@ namespace DotRecast.Detour.Extras.Jumplink
         private readonly JumpSegmentBuilder jumpSegmentBuilder = new JumpSegmentBuilder();
 
         private readonly List<JumpEdge[]> edges;
-        private readonly IList<RecastBuilderResult> results;
+        private readonly IList<RcBuilderResult> results;
 
-        public JumpLinkBuilder(IList<RecastBuilderResult> results)
+        public JumpLinkBuilder(IList<RcBuilderResult> results)
         {
             this.results = results;
-            edges = results.Select(r => edgeExtractor.ExtractEdges(r.GetMesh())).ToList();
+            edges = results.Select(r => edgeExtractor.ExtractEdges(r.Mesh)).ToList();
         }
 
         public List<JumpLink> Build(JumpLinkBuilderConfig acfg, JumpLinkType type)
@@ -39,11 +39,11 @@ namespace DotRecast.Detour.Extras.Jumplink
             return links;
         }
 
-        private List<JumpLink> ProcessEdge(JumpLinkBuilderConfig acfg, RecastBuilderResult result, JumpLinkType type, JumpEdge edge)
+        private List<JumpLink> ProcessEdge(JumpLinkBuilderConfig acfg, RcBuilderResult result, JumpLinkType type, JumpEdge edge)
         {
             EdgeSampler es = edgeSamplerFactory.Get(acfg, type, edge);
             groundSampler.Sample(acfg, result, es);
-            trajectorySampler.Sample(acfg, result.GetSolidHeightfield(), es);
+            trajectorySampler.Sample(acfg, result.SolidHeightfiled, es);
             JumpSegment[] jumpSegments = jumpSegmentBuilder.Build(acfg, es);
             return BuildJumpLinks(acfg, es, jumpSegments);
         }
@@ -59,13 +59,13 @@ namespace DotRecast.Detour.Extras.Jumplink
                 GroundSegment end = es.end[js.groundSegment];
                 RcVec3f ep = end.gsamples[js.startSample].p;
                 RcVec3f eq = end.gsamples[js.startSample + js.samples - 1].p;
-                float d = Math.Min(RcVec3f.Dist2DSqr(sp, sq), RcVec3f.Dist2DSqr(ep, eq));
+                float d = Math.Min(RcVec.Dist2DSqr(sp, sq), RcVec.Dist2DSqr(ep, eq));
                 if (d >= 4 * acfg.agentRadius * acfg.agentRadius)
                 {
                     JumpLink link = new JumpLink();
                     links.Add(link);
-                    link.startSamples = RcArrayUtils.CopyOf(es.start.gsamples, js.startSample, js.samples);
-                    link.endSamples = RcArrayUtils.CopyOf(end.gsamples, js.startSample, js.samples);
+                    link.startSamples = RcArrays.CopyOf(es.start.gsamples, js.startSample, js.samples);
+                    link.endSamples = RcArrays.CopyOf(end.gsamples, js.startSample, js.samples);
                     link.start = es.start;
                     link.end = end;
                     link.trajectory = es.trajectory;
@@ -73,14 +73,14 @@ namespace DotRecast.Detour.Extras.Jumplink
                     {
                         float u = ((float)j) / (link.nspine - 1);
                         RcVec3f p = es.trajectory.Apply(sp, ep, u);
-                        link.spine0[j * 3] = p.x;
-                        link.spine0[j * 3 + 1] = p.y;
-                        link.spine0[j * 3 + 2] = p.z;
+                        link.spine0[j * 3] = p.X;
+                        link.spine0[j * 3 + 1] = p.Y;
+                        link.spine0[j * 3 + 2] = p.Z;
 
                         p = es.trajectory.Apply(sq, eq, u);
-                        link.spine1[j * 3] = p.x;
-                        link.spine1[j * 3 + 1] = p.y;
-                        link.spine1[j * 3 + 2] = p.z;
+                        link.spine1[j * 3] = p.X;
+                        link.spine1[j * 3 + 1] = p.Y;
+                        link.spine1[j * 3 + 2] = p.Z;
                     }
                 }
             }

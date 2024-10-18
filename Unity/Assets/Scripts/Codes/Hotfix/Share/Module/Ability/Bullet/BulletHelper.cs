@@ -55,7 +55,7 @@ namespace ET.Ability
             unit.GetComponent<BulletObj>()?.TrigEvent(abilityBulletMonitorTriggerEvent, onAttackUnit, beHurtUnit);
         }
 
-        public static (bool, bool, float3) ChkBulletHit(Unit unitBullet, Unit unit)
+        public static (bool, bool, float3, float3) ChkBulletHit(Unit unitBullet, Unit unit)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
 
@@ -63,33 +63,30 @@ namespace ET.Ability
             float3 posBeforeBullet = moveTweenObj.lastPosition;
             float3 posAfterBullet = unitBullet.Position;
 
-            bool bHitUnit = false;
-            bool bHitMesh = false;
-            float3 hitPos = float3.zero;
+            bool isHitUnit = false;
+            bool isHitMesh = false;
+            float3 hitUnitPos = float3.zero;
+            float3 hitMeshPos = float3.zero;
 
             if (bulletObj.CanHitUnit(unit) && moveTweenObj.ChkCanTouchUnit(unit))
             {
-                (bool isHitUnit, float3 hitUnitPos) = _ChkBulletHitUnit(unitBullet, unit, posBeforeBullet, posAfterBullet);
+                (isHitUnit, hitUnitPos) = _ChkBulletHitUnit(unitBullet, unit, posBeforeBullet, posAfterBullet);
                 if (isHitUnit)
                 {
                     posAfterBullet = hitUnitPos;
-                    bHitUnit = true;
-                    hitPos = hitUnitPos;
                 }
             }
 
             if (bulletObj.CanHitMesh(false))
             {
-                (bool isHitMesh, float3 hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
+                (isHitMesh, hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
                 if (isHitMesh)
                 {
-                    bHitUnit = false;
-                    bHitMesh = true;
-                    hitPos = hitMeshPos;
+                    isHitUnit = false;
                 }
             }
 
-            return (bHitUnit, bHitMesh, hitPos);
+            return (isHitUnit, isHitMesh, hitUnitPos, hitMeshPos);
         }
 
         public static (bool, float3) ChkBulletHitMesh(Unit unitBullet)
@@ -100,20 +97,15 @@ namespace ET.Ability
             float3 posBeforeBullet = moveTweenObj.lastPosition;
             float3 posAfterBullet = unitBullet.Position;
 
-            bool bHitMesh = false;
-            float3 hitPos = float3.zero;
+            bool isHitMesh = false;
+            float3 hitMeshPos = float3.zero;
 
             if (bulletObj.CanHitMesh(true))
             {
-                (bool isHitMesh, float3 hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
-                if (isHitMesh)
-                {
-                    bHitMesh = true;
-                    hitPos = hitMeshPos;
-                }
+                (isHitMesh, hitMeshPos) = RecastHelper.ChkHitMesh(unitBullet.DomainScene(), posBeforeBullet, posAfterBullet);
             }
 
-            return (bHitMesh, hitPos);
+            return (isHitMesh, hitMeshPos);
         }
 
         public static (bool, float3) _ChkBulletHitUnit(Unit unitBullet, Unit unit, float3 posBeforeBullet, float3 posAfterBullet)
@@ -188,7 +180,7 @@ namespace ET.Ability
             }
         }
 
-        public static void DoBulletHitUnit(Unit unitBullet, Unit unit)
+        public static void DoBulletHitUnit(Unit unitBullet, Unit unit, float3 hitUnitPos)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
 
@@ -209,15 +201,21 @@ namespace ET.Ability
                 return;
             }
 
+            if (bulletObj.canHitTimes == 0)
+            {
+                unitBullet.Position = hitUnitPos;
+            }
+
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHit()
             {
                 attackerUnit = unitBullet,
                 defenderUnit = unit,
+                hitPos = hitUnitPos,
             });
 
         }
 
-        public static void DoBulletHitMesh(Unit unitBullet, float3 hitPos)
+        public static void DoBulletHitMesh(Unit unitBullet, float3 hitMeshPos)
         {
             BulletObj bulletObj = unitBullet.GetComponent<BulletObj>();
 
@@ -239,10 +237,15 @@ namespace ET.Ability
                 return;
             }
 
+            if (bulletObj.canHitTimes == 0)
+            {
+                unitBullet.Position = hitMeshPos;
+            }
+
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHitMesh()
             {
                 attackerUnit = unitBullet,
-                hitPos = hitPos,
+                hitPos = hitMeshPos,
             });
 
         }

@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -19,51 +19,48 @@ freely, subject to the following restrictions:
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DotRecast.Detour
 {
     public class DtNodePool
     {
-        private readonly Dictionary<long, List<DtNode>> m_map = new Dictionary<long, List<DtNode>>();
-        private readonly List<DtNode> m_nodes = new List<DtNode>();
+        private readonly Dictionary<long, List<DtNode>> m_map;
 
-        Queue<DtNode> queue = new();
-        Queue<List<DtNode>> queueNodeList = new();
+        private int m_nodeCount;
+        private readonly List<DtNode> m_nodes;
 
         public DtNodePool()
         {
+            m_map = new Dictionary<long, List<DtNode>>();
+            m_nodes = new List<DtNode>();
         }
 
         public void Clear()
         {
-            foreach (DtNode dtNode in this.m_nodes)
-            {
-                dtNode.Dispose();
-            }
-            m_nodes.Clear();
-
-            foreach (var tmp in this.m_map)
-            {
-                this.RecycleNodeList(tmp.Value);
-            }
             m_map.Clear();
+            m_nodeCount = 0;
         }
 
-        public List<DtNode> FindNodes(long id)
+        public int GetNodeCount()
         {
-            var hasNode = m_map.TryGetValue(id, out var nodes);
-            if (nodes == null)
+            return m_nodeCount;
+        }
+
+        public int FindNodes(long id, out List<DtNode> nodes)
+        {
+            var hasNode = m_map.TryGetValue(id, out nodes);
+            if (hasNode)
             {
-                nodes = this.FetchNodeList();
+                return nodes.Count;
             }
 
-            return nodes;
+            return 0;
         }
 
         public DtNode FindNode(long id)
         {
-            var hasNode = m_map.TryGetValue(id, out var nodes);
-            ;
+            m_map.TryGetValue(id, out var nodes);
             if (nodes != null && 0 != nodes.Count)
             {
                 return nodes[0];
@@ -74,7 +71,7 @@ namespace DotRecast.Detour
 
         public DtNode GetNode(long id, int state)
         {
-            var hasNode = m_map.TryGetValue(id, out var nodes);
+            m_map.TryGetValue(id, out var nodes);
             if (nodes != null)
             {
                 foreach (DtNode node in nodes)
@@ -87,7 +84,7 @@ namespace DotRecast.Detour
             }
             else
             {
-                nodes = this.FetchNodeList();
+                nodes = new List<DtNode>();
                 m_map.Add(id, nodes);
             }
 
@@ -96,10 +93,22 @@ namespace DotRecast.Detour
 
         private DtNode Create(long id, int state, List<DtNode> nodes)
         {
-            DtNode node = DtNode.Create(this, m_nodes.Count + 1);
+            if (m_nodes.Count <= m_nodeCount)
+            {
+                var newNode = new DtNode(m_nodeCount);
+                m_nodes.Add(newNode);
+            }
+
+            int i = m_nodeCount;
+            m_nodeCount++;
+            var node = m_nodes[i];
+            node.pidx = 0;
+            node.cost = 0;
+            node.total = 0;
             node.id = id;
             node.state = state;
-            m_nodes.Add(node);
+            node.flags = 0;
+            node.shortcut = null;
 
             nodes.Add(node);
             return node;
@@ -107,12 +116,16 @@ namespace DotRecast.Detour
 
         public int GetNodeIdx(DtNode node)
         {
-            return node != null ? node.index : 0;
+            return node != null
+                ? node.ptr + 1
+                : 0;
         }
 
         public DtNode GetNodeAtIdx(int idx)
         {
-            return idx != 0 ? m_nodes[idx - 1] : null;
+            return idx != 0
+                ? m_nodes[idx - 1]
+                : null;
         }
 
         public DtNode GetNode(long refs)
@@ -120,38 +133,9 @@ namespace DotRecast.Detour
             return GetNode(refs, 0);
         }
 
-        public Dictionary<long, List<DtNode>> GetNodeMap()
+        public IEnumerable<DtNode> AsEnumerable()
         {
-            return m_map;
-        }
-
-        public List<DtNode> FetchNodeList()
-        {
-            if (queueNodeList.Count == 0)
-            {
-                return new List<DtNode>();
-            }
-            return queueNodeList.Dequeue();
-        }
-
-        public void RecycleNodeList(List<DtNode> obj)
-        {
-            obj.Clear();
-            queueNodeList.Enqueue(obj);
-        }
-
-        public DtNode Fetch()
-        {
-            if (queue.Count == 0)
-            {
-                return new DtNode();
-            }
-            return queue.Dequeue();
-        }
-
-        public void Recycle(DtNode obj)
-        {
-            queue.Enqueue(obj);
+            return m_nodes.Take(m_nodeCount);
         }
     }
 }

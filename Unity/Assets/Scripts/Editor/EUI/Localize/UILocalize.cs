@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
@@ -59,6 +60,10 @@ public class UILocalize
         foreach (string value in execelLocalizeConfig_UI)
         {
             string[] tmp = value.Split("|");
+            if (tmp.Length < 2)
+            {
+                continue;
+            }
             if (dicExecel.TryGetValue(tmp[0], out string content))
             {
                 if (content == tmp[1])

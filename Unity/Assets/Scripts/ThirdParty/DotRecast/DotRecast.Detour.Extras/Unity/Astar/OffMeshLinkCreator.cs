@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -16,7 +17,9 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
+using System;
 using DotRecast.Core;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Detour.Extras.Unity.Astar
 {
@@ -35,26 +38,25 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                     if (startNode != null && endNode != null)
                     {
                         // FIXME: Optimise
-                        startTile.polys = RcArrayUtils.CopyOf(startTile.polys, startTile.polys.Length + 1);
+                        startTile.polys = RcArrays.CopyOf(startTile.polys, startTile.polys.Length + 1);
                         int poly = startTile.header.polyCount;
                         startTile.polys[poly] = new DtPoly(poly, 2);
                         startTile.polys[poly].verts[0] = startTile.header.vertCount;
                         startTile.polys[poly].verts[1] = startTile.header.vertCount + 1;
-                        startTile.polys[poly].SetPolyType(DtPoly.DT_POLYTYPE_OFFMESH_CONNECTION);
-                        startTile.verts = RcArrayUtils.CopyOf(startTile.verts, startTile.verts.Length + 6);
+                        startTile.polys[poly].SetPolyType(DtPolyTypes.DT_POLYTYPE_OFFMESH_CONNECTION);
+                        startTile.verts = RcArrays.CopyOf(startTile.verts, startTile.verts.Length + 6);
                         startTile.header.polyCount++;
                         startTile.header.vertCount += 2;
                         DtOffMeshConnection connection = new DtOffMeshConnection();
                         connection.poly = poly;
-                        connection.pos = new float[]
+                        connection.pos = new RcVec3f[]
                         {
-                            l.clamped1.x, l.clamped1.y, l.clamped1.z,
-                            l.clamped2.x, l.clamped2.y, l.clamped2.z
+                            l.clamped1, l.clamped2
                         };
                         connection.rad = 0.1f;
                         connection.side = startTile == endTile
                             ? 0xFF
-                            : DtNavMeshBuilder.ClassifyOffMeshPoint(RcVec3f.Of(connection.pos, 3), startTile.header.bmin, startTile.header.bmax);
+                            : DtNavMeshBuilder.ClassifyOffMeshPoint(connection.pos[1], startTile.header.bmin, startTile.header.bmax);
                         connection.userId = (int)l.linkID;
                         if (startTile.offMeshCons == null)
                         {
@@ -62,7 +64,7 @@ namespace DotRecast.Detour.Extras.Unity.Astar
                         }
                         else
                         {
-                            startTile.offMeshCons = RcArrayUtils.CopyOf(startTile.offMeshCons, startTile.offMeshCons.Length + 1);
+                            startTile.offMeshCons = RcArrays.CopyOf(startTile.offMeshCons, startTile.offMeshCons.Length + 1);
                         }
 
                         startTile.offMeshCons[startTile.offMeshCons.Length - 1] = connection;

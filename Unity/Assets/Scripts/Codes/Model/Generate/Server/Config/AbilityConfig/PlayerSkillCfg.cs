@@ -17,11 +17,8 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     public PlayerSkillCfg(ByteBuf _buf) 
     {
         Id = _buf.ReadString();
-        Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
-        Icon = _buf.ReadString();
         Level = _buf.ReadInt();
         ShowPriority = _buf.ReadInt();
-        SkillSelectAction = _buf.ReadString();
         TutorialCfgId = _buf.ReadString();
         LearnOrUpdateCost = _buf.ReadInt();
         NextPlayerSkillCfgId = _buf.ReadString();
@@ -40,16 +37,6 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     public string Id { get; private set; }
     public SkillCfg Id_Ref { get; private set; }
     /// <summary>
-    /// 名字
-    /// </summary>
-    public string Name { get; private set; }
-    public string Name_l10n_key { get; }
-    /// <summary>
-    /// icon资源路径
-    /// </summary>
-    public string Icon { get; private set; }
-    public ResIconCfg Icon_Ref { get; private set; }
-    /// <summary>
     /// 等级
     /// </summary>
     public int Level { get; private set; }
@@ -57,11 +44,6 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     /// 界面展示优先级(越大越前)
     /// </summary>
     public int ShowPriority { get; private set; }
-    /// <summary>
-    /// 玩家施法范围预览
-    /// </summary>
-    public string SkillSelectAction { get; private set; }
-    public SelectObjectCfg SkillSelectAction_Ref { get; private set; }
     /// <summary>
     /// 指引视频
     /// </summary>
@@ -87,8 +69,6 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.Id_Ref = (_tables["SkillCfgCategory"] as SkillCfgCategory).GetOrDefault(Id);
-        this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
-        this.SkillSelectAction_Ref = (_tables["SelectObjectCfgCategory"] as SelectObjectCfgCategory).GetOrDefault(SkillSelectAction);
         this.TutorialCfgId_Ref = (_tables["TutorialCfgCategory"] as TutorialCfgCategory).GetOrDefault(TutorialCfgId);
         this.NextPlayerSkillCfgId_Ref = (_tables["PlayerSkillCfgCategory"] as PlayerSkillCfgCategory).GetOrDefault(NextPlayerSkillCfgId);
         PostResolve();
@@ -96,18 +76,14 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        Name = translator(Name_l10n_key, Name);
     }
 
     public override string ToString()
     {
         return "{ "
         + "Id:" + Id + ","
-        + "Name:" + Name + ","
-        + "Icon:" + Icon + ","
         + "Level:" + Level + ","
         + "ShowPriority:" + ShowPriority + ","
-        + "SkillSelectAction:" + SkillSelectAction + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
         + "LearnOrUpdateCost:" + LearnOrUpdateCost + ","
         + "NextPlayerSkillCfgId:" + NextPlayerSkillCfgId + ","

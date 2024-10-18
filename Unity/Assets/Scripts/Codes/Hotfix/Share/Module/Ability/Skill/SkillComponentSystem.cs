@@ -23,6 +23,7 @@ namespace ET.Ability
                 self.manualSkillObjs = new();
 
                 self.SetCommonEnergyFull();
+                self.AddRestoreEnergy();
             }
         }
 
@@ -82,6 +83,28 @@ namespace ET.Ability
             self.curCommonEnergyNum = unitCfg.TotalCommonEnergy;
         }
 
+        public static void AddRestoreEnergy(this SkillComponent self)
+        {
+            UnitCfg unitCfg = self.GetUnit().model;
+            if (unitCfg == null)
+            {
+                return;
+            }
+
+            if (unitCfg.TotalCommonEnergy <= 0)
+            {
+                return;
+            }
+            if (unitCfg.RestoreCommonEnergyByWave <= 0)
+            {
+                return;
+            }
+            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_AddRestoreEnergy()
+            {
+                skillComponent = self,
+            });
+        }
+
         public static int GetCommonEnergyFullNum(this SkillComponent self)
         {
             UnitCfg unitCfg = self.GetUnit().model;
@@ -104,6 +127,10 @@ namespace ET.Ability
             {
                 return;
             }
+            if (self.curCommonEnergyNum >= unitCfg.TotalCommonEnergy)
+            {
+                return;
+            }
 
             self.curCommonEnergyNum = math.clamp(self.curCommonEnergyNum + restoreCommonEnergyByTime * fixedDeltaTime, 0, unitCfg.TotalCommonEnergy);
         }
@@ -120,7 +147,10 @@ namespace ET.Ability
             {
                 return;
             }
-
+            if (self.curCommonEnergyNum >= unitCfg.TotalCommonEnergy)
+            {
+                return;
+            }
             self.curCommonEnergyNum = math.clamp(self.curCommonEnergyNum + restoreCommonEnergyByWave, 0, unitCfg.TotalCommonEnergy);
         }
 
@@ -173,6 +203,8 @@ namespace ET.Ability
             self.ReSortPrioritySkillObjs();
 
             skillObj.DealLearnActionIds().Coroutine();
+
+            self.NoticeClient();
 
             return (true, "");
         }
@@ -245,16 +277,34 @@ namespace ET.Ability
             return (true, "");
         }
 
-        public static async ETTask<(bool ret, string msg)> BuySkillEnergy(this SkillComponent self, string skillCfgId)
+        public static async ETTask<(bool ret, string msg)> RestoreSkillEnergy(this SkillComponent self, string skillCfgId)
         {
-            SkillObj skillObj = self.GetSkillObj(skillCfgId);
-            if (skillObj == null)
+            if (string.IsNullOrEmpty(skillCfgId))
             {
-                string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_HaveNotLearned", skillCfgId);
-                return (false, msg);
+                bool ret;
+                string msg;
+                List<SkillObj> skillList = self.GetManualSkillList();
+                foreach (SkillObj skillObj in skillList)
+                {
+                    (ret, msg) = await skillObj.RestoreSkillEnergy();
+                    if (ret == false)
+                    {
+                        return (ret, msg);
+                    }
+                }
+                return (true, "");
             }
+            else
+            {
+                SkillObj skillObj = self.GetSkillObj(skillCfgId);
+                if (skillObj == null)
+                {
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Skill_HaveNotLearned", skillCfgId);
+                    return (false, msg);
+                }
 
-            return await skillObj.BuySkillEnergy();
+                return await skillObj.RestoreSkillEnergy();
+            }
         }
 
         public static async ETTask ReplaceSkillTimeline(this SkillComponent self, string newTimelineCfgId)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using DG.Tweening;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 using UnityEngine;
@@ -82,6 +83,8 @@ namespace ET.Client
 
             self.ResetScrollRectMoveWhenGuide();
 
+            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleCameraPlayerSkill>();
+
             //self.PlayMusic();
         }
 
@@ -148,24 +151,33 @@ namespace ET.Client
         public static void HideWindow(this DlgBattleTower self)
         {
             TimerComponent.Instance?.Remove(ref self.Timer);
+
+            UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleCameraPlayerSkill>();
+
         }
 
         public static void SetStep(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            GamePlayTowerDefenseStatus gamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
+            GamePlayTowerDefenseStatus newGamePlayTowerDefenseStatus = gamePlayTowerDefenseComponent.gamePlayTowerDefenseStatus;
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
             ET.Client.UIManagerHelper.HideConfirm(self.DomainScene());
             ET.Client.UIManagerHelper.HideChoose(self.DomainScene());
             self.ResetScrollRectMoveWhenGuide();
 
-            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome && gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
+            EventType.NoticeGamePlayTowerDefenseStatusWhenClient _NoticeGamePlayTowerDefenseStatusWhenClient = new()
+            {
+                gamePlayTowerDefenseStatus = newGamePlayTowerDefenseStatus,
+            };
+            EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayTowerDefenseStatusWhenClient);
+
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome && newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
             {
                 Log.Error($"--zpb self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome && gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished");
                 return;
             }
-            if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
+            if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitMeshFinished)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(false);
@@ -176,7 +188,7 @@ namespace ET.Client
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart() { eventName = "MeshLoadingEnded"});
 
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.LoadMeshErr)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.LoadMeshErr)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(false);
@@ -193,7 +205,7 @@ namespace ET.Client
                 });
 
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutHome)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
                 self.View.E_BattleImage.gameObject.SetActive(false);
@@ -246,7 +258,7 @@ namespace ET.Client
                 });
 
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(true);
                 self.View.E_BattleImage.gameObject.SetActive(false);
@@ -290,7 +302,7 @@ namespace ET.Client
                     self.ShowPutTipMsg(txt);
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.ShowStartEffect)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.ShowStartEffect)
             {
                 self.HidePutTipMsg();
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
@@ -300,7 +312,7 @@ namespace ET.Client
 
                 self.NoticeShowBattleNoticeWhenFirstShow();
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
             {
                 //UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonLoading>();
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
@@ -326,7 +338,7 @@ namespace ET.Client
                     self.TowerBuyShow().Coroutine();
                 }
 
-                if (self.gamePlayTowerDefenseStatus != gamePlayTowerDefenseStatus)
+                if (self.gamePlayTowerDefenseStatus != newGamePlayTowerDefenseStatus)
                 {
                     float homeHp = 0;
                     PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
@@ -354,7 +366,7 @@ namespace ET.Client
                     EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart() { eventName = "ShoppingEnded"});
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
             {
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(true);
@@ -363,7 +375,7 @@ namespace ET.Client
                 self.SetCurLeftTimeInfo();
                 self.NotTowerBuyShowWhenBattle().Coroutine();
 
-                if (self.gamePlayTowerDefenseStatus != gamePlayTowerDefenseStatus)
+                if (self.gamePlayTowerDefenseStatus != newGamePlayTowerDefenseStatus)
                 {
                     float homeHp = 0;
                     PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
@@ -391,7 +403,7 @@ namespace ET.Client
                     EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart() { eventName = "WaveEnded"});
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattleEnd)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattleEnd)
             {
                 UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.DefeatOneWave);
 
@@ -399,7 +411,7 @@ namespace ET.Client
                 Resources.UnloadUnusedAssets();
                 System.GC.Collect();
 
-                if (self.gamePlayTowerDefenseStatus != gamePlayTowerDefenseStatus)
+                if (self.gamePlayTowerDefenseStatus != newGamePlayTowerDefenseStatus)
                 {
                     float homeHp = 0;
                     PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
@@ -425,7 +437,7 @@ namespace ET.Client
                     });
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitRescan)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.WaitRescan)
             {
                 if (gamePlayTowerDefenseComponent.ownerPlayerId == myPlayerId)
                 {
@@ -440,7 +452,7 @@ namespace ET.Client
                     });
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.GameEnd)
             {
                 //UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonLoading>();
                 self.SetCurLeftTimeInfo();
@@ -449,7 +461,7 @@ namespace ET.Client
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideAllShownWindow();
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerEnd>().Coroutine();
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recover)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recover)
             {
                 self.SetCurLeftTimeInfo();
 
@@ -614,7 +626,7 @@ namespace ET.Client
 
                 }
             }
-            else if (gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering)
+            else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.Recovering)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {
@@ -657,7 +669,7 @@ namespace ET.Client
             {
             }
 
-            self.gamePlayTowerDefenseStatus = gamePlayTowerDefenseStatus;
+            self.gamePlayTowerDefenseStatus = newGamePlayTowerDefenseStatus;
         }
 
         public static int GetCurMonsterWave(this DlgBattleTower self)
@@ -701,7 +713,49 @@ namespace ET.Client
             //self.View.ELabel_TotalGoldTextMeshProUGUI.text = $"{self.GetMyGold()}";
 
             self.ChkRefreshBuyTowerPannel();
-            self.View.ELabel_TotalGoldTextMeshProUGUI.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(self.GetMyGold());
+            self.RefreshCoinAnimation();
+        }
+
+        public static void RefreshCoinAnimation(this DlgBattleTower self)
+        {
+            // 动画时间
+            float duration = 0.5f;
+
+            int oldGold = self.oldGold;
+            int newGold = self.GetMyGold();
+            self.oldGold = newGold;
+            if (oldGold == 0)
+            {
+                self.View.ELabel_TotalGoldTextMeshProUGUI.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(newGold);
+                return;
+            }
+            if (newGold < oldGold)
+            {
+                duration = 0.2f;
+            }
+
+            // 记录当前金币数
+            int startAmount = oldGold;
+
+            // 使用 DOTween 进行数字渐变
+            DOTween.To(() => startAmount, x =>
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                self.View.ELabel_TotalGoldTextMeshProUGUI.transform.GetComponent<UITextLocalizeMonoView>().DynamicSet(x);
+            }, newGold, duration);
+
+            // 可以添加额外的视觉效果，例如缩放动画
+            self.View.ELabel_TotalGoldTextMeshProUGUI.transform.DOScale(1.2f, 0.2f).OnComplete(() =>
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                self.View.ELabel_TotalGoldTextMeshProUGUI.transform.DOScale(1f, 0.2f);
+            });
         }
 
         public static void ChkRefreshBuyTowerPannel(this DlgBattleTower self)
@@ -835,6 +889,10 @@ namespace ET.Client
             int curTowerCount = gamePlayTowerDefenseComponent.GetPutAttackTowerCount(myPlayerId);
 
             string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_CurPutTowerCount", curTowerCount, limitTowerCount);
+            if (self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.text != msg)
+            {
+                self.RefreshPlayerTowerAnimation();
+            }
             self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.text = msg;
             if (limitTowerCount == curTowerCount)
             {
@@ -844,6 +902,19 @@ namespace ET.Client
             {
                 self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.color = Color.white;
             }
+        }
+
+        public static void RefreshPlayerTowerAnimation(this DlgBattleTower self)
+        {
+            // 可以添加额外的视觉效果，例如缩放动画
+            self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.transform.DOScale(1.2f, 0.2f).OnComplete(() =>
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                self.View.E_LeftCallPlayerTowerCountTextMeshProUGUI.transform.DOScale(1f, 0.2f);
+            });
         }
 
         public static async ETTask QuitBattle(this DlgBattleTower self)
@@ -863,7 +934,7 @@ namespace ET.Client
         public static async ETTask _QuitBattle(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+            if (gamePlayTowerDefenseComponent != null)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {
@@ -885,7 +956,7 @@ namespace ET.Client
         public static async ETTask _ReScan(this DlgBattleTower self)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
-            if (gamePlayTowerDefenseComponent.IsEndlessChallengeMode())
+            if (gamePlayTowerDefenseComponent != null)
             {
                 EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
                 {
@@ -1092,21 +1163,18 @@ namespace ET.Client
 
             if (listBought[index])
             {
-                /*itemTowerBuy.ELabel_ContentText.color = Color.white;
-                itemTowerBuy.ELabel_ContentText.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_TowerBuyDone");
-                itemTowerBuy.EButton_BuyButton.gameObject.SetActive(false);*/
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(true);
+                itemTowerBuy.EG_BuyBGRectTransform.SetVisible(false);
             }
             else
             {
                 itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
+                itemTowerBuy.EG_BuyBGRectTransform.SetVisible(true);
+                itemTowerBuy.EButton_BuyButton.SetVisible(true);
+                //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
+
+                itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), buyTowerCostGold).Coroutine();
             }
-
-            itemTowerBuy.EG_BuyBGRectTransform.SetVisible(true);
-            itemTowerBuy.EButton_BuyButton.SetVisible(true);
-            //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
-
-            itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), buyTowerCostGold).Coroutine();
 
             ET.EventTriggerListener.Get(itemTowerBuy.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
             {

@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
 recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
-DotRecast Copyright (c) 2023 Choi Ikpil ikpil@naver.com
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -21,6 +21,8 @@ freely, subject to the following restrictions:
 using System;
 using System.Collections.Generic;
 using DotRecast.Core;
+using DotRecast.Core.Collections;
+using DotRecast.Core.Numerics;
 
 namespace DotRecast.Recast.Geom
 {
@@ -31,8 +33,16 @@ namespace DotRecast.Recast.Geom
         public readonly float[] normals;
         private RcVec3f bmin;
         private RcVec3f bmax;
+
         private readonly List<RcConvexVolume> volumes = new List<RcConvexVolume>();
         private readonly RcTriMesh _mesh;
+
+        public static SimpleInputGeomProvider LoadFile(string objFilePath)
+        {
+            byte[] chunk = RcIO.ReadFileIfFound(objFilePath);
+            var context = RcObjImporter.LoadContext(chunk);
+            return new SimpleInputGeomProvider(context.vertexPositions, context.meshFaces);
+        }
 
         public SimpleInputGeomProvider(List<float> vertexPositions, List<int> meshFaces)
             : this(MapVertices(vertexPositions), MapFaces(meshFaces))
@@ -67,17 +77,20 @@ namespace DotRecast.Recast.Geom
             this.faces = faces;
             normals = new float[faces.Length];
             CalculateNormals();
-            bmin = RcVec3f.Zero;
-            bmax = RcVec3f.Zero;
-            RcVec3f.Copy(ref bmin, vertices, 0);
-            RcVec3f.Copy(ref bmax, vertices, 0);
+            bmin = new RcVec3f(vertices);
+            bmax = new RcVec3f(vertices);
             for (int i = 1; i < vertices.Length / 3; i++)
             {
-                bmin.Min(vertices, i * 3);
-                bmax.Max(vertices, i * 3);
+                bmin = RcVec3f.Min(bmin, RcVec.Create(vertices, i * 3));
+                bmax = RcVec3f.Max(bmax, RcVec.Create(vertices, i * 3));
             }
 
             _mesh = new RcTriMesh(vertices, faces);
+        }
+
+        public RcTriMesh GetMesh()
+        {
+            return _mesh;
         }
 
         public RcVec3f GetMeshBoundsMin()
@@ -102,12 +115,31 @@ namespace DotRecast.Recast.Geom
             vol.hmax = maxh;
             vol.verts = verts;
             vol.areaMod = areaMod;
-            volumes.Add(vol);
+        }
+
+        public void AddConvexVolume(RcConvexVolume convexVolume)
+        {
+            volumes.Add(convexVolume);
         }
 
         public IEnumerable<RcTriMesh> Meshes()
         {
             return RcImmutableArray.Create(_mesh);
+        }
+
+        public List<RcOffMeshConnection> GetOffMeshConnections()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddOffMeshConnection(RcVec3f start, RcVec3f end, float radius, bool bidir, int area, int flags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveOffMeshConnections(Predicate<RcOffMeshConnection> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public void CalculateNormals()
@@ -120,18 +152,18 @@ namespace DotRecast.Recast.Geom
 
                 var e0 = new RcVec3f();
                 var e1 = new RcVec3f();
-                e0.x = vertices[v1 + 0] - vertices[v0 + 0];
-                e0.y = vertices[v1 + 1] - vertices[v0 + 1];
-                e0.z = vertices[v1 + 2] - vertices[v0 + 2];
+                e0.X = vertices[v1 + 0] - vertices[v0 + 0];
+                e0.Y = vertices[v1 + 1] - vertices[v0 + 1];
+                e0.Z = vertices[v1 + 2] - vertices[v0 + 2];
 
-                e1.x = vertices[v2 + 0] - vertices[v0 + 0];
-                e1.y = vertices[v2 + 1] - vertices[v0 + 1];
-                e1.z = vertices[v2 + 2] - vertices[v0 + 2];
+                e1.X = vertices[v2 + 0] - vertices[v0 + 0];
+                e1.Y = vertices[v2 + 1] - vertices[v0 + 1];
+                e1.Z = vertices[v2 + 2] - vertices[v0 + 2];
 
-                normals[i] = e0.y * e1.z - e0.z * e1.y;
-                normals[i + 1] = e0.z * e1.x - e0.x * e1.z;
-                normals[i + 2] = e0.x * e1.y - e0.y * e1.x;
-                float d = (float)Math.Sqrt(normals[i] * normals[i] + normals[i + 1] * normals[i + 1] + normals[i + 2] * normals[i + 2]);
+                normals[i] = e0.Y * e1.Z - e0.Z * e1.Y;
+                normals[i + 1] = e0.Z * e1.X - e0.X * e1.Z;
+                normals[i + 2] = e0.X * e1.Y - e0.Y * e1.X;
+                float d = MathF.Sqrt(normals[i] * normals[i] + normals[i + 1] * normals[i + 1] + normals[i + 2] * normals[i + 2]);
                 if (d > 0)
                 {
                     d = 1.0f / d;

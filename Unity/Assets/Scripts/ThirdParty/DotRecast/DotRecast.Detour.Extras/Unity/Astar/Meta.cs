@@ -1,5 +1,6 @@
 /*
-recast4j copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+recast4j Copyright (c) 2015-2019 Piotr Piastucki piotr@jtilia.org
+DotRecast Copyright (c) 2023-2024 Choi Ikpil ikpil@naver.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -25,7 +26,7 @@ namespace DotRecast.Detour.Extras.Unity.Astar
     {
         public const string TYPENAME_RECAST_GRAPH = "Pathfinding.RecastGraph";
         public const string MIN_SUPPORTED_VERSION = "4.0.6";
-        public const string UPDATED_STRUCT_VERSION = "4.1.16";
+        public const string UPDATED_STRUCT_VERSION = "4.1.0";
         public static readonly Regex VERSION_PATTERN = new Regex(@"(\d+)\.(\d+)\.(\d+)");
         public string version { get; set; }
         public int graphs { get; set; }

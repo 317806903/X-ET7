@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -44,7 +45,7 @@ namespace ET
             return null;
         }
 
-        public static Entity SetPlayerModel(this PlayerDataComponent self, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys)
+        public static Entity SetPlayerModel(this PlayerDataComponent self, PlayerModelType playerModelType, byte[] bytes, List<string> setPlayerKeys, PlayerModelChgType playerModelChgType)
         {
             Entity entity = MongoHelper.Deserialize<Entity>(bytes);
             if (setPlayerKeys == null || setPlayerKeys.Count == 0)
@@ -78,6 +79,11 @@ namespace ET
                     default:
                         break;
                 }
+
+                if (playerModelChgType != PlayerModelChgType.None)
+                {
+                    Log.Info($"ET.PlayerDataComponentSystem.SetPlayerModel Reset playerModelChgType[{playerModelChgType.ToString()}] playerModelType[{playerModelType.ToString()}] playerId[{self.playerId}] entity[{entity}]");
+                }
                 return self.AddComponent(entity);
             }
             else
@@ -86,42 +92,42 @@ namespace ET
                 {
                     case PlayerModelType.BaseInfo:
                         PlayerBaseInfoComponent playerBaseInfoComponent = self.GetComponent<PlayerBaseInfoComponent>();
-                        self.ChgFieldValue<PlayerBaseInfoComponent>(playerBaseInfoComponent, (PlayerBaseInfoComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerBaseInfoComponent>(playerBaseInfoComponent, (PlayerBaseInfoComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerBaseInfoComponent;
                     case PlayerModelType.BackPack:
                         PlayerBackPackComponent playerBackPackComponent = self.GetComponent<PlayerBackPackComponent>();
-                        self.ChgFieldValue<PlayerBackPackComponent>(playerBackPackComponent, (PlayerBackPackComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerBackPackComponent>(playerBackPackComponent, (PlayerBackPackComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerBackPackComponent;
                     case PlayerModelType.BattleCard:
                         PlayerBattleCardComponent battleCardComponent = self.GetComponent<PlayerBattleCardComponent>();
-                        self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return battleCardComponent;
                     case PlayerModelType.OtherInfo:
                         PlayerOtherInfoComponent playerOtherInfoComponent = self.GetComponent<PlayerOtherInfoComponent>();
-                        self.ChgFieldValue<PlayerOtherInfoComponent>(playerOtherInfoComponent, (PlayerOtherInfoComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerOtherInfoComponent>(playerOtherInfoComponent, (PlayerOtherInfoComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerOtherInfoComponent;
                     case PlayerModelType.SeasonInfo:
                         PlayerSeasonInfoComponent playerSeasonInfoComponent = self.GetComponent<PlayerSeasonInfoComponent>();
-                        self.ChgFieldValue<PlayerSeasonInfoComponent>(playerSeasonInfoComponent, (PlayerSeasonInfoComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerSeasonInfoComponent>(playerSeasonInfoComponent, (PlayerSeasonInfoComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerSeasonInfoComponent;
                     case PlayerModelType.FunctionMenu:
                         PlayerFunctionMenuComponent playerFunctionMenuComponent = self.GetComponent<PlayerFunctionMenuComponent>();
-                        self.ChgFieldValue<PlayerFunctionMenuComponent>(playerFunctionMenuComponent, (PlayerFunctionMenuComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerFunctionMenuComponent>(playerFunctionMenuComponent, (PlayerFunctionMenuComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerFunctionMenuComponent;
                     case PlayerModelType.Mails:
                         PlayerMailComponent playerMailComponent = self.GetComponent<PlayerMailComponent>();
-                        self.ChgFieldValue<PlayerMailComponent>(playerMailComponent, (PlayerMailComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerMailComponent>(playerMailComponent, (PlayerMailComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerMailComponent;
                     case PlayerModelType.Skills:
                         PlayerSkillComponent playerSkillComponent = self.GetComponent<PlayerSkillComponent>();
-                        self.ChgFieldValue<PlayerSkillComponent>(playerSkillComponent, (PlayerSkillComponent)entity, setPlayerKeys);
+                        self.ChgFieldValue<PlayerSkillComponent>(playerSkillComponent, (PlayerSkillComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerSkillComponent;
                     default:
@@ -133,15 +139,21 @@ namespace ET
             }
         }
 
-        public static void ChgFieldValue<T>(this PlayerDataComponent self, T entity, T entityNew, List<string> setPlayerKeys) where T:Entity
+        public static void ChgFieldValue<T>(this PlayerDataComponent self, T entity, T entityNew, List<string> setPlayerKeys, PlayerModelType playerModelType, PlayerModelChgType playerModelChgType) where T:Entity
         {
             Type type = typeof(T);
             for (int i = 0; i < setPlayerKeys.Count; i++)
             {
                 try
                 {
-                    FieldInfo field = type.GetField(setPlayerKeys[i]);
-                    field.SetValue(entity, field.GetValue(entityNew));
+                    string key = setPlayerKeys[i];
+                    FieldInfo field = type.GetField(key);
+                    var value = field.GetValue(entityNew);
+                    field.SetValue(entity, value);
+                    if (playerModelChgType != PlayerModelChgType.None)
+                    {
+                        Log.Info($"ET.PlayerDataComponentSystem.SetPlayerModel ChgFieldValue playerModelChgType[{playerModelChgType.ToString()}] playerModelType[{playerModelType.ToString()}] playerId[{self.playerId}] entityId[{entity.Id}] key[{key}]=[{ET.ObjectHelper.GetString(value)}]");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -149,6 +161,5 @@ namespace ET
                 }
             }
         }
-
     }
 }

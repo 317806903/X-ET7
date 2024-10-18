@@ -534,14 +534,31 @@ namespace ET.Client
                 return;
             }
 
-            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
             string itemDesc = ItemHelper.GetItemDesc(itemCfgId);
+            ShowDescTips(scene, itemDesc, pos, true, false).Coroutine();
+        }
+
+        public static async ETTask ShowDescTips(Scene scene, string itemDesc, Vector3 pos, bool tipTextAlignmentMid, bool notNeedClickBg)
+        {
+            if (string.IsNullOrEmpty(itemDesc))
+            {
+                return;
+            }
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
             DlgDescTips_ShowWindowData _DlgDescTips_ShowWindowData = new()
             {
                 Pos = pos,
                 Desc = itemDesc,
+                tipTextAlignmentMid = tipTextAlignmentMid,
+                notNeedClickBg = notNeedClickBg,
             };
-            _UIComponent.ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData).Coroutine();
+            await _UIComponent.ShowWindowAsync<DlgDescTips>(_DlgDescTips_ShowWindowData);
+        }
+
+        public static void HideDescTips(Scene scene)
+        {
+            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
+            _UIComponent.HideWindow<DlgDescTips>();
         }
 
         public static async ETTask<bool> ChkPhsicalAndShowtip(Scene scene, int takePhsicalStrength)
@@ -572,6 +589,24 @@ namespace ET.Client
                 {
                     UIManagerHelper.ShowDlgArcade(scene, arcadeCoinNum - curArcadeCoin, finishCallBack);
                 }, null);
+                return false;
+            }
+            return true;
+        }
+
+        public static async ETTask<bool> ChkDiamondAndShowtip(Scene scene, int needDiamond, bool needTip = true)
+        {
+            int curDiamond = await PlayerCacheHelper.GetTokenDiamond(scene);
+            if(curDiamond < needDiamond)
+            {
+                if (needTip)
+                {
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_GetMore", needDiamond);
+                    UIManagerHelper.ShowConfirm(scene, msg, () =>
+                    {
+                        //UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgPhysicalStrength>().Coroutine();
+                    }, null);
+                }
                 return false;
             }
             return true;
@@ -856,15 +891,24 @@ namespace ET.Client
             {
                 vertices[i] = meshData.vertices[i];
             }
-            var normals = new Vector3[meshData.normals.Length];
-            for (int i = 0; i < meshData.normals.Length; i++)
+            Vector3[] normals = null;
+            if (meshData.normals != null)
             {
-                normals[i] = meshData.normals[i];
+                normals = new Vector3[meshData.normals.Length];
+                for (int i = 0; i < normals.Length; i++)
+                {
+                    normals[i] = meshData.normals[i];
+                }
             }
-            var uv = new Vector2[meshData.uv.Length];
-            for (int i = 0; i < meshData.uv.Length; i++)
+
+            Vector2[] uv = null;
+            if (meshData.uv != null)
             {
-                uv[i] = meshData.uv[i];
+                uv = new Vector2[meshData.uv.Length];
+                for (int i = 0; i < meshData.uv.Length; i++)
+                {
+                    uv[i] = meshData.uv[i];
+                }
             }
 
             return CreateMesh(vertices, meshData.triangles, normals, uv, scale);

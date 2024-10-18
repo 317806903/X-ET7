@@ -65,6 +65,10 @@ namespace ET.Client
 
 		public static void Hide(this DlgCommonLoading self, bool bForceHide)
 		{
+			if (self.IsDisposed)
+			{
+				return;
+			}
 			if (bForceHide)
 			{
 				self.showNum = 0;

@@ -47,20 +47,15 @@ namespace ET.Client
 					await TimerComponent.Instance.WaitAsync(200);
 				}
 			}
-			while (true)
+			bool bRet = await ET.Client.UnitViewHelper.ChkGameObjectShowReady(self, self.Unit);
+			if (bRet == false)
 			{
-				GameObjectShowComponent gameObjectShowComponent = self.Unit.GetComponent<GameObjectShowComponent>();
-				if (gameObjectShowComponent != null && gameObjectShowComponent.GetGo() != null)
-				{
-					WorldCameraController worldCameraController = self.MainCamera.gameObject.GetComponent<WorldCameraController>();
-					worldCameraController.ForceSetPosition(gameObjectShowComponent.GetGo().transform, 1f, 30, new Vector3(30f, 116, 0));
-					return;
-				}
-				else
-				{
-					await TimerComponent.Instance.WaitAsync(200);
-				}
+				return;
 			}
+
+			GameObjectShowComponent gameObjectShowComponent = self.Unit.GetComponent<GameObjectShowComponent>();
+			WorldCameraController worldCameraController = self.MainCamera.gameObject.GetComponent<WorldCameraController>();
+			worldCameraController.ForceSetPosition(gameObjectShowComponent.GetGo().transform, 1f, 30, new Vector3(30f, 116, 0));
 		}
 
 		private static void LateUpdate(this CameraComponent self)

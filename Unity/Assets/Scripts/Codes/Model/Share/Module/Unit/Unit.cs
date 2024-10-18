@@ -51,12 +51,55 @@ namespace ET
             this.position = position;
         }
 
+        [BsonIgnore]
+        public float3 EulerAnglesDegrees
+        {
+            get
+            {
+                return math.degrees(this.EulerAngles);
+            }
+        }
+
+        [BsonIgnore]
+        public float3 EulerAngles
+        {
+            get
+            {
+                float3 eulerAngles = QuaternionToEulerAngles(this.Rotation);
+                return eulerAngles;
+            }
+            set
+            {
+                this.Rotation = quaternion.Euler(value);
+            }
+        }
+
+        private float3 QuaternionToEulerAngles(quaternion q)
+        {
+            // 从四元数计算欧拉角
+            float3 euler = new float3(
+                (math.asin(2.0f * (q.value.w * q.value.x - q.value.y * q.value.z))),
+                (math.atan2(2.0f * (q.value.w * q.value.y + q.value.x * q.value.z),
+                    1.0f - 2.0f * (q.value.y * q.value.y + q.value.z * q.value.z))),
+                (math.atan2(2.0f * (q.value.w * q.value.z + q.value.x * q.value.y),
+                    1.0f - 2.0f * (q.value.z * q.value.z + q.value.x * q.value.x)))
+            );
+
+            return euler;
+        }
 
         [BsonIgnore]
         public float3 Forward
         {
             get => math.mul(this.Rotation, math.forward());
-            set => this.Rotation = quaternion.LookRotation(value, math.up());
+            set
+            {
+                if (value.x == 0 && value.z == 0)
+                {
+                    value.x = 0.0001f;
+                }
+                this.Rotation = quaternion.LookRotation(value, math.up());
+            }
         }
 
         [BsonElement]

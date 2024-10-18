@@ -33,10 +33,10 @@ namespace ET.Ability
             return await skillComponent.CastSkill(skillCfgId, selectHandleIn);
         }
 
-        public static async ETTask<(bool ret, string msg)> BuySkillEnergy(Unit unit, string skillCfgId)
+        public static async ETTask<(bool ret, string msg)> RestoreSkillEnergy(Unit unit, string skillCfgId)
         {
             SkillComponent skillComponent = GetSkillComponent(unit);
-            return await skillComponent.BuySkillEnergy(skillCfgId);
+            return await skillComponent.RestoreSkillEnergy(skillCfgId);
         }
 
         public static async ETTask ReplaceSkillTimeline(Unit unit, string newTimelineCfgId)
@@ -67,6 +67,12 @@ namespace ET.Ability
         {
             SkillComponent skillComponent = GetSkillComponent(unit);
             return skillComponent.GetManualSkillList();
+        }
+
+        public static SkillObj GetSkillObj(Unit unit, string skillCfgId)
+        {
+            SkillComponent skillComponent = GetSkillComponent(unit);
+            return skillComponent.GetSkillObj(skillCfgId);
         }
 
         public static float GetMaxSkillDis(Unit unit, ET.AbilityConfig.SkillSlotType skillSlotType)

@@ -21,7 +21,7 @@ namespace ET
         public static Dictionary<UIRedDotType, UIRedDotType> UIRedDot2Parent = new()
         {
             {UIRedDotType.Settings, UIRedDotType.Root},
-            {UIRedDotType.Cards, UIRedDotType.Root},
+            {UIRedDotType.BattleDeck, UIRedDotType.Root},
             {UIRedDotType.Bags, UIRedDotType.Root},
             {UIRedDotType.Account, UIRedDotType.Root},
             {UIRedDotType.Mail, UIRedDotType.Root},
@@ -31,15 +31,17 @@ namespace ET
             {UIRedDotType.Store, UIRedDotType.Root},
             {UIRedDotType.NewSeasonNotice, UIRedDotType.Root},
             {UIRedDotType.MultPlayers, UIRedDotType.Root},
-            {UIRedDotType.Skill, UIRedDotType.Root},
 
             {UIRedDotType.Tutorial, UIRedDotType.Settings},
             {UIRedDotType.Icon, UIRedDotType.Account},
             {UIRedDotType.SeasonBringUp, UIRedDotType.Season},
             {UIRedDotType.PVESeason, UIRedDotType.PVE},
             {UIRedDotType.TowerNew, UIRedDotType.Cards},
+            {UIRedDotType.SkillNew, UIRedDotType.Skills},
             {UIRedDotType.AvatarFrameNew, UIRedDotType.Icon},
             {UIRedDotType.ItemOtherNew, UIRedDotType.Bags},
+            {UIRedDotType.Cards, UIRedDotType.BattleDeck},
+            {UIRedDotType.Skills, UIRedDotType.BattleDeck},
         };
 
         public HashSet<string> questionnaireStatus = new();

@@ -14,7 +14,12 @@ namespace ET.Server
 			long towerUnitId = request.TowerUnitId;
 
 			UnitComponent unitComponent = Ability.UnitHelper.GetUnitComponent(observerUnit);
-			foreach (Unit unit in unitComponent.GetRecordList(UnitType.ActorUnit))
+			HashSet<Unit> list = unitComponent.GetRecordList(UnitType.ActorUnit);
+			if (list == null)
+			{
+				return;
+			}
+			foreach (Unit unit in list)
 			{
 				TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
 				if (towerComponent != null)

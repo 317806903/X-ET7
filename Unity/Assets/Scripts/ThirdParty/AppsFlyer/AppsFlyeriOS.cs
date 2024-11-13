@@ -220,6 +220,18 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
          }
 
         /// <summary>
+        /// Logs ad revenue data along with additional parameters if provided.
+        /// </summary>
+        /// <param name = "adRevenueData" >instance of AFAdRevenueData containing ad revenue information.</param>
+        /// <param name = "additionalParameters" >An optional map of additional parameters to be logged with ad revenue data. This can be null if there are no additional parameters.</param>
+        public void logAdRevenue(AFAdRevenueData adRevenueData, Dictionary<string, string> additionalParameters)
+        {
+#if !UNITY_EDITOR
+            _logAdRevenue(adRevenueData.monetizationNetwork, adRevenueData.mediationNetwork, adRevenueData.currencyIso4217Code, adRevenueData.eventRevenue, AFMiniJSON.Json.Serialize(additionalParameters));
+#endif
+         }
+
+        /// <summary>
         /// Anonymize user Data.
         /// Use this API during the SDK Initialization to explicitly anonymize a user's installs, events and sessions.
         /// Default is false
@@ -318,17 +330,30 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         }
 
         /// <summary>
-        ///  To send and validate in app purchases you can call this method from the processPurchase method.
+        ///  To send and validate in app purchases you can call this method from the processPurchase method - please use v2.
         /// </summary>
         /// <param name="productIdentifier">The product identifier.</param>
         /// <param name="price">The product price.</param>
         /// <param name="currency">The product currency.</param>
-        /// <param name="tranactionId">The purchase transaction Id.</param>
+        /// <param name="transactionId">The purchase transaction Id.</param>
         /// <param name="additionalParameters">The additional param, which you want to receive it in the raw reports.</param>
-        public void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
+        public void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
         {
 #if !UNITY_EDITOR
-            _validateAndSendInAppPurchase(productIdentifier, price, currency, tranactionId, AFMiniJSON.Json.Serialize(additionalParameters), gameObject ? gameObject.name : null);
+            _validateAndSendInAppPurchase(productIdentifier, price, currency, transactionId, AFMiniJSON.Json.Serialize(additionalParameters), gameObject ? gameObject.name : null);
+#endif
+        }
+
+        /// <summary>
+        ///  V2
+        ///  To send and validate in app purchases you can call this method from the processPurchase method.
+        /// </summary>
+        /// <param name="details">The AFSDKPurchaseDetailsIOS instance.</param>
+        /// <param name="extraEventValues">The extra params, which you want to receive it in the raw reports.</param>
+        public void validateAndSendInAppPurchase(AFSDKPurchaseDetailsIOS details, Dictionary<string, string> extraEventValues, MonoBehaviour gameObject)
+        {
+#if !UNITY_EDITOR
+            _validateAndSendInAppPurchaseV2(details.productId, details.price, details.currency, details.transactionId, AFMiniJSON.Json.Serialize(extraEventValues), gameObject ? gameObject.name : null);
 #endif
         }
 
@@ -742,6 +767,13 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
 #elif UNITY_STANDALONE_OSX
         [DllImport("AppsFlyerBundle")]
 #endif
+        private static extern void _logAdRevenue(string monetizationNetwork, MediationNetwork mediationNetwork, string currencyIso4217Code, double eventRevenue, string additionalParameters);
+
+#if UNITY_IOS
+    [DllImport("__Internal")]
+#elif UNITY_STANDALONE_OSX
+        [DllImport("AppsFlyerBundle")]
+#endif
         private static extern void _setDisableCollectIAd(bool disableCollectIAd);
 
 #if UNITY_IOS
@@ -798,7 +830,15 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
 #elif UNITY_STANDALONE_OSX
         [DllImport("AppsFlyerBundle")]
 #endif
-        private static extern void _validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, string additionalParameters, string objectName);
+        private static extern void _validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string transactionId, string additionalParameters, string objectName);
+
+
+#if UNITY_IOS
+    [DllImport("__Internal")]
+#elif UNITY_STANDALONE_OSX
+        [DllImport("AppsFlyerBundle")]
+#endif
+        private static extern void _validateAndSendInAppPurchaseV2(string product, string price, string currency, string transactionId, string extraEventValues, string objectName);
 
 #if UNITY_IOS
     [DllImport("__Internal")]

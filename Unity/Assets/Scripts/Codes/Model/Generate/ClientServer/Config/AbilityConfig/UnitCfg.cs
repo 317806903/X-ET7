@@ -24,6 +24,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         AttackPointHeight = _buf.ReadFloat();
         BodyHeight = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
+        NavObstacleRadius = _buf.ReadFloat();
         ResScale = _buf.ReadFloat();
         PropertyType = _buf.ReadString();
         DeathShow = _buf.ReadString();
@@ -78,6 +79,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// 身体半径(判断伤害什么的)
     /// </summary>
     public float BodyRadius { get; private set; }
+    /// <summary>
+    /// 寻路遮挡半径(圆柱体底面半径)
+    /// </summary>
+    public float NavObstacleRadius { get; private set; }
     /// <summary>
     /// 资源大小缩放
     /// </summary>
@@ -161,6 +166,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "AttackPointHeight:" + AttackPointHeight + ","
         + "BodyHeight:" + BodyHeight + ","
         + "BodyRadius:" + BodyRadius + ","
+        + "NavObstacleRadius:" + NavObstacleRadius + ","
         + "ResScale:" + ResScale + ","
         + "PropertyType:" + PropertyType + ","
         + "DeathShow:" + DeathShow + ","

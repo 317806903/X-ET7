@@ -99,24 +99,24 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void TrigEvent(this BulletObj self, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit = null, Unit
-            beHurtUnit = null)
+        public static void TrigEvent(this BulletObj self, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit
+            beHurtUnit, ref ActionContext actionContext)
         {
             List<BulletActionCall> bulletActionCalls = self.GetActionIds(abilityBulletMonitorTriggerEvent);
             if (bulletActionCalls.Count > 0)
             {
                 for (int i = 0; i < bulletActionCalls.Count; i++)
                 {
-                    self.EventHandler(bulletActionCalls[i], onAttackUnit, beHurtUnit);
+                    self.EventHandler(bulletActionCalls[i], onAttackUnit, beHurtUnit, ref actionContext);
                 }
             }
         }
 
-        public static void EventHandler(this BulletObj self, BulletActionCall bulletActionCall, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(this BulletObj self, BulletActionCall bulletActionCall, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
-            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), bulletActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
+            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), bulletActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref actionContext);
 
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), bulletActionCall.DelayTime, bulletActionCall.ActionId, bulletActionCall.ActionCondition1, bulletActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), bulletActionCall.DelayTime, bulletActionCall.ActionId, bulletActionCall.ActionCondition1, bulletActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref actionContext);
         }
 
         public static void FixedUpdate(this BulletObj self, float fixedDeltaTime)

@@ -14,6 +14,7 @@ namespace ScreenAdapt
     [Serializable]
     public class CallbackAdaptConfig
     {
+        public bool isSaved;
         public string param;
         public UnityEventString changeCallback;
     }
@@ -35,6 +36,10 @@ namespace ScreenAdapt
         protected override void _LoadConfig(CallbackAdaptConfig config)
         {
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             config.changeCallback.Invoke(config.param);
         }
     }

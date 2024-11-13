@@ -68,7 +68,7 @@ namespace ET.Client
             }
         }
 
-        public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionIOSComponent self, Action<bool> callBack)
+        public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionIOSComponent self, Action<bool, bool> callBack)
         {
             if (Application.HasUserAuthorization(UserAuthorization.WebCam) == false)
             {
@@ -79,17 +79,23 @@ namespace ET.Client
                     if (self.IsDisposed)
                     {
                         Log.Error($"ChkCameraAuthorization_IOS self.IsDisposed");
-                        callBack(false);
+                        callBack(false, true);
                         return;
                     }
                 }
                 bool bCameraAuthorization = Application.HasUserAuthorization(UserAuthorization.WebCam);
-                callBack(bCameraAuthorization);
+                callBack(bCameraAuthorization, true);
             }
             else
             {
-                callBack(true);
+                callBack(true, false);
             }
+        }
+
+        public static async ETTask JumpToSettings(this AuthorizedPermissionIOSComponent self)
+        {
+            // 打开应用的设置页面
+            Application.OpenURL("app-settings:");
         }
     }
 }

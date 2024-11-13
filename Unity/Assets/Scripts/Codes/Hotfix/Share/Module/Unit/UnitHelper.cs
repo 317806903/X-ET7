@@ -433,6 +433,11 @@ namespace ET.Ability
                         }
                     }
 
+                    bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(curHomeUnit);
+                    if (isCannotBeTargeted)
+                    {
+                        continue;
+                    }
                     if (isNeedChkCanBeFind)
                     {
                         bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(curHomeUnit, curUnit);
@@ -535,6 +540,11 @@ namespace ET.Ability
                         }
                     }
 
+                    bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(unit);
+                    if (isCannotBeTargeted)
+                    {
+                        continue;
+                    }
                     if (isNeedChkCanBeFind)
                     {
                         bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(unit, curUnit);
@@ -1026,6 +1036,7 @@ namespace ET.Ability
 
         public static void ResetPos(Unit unit, float3 resetPos, float3 resetForward)
         {
+            //Log.Error($"--zpb reset --{resetPos}");
             unit.Position = resetPos;
             if (resetForward.Equals(float3.zero) == false)
             {
@@ -1386,6 +1397,11 @@ namespace ET.Ability
         {
             Unit observerUnit = null;
             UnitComponent unitComponent = UnitHelper.GetUnitComponent(scene);
+            var observerUnits = unitComponent?.GetRecordList(UnitType.ObserverUnit);
+            if (observerUnits == null)
+            {
+                return null;
+            }
             foreach (var _observerUnit in unitComponent.GetRecordList(UnitType.ObserverUnit))
             {
                 observerUnit = _observerUnit;

@@ -51,6 +51,10 @@ namespace ET.Server
                     PlayerBattleCardComponent playerBattleCardComponent = await self.InitByDBOne<PlayerBattleCardComponent>(self.playerId);
                     playerBattleCardComponent.Init();
                     return playerBattleCardComponent;
+                case PlayerModelType.BattleSkill:
+                    PlayerBattleSkillComponent playerBattleSkillComponent = await self.InitByDBOne<PlayerBattleSkillComponent>(self.playerId);
+                    playerBattleSkillComponent.Init();
+                    return playerBattleSkillComponent;
                 case PlayerModelType.OtherInfo:
                     PlayerOtherInfoComponent playerOtherInfoComponent = await self.InitByDBOne<PlayerOtherInfoComponent>(self.playerId);
                     playerOtherInfoComponent.Init();
@@ -74,10 +78,6 @@ namespace ET.Server
                     PlayerMailComponent playerMailComponent = await self.InitByDBOne<PlayerMailComponent>(self.playerId);
                     playerMailComponent.Init();
                     return playerMailComponent;
-                case PlayerModelType.Skills:
-                    PlayerSkillComponent playerSkillComponent = await self.InitByDBOne<PlayerSkillComponent>(self.playerId);
-                    playerSkillComponent.Init();
-                    return playerSkillComponent;
                 default:
                     break;
             }

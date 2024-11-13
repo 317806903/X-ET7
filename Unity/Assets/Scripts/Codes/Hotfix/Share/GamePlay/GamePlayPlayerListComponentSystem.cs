@@ -556,10 +556,11 @@ namespace ET
             }
             else
             {
-                EventType.NoticeGamePlayPlayerListToClient _NoticeGamePlayPlayerListToClient = new()
-                {
-                    playerIds = new HashSet<long>() { playerId }, getCoinType = getCoinType, gamePlayPlayerListComponent = self,
-                };
+                EventType.NoticeGamePlayPlayerListToClient _NoticeGamePlayPlayerListToClient = new();
+                _NoticeGamePlayPlayerListToClient.playerIds = HashSetComponent<long>.Create();
+                _NoticeGamePlayPlayerListToClient.playerIds.Add(playerId);
+                _NoticeGamePlayPlayerListToClient.getCoinType = getCoinType;
+                _NoticeGamePlayPlayerListToClient.gamePlayPlayerListComponent = self;
                 EventSystem.Instance.Publish(self.DomainScene(), _NoticeGamePlayPlayerListToClient);
             }
         }

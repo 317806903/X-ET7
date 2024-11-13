@@ -6,8 +6,7 @@ namespace AppsFlyerSDK
 {
     public class AppsFlyer : MonoBehaviour
     {
-
-        public static readonly string kAppsFlyerPluginVersion = "6.13.10";
+        public static readonly string kAppsFlyerPluginVersion = "6.15.3";
         public static string CallBackObjectName = null;
         private static EventHandler onRequestResponse;
         private static EventHandler onInAppResponse;
@@ -330,6 +329,19 @@ namespace AppsFlyerSDK
             if (instance != null)
             {
                 instance.setConsentData(appsFlyerConsent);
+            }
+        }
+
+        /// <summary>
+        /// Logs ad revenue data along with additional parameters if provided.
+        /// </summary>
+        /// <param name = "adRevenueData" >instance of AFAdRevenueData containing ad revenue information.</param>
+        /// <param name = "additionalParameters" >An optional map of additional parameters to be logged with ad revenue data. This can be null if there are no additional parameters.</param>
+        public static void logAdRevenue(AFAdRevenueData adRevenueData, Dictionary<string, string> additionalParameters)
+        {
+            if (instance != null)
+            {
+                instance.logAdRevenue(adRevenueData, additionalParameters);
             }
         }
 
@@ -756,12 +768,22 @@ namespace AppsFlyerSDK
             }
         }
 
-        public static void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
+        public static void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
         {
             if (instance != null && instance is IAppsFlyerIOSBridge)
             {
                 IAppsFlyerIOSBridge appsFlyeriOSInstance = (IAppsFlyerIOSBridge)instance;
-                appsFlyeriOSInstance.validateAndSendInAppPurchase(productIdentifier, price, currency, tranactionId, additionalParameters, gameObject);
+                appsFlyeriOSInstance.validateAndSendInAppPurchase(productIdentifier, price, currency, transactionId, additionalParameters, gameObject);
+            }
+        }
+
+        // V2 
+        public static void validateAndSendInAppPurchase(AFSDKPurchaseDetailsIOS details, Dictionary<string, string> extraEventValues, MonoBehaviour gameObject)
+        {
+            if (instance != null && instance is IAppsFlyerIOSBridge)
+            {
+                IAppsFlyerIOSBridge appsFlyeriOSInstance = (IAppsFlyerIOSBridge)instance;
+                appsFlyeriOSInstance.validateAndSendInAppPurchase(details, extraEventValues, gameObject);
             }
         }
 
@@ -771,6 +793,16 @@ namespace AppsFlyerSDK
             {
                 IAppsFlyerAndroidBridge appsFlyerAndroidInstance = (IAppsFlyerAndroidBridge)instance;
                 appsFlyerAndroidInstance.validateAndSendInAppPurchase(publicKey, signature,purchaseData, price, currency, additionalParameters, gameObject);
+            }
+        }
+
+        // V2
+        public static void validateAndSendInAppPurchase(AFPurchaseDetailsAndroid details, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
+        {
+            if (instance != null && instance is IAppsFlyerAndroidBridge)
+            {
+                IAppsFlyerAndroidBridge appsFlyerAndroidInstance = (IAppsFlyerAndroidBridge)instance;
+                appsFlyerAndroidInstance.validateAndSendInAppPurchase(details, additionalParameters, gameObject);
             }
         }
 

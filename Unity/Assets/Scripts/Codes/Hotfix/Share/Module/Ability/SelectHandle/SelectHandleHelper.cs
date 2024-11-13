@@ -68,10 +68,9 @@ namespace ET.Ability
                 }
                 else if (selectObjectCfg.ActionCallParam is ActionCallOnAttackHitPos actionCallOnAttackHitPos)
                 {
-                    if (UnitHelper.ChkIsBullet(onAttackUnit))
+                    float3 hitPos = actionContext.hitPosition;
+                    if (hitPos.Equals(float3.zero) == false)
                     {
-                        BulletObj bulletObj = onAttackUnit.GetComponent<BulletObj>();
-                        float3 hitPos = bulletObj.actionContext.hitPosition;
                         selectHandle = SelectHandleHelper.CreatePositionSelectHandle(triggerUnit, hitPos, float3.zero, selectObjectCfg);
                         return (selectHandle, resetPosByUnit);
                     }
@@ -453,6 +452,11 @@ namespace ET.Ability
                         return (false, null);
                     }
 
+                    bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(selectUnit);
+                    if (isCannotBeTargeted)
+                    {
+                        return (false, null);
+                    }
                     if (selectObjectCfg.IsNeedChkCanBeFind)
                     {
                         bool isBeFind = ET.Ability.BuffHelper.ChkCanBeFind(selectUnit, unit);
@@ -1325,6 +1329,11 @@ namespace ET.Ability
                     Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
                     if (UnitHelper.ChkUnitAlive(unitOne))
                     {
+                        bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(unitOne);
+                        if (isCannotBeTargeted)
+                        {
+                            continue;
+                        }
                         if (selectObjectCfg.IsNeedChkCanBeFind)
                         {
                             if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
@@ -1350,6 +1359,11 @@ namespace ET.Ability
                 Unit unitOne = UnitHelper.GetUnit(unit.DomainScene(), unitId);
                 if (UnitHelper.ChkUnitAlive(unitOne))
                 {
+                    bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(unitOne);
+                    if (isCannotBeTargeted)
+                    {
+                        continue;
+                    }
                     if (selectObjectCfg.IsNeedChkCanBeFind)
                     {
                         if (ET.Ability.BuffHelper.ChkCanBeFind(unitOne, unit) == false)
@@ -1785,6 +1799,11 @@ namespace ET.Ability
                     return false;
                 }
 
+                bool isCannotBeTargeted = ET.Ability.BuffHelper.ChkCannotBeTargeted(unitSelect);
+                if (isCannotBeTargeted)
+                {
+                    return false;
+                }
                 if (selectObjectCfg.IsNeedChkCanBeFind)
                 {
                     if (ET.Ability.BuffHelper.ChkCanBeFind(unitSelect, unit) == false)

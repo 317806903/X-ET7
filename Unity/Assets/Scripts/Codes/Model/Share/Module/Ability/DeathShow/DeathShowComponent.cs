@@ -17,5 +17,7 @@ namespace ET.Ability
         ///已经存在了多久了，单位：秒
         ///</summary>
         public float timeElapsed = 0;
+
+        public bool isDestroying;
     }
 }

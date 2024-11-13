@@ -398,23 +398,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image E_CointIconImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_CointIconImage == null )
-				{
-					this.m_E_CointIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/E_RoomMemberStatus/ELable_RoomMemberStatus/E_CointIcon");
-				}
-				return this.m_E_CointIconImage;
-			}
-		}
-
 		public UnityEngine.UI.Button E_ShowQrCodeButton
 		{
 			get
@@ -619,57 +602,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.RectTransform EG_ChgBattleSkillRectTransform
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EG_ChgBattleSkillRectTransform == null )
-				{
-					this.m_EG_ChgBattleSkillRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleSkill");
-				}
-				return this.m_EG_ChgBattleSkillRectTransform;
-			}
-		}
-
-		public UnityEngine.UI.Button EButton_ChgBattleSkillButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ChgBattleSkillButton == null )
-				{
-					this.m_EButton_ChgBattleSkillButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleSkill/EButton_ChgBattleSkill");
-				}
-				return this.m_EButton_ChgBattleSkillButton;
-			}
-		}
-
-		public UnityEngine.UI.Image EButton_ChgBattleSkillImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_ChgBattleSkillImage == null )
-				{
-					this.m_EButton_ChgBattleSkillImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleSkill/EButton_ChgBattleSkill");
-				}
-				return this.m_EButton_ChgBattleSkillImage;
-			}
-		}
-
 		public void DestroyWidget()
 		{
 			this.m_EGBackGroundRectTransform = null;
@@ -695,7 +627,6 @@ namespace ET.Client
 			this.m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 			this.m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 			this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
-			this.m_E_CointIconImage = null;
 			this.m_E_ShowQrCodeButton = null;
 			this.m_E_ShowQrCodeImage = null;
 			this.m_E_ShowQrCode2Image = null;
@@ -708,9 +639,6 @@ namespace ET.Client
 			this.m_EG_ChgBattleDeckRectTransform = null;
 			this.m_EButton_ChgBattleDeckButton = null;
 			this.m_EButton_ChgBattleDeckImage = null;
-			this.m_EG_ChgBattleSkillRectTransform = null;
-			this.m_EButton_ChgBattleSkillButton = null;
-			this.m_EButton_ChgBattleSkillImage = null;
 			this.uiTransform = null;
 		}
 
@@ -737,7 +665,6 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELable_RoomMemberStatusTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_E_CointIconImage = null;
 		private UnityEngine.UI.Button m_E_ShowQrCodeButton = null;
 		private UnityEngine.UI.Image m_E_ShowQrCodeImage = null;
 		private UnityEngine.UI.Image m_E_ShowQrCode2Image = null;
@@ -750,9 +677,6 @@ namespace ET.Client
 		private UnityEngine.RectTransform m_EG_ChgBattleDeckRectTransform = null;
 		private UnityEngine.UI.Button m_EButton_ChgBattleDeckButton = null;
 		private UnityEngine.UI.Image m_EButton_ChgBattleDeckImage = null;
-		private UnityEngine.RectTransform m_EG_ChgBattleSkillRectTransform = null;
-		private UnityEngine.UI.Button m_EButton_ChgBattleSkillButton = null;
-		private UnityEngine.UI.Image m_EButton_ChgBattleSkillImage = null;
 		public Transform uiTransform = null;
 	}
 }

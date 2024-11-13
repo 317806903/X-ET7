@@ -9,6 +9,7 @@ namespace ScreenAdapt
     [Serializable]
     public class ScrollRectConfig
     {
+        public bool isSaved;
         public bool vertical;
         public bool horizontal;
     }
@@ -35,6 +36,7 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
+            config.isSaved = true;
             config.vertical = mComponent.vertical;
             config.horizontal = mComponent.horizontal;
         }
@@ -47,6 +49,10 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             mComponent.vertical = config.vertical;
             mComponent.horizontal = config.horizontal;
         }

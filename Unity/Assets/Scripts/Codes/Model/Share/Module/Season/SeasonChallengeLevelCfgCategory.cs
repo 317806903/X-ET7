@@ -36,6 +36,23 @@ namespace ET.AbilityConfig
 			return this.GetChallengeByIndex(roomTypeInfo.seasonCfgId, roomTypeInfo.pveIndex);
 		}
 
+		public ChallengeLevelCfg GetChallengeByDropItemCfgId(string dropItemCfgId)
+		{
+			var dic = this.SeasonChallenges;
+			foreach (var item in dic)
+			{
+				int seasonId = item.Key;
+				foreach (ChallengeLevelCfg challengeLevelCfg in item.Value.Values)
+				{
+					if (challengeLevelCfg.FirstRewardItemListShow.ContainsKey(dropItemCfgId))
+					{
+						return challengeLevelCfg;
+					}
+				}
+			}
+			return null;
+		}
+
 		public string GetCurChallengeGamePlayBattleLevelCfgId(int seasonCfgId, int pveIndex, bool isAR)
 		{
 			ChallengeLevelCfg ChallengeLevelCfg = GetChallengeByIndex(seasonCfgId, pveIndex);

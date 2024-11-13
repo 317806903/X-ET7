@@ -28,6 +28,10 @@ namespace ET
 		/// 波次序号，表示当前是哪一波(按照0,1,2,3..连续数字来计算的)
 		/// </summary>
 		public int curIndex;
+
+		public int circleWaveIndex;
+		public int circleNum;
+		public int circleIndex;
 		/// <summary>
 		/// 波次序号对应刷怪逻辑
 		/// </summary>

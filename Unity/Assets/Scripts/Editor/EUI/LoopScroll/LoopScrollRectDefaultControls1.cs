@@ -79,11 +79,11 @@ namespace UnityEngine.UI
                 SetLayerRecursively(t.GetChild(i).gameObject, layer);
         }
         #endregion
-        
+
         public static GameObject CreateLoopHorizontalScrollRect(DefaultControls.Resources resources,bool isGridLayout = false)
         {
             GameObject root = CreateUIElementRoot("Loop Horizontal Scroll Rect", new Vector2(200, 200));
-            
+
             GameObject content = CreateUIObject("Content", root);
 
             RectTransform contentRT = content.GetComponent<RectTransform>();
@@ -105,7 +105,7 @@ namespace UnityEngine.UI
             scrollRect.verticalScrollbarVisibility = LoopScrollRect.ScrollbarVisibility.Permanent;
             scrollRect.horizontalScrollbarSpacing = 0;
             scrollRect.verticalScrollbarSpacing = 0;
-            
+
             root.AddComponent<RectMask2D>();
 
             if (isGridLayout)
@@ -123,8 +123,10 @@ namespace UnityEngine.UI
                 layoutGroup.childAlignment = TextAnchor.MiddleLeft;
                 layoutGroup.childForceExpandWidth = false;
                 layoutGroup.childForceExpandHeight = true;
+                layoutGroup.childScaleWidth = true;
+                layoutGroup.spacing = 15;
             }
-         
+
 
             ContentSizeFitter sizeFitter = content.AddComponent<ContentSizeFitter>();
             sizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -136,9 +138,9 @@ namespace UnityEngine.UI
         public static GameObject CreateLoopVerticalScrollRect(DefaultControls.Resources resources,bool isGridLayout = false)
         {
             GameObject root = CreateUIElementRoot("Loop Vertical Scroll Rect", new Vector2(200, 200));
-            
+
             GameObject content = CreateUIObject("Content", root);
-            
+
             RectTransform contentRT = content.GetComponent<RectTransform>();
             contentRT.anchorMin = new Vector2(0.5f, 1);
             contentRT.anchorMax = new Vector2(0.5f, 1);
@@ -161,7 +163,7 @@ namespace UnityEngine.UI
 
             root.AddComponent<RectMask2D>();
 
-            
+
             if (isGridLayout)
             {
                 GridLayoutGroup layoutGroup = content.AddComponent<GridLayoutGroup>();
@@ -178,7 +180,7 @@ namespace UnityEngine.UI
                 layoutGroup.childForceExpandWidth = true;
                 layoutGroup.childForceExpandHeight = false;
             }
-          
+
 
             ContentSizeFitter sizeFitter = content.AddComponent<ContentSizeFitter>();
             sizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
@@ -192,13 +194,13 @@ namespace UnityEngine.UI
             GameObject root = CreateUIElementRoot("Loop Horizontal List View", new Vector2(200, 200));
             GameObject viewport = CreateUIObject("Viewport", root);
             GameObject content = CreateUIObject("Content", viewport);
-            
+
             RectTransform contentRT = content.GetComponent<RectTransform>();
             contentRT.anchorMin = new Vector2(0, 0f);
             contentRT.anchorMax = new Vector2(0, 1f);
             contentRT.sizeDelta = new Vector2(0, 0);
             contentRT.pivot = new Vector2(0, 0.5f);
-            
+
             RectTransform viewportRT = viewport.GetComponent<RectTransform>();
             viewportRT.anchorMin = new Vector2(0, 0);
             viewportRT.anchorMax = new Vector2(1, 1);
@@ -210,7 +212,7 @@ namespace UnityEngine.UI
             LoopListView2 loopList = root.AddComponent<LoopListView2>();
             loopList.ArrangeType = ListItemArrangeType.LeftToRight;
             loopList.ItemSnapEnable = true;
-            
+
             ScrollRect scrollRect = root.AddComponent<ScrollRect>();
             scrollRect.content = contentRT;
             scrollRect.viewport = viewportRT;
@@ -225,19 +227,19 @@ namespace UnityEngine.UI
 
             return root;
         }
-        
+
         public static GameObject CreateLoopVerticalListView(DefaultControls.Resources resources)
         {
             GameObject root = CreateUIElementRoot("Loop Vertical List View", new Vector2(200, 200));
             GameObject viewport = CreateUIObject("Viewport", root);
             GameObject content = CreateUIObject("Content", viewport);
-            
+
             RectTransform contentRT = content.GetComponent<RectTransform>();
             contentRT.anchorMin = new Vector2(0, 1);
             contentRT.anchorMax = new Vector2(1, 1);
             contentRT.sizeDelta = new Vector2(0, 0);
             contentRT.pivot = new Vector2(0.5f, 1);
-            
+
             RectTransform viewportRT = viewport.GetComponent<RectTransform>();
             viewportRT.anchorMin = new Vector2(0, 0);
             viewportRT.anchorMax = new Vector2(1, 1);
@@ -249,7 +251,7 @@ namespace UnityEngine.UI
             LoopListView2 loopList = root.AddComponent<LoopListView2>();
             loopList.ArrangeType = ListItemArrangeType.TopToBottom;
             loopList.ItemSnapEnable = true;
-            
+
             ScrollRect scrollRect = root.AddComponent<ScrollRect>();
             scrollRect.content = contentRT;
             scrollRect.viewport = viewportRT;
@@ -264,6 +266,6 @@ namespace UnityEngine.UI
 
             return root;
         }
-        
+
     }
 }

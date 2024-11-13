@@ -15,11 +15,11 @@ MonoBehaviour:
   ResLoadMode: 0
   ResHostServerIP: http://127.0.0.1
   ResGameVersion: v1.0
-  Version: 1.42642964
-  Channel: 10000
+  Version: 1.57982550
+  Channel: 9998
   RouterHttpHost: 127.0.0.1
   RouterHttpPort: 3478
-  areaType: 0
+  areaType: 2
   languageType: EN
   IsShowLanguagePre: 0
   IsShowDebugMode: 1

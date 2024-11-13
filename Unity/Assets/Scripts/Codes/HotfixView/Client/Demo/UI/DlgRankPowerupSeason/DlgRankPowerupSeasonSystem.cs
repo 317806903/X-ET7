@@ -30,16 +30,16 @@ namespace ET.Client
             self.View.ELoopListView_FrameLoopHorizontalScrollRect.AddItemRefreshListener(async (transform, i) =>
             {
                 await self.AddFrameItemRefreshListener(transform, i);
-                self.View.ELoopListView_FrameLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopListView_FrameLoopHorizontalScrollRect.SetSrcollMiddle();
             });
 
             //赛季奖励塔
-            self.View.ELoopListView_CardsLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopListView_CardsLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.View.ELoopListView_CardsLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopListView_CardsLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddTowerBuyListener(transform, i).Coroutine();
-                self.View.ELoopListView_CardsLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopListView_CardsLoopHorizontalScrollRect.SetSrcollMiddle();
             });
 
             //赛季怪物
@@ -48,7 +48,7 @@ namespace ET.Client
             self.View.ELoopListView_MonsersLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMonsterListener(transform, i);
-                self.View.ELoopListView_MonsersLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopListView_MonsersLoopHorizontalScrollRect.SetSrcollMiddle();
             });
         }
 
@@ -197,9 +197,8 @@ namespace ET.Client
             List<string> list;
             SeasonComponent seasonComponent = ET.Client.SeasonHelper.GetSeasonComponent(self.DomainScene());
 
-            transform.name = $"Item_TowerBuy_{index}";
-            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
+            transform.name = $"Item_TowerBattleBuy_{index}";
+            Scroll_Item_ItemShow itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
 
             //int clearLevel = await self.GetCurPveIndex();
             //ChallengeLevelCfg challengeLevelCfg =
@@ -208,7 +207,7 @@ namespace ET.Client
             list = seasonComponent.cfg.TowerListShow;
 
             string itemCfgId = list[index];
-            await itemTowerBuy.ShowBagItem(itemCfgId, true);
+            await itemTowerBuy.Init(itemCfgId, true);
 
             //WJTODO 获取玩家背包是否有该塔
             //itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);

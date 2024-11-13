@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
+  <assembly fullname="AppsFlyer">
+    <type fullname="AppsFlyerSDK.AppsFlyer" preserve="all" />
+    <type fullname="AppsFlyerSDK.IAppsFlyerConversionData" preserve="all" />
+  </assembly>
   <assembly fullname="BlurBackground">
     <type fullname="BlurBackground.TranslucentImage" preserve="all" />
     <type fullname="BlurBackground.TranslucentImageSource" preserve="all" />
@@ -273,14 +277,12 @@
     <type fullname="ET.ResConfig" preserve="all" />
     <type fullname="ET.ShowFPS" preserve="all" />
     <type fullname="ET.UITouchPass" preserve="all" />
+    <type fullname="ET.WorldPositionSetter" preserve="all" />
     <type fullname="ET.YooAssetHelper" preserve="all" />
     <type fullname="NetWork" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
     <type fullname="ReferenceSimpleData" preserve="all" />
     <type fullname="SimulateSwitchToBackground" preserve="all" />
-    <type fullname="SuperScrollView.LoopListView2" preserve="all" />
-    <type fullname="SuperScrollView.LoopListViewInitParam" preserve="all" />
-    <type fullname="SuperScrollView.LoopListViewItem2" preserve="all" />
     <type fullname="UIGuide.CircleGuideMask" preserve="all" />
     <type fullname="UIGuide.CurInNextType" preserve="all" />
     <type fullname="UIGuide.EventTriggerListener" preserve="all" />
@@ -330,6 +332,7 @@
     <type fullname="Unity.Services.PlayerAccounts.PlayerAccountService" preserve="all" />
   </assembly>
   <assembly fullname="Unity.TextMeshPro">
+    <type fullname="TMPro.HorizontalAlignmentOptions" preserve="all" />
     <type fullname="TMPro.TMP_Dropdown" preserve="all" />
     <type fullname="TMPro.TMP_Dropdown/DropdownEvent" preserve="all" />
     <type fullname="TMPro.TMP_Dropdown/OptionData" preserve="all" />
@@ -343,13 +346,12 @@
     <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
   </assembly>
   <assembly fullname="Unity.ThirdParty">
-    <type fullname="AppsFlyerSDK.AppsFlyer" preserve="all" />
-    <type fullname="AppsFlyerSDK.IAppsFlyerConversionData" preserve="all" />
     <type fullname="Bright.Common.StringUtil" preserve="all" />
     <type fullname="Bright.Config.BeanBase" preserve="all" />
     <type fullname="Bright.Serialization.ByteBuf" preserve="all" />
     <type fullname="Bright.Serialization.SerializationException" preserve="all" />
     <type fullname="DotRecast.Core.Numerics.RcVec3f" preserve="all" />
+    <type fullname="DotRecast.Core.RcByteOrder" preserve="all" />
     <type fullname="DotRecast.Core.RcObjImporter" preserve="all" />
     <type fullname="DotRecast.Core.RcObjImporterContext" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowd" preserve="all" />
@@ -374,6 +376,9 @@
     <type fullname="DotRecast.Detour.DtStatus" preserve="all" />
     <type fullname="DotRecast.Detour.DtStraightPath" preserve="all" />
     <type fullname="DotRecast.Detour.IDtQueryFilter" preserve="all" />
+    <type fullname="DotRecast.Detour.TileCache.DtTileCache" preserve="all" />
+    <type fullname="DotRecast.Detour.TileCache.Io.Compress.DtTileCacheCompressorFactory" preserve="all" />
+    <type fullname="DotRecast.Detour.TileCache.Io.Compress.IDtTileCacheCompressorFactory" preserve="all" />
     <type fullname="DotRecast.Recast.Geom.IInputGeomProvider" preserve="all" />
     <type fullname="DotRecast.Recast.RcBuilderResult" preserve="all" />
     <type fullname="DotRecast.Recast.RcHeightfield" preserve="all" />
@@ -384,6 +389,8 @@
     <type fullname="DotRecast.Recast.Toolset.Builder.TileNavMeshBuilder" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Geom.DemoInputGeomProvider" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.RcNavMeshBuildSettings" preserve="all" />
+    <type fullname="DotRecast.Recast.Toolset.Tools.RcObstacleTool" preserve="all" />
+    <type fullname="DotRecast.Recast.Toolset.Tools.RcTestNavMeshTool" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder`1" preserve="all" />
     <type fullname="ET.ETCancellationToken" preserve="all" />
@@ -427,6 +434,9 @@
   <assembly fullname="UnityEngine.AndroidJNIModule">
     <type fullname="UnityEngine.Android.Permission" preserve="all" />
     <type fullname="UnityEngine.Android.PermissionCallbacks" preserve="all" />
+    <type fullname="UnityEngine.AndroidJavaClass" preserve="all" />
+    <type fullname="UnityEngine.AndroidJavaException" preserve="all" />
+    <type fullname="UnityEngine.AndroidJavaObject" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.AnimationModule">
     <type fullname="UnityEngine.AnimationClip" preserve="all" />
@@ -457,13 +467,16 @@
     <type fullname="UnityEngine.Events.UnityEvent`1" preserve="all" />
     <type fullname="UnityEngine.GL" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Graphics" preserve="all" />
     <type fullname="UnityEngine.Handheld" preserve="all" />
     <type fullname="UnityEngine.HideInInspector" preserve="all" />
     <type fullname="UnityEngine.KeyCode" preserve="all" />
     <type fullname="UnityEngine.LayerMask" preserve="all" />
     <type fullname="UnityEngine.LineRenderer" preserve="all" />
     <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.MaterialPropertyBlock" preserve="all" />
     <type fullname="UnityEngine.Mathf" preserve="all" />
+    <type fullname="UnityEngine.Matrix4x4" preserve="all" />
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
@@ -547,7 +560,6 @@
     <type fullname="UnityEngine.UI.LayoutGroup" preserve="all" />
     <type fullname="UnityEngine.UI.LayoutRebuilder" preserve="all" />
     <type fullname="UnityEngine.UI.RawImage" preserve="all" />
-    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
     <type fullname="UnityEngine.UI.Selectable" preserve="all" />
     <type fullname="UnityEngine.UI.Slider" preserve="all" />
     <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="all" />
@@ -555,6 +567,7 @@
     <type fullname="UnityEngine.UI.Toggle" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="all" />
     <type fullname="UnityEngine.UI.ToggleGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UIModule">
     <type fullname="UnityEngine.Canvas" preserve="all" />
@@ -610,7 +623,6 @@
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
-    <type fullname="System.Double" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
     <type fullname="System.Func`1" preserve="all" />
@@ -656,7 +668,6 @@
     <type fullname="System.Security.Permissions.SecurityPermissionAttribute" preserve="all" />
     <type fullname="System.Security.UnverifiableCodeAttribute" preserve="all" />
     <type fullname="System.Single" preserve="all" />
-    <type fullname="System.Span`1" preserve="all" />
     <type fullname="System.String" preserve="all" />
     <type fullname="System.StringComparison" preserve="all" />
     <type fullname="System.StringSplitOptions" preserve="all" />

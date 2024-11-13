@@ -9,6 +9,7 @@ namespace ET.Ability
         /// </summary>
         public struct SkillOnCast
         {
+            public ActionContext actionContext;
             public Unit unit;
         }
 
@@ -17,9 +18,9 @@ namespace ET.Ability
         /// </summary>
         public struct DamageBeforeOnHit
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public DamageInfo damageInfo;
         }
 
         /// <summary>
@@ -27,9 +28,9 @@ namespace ET.Ability
         /// </summary>
         public struct DamageAfterOnHit
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public DamageInfo damageInfo;
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace ET.Ability
         /// </summary>
         public struct DamageBeforeOnKill
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public DamageInfo damageInfo;
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace ET.Ability
         /// </summary>
         public struct DamageAfterOnKill
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public DamageInfo damageInfo;
         }
 
         //=========================================================
@@ -59,6 +60,7 @@ namespace ET.Ability
         /// </summary>
         public struct UnitChgSaveSelectObj
         {
+            public ActionContext actionContext;
             public Unit unit;
             public SelectHandle selectHandle;
         }
@@ -68,6 +70,7 @@ namespace ET.Ability
         /// </summary>
         public struct UnitOnCreate
         {
+            public ActionContext actionContext;
             public Unit unit;
             public Unit createUnit;
         }
@@ -77,9 +80,9 @@ namespace ET.Ability
         /// </summary>
         public struct BulletOnHit
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
-            public float3 hitPos;
         }
 
         /// <summary>
@@ -87,8 +90,8 @@ namespace ET.Ability
         /// </summary>
         public struct BulletOnHitMesh
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
-            public float3 hitPos;
         }
 
         /// <summary>
@@ -96,8 +99,8 @@ namespace ET.Ability
         /// </summary>
         public struct UnitOnHitMesh
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
-            public float3 hitPos;
         }
 
         /// <summary>
@@ -105,8 +108,8 @@ namespace ET.Ability
         /// </summary>
         public struct BulletOnHitPos
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
-            public float3 hitPos;
         }
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace ET.Ability
         /// </summary>
         public struct UnitOnHitPos
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
-            public float3 hitPos;
         }
 
         /// <summary>
@@ -123,6 +126,7 @@ namespace ET.Ability
         /// </summary>
         public struct UnitOnHit
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
         }
@@ -132,6 +136,7 @@ namespace ET.Ability
         /// </summary>
         public struct UnitOnRemoved
         {
+            public ActionContext actionContext;
             public Unit unit;
         }
 
@@ -141,6 +146,7 @@ namespace ET.Ability
         /// </summary>
         public struct BulletTween
         {
+            public ActionContext actionContext;
             public Unit bulletUnit;
             public Unit targetUnit;
             public float time;
@@ -151,6 +157,7 @@ namespace ET.Ability
         /// </summary>
         public struct BulletTargettingFunction
         {
+            public ActionContext actionContext;
             public Unit bulletUnit;
             public Unit[] targetUnitIds;
         }
@@ -162,6 +169,7 @@ namespace ET.Ability
         /// </summary>
         public struct AoeOnEnter
         {
+            public ActionContext actionContext;
             public Unit unit;
             public Unit[] targetUnits;
         }
@@ -171,6 +179,7 @@ namespace ET.Ability
         /// </summary>
         public struct AoeOnExist
         {
+            public ActionContext actionContext;
             public Unit unit;
             public Unit[] targetUnits;
         }
@@ -179,22 +188,26 @@ namespace ET.Ability
 
         public struct NearUnitOnCreate
         {
+            public ActionContext actionContext;
             public Unit unit;
         }
 
         public struct NearUnitOnHit
         {
+            public ActionContext actionContext;
             public Unit attackerUnit;
             public Unit defenderUnit;
         }
 
         public struct NearUnitOnRemoved
         {
+            public ActionContext actionContext;
             public Unit unit;
         }
 
         public struct GamePlayTowerDefense_PutTower
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit towerUnit;
             public string towerCfgId;
@@ -202,6 +215,7 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_ScaleTower
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit towerUnit;
             public string towerCfgId;
@@ -209,6 +223,7 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_ReclaimTower
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit towerUnit;
             public string towerCfgId;
@@ -216,6 +231,7 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_UpgradeTower
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit oldTowerUnit;
             public string oldTowerCfgId;
@@ -225,6 +241,7 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_TowerBeKill
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit towerUnit;
             public string towerCfgId;
@@ -233,6 +250,7 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_TowerKillMonster
         {
+            public ActionContext actionContext;
             public long playerId;
             public Unit towerUnit;
             public string towerCfgId;
@@ -241,67 +259,83 @@ namespace ET.Ability
 
         public struct GamePlayTowerDefense_RefreshTowerBuyPool
         {
+            public ActionContext actionContext;
             public long playerId;
         }
 
         public struct GamePlay_Status_GameWaitForStart
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlay_Status_GameStart
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlay_Status_GameStartShow
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_PutHomeBegin
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_PutHomeEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_PutMonsterPointBegin
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_PutMonsterPointEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_ShowStartEffectBegin
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_ShowStartEffectEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_RestTimeBegin
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_RestTimeEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_InTheBattleBegin
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_Status_InTheBattleEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlay_Status_GameEnd
         {
+            public ActionContext actionContext;
         }
 
         public struct GamePlayTowerDefense_AddRestoreEnergy
         {
+            public ActionContext actionContext;
             public SkillComponent skillComponent;
             public SkillObj skillObj;
         }

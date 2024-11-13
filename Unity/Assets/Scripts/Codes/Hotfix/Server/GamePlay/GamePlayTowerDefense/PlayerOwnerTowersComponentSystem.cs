@@ -51,13 +51,12 @@ namespace ET.Server
 
 		public static async ETTask InitOwnerTowersPool(this PlayerOwnerTowersComponent self, long playerId)
 		{
-			List<ItemComponent> itemList = await ET.Server.PlayerCacheHelper.GetBattleCardItemListByPlayerId(self.DomainScene(), playerId, true);
+			List<ItemComponent> itemList = await ET.Server.PlayerCacheHelper.GetBattleTowerItemListByPlayerId(self.DomainScene(), playerId, true);
 			foreach (var itemComponent in itemList)
 			{
 				ItemTowerComponent itemTowerComponent = itemComponent.GetComponent<ItemTowerComponent>();
 				self.playerOwnerTowerCardIds.Add(playerId, itemComponent.CfgId, itemTowerComponent.level);
 			}
 		}
-
 	}
 }

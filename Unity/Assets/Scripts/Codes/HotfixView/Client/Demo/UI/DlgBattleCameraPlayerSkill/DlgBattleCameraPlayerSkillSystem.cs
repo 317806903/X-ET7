@@ -38,7 +38,7 @@ namespace ET.Client
 			self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
 			{
 				self.AddSkillItemRefreshListener(transform, i);
-				self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+				self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.SetSrcollMiddle();
 			});
 
 #if UNITY_EDITOR
@@ -55,6 +55,7 @@ namespace ET.Client
 
 			self.Timer = TimerComponent.Instance.NewFrameTimer(TimerInvokeType.DlgBattleCameraPlayerSkillFrameTimer, self);
 			self.ShowOrHide(false, false);
+			self.View.EGAimRootRectTransform.SetVisible(false);
 			await self.InitSkillList();
 		}
 
@@ -65,11 +66,11 @@ namespace ET.Client
 			{
 				if (isHigh)
 				{
-					self.View.EGRootRectTransform.DOLocalMove(new Vector3(0, 80, 0), 0.2f);
+					self.View.EGSkillRootRectTransform.transform.DOLocalMove(new Vector3(0, 100, 0), 0.2f);
 				}
 				else
 				{
-					self.View.EGRootRectTransform.DOLocalMove(Vector3.zero, 0.2f);
+					self.View.EGSkillRootRectTransform.transform.DOLocalMove(Vector3.zero, 0.2f);
 				}
 			}
 		}
@@ -140,14 +141,6 @@ namespace ET.Client
             self.AddUIScrollItems(ref self.ScrollItemSkills, countSkill);
             self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.SetVisible(true, countSkill);
 
-            if (countSkill > 3)
-            {
-	            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.horizontal = true;
-            }
-            else
-            {
-	            self.View.ELoopScrollList_SkillLoopHorizontalScrollRect.horizontal = false;
-            }
             await ETTask.CompletedTask;
         }
 
@@ -168,10 +161,15 @@ namespace ET.Client
             string skillCfgId = skillObj.skillCfgId;
             itemSkill.UpdateSkillBaseInfo(self.unitId, skillCfgId, (skillCfgId)=>
             {
+	            self.View.EGAimRootRectTransform.SetVisible(true);
+            },(skillCfgId)=>
+            {
 	            self.CreateSkillShowEffect(skillCfgId);
+	            self.View.EGAimRootRectTransform.SetVisible(false);
             }, (skillCfgId)=>
             {
 	            self.RemoveSkillShowEffect();
+	            self.View.EGAimRootRectTransform.SetVisible(false);
             }, (skillCfgId)=>
             {
 	            self.CastSkillWhenTrig(skillCfgId);
@@ -241,7 +239,7 @@ namespace ET.Client
 
 	        bRet = await SkillHelper.CastSkill(self.DomainScene(), skillCfgId, self.unitId, cameraPosition, cameraDirect, selectHandle);
 
-	        Handheld.Vibrate();
+	        ET.Ability.Client.AudioPlayHelper.PlayVibrate();
         }
 
         public static void CreateSkillShowEffect(this DlgBattleCameraPlayerSkill self, string skillCfgId)

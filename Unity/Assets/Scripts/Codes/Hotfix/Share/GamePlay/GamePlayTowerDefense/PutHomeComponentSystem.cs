@@ -142,6 +142,7 @@ namespace ET
 
         public static void RecoveryHomeHP(this PutHomeComponent self)
         {
+            ActionContext actionContext = new();
             foreach (var child in self.HomeUnitIdList)
             {
                 TeamFlagType homeTeamFlagType = child.Key;
@@ -159,7 +160,7 @@ namespace ET
                 if (attackValue < 0)
                 {
                     Damage damage = new(NumericType.PhysicalAttack, attackValue);
-                    ET.Ability.DamageHelper.CreateDamageInfo(homeUnit, homeUnit, damage, false);
+                    ET.Ability.DamageHelper.CreateDamageInfo(homeUnit, homeUnit, damage, false, ref actionContext);
                 }
             }
         }

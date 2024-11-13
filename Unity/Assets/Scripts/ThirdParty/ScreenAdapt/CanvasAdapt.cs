@@ -9,6 +9,7 @@ namespace ScreenAdapt
     [Serializable]
     public class CanvasAdaptConfig
     {
+        public bool isSaved;
         public Vector2 referenceResolution;
         public float matchWidthOrHeight;
     }
@@ -35,6 +36,7 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
+            config.isSaved = true;
             config.matchWidthOrHeight = mComponent.matchWidthOrHeight;
             config.referenceResolution = mComponent.referenceResolution;
         }
@@ -47,6 +49,10 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             mComponent.referenceResolution = config.referenceResolution;
             mComponent.matchWidthOrHeight = config.matchWidthOrHeight;
         }

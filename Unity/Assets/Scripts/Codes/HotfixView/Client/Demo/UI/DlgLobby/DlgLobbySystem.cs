@@ -17,6 +17,7 @@ namespace ET.Client
 			self.View.E_ReturnLoginButton.AddListenerAsync(self.ReturnBack);
 			self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
 
+			self.View.EButton_ChgBattleDeckButton.AddListenerAsync(self.OnChgBattleDeck);
 		}
 
 		public static async ETTask ShowWindow(this DlgLobby self, ShowWindowData contextData = null)
@@ -73,6 +74,13 @@ namespace ET.Client
 				isGlobalMode = true,
 				isAR = false,
 			});
+		}
+
+		public static async ETTask OnChgBattleDeck(this DlgLobby self)
+		{
+			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+
+			await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
 		}
 
 	}

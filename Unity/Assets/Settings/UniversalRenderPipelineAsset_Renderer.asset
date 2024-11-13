@@ -1,5 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5996100461842797435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e1eeeaa7fba944fb8e39c0af65b268, type: 3}
+  m_Name: TranslucentImageBlurSource
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  renderOrder: 0
+  blitMode: 0
+  rendererType: 0
+--- !u!114 &-3200622026653683032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec04e6b8c46dfec47885c054845bb3c3, type: 3}
+  m_Name: BlurBackgroundRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,10 +47,11 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: 8027882605722677147}
-  - {fileID: 3817888269307002620}
-  - {fileID: 7879771995444652247}
   - {fileID: 4343624603353133092}
-  m_RendererFeatureMap: 9b2fa344b2c4686ffcbe2c2427ddfb34d7a88c8be1925a6d24b0823090a7473c
+  - {fileID: -5996100461842797435}
+  - {fileID: -3200622026653683032}
+  - {fileID: 2071384620659587234}
+  m_RendererFeatureMap: 9b2fa344b2c4686f24b0823090a7473cb6aa3ec41e8e29aba6ef3e29c09a9d47673456f055d8763a85ec4d0e6692c9aca2389f7b5609bf1ca8320471391b95d3
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -65,6 +95,19 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &2071384620659587234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1a92e0373933345979dd7c429c1b0e, type: 3}
+  m_Name: ScanLineRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
 --- !u!114 &3817888269307002620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,22 +147,6 @@ MonoBehaviour:
       normalBlend: 0
   m_CopyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
   m_DBufferClear: {fileID: 4800000, guid: f056d8bd2a1c7e44e9729144b4c70395, type: 3}
---- !u!114 &7879771995444652247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba173a5237238a4496bd059bc5e0dd9, type: 3}
-  m_Name: ScanLineRenderFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    material: {fileID: 2100000, guid: b2965754232804cfb87d87b1a54f2b4c, type: 2}
-    renderPassEvent: 500
 --- !u!114 &8027882605722677147
 MonoBehaviour:
   m_ObjectHideFlags: 0

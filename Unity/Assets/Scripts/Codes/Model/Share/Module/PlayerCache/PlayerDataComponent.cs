@@ -10,11 +10,11 @@ namespace ET
         BaseInfo,
         BackPack,
         BattleCard,
+        BattleSkill,
         OtherInfo,
         SeasonInfo,
         FunctionMenu,
         Mails,
-        Skills,
 
         TokenArcadeCoinAdd,
         TokenArcadeCoinReduce,
@@ -30,10 +30,11 @@ namespace ET
         PlayerBaseInfo_Client = 1,
         PlayerBackPack_Client = 2,
         PlayerBattleCard_Client = 3,
-        PlayerFunctionMenu_Client = 4,
-        PlayerOtherInfo_Client = 5,
-        PlayerSeasonInfo_Client = 6,
-        PlayerMail_Client = 7,
+        PlayerBattleSkill_Client = 4,
+        PlayerFunctionMenu_Client = 5,
+        PlayerOtherInfo_Client = 6,
+        PlayerSeasonInfo_Client = 7,
+        PlayerMail_Client = 8,
 
         PlayerBaseInfo_AddPhysical = 100,
         PlayerBaseInfo_ReducePhysical = 101,
@@ -51,25 +52,23 @@ namespace ET
         PlayerBackPack_NewItemList = 202,
 
         PlayerBattleCard_AutoSetByBackPack = 300,
+        PlayerBattleSkill_AutoSetByBackPack = 400,
 
-        PlayerFunctionMenu_BattleEnd = 400,
-        PlayerFunctionMenu_ResetStatusWhenDebug = 401,
-        PlayerFunctionMenu_DealWaitChg = 402,
+        PlayerFunctionMenu_BattleEnd = 500,
+        PlayerFunctionMenu_ResetStatusWhenDebug = 501,
+        PlayerFunctionMenu_DealWaitChg = 502,
 
-        PlayerSeasonInfo_ChallengeClearLevel = 501,
-        PlayerSeasonInfo_EndlessChallengeScore = 502,
-        PlayerSeasonInfo_PowerUP = 503,
+        PlayerSeasonInfo_ChallengeClearLevel = 601,
+        PlayerSeasonInfo_EndlessChallengeScore = 602,
+        PlayerSeasonInfo_PowerUP = 603,
 
-        PlayerMails_GetItemGifts = 601,
+        PlayerMails_GetItemGifts = 701,
 
-        PlayerOtherInfo_SetUIRedDotType = 701,
-        PlayerOtherInfo_RewardQuestionnaire = 702,
-        PlayerOtherInfo_BattleNotice = 703,
-        PlayerOtherInfo_DealUIRedDotType = 704,
+        PlayerOtherInfo_SetUIRedDotType = 801,
+        PlayerOtherInfo_RewardQuestionnaire = 802,
+        PlayerOtherInfo_BattleNotice = 803,
+        PlayerOtherInfo_DealUIRedDotType = 804,
 
-        PlayerSkill_LearnOrUpdate = 801,
-        PlayerSkill_Replace = 802,
-        PlayerSkill_NewSkillList = 803,
     }
 
     [ChildOf(typeof(PlayerCacheManagerComponent))]

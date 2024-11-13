@@ -10,9 +10,16 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_Monsters))]
 	public static class Scroll_Item_MonstersSystem
 	{
-		public static void Init(this Scroll_Item_Monsters self)
+		public static void RegisterUIEvent(this Scroll_Item_Monsters self)
 		{
+
 		}
+
+		public static void HideItem(this Scroll_Item_Monsters self)
+		{
+
+		}
+
 
 		public static async ETTask ShowMonsterItem(this Scroll_Item_Monsters self, string itemCfgId, bool needClickShowDetail)
 		{
@@ -42,7 +49,7 @@ namespace ET.Client
 			}
 
 			Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(self.uiTransform.GetComponent<RectTransform>());
-			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos);
+			ET.Client.UIManagerHelper.ShowItemInfoWnd(self.DomainScene(), itemCfgId, pos, false, false);
 		}
 
 	}

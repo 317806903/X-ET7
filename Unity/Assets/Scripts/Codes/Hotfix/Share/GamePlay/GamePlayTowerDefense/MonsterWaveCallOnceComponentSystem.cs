@@ -45,8 +45,7 @@ namespace ET
             }
         }
 
-        public static void Init(this MonsterWaveCallOnceComponent self, long playerId, string monsterWaveRule, int index,
-        float monsterWaveNumScalePercent, float monsterWaveLevelScalePercent, float waveRewardGoldScalePercent)
+        public static void Init(this MonsterWaveCallOnceComponent self, long playerId, string monsterWaveRule, int index, float monsterWaveNumScalePercent, float monsterWaveLevelScalePercent, float waveRewardGoldScalePercent)
         {
             self.playerId = playerId;
             self.monsterWaveRule = monsterWaveRule;

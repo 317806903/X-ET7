@@ -23,12 +23,15 @@ namespace ET.Ability
             }
         }
 
-        public static void Init(this DamageInfo self, long attackerUnitId, long targetUnitId, Damage damage, bool isCrit)
+        public static void Init(this DamageInfo self, long attackerUnitId, long targetUnitId, Damage damage, bool isCrit, ref ActionContext actionContext)
         {
             self.attackerUnitId = attackerUnitId;
             self.defenderUnitId = targetUnitId;
             self.damage = damage;
             self.isCrit = isCrit;
+            self.actionContext = actionContext;
+            self.actionContext.isCriticalStrike = isCrit;
+            self.actionContext.damageInfoId = self.Id;
         }
 
         ///<summary>
@@ -73,28 +76,28 @@ namespace ET.Ability
             Unit defenderUnit = self.GetDefenderUnit();
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnHit()
                 {
+                    actionContext = self.actionContext,
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfo = self,
                 });
             EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnHit()
                 {
+                    actionContext = self.actionContext,
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfo = self,
                 });
 
             int damageValue = self.DamageValue();
             bool canBeDamage = ET.Ability.BuffHelper.ChkCanBeDamage(defenderUnit);
             if (canBeDamage)
             {
-                if (self.CanBeKilledByDamageInfo(defenderUnit) == true)
+                if (self.CanBeKilledByDamageInfo(defenderUnit))
                 {
                     EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageBeforeOnKill()
                     {
+                        actionContext = self.actionContext,
                         attackerUnit = attackerUnit,
                         defenderUnit = defenderUnit,
-                        damageInfo = self,
                     });
                 }
 
@@ -118,14 +121,16 @@ namespace ET.Ability
             {
                 EventSystem.Instance.Publish(scene, new AbilityTriggerEventType.DamageAfterOnKill()
                 {
+                    actionContext = self.actionContext,
                     attackerUnit = attackerUnit,
                     defenderUnit = defenderUnit,
-                    damageInfo = self,
                 });
 
-                defenderUnit.DestroyWithDeathShow();
+                if (UnitHelper.ChkUnitAlive(defenderUnit) == false)
+                {
+                    defenderUnit.DestroyWithDeathShow();
+                }
             }
-
         }
 
         public static bool CanBeKilledByDamageInfo(this DamageInfo self, Unit targetUnit)

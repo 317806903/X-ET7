@@ -19,7 +19,7 @@ namespace ET.Client
             self.View.E_CollectButton.AddListenerAsync(self.CollectBtnClick);
             self.View.E_BG_ClickButton.AddListenerAsync(self.OnBGClick);
             //礼物列表
-            self.View.ELoopScrollList_LoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_LoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.View.ELoopScrollList_LoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.View.ELoopScrollList_LoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddGiftListener(transform, i));
@@ -196,13 +196,13 @@ namespace ET.Client
         /// <param name="index"></param>
         public static async ETTask AddGiftListener(this DlgMailInfo self, Transform transform, int index)
         {
-            transform.name = $"Item_TowerBuy{index}";
-            Scroll_Item_TowerBuy scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
+            transform.name = $"Item_ItemShow{index}";
+            Scroll_Item_ItemShow scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
 
             string itemcfg = self.kvpItemCfgNumList[index].Key;
             int itemNum = self.kvpItemCfgNumList[index].Value;
 
-            await scrollItemGift.ShowBagItem(itemcfg, true, itemNum);
+            await scrollItemGift.Init(itemcfg, true, itemNum);
             await ETTask.CompletedTask;
 
         }

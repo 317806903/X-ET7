@@ -70,7 +70,7 @@ namespace ET.Client
 			}
 		}
 
-		public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionAndroidComponent self, Action<bool> callBack)
+		public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionAndroidComponent self, Action<bool, bool> callBack)
 		{
 			Log.Debug($"000 11 {UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera)}");
 
@@ -93,7 +93,7 @@ namespace ET.Client
 			}
 			else
 			{
-				callBack(true);
+				callBack(true, false);
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace ET.Client
 		private static void OnPermissionDenied(this AuthorizedPermissionAndroidComponent self, string permission)
 		{
 			Log.Error($"== OnPermissionDenied {permission}");
-			self.callBack(false);
+			self.callBack(false, true);
 		}
 
 		/// <summary>
@@ -114,7 +114,8 @@ namespace ET.Client
 		private static void OnPermissionGranted(this AuthorizedPermissionAndroidComponent self, string permission)
 		{
 			Log.Error($"== OnPermissionGranted {permission}");
-			self.callBack(true);
+			self.RemoveDontAskAgainPermission(permission);
+			self.callBack(true, false);
 		}
 
 		/// <summary>
@@ -125,7 +126,7 @@ namespace ET.Client
 		{
 			Log.Error($"== OnPermissionDeniedAndDontAskAgain {permission}");
 			self.SetDontAskAgainPermission(permission);
-			self.callBack(false);
+			self.callBack(false, true);
 		}
 
 		public static void SetDontAskAgainPermission(this AuthorizedPermissionAndroidComponent self, string permission)
@@ -134,12 +135,55 @@ namespace ET.Client
 			PlayerPrefs.SetInt(key, 1);
 		}
 
+		public static void RemoveDontAskAgainPermission(this AuthorizedPermissionAndroidComponent self, string permission)
+		{
+			string key = $"AuthorizedPermissionAndroid_{permission}";
+			PlayerPrefs.DeleteKey(key);
+		}
+
 		public static bool ChkDontAskAgainPermission(this AuthorizedPermissionAndroidComponent self, string permission)
 		{
 			string key = $"AuthorizedPermissionAndroid_{permission}";
+			if (PlayerPrefs.HasKey(key))
+			{
+				return false;
+			}
 			int value = PlayerPrefs.GetInt(key);
 			return value == 1;
 		}
 
+		public static async ETTask JumpToSettings(this AuthorizedPermissionAndroidComponent self)
+		{
+			using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+			{
+				AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+				// 尝试使用权限设置 Intent
+				using (AndroidJavaObject intentPermissionSettings = new AndroidJavaObject("android.content.Intent", "android.settings.PERMISSION_SETTINGS"))
+				{
+					try
+					{
+						activity.Call("startActivity", intentPermissionSettings);
+					}
+					catch (AndroidJavaException e)
+					{
+						// 创建 Intent 跳转到权限设置界面
+						using (AndroidJavaObject intentSettings = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS"))
+						{
+							string packageName = activity.Call<string>("getPackageName");
+							// 使用 Uri.parse 创建 URI
+							using (AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri"))
+							{
+								AndroidJavaObject uri = uriClass.CallStatic<AndroidJavaObject>("parse", "package:" + packageName);
+								intentSettings.Call<AndroidJavaObject>("setData", uri);
+							}
+
+							// 启动 Activity
+							activity.Call("startActivity", intentSettings);
+						}
+					}
+				}
+			}
+		}
     }
 }

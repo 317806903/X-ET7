@@ -9,7 +9,7 @@ namespace ET.Client
 
 		public Dictionary<int, Scroll_Item_RoomMember> ScrollItemRoomMembers;
 		public Dictionary<int, Scroll_Item_Monsters> ScrollItemMonsters;
-		public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemReward;
+		public Dictionary<int, Scroll_Item_ItemShow> ScrollItemReward;
 
 		public int seasonCfgId;
 		public int level;

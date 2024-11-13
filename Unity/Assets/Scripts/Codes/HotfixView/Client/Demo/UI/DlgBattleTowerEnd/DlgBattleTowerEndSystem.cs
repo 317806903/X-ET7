@@ -314,12 +314,12 @@ namespace ET.Client
 
 			if (count > 0)
 			{
-				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.poolSize = 7;
 				self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
 				{
 					self.AddItemRefreshListener(transform, i).Coroutine();
-					self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+					self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.SetSrcollMiddle();
 				});
 
 				self.AddUIScrollItems(ref self.ScrollItemReward, count);
@@ -335,12 +335,12 @@ namespace ET.Client
 
         public static async ETTask AddItemRefreshListener(this DlgBattleTowerEnd self, Transform transform, int index)
         {
-            Scroll_Item_TowerBuy itemTower = self.ScrollItemReward[index].BindTrans(transform);
+	        Scroll_Item_ItemShow itemTower = self.ScrollItemReward[index].BindTrans(transform);
 
             var dropItems = self.GetMyDropItemList();
             string itemCfgId = dropItems[index].itemCfgId;
             int itemNum = dropItems[index].num;
-            await itemTower.ShowBagItem(itemCfgId, true, itemNum);
+            await itemTower.Init(itemCfgId, true, itemNum);
         }
 	}
 }

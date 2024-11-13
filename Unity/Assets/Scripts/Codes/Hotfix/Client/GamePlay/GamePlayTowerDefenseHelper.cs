@@ -80,6 +80,27 @@ namespace ET.Client
 			}
 		}
 
+		public static async ETTask<M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath> SendTryMoveUnitAndGetAllMonsterCall2HeadQuarterPath(
+		Scene scene, long unitId, string unitCfgId, float3 pos)
+		{
+			M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath _M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath = await SessionHelper
+				   .GetSession(scene).Call(new C2M_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath()
+					{
+						UnitId = unitId,
+						UnitCfgId = unitCfgId,
+						Position = pos,
+					}, false) as M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath;
+			if (_M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath.Error != ET.ErrorCode.ERR_Success)
+			{
+				EventSystem.Instance.Publish(scene, new EventType.NoticeUITip()
+				{
+					tipMsg = _M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath.Message,
+				});
+				return null;
+			}
+			return _M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath;
+		}
+
 		public static async ETTask<NavmeshManagerComponent.NavMeshData> GetReachableAreaFromHeadQuarter(Scene scene, TeamFlagType homeTeamFlagType)
 		{
 			M2C_GetNavMeshFromHeadQuarter _M2C_GetNavMeshFromHeadQuarter = await ET.Client.SessionHelper.GetSession(scene).Call(

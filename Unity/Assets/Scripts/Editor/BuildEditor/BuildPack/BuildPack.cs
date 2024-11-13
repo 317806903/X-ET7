@@ -978,7 +978,6 @@ namespace ET
             string appName = PlayerSettings.applicationIdentifier["com.dm.".Length..];
 
             string packFileName = $"{appName}_{GetBuildPackageVersion()}_{GetBuildVersionCode()}";
-            Log.Debug($"================={packFileName}");
             (bool bRet, string packFullPath) = BuildHelper.Build(buildTarget, buildOptions, packFileName);
             if (bRet)
             {

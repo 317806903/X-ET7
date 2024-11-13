@@ -2,8 +2,8 @@
   <packages>
     <package>androidx.fragment:fragment:1.6.2</package>
     <package>com.android.installreferrer:installreferrer:2.1</package>
-    <package>com.appsflyer:af-android-sdk:6.13.0</package>
-    <package>com.appsflyer:unity-wrapper:6.13.10</package>
+    <package>com.appsflyer:af-android-sdk:6.15.0</package>
+    <package>com.appsflyer:unity-wrapper:6.15.3</package>
     <package>com.google.ads.mediation:unity:4.9.2.0</package>
     <package>com.google.android.gms:play-services-ads:22.5.0</package>
     <package>com.google.android.gms:play-services-auth:20+</package>

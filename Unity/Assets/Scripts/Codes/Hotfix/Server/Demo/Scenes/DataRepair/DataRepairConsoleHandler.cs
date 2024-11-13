@@ -108,7 +108,7 @@ namespace ET.Server
                         {
                             string itemCfgId = item.Key;
                             int count = item.Value;
-                            if (ItemHelper.ChkIsTower(itemCfgId) == false)
+                            if (ET.ItemHelper.ChkIsTower(itemCfgId) == false)
                             {
                                 continue;
                             }

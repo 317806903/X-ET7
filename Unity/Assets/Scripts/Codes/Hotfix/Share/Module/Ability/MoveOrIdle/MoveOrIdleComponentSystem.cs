@@ -107,8 +107,16 @@ namespace ET.Ability
 
         public static async ETTask _SetMoveInput_Direction(this MoveOrIdleComponent self, float3 directionInput)
         {
-            self.moveInputType = MoveInputType.Direction;
-            self.directionInput = directionInput;
+            if (self.moveInputType != MoveInputType.Direction)
+            {
+                self.moveInputType = MoveInputType.Direction;
+                self.NoticeClient();
+            }
+            if (self.directionInput.Equals(directionInput) == false)
+            {
+                self.directionInput = directionInput;
+                self.NoticeClient();
+            }
             await ETTask.CompletedTask;
         }
 
@@ -127,10 +135,19 @@ namespace ET.Ability
 
         public static async ETTask _SetMoveInput_TargetPosition(this MoveOrIdleComponent self, float3 targetPositionInput)
         {
-            self.moveInputType = MoveInputType.TargetPosition;
+            if (self.moveInputType != MoveInputType.TargetPosition)
+            {
+                self.moveInputType = MoveInputType.TargetPosition;
+                self.NoticeClient();
+            }
             if (self.targetPositionInput.Equals(targetPositionInput) == false)
             {
-                self.targetPositionInput = ET.RecastHelper.GetNearNavmeshPos(self.GetUnit(), targetPositionInput);
+                float3 targetPositionInputTmp = ET.RecastHelper.GetNearNavmeshPos(self.GetUnit(), targetPositionInput);
+                if (self.targetPositionInput.Equals(targetPositionInputTmp) == false)
+                {
+                    self.targetPositionInput = targetPositionInputTmp;
+                    self.NoticeClient();
+                }
             }
             await ETTask.CompletedTask;
         }
@@ -235,5 +252,11 @@ namespace ET.Ability
             self.CurMoveTimelineObj = timelineObj;
             return true;
         }
+
+        public static void NoticeClient(this MoveOrIdleComponent self)
+        {
+            Ability.UnitHelper.AddSyncData_UnitComponent(self.GetUnit(), self.GetType());
+        }
+
     }
 }

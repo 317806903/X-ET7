@@ -59,6 +59,30 @@ namespace ET
             return itemList;
         }
 
+        public static HashSet<string> GetItemHashSet(this ItemManagerComponent self)
+        {
+            HashSet<string> itemHashSet = HashSetComponent<string>.Create();
+            foreach (ItemComponent itemComponent in self.Children.Values)
+            {
+                itemHashSet.Add(itemComponent.CfgId);
+            }
+            return itemHashSet;
+        }
+
+        public static HashSet<string> GetItemHashSetByItemType(this ItemManagerComponent self, ItemType itemType, ItemSubType itemSubType)
+        {
+            HashSet<string> itemHashSet = HashSetComponent<string>.Create();
+            foreach (ItemComponent itemComponent in self.Children.Values)
+            {
+                if (itemComponent.model.ItemType == itemType
+                    && (itemSubType == ItemSubType.None || itemSubType == itemComponent.model.ItemSubType))
+                {
+                    itemHashSet.Add(itemComponent.CfgId);
+                }
+            }
+            return itemHashSet;
+        }
+
         public static ItemComponent GetItem(this ItemManagerComponent self, long itemId)
         {
             ItemComponent itemComponent = self.GetChild<ItemComponent>(itemId);

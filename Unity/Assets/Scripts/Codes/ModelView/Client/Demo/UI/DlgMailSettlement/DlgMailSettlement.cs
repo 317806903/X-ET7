@@ -11,7 +11,7 @@ namespace ET.Client
 
         public List<KeyValuePair<string, int>> kvpItemCfgNumList;
 
-        public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemGiftDic;
+        public Dictionary<int, Scroll_Item_ItemShow> ScrollItemGiftDic;
 
     }
 

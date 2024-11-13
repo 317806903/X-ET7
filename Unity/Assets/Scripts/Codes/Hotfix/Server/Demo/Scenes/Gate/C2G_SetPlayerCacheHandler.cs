@@ -37,6 +37,10 @@ namespace ET.Server
 			{
 				playerModelChgType = PlayerModelChgType.PlayerBattleCard_Client;
 			}
+			else if (playerModelType == PlayerModelType.BattleSkill)
+			{
+				playerModelChgType = PlayerModelChgType.PlayerBattleSkill_Client;
+			}
 			else if (playerModelType == PlayerModelType.OtherInfo)
 			{
 				playerModelChgType = PlayerModelChgType.PlayerOtherInfo_Client;

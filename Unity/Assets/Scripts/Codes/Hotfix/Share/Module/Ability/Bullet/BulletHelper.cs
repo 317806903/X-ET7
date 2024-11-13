@@ -45,14 +45,15 @@ namespace ET.Ability
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
+                actionContext = actionContext,
                 unit = unit,
                 createUnit = bulletUnit,
             });
         }
 
-        public static void EventHandler(Unit unit, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
-            unit.GetComponent<BulletObj>()?.TrigEvent(abilityBulletMonitorTriggerEvent, onAttackUnit, beHurtUnit);
+            unit.GetComponent<BulletObj>()?.TrigEvent(abilityBulletMonitorTriggerEvent, onAttackUnit, beHurtUnit, ref actionContext);
         }
 
         public static (bool, bool, float3, float3) ChkBulletHit(Unit unitBullet, Unit unit)
@@ -206,11 +207,13 @@ namespace ET.Ability
                 unitBullet.Position = hitUnitPos;
             }
 
+            ActionContext actionContext = bulletObj.actionContext;
+            actionContext.hitPosition = hitUnitPos;
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHit()
             {
+                actionContext = actionContext,
                 attackerUnit = unitBullet,
                 defenderUnit = unit,
-                hitPos = hitUnitPos,
             });
 
         }
@@ -242,10 +245,12 @@ namespace ET.Ability
                 unitBullet.Position = hitMeshPos;
             }
 
+            ActionContext actionContext = bulletObj.actionContext;
+            actionContext.hitPosition = hitMeshPos;
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHitMesh()
             {
+                actionContext = actionContext,
                 attackerUnit = unitBullet,
-                hitPos = hitMeshPos,
             });
 
         }
@@ -264,10 +269,12 @@ namespace ET.Ability
             }
 
             float3 hitPos = unitBullet.Position;
+            ActionContext actionContext = bulletObj.actionContext;
+            actionContext.hitPosition = hitPos;
             EventSystem.Instance.Publish(unitBullet.DomainScene(), new AbilityTriggerEventType.BulletOnHitPos()
             {
+                actionContext = actionContext,
                 attackerUnit = unitBullet,
-                hitPos = hitPos,
             });
 
         }

@@ -835,7 +835,7 @@ namespace ET
         public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayComponent self, long playerId)
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-            return gamePlayFriendTeamFlagCompent.GetTeamFlagByPlayerId(playerId);
+            return gamePlayFriendTeamFlagCompent?.GetTeamFlagByPlayerId(playerId) ?? TeamFlagType.None;
         }
 
         public static bool ChkIsFriend(this GamePlayComponent self, TeamFlagType curTeamFlagType, TeamFlagType targetTeamFlagType)
@@ -870,7 +870,7 @@ namespace ET
                 isPlayer = true;
             }
             PathfindingComponent pathfindingComponent = unit.AddComponent<PathfindingComponent>();
-            pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>(), isPlayer).Coroutine();
+            pathfindingComponent.Init(self.GetComponent<NavmeshManagerComponent>(), isPlayer, unit.model.NavObstacleRadius).Coroutine();
         }
 
         public static (bool, bool) ChkNavMeshReady(this GamePlayComponent self)

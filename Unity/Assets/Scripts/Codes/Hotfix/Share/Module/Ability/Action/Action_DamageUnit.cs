@@ -19,7 +19,7 @@ namespace ET.Ability
 
 			bool isCriticalStrike = DamageHelper.ChkIsCriticalStrike(unit, null);
 			actionContext.isCriticalStrike = isCriticalStrike;
-			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null, isCriticalStrike);
+			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null, isCriticalStrike, actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

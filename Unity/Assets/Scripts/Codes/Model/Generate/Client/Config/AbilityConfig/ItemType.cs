@@ -30,6 +30,10 @@ namespace ET.AbilityConfig
         /// 代币
         /// </summary>
         Token = 3,
+        /// <summary>
+        /// 技能
+        /// </summary>
+        Skill = 4,
     }
 
 } 

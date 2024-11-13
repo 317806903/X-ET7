@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ScanLineRendererOptions
   m_EditorClassIdentifier: 
   enabled: 1
-  material: {fileID: 2100000, guid: 6b1324cc8c98cfb4baf461871580c2a4, type: 2}
+  material: {fileID: 2100000, guid: b2965754232804cfb87d87b1a54f2b4c, type: 2}
   loop: 1

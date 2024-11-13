@@ -79,17 +79,21 @@ namespace ET.AbilityConfig
         /// </summary>
         BeBreakInvisible = 16,
         /// <summary>
+        /// 不作为攻击目标
+        /// </summary>
+        CannotBeTargeted = 17,
+        /// <summary>
         /// 动作停止(被冰冻)
         /// </summary>
-        StopAnimator = 17,
+        StopAnimator = 18,
         /// <summary>
         /// 不可被移动(击退，击飞等)
         /// </summary>
-        NoMotion = 18,
-        BuffTagType1 = 19,
-        BuffTagType2 = 20,
-        BuffTagType3 = 21,
-        BuffTagType4 = 22,
+        NoMotion = 19,
+        BuffTagType1 = 20,
+        BuffTagType2 = 21,
+        BuffTagType3 = 22,
+        BuffTagType4 = 23,
     }
 
 } 

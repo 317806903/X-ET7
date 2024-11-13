@@ -21,6 +21,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
         QualityRank = (QualityRank)_buf.ReadInt();
         TutorialCfgId = _buf.ReadString();
+        IsShowInBattleDeckUI = _buf.ReadBool();
+        UnLockCondition = UnLockConditionBase.DeserializeUnLockConditionBase(_buf);
         Radius = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RelativePosition = new System.Collections.Generic.List<System.Numerics.Vector3>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Numerics.Vector3 _e0;  _e0 = _buf.ReadVector3(); RelativePosition.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);UnitId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); UnitId.Add(_e0);}}
@@ -64,6 +66,14 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// </summary>
     public string TutorialCfgId { get; private set; }
     public TutorialCfg TutorialCfgId_Ref { get; private set; }
+    /// <summary>
+    /// 是否在UI面板中展示
+    /// </summary>
+    public bool IsShowInBattleDeckUI { get; private set; }
+    /// <summary>
+    /// 解锁条件
+    /// </summary>
+    public UnLockConditionBase UnLockCondition { get; private set; }
     /// <summary>
     /// 半径
     /// </summary>
@@ -126,6 +136,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     {
         this.Id_Ref = (_tables["ItemCfgCategory"] as ItemCfgCategory).GetOrDefault(Id);
         this.TutorialCfgId_Ref = (_tables["TutorialCfgCategory"] as TutorialCfgCategory).GetOrDefault(TutorialCfgId);
+        UnLockCondition?.Resolve(_tables);
         { UnitCfgCategory __table = (UnitCfgCategory)_tables["UnitCfgCategory"]; this.UnitId_Ref = new System.Collections.Generic.List<UnitCfg>(); foreach(var __e in UnitId) { this.UnitId_Ref.Add(__table.GetOrDefault(__e)); } }
         this.NextTowerId_Ref = (_tables["TowerDefense_TowerCfgCategory"] as TowerDefense_TowerCfgCategory).GetOrDefault(NextTowerId);
         PostResolve();
@@ -133,6 +144,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        UnLockCondition?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -143,6 +155,8 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
         + "QualityRank:" + QualityRank + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
+        + "IsShowInBattleDeckUI:" + IsShowInBattleDeckUI + ","
+        + "UnLockCondition:" + UnLockCondition + ","
         + "Radius:" + Radius + ","
         + "RelativePosition:" + Bright.Common.StringUtil.CollectionToString(RelativePosition) + ","
         + "UnitId:" + Bright.Common.StringUtil.CollectionToString(UnitId) + ","

@@ -8,6 +8,7 @@ namespace ScreenAdapt
     [Serializable]
     public class CameraAdaptConfig
     {
+        public bool isSaved;
         public float orthographicSize;
     }
 
@@ -33,6 +34,7 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
+            config.isSaved = true;
             config.orthographicSize = mComponent.orthographicSize;
         }
 
@@ -44,6 +46,10 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             mComponent.orthographicSize = config.orthographicSize;
         }
     }

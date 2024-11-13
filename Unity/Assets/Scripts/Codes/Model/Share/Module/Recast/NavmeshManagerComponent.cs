@@ -4,30 +4,34 @@ using DotRecast.Detour;
 using DotRecast.Detour.Crowd;
 using DotRecast.Recast.Toolset;
 using DotRecast.Recast.Toolset.Builder;
+using DotRecast.Recast.Toolset.Tools;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET
 {
     [ComponentOf(typeof(GamePlayComponent))]
-    public class NavmeshManagerComponent: Entity, IAwake, IDestroy
+    public class NavmeshManagerComponent: Entity, IAwake, IDestroy, IFixedUpdate
     {
         public struct RecastFileLoader
         {
             public string Name { get; set; }
         }
-
-        public byte[] objBytes;
+        [BsonIgnore]
         public MeshHelper.MeshData meshData;
-        public Dictionary<float, NavmeshComponent> NavmeshByRadius;
-        public NavmeshComponent playerNavmesh;
+        public Dictionary<float, EntityRef<NavmeshComponent>> NavmeshByRadius;
+        public EntityRef<NavmeshComponent> playerNavmesh;
+        [BsonIgnore]
+        public RcTestNavMeshTool navMeshTool;
 
         public bool isLoadMeshFinished;
         public bool isLoadMeshError;
-        public DtNavMesh m_nav;
-        public Sample _sample;
-
-        public SoloNavMeshBuilder soloNavMeshBuilder;
-        public TileNavMeshBuilder tileNavMeshBuilder;
+        [BsonIgnore]
+        public DtNavMesh navMesh;
+        [BsonIgnore]
+        public Sample navSample;
+        [BsonIgnore]
+        public RcObstacleTool obstacleTool;
 
         public List<float3> segPoints;
 

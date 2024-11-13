@@ -21,6 +21,7 @@ namespace ET.Ability
         /// 倒计时的cd
         /// </summary>
         public float cdCountDown;
+        public float cdTotal;
 
         public float curEnergyNum;
 

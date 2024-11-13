@@ -74,33 +74,43 @@ namespace ET.Client
             loopScrollRect.RefillCells();
         }
 
-        public static async ETTask SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect)
+        public static void SetSrcollMiddle(this LoopHorizontalScrollRect loopHorizontalScrollRect)
         {
             RectTransform contentRectTrans = loopHorizontalScrollRect.content;
+            if (contentRectTrans.childCount == 0)
+            {
+                return;
+            }
             int count = loopHorizontalScrollRect.totalCount;
             if (count > loopHorizontalScrollRect.prefabSource.poolSize || count > contentRectTrans.childCount)
             {
+                loopHorizontalScrollRect.horizontal = true;
                 contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
                 return;
             }
 
             // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
             float scrollRectWidth = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
-            if (contentRectTrans.rect.width > scrollRectWidth)
-            {
-                contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
-                return;
-            }
+            // if (contentRectTrans.rect.width * contentRectTrans.localScale.x > scrollRectWidth)
+            // {
+            //     loopHorizontalScrollRect.horizontal = true;
+            //     contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+            //     return;
+            // }
             Transform itemTransform = contentRectTrans.GetChild(0).GetComponent<Transform>();
-            float LoopForhalf = scrollRectWidth / 2;
-            float halfSpacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing / 2;
+            float spacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing;
             float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
-            float leftoffset = LoopForhalf - ((cellWidth / 2) * count) - (count - 1) * halfSpacing;
+            float leftoffset = (scrollRectWidth - (cellWidth * count + (count - 1) * spacing) * contentRectTrans.localScale.x)*0.5f / contentRectTrans.localScale.x;
             if (leftoffset < 0)
             {
+                loopHorizontalScrollRect.horizontal = true;
                 leftoffset = 0;
             }
-            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset * contentRectTrans.localScale.x);
+            else
+            {
+                loopHorizontalScrollRect.horizontal = false;
+            }
+            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset);
             //
             // await TimerComponent.Instance.WaitFrameAsync();
             // if (contentRectTrans.rect.width > scrollRectWidth)

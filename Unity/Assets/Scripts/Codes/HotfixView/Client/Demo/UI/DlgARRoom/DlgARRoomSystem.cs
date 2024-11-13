@@ -24,7 +24,7 @@ namespace ET.Client
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMemberItemRefreshListener(transform, i).Coroutine();
-                self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.SetSrcollMiddle();
             });
         }
 

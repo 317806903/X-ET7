@@ -21,12 +21,7 @@ namespace ET.Client
         {
             protected override void Destroy(HealthBarNormalComponent self)
             {
-                if (self.go != null)
-                {
-                    //UnityEngine.Object.Destroy(self.go);
-                    GameObjectPoolHelper.ReturnTransformToPool(self.go.transform);
-                    self.go = null;
-                }
+                HealthBarNormalManager.Instance?.RemoveRefList(self.Id);
             }
         }
 
@@ -41,27 +36,9 @@ namespace ET.Client
 
         public static async ETTask Init(this HealthBarNormalComponent self)
         {
-            string resName = "ResEffect_HealthBar_1";
-
-            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
-            if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
-            {
-                return;
-            }
-            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get(resName);
-            GameObject HealthBarGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,30);
-            HealthBarGo.transform.SetParent(gameObjectShowComponent.gameObject.transform);
-            float scaleX = gameObjectShowComponent.gameObject.transform.localScale.x;
-            HealthBarGo.transform.localScale = Vector3.one / scaleX;
-            float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
-            HealthBarGo.transform.position = gameObjectShowComponent.gameObject.transform.position + new Vector3(0, height, 0);
-
-            self.go = HealthBarGo;
-            self.healthBar = self.go.transform.Find("Bar/GreenAnchor");
-            self.delayHealthBar = self.go.transform.Find("Bar/DelayAnchor");
-            self.backgroundBar = self.go.transform.Find("Bar/RedAnchor");
-
             self.UpdateHealth(true);
+
+            HealthBarNormalManager.Instance.AddRefList(self);
         }
 
         public static Unit GetUnit(this HealthBarNormalComponent self)
@@ -71,151 +48,96 @@ namespace ET.Client
 
         public static void UpdateHealth(this HealthBarNormalComponent self, bool isInit)
         {
-            if (self.go == null)
-            {
-                return;
-            }
-
             NumericComponent numericComponent = self.GetUnit().GetComponent<NumericComponent>();
             float curHp = math.max(numericComponent.GetAsFloat(NumericType.Hp), 0);
             float maxHp = numericComponent.GetAsFloat(NumericType.MaxHp);
             float normalizedHealth = (float)curHp / maxHp;
-            Vector3 scale = Vector3.one;
             self.targetNormalizedHealth = normalizedHealth;
-            if (self.healthBar != null)
-            {
-                scale.x = normalizedHealth;
-                self.healthBar.localScale = scale;
-            }
 
-            if (isInit)
-            {
-                if (self.backgroundBar != null)
-                {
-                    scale.x = 1 - normalizedHealth;
-                    self.backgroundBar.localScale = scale;
-                }
-
-                if (self.delayHealthBar != null)
-                {
-                    self.delayHealthBar.localScale = Vector3.zero;
-                }
-            }
-            else
-            {
-                if (self.delayHealthBar == null)
-                {
-                    if (self.backgroundBar != null)
-                    {
-                        scale.x = 1 - normalizedHealth;
-                        self.backgroundBar.localScale = scale;
-                    }
-                }
-            }
             //Log.Debug($"normalizedHealth={normalizedHealth}");
 
             if (normalizedHealth > 0f && normalizedHealth < 1.0f)
             {
-                if (isInit || self.isActivity == false)
+                if (isInit || self.isShow == false)
                 {
-                    self.go.SetActive(true);
-                    self.isActivity = true;
+                    self.isShow = true;
                 }
             }
             else if(normalizedHealth == 0)
             {
-                if (isInit || self.isActivity)
+                if (isInit || self.isShow)
                 {
-                    self.go.SetActive(false);
-                    self.isActivity = false;
+                    self.isShow = false;
                 }
             }
             else if(normalizedHealth == 1)
             {
-                if (isInit || self.isActivity)
+                if (isInit || self.isShow)
                 {
-                    self.go.SetActive(false);
-                    self.isActivity = false;
+                    self.isShow = false;
                 }
             }
-        }
-
-        public static Camera GetMainCamera(this HealthBarNormalComponent self)
-        {
-            if (self.mainCamera == null)
-            {
-                Camera mainCamera = CameraHelper.GetMainCamera(self.DomainScene());
-                self.mainCamera = mainCamera;
-            }
-            return self.mainCamera;
         }
 
         public static void Update(this HealthBarNormalComponent self)
         {
-            if (self.go == null)
-            {
-                return;
-            }
-
-            if (self.isActivity == false)
-            {
-                return;
-            }
-
-            if (++self.curFrame >= self.waitFrame)
-            {
-                self.curFrame = 0;
-
-                self.UpdateForward();
-            }
-
             self.UpdateDelayHp();
         }
 
-        public static void UpdateForward(this HealthBarNormalComponent self)
+        public static bool ChkIsShow(this HealthBarNormalComponent self)
         {
-            if (self.go == null)
+            if (self.isShow == false)
             {
-                return;
+                return false;
             }
-            Transform transform = self.go.transform;
-            Camera mainCamera = self.GetMainCamera();
-            if (mainCamera == null)
+            GameObjectComponent gameObjectComponent = self.GetUnit().GetComponent<GameObjectComponent>();
+            if (gameObjectComponent == null || gameObjectComponent.isHiding)
             {
-                return;
+                return false;
             }
-            Vector3 direction = mainCamera.transform.forward;
-            transform.forward = -direction;
+            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+            if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static Vector3 GetPos(this HealthBarNormalComponent self)
+        {
+            GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
+            if (gameObjectShowComponent == null || gameObjectShowComponent.gameObject == null)
+            {
+                return Vector3.zero;
+            }
+
+            float height = ET.Ability.UnitHelper.GetBodyHeight(self.GetUnit()) + 0.75f;
+            Vector3 position = gameObjectShowComponent.gameObject.transform.position + new Vector3(0, height, 0);
+            return position;
+        }
+
+        public static float GetCurHpPer(this HealthBarNormalComponent self)
+        {
+            return self.targetNormalizedHealth;
+        }
+
+        public static float GetCurDelayHpPer(this HealthBarNormalComponent self)
+        {
+            return self.curDelayHpPer;
         }
 
         public static void UpdateDelayHp(this HealthBarNormalComponent self)
         {
-            if (self.go == null)
+            if (self.curDelayHpPer.Equals(self.targetNormalizedHealth))
             {
                 return;
             }
-            if (self.delayHealthBar != null)
+            else if (math.abs(math.abs(self.curDelayHpPer) - math.abs(self.targetNormalizedHealth)) < 0.005f)
             {
-                if (self.curNormalizedHealth == 1 - self.targetNormalizedHealth)
-                {
-                    return;
-                }
-                else if (math.abs(math.abs(self.curNormalizedHealth) - math.abs(1 - self.targetNormalizedHealth)) < 0.005f)
-                {
-                    self.curNormalizedHealth = 1-self.targetNormalizedHealth;
-                    self.backgroundBar.localScale = new Vector3(1-self.targetNormalizedHealth, 1, 1);
-                    self.delayHealthBar.localScale = new Vector3(0, 1, 1);
-                    return;
-                }
-                Vector3 scale = Vector3.one;
-                self.curNormalizedHealth = math.lerp(self.curNormalizedHealth, 1-self.targetNormalizedHealth, Time.deltaTime*2);
-                scale.x = self.curNormalizedHealth;
-
-                self.backgroundBar.localScale = scale;
-
-                self.delayHealthBar.localScale = new Vector3(1-self.targetNormalizedHealth - self.curNormalizedHealth, 1, 1);
-                self.delayHealthBar.localPosition = new Vector3(self.healthBar.localPosition.x - self.healthBar.localScale.x, 0, 0);
+                self.curDelayHpPer = self.targetNormalizedHealth;
+                return;
             }
+            self.curDelayHpPer = math.lerp(self.curDelayHpPer, self.targetNormalizedHealth, Time.deltaTime*2);
         }
 
     }

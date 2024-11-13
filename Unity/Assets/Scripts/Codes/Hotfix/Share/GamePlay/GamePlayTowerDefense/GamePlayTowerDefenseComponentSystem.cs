@@ -60,7 +60,8 @@ namespace ET
             return self.GetComponent<PutMonsterCallComponent>().GetCallMonsterUnitId(playerId);
         }
 
-        public static async ETTask Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId, RoomTypeInfo roomTypeInfo)
+        public static async ETTask Init(this GamePlayTowerDefenseComponent self, long ownerPlayerId, string gamePlayModeCfgId,
+        RoomTypeInfo roomTypeInfo)
         {
             self.gamePlayModeCfgId = gamePlayModeCfgId;
             self.roomTypeInfo = roomTypeInfo;
@@ -194,8 +195,8 @@ namespace ET
                 recoverTimeoutTime = GlobalSettingCfgCategory.Instance.RecoverTimeoutTime;
                 if (self.IsEndlessChallengeMode())
                 {
-                    recoverFreeTimes = 0;
-                    recoverByWatchAdTimes = 1;
+                    recoverFreeTimes = 1;
+                    recoverByWatchAdTimes = 0;
                     recoverCostArcadeCoinTimes = 0;
                 }
                 recoverAddHp = GlobalSettingCfgCategory.Instance.RecoverAddHp;
@@ -209,9 +210,11 @@ namespace ET
                 long playerId = playerTeamFlag.Key;
                 TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(playerId);
 
-                GamePlayHelper.ChgGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType, GameNumericType.TowerDefense_PlayerResurrectionTimesBase, recoverByWatchAdTimes, true);
+                GamePlayHelper.ChgGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType,
+                    GameNumericType.TowerDefense_PlayerResurrectionTimesBase, recoverByWatchAdTimes, true);
 
-                float tmp = GamePlayHelper.GetGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType, GameNumericType.TowerDefense_PlayerResurrectionTimes);
+                float tmp = GamePlayHelper.GetGamePlayNumericValueByHomeTeamFlagType(self.DomainScene(), homeTeamFlagType,
+                    GameNumericType.TowerDefense_PlayerResurrectionTimes);
                 if (recoverByWatchAdTimesNew < tmp)
                 {
                     recoverByWatchAdTimesNew = (int)tmp;
@@ -219,9 +222,9 @@ namespace ET
             }
             recoverByWatchAdTimes = recoverByWatchAdTimesNew;
 
-
             GameRecoverComponent gameRecoverComponent = self.AddComponent<GameRecoverComponent>();
-            gameRecoverComponent.Init(recoverTimeoutTime, recoverFreeTimes, recoverByWatchAdTimes, recoverCostArcadeCoinTimes, recoverCostArcadeCoinNum, recoverAddHp, recoverAddGold);
+            gameRecoverComponent.Init(recoverTimeoutTime, recoverFreeTimes, recoverByWatchAdTimes, recoverCostArcadeCoinTimes,
+                recoverCostArcadeCoinNum, recoverAddHp, recoverAddGold);
 
             await ETTask.CompletedTask;
         }
@@ -233,8 +236,10 @@ namespace ET
             for (int i = 0; i < playerList.Count; i++)
             {
                 long playerId = playerList[i];
-                GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGoldBase, initGold, true);
-                float newInitGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGold);
+                GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGoldBase,
+                    initGold, true);
+                float newInitGold =
+                        GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerInitGold);
 
                 ET.GamePlayHelper.SetPlayerCoin(self.DomainScene(), playerId, CoinTypeInGame.Gold, (int)newInitGold);
             }
@@ -309,7 +314,8 @@ namespace ET
             gamePlayComponent.StartShow();
             gamePlayComponent.NoticeGameBegin2Server();
 
-            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_ShowStartEffectBegin());
+            EventSystem.Instance.Publish(self.DomainScene(),
+                new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_ShowStartEffectBegin());
 
             await TimerComponent.Instance.WaitAsync(2000);
 
@@ -379,7 +385,8 @@ namespace ET
         {
             self.gamePlayTowerDefenseStatus = GamePlayTowerDefenseStatus.PutMonsterPoint;
 
-            EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_PutMonsterPointBegin());
+            EventSystem.Instance.Publish(self.DomainScene(),
+                new ET.Ability.AbilityTriggerEventType.GamePlayTowerDefense_Status_PutMonsterPointBegin());
 
             GamePlayBattleLevelCfg gamePlayBattleLevelCfg = self.GetGamePlay().GetGamePlayBattleConfig();
             if (gamePlayBattleLevelCfg.TeamMode is PlayerTeam)
@@ -421,7 +428,7 @@ namespace ET
 
         public static async ETTask TransToInTheBattleEnd(this GamePlayTowerDefenseComponent self)
         {
-            if(self.ChkIsGameEnd() || self.ChkIsGameRecover() || self.ChkIsGameRecovering())
+            if (self.ChkIsGameEnd() || self.ChkIsGameRecover() || self.ChkIsGameRecovering())
             {
                 return;
             }
@@ -740,12 +747,14 @@ namespace ET
             return self.GetComponent<PlayerOwnerTowersComponent>().ChkIsUpgradeMaxPlayerTower(towerCfgId);
         }
 
-        public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, bool onlyChkPool)
+        public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this GamePlayTowerDefenseComponent self,
+        long playerId, long towerUnitId, bool onlyChkPool)
         {
             return self.GetComponent<PlayerOwnerTowersComponent>().ChkUpgradePlayerTower(playerId, towerUnitId, onlyChkPool);
         }
 
-        public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, string towerCfgId, bool onlyChkPool)
+        public static (bool, string, Dictionary<string, int>, List<long>) ChkUpgradePlayerTower(this GamePlayTowerDefenseComponent self,
+        long playerId, string towerCfgId, bool onlyChkPool)
         {
             return self.GetComponent<PlayerOwnerTowersComponent>().ChkUpgradePlayerTower(playerId, 0, towerCfgId, onlyChkPool);
         }
@@ -911,7 +920,8 @@ namespace ET
 
             long attackValue = numericComponent.GetAsInt(NumericType.PhysicalAttack);
             Damage damage = new(NumericType.PhysicalAttack, attackValue);
-            ET.Ability.DamageHelper.CreateDamageInfo(unit, homeUnit, damage, false);
+            ActionContext actionContext = new ActionContext();
+            ET.Ability.DamageHelper.CreateDamageInfo(unit, homeUnit, damage, false, ref actionContext);
             unit.DestroyWithDeathShow();
         }
 
@@ -949,10 +959,13 @@ namespace ET
                         // }
 
                         long playerId = attackerPlayerId;
-                        GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenKillMonsterBase, rewardGold, true);
-                        float newRewardGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId, GameNumericType.TowerDefense_PlayerRewardWhenKillMonster);
+                        GamePlayHelper.ChgGamePlayNumericValueByPlayerId(self.DomainScene(), playerId,
+                            GameNumericType.TowerDefense_PlayerRewardWhenKillMonsterBase, rewardGold, true);
+                        float newRewardGold = GamePlayHelper.GetGamePlayNumericValueByPlayerId(self.DomainScene(), playerId,
+                            GameNumericType.TowerDefense_PlayerRewardWhenKillMonster);
 
-                        ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinTypeInGame.Gold, (int)newRewardGold, beKillUnit);
+                        ET.GamePlayHelper.ChgPlayerCoinShare(self.DomainScene(), attackerPlayerId, CoinTypeInGame.Gold, (int)newRewardGold,
+                            beKillUnit);
 
                     }
                 }
@@ -984,7 +997,8 @@ namespace ET
             return playerOwnerTowersComponent.GetPlayerOwnerTowers(playerId);
         }
 
-        public static bool ChkIsNearTower(this GamePlayTowerDefenseComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1, long ignoreTowerUnitId = -1)
+        public static bool ChkIsNearTower(this GamePlayTowerDefenseComponent self, float3 targetPos, float targetUnitRadius, long playerId = -1,
+        long ignoreTowerUnitId = -1)
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
             return playerOwnerTowersComponent.ChkIsNearTower(targetPos, targetUnitRadius, playerId, ignoreTowerUnitId);
@@ -1009,7 +1023,7 @@ namespace ET
 
         public static TeamFlagType GetPlayerCallMonsterTeamFlagTypeByPlayer(this GamePlayTowerDefenseComponent self, long playerId, float3 pos)
         {
-            (TeamFlagType nearHostileTeamFlagType, Unit homeUnit)  = self.GetNearHostileHomeByPlayerId(playerId, pos);
+            (TeamFlagType nearHostileTeamFlagType, Unit homeUnit) = self.GetNearHostileHomeByPlayerId(playerId, pos);
             return ET.GamePlayTowerDefenseHelper.GetMonsterTeamFlagType(nearHostileTeamFlagType);
         }
 

@@ -26,11 +26,6 @@ namespace ET.Ability
                     isAttributeChg = true;
                     self.AddBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
                 }
-                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
-                {
-                    isAttributeChg = true;
-                    self.AddBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
-                }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {
                     self.AddBuffWhenModifySkillAttribute(buffActionModifySkillAttribute);
@@ -66,11 +61,6 @@ namespace ET.Ability
                 {
                     isAttributeChg = true;
                     self.RemoveBuffWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex);
-                }
-                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
-                {
-                    isAttributeChg = true;
-                    self.RemoveBuffWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {
@@ -118,11 +108,6 @@ namespace ET.Ability
                 {
                     isAttributeChg = true;
                     self.ChgBuffStackCountWhenModifyAttributeByWaveIndex(buffActionModifyAttributeByWaveIndex, oldStackCount, newStackCount);
-                }
-                else if (buffAction is BuffActionModifyAttributeByCircleWaveIndex buffActionModifyAttributeByCircleWaveIndex)
-                {
-                    isAttributeChg = true;
-                    self.ChgBuffStackCountWhenModifyAttributeByCircleWaveIndex(buffActionModifyAttributeByCircleWaveIndex, oldStackCount, newStackCount);
                 }
                 else if (buffAction is BuffActionModifySkillAttribute buffActionModifySkillAttribute)
                 {

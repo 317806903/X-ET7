@@ -8,7 +8,7 @@ namespace ET.Client
 	{
 		public DlgQuestionnaireViewComponent View { get => this.GetComponent<DlgQuestionnaireViewComponent>(); }
 		public long dlgShowTime;
-        public Dictionary<int, Scroll_Item_TowerBuy> Scroll_Item_GiftsDict;
+        public Dictionary<int, Scroll_Item_ItemShow> Scroll_Item_GiftsDict;
 		public QuestionnaireCfg questionnaireCfg;
     }
 }

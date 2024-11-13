@@ -33,7 +33,6 @@
         public const int DlgARSceneSliderFrameTimer = 221;
         public const int DlgARSceneSliderSimpleFrameTimer = 222;
         public const int DlgVideoShowFrameTimer = 223;
-        public const int DlgBattleDeckFrameTimer = 224;
         public const int DlgFixedMenuFrameTimer = 225;
         public const int DlgFixedMenuHighestFrameTimer = 226;
         public const int GameModeArcadeTimer = 227;
@@ -41,10 +40,12 @@
         public const int ARSessionComponentTimer = 229;
         public const int DlgTutorialsFrameTimer = 230;
         public const int DlgTutorialOneFrameTimer = 231;
-        public const int DlgCameraPlayerSkillFrameTimer = 232;
         public const int DlgSkillDetailsFrameTimer = 233;
         public const int DlgBattleCameraPlayerSkillFrameTimer = 234;
         public const int DlgBattlePlayerSkillFrameTimer = 235;
+        public const int EPage_BattleDeckTowerFrameTimer = 236;
+        public const int EPage_BattleDeckSkillFrameTimer = 237;
+        public const int DlgTowerDetailsFrameTimer = 238;
 
 
     }

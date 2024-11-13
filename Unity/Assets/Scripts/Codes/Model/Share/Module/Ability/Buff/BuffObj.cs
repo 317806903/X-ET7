@@ -55,6 +55,8 @@ namespace ET.Ability
         ///</summary>
         public long casterUnitId;
 
+        public bool isRemoveWhenCasterActorUnitNotExist;
+
         ///<summary>
         ///buff已经存在了多少时间了 (在刷新时间时会被重置)，单位：秒
         ///</summary>

@@ -56,5 +56,7 @@ namespace ET.Ability
         ///伤害的角度，作为伤害打向角色的入射角度，比如子弹，就是它当前的飞行角度
         ///</summary>
         public float degree;
+
+        public ActionContext actionContext;
     }
 }

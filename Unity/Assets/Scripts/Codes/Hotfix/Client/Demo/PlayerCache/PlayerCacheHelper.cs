@@ -46,10 +46,11 @@ namespace ET.Client
         {
 	        PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCacheClient, playerId))
+	        bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType);
+	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType))
 	        {
 		        Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
-		        if (entity == null || forceReGet)
+		        if (entity == null || entity.IsDisposed || (forceReGet && isLock == false))
 		        {
 			        try
 			        {
@@ -122,6 +123,13 @@ namespace ET.Client
 	        return entity as PlayerBattleCardComponent;
         }
 
+        public static async ETTask<PlayerBattleSkillComponent> GetMyPlayerBattleSkill(Scene scene, bool forceReGet = false)
+        {
+	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
+	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.BattleSkill, forceReGet);
+	        return entity as PlayerBattleSkillComponent;
+        }
+
         public static async ETTask<PlayerOtherInfoComponent> GetMyPlayerOtherInfo(Scene scene, bool forceReGet = false)
         {
 	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
@@ -150,14 +158,7 @@ namespace ET.Client
 	        return entity as PlayerMailComponent;
         }
 
-        public static async ETTask<PlayerSkillComponent> GetMyPlayerSkill(Scene scene, bool forceReGet = false)
-        {
-	        long myPlayerId = ET.Client.PlayerStatusHelper.GetMyPlayerId(scene);
-	        Entity entity = await _GetPlayerModel(scene, myPlayerId, PlayerModelType.Skills, forceReGet);
-	        return entity as PlayerSkillComponent;
-        }
-
-        public static async ETTask<List<ItemComponent>> GetMyBattleCardItemList(Scene scene, bool forceReGet = false)
+        public static async ETTask<List<ItemComponent>> GetMyBattleTowerItemList(Scene scene, bool forceReGet = false)
         {
 	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
 	        PlayerBattleCardComponent playerBattleCardComponent = await GetMyPlayerBattleCard(scene, forceReGet);
@@ -171,6 +172,150 @@ namespace ET.Client
 		        list.Add(itemComponent);
 	        }
 	        return list;
+        }
+
+        public static async ETTask<List<string>> GetMyBattleTowerItemCfgIdList(Scene scene, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        PlayerBattleCardComponent playerBattleCardComponent = await GetMyPlayerBattleCard(scene, forceReGet);
+
+	        playerBattleCardComponent.SetBattleCardItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Tower, ItemSubType.None));
+
+	        List<string> list = playerBattleCardComponent.GetBattleCardItemCfgIdList();
+	        return list;
+        }
+
+        public static async ETTask<HashSet<string>> GetMyBattleTowerItemCfgIdHashSet(Scene scene, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        PlayerBattleCardComponent playerBattleCardComponent = await GetMyPlayerBattleCard(scene, forceReGet);
+
+	        playerBattleCardComponent.SetBattleCardItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Tower, ItemSubType.None));
+
+	        HashSet<string> list = playerBattleCardComponent.GetBattleCardItemCfgIdHashSet();
+	        return list;
+        }
+
+        public static async ETTask<List<(string itemCfgId, bool isAlreadyHave)>> GetTowerItemListWhenNotBattleDeck(Scene scene, bool forceReGet = false)
+        {
+	        List<(string itemCfgId, bool isAlreadyHave)> itemListWhenNotBattleDeck = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+	        using ListComponent<(string itemCfgId, bool isAlreadyHave)> itemListGetButNotDeck = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+	        using ListComponent<(string itemCfgId, bool isAlreadyHave)> itemListNotGet = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+
+	        List<string> towerListInBattleDeck = ET.ItemHelper.GetTowerListInBattleDeck();
+
+	        PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(scene, forceReGet);
+	        HashSet<string> towerList = playerBackPackComponent.GetItemHashSetByItemType(ItemType.Tower, ItemSubType.None);
+	        foreach (string itemCfgId in towerListInBattleDeck)
+	        {
+		        if (towerList.Contains(itemCfgId))
+		        {
+			        continue;
+		        }
+		        itemListNotGet.Add((itemCfgId, false));
+	        }
+	        HashSet<string> itemIdBattleCardHashSet = await ET.Client.PlayerCacheHelper.GetMyBattleTowerItemCfgIdHashSet(scene);
+
+	        foreach (string itemCfgId in towerList)
+	        {
+		        if (itemIdBattleCardHashSet.Contains(itemCfgId))
+		        {
+			        continue;
+		        }
+		        itemListGetButNotDeck.Add((itemCfgId, true));
+	        }
+	        itemListGetButNotDeck.Sort((x, y) =>
+	        {
+		        return ItemCfgCategory.Instance.Get(y.itemCfgId).ShowPriority.CompareTo(ItemCfgCategory.Instance.Get(x.itemCfgId).ShowPriority);
+	        });
+	        itemListWhenNotBattleDeck.AddRange(itemListGetButNotDeck);
+
+	        itemListNotGet.Sort((x, y) =>
+	        {
+		        return ItemCfgCategory.Instance.Get(y.itemCfgId).ShowPriority.CompareTo(ItemCfgCategory.Instance.Get(x.itemCfgId).ShowPriority);
+	        });
+	        itemListWhenNotBattleDeck.AddRange(itemListNotGet);
+	        return itemListWhenNotBattleDeck;
+        }
+
+        public static async ETTask<List<ItemComponent>> GetMyBattleSkillItemList(Scene scene, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        PlayerBattleSkillComponent playerBattleSkillComponent = await GetMyPlayerBattleSkill(scene, forceReGet);
+
+	        playerBattleSkillComponent.SetBattleSkillItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Skill, ItemSubType.None));
+
+	        List<ItemComponent> list = ListComponent<ItemComponent>.Create();
+	        foreach (var itemCfgId in playerBattleSkillComponent.GetBattleSkillItemCfgIdList())
+	        {
+		        ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
+		        list.Add(itemComponent);
+	        }
+	        return list;
+        }
+
+        public static async ETTask<List<string>> GetMyBattleSkillItemCfgIdList(Scene scene, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        PlayerBattleSkillComponent playerBattleSkillComponent = await GetMyPlayerBattleSkill(scene, forceReGet);
+
+	        playerBattleSkillComponent.SetBattleSkillItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Skill, ItemSubType.None));
+
+	        List<string> list = playerBattleSkillComponent.GetBattleSkillItemCfgIdList();
+	        return list;
+        }
+
+        public static async ETTask<HashSet<string>> GetMyBattleSkillItemCfgIdHashSet(Scene scene, bool forceReGet = false)
+        {
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
+	        PlayerBattleSkillComponent playerBattleSkillComponent = await GetMyPlayerBattleSkill(scene, forceReGet);
+
+	        playerBattleSkillComponent.SetBattleSkillItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Skill, ItemSubType.None));
+
+	        HashSet<string> list = playerBattleSkillComponent.GetBattleSkillItemCfgIdHashSet();
+	        return list;
+        }
+
+        public static async ETTask<List<(string itemCfgId, bool isAlreadyHave)>> GetSkillItemListWhenNotBattleDeck(Scene scene, bool forceReGet = false)
+        {
+	        List<(string itemCfgId, bool isAlreadyHave)> itemListWhenNotBattleDeck = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+	        using ListComponent<(string itemCfgId, bool isAlreadyHave)> itemListGetButNotDeck = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+	        using ListComponent<(string itemCfgId, bool isAlreadyHave)> itemListNotGet = ListComponent<(string itemCfgId, bool isAlreadyHave)>.Create();
+
+	        List<string> skillListInBattleDeck = ET.ItemHelper.GetSkillListInBattleDeck();
+
+	        PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(scene, forceReGet);
+	        HashSet<string> skillList = playerBackPackComponent.GetItemHashSetByItemType(ItemType.Skill, ItemSubType.None);
+	        foreach (string itemCfgId in skillListInBattleDeck)
+	        {
+		        if (skillList.Contains(itemCfgId))
+		        {
+			        continue;
+		        }
+		        itemListNotGet.Add((itemCfgId, false));
+	        }
+	        HashSet<string> itemIdBattleSkillHashSet = await ET.Client.PlayerCacheHelper.GetMyBattleSkillItemCfgIdHashSet(scene);
+
+	        foreach (string itemCfgId in skillList)
+	        {
+		        if (itemIdBattleSkillHashSet.Contains(itemCfgId))
+		        {
+			        continue;
+		        }
+		        itemListGetButNotDeck.Add((itemCfgId, true));
+	        }
+	        itemListGetButNotDeck.Sort((x, y) =>
+	        {
+		        return ItemCfgCategory.Instance.Get(y.itemCfgId).ShowPriority.CompareTo(ItemCfgCategory.Instance.Get(x.itemCfgId).ShowPriority);
+	        });
+	        itemListWhenNotBattleDeck.AddRange(itemListGetButNotDeck);
+
+	        itemListNotGet.Sort((x, y) =>
+	        {
+		        return ItemCfgCategory.Instance.Get(y.itemCfgId).ShowPriority.CompareTo(ItemCfgCategory.Instance.Get(x.itemCfgId).ShowPriority);
+	        });
+	        itemListWhenNotBattleDeck.AddRange(itemListNotGet);
+	        return itemListWhenNotBattleDeck;
         }
 
         public static async ETTask<int> GetTokenValue(Scene scene, string itemCfgId, bool forceReGet = false)
@@ -192,13 +337,13 @@ namespace ET.Client
 
         public static async ETTask<int> GetTokenDiamond(Scene scene, bool forceReGet = false)
         {
-	        string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+	        string itemCfgId = ET.ItemHelper.GetTokenDiamondCfgId();
 	        return await GetTokenValue(scene, itemCfgId, forceReGet);
         }
 
         public static async ETTask<int> GetTokenArcadeCoin(Scene scene, bool forceReGet = false)
         {
-	        string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+	        string itemCfgId = ET.ItemHelper.GetTokenArcadeCoinCfgId();
 	        return await GetTokenValue(scene, itemCfgId, forceReGet);
         }
 
@@ -260,6 +405,12 @@ namespace ET.Client
         {
 	        Entity entity = await _GetPlayerModel(scene, playerId, PlayerModelType.BattleCard, forceReGet);
 	        return entity as PlayerBattleCardComponent;
+        }
+
+        public static async ETTask<PlayerBattleSkillComponent> GetOtherPlayerBattleSkill(Scene scene, long playerId, bool forceReGet = false)
+        {
+	        Entity entity = await _GetPlayerModel(scene, playerId, PlayerModelType.BattleSkill, forceReGet);
+	        return entity as PlayerBattleSkillComponent;
         }
 
         public static async ETTask<(bool, byte[])> SendGetPlayerModelAsync(Scene clientScene, long playerId, PlayerModelType playerModelType)
@@ -478,7 +629,31 @@ namespace ET.Client
 	        return isNeedShow;
         }
 
-        public static async ETTask SetUIRedDotType(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "", string skillCfgId = "")
+        public static async ETTask GetUIRedDotType(Scene scene)
+        {
+	        try
+	        {
+		        scene = scene.ClientScene();
+
+		        G2C_GetUIRedDotType Resp = await ET.Client.SessionHelper.GetSession(scene).Call(new C2G_GetUIRedDotType()) as G2C_GetUIRedDotType;
+		        if (Resp.Error != ET.ErrorCode.ERR_Success)
+		        {
+			        Log.Error($"GetUIRedDotType Error==1 msg={Resp.Message}");
+			        return;
+		        }
+		        else
+		        {
+			        return;
+		        }
+	        }
+	        catch (Exception e)
+	        {
+		        Log.Error(e);
+		        return;
+	        }
+        }
+
+        public static async ETTask SetUIRedDotType(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "")
         {
 	        try
 	        {
@@ -496,7 +671,6 @@ namespace ET.Client
 		        {
 			        UIRedDotType = (int)uiRedDotType,
 			        ItemCfgId = itemCfgId,
-			        SkillCfgId = skillCfgId,
 		        }) as G2C_SetUIRedDotType;
 		        if (Resp.Error != ET.ErrorCode.ERR_Success)
 		        {

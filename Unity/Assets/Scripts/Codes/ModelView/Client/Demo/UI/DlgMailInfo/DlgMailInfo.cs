@@ -12,7 +12,7 @@ namespace ET.Client
         public List<KeyValuePair<string, int>> kvpItemCfgNumList = new List<KeyValuePair<string, int>>();
         public MailInfoComponent mailInfoComponent;
         public MailStatus mailStatus;
-        public Dictionary<int, Scroll_Item_TowerBuy> ScrollGiftDic = new Dictionary<int, Scroll_Item_TowerBuy>();
+        public Dictionary<int, Scroll_Item_ItemShow> ScrollGiftDic = new ();
     }
 
     public class DlgMailInfo_ShowWindowData : ShowWindowData

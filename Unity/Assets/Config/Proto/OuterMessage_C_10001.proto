@@ -434,43 +434,14 @@ message M2C_RestoreSkillEnergy // IActorLocationResponse
 	string Message = 3;
 }
 
-//ResponseType G2C_LearnPlayerSkill
-message C2G_LearnPlayerSkill // IRequest
+//ResponseType G2C_BuyItem
+message C2G_BuyItem // IRequest
 {
 	int32 RpcId = 1;
-	string SkillCfgId = 2;
+	string ItemCfgId = 2;
 }
 
-message G2C_LearnPlayerSkill // IResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-}
-
-//ResponseType G2C_UpdatePlayerSkill
-message C2G_UpdatePlayerSkill // IRequest
-{
-	int32 RpcId = 1;
-	string SkillCfgId = 2;
-}
-
-message G2C_UpdatePlayerSkill // IResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-}
-
-//ResponseType G2C_ReplacePlayerSkill
-message C2G_ReplacePlayerSkill // IRequest
-{
-	int32 RpcId = 1;
-	string SkillCfgId = 2;
-	int32 Index = 3;
-}
-
-message G2C_ReplacePlayerSkill // IResponse
+message G2C_BuyItem // IResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -1025,6 +996,40 @@ message M2C_GetNavMeshFromHeadQuarter // IActorLocationResponse
 	repeated int32 Indices = 5;
 }
 
+//ResponseType M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath
+message C2M_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	// Optional. If set the unit will be moved to the target position temporarily, otherwise a unit with UnitCfgId will
+	// be created temporarily at the target position when finding the path.
+	int64 UnitId = 2;
+	string UnitCfgId = 3;
+	Unity.Mathematics.float3 Position = 4;
+}
+
+message NavPath
+{
+	Unity.Mathematics.float3 TargetPosition = 1;
+	int64 PlayerId = 2;
+	int64 MonsterCallUnitId = 3;
+	repeated Unity.Mathematics.float3 Points = 4;
+}
+
+message M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated NavPath Path = 4;
+}
+
+message M2C_DrawAllMonsterCall2HeadQuarterPath // IActorMessage
+{
+	int32 RpcId = 1;
+	string Message = 2;
+	repeated NavPath Path = 3;
+}
+
 //ResponseType M2C_ChkRay
 message C2M_ChkRay // IActorLocationRequest
 {
@@ -1348,13 +1353,25 @@ message G2C_UpdatePowerup // IResponse
 	string Message = 3;
 }
 
+//ResponseType G2C_GetUIRedDotType
+message C2G_GetUIRedDotType  // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_GetUIRedDotType // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType G2C_SetUIRedDotType
 message C2G_SetUIRedDotType  // IRequest
 {
 	int32 RpcId = 1;
     int32 UIRedDotType = 2;
 	string ItemCfgId = 3;
-	string SkillCfgId = 4;
 }
 
 message G2C_SetUIRedDotType // IResponse

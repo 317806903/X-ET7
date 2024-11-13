@@ -921,6 +921,10 @@ namespace ET
 			{
 				return;
 			}
+			if (unit.IsDisposed)
+			{
+				return;
+			}
 
 			SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
 			ActionContext actionContext = new ActionContext()
@@ -1069,7 +1073,7 @@ namespace ET
 
         public static TeamFlagType GetHomeTeamFlagTypeByPlayer(Scene scene, long playerId)
         {
-	        TeamFlagType teamFlagType = GetGamePlay(scene).GetTeamFlagByPlayerId(playerId);
+	        TeamFlagType teamFlagType = GetGamePlay(scene)?.GetTeamFlagByPlayerId(playerId) ?? TeamFlagType.None;
 
 	        return GetHomeTeamFlagType(teamFlagType);
         }

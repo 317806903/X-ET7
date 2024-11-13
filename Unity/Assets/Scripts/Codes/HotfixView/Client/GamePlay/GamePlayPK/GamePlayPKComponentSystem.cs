@@ -171,7 +171,7 @@ namespace ET.Client
 
 		public static void DoMoveTower(this GamePlayPkComponentBase self, string towerCfgId, long towerUnitId)
 		{
-			Handheld.Vibrate();
+			ET.Ability.Client.AudioPlayHelper.PlayVibrate();
 
 			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
 			GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
@@ -211,7 +211,7 @@ namespace ET.Client
 
 		public static void DoMovePlayer(this GamePlayPkComponentBase self, long towerUnitId)
 		{
-			Handheld.Vibrate();
+			ET.Ability.Client.AudioPlayHelper.PlayVibrate();
 
 			Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
 			GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();

@@ -11,5 +11,7 @@ namespace ET.Client
         public EntityRef<GameObjectComponent> refGameObjectComponent;
 
         public GameObject cubeGameObject;
+        public GameObject sphereGameObject;
+        public GameObject cylinderGameObject;
     }
 }

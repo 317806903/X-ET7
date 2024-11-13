@@ -31,12 +31,16 @@ namespace ET.Client
         public static void RegisterUIEvent(this DlgBattle self)
         {
             Log.Debug($"ET.Client.DlgBattleSystem.RegisterUIEvent 11");
-            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Tower";
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBattle";
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.poolSize = 10;
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddTowerItemRefreshListener(transform, i));
+
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBattle";
+            self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.poolSize = 10;
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddMonsterItemRefreshListener(transform, i));
+
             self.View.E_QuitBattleButton.AddListenerAsync(self.QuitBattle);
 
             self.View.E_GameSettingButton.SetVisible(true);
@@ -327,14 +331,12 @@ namespace ET.Client
 
         public static void AddTowerItemRefreshListener(this DlgBattle self, Transform transform, int index)
         {
-            Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
+            Scroll_Item_TowerBattle itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
             string towerCfgId = self.matchTowerList[index];
-            itemTower.ShowBagItem(towerCfgId, true).Coroutine();
+            itemTower.Init(towerCfgId, true).Coroutine();
 
-            itemTower.ELabel_NumTextMeshProUGUI.text = "1";
-
-            ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemTower.GetActionButton()).onPress.AddListener((go, xx) =>
             {
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {
@@ -351,14 +353,13 @@ namespace ET.Client
 
         public static void AddMonsterItemRefreshListener(this DlgBattle self, Transform transform, int index)
         {
-            Scroll_Item_Tower itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
+            Scroll_Item_TowerBattle itemMonster = self.ScrollItemMonsters[index].BindTrans(transform);
 
             string monsterCfgId = self.matchMonsterList[index];
 
-            itemMonster.ShowBagItem(monsterCfgId, true).Coroutine();
-            itemMonster.ELabel_NumTextMeshProUGUI.text = $"1";
+            itemMonster.Init(monsterCfgId, true).Coroutine();
 
-            ET.EventTriggerListener.Get(itemMonster.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemMonster.GetActionButton()).onPress.AddListener((go, xx) =>
             {
                 DlgBattleDragItem_ShowWindowData showWindowData = new()
                 {

@@ -134,6 +134,8 @@ namespace ET.Client
 
             itemSkill.UpdateSkillBaseInfo(self.unitId, skillCfgId, (skillCfgId)=>
             {
+            }, (skillCfgId)=>
+            {
 	            self.CreateSkillShowEffect(skillCfgId);
             }, (skillCfgId)=>
             {
@@ -223,7 +225,7 @@ namespace ET.Client
 
 	        bRet = await SkillHelper.CastSkill(self.DomainScene(), skillCfgId, self.unitId, float3.zero, float3.zero, selectHandle);
 
-	        Handheld.Vibrate();
+	        ET.Ability.Client.AudioPlayHelper.PlayVibrate();
         }
 
         public static void CreateSkillShowEffect(this DlgBattlePlayerSkill self, string skillCfgId)

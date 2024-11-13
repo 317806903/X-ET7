@@ -173,6 +173,10 @@ namespace ET.Ability
                 {
                     return;
                 }
+                if (self.IsDisposed)
+                {
+                    return;
+                }
 
                 SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(self.GetUnit());
                 ActionContext actionContext = new ActionContext()
@@ -192,7 +196,7 @@ namespace ET.Ability
             }
         }
 
-        public static async ETTask<TimelineObj> CastSkill(this SkillObj self, SelectHandle selectHandleShow = null)
+        public static async ETTask<(TimelineObj timelineObj, ActionContext actionContext)> CastSkill(this SkillObj self, SelectHandle selectHandleShow = null)
         {
             ET.Ability.UnitHelper.ClearOnceSelectHandle(self.GetUnit());
             ET.Ability.UnitHelper.ClearExcludeSelectHandle(self.GetUnit());
@@ -221,18 +225,20 @@ namespace ET.Ability
 
             if (selectHandle == null || (selectHandle.selectHandleType == SelectHandleType.SelectUnits && selectHandle.unitIds.Count == 0))
             {
-                return null;
+                return (null, actionContext);
             }
 
             TimelineObj timelineObj = await TimelineHelper.CreateTimeline(self.GetUnit(), skillCfg.TimelineId);
             timelineObj.InitActionContext(ref actionContext);
 
             self.CostSkill();
-            self.cdCountDown = self._GetSkillCD();
+            float skillCD = self._GetSkillCD();
+            self.cdTotal = skillCD;
+            self.cdCountDown = self.cdTotal;
 
             self.NoticeClient();
 
-            return timelineObj;
+            return (timelineObj, actionContext);
         }
 
         public static async ETTask<(bool ret, string msg)> RestoreSkillEnergy(this SkillObj self)
@@ -312,7 +318,10 @@ namespace ET.Ability
         public static void ResetSkillCDCountDown(this SkillObj self)
         {
             float skillCD = self._GetSkillCD();
+            self.cdTotal = skillCD;
             self.cdCountDown = math.min(self.cdCountDown, skillCD);
+
+            self.NoticeClient();
         }
 
         public static float GetSkillDis(this SkillObj self)

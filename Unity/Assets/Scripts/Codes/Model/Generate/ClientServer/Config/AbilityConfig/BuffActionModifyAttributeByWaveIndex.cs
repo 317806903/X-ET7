@@ -13,15 +13,21 @@ namespace ET.AbilityConfig
 {
 
 /// <summary>
-/// 通过波次修改属性(float chgValue = buffActionModifyAttribute.BaseValue*waveIndex + buffActionModifyAttribute.StackValue * stackCount*waveIndex)
+/// 通过波次修改属性(waveIndex表示实际波数)(float chgValue = buffActionModifyAttribute.BaseValueWaveIndex*waveIndex + buffActionModifyAttribute.StackValueWaveIndex * stackCount*waveIndex)<br/>+<br/>通过循环波次修改属性(circleWaveIndex表示实际波数-从第N波开始循环)(float chgValue = buffActionModifyAttribute.BaseValueCircleWaveIndex*circleWaveIndex + buffActionModifyAttribute.StackValueCircleWaveIndex * stackCount*circleWaveIndex)<br/>+<br/>通过循环次数修改属性(circleNum表示第N次循环,circleIndex表示第N次循环中的第几个)(float chgValue = buffActionModifyAttribute.BaseValueCircleNumIndex*circleIndex + buffActionModifyAttribute.StackValueCircleNumIndex * stackCount*circleIndex) + buffActionModifyAttribute.BaseValueCircleNum*circleNum + buffActionModifyAttribute.StackValueCircleNum * stackCount
 /// </summary>
 public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction 
 {
     public BuffActionModifyAttributeByWaveIndex(ByteBuf _buf)  : base(_buf) 
     {
         NumericType = (NumericType)_buf.ReadInt();
-        BaseValue = _buf.ReadFloat();
-        StackValue = _buf.ReadFloat();
+        BaseValueWaveIndex = _buf.ReadFloat();
+        StackValueWaveIndex = _buf.ReadFloat();
+        BaseValueCircleWaveIndex = _buf.ReadFloat();
+        StackValueCircleWaveIndex = _buf.ReadFloat();
+        BaseValueCircleNumIndex = _buf.ReadFloat();
+        StackValueCircleNumIndex = _buf.ReadFloat();
+        BaseValueCircleNum = _buf.ReadFloat();
+        StackValueCircleNum = _buf.ReadFloat();
         MaxChgValue = _buf.ReadFloat();
         PostInit();
     }
@@ -36,13 +42,37 @@ public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction
     /// </summary>
     public NumericType NumericType { get; private set; }
     /// <summary>
-    /// 初始附加
+    /// 初始附加(通过波次修改属性)
     /// </summary>
-    public float BaseValue { get; private set; }
+    public float BaseValueWaveIndex { get; private set; }
     /// <summary>
-    /// 按照层数附加
+    /// 按照层数附加(通过波次修改属性)
     /// </summary>
-    public float StackValue { get; private set; }
+    public float StackValueWaveIndex { get; private set; }
+    /// <summary>
+    /// 初始附加(通过循环波次修改属性)
+    /// </summary>
+    public float BaseValueCircleWaveIndex { get; private set; }
+    /// <summary>
+    /// 按照层数附加(通过循环波次修改属性)
+    /// </summary>
+    public float StackValueCircleWaveIndex { get; private set; }
+    /// <summary>
+    /// 初始附加(通过循环次数中的序号修改属性)
+    /// </summary>
+    public float BaseValueCircleNumIndex { get; private set; }
+    /// <summary>
+    /// 按照层数附加(通过循环次数中的序号修改属性)
+    /// </summary>
+    public float StackValueCircleNumIndex { get; private set; }
+    /// <summary>
+    /// 初始附加(通过循环次数修改属性)
+    /// </summary>
+    public float BaseValueCircleNum { get; private set; }
+    /// <summary>
+    /// 按照层数附加(通过循环次数修改属性)
+    /// </summary>
+    public float StackValueCircleNum { get; private set; }
     /// <summary>
     /// 最大允许修改值(-1表示不限制)
     /// </summary>
@@ -66,8 +96,14 @@ public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction
     {
         return "{ "
         + "NumericType:" + NumericType + ","
-        + "BaseValue:" + BaseValue + ","
-        + "StackValue:" + StackValue + ","
+        + "BaseValueWaveIndex:" + BaseValueWaveIndex + ","
+        + "StackValueWaveIndex:" + StackValueWaveIndex + ","
+        + "BaseValueCircleWaveIndex:" + BaseValueCircleWaveIndex + ","
+        + "StackValueCircleWaveIndex:" + StackValueCircleWaveIndex + ","
+        + "BaseValueCircleNumIndex:" + BaseValueCircleNumIndex + ","
+        + "StackValueCircleNumIndex:" + StackValueCircleNumIndex + ","
+        + "BaseValueCircleNum:" + BaseValueCircleNum + ","
+        + "StackValueCircleNum:" + StackValueCircleNum + ","
         + "MaxChgValue:" + MaxChgValue + ","
         + "}";
     }

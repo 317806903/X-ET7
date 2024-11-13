@@ -46,6 +46,10 @@ namespace ET.AbilityConfig
         /// 街机代币
         /// </summary>
         ArcadeCoin = 1,
+        /// <summary>
+        /// 摄像头技能
+        /// </summary>
+        CameraPlayerSkill = 0,
     }
 
 } 

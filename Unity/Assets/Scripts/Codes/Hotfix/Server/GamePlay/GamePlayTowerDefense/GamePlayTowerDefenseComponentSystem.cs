@@ -316,7 +316,7 @@ namespace ET.Server
                     {
                         string itemCfgId = item.Key;
                         int count = item.Value;
-                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        if (ET.ItemHelper.ChkIsToken(itemCfgId) == false)
                         {
                             firstClearDropItemsNew[itemCfgId] = count;
                             continue;
@@ -337,7 +337,7 @@ namespace ET.Server
                     {
                         string itemCfgId = item.Key;
                         int count = item.Value;
-                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        if (ET.ItemHelper.ChkIsToken(itemCfgId) == false)
                         {
                             repeatClearDropItemsNew[itemCfgId] = count;
                             continue;
@@ -400,7 +400,7 @@ namespace ET.Server
                     {
                         string itemCfgId = item.Key;
                         int count = item.Value;
-                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        if (ET.ItemHelper.ChkIsToken(itemCfgId) == false)
                         {
                             firstClearDropItemsNew[itemCfgId] = count;
                             continue;
@@ -422,7 +422,7 @@ namespace ET.Server
                     {
                         string itemCfgId = item.Key;
                         int count = item.Value;
-                        if (ItemHelper.ChkIsToken(itemCfgId) == false)
+                        if (ET.ItemHelper.ChkIsToken(itemCfgId) == false)
                         {
                             repeatClearDropItemsNew[itemCfgId] = count;
                             continue;

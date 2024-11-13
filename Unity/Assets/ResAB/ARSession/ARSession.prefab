@@ -1971,6 +1971,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5652346418821383225}
+    - targetCorrespondingSourceObject: {fileID: 5290188778123824426, guid: 8451b30dbbf7a5048a029960a33aaf25,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5662210108902918889}
     - targetCorrespondingSourceObject: {fileID: 6547031809551266016, guid: 8451b30dbbf7a5048a029960a33aaf25,
         type: 3}
       insertIndex: -1
@@ -2321,6 +2325,29 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3471619534780538994}
   m_Enabled: 0
+--- !u!114 &5662210108902918889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471619534780538994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee01e66702087b4798e633ca34c7956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxUpdateRate: Infinity
+  preview: 0
+  blurAlgorithmSelection: 0
+  blurConfig: {fileID: 11400000, guid: 72b55b606114073cf9d3c270a8e6dd7d, type: 2}
+  downsample: 0
+  blurRegion:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &4799638323286152531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4313481528087689227, guid: 8451b30dbbf7a5048a029960a33aaf25,

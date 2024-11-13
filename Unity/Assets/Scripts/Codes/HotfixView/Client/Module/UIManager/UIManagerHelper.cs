@@ -376,7 +376,7 @@ namespace ET.Client
         public static async ETTask SetImageByItemCfgId(this Image image, Entity entity, string itemCfgId, bool needSetNativeSize = false)
         {
             //Log.Error($"zpb SetImageByItemCfgId itemCfgId {itemCfgId}");
-            string resName = ItemHelper.GetItemIcon(itemCfgId);
+            string resName = ET.ItemHelper.GetItemIcon(itemCfgId);
             await image.SetImageByPath(entity, resName, needSetNativeSize);
         }
 
@@ -416,6 +416,10 @@ namespace ET.Client
                 return;
             }
             if (entity == null || entity.IsDisposed)
+            {
+                return;
+            }
+            if (sprite == null)
             {
                 return;
             }
@@ -487,15 +491,19 @@ namespace ET.Client
             }
         }
 
-        public static void ShowItemInfoWnd(Scene scene, string itemCfgId, Vector3 pos)
+        public static void ShowItemInfoWnd(Scene scene, string itemCfgId, Vector3 pos, bool isShowStatus, bool isLock)
         {
             if (string.IsNullOrEmpty(itemCfgId))
             {
                 return;
             }
-            if (ItemHelper.ChkIsTower(itemCfgId))
+            if (ET.ItemHelper.ChkIsTower(itemCfgId))
             {
-                _ShowTowerItemWnd(scene, itemCfgId);
+                ShowTowerDetails(scene, itemCfgId, isShowStatus, isLock);
+            }
+            else if (ET.ItemHelper.ChkIsSkill(itemCfgId))
+            {
+                ShowSkillDetails(scene, itemCfgId, isShowStatus, isLock);
             }
             else
             {
@@ -503,24 +511,22 @@ namespace ET.Client
             }
         }
 
-        public static void _ShowTowerItemWnd(Scene scene, string itemCfgId)
+        public static void ShowTowerDetails(Scene scene, string itemCfgId, bool isShowStatus, bool isLock)
         {
             if (string.IsNullOrEmpty(itemCfgId))
             {
                 return;
             }
-            if (ItemHelper.ChkIsTower(itemCfgId) == false)
+            if (ET.ItemHelper.ChkIsTower(itemCfgId) == false)
             {
                 return;
             }
 
-            UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
-            _UIComponent.ShowWindow<DlgItemDetails>();
-            DlgItemDetails _DlgItemDetails = _UIComponent.GetDlgLogic<DlgItemDetails>(true);
-            if (_DlgItemDetails != null)
-            {
-                _DlgItemDetails.SetCurItemCfgId(itemCfgId);
-            }
+            ShowData_DlgTowerDetails _ShowData_DlgTowerDetails= new ();
+            _ShowData_DlgTowerDetails.towerCfgId = itemCfgId;
+            _ShowData_DlgTowerDetails.isShowStatus = isShowStatus;
+            _ShowData_DlgTowerDetails.isLock = isLock;
+            UIManagerHelper.GetUIComponent(scene).ShowWindow<DlgTowerDetails>(_ShowData_DlgTowerDetails);
         }
 
         public static void _ShowSimpleItemWnd(Scene scene, string itemCfgId, Vector3 pos)
@@ -529,12 +535,12 @@ namespace ET.Client
             {
                 return;
             }
-            if (ItemHelper.ChkIsTower(itemCfgId))
+            if (ET.ItemHelper.ChkIsTower(itemCfgId))
             {
                 return;
             }
 
-            string itemDesc = ItemHelper.GetItemDesc(itemCfgId);
+            string itemDesc = ET.ItemHelper.GetItemDesc(itemCfgId);
             ShowDescTips(scene, itemDesc, pos, true, false).Coroutine();
         }
 
@@ -559,6 +565,20 @@ namespace ET.Client
         {
             UIComponent _UIComponent = UIManagerHelper.GetUIComponent(scene);
             _UIComponent.HideWindow<DlgDescTips>();
+        }
+
+        public static void ShowSkillDetails(Scene scene, string skillCfgId, bool isShowStatus, bool isLock)
+        {
+            if (string.IsNullOrEmpty(skillCfgId))
+            {
+                return;
+            }
+
+            ShowData_DlgSkillDetails _ShowData_DlgSkillDetails= new ();
+            _ShowData_DlgSkillDetails.skillCfgId = skillCfgId;
+            _ShowData_DlgSkillDetails.isShowStatus = isShowStatus;
+            _ShowData_DlgSkillDetails.isLock = isLock;
+            UIManagerHelper.GetUIComponent(scene).ShowWindow<DlgSkillDetails>(_ShowData_DlgSkillDetails);
         }
 
         public static async ETTask<bool> ChkPhsicalAndShowtip(Scene scene, int takePhsicalStrength)
@@ -601,7 +621,7 @@ namespace ET.Client
             {
                 if (needTip)
                 {
-                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_PhysicalStrength_GetMore", needDiamond);
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Diamond_GetMore", needDiamond);
                     UIManagerHelper.ShowConfirm(scene, msg, () =>
                     {
                         //UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgPhysicalStrength>().Coroutine();
@@ -734,9 +754,9 @@ namespace ET.Client
                     descKey = "Text_Key_FunctionMenu_OpenCondition_BattleNumAREndlessChallenge";
                     return LocalizeComponent.Instance.GetTextValue(descKey, functionMenuConditionBattleNumAREndlessChallenge.BattleNum);
                     break;
-                case FunctionMenuConditionIndexWhenARPVE functionMenuConditionIndexWhenArpve:
+                case FunctionMenuConditionIndexWhenARPVE functionMenuConditionIndexWhenARPVE:
                     descKey = "Text_Key_FunctionMenu_OpenCondition_IndexWhenARPVE";
-                    return LocalizeComponent.Instance.GetTextValue(descKey, functionMenuConditionIndexWhenArpve.Index);
+                    return LocalizeComponent.Instance.GetTextValue(descKey, functionMenuConditionIndexWhenARPVE.Index);
                     break;
                 case FunctionMenuConditionIndexWhenAREndlessChallenge functionMenuConditionIndexWhenAREndlessChallenge:
                     descKey = "Text_Key_FunctionMenu_OpenCondition_IndexWhenAREndlessChallenge";
@@ -756,7 +776,7 @@ namespace ET.Client
             int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(scene);
             bool isEnough = curArcadeCoin >= costValue;
             textTrans.ChgTMPColor(isEnough);
-            textTrans.ChgTMPText($"{costValue}");
+            textTrans.ChgTMPText($"<sprite name=ArcadeCoin>{costValue}");
         }
 
         public static async ETTask ShowTokenDiamondCostText(this Transform textTrans, Scene scene, int costValue)
@@ -764,7 +784,7 @@ namespace ET.Client
             int curDiamond = await PlayerCacheHelper.GetTokenDiamond(scene);
             bool isEnough = curDiamond >= costValue;
             textTrans.ChgTMPColor(isEnough);
-            textTrans.ChgTMPText($"{costValue}");
+            textTrans.ChgTMPText($"<sprite name=Diamond>{costValue}");
         }
 
         public static async ETTask ShowCoinCostTextInBattleTower(this Transform textTrans, Scene scene, int costValue)
@@ -775,7 +795,7 @@ namespace ET.Client
 
             bool isEnough = curGoldValue >= costValue;
             textTrans.ChgTMPColor(isEnough);
-            textTrans.ChgTMPText($"{costValue}");
+            textTrans.ChgTMPText($"<sprite name=Gold>{costValue}");
             await ETTask.CompletedTask;
         }
 
@@ -785,7 +805,7 @@ namespace ET.Client
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             bool isEnough = playerBaseInfoComponent.GetPhysicalStrength() >= costValue;
             textTrans.ChgTMPColor(isEnough);
-            textTrans.ChgTMPText($"{costValue}");
+            textTrans.ChgTMPText($"<sprite name=Energy>{costValue}");
         }
 
         public static async ETTask ShowTokenArcadeCoinCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
@@ -793,7 +813,7 @@ namespace ET.Client
             int curArcadeCoin = await PlayerCacheHelper.GetTokenArcadeCoin(scene);
             bool isEnough = curArcadeCoin >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
-            textMeshProUGUI.ChgTMPText($"{costValue}");
+            textMeshProUGUI.ChgTMPText($"<sprite name=ArcadeCoin>{costValue}");
         }
 
         public static async ETTask ShowTokenDiamondCostText(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
@@ -801,7 +821,7 @@ namespace ET.Client
             int curDiamond = await PlayerCacheHelper.GetTokenDiamond(scene);
             bool isEnough = curDiamond >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
-            textMeshProUGUI.ChgTMPText($"{costValue}");
+            textMeshProUGUI.ChgTMPText($"<sprite name=Diamond>{costValue}");
         }
 
         public static async ETTask ShowCoinCostTextInBattleTower(this TextMeshProUGUI textMeshProUGUI, Scene scene, int costValue)
@@ -812,7 +832,7 @@ namespace ET.Client
 
             bool isEnough = curGoldValue >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
-            textMeshProUGUI.ChgTMPText($"{costValue}");
+            textMeshProUGUI.ChgTMPText($"<sprite name=Gold>{costValue}");
             await ETTask.CompletedTask;
         }
 
@@ -822,7 +842,7 @@ namespace ET.Client
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(scene);
             bool isEnough = playerBaseInfoComponent.GetPhysicalStrength() >= costValue;
             textMeshProUGUI.ChgTMPColor(isEnough);
-            textMeshProUGUI.ChgTMPText($"{costValue}");
+            textMeshProUGUI.ChgTMPText($"<sprite name=Energy>{costValue}");
         }
 
         #endregion
@@ -1158,13 +1178,97 @@ namespace ET.Client
             UIRedDotHelper.HideRedDotNode(scene, uiRedDotType);
         }
 
-        public static async ETTask HideUIRedDot(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "", string skillCfgId = "")
+        public static async ETTask HideUIRedDot(Scene scene, UIRedDotType uiRedDotType, string itemCfgId = "")
         {
             if (uiRedDotType != UIRedDotType.None)
             {
                 UIRedDotHelper.HideRedDotNode(scene, uiRedDotType);
             }
-            await ET.Client.PlayerCacheHelper.SetUIRedDotType(scene, uiRedDotType, itemCfgId, skillCfgId);
+            await ET.Client.PlayerCacheHelper.SetUIRedDotType(scene, uiRedDotType, itemCfgId);
+        }
+
+        #endregion
+
+        #region Tower,Skill 解锁相关
+
+        public static async ETTask<bool> ClickItemWhenLock(Scene scene, string itemCfgId)
+        {
+            UnLockConditionBase unLockCondition;
+            if (ET.ItemHelper.ChkIsTower(itemCfgId))
+            {
+                TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
+                unLockCondition = towerCfg.UnLockCondition;
+            }
+            else if (ET.ItemHelper.ChkIsSkill(itemCfgId))
+            {
+                PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(itemCfgId);
+                unLockCondition = playerSkillCfg.UnLockCondition;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (unLockCondition is UnLockDefault)
+            {
+                bool bBuyRet = await ET.Client.ItemHelper.BuyItem(scene, itemCfgId);
+                if (bBuyRet)
+                {
+                    string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ItemUnLockSuccess");
+                    UIManagerHelper.ShowTip(scene, tipMsg);
+                    return true;
+                }
+                return false;
+            }
+            else if (unLockCondition is UnLockByPVE unLockByPve)
+            {
+                string clickTip = ET.ItemHelper.GetItemUnLockTip(itemCfgId, false);
+                UIManagerHelper.ShowTip(scene, clickTip);
+                return false;
+            }
+            else if (unLockCondition is UnLockByActivity unLockByActivity)
+            {
+                string clickTip = ET.ItemHelper.GetItemUnLockTip(itemCfgId, false);
+                UIManagerHelper.ShowTip(scene, clickTip);
+                return false;
+            }
+            else if (unLockCondition is UnLockByDiamond unLockByDiamond)
+            {
+                bool bRet = await UIManagerHelper.ChkDiamondAndShowtip(scene, unLockByDiamond.DiamondValue, false);
+                if (bRet)
+                {
+                    bool bBuyRet = await ET.Client.ItemHelper.BuyItem(scene, itemCfgId);
+                    if (bBuyRet)
+                    {
+                        string tipMsg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_ItemUnLockSuccess");
+                        UIManagerHelper.ShowTip(scene, tipMsg);
+                        return true;
+                    }
+                }
+                else
+                {
+                    string clickTip = ET.ItemHelper.GetItemUnLockTip(itemCfgId, false);
+                    UIManagerHelper.ShowTip(scene, clickTip);
+                }
+                return false;
+            }
+            else if (unLockCondition is UnLockByPay unLockByPay)
+            {
+                string clickTip = ET.ItemHelper.GetItemUnLockTip(itemCfgId, false);
+                UIManagerHelper.ShowTip(scene, clickTip);
+                return false;
+            }
+            else if (unLockCondition is UnLockSoon unLockSoon)
+            {
+                string clickTip = ET.ItemHelper.GetItemUnLockTip(itemCfgId, false);
+                UIManagerHelper.ShowTip(scene, clickTip);
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         #endregion

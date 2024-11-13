@@ -18,7 +18,7 @@ extern "C" {
  
     const void _startSDK(bool shouldCallback, const char* objectName) {
         [[AppsFlyerLib shared] setPluginInfoWith: AFSDKPluginUnity
-                                pluginVersion:@"6.13.10"
+                                pluginVersion:@"6.15.3"
                                 additionalParams:nil];
         startRequestObjectName = stringFromChar(objectName);
         AppsFlyeriOSWarpper.didCallStart = YES;
@@ -95,6 +95,13 @@ extern "C" {
             consentData = [[AppsFlyerConsent alloc] initNonGDPRUser];
         }
        [[AppsFlyerLib shared] setConsentData:consentData];
+    }
+
+    const void _logAdRevenue(const char* monetizationNetwork, int mediationNetworkInt, const char* currencyIso4217Code, double eventRevenue, const char* additionalParameters) {
+        AppsFlyerAdRevenueMediationNetworkType mediationNetwork = mediationNetworkTypeFromInt(mediationNetworkInt);
+        NSNumber *number = [NSNumber numberWithDouble:eventRevenue];
+        AFAdRevenueData *adRevenue = [[AFAdRevenueData alloc] initWithMonetizationNetwork:stringFromChar(monetizationNetwork) mediationNetwork:mediationNetwork currencyIso4217Code:stringFromChar(currencyIso4217Code) eventRevenue:number];
+        [[AppsFlyerLib shared] logAdRevenue: adRevenue additionalParameters:dictionaryFromJson(additionalParameters)];
     }
 
     const void _setDisableCollectIAd (bool disableCollectASA) {
@@ -239,7 +246,7 @@ extern "C" {
         }
     }
     
-    const void _validateAndSendInAppPurchase (const char* productIdentifier, const char* price, const char* currency, const char* tranactionId, const char* additionalParameters, const char* objectName) {
+    const void _validateAndSendInAppPurchase (const char* productIdentifier, const char* price, const char* currency, const char* transactionId, const char* additionalParameters, const char* objectName) {
 
         validateObjectName = stringFromChar(objectName);
 
@@ -247,7 +254,7 @@ extern "C" {
          validateAndLogInAppPurchase:stringFromChar(productIdentifier)
          price:stringFromChar(price)
          currency:stringFromChar(currency)
-         transactionId:stringFromChar(tranactionId)
+         transactionId:stringFromChar(transactionId)
          additionalParameters:dictionaryFromJson(additionalParameters)
          success:^(NSDictionary *result){
                  unityCallBack(validateObjectName, VALIDATE_CALLBACK, stringFromdictionary(result));
@@ -259,6 +266,26 @@ extern "C" {
                  unityCallBack(validateObjectName, VALIDATE_ERROR_CALLBACK, error ? [[error localizedDescription] UTF8String] : "error");
              }
          }];
+    }
+
+    const void _validateAndSendInAppPurchaseV2 (const char* product, const char* price, const char* currency, const char* transactionId, const char* extraEventValues, const char* objectName) {
+
+        validateAndLogObjectName = stringFromChar(objectName);
+        AFSDKPurchaseDetails *details = [[AFSDKPurchaseDetails alloc] initWithProductId:stringFromChar(product) price:stringFromChar(price) currency:stringFromChar(currency) transactionId:stringFromChar(transactionId)];
+
+        [[AppsFlyerLib shared]
+         validateAndLogInAppPurchase:details
+         extraEventValues:dictionaryFromJson(extraEventValues)
+         completionHandler:^(AFSDKValidateAndLogResult * _Nullable result) {
+            if (result.status == AFSDKValidateAndLogStatusSuccess) {
+                unityCallBack(validateAndLogObjectName, VALIDATE_AND_LOG_V2_CALLBACK, stringFromdictionary(result.result));
+            } else if (result.status == AFSDKValidateAndLogStatusFailure) {
+                 unityCallBack(validateAndLogObjectName, VALIDATE_AND_LOG_V2_CALLBACK, stringFromdictionary(result.errorData));
+            } else {
+                unityCallBack(validateAndLogObjectName, VALIDATE_AND_LOG_V2_ERROR_CALLBACK, stringFromdictionary(dictionaryFromNSError(result.error)));
+            }
+        }];
+         
     }
     
     const void _getConversionData(const char* objectName) {

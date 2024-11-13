@@ -24,11 +24,27 @@ namespace ET.AbilityConfig
 		[BsonIgnore]
 		public Dictionary<string, (string, int)> towerCfgId2BaseTowerCfgIdAndCount = new();
 
+		[ProtoIgnore]
+		[BsonIgnore]
+		public List<string> towerCfgListInBattleDeck = new();
+
+		[ProtoIgnore]
+		[BsonIgnore]
+		public List<string> towerCfgListInBattleDeckWhenUnLockDefault = new();
+
 		partial void PostResolve()
 		{
 			foreach (var towerCfg in this.DataList)
 			{
 				string curTowerId = towerCfg.Id;
+				if (towerCfg.IsShowInBattleDeckUI)
+				{
+					this.towerCfgListInBattleDeck.Add(curTowerId);
+					if (towerCfg.UnLockCondition is UnLockDefault)
+					{
+						this.towerCfgListInBattleDeckWhenUnLockDefault.Add(curTowerId);
+					}
+				}
 				string nextTowerId = towerCfg.NextTowerId;
 				if (string.IsNullOrEmpty(nextTowerId))
 				{
@@ -60,6 +76,16 @@ namespace ET.AbilityConfig
 					}
 				}
 			}
+		}
+
+		public List<string> GetTowerCfgListInBattleDeck()
+		{
+			return this.towerCfgListInBattleDeck;
+		}
+
+		public List<string> GetTowerCfgListInBattleDeckWhenUnLockDefault()
+		{
+			return this.towerCfgListInBattleDeckWhenUnLockDefault;
 		}
 
 		public int GetTowerMaxLevel(string towerCfgId)

@@ -125,9 +125,16 @@ namespace IngameDebugConsole
 
 			QueuedDebugLogEntry queuedLogEntry = new QueuedDebugLogEntry( logString, stackTrace, logType );
 
-			lock( logEntriesLock )
+			if (logEntriesLock != null)
 			{
-				queuedLogEntries.Add( queuedLogEntry );
+				lock( logEntriesLock )
+				{
+					queuedLogEntries.Add( queuedLogEntry );
+				}
+			}
+			else
+			{
+					queuedLogEntries.Add( queuedLogEntry );
 			}
 		}
 	}

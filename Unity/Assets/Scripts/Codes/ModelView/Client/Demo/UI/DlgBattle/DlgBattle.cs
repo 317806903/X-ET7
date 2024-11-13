@@ -12,8 +12,8 @@ namespace ET.Client
 
 		public Dictionary<int, Scroll_Item_SkillBattleInfo> ScrollItemSkills;
 
-		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
-		public Dictionary<int, Scroll_Item_Tower> ScrollItemMonsters;
+		public Dictionary<int, Scroll_Item_TowerBattle> ScrollItemTowers;
+		public Dictionary<int, Scroll_Item_TowerBattle> ScrollItemMonsters;
 
 		public List<string> matchMonsterList = new();
 		public List<string> matchTowerList = new();
@@ -97,10 +97,6 @@ namespace ET.Client
 			"Tow24_1",
 			"Tow24_2",
 			"Tow24_3",
-			"TowCallMonster_1",
-			"TowCallMonster_2",
-			"TowCallMonster_3",
-			"TowCallMonster_4",
 		};
 
 		public List<string> monsterList = new ()
@@ -135,16 +131,27 @@ namespace ET.Client
 			"Monster_WuGui1",
 			"Monster_WuGui2",
 			"Monster_WuGui3",
+			"Monster_Skull1",
+			"Monster_Skull2",
+			"Monster_Skull3",
+			"Monster_Spirit1",
+			"Monster_Spirit2",
+			"Monster_Spirit3",
+			"Monster_FireSpirit1",
+			"Monster_FireSpirit2",
+			"Monster_FireSpirit3",
+			"Monster_StoneGolem1",
+			"Monster_StoneGolem2",
+			"Monster_StoneGolem3",
+			"Monster_Scorpid1",
+			"Monster_Scorpid2",
+			"Monster_Scorpid3",
+			"Monster_Imp1",
+			"Monster_Imp2",
+			"Monster_Imp3",
+			"Monster_Tombstone",
 			"Monster_Season2_Challenge1_1_2",
-			"Monster_Infinite_4_1",
-			"Monster_Infinite_13_1",
-			"Monster_Challenge3_5_1",
-			"Monster_Infinite_8_2",
 			"Tow1_1",
-			"TowCallMonster_1",
-			"TowCallMonster_2",
-			"TowCallMonster_3",
-			"TowCallMonster_4",
 		};
 
 		public long Timer;

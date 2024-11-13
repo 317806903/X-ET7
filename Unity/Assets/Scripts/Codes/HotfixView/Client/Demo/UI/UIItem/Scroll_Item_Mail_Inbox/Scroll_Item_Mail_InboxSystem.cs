@@ -2,30 +2,25 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using ET.AbilityConfig;
-using Dm.Api.Proto.Services.ArSession;
 
 namespace ET.Client
 {
-    /*
-        * WJTODO
-        * 若重新生成此类，需在Scroll_Item_Mail_Inbox类中添加如下数据
-            public Dictionary<int, Scroll_Item_TowerBuy> ScrollGiftDic = new Dictionary<int, Scroll_Item_TowerBuy>();
-            public MailInfoComponent mailInfoComponent = new MailInfoComponent();
-            public MailStatus mailStatus;
-            public List<KeyValuePair<string, int>> kvpItemCfgNumList = new List<KeyValuePair<string, int>>();
-
-           在Item中Destroy中加上下面数据
-            this.ScrollGiftDic = null;
-            this.mailInfoComponent = null;
-            this.mailStatus = 0;
-            this.kvpItemCfgNumList = null;
-   */
-
     [FriendOf(typeof(Scroll_Item_Mail_Inbox))]
 	public static class Scroll_Item_Mail_InboxSystem
 	{
+        public static void RegisterUIEvent(this Scroll_Item_Mail_Inbox self)
+        {
+
+        }
+
+        public static void HideItem(this Scroll_Item_Mail_Inbox self)
+        {
+            self.ScrollGiftDic = null;
+            self.mailInfoComponent = null;
+            self.mailStatus = 0;
+            self.kvpItemCfgNumList = null;
+        }
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -44,7 +39,7 @@ namespace ET.Client
 
 
             //礼物列表
-            self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.ELoopScrollListGiftLoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.ELoopScrollListGiftLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddGiftListener(transform, i));
@@ -142,13 +137,13 @@ namespace ET.Client
         /// <param name="index"></param>
         public static async ETTask AddGiftListener(this Scroll_Item_Mail_Inbox self, Transform transform, int index)
         {
-            transform.name = $"Item_TowerBuy{index}";
-            Scroll_Item_TowerBuy scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
+            transform.name = $"Item_ItemShow{index}";
+            Scroll_Item_ItemShow scrollItemGift = self.ScrollGiftDic[index].BindTrans(transform);
 
             string itemcfg = self.kvpItemCfgNumList[index].Key;
             int itemNum = self.kvpItemCfgNumList[index].Value;
 
-            await scrollItemGift.ShowBagItem(itemcfg, true, itemNum);
+            await scrollItemGift.Init(itemcfg, true, itemNum);
             await ETTask.CompletedTask;
 
         }

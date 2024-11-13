@@ -16,7 +16,6 @@ namespace ET.Server
 
             UIRedDotType uiRedDotType = (UIRedDotType)request.UIRedDotType;
             string itemCfgId = request.ItemCfgId;
-            string skillCfgId = request.SkillCfgId;
             if (uiRedDotType == UIRedDotType.None)
             {
                 if (string.IsNullOrEmpty(itemCfgId) == false)
@@ -28,17 +27,6 @@ namespace ET.Server
                     await PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.BackPack, new() { "newItemList" }, playerModelChgType);
 
                     await PlayerCacheHelper.DealPlayerUIRedDotType(scene, playerId, PlayerModelType.BackPack);
-                }
-
-                if (string.IsNullOrEmpty(skillCfgId) == false)
-                {
-                    PlayerSkillComponent playerSkillComponent = await PlayerCacheHelper.GetPlayerSkillByPlayerId(scene, playerId);
-                    playerSkillComponent.RemoveNewSkillRecord(skillCfgId);
-
-                    PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerSkill_NewSkillList;
-                    await PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.Skills, new() { "newSkillList" }, playerModelChgType);
-
-                    await PlayerCacheHelper.DealPlayerUIRedDotType(scene, playerId, PlayerModelType.Skills);
                 }
             }
             else

@@ -381,10 +381,10 @@ namespace ET.Ability
             return buffComponent.GetBuffListByTagGroupType(buffTagGroupType);
         }
 
-        public static void EventHandler(Unit unit, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(Unit unit, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
             BuffComponent buffComponent = _GetBuffComponent(unit);
-            buffComponent?.EventHandler(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit);
+            buffComponent?.EventHandler(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit, ref actionContext);
         }
 
         public static bool ChkCanMoveInput(Unit unit)
@@ -435,6 +435,16 @@ namespace ET.Ability
                 return true;
             }
             return buffComponent.ChkCanBeFind(seeUnit);
+        }
+
+        public static bool ChkCannotBeTargeted(Unit beFindUnit)
+        {
+            BuffComponent buffComponent = _GetBuffComponent(beFindUnit);
+            if (buffComponent == null)
+            {
+                return false;
+            }
+            return buffComponent.ChkCannotBeTargeted();
         }
 
         public static bool ChkCanBuffTick(Unit unit)

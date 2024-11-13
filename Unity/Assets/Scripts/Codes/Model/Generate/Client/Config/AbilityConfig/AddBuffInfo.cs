@@ -20,6 +20,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     public AddBuffInfo(ByteBuf _buf) 
     {
         Duration = _buf.ReadFloat();
+        IsRemoveWhenCasterActorUnitNotExist = _buf.ReadBool();
         AddStack = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BuffActions = new System.Collections.Generic.List<BuffAction>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { BuffAction _e0;  _e0 = BuffAction.DeserializeBuffAction(_buf); BuffActions.Add(_e0);}}
         BuffId = _buf.ReadString();
@@ -35,6 +36,10 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     /// 持续时间(s)
     /// </summary>
     public float Duration { get; private set; }
+    /// <summary>
+    /// 发起者不存在时是否移除
+    /// </summary>
+    public bool IsRemoveWhenCasterActorUnitNotExist { get; private set; }
     /// <summary>
     /// 新增的层数
     /// </summary>
@@ -68,6 +73,7 @@ public sealed partial class AddBuffInfo: Bright.Config.BeanBase
     {
         return "{ "
         + "Duration:" + Duration + ","
+        + "IsRemoveWhenCasterActorUnitNotExist:" + IsRemoveWhenCasterActorUnitNotExist + ","
         + "AddStack:" + AddStack + ","
         + "BuffActions:" + Bright.Common.StringUtil.CollectionToString(BuffActions) + ","
         + "BuffId:" + BuffId + ","

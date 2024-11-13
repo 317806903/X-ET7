@@ -18,7 +18,7 @@ namespace ET.Client
             self.View.E_StartButton.AddListenerAsync(self.ClickStart);
             self.View.E_BGButton.AddListenerAsync(self.ClickBg);
 
-            self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.View.ELoopScrollList_ItemLoopHorizontalScrollRect.prefabSource.poolSize = 5;
         }
 
@@ -85,13 +85,12 @@ namespace ET.Client
 
         public static async ETTask OnAddItemRefreshHandler(this DlgQuestionnaire self, Transform transform, int index )
         {
-            Scroll_Item_TowerBuy gifts = self.Scroll_Item_GiftsDict[index].BindTrans(transform);
+            Scroll_Item_ItemShow gifts = self.Scroll_Item_GiftsDict[index].BindTrans(transform);
 
             List<KeyValuePair<string, int>> list = self.questionnaireCfg.RewardItemListShow.ToList();
             string ItemcfgId = list[index].Key;
             int count = list[index].Value;
-            await gifts.ShowBagItem(ItemcfgId, true, count);
-
+            await gifts.Init(ItemcfgId, true, count);
         }
 
         public static async ETTask ShowAwardItems(this DlgQuestionnaire self)

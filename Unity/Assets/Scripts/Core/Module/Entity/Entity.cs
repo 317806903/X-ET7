@@ -371,14 +371,14 @@ namespace ET
         private List<Entity> childrenDB;
 
         [BsonIgnore]
-        private SortedDictionary<long, Entity> children;
+        private Dictionary<long, Entity> children;
 
         [BsonIgnore]
-        public SortedDictionary<long, Entity> Children
+        public Dictionary<long, Entity> Children
         {
             get
             {
-                return this.children ??= ObjectPool.Instance.Fetch<SortedDictionary<long, Entity>>();
+                return this.children ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>();
             }
         }
 
@@ -408,14 +408,14 @@ namespace ET
         protected List<Entity> componentsDB;
 
         [BsonIgnore]
-        private SortedDictionary<long, Entity> components;
+        private Dictionary<long, Entity> components;
 
         [BsonIgnore]
-        public SortedDictionary<long, Entity> Components
+        public Dictionary<long, Entity> Components
         {
             get
             {
-                return this.components ??= ObjectPool.Instance.Fetch<SortedDictionary<long, Entity>>();
+                return this.components ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>();
             }
         }
 

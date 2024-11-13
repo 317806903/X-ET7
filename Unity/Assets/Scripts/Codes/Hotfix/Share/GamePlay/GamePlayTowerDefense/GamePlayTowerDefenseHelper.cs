@@ -37,7 +37,7 @@ namespace ET
             return monsterCallUnit;
         }
 
-        public static Unit CreateMonster(Scene scene, long playerId, string monsterCfgId, int level, float3 pos, float3 forward, TeamFlagType teamFlagType, int rewardGold, int waveIndex, int circleWaveIndex)
+        public static Unit CreateMonster(Scene scene, long playerId, string monsterCfgId, int level, float3 pos, float3 forward, TeamFlagType teamFlagType, int rewardGold, int waveIndex, int circleWaveIndex, int circleNum, int circleIndex)
         {
             TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
             Unit monsterUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, monsterCfg.UnitId, level, pos, forward, monsterCfg.AiCfgId);
@@ -47,6 +47,8 @@ namespace ET
             monsterComponent.rewardGold = rewardGold;
             monsterComponent.waveIndex = waveIndex;
             monsterComponent.circleWaveIndex = circleWaveIndex;
+            monsterComponent.circleNum = circleNum;
+            monsterComponent.circleIndex = circleIndex;
 
             GamePlayHelper.AddUnitPathfinding(monsterUnit);
             GamePlayHelper.AddUnitTeamFlag(monsterUnit, teamFlagType);

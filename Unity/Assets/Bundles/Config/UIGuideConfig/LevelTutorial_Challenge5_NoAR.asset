@@ -59,7 +59,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy_0/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/EG_BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBattleBuy_0/ES_CommonItem/EButton_SelectWhenCommon
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_Challenge5_Buy1
@@ -99,7 +99,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower_0/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_TowerBattle_0/ES_CommonItem/EButton_SelectWhenCommon
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_Challenge5_Drag

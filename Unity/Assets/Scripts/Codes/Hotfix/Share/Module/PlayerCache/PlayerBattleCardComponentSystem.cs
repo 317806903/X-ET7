@@ -46,16 +46,22 @@ namespace ET
             return self.itemCfgIdList;
         }
 
+        public static HashSet<string> GetBattleCardItemCfgIdHashSet(this PlayerBattleCardComponent self)
+        {
+            HashSetComponent<string> itemCfgIdHashSet = HashSetComponent<string>.Create();
+            foreach (string itemCfgId in self.itemCfgIdList)
+            {
+                itemCfgIdHashSet.Add(itemCfgId);
+            }
+            return itemCfgIdHashSet;
+        }
+
         public static bool SetBattleCardItemCfgIdList(this PlayerBattleCardComponent self, List<ItemComponent> itemList)
         {
             bool isNeedChg = false;
             if (self.itemCfgIdList.Count < GlobalSettingCfgCategory.Instance.MaxBattleCardNum)
             {
-                using HashSetComponent<string> itemCfgIdHashSet = HashSetComponent<string>.Create();
-                foreach (string itemCfgId in self.itemCfgIdList)
-                {
-                    itemCfgIdHashSet.Add(itemCfgId);
-                }
+                HashSet<string> itemCfgIdHashSet = self.GetBattleCardItemCfgIdHashSet();
                 foreach (ItemComponent itemComponent in itemList)
                 {
                     if (ET.ItemHelper.ChkIsTower(itemComponent.CfgId) == false)

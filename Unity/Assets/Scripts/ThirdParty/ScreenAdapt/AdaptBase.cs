@@ -14,12 +14,40 @@ namespace ScreenAdapt
         [SerializeField]
         protected T PortraitConfig;
 
-        private bool currentIsLandscape = false;
+        [SerializeField]
+        protected T LandscapeConfigPad;
+
+        [SerializeField]
+        protected T PortraitConfigPad;
+
+        public bool currentIsLandscape = false;
+        public bool currentIsPad = false;
         protected T CurrentConfig
         {
             get
             {
-                return IsLandscape()? LandscapeConfig : PortraitConfig;
+                if (IsLandscape())
+                {
+                    if (IsPad())
+                    {
+                        return this.LandscapeConfigPad;
+                    }
+                    else
+                    {
+                        return this.LandscapeConfig;
+                    }
+                }
+                else
+                {
+                    if (IsPad())
+                    {
+                        return this.PortraitConfigPad;
+                    }
+                    else
+                    {
+                        return this.PortraitConfig;
+                    }
+                }
             }
         }
 
@@ -59,18 +87,40 @@ namespace ScreenAdapt
         {
             base.Awake();
             currentIsLandscape = IsLandscape();
+            currentIsPad = IsPad();
             LoadConfig();
             //AdaptManager.Instance.Register(this);
         }
 
+        void OnEnable()
+        {
+            if (GetComponent<T1>() == null)
+            {
+                Debug.LogError($"{typeof(T1)} component is required for this script to function properly.");
+                // 这里可以添加更多的错误处理逻辑，比如禁用脚本等
+                this.enabled = false; // 禁用脚本以防止进一步的错误
+            }
+        }
+
         private void Update()
         {
-            bool newState = IsLandscape();
-            if (newState != currentIsLandscape)
+#if UNITY_EDITOR
+            bool isLandscapeNew = IsLandscape();
+            bool isPadNew = IsPad();
+            if (isLandscapeNew != currentIsLandscape || isPadNew != this.currentIsPad)
             {
-                currentIsLandscape = newState;
+                currentIsLandscape = isLandscapeNew;
+                currentIsPad = isPadNew;
                 LoadConfig();
             }
+#else
+            bool isLandscapeNew = IsLandscape();;
+            if (isLandscapeNew != currentIsLandscape)
+            {
+                currentIsLandscape = isLandscapeNew;
+                LoadConfig();
+            }
+#endif
         }
 
         protected override void OnDestroy()
@@ -85,7 +135,7 @@ namespace ScreenAdapt
         }
 
 #if UNITY_EDITOR
-        public static bool IsLandscape()
+        public static (float height, float width) GetSceneSize()
         {
             var mouseOverWindow = UnityEditor.EditorWindow.mouseOverWindow;
             System.Reflection.Assembly assembly = typeof(UnityEditor.EditorWindow).Assembly;
@@ -96,14 +146,30 @@ namespace ScreenAdapt
                 System.Reflection.BindingFlags.NonPublic |
                 System.Reflection.BindingFlags.Static
             ).Invoke(mouseOverWindow, null);
-            return size.y < size.x;
+            return (size.y, size.x);
         }
 #else
-        public static bool IsLandscape()
+        public static (float height, float width) GetSceneSize()
         {
-            return Screen.height < Screen.width;
+            return (Screen.height, Screen.width);
         }
 #endif
+        public static bool IsLandscape()
+        {
+            (float height, float width) = GetSceneSize();
+            return height < width;
+        }
+
+        public static bool IsPad()
+        {
+            (float height, float width) = GetSceneSize();
+            if (height > width)
+            {
+                (height, width) = (width, height);
+            }
+            return width / height < 1.778f;
+        }
+
         public virtual void OnChange()
         {
             LoadConfig();
@@ -142,6 +208,26 @@ namespace ScreenAdapt
             this._LoadConfig(PortraitConfig);
         }
 
+        public void LoadLandscapeConfigPad()
+        {
+            if (null == LandscapeConfigPad)
+            {
+                return;
+            }
+
+            this._LoadConfig(LandscapeConfigPad);
+        }
+
+        public void LoadPortraitConfigPad()
+        {
+            if (null == PortraitConfigPad)
+            {
+                return;
+            }
+
+            this._LoadConfig(PortraitConfigPad);
+        }
+
         public override void LoadConfig()
         {
             if (this.mComponent == null)
@@ -150,11 +236,25 @@ namespace ScreenAdapt
             }
             if (IsLandscape())
             {
-                this.LoadLandscapeConfig();
+                if (IsPad())
+                {
+                    this.LoadLandscapeConfigPad();
+                }
+                else
+                {
+                    this.LoadLandscapeConfig();
+                }
             }
             else
             {
-                this.LoadPortraitConfig();
+                if (IsPad())
+                {
+                    this.LoadPortraitConfigPad();
+                }
+                else
+                {
+                    this.LoadPortraitConfig();
+                }
             }
         }
 
@@ -166,11 +266,25 @@ namespace ScreenAdapt
             }
             if (IsLandscape())
             {
-                this.SaveLandscapeConfig();
+                if (IsPad())
+                {
+                    this.SaveLandscapeConfigPad();
+                }
+                else
+                {
+                    this.SaveLandscapeConfig();
+                }
             }
             else
             {
-                this.SavePortraitConfig();
+                if (IsPad())
+                {
+                    this.SavePortraitConfigPad();
+                }
+                else
+                {
+                    this.SavePortraitConfig();
+                }
             }
         }
 
@@ -192,6 +306,26 @@ namespace ScreenAdapt
             }
 
             this._SaveConfig(PortraitConfig);
+        }
+
+        public void SaveLandscapeConfigPad()
+        {
+            if (null == LandscapeConfigPad)
+            {
+                LandscapeConfigPad = new T();
+            }
+
+            this._SaveConfig(LandscapeConfigPad);
+        }
+
+        public void SavePortraitConfigPad()
+        {
+            if (null == PortraitConfigPad)
+            {
+                PortraitConfigPad = new T();
+            }
+
+            this._SaveConfig(PortraitConfigPad);
         }
 
         protected virtual void _LoadConfig(T config)

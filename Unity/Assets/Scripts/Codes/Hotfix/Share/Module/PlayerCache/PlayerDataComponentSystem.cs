@@ -28,6 +28,8 @@ namespace ET
                     return self.GetComponent<PlayerBackPackComponent>();
                 case PlayerModelType.BattleCard:
                     return self.GetComponent<PlayerBattleCardComponent>();
+                case PlayerModelType.BattleSkill:
+                    return self.GetComponent<PlayerBattleSkillComponent>();
                 case PlayerModelType.OtherInfo:
                     return self.GetComponent<PlayerOtherInfoComponent>();
                 case PlayerModelType.SeasonInfo:
@@ -36,8 +38,6 @@ namespace ET
                     return self.GetComponent<PlayerFunctionMenuComponent>();
                 case PlayerModelType.Mails:
                     return self.GetComponent<PlayerMailComponent>();
-                case PlayerModelType.Skills:
-                    return self.GetComponent<PlayerSkillComponent>();
                 default:
                     break;
             }
@@ -61,6 +61,9 @@ namespace ET
                     case PlayerModelType.BattleCard:
                         self.RemoveComponent<PlayerBattleCardComponent>();
                         break;
+                    case PlayerModelType.BattleSkill:
+                        self.RemoveComponent<PlayerBattleSkillComponent>();
+                        break;
                     case PlayerModelType.OtherInfo:
                         self.RemoveComponent<PlayerOtherInfoComponent>();
                         break;
@@ -72,9 +75,6 @@ namespace ET
                         break;
                     case PlayerModelType.Mails:
                         self.RemoveComponent<PlayerMailComponent>();
-                        break;
-                    case PlayerModelType.Skills:
-                        self.RemoveComponent<PlayerSkillComponent>();
                         break;
                     default:
                         break;
@@ -105,6 +105,11 @@ namespace ET
                         self.ChgFieldValue<PlayerBattleCardComponent>(battleCardComponent, (PlayerBattleCardComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return battleCardComponent;
+                    case PlayerModelType.BattleSkill:
+                        PlayerBattleSkillComponent battleSkillComponent = self.GetComponent<PlayerBattleSkillComponent>();
+                        self.ChgFieldValue<PlayerBattleSkillComponent>(battleSkillComponent, (PlayerBattleSkillComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
+                        entity.Dispose();
+                        return battleSkillComponent;
                     case PlayerModelType.OtherInfo:
                         PlayerOtherInfoComponent playerOtherInfoComponent = self.GetComponent<PlayerOtherInfoComponent>();
                         self.ChgFieldValue<PlayerOtherInfoComponent>(playerOtherInfoComponent, (PlayerOtherInfoComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
@@ -125,11 +130,6 @@ namespace ET
                         self.ChgFieldValue<PlayerMailComponent>(playerMailComponent, (PlayerMailComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
                         entity.Dispose();
                         return playerMailComponent;
-                    case PlayerModelType.Skills:
-                        PlayerSkillComponent playerSkillComponent = self.GetComponent<PlayerSkillComponent>();
-                        self.ChgFieldValue<PlayerSkillComponent>(playerSkillComponent, (PlayerSkillComponent)entity, setPlayerKeys, playerModelType, playerModelChgType);
-                        entity.Dispose();
-                        return playerSkillComponent;
                     default:
                         entity.Dispose();
                         break;

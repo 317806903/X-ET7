@@ -17,7 +17,6 @@ namespace ET.Client
             self.View.E_RoomMemberStatusButton.AddListenerAsync(self.ChgRoomMemberStatus);
             self.View.EButton_ChooseBattleCfgButton.AddListenerAsync(self.OnChooseBattleCfg);
             self.View.EButton_ChgBattleDeckButton.AddListenerAsync(self.OnChgBattleDeck);
-            self.View.EButton_ChgBattleSkillButton.AddListenerAsync(self.OnChgBattleSkill);
             self.View.E_RoomMemberChgTeamButton.AddListenerAsync(self.OnChgTeam);
 
             self.View.ELoopScrollList_MemberLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
@@ -142,13 +141,12 @@ namespace ET.Client
 
             if (myPlayerId == roomComponent.ownerRoomMemberId)
             {
-                costValue = -99;
+                costValue = ET.GamePlayHelper.GetPhysicalCost(roomComponent.roomTypeInfo);
             }
             else
             {
                 costValue = 0;
             }
-
             self.View.ELabel_TakePhysicalStrengthNumTextMeshProUGUI.ShowPhysicalCostText(self.DomainScene(), costValue).Coroutine();
         }
 
@@ -158,13 +156,11 @@ namespace ET.Client
             {
                 self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(true);
                 self.View.EG_ChgBattleDeckRectTransform.gameObject.SetActive(true);
-                self.View.EG_ChgBattleSkillRectTransform.gameObject.SetActive(true);
             }
             else
             {
                 self.View.EG_ChooseBattleCfgRectTransform.gameObject.SetActive(false);
                 self.View.EG_ChgBattleDeckRectTransform.gameObject.SetActive(false);
-                self.View.EG_ChgBattleSkillRectTransform.gameObject.SetActive(false);
             }
 
             RoomComponent roomComponent = self.GetRoomComponent();
@@ -219,6 +215,8 @@ namespace ET.Client
             {
                 return;
             }
+
+            self.UpdatePhysical().Coroutine();
 
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
@@ -405,13 +403,6 @@ namespace ET.Client
             UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
 
             await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleDeck>();
-        }
-
-        public static async ETTask OnChgBattleSkill(this DlgRoom self)
-        {
-            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
-
-            await UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgCameraPlayerSkill>();
         }
 
         public static async ETTask OnChgTeam(this DlgRoom self)

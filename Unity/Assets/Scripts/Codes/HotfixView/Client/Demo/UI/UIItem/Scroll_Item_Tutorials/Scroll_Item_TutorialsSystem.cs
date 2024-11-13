@@ -10,16 +10,26 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_Tutorials))]
 	public static class Scroll_Item_TutorialsSystem
 	{
+		public static void RegisterUIEvent(this Scroll_Item_Tutorials self)
+		{
+
+		}
+
+		public static void HideItem(this Scroll_Item_Tutorials self)
+		{
+
+		}
+
 		public static void Init(this Scroll_Item_Tutorials self, int index, Action<int> callBack)
 		{
             self.EButton_VideoSelectButton.AddListener(() =>
-            {              
+            {
                     callBack?.Invoke(index);
             });
             self.SetItemStatus(false);
         }
 
-     
+
 
         /// <summary>
         /// 设置按钮的选中状态

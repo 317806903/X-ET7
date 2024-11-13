@@ -10,8 +10,8 @@ namespace ET.Client
 	{
 		public DlgBattleTowerViewComponent View { get => this.GetComponent<DlgBattleTowerViewComponent>();}
 
-		public Dictionary<int, Scroll_Item_Tower> ScrollItemTowers;
-		public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemTowerBuy;
+		public Dictionary<int, Scroll_Item_TowerBattle> ScrollItemTowers;
+		public Dictionary<int, Scroll_Item_TowerBattleBuy> ScrollItemTowerBuy;
 
 		public bool needResetMyOwnTowList;
 		public List<string> myOwnTowerList = new();

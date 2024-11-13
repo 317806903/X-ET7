@@ -9,7 +9,7 @@ namespace ET.Client
         //自定义数据字段
         public bool isAR;
         public Dictionary<int, Scroll_Item_ChallengeList> ScrollItemChallengeList;
-        public Dictionary<int, Scroll_Item_TowerBuy> ScrollItemReward;
+        public Dictionary<int, Scroll_Item_ItemShow> ScrollItemReward;
         public Dictionary<int, Scroll_Item_Monsters> ScrollItemMonster;
         public int seasonCfgId;
         public int selectIndex;

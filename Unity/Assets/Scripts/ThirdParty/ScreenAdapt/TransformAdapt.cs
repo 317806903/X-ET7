@@ -3,14 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScreenAdapt
 {
     [Serializable]
     public class TransformAdaptConfig
     {
+        public bool isSaved;
         public bool updateApply;
-        public bool isActive;
+        public bool isGoActive;
         public Vector3 localPosition;
         public Vector3 localEulerAngles;
         public Vector3 localScale;
@@ -38,7 +40,11 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
-            gameObject.SetActive(config.isActive);
+            if (config.isSaved == false)
+            {
+                return;
+            }
+            gameObject.SetActive(config.isGoActive);
             mComponent.localPosition = config.localPosition;
             mComponent.localEulerAngles = config.localEulerAngles;
             mComponent.localScale = config.localScale;
@@ -52,7 +58,8 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
-            config.isActive = gameObject.activeSelf;
+            config.isSaved = true;
+            config.isGoActive = gameObject.activeSelf;
             config.localPosition = mComponent.localPosition;
             config.localEulerAngles = mComponent.localEulerAngles;
             config.localScale = mComponent.localScale;

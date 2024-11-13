@@ -21,7 +21,7 @@
 
 		public void OnShowWindow(UIBaseWindow uiBaseWindow, ShowWindowData contextData = null)
 		{
-			uiBaseWindow.GetComponent<DlgBattleDragItem>().ShowWindow(contextData).Coroutine();
+			uiBaseWindow.GetComponent<DlgBattleDragItem>().ShowWindow(contextData);
 		}
 
 		public void OnHideWindow(UIBaseWindow uiBaseWindow)

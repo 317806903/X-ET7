@@ -23,7 +23,7 @@ namespace ET.Client
             self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMemberItemRefreshListener(transform, i, true).Coroutine();
-                self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_Member_LeftLoopHorizontalScrollRect.SetSrcollMiddle();
             });
 
             self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.prefabSource.prefabName = "Item_RoomMember";
@@ -31,7 +31,7 @@ namespace ET.Client
             self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMemberItemRefreshListener(transform, i, false).Coroutine();
-                self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_Member_RightLoopHorizontalScrollRect.SetSrcollMiddle();
             });
         }
 

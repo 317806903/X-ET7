@@ -1,6 +1,8 @@
+using DotRecast.Core.Numerics;
+using DotRecast.Detour.TileCache;
+using ET.Ability;
 using System.Collections.Generic;
 using Unity.Mathematics;
-
 namespace ET
 {
     public static class RecastHelper
@@ -32,9 +34,10 @@ namespace ET
             return pathfindingComponent.GetArrivePath(startPos, endPos);
         }
 
+
         public static (bool, List<float3>) ChkArrive(Unit unit, float3 startPos, float3 endPos)
         {
-            List<float3> points = ET.RecastHelper.GetArrivePath(unit, startPos, endPos);
+            List<float3> points = GetArrivePath(unit, startPos, endPos);
             if (points == null)
             {
                 return (false, points);
@@ -100,9 +103,9 @@ namespace ET
 
         public static float3 GetMidPosWhen2Pos(Scene scene, float3 pos1, float3 pos2)
         {
-            Unit observerUnit = ET.Ability.UnitHelper.GetOneObserverUnit(scene);
+            Unit observerUnit = UnitHelper.GetOneObserverUnit(scene);
 
-            List<float3> points = ET.RecastHelper.GetArrivePath(observerUnit, pos1, pos2);
+            List<float3> points = GetArrivePath(observerUnit, pos1, pos2);
             if (points == null)
             {
                 return float3.zero;
@@ -214,7 +217,7 @@ namespace ET
             {
                 foreach (float3 pos in posList)
                 {
-                    (bool canArrive, List<float3> pointList) = ET.RecastHelper.ChkArrive(observerUnit, chkPos, pos);
+                    (bool canArrive, List<float3> pointList) = RecastHelper.ChkArrive(observerUnit, chkPos, pos);
                     if (canArrive == false)
                     {
                         return false;
@@ -232,7 +235,7 @@ namespace ET
 
             (bool, float3) ChkCanReach(Unit observerUnit, List<float3> posList, float3 chkPos)
             {
-                float3 centerPos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, chkPos);
+                float3 centerPos = GetNearNavmeshPos(observerUnit, chkPos);
 
                 if (ChkArrive(observerUnit, posList, centerPos))
                 {
@@ -241,7 +244,7 @@ namespace ET
                 return (false, float3.zero);
             }
 
-            Unit observerUnit = ET.Ability.UnitHelper.GetOneObserverUnit(scene);
+            Unit observerUnit = UnitHelper.GetOneObserverUnit(scene);
             foreach (float3 circleCenterOrg in new List<float3>(){circleCenterOrg1, circleCenterOrg2})
             {
                 float dis = 0.1f;
@@ -303,7 +306,7 @@ namespace ET
             {
                 foreach (float3 pos in posList)
                 {
-                    (bool canArrive, List<float3> pointList) = ET.RecastHelper.ChkArrive(observerUnit, chkPos, pos);
+                    (bool canArrive, List<float3> pointList) = RecastHelper.ChkArrive(observerUnit, chkPos, pos);
                     if (canArrive == false)
                     {
                         return false;
@@ -316,7 +319,7 @@ namespace ET
 
             (bool, float3) ChkCanReach(Unit observerUnit, List<float3> posList, float3 chkPos)
             {
-                float3 centerPos = ET.RecastHelper.GetNearNavmeshPos(observerUnit, chkPos);
+                float3 centerPos = GetNearNavmeshPos(observerUnit, chkPos);
 
                 if (ChkArrive(observerUnit, posList, centerPos))
                 {
@@ -325,7 +328,7 @@ namespace ET
                 return (false, float3.zero);
             }
 
-            Unit observerUnit = ET.Ability.UnitHelper.GetOneObserverUnit(scene);
+            Unit observerUnit = UnitHelper.GetOneObserverUnit(scene);
             float dis = 0.1f;
             for (int i = 0; i < 100; i++)
             {
@@ -364,5 +367,125 @@ namespace ET
             return float3.zero;
         }
 
+        public static float3? RemoveObstacleFromUnit(Scene scene, long unitId)
+        {
+            if (unitId == 0)
+            {
+                return null;
+            }
+            Unit unitToMove = UnitHelper.GetUnit(scene, unitId);
+            if (unitToMove == null)
+            {
+                return null;
+            }
+            PathfindingComponent pathfindingComponent = unitToMove.GetComponent<PathfindingComponent>();
+            if (pathfindingComponent == null)
+            {
+                return null;
+            }
+            var result = pathfindingComponent.RemoveObstacle();
+            if (result != null)
+            {
+                FullyUpdateTileCache(scene);
+            }
+            return result;
+        }
+
+        public static bool AddObstacleFromUnit(Scene scene, long unitId, float3 pos)
+        {
+            if (unitId == 0)
+            {
+                return false;
+            }
+            Unit unitToMove = UnitHelper.GetUnit(scene, unitId);
+            if (unitToMove == null)
+            {
+                return false;
+            }
+            PathfindingComponent pathfindingComponent = unitToMove.GetComponent<PathfindingComponent>();
+            if (pathfindingComponent == null)
+            {
+                return false;
+            }
+            if (pathfindingComponent.AddOrUpdateObstacle(pos))
+            {
+                FullyUpdateTileCache(scene);
+                return true;
+            }
+            return false;
+        }
+
+        public static long AddObstacle(Scene scene, float3 pos, float radius)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
+            NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
+            var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
+            return tileCache.AddObstacle(new RcVec3f(-pos.x, pos.y - 0.5f, pos.z), radius,
+                navmeshManagerComponent.navSample.GetSettings().agentHeight);
+        }
+
+        public static DtTileCache GetTileCache(Scene scene)
+        {
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
+            NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
+            if (navmeshManagerComponent == null)
+            {
+                return null;
+            }
+            return navmeshManagerComponent.obstacleTool.GetTileCache();
+        }
+
+        public static void FullyUpdateTileCache(Scene scene)
+        {
+            DtTileCache tileCache = GetTileCache(scene);
+            while (!tileCache.Update()) { }
+        }
+
+        public static List<NavPath> GetAllPathsFromMonsterCallsToHeadQuarter(Unit unit)
+        {
+            Scene scene = unit.DomainScene();
+            var gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlay(scene)?.GetComponent<GamePlayTowerDefenseComponent>();
+            if (gamePlayTowerDefenseComponent == null)
+            {
+                return null;
+            }
+            PutMonsterCallComponent putMonsterCallComponent = gamePlayTowerDefenseComponent.GetComponent<PutMonsterCallComponent>();
+            PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+            if (putMonsterCallComponent != null && putMonsterCallComponent.MonsterCallUnitId != null && putHomeComponent != null)
+            {
+                List<NavPath> paths = new List<NavPath>();
+                foreach (var monsterCallUnitIds in putMonsterCallComponent.MonsterCallUnitId)
+                {
+                    long playerId = monsterCallUnitIds.Key;
+                    long monsterCallUnitId = monsterCallUnitIds.Value;
+                    Unit monsterCallUnit = UnitHelper.GetUnit(scene, monsterCallUnitId);
+                    if (monsterCallUnit == null)
+                    {
+                        continue;
+                    }
+                    float3 pos = monsterCallUnit.Position;
+                    TeamFlagType homeTeamFlagType = gamePlayTowerDefenseComponent.GetHomeTeamFlagTypeByPlayer(playerId);
+                    Unit homeUnit = putHomeComponent.GetHomeUnit(homeTeamFlagType);
+                    if (homeUnit == null)
+                    {
+                        continue;
+                    }
+                    float3 homePos = homeUnit.Position;
+                    var path = GetArrivePath(unit, pos, homePos);
+                    if (path != null && path.Count > 0)
+                    {
+                        paths.Add(new NavPath
+                        {
+                            TargetPosition = homePos,
+                            PlayerId = playerId,
+                            MonsterCallUnitId = monsterCallUnitId,
+                            Points = path
+                        });
+                    }
+                }
+                return paths;
+            }
+            return null;
+        }
     }
 }

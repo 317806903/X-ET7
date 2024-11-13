@@ -38,10 +38,10 @@ namespace ET.Ability
             }
         }
 
-        public static DamageInfo Add(this DamageComponent self, Unit attackerUnit, Unit targetUnit, Damage damage, bool isCrit)
+        public static DamageInfo Add(this DamageComponent self, Unit attackerUnit, Unit targetUnit, Damage damage, bool isCrit, ref ActionContext actionContext)
         {
             DamageInfo damageInfo = self.AddChild<DamageInfo>();
-            damageInfo.Init(attackerUnit.Id, targetUnit.Id, damage, isCrit);
+            damageInfo.Init(attackerUnit.Id, targetUnit.Id, damage, isCrit, ref actionContext);
             return damageInfo;
         }
 

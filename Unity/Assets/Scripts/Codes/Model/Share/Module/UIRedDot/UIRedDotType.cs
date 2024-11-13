@@ -6,8 +6,11 @@
         Root,
         Settings,
         Tutorial,
+        BattleDeck,
         Cards,
+        Skills,
         TowerNew,
+        SkillNew,
         AvatarFrameNew,
         Bags,
         ItemOtherNew,
@@ -22,6 +25,5 @@
         Store,
         NewSeasonNotice,
         MultPlayers,
-        Skill,
     }
 }

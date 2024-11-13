@@ -7,10 +7,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.createUnit) && UnitHelper.ChkIsBullet(args.createUnit))
 				{
 					Unit unit = args.createUnit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnCreate, null, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnCreate, null, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -21,17 +22,17 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BulletOnHit args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
 					BulletObj bulletObj = unit.GetComponent<BulletObj>();
-					bulletObj.actionContext.hitPosition = args.hitPos;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit, ref actionContext);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
 				{
 					Unit unit = args.defenderUnit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnBeHurt, args.attackerUnit, args.defenderUnit, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -42,12 +43,12 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BulletOnHitMesh args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
 					BulletObj bulletObj = unit.GetComponent<BulletObj>();
-					bulletObj.actionContext.hitPosition = args.hitPos;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitMesh, args.attackerUnit, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitMesh, args.attackerUnit, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -58,12 +59,12 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.BulletOnHitPos args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
 					BulletObj bulletObj = unit.GetComponent<BulletObj>();
-					bulletObj.actionContext.hitPosition = args.hitPos;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitPos, args.attackerUnit, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitPos, args.attackerUnit, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -93,10 +94,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsBullet(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnRemoved, null, null);
+					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnRemoved, null, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}

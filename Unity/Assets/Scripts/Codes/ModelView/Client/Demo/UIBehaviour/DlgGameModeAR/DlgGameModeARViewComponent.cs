@@ -535,40 +535,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Button E_SkillButton
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_SkillButton == null )
-				{
-					this.m_E_SkillButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "E_HomePage/E_Skill");
-				}
-				return this.m_E_SkillButton;
-			}
-		}
-
-		public TMPro.TextMeshProUGUI ELabel_TextMeshProUGUI
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_ELabel_TextMeshProUGUI == null )
-				{
-					this.m_ELabel_TextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "E_HomePage/E_Skill/ELabel_");
-				}
-				return this.m_ELabel_TextMeshProUGUI;
-			}
-		}
-
 		public UnityEngine.UI.Button E_SettingButton
 		{
 			get
@@ -620,8 +586,6 @@ namespace ET.Client
 			this.m_E_BtnMailButton = null;
 			this.m_E_BtnMailImage = null;
 			this.m_E_QuestionnaireButton = null;
-			this.m_E_SkillButton = null;
-			this.m_ELabel_TextMeshProUGUI = null;
 			this.m_E_SettingButton = null;
 			this.uiTransform = null;
 		}
@@ -657,8 +621,6 @@ namespace ET.Client
 		private UnityEngine.UI.Button m_E_BtnMailButton = null;
 		private UnityEngine.UI.Image m_E_BtnMailImage = null;
 		private UnityEngine.UI.Button m_E_QuestionnaireButton = null;
-		private UnityEngine.UI.Button m_E_SkillButton = null;
-		private TMPro.TextMeshProUGUI m_ELabel_TextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_SettingButton = null;
 		public Transform uiTransform = null;
 	}

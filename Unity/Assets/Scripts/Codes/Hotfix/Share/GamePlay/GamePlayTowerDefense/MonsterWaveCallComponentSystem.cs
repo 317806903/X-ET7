@@ -88,7 +88,7 @@ namespace ET
 
         public static int GetWaveRewardGold(this MonsterWaveCallComponent self)
         {
-            bool bRet = self.GetRealWaveInfo(out int waveIndex, out float monsterWaveNumScalePercent,
+            bool bRet = self.GetRealWaveInfo(out int waveIndex, out int circleWaveIndex, out int circleNum, out int circleIndex, out float monsterWaveNumScalePercent,
                 out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
             if (bRet == false)
             {
@@ -141,17 +141,21 @@ namespace ET
 
         public static void DoMonsterWaveCall(this MonsterWaveCallComponent self)
         {
+            bool bRet = self.GetRealWaveInfo(out int waveIndex, out int circleWaveIndex, out int circleNum, out int circleIndex, out float monsterWaveNumScalePercent,
+                out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
+            if (bRet == false)
+            {
+                return;
+            }
+            self.circleWaveIndex = circleWaveIndex;
+            self.circleNum = circleNum;
+            self.circleIndex = circleIndex;
+
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             List<long> playerList = gamePlayTowerDefenseComponent.GetPlayerList();
             foreach (long playerId in playerList)
             {
                 MonsterWaveCallOnceComponent monsterWaveCallOnceComponent = self.AddChild<MonsterWaveCallOnceComponent>();
-                bool bRet = self.GetRealWaveInfo(out int waveIndex, out float monsterWaveNumScalePercent,
-                    out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
-                if (bRet == false)
-                {
-                    return;
-                }
 
                 monsterWaveCallOnceComponent.Init(playerId, self.monsterWaveRule, waveIndex, monsterWaveNumScalePercent, monsterWaveLevelScalePercent,
                     waveRewardGoldScalePercent);
@@ -173,11 +177,14 @@ namespace ET
             }
         }
 
-        public static bool GetRealWaveInfo(this MonsterWaveCallComponent self, out int waveIndex,
+        public static bool GetRealWaveInfo(this MonsterWaveCallComponent self, out int waveIndex, out int circleWaveIndex, out int circleNum, out int circleIndex,
         out float monsterWaveNumScalePercent, out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent)
         {
             GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetGamePlayTowerDefense();
             waveIndex = 0;
+            circleWaveIndex = 0;
+            circleNum = 0;
+            circleIndex = 0;
             monsterWaveNumScalePercent = 0;
             monsterWaveLevelScalePercent = 0;
             waveRewardGoldScalePercent = 0;
@@ -192,6 +199,10 @@ namespace ET
                 GamePlayTowerDefenseEndlessChallengeMonster gamePlayTowerDefenseEndlessChallengeMonster =
                     gamePlayBattleLevelCfg.GamePlayMode as GamePlayTowerDefenseEndlessChallengeMonster;
                 int repeatNum = gamePlayTowerDefenseEndlessChallengeMonster.RepeatNum;
+                if (repeatNum <= 0)
+                {
+                    repeatNum = 1;
+                }
                 float monsterWaveNumScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.MonsterWaveNumScalePercentCoefficient;
                 float monsterWaveLevelScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.MonsterWaveLevelScalePercentCoefficient;
                 float waveRewardGoldScalePercentCoefficient = gamePlayTowerDefenseEndlessChallengeMonster.WaveRewardGoldScalePercentCoefficient;
@@ -204,6 +215,9 @@ namespace ET
                 int tmp2 = (self.curIndex - self.sortWaveIndex.Count) % repeatNum;
 
                 waveIndex = self.sortWaveIndex[self.sortWaveIndex.Count - (repeatNum - tmp2)];
+                circleWaveIndex = self.curIndex + 1 - self.sortWaveIndex.Count;
+                circleNum = tmp1;
+                circleIndex = tmp2;
                 monsterWaveNumScalePercent = tmp1 * monsterWaveNumScalePercentCoefficient;
                 monsterWaveLevelScalePercent = tmp1 * monsterWaveLevelScalePercentCoefficient;
                 waveRewardGoldScalePercent = tmp1 * waveRewardGoldScalePercentCoefficient;
@@ -232,7 +246,7 @@ namespace ET
             TeamFlagType teamFlagType = gamePlayTowerDefenseComponent.GetMonsterTeamFlagTypeByPlayer(playerId);
 
             Unit monsterUnit = ET.GamePlayTowerDefenseHelper.CreateMonster(self.DomainScene(), playerId, monsterCfgId, level, randomPos,
-                randomForward, teamFlagType, rewardGold, self.curIndex + 1, self.curIndex + 1 - self.sortWaveIndex.Count);
+                randomForward, teamFlagType, rewardGold, self.curIndex + 1, self.circleWaveIndex, self.circleNum, self.circleIndex);
 
             monsterUnit.AddComponent<UnitWaitResetPosComponent, float3>(pos);
 

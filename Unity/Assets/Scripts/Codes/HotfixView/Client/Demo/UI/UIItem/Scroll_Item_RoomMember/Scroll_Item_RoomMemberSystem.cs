@@ -12,11 +12,15 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_RoomMember))]
 	public static class Scroll_Item_RoomMemberSystem
 	{
-		public static void Init(this Scroll_Item_RoomMember self)
-		{
+        public static void RegisterUIEvent(this Scroll_Item_RoomMember self)
+        {
 
+        }
 
-		}
+        public static void HideItem(this Scroll_Item_RoomMember self)
+        {
+
+        }
 
         // 默认初始化成员项的UI状态
         public static void InitItemRoom(this Scroll_Item_RoomMember itemRoom)

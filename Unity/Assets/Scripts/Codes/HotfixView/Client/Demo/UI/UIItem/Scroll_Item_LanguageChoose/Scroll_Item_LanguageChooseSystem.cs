@@ -9,6 +9,16 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_LanguageChoose))]
 	public static class Scroll_Item_LanguageChooseSystem
 	{
+		public static void RegisterUIEvent(this Scroll_Item_LanguageChoose self)
+		{
+
+		}
+
+		public static void HideItem(this Scroll_Item_LanguageChoose self)
+		{
+
+		}
+
 		public static void Init(this Scroll_Item_LanguageChoose self, LanguageType languageType, Action callback)
 		{
 			self.SetItemSelectStatus(false);
@@ -17,7 +27,7 @@ namespace ET.Client
 			self.E_TextTextMeshProUGUI.text = text;
 			self.E_SelectButton.AddListener(() =>
 			{
-				callback?.Invoke();				
+				callback?.Invoke();
 			});
 		}
 
@@ -25,6 +35,6 @@ namespace ET.Client
 		{
 			self.EG_SelectedRectTransform.SetVisible(selected);
 		}
-		
+
 	}
 }

@@ -18,6 +18,8 @@ namespace ET
         public int rewardGold;
         public int waveIndex;
         public int circleWaveIndex;
+        public int circleNum;
+        public int circleIndex;
 
         [BsonIgnore]
         public TowerDefense_MonsterCfg model

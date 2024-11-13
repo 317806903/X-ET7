@@ -7,6 +7,9 @@ import time
 import os
 import shutil
 
+# 设置 DEVELOPER_DIR 环境变量，指向非测试版的 Xcode 路径
+os.environ['DEVELOPER_DIR'] = '/Applications/Xcode.app/Contents/Developer'
+
 def get_app_name():
     datanames = os.listdir(sys.path[0])
     for i in datanames:

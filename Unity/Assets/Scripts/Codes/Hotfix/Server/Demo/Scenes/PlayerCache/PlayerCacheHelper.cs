@@ -33,10 +33,11 @@ namespace ET.Server
         {
             PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId))
+            bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType);
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId * 10 + (int)playerModelType))
             {
                 Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
-                if (entity == null || forceReGet)
+                if (entity == null || entity.IsDisposed || (forceReGet && isLock == false))
                 {
                     (bool bRet, byte[] playerModelComponentBytes) = await SendGetPlayerModelAsync(scene, playerId, playerModelType);
                     if (bRet)
@@ -69,6 +70,12 @@ namespace ET.Server
             return entity as PlayerBattleCardComponent;
         }
 
+        public static async ETTask<PlayerBattleSkillComponent> GetPlayerBattleSkillByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+            Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.BattleSkill, forceReGet);
+            return entity as PlayerBattleSkillComponent;
+        }
+
         public static async ETTask<PlayerOtherInfoComponent> GetPlayerOtherInfoByPlayerId(Scene scene, long playerId, bool forceReGet = false)
         {
             Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.OtherInfo, forceReGet);
@@ -93,13 +100,7 @@ namespace ET.Server
             return entity as PlayerMailComponent;
         }
 
-        public static async ETTask<PlayerSkillComponent> GetPlayerSkillByPlayerId(Scene scene, long playerId, bool forceReGet = false)
-        {
-            Entity entity = await GetPlayerModel(scene, playerId, PlayerModelType.Skills, forceReGet);
-            return entity as PlayerSkillComponent;
-        }
-
-        public static async ETTask<List<ItemComponent>> GetBattleCardItemListByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        public static async ETTask<List<ItemComponent>> GetBattleTowerItemListByPlayerId(Scene scene, long playerId, bool forceReGet = false)
         {
             PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId, forceReGet);
             PlayerBattleCardComponent playerBattleCardComponent = await GetPlayerBattleCardByPlayerId(scene, playerId, forceReGet);
@@ -113,6 +114,28 @@ namespace ET.Server
 
             List<ItemComponent> list = ListComponent<ItemComponent>.Create();
             foreach (var itemCfgId in playerBattleCardComponent.GetBattleCardItemCfgIdList())
+            {
+                ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
+                list.Add(itemComponent);
+            }
+
+            return list;
+        }
+
+        public static async ETTask<List<ItemComponent>> GetBattleSkillItemListByPlayerId(Scene scene, long playerId, bool forceReGet = false)
+        {
+            PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId, forceReGet);
+            PlayerBattleSkillComponent playerBattleSkillByPlayerId = await GetPlayerBattleSkillByPlayerId(scene, playerId, forceReGet);
+
+            bool isNeedChg =
+                playerBattleSkillByPlayerId.SetBattleSkillItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Skill, ItemSubType.None));
+            if (isNeedChg)
+            {
+                await SavePlayerModel(scene, playerId, PlayerModelType.BattleSkill, null, PlayerModelChgType.PlayerBattleSkill_AutoSetByBackPack);
+            }
+
+            List<ItemComponent> list = ListComponent<ItemComponent>.Create();
+            foreach (var itemCfgId in playerBattleSkillByPlayerId.GetBattleSkillItemCfgIdList())
             {
                 ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
                 list.Add(itemComponent);
@@ -159,12 +182,10 @@ namespace ET.Server
             Entity entityModel = await GetPlayerModel(scene, playerId, playerModelType, false);
             entityModel.SetDataCacheAutoClear();
             byte[] bytes = entityModel.ToBson();
-
-            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId))
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId * 10 + (int)playerModelType))
             {
                 await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes, setPlayerKeys, playerModelChgType);
             }
-
             await NoticeClientPlayerCacheChg(scene, playerId, playerModelType);
             await ETTask.CompletedTask;
         }
@@ -427,7 +448,7 @@ namespace ET.Server
                 return;
             }
 
-            string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+            string itemCfgId = ET.ItemHelper.GetTokenArcadeCoinCfgId();
             await AddItem(scene, playerId, itemCfgId, chgValue);
 
             await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenArcadeCoinAdd);
@@ -443,7 +464,7 @@ namespace ET.Server
                 return;
             }
 
-            string itemCfgId = ItemHelper.GetTokenArcadeCoinCfgId();
+            string itemCfgId = ET.ItemHelper.GetTokenArcadeCoinCfgId();
             await DeleteItem(scene, playerId, itemCfgId, chgValue);
 
             await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenArcadeCoinReduce);
@@ -459,7 +480,7 @@ namespace ET.Server
                 return;
             }
 
-            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+            string itemCfgId = ET.ItemHelper.GetTokenDiamondCfgId();
             await AddItem(scene, playerId, itemCfgId, chgValue);
 
             await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenDiamondAdd);
@@ -477,7 +498,7 @@ namespace ET.Server
                 return;
             }
 
-            string itemCfgId = ItemHelper.GetTokenDiamondCfgId();
+            string itemCfgId = ET.ItemHelper.GetTokenDiamondCfgId();
             await DeleteItem(scene, playerId, itemCfgId, chgValue);
 
             await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.TokenDiamondReduce);
@@ -542,7 +563,7 @@ namespace ET.Server
                     continue;
                 }
 
-                if (ItemHelper.ChkIsToken(itemCfgId))
+                if (ET.ItemHelper.ChkIsToken(itemCfgId))
                 {
                     isContainTokenDiamond = true;
                 }
@@ -776,6 +797,16 @@ namespace ET.Server
                     }
                 }
                 {
+                    bool isShow = playerOtherInfoComponent.ChkUIRedDotType(UIRedDotType.SkillNew);
+                    PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId);
+                    bool isNeedShow = playerBackPackComponent.ChkIsNewSkill();
+                    if (isShow != isNeedShow)
+                    {
+                        await SetUIRedDotType(scene, playerId, UIRedDotType.SkillNew, isNeedShow, false);
+                        isNeedSave = true;
+                    }
+                }
+                {
                     bool isShow = playerOtherInfoComponent.ChkUIRedDotType(UIRedDotType.AvatarFrameNew);
                     PlayerBackPackComponent playerBackPackComponent = await GetPlayerBackPackByPlayerId(scene, playerId);
                     bool isNeedShow = playerBackPackComponent.ChkIsNewAvatarFrame();
@@ -787,17 +818,7 @@ namespace ET.Server
                 }
 
             }
-            if (playerModelType == PlayerModelType.None || playerModelType == PlayerModelType.Skills)
-            {
-                bool isShow = playerOtherInfoComponent.ChkUIRedDotType(UIRedDotType.Skill);
-                PlayerSkillComponent playerSkillComponent = await GetPlayerSkillByPlayerId(scene, playerId);
-                bool isNeedShow = playerSkillComponent.ChkIsNewSkill();
-                if (isShow != isNeedShow)
-                {
-                    await SetUIRedDotType(scene, playerId, UIRedDotType.Skill, isNeedShow, false);
-                    isNeedSave = true;
-                }
-            }
+
             if (isNeedSave)
             {
                 await ET.Server.PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.OtherInfo, new() { "uiRedDotTypeDic" },

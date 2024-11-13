@@ -23,15 +23,15 @@ namespace ET.Client
             self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMemberItemRefreshListener(transform, i).Coroutine();
-                self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_RoomMemberLoopHorizontalScrollRect.SetSrcollMiddle();
             });
 
-            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.poolSize = 4;
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddRewardItemRefreshListener(transform, i).Coroutine();
-                self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.SetSrcollMiddle();
             });
 
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Monsters";
@@ -39,7 +39,7 @@ namespace ET.Client
             self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
             {
                 self.AddMonsterItemRefreshListener(transform, i).Coroutine();
-                self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.SetSrcollMiddle().Coroutine();
+                self.View.ELoopScrollList_MonsterLoopHorizontalScrollRect.SetSrcollMiddle();
             });
         }
 
@@ -471,12 +471,12 @@ namespace ET.Client
 
         public static async ETTask AddRewardItemRefreshListener(this DlgARRoomPVE self, Transform transform, int index)
         {
-            transform.name = $"Item_TowerBuy_{index}";
-            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
+            transform.name = $"Item_ItemShow_{index}";
+            Scroll_Item_ItemShow itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
 
             string itemCfgId = self.itemList[index].itemCfgId;
             int itemNum = self.itemList[index].itemNum;
-            await itemTowerBuy.ShowBagItem(itemCfgId, true, itemNum);
+            await itemTowerBuy.Init(itemCfgId, true, itemNum);
         }
 
         public static async ETTask AddMonsterItemRefreshListener(this DlgARRoomPVE self, Transform transform, int index)

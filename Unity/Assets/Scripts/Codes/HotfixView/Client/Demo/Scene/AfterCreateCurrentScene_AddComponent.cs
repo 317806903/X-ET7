@@ -8,6 +8,7 @@ namespace ET.Client
             //scene.AddComponent<UIComponent>();
             //scene.AddComponent<FUIComponent>();
             scene.AddComponent<PathLineRendererComponent>();
+            scene.AddComponent<HealthBarNormalManager>();
             scene.AddComponent<NavMeshRendererComponent>();
             scene.AddComponent<ShootTextComponent>();
             scene.AddComponent<ShowGetGoldTextComponent>();

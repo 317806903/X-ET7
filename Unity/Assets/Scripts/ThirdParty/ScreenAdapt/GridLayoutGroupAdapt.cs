@@ -10,6 +10,7 @@ namespace ScreenAdapt
     [Serializable]
     public class GridLayoutGroupAdaptConfig
     {
+        public bool isSaved;
         public RectOffset padding;
         public Vector2 cellSize;
         public Vector2 spacing;
@@ -42,6 +43,10 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             mComponent.padding = config.padding;
             mComponent.cellSize = config.cellSize;
             mComponent.spacing = config.spacing;
@@ -60,6 +65,7 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
+            config.isSaved = true;
             config.padding = mComponent.padding;
             config.cellSize = mComponent.cellSize;
             config.spacing = mComponent.spacing;

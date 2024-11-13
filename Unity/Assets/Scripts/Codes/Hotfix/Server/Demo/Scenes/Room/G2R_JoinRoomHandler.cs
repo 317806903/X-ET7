@@ -24,6 +24,11 @@ namespace ET.Server
 			RoomComponent roomComponentOld = roomManagerComponent.GetRoomByPlayerId(playerId);
 			if (roomComponentOld != null)
 			{
+				if (roomComponentOld == roomComponent)
+				{
+					response.RoomTypeInfo = ET.RoomTypeInfo.ToBytes(roomComponent.roomTypeInfo);
+					return;
+				}
 				roomManagerComponent.QuitRoom(playerId, roomComponentOld.Id);
 			}
 

@@ -24,11 +24,27 @@ namespace ET.AbilityConfig
 		[BsonIgnore]
 		public Dictionary<string, string> skillCfgId2BaseSkillCfgId = new();
 
+		[ProtoIgnore]
+		[BsonIgnore]
+		public List<string> skillCfgListInBattleDeck = new();
+
+		[ProtoIgnore]
+		[BsonIgnore]
+		public List<string> skillCfgListInBattleDeckWhenUnLockDefault = new();
+
 		partial void PostResolve()
 		{
 			foreach (var skillCfg in this.DataList)
 			{
 				string curSkillCfgIdTmp = skillCfg.Id;
+				if (skillCfg.IsShowInBattleDeckUI)
+				{
+					this.skillCfgListInBattleDeck.Add(curSkillCfgIdTmp);
+					if (skillCfg.UnLockCondition is UnLockDefault)
+					{
+						this.skillCfgListInBattleDeckWhenUnLockDefault.Add(curSkillCfgIdTmp);
+					}
+				}
 				string nextSkillCfgIdTmp = skillCfg.NextPlayerSkillCfgId;
 				if (string.IsNullOrEmpty(nextSkillCfgIdTmp))
 				{
@@ -66,6 +82,16 @@ namespace ET.AbilityConfig
 				}
 				this.skillCfgId2BaseSkillCfgId[skillCfgId] = curSkillCfgId;
 			}
+		}
+
+		public List<string> GetSkillCfgListInBattleDeck()
+		{
+			return this.skillCfgListInBattleDeck;
+		}
+
+		public List<string> GetSkillCfgListInBattleDeckWhenUnLockDefault()
+		{
+			return this.skillCfgListInBattleDeckWhenUnLockDefault;
 		}
 
 		public int GetSkillMaxLevel(string skillCfgId)

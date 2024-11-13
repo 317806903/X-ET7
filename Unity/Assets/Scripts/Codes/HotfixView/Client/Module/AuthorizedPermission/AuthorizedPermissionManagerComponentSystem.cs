@@ -50,7 +50,7 @@ namespace ET.Client
             return false;
         }
 
-        public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionManagerComponent self, Action<bool> callBack)
+        public static async ETTask ChkCameraAuthorizationAndRequest(this AuthorizedPermissionManagerComponent self, Action<bool, bool> callBack)
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -59,6 +59,18 @@ namespace ET.Client
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 await self.GetComponent<AuthorizedPermissionIOSComponent>().ChkCameraAuthorizationAndRequest(callBack);
+            }
+        }
+
+        public static async ETTask JumpToSettings(this AuthorizedPermissionManagerComponent self)
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                await self.GetComponent<AuthorizedPermissionAndroidComponent>().JumpToSettings();
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                await self.GetComponent<AuthorizedPermissionIOSComponent>().JumpToSettings();
             }
         }
 

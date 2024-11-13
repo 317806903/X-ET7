@@ -51,17 +51,23 @@ namespace ET.Ability
             self.casterUnitId = casterUnit.Id;
             Unit casterPlayerUnit = self.GetCasterActorUnit();
             self.casterUnitId = casterPlayerUnit.Id;
+            self.isRemoveWhenCasterActorUnitNotExist = addBuffInfo.IsRemoveWhenCasterActorUnitNotExist;
 
             self.timeElapsed = 0;
             self.ticked = 0;
             self.AddStackCount(addBuffInfo.AddStack, false);
         }
 
-        public static void InitActionContext(this BuffObj self, ref ActionContext actionContext)
+        public static void SetBuffActionContext(this BuffObj self, ref ActionContext actionContext)
         {
             actionContext.buffUnitId = self.GetUnit().Id;
             actionContext.buffCfgId = self.CfgId;
             actionContext.buffId = self.Id;
+        }
+
+        public static void InitActionContext(this BuffObj self, ref ActionContext actionContext)
+        {
+            self.SetBuffActionContext(ref actionContext);
             self.actionContext = actionContext;
         }
 
@@ -85,7 +91,7 @@ namespace ET.Ability
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
             if (needPublic && op == ValueOperation.Add)
             {
-                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh);
+                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh, null, null, ref self.actionContext);
             }
             //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
@@ -102,7 +108,7 @@ namespace ET.Ability
             //Log.Debug($"---AddStackCount {self.CfgId} addStack={addStack} self.stack={self.stack} self.duration={self.duration}");
             if (needPublic && addStackCount > 0)
             {
-                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh);
+                self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRefresh, null, null, ref self.actionContext);
             }
             //Log.Debug($"---AddStackCount 22 {self.CfgId} self.stack={self.stack} self.duration={self.duration}");
         }
@@ -158,12 +164,13 @@ namespace ET.Ability
         public static Unit GetCasterActorUnit(this BuffObj self)
         {
             Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.casterUnitId);
-            return unit.GetCasterActor();
+            return unit?.GetCasterFirstActor();
         }
 
         public static List<BuffActionCall> GetActionIds(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent)
         {
-            return self.monitorTriggerList[abilityBuffMonitorTriggerEvent];
+            self.monitorTriggerList.TryGetValue(abilityBuffMonitorTriggerEvent, out var list);
+            return list;
         }
 
         public static void FixedUpdate(this BuffObj self, float fixedDeltaTime)
@@ -212,15 +219,15 @@ namespace ET.Ability
                                 lastCount++;
                                 if (i == 0)
                                 {
-                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1, null, null, ref self.actionContext);
                                 }
                                 else if (i == 1)
                                 {
-                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2, null, null, ref self.actionContext);
                                 }
                                 else if (i == 2)
                                 {
-                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3, null, null, ref self.actionContext);
                                 }
 
                                 self.ticked += 1;
@@ -231,58 +238,66 @@ namespace ET.Ability
             }
         }
 
-        public static void TrigEvent(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit = null, Unit beHurtUnit = null)
+        public static void TrigEvent(this BuffObj self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
             if (self.isEnabled == false)
             {
                 return;
             }
             List<BuffActionCall> buffActionCalls = self.GetActionIds(abilityBuffMonitorTriggerEvent);
-            if (buffActionCalls.Count > 0)
+            if (buffActionCalls == null || buffActionCalls.Count == 0)
             {
-                bool bContinue = true;
-                if (self.model.BuffType == BuffType.Debuff)
+                return;
+            }
+
+            bool bContinue = true;
+            if (self.model.BuffType == BuffType.Debuff)
+            {
+                bContinue = true;
+            }
+            else
+            {
+                bool bRet = BuffHelper.ChkCanBuffTrig(self.GetUnit());
+                if (bRet)
                 {
                     bContinue = true;
                 }
                 else
                 {
-                    bool bRet = BuffHelper.ChkCanBuffTrig(self.GetUnit());
-                    if (bRet)
-                    {
-                        bContinue = true;
-                    }
-                    else
-                    {
-                        bContinue = false;
-                    }
+                    bContinue = false;
                 }
-                if (bContinue)
+            }
+            if (bContinue)
+            {
+                for (int i = 0; i < buffActionCalls.Count; i++)
                 {
-                    for (int i = 0; i < buffActionCalls.Count; i++)
-                    {
-                        self.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit);
-                    }
+                    self.EventHandler(buffActionCalls[i], onAttackUnit, beHurtUnit, ref actionContext);
                 }
             }
         }
 
-        public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
             Unit casterActorUnit = self.GetCasterActorUnit();
             if (casterActorUnit == null)
             {
-                self.ChgDuration(0);
-                return;
+                if (self.isRemoveWhenCasterActorUnitNotExist)
+                {
+                    self.ChgDuration(0);
+                    return;
+                }
+                else
+                {
+                    casterActorUnit = self.GetUnit();
+                }
             }
 
-
-            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), buffActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref self.actionContext);
+            (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), buffActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref actionContext);
             if (resetPosByUnit == null && self.GetUnit() != casterActorUnit)
             {
                 resetPosByUnit = self.GetUnit();
             }
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref self.actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref actionContext);
         }
 
         public static bool ChkNeedRemove(this BuffObj self)

@@ -17,9 +17,31 @@ namespace ET.Ability
                 return (buffActionModifyAttributeByWaveIndex.NumericType, 0);
             }
 
-            int waveIndex = monsterComponent.waveIndex;
+            float chgValue = 0;
+            {
+                int waveIndex = monsterComponent.waveIndex;
+                float chgValueByWaveIndex = buffActionModifyAttributeByWaveIndex.BaseValueWaveIndex * waveIndex + buffActionModifyAttributeByWaveIndex.StackValueWaveIndex * stackCount * waveIndex;
+                chgValue += chgValueByWaveIndex;
+            }
+            {
+                int circleWaveIndex = monsterComponent.circleWaveIndex;
+                if (circleWaveIndex > 0)
+                {
+                    float chgValueByCircleWaveIndex = buffActionModifyAttributeByWaveIndex.BaseValueCircleWaveIndex * circleWaveIndex + buffActionModifyAttributeByWaveIndex.StackValueCircleWaveIndex * stackCount * circleWaveIndex;
+                    chgValue += chgValueByCircleWaveIndex;
+                }
+            }
+            {
+                int circleIndex = monsterComponent.circleIndex;
+                int circleNum = monsterComponent.circleNum;
+                if (circleNum > 0)
+                {
+                    float chgValueByCircleNumIndex = buffActionModifyAttributeByWaveIndex.BaseValueCircleNumIndex * circleIndex + buffActionModifyAttributeByWaveIndex.StackValueCircleNumIndex * stackCount * circleIndex;
+                    float chgValueByCircleNum = buffActionModifyAttributeByWaveIndex.BaseValueCircleNum * circleNum + buffActionModifyAttributeByWaveIndex.StackValueCircleNum * stackCount * circleNum;
+                    chgValue += chgValueByCircleNumIndex + chgValueByCircleNum;
+                }
+            }
 
-            float chgValue = buffActionModifyAttributeByWaveIndex.BaseValue * waveIndex + buffActionModifyAttributeByWaveIndex.StackValue * stackCount * waveIndex;
             float maxChgValue = buffActionModifyAttributeByWaveIndex.MaxChgValue;
             if (maxChgValue != -1)
             {

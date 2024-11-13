@@ -1,55 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DotRecast.Core;
 using DotRecast.Core.Numerics;
 using DotRecast.Detour;
+using DotRecast.Detour.TileCache.Io.Compress;
 using DotRecast.Recast;
 using DotRecast.Recast.Toolset;
 using DotRecast.Recast.Toolset.Builder;
 using DotRecast.Recast.Toolset.Geom;
+using DotRecast.Recast.Toolset.Tools;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
-
 namespace ET
 {
-    [FriendOf(typeof(NavmeshManagerComponent))]
+    [FriendOf(typeof (NavmeshManagerComponent))]
     public static class NavmeshManagerComponentSystem
     {
+        [ObjectSystem]
         public class AwakeSystem: AwakeSystem<NavmeshManagerComponent>
         {
             protected override void Awake(NavmeshManagerComponent self)
             {
-                self.NavmeshByRadius = new ();
+                self.NavmeshByRadius = new();
                 self.segPoints = new();
                 self.recordMeshHitDic = new();
                 self.recordMeshHeightDic = new();
                 self.navMeshDataDictionary = new();
+                self.navMeshTool = new RcTestNavMeshTool();
+                self.obstacleTool = new RcObstacleTool(DtTileCacheCompressorFactory.Shared);
             }
         }
 
-        public static void Destroy(this NavmeshManagerComponent self, string name)
+        [ObjectSystem]
+        public class NavmeshManagerComponentFixedUpdateSystem: FixedUpdateSystem<NavmeshManagerComponent>
         {
-            self.NavmeshByRadius.Clear();
-            self.segPoints.Clear();
-            self.objBytes = null;
-            self.m_nav = null;
-            self._sample = null;
-            self.soloNavMeshBuilder = null;
-            self.tileNavMeshBuilder = null;
-            self.segPoints = null;
-            self.recordMeshHitDic.Clear();
-            self.recordMeshHeightDic.Clear();
+            protected override void FixedUpdate(NavmeshManagerComponent self)
+            {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
+                float fixedDeltaTime = TimeHelper.FixedDetalTime;
+                self.FixedUpdate(fixedDeltaTime);
+            }
+        }
+
+        [ObjectSystem]
+        public class DestroySystem: DestroySystem<NavmeshManagerComponent>
+        {
+            protected override void Destroy(NavmeshManagerComponent self)
+            {
+                self.NavmeshByRadius.Clear();
+                self.segPoints.Clear();
+                self.navMesh = null;
+                self.navSample = null;
+                self.segPoints = null;
+                self.recordMeshHitDic.Clear();
+                self.recordMeshHeightDic.Clear();
+                self.obstacleTool = null;
+            }
         }
 
         public static void InitByFileBytes(this NavmeshManagerComponent self, byte[] bytes, float scale)
         {
-            self.objBytes = bytes;
-
             try
             {
                 DemoInputGeomProvider geom = DemoObjImporter.Load(bytes, scale);
 
-                self._sample = new Sample(geom, null, null);
-                self.ResetSampleSettings(self._sample, 1);
+                self.navSample = new Sample(geom, null, null);
+                self.ResetSampleSettings(self.navSample, 1);
 
                 self._InitNavMeshBuilder();
             }
@@ -72,15 +91,15 @@ namespace ET
             }
 
             DemoInputGeomProvider geom = new DemoInputGeomProvider(allVertices, self.meshData.trianglesOrg);
-            self._sample = new Sample(geom, null, null);
-            self.ResetSampleSettings(self._sample, scale);
+            self.navSample = new Sample(geom, null, null);
+            self.ResetSampleSettings(self.navSample, scale);
 
             self._InitNavMeshBuilder();
         }
 
         public static NavmeshComponent GetNavmeshComponent(this NavmeshManagerComponent self, float agentRadius)
         {
-            if (self.NavmeshByRadius.TryGetValue(agentRadius, out NavmeshComponent navmeshComponent))
+            if (self.NavmeshByRadius.TryGetValue(agentRadius, out EntityRef<NavmeshComponent> navmeshComponent))
             {
                 return navmeshComponent;
             }
@@ -89,7 +108,7 @@ namespace ET
 
         public static async ETTask<NavmeshComponent> CreateCrowdWhenPlayer(this NavmeshManagerComponent self, float agentRadius)
         {
-            while (self.m_nav == null)
+            while (self.navMesh == null)
             {
                 if (self.IsDisposed)
                 {
@@ -97,7 +116,10 @@ namespace ET
                 }
                 await TimerComponent.Instance.WaitAsync(100);
             }
-            agentRadius = self._sample.GetSettings().agentRadius;
+            if (agentRadius > self.navSample.GetSettings().agentRadius)
+            {
+                agentRadius = self.navSample.GetSettings().agentRadius;
+            }
             NavmeshComponent navmeshComponent = self.playerNavmesh;
             if (navmeshComponent != null)
             {
@@ -112,7 +134,7 @@ namespace ET
 
         public static async ETTask<NavmeshComponent> CreateCrowd(this NavmeshManagerComponent self, float agentRadius)
         {
-            while (self.m_nav == null)
+            while (self.navMesh == null)
             {
                 if (self.IsDisposed)
                 {
@@ -120,7 +142,10 @@ namespace ET
                 }
                 await TimerComponent.Instance.WaitAsync(100);
             }
-            agentRadius = self._sample.GetSettings().agentRadius;
+            if (agentRadius > self.navSample.GetSettings().agentRadius)
+            {
+                agentRadius = self.navSample.GetSettings().agentRadius;
+            }
             NavmeshComponent navmeshComponent = self.GetNavmeshComponent(agentRadius);
             if (navmeshComponent != null)
             {
@@ -141,27 +166,35 @@ namespace ET
 
             rcNavMeshBuildSettings.agentHeight = 2.0f;
             rcNavMeshBuildSettings.agentRadius = 0.5f;
-            rcNavMeshBuildSettings.agentMaxClimb = 1.5f;
-            rcNavMeshBuildSettings.agentMaxSlope = 70f;
+            rcNavMeshBuildSettings.agentMaxClimb = 1.0f;
+            rcNavMeshBuildSettings.agentMaxSlope = 50f;
+            rcNavMeshBuildSettings.agentMaxAcceleration = 50f;
+
+            rcNavMeshBuildSettings.tiled = true;
+            rcNavMeshBuildSettings.tileSize = 128;
         }
 
         public static void _InitNavMeshBuilder(this NavmeshManagerComponent self)
         {
-            NavMeshBuildResult buildResult;
+            var settings = self.navSample.GetSettings();
+            var inputGeom = self.navSample.GetInputGeom();
+            NavMeshBuildResult buildResult =
+                    self.obstacleTool.Build(inputGeom, settings, RcByteOrder.LITTLE_ENDIAN, true);
 
-            var settings = self._sample.GetSettings();
-            settings.tiled = true;
+            IList<RcBuilderResult> recastBuilderResults;
             if (settings.tiled)
             {
-                self.tileNavMeshBuilder = new();
-                buildResult = self.tileNavMeshBuilder.Build(self._sample.GetInputGeom(), settings);
+                TileNavMeshBuilder builder = new();
+                var tmpResult = builder.Build(inputGeom, settings);
+                recastBuilderResults = tmpResult.RecastBuilderResults;
             }
             else
             {
-                self.soloNavMeshBuilder = new();
-                buildResult = self.soloNavMeshBuilder.Build(self._sample.GetInputGeom(), settings);
+                SoloNavMeshBuilder builder = new();
+                var tmpResult = builder.Build(inputGeom, settings);
+                recastBuilderResults = tmpResult.RecastBuilderResults;
             }
-
+        
             if (!buildResult.Success)
             {
                 Log.Error("failed to build");
@@ -170,9 +203,9 @@ namespace ET
                 return;
             }
 
-            self.m_nav = buildResult.NavMesh;
-            self._sample.Update(self._sample.GetInputGeom(), buildResult.RecastBuilderResults, buildResult.NavMesh);
-            self._sample.SetChanged(false);
+            self.navMesh = buildResult.NavMesh;
+            self.navSample.Update(self.navSample.GetInputGeom(), recastBuilderResults, buildResult.NavMesh);
+            self.navSample.SetChanged(false);
             self.isLoadMeshFinished = true;
             self.isLoadMeshError = false;
             self.navMeshDataDictionary.Clear();
@@ -180,12 +213,12 @@ namespace ET
 
         public static DtNavMesh GetNavMesh(this NavmeshManagerComponent self)
         {
-            return self.m_nav;
+            return self.navMesh;
         }
 
         public static Sample GetSample(this NavmeshManagerComponent self)
         {
-            return self._sample;
+            return self.navSample;
         }
 
         public static (bool, RcVec3f) _OnRaycast(this NavmeshManagerComponent self, RcVec3f rayStart, RcVec3f rayEnd)
@@ -264,7 +297,7 @@ namespace ET
         {
             for (int i = 0; i <= segmentCount; i++)
             {
-                var pos = math.lerp(rayStartIn, rayEndIn, i/segmentCount);
+                var pos = math.lerp(rayStartIn, rayEndIn, i / segmentCount);
                 bool bHit = self.ChkHitMeshOnPoint(pos);
                 if (bHit)
                 {
@@ -285,7 +318,7 @@ namespace ET
             var segmentCount = math.ceil(math.distance(rayStartIn, rayEndIn) / self.GetSample().GetSettings().cellSize);
             for (int i = 0; i <= segmentCount; i++)
             {
-                var pos = math.lerp(rayStartIn, rayEndIn, i/segmentCount);
+                var pos = math.lerp(rayStartIn, rayEndIn, i / segmentCount);
                 self.segPoints.Add(pos);
             }
             return self.segPoints;
@@ -450,7 +483,7 @@ namespace ET
             return (false, (false, 0));
         }
 
-        public static void RecordMeshHeightOnPoint(this NavmeshManagerComponent self, int x, int y, int z, (bool isHitMesh, float height)info)
+        public static void RecordMeshHeightOnPoint(this NavmeshManagerComponent self, int x, int y, int z, (bool isHitMesh, float height) info)
         {
             if (self.recordMeshHeightDic.TryGetValue(x, out var dic2) == false)
             {
@@ -469,10 +502,10 @@ namespace ET
 
         private static readonly RcVec3f MPolyPickExt = new RcVec3f(2, 4, 2);
         private static readonly DtQueryDefaultFilter MFilter = new DtQueryDefaultFilter();
-        
+
         public static NavmeshManagerComponent.NavMeshData GetNavMeshData(this NavmeshManagerComponent self, float3 startPosition)
         {
-            NavmeshManagerComponent.NavMeshData result = new ();
+            NavmeshManagerComponent.NavMeshData result = new();
             if (!self.isLoadMeshFinished || self.isLoadMeshError)
             {
                 Log.Warning("NavMesh is not ready.");
@@ -494,13 +527,13 @@ namespace ET
                 return result;
             }
 
-            var polyCenter = self.m_nav.GetPolyCenter(polyRef);
+            var polyCenter = self.navMesh.GetPolyCenter(polyRef);
             var diameter = (self.GetSample().GetInputGeom().GetMeshBoundsMax() - self.GetSample().GetInputGeom().GetMeshBoundsMin()).Length();
             List<long> polys = new List<long>();
             List<long> resultParent = new List<long>();
             List<float> resultCost = new List<float>();
             List<(DtMeshTile, DtPoly)> tilesAndPolygons = new List<(DtMeshTile, DtPoly)>();
-            if (!query.FindPolysAroundCircle(polyRef, polyCenter, diameter / 2, MFilter, ref polys, ref resultParent, ref resultCost).Succeeded())
+            if (!query.FindPolysAroundCircle(polyRef, polyCenter, diameter, MFilter, ref polys, ref resultParent, ref resultCost).Succeeded())
             {
                 Log.Warning("Failed to find polys around circle.");
                 return result;
@@ -517,7 +550,7 @@ namespace ET
 
             for (int i = 0; i < polys.Count; i++)
             {
-                var status = self.m_nav.GetTileAndPolyByRef(polys[i], out var tile, out var poly);
+                var status = self.navMesh.GetTileAndPolyByRef(polys[i], out var tile, out var poly);
                 if (!status.Succeeded())
                 {
                     continue;
@@ -552,7 +585,7 @@ namespace ET
             int y = (int)(rayPosIn.y * 100);
             int z = (int)(rayPosIn.z * 100);
 
-            (bool isRecord, (bool isHitMesh, float height)info) = self.GetMeshHeightOnPointRecord(x, y, z);
+            (bool isRecord, (bool isHitMesh, float height) info) = self.GetMeshHeightOnPointRecord(x, y, z);
             if (isRecord)
             {
                 return info;
@@ -647,7 +680,8 @@ namespace ET
             return (false, 0);
         }
 
-        public static bool FrustumTest(this NavmeshManagerComponent self, float bmin_x, float bmin_y, float bmin_z, float bmax_x, float bmax_y, float bmax_z)
+        public static bool FrustumTest(this NavmeshManagerComponent self, float bmin_x, float bmin_y, float bmin_z, float bmax_x, float bmax_y,
+        float bmax_z)
         {
             foreach (float[] plane in self.frustumPlanes)
             {
@@ -702,6 +736,14 @@ namespace ET
         public static bool FrustumTest(this NavmeshManagerComponent self, RcVec3f bmin, RcVec3f bmax)
         {
             return self.FrustumTest(bmin.X, bmin.Y, bmin.Z, bmax.X, bmax.Y, bmax.Z);
+        }
+
+        public static void FixedUpdate(this NavmeshManagerComponent self, float fixedDeltaTime)
+        {
+            if (self.obstacleTool.GetTileCache() != null)
+            {
+                self.obstacleTool.GetTileCache().Update();
+            }
         }
     }
 }

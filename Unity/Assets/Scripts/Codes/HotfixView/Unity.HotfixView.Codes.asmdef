@@ -11,8 +11,9 @@
         "Unity.Loader",
         "Unity.RenderPipelines.Universal.Runtime",
         "MirrorVerse",
-        "MirrorVerse.UI.MirrorSceneClassyUI",
+        "MirrorVerse.UI.RendererFeatures",
         "MirrorVerse.UI.Renderers",
+        "MirrorVerse.UI.MirrorSceneClassyUI",
         "Unity.TextMeshPro",
         "ShootTextPro",
         "Unity.Services.PlayerAccounts",
@@ -25,7 +26,8 @@
         "DOTween.Runtime",
         "Unity.Advertisement.IosSupport",
         "UniWebView-CSharp",
-        "StatusIndiactors"
+        "StatusIndiactors",
+        "AppsFlyer"
     ],
     "includePlatforms": [
         "Editor"

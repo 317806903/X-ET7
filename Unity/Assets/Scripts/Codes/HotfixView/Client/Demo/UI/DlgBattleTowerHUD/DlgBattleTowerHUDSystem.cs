@@ -107,12 +107,12 @@ namespace ET.Client
 		public static void ShowTowerInfo_Base(this DlgBattleTowerHUD self)
 		{
 			string itemCfgId = self.towerCfgId;
-			string towerName = ItemHelper.GetItemName(itemCfgId);
+			string towerName = ET.ItemHelper.GetItemName(itemCfgId);
 
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
 
 			self.View.E_TowerNameTextMeshProUGUI.text = towerName;
-			int starCount = (int)ItemHelper.GetTowerItemQualityRank(itemCfgId);
+			int starCount = (int)ET.ItemHelper.GetTowerItemQualityRank(itemCfgId);
 			self.View.E_IconStar1Image.gameObject.SetActive(starCount>=1);
 			self.View.E_IconStar2Image.gameObject.SetActive(starCount>=2);
 			self.View.E_IconStar3Image.gameObject.SetActive(starCount>=3);
@@ -161,17 +161,17 @@ namespace ET.Client
 				}
 			}
 
-			string icon = ItemHelper.GetItemIcon(itemCfgId);
+			string icon = ET.ItemHelper.GetItemIcon(itemCfgId);
 			if (string.IsNullOrEmpty(icon) == false)
 			{
 				Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(icon);
 				self.View.E_IconImage.sprite = sprite;
 			}
 
-			string desc = ItemHelper.GetItemDesc(itemCfgId);
+			string desc = ET.ItemHelper.GetItemDesc(itemCfgId);
 			self.View.ELabel_DescriptionTextMeshProUGUI.text = desc;
 
-			List<string> labels = ItemHelper.GetTowerItemLabels(itemCfgId);
+			List<string> labels = ET.ItemHelper.GetTowerItemLabels(itemCfgId);
 			int labelCount = labels.Count;
 			self.View.EImage_Label1Image.gameObject.SetActive((labelCount>=1));
 			self.View.EImage_Label2Image.gameObject.SetActive((labelCount>=2));
@@ -189,9 +189,9 @@ namespace ET.Client
 		public static void ShowTowerInfo_Attr(this DlgBattleTowerHUD self)
 		{
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(self.towerCfgId);
+			string propertyType = UnitCfgCategory.Instance.Get(towerCfg.UnitId[0]).PropertyType;
 
-			string itemCfgId = self.towerCfgId;
-			var attributeList = ItemHelper.GetTowerAttribute(itemCfgId, towerCfg.Level[0]);
+			var attributeList = ET.ItemHelper.GetAttributeProperty(propertyType, towerCfg.Level[0]);
 			self.View.ENode_Attribute1Image.SetVisible(attributeList.Count >= 1);
 			self.View.ENode_Attribute2Image.SetVisible(attributeList.Count >= 2);
 			self.View.ENode_Attribute3Image.SetVisible(attributeList.Count >= 3);

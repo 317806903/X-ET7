@@ -8,6 +8,7 @@ namespace ScreenAdapt
     [Serializable]
     public class AnimatorAdaptConfig
     {
+        public bool isSaved;
         [Tooltip("设置状态机参数: int|Blend|0")] public List<string> animParams;
         public string animName;
     }
@@ -34,6 +35,10 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
+            if (config.isSaved == false)
+            {
+                return;
+            }
             for (int i = 0; i < config.animParams.Count; i++)
             {
                 string[] param = config.animParams[i].Split('|');

@@ -120,7 +120,7 @@ namespace ET.Ability
                             effectCasterUnitId = unitEffect.Id;
                         }
                         SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
-                        sceneEffectComponent.RecordEffect(unitEffect, actionCfgCreateEffect.Key, effectObj);
+                        sceneEffectComponent.RecordEffect(unit, actionCfgCreateEffect.Key, effectObj);
 
                         ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitSceneEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
                     }
@@ -209,7 +209,7 @@ namespace ET.Ability
             if (isSceneEffect)
             {
                 SceneEffectComponent sceneEffectComponent = unitEffect.DomainScene().GetComponent<SceneEffectComponent>();
-                return sceneEffectComponent.ChkCanAddEffect(unitEffect, key, maxKeyNum);
+                return sceneEffectComponent.ChkCanAddEffect(key, maxKeyNum);
             }
             else
             {

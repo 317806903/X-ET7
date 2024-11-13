@@ -15,6 +15,7 @@ namespace ET.Ability
 
             EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnCreate()
             {
+                actionContext = actionContext,
                 unit = unit,
                 createUnit = aoeUnit,
             });
@@ -22,9 +23,14 @@ namespace ET.Ability
         }
 
 
-        public static void EventHandler(Unit unit, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
+        public static void EventHandler(Unit unit, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent, ref ActionContext actionContext)
         {
-            unit.GetComponent<AoeObj>()?.TrigEvent(abilityAoeMonitorTriggerEvent);
+            AoeObj aoeObj = unit.GetComponent<AoeObj>();
+            if (aoeObj != null)
+            {
+                aoeObj.SetAoeActionContext(ref actionContext);
+                aoeObj.TrigEvent(abilityAoeMonitorTriggerEvent, ref actionContext);
+            }
         }
     }
 }

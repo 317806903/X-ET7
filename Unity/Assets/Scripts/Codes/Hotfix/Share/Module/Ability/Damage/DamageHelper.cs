@@ -46,20 +46,21 @@ namespace ET.Ability
             int count = selectHandle.unitIds.Count;
             actionContext.selectUnitNum = count;
 
+            bool isCriticalStrike = ChkIsCriticalStrike(unit, actionCfg_AttackArea.DamageInfo_Ref);
+            actionContext.isCriticalStrike = isCriticalStrike;
+
             for (int i = 0; i < count; i++)
             {
                 Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
 
                 EventSystem.Instance.Publish(unit.DomainScene(), new AbilityTriggerEventType.UnitOnHit()
                 {
+                    actionContext = actionContext,
                     attackerUnit = unit,
                     defenderUnit = targetUnit,
                 });
 
             }
-
-            bool isCriticalStrike = ChkIsCriticalStrike(unit, actionCfg_AttackArea.DamageInfo_Ref);
-            actionContext.isCriticalStrike = isCriticalStrike;
 
             SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
@@ -84,11 +85,11 @@ namespace ET.Ability
 
             if (string.IsNullOrEmpty(actionCfg_AttackArea.DamageInfo) == false)
             {
-                await DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot, isCriticalStrike);
+                await DoDamage(unit, actionCfg_AttackArea.DamageInfo_Ref, selectHandle, actionCfg_AttackArea.DamageAllot, isCriticalStrike, actionContext);
             }
         }
 
-        public static async ETTask DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot, bool isCriticalStrike)
+        public static async ETTask DoDamage(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, DamageAllot damageAllot, bool isCriticalStrike, ActionContext actionContext)
         {
             if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
             {
@@ -145,7 +146,7 @@ namespace ET.Ability
                 {
                     damage *= damageScale;
                 }
-                CreateDamageInfo(unit, targetUnit, damage, isCriticalStrike);
+                CreateDamageInfo(unit, targetUnit, damage, isCriticalStrike, ref actionContext);
                 if (i >= stopNum && i % stopNum == 0)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
@@ -317,10 +318,10 @@ namespace ET.Ability
             return damageValue;
         }
 
-        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, bool isCrit)
+        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, bool isCrit, ref ActionContext actionContext)
         {
             Scene scene = unit.DomainScene();
-            return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, isCrit);
+            return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, isCrit, ref actionContext);
         }
     }
 }

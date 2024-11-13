@@ -18,13 +18,13 @@ namespace ET.Server
 
 		public static async ETTask LoadCameraPlayerSkillList(long playerId, Unit cameraPlayerUnit)
 		{
-			PlayerSkillComponent playerSkillComponent = await PlayerCacheHelper.GetPlayerSkillByPlayerId(cameraPlayerUnit.DomainScene(), playerId);
-			List<string> skillCfgIdList = playerSkillComponent.GetUsingSkillCfgList();
-			foreach (string skillCfgId in skillCfgIdList)
+			List<ItemComponent> itemList = await ET.Server.PlayerCacheHelper.GetBattleSkillItemListByPlayerId(cameraPlayerUnit.DomainScene(), playerId, true);
+			foreach (var itemComponent in itemList)
 			{
 				ET.AbilityConfig.SkillSlotType skillSlotType = SkillSlotType.ManualSkill;
-				ET.Ability.SkillHelper.LearnSkill(cameraPlayerUnit, skillCfgId, 1, skillSlotType);
+				ET.Ability.SkillHelper.LearnSkill(cameraPlayerUnit, itemComponent.CfgId, 1, skillSlotType);
 			}
+
 		}
 
 	}

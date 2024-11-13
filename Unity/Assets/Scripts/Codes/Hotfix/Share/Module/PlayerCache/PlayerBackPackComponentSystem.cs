@@ -68,6 +68,26 @@ namespace ET
                     }
                     self.AddItem(itemCfgId, 1);
                 }
+
+                List<string> towerCfgList = ET.ItemHelper.GetTowerListInBattleDeckWhenUnLockDefault();
+                foreach (var itemCfgId in towerCfgList)
+                {
+                    if (string.IsNullOrEmpty(itemCfgId))
+                    {
+                        continue;
+                    }
+                    self.AddItem(itemCfgId, 1);
+                }
+
+                List<string> skillCfgList = ET.ItemHelper.GetSkillListInBattleDeckWhenUnLockDefault();
+                foreach (var itemCfgId in skillCfgList)
+                {
+                    if (string.IsNullOrEmpty(itemCfgId))
+                    {
+                        continue;
+                    }
+                    self.AddItem(itemCfgId, 1);
+                }
             }
         }
 
@@ -94,6 +114,16 @@ namespace ET
         public static List<ItemComponent> GetItemListByItemType(this PlayerBackPackComponent self, ItemType itemType, ItemSubType itemSubType)
         {
             return self._GetItemManagerComponent().GetItemList(itemType, itemSubType);
+        }
+
+        public static HashSet<string> GetItemHashSet(this PlayerBackPackComponent self)
+        {
+            return self._GetItemManagerComponent().GetItemHashSet();
+        }
+
+        public static HashSet<string> GetItemHashSetByItemType(this PlayerBackPackComponent self, ItemType itemType, ItemSubType itemSubType)
+        {
+            return self._GetItemManagerComponent().GetItemHashSetByItemType(itemType, itemSubType);
         }
 
         public static ItemComponent GetItem(this PlayerBackPackComponent self, long itemId)
@@ -182,6 +212,19 @@ namespace ET
             foreach (string itemCfgId in self.newItemList)
             {
                 if (ItemHelper.ChkIsTower(itemCfgId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool ChkIsNewSkill(this PlayerBackPackComponent self)
+        {
+            foreach (string itemCfgId in self.newItemList)
+            {
+                if (ItemHelper.ChkIsSkill(itemCfgId))
                 {
                     return true;
                 }

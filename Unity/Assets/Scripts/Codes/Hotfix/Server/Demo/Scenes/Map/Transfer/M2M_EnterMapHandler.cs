@@ -85,12 +85,10 @@ namespace ET.Server
 			m2CCreateUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(observerUnit);
 			MessageHelper.SendToClient(observerUnit, m2CCreateUnits);
 
-			// if (playerUnit != null)
-			// {
-			// 	M2C_CreateMyUnit m2CCreatePlayerUnits = new ();
-			// 	m2CCreatePlayerUnits.Unit = ET.Ability.UnitHelper.CreateUnitInfo(playerUnit);
-			// 	MessageHelper.SendToClient(observerUnit, m2CCreatePlayerUnits);
-			// }
+			if (gamePlayBattleLevelCfg.IsGlobalMode)
+			{
+				gamePlayComponent.StartShow();
+			}
 
 			if (bExistUnit)
 			{

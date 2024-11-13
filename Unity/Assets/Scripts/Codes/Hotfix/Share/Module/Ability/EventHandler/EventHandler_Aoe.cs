@@ -7,10 +7,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnCreate args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnCreate);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnCreate, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -21,10 +22,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.UnitOnRemoved args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnRemoved);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnRemoved, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -35,10 +37,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnEnter args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnEnter);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnEnter, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}
@@ -49,10 +52,11 @@
 		{
 			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.AoeOnExist args)
 			{
+				ActionContext actionContext = args.actionContext;
 				if (UnitHelper.ChkUnitAlive(args.unit) && UnitHelper.ChkIsAoe(args.unit))
 				{
 					Unit unit = args.unit;
-					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnExist);
+					EventHandlerHelper.Run_Aoe(unit, AbilityConfig.AoeTriggerEvent.AoeOnExist, ref actionContext);
 				}
 				await ETTask.CompletedTask;
 			}

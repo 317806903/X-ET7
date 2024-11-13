@@ -27,7 +27,7 @@ namespace ET.Client
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.AddItemRefreshListener(((transform, i) =>
                 self.AddListItemRefreshListener(transform, i).Coroutine()));
 
-            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ItemShow";
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.prefabSource.poolSize = 3;
             self.View.ELoopScrollList_RewardLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                 self.AddTowerBuyListener(transform, i));
@@ -195,7 +195,7 @@ namespace ET.Client
             {
                 foreach (var item in challengeLevelCfg.RepeatRewardItemListShow)
                 {
-                    if (ItemHelper.ChkIsTower(item.Key))
+                    if (ET.ItemHelper.ChkIsToken(item.Key) == false)
                     {
                         return true;
                     }
@@ -205,7 +205,7 @@ namespace ET.Client
             {
                 foreach (var item in challengeLevelCfg.FirstRewardItemListShow)
                 {
-                    if (ItemHelper.ChkIsTower(item.Key))
+                    if (ET.ItemHelper.ChkIsToken(item.Key) == false)
                     {
                         return true;
                     }
@@ -251,21 +251,18 @@ namespace ET.Client
 
         public static async ETTask AddTowerBuyListener(this EPage_ChallengNormal self, Transform transform, int index)
         {
-            transform.name = $"Item_TowerBuy_{index}";
-            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
-            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
+            transform.name = $"Item_TowerBattleBuy_{index}";
+            Scroll_Item_ItemShow itemTowerBuy = self.ScrollItemReward[index].BindTrans(transform);
 
             int clearLevel = await self.GetCurPveIndex();
             ChallengeLevelCfg challengeLevelCfg = TowerDefense_ChallengeLevelCfgCategory.Instance.GetChallengeByIndex(self.selectIndex + 1);
 
             string itemCfgId = self.itemList[index].itemCfgId;
             int itemNum = self.itemList[index].itemNum;
-            await itemTowerBuy.ShowBagItem(itemCfgId, true, itemNum);
 
-            if (ItemHelper.ChkIsTower(itemCfgId))
-            {
-                itemTowerBuy.SetCheckMark(clearLevel >= challengeLevelCfg.Index);
-            }
+            await itemTowerBuy.Init(itemCfgId, true);
+            itemTowerBuy.SetItemNum(itemNum);
+            itemTowerBuy.ShowCheck(clearLevel >= challengeLevelCfg.Index);
         }
 
         public static void AddMonsterListener(this EPage_ChallengNormal self, Transform transform, int index)

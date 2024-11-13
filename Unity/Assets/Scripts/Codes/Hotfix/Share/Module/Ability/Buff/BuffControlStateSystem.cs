@@ -221,6 +221,21 @@ namespace ET.Ability
         }
 
         /// <summary>
+        /// 是否不可作为目标
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool ChkCannotBeTargeted(this BuffComponent self)
+        {
+            bool bCannotBeTargeted = self.ChkBuffByTagType(BuffTagType.CannotBeTargeted);
+            if (bCannotBeTargeted)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// GameObject的显示状态
         /// </summary>
         /// <param name="self"></param>

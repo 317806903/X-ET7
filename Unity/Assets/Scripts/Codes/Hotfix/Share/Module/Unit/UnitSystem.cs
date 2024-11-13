@@ -102,6 +102,12 @@ namespace ET
             Unit unit = self;
             while (true)
             {
+                if (UnitHelper.ChkIsPlayer(unit)
+                    || UnitHelper.ChkIsCameraPlayer(unit)
+                    || UnitHelper.ChkIsActor(unit))
+                {
+                    break;
+                }
                 Unit casterUnit = unit.GetCaster();
                 if (casterUnit == null)
                 {
@@ -109,12 +115,6 @@ namespace ET
                 }
 
                 unit = casterUnit;
-                if (UnitHelper.ChkIsPlayer(unit)
-                    || UnitHelper.ChkIsCameraPlayer(unit)
-                    || UnitHelper.ChkIsActor(unit))
-                {
-                    break;
-                }
             }
 
             if (isContainSelf == false)

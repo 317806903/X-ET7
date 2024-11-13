@@ -92,9 +92,14 @@ namespace ET.Client
 			return await AuthorizedPermissionManagerComponent.Instance.ChkCameraAuthorization();
 		}
 
-		public static async ETTask ChkCameraAuthorizationAndRequest(this ARSessionComponent self, Action<bool> callBack)
+		public static async ETTask ChkCameraAuthorizationAndRequest(this ARSessionComponent self, Action<bool, bool> callBack)
 		{
 			await AuthorizedPermissionManagerComponent.Instance.ChkCameraAuthorizationAndRequest(callBack);
+		}
+
+		public static async ETTask JumpToSettings(this ARSessionComponent self)
+		{
+			await AuthorizedPermissionManagerComponent.Instance.JumpToSettings();
 		}
 
 		public static async ETTask LoadARSession(this ARSessionComponent self, Action next, bool needShowTipBefore)
@@ -123,8 +128,9 @@ namespace ET.Client
 
 		public static async ETTask _LoadARSession(this ARSessionComponent self, Action next)
 		{
-			await self.ChkCameraAuthorizationAndRequest((bCameraAuthorization) =>
+			await self.ChkCameraAuthorizationAndRequest((bCameraAuthorization, isNeedJumpToSetting) =>
 			{
+				Log.Debug($"-- bCameraAuthorization=[{bCameraAuthorization}] isNeedJumpToSetting=[{isNeedJumpToSetting}]");
 				if (self.IsDisposed)
 				{
 					return;
@@ -139,7 +145,7 @@ namespace ET.Client
 				});
 				if (bCameraAuthorization == false)
 				{
-					self.LoadARSessionErr(next).Coroutine();
+					self.LoadARSessionErr(isNeedJumpToSetting, next).Coroutine();
 				}
 				else
 				{
@@ -148,7 +154,7 @@ namespace ET.Client
 			});
 		}
 
-		public static async ETTask LoadARSessionErr(this ARSessionComponent self, Action next)
+		public static async ETTask LoadARSessionErr(this ARSessionComponent self, bool isNeedJumpToSetting, Action next)
 		{
 			await TimerComponent.Instance.WaitFrameAsync();
 			while (true)
@@ -168,15 +174,11 @@ namespace ET.Client
 			string sureText = LocalizeComponent.Instance.GetTextValue("TextCode_Key_NeedCameraPermission_Confirm");
 			UIManagerHelper.ShowOnlyConfirm(self.DomainScene(), message, async () =>
 			{
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIShowCommonLoading()
+				if (isNeedJumpToSetting)
 				{
-					bForce = true,
-				});
-				await TimerComponent.Instance.WaitAsync(3000);
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeUIHideCommonLoading()
-				{
-					bForce = true,
-				});
+					await self.JumpToSettings();
+					await TimerComponent.Instance.WaitAsync(3000);
+				}
 
 				self.LoadARSession(() =>
 				{
@@ -207,7 +209,9 @@ namespace ET.Client
 			ARSessionPrefab.name = ARSessionPrefab.name.Replace("(Clone)", "");
 			self.ARSessoinGo = ARSessionPrefab;
 
-			UnityEngine.Object.DontDestroyOnLoad(self.ARSessoinGo);
+			self.ARSessoinGo.transform.SetParent(GlobalComponent.Instance.ClientManagerRoot);
+			self.ARSessoinGo.transform.localPosition = UnityEngine.Vector3.zero;
+			self.ARSessoinGo.transform.localScale = UnityEngine.Vector3.one;
 
 			MainQualitySettingComponent.Instance.ForceResetResoution();
 
@@ -449,14 +453,26 @@ namespace ET.Client
 
 		public static void OnMenuReviewSceneOpen(this ARSessionComponent self)
 		{
-			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			if (self.IsReScanMeshing)
 			{
-				eventName = "FinishClicked",
-				properties = new()
+				// If "rescale" button is clicked and go back to mesh review and scale selection for the second or third times.
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 				{
-					{"mesh_num", self.meshFaceCount},
-				}
-			});
+					eventName = "RescaleClicked",
+				});
+			}
+			else
+			{
+				// If "finish" button is clicked and proceed to mesh review and scale selection for the first time.
+				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				{
+					eventName = "FinishClicked",
+					properties = new()
+					{
+						{"mesh_num", self.meshFaceCount},
+					}
+				});
+			}
 		}
 
 		public static void OnMenuReviewSceneClose(this ARSessionComponent self, bool confirm)
@@ -474,10 +490,22 @@ namespace ET.Client
 			}
 			else
 			{
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+				if (self.IsReScanMeshing)
 				{
-					eventName = "ResumeClicked",
-				});
+					// If "rescan" button is clicked, it restarts to standby to scan.
+					EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+					{
+						eventName = "RescanClicked",
+					});
+				}
+				else
+				{
+					// If "resume" button is clicked, continue the first time scanning.
+					EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+					{
+						eventName = "ResumeClicked",
+					});
+				}
 			}
 		}
 
@@ -1002,6 +1030,7 @@ namespace ET.Client
 
 		public static void OnMenuCreateScene(this ARSessionComponent self)
 		{
+			// Note for the new flow: this callback is called when start button is pressed.
 			Log.Debug($"ARSessionComponent OnMenuCreateScene");
 
 			UIAudioManagerHelper.PlayHighestMusic(self.DomainScene(), MusicType.ARScan);
@@ -1010,6 +1039,22 @@ namespace ET.Client
 			self.meshFaceCount = 0;
 			self.frameCaptured = 0;
 			self.lastScanWarning = 0;
+
+			// Scene scan started.
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
+			{
+				// 扫图开始事件
+				eventName = "ScanStarted",
+				properties = new()
+							{
+								{"session_id", self.GetARSceneId()},
+							}
+			});
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
+			{
+				// 扫图结束事件开始计时
+				eventName = "ScanEnded",
+			});
 		}
 
 		public static void OnMenuLoadRecentScene(this ARSessionComponent self)
@@ -1071,24 +1116,17 @@ namespace ET.Client
 				self.CurrentARSceneId = sceneInfo.Value.sceneId;
 			}
 
-			if (self.EntranceType == "scan")
+			// Note in the new flow this is called when Camera is opened and scene is automatically created.
+			// And user has not yet press start scan button. So we only log the stanby event with scene ID here.
+			EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
 			{
-				// Scen just created and standby for scan start.
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLogging()
-				{
-					// 扫图开始事件
-					eventName = "ScanStarted",
-					properties = new()
-								{
-									{"session_id", self.GetARSceneId()},
-								}
-				});
-				EventSystem.Instance.Publish(self.DomainScene(), new EventType.NoticeEventLoggingStart()
-				{
-					// 扫图结束事件开始计时
-					eventName = "ScanEnded",
-				});
-			}
+				// AR场景相机和空场景初始化完成，准备开始扫描
+				eventName = "SceneStandby",
+				properties = new()
+					{
+						{"session_id", self.GetARSceneId()},
+					}
+			});
 		}
 
 		public static void OnSceneReady(this ARSessionComponent self, StatusOr<SceneInfo> sceneInfo)

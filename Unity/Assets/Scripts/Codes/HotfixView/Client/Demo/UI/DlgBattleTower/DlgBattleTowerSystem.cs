@@ -29,12 +29,12 @@ namespace ET.Client
     {
         public static void RegisterUIEvent(this DlgBattleTower self)
         {
-            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.prefabName = "Item_Tower";
+            self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBattle";
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                     self.AddTowerItemRefreshListener(transform, i));
 
-            self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+            self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.prefabSource.prefabName = "Item_TowerBattleBuy";
             self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.prefabSource.poolSize = 5;
             self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.AddItemRefreshListener((transform, i) =>
                     self.AddTowerBuyListener(transform, i));
@@ -791,6 +791,7 @@ namespace ET.Client
             {
                 self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.horizontal = true;
                 self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.horizontal = true;
+                self.View.ELoopScrollList_BuyLoopHorizontalScrollRect.SetSrcollMiddle();
             }
         }
 
@@ -1089,6 +1090,22 @@ namespace ET.Client
                 return;
             }
 
+            if (ET.ItemHelper.ChkIsAttackTower(towerCfgId))
+            {
+                long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = ET.Client.GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+                int limitTowerCount = gamePlayTowerDefenseComponent.GetPutAttackTowerLimitCount(myPlayerId);
+                int curTowerCount = gamePlayTowerDefenseComponent.GetPutAttackTowerCount(myPlayerId);
+                if (curTowerCount >= limitTowerCount)
+                {
+                    string msg = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_MaxPutTowerCount", limitTowerCount);
+                    UIManagerHelper.ShowTip(self.DomainScene(), msg);
+                    UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.Click);
+                    self.RefreshPlayerTowerAnimation();
+                    return;
+                }
+            }
+
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.gameObject.SetActive(false);
             self.View.EG_BuyNodeRectTransform.SetVisible(false);
             //self.View.E_QuitBattleButton.SetVisible(false);
@@ -1110,25 +1127,25 @@ namespace ET.Client
 
         public static void AddTowerItemRefreshListener(this DlgBattleTower self, Transform transform, int index)
         {
-            transform.name = $"Item_Tower_{index}";
-            Scroll_Item_Tower itemTower = self.ScrollItemTowers[index].BindTrans(transform);
+            transform.name = $"Item_TowerBattle_{index}";
+            Scroll_Item_TowerBattle itemTower = self.ScrollItemTowers[index].BindTrans(transform);
 
             List<string> list = self.GetOwnerTowerList();
 
             string itemCfgId = list[index];
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
-            itemTower.ShowBagItem(itemCfgId, false).Coroutine();
-            itemTower.ELabel_NumTextMeshProUGUI.text = $"{self.myOwnTowerDic[itemCfgId]}";
+            itemTower.Init(itemCfgId, false).Coroutine();
+            itemTower.SetItemNum(self.myOwnTowerDic[itemCfgId]);
 
-            ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onPress.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemTower.GetActionButton()).onPress.AddListener((go, xx) =>
             {
                 self.OnSelectTower(itemCfgId);
             });
 
             long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
 
-            ET.EventTriggerListener.Get(itemTower.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemTower.GetActionButton()).onClick.AddListener((go, xx) =>
             {
                 if (ET.Client.UIGuideHelper.ChkIsUIGuideing(self.DomainScene(), true) == false)
                 {
@@ -1146,9 +1163,8 @@ namespace ET.Client
 
         public static void AddTowerBuyListener(this DlgBattleTower self, Transform transform, int index)
         {
-            transform.name = $"Item_TowerBuy_{index}";
-            Scroll_Item_TowerBuy itemTowerBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
-            itemTowerBuy.EG_TowerBuyShowRectTransform.SetVisible(true);
+            transform.name = $"Item_TowerBattleBuy_{index}";
+            Scroll_Item_TowerBattleBuy itemTowerBuy = self.ScrollItemTowerBuy[index].BindTrans(transform);
 
             List<string> list = self.GetTowerBuyList();
             List<bool> listBought = self.GetTowerBoughtsList();
@@ -1156,27 +1172,13 @@ namespace ET.Client
             string towerCfgId = list[index];
             string itemCfgId = list[index];
 
-            itemTowerBuy.ShowBagItem(itemCfgId, false).Coroutine();
+            itemTowerBuy.Init(itemCfgId, false).Coroutine();
 
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
             int buyTowerCostGold = self.GetTowerBuyCost(index);
+            itemTowerBuy.SetBuyStatus(listBought[index], buyTowerCostGold);
 
-            if (listBought[index])
-            {
-                itemTowerBuy.EImage_PurchasedImage.SetVisible(true);
-                itemTowerBuy.EG_BuyBGRectTransform.SetVisible(false);
-            }
-            else
-            {
-                itemTowerBuy.EImage_PurchasedImage.SetVisible(false);
-                itemTowerBuy.EG_BuyBGRectTransform.SetVisible(true);
-                itemTowerBuy.EButton_BuyButton.SetVisible(true);
-                //itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.SetVisible(true);
-
-                itemTowerBuy.ELabel_BuyCostTextMeshProUGUI.ShowCoinCostTextInBattleTower(self.DomainScene(), buyTowerCostGold).Coroutine();
-            }
-
-            ET.EventTriggerListener.Get(itemTowerBuy.EButton_SelectButton.gameObject).onClick.AddListener((go, xx) =>
+            ET.EventTriggerListener.Get(itemTowerBuy.GetActionButton()).onClick.AddListener((go, xx) =>
             {
                 self.BuyTower(index, towerCfgId).Coroutine();
             });

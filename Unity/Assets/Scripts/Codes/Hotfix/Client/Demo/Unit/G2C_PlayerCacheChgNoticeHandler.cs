@@ -44,9 +44,6 @@ namespace ET.Client
 				case PlayerModelType.SeasonInfo:
 					isNeedClearPlayerModel = true;
 					break;
-				case PlayerModelType.Skills:
-					isNeedClearPlayerModel = true;
-					break;
 				case PlayerModelType.TokenArcadeCoinAdd:
 				case PlayerModelType.TokenArcadeCoinReduce:
 				case PlayerModelType.TokenDiamondAdd:

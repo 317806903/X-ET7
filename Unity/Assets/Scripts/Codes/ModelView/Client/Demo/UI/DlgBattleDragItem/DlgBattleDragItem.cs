@@ -22,7 +22,6 @@ namespace ET.Client
 		public DlgBattleDragItemViewComponent View { get => this.GetComponent<DlgBattleDragItemViewComponent>(); }
 
 		public long Timer;
-		public bool isUpdating;
 
 		public BattleDragItemType battleDragItemType;
 		public string battleDragItemParam;
@@ -36,8 +35,10 @@ namespace ET.Client
 
 		//当前要被放置的对象
 		public GameObject currentPlaceObj = null;
+		public float3 _lastPlaceObjPos = float3.zero;
 		public bool isClickUGUI = false;
 		public bool isDragging = false;
+		public bool redrawPathWhenClose = false;
 		public bool isCliffy = false;
 		public bool isRaycast = false;
 		public float3 rayHitPos;
@@ -45,7 +46,7 @@ namespace ET.Client
 		public int tryNum = 0;
 		public float tryDis = 0f;
 
-		public bool canPutMonsterCall = true;
+		public bool pathfindingSuccess = true;
 
 		//坐标在Y轴上的偏移量
 		public float _YOffset = 0.1F;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using DG.Tweening;
 using ET.Ability;
 using ET.AbilityConfig;
 using UnityEngine;
@@ -11,18 +12,36 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_SkillBattleInfo))]
 	public static class Scroll_Item_SkillBattleInfoSystem
 	{
-		public static void Init(this Scroll_Item_SkillBattleInfo self)
+		public static void RegisterUIEvent(this Scroll_Item_SkillBattleInfo self)
 		{
+
 		}
 
-        public static void UpdateSkillBaseInfo(this Scroll_Item_SkillBattleInfo self, long unitId, string skillCfgId, Action<string> onPressCallBack, Action<string> onExitCallBack, Action<string> onClickCallBack)
-        {
-	        SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
-	        self.EButton_IconImage.SetImageByResIconCfgId(self, skillCfg.Icon).Coroutine();
-	        self.EButton_nameTextMeshProUGUI.text = skillCfg.Name;
-	        self.EButton_ShowDetailButton.SetVisible(false);
+		public static void HideItem(this Scroll_Item_SkillBattleInfo self)
+		{
 
-	        ET.EventTriggerListener.Get(self.EButton_BuyEnergyButton.gameObject).onClick.AddListener(async (go, xx) =>
+		}
+
+
+        public static void UpdateSkillBaseInfo(this Scroll_Item_SkillBattleInfo self, long unitId, string skillCfgId, Action<string> onDownCallBack, Action<string> onPressCallBack, Action<string> onExitCallBack, Action<string> onClickCallBack)
+        {
+	        self.unitId = unitId;
+	        self.skillCfgId = skillCfgId;
+	        self.onDownCallBack = onDownCallBack;
+	        self.onPressCallBack = onPressCallBack;
+	        self.onExitCallBack = onExitCallBack;
+	        self.onClickCallBack = onClickCallBack;
+
+	        self.isPressing = false;
+	        self.isShowDetail = true;
+
+	        self.EImage_IconImage.SetImageByItemCfgId(self, skillCfgId).Coroutine();
+	        self.EButton_ShowDetailButton.SetVisible(false);
+	        self.EG_BuyEnergyRectTransform.SetVisible(true);
+	        self.ELabel_AddTimesTipsTextMeshProUGUI.SetVisible(false);
+	        self.ELabel_TimesTextMeshProUGUI.text = "";
+
+	        self.EButton_BuyEnergyButton.AddListener(async () =>
 	        {
 		        if (self.IsDisposed)
 		        {
@@ -56,8 +75,6 @@ namespace ET.Client
 		        }
 	        });
 
-	        bool isPressing = false;
-
             ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).isNeedClickWhenPress = true;
             ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onPress.AddListener(async (go, xx) =>
             {
@@ -69,23 +86,10 @@ namespace ET.Client
                 //Log.Error($"====onDown");
                 self.EG_RootRectTransform.localScale = Vector3.one * 1.1f;
                 self.EButton_ShowDetailButton.SetVisible(true);
-                self.CheckUserInput(async () =>
-                {
-	                isPressing = false;
-	                self.EButton_ShowDetailButton.SetVisible(false);
+                self.EG_BuyEnergyRectTransform.SetVisible(false);
 
-
-	                await TimerComponent.Instance.WaitAsync(500);
-	                if (self.IsDisposed)
-	                {
-		                return;
-	                }
-	                if (isPressing)
-	                {
-		                return;
-	                }
-	                self.RemoveSkillDetailTips();
-                }).Coroutine();
+                self.CheckUserInput().Coroutine();
+                onDownCallBack?.Invoke(skillCfgId);
 
             });
             ET.EventTriggerListener.Get(self.EButton_SelectButton.gameObject).onUp.AddListener((go, xx) =>
@@ -109,11 +113,19 @@ namespace ET.Client
                 onClickCallBack?.Invoke(skillCfgId);
             });
 
+            ET.EventTriggerListener.Get(self.EGBuyEnergyPressRectTransform.gameObject).onDown.AddListener((go, xx) =>
+            {
+	            //Log.Error($"====onDown");
+
+	            self.EButton_ShowDetailButton.SetVisible(true);
+	            self.CheckUserInput().Coroutine();
+
+            });
             ET.EventTriggerListener.Get(self.EButton_ShowDetailButton.gameObject).onEnter.AddListener(async (go, xx) =>
             {
 	            //Log.Error($"====onEnter");
 
-	            if (isPressing)
+	            if (self.isPressing)
 	            {
 		            return;
 	            }
@@ -129,13 +141,20 @@ namespace ET.Client
 		            return;
 	            }
 
-	            isPressing = true;
+	            self.isPressing = true;
 
-	            await self.CreateSkillDetailTips(self.uiTransform, unitId, skillCfgId, skillObj);
+	            if (self.isShowDetail)
+	            {
+		            await self.ShowSkillDetail(self.uiTransform, unitId, skillCfgId, skillObj);
+	            }
+	            else
+	            {
+		            await self.ShowSkillDetailTips(self.uiTransform, unitId, skillCfgId, skillObj);
+	            }
             });
         }
 
-        public static async ETTask CheckUserInput(this Scroll_Item_SkillBattleInfo self, Action resetPressing)
+        public static async ETTask CheckUserInput(this Scroll_Item_SkillBattleInfo self)
         {
 	        while (ET.UGUIHelper.CheckUserInput())
 	        {
@@ -145,29 +164,209 @@ namespace ET.Client
 			        return;
 		        }
 	        }
-	        resetPressing();
+
+	        self.isPressing = false;
+	        self.EButton_ShowDetailButton.SetVisible(false);
+	        self.EG_BuyEnergyRectTransform.SetVisible(true);
+
+	        if (self.isShowDetail)
+	        {
+	        }
+	        else
+	        {
+		        await TimerComponent.Instance.WaitAsync(500);
+		        if (self.IsDisposed)
+		        {
+			        return;
+		        }
+		        if (self.isPressing)
+		        {
+			        return;
+		        }
+		        self.RemoveSkillDetailTips();
+	        }
         }
 
         public static void UpdateSkillInfo(this Scroll_Item_SkillBattleInfo self, ET.Ability.SkillObj skillObj)
         {
-	        self.ELabel_CDTextMeshProUGUI.text = $"{Math.Round(skillObj.cdCountDown, 2)}";
-	        self.ELabel_EnergyTextMeshProUGUI.text = $"{Math.Round(skillObj.curEnergyNum, 2)}/{skillObj.GetEnergyFullNum()}";
-	        self.ELabel_CommonEnergyTextMeshProUGUI.text = $"{Math.Round(skillObj.GetCurCommonEnergyNum(), 2)}/{skillObj.GetCommonEnergyFullNum()}";
+	        self._UpdateSkillInfo_CD(skillObj);
+	        self._UpdateSkillInfo_EnergyCD(skillObj);
+	        self._UpdateSkillInfo_Times(skillObj);
+	        self._UpdateSkillInfo_Buy(skillObj);
+        }
 
+        public static void _UpdateSkillInfo_CD(this Scroll_Item_SkillBattleInfo self, ET.Ability.SkillObj skillObj)
+        {
+	        if (skillObj.cdTotal == 0)
+	        {
+		        self.EImage_CDImage.fillAmount = 1;
+		        return;
+	        }
+	        self.EImage_CDImage.fillAmount = 1 - skillObj.cdCountDown / skillObj.cdTotal;
+        }
+
+        public static void _UpdateSkillInfo_EnergyCD(this Scroll_Item_SkillBattleInfo self, ET.Ability.SkillObj skillObj)
+        {
+	        SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(skillObj.skillCfgId);
+
+	        if (skillConsumeCfg.ConsumeCommonEnergy > 0)
+	        {
+		        Unit unit = ET.Client.UnitHelper.GetUnit(self.DomainScene(), self.unitId);
+		        float totalCommonEnergy = unit.model.TotalCommonEnergy;
+		        int consumeCommonEnergy = skillConsumeCfg.ConsumeCommonEnergy;
+		        int realTotalCommonEnergy = (int)(totalCommonEnergy / consumeCommonEnergy) * consumeCommonEnergy;
+
+		        float curCommonEnergyNum = skillObj.GetCurCommonEnergyNum();
+
+		        if (curCommonEnergyNum >= realTotalCommonEnergy)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 0;
+			        return;
+		        }
+		        if (unit.model.RestoreCommonEnergyByTime <= 0)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 0;
+			        return;
+		        }
+		        float progress = (curCommonEnergyNum % consumeCommonEnergy) / (float)consumeCommonEnergy;
+		        if (self.EImage_EnergyCDImage.fillAmount < 1 - progress)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 1 - progress;
+		        }
+		        else
+		        {
+			        self.EImage_EnergyCDImage.DOFillAmount(1 - progress, 0.5f);
+		        }
+	        }
+	        if (skillConsumeCfg.ConsumeEnergy > 0)
+	        {
+		        float totalEnergy = skillConsumeCfg.TotalEnergy;
+		        int consumeEnergy = skillConsumeCfg.ConsumeEnergy;
+		        int realTotalEnergy = (int)(totalEnergy / consumeEnergy) * consumeEnergy;
+
+		        float curEnergyNum = skillObj.curEnergyNum;
+
+		        if (curEnergyNum >= realTotalEnergy)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 0;
+			        return;
+		        }
+		        if (skillConsumeCfg.RestoreEnergyByTime <= 0)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 0;
+			        return;
+		        }
+		        float progress = (curEnergyNum % consumeEnergy) / (float)consumeEnergy;
+		        if (self.EImage_EnergyCDImage.fillAmount < 1 - progress)
+		        {
+			        self.EImage_EnergyCDImage.fillAmount = 1 - progress;
+		        }
+		        else
+		        {
+			        self.EImage_EnergyCDImage.DOFillAmount(1 - progress, 0.5f);
+		        }
+	        }
+        }
+
+        public static void _UpdateSkillInfo_Times(this Scroll_Item_SkillBattleInfo self, ET.Ability.SkillObj skillObj)
+        {
+	        SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(skillObj.skillCfgId);
+
+	        if (skillConsumeCfg.ConsumeCommonEnergy > 0)
+	        {
+		        string text = self.ELabel_TimesTextMeshProUGUI.text;
+		        int newText = (int)Math.Floor(skillObj.GetCurCommonEnergyNum()/skillConsumeCfg.ConsumeCommonEnergy);
+		        self.EImage_TimeBg3Image.SetVisible(newText == 0);
+		        if (text.IsNullOrEmpty())
+		        {
+			        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+		        }
+		        else
+		        {
+			        int lastText = int.Parse(self.ELabel_TimesTextMeshProUGUI.text);
+			        if (lastText < newText)
+			        {
+				        self.ShowAddTimesTips(newText - lastText).Coroutine();
+				        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+			        }
+			        else if (lastText > newText)
+			        {
+				        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+			        }
+		        }
+	        }
+	        if (skillConsumeCfg.ConsumeEnergy > 0)
+	        {
+		        string text = self.ELabel_TimesTextMeshProUGUI.text;
+		        int newText = (int)Math.Floor(skillObj.curEnergyNum/skillConsumeCfg.ConsumeEnergy);
+		        self.EImage_TimeBg3Image.SetVisible(newText == 0);
+		        if (text.IsNullOrEmpty())
+		        {
+			        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+		        }
+		        else
+		        {
+			        int lastText = int.Parse(self.ELabel_TimesTextMeshProUGUI.text);
+			        if (lastText < newText)
+			        {
+				        self.ShowAddTimesTips(newText - lastText).Coroutine();
+				        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+			        }
+			        else if (lastText > newText)
+			        {
+				        self.ELabel_TimesTextMeshProUGUI.text = $"{newText}";
+			        }
+		        }
+	        }
+        }
+
+        public static void _UpdateSkillInfo_Buy(this Scroll_Item_SkillBattleInfo self, ET.Ability.SkillObj skillObj)
+        {
 	        bool needShowBuy = false;
 	        SkillConsumeCfg skillConsumeCfg = SkillConsumeCfgCategory.Instance.Get(skillObj.skillCfgId);
-	        if (skillObj.GetCurCommonEnergyNum() < skillConsumeCfg.ConsumeCommonEnergy)
+
+	        if (skillConsumeCfg.ConsumeCommonEnergy > 0 && skillObj.GetCurCommonEnergyNum() < skillConsumeCfg.ConsumeCommonEnergy)
 	        {
 		        needShowBuy = true;
 	        }
-	        if (skillObj.curEnergyNum < skillConsumeCfg.ConsumeEnergy)
+	        if (skillConsumeCfg.ConsumeEnergy > 0 && skillObj.curEnergyNum < skillConsumeCfg.ConsumeEnergy)
 	        {
 		        needShowBuy = true;
 	        }
 	        self.EButton_BuyEnergyButton.SetVisible(needShowBuy);
+	        self.EGBuyEnergyPressRectTransform.SetVisible(needShowBuy);
         }
 
-        public static async ETTask CreateSkillDetailTips(this Scroll_Item_SkillBattleInfo self, Transform trans, long unitId, string skillCfgId, ET.Ability.SkillObj skillObj)
+        public static async ETTask ShowAddTimesTips(this Scroll_Item_SkillBattleInfo self, int addTimes)
+        {
+	        // 可以添加额外的视觉效果，例如缩放动画
+	        self.ELabel_TimesTextMeshProUGUI.transform.DOScale(1.2f, 0.2f).OnComplete(() =>
+	        {
+		        if (self.IsDisposed)
+		        {
+			        return;
+		        }
+		        self.ELabel_TimesTextMeshProUGUI.transform.DOScale(1f, 0.2f);
+	        });
+
+	        self.ELabel_AddTimesTipsTextMeshProUGUI.SetVisible(true);
+	        self.ELabel_AddTimesTipsTextMeshProUGUI.text = $"+{addTimes}";
+	        await TimerComponent.Instance.WaitAsync(3000);
+	        if (self.IsDisposed)
+	        {
+		        return;
+	        }
+	        self.ELabel_AddTimesTipsTextMeshProUGUI.SetVisible(false);
+        }
+
+        public static async ETTask ShowSkillDetail(this Scroll_Item_SkillBattleInfo self, Transform trans, long unitId, string skillCfgId,
+        ET.Ability.SkillObj skillObj)
+        {
+	        await ETTask.CompletedTask;
+	        ET.Client.UIManagerHelper.ShowSkillDetails(self.DomainScene(), skillCfgId, false, false);
+        }
+
+        public static async ETTask ShowSkillDetailTips(this Scroll_Item_SkillBattleInfo self, Transform trans, long unitId, string skillCfgId, ET.Ability.SkillObj skillObj)
         {
 	        Vector3 pos = ET.Client.EUIHelper.GetRectTransformMidTop(trans.GetComponent<RectTransform>());
 	        SkillCfg skillCfg = SkillCfgCategory.Instance.Get(skillCfgId);
@@ -225,8 +424,11 @@ namespace ET.Client
 			        }
 		        }
 	        }
-	        string desc = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleSkillTips_Show", skillCfg.Name, skillCfg.Desc, restoreEnergyDesc);
-	        await ET.Client.UIManagerHelper.ShowDescTips(self.DomainScene(), desc, pos, false, true);
+
+	        string name = ET.ItemHelper.GetItemName(skillCfgId);
+	        string desc = ET.ItemHelper.GetItemDesc(skillCfgId);
+	        string txt = LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleSkillTips_Show", name, desc, restoreEnergyDesc);
+	        await ET.Client.UIManagerHelper.ShowDescTips(self.DomainScene(), txt, pos, false, true);
         }
 
         public static void RemoveSkillDetailTips(this Scroll_Item_SkillBattleInfo self)

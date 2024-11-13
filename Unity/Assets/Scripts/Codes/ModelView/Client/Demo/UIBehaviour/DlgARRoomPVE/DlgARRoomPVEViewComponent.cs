@@ -92,6 +92,57 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EG_ChgBattleDeckRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EG_ChgBattleDeckRectTransform == null )
+				{
+					this.m_EG_ChgBattleDeckRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck");
+				}
+				return this.m_EG_ChgBattleDeckRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.Button EButton_ChgBattleDeckButton
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ChgBattleDeckButton == null )
+				{
+					this.m_EButton_ChgBattleDeckButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck/EButton_ChgBattleDeck");
+				}
+				return this.m_EButton_ChgBattleDeckButton;
+			}
+		}
+
+		public UnityEngine.UI.Image EButton_ChgBattleDeckImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EButton_ChgBattleDeckImage == null )
+				{
+					this.m_EButton_ChgBattleDeckImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EG_ChgBattleDeck/EButton_ChgBattleDeck");
+				}
+				return this.m_EButton_ChgBattleDeckImage;
+			}
+		}
+
 		public UnityEngine.RectTransform EGRootRectTransform
 		{
 			get
@@ -279,6 +330,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.UI.Image E_ShowQrCodeImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_ShowQrCodeImage == null )
+				{
+					this.m_E_ShowQrCodeImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EGRoot/E_OperationPanel/Info/E_ShowQrCode");
+				}
+				return this.m_E_ShowQrCodeImage;
+			}
+		}
+
 		public UnityEngine.UI.Button E_RoomMemberStatusButton
 		{
 			get
@@ -330,6 +398,23 @@ namespace ET.Client
 			}
 		}
 
+		public UITextLocalizeMonoView ELable_RoomMemberStatusUITextLocalizeMonoView
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_ELable_RoomMemberStatusUITextLocalizeMonoView == null )
+				{
+					this.m_ELable_RoomMemberStatusUITextLocalizeMonoView = UIFindHelper.FindDeepChild<UITextLocalizeMonoView>(this.uiTransform.gameObject, "EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/ELable_RoomMemberStatus");
+				}
+				return this.m_ELable_RoomMemberStatusUITextLocalizeMonoView;
+			}
+		}
+
 		public TMPro.TextMeshProUGUI ELabel_TakePhysicalStrengthNumTextMeshProUGUI
 		{
 			get
@@ -344,23 +429,6 @@ namespace ET.Client
 					this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/ELabel_TakePhysicalStrengthNum");
 				}
 				return this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI;
-			}
-		}
-
-		public UnityEngine.UI.Image E_CointIconImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_E_CointIconImage == null )
-				{
-					this.m_E_CointIconImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus/E_CointIcon");
-				}
-				return this.m_E_CointIconImage;
 			}
 		}
 
@@ -388,6 +456,9 @@ namespace ET.Client
 			this.m_E_BG_ClickImage = null;
 			this.m_E_BGTranslucentImage = null;
 			this.m_E_BGARImage = null;
+			this.m_EG_ChgBattleDeckRectTransform = null;
+			this.m_EButton_ChgBattleDeckButton = null;
+			this.m_EButton_ChgBattleDeckImage = null;
 			this.m_EGRootRectTransform = null;
 			this.m_E_QuitRoomButton = null;
 			this.m_E_QuitRoomImage = null;
@@ -399,11 +470,12 @@ namespace ET.Client
 			this.m_ELabel_Label1TextMeshProUGUI = null;
 			this.m_E_ReScanButton = null;
 			this.m_E_ShowQrCodeButton = null;
+			this.m_E_ShowQrCodeImage = null;
 			this.m_E_RoomMemberStatusButton = null;
 			this.m_E_RoomMemberStatusImage = null;
 			this.m_ELable_RoomMemberStatusTextMeshProUGUI = null;
+			this.m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 			this.m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
-			this.m_E_CointIconImage = null;
 			this.m_ELoopScrollList_RoomMemberLoopHorizontalScrollRect = null;
 			this.uiTransform = null;
 		}
@@ -413,6 +485,9 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_BG_ClickImage = null;
 		private BlurBackground.TranslucentImage m_E_BGTranslucentImage = null;
 		private UnityEngine.UI.Image m_E_BGARImage = null;
+		private UnityEngine.RectTransform m_EG_ChgBattleDeckRectTransform = null;
+		private UnityEngine.UI.Button m_EButton_ChgBattleDeckButton = null;
+		private UnityEngine.UI.Image m_EButton_ChgBattleDeckImage = null;
 		private UnityEngine.RectTransform m_EGRootRectTransform = null;
 		private UnityEngine.UI.Button m_E_QuitRoomButton = null;
 		private UnityEngine.UI.Image m_E_QuitRoomImage = null;
@@ -424,11 +499,12 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_Label1TextMeshProUGUI = null;
 		private UnityEngine.UI.Button m_E_ReScanButton = null;
 		private UnityEngine.UI.Button m_E_ShowQrCodeButton = null;
+		private UnityEngine.UI.Image m_E_ShowQrCodeImage = null;
 		private UnityEngine.UI.Button m_E_RoomMemberStatusButton = null;
 		private UnityEngine.UI.Image m_E_RoomMemberStatusImage = null;
 		private TMPro.TextMeshProUGUI m_ELable_RoomMemberStatusTextMeshProUGUI = null;
+		private UITextLocalizeMonoView m_ELable_RoomMemberStatusUITextLocalizeMonoView = null;
 		private TMPro.TextMeshProUGUI m_ELabel_TakePhysicalStrengthNumTextMeshProUGUI = null;
-		private UnityEngine.UI.Image m_E_CointIconImage = null;
 		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RoomMemberLoopHorizontalScrollRect = null;
 		public Transform uiTransform = null;
 	}

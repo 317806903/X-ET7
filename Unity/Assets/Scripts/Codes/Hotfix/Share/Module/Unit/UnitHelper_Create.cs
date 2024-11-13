@@ -289,7 +289,7 @@ namespace ET.Ability
                 unitLevel = useCallerAttrTypeAndFixedLevel.FixedLevel;
                 propertyType = unitCaster.model.PropertyType;
             }
-            else if (beCallActorAttrType is UseCallerCurAttr useCallerCurAttr)
+            else if (beCallActorAttrType is UseCallerCurAttr)
             {
                 unitLevel = unitCaster.level;
             }
@@ -312,11 +312,22 @@ namespace ET.Ability
 
             actorUnit.AddComponent<UnitWaitResetPosComponent, float3>(unitCaster.Position);
 
-            if (beCallActorAttrType is UseCallerCurAttr)
+            if (beCallActorAttrType is UseCallerCurAttr useCallerCurAttr)
             {
                 NumericComponent numericComponentFrom = unitCaster.GetComponent<NumericComponent>();
                 NumericComponent numericComponentTo = actorUnit.GetComponent<NumericComponent>();
-                CopyUnitNumericWhenCallActor(numericComponentFrom, numericComponentTo);
+                if (useCallerCurAttr.IsUseCallerSpeed)
+                {
+                    CopyUnitNumericWhenCallActor(numericComponentFrom, numericComponentTo);
+                }
+                else
+                {
+                    long speedBase = numericComponentTo.GetAsLong(NumericType.SpeedBase);
+                    long rotationSpeedBase = numericComponentTo.GetAsLong(NumericType.RotationSpeedBase);
+                    CopyUnitNumericWhenCallActor(numericComponentFrom, numericComponentTo);
+                    numericComponentTo.SetAsLong(NumericType.SpeedBase, speedBase);
+                    numericComponentTo.SetAsLong(NumericType.RotationSpeedBase, rotationSpeedBase);
+                }
             }
             else
             {
@@ -331,7 +342,7 @@ namespace ET.Ability
                 SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(actorUnit);
                 foreach (var actionId in actionCfgCallActor.BeCallActorActionId)
                 {
-                    ActionHandlerHelper.CreateAction(unitCaster, null, actionId, 0, selectHandleSelf, ref actionContext);
+                    ActionHandlerHelper.CreateAction(actorUnit, null, actionId, 0, selectHandleSelf, ref actionContext);
                 }
             }
             return actorUnit;
@@ -474,7 +485,16 @@ namespace ET.Ability
         {
             foreach (var numeric in numericComponentFrom.NumericDic)
             {
-                numericComponentTo.SetAsLong(numeric.Key, numeric.Value);
+                int numericKey = numeric.Key;
+                long numericValue = numeric.Value;
+                if (numericKey >= NumericType.Max)
+                {
+                    continue;
+                }
+
+                int numericKeyBase = numericKey * 10 + 1;
+                numericComponentTo.SetAsLong(numericKey, numericValue);
+                numericComponentTo.SetAsLong(numericKeyBase, numericValue);
             }
             numericComponentTo.SetHpFull();
         }
@@ -483,7 +503,16 @@ namespace ET.Ability
         {
             foreach (var numeric in numericComponentFrom.NumericDic)
             {
-                numericComponentTo.SetAsLong(numeric.Key, numeric.Value);
+                int numericKey = numeric.Key;
+                long numericValue = numeric.Value;
+                if (numericKey >= NumericType.Max)
+                {
+                    continue;
+                }
+
+                int numericKeyBase = numericKey * 10 + 1;
+                numericComponentTo.SetAsLong(numericKey, numericValue);
+                numericComponentTo.SetAsLong(numericKeyBase, numericValue);
             }
         }
     }

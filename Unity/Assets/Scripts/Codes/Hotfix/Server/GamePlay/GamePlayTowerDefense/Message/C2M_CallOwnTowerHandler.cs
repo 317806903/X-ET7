@@ -27,8 +27,8 @@ namespace ET.Server
 
 			TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
 
-			bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
-			bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
+			bool isAttackTower = ET.ItemHelper.ChkIsAttackTower(towerCfgId);
+			bool isCallMonster = ET.ItemHelper.ChkIsCallMonster(towerCfgId);
 
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(observerUnit.DomainScene());
 			(bool bRet, string msg) = gamePlayTowerDefenseComponent.ChkCallPlayerTower(playerId, towerCfgId);

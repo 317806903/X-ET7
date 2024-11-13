@@ -33,6 +33,16 @@ namespace ET.Client
                     UnityEngine.Object.Destroy(self.cubeGameObject);
                     self.cubeGameObject = null;
                 }
+                if (self.sphereGameObject != null)
+                {
+                    UnityEngine.Object.Destroy(self.sphereGameObject);
+                    self.sphereGameObject = null;
+                }
+                if (self.cylinderGameObject != null)
+                {
+                    UnityEngine.Object.Destroy(self.cylinderGameObject);
+                    self.cylinderGameObject = null;
+                }
             }
         }
 
@@ -143,6 +153,10 @@ namespace ET.Client
             }
 
             GameObject go = GameObjectPoolHelper.GetObjectFromPool(resName,true,1);
+            if (go == null)
+            {
+                go = new GameObject();
+            }
             go.transform.SetParent(GlobalComponent.Instance.Unit);
             go.transform.position = unit.Position;
             go.transform.forward = unit.Forward;
@@ -153,8 +167,18 @@ namespace ET.Client
             self._SetGo(go);
 
 #if UNITY_EDITOR
-            // self.cubeGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            // self.cubeGameObject.transform.SetParent(GlobalComponent.Instance.Unit);
+            if (Ability.UnitHelper.ChkIsPlayer(unit))
+            {
+            //     self.cubeGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //     self.cubeGameObject.transform.SetParent(GlobalComponent.Instance.Unit);
+
+            //     self.sphereGameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //     self.sphereGameObject.transform.SetParent(GlobalComponent.Instance.Unit);
+
+            //     self.cylinderGameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            //     self.cylinderGameObject.transform.SetParent(GlobalComponent.Instance.Unit);
+            }
+
 #endif
 
             self.ChkBattleNotice();
@@ -254,8 +278,13 @@ namespace ET.Client
             UnitClientPosComponent unitClientPosComponent = unit.GetComponent<UnitClientPosComponent>();
 
             float3 curGameObjectPos = transform.position;
+            float3 curGameObjectForward = transform.forward;
             float3 targetPos = unit.Position;
 
+            // if (curGameObjectPos.Equals(targetPos) == false)
+            // {
+            //     Log.Error($"--zpb [{math.normalize(targetPos - curGameObjectPos)}] curGameObjectPos={curGameObjectPos} targetPos={targetPos}");
+            // }
             if (self.cubeGameObject != null)
             {
                 self.cubeGameObject.transform.position = targetPos;
@@ -310,6 +339,9 @@ namespace ET.Client
                         {
                             donePercentageMove = Mathf.Min(1f, 1f * moveSpeed * Time.deltaTime/math.length(targetPos - curGameObjectPos));
                         }
+
+                        donePercentageMove = Mathf.Clamp(donePercentageMove, 0, 1);
+                        //Log.Error($"---zpb donePercentageMove={donePercentageMove}");
                         //Log.Error($"--zpb donePercentageMove[{donePercentageMove}]");
                         var position1 = Vector3.Lerp(curGameObjectPos, targetPos, donePercentageMove);
                         transform.position = position1;

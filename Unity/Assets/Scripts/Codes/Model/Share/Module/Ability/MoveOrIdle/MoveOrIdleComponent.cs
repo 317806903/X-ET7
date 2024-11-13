@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET.Ability
@@ -20,9 +21,11 @@ namespace ET.Ability
     }
 
     [ComponentOf(typeof(Unit))]
-	public class MoveOrIdleComponent: Entity, IAwake, IDestroy, IFixedUpdate
+	public class MoveOrIdleComponent: Entity, IAwake, IDestroy, IFixedUpdate, ITransferClient
     {
+        [BsonIgnore]
         private EntityRef<TimelineObj> _IdleTimeLineObj;
+        [BsonIgnore]
         public TimelineObj CurIdleTimelineObj
         {
             get
@@ -35,7 +38,9 @@ namespace ET.Ability
             }
         }
 
+        [BsonIgnore]
         private EntityRef<TimelineObj> _moveTimeLineObj;
+        [BsonIgnore]
         public TimelineObj CurMoveTimelineObj
         {
             get
@@ -51,6 +56,8 @@ namespace ET.Ability
         public MoveInputType moveInputType;
         public float3 directionInput;
         public float3 targetPositionInput;
+        [BsonIgnore]
         public bool isIdleCreating;
+
     }
 }

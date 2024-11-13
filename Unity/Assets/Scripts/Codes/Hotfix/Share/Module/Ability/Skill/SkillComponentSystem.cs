@@ -262,7 +262,7 @@ namespace ET.Ability
 
             ET.Ability.MoveOrIdleHelper.StopMove(self.GetUnit());
 
-            TimelineObj timelineObj = await skillObj.CastSkill(selectHandleIn);
+            (TimelineObj timelineObj, ActionContext actionContext) = await skillObj.CastSkill(selectHandleIn);
             if (timelineObj == null)
             {
                 return (false, "no target");
@@ -271,6 +271,7 @@ namespace ET.Ability
 
             EventSystem.Instance.Publish(self.DomainScene(), new AbilityTriggerEventType.SkillOnCast()
             {
+                actionContext = actionContext,
                 unit = self.GetUnit(),
             });
 

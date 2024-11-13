@@ -23,6 +23,7 @@ namespace ET.AbilityConfig
         Die = 7,
         Show = 8,
         HideToIdle = 9,
+        Underground = 10,
     }
 
 } 

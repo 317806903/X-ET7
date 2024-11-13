@@ -129,6 +129,16 @@ namespace ET
         {
             public List<(Unit unit, int damageValue, bool isCrt)> list;
         }
+        
+        public struct NoticeRedrawAllPaths
+        {
+            public M2C_DrawAllMonsterCall2HeadQuarterPath pathToDraw;
+        }
+        
+        public struct SendDrawPathsToClients
+        {
+            public M2C_DrawAllMonsterCall2HeadQuarterPath pathToDraw;
+        }
 
         public struct NoticeGuideConditionStatus
         {

@@ -15,7 +15,7 @@ namespace ET.Client
 			self.View.E_QuitBattleButton.AddListenerAsync(self.OnQuitButton);
 			self.View.E_BG_ClickButton.AddListenerAsync(self.OnBgClick);
 
-			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.prefabSource.prefabName = "Item_TowerBuy";
+			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.prefabSource.prefabName = "Item_ItemShow";
 			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.prefabSource.poolSize = 24;
 			self.View.ELoopScrollList_BagItemLoopVerticalScrollRect.AddItemRefreshListener((transform, i) =>
 					self.AddBagItemRefreshListener(transform, i).Coroutine());
@@ -70,10 +70,10 @@ namespace ET.Client
 
 		public static async ETTask AddBagItemRefreshListener(this DlgBag self, Transform transform, int index)
 		{
-			Scroll_Item_TowerBuy BagItem = self.ScrollBagItem[index].BindTrans(transform);
+			Scroll_Item_ItemShow BagItem = self.ScrollBagItem[index].BindTrans(transform);
 			PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
 			List<ItemComponent> itemList = playerBackPackComponent.GetItemList();
-			itemList.Sort((x, y) => x.model.ShowPriority.CompareTo(y.model.ShowPriority));
+			itemList.Sort((x, y) => y.model.ShowPriority.CompareTo(x.model.ShowPriority));
 			string itemCfgId = "";
 			int itemNum = 0;
 			if (index < itemList.Count)
@@ -81,7 +81,7 @@ namespace ET.Client
 				itemCfgId = itemList[index].CfgId;
 				itemNum = itemList[index].count;
 			}
-			await BagItem.ShowBagItem(itemCfgId, true, itemNum);
+			await BagItem.Init(itemCfgId, true, itemNum);
 		}
 
 		public static async ETTask OnBgClick(this DlgBag self)

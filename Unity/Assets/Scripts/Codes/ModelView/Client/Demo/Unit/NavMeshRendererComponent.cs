@@ -9,7 +9,8 @@ namespace ET.Client
 
         public Transform navMeshRendererRoot;
         public Transform navMeshRendererItem;
-        public MeshRenderer meshRenderer;
+        public Transform wireframeRendererItem;
+        public MeshFilter wireframeMeshFilter; 
         public MeshFilter MeshFilter;
     }
 }

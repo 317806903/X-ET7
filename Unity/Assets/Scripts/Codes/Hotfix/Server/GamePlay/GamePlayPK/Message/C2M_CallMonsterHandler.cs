@@ -14,8 +14,8 @@ namespace ET.Server
 
 			string itemCfgId = request.MonsterUnitCfgId;
 
-			bool isMonster = ItemHelper.ChkIsMonster(itemCfgId);
-			bool isTower = ItemHelper.ChkIsTower(itemCfgId);
+			bool isMonster = ET.ItemHelper.ChkIsMonster(itemCfgId);
+			bool isTower = ET.ItemHelper.ChkIsTower(itemCfgId);
 
 			float3 position = request.Position;
 			position = ET.RecastHelper.GetHitNavmeshPos(observerUnit.DomainScene(), position);

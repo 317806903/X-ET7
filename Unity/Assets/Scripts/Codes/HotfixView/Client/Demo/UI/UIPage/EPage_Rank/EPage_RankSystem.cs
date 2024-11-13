@@ -134,7 +134,7 @@ namespace ET.Client
 
             PlayerBaseInfoComponent myBaseInfoComponent =
                     await PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
-            itemRank.Eimage_MyBGImage.gameObject.SetActive(myBaseInfoComponent.Id == playerBaseInfoComponent.Id);
+            itemRank.EImage_MyBGImage.gameObject.SetActive(myBaseInfoComponent.Id == playerBaseInfoComponent.Id);
         }
         #endregion
 

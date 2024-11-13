@@ -43,6 +43,7 @@ namespace ET.Ability
         {
             self.duration = actionCfg_DeathShow.Duration;
             self.timeElapsed = 0;
+            self.isDestroying = false;
 
             string actionId = actionCfg_DeathShow.Id;
 
@@ -67,8 +68,9 @@ namespace ET.Ability
             self.duration -= timePassed;
             //Log.Error(" self.duration:" + self.duration + " " + self.GetUnit().Id);
             self.timeElapsed += timePassed;
-            if (self.duration <= 0)
+            if (self.duration <= 0 && self.isDestroying == false)
             {
+                self.isDestroying = true;
                 self.GetUnit()._Destroy();
             }
         }

@@ -23,7 +23,7 @@
         /// </summary>
         JoinTheRoom,
         /// <summary>
-        /// 保持当前roomId，进入重扫界面
+        /// 保持当前roomId，进入重新选择大小或再次重扫界面
         /// </summary>
         KeepRoomAndRescan,
         /// <summary>

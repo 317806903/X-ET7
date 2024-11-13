@@ -24,7 +24,7 @@ namespace ET.Ability
             {
                 return;
             }
-            unit.RemoveComponent<AIComponent>();
+            unit.GetComponent<AIComponent>()?.PauseAI();
             unit.Stop(WaitTypeError.Cancel);
             float deathShowDuration = 0;
             if (actionCfg_DeathShow == null)

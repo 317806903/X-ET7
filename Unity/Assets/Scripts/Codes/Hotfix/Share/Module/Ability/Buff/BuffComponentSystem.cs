@@ -118,10 +118,13 @@ namespace ET.Ability
                 {
                     return null;
                 }
+                if (self.IsDisposed || buffObj.IsDisposed)
+                {
+                    return null;
+                }
+                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake, null, null, ref buffObj.actionContext);
 
-                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake);
-
-                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart);
+                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart, null, null, ref buffObj.actionContext);
             }
 
             self.NoticeUnitBuffStatusChg();
@@ -200,7 +203,7 @@ namespace ET.Ability
             }
         }
 
-        public static void EventHandler(this BuffComponent self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit)
+        public static void EventHandler(this BuffComponent self, AbilityConfig.BuffTriggerEvent abilityBuffMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
             if (self.monitorTriggerList.ContainsKey(abilityBuffMonitorTriggerEvent) == false)
             {
@@ -211,13 +214,14 @@ namespace ET.Ability
             //buffObjs.Sort((a, b) => a.model.Priority.CompareTo(b.model.Priority));
             foreach (BuffObj buffObj in buffObjs)
             {
-                buffObj.TrigEvent(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit);
+                buffObj.SetBuffActionContext(ref actionContext);
+                buffObj.TrigEvent(abilityBuffMonitorTriggerEvent, onAttackUnit, beHurtUnit, ref actionContext);
             }
         }
 
         public static void Remove(this BuffComponent self, BuffObj buffObj)
         {
-            buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnDestroy);
+            buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnDestroy, null, null, ref buffObj.actionContext);
 
             self.DealWhenRemoveBuff(buffObj);
             self.DoEnabledTagGroup(buffObj);
@@ -256,7 +260,7 @@ namespace ET.Ability
 
                 if (buffObj.ChkNeedRemove())
                 {
-                    buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRemoved);
+                    buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnRemoved, null, null, ref buffObj.actionContext);
                 }
                 if (buffObj.ChkNeedRemove())
                 {

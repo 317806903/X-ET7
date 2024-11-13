@@ -773,23 +773,6 @@ namespace ET.Client
 			}
 		}
 
-		public UnityEngine.UI.Image EButton_Refresh_icon_goldImage
-		{
-			get
-			{
-				if (this.uiTransform == null)
-				{
-					Log.Error("uiTransform is null.");
-					return null;
-				}
-				if( this.m_EButton_Refresh_icon_goldImage == null )
-				{
-					this.m_EButton_Refresh_icon_goldImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh/EButton_Refresh_icon_gold");
-				}
-				return this.m_EButton_Refresh_icon_goldImage;
-			}
-		}
-
 		public UnityEngine.UI.Button EButton_BuyCloseButton
 		{
 			get
@@ -1076,7 +1059,6 @@ namespace ET.Client
 			this.m_ELabel_RefreshTextMeshProUGUI = null;
 			this.m_ELabel_RefreshUITextLocalizeMonoView = null;
 			this.m_EButton_Refresh_iconImage = null;
-			this.m_EButton_Refresh_icon_goldImage = null;
 			this.m_EButton_BuyCloseButton = null;
 			this.m_EButton_BuyCloseImage = null;
 			this.m_EButton_BuyClose_iconImage = null;
@@ -1139,7 +1121,6 @@ namespace ET.Client
 		private TMPro.TextMeshProUGUI m_ELabel_RefreshTextMeshProUGUI = null;
 		private UITextLocalizeMonoView m_ELabel_RefreshUITextLocalizeMonoView = null;
 		private UnityEngine.UI.Image m_EButton_Refresh_iconImage = null;
-		private UnityEngine.UI.Image m_EButton_Refresh_icon_goldImage = null;
 		private UnityEngine.UI.Button m_EButton_BuyCloseButton = null;
 		private UnityEngine.UI.Image m_EButton_BuyCloseImage = null;
 		private UnityEngine.UI.Image m_EButton_BuyClose_iconImage = null;

@@ -22,6 +22,11 @@ namespace ET
         {
             protected override void Destroy(PathfindingComponent self)
             {
+                if (self.RemoveObstacle() != null)
+                {
+                    RecastHelper.FullyUpdateTileCache(self.DomainScene());
+                    NotifyToUpdateAllNavigationPathsForClients(self.DomainScene());
+                }
                 self.Name = string.Empty;
 
                 if (self.navMeshAgent != null)
@@ -52,7 +57,8 @@ namespace ET
             }
         }
 
-        public static async ETTask Init(this PathfindingComponent self, NavmeshManagerComponent navmeshManagerComponent, bool isPlayer)
+        public static async ETTask Init(this PathfindingComponent self, NavmeshManagerComponent navmeshManagerComponent, bool isPlayer,
+        float navObstacleRadius)
         {
             Unit unit = self.GetUnit();
             float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
@@ -93,18 +99,87 @@ namespace ET
                 }
             }
             self.navMeshAgent = self.NavMesh.AddAgent(separationWeight, radius, speed, unit.Position);
+            self.NavObstacleRadius = navObstacleRadius;
+            self._NavMeshManager = navmeshManagerComponent;
+        }
+
+        private static void NotifyToUpdateAllNavigationPathsForClients(Scene scene)
+        {
+            Unit observerUnit = ET.Ability.UnitHelper.GetOneObserverUnit(scene);
+            if (observerUnit == null)
+            {
+                return;
+            }
+            M2C_DrawAllMonsterCall2HeadQuarterPath drawAllMonsterCall2HeadQuarterPath = new()
+            {
+                Path = RecastHelper.GetAllPathsFromMonsterCallsToHeadQuarter(observerUnit)
+            };
+            EventType.SendDrawPathsToClients selfSendDrawPathsToClients = new()
+            {
+                pathToDraw = drawAllMonsterCall2HeadQuarterPath
+            };
+            EventSystem.Instance.Publish(scene.DomainScene(), selfSendDrawPathsToClients);
         }
 
         public static void FixedUpdate(this PathfindingComponent self, float fixedDeltaTime)
         {
-            if (++self.curFrameSyncPos >= self.waitFrameSyncPos)
+            if (++self._CurFrameSyncPos >= self._WaitFrameSyncPos)
             {
-                self.curFrameSyncPos = 0;
+                self._CurFrameSyncPos = 0;
 
                 self.ResetPosAndFace();
                 self.ChkIsUpOrDown();
+
+                if (self.NavObstacleRadius > 0)
+                {
+                    Unit unit = self.GetUnit();
+                    if (!self._ObstaclePos.Equals(unit.Position))
+                    {
+                        if (AddOrUpdateObstacle(self, unit.Position))
+                        {
+                            RecastHelper.FullyUpdateTileCache(self.DomainScene());
+                            NotifyToUpdateAllNavigationPathsForClients(self.DomainScene());
+                        }
+                    }
+                }
             }
         }
+        
+        public static float3? RemoveObstacle(this PathfindingComponent self)
+        {
+            if (self._ObstacleRef != 0)
+            {
+                NavmeshManagerComponent navmeshManagerComponent = self._NavMeshManager;
+                if (navmeshManagerComponent == null)
+                {
+                    return null;
+                }
+                var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
+                tileCache.RemoveObstacle(self._ObstacleRef);
+                self._ObstacleRef = 0;
+                return self._ObstaclePos;
+            }
+            return null;
+        }
+        
+        public static bool AddOrUpdateObstacle(this PathfindingComponent self, float3 pos)
+        {
+            if (self.NavObstacleRadius <= 0)
+            {
+                return false;
+            }
+            RemoveObstacle(self);
+            self._ObstaclePos = pos;
+            NavmeshManagerComponent navmeshManagerComponent = self._NavMeshManager;
+            if (navmeshManagerComponent == null)
+            {
+                return false;
+            }
+            var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
+            self._ObstacleRef = tileCache.AddObstacle(new DotRecast.Core.Numerics.RcVec3f(-pos.x, pos.y, pos.z), self.NavObstacleRadius,
+                navmeshManagerComponent.navSample.GetSettings().agentHeight);
+            return self._ObstacleRef != 0;
+        } 
 
         public static Unit GetUnit(this PathfindingComponent self)
         {
@@ -283,139 +358,7 @@ namespace ET
 
             return self.NavMesh.GetArrivePath(startPos, targetPos);
         }
-
-        // public static void Find(this PathfindingComponent self, float3 start, float3 target, List<float3> result)
-        // {
-        //     if (self.NavMesh == null)
-        //     {
-        //         Log.Debug("寻路| Find 失败 pathfinding ptr is zero");
-        //         throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
-        //     }
-        //
-        //     self.StartPos[0] = -start.x;
-        //     self.StartPos[1] = start.y;
-        //     self.StartPos[2] = start.z;
-        //
-        //     self.EndPos[0] = -target.x;
-        //     self.EndPos[1] = target.y;
-        //     self.EndPos[2] = target.z;
-        //     //Log.Debug($"start find path: {self.GetParent<Unit>().Id}");
-        //
-        //     //float3 tmp1 = self.RecastFindNearestPoint(target);
-        //     int n = 0;//Recast.RecastFind(self.NavMesh, PathfindingComponent.extents, self.StartPos, self.EndPos, self.Result);
-        //     for (int i = 0; i < n; ++i)
-        //     {
-        //         int index = i * 3;
-        //         result.Add(new float3(-self.Result[index], self.Result[index + 1], self.Result[index + 2]));
-        //     }
-        //     //Log.Debug($"finish find path: {self.GetParent<Unit>().Id} {result.ListToString()}");
-        // }
-        //
-        // public static void FindWithAdjust(this PathfindingComponent self, float3 start, float3 target, List<float3> result,float adjustRaduis)
-        // {
-        //     self.Find(start, target, result);
-        //     for (int i = 0; i < result.Count; i++)
-        //     {
-        //         float3 adjust = self.FindRandomPointWithRaduis(result[i], adjustRaduis);
-        //         result[i] = adjust;
-        //     }
-        // }
-        //
-        // public static float3 FindRandomPointWithRaduis(this PathfindingComponent self, float3 pos, float raduis)
-        // {
-        //     if ( self.NavMesh == null)
-        //     {
-        //         throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
-        //     }
-        //
-        //     if (raduis > PathfindingComponent.FindRandomNavPosMaxRadius * 0.001f)
-        //     {
-        //         throw new Exception($"pathfinding raduis is too large，cur: {raduis}, max: {PathfindingComponent.FindRandomNavPosMaxRadius}");
-        //     }
-        //
-        //     int degrees = RandomGenerator.RandomNumber(0, 360);
-        //     float r = RandomGenerator.RandomNumber(0, (int) (raduis * 1000)) / 1000f;
-        //
-        //     float x = r * math.cos(math.radians(degrees));
-        //     float z = r * math.sin(math.radians(degrees));
-        //
-        //     float3 findpos = new float3(pos.x + x, pos.y, pos.z + z);
-        //
-        //     return self.RecastFindNearestPoint(findpos);
-        // }
-        //
-        // /// <summary>
-        // /// 以pos为中心各自在宽和高的左右 前后两个方向延伸
-        // /// </summary>
-        // /// <param name="self"></param>
-        // /// <param name="pos"></param>
-        // /// <param name="width"></param>
-        // /// <param name="height"></param>
-        // /// <returns></returns>
-        // /// <exception cref="Exception"></exception>
-        // public static float3 FindRandomPointWithRectangle(this PathfindingComponent self, float3 pos, int width, int height)
-        // {
-        //     if ( self.NavMesh == null)
-        //     {
-        //         throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
-        //     }
-        //
-        //     if (width > PathfindingComponent.FindRandomNavPosMaxRadius * 0.001f || height > PathfindingComponent.FindRandomNavPosMaxRadius * 0.001f)
-        //     {
-        //         throw new Exception($"pathfinding rectangle is too large，width: {width} height: {height}, max: {PathfindingComponent.FindRandomNavPosMaxRadius}");
-        //     }
-        //
-        //     float x = RandomGenerator.RandomNumber(-width, width);
-        //     float z = RandomGenerator.RandomNumber(-height, height);
-        //
-        //     float3 findpos = new float3(pos.x + x, pos.y, pos.z + z);
-        //
-        //     return self.RecastFindNearestPoint(findpos);
-        // }
-        //
-        // public static float3 FindRandomPointWithRaduis(this PathfindingComponent self, float3 pos, float minRadius, float maxRadius)
-        // {
-        //     if ( self.NavMesh == null)
-        //     {
-        //         throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
-        //     }
-        //
-        //     if (maxRadius > PathfindingComponent.FindRandomNavPosMaxRadius * 0.001f)
-        //     {
-        //         throw new Exception($"pathfinding raduis is too large，cur: {maxRadius}, max: {PathfindingComponent.FindRandomNavPosMaxRadius}");
-        //     }
-        //
-        //     int degrees = RandomGenerator.RandomNumber(0, 360);
-        //     float r = RandomGenerator.RandomNumber((int) (minRadius * 1000), (int) (maxRadius * 1000)) / 1000f;
-        //
-        //     float x = r * math.cos(math.radians(degrees));
-        //     float z = r * math.sin(math.radians(degrees));
-        //
-        //     float3 findpos = new float3(pos.x + x, pos.y, pos.z + z);
-        //
-        //     return self.RecastFindNearestPoint(findpos);
-        // }
-        //
-        // public static float3 RecastFindNearestPoint(this PathfindingComponent self, float3 pos)
-        // {
-        //     if ( self.NavMesh == null)
-        //     {
-        //         throw new Exception($"pathfinding ptr is zero: {self.DomainScene().Name}");
-        //     }
-        //
-        //     self.StartPos[0] = -pos.x;
-        //     self.StartPos[1] = pos.y;
-        //     self.StartPos[2] = pos.z;
-        //
-        //     int ret = 1;//Recast.RecastFindNearestPoint(self.NavMesh, PathfindingComponent.extents, self.StartPos, self.EndPos);
-        //     if (ret == 0)
-        //     {
-        //         throw new Exception($"RecastFindNearestPoint fail, 可能是位置配置有问题: sceneName:{self.DomainScene().Name} {pos} {self.Name} {self.GetParent<Unit>().Id} {self.EndPos.ArrayToString()}");
-        //     }
-        //
-        //     return new float3(-self.EndPos[0], self.EndPos[1], self.EndPos[2]);
-        // }
-
+        
         public static void SetMoveTarget(this PathfindingComponent self, float3 pos)
         {
             if ( self.NavMesh == null)

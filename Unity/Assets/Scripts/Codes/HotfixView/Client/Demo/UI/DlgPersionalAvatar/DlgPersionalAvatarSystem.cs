@@ -66,7 +66,11 @@ namespace ET.Client
             //加载头像框数据
             PlayerBackPackComponent playerBackPackComponent = await ET.Client.PlayerCacheHelper.GetMyPlayerBackPack(self.DomainScene());
             List<ItemComponent> avatarFrameList = playerBackPackComponent.GetItemListByItemType(ItemType.AvatarFrame, ItemSubType.None);
-            avatarFrameList.Sort((x, y) => x.model.ShowPriority.CompareTo(y.model.ShowPriority));
+            //avatarFrameList.Sort((x, y) => y.model.ShowPriority.CompareTo(x.model.ShowPriority));
+            avatarFrameList.Sort((x, y) =>
+            {
+                return y.model.ShowPriority.CompareTo(x.model.ShowPriority);
+            });
             self.avatarFrameList = avatarFrameList;
 
             //加载头像图片数据
@@ -89,7 +93,7 @@ namespace ET.Client
             }
 
             self.curSelectedFrameIcon = self.oldFrameIcon;
-            string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
+            string frameNameDesc = ET.ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
             self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
 
             self.ChkInfoIsChanged();
@@ -269,7 +273,7 @@ namespace ET.Client
             ItemCfg itemCfg = ItemCfgCategory.Instance.Get(self.curSelectedFrameIcon);
             ResIconCfg resIconCfg = ResIconCfgCategory.Instance.Get(itemCfg.Icon);
             await self.View.ES_AvatarShow.SetFrameIcon(resIconCfg.ResName);
-            string frameNameDesc = ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
+            string frameNameDesc = ET.ItemHelper.GetItemDesc(self.curSelectedFrameIcon);
             self.View.ELabelDesFrameTextMeshProUGUI.SetText(frameNameDesc);
             //self.View.ELoopScrollList_FrameLoopHorizontalScrollRect.RefreshCells();
 

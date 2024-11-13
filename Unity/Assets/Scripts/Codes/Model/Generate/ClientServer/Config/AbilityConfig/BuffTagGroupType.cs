@@ -34,6 +34,7 @@ namespace ET.AbilityConfig
         BuffTagGroup_PlayerGlobalBuffTagGroup_ToTower_AttackInterval = 18,
         BuffTagGroupNiao = 19,
         BuffTagGroupSlow = 20,
+        BuffTagGroupInvisible = 21,
     }
 
 } 

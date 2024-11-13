@@ -11,14 +11,10 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, EventType.NoticePlayerCacheChg args)
         {
-            if (args.playerModelType != PlayerModelType.BattleCard)
-            {
-                return;
-            }
             DlgBattleDeck _DlgBattleDeck = UIManagerHelper.GetUIComponent(scene).GetDlgLogic<DlgBattleDeck>(true);
             if (_DlgBattleDeck != null)
             {
-                _DlgBattleDeck.Refresh().Coroutine();
+                _DlgBattleDeck.RefreshWhenPlayerModelChg(args.playerModelType).Coroutine();
             }
             await ETTask.CompletedTask;
         }

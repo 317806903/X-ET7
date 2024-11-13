@@ -34,15 +34,23 @@ namespace ET.Client
 				return null;
 			}
 
-			CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
-			ARSessionComponent arSessionComponent = currentScenesComponent.GetComponent<ARSessionComponent>();
+			ARSessionComponent arSessionComponent = clientScene.GetComponent<ARSessionComponent>();
 			if (arSessionComponent == null)
 			{
 				if (create)
 				{
-					arSessionComponent = currentScenesComponent.AddComponent<ARSessionComponent>();
+					arSessionComponent = clientScene.AddComponent<ARSessionComponent>();
 				}
 			}
+			// CurrentScenesComponent currentScenesComponent = clientScene.GetComponent<CurrentScenesComponent>();
+			// ARSessionComponent arSessionComponent = currentScenesComponent.GetComponent<ARSessionComponent>();
+			// if (arSessionComponent == null)
+			// {
+			// 	if (create)
+			// 	{
+			// 		arSessionComponent = currentScenesComponent.AddComponent<ARSessionComponent>();
+			// 	}
+			// }
 			return arSessionComponent;
 		}
 

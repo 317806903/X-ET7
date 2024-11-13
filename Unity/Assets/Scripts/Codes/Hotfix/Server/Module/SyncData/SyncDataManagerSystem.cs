@@ -100,6 +100,7 @@ namespace ET.Server
             //Log.Debug($"zpb synFrame[{synFrame}] fps[{fps}] pingTime[{pingTime}]");
 
             //synFrame = RandomGenerator.RandomNumber(3, 20);
+            //synFrame = 100;
             return synFrame;
         }
     }

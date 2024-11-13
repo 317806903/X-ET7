@@ -72,7 +72,7 @@ namespace ET.Client
 			Tweener twe = uiRect.transform.DOLocalMoveY(300, 1);
 			twe.SetEase(Ease.OutCubic);
 			mySequence.Append(twe);
-			mySequence.AppendInterval(1);
+			mySequence.AppendInterval(0.8f);
 			mySequence.OnComplete(() =>
 			{
 				self.ChkNeedClose(uiRect.gameObject);

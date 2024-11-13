@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using ET.Ability;
+﻿using ET.Ability;
 using ET.AbilityConfig;
+using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-
 namespace ET.Client
 {
     public static class PathLineRendererComponentSystem
@@ -76,27 +75,10 @@ namespace ET.Client
                     self.lineRenderers.Remove(key);
                     return false;
                 }
-                float3 startPos = lineRenderer.GetPosition(0);
-                if (math.abs(startPos.x - pos.x) < 0.1f && math.abs(startPos.z - pos.z) < 0.1f)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;
-        }
-
-        public static void ChgCurPlayerShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long playerId, long monsterCallUnitId)
-        {
-            string keyOld = $"{homeTeamFlagType}_{playerId}";
-            string key = $"{homeTeamFlagType}_{monsterCallUnitId}";
-            if (self.lineRenderers.ContainsKey(keyOld))
-            {
-                self.lineRenderers[key] = self.lineRenderers[keyOld];
-                self.lineRendererTrans[key] = self.lineRendererTrans[keyOld];
-                self.lineRenderers.Remove(keyOld);
-                self.lineRendererTrans.Remove(keyOld);
-            }
         }
 
         public static async ETTask ShowPath(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType, long monsterCallUnitId, bool canArrive, List<float3> points)
@@ -139,7 +121,7 @@ namespace ET.Client
 
             if (points != null && points.Count > 0)
             {
-                self.lineRendererMidPos[key] = ET.RecastHelper.GetMidPosWhen2Pos(points);
+                self.lineRendererMidPos[key] = RecastHelper.GetMidPosWhen2Pos(points);
                 lineRenderer.enabled = true;
                 float alpha = lineRenderer.material.color.a;
                 if (canArrive)
@@ -285,6 +267,32 @@ namespace ET.Client
                 }
             }
             return false;
+        }
+
+        public static async ETTask<bool> ShowPathIfCanArrive(this PathLineRendererComponent self, TeamFlagType homeTeamFlagType,
+        long monsterCallUnitId, float3 homePos, List<float3> points)
+        {
+            bool canArrive = false;
+            if (points != null && points.Count > 0)
+            {
+                float3 lastPoint = points[points.Count - 1];
+                if (math.abs(homePos.x - lastPoint.x) < 0.3f
+                    && math.abs(homePos.y - lastPoint.y) < 0.3f
+                    && math.abs(homePos.z - lastPoint.z) < 0.3f)
+                {
+                    canArrive = true;
+                }
+            }
+
+            try
+            {
+                await self.ShowPath(homeTeamFlagType, monsterCallUnitId, canArrive, points);
+            }
+            catch (Exception e)
+            {
+                Log.Error($" PathLineRendererComponent.Instance.ShowPath {e}");
+            }
+            return canArrive;
         }
     }
 }

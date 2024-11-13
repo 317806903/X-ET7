@@ -33,6 +33,8 @@ namespace ET.Client
 		public Action<string> OnMenuJoinSceneCallBack;
 		public Func<(bool, string)> OnRequestQRCodeExtraData;
 
+		// False for normal scan finish button then confirm/resume flow.
+		// True for going back from room page by clicking rescale button then confirm/rescan flow.
 		public bool IsReScanMeshing;
 
 		public long Timer;

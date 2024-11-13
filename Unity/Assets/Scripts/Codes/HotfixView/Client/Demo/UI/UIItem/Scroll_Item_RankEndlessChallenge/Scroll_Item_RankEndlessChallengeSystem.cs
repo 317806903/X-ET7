@@ -9,8 +9,14 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_RankEndlessChallenge))]
 	public static class Scroll_Item_RankEndlessChallengeSystem
 	{
-		public static void Init(this Scroll_Item_RankEndlessChallenge self)
+		public static void RegisterUIEvent(this Scroll_Item_RankEndlessChallenge self)
 		{
+
+		}
+
+		public static void HideItem(this Scroll_Item_RankEndlessChallenge self)
+		{
+
 		}
 
 	}

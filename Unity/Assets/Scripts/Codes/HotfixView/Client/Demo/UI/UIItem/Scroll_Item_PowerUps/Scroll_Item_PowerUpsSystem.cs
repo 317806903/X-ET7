@@ -11,6 +11,16 @@ namespace ET.Client
 	[FriendOf(typeof(Scroll_Item_PowerUps))]
 	public static class Scroll_Item_PowerUpsSystem
 	{
+        public static void RegisterUIEvent(this Scroll_Item_PowerUps self)
+        {
+
+        }
+
+        public static void HideItem(this Scroll_Item_PowerUps self)
+        {
+
+        }
+
         /// <summary>
         /// 初始化-
         /// </summary>

@@ -3,14 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScreenAdapt
 {
     [Serializable]
     public class RectTransformAdaptConfig
     {
-        public bool useIsActive;
-        public bool isActive;
+        public bool isSaved;
+        public bool useIsGoActive;
+        public bool isGoActive;
         public Vector2 anchorMin;
         public Vector2 anchorMax;
         public Vector2 sizeDelta;
@@ -43,9 +45,13 @@ namespace ScreenAdapt
             }
 
             base._LoadConfig(config);
-            if (config.useIsActive)
+            if (config.isSaved == false)
             {
-                gameObject.SetActive(config.isActive);
+                return;
+            }
+            if (config.useIsGoActive)
+            {
+                gameObject.SetActive(config.isGoActive);
             }
 
             mComponent.anchorMin = config.anchorMin;
@@ -66,7 +72,8 @@ namespace ScreenAdapt
             }
 
             base._SaveConfig(config);
-            config.isActive = gameObject.activeSelf;
+            config.isSaved = true;
+            config.isGoActive = gameObject.activeSelf;
             config.anchorMin = mComponent.anchorMin;
             config.anchorMax = mComponent.anchorMax;
             config.sizeDelta = mComponent.sizeDelta;

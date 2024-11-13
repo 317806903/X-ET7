@@ -6,6 +6,11 @@ namespace ET
 {
     public static class HybridCLRHelper
     {
+        public static void PreventCodeStripping()
+        {
+
+        }
+
         public static void Load()
         {
             //HybridCLRSettings.Instance.patchAOTAssemblies

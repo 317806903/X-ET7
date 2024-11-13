@@ -9,7 +9,8 @@ namespace DynamicAtlas
         Size_256 = 256,
         Size_512 = 512,
         Size_1024 = 1024,
-        Size_2048 = 2048
+        Size_2048 = 2048,
+        Size_4096 = 4096
     }
 
     public struct DynamicAtlasDefine

@@ -55,7 +55,6 @@ namespace ET.Client
             //添加问卷按钮点击事件
             self.View.E_QuestionnaireButton.AddListenerAsync(self.ClickQuerstionare);
 
-            self.View.E_SkillButton.AddListenerAsync(self.OnClickSkill);
         }
 
         public static async ETTask ShowWindow(this DlgGameModeAR self, ShowWindowData contextData = null)
@@ -392,10 +391,5 @@ namespace ET.Client
             });
         }
 
-        public static async ETTask OnClickSkill(this DlgGameModeAR self)
-        {
-            UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindow<DlgCameraPlayerSkill>();
-            await ETTask.CompletedTask;
-        }
     }
 }

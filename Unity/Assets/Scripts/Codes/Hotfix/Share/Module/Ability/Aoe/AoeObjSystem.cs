@@ -62,9 +62,14 @@ namespace ET.Ability
             self.aoeTargetCondition = aoeTargetCondition;
         }
 
-        public static void InitActionContext(this AoeObj self, ref ActionContext actionContext)
+        public static void SetAoeActionContext(this AoeObj self, ref ActionContext actionContext)
         {
             actionContext.aoeId = self.Id;
+        }
+
+        public static void InitActionContext(this AoeObj self, ref ActionContext actionContext)
+        {
+            self.SetAoeActionContext(ref actionContext);
             self.actionContext = actionContext;
         }
 
@@ -83,26 +88,26 @@ namespace ET.Ability
             return self.GetParent<Unit>();
         }
 
-        public static void TrigEvent(this AoeObj self, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent)
+        public static void TrigEvent(this AoeObj self, AbilityConfig.AoeTriggerEvent abilityAoeMonitorTriggerEvent, ref ActionContext actionContext)
         {
             List<AoeActionCall> aoeActionCalls = self.GetActionIds(abilityAoeMonitorTriggerEvent);
             if (aoeActionCalls.Count > 0)
             {
                 for (int i = 0; i < aoeActionCalls.Count; i++)
                 {
-                    self.EventHandler(aoeActionCalls[i]);
+                    self.EventHandler(aoeActionCalls[i], ref actionContext);
                 }
             }
         }
 
-        public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall)
+        public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall, ref ActionContext actionContext)
         {
             SelectHandle selectHandle = ET.Ability.SelectHandleHelper.CreateSelectHandleWhenAoe(self.GetUnit(), aoeActionCall.AoeSelectObjectType);
             if (selectHandle == null)
             {
                 return;
             }
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, null, ref self.actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, null, ref actionContext);
         }
 
         public static void FixedUpdate(this AoeObj self, float fixedDeltaTime)
@@ -129,15 +134,15 @@ namespace ET.Ability
                         lastCount++;
                         if (i == 0)
                         {
-                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick1);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick1, ref self.actionContext);
                         }
                         else if (i == 1)
                         {
-                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick2);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick2, ref self.actionContext);
                         }
                         else if (i == 2)
                         {
-                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick3);
+                            self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnTick3, ref self.actionContext);
                         }
 
                         self.ticked += 1;
@@ -235,13 +240,13 @@ namespace ET.Ability
             if (newEnterList.Count > 0)
             {
                 self.aoeChgUnitList = newEnterList;
-                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnEnter);
+                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnEnter, ref self.actionContext);
             }
 
             if (newExistList.Count > 0)
             {
                 self.aoeChgUnitList = newExistList;
-                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnExist);
+                self.TrigEvent(AbilityConfig.AoeTriggerEvent.AoeOnExist, ref self.actionContext);
             }
         }
     }

@@ -16,7 +16,9 @@ namespace ET.Ability
             protected override void Awake(SceneEffectComponent self)
             {
                 self.removeList = new();
+                self.removeKeyList = new();
                 self.recordEffectList = new();
+                self.recordUnitId2EffectList = new();
             }
         }
 
@@ -26,7 +28,9 @@ namespace ET.Ability
             protected override void Destroy(SceneEffectComponent self)
             {
                 self.removeList.Clear();
+                self.removeKeyList.Clear();
                 self.recordEffectList.Clear();
+                self.recordUnitId2EffectList.Clear();
             }
         }
 
@@ -45,30 +49,31 @@ namespace ET.Ability
             }
         }
 
-        public static void RecordEffect(this SceneEffectComponent self, Unit unitEffect, string key, EffectObj effectObj)
+        public static void RecordEffect(this SceneEffectComponent self, Unit unit, string key, EffectObj effectObj)
         {
             if (string.IsNullOrEmpty(key))
             {
                 return;
             }
 
-            if (self.recordEffectList.TryGetValue(unitEffect.Id, out var recordKey2Obj) == false)
+            self.recordEffectList.Add(key, effectObj);
+
+            if (self.recordUnitId2EffectList.TryGetValue(unit.Id, out var recordKey2Obj) == false)
             {
                 recordKey2Obj = new();
-                self.recordEffectList.Add(unitEffect.Id, recordKey2Obj);
+                self.recordUnitId2EffectList.Add(unit.Id, recordKey2Obj);
             }
             recordKey2Obj.Add(key, effectObj);
-
         }
 
-        public static bool ChkCanAddEffect(this SceneEffectComponent self, Unit unitEffect, string key, int maxKeyNum)
+        public static bool ChkCanAddEffect(this SceneEffectComponent self, string key, int maxKeyNum)
         {
-            if (self.recordEffectList.TryGetValue(unitEffect.Id, out var recordKey2Obj) == false)
+            if (self.recordEffectList.TryGetValue(key, out var effectObjList) == false)
             {
                 return true;
             }
 
-            if (recordKey2Obj.ContainsKey(key) && recordKey2Obj[key].Count >= maxKeyNum)
+            if (effectObjList.Count >= maxKeyNum)
             {
                 return false;
             }
@@ -76,9 +81,9 @@ namespace ET.Ability
             return true;
         }
 
-        public static void RemoveEffectByKey(this SceneEffectComponent self, Unit unitEffect, string key)
+        public static void RemoveEffectByKey(this SceneEffectComponent self, Unit unit, string key)
         {
-            if (self.recordEffectList.TryGetValue(unitEffect.Id, out var recordKey2Obj) == false)
+            if (self.recordUnitId2EffectList.TryGetValue(unit.Id, out var recordKey2Obj) == false)
             {
                 return;
             }
@@ -87,8 +92,11 @@ namespace ET.Ability
             {
                 return;
             }
-            foreach (EffectObj effectObj in recordKey2Obj[key])
+            foreach (EntityRef<EffectObj> effectObjRef in recordKey2Obj[key])
             {
+                self.recordEffectList.Remove(key, effectObjRef);
+
+                EffectObj effectObj = effectObjRef;
                 effectObj?.WillDestroy();
             }
             recordKey2Obj.Remove(key);
@@ -96,7 +104,37 @@ namespace ET.Ability
 
         public static void FixedUpdate(this SceneEffectComponent self, float fixedDeltaTime)
         {
-            foreach (var tmp1 in self.recordEffectList)
+            if (++self.curFrameChk >= self.waitFrameChk)
+            {
+                self.curFrameChk = 0;
+
+                self.ClearNotExist();
+            }
+        }
+
+        public static void ClearNotExist(this SceneEffectComponent self)
+        {
+            self.removeKeyList.Clear();
+            foreach (var item in self.recordEffectList)
+            {
+                string key = item.Key;
+                foreach (EntityRef<EffectObj> effectObjRef in item.Value)
+                {
+                    EffectObj effectObj = effectObjRef;
+                    if (effectObj == null)
+                    {
+                        self.removeKeyList.Add((key, effectObjRef));
+                    }
+                }
+            }
+            for (int i = 0; i < self.removeKeyList.Count; i++)
+            {
+                self.recordEffectList.Remove(self.removeKeyList[i].key, self.removeKeyList[i].effectObjRef);
+            }
+            self.removeKeyList.Clear();
+
+            self.removeList.Clear();
+            foreach (var tmp1 in self.recordUnitId2EffectList)
             {
                 long unitId = tmp1.Key;
                 Unit unitEffect = UnitHelper.GetUnit(self.DomainScene(), unitId);
@@ -104,28 +142,12 @@ namespace ET.Ability
                 {
                     self.removeList.Add(unitId);
                 }
-
-                var tmp2 = tmp1.Value;
-                foreach (var tmp21 in tmp2.Keys)
-                {
-                    List<EntityRef<EffectObj>> effectObjRefList = tmp2[tmp21];
-                    for (int i = effectObjRefList.Count-1; i >= 0; i--)
-                    {
-                        EffectObj effectObj = effectObjRefList[i];
-                        if (effectObj == null)
-                        {
-                            effectObjRefList.RemoveAt(i);
-                        }
-                    }
-                }
             }
-            int count = self.removeList.Count;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < self.removeList.Count; i++)
             {
                 long unitId = self.removeList[i];
-                self.recordEffectList.Remove(unitId);
+                self.recordUnitId2EffectList.Remove(unitId);
             }
-
             self.removeList.Clear();
         }
     }

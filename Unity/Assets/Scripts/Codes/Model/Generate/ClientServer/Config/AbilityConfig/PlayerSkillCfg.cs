@@ -18,8 +18,11 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Level = _buf.ReadInt();
-        ShowPriority = _buf.ReadInt();
         TutorialCfgId = _buf.ReadString();
+        IsShowInBattleDeckUI = _buf.ReadBool();
+        UnLockCondition = UnLockConditionBase.DeserializeUnLockConditionBase(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
+        PropertyType = _buf.ReadString();
         LearnOrUpdateCost = _buf.ReadInt();
         NextPlayerSkillCfgId = _buf.ReadString();
         LearnOrUpdateCondition = _buf.ReadString();
@@ -41,14 +44,26 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     /// </summary>
     public int Level { get; private set; }
     /// <summary>
-    /// 界面展示优先级(越大越前)
-    /// </summary>
-    public int ShowPriority { get; private set; }
-    /// <summary>
     /// 指引视频
     /// </summary>
     public string TutorialCfgId { get; private set; }
     public TutorialCfg TutorialCfgId_Ref { get; private set; }
+    /// <summary>
+    /// 是否在UI面板中展示
+    /// </summary>
+    public bool IsShowInBattleDeckUI { get; private set; }
+    /// <summary>
+    /// 解锁条件
+    /// </summary>
+    public UnLockConditionBase UnLockCondition { get; private set; }
+    /// <summary>
+    /// 标签
+    /// </summary>
+    public System.Collections.Generic.List<string> Labels { get; private set; }
+    /// <summary>
+    /// 属性类型
+    /// </summary>
+    public string PropertyType { get; private set; }
     /// <summary>
     /// 学习或升级消耗
     /// </summary>
@@ -70,12 +85,14 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     {
         this.Id_Ref = (_tables["SkillCfgCategory"] as SkillCfgCategory).GetOrDefault(Id);
         this.TutorialCfgId_Ref = (_tables["TutorialCfgCategory"] as TutorialCfgCategory).GetOrDefault(TutorialCfgId);
+        UnLockCondition?.Resolve(_tables);
         this.NextPlayerSkillCfgId_Ref = (_tables["PlayerSkillCfgCategory"] as PlayerSkillCfgCategory).GetOrDefault(NextPlayerSkillCfgId);
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        UnLockCondition?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -83,8 +100,11 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Level:" + Level + ","
-        + "ShowPriority:" + ShowPriority + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
+        + "IsShowInBattleDeckUI:" + IsShowInBattleDeckUI + ","
+        + "UnLockCondition:" + UnLockCondition + ","
+        + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
+        + "PropertyType:" + PropertyType + ","
         + "LearnOrUpdateCost:" + LearnOrUpdateCost + ","
         + "NextPlayerSkillCfgId:" + NextPlayerSkillCfgId + ","
         + "LearnOrUpdateCondition:" + LearnOrUpdateCondition + ","

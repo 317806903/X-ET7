@@ -19,6 +19,7 @@ public sealed partial class UseCallerCurAttr:  BeCallActorAttrType
 {
     public UseCallerCurAttr(ByteBuf _buf)  : base(_buf) 
     {
+        IsUseCallerSpeed = _buf.ReadBool();
         PostInit();
     }
 
@@ -27,6 +28,10 @@ public sealed partial class UseCallerCurAttr:  BeCallActorAttrType
         return new UseCallerCurAttr(_buf);
     }
 
+    /// <summary>
+    /// 是否使用召唤者的移动速度
+    /// </summary>
+    public bool IsUseCallerSpeed { get; private set; }
 
     public const int __ID__ = -47874017;
     public override int GetTypeId() => __ID__;
@@ -45,6 +50,7 @@ public sealed partial class UseCallerCurAttr:  BeCallActorAttrType
     public override string ToString()
     {
         return "{ "
+        + "IsUseCallerSpeed:" + IsUseCallerSpeed + ","
         + "}";
     }
     

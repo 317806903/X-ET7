@@ -688,7 +688,7 @@ namespace UnityEngine.UI
             {
                 itemTypeStart = 0;
                 itemTypeEnd = 0;
-                totalCount = 0;
+                //totalCount = 0;
                 for (int i = m_Content.childCount - 1; i >= 0; i--)
                 {
                     prefabSource.ReturnObject(m_Content.GetChild(i));

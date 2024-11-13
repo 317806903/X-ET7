@@ -7,7 +7,7 @@ namespace ET.Client
 	public class DlgBag : Entity, IAwake, IUILogic, IUIDlg
 	{
 		public DlgBagViewComponent View { get => this.GetComponent<DlgBagViewComponent>(); }
-		
-		public Dictionary<int, Scroll_Item_TowerBuy> ScrollBagItem;
+
+		public Dictionary<int, Scroll_Item_ItemShow> ScrollBagItem;
 	}
 }

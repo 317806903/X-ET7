@@ -157,7 +157,24 @@ namespace DynamicAtlas
 
             if (!string.IsNullOrEmpty(m_SpriteName) && m_SpriteName.Equals(name))
             {
-                return;
+                string textureName = texture.name;
+                if (textureName.StartsWith("DynamicAtlas-"))
+                {
+                    return;
+                }
+                if (this.m_Image != null && this.m_Image.mainTexture != null)
+                {
+                    string mainTextureName = this.m_Image.mainTexture.name;
+                    if (mainTextureName.StartsWith("DynamicAtlas-"))
+                    {
+                        return;
+                    }
+
+                    if (System.IO.Path.GetFileNameWithoutExtension(name).Equals(mainTextureName))
+                    {
+                        return;
+                    }
+                }
             }
 
             m_SpriteName = name;

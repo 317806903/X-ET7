@@ -94,6 +94,18 @@ namespace ET
 				unitRemove.Position = unit.Position;
 				unitRemove.Forward = unit.Forward;
 
+				CasterComponent casterComponent = unit.GetComponent<CasterComponent>();
+				if (casterComponent != null)
+				{
+					unitRemove.AddComponent(casterComponent);
+				}
+
+				TeamFlagComponent teamFlagComponent = unit.GetComponent<TeamFlagComponent>();
+				if (teamFlagComponent != null)
+				{
+					unitRemove.AddComponent(teamFlagComponent);
+				}
+
 				self.unitList.Enqueue(unitRemove.Id);
 				self.unitRemoveTimeList.Enqueue(TimeHelper.ServerNow() + 5 * 1000);
 			}
@@ -107,10 +119,27 @@ namespace ET
 				unitRemove.Position = unit.Position;
 				unitRemove.Forward = unit.Forward;
 
+				CasterComponent casterComponent = unit.GetComponent<CasterComponent>();
+				if (casterComponent != null)
+				{
+					unitRemove.AddComponent(casterComponent);
+				}
+
+				TeamFlagComponent teamFlagComponent = unit.GetComponent<TeamFlagComponent>();
+				if (teamFlagComponent != null)
+				{
+					unitRemove.AddComponent(teamFlagComponent);
+				}
+
 				NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-				NumericComponent numericComponentRemove = unitRemove.AddComponent<NumericComponent>();
-				ET.Ability.UnitHelper_Create.CopyUnitNumeric(numericComponent, numericComponentRemove);
-				numericComponentRemove.NumericDic[NumericType.Hp] = 0;
+				if (numericComponent != null)
+				{
+					unitRemove.AddComponent(numericComponent);
+					numericComponent.NumericDic[NumericType.Hp] = 0;
+				}
+				// NumericComponent numericComponentRemove = unitRemove.AddComponent<NumericComponent>();
+				// ET.Ability.UnitHelper_Create.CopyUnitNumeric(numericComponent, numericComponentRemove);
+				// numericComponentRemove.NumericDic[NumericType.Hp] = 0;
 
 				self.unitList.Enqueue(unitRemove.Id);
 				if (unit.GetComponent<TowerComponent>() != null)

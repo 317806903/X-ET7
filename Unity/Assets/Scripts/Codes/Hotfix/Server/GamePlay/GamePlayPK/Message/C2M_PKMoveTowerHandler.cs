@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ET.Ability;
 using Unity.Mathematics;
 
@@ -16,7 +17,30 @@ namespace ET.Server
 			float3 position = request.Position;
 
 			Unit curTownUnit = ET.Ability.UnitHelper.GetUnit(observerUnit.DomainScene(), towerUnitId);
+
+			List<Unit> downTowerList = null;
+			float curUnitHeight = 0;
+			GamePlayPkComponent GetGamePlayPK = ET.GamePlayHelper.GetGamePlayPk(observerUnit.DomainScene());
+			bool isNeedDownTower = GetGamePlayPK.ChkMovePlayerTowerNeedDownTower(towerUnitId, position);
+			if (isNeedDownTower)
+			{
+				Unit unit = curTownUnit;
+				downTowerList = GetGamePlayPK.GetTowerListWhenStackedOnTop(unit);
+				curUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(unit);
+			}
+
 			ET.Ability.UnitHelper.ResetPos(curTownUnit, position, float3.zero);
+
+			if (true)
+			{
+				if (downTowerList != null)
+				{
+					foreach (Unit towerUnit in downTowerList)
+					{
+						Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+					}
+				}
+			}
 
 			await ETTask.CompletedTask;
 		}

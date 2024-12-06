@@ -29,8 +29,14 @@ namespace ET.Ability
                 for (int j = 0; j < actionCfgCallActor.CallCount; j++)
                 {
                     Unit actorUnit = GamePlayHelper.CreateActorByUnit(unit.DomainScene(), targetUnit, actionCfgCallActor, selectHandle, ref actionContext);
-                    unit.AddOwnCaller(actorUnit);
-                    actorUnit.AddCaster(unit);
+                    targetUnit.AddOwnCaller(actorUnit);
+                    actorUnit.AddCaster(targetUnit);
+                    EventSystem.Instance.Publish(unit.DomainScene(), new ET.Ability.AbilityTriggerEventType.CallActor()
+                    {
+                        actionContext = actionContext,
+                        unit = targetUnit,
+                        beCallUnit = actorUnit,
+                    });
                 }
             }
             list.Dispose();

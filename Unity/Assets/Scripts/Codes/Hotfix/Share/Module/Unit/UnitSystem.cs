@@ -31,20 +31,24 @@ namespace ET
             return ET.Ability.DeathShowHelper.ChkIsInDeath(self);
         }
 
-        public static void DestroyWithDeathShow(this Unit self)
+        public static void DestroyWithDeathShow(this Unit self, bool isNeedRemoveBuffFirst = true)
         {
+            if (isNeedRemoveBuffFirst)
+            {
+                self.RemoveComponent<BuffComponent>();
+            }
             ET.Ability.DeathShowHelper.DeathShow(self);
         }
 
         public static void DestroyNotDeathShow(this Unit self)
         {
+            self.RemoveComponent<BuffComponent>();
             self._Destroy();
         }
 
         public static void _Destroy(this Unit self)
         {
             EventSystem.Instance.Publish(self.DomainScene(), new ET.Ability.AbilityTriggerEventType.UnitOnRemoved() { unit = self });
-            //self.Dispose();
             UnitHelper.AddWaitRemove(self);
         }
 
@@ -115,6 +119,16 @@ namespace ET
                 }
 
                 unit = casterUnit;
+            }
+
+            if (UnitHelper.ChkIsPlayer(unit)
+                || UnitHelper.ChkIsCameraPlayer(unit)
+                || UnitHelper.ChkIsActor(unit))
+            {
+            }
+            else
+            {
+                return null;
             }
 
             if (isContainSelf == false)

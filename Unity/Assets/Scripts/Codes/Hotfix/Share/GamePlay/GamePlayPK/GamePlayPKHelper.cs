@@ -6,7 +6,7 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    [FriendOf(typeof(GamePlayPkComponentBase))]
+    [FriendOf(typeof(GamePlayPkComponent))]
     [FriendOf(typeof(Unit))]
     public static class GamePlayPKHelper
 	{
@@ -38,6 +38,7 @@ namespace ET
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
             bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
             bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCollider = ItemHelper.ChkIsCollider(towerCfgId);
             bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
             int count = towerCfg.UnitId.Count;
             for (int i = 0; i < count; i++)
@@ -63,7 +64,7 @@ namespace ET
                 {
                     Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-                    if (isAttackTower || isTrap)
+                    if (isAttackTower || isTrap || isCollider)
                     {
                         TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
                         towerComponent.towerCfgId = towerCfgId;

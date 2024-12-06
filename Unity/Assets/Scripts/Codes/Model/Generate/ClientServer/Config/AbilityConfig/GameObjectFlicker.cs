@@ -19,6 +19,10 @@ public sealed partial class GameObjectFlicker:  GameObjectDeal
 {
     public GameObjectFlicker(ByteBuf _buf)  : base(_buf) 
     {
+        FlickerDuration = _buf.ReadFloat();
+        FlickerFrequency = _buf.ReadFloat();
+        StartColor = ColorBean.DeserializeColorBean(_buf);
+        EndColor = ColorBean.DeserializeColorBean(_buf);
         PostInit();
     }
 
@@ -27,6 +31,22 @@ public sealed partial class GameObjectFlicker:  GameObjectDeal
         return new GameObjectFlicker(_buf);
     }
 
+    /// <summary>
+    /// 闪烁时长(秒)
+    /// </summary>
+    public float FlickerDuration { get; private set; }
+    /// <summary>
+    /// 每秒闪多少下
+    /// </summary>
+    public float FlickerFrequency { get; private set; }
+    /// <summary>
+    /// 开始颜色
+    /// </summary>
+    public ColorBean StartColor { get; private set; }
+    /// <summary>
+    /// 结束颜色
+    /// </summary>
+    public ColorBean EndColor { get; private set; }
 
     public const int __ID__ = 1746894535;
     public override int GetTypeId() => __ID__;
@@ -34,17 +54,25 @@ public sealed partial class GameObjectFlicker:  GameObjectDeal
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         base.Resolve(_tables);
+        StartColor?.Resolve(_tables);
+        EndColor?.Resolve(_tables);
         PostResolve();
     }
 
     public override void TranslateText(System.Func<string, string, string> translator)
     {
         base.TranslateText(translator);
+        StartColor?.TranslateText(translator);
+        EndColor?.TranslateText(translator);
     }
 
     public override string ToString()
     {
         return "{ "
+        + "FlickerDuration:" + FlickerDuration + ","
+        + "FlickerFrequency:" + FlickerFrequency + ","
+        + "StartColor:" + StartColor + ","
+        + "EndColor:" + EndColor + ","
         + "}";
     }
     

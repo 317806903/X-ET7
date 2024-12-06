@@ -10,7 +10,7 @@ namespace ET.Client
         [StaticField]
         public static HealthBarNormalManager Instance;
 
-        public static int MAX_CONT = 1023;
+        public static int MAX_CONT = 250;
 
         public GameObject go { get; set; }
         public Camera mainCamera { get; set; }

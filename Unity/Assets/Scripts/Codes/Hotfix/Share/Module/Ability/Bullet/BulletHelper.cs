@@ -49,6 +49,13 @@ namespace ET.Ability
                 unit = unit,
                 createUnit = bulletUnit,
             });
+
+            EventSystem.Instance.Publish(unit.DomainScene(), new ET.Ability.AbilityTriggerEventType.CallBullet()
+            {
+                actionContext = actionContext,
+                unit = unit,
+                beCallUnit = bulletUnit,
+            });
         }
 
         public static void EventHandler(Unit unit, AbilityConfig.BulletTriggerEvent abilityBulletMonitorTriggerEvent, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)

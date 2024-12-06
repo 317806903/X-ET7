@@ -130,14 +130,14 @@ namespace ET.Client
 	            loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndWin);
             }
             else
             {
 	            loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
 
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -155,14 +155,14 @@ namespace ET.Client
 	            loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
 
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndWin);
             }
             else
             {
 	            loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
 
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -204,7 +204,7 @@ namespace ET.Client
 
 				loseTrans.gameObject.SetActive(false);
 	            victoryTrans.gameObject.SetActive(true);
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndWin);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndWin);
 
 	            int count = self.GetMyDropItemList().Count;
 	            if (count > 0)
@@ -220,7 +220,7 @@ namespace ET.Client
 	            self.View.E_Return_TextTextMeshProUGUI.text = LocalizeComponent.Instance.GetTextValue("TextCode_Key_Battle_End_Retry");
 				loseTrans.gameObject.SetActive(true);
 	            victoryTrans.gameObject.SetActive(false);
-	            UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFail);
+	            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndFail);
             }
 
             await TimerComponent.Instance.WaitAsync(2000);
@@ -259,7 +259,7 @@ namespace ET.Client
 			self.View.ELabel_KillNumTextMeshProUGUI.text =
 					LocalizeComponent.Instance.GetTextValue("TextCode_Key_BattleEnd_KillNum", killNum);
 
-			UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.GameEndFinish);
+			UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.GameEndFinish);
 
             await TimerComponent.Instance.WaitAsync(2000);
 		}

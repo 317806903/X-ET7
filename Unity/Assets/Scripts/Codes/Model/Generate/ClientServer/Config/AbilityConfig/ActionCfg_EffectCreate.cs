@@ -22,6 +22,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         IsOnlySelfShow = _buf.ReadBool();
         ResEffectId = _buf.ReadString();
         PlayAudioActionId = _buf.ReadString();
+        FloatingTextId = _buf.ReadString();
         Key = _buf.ReadString();
         MaxKeyNum = _buf.ReadInt();
         Duration = _buf.ReadFloat();
@@ -64,6 +65,11 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     public string PlayAudioActionId { get; private set; }
     public ActionCfg_PlayAudio PlayAudioActionId_Ref { get; private set; }
     /// <summary>
+    /// 飘字id
+    /// </summary>
+    public string FloatingTextId { get; private set; }
+    public ActionCfg_FloatingText FloatingTextId_Ref { get; private set; }
+    /// <summary>
     /// 唯一key(用来便于准确删除)
     /// </summary>
     public string Key { get; private set; }
@@ -96,6 +102,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
     {
         this.ResEffectId_Ref = (_tables["ResEffectCfgCategory"] as ResEffectCfgCategory).GetOrDefault(ResEffectId);
         this.PlayAudioActionId_Ref = (_tables["ActionCfg_PlayAudioCategory"] as ActionCfg_PlayAudioCategory).GetOrDefault(PlayAudioActionId);
+        this.FloatingTextId_Ref = (_tables["ActionCfg_FloatingTextCategory"] as ActionCfg_FloatingTextCategory).GetOrDefault(FloatingTextId);
         OffSetInfo?.Resolve(_tables);
         PostResolve();
     }
@@ -114,6 +121,7 @@ public sealed partial class ActionCfg_EffectCreate: Bright.Config.BeanBase
         + "IsOnlySelfShow:" + IsOnlySelfShow + ","
         + "ResEffectId:" + ResEffectId + ","
         + "PlayAudioActionId:" + PlayAudioActionId + ","
+        + "FloatingTextId:" + FloatingTextId + ","
         + "Key:" + Key + ","
         + "MaxKeyNum:" + MaxKeyNum + ","
         + "Duration:" + Duration + ","

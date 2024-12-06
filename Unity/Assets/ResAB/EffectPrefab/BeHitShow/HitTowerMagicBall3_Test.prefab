@@ -604,7 +604,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -3889,7 +3889,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 1
+    enabled: 0
     ratio: 1
     light: {fileID: 0}
     randomDistribution: 1
@@ -5502,7 +5502,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -9836,6 +9836,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9191619708846058849}
     m_Modifications:
+    - target: {fileID: 398333289584329195, guid: d1f100dad2915ec45b59b339f98b7d88,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 547999501500000501, guid: d1f100dad2915ec45b59b339f98b7d88,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime1
@@ -9935,6 +9940,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001616123068232671, guid: d1f100dad2915ec45b59b339f98b7d88,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6151412605998765983, guid: d1f100dad2915ec45b59b339f98b7d88, type: 3}

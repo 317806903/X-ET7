@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
+  <assembly fullname="Unity.Advertisement.IosSupport">
+    <type fullname="Unity.Advertisement.IosSupport.ATTrackingStatusBinding" preserve="all" />
+    <type fullname="Unity.Advertisement.IosSupport.ATTrackingStatusBinding/AuthorizationTrackingStatus" preserve="all" />
+  </assembly>
   <assembly fullname="AppsFlyer">
     <type fullname="AppsFlyerSDK.AppsFlyer" preserve="all" />
     <type fullname="AppsFlyerSDK.IAppsFlyerConversionData" preserve="all" />
@@ -27,6 +31,10 @@
   </assembly>
   <assembly fullname="DOTween.Runtime">
     <type fullname="DG.Tweening.DOTweenModuleUI" preserve="all" />
+  </assembly>
+  <assembly fullname="DamageNumbersPro">
+    <type fullname="DamageNumbersPro.DamageNumber" preserve="all" />
+    <type fullname="DamageNumbersPro.Internal.DNPUpdater" preserve="all" />
   </assembly>
   <assembly fullname="EventLoggingAPIModule">
     <type fullname="Dm.EventLogging.EventLoggingAPI" preserve="all" />
@@ -101,6 +109,12 @@
     <type fullname="MongoDB.Bson.Serialization.BsonSerializationContext/Builder" preserve="all" />
     <type fullname="MongoDB.Bson.Serialization.IBsonSerializer`1" preserve="all" />
     <type fullname="MongoDB.Bson.Serialization.Options.DictionaryRepresentation" preserve="all" />
+  </assembly>
+  <assembly fullname="MoreMountains.NiceVibrations">
+    <type fullname="MoreMountains.NiceVibrations.MMVibrationManager" preserve="all" />
+  </assembly>
+  <assembly fullname="MoreMountains.NiceVibrations.Haptics">
+    <type fullname="MoreMountains.NiceVibrations.HapticTypes" preserve="all" />
   </assembly>
   <assembly fullname="ShootTextPro">
     <type fullname="ShootTextProManager" preserve="all" />
@@ -351,7 +365,6 @@
     <type fullname="Bright.Serialization.ByteBuf" preserve="all" />
     <type fullname="Bright.Serialization.SerializationException" preserve="all" />
     <type fullname="DotRecast.Core.Numerics.RcVec3f" preserve="all" />
-    <type fullname="DotRecast.Core.RcByteOrder" preserve="all" />
     <type fullname="DotRecast.Core.RcObjImporter" preserve="all" />
     <type fullname="DotRecast.Core.RcObjImporterContext" preserve="all" />
     <type fullname="DotRecast.Detour.Crowd.DtCrowd" preserve="all" />
@@ -375,21 +388,27 @@
     <type fullname="DotRecast.Detour.DtQueryDefaultFilter" preserve="all" />
     <type fullname="DotRecast.Detour.DtStatus" preserve="all" />
     <type fullname="DotRecast.Detour.DtStraightPath" preserve="all" />
+    <type fullname="DotRecast.Detour.Dynamic.Colliders.DtBoxCollider" preserve="all" />
+    <type fullname="DotRecast.Detour.Dynamic.Colliders.IDtCollider" preserve="all" />
+    <type fullname="DotRecast.Detour.Dynamic.DtDynamicNavMesh" preserve="all" />
+    <type fullname="DotRecast.Detour.Dynamic.DtDynamicNavMeshConfig" preserve="all" />
+    <type fullname="DotRecast.Detour.Dynamic.Io.DtVoxelFile" preserve="all" />
     <type fullname="DotRecast.Detour.IDtQueryFilter" preserve="all" />
-    <type fullname="DotRecast.Detour.TileCache.DtTileCache" preserve="all" />
-    <type fullname="DotRecast.Detour.TileCache.Io.Compress.DtTileCacheCompressorFactory" preserve="all" />
-    <type fullname="DotRecast.Detour.TileCache.Io.Compress.IDtTileCacheCompressorFactory" preserve="all" />
     <type fullname="DotRecast.Recast.Geom.IInputGeomProvider" preserve="all" />
+    <type fullname="DotRecast.Recast.RcAreaModification" preserve="all" />
     <type fullname="DotRecast.Recast.RcBuilderResult" preserve="all" />
+    <type fullname="DotRecast.Recast.RcConfig" preserve="all" />
     <type fullname="DotRecast.Recast.RcHeightfield" preserve="all" />
+    <type fullname="DotRecast.Recast.RcPartition" preserve="all" />
+    <type fullname="DotRecast.Recast.RcPartitionType" preserve="all" />
     <type fullname="DotRecast.Recast.RcPolyMeshRaycast" preserve="all" />
     <type fullname="DotRecast.Recast.RcSpan" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.NavMeshBuildResult" preserve="all" />
+    <type fullname="DotRecast.Recast.Toolset.Builder.SampleAreaModifications" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.SoloNavMeshBuilder" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Builder.TileNavMeshBuilder" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Geom.DemoInputGeomProvider" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.RcNavMeshBuildSettings" preserve="all" />
-    <type fullname="DotRecast.Recast.Toolset.Tools.RcObstacleTool" preserve="all" />
     <type fullname="DotRecast.Recast.Toolset.Tools.RcTestNavMeshTool" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder" preserve="all" />
     <type fullname="ET.ETAsyncTaskMethodBuilder`1" preserve="all" />
@@ -468,7 +487,6 @@
     <type fullname="UnityEngine.GL" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.Graphics" preserve="all" />
-    <type fullname="UnityEngine.Handheld" preserve="all" />
     <type fullname="UnityEngine.HideInInspector" preserve="all" />
     <type fullname="UnityEngine.KeyCode" preserve="all" />
     <type fullname="UnityEngine.LayerMask" preserve="all" />
@@ -480,6 +498,7 @@
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.NetworkReachability" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.PlayerPrefs" preserve="all" />
@@ -560,6 +579,7 @@
     <type fullname="UnityEngine.UI.LayoutGroup" preserve="all" />
     <type fullname="UnityEngine.UI.LayoutRebuilder" preserve="all" />
     <type fullname="UnityEngine.UI.RawImage" preserve="all" />
+    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
     <type fullname="UnityEngine.UI.Selectable" preserve="all" />
     <type fullname="UnityEngine.UI.Slider" preserve="all" />
     <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="all" />

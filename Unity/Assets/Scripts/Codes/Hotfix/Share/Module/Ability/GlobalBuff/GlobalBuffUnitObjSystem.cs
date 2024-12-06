@@ -34,16 +34,15 @@ namespace ET.Ability
             self.CfgId = unitGlobalBuffCfgId;
 
             GlobalConditionManagerComponent globalConditionManagerComponent = self.AddComponent<GlobalConditionManagerComponent>();
-            await globalConditionManagerComponent.Init(self.model.MonitorTriggers.ActionCondition1, self.model.MonitorTriggers.ActionCondition2);
+            await globalConditionManagerComponent.Init(self.model.MonitorTriggers.TrigCondition1, self.model.MonitorTriggers.TrigCondition2);
 
             self.permanent = true;
             self.duration = 100;
             self.orgDuration = self.duration;
 
             self.unitId = unitId;
-            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
-            long playerId = gamePlayComponent.GetPlayerIdByUnitId(self.unitId);
-            self.playerId = playerId;
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), self.unitId);
+            self.playerId = TeamFlagHelper.GetPlayerId(unit);
             self.teamFlagType = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene()).GetHomeTeamFlagTypeByPlayer(self.playerId);
 
             self.casterPlayerId = casterPlayerId;

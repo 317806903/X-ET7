@@ -2,6 +2,7 @@
 using ET.AbilityConfig;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 namespace ET.Client
 {
@@ -23,6 +24,8 @@ namespace ET.Client
                 self.MeshFilter = self.navMeshRendererItem.GetComponent<MeshFilter>();
                 self.wireframeMeshFilter = self.wireframeRendererItem.GetComponent<MeshFilter>();
                 self.navMeshRendererRoot.gameObject.SetActive(false);
+                self.MeshFilter.sharedMesh = null;
+                self.navmeshDataDict = new Dictionary<long, NavmeshManagerComponent.NavMeshData>();
             }
         }
 
@@ -146,16 +149,47 @@ namespace ET.Client
             mesh.SetTriangles(triangles, 0);
         }
 
-        public static void SetNavMesh(this NavMeshRendererComponent self, Scene scene, NavmeshManagerComponent.NavMeshData navMeshData)
+        public static async ETTask<bool> ShowNavMeshFromPos(this NavMeshRendererComponent self, float3 pos)
         {
-            if (self.navMeshRendererRoot == null || scene == null)
+            (var polyRef, var _) = await GamePlayTowerDefenseHelper.GetNearestNavmeshPos(self.ClientScene(), pos);
+            if (self.IsDisposed)
             {
-                return;
+                self.SetNavMesh(null);
+                return false;
             }
-            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(scene);
-            if (gamePlayComponent == null)
+            if (polyRef == 0)
             {
-                return;
+                self.SetNavMesh(null);
+                return false;
+            }
+            if (self.navmeshDataDict.TryGetValue(polyRef, out NavmeshManagerComponent.NavMeshData navMeshData))
+            {
+                return self.SetNavMesh(navMeshData);
+            }
+            var data = await GamePlayTowerDefenseHelper.RequestReachableAreaFromPosition(self.ClientScene(), pos);
+            if (self.IsDisposed)
+            {
+                self.SetNavMesh(null);
+                return false;
+            }
+            foreach (long polyRefL in data.PolygonRefs)
+            {
+                self.navmeshDataDict[polyRefL] = data;
+            }
+            return self.SetNavMesh(data);
+        }
+
+        public static bool SetNavMesh(this NavMeshRendererComponent self, NavmeshManagerComponent.NavMeshData navMeshData)
+        {
+            if (self.navMeshRendererRoot == null)
+            {
+                return false;
+            }
+            
+            if (navMeshData == null || navMeshData.Vertices.Count == 0 || navMeshData.Indices.Count == 0)
+            {
+                self.MeshFilter.sharedMesh = null;
+                return false;
             }
 
             Mesh mesh = new Mesh();
@@ -198,6 +232,7 @@ namespace ET.Client
             Mesh polygonMesh = new Mesh();
             UpdatePolygonsFromPoints(polygons, polygonMesh);
             self.wireframeMeshFilter.sharedMesh = polygonMesh;
+            return true;
         }
     }
 }

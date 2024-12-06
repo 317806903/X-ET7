@@ -79,6 +79,7 @@ namespace ET.Client
             PlayerBaseInfoComponent playerBaseInfoComponent =
                 await ET.Client.PlayerCacheHelper.GetMyPlayerBaseInfo(self.DomainScene());
             self.View.ELabel_NameTextMeshProUGUI.text = playerBaseInfoComponent.PlayerName;
+            Log.Debug($"---DlgPersonalInformation ID:{playerBaseInfoComponent.GetPlayerId()}");
             self.View.ELabel_IDTextMeshProUGUI.text = $"ID:{playerBaseInfoComponent.GetPlayerId()}";
 
             self.View.ES_AvatarShow.ShowMyAvatarIcon(false).Coroutine();

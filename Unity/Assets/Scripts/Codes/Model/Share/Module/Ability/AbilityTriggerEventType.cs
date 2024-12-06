@@ -53,6 +53,7 @@ namespace ET.Ability
             public Unit defenderUnit;
         }
 
+
         //=========================================================
 
         /// <summary>
@@ -141,25 +142,33 @@ namespace ET.Ability
         }
 
         /// <summary>
-        ///子弹的轨迹函数，传入一个时间点，返回出一个Vector3，作为这个时间点的速度和方向，这是个相对于正在飞行的方向的一个偏移（*speed的）
-        ///正在飞行的方向按照z轴，来算，也就是说，当你只需要子弹匀速行动的时候，你可以让这个函数只做一件事情——return Vector3.forward。
+        /// 召唤Bullet
         /// </summary>
-        public struct BulletTween
+        public struct CallBullet
         {
             public ActionContext actionContext;
-            public Unit bulletUnit;
-            public Unit targetUnit;
-            public float time;
+            public Unit unit;
+            public Unit beCallUnit;
         }
 
         /// <summary>
-        /// 子弹在发射瞬间，可以捕捉一个GameObject作为目标，并且将这个目标传递给BulletTween，作为移动参数
+        /// 召唤Aoe
         /// </summary>
-        public struct BulletTargettingFunction
+        public struct CallAoe
         {
             public ActionContext actionContext;
-            public Unit bulletUnit;
-            public Unit[] targetUnitIds;
+            public Unit unit;
+            public Unit beCallUnit;
+        }
+
+        /// <summary>
+        /// 召唤Actor
+        /// </summary>
+        public struct CallActor
+        {
+            public ActionContext actionContext;
+            public Unit unit;
+            public Unit beCallUnit;
         }
 
         //=========================================================

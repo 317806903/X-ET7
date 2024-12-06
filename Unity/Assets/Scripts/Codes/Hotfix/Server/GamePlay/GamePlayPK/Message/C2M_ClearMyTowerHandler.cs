@@ -26,8 +26,20 @@ namespace ET.Server
 				{
 					if (towerComponent.playerId == playerId)
 					{
-						if (towerUnitId == -1 || towerUnitId == unit.Id)
+						if (towerUnitId == -1)
 						{
+							unit.DestroyNotDeathShow();
+						}
+						else if (towerUnitId == unit.Id)
+						{
+							GamePlayPkComponent GetGamePlayPK = ET.GamePlayHelper.GetGamePlayPk(observerUnit.DomainScene());
+							List<Unit> downTowerList = GetGamePlayPK.GetTowerListWhenStackedOnTop(unit);
+							float curUnitHeight = Ability.UnitHelper.GetBodyHeight(unit);
+							foreach (Unit towerUnit in downTowerList)
+							{
+								Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+							}
+
 							unit.DestroyNotDeathShow();
 						}
 					}

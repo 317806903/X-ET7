@@ -50,6 +50,11 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1606824812364234816, guid: 67ce564ae700fbe4f97da14b38b55d05,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300004, guid: 009511045b28459418b1b3bf82094a18, type: 3}
     - target: {fileID: 4195438504471517833, guid: 67ce564ae700fbe4f97da14b38b55d05,
         type: 3}
       propertyPath: m_LocalScale.x

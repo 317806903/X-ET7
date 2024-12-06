@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
 --- !u!1 &5157954425894609311
 GameObject:
   m_ObjectHideFlags: 0
@@ -4238,7 +4238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7204983248653263425
 RectTransform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecde97c990c98b9498c16c7c3e6b5c19, type: 3}
-  m_Name: LevelTutorial_Challenge1_AR
+  m_Name: LevelTutorial_Challenge1_NoAR
   m_EditorClassIdentifier: 
   list:
   - name: "\u653E\u7F6E\u5927\u672C\u8425"
@@ -34,7 +34,7 @@ MonoBehaviour:
     trigExitConditionStaticMethod: 
     trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
   - name: "\u653E\u7F6E\u51FA\u602A\u53E3"
-    isFreeClickBeforeEnter: 0
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
@@ -45,31 +45,31 @@ MonoBehaviour:
     text: TextCode_Key_TutorialText_PlaceSP
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_portal.png
-    curInNextType: 1
-    waitToNextUIGuideStep: 4
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 
-    trigExitCondition: 1
+    trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
-  - name: "\u653E\u7F6E\u51FA\u602A\u53E3(\u786E\u8BA4)"
-    isFreeClickBeforeEnter: 0
+  - name: "\u5B66\u4E60redo"
+    isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
-    hierarchyGuidePath: DlgBattleDragItem/EGRoot/EG_ConfirmRoot/confirm/E_ConfirmButton
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleTowerAR/E_PutHomeAndMonsterPoint/EButton_ResetHome
     guideTextType: 1
     guideTextImgPath: 
-    text: 
+    text: TextCode_Key_TutorialText_Redo
     specImgMatchType: 0
-    specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img_battlefield.png
+    specImgPath: 
     curInNextType: 0
-    waitToNextUIGuideStep: 0
+    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
-    guideExecuteParam: false
+    guideExecuteParam: 
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
@@ -193,43 +193,23 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u663E\u793A\u89C6\u9891"
+  - name: "\u653E\u6280\u80FD"
     isFreeClickBeforeEnter: 1
-    trigEnterCondition: 1
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerAR/E_Battle/EG_BuyNode/EG_TowerBuyShow
-    hierarchyCanvasPath: 
-    hierarchyGuidePath: 
-    guideTextType: 0
+    trigEnterCondition: 2
+    trigEnterConditionStaticMethod: ChkWaitTime
+    trigEnterConditionParam: 0.25
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleCameraPlayerSkill/EGRoot/EGSkillRootTmp/EGSkillRoot/ELoopScrollList_Skill/Content/Item_SkillBattleInfo/EButton_Select
+    guideTextType: 1
     guideTextImgPath: 
-    text: 
+    text: TextCode_Key_TutorialText_Skills
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
     waitToNextUIGuideStep: 2
     audioPath: 
-    guideExecuteStaticMethod: ShowVideo
-    guideExecuteParam: Video_Upgrade
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u5237\u65B0"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 2
-    trigEnterConditionStaticMethod: ChkIsNotShowVideo
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTowerAR/E_Battle/EG_BuyNode/EG_TowerBuyShow/EButton_Refresh
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_Refresh
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 0
-    audioPath: 
     guideExecuteStaticMethod: None
-    guideExecuteParam: 
+    guideExecuteParam: Video_Upgrade
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 

@@ -13,9 +13,6 @@ namespace ET
         {
             protected override void Awake(SyncData_DamageShow self)
             {
-                self.unitId = new();
-                self.damageValue = new();
-                self.isCrt = new();
             }
         }
 
@@ -27,6 +24,7 @@ namespace ET
                 self.unitId.Clear();
                 self.damageValue.Clear();
                 self.isCrt.Clear();
+                self.list.Clear();
             }
         }
 
@@ -51,9 +49,9 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_DamageShow self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_DamageShow self, UnitComponent unitComponent)
         {
-            ListComponent<(Unit unit, int damageValue, bool isCrt)> list = ListComponent<(Unit unit, int damageValue, bool isCrt)>.Create();
+            self.list.Clear();
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
             {
@@ -65,15 +63,14 @@ namespace ET
                 {
                     continue;
                 }
-                list.Add((unit, damageValue, isCrt));
+                self.list.Add((unit, damageValue, isCrt));
             }
 
             EventType.SyncDamageShow _SyncDamageShow = new ()
             {
-                list = list
+                list = self.list
             };
             EventSystem.Instance.Publish(unitComponent.DomainScene(), _SyncDamageShow);
-            await ETTask.CompletedTask;
         }
     }
 }

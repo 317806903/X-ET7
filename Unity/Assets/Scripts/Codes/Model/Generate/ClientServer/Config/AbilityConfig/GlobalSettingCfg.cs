@@ -39,7 +39,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         ARPVPCfgTakePhsicalStrength = _buf.ReadInt();
         AREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
         PhysicalStrengthShow = _buf.ReadBool();
-        TowerDefenseNearTowerDis = _buf.ReadFloat();
+        TowerDefenseNearDisWhenHome = _buf.ReadFloat();
+        TowerDefenseNearDisWhenMonsterCall = _buf.ReadFloat();
+        TowerDefenseNearDisWhenAttackTower = _buf.ReadFloat();
+        TowerDefenseNearDisWhenTrapTower = _buf.ReadFloat();
+        TowerDefenseNearDisWhenColliderTower = _buf.ReadFloat();
         AdmobAvailable = _buf.ReadBool();
         RecoverTimeoutTime = _buf.ReadInt();
         RecoverAddHp = _buf.ReadInt();
@@ -176,9 +180,25 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public bool PhysicalStrengthShow { get; private set; }
     /// <summary>
-    /// 两塔允许最近距离
+    /// 大本营允许靠近其他的距离
     /// </summary>
-    public float TowerDefenseNearTowerDis { get; private set; }
+    public float TowerDefenseNearDisWhenHome { get; private set; }
+    /// <summary>
+    /// 出怪点允许靠近其他的距离
+    /// </summary>
+    public float TowerDefenseNearDisWhenMonsterCall { get; private set; }
+    /// <summary>
+    /// 攻击塔允许靠近其他的距离
+    /// </summary>
+    public float TowerDefenseNearDisWhenAttackTower { get; private set; }
+    /// <summary>
+    /// 陷阱塔允许靠近其他的距离
+    /// </summary>
+    public float TowerDefenseNearDisWhenTrapTower { get; private set; }
+    /// <summary>
+    /// 碰撞塔允许靠近其他的距离
+    /// </summary>
+    public float TowerDefenseNearDisWhenColliderTower { get; private set; }
     /// <summary>
     /// 广告系统是否可用
     /// </summary>
@@ -381,7 +401,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "ARPVPCfgTakePhsicalStrength:" + ARPVPCfgTakePhsicalStrength + ","
         + "AREndlessChallengeTakePhsicalStrength:" + AREndlessChallengeTakePhsicalStrength + ","
         + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
-        + "TowerDefenseNearTowerDis:" + TowerDefenseNearTowerDis + ","
+        + "TowerDefenseNearDisWhenHome:" + TowerDefenseNearDisWhenHome + ","
+        + "TowerDefenseNearDisWhenMonsterCall:" + TowerDefenseNearDisWhenMonsterCall + ","
+        + "TowerDefenseNearDisWhenAttackTower:" + TowerDefenseNearDisWhenAttackTower + ","
+        + "TowerDefenseNearDisWhenTrapTower:" + TowerDefenseNearDisWhenTrapTower + ","
+        + "TowerDefenseNearDisWhenColliderTower:" + TowerDefenseNearDisWhenColliderTower + ","
         + "AdmobAvailable:" + AdmobAvailable + ","
         + "RecoverTimeoutTime:" + RecoverTimeoutTime + ","
         + "RecoverAddHp:" + RecoverAddHp + ","

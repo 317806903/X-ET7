@@ -13,6 +13,11 @@ namespace ET.Server
 			long playerId = player.Id;
 
 			PlayerModelType playerModelType = (PlayerModelType)request.PlayerModelType;
+			long sceneInstanceId = request.SceneInstanceId;
+			if (sceneInstanceId != scene.InstanceId)
+			{
+				PlayerCacheHelper.ClearPlayerModel(scene, playerId, playerModelType);
+			}
 
 			G2C_PlayerCacheChgNotice _G2C_PlayerCacheChgNotice = new()
 			{

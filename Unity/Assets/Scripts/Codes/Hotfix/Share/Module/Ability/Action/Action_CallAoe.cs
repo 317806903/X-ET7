@@ -26,7 +26,14 @@ namespace ET.Ability
             for (int i = 0; i < list.Count; i++)
             {
                 Unit targetUnit = list[i];
-                GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), targetUnit, actionCfgCallAoe, selectHandle, ref actionContext);
+                Unit aoeUnit = GamePlayHelper.CreateAoeByUnit(unit.DomainScene(), targetUnit, actionCfgCallAoe, selectHandle, ref actionContext);
+
+                EventSystem.Instance.Publish(unit.DomainScene(), new ET.Ability.AbilityTriggerEventType.CallAoe()
+                {
+                    actionContext = actionContext,
+                    unit = targetUnit,
+                    beCallUnit = aoeUnit,
+                });
             }
             list.Dispose();
 

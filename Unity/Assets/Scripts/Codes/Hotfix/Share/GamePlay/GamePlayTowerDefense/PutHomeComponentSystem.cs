@@ -160,7 +160,9 @@ namespace ET
                 if (attackValue < 0)
                 {
                     Damage damage = new(NumericType.PhysicalAttack, attackValue);
-                    ET.Ability.DamageHelper.CreateDamageInfo(homeUnit, homeUnit, damage, false, ref actionContext);
+                    ET.Ability.DamageObj damageObj = ET.Ability.DamageHelper.CreateDamageObj(homeUnit, homeUnit, damage, false, ref actionContext);
+                    ActionCfg_DamageUnit actionCfg_DamageUnit = ActionCfg_DamageUnitCategory.Instance.Get("DamageUnit_Home_Recovery");
+                    damageObj.SetDamageShowType(actionCfg_DamageUnit.Id);
                 }
             }
         }
@@ -230,7 +232,7 @@ namespace ET
 
         public static Unit GetHomeUnit(this PutHomeComponent self, Unit unit)
         {
-            TeamFlagType teamFlagType = self.GetGamePlay().GetTeamFlagByUnitId(unit.Id);
+            TeamFlagType teamFlagType = ET.Ability.TeamFlagHelper.GetTeamFlag(unit);
             return self._GetHomeUnitByTeamFlagType(teamFlagType);
         }
 

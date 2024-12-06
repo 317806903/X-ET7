@@ -15,10 +15,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitComponent self)
             {
-                self.unitId = new();
-                self.unitComponentCount = new();
-                self.unitComponents = new();
-                self.deleteUnitComponents = new();
             }
         }
 
@@ -69,7 +65,7 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_UnitComponent self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_UnitComponent self, UnitComponent unitComponent)
         {
             int index = 0;
             int count = self.unitId.Count;
@@ -102,7 +98,6 @@ namespace ET
                     }
                 }
             }
-            await ETTask.CompletedTask;
         }
     }
 }

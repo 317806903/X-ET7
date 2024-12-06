@@ -47,16 +47,17 @@ namespace ET.Client
 		public float tryDis = 0f;
 
 		public bool pathfindingSuccess = true;
+		public bool hasNavMeshFromHeadQuarter = false;
 
 		//坐标在Y轴上的偏移量
-		public float _YOffset = 0.1F;
+		public float _YOffset = 0.02F;
 		public LayerMask _groundLayerMask;
 
 		public long newShowLineRendererTime;
 
-		public float3 lineRendererPos;
-		public bool canShowLineRendererNear;
-		public bool lineRendererReqing = false;
+		public float3 asyncCheckPos;
+		public bool asyncChecked;
+		public bool isAsyncChecking = false;
 
 		public float3 recordLastRayPos;
 		public long recordLastChkPutRepeatTime;

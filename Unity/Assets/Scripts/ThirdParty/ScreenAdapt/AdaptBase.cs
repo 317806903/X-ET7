@@ -167,7 +167,7 @@ namespace ScreenAdapt
             {
                 (height, width) = (width, height);
             }
-            return width / height < 1.778f;
+            return width / height < 1.7f;
         }
 
         public virtual void OnChange()

@@ -17,9 +17,7 @@ namespace ET.Ability
 			}
 			ActionCfg_DamageUnit actionCfg_DamageUnit = ActionCfg_DamageUnitCategory.Instance.Get(actionId);
 
-			bool isCriticalStrike = DamageHelper.ChkIsCriticalStrike(unit, null);
-			actionContext.isCriticalStrike = isCriticalStrike;
-			await DamageHelper.DoDamage(unit, actionCfg_DamageUnit, selectHandle, null, isCriticalStrike, actionContext);
+			DamageHelper.DoDamageQuick(unit, actionCfg_DamageUnit, selectHandle, ref actionContext);
 			await ETTask.CompletedTask;
 		}
 	}

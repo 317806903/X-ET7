@@ -14,13 +14,13 @@ namespace ET.Server
 
 			string towerUnitCfgId = request.TowerUnitCfgId;
 			float3 position = request.Position;
-			position = ET.RecastHelper.GetHitNavmeshPos(observerUnit.DomainScene(), position);
-			if (position.Equals(float3.zero))
-			{
-				response.Error = ErrorCode.ERR_LogicError;
-				response.Message = "not found position";
-				return;
-			}
+			// position = ET.RecastHelper.GetHitNavmeshPos(observerUnit.DomainScene(), position);
+			// if (position.Equals(float3.zero))
+			// {
+			// 	response.Error = ErrorCode.ERR_LogicError;
+			// 	response.Message = "not found position";
+			// 	return;
+			// }
 
 			string createActionIds = request.CreateActionIds;
 			List<string> createActionList = new();

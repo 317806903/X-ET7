@@ -122,9 +122,8 @@ namespace ET.Ability
                 {
                     return null;
                 }
-                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake, null, null, ref buffObj.actionContext);
-
-                buffObj.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart, null, null, ref buffObj.actionContext);
+                buffObj.ChkBuffAwake();
+                buffObj.ChkBuffStart();
             }
 
             self.NoticeUnitBuffStatusChg();

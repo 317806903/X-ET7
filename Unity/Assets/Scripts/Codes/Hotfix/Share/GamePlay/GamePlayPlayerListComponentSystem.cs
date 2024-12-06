@@ -19,7 +19,6 @@ namespace ET
                 self.playerId2UnitIds = new();
                 self.playerId2PlayerUnitIdList = new();
                 self.playerId2CameraPlayerUnitId = new();
-                self.unitId2PlayerId = new();
                 self.playerId2IsQuit = new();
                 self.playerId2BirthPos = new();
                 self.playerId2CoinList = new();
@@ -35,7 +34,6 @@ namespace ET
                 self.playerId2UnitIds?.Clear();
                 self.playerId2PlayerUnitIdList?.Clear();
                 self.playerId2CameraPlayerUnitId?.Clear();
-                self.unitId2PlayerId?.Clear();
                 self.playerId2IsQuit?.Clear();
                 self.playerId2BirthPos?.Clear();
                 self.playerId2CoinList?.Clear();
@@ -64,25 +62,6 @@ namespace ET
             {
                 self.curFrameChk = 0;
 
-                if (self.unitId2PlayerId_WaitDestroy.Count == 0)
-                {
-                    return;
-                }
-
-                self.unitId2PlayerId_RemoveList.Clear();
-                foreach (var item in self.unitId2PlayerId_WaitDestroy)
-                {
-                    if (item.Value.destroyTime < TimeHelper.ServerNow() - 5000)
-                    {
-                        self.unitId2PlayerId_RemoveList.Add(item.Key);
-                    }
-                }
-
-                foreach (long unitId in self.unitId2PlayerId_RemoveList)
-                {
-                    self.unitId2PlayerId_WaitDestroy.Remove(unitId);
-                }
-                self.unitId2PlayerId_RemoveList.Clear();
             }
         }
 
@@ -150,19 +129,15 @@ namespace ET
         /// <param name="unitId"></param>
         public static void AddUnitInfo(this GamePlayPlayerListComponent self, long playerId, long unitId, UnitType unitType)
         {
-            if (self.unitId2PlayerId.ContainsKey(unitId) == false)
-            {
-                self.playerId2UnitIds.Add(playerId, unitId);
-                self.unitId2PlayerId.Add(unitId, playerId);
+            self.playerId2UnitIds.Add(playerId, unitId);
 
-                if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
-                {
-                    self.playerId2CameraPlayerUnitId.Add(playerId, unitId);
-                }
-                else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
-                {
-                    self.playerId2PlayerUnitIdList.Add(playerId, unitId);
-                }
+            if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
+            {
+                self.playerId2CameraPlayerUnitId.Add(playerId, unitId);
+            }
+            else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
+            {
+                self.playerId2PlayerUnitIdList.Add(playerId, unitId);
             }
         }
 
@@ -173,27 +148,17 @@ namespace ET
         /// <param name="unitId"></param>
         public static void RemoveUnitInfo(this GamePlayPlayerListComponent self, long unitId, UnitType unitType)
         {
-            if (self.unitId2PlayerId.TryGetValue(unitId, out long playerId))
-            {
-                self.playerId2UnitIds.Remove(playerId, unitId);
-                self.unitId2PlayerId.Remove(unitId);
-                if (self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId) == false)
-                {
-                    self.unitId2PlayerId_WaitDestroy.Add(unitId, (playerId, TimeHelper.ServerNow()));
-                }
-                else
-                {
-                    Log.Error($"ET.GamePlayPlayerListComponentSystem.RemoveUnitInfo self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId)");
-                }
+            Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+            long playerId = TeamFlagHelper.GetPlayerId(unit);
+            self.playerId2UnitIds.Remove(playerId, unitId);
 
-                if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
-                {
-                    self.playerId2CameraPlayerUnitId.Remove(playerId);
-                }
-                else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
-                {
-                    self.playerId2PlayerUnitIdList.Remove(playerId);
-                }
+            if (ET.Ability.UnitHelper.ChkIsCameraPlayer(unitType))
+            {
+                self.playerId2CameraPlayerUnitId.Remove(playerId);
+            }
+            else if (ET.Ability.UnitHelper.ChkIsPlayer(unitType))
+            {
+                self.playerId2PlayerUnitIdList.Remove(playerId);
             }
         }
 
@@ -228,27 +193,6 @@ namespace ET
             }
 
             return -1;
-        }
-
-        /// <summary>
-        /// 通过这个判断 unitId 是否归属 player, 返回-1则不是玩家的
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="unitId"></param>
-        /// <returns></returns>
-        public static long GetPlayerIdByUnitId(this GamePlayPlayerListComponent self, long unitId)
-        {
-            if (self.unitId2PlayerId.ContainsKey(unitId) == false)
-            {
-                if (self.unitId2PlayerId_WaitDestroy.ContainsKey(unitId))
-                {
-                    return self.unitId2PlayerId_WaitDestroy[unitId].playerId;
-                }
-                return -1;
-            }
-
-            long playerId = self.unitId2PlayerId[unitId];
-            return playerId;
         }
 
         /// <summary>

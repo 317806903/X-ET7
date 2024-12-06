@@ -29,12 +29,23 @@ namespace ET.Server
             return playerDataComponent;
         }
 
+        public static void ClearPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType)
+        {
+            PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
+            Entity entityModel = playerDataComponent.GetPlayerModel(playerModelType);
+            if (entityModel == null)
+            {
+                return;
+            }
+            entityModel.ClearDataCache();
+        }
+
         public static async ETTask<Entity> GetPlayerModel(Scene scene, long playerId, PlayerModelType playerModelType, bool forceReGet)
         {
             PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-            bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType);
-            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId * 10 + (int)playerModelType))
+            bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId + (int)playerModelType);
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId + (int)playerModelType))
             {
                 Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
                 if (entity == null || entity.IsDisposed || (forceReGet && isLock == false))
@@ -116,7 +127,10 @@ namespace ET.Server
             foreach (var itemCfgId in playerBattleCardComponent.GetBattleCardItemCfgIdList())
             {
                 ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
-                list.Add(itemComponent);
+                if (itemComponent != null)
+                {
+                    list.Add(itemComponent);
+                }
             }
 
             return list;
@@ -138,7 +152,10 @@ namespace ET.Server
             foreach (var itemCfgId in playerBattleSkillByPlayerId.GetBattleSkillItemCfgIdList())
             {
                 ItemComponent itemComponent = playerBackPackComponent.GetItemWhenStack(itemCfgId);
-                list.Add(itemComponent);
+                if (itemComponent != null)
+                {
+                    list.Add(itemComponent);
+                }
             }
 
             return list;
@@ -182,7 +199,7 @@ namespace ET.Server
             Entity entityModel = await GetPlayerModel(scene, playerId, playerModelType, false);
             entityModel.SetDataCacheAutoClear();
             byte[] bytes = entityModel.ToBson();
-            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId * 10 + (int)playerModelType))
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId + (int)playerModelType))
             {
                 await SendSavePlayerModelAsync(scene, playerId, playerModelType, bytes, setPlayerKeys, playerModelChgType);
             }
@@ -548,6 +565,26 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        public static async ETTask SetItemNum(Scene scene, long playerId, string itemCfgId, int count)
+        {
+            if (count < 0)
+            {
+                Log.Error($"Quantity must be positive, count:{count}");
+                return;
+            }
+
+            PlayerBackPackComponent playerBackPackComponent =
+                await GetPlayerModel(scene, playerId, PlayerModelType.BackPack, true) as
+                    PlayerBackPackComponent;
+            playerBackPackComponent.SetItem(itemCfgId, count);
+
+            PlayerModelChgType playerModelChgType = PlayerModelChgType.PlayerBackPack_SetItemNum;
+            await SavePlayerModel(scene, playerId, PlayerModelType.BackPack, null, playerModelChgType);
+
+            await PlayerCacheHelper.DealPlayerUIRedDotType(scene, playerId, PlayerModelType.BackPack);
+            await ETTask.CompletedTask;
+        }
+
         public static async ETTask AddItems(Scene scene, long playerId, Dictionary<string, int> items)
         {
             PlayerBackPackComponent playerBackPackComponent =
@@ -583,12 +620,19 @@ namespace ET.Server
 
         public static async ETTask NoticeClientPlayerCacheChg(Scene scene, long playerId, PlayerModelType playerModelType)
         {
-            long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, scene.InstanceId);
-            if (locationActorId != 0)
+            using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCache, playerId + (int)playerModelType))
             {
-                O2G_PlayerCacheChgNoticeClient _O2G_PlayerCacheChgNoticeClient = new() { PlayerModelType = (int)playerModelType, };
-                ActorLocationSenderOneType oneTypeLocationTypeTmp = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
-                await oneTypeLocationTypeTmp.Call(playerId, _O2G_PlayerCacheChgNoticeClient, scene.InstanceId);
+                long locationActorId = await LocationProxyComponent.Instance.Get(LocationType.Player, playerId, scene.InstanceId);
+                if (locationActorId != 0)
+                {
+                    O2G_PlayerCacheChgNoticeClient _O2G_PlayerCacheChgNoticeClient = new()
+                    {
+                        PlayerModelType = (int)playerModelType,
+                        SceneInstanceId = scene.InstanceId,
+                    };
+                    ActorLocationSenderOneType oneTypeLocationTypeTmp = ActorLocationSenderComponent.Instance.Get(LocationType.Player);
+                    await oneTypeLocationTypeTmp.Call(playerId, _O2G_PlayerCacheChgNoticeClient, scene.InstanceId);
+                }
             }
 
             await ETTask.CompletedTask;
@@ -876,7 +920,8 @@ namespace ET.Server
                 if (isNew)
                 {
                     await PlayerCacheHelper.SetUIRedDotType(scene, playerId, UIRedDotType.Mail, true);
-                    await NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.Mails);
+                    PlayerCacheHelper.ClearPlayerModel(scene, playerId, PlayerModelType.Mails);
+                    await PlayerCacheHelper.NoticeClientPlayerCacheChg(scene, playerId, PlayerModelType.Mails);
                 }
             }
         }

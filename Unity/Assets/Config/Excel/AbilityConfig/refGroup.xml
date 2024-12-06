@@ -9,7 +9,8 @@
 	ActionCfg_EffectRecordPointLightningTrailTargetCategory,
 	ActionCfg_AttackAreaCategory,
 	ActionCfg_GoToDieCategory,
-	ActionCfg_FaceToCategory,
+	ActionCfg_DamageChgCategory,
+	ActionCfg_FloatingTextCategory,
 	ActionCfg_CallActorCategory,
 	ActionCfg_CallAoeCategory,
 	ActionCfg_CoinAddCategory,
@@ -26,7 +27,7 @@
 	ActionCfg_SkillForgetCategory,
 	ActionCfg_BuffAddCategory,
 	ActionCfg_BuffDealCategory"/>
-	
+
     <refgroup name="ActionGameCfg_ref_group" ref="
 	ActionGameCfg_DoUnitActionCategory,
 	ActionGameCfg_ChgGamePlayNumericCategory"/>

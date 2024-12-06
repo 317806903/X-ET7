@@ -60,22 +60,6 @@ namespace ET.Client
 
         public static void ChgTransparent(this GameObjectTransparentComponent self, bool isTransparent)
         {
-            // TransparentSetter[] tss = self.GetGo().GetComponentsInChildren<TransparentSetter>();
-            // if (isTransparent)
-            // {
-            //     foreach (var ts in tss)
-            //     {
-            //         ts.SetTransparent(true, 0.6f);
-            //     }
-            // }
-            // else
-            // {
-            //     foreach (var ts in tss)
-            //     {
-            //         ts.SetTransparent(false, 1f);
-            //     }
-            // }
-
             if (isTransparent)
             {
                 self.SetTransparent(true, 0.6f);

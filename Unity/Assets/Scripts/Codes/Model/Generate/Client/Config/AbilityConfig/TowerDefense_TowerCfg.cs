@@ -67,7 +67,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     public string TutorialCfgId { get; private set; }
     public TutorialCfg TutorialCfgId_Ref { get; private set; }
     /// <summary>
-    /// 是否在UI面板中展示
+    /// 是否在出战UI面板中展示
     /// </summary>
     public bool IsShowInBattleDeckUI { get; private set; }
     /// <summary>
@@ -75,11 +75,11 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// </summary>
     public UnLockConditionBase UnLockCondition { get; private set; }
     /// <summary>
-    /// 半径
+    /// 半径(仅CallMonster时需要)
     /// </summary>
     public float Radius { get; private set; }
     /// <summary>
-    /// 相对位置
+    /// 相对位置(仅CallMonster时需要)
     /// </summary>
     public System.Collections.Generic.List<System.Numerics.Vector3> RelativePosition { get; private set; }
     /// <summary>
@@ -88,11 +88,11 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     public System.Collections.Generic.List<string> UnitId { get; private set; }
     public System.Collections.Generic.List<UnitCfg> UnitId_Ref { get; private set; }
     /// <summary>
-    /// 数量
+    /// 数量(仅CallMonster时需要)
     /// </summary>
     public System.Collections.Generic.List<int> Num { get; private set; }
     /// <summary>
-    /// 等级
+    /// 等级(仅CallMonster时需要)
     /// </summary>
     public System.Collections.Generic.List<int> Level { get; private set; }
     /// <summary>

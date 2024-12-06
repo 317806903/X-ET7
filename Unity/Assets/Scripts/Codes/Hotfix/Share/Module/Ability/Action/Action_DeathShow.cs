@@ -18,9 +18,15 @@ namespace ET.Ability
 			ActionCfg_DeathShow actionCfg_DeathShow = ActionCfg_DeathShowCategory.Instance.Get(actionId);
 			foreach (AttackActionCall attackActionCall in actionCfg_DeathShow.DeathShowActionCall)
 			{
+				bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(unit, attackActionCall.ChkCondition1, attackActionCall.ChkCondition2, attackActionCall.ChkCondition1SelectObj_Ref, attackActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+				if (bRetChk == false)
+				{
+					continue;
+				}
+
 				SelectHandle curSelectHandle = selectHandle;
 
-				bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, null, ref actionContext);
+				bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.FilterCondition1, attackActionCall.FilterCondition2, curSelectHandle, null, ref actionContext);
 
 			}
 			await ETTask.CompletedTask;

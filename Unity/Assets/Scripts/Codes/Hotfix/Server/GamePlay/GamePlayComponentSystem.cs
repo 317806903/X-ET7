@@ -508,9 +508,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
+                GamePlayPkComponent gamePlayPkComponent = self.GetGamePlayMode() as GamePlayPkComponent;
 
-                await gamePlayPkComponentBase.GameBeginWhenServer();
+                await gamePlayPkComponent.GameBeginWhenServer();
             }
 
             await ETTask.CompletedTask;
@@ -526,9 +526,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
+                GamePlayPkComponent gamePlayPkComponent = self.GetGamePlayMode() as GamePlayPkComponent;
 
-                await gamePlayPkComponentBase.GameEndWhenServer();
+                await gamePlayPkComponent.GameEndWhenServer();
             }
 
             await ETTask.CompletedTask;
@@ -544,9 +544,9 @@ namespace ET.Server
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetGamePlayMode() as GamePlayPkComponentBase;
+                GamePlayPkComponent gamePlayPkComponent = self.GetGamePlayMode() as GamePlayPkComponent;
 
-                await gamePlayPkComponentBase.GameRecoverWhenServer(playerId);
+                await gamePlayPkComponent.GameRecoverWhenServer(playerId);
             }
 
             await ETTask.CompletedTask;

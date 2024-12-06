@@ -30,33 +30,38 @@ namespace ET.Client
 					if (type == typeof (ET.SyncData_UnitPosInfo))
 					{
 						ET.SyncData_UnitPosInfo _SyncData_UnitPosInfo = (ET.SyncData_UnitPosInfo)entity;
-						await _SyncData_UnitPosInfo.DealByBytes(unitComponent);
+						_SyncData_UnitPosInfo.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitNumericInfo))
 					{
 						ET.SyncData_UnitNumericInfo _SyncData_UnitNumericInfo = (ET.SyncData_UnitNumericInfo)entity;
 
-						await _SyncData_UnitNumericInfo.DealByBytes(unitComponent);
+						_SyncData_UnitNumericInfo.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitPlayAudio))
 					{
 						ET.SyncData_UnitPlayAudio _SyncData_UnitPlayAudio = (ET.SyncData_UnitPlayAudio)entity;
-						await _SyncData_UnitPlayAudio.DealByBytes(unitComponent);
+						_SyncData_UnitPlayAudio.DealByBytes(unitComponent);
+					}
+					else if (type == typeof (ET.SyncData_UnitFloatingText))
+					{
+						ET.SyncData_UnitFloatingText _SyncData_UnitFloatingText = (ET.SyncData_UnitFloatingText)entity;
+						_SyncData_UnitFloatingText.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitComponent))
 					{
 						ET.SyncData_UnitComponent _SyncData_UnitComponent = (ET.SyncData_UnitComponent)entity;
-						await _SyncData_UnitComponent.DealByBytes(unitComponent);
+						_SyncData_UnitComponent.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitGetCoinShow))
 					{
 						ET.SyncData_UnitGetCoinShow _SyncData_UnitGetCoinShow = (ET.SyncData_UnitGetCoinShow)entity;
-						await _SyncData_UnitGetCoinShow.DealByBytes(unitComponent);
+						_SyncData_UnitGetCoinShow.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_DamageShow))
 					{
 						ET.SyncData_DamageShow _SyncData_DamageShow = (ET.SyncData_DamageShow)entity;
-						await _SyncData_DamageShow.DealByBytes(unitComponent);
+						_SyncData_DamageShow.DealByBytes(unitComponent);
 					}
 					else if (type == typeof (ET.SyncData_UnitEffects))
 					{

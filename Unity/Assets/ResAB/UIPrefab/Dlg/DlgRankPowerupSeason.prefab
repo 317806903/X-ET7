@@ -303,7 +303,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6012811418553100506}
+  m_TargetGraphic: {fileID: 6750124385046422127}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -635,7 +635,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 9018212831833898710}
+  m_TargetGraphic: {fileID: 7410770453191664372}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1372,7 +1372,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
 --- !u!1 &2631471107400192813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1529,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 7722451522653200052}
+  m_TargetGraphic: {fileID: 8108924275336510198}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3490,7 +3490,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1720587293925655733}
+  m_TargetGraphic: {fileID: 644601487426053049}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

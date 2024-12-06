@@ -25,6 +25,14 @@ namespace ET.Client
         {
             protected override void Destroy(UIGuideComponent self)
             {
+                if (self.nowIndex >= 0 && self.nowIndex < self._UIGuidePathList.list.Count)
+                {
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.AppsFlyerTutorialCompleted()
+                    {
+                        isTutorialCompleted = false,
+                        tutorialId = self.guideFileName
+                    });
+                }
                 if (UIGuideComponent.Instance == self)
                 {
                     UIGuideComponent.Instance = null;
@@ -139,18 +147,24 @@ namespace ET.Client
         public static async ETTask DoGuideStep(this UIGuideComponent self)
         {
             UIGuidePathList _UIGuidePathList = self._UIGuidePathList;
-
-            if (self.nowIndex > 0)
+            if (self.nowIndex < 0)
             {
-                if (self.nowIndex >= _UIGuidePathList.list.Count)
+                return;
+            }
+
+            if (self.nowIndex >= _UIGuidePathList.list.Count)
+            {
+                if (self.finished != null)
                 {
-                    if (self.finished != null)
+                    EventSystem.Instance.Publish(self.DomainScene(), new EventType.AppsFlyerTutorialCompleted()
                     {
-                        self.finished(self.DomainScene());
-                    }
-                    self.DestroySelf();
-                    return;
+                        isTutorialCompleted = true,
+                        tutorialId = self.guideFileName
+                    });
+                    self.finished(self.DomainScene());
                 }
+                self.DestroySelf();
+                return;
             }
 
 
@@ -170,7 +184,7 @@ namespace ET.Client
 
         public static void DestroySelf(this UIGuideComponent self)
         {
-            self.nowIndex = 0;
+            self.nowIndex = -1;
             if (self.CurUIGuideComponent != null)
             {
                 self.CurUIGuideComponent.Dispose();

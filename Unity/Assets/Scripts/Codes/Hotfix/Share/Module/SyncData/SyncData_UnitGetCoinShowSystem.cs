@@ -13,9 +13,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitGetCoinShow self)
             {
-                self.unitId = new();
-                self.coinType = new();
-                self.chgValue = new();
             }
         }
 
@@ -27,6 +24,7 @@ namespace ET
                 self.unitId.Clear();
                 self.coinType.Clear();
                 self.chgValue.Clear();
+                self.list.Clear();
             }
         }
 
@@ -51,9 +49,9 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_UnitGetCoinShow self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_UnitGetCoinShow self, UnitComponent unitComponent)
         {
-            ListComponent<(Unit unit, CoinTypeInGame coinType, int chgValue)> list = ListComponent<(Unit unit, CoinTypeInGame coinType, int chgValue)>.Create();
+            self.list.Clear();
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
             {
@@ -65,15 +63,14 @@ namespace ET
                 {
                     continue;
                 }
-                list.Add((unit, coinType, chgValue));
+                self.list.Add((unit, coinType, chgValue));
             }
 
             EventType.SyncGetCoinShow _SyncGetCoinShow = new ()
             {
-                list = list
+                list = self.list
             };
             EventSystem.Instance.Publish(unitComponent.DomainScene(), _SyncGetCoinShow);
-            await ETTask.CompletedTask;
         }
     }
 }

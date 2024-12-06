@@ -66,7 +66,7 @@ public abstract partial class UnitConditionBase: Bright.Config.BeanBase
     }
 
     /// <summary>
-    /// 条件符号
+    /// 筛选条件符号
     /// </summary>
     public ConditionCompare ConditionCompare { get; private set; }
 

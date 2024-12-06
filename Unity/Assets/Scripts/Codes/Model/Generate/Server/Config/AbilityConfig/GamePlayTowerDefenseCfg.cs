@@ -21,6 +21,7 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         IsNeedPutHomeAndMonsterCall = _buf.ReadBool();
         PlayerInitGold = _buf.ReadInt();
         InterestOnDeposit = _buf.ReadInt();
+        InterestOnDepositMaxValue = _buf.ReadInt();
         ResTime = _buf.ReadFloat();
         LimitTowerCount = _buf.ReadInt();
         RefreshBuyTowerCost = _buf.ReadInt();
@@ -59,6 +60,10 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// 波次结束结算存款利息(%)
     /// </summary>
     public int InterestOnDeposit { get; private set; }
+    /// <summary>
+    /// 波次结束结算存款利息最大值
+    /// </summary>
+    public int InterestOnDepositMaxValue { get; private set; }
     /// <summary>
     /// 中间休息时间
     /// </summary>
@@ -122,6 +127,7 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         + "IsNeedPutHomeAndMonsterCall:" + IsNeedPutHomeAndMonsterCall + ","
         + "PlayerInitGold:" + PlayerInitGold + ","
         + "InterestOnDeposit:" + InterestOnDeposit + ","
+        + "InterestOnDepositMaxValue:" + InterestOnDepositMaxValue + ","
         + "ResTime:" + ResTime + ","
         + "LimitTowerCount:" + LimitTowerCount + ","
         + "RefreshBuyTowerCost:" + RefreshBuyTowerCost + ","

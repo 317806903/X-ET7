@@ -114,9 +114,15 @@ namespace ET.Ability
 
         public static void EventHandler(this BulletObj self, BulletActionCall bulletActionCall, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
+            bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(self.GetUnit(), bulletActionCall.ChkCondition1, bulletActionCall.ChkCondition2, bulletActionCall.ChkCondition1SelectObj_Ref, bulletActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+            if (bRetChk == false)
+            {
+                return;
+            }
+
             (SelectHandle selectHandle, Unit resetPosByUnit) = ET.Ability.SelectHandleHelper.DealSelectHandler(self.GetUnit(), bulletActionCall.ActionCallParam_Ref, onAttackUnit, beHurtUnit, ref actionContext);
 
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), bulletActionCall.DelayTime, bulletActionCall.ActionId, bulletActionCall.ActionCondition1, bulletActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), bulletActionCall.DelayTime, bulletActionCall.ActionId, bulletActionCall.FilterCondition1, bulletActionCall.FilterCondition2, selectHandle, resetPosByUnit, ref actionContext);
         }
 
         public static void FixedUpdate(this BulletObj self, float fixedDeltaTime)
@@ -132,7 +138,7 @@ namespace ET.Ability
 
             if (self.duration <= 0 || self.canHitTimes <= 0)
             {
-                self.GetUnit().DestroyWithDeathShow();
+                self.GetUnit().DestroyWithDeathShow(false);
                 return;
             }
 

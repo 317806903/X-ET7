@@ -246,6 +246,23 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EGDetailRootRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGDetailRootRectTransform == null )
+				{
+					this.m_EGDetailRootRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EG_MailReport/Root/EG_info/EGDetailRoot");
+				}
+				return this.m_EGDetailRootRectTransform;
+			}
+		}
+
 		public TMPro.TextMeshProUGUI ETxtDetailsTextMeshProUGUI
 		{
 			get
@@ -257,7 +274,7 @@ namespace ET.Client
 				}
 				if( this.m_ETxtDetailsTextMeshProUGUI == null )
 				{
-					this.m_ETxtDetailsTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_MailReport/Root/EG_info/ETxtDetails");
+					this.m_ETxtDetailsTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EG_MailReport/Root/EG_info/EGDetailRoot/Scroll View/Viewport/Content/ETxtDetails");
 				}
 				return this.m_ETxtDetailsTextMeshProUGUI;
 			}
@@ -365,6 +382,7 @@ namespace ET.Client
 			this.m_es_avatarshow = null;
 			this.m_ETxtSendDateTextMeshProUGUI = null;
 			this.m_ETxtLimintDataTextMeshProUGUI = null;
+			this.m_EGDetailRootRectTransform = null;
 			this.m_ETxtDetailsTextMeshProUGUI = null;
 			this.m_EMainContentGiftsImage = null;
 			this.m_E_CollectButton = null;
@@ -388,6 +406,7 @@ namespace ET.Client
 		private ES_AvatarShow m_es_avatarshow = null;
 		private TMPro.TextMeshProUGUI m_ETxtSendDateTextMeshProUGUI = null;
 		private TMPro.TextMeshProUGUI m_ETxtLimintDataTextMeshProUGUI = null;
+		private UnityEngine.RectTransform m_EGDetailRootRectTransform = null;
 		private TMPro.TextMeshProUGUI m_ETxtDetailsTextMeshProUGUI = null;
 		private UnityEngine.UI.Image m_EMainContentGiftsImage = null;
 		private UnityEngine.UI.Button m_E_CollectButton = null;

@@ -10,8 +10,8 @@ namespace ET.Client
         {
 	        Unit unit = ET.Ability.UnitHelper_Create.CreateWhenClient(unitComponent, unitInfo);
 
-	        unit.Position = unitInfo.Position;
-	        unit.Forward = unitInfo.Forward;
+	        unit.SetPositionWhenClient(unitInfo.Position);
+	        unit.SetRotationWhenClient(unitInfo.Rotation);
 
 	        if (unitInfo.Components != null)
 	        {
@@ -56,15 +56,6 @@ namespace ET.Client
 	        else
 	        {
 		        unit.AddComponent<MoveByPathComponent>();
-		        if (unitInfo.MoveInfo != null)
-		        {
-			        if (unitInfo.MoveInfo.Points.Count > 0)
-			        {
-				        unitInfo.MoveInfo.Points[0] = unit.Position;
-				        unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
-			        }
-		        }
-
 		        unit.AddComponent<ObjectWait>();
 
 		        //unit.AddComponent<XunLuoPathComponent>();
@@ -80,8 +71,8 @@ namespace ET.Client
 	        unit.level = unitInfo.Level;
 	        unit.Type = unitType;
 
-	        unit.Position = unitInfo.Position;
-	        unit.Forward = unitInfo.Forward;
+	        unit.SetPositionWhenClient(unitInfo.Position);
+	        unit.SetRotationWhenClient(unitInfo.Rotation);
 
 	        foreach (byte[] bytes in unitInfo.Components)
 	        {
@@ -127,14 +118,6 @@ namespace ET.Client
 			        unit.RemoveComponent<MoveByPathComponent>();
 		        }
 		        moveByPathComponent = unit.AddComponent<MoveByPathComponent>();
-		        if (unitInfo.MoveInfo != null)
-		        {
-			        if (unitInfo.MoveInfo.Points.Count > 0)
-			        {
-				        unitInfo.MoveInfo.Points[0] = unit.Position;
-				        unit.MoveToAsync(unitInfo.MoveInfo.Points).Coroutine();
-			        }
-		        }
 
 		        ObjectWait objectWait = unit.GetComponent<ObjectWait>();
 		        if (objectWait != null)

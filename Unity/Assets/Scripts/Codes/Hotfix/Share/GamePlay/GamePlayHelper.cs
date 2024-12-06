@@ -34,6 +34,16 @@ namespace ET
 			return GetGamePlay(unit)?.GetComponent<GamePlayTowerDefenseComponent>();
 		}
 
+		public static GamePlayPkComponent GetGamePlayPk(Scene scene)
+		{
+			return GetGamePlay(scene)?.GetComponent<GamePlayPkComponent>();
+		}
+
+		public static GamePlayPkComponent GetGamePlayPk(Unit unit)
+		{
+			return GetGamePlay(unit)?.GetComponent<GamePlayPkComponent>();
+		}
+
 		//-----------------------------------------------------------
 
 		public static Unit CreateObserverUnit(GamePlayMode gamePlayMode, Scene scene, long playerId)
@@ -45,6 +55,7 @@ namespace ET
 
 			GamePlayHelper.AddUnitPathfinding(unit);
 			GamePlayHelper.AddUnitInfo(playerId, unit);
+			GamePlayHelper.AddPlayerUnitTeamFlag(playerId, unit);
 			return unit;
 		}
 
@@ -117,12 +128,12 @@ namespace ET
 		{
 			Unit bulletUnit = UnitHelper_Create.CreateWhenServer_Bullet(scene, unitCaster, actionCfgFireBullet, selectHandle, actionContext);
 
-			GamePlayHelper.AddUnitTeamFlagByParent(unitCaster, bulletUnit);
 			long playerId = GamePlayHelper.GetPlayerIdByUnitId(unitCaster);
 			if (playerId != -1)
 			{
 				GamePlayHelper.AddUnitInfo(playerId, bulletUnit);
 			}
+			GamePlayHelper.AddUnitTeamFlagByParent(playerId, unitCaster, bulletUnit);
 
 			return bulletUnit;
 		}
@@ -136,12 +147,12 @@ namespace ET
 				actorUnit.AddComponent<UnitWaitDestroyComponent, float>(actionCfgCallActor.Duration);
 			}
 
-			GamePlayHelper.AddUnitTeamFlagByParent(unitCaster, actorUnit);
 			long playerId = GamePlayHelper.GetPlayerIdByUnitId(unitCaster);
 			if (playerId != -1)
 			{
 				GamePlayHelper.AddUnitInfo(playerId, actorUnit);
 			}
+			GamePlayHelper.AddUnitTeamFlagByParent(playerId, unitCaster, actorUnit);
 
 			return actorUnit;
 		}
@@ -155,12 +166,12 @@ namespace ET
 				aoeUnit.AddComponent<UnitWaitDestroyComponent, float>(actionCfg_CallAoe.Duration);
 			}
 
-			GamePlayHelper.AddUnitTeamFlagByParent(unitCaster, aoeUnit);
 			long playerId = GamePlayHelper.GetPlayerIdByUnitId(unitCaster);
 			if (playerId != -1)
 			{
 				GamePlayHelper.AddUnitInfo(playerId, aoeUnit);
 			}
+			GamePlayHelper.AddUnitTeamFlagByParent(playerId, unitCaster, aoeUnit);
 
 			return aoeUnit;
 		}
@@ -288,8 +299,7 @@ namespace ET
 			{
 				return -1;
 			}
-			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
-			long playerId = gamePlayComponent.GetPlayerIdByUnitId(unit.Id);
+			long playerId = TeamFlagHelper.GetPlayerId(unit);
 			return playerId;
 		}
 
@@ -345,10 +355,10 @@ namespace ET
 		/// <param name="self"></param>
 		/// <param name="unitParent"></param>
 		/// <param name="unit"></param>
-		public static void AddUnitTeamFlagByParent(Unit unitParent, Unit unit)
+		public static void AddUnitTeamFlagByParent(long playerId, Unit unitParent, Unit unit)
 		{
 			GamePlayComponent gamePlayComponent = GetGamePlay(unit);
-			gamePlayComponent.AddUnitTeamFlagByParent(unitParent, unit);
+			gamePlayComponent.AddUnitTeamFlagByParent(playerId, unitParent, unit);
 		}
 
 		public static string GetPathfindingMapName(Scene scene)

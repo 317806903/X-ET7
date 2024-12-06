@@ -87,12 +87,6 @@ namespace ET.Client
             return skillDis;
         }
 
-        public static void SendGetNumericUnit(Unit unit)
-        {
-            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(unit.DomainScene());
-            gamePlayComponent.RecordNeedGetNumericUnit(unit);
-        }
-
         public static async ETTask<bool> ChkUnitExist(Entity self, long unitId, int retryNum = 1000)
         {
             Unit unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
@@ -106,7 +100,7 @@ namespace ET.Client
                 retryNum--;
                 if (retryNum <= 0)
                 {
-                    continue;
+                    return false;
                 }
                 unit = ET.Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
             }

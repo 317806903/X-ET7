@@ -10,6 +10,11 @@ namespace ET.Ability
     {
         public static async ETTask DoAttackArea(Unit unit, Unit resetPosByUnit, ActionCfg_AttackArea actionCfg_AttackArea, SelectHandle selectHandleOld, ActionContext actionContext)
         {
+            bool isReady = await ET.AOIHelper.ChkAOIReady(null, unit);
+            if (isReady == false)
+            {
+                return;
+            }
             SelectHandle selectHandle;
             if (actionCfg_AttackArea.ActionCallAutoUnitArea_Ref.ActionCallParam is ActionCallSelectLast)
             {
@@ -65,13 +70,26 @@ namespace ET.Ability
             SelectHandle selectHandleSelf = SelectHandleHelper.CreateUnitSelfSelectHandle(unit);
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.SelfAttackActionCall)
             {
+                bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(unit, attackActionCall.ChkCondition1, attackActionCall.ChkCondition2, attackActionCall.ChkCondition1SelectObj_Ref, attackActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+                if (bRetChk == false)
+                {
+                    continue;
+                }
+
                 SelectHandle curSelectHandle = selectHandleSelf;
 
-                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, null, ref actionContext);
+                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.FilterCondition1, attackActionCall.FilterCondition2, curSelectHandle, null, ref actionContext);
             }
 
             foreach (AttackActionCall attackActionCall in actionCfg_AttackArea.TargetAttackActionCall)
             {
+
+                bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(unit, attackActionCall.ChkCondition1, attackActionCall.ChkCondition2, attackActionCall.ChkCondition1SelectObj_Ref, attackActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+                if (bRetChk == false)
+                {
+                    continue;
+                }
+
                 SelectHandle curSelectHandle = selectHandle;
 
                 Unit resetPosByUnitNew = null;
@@ -79,7 +97,7 @@ namespace ET.Ability
                 {
                     resetPosByUnitNew = UnitHelper.GetUnit(unit.DomainScene(), curSelectHandle.unitIds[0]);
                 }
-                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.ActionCondition1, attackActionCall.ActionCondition2, curSelectHandle, resetPosByUnitNew, ref actionContext);
+                bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(unit, unit, attackActionCall.DelayTime, attackActionCall.ActionId, attackActionCall.FilterCondition1, attackActionCall.FilterCondition2, curSelectHandle, resetPosByUnitNew, ref actionContext);
 
             }
 
@@ -136,7 +154,7 @@ namespace ET.Ability
                 {
                     continue;
                 }
-                Damage damage = GetDamage(unit, targetUnit, actionCfg_DamageUnit, isCriticalStrike);
+                Damage damage = CreateDamage(unit, targetUnit, actionCfg_DamageUnit, isCriticalStrike);
                 if (damageAllot is DamageAllotChg damageAllotChg)
                 {
                     damage *= damageScale;
@@ -146,7 +164,8 @@ namespace ET.Ability
                 {
                     damage *= damageScale;
                 }
-                CreateDamageInfo(unit, targetUnit, damage, isCriticalStrike, ref actionContext);
+                DamageObj damageObj = CreateDamageObj(unit, targetUnit, damage, isCriticalStrike, ref actionContext);
+                damageObj.SetDamageShowType(actionCfg_DamageUnit.Id);
                 if (i >= stopNum && i % stopNum == 0)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
@@ -223,7 +242,7 @@ namespace ET.Ability
             return false;
         }
 
-        public static Damage GetDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit, bool isCriticalStrike)
+        public static Damage CreateDamage(Unit attackerUnit, Unit targetUnit, ActionCfg_DamageUnit actionCfg_DamageUnit, bool isCriticalStrike)
         {
             float damageValue = 0;
             ET.AbilityConfig.DamageInfo damageInfo = actionCfg_DamageUnit.DamageInfo;
@@ -264,7 +283,10 @@ namespace ET.Ability
             if (damageInfo.ScaleByDis != 0)
             {
                 Unit casterActorUnit = attackerUnit.GetCasterActor();
-
+                if (casterActorUnit == null)
+                {
+                    return;
+                }
                 //按照距离变化(>0表示越远伤害越高,<0表示越近伤害越高)
                 float dis = math.length(casterActorUnit.Position - targetUnit.Position);
                 if (damageInfo.ScaleByDis > 0)
@@ -280,7 +302,10 @@ namespace ET.Ability
             if (damageInfo.ScaleByHeight != 0)
             {
                 Unit casterActorUnit = attackerUnit.GetCasterActor();
-
+                if (casterActorUnit == null)
+                {
+                    return;
+                }
                 //按照高度变化(>0表示往上越远伤害越高,<0表示往下越远伤害越高)
                 if (
                     (damageInfo.ScaleByHeight > 0 && casterActorUnit.Position.y < targetUnit.Position.y)
@@ -318,10 +343,49 @@ namespace ET.Ability
             return damageValue;
         }
 
-        public static DamageInfo CreateDamageInfo(Unit unit, Unit targetUnit, Damage damage, bool isCrit, ref ActionContext actionContext)
+        public static DamageObj CreateDamageObj(Unit unit, Unit targetUnit, Damage damage, bool isCrit, ref ActionContext actionContext)
         {
             Scene scene = unit.DomainScene();
             return scene.GetComponent<DamageComponent>().Add(unit, targetUnit, damage, isCrit, ref actionContext);
         }
+
+        public static void ChgDamageObj(Unit unit, ActionCfg_DamageChg _ActionCfg_DamageChg, ref ActionContext actionContext)
+        {
+            Scene scene = unit.DomainScene();
+            scene.GetComponent<DamageComponent>().ChgDamageObj(_ActionCfg_DamageChg, ref actionContext);
+        }
+
+        public static void DoDamageQuick(Unit unit, ActionCfg_DamageUnit actionCfg_DamageUnit, SelectHandle selectHandle, ref ActionContext actionContext)
+        {
+            if (selectHandle.selectHandleType != SelectHandleType.SelectUnits)
+            {
+                Log.Error($"ET.Ability.DamageHelper.DoDamageQuick selectHandle.selectHandleType[{selectHandle.selectHandleType}] != SelectHandleType.SelectUnits");
+                return;
+            }
+
+            int count = selectHandle.unitIds.Count;
+            if (count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                Unit targetUnit = UnitHelper.GetUnit(unit.DomainScene(), selectHandle.unitIds[i]);
+                if (UnitHelper.ChkUnitAlive(targetUnit, true) == false)
+                {
+                    continue;
+                }
+                Damage damage = CreateDamage(unit, targetUnit, actionCfg_DamageUnit, false);
+                CreateDamageObjQuick(targetUnit, damage, ref actionContext, actionCfg_DamageUnit.Id);
+            }
+        }
+
+        public static void CreateDamageObjQuick(Unit targetUnit, Damage damage, ref ActionContext actionContext, string actionCfgDamageUnitId)
+        {
+            Scene scene = targetUnit.DomainScene();
+            scene.GetComponent<DamageComponent>().DealWithDamageQuick(targetUnit, damage, ref actionContext, actionCfgDamageUnitId);
+        }
+
     }
 }

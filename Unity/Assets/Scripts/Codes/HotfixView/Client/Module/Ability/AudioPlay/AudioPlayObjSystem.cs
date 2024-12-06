@@ -63,7 +63,7 @@ namespace ET.Ability.Client
                 }
                 GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
 
-                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_AudioSource");
+                ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_AudioBattleSource");
                 GameObject go = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,10);
                 if (go == null)
                 {

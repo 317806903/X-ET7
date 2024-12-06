@@ -71,7 +71,6 @@ namespace ET.Client
         {
             self.DealList();
 
-            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Game);
             int countTower = self.matchTowerList.Count;
             self.AddUIScrollItems(ref self.ScrollItemTowers, countTower);
             self.View.ELoopScrollList_TowerLoopHorizontalScrollRect.SetVisible(true, countTower);

@@ -86,13 +86,6 @@ message G2C_LoginInAtOtherWhere // IActorMessage
 	int32 RpcId = 1;
 }
 
-message MoveInfo
-{
-	repeated Unity.Mathematics.float3 Points = 1;
-	Unity.Mathematics.quaternion Rotation = 2;
-	int32 TurnSpeed = 3;
-}
-
 message UnitInfo
 {
 	int64 UnitId = 1;
@@ -100,11 +93,10 @@ message UnitInfo
 	int32 Level = 3;
 	int32 Type = 4;
 	Unity.Mathematics.float3 Position = 5;
-	Unity.Mathematics.float3 Forward = 6;
+	Unity.Mathematics.quaternion Rotation = 6;
 	map<int32, int64> KV = 7;
-	MoveInfo MoveInfo = 8;
-	repeated bytes Components = 9;
-	repeated bytes EffectComponents = 10;
+	repeated bytes Components = 8;
+	repeated bytes EffectComponents = 9;
 }
 
 message M2C_CreateUnits // IActorMessage
@@ -980,20 +972,37 @@ message M2C_GetMonsterCall2HeadQuarterPath // IActorLocationResponse
 	repeated Unity.Mathematics.float3 Points = 5;
 }
 
-//ResponseType M2C_GetNavMeshFromHeadQuarter
-message C2M_GetNavMeshFromHeadQuarter // IActorLocationRequest
+//ResponseType M2C_GetNearestNavMeshPoint
+message C2M_GetNearestNavMeshPoint // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	int32 HomeTeamFlagType = 2;
+	Unity.Mathematics.float3 Position = 2;
 }
 
-message M2C_GetNavMeshFromHeadQuarter // IActorLocationResponse
+message M2C_GetNearestNavMeshPoint // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	Unity.Mathematics.float3 NavMeshPosition = 4;
+	int64 PolygonRef = 5;
+}
+
+//ResponseType M2C_GetNavMeshFromPosition
+message C2M_GetNavMeshFromPosition // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	Unity.Mathematics.float3 Position = 2;
+}
+
+message M2C_GetNavMeshFromPosition // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
 	repeated Unity.Mathematics.float3 Vertices = 4;
 	repeated int32 Indices = 5;
+	repeated int64 PolygonRefs = 6;
 }
 
 //ResponseType M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath

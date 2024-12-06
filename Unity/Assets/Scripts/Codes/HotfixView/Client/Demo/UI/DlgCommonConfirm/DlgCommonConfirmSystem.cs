@@ -68,6 +68,26 @@ namespace ET.Client
             self.View.E_CancelTextTextMeshProUGUI.text = msg;
         }
 
+        public static void SetDetailText(this DlgCommonConfirm self, string detailText)
+        {
+            self.View.E_TextSimpleTextMeshProUGUI.SetVisible(true);
+            self.View.E_TextSimpleTextMeshProUGUI.text = detailText;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.E_TextSimpleTextMeshProUGUI.rectTransform);
+            float sizeRootY = self.View.EGDetailRootRectTransform.sizeDelta.y;
+            float sizeTextY = self.View.E_TextSimpleTextMeshProUGUI.preferredHeight;
+            if (sizeRootY < sizeTextY)
+            {
+                self.View.E_TextSimpleTextMeshProUGUI.SetVisible(false);
+                self.View.EGDetailScrollRectTransform.SetVisible(true);
+                self.View.E_TextTextMeshProUGUI.text = detailText;
+            }
+            else
+            {
+                self.View.E_TextSimpleTextMeshProUGUI.SetVisible(true);
+                self.View.EGDetailScrollRectTransform.SetVisible(false);
+            }
+        }
+
         // 显示通用确认对话框，但不关闭
         public static void ShowConfirmNoClose(this DlgCommonConfirm self, string confirmMsg, string sureText = null, string titleText = null)
         {
@@ -77,7 +97,7 @@ namespace ET.Client
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(false);
             // 设置确认消息文本
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+            self.SetDetailText(confirmMsg);
             // 如果指定了确认按钮的文本，则设置确认按钮和仅确认文本的文本
             if (string.IsNullOrEmpty(sureText) == false)
             {
@@ -110,7 +130,7 @@ namespace ET.Client
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(false);
             // 设置确认消息文本
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+            self.SetDetailText(confirmMsg);
             // 如果指定了确认按钮的文本，则设置确认按钮和仅确认文本的文本
             if (string.IsNullOrEmpty(sureText) == false)
             {
@@ -143,7 +163,7 @@ namespace ET.Client
             self.View.EG_SureRectTransform.gameObject.SetActive(false);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(true);
             // 设置确认消息文本
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+            self.SetDetailText(confirmMsg);
             // 如果指定了确认按钮的文本，则设置确认按钮和仅确认文本的文本
             if (string.IsNullOrEmpty(sureText) == false)
             {

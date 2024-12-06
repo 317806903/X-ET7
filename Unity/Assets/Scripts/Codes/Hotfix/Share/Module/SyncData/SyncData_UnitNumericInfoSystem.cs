@@ -14,10 +14,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitNumericInfo self)
             {
-                self.unitId = new();
-                self.KVCount = new();
-                self.KVKey = new();
-                self.KVValue = new();
             }
         }
 
@@ -30,6 +26,7 @@ namespace ET
                 self.KVCount.Clear();
                 self.KVKey.Clear();
                 self.KVValue.Clear();
+                self.list.Clear();
             }
         }
 
@@ -103,9 +100,9 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_UnitNumericInfo self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_UnitNumericInfo self, UnitComponent unitComponent)
         {
-            ListComponent<Unit> list = ListComponent<Unit>.Create();
+            self.list.Clear();
             int index = 0;
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
@@ -132,18 +129,17 @@ namespace ET
                     numericComponent.SetNoEvent(key, value);
                     if (key == ET.NumericType.Hp)
                     {
-                        list.Add(unit);
+                        self.list.Add(unit);
                     }
                 }
             }
 
             EventType.SyncHealthBar _SyncHealthBar = new ()
             {
-                list = list,
+                list = self.list,
             };
             EventSystem.Instance.Publish(unitComponent.DomainScene(), _SyncHealthBar);
 
-            await ETTask.CompletedTask;
         }
 
     }

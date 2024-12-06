@@ -49,7 +49,8 @@ namespace ET
 
         PlayerBackPack_AddItem = 200,
         PlayerBackPack_DeleteItem = 201,
-        PlayerBackPack_NewItemList = 202,
+        PlayerBackPack_SetItemNum = 202,
+        PlayerBackPack_NewItemList = 203,
 
         PlayerBattleCard_AutoSetByBackPack = 300,
         PlayerBattleSkill_AutoSetByBackPack = 400,

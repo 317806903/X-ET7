@@ -65,7 +65,6 @@ namespace ET.Client
 
         public static async ETTask ShowWindow(this DlgBattleTowerAR self, ShowWindowData contextData = null)
         {
-            UIAudioManagerHelper.PlayMusic(self.DomainScene(), MusicType.Game);
             self.needResetMyOwnTowList = true;
             //self.ShowAvatar().Coroutine();
             self.View.ES_AvatarShow.View.E_AvatarIconImage.SetVisible(false);
@@ -312,11 +311,15 @@ namespace ET.Client
 
                 UIManagerHelper.GetUIComponent(self.DomainScene()).ShowWindowAsync<DlgBattleTowerBegin>().Coroutine();
 
-                self.NoticeShowBattleNoticeWhenFirstShow();
+                self.NoticeShowBattleNoticeWhenFirstShow().Coroutine();
             }
             else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.RestTime)
             {
-                //UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgCommonLoading>();
+                if (self.gamePlayTowerDefenseStatus != newGamePlayTowerDefenseStatus)
+                {
+                    gamePlayTowerDefenseComponent.PlayRestTimeMusic();
+                }
+
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(true);
                 RestTimeComponent restTimeComponent = gamePlayTowerDefenseComponent.GetComponent<RestTimeComponent>();
@@ -331,6 +334,7 @@ namespace ET.Client
 
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleTowerBegin>();
                 UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleTowerHUD>();
+                UIManagerHelper.GetUIComponent(self.DomainScene()).HideWindow<DlgBattleHomeHUD>();
 
                 self.ShowMonsterWaveInfo();
                 self.SetCurLeftTimeInfo();
@@ -370,6 +374,12 @@ namespace ET.Client
             }
             else if (newGamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.InTheBattle)
             {
+                if (self.gamePlayTowerDefenseStatus != newGamePlayTowerDefenseStatus)
+                {
+                    gamePlayTowerDefenseComponent.PlayBattleMusic();
+                    UIAudioManagerHelper.PlayUIAudio(self.DomainScene(), SoundEffectType.NextWave);
+                }
+
                 self.View.E_PutHomeAndMonsterPointImage.gameObject.SetActive(false);
                 self.View.E_BattleImage.gameObject.SetActive(true);
 
@@ -1237,8 +1247,13 @@ namespace ET.Client
             await ET.Client.GamePlayTowerDefenseHelper.SendReadyWhenRestTime(self.ClientScene());
         }
 
-        public static void NoticeShowBattleNoticeWhenFirstShow(this DlgBattleTowerAR self)
+        public static async ETTask NoticeShowBattleNoticeWhenFirstShow(this DlgBattleTowerAR self)
         {
+            await TimerComponent.Instance.WaitAsync(2000);
+            if (self.IsDisposed)
+            {
+                return;
+            }
             List<string> list = self.GetTowerBuyList();
             foreach (string towerCfgId in list)
             {

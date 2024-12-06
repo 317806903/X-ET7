@@ -30,6 +30,6 @@ namespace ET.Ability
         public float3 motionPosition;
         public float3 hitPosition;
         public bool isCriticalStrike;
-        public long damageInfoId;
+        public long damageObjId;
     }
 }

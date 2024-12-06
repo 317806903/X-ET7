@@ -59,6 +59,11 @@ namespace ET.Client
             self.CreateShow().Coroutine();
         }
 
+        public static void ShowOrHide(this TowerShowComponent self, bool isShow)
+        {
+            self.transRoot.gameObject.SetActive(isShow);
+        }
+
         public static async ETTask CreateShow(this TowerShowComponent self)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(self.DomainScene());
@@ -82,8 +87,9 @@ namespace ET.Client
             ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
             GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
             self.transRoot = TowerShowGo.transform;
+            self.ShowOrHide(true);
             TowerShowGo.transform.SetParent(gameObjectShowComponent.GetGo().transform);
-            TowerShowGo.transform.localPosition = new float3(0, 0, 0);
+            TowerShowGo.transform.localPosition = Vector3.zero;
 
             Unit unit = self.GetUnit();
             float radius = Ability.UnitHelper.GetBodyRadius(unit) / Ability.UnitHelper.GetResScale(unit);
@@ -93,6 +99,16 @@ namespace ET.Client
             Transform  transCollider = self.transRoot.Find("ColliderRoot");
             transCollider.gameObject.SetActive(true);
             self.transCollider = self.transRoot.Find("ColliderRoot/Collider");
+
+            if (ET.ItemHelper.ChkIsCollider(self.towerComponent.towerCfgId))
+            {
+                self.transCollider.gameObject.SetLayer(LayerMask.NameToLayer("Map"), true);
+            }
+            else
+            {
+                self.transCollider.gameObject.SetLayer(LayerMask.NameToLayer("Default"), true);
+            }
+
             ET.Client.ModelClickManagerHelper.SetTowerInfoToClickInfo(self.DomainScene(), self.transCollider, self);
 
             float chgY = self.transRoot.localScale.x / self.transRoot.localScale.y;

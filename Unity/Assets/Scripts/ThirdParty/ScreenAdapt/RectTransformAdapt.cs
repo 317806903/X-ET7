@@ -16,7 +16,7 @@ namespace ScreenAdapt
         public Vector2 anchorMin;
         public Vector2 anchorMax;
         public Vector2 sizeDelta;
-        public Vector3 localPosition;
+        //public Vector3 localPosition;
         public Vector3 anchoredPosition;
         public Vector3 localEulerAngles;
         public Vector3 localScale;
@@ -77,7 +77,7 @@ namespace ScreenAdapt
             config.anchorMin = mComponent.anchorMin;
             config.anchorMax = mComponent.anchorMax;
             config.sizeDelta = mComponent.sizeDelta;
-            config.localPosition = mComponent.localPosition;
+            //config.localPosition = mComponent.localPosition;
             config.anchoredPosition = mComponent.anchoredPosition;
             config.localEulerAngles = mComponent.localEulerAngles;
             config.localScale = mComponent.localScale;

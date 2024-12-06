@@ -1498,7 +1498,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 3439226461919851797}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3591,7 +3591,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 3002317299263689482}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4543,7 +4543,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 650083196563736627}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4651,7 +4651,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 9169143480978298969}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -8169,7 +8169,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 9182700828169735303}
+  m_TargetGraphic: {fileID: 5074675609219718688}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -9724,7 +9724,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TargetGraphic
       value: 
-      objectReference: {fileID: 3105402861823947357}
+      objectReference: {fileID: 5344449300695709904}
     - target: {fileID: 6545362027476258518, guid: 9925869842533014e80c0ce6c7ec8493,
         type: 3}
       propertyPath: m_IsActive
@@ -9764,9 +9764,15 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5265882365848657071}
   m_SourcePrefab: {fileID: 100100000, guid: 9925869842533014e80c0ce6c7ec8493, type: 3}
---- !u!114 &3105402861823947357 stripped
+--- !u!224 &4587114304338920427 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4430975619333968167, guid: 9925869842533014e80c0ce6c7ec8493,
+    type: 3}
+  m_PrefabInstance: {fileID: 204149616171373260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5344449300695709904 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3012296330867515537, guid: 9925869842533014e80c0ce6c7ec8493,
+  m_CorrespondingSourceObject: {fileID: 5259646552147765788, guid: 9925869842533014e80c0ce6c7ec8493,
     type: 3}
   m_PrefabInstance: {fileID: 204149616171373260}
   m_PrefabAsset: {fileID: 0}
@@ -9776,12 +9782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4587114304338920427 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4430975619333968167, guid: 9925869842533014e80c0ce6c7ec8493,
-    type: 3}
-  m_PrefabInstance: {fileID: 204149616171373260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8845226848054588615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8653040008617780747, guid: 9925869842533014e80c0ce6c7ec8493,

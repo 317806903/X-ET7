@@ -61,6 +61,24 @@ namespace ET.Client
             return modelClickManagerComponent.GetTowerInfoFromClickInfo(raycastHit);
         }
 
+        public static void SetHomeInfoToClickInfo(Scene scene, Transform colliderTrans, HomeShowComponent homeShowComponent)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            modelClickManagerComponent.SetHomeInfoToClickInfo(colliderTrans, homeShowComponent);
+        }
+
+        public static bool ChkIsHitHomeClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.ChkIsHitHomeClickInfo(raycastHit);
+        }
+
+        public static HomeShowComponent GetHomeInfoFromClickInfo(Scene scene, RaycastHit raycastHit)
+        {
+            ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);
+            return modelClickManagerComponent.GetHomeInfoFromClickInfo(raycastHit);
+        }
+
         public static void SetPlayerUnitInfoToClickInfo(Scene scene, Transform colliderTrans, PlayerUnitShowComponent playerUnitShowComponent)
         {
             ModelClickManagerComponent modelClickManagerComponent = GetModelClickManagerComponent(scene);

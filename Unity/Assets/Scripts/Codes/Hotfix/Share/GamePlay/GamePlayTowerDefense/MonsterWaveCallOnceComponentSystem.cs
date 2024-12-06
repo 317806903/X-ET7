@@ -191,5 +191,17 @@ namespace ET
 
             return true;
         }
+
+        public static bool RecordMonsterWhenCallActor(this MonsterWaveCallOnceComponent self, Unit unit, Unit beCallActor)
+        {
+            if (self.monsterWaveUnitList.Contains(unit.Id) == false)
+            {
+                return false;
+            }
+
+            self.monsterWaveUnitList.Add(beCallActor.Id);
+
+            return true;
+        }
     }
 }

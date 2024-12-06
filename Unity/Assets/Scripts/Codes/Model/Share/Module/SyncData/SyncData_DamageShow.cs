@@ -5,8 +5,10 @@ namespace ET
 {
     public class SyncData_DamageShow : Entity, IAwake, IDestroy
     {
-        public List<long> unitId { get; set; }
-        public List<int> damageValue;
-        public List<bool> isCrt;
+        public List<long> unitId = new();
+        public List<int> damageValue = new();
+        public List<bool> isCrt = new();
+
+        public List<(Unit unit, int damageValue, bool isCrt)> list = new();
     }
 }

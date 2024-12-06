@@ -29,7 +29,7 @@ MonoBehaviour:
     waitToNextUIGuideStep: 2
     audioPath: 
     guideExecuteStaticMethod: ShowVideo
-    guideExecuteParam: Video_Slope
+    guideExecuteParam: Video_Upgrade
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 

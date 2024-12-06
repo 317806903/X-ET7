@@ -112,9 +112,25 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public bool PhysicalStrengthShow => _data.PhysicalStrengthShow;
     /// <summary>
-    /// 两塔允许最近距离
+    /// 大本营允许靠近其他的距离
     /// </summary>
-     public float TowerDefenseNearTowerDis => _data.TowerDefenseNearTowerDis;
+     public float TowerDefenseNearDisWhenHome => _data.TowerDefenseNearDisWhenHome;
+    /// <summary>
+    /// 出怪点允许靠近其他的距离
+    /// </summary>
+     public float TowerDefenseNearDisWhenMonsterCall => _data.TowerDefenseNearDisWhenMonsterCall;
+    /// <summary>
+    /// 攻击塔允许靠近其他的距离
+    /// </summary>
+     public float TowerDefenseNearDisWhenAttackTower => _data.TowerDefenseNearDisWhenAttackTower;
+    /// <summary>
+    /// 陷阱塔允许靠近其他的距离
+    /// </summary>
+     public float TowerDefenseNearDisWhenTrapTower => _data.TowerDefenseNearDisWhenTrapTower;
+    /// <summary>
+    /// 碰撞塔允许靠近其他的距离
+    /// </summary>
+     public float TowerDefenseNearDisWhenColliderTower => _data.TowerDefenseNearDisWhenColliderTower;
     /// <summary>
     /// 广告系统是否可用
     /// </summary>

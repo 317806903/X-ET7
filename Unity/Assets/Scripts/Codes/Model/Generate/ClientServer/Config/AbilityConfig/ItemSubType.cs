@@ -27,9 +27,13 @@ namespace ET.AbilityConfig
         /// </summary>
         Trap = 1,
         /// <summary>
+        /// 碰撞体
+        /// </summary>
+        Collider = 2,
+        /// <summary>
         /// 召唤怪物
         /// </summary>
-        CallMonster = 2,
+        CallMonster = 3,
         /// <summary>
         /// 怪物1
         /// </summary>

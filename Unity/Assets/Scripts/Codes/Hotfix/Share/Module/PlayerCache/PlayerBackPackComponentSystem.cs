@@ -18,74 +18,90 @@ namespace ET
 
         public static void Init(this PlayerBackPackComponent self)
         {
-            ItemManagerComponent itemManagerComponent = self.GetComponent<ItemManagerComponent>();
-            if (itemManagerComponent == null)
-            {
-                itemManagerComponent = self.AddComponent<ItemManagerComponent>();
+            self.InitDebugItems();
+            self.InitDefaultItems();
+        }
+
+        public static void InitDebugItems(this PlayerBackPackComponent self)
+        {
 #if UNITY_EDITOR
-                List<string> initialItemList;
-                if (false)
+            if (true)
+            {
+                return;
+            }
+            List<string> initialItemList;
+            string tmp =
+                "Tow25_1|Tow12_3|Tow13_1|Tow13_2|Tow13_3|Tow14_1|Tow14_2|Tow14_3|Tow15_1|Tow15_2|Tow15_3|Tow16_1|Tow16_2|Tow16_3|Tow17_1|Tow17_2|Tow17_3|Tow18_1|Tow18_2|Tow18_3|Tow19_1|Tow19_2|Tow19_3|Tow20_1|Tow20_2|Tow20_3|Tow21_1|Tow21_2|Tow21_3|Tow22_1|Tow22_2|Tow22_3|Tow23_1|AvatarFrame_None|AvatarFrame_Season1_1|AvatarFrame_Season1_2|AvatarFrame_Season1_3|AvatarFrame_Season1_4|AvatarFrame_Season1_5|Token_Diamond|Token_ArcadeCoin";
+            initialItemList = new(tmp.Split("|"));
+
+            foreach (var itemCfgId in initialItemList)
+            {
+                if (string.IsNullOrEmpty(itemCfgId))
                 {
-                    string tmp =
-                        "Tow25_1|Tow12_3|Tow13_1|Tow13_2|Tow13_3|Tow14_1|Tow14_2|Tow14_3|Tow15_1|Tow15_2|Tow15_3|Tow16_1|Tow16_2|Tow16_3|Tow17_1|Tow17_2|Tow17_3|Tow18_1|Tow18_2|Tow18_3|Tow19_1|Tow19_2|Tow19_3|Tow20_1|Tow20_2|Tow20_3|Tow21_1|Tow21_2|Tow21_3|Tow22_1|Tow22_2|Tow22_3|Tow23_1|AvatarFrame_None|AvatarFrame_Season1_1|AvatarFrame_Season1_2|AvatarFrame_Season1_3|AvatarFrame_Season1_4|AvatarFrame_Season1_5|Token_Diamond|Token_ArcadeCoin";
-                    initialItemList = new(tmp.Split("|"));
+                    continue;
                 }
-                else
+                bool isExist = self._ChkItemExist(itemCfgId);
+                if (isExist == false)
                 {
-                    if (ET.SceneHelper.ChkIsGameModeArcade())
-                    {
-                        initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
-                    }
-                    else if (ET.SceneHelper.ChkIsDemoShow())
-                    {
-                        initialItemList = GlobalSettingCfgCategory.Instance.DemoShowInitialBackpackItem;
-                    }
-                    else
-                    {
-                        initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
-                    }
+                    self.AddItem(itemCfgId, 1);
                 }
-#else
-                List<string> initialItemList;
-                if (ET.SceneHelper.ChkIsGameModeArcade())
-                {
-                    initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
-                }
-                else if (ET.SceneHelper.ChkIsDemoShow())
-                {
-                    initialItemList = GlobalSettingCfgCategory.Instance.DemoShowInitialBackpackItem;
-                }
-                else
-                {
-                    initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
-                }
+            }
 #endif
-                foreach (var itemCfgId in initialItemList)
+        }
+
+        public static void InitDefaultItems(this PlayerBackPackComponent self)
+        {
+            List<string> initialItemList;
+            if (ET.SceneHelper.ChkIsGameModeArcade())
+            {
+                initialItemList = GlobalSettingCfgCategory.Instance.GameModeArcadeInitialBackpackItem;
+            }
+            else if (ET.SceneHelper.ChkIsDemoShow())
+            {
+                initialItemList = GlobalSettingCfgCategory.Instance.DemoShowInitialBackpackItem;
+            }
+            else
+            {
+                initialItemList = GlobalSettingCfgCategory.Instance.InitialBackpackItem;
+            }
+
+            foreach (var itemCfgId in initialItemList)
+            {
+                if (string.IsNullOrEmpty(itemCfgId))
                 {
-                    if (string.IsNullOrEmpty(itemCfgId))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
+                bool isExist = self._ChkItemExist(itemCfgId);
+                if (isExist == false)
+                {
                     self.AddItem(itemCfgId, 1);
                 }
+            }
 
-                List<string> towerCfgList = ET.ItemHelper.GetTowerListInBattleDeckWhenUnLockDefault();
-                foreach (var itemCfgId in towerCfgList)
+            List<string> towerCfgList = ET.ItemHelper.GetTowerListInBattleDeckWhenUnLockDefault();
+            foreach (var itemCfgId in towerCfgList)
+            {
+                if (string.IsNullOrEmpty(itemCfgId))
                 {
-                    if (string.IsNullOrEmpty(itemCfgId))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
+                bool isExist = self._ChkItemExist(itemCfgId);
+                if (isExist == false)
+                {
                     self.AddItem(itemCfgId, 1);
                 }
+            }
 
-                List<string> skillCfgList = ET.ItemHelper.GetSkillListInBattleDeckWhenUnLockDefault();
-                foreach (var itemCfgId in skillCfgList)
+            List<string> skillCfgList = ET.ItemHelper.GetSkillListInBattleDeckWhenUnLockDefault();
+            foreach (var itemCfgId in skillCfgList)
+            {
+                if (string.IsNullOrEmpty(itemCfgId))
                 {
-                    if (string.IsNullOrEmpty(itemCfgId))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
+                bool isExist = self._ChkItemExist(itemCfgId);
+                if (isExist == false)
+                {
                     self.AddItem(itemCfgId, 1);
                 }
             }
@@ -143,7 +159,10 @@ namespace ET
 
         public static void AddItem(this PlayerBackPackComponent self, string itemCfgId, int count)
         {
-            self.AddNewItemRecord(itemCfgId);
+            if (count > 0)
+            {
+                self.AddNewItemRecord(itemCfgId);
+            }
 
             self._GetItemManagerComponent().AddItem(itemCfgId, count);
         }

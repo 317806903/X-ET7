@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 namespace ET.Client
 { 
     [ComponentOf(typeof(Unit))]
@@ -12,5 +13,7 @@ namespace ET.Client
         public Transform wireframeRendererItem;
         public MeshFilter wireframeMeshFilter; 
         public MeshFilter MeshFilter;
+        // PolyRef to NavMeshData
+        public Dictionary<long, NavmeshManagerComponent.NavMeshData> navmeshDataDict;
     }
 }

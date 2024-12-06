@@ -17,5 +17,7 @@ namespace ET
 
         public Dictionary<long, int> waitFrameSync = new();
         public Dictionary<long, int> curFrameSync = new();
+
+        public List<long> removePlayerIds = new();
     }
 }

@@ -22,6 +22,8 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         Desc = _buf.ReadString();
         WaveRewardGold = _buf.ReadInt();
         Duration = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RestMusicList = new System.Collections.Generic.Dictionary<string, float>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); float _v0;  _v0 = _buf.ReadFloat();     RestMusicList.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BattleMusicList = new System.Collections.Generic.Dictionary<string, float>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); float _v0;  _v0 = _buf.ReadFloat();     BattleMusicList.Add(_k0, _v0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Nodes = new System.Collections.Generic.List<MonsterWaveCallNode>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { MonsterWaveCallNode _e0;  _e0 = MonsterWaveCallNode.DeserializeMonsterWaveCallNode(_buf); Nodes.Add(_e0);}}
         PostInit();
     }
@@ -55,6 +57,14 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
     /// 总时长(单位秒,超出后失败)
     /// </summary>
     public float Duration { get; private set; }
+    /// <summary>
+    /// 波次休息时背景音乐
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, float> RestMusicList { get; private set; }
+    /// <summary>
+    /// 波次战斗时背景音乐
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, float> BattleMusicList { get; private set; }
     public System.Collections.Generic.List<MonsterWaveCallNode> Nodes { get; private set; }
 
     public const int __ID__ = -444792353;
@@ -80,6 +90,8 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         + "Desc:" + Desc + ","
         + "WaveRewardGold:" + WaveRewardGold + ","
         + "Duration:" + Duration + ","
+        + "RestMusicList:" + Bright.Common.StringUtil.CollectionToString(RestMusicList) + ","
+        + "BattleMusicList:" + Bright.Common.StringUtil.CollectionToString(BattleMusicList) + ","
         + "Nodes:" + Bright.Common.StringUtil.CollectionToString(Nodes) + ","
         + "}";
     }

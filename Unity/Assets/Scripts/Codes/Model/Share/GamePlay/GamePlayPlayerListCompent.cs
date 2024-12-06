@@ -39,10 +39,6 @@ namespace ET
 		public int waitFrameChk = 60;
 		[BsonIgnore]
 		public int curFrameChk = 0;
-		[BsonIgnore]
-		public Dictionary<long , (long playerId, long destroyTime)> unitId2PlayerId_WaitDestroy = new();
-		[BsonIgnore]
-		public List<long> unitId2PlayerId_RemoveList = new();
 
 		/// <summary>
 		/// playerId对应的unitId列表
@@ -55,12 +51,6 @@ namespace ET
 
 		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<long, long> playerId2CameraPlayerUnitId;
-
-		/// <summary>
-		/// unitId对应playerId
-		/// </summary>
-		[BsonIgnore]
-		public Dictionary<long, long> unitId2PlayerId;
 
 		/// <summary>
 		/// playerId是否已经退出战斗

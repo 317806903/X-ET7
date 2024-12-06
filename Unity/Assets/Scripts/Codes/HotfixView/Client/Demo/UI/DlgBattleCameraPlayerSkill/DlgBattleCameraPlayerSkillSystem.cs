@@ -239,7 +239,7 @@ namespace ET.Client
 
 	        bRet = await SkillHelper.CastSkill(self.DomainScene(), skillCfgId, self.unitId, cameraPosition, cameraDirect, selectHandle);
 
-	        ET.Ability.Client.AudioPlayHelper.PlayVibrate();
+	        ET.Ability.Client.AudioPlayHelper.PlayVibrate(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
         }
 
         public static void CreateSkillShowEffect(this DlgBattleCameraPlayerSkill self, string skillCfgId)

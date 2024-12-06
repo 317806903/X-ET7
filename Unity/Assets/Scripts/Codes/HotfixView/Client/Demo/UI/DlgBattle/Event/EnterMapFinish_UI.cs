@@ -77,9 +77,11 @@ namespace ET.Client
             Scene currentScene = scene.CurrentScene();
 
             GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+            gamePlayComponent.PlayBattleStartMusic();
 
             float fARScale = gamePlayComponent.GetARScale();
             ET.Client.ARSessionHelper.SetScaleARCamera(currentScene, fARScale);
+
 
             Log.Debug($"EnterMapFinish AR GamePlay ready. Game mode: {gamePlayComponent.gamePlayMode} AR scale: {fARScale}.");
             if (gamePlayComponent.gamePlayMode == GamePlayMode.TowerDefense)
@@ -121,15 +123,15 @@ namespace ET.Client
             }
             else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
-                while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
+                GamePlayPkComponent gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPkComponent == null || gamePlayPkComponent.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                     if (currentScene.IsDisposed)
                     {
                         return;
                     }
-                    gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                    gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
                 await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
@@ -139,19 +141,23 @@ namespace ET.Client
 
         public async ETTask EnterMap_WhenNoAR(Scene scene)
         {
+            Scene currentScene = scene.CurrentScene();
+
+            GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
+            gamePlayComponent.PlayBattleStartMusic();
+
             PlayerStatusComponent playerStatusComponent = ET.Client.PlayerStatusHelper.GetMyPlayerStatusComponent(scene);
             if (playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalSingleMap)
             {
-                Scene currentScene = scene.CurrentScene();
-                GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
-                while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
+                GamePlayPkComponent gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                while (gamePlayPkComponent == null || gamePlayPkComponent.IsDisposed)
                 {
                     await TimerComponent.Instance.WaitFrameAsync();
                     if (currentScene.IsDisposed)
                     {
                         return;
                     }
-                    gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                    gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
                 }
 
                 Log.Debug($"EnterMapFinish nonAR NormalSingleMap ready.");
@@ -164,9 +170,6 @@ namespace ET.Client
                      || playerStatusComponent.RoomTypeInfo.subRoomType == SubRoomType.NormalScanMesh
                      )
             {
-                Scene currentScene = scene.CurrentScene();
-                GamePlayComponent gamePlayComponent = ET.Client.GamePlayHelper.GetGamePlay(currentScene);
-
                 Log.Debug($"EnterMapFinish nonAR NormalRoom GamePlay ready. Game mode: {gamePlayComponent.gamePlayMode}");
 
                 if (gamePlayComponent.gamePlayMode == GamePlayMode.TowerDefense)
@@ -207,15 +210,15 @@ namespace ET.Client
                 }
                 else if (gamePlayComponent.gamePlayMode == GamePlayMode.PK)
                 {
-                    GamePlayPkComponentBase gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
-                    while (gamePlayPkComponentBase == null || gamePlayPkComponentBase.IsDisposed)
+                    GamePlayPkComponent gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
+                    while (gamePlayPkComponent == null || gamePlayPkComponent.IsDisposed)
                     {
                         await TimerComponent.Instance.WaitFrameAsync();
                         if (currentScene.IsDisposed)
                         {
                             return;
                         }
-                        gamePlayPkComponentBase = GamePlayHelper.GetGamePlayPK(currentScene);
+                        gamePlayPkComponent = GamePlayHelper.GetGamePlayPK(currentScene);
                     }
                     await UIManagerHelper.GetUIComponent(scene).ShowWindowAsync<DlgBattle>();
                 }

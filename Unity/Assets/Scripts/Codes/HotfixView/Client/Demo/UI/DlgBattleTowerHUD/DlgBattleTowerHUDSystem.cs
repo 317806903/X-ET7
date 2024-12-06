@@ -67,6 +67,11 @@ namespace ET.Client
 			await self.SetUpgradeUIStatus();
 		}
 
+		public static void HideWindow(this DlgBattleTowerHUD self)
+		{
+
+		}
+
 		public static void _ShowWindow(this DlgBattleTowerHUD self)
 		{
 

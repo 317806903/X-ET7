@@ -59,24 +59,33 @@ namespace ET.Ability
                     timelineNode.TimeElapsed >= wasTimeElapsed
                 )
                 {
+                    bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(self.GetUnit(), timelineNode.ChkCondition1, timelineNode.ChkCondition2, timelineNode.ChkCondition1SelectObj_Ref, timelineNode.ChkCondition2SelectObj_Ref, ref self.actionContext);
+                    if (bRetChk == false)
+                    {
+                        continue;
+                    }
+
                     SelectHandle curSelectHandle = SelectHandleHelper.CreateSelectHandle(self.GetUnit(), null, timelineNode.ActionCallParam_Ref, ref self.actionContext);
                     if (curSelectHandle == null)
                     {
                         continue;
                     }
 
-                    bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), timelineNode.DelayTime, timelineNode.ActionId, timelineNode.ActionCondition1, timelineNode.ActionCondition2, curSelectHandle, null, ref self.actionContext);
+                    bool bRet = ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), timelineNode.DelayTime, timelineNode.ActionId, timelineNode.FilterCondition1, timelineNode.FilterCondition2, curSelectHandle, null, ref self.actionContext);
                     if (bRet)
                     {
-                        if (timelineNode.ActionId.StartsWith("TimelineJumpTime"))
+                        foreach (string actionId in timelineNode.ActionId)
                         {
-                            self.timelineJumpNum++;
-                            if (self.timelineJumpNum > 10)
+                            if (actionId.StartsWith("TimelineJumpTime"))
                             {
-                                self.timeElapsed = wasTimeElapsed + 0.0001f;
-                                self.timelineJumpNum = 0;
+                                self.timelineJumpNum++;
+                                if (self.timelineJumpNum > 10)
+                                {
+                                    self.timeElapsed = wasTimeElapsed + 0.0001f;
+                                    self.timelineJumpNum = 0;
+                                }
+                                return;
                             }
-                            return;
                         }
                     }
 

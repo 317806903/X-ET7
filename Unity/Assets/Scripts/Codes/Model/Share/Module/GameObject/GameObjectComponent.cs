@@ -1,4 +1,6 @@
 
+using ET.AbilityConfig;
+
 namespace ET
 {
     [ComponentOf(typeof(Unit))]
@@ -11,6 +13,10 @@ namespace ET
         public bool isHiding;
         //闪烁结束时刻
         public long flickerEndTime;
+        //每秒闪多少下
+        public float flickerFrequency;
+        public ColorBean flickerStartColor;
+        public ColorBean flickerEndColor;
         //隐身(半透)
         public bool isTransparent;
     }

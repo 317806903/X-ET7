@@ -96,6 +96,7 @@ namespace ET.Client
 
 		public static void Init(this DlgSkillDetails self, string skillCfgId, bool isShowStatus, bool isLock)
 		{
+			Log.Debug($"---Init towerCfgId[{skillCfgId}]");
 			if (ET.ItemHelper.ChkIsSkill(skillCfgId) == false)
 			{
 				return;
@@ -104,7 +105,8 @@ namespace ET.Client
 			self.isLock = isLock;
 			self.baseSkillCfgId = skillCfgId;
 			self.curSkillCfgId = skillCfgId;
-			self.curSkillIndex = 1;
+
+			self.curSkillIndex = ET.ItemHelper.GetSkillItemLevel(self.baseSkillCfgId);
 
 			self.ShowDetails().Coroutine();
 		}
@@ -245,12 +247,15 @@ namespace ET.Client
 		{
 			if (self.isLock)
 			{
-#if UNITY_EDITOR
-				self.View.E_DebugButton.SetVisible(true);
-				self.View.E_DebugButton.AddListenerAsync(self.AddSkillWhenDebug);
-#else
-				self.View.E_DebugButton.SetVisible(false);
-#endif
+				if (Application.isMobilePlatform == false)
+				{
+					self.View.E_DebugButton.SetVisible(true);
+					self.View.E_DebugButton.AddListenerAsync(self.AddSkillWhenDebug);
+				}
+				else
+				{
+					self.View.E_DebugButton.SetVisible(false);
+				}
 			}
 			else
 			{

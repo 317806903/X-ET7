@@ -17,6 +17,7 @@ namespace ET
             {
                 self.player2SyncDataList = new();
                 self.playerSessionInfoList = new();
+                self.syncData2Players = new();
                 self.Init();
             }
         }
@@ -28,6 +29,7 @@ namespace ET
             {
                 self.player2SyncDataList.Clear();
                 self.playerSessionInfoList.Clear();
+                self.syncData2Players.Clear();
             }
         }
 
@@ -51,6 +53,7 @@ namespace ET
             self.AddComponent<SyncDataManager_UnitPosInfo>();
             self.AddComponent<SyncDataManager_UnitNumericInfo>();
             self.AddComponent<SyncDataManager_UnitPlayAudio>();
+            self.AddComponent<SyncDataManager_UnitFloatingText>();
             self.AddComponent<SyncDataManager_UnitComponent>();
             self.AddComponent<SyncDataManager_UnitGetCoinShow>();
             self.AddComponent<SyncDataManager_DamageShow>();
@@ -62,6 +65,7 @@ namespace ET
             self.GetComponent<SyncDataManager_UnitPosInfo>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitNumericInfo>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitPlayAudio>().FixedUpdate(fixedDeltaTime);
+            self.GetComponent<SyncDataManager_UnitFloatingText>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitComponent>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_UnitGetCoinShow>().FixedUpdate(fixedDeltaTime);
             self.GetComponent<SyncDataManager_DamageShow>().FixedUpdate(fixedDeltaTime);
@@ -107,7 +111,8 @@ namespace ET
             {
                 return null;
             }
-            List<long> syncData2Players = ListComponent<long>.Create();
+            List<long> syncData2Players = self.syncData2Players;
+            syncData2Players.Clear();
             foreach (AOIEntity u in dict.Values)
             {
                 long playerId = u.Unit.Id;
@@ -141,6 +146,11 @@ namespace ET
         public static void AddSyncData_UnitPlayAudio(this SyncDataManager self, Unit unit, string playAudioActionId, bool isOnlySelfShow)
         {
             self.GetComponent<SyncDataManager_UnitPlayAudio>().AddSyncPlayAudio(unit, playAudioActionId, isOnlySelfShow);
+        }
+
+        public static void AddSyncData_UnitFloatingText(this SyncDataManager self, Unit unit, string floatingTextId, int shownum, bool isOnlySelfShow)
+        {
+            self.GetComponent<SyncDataManager_UnitFloatingText>().AddSyncFloatingText(unit, floatingTextId, shownum, isOnlySelfShow);
         }
 
         public static void AddSyncData_UnitGetCoinShow(this SyncDataManager self, long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)

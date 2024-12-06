@@ -46,8 +46,8 @@ namespace ET.Client
         {
 	        PlayerDataComponent playerDataComponent = GetPlayerCache(scene, playerId);
 
-	        bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType);
-	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCacheClient, playerId * 10 + (int)playerModelType))
+	        bool isLock = CoroutineLockComponent.Instance.ChkIsLock(CoroutineLockType.PlayerCacheClient, playerId + (int)playerModelType);
+	        using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.PlayerCacheClient, playerId + (int)playerModelType))
 	        {
 		        Entity entity = playerDataComponent.GetPlayerModel(playerModelType);
 		        if (entity == null || entity.IsDisposed || (forceReGet && isLock == false))
@@ -176,8 +176,8 @@ namespace ET.Client
 
         public static async ETTask<List<string>> GetMyBattleTowerItemCfgIdList(Scene scene, bool forceReGet = false)
         {
-	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
 	        PlayerBattleCardComponent playerBattleCardComponent = await GetMyPlayerBattleCard(scene, forceReGet);
+	        PlayerBackPackComponent playerBackPackComponent = await GetMyPlayerBackPack(scene, forceReGet);
 
 	        playerBattleCardComponent.SetBattleCardItemCfgIdList(playerBackPackComponent.GetItemListByItemType(ItemType.Tower, ItemSubType.None));
 

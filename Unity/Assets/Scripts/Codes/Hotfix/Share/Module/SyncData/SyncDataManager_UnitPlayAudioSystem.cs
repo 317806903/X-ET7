@@ -28,22 +28,22 @@ namespace ET
 
         public static void FixedUpdate(this SyncDataManager_UnitPlayAudio self, float fixedDeltaTime)
         {
-	        self.SyncData2Client().Coroutine();
+	        self.SyncData2Client();
         }
 
-        public static void AddSyncPlayAudio(this SyncDataManager_UnitPlayAudio self, Unit unit, string playAudioActionId, bool isOnlySelfShow)
+        public static void AddSyncPlayAudio(this SyncDataManager_UnitPlayAudio self, Unit unit, string floatingTextActionId, bool isOnlySelfShow)
         {
             if (unit.GetComponent<AOIEntity>() == null)
             {
                 return;
             }
-            self.NeedSyncPlayAudioList.Add((unit, playAudioActionId, isOnlySelfShow));
+            self.NeedSyncPlayAudioList.Add((unit, floatingTextActionId, isOnlySelfShow));
         }
 
-        public static async ETTask SyncData2Client(this SyncDataManager_UnitPlayAudio self)
+        public static void SyncData2Client(this SyncDataManager_UnitPlayAudio self)
         {
 	        self.DealSyncData2PlayerId();
-	        await self.SyncData2Client_Wait();
+	        self.SyncData2Client_Wait();
         }
 
 		public static void DealSyncData2PlayerId(this SyncDataManager_UnitPlayAudio self)
@@ -52,7 +52,7 @@ namespace ET
 				return;
 
 			SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-			foreach ((Unit unit, string playAudioActionId, bool isOnlySelfShow) in self.NeedSyncPlayAudioList)
+			foreach ((Unit unit, string floatingTextActionId, bool isOnlySelfShow) in self.NeedSyncPlayAudioList)
 			{
 				if (unit == null || unit.IsDisposed)
 				{
@@ -64,24 +64,24 @@ namespace ET
 				{
 					foreach (long playerId in syncData2Players)
 					{
-						self.player2SyncUnit.Add(playerId, (unit, playAudioActionId, isOnlySelfShow));
+						self.player2SyncUnit.Add(playerId, (unit, floatingTextActionId, isOnlySelfShow));
 					}
 				}
 			}
 			self.NeedSyncPlayAudioList.Clear();
 		}
 
-		public static async ETTask SyncData2Client_Wait(this SyncDataManager_UnitPlayAudio self)
+		public static void SyncData2Client_Wait(this SyncDataManager_UnitPlayAudio self)
 		{
             if (self.player2SyncUnit.Count == 0)
                 return;
 
             SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-            using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+            self.removePlayerIds.Clear();
             foreach (var item in self.player2SyncUnit)
             {
 	            long playerId = item.Key;
-	            HashSet<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list = item.Value;
+	            HashSet<(Unit unit, string floatingTextActionId, bool isOnlySelfShow)> list = item.Value;
 
 	            if (syncDataManager.playerSessionInfoList.TryGetValue(playerId, out int synFrame) == false)
 	            {
@@ -103,7 +103,7 @@ namespace ET
 
 	            if (list.Count == 0)
 	            {
-		            removePlayerIds.Add(playerId);
+		            self.removePlayerIds.Add(playerId);
 		            continue;
 	            }
 
@@ -112,7 +112,7 @@ namespace ET
 	            if (_SyncData_UnitPlayAudio.unitId.Count == 0)
 	            {
 		            _SyncData_UnitPlayAudio.Dispose();
-		            removePlayerIds.Add(playerId);
+		            self.removePlayerIds.Add(playerId);
 		            continue;
 	            }
 	            byte[] syncData = _SyncData_UnitPlayAudio.ToBson();
@@ -121,16 +121,14 @@ namespace ET
 	            //Log.Debug($"zpb ET.SyncDataManager_UnitPlayAudioSystem.SyncData2Client_Wait {playerId} {list.Count}");
 
 	            syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
-	            removePlayerIds.Add(playerId);
+	            self.removePlayerIds.Add(playerId);
             }
 
-            foreach (long playerId in removePlayerIds)
+            foreach (long playerId in self.removePlayerIds)
             {
 	            self.player2SyncUnit.Remove(playerId);
             }
-            removePlayerIds.Clear();
-
-            await ETTask.CompletedTask;
+            self.removePlayerIds.Clear();
 		}
     }
 }

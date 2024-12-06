@@ -1,9 +1,9 @@
+using DotRecast.Detour.Crowd;
+using ET.Ability;
+using ET.EventType;
 using System;
 using System.Collections.Generic;
-using DotRecast.Core;
 using Unity.Mathematics;
-using ET.Ability;
-
 namespace ET
 {
     [FriendOf(typeof(PathfindingComponent))]
@@ -22,9 +22,8 @@ namespace ET
         {
             protected override void Destroy(PathfindingComponent self)
             {
-                if (self.RemoveObstacle() != null)
+                if (self.RemoveObstacle() != null && NavmeshManagerComponentSystem.UpdateDynamicMesh(self._NavMeshManager))
                 {
-                    RecastHelper.FullyUpdateTileCache(self.DomainScene());
                     NotifyToUpdateAllNavigationPathsForClients(self.DomainScene());
                 }
                 self.Name = string.Empty;
@@ -61,15 +60,15 @@ namespace ET
         float navObstacleRadius)
         {
             Unit unit = self.GetUnit();
-            float speed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
-            float radius = ET.Ability.UnitHelper.GetBodyRadius(unit);
+            float speed = UnitHelper.GetMoveSpeed(unit);
+            float radius = UnitHelper.GetBodyRadius(unit);
             if (isPlayer)
             {
-                self.NavMesh = await navmeshManagerComponent.CreateCrowdWhenPlayer(radius);
+                self.NavMesh = await navmeshManagerComponent.GetPlayerNavMesh();
             }
             else
             {
-                self.NavMesh = await navmeshManagerComponent.CreateCrowd(radius);
+                self.NavMesh = await navmeshManagerComponent.GetUnitNavmesh();
             }
             if (self.NavMesh == null)
             {
@@ -80,23 +79,11 @@ namespace ET
                 radius = self.NavMesh.GetRadius();
             }
 
-            if (self.NavMesh == null)
-            {
-                throw new Exception($"nav load fail");
-            }
-
-            float separationWeight = 2;
-            if (UnitHelper.ChkIsObserver(unit))
+            float separationWeight = 1;
+            TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
+            if (towerComponent != null)
             {
                 separationWeight = 2;
-            }
-            else
-            {
-                TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
-                if (towerComponent != null)
-                {
-                    separationWeight = 2;
-                }
             }
             self.navMeshAgent = self.NavMesh.AddAgent(separationWeight, radius, speed, unit.Position);
             self.NavObstacleRadius = navObstacleRadius;
@@ -105,7 +92,7 @@ namespace ET
 
         private static void NotifyToUpdateAllNavigationPathsForClients(Scene scene)
         {
-            Unit observerUnit = ET.Ability.UnitHelper.GetOneObserverUnit(scene);
+            Unit observerUnit = UnitHelper.GetOneObserverUnit(scene);
             if (observerUnit == null)
             {
                 return;
@@ -114,7 +101,7 @@ namespace ET
             {
                 Path = RecastHelper.GetAllPathsFromMonsterCallsToHeadQuarter(observerUnit)
             };
-            EventType.SendDrawPathsToClients selfSendDrawPathsToClients = new()
+            SendDrawPathsToClients selfSendDrawPathsToClients = new()
             {
                 pathToDraw = drawAllMonsterCall2HeadQuarterPath
             };
@@ -135,16 +122,15 @@ namespace ET
                     Unit unit = self.GetUnit();
                     if (!self._ObstaclePos.Equals(unit.Position))
                     {
-                        if (AddOrUpdateObstacle(self, unit.Position))
+                        if (AddOrUpdateObstacle(self, unit.Position) && NavmeshManagerComponentSystem.UpdateDynamicMesh(self._NavMeshManager))
                         {
-                            RecastHelper.FullyUpdateTileCache(self.DomainScene());
                             NotifyToUpdateAllNavigationPathsForClients(self.DomainScene());
                         }
                     }
                 }
             }
         }
-        
+
         public static float3? RemoveObstacle(this PathfindingComponent self)
         {
             if (self._ObstacleRef != 0)
@@ -154,14 +140,13 @@ namespace ET
                 {
                     return null;
                 }
-                var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
-                tileCache.RemoveObstacle(self._ObstacleRef);
+                navmeshManagerComponent.RemoveObstacle(self._ObstacleRef);
                 self._ObstacleRef = 0;
                 return self._ObstaclePos;
             }
             return null;
         }
-        
+
         public static bool AddOrUpdateObstacle(this PathfindingComponent self, float3 pos)
         {
             if (self.NavObstacleRadius <= 0)
@@ -175,11 +160,9 @@ namespace ET
             {
                 return false;
             }
-            var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
-            self._ObstacleRef = tileCache.AddObstacle(new DotRecast.Core.Numerics.RcVec3f(-pos.x, pos.y, pos.z), self.NavObstacleRadius,
-                navmeshManagerComponent.navSample.GetSettings().agentHeight);
+            self._ObstacleRef = navmeshManagerComponent.AddObstacle(pos, self.NavObstacleRadius);
             return self._ObstacleRef != 0;
-        } 
+        }
 
         public static Unit GetUnit(this PathfindingComponent self)
         {
@@ -227,14 +210,14 @@ namespace ET
                 return;
             }
             float3 position = self.NavMesh.GetAgentPos(self.navMeshAgent);
-            (bool isHitMesh, float height) = ET.RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), position);
+            (bool isHitMesh, float height) = RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), position);
             if (isHitMesh == false)
             {
                 return;
             }
 
             float3 nextPosition = position + forward * 0.3f;
-            (bool isHitMeshNext, float heightNext) = ET.RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), nextPosition);
+            (bool isHitMeshNext, float heightNext) = RecastHelper.GetMeshHeightOnPoint(self.DomainScene(), nextPosition);
             if (isHitMeshNext == false)
             {
                 return;
@@ -275,7 +258,7 @@ namespace ET
         public static void ResetAgentSpeed(this PathfindingComponent self, float speedScale = 1)
         {
             Unit unit = self.GetUnit();
-            float newSpeed = ET.Ability.UnitHelper.GetMoveSpeed(unit);
+            float newSpeed = UnitHelper.GetMoveSpeed(unit);
             self.NavMesh.ResetAgentSpeed(self.navMeshAgent, newSpeed * speedScale);
         }
 
@@ -320,7 +303,7 @@ namespace ET
 
         public static bool ChkIsMoveing(this PathfindingComponent self)
         {
-            if (self.navMeshAgent.targetState == DotRecast.Detour.Crowd.DtMoveRequestState.DT_CROWDAGENT_TARGET_VELOCITY)
+            if (self.navMeshAgent.targetState == DtMoveRequestState.DT_CROWDAGENT_TARGET_VELOCITY)
             {
                 return true;
             }
@@ -358,7 +341,7 @@ namespace ET
 
             return self.NavMesh.GetArrivePath(startPos, targetPos);
         }
-        
+
         public static void SetMoveTarget(this PathfindingComponent self, float3 pos)
         {
             if ( self.NavMesh == null)
@@ -381,15 +364,16 @@ namespace ET
             self.NavMesh.SetMoveVelocity(self.navMeshAgent, velocity);
         }
 
-        public static float3 GetNearNavmeshPos(this PathfindingComponent self, float3 pos)
+        public static float3 GetNearNavmeshPos(this PathfindingComponent self, float3 pos, out long nearestRefOut)
         {
+            nearestRefOut = 0;
             if (self.NavMesh == null)
             {
                 Log.Error($"GetNearNavmeshPos pathfinding ptr is zero: {self.DomainScene().Name}");
                 return pos;
             }
 
-            return self.NavMesh.GetNearNavmeshPos(pos, out var _, out var _);
+            return self.NavMesh.GetNearNavmeshPos(pos, out nearestRefOut, out var _);
         }
     }
 }

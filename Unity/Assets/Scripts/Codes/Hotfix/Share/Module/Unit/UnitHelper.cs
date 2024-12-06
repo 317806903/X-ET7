@@ -379,7 +379,7 @@ namespace ET.Ability
                     return null;
                 }
                 Dictionary<TeamFlagType, long> homeUnitList = putHomeComponent.GetHomeUnitList();
-                TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByUnitId(curUnit.Id);
+                TeamFlagType teamFlagType = ET.Ability.TeamFlagHelper.GetTeamFlag(curUnit);
                 foreach (var homeUnits in homeUnitList)
                 {
                     TeamFlagType curHomeTeamFlagType = homeUnits.Key;
@@ -656,12 +656,12 @@ namespace ET.Ability
             return true;
         }
 
-        public static bool ChkIsNearNoRadius(Unit curUnit, Unit targetUnit, float radius, bool ignoreY)
+        public static bool ChkIsNearNoCurUnitRadius(Unit curUnit, Unit targetUnit, float radius, bool ignoreY)
         {
-            return ChkIsNearNoRadius(curUnit.Position, targetUnit.Position, radius, ignoreY);
+            return ChkIsNearNoCurUnitRadius(curUnit.Position, targetUnit.Position, radius, ignoreY);
         }
 
-        public static bool ChkIsNearNoRadius(float3 curUnitPos, float3 targetPos, float radius, bool ignoreY)
+        public static bool ChkIsNearNoCurUnitRadius(float3 curUnitPos, float3 targetPos, float radius, bool ignoreY)
         {
             float3 dis = curUnitPos - targetPos;
             float targetDisSq = math.pow(radius, 2);
@@ -722,6 +722,29 @@ namespace ET.Ability
                         return true;
                     }
                 }
+            }
+            return false;
+        }
+
+        public static bool ChkIsStackedOnTop(float3 curUnitPos, float curUnitHeight, Unit targetUnit, float radius)
+        {
+            float3 targetUnitPos = targetUnit.Position;
+            float targetUnitHeight = ET.Ability.UnitHelper.GetBodyHeight(targetUnit);
+            float3 dis = curUnitPos - targetUnitPos;
+            float targetDisSq = math.pow(radius, 2);
+
+            if (curUnitPos.y > targetUnitPos.y)
+            {
+                return false;
+            }
+            if (curUnitPos.y + curUnitHeight + 0.2f < targetUnitPos.y)
+            {
+                return false;
+            }
+
+            if (math.pow(dis.x, 2) + math.pow(dis.z, 2) <= targetDisSq)
+            {
+                return true;
             }
             return false;
         }
@@ -865,6 +888,11 @@ namespace ET.Ability
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitPlayAudio(unit, playAudioActionId, isOnlySelfShow);
         }
 
+        public static void AddSyncData_UnitFloatingText(Unit unit, string floatingTextId, int showNum, bool isOnlySelfShow)
+        {
+            GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitFloatingText(unit, floatingTextId, showNum, isOnlySelfShow);
+        }
+
         public static void AddSyncData_UnitGetCoinShow(long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)
         {
             GetSyncDataManagerComponent(unit.DomainScene()).AddSyncData_UnitGetCoinShow(playerId, unit, coinType, chgValue);
@@ -901,7 +929,7 @@ namespace ET.Ability
             unitInfo.Level = unit.level;
             unitInfo.Type = (int)unit.Type;
             unitInfo.Position = unit.Position;
-            unitInfo.Forward = unit.Forward;
+            unitInfo.Rotation = unit.Rotation;
 
             unitInfo.Components = ListComponent<byte[]>.Create();
             foreach (Entity entity in unit.Components.Values)

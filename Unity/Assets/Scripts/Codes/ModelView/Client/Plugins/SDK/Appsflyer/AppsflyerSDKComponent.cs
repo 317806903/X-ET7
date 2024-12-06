@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine.Events;
-
+﻿using UnityEngine;
 namespace ET.Client
 {
     [ComponentOf(typeof(Scene))]
@@ -9,5 +6,6 @@ namespace ET.Client
     {
         [StaticField]
         public static AppsflyerSDKComponent Instance;
+        public MonoBehaviour AppsflyerSDKMono;
     }
 }

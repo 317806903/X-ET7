@@ -45,6 +45,18 @@ namespace ET
             return;
         }
 
+        public static void SwitchLanguageWhenEditor(this LocalizeComponent self, string languageStr)
+        {
+            LanguageType languageType = (LanguageType)Enum.Parse(typeof(LanguageType), languageStr);
+            self.SwitchLanguage(languageType, true);
+        }
+
+        public static void ReSetIsShowLanguagePreWhenEditor(this LocalizeComponent self, bool isShowLanguagePre)
+        {
+            self.IsShowLanguagePre = isShowLanguagePre;
+            self.SwitchLanguage(self.CurrentLanguage, true);
+        }
+
         public static void ResetLanguage(this LocalizeComponent self)
         {
             ConfigComponent.Instance.TranslateText(self.GetTextValueByExcel);

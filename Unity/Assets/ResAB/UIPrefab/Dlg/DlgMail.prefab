@@ -2372,7 +2372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2650867161112417255
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2623,7 +2623,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
 --- !u!1 &6281914765437970722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,7 +3453,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1159.1111, y: 652}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &342692279040295919
 CanvasRenderer:
@@ -3526,7 +3526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6163489185330010795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3625,7 +3625,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 864825538170565382}
+  m_TargetGraphic: {fileID: 2051361097945919897}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEditor.SceneManagement;
@@ -57,7 +58,7 @@ namespace ET
             { ServerEnum.Release_148Master, "192.168.10.148"},
             { ServerEnum.Release_148Release, "192.168.10.148"},
             { ServerEnum.Release_Zpb, "192.168.10.50"},
-            { ServerEnum.Release_USDebug, "192.168.60.150"},
+            { ServerEnum.Release_USDebug, "192.168.60.234"},
             { ServerEnum.Release_OutNet_Arcade, "8.134.89.37"},
             { ServerEnum.Release_OutNet_CN, "8.134.156.170"},
             { ServerEnum.Release_OutNet_CN_Demo, "8.134.156.170"},
@@ -86,7 +87,7 @@ namespace ET
             { ServerEnum.Release_148Master, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Master"},
             { ServerEnum.Release_148Release, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_148Release"},
             { ServerEnum.Release_Zpb, "http://192.168.10.50"},
-            { ServerEnum.Release_USDebug, "http://192.168.60.150"},
+            { ServerEnum.Release_USDebug, "http://192.168.60.234"},
             { ServerEnum.Release_OutNet_Arcade, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_Arcade"},
             { ServerEnum.Release_OutNet_CN, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame"},
             { ServerEnum.Release_OutNet_CN_Demo, "https://omelette.oss-cn-beijing.aliyuncs.com/dev/DeepMirrorARGame_CNDemo"},
@@ -543,6 +544,8 @@ namespace ET
                     this.resConfig.languageType = languageType.ToString();
                     EditorUtility.SetDirty(this.resConfig);
                     AssetDatabase.SaveAssets();
+
+                    ReSetLanguage(languageType.ToString());
                 }
             }
             else
@@ -561,6 +564,7 @@ namespace ET
                     this.resConfig.IsShowLanguagePre = IsShowLanguagePre;
                     EditorUtility.SetDirty(this.resConfig);
                     AssetDatabase.SaveAssets();
+                    ReSetIsShowLanguagePre(IsShowLanguagePre);
                 }
             }
             else
@@ -778,6 +782,60 @@ namespace ET
             AfterCompiling();
 
             ShowNotification("Build Model And Hotfix Success!");
+        }
+
+        public static void ReSetLanguage(string languageType)
+        {
+            if (Application.isPlaying)
+            {
+                var typeSystem = Type.GetType("ET.LocalizeComponentSystem, Unity.Hotfix.Codes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+                var type = Type.GetType("ET.LocalizeComponent, Unity.Model.Codes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+                // 获取Instance属性的PropertyInfo对象
+                PropertyInfo instancePropertyInfo = type.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public);
+
+                if (instancePropertyInfo != null)
+                {
+                    // 获取单例实例
+                    object singletonInstance = instancePropertyInfo.GetValue(null); // 对于静态属性，传递null作为实例
+
+                    // 获取MyMethod方法的MethodInfo对象
+                    MethodInfo myMethodInfo = typeSystem.GetMethod("SwitchLanguageWhenEditor", BindingFlags.Static | BindingFlags.Public);
+
+                    if (myMethodInfo != null)
+                    {
+                        object[] parameters = new object[] { singletonInstance, languageType };
+                        // 使用MethodInfo对象调用MyMethod方法
+                        myMethodInfo.Invoke(null, parameters);
+                    }
+                }
+            }
+        }
+
+        public static void ReSetIsShowLanguagePre(bool isShowLanguagePre)
+        {
+            if (Application.isPlaying)
+            {
+                var typeSystem = Type.GetType("ET.LocalizeComponentSystem, Unity.Hotfix.Codes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+                var type = Type.GetType("ET.LocalizeComponent, Unity.Model.Codes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+                // 获取Instance属性的PropertyInfo对象
+                PropertyInfo instancePropertyInfo = type.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public);
+
+                if (instancePropertyInfo != null)
+                {
+                    // 获取单例实例
+                    object singletonInstance = instancePropertyInfo.GetValue(null); // 对于静态属性，传递null作为实例
+
+                    // 获取MyMethod方法的MethodInfo对象
+                    MethodInfo myMethodInfo = typeSystem.GetMethod("ReSetIsShowLanguagePreWhenEditor", BindingFlags.Static | BindingFlags.Public);
+
+                    if (myMethodInfo != null)
+                    {
+                        object[] parameters = new object[] { singletonInstance, isShowLanguagePre };
+                        // 使用MethodInfo对象调用MyMethod方法
+                        myMethodInfo.Invoke(null, parameters);
+                    }
+                }
+            }
         }
     }
 }

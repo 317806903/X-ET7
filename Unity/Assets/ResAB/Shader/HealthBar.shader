@@ -37,8 +37,8 @@ Shader "Unlit/HealthBar"
             fixed4 _ColorLost;
             fixed4 _ColorDelay;
 
-            float _CurHpPers[1023];   // Max instanced batch size.
-            float _CurDelayHpPers[1023];   // Max instanced batch size.
+            float _CurHpPers[250];   // Max instanced batch size.
+            float _CurDelayHpPers[250];   // Max instanced batch size.
 
             v2f vert (appdata v, uint instanceID: SV_InstanceID)
             {

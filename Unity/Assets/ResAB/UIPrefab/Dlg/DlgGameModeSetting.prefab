@@ -1667,7 +1667,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 3274295604203371433}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2018,7 +2018,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
 --- !u!1 &5310687516382758045
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,7 +3536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1474259902260097676
 RectTransform:
   m_ObjectHideFlags: 0

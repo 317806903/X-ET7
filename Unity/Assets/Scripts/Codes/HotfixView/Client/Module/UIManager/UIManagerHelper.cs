@@ -410,7 +410,7 @@ namespace ET.Client
                 image.enabled = false;
             }
 
-            Sprite sprite = await ResComponent.Instance.LoadAssetAsync<Sprite>(imgPath);
+            Sprite sprite = ResComponent.Instance.LoadAsset<Sprite>(imgPath);
             if (image == null)
             {
                 return;

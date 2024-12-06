@@ -53,40 +53,20 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u70B9\u51FB\u6311\u6218\u6A21\u5F0F"
+  - name: "\u70B9\u51FB\u80CC\u5305"
     isFreeClickBeforeEnter: 1
     trigEnterCondition: 1
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_BattleDeck
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Challenge
+    text: TextCode_Key_TutorialText_Bags
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
     waitToNextUIGuideStep: 0
-    audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
-    trigExitCondition: 0
-    trigExitConditionStaticMethod: 
-    trigExitConditionParam: 
-  - name: "\u9009\u4E2D\u5173\u5361"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/EPage_ChallengNormal/info/E_Select
-    guideTextType: 1
-    guideTextImgPath: 
-    text: TextCode_Key_TutorialText_ARPVE_Select
-    specImgMatchType: 0
-    specImgPath: 
-    curInNextType: 0
-    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 

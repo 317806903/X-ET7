@@ -26,14 +26,14 @@ namespace ET.Server
             {
                 refId = RecastHelper.AddObstacle(scene, message.Position, unitCfg.NavObstacleRadius);
             }
-            RecastHelper.FullyUpdateTileCache(scene);
+            RecastHelper.UpdateDynamicMesh(scene);
 
             response.Path = RecastHelper.GetAllPathsFromMonsterCallsToHeadQuarter(observerUnit);
 
             // Remove the obstacles.
             if (refId != 0)
             {
-                RecastHelper.GetTileCache(scene).RemoveObstacle(refId);
+                RecastHelper.RemoveObstacle(scene, refId);
             }
 
             // Restore the unit.
@@ -41,7 +41,7 @@ namespace ET.Server
             {
                 ET.RecastHelper.AddObstacleFromUnit(scene, message.UnitId, previousObstaclePosition.Value);
             }
-            RecastHelper.FullyUpdateTileCache(scene);
+            RecastHelper.UpdateDynamicMesh(scene);
 
             await ETTask.CompletedTask;
         }

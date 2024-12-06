@@ -24,6 +24,7 @@ namespace ET.Client
         {
             protected override void Destroy(GameObjectFlickerComponent self)
             {
+                self.StopColorFlicker();
             }
         }
 
@@ -65,16 +66,27 @@ namespace ET.Client
                 Renderer[] renderers = child.gameObject.GetComponentsInChildren<Renderer>();
                 foreach (Renderer renderer in renderers)
                 {
-                    self.MaterialRecordDic[renderer] = renderer.materials;
+                    self.MaterialRecordList.AddRange(renderer.materials);
                 }
             }
 
         }
 
         public static void ResetTime(this GameObjectFlickerComponent self,
-        long flickerEndTime)
+        long flickerEndTime, float flickerFrequency, Color startColor, Color endColor)
         {
+            if (self.flickerEndTime >= flickerEndTime)
+            {
+                return;
+            }
+            if (self.flickerEndTime < flickerEndTime)
+            {
+                self.flickerStartTime = TimeHelper.ServerNow();
+            }
             self.flickerEndTime = flickerEndTime;
+            self.flickerFrequency = flickerFrequency;
+            self.startColor = startColor;
+            self.endColor = endColor;
         }
 
         public static void Update(this GameObjectFlickerComponent self)
@@ -89,54 +101,55 @@ namespace ET.Client
                 if (self.isFlickering)
                 {
                     self.isFlickering = false;
-                    self.ChgColor(false);
+                    self.StopColorFlicker();
                 }
                 return;
             }
-            self.isFlickering = true;
-            self.ChgColor(true);
+
+            if (self.isFlickering == false)
+            {
+                self.isFlickering = true;
+                self.flickerStartTime = TimeHelper.ServerNow();
+            }
+            self.StartColorFlicker();
         }
 
-        public static void ChgColor(this GameObjectFlickerComponent self, bool isFlicker)
+        public static Color GetCurColor(this GameObjectFlickerComponent self)
         {
-            if (isFlicker)
-            {
-                Color colorNew = new Color(0.6f, 0.6f, 0.6f);
-                self._ChgColor(true, colorNew);
-            }
-            else
-            {
-                Color colorNew = Color.black;
-                self._ChgColor(false, colorNew);
-            }
+            float flickerDuration = 1 / self.flickerFrequency;
+            float curTime = (TimeHelper.ServerNow() - self.flickerStartTime) * 0.001f;
+
+            float progress = (curTime % flickerDuration) / (float)flickerDuration;
+            return Color.Lerp(self.startColor, self.endColor, progress);
+        }
+
+        public static void StartColorFlicker(this GameObjectFlickerComponent self)
+        {
+            self._ChgColor(true, self.GetCurColor());
+        }
+
+        public static void StopColorFlicker(this GameObjectFlickerComponent self)
+        {
+            Color colorNew = Color.black;
+            self._ChgColor(false, colorNew);
         }
 
         public static void _ChgColor(this GameObjectFlickerComponent self, bool enableEmission, Color emissionColor)
         {
-            foreach (var item in self.MaterialRecordDic)
+            foreach (Material material in self.MaterialRecordList)
             {
-                Renderer renderer = item.Key;
-                if (renderer == null)
+                if (material == null)
                 {
                     continue;
                 }
-                Material[] mats = renderer.materials;
-                for (int i = 0; i < mats.Length; i++)
+                if (enableEmission)
                 {
-                    Material material = mats[i];
-                    if (material == null)
-                    {
-                        continue;
-                    }
-                    if (enableEmission)
-                    {
-                        material.EnableKeyword("_EMISSION");
-                        material.SetColor("_EmissionColor", emissionColor);
-                    }
-                    else
-                    {
-                        material.DisableKeyword("_EMISSION");
-                    }
+                    material.EnableKeyword("_EMISSION");
+                    material.SetColor("_EmissionColor", emissionColor);
+                }
+                else
+                {
+                    material.DisableKeyword("_EMISSION");
                 }
             }
         }

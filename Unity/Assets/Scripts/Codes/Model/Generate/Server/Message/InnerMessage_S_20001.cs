@@ -1728,6 +1728,9 @@ namespace ET
 		[ProtoMember(2)]
 		public int PlayerModelType { get; set; }
 
+		[ProtoMember(3)]
+		public long SceneInstanceId { get; set; }
+
 	}
 
 	[Message(InnerMessage.G2O_PlayerCacheChgNoticeClient)]

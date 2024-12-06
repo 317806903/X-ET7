@@ -8,7 +8,7 @@ namespace ET
 {
     public static class ProcessHelper
     {
-        public static Process Run(string exe, string arguments, string workingDirectory = ".", bool waitExit = false)
+        public static Process Run(string exe, string arguments, string workingDirectory = ".", bool waitExit = false, bool runAsAdmin = false)
         {
             //Log.Debug($"Process Run exe:{exe} ,arguments:{arguments} ,workingDirectory:{workingDirectory}");
             try
@@ -37,6 +37,7 @@ namespace ET
                     WorkingDirectory = workingDirectory,
                     RedirectStandardOutput = redirectStandardOutput,
                     RedirectStandardError = redirectStandardError,
+                    Verb = runAsAdmin ? "runas" : string.Empty,
                 };
 
                 Process process = Process.Start(info);

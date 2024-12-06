@@ -13,9 +13,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitPlayAudio self)
             {
-                self.unitId = new();
-                self.playAudioActionId = new();
-                self.isOnlySelfShow = new();
             }
         }
 
@@ -27,10 +24,12 @@ namespace ET
                 self.unitId.Clear();
                 self.playAudioActionId.Clear();
                 self.isOnlySelfShow.Clear();
+                self.playAudioActionId2Units.Clear();
+                self.list.Clear();
             }
         }
 
-        public static void Init(this SyncData_UnitPlayAudio self, HashSet<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list)
+        public static void Init(this SyncData_UnitPlayAudio self, HashSet<(Unit unit, string floatingTextActionId, bool isOnlySelfShow)> list)
         {
             self.unitId.Clear();
             self.playAudioActionId.Clear();
@@ -51,9 +50,9 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_UnitPlayAudio self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_UnitPlayAudio self, UnitComponent unitComponent)
         {
-            DictionaryComponent<string, HashSetComponent<Unit>> playAudioActionId2Units = DictionaryComponent<string, HashSetComponent<Unit>>.Create();
+            self.playAudioActionId2Units.Clear();
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
             {
@@ -65,10 +64,10 @@ namespace ET
                 {
                     continue;
                 }
-                if(playAudioActionId2Units.TryGetValue(playAudioActionId, out var hashSet) == false)
+                if(self.playAudioActionId2Units.TryGetValue(playAudioActionId, out var hashSet) == false)
                 {
                     hashSet = HashSetComponent<Unit>.Create();
-                    playAudioActionId2Units[playAudioActionId] = hashSet;
+                    self.playAudioActionId2Units[playAudioActionId] = hashSet;
                 }
 
                 if (hashSet.Count <= 20)
@@ -77,26 +76,24 @@ namespace ET
                 }
             }
 
-            ListComponent<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list = ListComponent<(Unit unit, string playAudioActionId, bool isOnlySelfShow)>.Create();
-            foreach (var item in playAudioActionId2Units)
+            self.list.Clear();
+            foreach (var item in self.playAudioActionId2Units)
             {
                 string playAudioActionId = item.Key;
                 HashSet<Unit> units = item.Value;
 
                 foreach (Unit unit in units)
                 {
-                    list.Add((unit, playAudioActionId, false));
+                    self.list.Add((unit, playAudioActionId, false));
                 }
             }
-            playAudioActionId2Units.Dispose();
+            self.playAudioActionId2Units.Clear();
 
             EventType.SyncPlayAudio _SyncPlayAudio = new ()
             {
-                list = list,
+                list = self.list,
             };
             EventSystem.Instance.Publish(unitComponent.DomainScene(), _SyncPlayAudio);
-
-            await ETTask.CompletedTask;
         }
     }
 }

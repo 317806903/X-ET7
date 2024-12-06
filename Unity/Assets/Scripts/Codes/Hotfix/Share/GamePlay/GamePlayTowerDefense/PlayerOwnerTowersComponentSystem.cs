@@ -1081,6 +1081,29 @@ namespace ET
 			return (true, msg);
 		}
 
+		public static bool ChkMovePlayerTowerNeedDownTower(this PlayerOwnerTowersComponent self, long towerUnitId, float3 position)
+		{
+			Unit curUnit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+			float3 curUnitPos = curUnit.Position;
+			float curUnitHeight = UnitHelper.GetBodyHeight(curUnit);
+			float curUnitRadius = UnitHelper.GetBodyRadius(curUnit);
+			long ignoreTowerUnitId = curUnit.Id;
+
+			Unit unit = self.GetTowerWhenStackedOnTop(curUnitPos, curUnitHeight, curUnitRadius, ignoreTowerUnitId);
+			if (unit == null)
+			{
+				return false;
+			}
+			curUnitPos = position;
+			Unit unitNew = self.GetTowerWhenStackedOnTop(curUnitPos, curUnitHeight, curUnitRadius, ignoreTowerUnitId);
+			if (unitNew != null && unitNew == unit)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		public static bool MovePlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId, float3 position)
 		{
 			(bool bRet, string msg) = self.ChkMovePlayerTower(playerId, towerUnitId, position);
@@ -1193,8 +1216,7 @@ namespace ET
 			GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetParent<GamePlayTowerDefenseComponent>();
 			PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
 			var homeUnitList = putHomeComponent.GetHomeUnitList();
-			//float nearDis = 0.3f;
-			float nearDis = GlobalSettingCfgCategory.Instance.TowerDefenseNearTowerDis;
+			float nearDisBase = 0f;
 			foreach (var homeUnits in homeUnitList)
 			{
 				if (playerId != -1)
@@ -1209,6 +1231,7 @@ namespace ET
 				Unit homeUnit = UnitHelper.GetUnit(self.DomainScene(), homeUnitId);
 				if (homeUnit != null)
 				{
+					float nearDis = nearDisBase + GlobalSettingCfgCategory.Instance.TowerDefenseNearDisWhenHome;
 					bool isNear1 = UnitHelper.ChkIsNear(homeUnit, targetPos, targetUnitRadius, nearDis, false);
 					if (isNear1)
 					{
@@ -1234,6 +1257,24 @@ namespace ET
 					{
 						continue;
 					}
+					float nearDis = 0;
+					TowerComponent towerComponent = unit.GetComponent<TowerComponent>();
+					if (towerComponent != null)
+					{
+						if (ItemHelper.ChkIsAttackTower(towerComponent.towerCfgId))
+						{
+							nearDis = nearDisBase + GlobalSettingCfgCategory.Instance.TowerDefenseNearDisWhenAttackTower;
+						}
+						else if (ItemHelper.ChkIsTrap(towerComponent.towerCfgId))
+						{
+							nearDis = nearDisBase + GlobalSettingCfgCategory.Instance.TowerDefenseNearDisWhenTrapTower;
+						}
+						else if (ItemHelper.ChkIsCollider(towerComponent.towerCfgId))
+						{
+							nearDis = nearDisBase + GlobalSettingCfgCategory.Instance.TowerDefenseNearDisWhenColliderTower;
+						}
+					}
+
 					bool isNear = UnitHelper.ChkIsNear(unit, targetPos, targetUnitRadius, nearDis, false);
 					if (isNear)
 					{
@@ -1243,6 +1284,66 @@ namespace ET
 			}
 
 			return false;
+		}
+
+		public static List<Unit> GetTowerListWhenStackedOnTop(this PlayerOwnerTowersComponent self, Unit curUnit)
+		{
+			float3 curUnitPos = curUnit.Position;
+			float curUnitHeight = UnitHelper.GetBodyHeight(curUnit);
+			float curUnitRadius = UnitHelper.GetBodyRadius(curUnit);
+			long ignoreTowerUnitId = curUnit.Id;
+
+			return self.GetTowerListWhenStackedOnTop(curUnitPos, curUnitHeight, curUnitRadius, ignoreTowerUnitId);
+		}
+
+		public static List<Unit> GetTowerListWhenStackedOnTop(this PlayerOwnerTowersComponent self, float3 curUnitPos, float curUnitHeight, float curUnitRadius, long ignoreTowerUnitId)
+		{
+			List<Unit> list = ListComponent<Unit>.Create();
+			do
+			{
+				Unit unit = self.GetTowerWhenStackedOnTop(curUnitPos, curUnitHeight, curUnitRadius, ignoreTowerUnitId);
+				if (unit != null)
+				{
+					list.Add(unit);
+					curUnitPos = unit.Position;
+					curUnitHeight = UnitHelper.GetBodyHeight(unit);
+					curUnitRadius = UnitHelper.GetBodyRadius(unit);
+					ignoreTowerUnitId = unit.Id;
+				}
+				else
+				{
+					break;
+				}
+			}
+			while (true);
+
+			return list;
+		}
+
+		public static Unit GetTowerWhenStackedOnTop(this PlayerOwnerTowersComponent self, float3 curUnitPos, float curUnitHeight, float curUnitRadius, long ignoreTowerUnitId)
+		{
+			foreach (var list in self.playerId2unitTowerId)
+			{
+				foreach (long unitId in list.Value)
+				{
+					Unit unit = UnitHelper.GetUnit(self.DomainScene(), unitId);
+					if (UnitHelper.ChkUnitAlive(unit, false) == false)
+					{
+						continue;
+					}
+					if (ignoreTowerUnitId != -1 && ignoreTowerUnitId == unit.Id)
+					{
+						continue;
+					}
+					bool isNear = UnitHelper.ChkIsStackedOnTop(curUnitPos, curUnitHeight, unit, curUnitRadius);
+					if (isNear)
+					{
+						return unit;
+					}
+				}
+			}
+
+			return null;
 		}
 
 		public static bool DestroyPlayerTower(this PlayerOwnerTowersComponent self, long playerId, long towerUnitId)

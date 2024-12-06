@@ -24,12 +24,12 @@ namespace ET.Client
                 {
                     continue;
                 }
-                // GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
-                // if (gameObjectShowComponent == null)
-                // {
-                //     continue;
-                // }
-                // await gameObjectShowComponent.FlickerWhenBeHit();
+                GameObjectShowComponent gameObjectShowComponent = unit.GetComponent<GameObjectShowComponent>();
+                if (gameObjectShowComponent == null)
+                {
+                    continue;
+                }
+                gameObjectShowComponent.FlickerWhenBeHit().Coroutine();
             }
         }
     }

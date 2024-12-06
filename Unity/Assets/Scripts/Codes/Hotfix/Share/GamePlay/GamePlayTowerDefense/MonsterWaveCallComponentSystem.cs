@@ -1,6 +1,7 @@
 ﻿using ET.Ability;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ET.AbilityConfig;
 using Unity.Mathematics;
 
@@ -224,7 +225,14 @@ namespace ET
             }
             else
             {
-                waveIndex = self.sortWaveIndex[self.curIndex];
+                if (self.curIndex == -1)
+                {
+                    waveIndex = self.sortWaveIndex.FirstOrDefault();
+                }
+                else
+                {
+                    waveIndex = self.sortWaveIndex[self.curIndex];
+                }
             }
 
             return true;
@@ -336,6 +344,37 @@ namespace ET
                 }
 
                 TimerComponent.Instance.Remove(ref self.Timer);
+            }
+        }
+
+        public static void RecordMonsterWhenCallActor(this MonsterWaveCallComponent self, Unit unit, Unit beCallActor)
+        {
+            MonsterComponent monsterComponent = unit.GetComponent<MonsterComponent>();
+            if (monsterComponent == null)
+            {
+                return;
+            }
+
+            if (monsterComponent.waveIndex <= 0)
+            {
+                return;
+            }
+
+            foreach (var playerWaveMonsterCall in self.waveMonsterCallList)
+            {
+                foreach (var waveMonsterCall in playerWaveMonsterCall.Value)
+                {
+                    MonsterWaveCallOnceComponent monsterWaveCallOnceComponent = waveMonsterCall.Value;
+                    bool bRet = monsterWaveCallOnceComponent.RecordMonsterWhenCallActor(unit, beCallActor);
+                    if (bRet)
+                    {
+                        MonsterComponent monsterComponentBeCall = beCallActor.AddComponent<MonsterComponent>();
+                        monsterComponentBeCall.waveIndex = monsterComponent.waveIndex;
+                        monsterComponentBeCall.circleWaveIndex = monsterComponent.circleWaveIndex;
+                        monsterComponentBeCall.circleNum = monsterComponent.circleNum;
+                        monsterComponentBeCall.circleIndex = monsterComponent.circleIndex;
+                    }
+                }
             }
         }
 

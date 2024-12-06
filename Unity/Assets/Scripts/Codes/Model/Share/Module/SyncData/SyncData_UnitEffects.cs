@@ -5,9 +5,9 @@ namespace ET
 {
     public class SyncData_UnitEffects : Entity, IAwake, IDestroy
     {
-        public List<long> unitId { get; set; }
-        public List<bool> isAddOrRemove;
-        public List<long> unitEffectObjIds;
-        public List<byte[]> unitEffectComponents;
+        public List<long> unitId = new();
+        public List<bool> isAddOrRemove = new();
+        public List<long> unitEffectObjIds = new();
+        public List<byte[]> unitEffectComponents = new();
     }
 }

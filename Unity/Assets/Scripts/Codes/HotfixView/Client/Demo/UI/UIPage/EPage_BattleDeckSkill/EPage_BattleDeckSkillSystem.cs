@@ -45,12 +45,15 @@ namespace ET.Client
 
 			self.BindMoveBagItem();
 
-#if UNITY_EDITOR
-			self.View.E_DebugButton.SetVisible(true);
-			self.View.E_DebugButton.AddListenerAsync(self.AddSkillsWhenDebug);
-#else
-			self.View.E_DebugButton.SetVisible(false);
-#endif
+			if (Application.isMobilePlatform == false)
+			{
+				self.View.E_DebugButton.SetVisible(true);
+				self.View.E_DebugButton.AddListenerAsync(self.AddSkillsWhenDebug);
+			}
+			else
+			{
+				self.View.E_DebugButton.SetVisible(false);
+			}
 		}
 
 		public static async ETTask ShowPage(this EPage_BattleDeckSkill self, ShowWindowData contextData = null)
@@ -75,6 +78,7 @@ namespace ET.Client
 
 		public static async ETTask Refresh(this EPage_BattleDeckSkill self)
 		{
+			await ET.Client.PlayerCacheHelper.GetMyBattleSkillItemCfgIdList(self.DomainScene());
 			await self.CreateCardScrollItem();
 		}
 

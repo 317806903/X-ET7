@@ -19,6 +19,7 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
         Id = _buf.ReadString();
         Name = _buf.ReadString();
         IsOnlySelfShow = _buf.ReadBool();
+        VibrationType = (VibrationType)_buf.ReadInt();
         ResId = _buf.ReadString();
         Duration = _buf.ReadFloat();
         IsLoop = _buf.ReadBool();
@@ -42,6 +43,10 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
     /// 是否仅自己可见
     /// </summary>
     public bool IsOnlySelfShow { get; private set; }
+    /// <summary>
+    /// 振动类型
+    /// </summary>
+    public VibrationType VibrationType { get; private set; }
     /// <summary>
     /// 资源id
     /// </summary>
@@ -75,6 +80,7 @@ public sealed partial class ActionCfg_PlayAudio: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "IsOnlySelfShow:" + IsOnlySelfShow + ","
+        + "VibrationType:" + VibrationType + ","
         + "ResId:" + ResId + ","
         + "Duration:" + Duration + ","
         + "IsLoop:" + IsLoop + ","

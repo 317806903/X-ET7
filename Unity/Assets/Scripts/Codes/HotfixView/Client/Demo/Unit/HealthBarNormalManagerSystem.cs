@@ -68,6 +68,18 @@ namespace ET.Client
 
         public static void ResetRendererData(this HealthBarNormalManager self)
         {
+            if (SystemInfo.supportsInstancing)
+            {
+                self.ResetRendererData_GPUInstance();
+            }
+            else
+            {
+                self.ResetRendererData_NotGPUInstance();
+            }
+        }
+
+        public static void ResetRendererData_GPUInstance(this HealthBarNormalManager self)
+        {
             int totalCount = self.refDic.Count;
             self.batches.Clear();
             if (totalCount == 0)
@@ -117,6 +129,43 @@ namespace ET.Client
                 self._propertyBlock.SetFloatArray("_CurDelayHpPers", curDelayHpPers);
 
                 Graphics.DrawMeshInstanced(self.healthBarMesh, 0, self.healthBarMaterial, self.batches, self._propertyBlock);
+            }
+        }
+
+        public static void ResetRendererData_NotGPUInstance(this HealthBarNormalManager self)
+        {
+            int totalCount = self.refDic.Count;
+            if (totalCount == 0)
+            {
+                return;
+            }
+
+            float[] curDelayHpPers = self.curDelayHpPers;
+            float[] curHpPers = self.curHpPers;
+
+            foreach (var item in self.refDic)
+            {
+                HealthBarNormalComponent healthBarNormalComponent = item.Value;
+                if (healthBarNormalComponent == null || healthBarNormalComponent.ChkIsShow() == false)
+                {
+                    continue;
+                }
+                Vector3 pos = healthBarNormalComponent.GetPos() + self.meshLocalPosition;
+                Quaternion rot = self.GetForward();
+                Vector3 size = self.meshSize;
+
+                Matrix4x4 matrices = new();
+                matrices.SetTRS(pos, rot, size);
+                self.batches.Add(matrices);
+
+                int i = 0;
+                curHpPers[i] = healthBarNormalComponent.GetCurHpPer();
+                curDelayHpPers[i] = healthBarNormalComponent.GetCurDelayHpPer();
+
+                self._propertyBlock.SetFloatArray("_CurHpPers", curHpPers);
+                self._propertyBlock.SetFloatArray("_CurDelayHpPers", curDelayHpPers);
+
+                Graphics.DrawMesh(self.healthBarMesh, matrices, self.healthBarMaterial, 0, self.GetMainCamera(), 0, self._propertyBlock);
             }
         }
 

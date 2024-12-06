@@ -6,5 +6,6 @@ namespace ET
     [ComponentOf(typeof(Unit))]
     public class HomeComponent: Entity, IAwake, IDestroy, ITransferClient
     {
+        public string homeCfgId;
     }
 }

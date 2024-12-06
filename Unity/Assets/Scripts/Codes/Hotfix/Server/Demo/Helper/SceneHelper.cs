@@ -85,6 +85,10 @@ namespace ET.Server
                     scene.AddComponent<HttpComponent, string>($"http://*:{startSceneConfig.OuterPort}/");
                     scene.AddComponent<PayManagerComponent>();
                     break;
+                case SceneType.ActionFromHttp:
+                    scene.AddComponent<HttpComponent, string>($"http://*:{startSceneConfig.OuterPort}/");
+                    scene.AddComponent<ActionFromHttpManagerComponent>();
+                    break;
             }
 
             return scene;

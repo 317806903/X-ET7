@@ -27,6 +27,7 @@ namespace ET
 		Mail = 1 << 19,
 		Pay = 1 << 20,
 		Season = 1 << 21,
+		ActionFromHttp = 1 << 22,
 
 		// 客户端Model层
 		Client = 1 << 30,

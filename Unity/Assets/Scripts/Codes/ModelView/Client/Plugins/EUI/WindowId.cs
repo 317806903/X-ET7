@@ -73,5 +73,6 @@ namespace ET.Client
 		WindowID_SkillDetails,
 		WindowID_BattlePlayerSkill,
 		WindowID_BattleCameraPlayerSkill,
+		WindowID_BattleHomeHUD,
 	}
 }

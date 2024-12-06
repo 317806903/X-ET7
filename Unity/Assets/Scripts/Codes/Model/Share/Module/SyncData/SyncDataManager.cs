@@ -14,5 +14,6 @@ namespace ET
         public int waitFrameSync = 60;
         public int curFrameSync = 0;
         public Dictionary<long, int> playerSessionInfoList;
+        public List<long> syncData2Players;
     }
 }

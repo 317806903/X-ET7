@@ -16,8 +16,8 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
 {
     public GlobalBuffActionCall(ByteBuf _buf) 
     {
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); ActionCondition1.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); ActionCondition2.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TrigCondition1 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); TrigCondition1.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TrigCondition2 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); TrigCondition2.Add(_e0);}}
         DelayTime = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionId.Add(_e0);}}
         PostInit();
@@ -29,10 +29,13 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
     }
 
     /// <summary>
-    /// 触发事件
+    /// 触发事件1
     /// </summary>
-    public System.Collections.Generic.List<SequenceGlobalCondition> ActionCondition1 { get; private set; }
-    public System.Collections.Generic.List<SequenceGlobalCondition> ActionCondition2 { get; private set; }
+    public System.Collections.Generic.List<SequenceGlobalCondition> TrigCondition1 { get; private set; }
+    /// <summary>
+    /// 触发事件2
+    /// </summary>
+    public System.Collections.Generic.List<SequenceGlobalCondition> TrigCondition2 { get; private set; }
     /// <summary>
     /// 延迟多久后触发action
     /// </summary>
@@ -47,22 +50,22 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
-        foreach(var _e in ActionCondition1) { _e?.Resolve(_tables); }
-        foreach(var _e in ActionCondition2) { _e?.Resolve(_tables); }
+        foreach(var _e in TrigCondition1) { _e?.Resolve(_tables); }
+        foreach(var _e in TrigCondition2) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
-        foreach(var _e in ActionCondition1) { _e?.TranslateText(translator); }
-        foreach(var _e in ActionCondition2) { _e?.TranslateText(translator); }
+        foreach(var _e in TrigCondition1) { _e?.TranslateText(translator); }
+        foreach(var _e in TrigCondition2) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
     {
         return "{ "
-        + "ActionCondition1:" + Bright.Common.StringUtil.CollectionToString(ActionCondition1) + ","
-        + "ActionCondition2:" + Bright.Common.StringUtil.CollectionToString(ActionCondition2) + ","
+        + "TrigCondition1:" + Bright.Common.StringUtil.CollectionToString(TrigCondition1) + ","
+        + "TrigCondition2:" + Bright.Common.StringUtil.CollectionToString(TrigCondition2) + ","
         + "DelayTime:" + DelayTime + ","
         + "ActionId:" + Bright.Common.StringUtil.CollectionToString(ActionId) + ","
         + "}";

@@ -31,6 +31,7 @@ namespace ET.Client
                 return;
             }
             self.isInitClient = true;
+            self.isNavmeshFromHomeInitialized = false;
 
             ModelClickManagerHelper.SetModelClickCallBack(self.DomainScene(), (rayHit) =>
             {
@@ -57,30 +58,41 @@ namespace ET.Client
             self.SendARCameraPos();
             self.SendNeedReNoticeUnitIds();
             self.SendNeedReNoticeTowerDefense();
-            if (self.previousGamePlayTowerDefenseStatus != self.gamePlayTowerDefenseStatus)
+            if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
             {
-                if (self.gamePlayTowerDefenseStatus == GamePlayTowerDefenseStatus.PutMonsterPoint)
-                {
-                    self.OnPutMonsterPointStart().Coroutine();
-                }
+                self.InitializeNavmeshFromHome().Coroutine();
             }
-            self.previousGamePlayTowerDefenseStatus = self.gamePlayTowerDefenseStatus;
         }
 
-        public static async ETTask OnPutMonsterPointStart(this GamePlayTowerDefenseComponent self)
+        public static async ETTask InitializeNavmeshFromHome(this GamePlayTowerDefenseComponent self)
         {
-            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
-            TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
-            var navMeshData = await GamePlayTowerDefenseHelper.GetReachableAreaFromHeadQuarter(self.ClientScene(), homeTeamFlagType);
-            if (self.IsDisposed)
+            if (self.isNavmeshFromHomeInitialized)
             {
                 return;
             }
-            NavMeshRendererComponent.Instance.SetNavMesh(self.DomainScene(), navMeshData);
+            // Wait until HomeUnit is initialized.
+            long myPlayerId = PlayerStatusHelper.GetMyPlayerId(self.DomainScene());
+            TeamFlagType homeTeamFlagType = self.GetHomeTeamFlagTypeByPlayer(myPlayerId);
+            GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = GamePlayHelper.GetGamePlayTowerDefense(self.DomainScene());
+            PutHomeComponent putHomeComponent = gamePlayTowerDefenseComponent.GetComponent<PutHomeComponent>();
+            Unit homeUnit = putHomeComponent.GetHomeUnit(homeTeamFlagType);
+            if (homeUnit == null)
+            {
+                Log.Warning($"HomeUnit is null");
+                return;
+            }
+            self.isNavmeshFromHomeInitialized = true;
+            NavMeshRendererComponent.Instance.ShowNavMeshFromPos(homeUnit.Position);
         }
 
         public static bool ChkIsHitMap(this GamePlayTowerDefenseComponent self, RaycastHit hit)
         {
+            bool isHitTower = ModelClickManagerHelper.ChkIsHitTowerClickInfo(self.DomainScene(), hit);
+            if (isHitTower)
+            {
+                return false;
+            }
+
             GameObject hitGo = hit.collider.gameObject;
             bool isHitMap = false;
             if (PathLineRendererComponent.Instance.ChkIsHitPath(hitGo))
@@ -115,6 +127,13 @@ namespace ET.Client
                 {
                     self.DoHitTower(hit);
                 }
+
+                bool isHitHome = ET.Client.ModelClickManagerHelper.ChkIsHitHomeClickInfo(self.DomainScene(), hit);
+                if (isHitHome)
+                {
+                    self.DoHitHome(hit);
+                }
+
             }
 
         }
@@ -194,6 +213,16 @@ namespace ET.Client
             }
         }
 
+        public static void DoHitHome(this GamePlayTowerDefenseComponent self, RaycastHit hit)
+        {
+            Log.Debug($" hit.collider.name[{hit.collider.name}]");
+            HomeShowComponent curHomeShowComponent = ET.Client.ModelClickManagerHelper.GetHomeInfoFromClickInfo(self.DomainScene(), hit);
+            if (curHomeShowComponent != null)
+            {
+                curHomeShowComponent.DoSelect().Coroutine();
+            }
+        }
+
         public static void DoPressHitTower(this GamePlayTowerDefenseComponent self, RaycastHit hit)
         {
             PlayerOwnerTowersComponent playerOwnerTowersComponent = self.GetComponent<PlayerOwnerTowersComponent>();
@@ -231,13 +260,18 @@ namespace ET.Client
 
         public static async ETTask DoMoveTower(this GamePlayTowerDefenseComponent self, string towerCfgId, long towerUnitId)
         {
-            AudioPlayHelper.PlayVibrate();
+            AudioPlayHelper.PlayVibrate(MoreMountains.NiceVibrations.HapticTypes.Warning);
 
             Unit unitTower = Ability.UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
             GameObjectShowComponent gameObjectShowComponent = unitTower.GetComponent<GameObjectShowComponent>();
             if (gameObjectShowComponent != null)
             {
                 gameObjectShowComponent.ChgColor(true);
+            }
+            TowerShowComponent towerShowComponent = unitTower.GetComponent<TowerShowComponent>();
+            if (towerShowComponent != null)
+            {
+                towerShowComponent.ShowOrHide(false);
             }
             DlgBattleDragItem_ShowWindowData showWindowData = new()
             {
@@ -263,6 +297,10 @@ namespace ET.Client
             if (gameObjectShowComponent != null)
             {
                 gameObjectShowComponent.ChgColor(false);
+            }
+            if (towerShowComponent != null)
+            {
+                towerShowComponent.ShowOrHide(true);
             }
         }
 
@@ -348,7 +386,7 @@ namespace ET.Client
         }
 
         public static async ETTask<bool> DoDrawMonsterCall2HeadQuarterByPos(this GamePlayTowerDefenseComponent self, TeamFlagType homeTeamFlagType,
-        long monsterCallUnitId, float3 pos)
+            long monsterCallUnitId, float3 pos)
         {
             (float3 homePos, List<float3> points) =
                     await GamePlayTowerDefenseHelper.SendGetMonsterCall2HeadQuarterPath(self.ClientScene(), homeTeamFlagType, pos);
@@ -360,7 +398,7 @@ namespace ET.Client
         }
 
         public static async ETTask<bool> TryMoveUnitAndDrawAllMonsterCall2HeadQuarterPaths(this GamePlayTowerDefenseComponent self, long unitId,
-        string unitCfgId, float3 pos)
+            string unitCfgId, float3 pos)
         {
             M2C_TryMoveUnitAndGetAllMonsterCall2HeadQuarterPath result =
                     await GamePlayTowerDefenseHelper.SendTryMoveUnitAndGetAllMonsterCall2HeadQuarterPath(self.ClientScene(), unitId, unitCfgId, pos);
@@ -639,6 +677,52 @@ namespace ET.Client
             self.lastSendTimeTowerDefense = TimeHelper.ClientNow() + 1000;
 
             GamePlayHelper.SendNeedReNoticeTowerDefense(self.DomainScene()).Coroutine();
+        }
+
+        public static void PlayBattleMusic(this GamePlayTowerDefenseComponent self)
+        {
+            MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
+
+            bool bRet = monsterWaveCallComponent.GetRealWaveInfo(out int waveIndex, out int circleWaveIndex, out int circleNum, out int circleIndex,
+                out float monsterWaveNumScalePercent, out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
+            if (bRet == false)
+            {
+            }
+
+            if (waveIndex == 0)
+            {
+                waveIndex = 1;
+            }
+
+            ET.AbilityConfig.TowerDefense_MonsterWaveCallRuleCfg monsterWaveCallCfg =
+                    ET.AbilityConfig.TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.Get(monsterWaveCallComponent.monsterWaveRule, waveIndex);
+
+            Dictionary<string, float> audioList = monsterWaveCallCfg.BattleMusicList;
+            UIAudioManagerComponent _UIAudioManagerComponent = UIAudioManagerHelper.GetUIAudioManagerComponent(self.DomainScene());
+            _UIAudioManagerComponent.PlayMusic(audioList);
+        }
+
+        public static void PlayRestTimeMusic(this GamePlayTowerDefenseComponent self)
+        {
+            MonsterWaveCallComponent monsterWaveCallComponent = self.GetComponent<MonsterWaveCallComponent>();
+
+            bool bRet = monsterWaveCallComponent.GetRealWaveInfo(out int waveIndex, out int circleWaveIndex, out int circleNum, out int circleIndex,
+                out float monsterWaveNumScalePercent, out float monsterWaveLevelScalePercent, out float waveRewardGoldScalePercent);
+            if (bRet == false)
+            {
+            }
+
+            if (waveIndex == 0)
+            {
+                waveIndex = 1;
+            }
+
+            ET.AbilityConfig.TowerDefense_MonsterWaveCallRuleCfg monsterWaveCallCfg =
+                    ET.AbilityConfig.TowerDefense_MonsterWaveCallRuleCfgCategory.Instance.Get(monsterWaveCallComponent.monsterWaveRule, waveIndex);
+
+            Dictionary<string, float> audioList = monsterWaveCallCfg.RestMusicList;
+            UIAudioManagerComponent _UIAudioManagerComponent = UIAudioManagerHelper.GetUIAudioManagerComponent(self.DomainScene());
+            _UIAudioManagerComponent.PlayMusic(audioList);
         }
     }
 }

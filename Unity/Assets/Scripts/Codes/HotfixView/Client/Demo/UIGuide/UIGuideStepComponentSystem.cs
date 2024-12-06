@@ -105,7 +105,7 @@ namespace ET.Client
                 {
                     return;
                 }
-                if (self.lastPos3D.Equals(self.guidePathGo.transform.position) == false)
+                if (self.ChkIsNear(self.lastPos3D, self.guidePathGo.transform.position) == false)
                 {
                     //如果当前节点
                     await self._DoGuideStep(true);
@@ -134,7 +134,7 @@ namespace ET.Client
                 }
 
                 Vector2 canvasSize = self.canvasPathGo.GetComponent<RectTransform>().sizeDelta;
-                if (self.lastCanvasSize.Equals(canvasSize) == false)
+                if (self.ChkIsNear(self.lastCanvasSize, canvasSize) == false)
                 {
                     //如果当前节点
                     await self._DoGuideStep(true);
@@ -320,7 +320,7 @@ namespace ET.Client
                         self.lastGuideRectSize = size;
                         isNeedRefind = true;
                     }
-                    else if (self.lastGuideRectSize.Equals(size) == false)
+                    else if (self.ChkIsNear(self.lastGuideRectSize, size) == false)
                     {
                         self.lastGuideRectSize = size;
                         isNeedRefind = true;
@@ -333,7 +333,7 @@ namespace ET.Client
                         self.lastGuideRectPos = curPosition;
                         isNeedRefind = true;
                     }
-                    else if (self.lastGuideRectPos.Equals(curPosition) == false)
+                    else if (self.ChkIsNear(self.lastGuideRectPos, curPosition) == false)
                     {
                         self.lastGuideRectPos = curPosition;
                         isNeedRefind = true;
@@ -345,7 +345,7 @@ namespace ET.Client
                         self.lastGuideRectlossyScale = lossyScale;
                         isNeedRefind = true;
                     }
-                    else if (self.lastGuideRectlossyScale.Equals(lossyScale) == false)
+                    else if (self.ChkIsNear(self.lastGuideRectlossyScale, lossyScale) == false)
                     {
                         self.lastGuideRectlossyScale = lossyScale;
                         isNeedRefind = true;
@@ -380,6 +380,24 @@ namespace ET.Client
             await self.ShowUIMask(self.guidePathGo.transform as RectTransform, self.canvasPathGo.GetComponent<Canvas>());
 
             self.isGuiding = true;
+        }
+
+        public static bool ChkIsNear(this UIGuideStepComponent self, Vector3 pos1, Vector3 pos2)
+        {
+            if (math.abs(pos1.x - pos2.x) > 0.5f)
+            {
+                return false;
+            }
+            if (math.abs(pos1.y - pos2.y) > 0.5f)
+            {
+                return false;
+            }
+            if (math.abs(pos1.z - pos2.z) > 0.5f)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static async ETTask<Vector2> ShowUIMask(this UIGuideStepComponent self, RectTransform mask, Canvas canvas)

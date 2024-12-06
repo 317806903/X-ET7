@@ -35,10 +35,14 @@ namespace ET
             dotnet = "dotnet";
 #endif
             
-            if (GUILayout.Button("Start Server(Single Process)"))
+            if (GUILayout.Button("Build Server"))
+            {
+                ProcessHelper.Run(dotnet, "build DotNet.sln", "../DotNet");
+            }
+            if (GUILayout.Button("Start Server - require admin (Single Process)"))
             {
                 string arguments = $"App.dll --Process=1 --StartConfig=StartConfig/{this.startConfig} --Console=1";
-                ProcessHelper.Run(dotnet, arguments, "../Bin/");
+                ProcessHelper.Run(dotnet, arguments, "../Bin/", false, true);
             }
             
             if (GUILayout.Button("Start Watcher"))

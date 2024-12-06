@@ -16,6 +16,11 @@ namespace ET.Server
 			return ET.GamePlayHelper.GetGamePlayTowerDefense(scene);
 		}
 
+		public static GamePlayPkComponent GetGamePlayPK(Scene scene)
+		{
+			return ET.GamePlayHelper.GetGamePlayPk(scene);
+		}
+
 		public static async ETTask LoadCameraPlayerSkillList(long playerId, Unit cameraPlayerUnit)
 		{
 			List<ItemComponent> itemList = await ET.Server.PlayerCacheHelper.GetBattleSkillItemListByPlayerId(cameraPlayerUnit.DomainScene(), playerId, true);

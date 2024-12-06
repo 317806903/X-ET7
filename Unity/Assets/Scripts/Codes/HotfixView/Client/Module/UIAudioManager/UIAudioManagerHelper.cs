@@ -14,6 +14,7 @@ namespace ET.Client
         Reward,
         Scan,
         ReadyGo,
+        NextWave,
         Upgradation,
         Reclaim,
         Buy,
@@ -23,19 +24,18 @@ namespace ET.Client
         Forbidden,
         BattleForbidden,
         TowerPush,
-        GameEndFinish,
-        GameEndWin,
-        GameEndFail
     }
 
     public enum MusicType
     {
         Login,
         Main,
-        Game,
         None,
         ARStart,
         ARScan,
+        GameEndFinish,
+        GameEndWin,
+        GameEndFail
     }
 
     [FriendOf(typeof (Unit))]
@@ -94,6 +94,9 @@ namespace ET.Client
                 case SoundEffectType.ReadyGo:
                     resAudioCfgId = "ResAudio_UI_ready_go";
                     break;
+                case SoundEffectType.NextWave:
+                    resAudioCfgId = "ResAudio_UI_NextWave";
+                    break;
                 case SoundEffectType.Upgradation:
                     resAudioCfgId = "ResAudio_UI_Upgradation";
                     break;
@@ -121,15 +124,6 @@ namespace ET.Client
                 case SoundEffectType.TowerPush:
                     resAudioCfgId = "ResAudio_TowerPush";
                     break;
-                case SoundEffectType.GameEndFinish:
-                    resAudioCfgId = "ResAudio_Music_Finish";
-                    break;
-                case SoundEffectType.GameEndWin:
-                    resAudioCfgId = "ResAudio_Music_Win";
-                    break;
-                case SoundEffectType.GameEndFail:
-                    resAudioCfgId = "ResAudio_Music_Fail";
-                    break;
                 default:
                     break;
             }
@@ -144,44 +138,56 @@ namespace ET.Client
 
         public static void PlayMusic(Scene scene, MusicType musicType)
         {
-            List<string> resAudioCfgIds = null;
+            Dictionary<string, float> audioList = null;
             switch (musicType)
             {
                 case MusicType.Login:
-                    resAudioCfgIds = new List<string>(){"ResAudio_Music_login"};
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_login", 1);
                     break;
                 case MusicType.Main:
-                    resAudioCfgIds = new List<string>(){"ResAudio_Music_main"};
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_main", 1);
                     break;
                 case MusicType.ARStart:
-                    resAudioCfgIds = new List<string>(){"ResAudio_Music_ARStarted"};
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_ARStarted", 1);
                     break;
                 case MusicType.ARScan:
                     Log.Error($"PlayMusic cannot MusicType.ARScan ");
                     return;
                     break;
-                case MusicType.Game:
-                    GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
-                    resAudioCfgIds = gamePlayComponent.GetGamePlayBattleConfig().MusicList;
+                case MusicType.GameEndFinish:
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_Finish", 1);
+                    break;
+                case MusicType.GameEndWin:
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_Win", 1);
+                    break;
+                case MusicType.GameEndFail:
+                    audioList = new ();
+                    audioList.Add("ResAudio_Music_Fail", 1);
                     break;
                 default:
                     break;
             }
 
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
-            _UIAudioManagerComponent.PlayMusic(resAudioCfgIds);
+            _UIAudioManagerComponent.PlayMusic(audioList);
         }
 
-        public static void PlayHighestMusic(Scene scene, MusicType musicType)
+        public static void PlayHighestMusic(Scene scene, MusicType musicType, bool isLoop = true)
         {
-            List<string> resAudioCfgIds = null;
+            Dictionary<string, float> audioList = null;
             switch (musicType)
             {
                 case MusicType.None:
-                    resAudioCfgIds = null;
+                    audioList = new ();
                     break;
                 case MusicType.ARScan:
-                    resAudioCfgIds = new List<string>(){"ResAudio_UI_Scan"};
+                    audioList = new ();
+                    audioList.Add("ResAudio_UI_Scan", 1);
                     break;
                 default:
                     Log.Error($"PlayHighestMusic cannot other ");
@@ -189,7 +195,7 @@ namespace ET.Client
             }
 
             UIAudioManagerComponent _UIAudioManagerComponent = GetUIAudioManagerComponent(scene);
-            _UIAudioManagerComponent.PlayHighestMusic(resAudioCfgIds);
+            _UIAudioManagerComponent.PlayHighestMusic(audioList, isLoop);
         }
 
         public static void ResetMusicStatus(Scene scene)

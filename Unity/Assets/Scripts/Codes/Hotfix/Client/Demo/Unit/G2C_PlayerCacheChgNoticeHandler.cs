@@ -28,8 +28,13 @@ namespace ET.Client
 					break;
 				case PlayerModelType.BackPack:
 					isNeedClearPlayerModel = true;
+					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, PlayerModelType.BattleCard);
+					ET.Client.PlayerCacheHelper.ClearPlayerModel(clientScene, myPlayerId, PlayerModelType.BattleSkill);
 					break;
 				case PlayerModelType.BattleCard:
+					isNeedClearPlayerModel = true;
+					break;
+				case PlayerModelType.BattleSkill:
 					isNeedClearPlayerModel = true;
 					break;
 				case PlayerModelType.FunctionMenu:

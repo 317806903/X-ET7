@@ -15,12 +15,15 @@ namespace ET.Client
             self.View.E_SelectButton.AddListenerAsync(self.Select);
             self.View.E_UnlockedButton.AddListenerAsync(self.Unlocked);
 
-#if UNITY_EDITOR
-            self.View.E_DebugButton.SetVisible(true);
-            self.View.E_DebugButton.AddListenerAsync(self.SetCurPveIndexWhenDebug);
-#else
-			self.View.E_DebugButton.SetVisible(false);
-#endif
+            if (Application.isMobilePlatform == false)
+            {
+                self.View.E_DebugButton.SetVisible(true);
+                self.View.E_DebugButton.AddListenerAsync(self.SetCurPveIndexWhenDebug);
+            }
+            else
+            {
+                self.View.E_DebugButton.SetVisible(false);
+            }
 
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.prefabName = "Item_ChallengeList";
             self.View.ELoopScrollList_ChallengeLoopHorizontalScrollRect.prefabSource.poolSize = 7;

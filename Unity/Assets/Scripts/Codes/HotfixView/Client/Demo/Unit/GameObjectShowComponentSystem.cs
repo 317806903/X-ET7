@@ -220,29 +220,13 @@ namespace ET.Client
 
         public static void ChgColor(this GameObjectShowComponent self, bool isMoving)
         {
-            // TransparentSetter[] tss = self.gameObject.GetComponentsInChildren<TransparentSetter>();
-            // if (isMoving)
-            // {
-            //     foreach (var ts in tss)
-            //     {
-            //         ts.SetTransparent(true, 0.6f);
-            //     }
-            // }
-            // else
-            // {
-            //     foreach (var ts in tss)
-            //     {
-            //         ts.SetTransparent(false, 1f);
-            //     }
-            // }
-
             if (isMoving)
             {
-                self.AddComponent<GameObjectTransparentComponent>();
+                self.DealPrefabEffect_Transparent(true);
             }
             else
             {
-                self.RemoveComponent<GameObjectTransparentComponent>();
+                self.DealPrefabEffect_Transparent(false);
             }
         }
 
@@ -326,11 +310,11 @@ namespace ET.Client
                     {
                         float donePercentageMove = 0.1f;
 
-                        if (PingComponent.Instance.Ping > 200)
+                        if (PingComponent.Instance != null && PingComponent.Instance.Ping > 200)
                         {
                             donePercentageMove *= 100f / (int)(PingComponent.Instance.Ping);
                         }
-                        else if (PingComponent.Instance.Ping > 100)
+                        else if (PingComponent.Instance != null && PingComponent.Instance.Ping > 100)
                         {
                             donePercentageMove *= 100f / (int)(PingComponent.Instance.Ping);
                         }
@@ -515,9 +499,14 @@ namespace ET.Client
 
         public static async ETTask DealPrefabEffect(this GameObjectShowComponent self)
         {
+            GameObjectComponent gameObjectComponent = self.refGameObjectComponent;
+            if (gameObjectComponent == null)
+            {
+                return;
+            }
             await self.DealPrefabEffect_Hide();
             await self.DealPrefabEffect_Flicker();
-            await self.DealPrefabEffect_Transparent();
+            self.DealPrefabEffect_Transparent(gameObjectComponent.isTransparent);
         }
 
         public static async ETTask DealPrefabEffect_Hide(this GameObjectShowComponent self)
@@ -553,31 +542,29 @@ namespace ET.Client
             }
             if (gameObjectComponent.flickerEndTime > TimeHelper.ServerNow())
             {
+                Color startColor = new Color(gameObjectComponent.flickerStartColor.R, gameObjectComponent.flickerStartColor.G, gameObjectComponent.flickerStartColor.B, gameObjectComponent.flickerStartColor.A);
+                Color endColor = new Color(gameObjectComponent.flickerEndColor.R, gameObjectComponent.flickerEndColor.G, gameObjectComponent.flickerEndColor.B, gameObjectComponent.flickerEndColor.A);
                 if (self.GetComponent<GameObjectFlickerComponent>() == null)
                 {
                     self.AddComponent<GameObjectFlickerComponent>();
                 }
-                self.GetComponent<GameObjectFlickerComponent>().ResetTime(gameObjectComponent.flickerEndTime);
+                self.GetComponent<GameObjectFlickerComponent>().ResetTime(gameObjectComponent.flickerEndTime, gameObjectComponent.flickerFrequency, startColor, endColor);
             }
         }
 
-        public static async ETTask DealPrefabEffect_Transparent(this GameObjectShowComponent self)
+        public static void DealPrefabEffect_Transparent(this GameObjectShowComponent self, bool isTransparent)
         {
-            GameObjectComponent gameObjectComponent = self.refGameObjectComponent;
-            if (gameObjectComponent == null)
+            GameObjectTransparentComponent gameObjectTransparentComponent = self.GetComponent<GameObjectTransparentComponent>();
+            if (isTransparent)
             {
-                return;
-            }
-            if (gameObjectComponent.isTransparent)
-            {
-                if (self.GetComponent<GameObjectTransparentComponent>() == null)
+                if (gameObjectTransparentComponent == null)
                 {
-                    self.AddComponent<GameObjectTransparentComponent>();
+                    gameObjectTransparentComponent = self.AddComponent<GameObjectTransparentComponent>();
                 }
             }
             else
             {
-                if (self.GetComponent<GameObjectTransparentComponent>() != null)
+                if (gameObjectTransparentComponent != null)
                 {
                     self.RemoveComponent<GameObjectTransparentComponent>();
                 }
@@ -586,13 +573,31 @@ namespace ET.Client
 
         public static async ETTask FlickerWhenBeHit(this GameObjectShowComponent self)
         {
-            long flickerEndTime = TimeHelper.ServerNow() + 200;
-
-            if (self.GetComponent<GameObjectFlickerComponent>() == null)
+            ActionCfg_GameObjectDeal actionCfgGameObjectDeal = ActionCfg_GameObjectDealCategory.Instance.Get("GameObjectDeal_FlickerWhenBeHit");
+            if (actionCfgGameObjectDeal == null)
             {
-                self.AddComponent<GameObjectFlickerComponent>();
+                return;
             }
-            self.GetComponent<GameObjectFlickerComponent>().ResetTime(flickerEndTime);
+
+            foreach (GameObjectDeal gameObjectDeal in actionCfgGameObjectDeal.DealType)
+            {
+                if (gameObjectDeal is GameObjectFlicker gameObjectFlicker)
+                {
+                    if (gameObjectFlicker.FlickerDuration <= 0)
+                    {
+                        continue;
+                    }
+                    long flickerEndTime = TimeHelper.ServerNow() + (long)(gameObjectFlicker.FlickerDuration * 1000);
+                    float flickerFrequency = gameObjectFlicker.FlickerFrequency;
+                    Color startColor = new Color(gameObjectFlicker.StartColor.R, gameObjectFlicker.StartColor.G, gameObjectFlicker.StartColor.B, gameObjectFlicker.StartColor.A);
+                    Color endColor = new Color(gameObjectFlicker.EndColor.R, gameObjectFlicker.EndColor.G, gameObjectFlicker.EndColor.B, gameObjectFlicker.EndColor.A);
+                    if (self.GetComponent<GameObjectFlickerComponent>() == null)
+                    {
+                        self.AddComponent<GameObjectFlickerComponent>();
+                    }
+                    self.GetComponent<GameObjectFlickerComponent>().ResetTime(flickerEndTime, flickerFrequency, startColor, endColor);
+                }
+            }
         }
 
     }

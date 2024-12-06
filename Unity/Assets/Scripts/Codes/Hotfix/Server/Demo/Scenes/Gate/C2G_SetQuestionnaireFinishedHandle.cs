@@ -24,6 +24,11 @@ namespace ET.Server
                 playerOtherInfoComponent.SetUIRedDotType(UIRedDotType.Questionnaire, false);
                 await ET.Server.PlayerCacheHelper.SavePlayerModel(scene, playerId, PlayerModelType.OtherInfo, new(){"questionnaireStatus", "uiRedDotTypeDic"}, PlayerModelChgType.PlayerOtherInfo_RewardQuestionnaire);
             }
+
+            {
+                PlayerCacheHelper.ClearPlayerModel(scene, playerId, PlayerModelType.Mails);
+            }
+
             {
                 QuestionnaireCfg questionnaireCfg = QuestionnaireCfgCategory.Instance.Get(questionnaireCfgId);
 

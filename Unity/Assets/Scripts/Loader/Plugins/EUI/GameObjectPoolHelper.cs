@@ -142,6 +142,9 @@ namespace ET.Client
                 {
                     if (particleSystem != null)
                     {
+                        // particleSystem.Stop();
+                        // particleSystem.Clear(true);
+                        particleSystem.time = 0;
                         particleSystem.Play();
                     }
                 }

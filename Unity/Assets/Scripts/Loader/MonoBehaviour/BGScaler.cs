@@ -40,6 +40,17 @@ namespace ET
             float width = canvasSize.x;
             float height = canvasSize.y;
 
+            if (gameObject.GetComponent<Image>() != null && gameObject.GetComponent<Image>().mainTexture != null)
+            {
+                this.designWidthOrg = gameObject.GetComponent<Image>().mainTexture.width;
+                this.designHeightOrg = gameObject.GetComponent<Image>().mainTexture.height;
+            }
+            else if (gameObject.GetComponent<RawImage>() != null && gameObject.GetComponent<RawImage>().mainTexture != null)
+            {
+                this.designWidthOrg = gameObject.GetComponent<RawImage>().mainTexture.width;
+                this.designHeightOrg = gameObject.GetComponent<RawImage>().mainTexture.height;
+            }
+
             float designWidth = this.designWidthOrg;
             float designHeight = this.designHeightOrg;
             float s1 = (float)designWidth / designHeight;

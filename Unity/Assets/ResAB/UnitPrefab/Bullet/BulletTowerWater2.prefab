@@ -77,12 +77,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
         type: 3}
+      propertyPath: SubModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
+        type: 3}
       propertyPath: moveWithTransform
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
         type: 3}
       propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
+        type: 3}
+      propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5945548896054978166, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
@@ -288,6 +303,11 @@ PrefabInstance:
     - target: {fileID: 8127945698704780524, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
         type: 3}
       propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8127945698704780524, guid: 9b64fbd5eddca3e4a8c156a83d698d59,
+        type: 3}
+      propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8127945698704780524, guid: 9b64fbd5eddca3e4a8c156a83d698d59,

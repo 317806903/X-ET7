@@ -55,6 +55,11 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3837581217250107949, guid: 8fb40da3d9cfd2d4f8afc14752e011fb,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5053837399496999169, guid: 8fb40da3d9cfd2d4f8afc14752e011fb,
         type: 3}
       propertyPath: lengthInSec
@@ -74,6 +79,11 @@ PrefabInstance:
         type: 3}
       propertyPath: LightsModule.light
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256102919061256884, guid: 8fb40da3d9cfd2d4f8afc14752e011fb,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5256102919061256884, guid: 8fb40da3d9cfd2d4f8afc14752e011fb,
         type: 3}

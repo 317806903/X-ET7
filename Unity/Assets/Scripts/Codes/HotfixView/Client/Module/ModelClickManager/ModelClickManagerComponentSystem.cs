@@ -255,6 +255,58 @@ namespace ET.Client
             return self._GetTowerInfoFromClickInfo(referenceSimpleData);
         }
 
+        public static void SetHomeInfoToClickInfo(this ModelClickManagerComponent self, Transform colliderTrans, HomeShowComponent homeShowComponent)
+        {
+            Collider collider = colliderTrans.gameObject.GetComponent<Collider>();
+            if (collider == null)
+            {
+                Log.Error($"SetHomeInfoToClickInfo collider == null");
+                return;
+            }
+            ReferenceSimpleData referenceSimpleData = colliderTrans.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                referenceSimpleData = colliderTrans.gameObject.AddComponent<ReferenceSimpleData>();
+            }
+            var dict = referenceSimpleData.dict;
+            dict.Clear();
+            dict.Add(ClickDataField.DataType.ToString(), ClickDataType.Home.ToString());
+            dict.Add(ClickDataField.UnitId.ToString(), homeShowComponent.GetUnit().Id.ToString());
+            dict.Add(ClickDataField.UnitCfgId.ToString(), homeShowComponent.GetUnit().CfgId.ToString());
+        }
+
+        public static bool ChkIsHitHomeClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return false;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return false;
+            }
+
+            if (value != ClickDataType.Home.ToString())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static HomeShowComponent GetHomeInfoFromClickInfo(this ModelClickManagerComponent self, RaycastHit raycastHit)
+        {
+            ReferenceSimpleData referenceSimpleData = raycastHit.collider.gameObject.GetComponent<ReferenceSimpleData>();
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+
+            return self._GetHomeInfoFromClickInfo(referenceSimpleData);
+        }
+
         public static void SetPlayerUnitInfoToClickInfo(this ModelClickManagerComponent self, Transform colliderTrans, PlayerUnitShowComponent playerUnitShowComponent)
         {
             Collider collider = colliderTrans.gameObject.GetComponent<Collider>();
@@ -359,6 +411,37 @@ namespace ET.Client
             }
             TowerShowComponent towerShowComponent = unit.GetComponent<TowerShowComponent>();
             return towerShowComponent;
+        }
+
+        public static HomeShowComponent _GetHomeInfoFromClickInfo(this ModelClickManagerComponent self, ReferenceSimpleData referenceSimpleData)
+        {
+            if (referenceSimpleData == null)
+            {
+                return null;
+            }
+            var dict = referenceSimpleData.dict;
+            if (dict.TryGetValue(ClickDataField.DataType.ToString(), out string value) == false)
+            {
+                return null;
+            }
+
+            if (value != ClickDataType.Home.ToString())
+            {
+                return null;
+            }
+            if (dict.TryGetValue(ClickDataField.UnitId.ToString(), out string unitIdValue) == false)
+            {
+                return null;
+            }
+
+            long unitId = long.Parse(unitIdValue);
+            Unit unit = Ability.UnitHelper.GetUnit(self.DomainScene(), unitId);
+            if (unit == null)
+            {
+                return null;
+            }
+            HomeShowComponent homeShowComponent = unit.GetComponent<HomeShowComponent>();
+            return homeShowComponent;
         }
 
         public static PlayerUnitShowComponent _GetPlayerUnitInfoFromClickInfo(this ModelClickManagerComponent self, ReferenceSimpleData referenceSimpleData)

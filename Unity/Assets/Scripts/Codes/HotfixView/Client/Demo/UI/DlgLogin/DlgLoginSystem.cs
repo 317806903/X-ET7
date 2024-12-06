@@ -172,6 +172,9 @@ namespace ET.Client
                 Debug.Log("--[[ PrintSystemInfo Application.isMobilePlatform");
             }
             //----------------------------------
+
+            Debug.Log($"--[[ PrintSystemInfo SystemInfo.supportsInstancing[{SystemInfo.supportsInstancing}]");
+            Debug.Log($"--[[ PrintSystemInfo Screen.dpi[{Screen.dpi}]");
         }
 
         public static void SetGameInfo(this DlgLogin self)
@@ -329,6 +332,12 @@ namespace ET.Client
             {
                 accountId = SystemInfo.deviceUniqueIdentifier;
             }
+#if UNITY_IOS
+            if (string.IsNullOrEmpty(accountId))
+            {
+                accountId = UnityEngine.iOS.Device.advertisingIdentifier;
+            }
+#endif
             if (string.IsNullOrEmpty(accountId))
             {
                 accountId = IdGenerater.Instance.GenerateId().ToString();
@@ -422,6 +431,12 @@ namespace ET.Client
             {
                 accountId = SystemInfo.deviceUniqueIdentifier;
             }
+#if UNITY_IOS
+            if (string.IsNullOrEmpty(accountId))
+            {
+                accountId = UnityEngine.iOS.Device.advertisingIdentifier;
+            }
+#endif
             if (string.IsNullOrEmpty(accountId))
             {
                 accountId = IdGenerater.Instance.GenerateId().ToString();

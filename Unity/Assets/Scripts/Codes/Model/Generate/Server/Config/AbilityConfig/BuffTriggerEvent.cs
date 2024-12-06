@@ -43,81 +43,105 @@ namespace ET.AbilityConfig
         /// </summary>
         BuffOnTick3 = 7,
         /// <summary>
+        /// 监听 buff在开始或者每个工作周期会执行的函数
+        /// </summary>
+        BuffOnStartOrTick1 = 8,
+        /// <summary>
+        /// 监听 buff在开始或者每个工作周期会执行的函数
+        /// </summary>
+        BuffOnStartOrTick2 = 9,
+        /// <summary>
+        /// 监听 buff在开始或者每个工作周期会执行的函数
+        /// </summary>
+        BuffOnStartOrTick3 = 10,
+        /// <summary>
         /// 监听 在这个buffObj被移除之前要做的事情，如果运行之后buffObj又不足以被删除了就会被保留
         /// </summary>
-        BuffOnRemoved = 8,
+        BuffOnRemoved = 11,
         /// <summary>
         /// 监听 在这个buffObj被移除之后要做的事情
         /// </summary>
-        BuffOnDestroy = 9,
+        BuffOnDestroy = 12,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageBeforeOnHit = 10,
+        DamageBeforeOnHit = 13,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageBeforeOnBeHurt = 11,
+        DamageBeforeOnBeHurt = 14,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageAfterOnHit = 12,
+        DamageAfterOnHit = 15,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageAfterOnBeHurt = 13,
+        DamageAfterOnBeHurt = 16,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，如果击杀目标，则会触发的啥事情
         /// </summary>
-        DamageBeforeOnKill = 14,
+        DamageBeforeOnKill = 17,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
-        DamageBeforeOnBeKilled = 15,
+        DamageBeforeOnBeKilled = 18,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发，如果击杀目标，则会触发的啥事情
         /// </summary>
-        DamageAfterOnKill = 16,
+        DamageAfterOnKill = 19,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
-        DamageAfterOnBeKilled = 17,
+        DamageAfterOnBeKilled = 20,
         /// <summary>
         /// 监听 unit切换保持的选择目标
         /// </summary>
-        UnitChgSaveSelectObj = 18,
+        UnitChgSaveSelectObj = 21,
         /// <summary>
         /// 监听 unit被创建的事件
         /// </summary>
-        UnitOnCreate = 19,
+        UnitOnCreate = 22,
         /// <summary>
         /// 监听 子弹碰到Mesh的事件
         /// </summary>
-        BulletOnHitMesh = 20,
+        BulletOnHitMesh = 23,
         /// <summary>
         /// 监听 unit攻击到Mesh
         /// </summary>
-        UnitOnHitMesh = 21,
+        UnitOnHitMesh = 24,
         /// <summary>
         /// 监听 子弹碰到特定位置的事件
         /// </summary>
-        BulletOnHitPos = 22,
+        BulletOnHitPos = 25,
         /// <summary>
         /// 监听 unit攻击到特定位置
         /// </summary>
-        UnitOnHitPos = 23,
+        UnitOnHitPos = 26,
         /// <summary>
         /// 监听 unit产生攻击的事件
         /// </summary>
-        UnitOnHit = 24,
+        UnitOnHit = 27,
         /// <summary>
         /// 监听 unit被攻击的事件
         /// </summary>
-        UnitOnBeHurt = 25,
+        UnitOnBeHurt = 28,
         /// <summary>
         /// 监听 unit销毁的事件
         /// </summary>
-        UnitOnRemoved = 26,
+        UnitOnRemoved = 29,
+        /// <summary>
+        /// 监听 召唤Bullet
+        /// </summary>
+        CallBullet = 30,
+        /// <summary>
+        /// 监听 召唤Aoe
+        /// </summary>
+        CallAoe = 31,
+        /// <summary>
+        /// 监听 召唤Actor
+        /// </summary>
+        CallActor = 32,
     }
 
 } 

@@ -124,11 +124,18 @@ namespace ET
 			}
 			//Log.Debug($"....22 logicTimer={logicTimer}");
 			lastChkTimer = TimeHelper.ClientFrameTime();
+
 			while (logicTimer >= TimeHelper.FixedDetalTimeLong)
 			{
 				logicTimer -= TimeHelper.FixedDetalTimeLong;
 
 				this.DoFixedUpdate();
+#if UNITY_EDITOR
+				if (logicTimer - TimeHelper.FixedDetalTimeLong > 10000)
+				{
+					logicTimer = 0;
+				}
+#endif
 			}
 		}
 

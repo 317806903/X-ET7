@@ -16,10 +16,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitEffects self)
             {
-                self.unitId = new();
-                self.isAddOrRemove = new();
-                self.unitEffectObjIds = new();
-                self.unitEffectComponents = new();
             }
         }
 

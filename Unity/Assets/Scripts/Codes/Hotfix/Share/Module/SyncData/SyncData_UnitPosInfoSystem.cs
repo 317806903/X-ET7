@@ -13,14 +13,6 @@ namespace ET
         {
             protected override void Awake(SyncData_UnitPosInfo self)
             {
-                self.unitId = new();
-                self.posX = new();
-                self.posY = new();
-                self.posZ = new();
-                self.rotationX = new();
-                self.rotationY = new();
-                self.rotationZ = new();
-                self.rotationW = new();
             }
         }
 
@@ -68,7 +60,7 @@ namespace ET
             }
         }
 
-        public static async ETTask DealByBytes(this SyncData_UnitPosInfo self, UnitComponent unitComponent)
+        public static void DealByBytes(this SyncData_UnitPosInfo self, UnitComponent unitComponent)
         {
             int count = self.unitId.Count;
             for (int i = 0; i < count; i++)
@@ -105,7 +97,6 @@ namespace ET
                 unit.SetPositionWhenClient(self.GetPos(i));
                 unit.SetRotationWhenClient(self.GetRotation(i));
             }
-            await ETTask.CompletedTask;
         }
 
         public static float3 GetPos(this SyncData_UnitPosInfo self, int i)

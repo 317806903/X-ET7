@@ -26,7 +26,6 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					BulletObj bulletObj = unit.GetComponent<BulletObj>();
 					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHit, args.attackerUnit, args.defenderUnit, ref actionContext);
 				}
 				if (UnitHelper.ChkUnitAlive(args.defenderUnit) && UnitHelper.ChkIsBullet(args.defenderUnit))
@@ -47,7 +46,6 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					BulletObj bulletObj = unit.GetComponent<BulletObj>();
 					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitMesh, args.attackerUnit, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;
@@ -63,7 +61,6 @@
 				if (UnitHelper.ChkUnitAlive(args.attackerUnit) && UnitHelper.ChkIsBullet(args.attackerUnit))
 				{
 					Unit unit = args.attackerUnit;
-					BulletObj bulletObj = unit.GetComponent<BulletObj>();
 					EventHandlerHelper.Run_Bullet(unit, AbilityConfig.BulletTriggerEvent.BulletOnHitPos, args.attackerUnit, null, ref actionContext);
 				}
 				await ETTask.CompletedTask;

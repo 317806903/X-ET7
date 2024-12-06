@@ -50,12 +50,34 @@ namespace ET.Client
             self.View.E_CancelTextTextMeshProUGUI.text = msg;
         }
 
+        public static void SetDetailText(this DlgCommonConfirmHighest self, string detailText)
+        {
+            self.View.E_TextSimpleTextMeshProUGUI.SetVisible(true);
+            self.View.E_TextSimpleTextMeshProUGUI.text = detailText;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(self.View.E_TextSimpleTextMeshProUGUI.rectTransform);
+            float sizeRootY = self.View.EGDetailRootRectTransform.sizeDelta.y;
+            float sizeTextY = self.View.E_TextSimpleTextMeshProUGUI.preferredHeight;
+            if (sizeRootY < sizeTextY)
+            {
+                self.View.E_TextSimpleTextMeshProUGUI.SetVisible(false);
+                self.View.EGDetailScrollRectTransform.SetVisible(true);
+                self.View.E_TextTextMeshProUGUI.text = detailText;
+            }
+            else
+            {
+                self.View.E_TextSimpleTextMeshProUGUI.SetVisible(true);
+                self.View.EGDetailScrollRectTransform.SetVisible(false);
+            }
+        }
+
         public static void ShowConfirmNoClose(this DlgCommonConfirmHighest self, string confirmMsg, string sureText = null, string titleText = null)
         {
             self.SetDefaultText();
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(false);
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+
+            self.SetDetailText(confirmMsg);
+
 
             if (string.IsNullOrEmpty(sureText) == false)
             {
@@ -76,7 +98,9 @@ namespace ET.Client
             self.SetDefaultText();
             self.View.EG_SureRectTransform.gameObject.SetActive(true);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(false);
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+
+            self.SetDetailText(confirmMsg);
+
 
             if (string.IsNullOrEmpty(sureText) == false)
             {
@@ -110,7 +134,9 @@ namespace ET.Client
             self.SetDefaultText();
             self.View.EG_SureRectTransform.gameObject.SetActive(false);
             self.View.EG_ConfirmRectTransform.gameObject.SetActive(true);
-            self.View.E_TextTextMeshProUGUI.text = confirmMsg;
+
+            self.SetDetailText(confirmMsg);
+
 
             if (string.IsNullOrEmpty(sureText) == false)
             {

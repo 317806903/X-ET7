@@ -92,6 +92,7 @@ namespace ET.Client
 
         public static void AddUIRootRotationAll(this UIRootManagerComponent self)
         {
+            return;
             self._AddUIRootRotation(self.WorldHubRoot);
             self._AddUIRootRotation(self.NormalRoot);
             self._AddUIRootRotation(self.PopUpRoot);

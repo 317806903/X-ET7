@@ -34,7 +34,7 @@ namespace ET.Ability
             self.CfgId = gameGlobalBuffCfgId;
 
             GlobalConditionManagerComponent globalConditionManagerComponent = self.AddComponent<GlobalConditionManagerComponent>();
-            await globalConditionManagerComponent.Init(self.model.MonitorTriggers.ActionCondition1, self.model.MonitorTriggers.ActionCondition2);
+            await globalConditionManagerComponent.Init(self.model.MonitorTriggers.TrigCondition1, self.model.MonitorTriggers.TrigCondition2);
 
             self.permanent = true;
             self.duration = 100;

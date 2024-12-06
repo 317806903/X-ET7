@@ -71,21 +71,22 @@ namespace ET
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(towerCfgId);
             bool isAttackTower = ItemHelper.ChkIsAttackTower(towerCfgId);
             bool isTrap = ItemHelper.ChkIsTrap(towerCfgId);
+            bool isCollider = ItemHelper.ChkIsCollider(towerCfgId);
             bool isCallMonster = ItemHelper.ChkIsCallMonster(towerCfgId);
             int count = towerCfg.UnitId.Count;
             for (int i = 0; i < count; i++)
             {
                 string unitCfgId = "";
                 string monsterCfgId = "";
-                if (isAttackTower || isTrap)
-                {
-                    unitCfgId = towerCfg.UnitId[i];
-                }
-                else if (isCallMonster)
+                if (isCallMonster)
                 {
                     monsterCfgId = towerCfg.UnitId[i];
                     TowerDefense_MonsterCfg monsterCfg = TowerDefense_MonsterCfgCategory.Instance.Get(monsterCfgId);
                     unitCfgId = monsterCfg.UnitId;
+                }
+                else
+                {
+                    unitCfgId = towerCfg.UnitId[i];
                 }
 
                 int unitNum = 1;
@@ -108,7 +109,7 @@ namespace ET
                 {
                     Unit towerUnit = UnitHelper_Create.CreateWhenServer_ActorUnit(scene, unitCfgId, unitLevel, pos + releativePos, forward, towerCfg.AiCfgId);
 
-                    if (isAttackTower || isTrap)
+                    if (isAttackTower || isTrap || isCollider)
                     {
                         TowerComponent towerComponent = towerUnit.AddComponent<TowerComponent>();
                         towerComponent.towerCfgId = towerCfgId;
@@ -141,7 +142,7 @@ namespace ET
                     UnitHelper_Create.ActorUnitLearnSkillWhenCreate(towerUnit);
                     ET.GamePlayHelper.DoCreateActions(towerUnit, towerCfg.CreateActionIds).Coroutine();
 
-                    if (isAttackTower || isTrap)
+                    if (isAttackTower || isTrap || isCollider)
                     {
                         unitList.Add(towerUnit);
                     }

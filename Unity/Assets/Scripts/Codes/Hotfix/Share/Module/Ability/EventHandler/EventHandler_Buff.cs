@@ -30,7 +30,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -60,7 +59,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -90,7 +88,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -98,7 +95,7 @@
 						}
 					}
 				}
-				if (UnitHelper.ChkUnitAlive(args.defenderUnit))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit, true))
 				{
 					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.DamageBeforeOnBeKilled, args.attackerUnit, args.defenderUnit, ref actionContext);
@@ -120,7 +117,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -128,7 +124,7 @@
 						}
 					}
 				}
-				//if (UnitHelper.ChkUnitAlive(args.defenderUnit))
+				if (UnitHelper.ChkUnitAlive(args.defenderUnit, true))
 				{
 					Unit unit = args.defenderUnit;
 					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.DamageAfterOnBeKilled, args.attackerUnit, args.defenderUnit, ref actionContext);
@@ -211,7 +207,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -236,7 +231,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -261,7 +255,6 @@
 
 					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
 					{
-						BulletObj bulletObj = unit.GetComponent<BulletObj>();
 						Unit unitActor = unit.GetCasterFirstActor();
 						if (unitActor != null)
 						{
@@ -306,6 +299,78 @@
 				if (UnitHelper.ChkUnitAlive(unit, true))
 				{
 					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.UnitOnRemoved, null, null, ref actionContext);
+				}
+				await ETTask.CompletedTask;
+			}
+		}
+
+		[Event(SceneType.Map)]
+		public class EventHandler_CallBullet: AEvent<Scene, AbilityTriggerEventType.CallBullet>
+		{
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.CallBullet args)
+			{
+				ActionContext actionContext = args.actionContext;
+				if (UnitHelper.ChkUnitAlive(args.unit))
+				{
+					Unit unit = args.unit;
+					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.CallBullet, null, null, ref actionContext);
+
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						Unit unitActor = unit.GetCasterFirstActor();
+						if (unitActor != null)
+						{
+							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.CallBullet, null, null, ref actionContext);
+						}
+					}
+				}
+				await ETTask.CompletedTask;
+			}
+		}
+
+		[Event(SceneType.Map)]
+		public class EventHandler_CallAoe: AEvent<Scene, AbilityTriggerEventType.CallAoe>
+		{
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.CallAoe args)
+			{
+				ActionContext actionContext = args.actionContext;
+				if (UnitHelper.ChkUnitAlive(args.unit))
+				{
+					Unit unit = args.unit;
+					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.CallAoe, null, null, ref actionContext);
+
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						Unit unitActor = unit.GetCasterFirstActor();
+						if (unitActor != null)
+						{
+							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.CallAoe, null, null, ref actionContext);
+						}
+					}
+				}
+				await ETTask.CompletedTask;
+			}
+		}
+
+		[Event(SceneType.Map)]
+		public class EventHandler_CallActor: AEvent<Scene, AbilityTriggerEventType.CallActor>
+		{
+			protected override async ETTask Run(Scene scene, AbilityTriggerEventType.CallActor args)
+			{
+				ActionContext actionContext = args.actionContext;
+				if (UnitHelper.ChkUnitAlive(args.unit))
+				{
+					Unit unit = args.unit;
+					EventHandlerHelper.Run_Buff(unit, AbilityConfig.BuffTriggerEvent.CallActor, null, null, ref actionContext);
+
+					if (UnitHelper.ChkUnitAlive(unit) && UnitHelper.ChkIsBullet(unit))
+					{
+						Unit unitActor = unit.GetCasterFirstActor();
+						if (unitActor != null)
+						{
+							EventHandlerHelper.Run_Buff(unitActor, AbilityConfig.BuffTriggerEvent.CallActor, null, null, ref actionContext);
+						}
+					}
 				}
 				await ETTask.CompletedTask;
 			}

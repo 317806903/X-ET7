@@ -439,8 +439,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
-                gamePlayPkComponentBase.NoticeToClient(playerId);
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                gamePlayPkComponent.NoticeToClient(playerId);
             }
 
             self.NoticeToClient(playerId);
@@ -528,8 +528,8 @@ namespace ET
             if (isPK)
             {
                 self.gamePlayMode = GamePlayMode.PK;
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.AddComponent<GamePlayPkComponentBase>();
-                await gamePlayPkComponentBase.Init(self.ownerPlayerId, gamePlayModeCfgId, roomTypeInfo);
+                GamePlayPkComponent gamePlayPkComponent = self.AddComponent<GamePlayPkComponent>();
+                await gamePlayPkComponent.Init(self.ownerPlayerId, gamePlayModeCfgId, roomTypeInfo);
             }
         }
 
@@ -555,8 +555,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
-                await gamePlayPkComponentBase.DoReadyForBattle();
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                await gamePlayPkComponent.DoReadyForBattle();
             }
         }
 
@@ -569,8 +569,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
-                return gamePlayPkComponentBase;
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                return gamePlayPkComponent;
             }
 
             return null;
@@ -600,18 +600,6 @@ namespace ET
                 return true;
             }
             return gamePlayPlayerListComponent.ChkPlayerIsQuit(playerId);
-        }
-
-        /// <summary>
-        /// 通过这个判断 unitId 是否归属 player, 返回-1则不是玩家的
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="unitId"></param>
-        /// <returns></returns>
-        public static long GetPlayerIdByUnitId(this GamePlayComponent self, long unitId)
-        {
-            GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetComponent<GamePlayPlayerListComponent>();
-            return gamePlayPlayerListComponent.GetPlayerIdByUnitId(unitId);
         }
 
         public static Unit GetCurPlayerUnit(this GamePlayComponent self, long playerId)
@@ -713,8 +701,8 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
-                gamePlayPkComponentBase.NoticeToClient(playerId);
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                gamePlayPkComponent.NoticeToClient(playerId);
             }
         }
 
@@ -739,7 +727,7 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                // GamePlayPkComponentBase gamePlayPKComponent = self.GetComponent<GamePlayPkComponentBase>();
+                // GamePlayPkComponent gamePlayPKComponent = self.GetComponent<GamePlayPkComponent>();
                 // gamePlayPKComponent.NoticeToClient(playerId);
             }
             EventSystem.Instance.Publish(self.DomainScene(), _NoticeGameEndToRoom);
@@ -814,22 +802,16 @@ namespace ET
         /// <param name="self"></param>
         /// <param name="unitParent"></param>
         /// <param name="unit"></param>
-        public static void AddUnitTeamFlagByParent(this GamePlayComponent self, Unit unitParent, Unit unit)
+        public static void AddUnitTeamFlagByParent(this GamePlayComponent self, long playerId, Unit unitParent, Unit unit)
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-            gamePlayFriendTeamFlagCompent.AddUnitTeamFlagByParent(unitParent, unit);
+            gamePlayFriendTeamFlagCompent.AddUnitTeamFlagByParent(playerId, unitParent, unit);
         }
 
         public static Dictionary<long, TeamFlagType> GetAllPlayerTeamFlag(this GamePlayComponent self)
         {
             GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
             return gamePlayFriendTeamFlagCompent.GetAllPlayerTeamFlag();
-        }
-
-        public static TeamFlagType GetTeamFlagByUnitId(this GamePlayComponent self, long unitId)
-        {
-            GamePlayFriendTeamFlagCompent gamePlayFriendTeamFlagCompent = self.GetComponent<GamePlayFriendTeamFlagCompent>();
-            return gamePlayFriendTeamFlagCompent.GetTeamFlagByUnitId(unitId);
         }
 
         public static TeamFlagType GetTeamFlagByPlayerId(this GamePlayComponent self, long playerId)
@@ -941,8 +923,22 @@ namespace ET
             }
             else if (self.gamePlayMode == GamePlayMode.PK)
             {
-                GamePlayPkComponentBase gamePlayPkComponentBase = self.GetComponent<GamePlayPkComponentBase>();
-                gamePlayPkComponentBase.DealUnitBeKill(attackerUnit, beKillUnit);
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                gamePlayPkComponent.DealUnitBeKill(attackerUnit, beKillUnit);
+            }
+        }
+
+        public static void DealUnitCallActor(this GamePlayComponent self, Unit unit, Unit beCallUnit)
+        {
+            if (self.gamePlayMode == GamePlayMode.TowerDefense)
+            {
+                GamePlayTowerDefenseComponent gamePlayTowerDefenseComponent = self.GetComponent<GamePlayTowerDefenseComponent>();
+                gamePlayTowerDefenseComponent.DealUnitCallActor(unit, beCallUnit);
+            }
+            else if (self.gamePlayMode == GamePlayMode.PK)
+            {
+                GamePlayPkComponent gamePlayPkComponent = self.GetComponent<GamePlayPkComponent>();
+                gamePlayPkComponent.DealUnitCallActor(unit, beCallUnit);
             }
         }
 

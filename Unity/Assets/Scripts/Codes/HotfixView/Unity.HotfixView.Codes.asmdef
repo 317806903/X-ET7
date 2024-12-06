@@ -27,7 +27,10 @@
         "Unity.Advertisement.IosSupport",
         "UniWebView-CSharp",
         "StatusIndiactors",
-        "AppsFlyer"
+        "AppsFlyer",
+        "MoreMountains.NiceVibrations",
+        "MoreMountains.NiceVibrations.Haptics",
+        "DamageNumbersPro"
     ],
     "includePlatforms": [
         "Editor"

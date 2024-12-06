@@ -119,6 +119,22 @@ namespace ET
             return true;
         }
 
+        public static bool ChkIsCollider(string itemCfgId)
+        {
+            if (ChkIsTower(itemCfgId) == false)
+            {
+                return false;
+            }
+
+            ItemCfg itemCfg = ItemCfgCategory.Instance.Get(itemCfgId);
+            if (itemCfg.ItemSubType != ItemSubType.Collider)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool ChkIsCallMonster(string itemCfgId)
         {
             if (ChkIsTower(itemCfgId) == false)
@@ -246,6 +262,18 @@ namespace ET
         {
             TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
             return towerCfg.Labels;
+        }
+
+        public static int GetTowerItemLevel(string itemCfgId)
+        {
+            TowerDefense_TowerCfg towerCfg = TowerDefense_TowerCfgCategory.Instance.Get(itemCfgId);
+            return towerCfg.Level[0];
+        }
+
+        public static int GetSkillItemLevel(string itemCfgId)
+        {
+            PlayerSkillCfg playerSkillCfg = PlayerSkillCfgCategory.Instance.Get(itemCfgId);
+            return playerSkillCfg.Level;
         }
 
         public static string GetTowerItemPreTowerConfigId(string itemCfgId, int index = 1)

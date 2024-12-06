@@ -29,7 +29,7 @@ namespace ET
 
         public static void FixedUpdate(this SyncDataManager_UnitGetCoinShow self, float fixedDeltaTime)
         {
-	        self.SyncData2Client().Coroutine();
+	        self.SyncData2Client();
         }
 
         public static void AddSyncGetCoinShow(this SyncDataManager_UnitGetCoinShow self, long playerId, Unit unit, CoinTypeInGame coinType, int chgValue)
@@ -41,10 +41,10 @@ namespace ET
             self.NeedSyncGetCoinShowList.Add((playerId, unit, coinType, chgValue));
         }
 
-        public static async ETTask SyncData2Client(this SyncDataManager_UnitGetCoinShow self)
+        public static void SyncData2Client(this SyncDataManager_UnitGetCoinShow self)
         {
 	        self.DealSyncData2PlayerId();
-	        await self.SyncData2Client_Wait();
+	        self.SyncData2Client_Wait();
         }
 
 		public static void DealSyncData2PlayerId(this SyncDataManager_UnitGetCoinShow self)
@@ -64,13 +64,13 @@ namespace ET
 			self.NeedSyncGetCoinShowList.Clear();
 		}
 
-		public static async ETTask SyncData2Client_Wait(this SyncDataManager_UnitGetCoinShow self)
+		public static void SyncData2Client_Wait(this SyncDataManager_UnitGetCoinShow self)
 		{
             if (self.player2SyncUnit.Count == 0)
                 return;
 
             SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-            using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+            self.removePlayerIds.Clear();
             foreach (var item in self.player2SyncUnit)
             {
 	            long playerId = item.Key;
@@ -96,7 +96,7 @@ namespace ET
 
 	            if (list.Count == 0)
 	            {
-		            removePlayerIds.Add(playerId);
+		            self.removePlayerIds.Add(playerId);
 		            continue;
 	            }
 
@@ -105,7 +105,7 @@ namespace ET
 	            if (_SyncData_UnitGetCoinShow.unitId.Count == 0)
 	            {
 		            _SyncData_UnitGetCoinShow.Dispose();
-		            removePlayerIds.Add(playerId);
+		            self.removePlayerIds.Add(playerId);
 		            continue;
 	            }
 	            byte[] syncData = _SyncData_UnitGetCoinShow.ToBson();
@@ -114,16 +114,14 @@ namespace ET
 	            //Log.Debug($"zpb ET.SyncDataManager_UnitGetCoinShowSystem.SyncData2Client_Wait {playerId} {list.Count}");
 
 	            syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
-	            removePlayerIds.Add(playerId);
+	            self.removePlayerIds.Add(playerId);
             }
 
-            foreach (long playerId in removePlayerIds)
+            foreach (long playerId in self.removePlayerIds)
             {
 	            self.player2SyncUnit.Remove(playerId);
             }
-            removePlayerIds.Clear();
-
-            await ETTask.CompletedTask;
+            self.removePlayerIds.Clear();
 		}
     }
 }

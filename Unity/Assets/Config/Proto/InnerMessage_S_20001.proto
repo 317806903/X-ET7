@@ -813,6 +813,7 @@ message O2G_PlayerCacheChgNoticeClient // IActorRequest
 {
 	int32 RpcId = 1;
 	int32 PlayerModelType = 2;
+	int64 SceneInstanceId = 3;
 }
 
 message G2O_PlayerCacheChgNoticeClient // IActorResponse

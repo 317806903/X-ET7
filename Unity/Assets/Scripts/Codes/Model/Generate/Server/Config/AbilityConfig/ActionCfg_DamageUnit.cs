@@ -18,6 +18,7 @@ public sealed partial class ActionCfg_DamageUnit: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        FloatingTextId = _buf.ReadString();
         DamageInfo = DamageInfo.DeserializeDamageInfo(_buf);
         PostInit();
     }
@@ -35,6 +36,11 @@ public sealed partial class ActionCfg_DamageUnit: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 飘字id
+    /// </summary>
+    public string FloatingTextId { get; private set; }
+    public ActionCfg_FloatingText FloatingTextId_Ref { get; private set; }
     public DamageInfo DamageInfo { get; private set; }
 
     public const int __ID__ = 1994931300;
@@ -42,6 +48,7 @@ public sealed partial class ActionCfg_DamageUnit: Bright.Config.BeanBase
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        this.FloatingTextId_Ref = (_tables["ActionCfg_FloatingTextCategory"] as ActionCfg_FloatingTextCategory).GetOrDefault(FloatingTextId);
         DamageInfo?.Resolve(_tables);
         PostResolve();
     }
@@ -56,6 +63,7 @@ public sealed partial class ActionCfg_DamageUnit: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "FloatingTextId:" + FloatingTextId + ","
         + "DamageInfo:" + DamageInfo + ","
         + "}";
     }

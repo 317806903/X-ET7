@@ -719,7 +719,8 @@ namespace ET
                 ResConfig.Instance.IsShowDebugMode = true;
                 ResConfig.Instance.IsShowEditorLoginMode = true;
                 productName = $"UsDebug_RealityGuard";
-                packageName = $"com.dm.ARGameInNetUsDebug";
+                // Must use the same package name as the production version to test AppsFlyer.
+                packageName = $"com.dm.realityguard";
                 //EditorUserBuildSettings.androidCreateSymbols = AndroidCreateSymbols.Debugging;
             }
             else if (packName == PackName.OutNet_Benchmark)

@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 709400225940798039}
   - component: {fileID: 6390583724493789883}
   - component: {fileID: 3320964975756426587}
+  - component: {fileID: 7194115634384283953}
   m_Layer: 5
   m_Name: FixedRoot
   m_TagString: Untagged
@@ -144,7 +145,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &7194115634384283953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518661101418016604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &1314191326779703424
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +570,7 @@ GameObject:
   - component: {fileID: 8338023874645827580}
   - component: {fileID: 1947049499863285274}
   - component: {fileID: 28834320453995814}
+  - component: {fileID: 1245850869176025978}
   m_Layer: 5
   m_Name: NoticeRoot
   m_TagString: Untagged
@@ -627,7 +659,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &1245850869176025978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4498549938520153390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &4580880950203891377
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,6 +845,7 @@ GameObject:
   - component: {fileID: 4929491231848285185}
   - component: {fileID: 3853858169819985774}
   - component: {fileID: 3904579437224528071}
+  - component: {fileID: 2937865330218921876}
   m_Layer: 5
   m_Name: HighestNoticeRoot
   m_TagString: Untagged
@@ -871,7 +934,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &2937865330218921876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877575892384939530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &6146730134366205408
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +977,7 @@ GameObject:
   - component: {fileID: 7146090346024899582}
   - component: {fileID: 6203945705559870032}
   - component: {fileID: 5909168407410166406}
+  - component: {fileID: 6592716498620716275}
   m_Layer: 5
   m_Name: LoadingRoot
   m_TagString: Untagged
@@ -972,7 +1066,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &6592716498620716275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146730134366205408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &6626733977717339171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1144,7 @@ GameObject:
   - component: {fileID: 5789839164280475536}
   - component: {fileID: 4120823965639927542}
   - component: {fileID: 5766554471387797154}
+  - component: {fileID: 943873190677286880}
   m_Layer: 5
   m_Name: HighestFixedRoot
   m_TagString: Untagged
@@ -1108,7 +1233,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &943873190677286880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042102071102683368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &7438507021208420593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1276,7 @@ GameObject:
   - component: {fileID: 975265560167819412}
   - component: {fileID: 1234886682261597328}
   - component: {fileID: 6477625661254928536}
+  - component: {fileID: 8213907638265870231}
   m_Layer: 5
   m_Name: NormalRoot
   m_TagString: Untagged
@@ -1209,7 +1365,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &8213907638265870231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7438507021208420593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &7677372040492730655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1408,7 @@ GameObject:
   - component: {fileID: 2165282947874016945}
   - component: {fileID: 5022403599118484886}
   - component: {fileID: 6297306725979558657}
+  - component: {fileID: 2163198995795065287}
   m_Layer: 5
   m_Name: WorldHubRoot
   m_TagString: Untagged
@@ -1310,7 +1497,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &2163198995795065287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677372040492730655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &8736783595894354474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,6 +1571,7 @@ GameObject:
   - component: {fileID: 2525248551527207301}
   - component: {fileID: 7073740766066156875}
   - component: {fileID: 7061723520337508508}
+  - component: {fileID: 3469446970569532159}
   m_Layer: 5
   m_Name: PopUpRoot
   m_TagString: Untagged
@@ -1442,7 +1660,37 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
+--- !u!114 &3469446970569532159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980735795955198770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0335b9f5563e2439c3fe1e30b2755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandscapeConfig:
+    isSaved: 1
+    referenceResolution: {x: 1920, y: 1080}
+    matchWidthOrHeight: 0.5
+  PortraitConfig:
+    isSaved: 1
+    referenceResolution: {x: 1080, y: 1920}
+    matchWidthOrHeight: 0.5
+  LandscapeConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1990, y: 1390}
+    matchWidthOrHeight: 0.5
+  PortraitConfigPad:
+    isSaved: 1
+    referenceResolution: {x: 1390, y: 1990}
+    matchWidthOrHeight: 0.5
+  currentIsLandscape: 1
+  currentIsPad: 1
 --- !u!1 &9209679347561470119
 GameObject:
   m_ObjectHideFlags: 0

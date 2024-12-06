@@ -20,6 +20,10 @@ namespace ET
 					return;
 				}
 				attackerUnit = attackerUnit.GetCasterActor();
+				if (attackerUnit == null)
+				{
+					return;
+				}
 				GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 				if (gamePlayComponent != null)
 				{

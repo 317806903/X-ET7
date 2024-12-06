@@ -45,12 +45,15 @@ namespace ET.Client
 
 			self.BindMoveBagItem();
 
-#if UNITY_EDITOR
-			self.View.E_DebugButton.SetVisible(true);
-			self.View.E_DebugButton.AddListenerAsync(self.AddCardsWhenDebug);
-#else
-			self.View.E_DebugButton.SetVisible(false);
-#endif
+			if (Application.isMobilePlatform == false)
+			{
+				self.View.E_DebugButton.SetVisible(true);
+				self.View.E_DebugButton.AddListenerAsync(self.AddCardsWhenDebug);
+			}
+			else
+			{
+				self.View.E_DebugButton.SetVisible(false);
+			}
 		}
 
 		public static async ETTask ShowPage(this EPage_BattleDeckTower self, ShowWindowData contextData = null)
@@ -75,6 +78,7 @@ namespace ET.Client
 
 		public static async ETTask Refresh(this EPage_BattleDeckTower self)
 		{
+			await ET.Client.PlayerCacheHelper.GetMyBattleTowerItemCfgIdList(self.DomainScene());
 			await self.CreateCardScrollItem();
 		}
 
@@ -208,6 +212,7 @@ namespace ET.Client
 				return;
 			}
 			string itemCfgId = "";
+			//Log.Error($"--zpb-- index[{index}] itemList.Count[{itemList.Count}] {itemList}");
 			if (index < itemList.Count)
 			{
 				itemCfgId = itemList[index];

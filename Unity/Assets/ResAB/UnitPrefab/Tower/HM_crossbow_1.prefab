@@ -24,12 +24,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013879972442302}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.008000017, y: 0.6997361, z: 0.8928974}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.09229594, y: -0.70105743, z: -0.09229594, w: 0.70105743}
+  m_LocalPosition: {x: 0, y: 2.1000001, z: 0.95000005}
+  m_LocalScale: {x: 1.2891289, y: 1.2891288, z: 1.2891287}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4576532351869360}
+  m_Father: {fileID: 4865180270731876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1022360903474482
 GameObject:
@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 4547342459067366}
   - component: {fileID: 33621741208406218}
   - component: {fileID: 23788006930709996}
-  - component: {fileID: 3904387457111811344}
   m_Layer: 0
   m_Name: HM_crossbow1
   m_TagString: Untagged
@@ -85,7 +84,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 2
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
@@ -115,18 +114,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3904387457111811344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022360903474482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1043585126853052
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +125,6 @@ GameObject:
   - component: {fileID: 4576532351869360}
   - component: {fileID: 33264719641899038}
   - component: {fileID: 23305468539416806}
-  - component: {fileID: 610212388898006860}
   m_Layer: 0
   m_Name: HM_crossbow_pivot1
   m_TagString: Untagged
@@ -160,7 +146,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4184122839794904}
-  - {fileID: 4531723019861410}
   m_Father: {fileID: 4865180270731876}
   m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!33 &33264719641899038
@@ -183,7 +168,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 2
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
@@ -213,18 +198,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &610212388898006860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1043585126853052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1081052201835490
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,9 +224,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 0.77571774, y: 0.77571774, z: 0.77571774}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4531723019861410}
   - {fileID: 4547342459067366}
   - {fileID: 4576532351869360}
   - {fileID: 3501004812559339755}
@@ -289,6 +263,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4865180270731876}
+  - {fileID: 7681876412127274134}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1953292054946952
@@ -302,7 +277,6 @@ GameObject:
   - component: {fileID: 4184122839794904}
   - component: {fileID: 33440129822320322}
   - component: {fileID: 23368106542105272}
-  - component: {fileID: 3399373465374818119}
   m_Layer: 0
   m_Name: HM_crossbow_bullet1
   m_TagString: Untagged
@@ -345,7 +319,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 2
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
@@ -375,18 +349,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3399373465374818119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953292054946952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1053822827297637437
 GameObject:
   m_ObjectHideFlags: 0
@@ -25025,3 +24987,34 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &7998690662899371023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7681876412127274134}
+  m_Layer: 0
+  m_Name: ShootElement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7681876412127274134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7998690662899371023}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4571182584650926}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

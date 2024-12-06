@@ -26,6 +26,10 @@
 			{
 				Unit attackerUnit = args.attackerUnit;
 				attackerUnit = attackerUnit.GetCasterActor();
+				if (attackerUnit == null)
+				{
+					return;
+				}
 				Unit defenderUnit = args.defenderUnit;
 
 				EventSystem.Instance.Publish(scene, new ET.Ability.AbilityTriggerEventType.NearUnitOnHit()
@@ -67,6 +71,10 @@
 					return;
 				}
 				attackerUnit = attackerUnit.GetCasterActor();
+				if (attackerUnit == null)
+				{
+					return;
+				}
 				GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
 				if (gamePlayComponent != null)
 				{

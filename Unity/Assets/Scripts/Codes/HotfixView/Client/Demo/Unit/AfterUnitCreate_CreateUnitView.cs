@@ -53,6 +53,14 @@ namespace ET.Client
                 towerStarBarComponent.Init(towerComponent);
             }
 
+            HomeComponent homeComponent = unit.GetComponent<HomeComponent>();
+            if (homeComponent != null)
+            {
+                unit.RemoveComponent<HomeShowComponent>();
+                HomeShowComponent homeShowComponent = unit.AddComponent<HomeShowComponent>();
+                homeShowComponent.Init(homeComponent);
+            }
+
             PlayerUnitComponent playerUnitComponent = unit.GetComponent<PlayerUnitComponent>();
             if (playerUnitComponent != null)
             {
@@ -74,6 +82,11 @@ namespace ET.Client
             if (unit.GetComponent<ET.Ability.Client.AudioPlayComponent>() == null)
             {
                 unit.AddComponent<ET.Ability.Client.AudioPlayComponent>();
+            }
+
+            if (unit.GetComponent<ET.Ability.Client.FloatingTextComponent>() == null)
+            {
+                unit.AddComponent<ET.Ability.Client.FloatingTextComponent>();
             }
 
             await ETTask.CompletedTask;

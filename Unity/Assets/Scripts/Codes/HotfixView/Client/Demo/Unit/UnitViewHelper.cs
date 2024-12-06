@@ -252,7 +252,7 @@ namespace ET.Client
 
                     if (isContainHostile)
                     {
-                        bool isFriend = false;//ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
+                        bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
                         if (isFriend)
                         {
                             continue;
@@ -262,7 +262,7 @@ namespace ET.Client
                     {
                         if (isContainSelf && isContainFriend)
                         {
-                            bool isFriend = false;//ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit);
                             if (isFriend == false)
                             {
                                 continue;
@@ -270,7 +270,7 @@ namespace ET.Client
                         }
                         else if (isContainSelf)
                         {
-                            bool isFriend = false;//ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
                             if (isFriend == false)
                             {
                                 continue;
@@ -278,12 +278,12 @@ namespace ET.Client
                         }
                         else if (isContainFriend)
                         {
-                            bool isFriend = false;//ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
+                            bool isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, true);
                             if (isFriend)
                             {
                                 continue;
                             }
-                            isFriend = false;//ET.GamePlayHelper.ChkIsFriend(curUnit, unit, false);
+                            isFriend = ET.GamePlayHelper.ChkIsFriend(curUnit, unit, false);
                             if (isFriend == false)
                             {
                                 continue;

@@ -32,8 +32,8 @@ namespace ET
 
         public static void FixedUpdate(this SyncDataManager_UnitNumericInfo self, float fixedDeltaTime)
         {
-	        self.SyncData2Client_AllKey().Coroutine();
-	        self.SyncData2Client().Coroutine();
+	        self.SyncData2Client_AllKey();
+	        self.SyncData2Client();
         }
 
         public static void AddSyncNumericUnit(this SyncDataManager_UnitNumericInfo self, Unit unit)
@@ -70,10 +70,10 @@ namespace ET
             self.NeedSyncNumericUnit.Add(unit.Id, numericKey);
         }
 
-        public static async ETTask SyncData2Client(this SyncDataManager_UnitNumericInfo self)
+        public static void SyncData2Client(this SyncDataManager_UnitNumericInfo self)
         {
 	        self.DealSyncData2PlayerId();
-	        await self.SyncData2Client_Wait();
+	        self.SyncData2Client_Wait();
         }
 
         public static void DealSyncData2PlayerId(this SyncDataManager_UnitNumericInfo self)
@@ -114,13 +114,13 @@ namespace ET
 	        self.NeedSyncNumericUnit.Clear();
         }
 
-        public static async ETTask SyncData2Client_Wait(this SyncDataManager_UnitNumericInfo self)
+        public static void SyncData2Client_Wait(this SyncDataManager_UnitNumericInfo self)
         {
 	        if (self.player2SyncUnit.Count == 0)
 		        return;
 
 	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-	        using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+	        self.removePlayerIds.Clear();
 	        foreach (var item in self.player2SyncUnit)
 	        {
 		        long playerId = item.Key;
@@ -146,7 +146,7 @@ namespace ET
 
 		        if (list.Count == 0)
 		        {
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds.Add(playerId);
 			        continue;
 		        }
 
@@ -156,7 +156,7 @@ namespace ET
 		        if (_SyncData_UnitNumericInfo.unitId.Count == 0)
 		        {
 			        _SyncData_UnitNumericInfo.Dispose();
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds.Add(playerId);
 			        continue;
 		        }
 
@@ -166,23 +166,20 @@ namespace ET
 		        //Log.Debug($"zpb ET.SyncDataManager_UnitNumericInfoSystem.SyncData2Client_Wait {playerId} {list.Count}");
 
 		        syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
-		        removePlayerIds.Add(playerId);
+		        self.removePlayerIds.Add(playerId);
 	        }
 
-	        foreach (long playerId in removePlayerIds)
+	        foreach (long playerId in self.removePlayerIds)
 	        {
 		        self.player2SyncUnit.Remove(playerId);
 	        }
-	        removePlayerIds.Clear();
-
-
-	        await ETTask.CompletedTask;
+	        self.removePlayerIds.Clear();
         }
 
-        public static async ETTask SyncData2Client_AllKey(this SyncDataManager_UnitNumericInfo self)
+        public static void SyncData2Client_AllKey(this SyncDataManager_UnitNumericInfo self)
         {
 	        self.DealSyncData2PlayerId_AllKey();
-	        await self.SyncData2Client_AllKey_Wait();
+	        self.SyncData2Client_AllKey_Wait();
         }
 
         public static void DealSyncData2PlayerId_AllKey(this SyncDataManager_UnitNumericInfo self)
@@ -210,13 +207,13 @@ namespace ET
 	        self.NeedSyncNumericUnit_AllKey.Clear();
         }
 
-        public static async ETTask SyncData2Client_AllKey_Wait(this SyncDataManager_UnitNumericInfo self)
+        public static void SyncData2Client_AllKey_Wait(this SyncDataManager_UnitNumericInfo self)
         {
 	        if (self.player2SyncUnit_AllKey.Count == 0)
 		        return;
 
 	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-	        using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+	        self.removePlayerIds_AllKey.Clear();
 	        foreach (var item in self.player2SyncUnit_AllKey)
 	        {
 		        long playerId = item.Key;
@@ -242,7 +239,7 @@ namespace ET
 
 		        if (list.Count == 0)
 		        {
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds_AllKey.Add(playerId);
 			        continue;
 		        }
 
@@ -252,7 +249,7 @@ namespace ET
 		        if (_SyncData_UnitNumericInfo.unitId.Count == 0)
 		        {
 			        _SyncData_UnitNumericInfo.Dispose();
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds_AllKey.Add(playerId);
 			        continue;
 		        }
 
@@ -262,16 +259,14 @@ namespace ET
 		        //Log.Debug($"zpb ET.SyncDataManager_UnitNumericInfoSystem.SyncData2Client_AllKey_Wait {playerId} {list.Count}");
 
 		        syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
-		        removePlayerIds.Add(playerId);
+		        self.removePlayerIds_AllKey.Add(playerId);
 	        }
 
-	        foreach (long playerId in removePlayerIds)
+	        foreach (long playerId in self.removePlayerIds_AllKey)
 	        {
 		        self.player2SyncUnit_AllKey.Remove(playerId);
 	        }
-	        removePlayerIds.Clear();
-
-	        await ETTask.CompletedTask;
+	        self.removePlayerIds_AllKey.Clear();
         }
     }
 }

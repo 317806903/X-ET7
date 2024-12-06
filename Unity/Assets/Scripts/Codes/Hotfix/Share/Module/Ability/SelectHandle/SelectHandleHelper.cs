@@ -846,7 +846,7 @@ namespace ET.Ability
                     return null;
                 }
                 Dictionary<TeamFlagType, long> homeUnitList = putHomeComponent.GetHomeUnitList();
-                TeamFlagType teamFlagType = gamePlayComponent.GetTeamFlagByUnitId(unit.Id);
+                TeamFlagType teamFlagType = ET.Ability.TeamFlagHelper.GetTeamFlag(unit);
                 foreach (var homeUnits in homeUnitList)
                 {
                     TeamFlagType curHomeTeamFlagType = homeUnits.Key;

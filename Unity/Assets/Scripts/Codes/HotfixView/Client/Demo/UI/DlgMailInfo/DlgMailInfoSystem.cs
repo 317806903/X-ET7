@@ -83,11 +83,15 @@ namespace ET.Client
                 self.AddUIScrollItems(ref self.ScrollGiftDic, self.kvpItemCfgNumList.Count);
                 self.View.EMainContentGiftsImage.gameObject.SetActive(true);
                 self.View.ELoopScrollList_LoopHorizontalScrollRect.SetVisible(true, self.kvpItemCfgNumList.Count);
+                Vector2 sizeDelta = self.View.EGDetailRootRectTransform.sizeDelta;
+                self.View.EGDetailRootRectTransform.sizeDelta = new Vector2(sizeDelta.x, 288);
             }
             else
             {
                 self.AddUIScrollItems(ref self.ScrollGiftDic, 0);
                 self.View.EMainContentGiftsImage.gameObject.SetActive(false);
+                Vector2 sizeDelta = self.View.EGDetailRootRectTransform.sizeDelta;
+                self.View.EGDetailRootRectTransform.sizeDelta = new Vector2(sizeDelta.x, 460);
             }
             await ETTask.CompletedTask;
         }

@@ -131,6 +131,11 @@ namespace ET.Ability
             {
                 return;
             }
+
+            if (self.isEnabled == false)
+            {
+                return;
+            }
             if (self.selfEffectList == null)
             {
                 self.selfEffectList = new();

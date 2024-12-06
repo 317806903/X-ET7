@@ -294,7 +294,7 @@ namespace ET
             {
                 radius = curUnitRadius + targetUnitRadius + 0.2f;
             }
-            if (ET.Ability.UnitHelper.ChkIsNearNoRadius(curUnit, targetUnit, radius, ignoreY))
+            if (ET.Ability.UnitHelper.ChkIsNearNoCurUnitRadius(curUnit, targetUnit, radius, ignoreY))
             {
                 return true;
             }

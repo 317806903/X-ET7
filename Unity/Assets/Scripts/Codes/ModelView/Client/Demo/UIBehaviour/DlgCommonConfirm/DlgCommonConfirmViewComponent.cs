@@ -126,6 +126,74 @@ namespace ET.Client
 			}
 		}
 
+		public UnityEngine.RectTransform EGDetailRootRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGDetailRootRectTransform == null )
+				{
+					this.m_EGDetailRootRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot");
+				}
+				return this.m_EGDetailRootRectTransform;
+			}
+		}
+
+		public UnityEngine.RectTransform EGDetailScrollRectTransform
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGDetailScrollRectTransform == null )
+				{
+					this.m_EGDetailScrollRectTransform = UIFindHelper.FindDeepChild<UnityEngine.RectTransform>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot/EGDetailScroll");
+				}
+				return this.m_EGDetailScrollRectTransform;
+			}
+		}
+
+		public UnityEngine.UI.ScrollRect EGDetailScrollScrollRect
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGDetailScrollScrollRect == null )
+				{
+					this.m_EGDetailScrollScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.ScrollRect>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot/EGDetailScroll");
+				}
+				return this.m_EGDetailScrollScrollRect;
+			}
+		}
+
+		public UnityEngine.UI.Image EGDetailScrollImage
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_EGDetailScrollImage == null )
+				{
+					this.m_EGDetailScrollImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot/EGDetailScroll");
+				}
+				return this.m_EGDetailScrollImage;
+			}
+		}
+
 		public TMPro.TextMeshProUGUI E_TextTextMeshProUGUI
 		{
 			get
@@ -137,9 +205,26 @@ namespace ET.Client
 				}
 				if( this.m_E_TextTextMeshProUGUI == null )
 				{
-					this.m_E_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/Scroll View/Viewport/Content/E_Text");
+					this.m_E_TextTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot/EGDetailScroll/Viewport/Content/E_Text");
 				}
 				return this.m_E_TextTextMeshProUGUI;
+			}
+		}
+
+		public TMPro.TextMeshProUGUI E_TextSimpleTextMeshProUGUI
+		{
+			get
+			{
+				if (this.uiTransform == null)
+				{
+					Log.Error("uiTransform is null.");
+					return null;
+				}
+				if( this.m_E_TextSimpleTextMeshProUGUI == null )
+				{
+					this.m_E_TextSimpleTextMeshProUGUI = UIFindHelper.FindDeepChild<TMPro.TextMeshProUGUI>(this.uiTransform.gameObject, "EGBackGround/Root/EGDetailRoot/E_TextSimple");
+				}
+				return this.m_E_TextSimpleTextMeshProUGUI;
 			}
 		}
 
@@ -390,7 +475,12 @@ namespace ET.Client
 			this.m_EG_bgARTranslucentImage = null;
 			this.m_EG_bgRectTransform = null;
 			this.m_EG_bgImage = null;
+			this.m_EGDetailRootRectTransform = null;
+			this.m_EGDetailScrollRectTransform = null;
+			this.m_EGDetailScrollScrollRect = null;
+			this.m_EGDetailScrollImage = null;
 			this.m_E_TextTextMeshProUGUI = null;
+			this.m_E_TextSimpleTextMeshProUGUI = null;
 			this.m_EG_ConfirmRectTransform = null;
 			this.m_E_ConfirmCancelButton = null;
 			this.m_E_ConfirmCancelImage = null;
@@ -415,7 +505,12 @@ namespace ET.Client
 		private BlurBackground.TranslucentImage m_EG_bgARTranslucentImage = null;
 		private UnityEngine.RectTransform m_EG_bgRectTransform = null;
 		private UnityEngine.UI.Image m_EG_bgImage = null;
+		private UnityEngine.RectTransform m_EGDetailRootRectTransform = null;
+		private UnityEngine.RectTransform m_EGDetailScrollRectTransform = null;
+		private UnityEngine.UI.ScrollRect m_EGDetailScrollScrollRect = null;
+		private UnityEngine.UI.Image m_EGDetailScrollImage = null;
 		private TMPro.TextMeshProUGUI m_E_TextTextMeshProUGUI = null;
+		private TMPro.TextMeshProUGUI m_E_TextSimpleTextMeshProUGUI = null;
 		private UnityEngine.RectTransform m_EG_ConfirmRectTransform = null;
 		private UnityEngine.UI.Button m_E_ConfirmCancelButton = null;
 		private UnityEngine.UI.Image m_E_ConfirmCancelImage = null;

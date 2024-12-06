@@ -18,7 +18,63 @@ namespace ET.Ability
             unit.DomainScene().GetComponent<ActionHandlerComponent>().Run(unit, resetPosByUnit, actionId, delayTime, selectHandle, actionContext).Coroutine();
         }
 
-        public static bool DoActionTriggerHandler(Unit triggerUnit, Unit actionUnit, float delayTime, string actionId, List<SequenceUnitCondition> actionCondition1, List<SequenceUnitCondition> actionCondition2, SelectHandle curSelectHandle, Unit resetPosByUnit, ref ActionContext actionContext)
+        public static bool ChkActionCondition(Unit triggerUnit, List<SequenceUnitCondition> chkCondition1, List<SequenceUnitCondition> chkCondition2, SelectObjectCfg chkCondition1SelectObj, SelectObjectCfg chkCondition2SelectObj, ref ActionContext actionContext)
+        {
+            bool chkRet1 = _ChkActionCondition(triggerUnit, chkCondition1, chkCondition1SelectObj, ref actionContext);
+            bool chkRet2 = _ChkActionCondition(triggerUnit, chkCondition2, chkCondition2SelectObj, ref actionContext);
+            return chkRet1 && chkRet2;
+        }
+
+        public static bool _ChkActionCondition(Unit triggerUnit, List<SequenceUnitCondition> chkCondition, SelectObjectCfg chkConditionSelectObj, ref ActionContext actionContext)
+        {
+            if (chkConditionSelectObj == null || chkCondition == null || chkCondition.Count == 0)
+            {
+                return true;
+            }
+
+            SelectHandle chkCondition1SelectHandle = SelectHandleHelper.CreateSelectHandle(triggerUnit, null, chkConditionSelectObj, ref actionContext);
+            if (chkCondition1SelectHandle == null)
+            {
+                return false;
+            }
+            if (chkCondition1SelectHandle.selectHandleType == SelectHandleType.SelectUnits && chkCondition1SelectHandle.unitIds.Count == 0)
+            {
+                return false;
+            }
+
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(triggerUnit, chkCondition1SelectHandle, chkCondition, ref actionContext);
+
+            if (bRet1 == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool DoActionTriggerHandler(Unit triggerUnit, Unit actionUnit, List<float> delayTimeList, List<string> actionIdList,
+        List<SequenceUnitCondition> filterCondition1, List<SequenceUnitCondition> filterCondition2, SelectHandle curSelectHandle, Unit resetPosByUnit,
+        ref ActionContext actionContext)
+        {
+            bool bRetAll = true;
+            float delayTime = 0;
+            for (int i = 0; i < actionIdList.Count; i++)
+            {
+                string actionId = actionIdList[i];
+                if (delayTimeList.Count > i)
+                {
+                    delayTime = delayTimeList[i];
+                }
+                bool bRet = DoActionTriggerHandler(triggerUnit, actionUnit, delayTime, actionId, filterCondition1, filterCondition2, curSelectHandle, resetPosByUnit, ref actionContext);
+                if (bRet == false)
+                {
+                    bRetAll = false;
+                }
+            }
+            return bRetAll;
+        }
+
+        public static bool DoActionTriggerHandler(Unit triggerUnit, Unit actionUnit, float delayTime, string actionId, List<SequenceUnitCondition> filterCondition1, List<SequenceUnitCondition> filterCondition2, SelectHandle curSelectHandle, Unit resetPosByUnit, ref ActionContext actionContext)
         {
             if (curSelectHandle == null)
             {
@@ -34,7 +90,7 @@ namespace ET.Ability
 #endif
                 return false;
             }
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition1, ref actionContext);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, filterCondition1, ref actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
@@ -42,7 +98,7 @@ namespace ET.Ability
 
             if (bRet1)
             {
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = UnitConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, actionCondition2, ref actionContext);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = UnitConditionHandleHelper.ChkCondition(triggerUnit, curSelectHandle, filterCondition2, ref actionContext);
                 if (isChgSelect2)
                 {
                     curSelectHandle = newSelectHandle2;

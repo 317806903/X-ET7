@@ -184,6 +184,39 @@ namespace ET.Ability
             self.ChkBuffTick(lastTimeElapsed);
         }
 
+        public static void ChkBuffAwake(this BuffObj self)
+        {
+            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnAwake, null, null, ref self.actionContext);
+        }
+
+        public static void ChkBuffStart(this BuffObj self)
+        {
+            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStart, null, null, ref self.actionContext);
+
+            int tickCount = math.min(self.model.TickTime.Count, 3);
+            if (tickCount > 0)
+            {
+                for (int i = 0; i < tickCount; i++)
+                {
+                    if (self.model.TickTime[i] > 0)
+                    {
+                        if (i == 0)
+                        {
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick1, null, null, ref self.actionContext);
+                        }
+                        else if (i == 1)
+                        {
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick2, null, null, ref self.actionContext);
+                        }
+                        else if (i == 2)
+                        {
+                            self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick3, null, null, ref self.actionContext);
+                        }
+                    }
+                }
+            }
+        }
+
         public static void ChkBuffTick(this BuffObj self, float lastTimeElapsed)
         {
             int tickCount = math.min(self.model.TickTime.Count, 3);
@@ -214,20 +247,29 @@ namespace ET.Ability
                         {
                             int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
                             int newCount = (int)(self.timeElapsedReal / self.model.TickTime[i]);
+#if UNITY_EDITOR
+                            if (newCount > lastCount + 100)
+                            {
+                                newCount = 0;
+                            }
+#endif
                             while (newCount > lastCount)
                             {
                                 lastCount++;
                                 if (i == 0)
                                 {
                                     self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick1, null, null, ref self.actionContext);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick1, null, null, ref self.actionContext);
                                 }
                                 else if (i == 1)
                                 {
                                     self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick2, null, null, ref self.actionContext);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick2, null, null, ref self.actionContext);
                                 }
                                 else if (i == 2)
                                 {
                                     self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnTick3, null, null, ref self.actionContext);
+                                    self.TrigEvent(AbilityConfig.BuffTriggerEvent.BuffOnStartOrTick3, null, null, ref self.actionContext);
                                 }
 
                                 self.ticked += 1;
@@ -278,8 +320,14 @@ namespace ET.Ability
 
         public static void EventHandler(this BuffObj self, BuffActionCall buffActionCall, Unit onAttackUnit, Unit beHurtUnit, ref ActionContext actionContext)
         {
+            bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(self.GetUnit(), buffActionCall.ChkCondition1, buffActionCall.ChkCondition2, buffActionCall.ChkCondition1SelectObj_Ref, buffActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+            if (bRetChk == false)
+            {
+                return;
+            }
+
             Unit casterActorUnit = self.GetCasterActorUnit();
-            if (casterActorUnit == null)
+            if (UnitHelper.ChkUnitAlive(casterActorUnit, false) == false)
             {
                 if (self.isRemoveWhenCasterActorUnitNotExist)
                 {
@@ -297,7 +345,7 @@ namespace ET.Ability
             {
                 resetPosByUnit = self.GetUnit();
             }
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.ActionCondition1, buffActionCall.ActionCondition2, selectHandle, resetPosByUnit, ref actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), casterActorUnit, buffActionCall.DelayTime, buffActionCall.ActionId, buffActionCall.FilterCondition1, buffActionCall.FilterCondition2, selectHandle, resetPosByUnit, ref actionContext);
         }
 
         public static bool ChkNeedRemove(this BuffObj self)

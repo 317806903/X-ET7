@@ -167,6 +167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3446996287950901111, guid: 80d9a39aac12f2a43bb0fb574f7f1e7d,
         type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446996287950901111, guid: 80d9a39aac12f2a43bb0fb574f7f1e7d,
+        type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 1
       objectReference: {fileID: 0}

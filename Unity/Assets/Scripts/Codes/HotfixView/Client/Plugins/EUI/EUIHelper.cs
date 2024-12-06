@@ -91,12 +91,7 @@ namespace ET.Client
 
             // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
             float scrollRectWidth = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
-            // if (contentRectTrans.rect.width * contentRectTrans.localScale.x > scrollRectWidth)
-            // {
-            //     loopHorizontalScrollRect.horizontal = true;
-            //     contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
-            //     return;
-            // }
+
             Transform itemTransform = contentRectTrans.GetChild(0).GetComponent<Transform>();
             float spacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing;
             float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
@@ -111,12 +106,40 @@ namespace ET.Client
                 loopHorizontalScrollRect.horizontal = false;
             }
             contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset);
-            //
-            // await TimerComponent.Instance.WaitFrameAsync();
-            // if (contentRectTrans.rect.width > scrollRectWidth)
-            // {
-            //     contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
-            // }
+        }
+
+        public static void SetSrcollRight(this LoopHorizontalScrollRect loopHorizontalScrollRect)
+        {
+            RectTransform contentRectTrans = loopHorizontalScrollRect.content;
+            if (contentRectTrans.childCount == 0)
+            {
+                return;
+            }
+            int count = loopHorizontalScrollRect.totalCount;
+            if (count > loopHorizontalScrollRect.prefabSource.poolSize || count > contentRectTrans.childCount)
+            {
+                loopHorizontalScrollRect.horizontal = true;
+                contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+                return;
+            }
+
+            // HorizontalLayoutGroup左边距 = 循环列表宽度的一半 - （每个Item宽度的一半*总共ITem数量+（总共ITem数量-1)*间隔距离一半）
+            float scrollRectWidth = loopHorizontalScrollRect.transform.GetComponent<RectTransform>().rect.width;
+
+            Transform itemTransform = contentRectTrans.GetChild(0).GetComponent<Transform>();
+            float spacing = contentRectTrans.GetComponent<HorizontalLayoutGroup>().spacing;
+            float cellWidth = itemTransform.GetComponent<RectTransform>().rect.width * itemTransform.localScale.x;
+            float leftoffset = (scrollRectWidth - (cellWidth * count + (count - 1) * spacing) * contentRectTrans.localScale.x - 10) / contentRectTrans.localScale.x;
+            if (leftoffset < 0)
+            {
+                loopHorizontalScrollRect.horizontal = true;
+                leftoffset = 0;
+            }
+            else
+            {
+                loopHorizontalScrollRect.horizontal = false;
+            }
+            contentRectTrans.GetComponent<HorizontalLayoutGroup>().padding.left = (int)(leftoffset);
         }
 
         public static void SetVisibleWithScale(this Transform transform, bool isVisible)

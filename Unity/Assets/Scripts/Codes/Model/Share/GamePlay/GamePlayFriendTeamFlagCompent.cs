@@ -14,8 +14,7 @@ namespace ET
 		public int waitFrameChk = 60;
 		[BsonIgnore]
 		public int curFrameChk = 0;
-		[BsonIgnore]
-		public Dictionary<long , (TeamFlagType teamFlagType, long destroyTime)> unitId2TeamFlag_WaitDestroy = new();
+
 		[BsonIgnore]
 		public List<long> RemoveList = new();
 		[BsonIgnore]

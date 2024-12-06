@@ -265,11 +265,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 720698969258887493, guid: b3a69ddfa94c0134ca700a45649469ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299816132176440824, guid: b3a69ddfa94c0134ca700a45649469ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3721674338461971581, guid: b3a69ddfa94c0134ca700a45649469ce,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4407847064602917308, guid: b3a69ddfa94c0134ca700a45649469ce,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 4051789221904921981}
     - target: {fileID: 4430975619333968167, guid: b3a69ddfa94c0134ca700a45649469ce,
         type: 3}
       propertyPath: m_Pivot.x
@@ -370,6 +385,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628443762182150197, guid: b3a69ddfa94c0134ca700a45649469ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6565801137144292087, guid: b3a69ddfa94c0134ca700a45649469ce,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -440,6 +460,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3a69ddfa94c0134ca700a45649469ce, type: 3}
+--- !u!114 &4051789221904921981 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8539313847218007093, guid: b3a69ddfa94c0134ca700a45649469ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 5673238549506742600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8342523303234603119 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4430975619333968167, guid: b3a69ddfa94c0134ca700a45649469ce,

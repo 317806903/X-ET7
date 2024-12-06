@@ -177,11 +177,11 @@ namespace ET.Client
                 }
                 else if(configFullName.StartsWith("ET.AbilityConfig."))
                 {
-                    configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configName}.bytes";
+                    configFilePath = $"../Config/Excel/{ct}/AbilityConfig/{configName.ToLower()}.bytes";
                 }
                 else
                 {
-                    configFilePath = $"../Config/Excel/{ct}/GameConfig/{configName}.bytes";
+                    configFilePath = $"../Config/Excel/{ct}/GameConfig/{configName.ToLower()}.bytes";
                 }
                 Log.Debug($"GetOneConfigBytes {configName} {configFilePath}");
                 configBytes = new ByteBuf(File.ReadAllBytes(configFilePath));

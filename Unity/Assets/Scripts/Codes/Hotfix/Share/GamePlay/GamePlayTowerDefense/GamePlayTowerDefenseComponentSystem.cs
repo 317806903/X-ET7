@@ -523,12 +523,14 @@ namespace ET
             {
                 return false;
             }
+            int interestOnDepositMaxValue = self.model.InterestOnDepositMaxValue;
             List<long> playerList = self.GetPlayerList();
             for (int i = 0; i < playerList.Count; i++)
             {
                 GamePlayPlayerListComponent gamePlayPlayerListComponent = self.GetGamePlay().GetComponent<GamePlayPlayerListComponent>();
                 float curGold = gamePlayPlayerListComponent.GetPlayerCoin(playerList[i], CoinTypeInGame.Gold);
                 float interestGold = curGold * interestOnDeposit * 0.01f;
+                interestGold = math.min(interestGold, interestOnDepositMaxValue);
                 gamePlayPlayerListComponent.ChgPlayerCoin(playerList[i], CoinTypeInGame.Gold, interestGold, GetCoinType.InterestOnDeposit);
             }
 
@@ -771,7 +773,18 @@ namespace ET
 
         public static bool ScalePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId)
         {
-            return self.GetComponent<PlayerOwnerTowersComponent>().ScalePlayerTower(playerId, towerUnitId);
+            bool bRet = self.GetComponent<PlayerOwnerTowersComponent>().ScalePlayerTower(playerId, towerUnitId);
+            if (bRet)
+            {
+                Unit unit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+                List<Unit> downTowerList = self.GetComponent<PlayerOwnerTowersComponent>().GetTowerListWhenStackedOnTop(unit);
+                float curUnitHeight = UnitHelper.GetBodyHeight(unit);
+                foreach (Unit towerUnit in downTowerList)
+                {
+                    Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+                }
+            }
+            return bRet;
         }
 
         public static bool ScalePlayerTowerCard(this GamePlayTowerDefenseComponent self, long playerId, string towerCfgId)
@@ -786,7 +799,18 @@ namespace ET
 
         public static bool ReclaimPlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId)
         {
-            return self.GetComponent<PlayerOwnerTowersComponent>().ReclaimPlayerTower(playerId, towerUnitId);
+            bool bRet = self.GetComponent<PlayerOwnerTowersComponent>().ReclaimPlayerTower(playerId, towerUnitId);
+            if (bRet)
+            {
+                Unit unit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+                List<Unit> downTowerList = self.GetComponent<PlayerOwnerTowersComponent>().GetTowerListWhenStackedOnTop(unit);
+                float curUnitHeight = UnitHelper.GetBodyHeight(unit);
+                foreach (Unit towerUnit in downTowerList)
+                {
+                    Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+                }
+            }
+            return bRet;
         }
 
         public static (bool, string) ChkMovePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, float3 position)
@@ -794,9 +818,34 @@ namespace ET
             return self.GetComponent<PlayerOwnerTowersComponent>().ChkMovePlayerTower(playerId, towerUnitId, position);
         }
 
+        public static bool ChkMovePlayerTowerNeedDownTower(this GamePlayTowerDefenseComponent self, long towerUnitId, float3 position)
+        {
+            return self.GetComponent<PlayerOwnerTowersComponent>().ChkMovePlayerTowerNeedDownTower(towerUnitId, position);
+        }
+
         public static bool MovePlayerTower(this GamePlayTowerDefenseComponent self, long playerId, long towerUnitId, float3 position)
         {
-            return self.GetComponent<PlayerOwnerTowersComponent>().MovePlayerTower(playerId, towerUnitId, position);
+            List<Unit> downTowerList = null;
+            float curUnitHeight = 0;
+            bool isNeedDownTower = self.GetComponent<PlayerOwnerTowersComponent>().ChkMovePlayerTowerNeedDownTower(towerUnitId, position);
+            if (isNeedDownTower)
+            {
+                Unit unit = UnitHelper.GetUnit(self.DomainScene(), towerUnitId);
+                downTowerList = self.GetComponent<PlayerOwnerTowersComponent>().GetTowerListWhenStackedOnTop(unit);
+                curUnitHeight = UnitHelper.GetBodyHeight(unit);
+            }
+            bool bRet = self.GetComponent<PlayerOwnerTowersComponent>().MovePlayerTower(playerId, towerUnitId, position);
+            if (bRet)
+            {
+                if (downTowerList != null)
+                {
+                    foreach (Unit towerUnit in downTowerList)
+                    {
+                        Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+                    }
+                }
+            }
+            return bRet;
         }
 
         public static void SetReadyWhenRestTime(this GamePlayTowerDefenseComponent self, long playerId)
@@ -921,7 +970,9 @@ namespace ET
             long attackValue = numericComponent.GetAsInt(NumericType.PhysicalAttack);
             Damage damage = new(NumericType.PhysicalAttack, attackValue);
             ActionContext actionContext = new ActionContext();
-            ET.Ability.DamageHelper.CreateDamageInfo(unit, homeUnit, damage, false, ref actionContext);
+            ET.Ability.DamageObj damageObj = ET.Ability.DamageHelper.CreateDamageObj(unit, homeUnit, damage, false, ref actionContext);
+            ActionCfg_DamageUnit actionCfg_DamageUnit = ActionCfg_DamageUnitCategory.Instance.Get("DamageUnit_Home_Escape");
+            damageObj.SetDamageShowType(actionCfg_DamageUnit.Id);
             unit.DestroyWithDeathShow();
         }
 
@@ -933,6 +984,13 @@ namespace ET
                 TowerComponent towerComponent = beKillUnit.GetComponent<TowerComponent>();
                 if (towerComponent != null)
                 {
+                    List<Unit> downTowerList = self.GetComponent<PlayerOwnerTowersComponent>().GetTowerListWhenStackedOnTop(beKillUnit);
+                    float curUnitHeight = UnitHelper.GetBodyHeight(beKillUnit);
+                    foreach (Unit towerUnit in downTowerList)
+                    {
+                        Ability.UnitHelper.ResetPos(towerUnit, towerUnit.Position - new float3(0, curUnitHeight, 0), float3.zero);
+                    }
+
                     self.GetComponent<PlayerOwnerTowersComponent>().DestroyPlayerTower(beKillUnitPlayerId, beKillUnit.Id);
                 }
 
@@ -971,6 +1029,17 @@ namespace ET
                 }
             }
 
+        }
+
+        public static void DealUnitCallActor(this GamePlayTowerDefenseComponent self, Unit unit, Unit beCallUnit)
+        {
+            long beKillUnitPlayerId = GamePlayHelper.GetPlayerIdByUnitId(unit);
+            if (beKillUnitPlayerId != -1)
+            {
+                return;
+            }
+
+            self.GetComponent<MonsterWaveCallComponent>().RecordMonsterWhenCallActor(unit, beCallUnit);
         }
 
         public static List<long> GetPutTowers(this GamePlayTowerDefenseComponent self, long playerId)

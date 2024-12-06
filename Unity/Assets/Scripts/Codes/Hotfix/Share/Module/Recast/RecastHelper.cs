@@ -1,5 +1,4 @@
 using DotRecast.Core.Numerics;
-using DotRecast.Detour.TileCache;
 using ET.Ability;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -9,12 +8,18 @@ namespace ET
     {
         public static float3 GetNearNavmeshPos(Unit unit, float3 pos)
         {
+            return GetNearNavmeshPos(unit, pos, out _);
+        }
+
+        public static float3 GetNearNavmeshPos(Unit unit, float3 pos, out long polyRef)
+        {
+            polyRef = 0;
             PathfindingComponent pathfindingComponent = unit.GetComponent<PathfindingComponent>();
             if (pathfindingComponent == null)
             {
                 return pos;
             }
-            return pathfindingComponent.GetNearNavmeshPos(pos);
+            return pathfindingComponent.GetNearNavmeshPos(pos, out polyRef);
         }
 
         public static float3 GetHitNavmeshPos(Scene scene, float3 pos, float height = 3)
@@ -384,10 +389,6 @@ namespace ET
                 return null;
             }
             var result = pathfindingComponent.RemoveObstacle();
-            if (result != null)
-            {
-                FullyUpdateTileCache(scene);
-            }
             return result;
         }
 
@@ -407,38 +408,28 @@ namespace ET
             {
                 return false;
             }
-            if (pathfindingComponent.AddOrUpdateObstacle(pos))
-            {
-                FullyUpdateTileCache(scene);
-                return true;
-            }
-            return false;
+            return pathfindingComponent.AddOrUpdateObstacle(pos);
         }
 
         public static long AddObstacle(Scene scene, float3 pos, float radius)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
             NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
-            var tileCache = navmeshManagerComponent.obstacleTool.GetTileCache();
-            return tileCache.AddObstacle(new RcVec3f(-pos.x, pos.y - 0.5f, pos.z), radius,
-                navmeshManagerComponent.navSample.GetSettings().agentHeight);
+            return navmeshManagerComponent.AddObstacle(pos, radius);
         }
-
-        public static DtTileCache GetTileCache(Scene scene)
+        
+        public static void RemoveObstacle(Scene scene, long obstacleRef)
         {
             GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
             NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
-            if (navmeshManagerComponent == null)
-            {
-                return null;
-            }
-            return navmeshManagerComponent.obstacleTool.GetTileCache();
+            navmeshManagerComponent.RemoveObstacle(obstacleRef);
         }
 
-        public static void FullyUpdateTileCache(Scene scene)
+        public static bool UpdateDynamicMesh(Scene scene)
         {
-            DtTileCache tileCache = GetTileCache(scene);
-            while (!tileCache.Update()) { }
+            GamePlayComponent gamePlayComponent = GamePlayHelper.GetGamePlay(scene);
+            NavmeshManagerComponent navmeshManagerComponent = gamePlayComponent.GetComponent<NavmeshManagerComponent>();
+            return navmeshManagerComponent.UpdateDynamicMesh();
         }
 
         public static List<NavPath> GetAllPathsFromMonsterCallsToHeadQuarter(Unit unit)
@@ -486,6 +477,16 @@ namespace ET
                 return paths;
             }
             return null;
+        }
+
+        public static float3 ToFloat3(RcVec3f rcVec3f)
+        {
+            return new float3(-rcVec3f.X, rcVec3f.Y, rcVec3f.Z);
+        }
+        
+        public static RcVec3f ToRcVec3f(float3 float3)
+        {
+            return new RcVec3f(-float3.x, float3.y, float3.z);
         }
     }
 }

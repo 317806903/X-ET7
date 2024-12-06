@@ -97,6 +97,7 @@ namespace ET.Client
 
 		public static void Init(this DlgTowerDetails self, string towerCfgId, bool isShowStatus, bool isLock)
 		{
+			Log.Debug($"---Init towerCfgId[{towerCfgId}]");
 			if (ET.ItemHelper.ChkIsTower(towerCfgId) == false)
 			{
 				return;
@@ -105,7 +106,8 @@ namespace ET.Client
 			self.isLock = isLock;
 			self.baseTowerCfgId = towerCfgId;
 			self.curTowerCfgId = towerCfgId;
-			self.curTowerIndex = 1;
+
+			self.curTowerIndex = ET.ItemHelper.GetTowerItemLevel(self.baseTowerCfgId);
 
 			self.ShowDetails().Coroutine();
 		}
@@ -317,12 +319,15 @@ namespace ET.Client
 		{
 			if (self.isLock)
 			{
-#if UNITY_EDITOR
-				self.View.E_DebugButton.SetVisible(true);
-				self.View.E_DebugButton.AddListenerAsync(self.AddCardWhenDebug);
-#else
-				self.View.E_DebugButton.SetVisible(false);
-#endif
+				if (Application.isMobilePlatform == false)
+				{
+					self.View.E_DebugButton.SetVisible(true);
+					self.View.E_DebugButton.AddListenerAsync(self.AddCardWhenDebug);
+				}
+				else
+				{
+					self.View.E_DebugButton.SetVisible(false);
+				}
 			}
 			else
 			{

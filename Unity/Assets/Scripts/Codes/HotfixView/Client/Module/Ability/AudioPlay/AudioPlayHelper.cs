@@ -17,6 +17,7 @@ namespace ET.Ability.Client
                 return null;
             }
             ActionCfg_PlayAudio actionCfg_PlayAudio = ActionCfg_PlayAudioCategory.Instance.Get(playAudioActionId);
+            PlayVibrate(actionCfg_PlayAudio);
             return PlayAudio(unit, actionCfg_PlayAudio);
         }
 
@@ -31,80 +32,21 @@ namespace ET.Ability.Client
             return audioPlayComponent.AddPlayAudioObj(actionCfg_PlayAudio);
         }
 
-        // public static void StopAudio(Unit unit)
-        // {
-        //     AudioPlayComponent audioPlayComponent = unit.GetComponent<AudioPlayComponent>();
-        //     audioPlayComponent.RemoveEffectByKey();
-        // }
-
-        public static void PlayVibrate()
+        public static void PlayVibrate(ActionCfg_PlayAudio actionCfg_PlayAudio)
         {
-            Handheld.Vibrate();
-        }
-
-        public static void PlayVibrate(float time)
-        {
-#if UNITY_ANDROID || UNITY_IOS
-            if (Application.platform == RuntimePlatform.Android)
+            VibrationType vibrationType = actionCfg_PlayAudio.VibrationType;
+            if (vibrationType == VibrationType.None)
             {
-                if (CheckVibratePermission())
-                {
-                    _PlayVibrateWhenAndroid(time);
-                }
-                else
-                {
-                    RequestVibratePermission();
-                }
+                return;
             }
-            else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                Handheld.Vibrate();
-            }
-#endif
+            MoreMountains.NiceVibrations.HapticTypes hapticTypes = (MoreMountains.NiceVibrations.HapticTypes)Enum.Parse(typeof(MoreMountains.NiceVibrations.HapticTypes), vibrationType.ToString());
+            PlayVibrate(hapticTypes);
         }
 
-        public static bool CheckVibratePermission()
+        public static void PlayVibrate(MoreMountains.NiceVibrations.HapticTypes hapticTypes)
         {
-            return UnityEngine.Android.Permission.HasUserAuthorizedPermission("android.permission.VIBRATE");
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(hapticTypes, false, true);
         }
 
-        public static void RequestVibratePermission()
-        {
-            UnityEngine.Android.Permission.RequestUserPermission("android.permission.VIBRATE");
-        }
-
-        public static void _PlayVibrateWhenAndroid(float time)
-        {
-#if UNITY_ANDROID || UNITY_IOS
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                try
-                {
-                    using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-                    {
-                        AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-                        AndroidJavaObject vibrator = unityActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
-
-                        // 检查设备是否支持震动
-                        if (vibrator.Call<bool>("hasVibrator"))
-                        {
-                            Log.Error($"--zpb start vibration.");
-                            long millisecond = (long)(time * 1000f);
-                            vibrator.Call("vibrate", millisecond);
-                            Log.Error($"--zpb start vibration End");
-                        }
-                        else
-                        {
-                            Log.Error($"--zpb This device does not support vibration.");
-                            Handheld.Vibrate();
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                }
-            }
-#endif
-        }
     }
 }

@@ -21,8 +21,8 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     {
         Radius = _buf.ReadFloat();
         SelectObjectUnitTypeBase = SelectObjectUnitTypeBase.DeserializeSelectObjectUnitTypeBase(_buf);
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition1.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); ActionCondition2.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition1.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition2.Add(_e0);}}
         PostInit();
     }
 
@@ -40,13 +40,13 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     /// </summary>
     public SelectObjectUnitTypeBase SelectObjectUnitTypeBase { get; private set; }
     /// <summary>
-    /// 条件1
+    /// 筛选条件1
     /// </summary>
-    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition1 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> FilterCondition1 { get; private set; }
     /// <summary>
-    /// 条件2
+    /// 筛选条件2
     /// </summary>
-    public System.Collections.Generic.List<SequenceUnitCondition> ActionCondition2 { get; private set; }
+    public System.Collections.Generic.List<SequenceUnitCondition> FilterCondition2 { get; private set; }
 
     public const int __ID__ = -189383757;
     public override int GetTypeId() => __ID__;
@@ -54,16 +54,16 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         SelectObjectUnitTypeBase?.Resolve(_tables);
-        foreach(var _e in ActionCondition1) { _e?.Resolve(_tables); }
-        foreach(var _e in ActionCondition2) { _e?.Resolve(_tables); }
+        foreach(var _e in FilterCondition1) { _e?.Resolve(_tables); }
+        foreach(var _e in FilterCondition2) { _e?.Resolve(_tables); }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
         SelectObjectUnitTypeBase?.TranslateText(translator);
-        foreach(var _e in ActionCondition1) { _e?.TranslateText(translator); }
-        foreach(var _e in ActionCondition2) { _e?.TranslateText(translator); }
+        foreach(var _e in FilterCondition1) { _e?.TranslateText(translator); }
+        foreach(var _e in FilterCondition2) { _e?.TranslateText(translator); }
     }
 
     public override string ToString()
@@ -71,8 +71,8 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
         return "{ "
         + "Radius:" + Radius + ","
         + "SelectObjectUnitTypeBase:" + SelectObjectUnitTypeBase + ","
-        + "ActionCondition1:" + Bright.Common.StringUtil.CollectionToString(ActionCondition1) + ","
-        + "ActionCondition2:" + Bright.Common.StringUtil.CollectionToString(ActionCondition2) + ","
+        + "FilterCondition1:" + Bright.Common.StringUtil.CollectionToString(FilterCondition1) + ","
+        + "FilterCondition2:" + Bright.Common.StringUtil.CollectionToString(FilterCondition2) + ","
         + "}";
     }
     

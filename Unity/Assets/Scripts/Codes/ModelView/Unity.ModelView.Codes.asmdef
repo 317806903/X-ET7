@@ -13,7 +13,8 @@
         "Unity.Services.Authentication",
         "Unity.Services.Core",
         "BlurBackground",
-        "StatusIndiactors"
+        "StatusIndiactors",
+        "DamageNumbersPro"
     ],
     "includePlatforms": [
         "Editor"

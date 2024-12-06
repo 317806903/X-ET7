@@ -120,6 +120,11 @@ namespace ET
             public List<(Unit unit, string playAudioActionId, bool isOnlySelfShow)> list;
         }
 
+        public struct SyncFloatingText
+        {
+            public List<(Unit unit, string floatingTextActionId, int showNum, bool isOnlySelfShow)> list;
+        }
+
         public struct SyncGetCoinShow
         {
             public List<(Unit unit, CoinTypeInGame coinType, int chgValue)> list;
@@ -129,12 +134,12 @@ namespace ET
         {
             public List<(Unit unit, int damageValue, bool isCrt)> list;
         }
-        
+
         public struct NoticeRedrawAllPaths
         {
             public M2C_DrawAllMonsterCall2HeadQuarterPath pathToDraw;
         }
-        
+
         public struct SendDrawPathsToClients
         {
             public M2C_DrawAllMonsterCall2HeadQuarterPath pathToDraw;
@@ -290,6 +295,13 @@ namespace ET
         {
             public string eventName;
             public string timerKey;
+        }
+
+        public struct AppsFlyerTutorialCompleted
+        {
+            public bool isTutorialCompleted;
+            public string tutorialId;
+            public string tutorialName;
         }
 
         public struct NoticeEventLogging

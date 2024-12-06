@@ -272,8 +272,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6140368428042726024, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140368428042726024, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
       propertyPath: EmissionModule.enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140368428042726024, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6140368428042726024, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}
@@ -332,6 +342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}
+      propertyPath: SubModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
       propertyPath: moveWithTransform
       value: 0
       objectReference: {fileID: 0}
@@ -347,8 +362,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
       propertyPath: EmissionModule.enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6182969504857939482, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}
@@ -504,6 +529,11 @@ PrefabInstance:
         type: 3}
       propertyPath: lengthInSec
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9168285722619292007, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9168285722619292007, guid: 0fe5f2b40c3e3674e9c4a16b7cf6855b,
         type: 3}

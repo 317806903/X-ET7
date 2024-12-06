@@ -25,6 +25,10 @@ namespace ET.Ability
             {
                 await AddEffectWhenSelectPosition(unit, actionCfgCreateEffect, selectHandle, actionContext);
             }
+            if (string.IsNullOrEmpty(actionCfgCreateEffect.FloatingTextId) == false)
+            {
+                FloatingTextHelper.AddFloatingText(unit, actionCfgCreateEffect.FloatingTextId, 0, selectHandle, ref actionContext);
+            }
         }
 
         public static async ETTask AddEffectWhenSelectUnits(Unit unit, ActionCfg_EffectCreate actionCfgCreateEffect, SelectHandle selectHandle, ActionContext actionContext)
@@ -250,6 +254,12 @@ namespace ET.Ability
                 ET.Ability.UnitHelper.AddSyncData_UnitEffects(unitEffect, effectObj.Id, actionCfgCreateEffect.IsOnlySelfShow);
             }
 
+            if (string.IsNullOrEmpty(actionCfgCreateEffect.FloatingTextId) == false)
+            {
+                SelectHandle selectHandle = SelectHandleHelper.CreateUnitSelfSelectHandle(unitEffect);
+                ActionContext actionContext = new();
+                FloatingTextHelper.AddFloatingText(unit, actionCfgCreateEffect.FloatingTextId, 0, selectHandle, ref actionContext);
+            }
             return effectObj;
         }
 

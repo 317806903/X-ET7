@@ -12,8 +12,8 @@ namespace ET
     [FriendOf(typeof (NavmeshComponent))]
     public static class NavmeshComponentSystem
     {
-        public static readonly DtQueryDefaultFilter DEFAULT_FILTER = new DtQueryDefaultFilter(SampleAreaModifications.SAMPLE_POLYFLAGS_ALL,
-            SampleAreaModifications.SAMPLE_POLYFLAGS_DISABLED, new float[] { 1f, 10f, 1f, 1f, 2f, 1.5f });
+        public static readonly DtQueryDefaultFilter DEFAULT_FILTER = new DtQueryDefaultFilter(SampleAreaModifications.SAMPLE_POLYFLAGS_WALK,
+            SampleAreaModifications.SAMPLE_POLYFLAGS_DISABLED, new float[] { });
 
         public class AwakeSystem: AwakeSystem<NavmeshComponent>
         {
@@ -51,10 +51,10 @@ namespace ET
             return self.radius;
         }
 
-        public static async ETTask CreateCrowd(this NavmeshComponent self, float agentRadius)
+        public static async ETTask CreateCrowd(this NavmeshComponent self, float maxAgentRadius)
         {
-            self.radius = agentRadius;
-            await self._InitDtCrowd(agentRadius);
+            self.radius = maxAgentRadius;
+            await self._InitDtCrowd(maxAgentRadius);
         }
 
         public static DtNavMesh GetNavMesh(this NavmeshComponent self)
@@ -67,9 +67,9 @@ namespace ET
             return self.GetParent<NavmeshManagerComponent>().navSample;
         }
 
-        public static async Task _InitDtCrowd(this NavmeshComponent self, float agentRadius)
+        public static async Task _InitDtCrowd(this NavmeshComponent self, float maxAgentRadius)
         {
-            DtCrowdConfig config = new DtCrowdConfig(agentRadius);
+            DtCrowdConfig config = new DtCrowdConfig(maxAgentRadius);
 
             self.crowd = new DtCrowd(config, self.GetNavMesh(), __ => DEFAULT_FILTER);
 
@@ -106,6 +106,14 @@ namespace ET
 
             self.crowd.SetObstacleAvoidanceParams(3, option);
             await ETTask.CompletedTask;
+        }
+        
+        public static void OnNavMeshUpdated(this NavmeshComponent self)
+        {
+            if (self.crowd != null)
+            {
+                self.crowd.SetNavMesh(self.GetNavMesh());
+            }
         }
 
         public static DtCrowdAgent AddAgent(this NavmeshComponent self, float separationWeight, float radius, float maxSpeed, float3 position)
@@ -307,7 +315,7 @@ namespace ET
             List<float3> arrivePath = new List<float3>();
             for (int i = 0; i < pathList.Count; i++)
             {
-                arrivePath.Add(new float3(-pathList[i].X, pathList[i].Y, pathList[i].Z));
+                arrivePath.Add(RecastHelper.ToFloat3(pathList[i]));
             }
             arrivePath = LineSimplifier.SimplifyLineRDP(arrivePath);
             return arrivePath;
@@ -320,13 +328,13 @@ namespace ET
             DtNavMeshQuery navquery = self.GetSample().GetNavMeshQuery();
             IDtQueryFilter filter = self.crowd.GetFilter(0);
 
-            RcVec3f centerPos = new RcVec3f(-pos.x, pos.y, pos.z);
+            RcVec3f centerPos = RecastHelper.ToRcVec3f(pos);
             RcVec3f nearestPt;
             navquery.FindNearestPoly(centerPos, MPolyPickExt, filter, out var nearestRef, out nearestPt, out var _);
 
             nearestRefOut = nearestRef;
             nearestPtOut = nearestPt;
-            return new float3(-nearestPt.X, nearestPt.Y, nearestPt.Z);
+            return RecastHelper.ToFloat3(nearestPt);
         }
 
         public static DtCrowdAgentParams GetAgentParams(NavmeshComponent self, float radius, float separationWeight)
@@ -339,7 +347,6 @@ namespace ET
             ap.collisionQueryRange = ap.radius * 12.0f;
             ap.pathOptimizationRange = ap.radius * 30.0f;
             ap.updateFlags = GetUpdateFlags();
-            ap.obstacleAvoidanceType = 3;
             ap.separationWeight = separationWeight;
             return ap;
         }
@@ -350,7 +357,6 @@ namespace ET
             updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_ANTICIPATE_TURNS;
             updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OPTIMIZE_VIS;
             updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OPTIMIZE_TOPO;
-            updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_OBSTACLE_AVOIDANCE;
             updateFlags |= DtCrowdAgentUpdateFlags.DT_CROWD_SEPARATION;
             return updateFlags;
         }

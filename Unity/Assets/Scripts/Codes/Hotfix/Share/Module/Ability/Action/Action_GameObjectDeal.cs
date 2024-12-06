@@ -51,9 +51,16 @@ namespace ET.Ability
 						}
 						gameObjectComponent.isHiding = false;
 					}
-					else if (gameObjectDeal is GameObjectFlicker)
+					else if (gameObjectDeal is GameObjectFlicker gameObjectFlicker)
 					{
-						gameObjectComponent.flickerEndTime = TimeHelper.ServerNow() + 1000;
+						if (gameObjectFlicker.FlickerDuration <= 0)
+						{
+							continue;
+						}
+						gameObjectComponent.flickerEndTime = TimeHelper.ServerNow() + (long)(gameObjectFlicker.FlickerDuration * 1000);
+						gameObjectComponent.flickerFrequency = gameObjectFlicker.FlickerFrequency;
+						gameObjectComponent.flickerStartColor = gameObjectFlicker.StartColor;
+						gameObjectComponent.flickerEndColor = gameObjectFlicker.EndColor;
 					}
 					else if (gameObjectDeal is GameObjectTransparent)
 					{

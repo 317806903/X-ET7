@@ -14,7 +14,7 @@ namespace ET.Ability
 
         public Damage(Dictionary<int, float> damageList)
         {
-            list = new();
+            list = DictionaryComponent<int, float>.Create();
             if (damageList != null)
             {
                 foreach (var damageInfo in damageList)
@@ -70,7 +70,7 @@ namespace ET.Ability
 
         public static Damage operator +(Damage a, Damage b)
         {
-            Dictionary<int, float> list = new();
+            Dictionary<int, float> list = DictionaryComponent<int, float>.Create();
             foreach (var damageInfo in a.list)
             {
                 if (list.ContainsKey(damageInfo.Key))
@@ -96,13 +96,37 @@ namespace ET.Ability
             return new Damage(list);
         }
 
+        public static Damage operator +(Damage a, float chgValue)
+        {
+            if (chgValue == 0)
+            {
+                return a;
+            }
+            Dictionary<int, float> list = DictionaryComponent<int, float>.Create();
+            foreach (var damageInfo in a.list)
+            {
+                list[damageInfo.Key] = damageInfo.Value + chgValue;
+            }
+            return new Damage(list);
+        }
+
+        public static Damage Set(Damage a, float setValue)
+        {
+            Dictionary<int, float> list = DictionaryComponent<int, float>.Create();
+            foreach (var damageInfo in a.list)
+            {
+                list[damageInfo.Key] = setValue;
+            }
+            return new Damage(list);
+        }
+
         public static Damage operator *(Damage a, float scale)
         {
             if (scale == 1)
             {
                 return a;
             }
-            Dictionary<int, float> list = new();
+            Dictionary<int, float> list = DictionaryComponent<int, float>.Create();
             foreach (var damageInfo in a.list)
             {
                 list[damageInfo.Key] = damageInfo.Value * scale;

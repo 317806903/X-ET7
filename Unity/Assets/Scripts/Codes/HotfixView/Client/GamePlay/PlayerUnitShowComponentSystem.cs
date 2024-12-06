@@ -79,16 +79,16 @@ namespace ET.Client
             }
             GameObjectShowComponent gameObjectShowComponent = self.GetUnit().GetComponent<GameObjectShowComponent>();
 
-            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_TowerShow");
-            GameObject TowerShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
-            self.transRoot = TowerShowGo.transform;
-            TowerShowGo.transform.SetParent(gameObjectShowComponent.GetGo().transform);
-            TowerShowGo.transform.localPosition = new float3(0, 0, 0);
+            ResEffectCfg resEffectCfg = ResEffectCfgCategory.Instance.Get("ResEffect_PlayerUnitShow");
+            GameObject PlayerUnitShowGo = GameObjectPoolHelper.GetObjectFromPool(resEffectCfg.ResName,true,1);
+            self.transRoot = PlayerUnitShowGo.transform;
+            PlayerUnitShowGo.transform.SetParent(gameObjectShowComponent.GetGo().transform);
+            PlayerUnitShowGo.transform.localPosition = new float3(0, 0, 0);
 
             Unit unit = self.GetUnit();
             float radius = Ability.UnitHelper.GetBodyRadius(unit) / Ability.UnitHelper.GetResScale(unit);
             float height = Ability.UnitHelper.GetBodyHeight(unit) / Ability.UnitHelper.GetResScale(unit);
-            TowerShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
+            PlayerUnitShowGo.transform.localScale = new Vector3(radius * 2, height, radius * 2);
 
             Transform  transCollider = self.transRoot.Find("ColliderRoot");
             transCollider.gameObject.SetActive(true);

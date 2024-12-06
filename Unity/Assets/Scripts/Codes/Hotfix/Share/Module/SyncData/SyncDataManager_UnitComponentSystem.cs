@@ -28,7 +28,7 @@ namespace ET
 
         public static void FixedUpdate(this SyncDataManager_UnitComponent self, float fixedDeltaTime)
         {
-	        self.SyncData2Client().Coroutine();
+	        self.SyncData2Client();
         }
 
         public static void AddSyncUnit(this SyncDataManager_UnitComponent self, Unit unit, Type type)
@@ -44,10 +44,10 @@ namespace ET
             self.NeedSyncList.Add(unit.Id, type);
         }
 
-        public static async ETTask SyncData2Client(this SyncDataManager_UnitComponent self)
+        public static void SyncData2Client(this SyncDataManager_UnitComponent self)
         {
 	        self.DealSyncData2PlayerId();
-	        await self.SyncData2Client_Wait();
+	        self.SyncData2Client_Wait();
         }
 
         public static void DealSyncData2PlayerId(this SyncDataManager_UnitComponent self)
@@ -77,13 +77,13 @@ namespace ET
 	        self.NeedSyncList.Clear();
         }
 
-        public static async ETTask SyncData2Client_Wait(this SyncDataManager_UnitComponent self)
+        public static void SyncData2Client_Wait(this SyncDataManager_UnitComponent self)
         {
 	        if (self.player2SyncUnit.Count == 0)
 		        return;
 
 	        SyncDataManager syncDataManager = UnitHelper.GetSyncDataManagerComponent(self.DomainScene());
-	        using ListComponent<long> removePlayerIds = ListComponent<long>.Create();
+	        self.removePlayerIds.Clear();
 	        foreach (var item in self.player2SyncUnit)
 	        {
 		        long playerId = item.Key;
@@ -109,7 +109,7 @@ namespace ET
 
 		        if (list.Count == 0)
 		        {
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds.Add(playerId);
 			        continue;
 		        }
 
@@ -118,7 +118,7 @@ namespace ET
 		        if (_SyncData_UnitComponent.unitId.Count == 0)
 		        {
 			        _SyncData_UnitComponent.Dispose();
-			        removePlayerIds.Add(playerId);
+			        self.removePlayerIds.Add(playerId);
 			        continue;
 		        }
 
@@ -128,17 +128,15 @@ namespace ET
 		        //Log.Debug($"zpb ET.SyncDataManager_UnitComponentSystem.SyncData2Client_Wait {playerId} {list.Count}");
 
 		        syncDataManager.SyncData2OnlyPlayer(playerId, syncData);
-		        removePlayerIds.Add(playerId);
+		        self.removePlayerIds.Add(playerId);
 	        }
 
-	        foreach (long playerId in removePlayerIds)
+	        foreach (long playerId in self.removePlayerIds)
 	        {
 		        self.player2SyncUnit.Remove(playerId);
 	        }
 
-	        removePlayerIds.Clear();
-
-	        await ETTask.CompletedTask;
+	        self.removePlayerIds.Clear();
         }
     }
 }

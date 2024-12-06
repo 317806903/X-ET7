@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1786467650342887235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8781360324516246535}
+  m_Layer: 0
+  m_Name: ShootElement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8781360324516246535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786467650342887235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4166850748088457021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3093009825000916684
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +666,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
     rotation3D: 0
@@ -5021,6 +5052,7 @@ Transform:
   m_Children:
   - {fileID: 1165876486955979286}
   - {fileID: 4166850747331262681}
+  - {fileID: 8781360324516246535}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4269407779959020052
@@ -5627,7 +5659,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -8709,7 +8741,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -10538,7 +10570,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
     rotation3D: 1
@@ -13823,7 +13855,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 1
+    enabled: 0
     ratio: 0
     light: {fileID: 0}
     randomDistribution: 1
@@ -20389,7 +20421,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -24796,11 +24828,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1448690643021912, guid: 416e147bbd65b7946b418f5bef484167,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7936733104789447635}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 416e147bbd65b7946b418f5bef484167, type: 3}
 --- !u!4 &4162284348898638306 stripped
 Transform:
@@ -24808,24 +24836,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4166850748266315106}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4167665007205633338 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1448690643021912, guid: 416e147bbd65b7946b418f5bef484167,
-    type: 3}
-  m_PrefabInstance: {fileID: 4166850748266315106}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7936733104789447635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4167665007205633338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4166850748924385488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24922,33 +24932,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3965613792482004190}
-    - targetCorrespondingSourceObject: {fileID: 3779205011471597057, guid: e0b83e2763882644a9fe860e1f1341bf,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9138839515890019258}
-    - targetCorrespondingSourceObject: {fileID: 6303085923774026641, guid: e0b83e2763882644a9fe860e1f1341bf,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3041208062215160022}
   m_SourcePrefab: {fileID: 100100000, guid: e0b83e2763882644a9fe860e1f1341bf, type: 3}
---- !u!1 &982292979619636945 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3779205011471597057, guid: e0b83e2763882644a9fe860e1f1341bf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4166850748924385488}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9138839515890019258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982292979619636945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1596323755674790988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3455641155121067164, guid: e0b83e2763882644a9fe860e1f1341bf,
@@ -24991,21 +24975,3 @@ MonoBehaviour:
       Value: Ready
     - Key: walk
       Value: walk
---- !u!1 &7974379523777334081 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6303085923774026641, guid: e0b83e2763882644a9fe860e1f1341bf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4166850748924385488}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3041208062215160022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7974379523777334081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08bb8ecdc93fa946b975ab85aa9b5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

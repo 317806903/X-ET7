@@ -102,12 +102,18 @@ namespace ET.Ability
 
         public static void EventHandler(this AoeObj self, AoeActionCall aoeActionCall, ref ActionContext actionContext)
         {
+            bool bRetChk = ET.Ability.ActionHandlerHelper.ChkActionCondition(self.GetUnit(), aoeActionCall.ChkCondition1, aoeActionCall.ChkCondition2, aoeActionCall.ChkCondition1SelectObj_Ref, aoeActionCall.ChkCondition2SelectObj_Ref, ref actionContext);
+            if (bRetChk == false)
+            {
+                return;
+            }
+
             SelectHandle selectHandle = ET.Ability.SelectHandleHelper.CreateSelectHandleWhenAoe(self.GetUnit(), aoeActionCall.AoeSelectObjectType);
             if (selectHandle == null)
             {
                 return;
             }
-            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.ActionCondition1, aoeActionCall.ActionCondition2, selectHandle, null, ref actionContext);
+            ET.Ability.ActionHandlerHelper.DoActionTriggerHandler(self.GetUnit(), self.GetUnit(), aoeActionCall.DelayTime, aoeActionCall.ActionId, aoeActionCall.FilterCondition1, aoeActionCall.FilterCondition2, selectHandle, null, ref actionContext);
         }
 
         public static void FixedUpdate(this AoeObj self, float fixedDeltaTime)
@@ -118,7 +124,7 @@ namespace ET.Ability
             self.timeElapsed += timePassed;
             if (self.duration <= 0)
             {
-                self.GetUnit().DestroyWithDeathShow();
+                self.GetUnit().DestroyWithDeathShow(false);
                 return;
             }
 
@@ -129,6 +135,12 @@ namespace ET.Ability
                 {
                     int lastCount = (int)(lastTimeElapsed / self.model.TickTime[i]);
                     int newCount = (int)(self.timeElapsed / self.model.TickTime[i]);
+#if UNITY_EDITOR
+                    if (newCount > lastCount + 100)
+                    {
+                        newCount = 0;
+                    }
+#endif
                     while (newCount > lastCount)
                     {
                         lastCount++;
@@ -188,7 +200,7 @@ namespace ET.Ability
             }
 
             SelectHandle curSelectHandle = ET.Ability.SelectHandleHelper.GetSelectHandleWithSelectObjectType(curUnit, self.aoeTargetCondition.SelectObjectUnitTypeBase, list);
-            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition1, ref self.actionContext);
+            (bool bRet1, bool isChgSelect1, SelectHandle newSelectHandle1) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.FilterCondition1, ref self.actionContext);
             if (isChgSelect1)
             {
                 curSelectHandle = newSelectHandle1;
@@ -196,7 +208,7 @@ namespace ET.Ability
 
             if (bRet1)
             {
-                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.ActionCondition2, ref self.actionContext);
+                (bool bRet2, bool isChgSelect2, SelectHandle newSelectHandle2) = UnitConditionHandleHelper.ChkCondition(self.GetUnit(), curSelectHandle, self.aoeTargetCondition.FilterCondition2, ref self.actionContext);
                 if (isChgSelect2)
                 {
                     curSelectHandle = newSelectHandle2;

@@ -34,7 +34,7 @@ namespace ET.Client
         public string guideFileName;
         public int priority;
         public UIGuidePathList _UIGuidePathList;
-        public int nowIndex;
+        public int nowIndex = -1;
 
         public Action<Scene> finished;
         public Action<Scene, int> stepFinished;

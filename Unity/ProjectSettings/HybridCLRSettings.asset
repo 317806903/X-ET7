@@ -18,8 +18,8 @@ MonoBehaviour:
   il2cppPlusRepoURL: https://gitee.com/focus-creative-games/il2cpp_plus
   hotUpdateAssemblyDefinitions: []
   hotUpdateAssemblies:
-  - Model_105239
-  - Hotfix_105240
+  - Model_93721
+  - Hotfix_93723
   preserveHotUpdateAssemblies: []
   hotUpdateDllCompileOutputRootDir: HybridCLRData/HotUpdateDlls
   externalHotUpdateAssembliyDirs:
@@ -49,7 +49,10 @@ MonoBehaviour:
   - GoogleMobileAds.Android.dll
   - GoogleMobileAds.iOS.dll
   - GoogleMobileAds.Ump.iOS.dll
+  - DOTween.dll
   outputLinkFile: Scripts/Loader/Plugins/HybridCLR/Generated/link.xml
   outputAOTGenericReferenceFile: Scripts/Loader/Plugins/HybridCLR/Generated/AOTGenericReferences.cs
   maxGenericReferenceIteration: 10
   maxMethodBridgeGenericIteration: 10
+  enableProfilerInReleaseBuild: 0
+  enableStraceTraceInWebGLReleaseBuild: 0

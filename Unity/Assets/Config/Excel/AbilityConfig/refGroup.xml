@@ -4,6 +4,7 @@
 	ActionCfg_FireBulletCategory,
 	ActionCfg_MoveTweenChgTargetCategory,
 	ActionCfg_GameObjectDealCategory,
+	ActionCfg_ReplaceUnitCfgIdCategory,
 	ActionCfg_EffectCreateCategory,
 	ActionCfg_EffectRemoveCategory,
 	ActionCfg_EffectRecordPointLightningTrailTargetCategory,
@@ -21,6 +22,7 @@
 	ActionCfg_TimelinePlayCategory,
 	ActionCfg_TimelineJumpTimeCategory,
 	ActionCfg_GlobalBuffAddCategory,
+	ActionCfg_GlobalBuffAddImmediatelyCategory,
 	ActionCfg_LearnUnitExtSkillCategory,
 	ActionCfg_SkillCastCategory,
 	ActionCfg_SkillLearnCategory,
@@ -30,5 +32,7 @@
 
     <refgroup name="ActionGameCfg_ref_group" ref="
 	ActionGameCfg_DoUnitActionCategory,
+	ActionGameCfg_CreateGlobalUnitCategory,
+	ActionGameCfg_RewardGamePlayTowerDefenseCardsCategory,
 	ActionGameCfg_ChgGamePlayNumericCategory"/>
 </module>

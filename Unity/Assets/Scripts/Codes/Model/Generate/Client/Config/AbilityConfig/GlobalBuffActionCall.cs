@@ -19,7 +19,7 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TrigCondition1 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); TrigCondition1.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TrigCondition2 = new System.Collections.Generic.List<SequenceGlobalCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceGlobalCondition _e0;  _e0 = SequenceGlobalCondition.DeserializeSequenceGlobalCondition(_buf); TrigCondition2.Add(_e0);}}
         DelayTime = _buf.ReadFloat();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionIds.Add(_e0);}}
         PostInit();
     }
 
@@ -43,7 +43,7 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
     /// <summary>
     /// 触发action
     /// </summary>
-    public System.Collections.Generic.List<string> ActionId { get; private set; }
+    public System.Collections.Generic.List<string> ActionIds { get; private set; }
 
     public const int __ID__ = 84143370;
     public override int GetTypeId() => __ID__;
@@ -67,7 +67,7 @@ public sealed partial class GlobalBuffActionCall: Bright.Config.BeanBase
         + "TrigCondition1:" + Bright.Common.StringUtil.CollectionToString(TrigCondition1) + ","
         + "TrigCondition2:" + Bright.Common.StringUtil.CollectionToString(TrigCondition2) + ","
         + "DelayTime:" + DelayTime + ","
-        + "ActionId:" + Bright.Common.StringUtil.CollectionToString(ActionId) + ","
+        + "ActionIds:" + Bright.Common.StringUtil.CollectionToString(ActionIds) + ","
         + "}";
     }
     

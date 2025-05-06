@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8171320510514812418}
   - component: {fileID: 1893065722960749156}
+  - component: {fileID: -1719572439508495974}
   m_Layer: 11
   m_Name: path_01
   m_TagString: Untagged
@@ -145,6 +146,21 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
+--- !u!114 &-1719572439508495974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7642859409816467763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6d6720feca4e94844127be53c36325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curWidthMultiplier: 0
+  initialWidthMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &8180927107789600391
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7756709689573849408}
   - component: {fileID: 1924680939189098306}
+  - component: {fileID: 6983664751520773130}
   m_Layer: 11
   m_Name: path_02
   m_TagString: Untagged
@@ -290,6 +307,21 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
+--- !u!114 &6983664751520773130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180927107789600391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6d6720feca4e94844127be53c36325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curWidthMultiplier: 0
+  initialWidthMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &8782145736878327818
 GameObject:
   m_ObjectHideFlags: 0

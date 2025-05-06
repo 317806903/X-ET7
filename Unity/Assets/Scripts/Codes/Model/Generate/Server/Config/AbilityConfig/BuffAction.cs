@@ -29,6 +29,7 @@ public abstract partial class BuffAction: Bright.Config.BeanBase
             case BuffActionNone.__ID__: return new BuffActionNone(_buf);
             case BuffActionModifyAttribute.__ID__: return new BuffActionModifyAttribute(_buf);
             case BuffActionModifyAttributeByWaveIndex.__ID__: return new BuffActionModifyAttributeByWaveIndex(_buf);
+            case BuffActionModifyAttributeByTeamPlayerCount.__ID__: return new BuffActionModifyAttributeByTeamPlayerCount(_buf);
             case BuffActionModifySkillAttribute.__ID__: return new BuffActionModifySkillAttribute(_buf);
             case BuffActionModifyMotionVertical.__ID__: return new BuffActionModifyMotionVertical(_buf);
             case BuffActionModifyMotionHorizontal_Forward.__ID__: return new BuffActionModifyMotionHorizontal_Forward(_buf);

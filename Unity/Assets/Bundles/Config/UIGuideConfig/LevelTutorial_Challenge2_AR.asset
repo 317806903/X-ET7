@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: LevelTutorial_Challenge2_AR
   m_EditorClassIdentifier: 
   list:
-  - name: "\u89C6\u9891"
-    isFreeClickBeforeEnter: 0
-    trigEnterCondition: 0
+  - name: "\u5347\u7EA7\u89C6\u9891"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 1
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
+    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgBattleTowerAR/EGRootContent/EGRoot/E_Battle/EG_BuyNode
     hierarchyCanvasPath: 
     hierarchyGuidePath: 
     guideTextType: 0

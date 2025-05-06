@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 966899678520663855}
   - component: {fileID: 2675242506518947245}
   - component: {fileID: 7843553817516313776}
+  - component: {fileID: -8228705640418394503}
   m_Layer: 0
   m_Name: Liquid
   m_TagString: Untagged
@@ -4802,13 +4803,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4818,6 +4821,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-8228705640418394503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835345927347463550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e03b606c4e416993f3ec81a6f33f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curGravityModifierMultiplier: 0
+  initialGravityModifierMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &4126623982752848786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,6 +4879,7 @@ GameObject:
   - component: {fileID: 993820975266725669}
   - component: {fileID: 1956445893406629129}
   - component: {fileID: 8773115647114438136}
+  - component: {fileID: -1833011988285646794}
   m_Layer: 0
   m_Name: hit
   m_TagString: Untagged
@@ -9681,13 +9700,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -9697,6 +9718,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-1833011988285646794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008421552795180583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e03b606c4e416993f3ec81a6f33f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curGravityModifierMultiplier: 0
+  initialGravityModifierMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &6461546097126962585
 GameObject:
   m_ObjectHideFlags: 0
@@ -14507,13 +14543,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -14534,6 +14572,7 @@ GameObject:
   - component: {fileID: 6436883275351014212}
   - component: {fileID: 762405084923665504}
   - component: {fileID: 6900748699289996230}
+  - component: {fileID: -6954715323649114312}
   m_Layer: 0
   m_Name: Bubbles
   m_TagString: Untagged
@@ -19415,13 +19454,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -19431,6 +19472,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-6954715323649114312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295296526465175086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e03b606c4e416993f3ec81a6f33f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curGravityModifierMultiplier: 0
+  initialGravityModifierMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &8577813585714161183
 GameObject:
   m_ObjectHideFlags: 0
@@ -19442,6 +19498,7 @@ GameObject:
   - component: {fileID: 3614300143167130156}
   - component: {fileID: 1303619029729254682}
   - component: {fileID: 3691554569301781171}
+  - component: {fileID: 4012484321942798134}
   m_Layer: 0
   m_Name: BubbleSubEmitter
   m_TagString: Untagged
@@ -24277,13 +24334,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -24293,6 +24352,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4012484321942798134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577813585714161183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e03b606c4e416993f3ec81a6f33f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curGravityModifierMultiplier: 0
+  initialGravityModifierMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &8811449540075431746
 GameObject:
   m_ObjectHideFlags: 0
@@ -24304,6 +24378,7 @@ GameObject:
   - component: {fileID: 6032196839581081690}
   - component: {fileID: 8139432694779734018}
   - component: {fileID: 3099361136471860610}
+  - component: {fileID: -6576416234765675814}
   m_Layer: 0
   m_Name: LiquidTrail
   m_TagString: Untagged
@@ -29108,13 +29183,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 0001030405
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -29124,3 +29201,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-6576416234765675814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8811449540075431746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e03b606c4e416993f3ec81a6f33f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curGravityModifierMultiplier: 0
+  initialGravityModifierMultiplier: 0
+  chkIntervalTime: 2

@@ -20,6 +20,7 @@ public sealed partial class TowerRefreshRuleOne: Bright.Config.BeanBase
     public TowerRefreshRuleOne(ByteBuf _buf) 
     {
         TowerCfgId = _buf.ReadString();
+        TowerNum = _buf.ReadInt();
         Weight = _buf.ReadInt();
         StartWaveIndex = _buf.ReadInt();
         EndWaveIndex = _buf.ReadInt();
@@ -36,6 +37,10 @@ public sealed partial class TowerRefreshRuleOne: Bright.Config.BeanBase
     /// </summary>
     public string TowerCfgId { get; private set; }
     public TowerDefense_TowerCfg TowerCfgId_Ref { get; private set; }
+    /// <summary>
+    /// 塔数量
+    /// </summary>
+    public int TowerNum { get; private set; }
     /// <summary>
     /// 权重
     /// </summary>
@@ -66,6 +71,7 @@ public sealed partial class TowerRefreshRuleOne: Bright.Config.BeanBase
     {
         return "{ "
         + "TowerCfgId:" + TowerCfgId + ","
+        + "TowerNum:" + TowerNum + ","
         + "Weight:" + Weight + ","
         + "StartWaveIndex:" + StartWaveIndex + ","
         + "EndWaveIndex:" + EndWaveIndex + ","

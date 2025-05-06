@@ -22,6 +22,8 @@ public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction
         NumericType = (NumericType)_buf.ReadInt();
         BaseValueWaveIndex = _buf.ReadFloat();
         StackValueWaveIndex = _buf.ReadFloat();
+        BaseValueStageNum = _buf.ReadFloat();
+        StackValueStageNum = _buf.ReadFloat();
         BaseValueCircleWaveIndex = _buf.ReadFloat();
         StackValueCircleWaveIndex = _buf.ReadFloat();
         BaseValueCircleNumIndex = _buf.ReadFloat();
@@ -49,6 +51,14 @@ public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction
     /// 按照层数附加(通过波次修改属性)
     /// </summary>
     public float StackValueWaveIndex { get; private set; }
+    /// <summary>
+    /// 初始附加(通过阶段数修改属性)
+    /// </summary>
+    public float BaseValueStageNum { get; private set; }
+    /// <summary>
+    /// 按照层数附加(通过阶段数修改属性)
+    /// </summary>
+    public float StackValueStageNum { get; private set; }
     /// <summary>
     /// 初始附加(通过循环波次修改属性)
     /// </summary>
@@ -98,6 +108,8 @@ public sealed partial class BuffActionModifyAttributeByWaveIndex:  BuffAction
         + "NumericType:" + NumericType + ","
         + "BaseValueWaveIndex:" + BaseValueWaveIndex + ","
         + "StackValueWaveIndex:" + StackValueWaveIndex + ","
+        + "BaseValueStageNum:" + BaseValueStageNum + ","
+        + "StackValueStageNum:" + StackValueStageNum + ","
         + "BaseValueCircleWaveIndex:" + BaseValueCircleWaveIndex + ","
         + "StackValueCircleWaveIndex:" + StackValueCircleWaveIndex + ","
         + "BaseValueCircleNumIndex:" + BaseValueCircleNumIndex + ","

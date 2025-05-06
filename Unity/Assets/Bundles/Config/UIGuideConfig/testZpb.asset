@@ -284,7 +284,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EButton_Buy
+    hierarchyGuidePath: DlgBattleTower/EGRootContent/EGRoot/E_Battle/BuyNode/EG_TowerBuyShow/ELoopScrollList_Buy/Content/Item_TowerBuy/EButton_Buy
     guideTextType: 1
     guideTextImgPath: 
     text: "\u8D2D\u4E70\u5854"
@@ -303,7 +303,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/BuyNode/EG_TowerBuyShow/EButton_BuyClose
+    hierarchyGuidePath: DlgBattleTower/EGRootContent/EGRoot/E_Battle/BuyNode/EG_TowerBuyShow/EButton_BuyClose
     guideTextType: 1
     guideTextImgPath: 
     text: "\u70B9\u51FB\u5173\u95ED"
@@ -322,7 +322,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/ELoopScrollList_Tower/Content/Item_Tower/EButton_Select
+    hierarchyGuidePath: DlgBattleTower/EGRootContent/EGRoot/E_Battle/ELoopScrollList_Tower/Content/Item_Tower/EButton_Select
     guideTextType: 1
     guideTextImgPath: 
     text: "\u62D6\u653E\u653E\u7F6E\u5854"
@@ -379,7 +379,7 @@ MonoBehaviour:
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgBattleTower/E_Battle/EButton_ReadyWhenRestTime
+    hierarchyGuidePath: DlgBattleTower/EGRootContent/EGRoot/E_Battle/EButton_ReadyWhenRestTime
     guideTextType: 1
     guideTextImgPath: 
     text: "\u6211\u5DF2\u51C6\u5907\u597D"

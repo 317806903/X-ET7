@@ -15,6 +15,7 @@ Remove-Item $path\Config\Json -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\cs -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\c -Recurse -ErrorAction Ignore
 
+Get-Date -Format "yyyy-MM-dd HH:mm:ss" | Out-File -FilePath $path\linux-x64_version.txt -Encoding UTF8
 
 #---------------------------------
 $path = ".\Publish\linux-x64-Quick"
@@ -35,6 +36,8 @@ Copy-Item .\Bin\linux-x64\publish\ThirdParty.dll -Destination $path\Bin\ThirdPar
 
 Remove-Item $path\Config -Recurse -ErrorAction Ignore
 Copy-Item .\Config\Excel\s\AbilityConfig -Destination $path\Config\Excel\s\AbilityConfig  -Recurse -Force
+
+Get-Date -Format "yyyy-MM-dd HH:mm:ss" | Out-File -FilePath $path\linux-x64_version.txt -Encoding UTF8
 
 echo "`n`n=========================Build Server linux-x64 Success========================="
 timeout /t 1

@@ -23,6 +23,7 @@ public sealed partial class TutorialCfg: Bright.Config.BeanBase
         IsShow = _buf.ReadBool();
         ResIcon = _buf.ReadString();
         ResVideo = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ChildList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ChildList.Add(_e0);}}
         PostInit();
     }
 
@@ -63,6 +64,11 @@ public sealed partial class TutorialCfg: Bright.Config.BeanBase
     /// </summary>
     public string ResVideo { get; private set; }
     public ResVideoCfg ResVideo_Ref { get; private set; }
+    /// <summary>
+    /// 子节点列表
+    /// </summary>
+    public System.Collections.Generic.List<string> ChildList { get; private set; }
+    public System.Collections.Generic.List<TutorialCfg> ChildList_Ref { get; private set; }
 
     public const int __ID__ = 24928262;
     public override int GetTypeId() => __ID__;
@@ -71,6 +77,7 @@ public sealed partial class TutorialCfg: Bright.Config.BeanBase
     {
         this.ResIcon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(ResIcon);
         this.ResVideo_Ref = (_tables["ResVideoCfgCategory"] as ResVideoCfgCategory).GetOrDefault(ResVideo);
+        { TutorialCfgCategory __table = (TutorialCfgCategory)_tables["TutorialCfgCategory"]; this.ChildList_Ref = new System.Collections.Generic.List<TutorialCfg>(); foreach(var __e in ChildList) { this.ChildList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
@@ -90,6 +97,7 @@ public sealed partial class TutorialCfg: Bright.Config.BeanBase
         + "IsShow:" + IsShow + ","
         + "ResIcon:" + ResIcon + ","
         + "ResVideo:" + ResVideo + ","
+        + "ChildList:" + Bright.Common.StringUtil.CollectionToString(ChildList) + ","
         + "}";
     }
     

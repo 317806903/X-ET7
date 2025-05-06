@@ -20,19 +20,23 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         IsNeedPutHomeAndMonsterCall = _buf.ReadBool();
-        PlayerInitGold = _buf.ReadInt();
+        IncreaseGold = TowerDefenseIncreaseGold.DeserializeTowerDefenseIncreaseGold(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);PlayerInitCards = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     PlayerInitCards.Add(_k0, _v0);}}
         InterestOnDeposit = _buf.ReadInt();
         InterestOnDepositMaxValue = _buf.ReadInt();
-        ResTime = _buf.ReadFloat();
         LimitTowerCount = _buf.ReadInt();
         RefreshBuyTowerCost = _buf.ReadInt();
         IsAutoRefreshBuyTower = _buf.ReadBool();
         BuyTowerPoolCount = _buf.ReadInt();
         HomeLife = _buf.ReadInt();
+        GameInstructions_l10n_key = _buf.ReadString(); GameInstructions = _buf.ReadString();
         BuyTowerRefreshRuleCfgId = _buf.ReadString();
-        MonsterWaveCallRuleCfgId = _buf.ReadString();
-        MonsterWaveCallStartWaveIndex = _buf.ReadInt();
+        MonsterWaveCallRule = TowerDefenseBattleMonsterWaveCall.DeserializeTowerDefenseBattleMonsterWaveCall(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CameraPlayerUnitCreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CameraPlayerUnitCreateActionIds.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);PlayerUnitCreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); PlayerUnitCreateActionIds.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TowerCreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TowerCreateActionIds.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterWaveCallCreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterWaveCallCreateActionIds.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffAddList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffAddList.Add(_e0);}}
         PostInit();
     }
 
@@ -57,10 +61,11 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// 是否需要手动放置大本营和出怪点
     /// </summary>
     public bool IsNeedPutHomeAndMonsterCall { get; private set; }
+    public TowerDefenseIncreaseGold IncreaseGold { get; private set; }
     /// <summary>
-    /// 每个玩家初始金币
+    /// 玩家初始卡牌
     /// </summary>
-    public int PlayerInitGold { get; private set; }
+    public System.Collections.Generic.Dictionary<string, int> PlayerInitCards { get; private set; }
     /// <summary>
     /// 波次结束结算存款利息(%)
     /// </summary>
@@ -69,10 +74,6 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// 波次结束结算存款利息最大值
     /// </summary>
     public int InterestOnDepositMaxValue { get; private set; }
-    /// <summary>
-    /// 中间休息时间
-    /// </summary>
-    public float ResTime { get; private set; }
     /// <summary>
     /// 每人最多允许建造塔数
     /// </summary>
@@ -94,34 +95,55 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
     /// </summary>
     public int HomeLife { get; private set; }
     /// <summary>
+    /// 游戏介绍
+    /// </summary>
+    public string GameInstructions { get; private set; }
+    public string GameInstructions_l10n_key { get; }
+    /// <summary>
     /// 可购买塔刷新规则
     /// </summary>
     public string BuyTowerRefreshRuleCfgId { get; private set; }
     public TowerDefense_BuyTowerRefreshRuleCfg BuyTowerRefreshRuleCfgId_Ref { get; private set; }
+    public TowerDefenseBattleMonsterWaveCall MonsterWaveCallRule { get; private set; }
     /// <summary>
-    /// 刷怪点刷怪规则
+    /// cameraPlayer生成时Action事件id（对应ActionConfig文件夹下表格）
     /// </summary>
-    public string MonsterWaveCallRuleCfgId { get; private set; }
+    public System.Collections.Generic.List<string> CameraPlayerUnitCreateActionIds { get; private set; }
     /// <summary>
-    /// 刷怪点刷怪开始进来时波次(下一波+1)
+    /// player生成时Action事件id（对应ActionConfig文件夹下表格）
     /// </summary>
-    public int MonsterWaveCallStartWaveIndex { get; private set; }
+    public System.Collections.Generic.List<string> PlayerUnitCreateActionIds { get; private set; }
     /// <summary>
-    /// 刷怪点刷怪生成时Action事件id（对应ActionConfig文件夹下表格）
+    /// 塔生成时Action事件id（对应ActionConfig文件夹下表格）
+    /// </summary>
+    public System.Collections.Generic.List<string> TowerCreateActionIds { get; private set; }
+    /// <summary>
+    /// 怪生成时Action事件id（对应ActionConfig文件夹下表格）
     /// </summary>
     public System.Collections.Generic.List<string> MonsterWaveCallCreateActionIds { get; private set; }
+    /// <summary>
+    /// 效果列表
+    /// </summary>
+    public System.Collections.Generic.List<string> GlobalBuffAddList { get; private set; }
+    public System.Collections.Generic.List<ActionCfg_GlobalBuffAdd> GlobalBuffAddList_Ref { get; private set; }
 
     public const int __ID__ = -1245243737;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        IncreaseGold?.Resolve(_tables);
         this.BuyTowerRefreshRuleCfgId_Ref = (_tables["TowerDefense_BuyTowerRefreshRuleCfgCategory"] as TowerDefense_BuyTowerRefreshRuleCfgCategory).GetOrDefault(BuyTowerRefreshRuleCfgId);
+        MonsterWaveCallRule?.Resolve(_tables);
+        { ActionCfg_GlobalBuffAddCategory __table = (ActionCfg_GlobalBuffAddCategory)_tables["ActionCfg_GlobalBuffAddCategory"]; this.GlobalBuffAddList_Ref = new System.Collections.Generic.List<ActionCfg_GlobalBuffAdd>(); foreach(var __e in GlobalBuffAddList) { this.GlobalBuffAddList_Ref.Add(__table.GetOrDefault(__e)); } }
         PostResolve();
     }
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        IncreaseGold?.TranslateText(translator);
+        GameInstructions = translator(GameInstructions_l10n_key, GameInstructions);
+        MonsterWaveCallRule?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -131,19 +153,23 @@ public sealed partial class GamePlayTowerDefenseCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "IsNeedPutHomeAndMonsterCall:" + IsNeedPutHomeAndMonsterCall + ","
-        + "PlayerInitGold:" + PlayerInitGold + ","
+        + "IncreaseGold:" + IncreaseGold + ","
+        + "PlayerInitCards:" + Bright.Common.StringUtil.CollectionToString(PlayerInitCards) + ","
         + "InterestOnDeposit:" + InterestOnDeposit + ","
         + "InterestOnDepositMaxValue:" + InterestOnDepositMaxValue + ","
-        + "ResTime:" + ResTime + ","
         + "LimitTowerCount:" + LimitTowerCount + ","
         + "RefreshBuyTowerCost:" + RefreshBuyTowerCost + ","
         + "IsAutoRefreshBuyTower:" + IsAutoRefreshBuyTower + ","
         + "BuyTowerPoolCount:" + BuyTowerPoolCount + ","
         + "HomeLife:" + HomeLife + ","
+        + "GameInstructions:" + GameInstructions + ","
         + "BuyTowerRefreshRuleCfgId:" + BuyTowerRefreshRuleCfgId + ","
-        + "MonsterWaveCallRuleCfgId:" + MonsterWaveCallRuleCfgId + ","
-        + "MonsterWaveCallStartWaveIndex:" + MonsterWaveCallStartWaveIndex + ","
+        + "MonsterWaveCallRule:" + MonsterWaveCallRule + ","
+        + "CameraPlayerUnitCreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CameraPlayerUnitCreateActionIds) + ","
+        + "PlayerUnitCreateActionIds:" + Bright.Common.StringUtil.CollectionToString(PlayerUnitCreateActionIds) + ","
+        + "TowerCreateActionIds:" + Bright.Common.StringUtil.CollectionToString(TowerCreateActionIds) + ","
         + "MonsterWaveCallCreateActionIds:" + Bright.Common.StringUtil.CollectionToString(MonsterWaveCallCreateActionIds) + ","
+        + "GlobalBuffAddList:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffAddList) + ","
         + "}";
     }
     

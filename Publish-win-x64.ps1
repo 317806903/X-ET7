@@ -15,6 +15,7 @@ Remove-Item $path\Config\Json -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\cs -Recurse -ErrorAction Ignore
 Remove-Item $path\Config\Excel\c -Recurse -ErrorAction Ignore
 
+Get-Date -Format "yyyy-MM-dd HH:mm:ss" | Out-File -FilePath $path\x64_version.txt -Encoding UTF8
 
 #---------------------------------
 $path = ".\Publish\win-x64-Quick"
@@ -35,6 +36,8 @@ Copy-Item .\Bin\win-x64\publish\ThirdParty.dll -Destination $path\Bin\ThirdParty
 
 Remove-Item $path\Config -Recurse -ErrorAction Ignore
 Copy-Item .\Config\Excel\s\AbilityConfig -Destination $path\Config\Excel\s\AbilityConfig  -Recurse -Force
+
+Get-Date -Format "yyyy-MM-dd HH:mm:ss" | Out-File -FilePath $path\x64_version.txt -Encoding UTF8
 
 echo "`n`n=========================Build Server win-x64 Success========================="
 timeout /t 1

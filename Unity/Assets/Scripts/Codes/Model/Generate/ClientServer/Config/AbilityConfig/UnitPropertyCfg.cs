@@ -24,7 +24,8 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         CriticalHitDamageBase = _buf.ReadInt();
         CriticalStrikeRateBase = _buf.ReadInt();
         DamageDeepeningBase = _buf.ReadInt();
-        DamageReliefBase = _buf.ReadInt();
+        DamageReliefWhenPhysicalBase = _buf.ReadInt();
+        DamageReliefWhenMagicBase = _buf.ReadInt();
         UIAttribute1 = UIAttribute.DeserializeUIAttribute(_buf);
         UIAttribute2 = UIAttribute.DeserializeUIAttribute(_buf);
         UIAttribute3 = UIAttribute.DeserializeUIAttribute(_buf);
@@ -63,9 +64,13 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
     /// </summary>
     public int DamageDeepeningBase { get; private set; }
     /// <summary>
-    /// 受击伤害减免系数(N%)
+    /// 受击物理伤害减免系数(N%)
     /// </summary>
-    public int DamageReliefBase { get; private set; }
+    public int DamageReliefWhenPhysicalBase { get; private set; }
+    /// <summary>
+    /// 受击魔法伤害减免系数(N%)
+    /// </summary>
+    public int DamageReliefWhenMagicBase { get; private set; }
     public UIAttribute UIAttribute1 { get; private set; }
     public UIAttribute UIAttribute2 { get; private set; }
     public UIAttribute UIAttribute3 { get; private set; }
@@ -99,7 +104,8 @@ public sealed partial class UnitPropertyCfg: Bright.Config.BeanBase
         + "CriticalHitDamageBase:" + CriticalHitDamageBase + ","
         + "CriticalStrikeRateBase:" + CriticalStrikeRateBase + ","
         + "DamageDeepeningBase:" + DamageDeepeningBase + ","
-        + "DamageReliefBase:" + DamageReliefBase + ","
+        + "DamageReliefWhenPhysicalBase:" + DamageReliefWhenPhysicalBase + ","
+        + "DamageReliefWhenMagicBase:" + DamageReliefWhenMagicBase + ","
         + "UIAttribute1:" + UIAttribute1 + ","
         + "UIAttribute2:" + UIAttribute2 + ","
         + "UIAttribute3:" + UIAttribute3 + ","

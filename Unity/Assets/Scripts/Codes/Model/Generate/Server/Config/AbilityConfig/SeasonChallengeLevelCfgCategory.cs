@@ -19,7 +19,7 @@ public partial class SeasonChallengeLevelCfgCategory: ConfigSingleton<SeasonChal
 {
     private readonly List<ChallengeLevelCfg> _dataList;
 
-    private Dictionary<(int, int), ChallengeLevelCfg> _dataMapUnion;
+    private Dictionary<(int, int, PVELevelDifficulty), ChallengeLevelCfg> _dataMapUnion;
 
     public SeasonChallengeLevelCfgCategory(ByteBuf _buf)
     {
@@ -31,17 +31,17 @@ public partial class SeasonChallengeLevelCfgCategory: ConfigSingleton<SeasonChal
             _v = ChallengeLevelCfg.DeserializeChallengeLevelCfg(_buf);
             _dataList.Add(_v);
         }
-        _dataMapUnion = new Dictionary<(int, int), ChallengeLevelCfg>();
+        _dataMapUnion = new Dictionary<(int, int, PVELevelDifficulty), ChallengeLevelCfg>();
         foreach(var _v in _dataList)
         {
-            _dataMapUnion.Add((_v.SeasonId, _v.Index), _v);
+            _dataMapUnion.Add((_v.SeasonId, _v.Index, _v.PveLevelDifficulty), _v);
         }
         PostInit();
     }
 
     public List<ChallengeLevelCfg> DataList => _dataList;
 
-    public ChallengeLevelCfg Get(int seasonId, int index) => _dataMapUnion.TryGetValue((seasonId, index), out ChallengeLevelCfg __v) ? __v : null;
+    public ChallengeLevelCfg Get(int seasonId, int index, PVELevelDifficulty pveLevelDifficulty) => _dataMapUnion.TryGetValue((seasonId, index, pveLevelDifficulty), out ChallengeLevelCfg __v) ? __v : null;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

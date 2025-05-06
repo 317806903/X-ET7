@@ -29,6 +29,8 @@ public abstract partial class GamePlayTowerDefenseBase:  GamePlayModeBase
         {
             case GamePlayTowerDefenseNormal.__ID__: return new GamePlayTowerDefenseNormal(_buf);
             case GamePlayTowerDefenseEndlessChallengeMonster.__ID__: return new GamePlayTowerDefenseEndlessChallengeMonster(_buf);
+            case GamePlayTowerDefenseNormalTeamOne.__ID__: return new GamePlayTowerDefenseNormalTeamOne(_buf);
+            case GamePlayTowerDefenseEndlessChallengeMonsterTeamOne.__ID__: return new GamePlayTowerDefenseEndlessChallengeMonsterTeamOne(_buf);
             default: throw new SerializationException();
         }
     }

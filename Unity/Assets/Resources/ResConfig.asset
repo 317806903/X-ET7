@@ -15,8 +15,8 @@ MonoBehaviour:
   ResLoadMode: 0
   ResHostServerIP: http://127.0.0.1
   ResGameVersion: v1.0
-  Version: 1.60921321
-  Channel: 9998
+  Version: 1.66638899
+  Channel: 10000
   RouterHttpHost: 127.0.0.1
   RouterHttpPort: 3478
   areaType: 2

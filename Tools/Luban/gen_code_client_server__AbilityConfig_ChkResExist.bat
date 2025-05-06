@@ -10,14 +10,12 @@ echo ======================= ClientServer ==========================
 %GEN_CLIENT% --template_search_path CustomTemplate -j cfg --^
  -d %CONF_ROOT%\__root__.xml ^
  --input_data_dir %CONF_ROOT% ^
- --output_code_dir %OUTPUT_CODE_DIR%\ClientServer\Config\AbilityConfig ^
- --output_data_dir %OUTPUT_DATA_DIR%\cs\AbilityConfig ^
+	 --output_code_dir %OUTPUT_CODE_DIR%\Client\Config\AbilityConfig ^
+	 --output_data_dir %OUTPUT_DATA_DIR%\c\AbilityConfig ^
+	 --output:exclude_tags s ^
  --gen_types code_cs_bin,data_bin ^
- -s all ^
- --validate_root_dir %WORKSPACE%\Unity ^
- --l10n:input_text_files %CONF_ROOT%\TextKeyValue\LocalizeConfig_Excel.xlsx ^
- --l10n:text_field_name text_en ^
- --l10n:output_not_translated_text_file %CONF_ROOT%\TextKeyValue\__NotLocalized_Excel.txt
+ -s client ^
+ --validate_root_dir %WORKSPACE%\Unity
 
 if %ERRORLEVEL% NEQ 0 (
 	pause
@@ -25,4 +23,5 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo "============success============"
-timeout /t 1
+::timeout /t 1
+pause

@@ -20,6 +20,10 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
         Name = _buf.ReadString();
         IsUseMyTowers = _buf.ReadBool();
         MyTowersWeight = _buf.ReadInt();
+        IsUseMySkills = _buf.ReadBool();
+        MySkillsWeight = _buf.ReadInt();
+        IsUseMyMonsterCalls = _buf.ReadBool();
+        MyMonsterCallsWeight = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TowerWeight = new System.Collections.Generic.List<TowerRefreshRuleOne>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { TowerRefreshRuleOne _e0;  _e0 = TowerRefreshRuleOne.DeserializeTowerRefreshRuleOne(_buf); TowerWeight.Add(_e0);}}
         PostInit();
     }
@@ -38,13 +42,29 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
     /// </summary>
     public string Name { get; private set; }
     /// <summary>
-    /// 是否使用自身拥有卡
+    /// 是否使用自身拥有塔卡
     /// </summary>
     public bool IsUseMyTowers { get; private set; }
     /// <summary>
-    /// 自身拥有卡的单卡权重
+    /// 自身拥有塔卡的单卡权重
     /// </summary>
     public int MyTowersWeight { get; private set; }
+    /// <summary>
+    /// 是否使用自身拥有技能卡
+    /// </summary>
+    public bool IsUseMySkills { get; private set; }
+    /// <summary>
+    /// 自身拥有技能卡的单卡权重
+    /// </summary>
+    public int MySkillsWeight { get; private set; }
+    /// <summary>
+    /// 是否使用自身拥有怪物召唤卡
+    /// </summary>
+    public bool IsUseMyMonsterCalls { get; private set; }
+    /// <summary>
+    /// 自身拥有怪物召唤卡的单卡权重
+    /// </summary>
+    public int MyMonsterCallsWeight { get; private set; }
     public System.Collections.Generic.List<TowerRefreshRuleOne> TowerWeight { get; private set; }
 
     public const int __ID__ = -621375048;
@@ -68,6 +88,10 @@ public sealed partial class TowerDefense_BuyTowerRefreshRuleCfg: Bright.Config.B
         + "Name:" + Name + ","
         + "IsUseMyTowers:" + IsUseMyTowers + ","
         + "MyTowersWeight:" + MyTowersWeight + ","
+        + "IsUseMySkills:" + IsUseMySkills + ","
+        + "MySkillsWeight:" + MySkillsWeight + ","
+        + "IsUseMyMonsterCalls:" + IsUseMyMonsterCalls + ","
+        + "MyMonsterCallsWeight:" + MyMonsterCallsWeight + ","
         + "TowerWeight:" + Bright.Common.StringUtil.CollectionToString(TowerWeight) + ","
         + "}";
     }

@@ -31,117 +31,125 @@ namespace ET.AbilityConfig
         /// </summary>
         BuffOnRefresh = 4,
         /// <summary>
-        /// 监听 buff在每个工作周期会执行的函数
+        /// 监听 buff在被启用 时候触发的事件
         /// </summary>
-        BuffOnTick1 = 5,
+        BuffOnEnable = 5,
+        /// <summary>
+        /// 监听 buff在被禁用 时候触发的事件
+        /// </summary>
+        BuffOnDisable = 6,
         /// <summary>
         /// 监听 buff在每个工作周期会执行的函数
         /// </summary>
-        BuffOnTick2 = 6,
+        BuffOnTick1 = 7,
         /// <summary>
         /// 监听 buff在每个工作周期会执行的函数
         /// </summary>
-        BuffOnTick3 = 7,
+        BuffOnTick2 = 8,
+        /// <summary>
+        /// 监听 buff在每个工作周期会执行的函数
+        /// </summary>
+        BuffOnTick3 = 9,
         /// <summary>
         /// 监听 buff在开始或者每个工作周期会执行的函数
         /// </summary>
-        BuffOnStartOrTick1 = 8,
+        BuffOnStartOrTick1 = 10,
         /// <summary>
         /// 监听 buff在开始或者每个工作周期会执行的函数
         /// </summary>
-        BuffOnStartOrTick2 = 9,
+        BuffOnStartOrTick2 = 11,
         /// <summary>
         /// 监听 buff在开始或者每个工作周期会执行的函数
         /// </summary>
-        BuffOnStartOrTick3 = 10,
+        BuffOnStartOrTick3 = 12,
         /// <summary>
         /// 监听 在这个buffObj被移除之前要做的事情，如果运行之后buffObj又不足以被删除了就会被保留
         /// </summary>
-        BuffOnRemoved = 11,
+        BuffOnRemoved = 13,
         /// <summary>
         /// 监听 在这个buffObj被移除之后要做的事情
         /// </summary>
-        BuffOnDestroy = 12,
+        BuffOnDestroy = 14,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageBeforeOnHit = 13,
+        DamageBeforeOnHit = 15,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的初步事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageBeforeOnBeHurt = 14,
+        DamageBeforeOnBeHurt = 16,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为攻击者会发生的事情
         /// </summary>
-        DamageAfterOnHit = 15,
+        DamageAfterOnHit = 17,
         /// <summary>
         /// 监听 在伤害流程中，触发伤害之前要做的最终事件, 持有这个buff的人作为挨打者会发生的事情
         /// </summary>
-        DamageAfterOnBeHurt = 16,
+        DamageAfterOnBeHurt = 18,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，如果击杀目标，则会触发的啥事情
         /// </summary>
-        DamageBeforeOnKill = 17,
+        DamageBeforeOnKill = 19,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标前触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
-        DamageBeforeOnBeKilled = 18,
+        DamageBeforeOnBeKilled = 20,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发，如果击杀目标，则会触发的啥事情
         /// </summary>
-        DamageAfterOnKill = 19,
+        DamageAfterOnKill = 21,
         /// <summary>
         /// 监听 在伤害流程中，击杀目标后触发，持有这个buff的人被杀死了，会触发的事情
         /// </summary>
-        DamageAfterOnBeKilled = 20,
+        DamageAfterOnBeKilled = 22,
         /// <summary>
         /// 监听 unit切换保持的选择目标
         /// </summary>
-        UnitChgSaveSelectObj = 21,
+        UnitChgSaveSelectObj = 23,
         /// <summary>
         /// 监听 unit被创建的事件
         /// </summary>
-        UnitOnCreate = 22,
+        UnitOnCreate = 24,
         /// <summary>
         /// 监听 子弹碰到Mesh的事件
         /// </summary>
-        BulletOnHitMesh = 23,
+        BulletOnHitMesh = 25,
         /// <summary>
         /// 监听 unit攻击到Mesh
         /// </summary>
-        UnitOnHitMesh = 24,
+        UnitOnHitMesh = 26,
         /// <summary>
         /// 监听 子弹碰到特定位置的事件
         /// </summary>
-        BulletOnHitPos = 25,
+        BulletOnHitPos = 27,
         /// <summary>
         /// 监听 unit攻击到特定位置
         /// </summary>
-        UnitOnHitPos = 26,
+        UnitOnHitPos = 28,
         /// <summary>
         /// 监听 unit产生攻击的事件
         /// </summary>
-        UnitOnHit = 27,
+        UnitOnHit = 29,
         /// <summary>
         /// 监听 unit被攻击的事件
         /// </summary>
-        UnitOnBeHurt = 28,
+        UnitOnBeHurt = 30,
         /// <summary>
         /// 监听 unit销毁的事件
         /// </summary>
-        UnitOnRemoved = 29,
+        UnitOnRemoved = 31,
         /// <summary>
         /// 监听 召唤Bullet
         /// </summary>
-        CallBullet = 30,
+        CallBullet = 32,
         /// <summary>
         /// 监听 召唤Aoe
         /// </summary>
-        CallAoe = 31,
+        CallAoe = 33,
         /// <summary>
         /// 监听 召唤Actor
         /// </summary>
-        CallActor = 32,
+        CallActor = 34,
     }
 
 } 

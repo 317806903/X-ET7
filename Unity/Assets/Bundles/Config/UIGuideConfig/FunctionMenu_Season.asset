@@ -22,7 +22,7 @@ MonoBehaviour:
     hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Season
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_AREndlessChallenge_Rank
+    text: TextCode_Key_TutorialText_AREndlessChallenge_BringUp
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
     hierarchyGuidePath: DlgRankPowerupSeason/EGRoot/RigthTopTabGroup/TabPowerupsRoot/EBtnTabPowerups_Unselected
-    guideTextType: 1
+    guideTextType: 0
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_AREndlessChallenge_BringUp
     specImgMatchType: 0
@@ -53,20 +53,60 @@ MonoBehaviour:
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 
-  - name: "\u70B9\u51FB\u80CC\u5305"
-    isFreeClickBeforeEnter: 1
-    trigEnterCondition: 1
+  - name: "\u5347\u7EA7\u4E00\u6B21"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: Init/GlobalRoot/UIRoot/NormalRoot/DlgGameModeAR
+    trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_BattleDeck
+    hierarchyGuidePath: DlgRankPowerupSeason/EGRoot/EPage_Powerup/BottomInfo/Update_Tutorial
     guideTextType: 1
     guideTextImgPath: 
-    text: TextCode_Key_TutorialText_Bags
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Upgrade
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u8FDB\u5165\u6311\u6218\u6A21\u5F0F"
+    isFreeClickBeforeEnter: 1
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_play/E_GameMode/E_PVE
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Challenge
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
     waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u9009\u62E9\u96BE\u5EA6"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgChallengeMode/E_HomePage/E_play/EPage_ChallengNormal/info/E_difficultyselect_btnlist
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_ARPVE_Mode
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 

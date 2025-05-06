@@ -79,21 +79,41 @@ namespace ET.AbilityConfig
         /// </summary>
         BeBreakInvisible = 16,
         /// <summary>
+        /// 看到显形单位
+        /// </summary>
+        SeeInvisible = 17,
+        /// <summary>
+        /// 飞行:不可被其他人触碰(不被主动搜索到)
+        /// </summary>
+        Fly = 18,
+        /// <summary>
+        /// 被破飞行
+        /// </summary>
+        BeBreakFly = 19,
+        /// <summary>
+        /// 可攻击飞行
+        /// </summary>
+        TouchFly = 20,
+        /// <summary>
         /// 不作为攻击目标
         /// </summary>
-        CannotBeTargeted = 17,
+        CannotBeTargeted = 21,
         /// <summary>
         /// 动作停止(被冰冻)
         /// </summary>
-        StopAnimator = 18,
+        StopAnimator = 22,
         /// <summary>
         /// 不可被移动(击退，击飞等)
         /// </summary>
-        NoMotion = 19,
-        BuffTagType1 = 20,
-        BuffTagType2 = 21,
-        BuffTagType3 = 22,
-        BuffTagType4 = 23,
+        NoMotion = 23,
+        /// <summary>
+        /// 障碍塔
+        /// </summary>
+        ColliderTower = 24,
+        BuffTagType1 = 25,
+        BuffTagType2 = 26,
+        BuffTagType3 = 27,
+        BuffTagType4 = 28,
     }
 
 } 

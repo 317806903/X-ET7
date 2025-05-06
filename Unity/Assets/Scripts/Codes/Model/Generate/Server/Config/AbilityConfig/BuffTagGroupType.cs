@@ -20,7 +20,7 @@ namespace ET.AbilityConfig
         BuffTagGroupType4 = 4,
         BuffTagGroupCDDown = 5,
         BuffTagGroupTowerFire = 6,
-        BuffTagGroupTowerLianJi = 7,
+        BuffTagGroupStun = 7,
         BuffTagGroupTowerwitch = 8,
         BuffTagGroupTowerZaiE = 9,
         BuffTagGroupTowerCurse = 10,
@@ -35,6 +35,8 @@ namespace ET.AbilityConfig
         BuffTagGroupNiao = 19,
         BuffTagGroupSlow = 20,
         BuffTagGroupInvisible = 21,
+        BuffTagGroupBreak = 22,
+        BuffTagGroupFly = 23,
     }
 
 } 

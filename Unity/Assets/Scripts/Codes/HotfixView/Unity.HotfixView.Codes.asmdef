@@ -19,7 +19,6 @@
         "Unity.Services.PlayerAccounts",
         "Unity.Services.Authentication",
         "Unity.Services.Core",
-        "BlurBackground",
         "IngameDebugConsole.Runtime",
         "EventLoggingAPIModule",
         "DOTwee.Pro.Runtime",
@@ -30,7 +29,8 @@
         "AppsFlyer",
         "MoreMountains.NiceVibrations",
         "MoreMountains.NiceVibrations.Haptics",
-        "DamageNumbersPro"
+        "DamageNumbersPro",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"

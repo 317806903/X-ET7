@@ -73,7 +73,7 @@ namespace ET.AbilityConfig
         CriticalStrikeRateFinalAdd = 10094,
         CriticalStrikeRateFinalPct = 10095,
         /// <summary>
-        /// 伤害加深系数(N%)
+        /// 攻击伤害加深系数(N%)
         /// </summary>
         DamageDeepeningBase = 10101,
         DamageDeepeningAdd = 10102,
@@ -81,13 +81,85 @@ namespace ET.AbilityConfig
         DamageDeepeningFinalAdd = 10104,
         DamageDeepeningFinalPct = 10105,
         /// <summary>
-        /// 伤害减免系数(N%)
+        /// 受击物理伤害减免系数(N%)
         /// </summary>
-        DamageReliefBase = 10111,
-        DamageReliefAdd = 10112,
-        DamageReliefPct = 10113,
-        DamageReliefFinalAdd = 10114,
-        DamageReliefFinalPct = 10115,
+        DamageReliefWhenPhysicalBase = 10111,
+        DamageReliefWhenPhysicalAdd = 10112,
+        DamageReliefWhenPhysicalPct = 10113,
+        DamageReliefWhenPhysicalFinalAdd = 10114,
+        DamageReliefWhenPhysicalFinalPct = 10115,
+        /// <summary>
+        /// 受击魔法伤害减免系数(N%)
+        /// </summary>
+        DamageReliefWhenMagicBase = 10121,
+        DamageReliefWhenMagicAdd = 10122,
+        DamageReliefWhenMagicPct = 10123,
+        DamageReliefWhenMagicFinalAdd = 10124,
+        DamageReliefWhenMagicFinalPct = 10125,
+        /// <summary>
+        /// 按照距离变化(&gt;0表示越远伤害越高,&lt;0表示越近伤害越高)
+        /// </summary>
+        PhysicalAttackScaleByDisAdd = 10132,
+        PhysicalAttackScaleByDisPct = 10133,
+        PhysicalAttackScaleByDisFinalAdd = 10134,
+        PhysicalAttackScaleByDisFinalPct = 10135,
+        /// <summary>
+        /// 按照高度变化(&gt;0表示往上越远伤害越高,&lt;0表示往下越远伤害越高)
+        /// </summary>
+        PhysicalAttackScaleByHeightAdd = 10142,
+        PhysicalAttackScaleByHeightPct = 10143,
+        PhysicalAttackScaleByHeightFinalAdd = 10144,
+        PhysicalAttackScaleByHeightFinalPct = 10145,
+        /// <summary>
+        /// buff时间修改(BuffType==Buff)
+        /// </summary>
+        BuffTimeModifyAdd = 10202,
+        BuffTimeModifyPct = 10203,
+        BuffTimeModifyFinalAdd = 10204,
+        BuffTimeModifyFinalPct = 10205,
+        /// <summary>
+        /// buff时间修改(BuffType==Debuff)
+        /// </summary>
+        DebuffTimeModifyAdd = 10212,
+        DebuffTimeModifyPct = 10213,
+        DebuffTimeModifyFinalAdd = 10214,
+        DebuffTimeModifyFinalPct = 10215,
+        /// <summary>
+        /// 发起者的buff伤害修改
+        /// </summary>
+        BuffDamageModifyAdd = 10222,
+        BuffDamageModifyPct = 10223,
+        BuffDamageModifyFinalAdd = 10224,
+        BuffDamageModifyFinalPct = 10225,
+        /// <summary>
+        /// 受击者的buff伤害修改
+        /// </summary>
+        BuffBeDamageModifyAdd = 10232,
+        BuffBeDamageModifyPct = 10233,
+        BuffBeDamageModifyFinalAdd = 10234,
+        BuffBeDamageModifyFinalPct = 10235,
+        /// <summary>
+        /// 最大攻击范围
+        /// </summary>
+        MaxAttackDisBase = 10241,
+        MaxAttackDisAdd = 10242,
+        MaxAttackDisPct = 10243,
+        MaxAttackDisFinalAdd = 10244,
+        MaxAttackDisFinalPct = 10245,
+        /// <summary>
+        /// 技能释放时选择对象数量修改
+        /// </summary>
+        SkillSelectNumModifyAdd = 10252,
+        SkillSelectNumModifyPct = 10253,
+        SkillSelectNumModifyFinalAdd = 10254,
+        SkillSelectNumModifyFinalPct = 10255,
+        /// <summary>
+        /// unit技能通用总能量点修改
+        /// </summary>
+        TotalEnergyModifyAdd = 10262,
+        TotalEnergyModifyPct = 10263,
+        TotalEnergyModifyFinalAdd = 10264,
+        TotalEnergyModifyFinalPct = 10265,
     }
 
 } 

@@ -18,6 +18,7 @@ public sealed partial class ActionCfg_CoinAdd: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Name = _buf.ReadString();
+        IsAddWhenBattleOnly = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CoinAdd = new System.Collections.Generic.Dictionary<CoinTypeInGame, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { CoinTypeInGame _k0;  _k0 = (CoinTypeInGame)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     CoinAdd.Add(_k0, _v0);}}
         PostInit();
     }
@@ -35,6 +36,10 @@ public sealed partial class ActionCfg_CoinAdd: Bright.Config.BeanBase
     /// 名字
     /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// 是否仅在战斗中获得
+    /// </summary>
+    public bool IsAddWhenBattleOnly { get; private set; }
     /// <summary>
     /// 货币类型
     /// </summary>
@@ -57,6 +62,7 @@ public sealed partial class ActionCfg_CoinAdd: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
+        + "IsAddWhenBattleOnly:" + IsAddWhenBattleOnly + ","
         + "CoinAdd:" + Bright.Common.StringUtil.CollectionToString(CoinAdd) + ","
         + "}";
     }

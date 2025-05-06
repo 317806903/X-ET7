@@ -22,6 +22,7 @@ public sealed partial class ActionCallOwnCaller:  ActionCallParam
         OwnActor = _buf.ReadBool();
         OwnBullet = _buf.ReadBool();
         OwnAoe = _buf.ReadBool();
+        OwnSkillCaster = _buf.ReadBool();
         PostInit();
     }
 
@@ -42,6 +43,10 @@ public sealed partial class ActionCallOwnCaller:  ActionCallParam
     /// 召唤的aoe
     /// </summary>
     public bool OwnAoe { get; private set; }
+    /// <summary>
+    /// 召唤的skillCaster
+    /// </summary>
+    public bool OwnSkillCaster { get; private set; }
 
     public const int __ID__ = -980355267;
     public override int GetTypeId() => __ID__;
@@ -63,6 +68,7 @@ public sealed partial class ActionCallOwnCaller:  ActionCallParam
         + "OwnActor:" + OwnActor + ","
         + "OwnBullet:" + OwnBullet + ","
         + "OwnAoe:" + OwnAoe + ","
+        + "OwnSkillCaster:" + OwnSkillCaster + ","
         + "}";
     }
     

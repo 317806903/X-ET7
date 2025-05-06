@@ -35,18 +35,18 @@ MonoBehaviour:
     trigExitConditionParam: 
   - name: "\u63D0\u793A\u62D6\u62FD"
     isFreeClickBeforeEnter: 1
-    trigEnterCondition: 1
+    trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
     trigEnterConditionParam: Init/GlobalRoot/UIRoot/PopUpRoot/DlgBattleDeck/E_Bag/E_CardCollection/info/list/ELoopScrollList_TowerCardItem/Content/Item_TowerBuy/EButton_Select
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/PopUpRoot
-    hierarchyGuidePath: DlgBattleDeck/E_Bag/E_CardCollection/info/list/ELoopScrollList_TowerCardItem/Content/Item_TowerBuy/EButton_Select
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgBattleDeck/E_HomePage/EPage_BattleDeckTower/E_Root/E_CardCollection/info/list/ELoopScrollList_BagCardItem
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_BattleDeckOperate_Drag
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 1
-    waitToNextUIGuideStep: 0
+    waitToNextUIGuideStep: 3
     audioPath: 
     guideExecuteStaticMethod: None
     guideExecuteParam: 

@@ -25,6 +25,9 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BeCallActorActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); BeCallActorActionId.Add(_e0);}}
         UnitAiCfg = _buf.ReadString();
         Duration = _buf.ReadFloat();
+        CallActorUnitType = (CallActorUnitType)_buf.ReadInt();
+        CallActorTeamFlagType = (CallActorTeamFlagType)_buf.ReadInt();
+        CallActorPositionType = (CallActorPositionType)_buf.ReadInt();
         OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
         PostInit();
     }
@@ -68,6 +71,18 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
     /// 持续时间(s)(-1表示永久)
     /// </summary>
     public float Duration { get; private set; }
+    /// <summary>
+    /// callActor Unit类型
+    /// </summary>
+    public CallActorUnitType CallActorUnitType { get; private set; }
+    /// <summary>
+    /// callActor阵营类型
+    /// </summary>
+    public CallActorTeamFlagType CallActorTeamFlagType { get; private set; }
+    /// <summary>
+    /// callActor生成位置
+    /// </summary>
+    public CallActorPositionType CallActorPositionType { get; private set; }
     public OffSetInfo OffSetInfo { get; private set; }
 
     public const int __ID__ = -1783940794;
@@ -99,6 +114,9 @@ public sealed partial class ActionCfg_CallActor: Bright.Config.BeanBase
         + "BeCallActorActionId:" + Bright.Common.StringUtil.CollectionToString(BeCallActorActionId) + ","
         + "UnitAiCfg:" + UnitAiCfg + ","
         + "Duration:" + Duration + ","
+        + "CallActorUnitType:" + CallActorUnitType + ","
+        + "CallActorTeamFlagType:" + CallActorTeamFlagType + ","
+        + "CallActorPositionType:" + CallActorPositionType + ","
         + "OffSetInfo:" + OffSetInfo + ","
         + "}";
     }

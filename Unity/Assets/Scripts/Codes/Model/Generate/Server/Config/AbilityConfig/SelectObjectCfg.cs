@@ -25,7 +25,10 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         IsChgToSelectPos = _buf.ReadBool();
         SelectNum = _buf.ReadInt();
         IsNeedChkMesh = _buf.ReadBool();
-        IsNeedChkCanBeFind = _buf.ReadBool();
+        IsNeedChkInvisible = _buf.ReadBool();
+        IsNeedChkFly = _buf.ReadBool();
+        IsNeedIgnoreCannotBeTargeted = _buf.ReadBool();
+        SelectObjectTeamFlagType = (SelectObjectTeamFlagType)_buf.ReadInt();
         SelectObjectUnitType = SelectObjectUnitTypeBase.DeserializeSelectObjectUnitTypeBase(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectOrder = new System.Collections.Generic.List<SelectObjectOrder>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SelectObjectOrder _e0;  _e0 = SelectObjectOrder.DeserializeSelectObjectOrder(_buf); SelectOrder.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelectPreCondition = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); SelectPreCondition.Add(_e0);}}
@@ -75,9 +78,21 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
     /// </summary>
     public bool IsNeedChkMesh { get; private set; }
     /// <summary>
-    /// 是否需要检测隐身单位
+    /// 是否需要检测隐身单位(false时表示可以选中隐身单位)
     /// </summary>
-    public bool IsNeedChkCanBeFind { get; private set; }
+    public bool IsNeedChkInvisible { get; private set; }
+    /// <summary>
+    /// 是否需要检测飞行单位(false时表示可以选中飞行单位)
+    /// </summary>
+    public bool IsNeedChkFly { get; private set; }
+    /// <summary>
+    /// 是否忽略不可被选中目标
+    /// </summary>
+    public bool IsNeedIgnoreCannotBeTargeted { get; private set; }
+    /// <summary>
+    /// 目标选择阵营类型
+    /// </summary>
+    public SelectObjectTeamFlagType SelectObjectTeamFlagType { get; private set; }
     public SelectObjectUnitTypeBase SelectObjectUnitType { get; private set; }
     /// <summary>
     /// 对象选择排序规则
@@ -121,7 +136,10 @@ public sealed partial class SelectObjectCfg: Bright.Config.BeanBase
         + "IsChgToSelectPos:" + IsChgToSelectPos + ","
         + "SelectNum:" + SelectNum + ","
         + "IsNeedChkMesh:" + IsNeedChkMesh + ","
-        + "IsNeedChkCanBeFind:" + IsNeedChkCanBeFind + ","
+        + "IsNeedChkInvisible:" + IsNeedChkInvisible + ","
+        + "IsNeedChkFly:" + IsNeedChkFly + ","
+        + "IsNeedIgnoreCannotBeTargeted:" + IsNeedIgnoreCannotBeTargeted + ","
+        + "SelectObjectTeamFlagType:" + SelectObjectTeamFlagType + ","
         + "SelectObjectUnitType:" + SelectObjectUnitType + ","
         + "SelectOrder:" + Bright.Common.StringUtil.CollectionToString(SelectOrder) + ","
         + "SelectPreCondition:" + Bright.Common.StringUtil.CollectionToString(SelectPreCondition) + ","

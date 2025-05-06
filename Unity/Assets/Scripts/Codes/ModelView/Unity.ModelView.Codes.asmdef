@@ -12,7 +12,6 @@
         "Unity.Services.PlayerAccounts",
         "Unity.Services.Authentication",
         "Unity.Services.Core",
-        "BlurBackground",
         "StatusIndiactors",
         "DamageNumbersPro"
     ],

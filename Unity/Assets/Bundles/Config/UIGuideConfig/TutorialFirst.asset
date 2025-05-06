@@ -49,7 +49,7 @@ MonoBehaviour:
     waitToNextUIGuideStep: 2
     audioPath: 
     guideExecuteStaticMethod: ShowVideo
-    guideExecuteParam: Video_Beginners
+    guideExecuteParam: Video_PathDesign
     trigExitCondition: 2
     trigExitConditionStaticMethod: ChkIsNotShowVideo
     trigExitConditionParam: 
@@ -115,9 +115,9 @@ MonoBehaviour:
     trigExitConditionParam: 
   - name: "\u7ED3\u675F\u626B\u63CF"
     isFreeClickBeforeEnter: 1
-    trigEnterCondition: 0
-    trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
+    trigEnterCondition: 2
+    trigEnterConditionStaticMethod: None
+    trigEnterConditionParam: 20
     hierarchyCanvasPath: ARSession/MirrorSceneAll_Classy/MirrorSceneClassyUI/ScanSceneMenu/Canvas
     hierarchyGuidePath: Panel/ScanningButton
     guideTextType: 1
@@ -166,7 +166,7 @@ MonoBehaviour:
     specImgMatchType: 0
     specImgPath: Assets/ResAB/UI/Beginners_Guide/Beginners_Guide_img-confirm.png
     curInNextType: 0
-    waitToNextUIGuideStep: 0
+    waitToNextUIGuideStep: 2
     audioPath: 
     guideExecuteStaticMethod: ShowScanQuit
     guideExecuteParam: true
@@ -180,7 +180,7 @@ MonoBehaviour:
     trigEnterConditionParam: 
     hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
     hierarchyGuidePath: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Info/E_RoomMemberStatus
-    guideTextType: 0
+    guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_RoomStart
     specImgMatchType: 0

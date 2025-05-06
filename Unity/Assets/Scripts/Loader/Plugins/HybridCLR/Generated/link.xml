@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
+  <assembly fullname="Aliyun.OSS">
+    <type fullname="Aliyun.OSS.Common.OssException" preserve="all" />
+    <type fullname="Aliyun.OSS.Common.ServiceException" preserve="all" />
+    <type fullname="Aliyun.OSS.DeleteObjectResult" preserve="all" />
+    <type fullname="Aliyun.OSS.DeleteObjectsRequest" preserve="all" />
+    <type fullname="Aliyun.OSS.DeleteObjectsResult" preserve="all" />
+    <type fullname="Aliyun.OSS.DeleteObjectsResult/DeletedObject" preserve="all" />
+    <type fullname="Aliyun.OSS.OssClient" preserve="all" />
+    <type fullname="Aliyun.OSS.PutObjectRequest" preserve="all" />
+    <type fullname="Aliyun.OSS.PutObjectResult" preserve="all" />
+    <type fullname="Aliyun.OSS.StreamTransferProgressArgs" preserve="all" />
+  </assembly>
   <assembly fullname="Unity.Advertisement.IosSupport">
     <type fullname="Unity.Advertisement.IosSupport.ATTrackingStatusBinding" preserve="all" />
     <type fullname="Unity.Advertisement.IosSupport.ATTrackingStatusBinding/AuthorizationTrackingStatus" preserve="all" />
@@ -7,10 +19,6 @@
   <assembly fullname="AppsFlyer">
     <type fullname="AppsFlyerSDK.AppsFlyer" preserve="all" />
     <type fullname="AppsFlyerSDK.IAppsFlyerConversionData" preserve="all" />
-  </assembly>
-  <assembly fullname="BlurBackground">
-    <type fullname="BlurBackground.TranslucentImage" preserve="all" />
-    <type fullname="BlurBackground.TranslucentImageSource" preserve="all" />
   </assembly>
   <assembly fullname="DOTween">
     <type fullname="DG.Tweening.Core.DOGetter`1" preserve="all" />
@@ -206,6 +214,7 @@
     <type fullname="ET.FriendOfAttribute" preserve="all" />
     <type fullname="ET.Game" preserve="all" />
     <type fullname="ET.HashSetComponent`1" preserve="all" />
+    <type fullname="ET.HttpHelper" preserve="all" />
     <type fullname="ET.IAwake" preserve="all" />
     <type fullname="ET.IAwake`1" preserve="all" />
     <type fullname="ET.IAwake`2" preserve="all" />
@@ -265,7 +274,22 @@
     <type fullname="ET.WinPeriod" preserve="all" />
     <type fullname="ET.ZipHelper" preserve="all" />
   </assembly>
+  <assembly fullname="Unity.InputSystem">
+    <type fullname="UnityEngine.InputSystem.Controls.ButtonControl" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Controls.KeyControl" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Controls.TouchControl" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Controls.TouchPressControl" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Controls.Vector2Control" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.InputControl`1" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Keyboard" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Mouse" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Pointer" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Touchscreen" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Utilities.ReadOnlyArray`1" preserve="all" />
+    <type fullname="UnityEngine.InputSystem.Utilities.ReadOnlyArray`1/Enumerator" preserve="all" />
+  </assembly>
   <assembly fullname="Unity.Loader">
+    <type fullname="DOTweenSequence" preserve="all" />
     <type fullname="DaVikingCode.RectanglePacking.RectanglePackerMgr" preserve="all" />
     <type fullname="DigitalRuby.LightningBolt.LightningBoltScript" preserve="all" />
     <type fullname="DigitalRuby.LightningBolt.LightningBoltScriptManager" preserve="all" />
@@ -276,6 +300,7 @@
     <type fullname="ET.ChkGesture" preserve="all" />
     <type fullname="ET.Client.GameObjectPoolHelper" preserve="all" />
     <type fullname="ET.Client.PoolObject" preserve="all" />
+    <type fullname="ET.ClientResScaleType" preserve="all" />
     <type fullname="ET.CodeLoader" preserve="all" />
     <type fullname="ET.CodeMode" preserve="all" />
     <type fullname="ET.DBType" preserve="all" />
@@ -289,6 +314,7 @@
     <type fullname="ET.MonoResComponent" preserve="all" />
     <type fullname="ET.PathHelper" preserve="all" />
     <type fullname="ET.ResConfig" preserve="all" />
+    <type fullname="ET.ResetUIRendererSortingOrder" preserve="all" />
     <type fullname="ET.ShowFPS" preserve="all" />
     <type fullname="ET.UITouchPass" preserve="all" />
     <type fullname="ET.WorldPositionSetter" preserve="all" />
@@ -488,7 +514,6 @@
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.Graphics" preserve="all" />
     <type fullname="UnityEngine.HideInInspector" preserve="all" />
-    <type fullname="UnityEngine.KeyCode" preserve="all" />
     <type fullname="UnityEngine.LayerMask" preserve="all" />
     <type fullname="UnityEngine.LineRenderer" preserve="all" />
     <type fullname="UnityEngine.Material" preserve="all" />
@@ -516,6 +541,7 @@
     <type fullname="UnityEngine.Rendering.GraphicsDeviceType" preserve="all" />
     <type fullname="UnityEngine.Rendering.IndexFormat" preserve="all" />
     <type fullname="UnityEngine.Rendering.RenderPipelineAsset" preserve="all" />
+    <type fullname="UnityEngine.Rendering.ShadowCastingMode" preserve="all" />
     <type fullname="UnityEngine.Resolution" preserve="all" />
     <type fullname="UnityEngine.Resources" preserve="all" />
     <type fullname="UnityEngine.RuntimePlatform" preserve="all" />
@@ -542,8 +568,6 @@
   </assembly>
   <assembly fullname="UnityEngine.InputLegacyModule">
     <type fullname="UnityEngine.Input" preserve="all" />
-    <type fullname="UnityEngine.Touch" preserve="all" />
-    <type fullname="UnityEngine.TouchPhase" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.ParticleSystemModule">
     <type fullname="UnityEngine.ParticleSystem" preserve="all" />
@@ -644,6 +668,7 @@
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
+    <type fullname="System.EventHandler`1" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
     <type fullname="System.Func`1" preserve="all" />
     <type fullname="System.Func`2" preserve="all" />
@@ -653,7 +678,11 @@
     <type fullname="System.IComparable" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
     <type fullname="System.IO.File" preserve="all" />
+    <type fullname="System.IO.FileMode" preserve="all" />
+    <type fullname="System.IO.FileStream" preserve="all" />
+    <type fullname="System.IO.MemoryStream" preserve="all" />
     <type fullname="System.IO.Path" preserve="all" />
+    <type fullname="System.IO.Stream" preserve="all" />
     <type fullname="System.IO.TextReader" preserve="all" />
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Int64" preserve="all" />
@@ -691,12 +720,15 @@
     <type fullname="System.String" preserve="all" />
     <type fullname="System.StringComparison" preserve="all" />
     <type fullname="System.StringSplitOptions" preserve="all" />
+    <type fullname="System.Text.Encoding" preserve="all" />
     <type fullname="System.Text.StringBuilder" preserve="all" />
     <type fullname="System.Threading.CancellationToken" preserve="all" />
     <type fullname="System.Threading.CancellationTokenSource" preserve="all" />
     <type fullname="System.Threading.Tasks.Task" preserve="all" />
     <type fullname="System.Threading.Tasks.TaskFactory" preserve="all" />
     <type fullname="System.Threading.Tasks.Task`1" preserve="all" />
+    <type fullname="System.Threading.Thread" preserve="all" />
+    <type fullname="System.Threading.ThreadStart" preserve="all" />
     <type fullname="System.TimeSpan" preserve="all" />
     <type fullname="System.Type" preserve="all" />
     <type fullname="System.UInt16" preserve="all" />
@@ -705,6 +737,8 @@
     <type fullname="System.ValueTuple`2" preserve="all" />
     <type fullname="System.ValueTuple`3" preserve="all" />
     <type fullname="System.ValueTuple`4" preserve="all" />
+    <type fullname="System.ValueTuple`5" preserve="all" />
+    <type fullname="System.ValueTuple`6" preserve="all" />
     <type fullname="System.ValueType" preserve="all" />
   </assembly>
 </linker>

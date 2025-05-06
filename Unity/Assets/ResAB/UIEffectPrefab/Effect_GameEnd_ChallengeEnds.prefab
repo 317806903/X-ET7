@@ -1220,6 +1220,7 @@ GameObject:
   - component: {fileID: 7036697537021959344}
   - component: {fileID: 4153905382098048411}
   - component: {fileID: 2304844199001657501}
+  - component: {fileID: 2140865616959982747}
   m_Layer: 0
   m_Name: Effect_GameEnd_ChallengeEnds
   m_TagString: Untagged
@@ -1330,6 +1331,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2140865616959982747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4682484604128754422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35dbfe5bac5437889bc71433c8b2c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4707535060324366189
 GameObject:
   m_ObjectHideFlags: 0

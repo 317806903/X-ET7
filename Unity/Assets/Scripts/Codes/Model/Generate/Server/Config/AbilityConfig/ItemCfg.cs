@@ -20,6 +20,7 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
         Name_l10n_key = _buf.ReadString(); Name = _buf.ReadString();
         Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         Icon = _buf.ReadString();
+        MarkIcon = _buf.ReadString();
         QualityType = (QualityType)_buf.ReadInt();
         ItemType = (ItemType)_buf.ReadInt();
         ItemSubType = (ItemSubType)_buf.ReadInt();
@@ -47,6 +48,11 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
     /// </summary>
     public string Icon { get; private set; }
     public ResIconCfg Icon_Ref { get; private set; }
+    /// <summary>
+    /// 角标
+    /// </summary>
+    public string MarkIcon { get; private set; }
+    public ResIconCfg MarkIcon_Ref { get; private set; }
     /// <summary>
     /// 稀有度(品质类型)
     /// </summary>
@@ -78,6 +84,7 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
         this.Icon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(Icon);
+        this.MarkIcon_Ref = (_tables["ResIconCfgCategory"] as ResIconCfgCategory).GetOrDefault(MarkIcon);
         PostResolve();
     }
 
@@ -94,6 +101,7 @@ public sealed partial class ItemCfg: Bright.Config.BeanBase
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "Icon:" + Icon + ","
+        + "MarkIcon:" + MarkIcon + ","
         + "QualityType:" + QualityType + ","
         + "ItemType:" + ItemType + ","
         + "ItemSubType:" + ItemSubType + ","

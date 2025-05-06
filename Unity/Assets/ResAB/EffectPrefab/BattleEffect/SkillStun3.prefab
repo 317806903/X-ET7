@@ -188,6 +188,16 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 6274838589298503530, guid: 93d4f9178edef234ba48a8b59ca5c21d,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274838589298503530, guid: 93d4f9178edef234ba48a8b59ca5c21d,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6274838590164103032, guid: 93d4f9178edef234ba48a8b59ca5c21d,
         type: 3}
       propertyPath: looping
@@ -219,6 +229,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1798469866650792658}
     m_Modifications:
+    - target: {fileID: 130371808180272905, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 130371808180272905, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 130371808180272905, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[2].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 130371808180272907, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -323,6 +348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stun
+      objectReference: {fileID: 0}
+    - target: {fileID: 130371810121128449, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 175027673274081012, guid: 8e379cc85822fa84eb2d10a9e08ccd07,
         type: 3}

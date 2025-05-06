@@ -34,6 +34,10 @@ namespace ET.AbilityConfig
         /// 需手动释放的技能(AI不会触发)
         /// </summary>
         ManualSkill = 4,
+        /// <summary>
+        /// 被堵住时释放的技能
+        /// </summary>
+        BlockSkill = 5,
     }
 
 } 

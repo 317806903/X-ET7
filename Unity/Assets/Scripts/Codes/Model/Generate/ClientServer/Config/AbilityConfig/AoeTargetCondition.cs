@@ -20,6 +20,7 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     public AoeTargetCondition(ByteBuf _buf) 
     {
         Radius = _buf.ReadFloat();
+        SelectObjectTeamFlagType = (SelectObjectTeamFlagType)_buf.ReadInt();
         SelectObjectUnitTypeBase = SelectObjectUnitTypeBase.DeserializeSelectObjectUnitTypeBase(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition1.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition2.Add(_e0);}}
@@ -35,6 +36,10 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     /// 范围半径(米)
     /// </summary>
     public float Radius { get; private set; }
+    /// <summary>
+    /// 目标选择阵营类型
+    /// </summary>
+    public SelectObjectTeamFlagType SelectObjectTeamFlagType { get; private set; }
     /// <summary>
     /// 目标选择对象类型
     /// </summary>
@@ -70,6 +75,7 @@ public sealed partial class AoeTargetCondition: Bright.Config.BeanBase
     {
         return "{ "
         + "Radius:" + Radius + ","
+        + "SelectObjectTeamFlagType:" + SelectObjectTeamFlagType + ","
         + "SelectObjectUnitTypeBase:" + SelectObjectUnitTypeBase + ","
         + "FilterCondition1:" + Bright.Common.StringUtil.CollectionToString(FilterCondition1) + ","
         + "FilterCondition2:" + Bright.Common.StringUtil.CollectionToString(FilterCondition2) + ","

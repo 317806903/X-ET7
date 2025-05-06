@@ -22,14 +22,16 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         RotationSpeed = _buf.ReadFloat();
         IsNeedChkMesh = _buf.ReadBool();
         AttackPointHeight = _buf.ReadFloat();
+        BeAttackPointHeight = _buf.ReadFloat();
         BodyHeight = _buf.ReadFloat();
         BodyRadius = _buf.ReadFloat();
-        NavObstacleRadius = _buf.ReadFloat();
+        IsNavObstacle = _buf.ReadBool();
         ResScale = _buf.ReadFloat();
         PropertyType = _buf.ReadString();
         DeathShow = _buf.ReadString();
         IdleTimelineId = _buf.ReadString();
         MoveTimelineId = _buf.ReadString();
+        FlyTimelineId = _buf.ReadString();
         TotalCommonEnergy = _buf.ReadInt();
         RestoreCommonEnergyByTime = _buf.ReadFloat();
         RestoreCommonEnergyByWave = _buf.ReadFloat();
@@ -72,6 +74,10 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// </summary>
     public float AttackPointHeight { get; private set; }
     /// <summary>
+    /// 被攻击的高度(判断连通时会不会被阻挡)
+    /// </summary>
+    public float BeAttackPointHeight { get; private set; }
+    /// <summary>
     /// 身体高度(判断位置，判断伤害什么的)
     /// </summary>
     public float BodyHeight { get; private set; }
@@ -80,9 +86,9 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// </summary>
     public float BodyRadius { get; private set; }
     /// <summary>
-    /// 寻路遮挡半径(圆柱体底面半径)
+    /// 是否地形遮挡
     /// </summary>
-    public float NavObstacleRadius { get; private set; }
+    public bool IsNavObstacle { get; private set; }
     /// <summary>
     /// 资源大小缩放
     /// </summary>
@@ -106,6 +112,11 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
     /// </summary>
     public string MoveTimelineId { get; private set; }
     public TimelineCfg MoveTimelineId_Ref { get; private set; }
+    /// <summary>
+    /// Fly行为
+    /// </summary>
+    public string FlyTimelineId { get; private set; }
+    public TimelineCfg FlyTimelineId_Ref { get; private set; }
     /// <summary>
     /// 技能本身总通用能量点
     /// </summary>
@@ -148,6 +159,7 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         this.DeathShow_Ref = (_tables["ActionCfg_DeathShowCategory"] as ActionCfg_DeathShowCategory).GetOrDefault(DeathShow);
         this.IdleTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(IdleTimelineId);
         this.MoveTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(MoveTimelineId);
+        this.FlyTimelineId_Ref = (_tables["TimelineCfgCategory"] as TimelineCfgCategory).GetOrDefault(FlyTimelineId);
         PostResolve();
     }
 
@@ -164,14 +176,16 @@ public sealed partial class UnitCfg: Bright.Config.BeanBase
         + "RotationSpeed:" + RotationSpeed + ","
         + "IsNeedChkMesh:" + IsNeedChkMesh + ","
         + "AttackPointHeight:" + AttackPointHeight + ","
+        + "BeAttackPointHeight:" + BeAttackPointHeight + ","
         + "BodyHeight:" + BodyHeight + ","
         + "BodyRadius:" + BodyRadius + ","
-        + "NavObstacleRadius:" + NavObstacleRadius + ","
+        + "IsNavObstacle:" + IsNavObstacle + ","
         + "ResScale:" + ResScale + ","
         + "PropertyType:" + PropertyType + ","
         + "DeathShow:" + DeathShow + ","
         + "IdleTimelineId:" + IdleTimelineId + ","
         + "MoveTimelineId:" + MoveTimelineId + ","
+        + "FlyTimelineId:" + FlyTimelineId + ","
         + "TotalCommonEnergy:" + TotalCommonEnergy + ","
         + "RestoreCommonEnergyByTime:" + RestoreCommonEnergyByTime + ","
         + "RestoreCommonEnergyByWave:" + RestoreCommonEnergyByWave + ","

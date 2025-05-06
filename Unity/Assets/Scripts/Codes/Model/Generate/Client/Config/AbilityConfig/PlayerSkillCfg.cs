@@ -18,14 +18,15 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Level = _buf.ReadInt();
+        IsShowTutorialInBattle = _buf.ReadBool();
         TutorialCfgId = _buf.ReadString();
         IsShowInBattleDeckUI = _buf.ReadBool();
         UnLockCondition = UnLockConditionBase.DeserializeUnLockConditionBase(_buf);
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
         PropertyType = _buf.ReadString();
         LearnOrUpdateCost = _buf.ReadInt();
         NextPlayerSkillCfgId = _buf.ReadString();
         LearnOrUpdateCondition = _buf.ReadString();
+        BuySkillCardCostGold = _buf.ReadInt();
         PostInit();
     }
 
@@ -44,6 +45,10 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     /// </summary>
     public int Level { get; private set; }
     /// <summary>
+    /// 是否需要在战斗中出现
+    /// </summary>
+    public bool IsShowTutorialInBattle { get; private set; }
+    /// <summary>
     /// 指引视频
     /// </summary>
     public string TutorialCfgId { get; private set; }
@@ -56,10 +61,6 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     /// 解锁条件
     /// </summary>
     public UnLockConditionBase UnLockCondition { get; private set; }
-    /// <summary>
-    /// 标签
-    /// </summary>
-    public System.Collections.Generic.List<string> Labels { get; private set; }
     /// <summary>
     /// 属性类型
     /// </summary>
@@ -77,6 +78,10 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
     /// 学习或升级条件
     /// </summary>
     public string LearnOrUpdateCondition { get; private set; }
+    /// <summary>
+    /// 战斗中技能卡片价格
+    /// </summary>
+    public int BuySkillCardCostGold { get; private set; }
 
     public const int __ID__ = 1778264692;
     public override int GetTypeId() => __ID__;
@@ -100,14 +105,15 @@ public sealed partial class PlayerSkillCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Level:" + Level + ","
+        + "IsShowTutorialInBattle:" + IsShowTutorialInBattle + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
         + "IsShowInBattleDeckUI:" + IsShowInBattleDeckUI + ","
         + "UnLockCondition:" + UnLockCondition + ","
-        + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
         + "PropertyType:" + PropertyType + ","
         + "LearnOrUpdateCost:" + LearnOrUpdateCost + ","
         + "NextPlayerSkillCfgId:" + NextPlayerSkillCfgId + ","
         + "LearnOrUpdateCondition:" + LearnOrUpdateCondition + ","
+        + "BuySkillCardCostGold:" + BuySkillCardCostGold + ","
         + "}";
     }
     

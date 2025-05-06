@@ -61,6 +61,10 @@ public abstract partial class UnitConditionBase: Bright.Config.BeanBase
             case DisRecordCondition.__ID__: return new DisRecordCondition(_buf);
             case ProbabilityCondition.__ID__: return new ProbabilityCondition(_buf);
             case ProbabilityRecordCondition.__ID__: return new ProbabilityRecordCondition(_buf);
+            case TargetAltitudeDifferenceCondition.__ID__: return new TargetAltitudeDifferenceCondition(_buf);
+            case TargetAltitudeDifferenceRecordCondition.__ID__: return new TargetAltitudeDifferenceRecordCondition(_buf);
+            case ChkIsMonsterCondition.__ID__: return new ChkIsMonsterCondition(_buf);
+            case ChkIsTowerCondition.__ID__: return new ChkIsTowerCondition(_buf);
             default: throw new SerializationException();
         }
     }

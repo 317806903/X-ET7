@@ -35,9 +35,18 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         RecoverTimeOfPhysicalStrength = _buf.ReadInt();
         RecoverIncreaseOfPhysicalStrength = _buf.ReadInt();
         RecoverIncreaseOfPhysicalStrengthByAd = _buf.ReadInt();
-        ARPVECfgTakePhsicalStrength = _buf.ReadInt();
-        ARPVPCfgTakePhsicalStrength = _buf.ReadInt();
-        AREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
+        OwnerARPVECfgTakePhsicalStrength = _buf.ReadInt();
+        OwnerARPVESeasonCfgTakePhsicalStrength = _buf.ReadInt();
+        OwnerARPVPCfgTakePhsicalStrength = _buf.ReadInt();
+        OwnerARPVPSeasonCfgTakePhsicalStrength = _buf.ReadInt();
+        OwnerAREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
+        OwnerAREndlessChallengeSeasonTakePhsicalStrength = _buf.ReadInt();
+        OtherARPVECfgTakePhsicalStrength = _buf.ReadInt();
+        OtherARPVESeasonCfgTakePhsicalStrength = _buf.ReadInt();
+        OtherARPVPCfgTakePhsicalStrength = _buf.ReadInt();
+        OtherARPVPSeasonCfgTakePhsicalStrength = _buf.ReadInt();
+        OtherAREndlessChallengeTakePhsicalStrength = _buf.ReadInt();
+        OtherAREndlessChallengeSeasonTakePhsicalStrength = _buf.ReadInt();
         PhysicalStrengthShow = _buf.ReadBool();
         TowerDefenseNearDisWhenHome = _buf.ReadFloat();
         TowerDefenseNearDisWhenMonsterCall = _buf.ReadFloat();
@@ -52,6 +61,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         GameReJudgeTime = _buf.ReadLong();
         MaxBattleCardNum = _buf.ReadInt();
         MaxBattleSkillNum = _buf.ReadInt();
+        MaxBattleMonsterCallNum = _buf.ReadInt();
         SeasonStartTime = _buf.ReadLong();
         SeasonDurationTime = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DemoShowInitialBackpackItem = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DemoShowInitialBackpackItem.Add(_e0);}}
@@ -77,6 +87,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         GameModeArcadeEndlessChallengeCostWhenRevive = _buf.ReadInt();
         GameModeArcadeEndlessChallengeCostWhenStart = _buf.ReadInt();
         EventLogCameraPosHz = _buf.ReadFloat();
+        MinDisWhenMonsterCall2HeadQuarter = _buf.ReadFloat();
+        TowerLevelWhenGot = _buf.ReadInt();
+        SkillLevelWhenGot = _buf.ReadInt();
+        HeadQuarterLevelWhenInBattle = _buf.ReadInt();
+        FlyHeight = _buf.ReadFloat();
         PostInit();
     }
 
@@ -163,17 +178,53 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// </summary>
     public int RecoverIncreaseOfPhysicalStrengthByAd { get; private set; }
     /// <summary>
-    /// AR模式PVE所需体力
+    /// 房主-AR模式PVE所需体力
     /// </summary>
-    public int ARPVECfgTakePhsicalStrength { get; private set; }
+    public int OwnerARPVECfgTakePhsicalStrength { get; private set; }
     /// <summary>
-    /// AR模式PVP所需体力
+    /// 房主-AR模式PVESeason所需体力
     /// </summary>
-    public int ARPVPCfgTakePhsicalStrength { get; private set; }
+    public int OwnerARPVESeasonCfgTakePhsicalStrength { get; private set; }
     /// <summary>
-    /// AR模式PVE无尽模式所需体力
+    /// 房主-AR模式PVP所需体力
     /// </summary>
-    public int AREndlessChallengeTakePhsicalStrength { get; private set; }
+    public int OwnerARPVPCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 房主-AR模式PVPSeason所需体力
+    /// </summary>
+    public int OwnerARPVPSeasonCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 房主-AR模式无尽模式所需体力
+    /// </summary>
+    public int OwnerAREndlessChallengeTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 房主-AR模式无尽模式Season所需体力
+    /// </summary>
+    public int OwnerAREndlessChallengeSeasonTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式PVE所需体力
+    /// </summary>
+    public int OtherARPVECfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式PVESeason所需体力
+    /// </summary>
+    public int OtherARPVESeasonCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式PVP所需体力
+    /// </summary>
+    public int OtherARPVPCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式PVPSeason所需体力
+    /// </summary>
+    public int OtherARPVPSeasonCfgTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式无尽模式所需体力
+    /// </summary>
+    public int OtherAREndlessChallengeTakePhsicalStrength { get; private set; }
+    /// <summary>
+    /// 成员-AR模式无尽模式Season所需体力
+    /// </summary>
+    public int OtherAREndlessChallengeSeasonTakePhsicalStrength { get; private set; }
     /// <summary>
     /// 体力系统是否显示
     /// </summary>
@@ -225,13 +276,17 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     public long GameReJudgeTime { get; private set; }
     public long GameReJudgeTime_Millis => GameReJudgeTime * 1000L;
     /// <summary>
-    /// 最多出战卡数
+    /// 最多出战塔卡数
     /// </summary>
     public int MaxBattleCardNum { get; private set; }
     /// <summary>
     /// 最多出战技能数
     /// </summary>
     public int MaxBattleSkillNum { get; private set; }
+    /// <summary>
+    /// 最多出战怪物卡数
+    /// </summary>
+    public int MaxBattleMonsterCallNum { get; private set; }
     /// <summary>
     /// 赛季开始时间
     /// </summary>
@@ -341,6 +396,26 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
     /// 上报相机位置的频率(秒)
     /// </summary>
     public float EventLogCameraPosHz { get; private set; }
+    /// <summary>
+    /// 刷怪点到大本营的最新距离
+    /// </summary>
+    public float MinDisWhenMonsterCall2HeadQuarter { get; private set; }
+    /// <summary>
+    /// 塔获得后的初始等级
+    /// </summary>
+    public int TowerLevelWhenGot { get; private set; }
+    /// <summary>
+    /// 技能获得后的初始等级
+    /// </summary>
+    public int SkillLevelWhenGot { get; private set; }
+    /// <summary>
+    /// 大本营战斗中的初始等级
+    /// </summary>
+    public int HeadQuarterLevelWhenInBattle { get; private set; }
+    /// <summary>
+    /// 飞行高度
+    /// </summary>
+    public float FlyHeight { get; private set; }
 
     public const int __ID__ = -424096745;
     public override int GetTypeId() => __ID__;
@@ -392,9 +467,18 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "RecoverTimeOfPhysicalStrength:" + RecoverTimeOfPhysicalStrength + ","
         + "RecoverIncreaseOfPhysicalStrength:" + RecoverIncreaseOfPhysicalStrength + ","
         + "RecoverIncreaseOfPhysicalStrengthByAd:" + RecoverIncreaseOfPhysicalStrengthByAd + ","
-        + "ARPVECfgTakePhsicalStrength:" + ARPVECfgTakePhsicalStrength + ","
-        + "ARPVPCfgTakePhsicalStrength:" + ARPVPCfgTakePhsicalStrength + ","
-        + "AREndlessChallengeTakePhsicalStrength:" + AREndlessChallengeTakePhsicalStrength + ","
+        + "OwnerARPVECfgTakePhsicalStrength:" + OwnerARPVECfgTakePhsicalStrength + ","
+        + "OwnerARPVESeasonCfgTakePhsicalStrength:" + OwnerARPVESeasonCfgTakePhsicalStrength + ","
+        + "OwnerARPVPCfgTakePhsicalStrength:" + OwnerARPVPCfgTakePhsicalStrength + ","
+        + "OwnerARPVPSeasonCfgTakePhsicalStrength:" + OwnerARPVPSeasonCfgTakePhsicalStrength + ","
+        + "OwnerAREndlessChallengeTakePhsicalStrength:" + OwnerAREndlessChallengeTakePhsicalStrength + ","
+        + "OwnerAREndlessChallengeSeasonTakePhsicalStrength:" + OwnerAREndlessChallengeSeasonTakePhsicalStrength + ","
+        + "OtherARPVECfgTakePhsicalStrength:" + OtherARPVECfgTakePhsicalStrength + ","
+        + "OtherARPVESeasonCfgTakePhsicalStrength:" + OtherARPVESeasonCfgTakePhsicalStrength + ","
+        + "OtherARPVPCfgTakePhsicalStrength:" + OtherARPVPCfgTakePhsicalStrength + ","
+        + "OtherARPVPSeasonCfgTakePhsicalStrength:" + OtherARPVPSeasonCfgTakePhsicalStrength + ","
+        + "OtherAREndlessChallengeTakePhsicalStrength:" + OtherAREndlessChallengeTakePhsicalStrength + ","
+        + "OtherAREndlessChallengeSeasonTakePhsicalStrength:" + OtherAREndlessChallengeSeasonTakePhsicalStrength + ","
         + "PhysicalStrengthShow:" + PhysicalStrengthShow + ","
         + "TowerDefenseNearDisWhenHome:" + TowerDefenseNearDisWhenHome + ","
         + "TowerDefenseNearDisWhenMonsterCall:" + TowerDefenseNearDisWhenMonsterCall + ","
@@ -409,6 +493,7 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "GameReJudgeTime:" + GameReJudgeTime + ","
         + "MaxBattleCardNum:" + MaxBattleCardNum + ","
         + "MaxBattleSkillNum:" + MaxBattleSkillNum + ","
+        + "MaxBattleMonsterCallNum:" + MaxBattleMonsterCallNum + ","
         + "SeasonStartTime:" + SeasonStartTime + ","
         + "SeasonDurationTime:" + SeasonDurationTime + ","
         + "DemoShowInitialBackpackItem:" + Bright.Common.StringUtil.CollectionToString(DemoShowInitialBackpackItem) + ","
@@ -434,6 +519,11 @@ public sealed partial class GlobalSettingCfg: Bright.Config.BeanBase
         + "GameModeArcadeEndlessChallengeCostWhenRevive:" + GameModeArcadeEndlessChallengeCostWhenRevive + ","
         + "GameModeArcadeEndlessChallengeCostWhenStart:" + GameModeArcadeEndlessChallengeCostWhenStart + ","
         + "EventLogCameraPosHz:" + EventLogCameraPosHz + ","
+        + "MinDisWhenMonsterCall2HeadQuarter:" + MinDisWhenMonsterCall2HeadQuarter + ","
+        + "TowerLevelWhenGot:" + TowerLevelWhenGot + ","
+        + "SkillLevelWhenGot:" + SkillLevelWhenGot + ","
+        + "HeadQuarterLevelWhenInBattle:" + HeadQuarterLevelWhenInBattle + ","
+        + "FlyHeight:" + FlyHeight + ","
         + "}";
     }
     

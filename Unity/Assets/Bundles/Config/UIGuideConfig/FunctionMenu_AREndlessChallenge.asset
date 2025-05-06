@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FunctionMenu_AREndlessChallenge
   m_EditorClassIdentifier: 
   list:
-  - name: "\u70B9\u51FB\u65E0\u9650"
+  - name: "\u67E5\u770B\u65E0\u9650"
     isFreeClickBeforeEnter: 1
     trigEnterCondition: 0
     trigEnterConditionStaticMethod: 
@@ -23,6 +23,66 @@ MonoBehaviour:
     guideTextType: 1
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_AREndlessChallenge_Infinite
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u70B9\u51FB\u8D5B\u5B63"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgGameModeAR/E_HomePage/E_OperationPanel/E_function/E_Function/E_Season
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Season
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 0
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u67E5\u770B\u6392\u884C\u699C"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgRankPowerupSeason/EGRoot/EPage_Rank/BottomInfo
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_AREndlessChallenge_PlayerRank
+    specImgMatchType: 0
+    specImgPath: 
+    curInNextType: 0
+    waitToNextUIGuideStep: 3
+    audioPath: 
+    guideExecuteStaticMethod: None
+    guideExecuteParam: 
+    trigExitCondition: 0
+    trigExitConditionStaticMethod: 
+    trigExitConditionParam: 
+  - name: "\u67E5\u770B\u5956\u52B1"
+    isFreeClickBeforeEnter: 0
+    trigEnterCondition: 0
+    trigEnterConditionStaticMethod: 
+    trigEnterConditionParam: 
+    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
+    hierarchyGuidePath: DlgRankPowerupSeason/EGRoot/LeftSeasonInfoPanel/ELoopListView_Frame
+    guideTextType: 1
+    guideTextImgPath: 
+    text: TextCode_Key_TutorialText_AREndlessChallenge_Reward
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0

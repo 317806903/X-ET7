@@ -4824,13 +4824,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4850,6 +4852,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4997928560228356}
   - component: {fileID: 96119254066532362}
+  - component: {fileID: -8567773904595646735}
   m_Layer: 0
   m_Name: Trail_additive
   m_TagString: Untagged
@@ -4976,6 +4979,21 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
+--- !u!114 &-8567773904595646735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721692136780574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6d6720feca4e94844127be53c36325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curWidthMultiplier: 0
+  initialWidthMultiplier: 0
+  chkIntervalTime: 2
 --- !u!1 &1768389422192202
 GameObject:
   m_ObjectHideFlags: 0

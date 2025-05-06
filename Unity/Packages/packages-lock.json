@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2414e77fefdd5d6fe44510437d2394eecaf989f0"
+      "hash": "4d0fef095b5af314b06e204ea0f6c17681f3ec3c"
     },
     "com.deepmirror.mirrorverse": {
       "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse",
@@ -14,23 +14,16 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": ">=12.1.11"
       },
-      "hash": "7cb60dc4ebfd4eea774ae6d3e88024639e4507d9"
+      "hash": "be7ac6248506c5860550e51d12829e20302d4cf4"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "0.2.0"
+        "com.deepmirror.mirrorverse": "0.2.1"
       },
-      "hash": "7cb60dc4ebfd4eea774ae6d3e88024639e4507d9"
-    },
-    "com.dm.packages.blurbackground": {
-      "version": "https://github.com/deepmirrorinc/Pi.git?path=/Assets/BlurBackground",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "8ac057eb706b72bb6ccc31939ff63e9118a758c0"
+      "hash": "be7ac6248506c5860550e51d12829e20302d4cf4"
     },
     "com.dm.packages.eventlogging": {
       "version": "https://github.com/deepmirrorinc/EventLoggingUnitySdk.git?path=/Assets",
@@ -74,11 +67,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.8",
+      "version": "1.8.18",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.mathematics": "1.2.1"
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -117,7 +111,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.31",
+      "version": "3.0.34",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -142,7 +136,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.7.0",
+      "version": "1.11.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -170,7 +164,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.android-logcat": {
-      "version": "1.4.0",
+      "version": "1.4.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -198,7 +192,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "14.0.10",
+      "version": "14.0.11",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
@@ -220,7 +214,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.21.21",
+      "version": "1.21.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -246,7 +240,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.11.0",
+      "version": "1.12.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -268,11 +262,11 @@
       }
     },
     "com.unity.shadergraph": {
-      "version": "14.0.8",
+      "version": "14.0.11",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.8",
+        "com.unity.render-pipelines.core": "14.0.11",
         "com.unity.searcher": "4.9.2"
       }
     },
@@ -314,7 +308,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.6",
+      "version": "3.0.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -387,7 +381,7 @@
         "com.unity.modules.androidjni": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
-      "hash": "1dcf1cd94a2530e95144718d82b029e64b7d6d0b"
+      "hash": "04fdeffb1d6a305a988d7742d630c6bfa6ca4b31"
     },
     "com.unity.xr.arfoundation": {
       "version": "5.1.5",
@@ -420,7 +414,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.core-utils": {
-      "version": "2.2.3",
+      "version": "2.3.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -429,7 +423,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.10",
+      "version": "2.1.11",
       "depth": 2,
       "source": "registry",
       "dependencies": {
@@ -464,7 +458,7 @@
       "dependencies": {
         "com.unity.modules.androidjni": "1.0.0"
       },
-      "hash": "8ac057eb706b72bb6ccc31939ff63e9118a758c0"
+      "hash": "04fdeffb1d6a305a988d7742d630c6bfa6ca4b31"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

@@ -19,9 +19,13 @@ namespace ET.AbilityConfig
         /// </summary>
         Self = 0,
         /// <summary>
-        /// 以施加者做偏移(例如子弹击中大体型怪,这时候以子弹位置来表现)
+        /// 以自身做偏移,且添加到会倾斜的部分
         /// </summary>
-        Caster = 1,
+        SelfTilted = 1,
+        /// <summary>
+        /// 以自身做偏移,且添加到不会旋转的部分
+        /// </summary>
+        SelfForward = 2,
     }
 
 } 

@@ -32,6 +32,13 @@ namespace ET.AbilityConfig
         SkillDisPct = 10033,
         SkillDisFinalAdd = 10034,
         SkillDisFinalPct = 10035,
+        /// <summary>
+        /// 技能总能量点修改
+        /// </summary>
+        TotalEnergyModifyAdd = 10042,
+        TotalEnergyModifyPct = 10043,
+        TotalEnergyModifyFinalAdd = 10044,
+        TotalEnergyModifyFinalPct = 10045,
     }
 
 } 

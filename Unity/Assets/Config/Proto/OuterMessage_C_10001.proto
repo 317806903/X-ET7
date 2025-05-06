@@ -99,6 +99,16 @@ message UnitInfo
 	repeated bytes EffectComponents = 9;
 }
 
+message UnitBaseInfo
+{
+	int64 UnitId = 1;
+	string ConfigId = 2;
+	int32 Level = 3;
+	int32 Type = 4;
+	Unity.Mathematics.float3 Position = 5;
+	Unity.Mathematics.quaternion Rotation = 6;
+}
+
 message M2C_CreateUnits // IActorMessage
 {
 	repeated UnitInfo Units = 1;
@@ -382,11 +392,12 @@ message M2C_LearnSkill // IActorLocationResponse
 message C2M_CastSkill // IActorLocationRequest
 {
 	int32 RpcId = 1;
-	string SkillCfgId = 2;
-	int64 unitId = 3;
-	Unity.Mathematics.float3 CameraPosition = 4;
-	Unity.Mathematics.float3 CameraDirect = 5;
-	bytes SelectHandleBytes = 6;
+	int32 IsCameraSkill = 2;
+	string SkillCfgId = 3;
+	int64 unitId = 4;
+	Unity.Mathematics.float3 CameraPosition = 5;
+	Unity.Mathematics.float3 CameraDirect = 6;
+	bytes SelectHandleBytes = 7;
 }
 
 message M2C_CastSkill // IActorLocationResponse
@@ -440,16 +451,61 @@ message G2C_BuyItem // IResponse
 	string Message = 3;
 }
 
+//ResponseType G2C_ReplaceBattleDeck
+message C2G_ReplaceBattleDeck // IRequest
+{
+	int32 RpcId = 1;
+	int32 ReplaceIndex = 2;
+	string ItemCfgId = 3;
+}
+
+message G2C_ReplaceBattleDeck // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_UpgradeItem
+message C2G_UpgradeItem // IRequest
+{
+	int32 RpcId = 1;
+	string ItemCfgId = 2;
+}
+
+message G2C_UpgradeItem // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 //ResponseType M2C_CallTower
 message C2M_CallTower // IActorLocationRequest
 {
 	int32 RpcId = 1;
 	string TowerUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
-	string CreateActionIds = 4;
+	Unity.Mathematics.float3 Forward = 4;
+	string CreateActionIds = 5;
 }
 
 message M2C_CallTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_CallTowerActions
+message C2M_CallTowerActions // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 TowerUnitId = 2;
+	string AddActionIds = 3;
+}
+
+message M2C_CallTowerActions // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -462,8 +518,9 @@ message C2M_CallMonster // IActorLocationRequest
 	int32 RpcId = 1;
 	string MonsterUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
-	int32 Count = 4;
-	string CreateActionIds = 5;
+	Unity.Mathematics.float3 Forward = 4;
+	int32 Count = 5;
+	string CreateActionIds = 6;
 }
 
 message M2C_CallMonster // IActorLocationResponse
@@ -479,6 +536,7 @@ message C2M_PKMovePlayer // IActorLocationRequest
 	int32 RpcId = 1;
 	int64 TowerUnitId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	Unity.Mathematics.float3 Forward = 4;
 }
 
 message M2C_PKMovePlayer // IActorLocationResponse
@@ -494,6 +552,7 @@ message C2M_PKMoveTower // IActorLocationRequest
 	int32 RpcId = 1;
 	int64 TowerUnitId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	Unity.Mathematics.float3 Forward = 4;
 }
 
 message M2C_PKMoveTower // IActorLocationResponse
@@ -679,8 +738,9 @@ message C2G_SetARRoomInfo // IRequest
 	int32 ARMapScale = 2;
 	int32 ARMeshType = 3;
 	string ARSceneId = 4;
-	string ARMeshDownLoadUrl = 5;
-	bytes ARMeshBytes = 6;
+	string ARSceneMeshId = 5;
+	string ARMeshDownLoadUrl = 6;
+	bytes ARMeshBytes = 7;
 }
 
 message G2C_SetARRoomInfo // IResponse
@@ -688,6 +748,27 @@ message G2C_SetARRoomInfo // IResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+//ResponseType G2C_GetARRoomInfo
+message C2G_GetARRoomInfo // IRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+	int32 IsWithARMeshBytes = 3;
+}
+
+message G2C_GetARRoomInfo // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 ARMapScale = 4;
+	int32 ARMeshType = 5;
+	string ARSceneId = 6;
+	string ARSceneMeshId = 7;
+	string ARMeshDownLoadUrl = 8;
+	bytes ARMeshBytes = 9;
 }
 
 //ResponseType G2C_ChgRoomBattleLevelCfg
@@ -777,6 +858,7 @@ message C2M_PutHome // IActorLocationRequest
 	int32 RpcId = 1;
 	string UnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	Unity.Mathematics.float3 Forward = 4;
 }
 
 message M2C_PutHome // IActorLocationResponse
@@ -847,9 +929,26 @@ message C2M_CallOwnTower // IActorLocationRequest
 	int32 RpcId = 1;
 	string TowerUnitCfgId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	Unity.Mathematics.float3 Forward = 4;
 }
 
 message M2C_CallOwnTower // IActorLocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_UpgradeItemUnit
+message C2M_UpgradeItemUnit // IActorLocationRequest
+{
+	int32 RpcId = 1;
+	int64 ItemUnitId = 2;
+	int32 NextLevel = 3;
+	string ItemGiftCfgId = 4;
+}
+
+message M2C_UpgradeItemUnit // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
@@ -920,6 +1019,7 @@ message C2M_MovePlayerTower // IActorLocationRequest
 	int32 RpcId = 1;
 	int64 TowerUnitId = 2;
 	Unity.Mathematics.float3 Position = 3;
+	Unity.Mathematics.float3 Forward = 4;
 }
 
 message M2C_MovePlayerTower // IActorLocationResponse
@@ -1242,6 +1342,11 @@ message C2M_ForceGameEndWhenDebug // IActorLocationMessage
 	int32 RpcId = 1;
 }
 
+message C2M_ForceNextWaveWhenDebug // IActorLocationMessage
+{
+	int32 RpcId = 1;
+}
+
 message C2M_ForceAddGameGoldWhenDebug // IActorLocationMessage
 {
 	int32 RpcId = 1;
@@ -1417,6 +1522,19 @@ message C2G_SetBattleNoticeFinished  // IRequest
 }
 
 message G2C_SetBattleNoticeFinished // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType M2C_ResetAllUnitPos
+message C2M_ResetAllUnitPos // IActorLocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_ResetAllUnitPos // IActorLocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

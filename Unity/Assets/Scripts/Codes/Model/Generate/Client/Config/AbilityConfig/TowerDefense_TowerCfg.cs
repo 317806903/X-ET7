@@ -18,18 +18,15 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = (TowerType)_buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Labels = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Labels.Add(_e0);}}
         QualityRank = (QualityRank)_buf.ReadInt();
+        IsShowTutorialInBattle = _buf.ReadBool();
+        MaxTiltedUpAngle = _buf.ReadFloat();
+        MaxTiltedDownAngle = _buf.ReadFloat();
         TutorialCfgId = _buf.ReadString();
         IsShowInBattleDeckUI = _buf.ReadBool();
         UnLockCondition = UnLockConditionBase.DeserializeUnLockConditionBase(_buf);
-        Radius = _buf.ReadFloat();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RelativePosition = new System.Collections.Generic.List<System.Numerics.Vector3>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Numerics.Vector3 _e0;  _e0 = _buf.ReadVector3(); RelativePosition.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);UnitId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); UnitId.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Num = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Num.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Level = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Level.Add(_e0);}}
+        Tower2UnitInfo = TowerToUnitBase.DeserializeTowerToUnitBase(_buf);
         BuyTowerCostGold = _buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RewardGold = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); RewardGold.Add(_e0);}}
         ReclaimTowerCostGold = _buf.ReadInt();
         ScaleTowerCostGold = _buf.ReadInt();
         NextTowerId = _buf.ReadString();
@@ -54,13 +51,21 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// </summary>
     public TowerType Type { get; private set; }
     /// <summary>
-    /// 标签
-    /// </summary>
-    public System.Collections.Generic.List<string> Labels { get; private set; }
-    /// <summary>
     /// 品阶
     /// </summary>
     public QualityRank QualityRank { get; private set; }
+    /// <summary>
+    /// 是否需要在战斗中出现
+    /// </summary>
+    public bool IsShowTutorialInBattle { get; private set; }
+    /// <summary>
+    /// 最大上仰角度
+    /// </summary>
+    public float MaxTiltedUpAngle { get; private set; }
+    /// <summary>
+    /// 最大俯视角度
+    /// </summary>
+    public float MaxTiltedDownAngle { get; private set; }
     /// <summary>
     /// 指引视频
     /// </summary>
@@ -74,35 +79,11 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     /// 解锁条件
     /// </summary>
     public UnLockConditionBase UnLockCondition { get; private set; }
-    /// <summary>
-    /// 半径(仅CallMonster时需要)
-    /// </summary>
-    public float Radius { get; private set; }
-    /// <summary>
-    /// 相对位置(仅CallMonster时需要)
-    /// </summary>
-    public System.Collections.Generic.List<System.Numerics.Vector3> RelativePosition { get; private set; }
-    /// <summary>
-    /// unitId
-    /// </summary>
-    public System.Collections.Generic.List<string> UnitId { get; private set; }
-    public System.Collections.Generic.List<UnitCfg> UnitId_Ref { get; private set; }
-    /// <summary>
-    /// 数量(仅CallMonster时需要)
-    /// </summary>
-    public System.Collections.Generic.List<int> Num { get; private set; }
-    /// <summary>
-    /// 等级(仅CallMonster时需要)
-    /// </summary>
-    public System.Collections.Generic.List<int> Level { get; private set; }
+    public TowerToUnitBase Tower2UnitInfo { get; private set; }
     /// <summary>
     /// 购买消耗金币
     /// </summary>
     public int BuyTowerCostGold { get; private set; }
-    /// <summary>
-    /// 击杀奖励金币
-    /// </summary>
-    public System.Collections.Generic.List<int> RewardGold { get; private set; }
     /// <summary>
     /// 回收塔消耗金币
     /// </summary>
@@ -137,7 +118,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         this.Id_Ref = (_tables["ItemCfgCategory"] as ItemCfgCategory).GetOrDefault(Id);
         this.TutorialCfgId_Ref = (_tables["TutorialCfgCategory"] as TutorialCfgCategory).GetOrDefault(TutorialCfgId);
         UnLockCondition?.Resolve(_tables);
-        { UnitCfgCategory __table = (UnitCfgCategory)_tables["UnitCfgCategory"]; this.UnitId_Ref = new System.Collections.Generic.List<UnitCfg>(); foreach(var __e in UnitId) { this.UnitId_Ref.Add(__table.GetOrDefault(__e)); } }
+        Tower2UnitInfo?.Resolve(_tables);
         this.NextTowerId_Ref = (_tables["TowerDefense_TowerCfgCategory"] as TowerDefense_TowerCfgCategory).GetOrDefault(NextTowerId);
         PostResolve();
     }
@@ -145,6 +126,7 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
     public  void TranslateText(System.Func<string, string, string> translator)
     {
         UnLockCondition?.TranslateText(translator);
+        Tower2UnitInfo?.TranslateText(translator);
     }
 
     public override string ToString()
@@ -152,18 +134,15 @@ public sealed partial class TowerDefense_TowerCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Type:" + Type + ","
-        + "Labels:" + Bright.Common.StringUtil.CollectionToString(Labels) + ","
         + "QualityRank:" + QualityRank + ","
+        + "IsShowTutorialInBattle:" + IsShowTutorialInBattle + ","
+        + "MaxTiltedUpAngle:" + MaxTiltedUpAngle + ","
+        + "MaxTiltedDownAngle:" + MaxTiltedDownAngle + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
         + "IsShowInBattleDeckUI:" + IsShowInBattleDeckUI + ","
         + "UnLockCondition:" + UnLockCondition + ","
-        + "Radius:" + Radius + ","
-        + "RelativePosition:" + Bright.Common.StringUtil.CollectionToString(RelativePosition) + ","
-        + "UnitId:" + Bright.Common.StringUtil.CollectionToString(UnitId) + ","
-        + "Num:" + Bright.Common.StringUtil.CollectionToString(Num) + ","
-        + "Level:" + Bright.Common.StringUtil.CollectionToString(Level) + ","
+        + "Tower2UnitInfo:" + Tower2UnitInfo + ","
         + "BuyTowerCostGold:" + BuyTowerCostGold + ","
-        + "RewardGold:" + Bright.Common.StringUtil.CollectionToString(RewardGold) + ","
         + "ReclaimTowerCostGold:" + ReclaimTowerCostGold + ","
         + "ScaleTowerCostGold:" + ScaleTowerCostGold + ","
         + "NextTowerId:" + NextTowerId + ","

@@ -20,10 +20,10 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         WaveIndex = _buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        WaveRewardGold = _buf.ReadInt();
         Duration = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RestMusicList = new System.Collections.Generic.Dictionary<string, float>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); float _v0;  _v0 = _buf.ReadFloat();     RestMusicList.Add(_k0, _v0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);BattleMusicList = new System.Collections.Generic.Dictionary<string, float>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); float _v0;  _v0 = _buf.ReadFloat();     BattleMusicList.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);GlobalBuffAddList = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GlobalBuffAddList.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Nodes = new System.Collections.Generic.List<MonsterWaveCallNode>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { MonsterWaveCallNode _e0;  _e0 = MonsterWaveCallNode.DeserializeMonsterWaveCallNode(_buf); Nodes.Add(_e0);}}
         PostInit();
     }
@@ -50,11 +50,7 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 波次结束奖励金币
-    /// </summary>
-    public int WaveRewardGold { get; private set; }
-    /// <summary>
-    /// 总时长(单位秒,超出后失败)
+    /// 总时长(单位秒,超出后失败or出下波怪)
     /// </summary>
     public float Duration { get; private set; }
     /// <summary>
@@ -65,6 +61,11 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
     /// 波次战斗时背景音乐
     /// </summary>
     public System.Collections.Generic.Dictionary<string, float> BattleMusicList { get; private set; }
+    /// <summary>
+    /// 效果列表
+    /// </summary>
+    public System.Collections.Generic.List<string> GlobalBuffAddList { get; private set; }
+    public System.Collections.Generic.List<ActionCfg_GlobalBuffAddImmediately> GlobalBuffAddList_Ref { get; private set; }
     public System.Collections.Generic.List<MonsterWaveCallNode> Nodes { get; private set; }
 
     public const int __ID__ = -444792353;
@@ -72,6 +73,7 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
 
     public  void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
+        { ActionCfg_GlobalBuffAddImmediatelyCategory __table = (ActionCfg_GlobalBuffAddImmediatelyCategory)_tables["ActionCfg_GlobalBuffAddImmediatelyCategory"]; this.GlobalBuffAddList_Ref = new System.Collections.Generic.List<ActionCfg_GlobalBuffAddImmediately>(); foreach(var __e in GlobalBuffAddList) { this.GlobalBuffAddList_Ref.Add(__table.GetOrDefault(__e)); } }
         foreach(var _e in Nodes) { _e?.Resolve(_tables); }
         PostResolve();
     }
@@ -88,10 +90,10 @@ public sealed partial class TowerDefense_MonsterWaveCallRuleCfg: Bright.Config.B
         + "WaveIndex:" + WaveIndex + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "WaveRewardGold:" + WaveRewardGold + ","
         + "Duration:" + Duration + ","
         + "RestMusicList:" + Bright.Common.StringUtil.CollectionToString(RestMusicList) + ","
         + "BattleMusicList:" + Bright.Common.StringUtil.CollectionToString(BattleMusicList) + ","
+        + "GlobalBuffAddList:" + Bright.Common.StringUtil.CollectionToString(GlobalBuffAddList) + ","
         + "Nodes:" + Bright.Common.StringUtil.CollectionToString(Nodes) + ","
         + "}";
     }

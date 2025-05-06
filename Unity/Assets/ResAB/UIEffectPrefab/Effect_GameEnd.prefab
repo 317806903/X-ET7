@@ -986,7 +986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 694030291833054317}
   - component: {fileID: 94721177200554697}
-  - component: {fileID: 2530329925604356907}
+  - component: {fileID: 1493996082218208192}
   m_Layer: 5
   m_Name: bg01
   m_TagString: Untagged
@@ -1021,7 +1021,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801732483897198117}
   m_CullTransparentMesh: 1
---- !u!114 &2530329925604356907
+--- !u!114 &1493996082218208192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1030,10 +1030,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1801732483897198117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196bb08d6c2d3c9499c04e1281fd4ad3, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 96c5704d0681e35408630c488fc0c234, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1051,12 +1051,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-  source: {fileID: 0}
-  vibrancy: 1.8
-  brightness: 0
-  flatten: 0.15
-  fallbackAlpha: 0.5
-  m_spriteBlending: 0.65
 --- !u!1 &2130241632310351126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,6 +1063,7 @@ GameObject:
   - component: {fileID: 3012213966438113584}
   - component: {fileID: 5088187365205089186}
   - component: {fileID: 3453366266635355872}
+  - component: {fileID: 6550707799817569507}
   m_Layer: 0
   m_Name: Effect_GameEnd
   m_TagString: Untagged
@@ -1181,6 +1176,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6550707799817569507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130241632310351126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35dbfe5bac5437889bc71433c8b2c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrder: 0
 --- !u!1 &2146343885477187477
 GameObject:
   m_ObjectHideFlags: 0

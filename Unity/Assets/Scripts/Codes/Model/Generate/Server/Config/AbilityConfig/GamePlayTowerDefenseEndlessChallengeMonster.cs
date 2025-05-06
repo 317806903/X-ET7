@@ -19,11 +19,16 @@ public sealed partial class GamePlayTowerDefenseEndlessChallengeMonster:  GamePl
 {
     public GamePlayTowerDefenseEndlessChallengeMonster(ByteBuf _buf)  : base(_buf) 
     {
+        StageNum = _buf.ReadInt();
+        MonsterWaveNumScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
+        MonsterWaveLevelScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
+        WaveRewardGoldScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
         RepeatNum = _buf.ReadInt();
-        MonsterWaveNumScalePercentCoefficient = _buf.ReadFloat();
-        MonsterWaveLevelScalePercentCoefficient = _buf.ReadFloat();
-        WaveRewardGoldScalePercentCoefficient = _buf.ReadFloat();
+        MonsterWaveNumScalePercentCoefficientWhenRepeatNum = _buf.ReadFloat();
+        MonsterWaveLevelScalePercentCoefficientWhenRepeatNum = _buf.ReadFloat();
+        WaveRewardGoldScalePercentCoefficientWhenRepeatNum = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIdsWhenRepeat = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIdsWhenRepeat.Add(_e0);}}
         PostInit();
     }
 
@@ -33,25 +38,45 @@ public sealed partial class GamePlayTowerDefenseEndlessChallengeMonster:  GamePl
     }
 
     /// <summary>
+    /// N关一个阶段
+    /// </summary>
+    public int StageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时刷怪数量增加x%
+    /// </summary>
+    public float MonsterWaveNumScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时刷怪等级增加y%
+    /// </summary>
+    public float MonsterWaveLevelScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时关卡奖励增加y%
+    /// </summary>
+    public float WaveRewardGoldScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
     /// 使用最后N关进行轮询
     /// </summary>
     public int RepeatNum { get; private set; }
     /// <summary>
     /// 每重复最后关卡时刷怪数量增加x%
     /// </summary>
-    public float MonsterWaveNumScalePercentCoefficient { get; private set; }
+    public float MonsterWaveNumScalePercentCoefficientWhenRepeatNum { get; private set; }
     /// <summary>
     /// 每重复最后关卡时刷怪等级增加y%
     /// </summary>
-    public float MonsterWaveLevelScalePercentCoefficient { get; private set; }
+    public float MonsterWaveLevelScalePercentCoefficientWhenRepeatNum { get; private set; }
     /// <summary>
     /// 每重复最后关卡时关卡奖励增加y%
     /// </summary>
-    public float WaveRewardGoldScalePercentCoefficient { get; private set; }
+    public float WaveRewardGoldScalePercentCoefficientWhenRepeatNum { get; private set; }
     /// <summary>
     /// 生成时Action事件id
     /// </summary>
     public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
+    /// <summary>
+    /// 进入repeat后生成时Action事件id
+    /// </summary>
+    public System.Collections.Generic.List<string> CreateActionIdsWhenRepeat { get; private set; }
 
     public const int __ID__ = 1978480078;
     public override int GetTypeId() => __ID__;
@@ -71,11 +96,16 @@ public sealed partial class GamePlayTowerDefenseEndlessChallengeMonster:  GamePl
     {
         return "{ "
         + "GamePlayModeCfgId:" + GamePlayModeCfgId + ","
+        + "StageNum:" + StageNum + ","
+        + "MonsterWaveNumScalePercentCoefficientWhenStageNum:" + MonsterWaveNumScalePercentCoefficientWhenStageNum + ","
+        + "MonsterWaveLevelScalePercentCoefficientWhenStageNum:" + MonsterWaveLevelScalePercentCoefficientWhenStageNum + ","
+        + "WaveRewardGoldScalePercentCoefficientWhenStageNum:" + WaveRewardGoldScalePercentCoefficientWhenStageNum + ","
         + "RepeatNum:" + RepeatNum + ","
-        + "MonsterWaveNumScalePercentCoefficient:" + MonsterWaveNumScalePercentCoefficient + ","
-        + "MonsterWaveLevelScalePercentCoefficient:" + MonsterWaveLevelScalePercentCoefficient + ","
-        + "WaveRewardGoldScalePercentCoefficient:" + WaveRewardGoldScalePercentCoefficient + ","
+        + "MonsterWaveNumScalePercentCoefficientWhenRepeatNum:" + MonsterWaveNumScalePercentCoefficientWhenRepeatNum + ","
+        + "MonsterWaveLevelScalePercentCoefficientWhenRepeatNum:" + MonsterWaveLevelScalePercentCoefficientWhenRepeatNum + ","
+        + "WaveRewardGoldScalePercentCoefficientWhenRepeatNum:" + WaveRewardGoldScalePercentCoefficientWhenRepeatNum + ","
         + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
+        + "CreateActionIdsWhenRepeat:" + Bright.Common.StringUtil.CollectionToString(CreateActionIdsWhenRepeat) + ","
         + "}";
     }
     

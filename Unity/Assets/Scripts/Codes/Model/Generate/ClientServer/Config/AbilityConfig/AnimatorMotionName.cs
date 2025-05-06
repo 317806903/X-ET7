@@ -17,13 +17,14 @@ namespace ET.AbilityConfig
         None = 1,
         Idle = 2,
         Move = 3,
-        Attack1 = 4,
-        Skill1 = 5,
-        Skill2 = 6,
-        Die = 7,
-        Show = 8,
-        HideToIdle = 9,
-        Underground = 10,
+        Fly = 4,
+        Attack1 = 5,
+        Skill1 = 6,
+        Skill2 = 7,
+        Die = 8,
+        Show = 9,
+        HideToIdle = 10,
+        Underground = 11,
     }
 
 } 

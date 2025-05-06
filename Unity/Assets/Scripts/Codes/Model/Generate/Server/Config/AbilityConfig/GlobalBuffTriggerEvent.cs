@@ -55,65 +55,89 @@ namespace ET.AbilityConfig
         /// </summary>
         GamePlayTowerDefense_UpgradeTower = 10,
         /// <summary>
+        /// 监听 升级tower天赋
+        /// </summary>
+        GamePlayTowerDefense_UpgradeItemUnit = 11,
+        /// <summary>
+        /// 监听 移动tower
+        /// </summary>
+        GamePlayTowerDefense_MoveTower = 12,
+        /// <summary>
         /// 监听 tower击杀monster
         /// </summary>
-        GamePlayTowerDefense_TowerKillMonster = 11,
+        GamePlayTowerDefense_TowerKillMonster = 13,
         /// <summary>
         /// 监听 刷新塔池
         /// </summary>
-        GamePlayTowerDefense_RefreshTowerBuyPool = 12,
+        GamePlayTowerDefense_RefreshTowerBuyPool = 14,
         /// <summary>
         /// 监听 Game游戏状态WaitForStart
         /// </summary>
-        GamePlay_Status_GameWaitForStart = 13,
+        GamePlay_Status_GameWaitForStart = 15,
         /// <summary>
         /// 监听 Game游戏状态Start
         /// </summary>
-        GamePlay_Status_GameStart = 14,
+        GamePlay_Status_GameStart = 16,
+        /// <summary>
+        /// 监听 Game游戏状态LoadMeshFinished
+        /// </summary>
+        GamePlay_Status_LoadMeshFinished = 17,
+        /// <summary>
+        /// 监听 Game游戏状态AddPlayerWhenGlobal
+        /// </summary>
+        GamePlay_Status_AddPlayerWhenGlobal = 18,
+        /// <summary>
+        /// 监听 Game游戏状态PlayerQuit
+        /// </summary>
+        GamePlay_Status_PlayerQuit = 19,
         /// <summary>
         /// 监听 Game游戏状态PutHome
         /// </summary>
-        GamePlayTowerDefense_Status_PutHomeBegin = 15,
+        GamePlayTowerDefense_Status_PutHomeBegin = 20,
         /// <summary>
         /// 监听 Game游戏状态PutHome
         /// </summary>
-        GamePlayTowerDefense_Status_PutHomeEnd = 16,
+        GamePlayTowerDefense_Status_PutHomeEnd = 21,
         /// <summary>
         /// 监听 Game游戏状态PutMonsterPoint
         /// </summary>
-        GamePlayTowerDefense_Status_PutMonsterPointBegin = 17,
+        GamePlayTowerDefense_Status_PutMonsterPointBegin = 22,
         /// <summary>
         /// 监听 Game游戏状态PutMonsterPoint
         /// </summary>
-        GamePlayTowerDefense_Status_PutMonsterPointEnd = 18,
+        GamePlayTowerDefense_Status_PutMonsterPointEnd = 23,
         /// <summary>
         /// 监听 Game游戏状态ShowStartEffect
         /// </summary>
-        GamePlayTowerDefense_Status_ShowStartEffectBegin = 19,
+        GamePlayTowerDefense_Status_ShowStartEffectBegin = 24,
         /// <summary>
         /// 监听 Game游戏状态ShowStartEffect
         /// </summary>
-        GamePlayTowerDefense_Status_ShowStartEffectEnd = 20,
+        GamePlayTowerDefense_Status_ShowStartEffectEnd = 25,
+        /// <summary>
+        /// 监听 Game游戏状态技能准备完毕
+        /// </summary>
+        GamePlayTowerDefense_Status_SkillReady = 26,
         /// <summary>
         /// 监听 Game游戏状态RestTime
         /// </summary>
-        GamePlayTowerDefense_Status_RestTimeBegin = 21,
+        GamePlayTowerDefense_Status_RestTimeBegin = 27,
         /// <summary>
         /// 监听 Game游戏状态RestTime
         /// </summary>
-        GamePlayTowerDefense_Status_RestTimeEnd = 22,
+        GamePlayTowerDefense_Status_RestTimeEnd = 28,
         /// <summary>
         /// 监听 Game游戏状态InTheBattle
         /// </summary>
-        GamePlayTowerDefense_Status_InTheBattleBegin = 23,
+        GamePlayTowerDefense_Status_InTheBattleBegin = 29,
         /// <summary>
         /// 监听 Game游戏状态InTheBattleEnd
         /// </summary>
-        GamePlayTowerDefense_Status_InTheBattleEnd = 24,
+        GamePlayTowerDefense_Status_InTheBattleEnd = 30,
         /// <summary>
         /// 监听 Game游戏状态GameEnd
         /// </summary>
-        GamePlay_Status_GameEnd = 25,
+        GamePlay_Status_GameEnd = 31,
     }
 
 } 

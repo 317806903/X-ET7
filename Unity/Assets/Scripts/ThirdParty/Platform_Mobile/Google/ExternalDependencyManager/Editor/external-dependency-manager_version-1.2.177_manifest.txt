@@ -1,0 +1,13 @@
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.IOSResolver.dll
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.IOSResolver.dll.mdb
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.JarResolver.dll
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.JarResolver.dll.mdb
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.PackageManagerResolver.dll
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.PackageManagerResolver.dll.mdb
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.VersionHandlerImpl.dll
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/1.2.177/Google.VersionHandlerImpl.dll.mdb
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/CHANGELOG.md
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/Google.VersionHandler.dll
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/Google.VersionHandler.dll.mdb
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/LICENSE
+Assets/Scripts/ThirdParty/Platform_Mobile/Google/ExternalDependencyManager/Editor/README.md

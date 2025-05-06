@@ -18,6 +18,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     {
         Id = _buf.ReadString();
         Type = (MonsterType)_buf.ReadInt();
+        IsShowTutorialInBattle = _buf.ReadBool();
         TutorialCfgId = _buf.ReadString();
         UnitId = _buf.ReadString();
         AiCfgId = _buf.ReadString();
@@ -39,6 +40,10 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
     /// 类型
     /// </summary>
     public MonsterType Type { get; private set; }
+    /// <summary>
+    /// 是否需要在战斗中出现
+    /// </summary>
+    public bool IsShowTutorialInBattle { get; private set; }
     /// <summary>
     /// 指引视频
     /// </summary>
@@ -78,6 +83,7 @@ public sealed partial class TowerDefense_MonsterCfg: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Type:" + Type + ","
+        + "IsShowTutorialInBattle:" + IsShowTutorialInBattle + ","
         + "TutorialCfgId:" + TutorialCfgId + ","
         + "UnitId:" + UnitId + ","
         + "AiCfgId:" + AiCfgId + ","

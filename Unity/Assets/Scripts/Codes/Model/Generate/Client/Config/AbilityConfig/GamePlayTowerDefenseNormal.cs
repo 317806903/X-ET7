@@ -19,6 +19,11 @@ public sealed partial class GamePlayTowerDefenseNormal:  GamePlayTowerDefenseBas
 {
     public GamePlayTowerDefenseNormal(ByteBuf _buf)  : base(_buf) 
     {
+        StageNum = _buf.ReadInt();
+        MonsterWaveNumScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
+        MonsterWaveLevelScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
+        WaveRewardGoldScalePercentCoefficientWhenStageNum = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);CreateActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); CreateActionIds.Add(_e0);}}
         PostInit();
     }
 
@@ -27,6 +32,26 @@ public sealed partial class GamePlayTowerDefenseNormal:  GamePlayTowerDefenseBas
         return new GamePlayTowerDefenseNormal(_buf);
     }
 
+    /// <summary>
+    /// N关一个阶段
+    /// </summary>
+    public int StageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时刷怪数量增加x%
+    /// </summary>
+    public float MonsterWaveNumScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时刷怪等级增加y%
+    /// </summary>
+    public float MonsterWaveLevelScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
+    /// 每阶段时关卡奖励增加y%
+    /// </summary>
+    public float WaveRewardGoldScalePercentCoefficientWhenStageNum { get; private set; }
+    /// <summary>
+    /// 生成时Action事件id
+    /// </summary>
+    public System.Collections.Generic.List<string> CreateActionIds { get; private set; }
 
     public const int __ID__ = -1099965500;
     public override int GetTypeId() => __ID__;
@@ -46,6 +71,11 @@ public sealed partial class GamePlayTowerDefenseNormal:  GamePlayTowerDefenseBas
     {
         return "{ "
         + "GamePlayModeCfgId:" + GamePlayModeCfgId + ","
+        + "StageNum:" + StageNum + ","
+        + "MonsterWaveNumScalePercentCoefficientWhenStageNum:" + MonsterWaveNumScalePercentCoefficientWhenStageNum + ","
+        + "MonsterWaveLevelScalePercentCoefficientWhenStageNum:" + MonsterWaveLevelScalePercentCoefficientWhenStageNum + ","
+        + "WaveRewardGoldScalePercentCoefficientWhenStageNum:" + WaveRewardGoldScalePercentCoefficientWhenStageNum + ","
+        + "CreateActionIds:" + Bright.Common.StringUtil.CollectionToString(CreateActionIds) + ","
         + "}";
     }
     

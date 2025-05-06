@@ -96,17 +96,53 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public int RecoverIncreaseOfPhysicalStrengthByAd => _data.RecoverIncreaseOfPhysicalStrengthByAd;
     /// <summary>
-    /// AR模式PVE所需体力
+    /// 房主-AR模式PVE所需体力
     /// </summary>
-     public int ARPVECfgTakePhsicalStrength => _data.ARPVECfgTakePhsicalStrength;
+     public int OwnerARPVECfgTakePhsicalStrength => _data.OwnerARPVECfgTakePhsicalStrength;
     /// <summary>
-    /// AR模式PVP所需体力
+    /// 房主-AR模式PVESeason所需体力
     /// </summary>
-     public int ARPVPCfgTakePhsicalStrength => _data.ARPVPCfgTakePhsicalStrength;
+     public int OwnerARPVESeasonCfgTakePhsicalStrength => _data.OwnerARPVESeasonCfgTakePhsicalStrength;
     /// <summary>
-    /// AR模式PVE无尽模式所需体力
+    /// 房主-AR模式PVP所需体力
     /// </summary>
-     public int AREndlessChallengeTakePhsicalStrength => _data.AREndlessChallengeTakePhsicalStrength;
+     public int OwnerARPVPCfgTakePhsicalStrength => _data.OwnerARPVPCfgTakePhsicalStrength;
+    /// <summary>
+    /// 房主-AR模式PVPSeason所需体力
+    /// </summary>
+     public int OwnerARPVPSeasonCfgTakePhsicalStrength => _data.OwnerARPVPSeasonCfgTakePhsicalStrength;
+    /// <summary>
+    /// 房主-AR模式无尽模式所需体力
+    /// </summary>
+     public int OwnerAREndlessChallengeTakePhsicalStrength => _data.OwnerAREndlessChallengeTakePhsicalStrength;
+    /// <summary>
+    /// 房主-AR模式无尽模式Season所需体力
+    /// </summary>
+     public int OwnerAREndlessChallengeSeasonTakePhsicalStrength => _data.OwnerAREndlessChallengeSeasonTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式PVE所需体力
+    /// </summary>
+     public int OtherARPVECfgTakePhsicalStrength => _data.OtherARPVECfgTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式PVESeason所需体力
+    /// </summary>
+     public int OtherARPVESeasonCfgTakePhsicalStrength => _data.OtherARPVESeasonCfgTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式PVP所需体力
+    /// </summary>
+     public int OtherARPVPCfgTakePhsicalStrength => _data.OtherARPVPCfgTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式PVPSeason所需体力
+    /// </summary>
+     public int OtherARPVPSeasonCfgTakePhsicalStrength => _data.OtherARPVPSeasonCfgTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式无尽模式所需体力
+    /// </summary>
+     public int OtherAREndlessChallengeTakePhsicalStrength => _data.OtherAREndlessChallengeTakePhsicalStrength;
+    /// <summary>
+    /// 成员-AR模式无尽模式Season所需体力
+    /// </summary>
+     public int OtherAREndlessChallengeSeasonTakePhsicalStrength => _data.OtherAREndlessChallengeSeasonTakePhsicalStrength;
     /// <summary>
     /// 体力系统是否显示
     /// </summary>
@@ -156,13 +192,17 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// </summary>
      public long GameReJudgeTime => _data.GameReJudgeTime;
     /// <summary>
-    /// 最多出战卡数
+    /// 最多出战塔卡数
     /// </summary>
      public int MaxBattleCardNum => _data.MaxBattleCardNum;
     /// <summary>
     /// 最多出战技能数
     /// </summary>
      public int MaxBattleSkillNum => _data.MaxBattleSkillNum;
+    /// <summary>
+    /// 最多出战怪物卡数
+    /// </summary>
+     public int MaxBattleMonsterCallNum => _data.MaxBattleMonsterCallNum;
     /// <summary>
     /// 赛季开始时间
     /// </summary>
@@ -267,6 +307,26 @@ public partial class GlobalSettingCfgCategory: ConfigSingleton<GlobalSettingCfgC
     /// 上报相机位置的频率(秒)
     /// </summary>
      public float EventLogCameraPosHz => _data.EventLogCameraPosHz;
+    /// <summary>
+    /// 刷怪点到大本营的最新距离
+    /// </summary>
+     public float MinDisWhenMonsterCall2HeadQuarter => _data.MinDisWhenMonsterCall2HeadQuarter;
+    /// <summary>
+    /// 塔获得后的初始等级
+    /// </summary>
+     public int TowerLevelWhenGot => _data.TowerLevelWhenGot;
+    /// <summary>
+    /// 技能获得后的初始等级
+    /// </summary>
+     public int SkillLevelWhenGot => _data.SkillLevelWhenGot;
+    /// <summary>
+    /// 大本营战斗中的初始等级
+    /// </summary>
+     public int HeadQuarterLevelWhenInBattle => _data.HeadQuarterLevelWhenInBattle;
+    /// <summary>
+    /// 飞行高度
+    /// </summary>
+     public float FlyHeight => _data.FlyHeight;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {

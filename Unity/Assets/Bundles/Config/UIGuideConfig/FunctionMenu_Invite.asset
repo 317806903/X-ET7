@@ -15,21 +15,21 @@ MonoBehaviour:
   list:
   - name: "\u6307\u5F15\u591A\u4EBA"
     isFreeClickBeforeEnter: 1
-    trigEnterCondition: 0
+    trigEnterCondition: 1
     trigEnterConditionStaticMethod: 
-    trigEnterConditionParam: 
-    hierarchyCanvasPath: Init/GlobalRoot/UIRoot/NormalRoot
-    hierarchyGuidePath: DlgARRoomPVE/EGBackGround/EGRoot/E_OperationPanel/Info/E_ShowQrCode
-    guideTextType: 1
+    trigEnterConditionParam: ARSession/MirrorSceneAll_Classy/MirrorSceneRenderer/CanvasRoot/MarkerCanvas
+    hierarchyCanvasPath: 
+    hierarchyGuidePath: 
+    guideTextType: 0
     guideTextImgPath: 
     text: TextCode_Key_TutorialText_FunctionMenu_Invite0
     specImgMatchType: 0
     specImgPath: 
     curInNextType: 0
-    waitToNextUIGuideStep: 0
+    waitToNextUIGuideStep: 2
     audioPath: 
-    guideExecuteStaticMethod: None
-    guideExecuteParam: 
+    guideExecuteStaticMethod: ShowVideo
+    guideExecuteParam: Video_Multiple
     trigExitCondition: 0
     trigExitConditionStaticMethod: 
     trigExitConditionParam: 

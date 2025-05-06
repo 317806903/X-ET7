@@ -21,7 +21,7 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
     {
         TimeElapsed = _buf.ReadFloat();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DelayTime = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); DelayTime.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionIds.Add(_e0);}}
         ActionCallParam = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition1 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition1.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FilterCondition2 = new System.Collections.Generic.List<SequenceUnitCondition>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { SequenceUnitCondition _e0;  _e0 = SequenceUnitCondition.DeserializeSequenceUnitCondition(_buf); FilterCondition2.Add(_e0);}}
@@ -48,7 +48,7 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
     /// <summary>
     /// 触发action
     /// </summary>
-    public System.Collections.Generic.List<string> ActionId { get; private set; }
+    public System.Collections.Generic.List<string> ActionIds { get; private set; }
     /// <summary>
     /// 对象选择器
     /// </summary>
@@ -109,7 +109,7 @@ public sealed partial class TimelineNode: Bright.Config.BeanBase
         return "{ "
         + "TimeElapsed:" + TimeElapsed + ","
         + "DelayTime:" + Bright.Common.StringUtil.CollectionToString(DelayTime) + ","
-        + "ActionId:" + Bright.Common.StringUtil.CollectionToString(ActionId) + ","
+        + "ActionIds:" + Bright.Common.StringUtil.CollectionToString(ActionIds) + ","
         + "ActionCallParam:" + ActionCallParam + ","
         + "FilterCondition1:" + Bright.Common.StringUtil.CollectionToString(FilterCondition1) + ","
         + "FilterCondition2:" + Bright.Common.StringUtil.CollectionToString(FilterCondition2) + ","

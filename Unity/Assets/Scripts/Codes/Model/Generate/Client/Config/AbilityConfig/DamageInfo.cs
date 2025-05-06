@@ -20,7 +20,9 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
     public DamageInfo(ByteBuf _buf) 
     {
         DamageType = (DamageType)_buf.ReadInt();
+        DamageAttrType = (DamageAttrType)_buf.ReadInt();
         Value = _buf.ReadFloat();
+        ValueLimit = _buf.ReadFloat();
         ScaleByDis = _buf.ReadFloat();
         ScaleByDisMax = _buf.ReadFloat();
         ScaleByHeight = _buf.ReadFloat();
@@ -38,9 +40,17 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
     /// </summary>
     public DamageType DamageType { get; private set; }
     /// <summary>
+    /// 伤害属性类型
+    /// </summary>
+    public DamageAttrType DamageAttrType { get; private set; }
+    /// <summary>
     /// 数值
     /// </summary>
     public float Value { get; private set; }
+    /// <summary>
+    /// 数值限制(-1表示不限制)(当value&gt;0时，表示最大数值，当value&lt;0时表示最小数值)
+    /// </summary>
+    public float ValueLimit { get; private set; }
     /// <summary>
     /// 按照距离变化(&gt;0表示越远伤害越高,&lt;0表示越近伤害越高)
     /// </summary>
@@ -74,7 +84,9 @@ public sealed partial class DamageInfo: Bright.Config.BeanBase
     {
         return "{ "
         + "DamageType:" + DamageType + ","
+        + "DamageAttrType:" + DamageAttrType + ","
         + "Value:" + Value + ","
+        + "ValueLimit:" + ValueLimit + ","
         + "ScaleByDis:" + ScaleByDis + ","
         + "ScaleByDisMax:" + ScaleByDisMax + ","
         + "ScaleByHeight:" + ScaleByHeight + ","

@@ -12,48 +12,53 @@ namespace ET.AbilityConfig
     /// <summary>
     /// 物品子类型
     /// </summary>
+    [System.Flags]
     public enum ItemSubType
     {
         /// <summary>
         /// 任意
         /// </summary>
-        None = -1,
+        None = 0,
         /// <summary>
         /// 塔
         /// </summary>
-        AttackTower = 0,
+        AttackTower = 1,
         /// <summary>
         /// 陷阱
         /// </summary>
-        Trap = 1,
+        Trap = 2,
         /// <summary>
         /// 碰撞体
         /// </summary>
-        Collider = 2,
+        Collider = 4,
         /// <summary>
         /// 召唤怪物
         /// </summary>
-        CallMonster = 3,
+        CallMonster = 8,
+        /// <summary>
+        /// 出战塔类型
+        /// </summary>
+        BattleDeckTower = AttackTower|Trap,
         /// <summary>
         /// 怪物1
         /// </summary>
-        Monster1 = 0,
+        Monster1 = 1,
         /// <summary>
         /// 头像框系列1
         /// </summary>
-        AvatarFrameType1 = 0,
+        AvatarFrameType1 = 1,
         /// <summary>
         /// 钻石
         /// </summary>
-        Diamond = 0,
+        Diamond = 1,
         /// <summary>
         /// 街机代币
         /// </summary>
-        ArcadeCoin = 1,
+        ArcadeCoin = 2,
         /// <summary>
-        /// 摄像头技能
+        /// 符文碎片(养成代币)
         /// </summary>
-        CameraPlayerSkill = 0,
+        RuneFragments = 4,
     }
 
 } 

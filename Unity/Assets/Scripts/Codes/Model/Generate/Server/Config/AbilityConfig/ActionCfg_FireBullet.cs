@@ -21,6 +21,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         BulletId = _buf.ReadString();
         Duration = _buf.ReadFloat();
         OffSetInfo = OffSetInfo.DeserializeOffSetInfo(_buf);
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MoveTweenTargetActionId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MoveTweenTargetActionId.Add(_e0);}}
         MoveTweenId = _buf.ReadString();
         PostInit();
     }
@@ -48,6 +49,10 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
     /// </summary>
     public float Duration { get; private set; }
     public OffSetInfo OffSetInfo { get; private set; }
+    /// <summary>
+    /// MoveTween目标的Action事件
+    /// </summary>
+    public System.Collections.Generic.List<string> MoveTweenTargetActionId { get; private set; }
     /// <summary>
     /// 飞行轨迹
     /// </summary>
@@ -78,6 +83,7 @@ public sealed partial class ActionCfg_FireBullet: Bright.Config.BeanBase
         + "BulletId:" + BulletId + ","
         + "Duration:" + Duration + ","
         + "OffSetInfo:" + OffSetInfo + ","
+        + "MoveTweenTargetActionId:" + Bright.Common.StringUtil.CollectionToString(MoveTweenTargetActionId) + ","
         + "MoveTweenId:" + MoveTweenId + ","
         + "}";
     }

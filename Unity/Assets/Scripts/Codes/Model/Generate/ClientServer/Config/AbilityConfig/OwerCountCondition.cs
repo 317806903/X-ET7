@@ -22,6 +22,7 @@ public sealed partial class OwerCountCondition:  UnitConditionBase
         OwnActor = _buf.ReadBool();
         OwnBullet = _buf.ReadBool();
         OwnAoe = _buf.ReadBool();
+        OwnSkillCaster = _buf.ReadBool();
         Value = _buf.ReadFloat();
         PostInit();
     }
@@ -43,6 +44,10 @@ public sealed partial class OwerCountCondition:  UnitConditionBase
     /// aoe
     /// </summary>
     public bool OwnAoe { get; private set; }
+    /// <summary>
+    /// skillCaster
+    /// </summary>
+    public bool OwnSkillCaster { get; private set; }
     /// <summary>
     /// 数值
     /// </summary>
@@ -69,6 +74,7 @@ public sealed partial class OwerCountCondition:  UnitConditionBase
         + "OwnActor:" + OwnActor + ","
         + "OwnBullet:" + OwnBullet + ","
         + "OwnAoe:" + OwnAoe + ","
+        + "OwnSkillCaster:" + OwnSkillCaster + ","
         + "Value:" + Value + ","
         + "}";
     }

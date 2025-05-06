@@ -293,6 +293,7 @@ message R2G_GetRoomIdByPlayer // IActorResponse
 	int64 RoomId = 4;
 	int32 RoomStatus = 5;
 	bytes RoomTypeInfo = 6;
+	int32 MapScale = 7;
 }
 
 //ResponseType R2G_GetRoomList
@@ -357,6 +358,7 @@ message R2G_JoinRoom // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 	bytes RoomTypeInfo = 4;
+	int32 MapScale = 5;
 }
 
 //ResponseType R2G_QuitRoom
@@ -463,8 +465,9 @@ message G2R_SetARRoomInfo // IActorRequest
 	int32 ARMapScale = 4;
 	int32 ARMeshType = 5;
 	string ARSceneId = 6;
-	string ARMeshDownLoadUrl = 7;
-	bytes ARMeshBytes = 8;
+	string ARSceneMeshId = 7;
+	string ARMeshDownLoadUrl = 8;
+	bytes ARMeshBytes = 9;
 }
 
 message R2G_SetARRoomInfo // IActorResponse
@@ -472,6 +475,27 @@ message R2G_SetARRoomInfo // IActorResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+}
+
+//ResponseType R2G_GetARRoomInfo
+message G2R_GetARRoomInfo // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 RoomId = 2;
+	int32 IsWithARMeshBytes = 3;
+}
+
+message R2G_GetARRoomInfo // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int32 ARMapScale = 4;
+	int32 ARMeshType = 5;
+	string ARSceneId = 6;
+	string ARSceneMeshId = 7;
+	string ARMeshDownLoadUrl = 8;
+	bytes ARMeshBytes = 9;
 }
 
 //ResponseType R2G_ChgRoomBattleLevelCfg
@@ -512,8 +536,9 @@ message R2M_CreateDynamicMap // IActorRequest
 	repeated bytes RoomMemberInfos = 3;
 	int32 ARMeshType = 4;
 	string ARSceneId = 5;
-	string ARMeshDownLoadUrl = 6;
-	bytes ARMeshBytes = 7;
+	string ARSceneMeshId = 6;
+	string ARMeshDownLoadUrl = 7;
+	bytes ARMeshBytes = 8;
 }
 
 message M2R_CreateDynamicMap // IActorResponse
@@ -545,6 +570,7 @@ message M2M_EnterMapRequest // IActorRequest
 	int64 PlayerId = 2;
 	int32 PlayerLevel = 3;
 	string GamePlayBattleLevelCfgId = 4;
+	int32 MapScale = 5;
 }
 
 message M2M_EnterMapResponse // IActorResponse
@@ -560,6 +586,7 @@ message R2G_StartBattle // IActorRequest
 	int32 RpcId = 1;
 	string GamePlayBattleLevelCfgId = 2;
 	int64 DynamicMapInstanceId = 3;
+	int32 MapScale = 4;
 }
 
 message G2R_StartBattle // IActorResponse

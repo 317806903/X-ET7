@@ -20,7 +20,9 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
         BattleCfgIdNoAR = _buf.ReadString();
         BattleCfgIdAR = _buf.ReadString();
         Name = _buf.ReadString();
+        Desc_l10n_key = _buf.ReadString(); Desc = _buf.ReadString();
         Index = _buf.ReadInt();
+        PveLevelDifficulty = (PVELevelDifficulty)_buf.ReadInt();
         FirstClearDropItem = _buf.ReadString();
         RepeatClearDropItem = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);MonsterListShow = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); MonsterListShow.Add(_e0);}}
@@ -53,9 +55,18 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
     /// </summary>
     public string Name { get; private set; }
     /// <summary>
+    /// 描述
+    /// </summary>
+    public string Desc { get; private set; }
+    public string Desc_l10n_key { get; }
+    /// <summary>
     /// 关卡序号
     /// </summary>
     public int Index { get; private set; }
+    /// <summary>
+    /// 难度
+    /// </summary>
+    public PVELevelDifficulty PveLevelDifficulty { get; private set; }
     /// <summary>
     /// 首通掉落
     /// </summary>
@@ -95,6 +106,7 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        Desc = translator(Desc_l10n_key, Desc);
     }
 
     public override string ToString()
@@ -104,7 +116,9 @@ public sealed partial class ChallengeLevelCfg: Bright.Config.BeanBase
         + "BattleCfgIdNoAR:" + BattleCfgIdNoAR + ","
         + "BattleCfgIdAR:" + BattleCfgIdAR + ","
         + "Name:" + Name + ","
+        + "Desc:" + Desc + ","
         + "Index:" + Index + ","
+        + "PveLevelDifficulty:" + PveLevelDifficulty + ","
         + "FirstClearDropItem:" + FirstClearDropItem + ","
         + "RepeatClearDropItem:" + RepeatClearDropItem + ","
         + "MonsterListShow:" + Bright.Common.StringUtil.CollectionToString(MonsterListShow) + ","

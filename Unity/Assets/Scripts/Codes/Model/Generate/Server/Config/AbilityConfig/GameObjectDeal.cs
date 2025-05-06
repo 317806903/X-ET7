@@ -31,6 +31,8 @@ public abstract partial class GameObjectDeal: Bright.Config.BeanBase
             case GameObjectFlicker.__ID__: return new GameObjectFlicker(_buf);
             case GameObjectTransparent.__ID__: return new GameObjectTransparent(_buf);
             case GameObjectNotTransparent.__ID__: return new GameObjectNotTransparent(_buf);
+            case GameObjectFly.__ID__: return new GameObjectFly(_buf);
+            case GameObjectNotFly.__ID__: return new GameObjectNotFly(_buf);
             default: throw new SerializationException();
         }
     }

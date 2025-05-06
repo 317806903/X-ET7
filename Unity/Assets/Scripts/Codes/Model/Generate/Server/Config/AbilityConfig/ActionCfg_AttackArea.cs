@@ -24,6 +24,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
         DamageInfo = _buf.ReadString();
         DamageAllot = DamageAllot.DeserializeDamageAllot(_buf);
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelfAttackActionCall = new System.Collections.Generic.List<AttackActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { AttackActionCall _e0;  _e0 = AttackActionCall.DeserializeAttackActionCall(_buf); SelfAttackActionCall.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SelfActorAttackActionCall = new System.Collections.Generic.List<AttackActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { AttackActionCall _e0;  _e0 = AttackActionCall.DeserializeAttackActionCall(_buf); SelfActorAttackActionCall.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TargetAttackActionCall = new System.Collections.Generic.List<AttackActionCall>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { AttackActionCall _e0;  _e0 = AttackActionCall.DeserializeAttackActionCall(_buf); TargetAttackActionCall.Add(_e0);}}
         PostInit();
     }
@@ -64,6 +65,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
     /// </summary>
     public DamageAllot DamageAllot { get; private set; }
     public System.Collections.Generic.List<AttackActionCall> SelfAttackActionCall { get; private set; }
+    public System.Collections.Generic.List<AttackActionCall> SelfActorAttackActionCall { get; private set; }
     public System.Collections.Generic.List<AttackActionCall> TargetAttackActionCall { get; private set; }
 
     public const int __ID__ = 1807778246;
@@ -75,6 +77,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
         this.DamageInfo_Ref = (_tables["ActionCfg_DamageUnitCategory"] as ActionCfg_DamageUnitCategory).GetOrDefault(DamageInfo);
         DamageAllot?.Resolve(_tables);
         foreach(var _e in SelfAttackActionCall) { _e?.Resolve(_tables); }
+        foreach(var _e in SelfActorAttackActionCall) { _e?.Resolve(_tables); }
         foreach(var _e in TargetAttackActionCall) { _e?.Resolve(_tables); }
         PostResolve();
     }
@@ -83,6 +86,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
     {
         DamageAllot?.TranslateText(translator);
         foreach(var _e in SelfAttackActionCall) { _e?.TranslateText(translator); }
+        foreach(var _e in SelfActorAttackActionCall) { _e?.TranslateText(translator); }
         foreach(var _e in TargetAttackActionCall) { _e?.TranslateText(translator); }
     }
 
@@ -97,6 +101,7 @@ public sealed partial class ActionCfg_AttackArea: Bright.Config.BeanBase
         + "DamageInfo:" + DamageInfo + ","
         + "DamageAllot:" + DamageAllot + ","
         + "SelfAttackActionCall:" + Bright.Common.StringUtil.CollectionToString(SelfAttackActionCall) + ","
+        + "SelfActorAttackActionCall:" + Bright.Common.StringUtil.CollectionToString(SelfActorAttackActionCall) + ","
         + "TargetAttackActionCall:" + Bright.Common.StringUtil.CollectionToString(TargetAttackActionCall) + ","
         + "}";
     }

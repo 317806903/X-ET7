@@ -14,6 +14,7 @@ namespace ET.AbilityConfig
     /// </summary>
     public enum BuffType
     {
+        None = 0,
         /// <summary>
         /// 增益效果
         /// </summary>

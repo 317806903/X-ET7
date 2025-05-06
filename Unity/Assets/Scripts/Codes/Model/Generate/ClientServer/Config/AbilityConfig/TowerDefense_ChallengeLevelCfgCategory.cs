@@ -17,12 +17,12 @@ namespace ET.AbilityConfig
 [Config]
 public partial class TowerDefense_ChallengeLevelCfgCategory: ConfigSingleton<TowerDefense_ChallengeLevelCfgCategory>
 {
-    private readonly Dictionary<int, ChallengeLevelCfg> _dataMap;
     private readonly List<ChallengeLevelCfg> _dataList;
-    
+
+    private Dictionary<(int, PVELevelDifficulty), ChallengeLevelCfg> _dataMapUnion;
+
     public TowerDefense_ChallengeLevelCfgCategory(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<int, ChallengeLevelCfg>();
         _dataList = new List<ChallengeLevelCfg>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -30,26 +30,18 @@ public partial class TowerDefense_ChallengeLevelCfgCategory: ConfigSingleton<Tow
             ChallengeLevelCfg _v;
             _v = ChallengeLevelCfg.DeserializeChallengeLevelCfg(_buf);
             _dataList.Add(_v);
-            _dataMap.Add(_v.Index, _v);
+        }
+        _dataMapUnion = new Dictionary<(int, PVELevelDifficulty), ChallengeLevelCfg>();
+        foreach(var _v in _dataList)
+        {
+            _dataMapUnion.Add((_v.Index, _v.PveLevelDifficulty), _v);
         }
         PostInit();
     }
-    
-    public bool Contain(int id)
-    {
-        return _dataMap.ContainsKey(id);
-    }
 
-    public Dictionary<int, ChallengeLevelCfg> GetAll()
-    {
-        return _dataMap;
-    }
-    
     public List<ChallengeLevelCfg> DataList => _dataList;
 
-    public ChallengeLevelCfg GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public ChallengeLevelCfg Get(int key) => _dataMap[key];
-    public ChallengeLevelCfg this[int key] => _dataMap[key];
+    public ChallengeLevelCfg Get(int index, PVELevelDifficulty pveLevelDifficulty) => _dataMapUnion.TryGetValue((index, pveLevelDifficulty), out ChallengeLevelCfg __v) ? __v : null;
 
     public override void Resolve(Dictionary<string, IConfigSingleton> _tables)
     {
@@ -70,10 +62,9 @@ public partial class TowerDefense_ChallengeLevelCfgCategory: ConfigSingleton<Tow
     
     public override void TrimExcess()
     {
-        _dataMap.TrimExcess();
         _dataList.TrimExcess();
     }
-    
+        
     
     public override string ConfigName()
     {

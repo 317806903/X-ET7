@@ -34,6 +34,10 @@ namespace ET.AbilityConfig
         /// 技能
         /// </summary>
         Skill = 4,
+        /// <summary>
+        /// 大本营
+        /// </summary>
+        HeadQuarter = 5,
     }
 
 } 

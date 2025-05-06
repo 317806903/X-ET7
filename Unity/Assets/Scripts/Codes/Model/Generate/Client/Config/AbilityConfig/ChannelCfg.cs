@@ -45,6 +45,7 @@ public sealed partial class ChannelCfg: Bright.Config.BeanBase
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);QuestionnaireCfgId = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); QuestionnaireCfgId.Add(_e0);}}
         DiscordURL = _buf.ReadString();
         PrivacyPolicyURL = _buf.ReadString();
+        AliyunOSS = _buf.ReadString();
         PostInit();
     }
 
@@ -170,6 +171,10 @@ public sealed partial class ChannelCfg: Bright.Config.BeanBase
     /// 隐私政策URL
     /// </summary>
     public string PrivacyPolicyURL { get; private set; }
+    /// <summary>
+    /// 阿里云oss(AccessKeyId|AccessKeySecret|Endpoint|Bucket)
+    /// </summary>
+    public string AliyunOSS { get; private set; }
 
     public const int __ID__ = 62628993;
     public override int GetTypeId() => __ID__;
@@ -216,6 +221,7 @@ public sealed partial class ChannelCfg: Bright.Config.BeanBase
         + "QuestionnaireCfgId:" + Bright.Common.StringUtil.CollectionToString(QuestionnaireCfgId) + ","
         + "DiscordURL:" + DiscordURL + ","
         + "PrivacyPolicyURL:" + PrivacyPolicyURL + ","
+        + "AliyunOSS:" + AliyunOSS + ","
         + "}";
     }
     

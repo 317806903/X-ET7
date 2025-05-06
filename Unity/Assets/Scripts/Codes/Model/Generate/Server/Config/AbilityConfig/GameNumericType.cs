@@ -83,6 +83,15 @@ namespace ET.AbilityConfig
         TowerDefense_PlayerRewardWhenKillMonsterPct = 10073,
         TowerDefense_PlayerRewardWhenKillMonsterFinalAdd = 10074,
         TowerDefense_PlayerRewardWhenKillMonsterFinalPct = 10075,
+        /// <summary>
+        /// 玩家塔/技能升级价格
+        /// </summary>
+        TowerDefense_UpgradeItemUnitPrice = 1008,
+        TowerDefense_UpgradeItemUnitPriceBase = 10081,
+        TowerDefense_UpgradeItemUnitPriceAdd = 10082,
+        TowerDefense_UpgradeItemUnitPricePct = 10083,
+        TowerDefense_UpgradeItemUnitPriceFinalAdd = 10084,
+        TowerDefense_UpgradeItemUnitPriceFinalPct = 10085,
     }
 
 } 
